@@ -3,9 +3,12 @@
 namespace PacketPrep\Http\Controllers\Auth;
 
 use PacketPrep\User;
+use PacketPrep\Mail\ActivateUser;
 use PacketPrep\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -49,6 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:20|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -62,10 +66,43 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        $user = User::create([
             'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'activation_token' => str_random(20),
         ]);
+
+        Mail::to($user->email)->send(new ActivateUser($user));
+
+        return $user;
     }
+
+    protected function registered(Request $request, $user)
+    {
+        $this->guard()->logout();
+        return redirect('/login')->with('status', 'We sent you an activation code. Check your email and click on the link to verify.');
+    }
+
+    public function activateUser($token)
+    {
+        dd($token);
+        $user = User::where('activation_token', $token)->first();
+        if(isset($user) ){;
+            if(!$user->status) {
+                $user->status = 1;
+                $user->save();
+                $status = "Your e-mail is verified. You can now login.";
+            }else{
+                $status = "Your e-mail is already verified. You can now login.";
+            }
+        }else{
+            return redirect('/login')->with('warning', "Sorry your account cannot be identified. Kindly contact administrator");
+        }
+ 
+        return redirect('/login')->with('status', $status);
+    }
+ 
 }
