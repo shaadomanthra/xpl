@@ -1,0 +1,48 @@
+@extends('layouts.app')
+@section('content')
+
+<div  class="row ">
+
+  <div class="col">
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Data Entry</li>
+      </ol>
+    </nav>
+    @include('flash::message')  
+    <div class="card">
+      <div class="card-body">
+        <nav class="navbar navbar-light bg-light justify-content-between mb-3">
+          <a class="navbar-brand">Projects </a>
+
+          <form class="form-inline" method="GET" action="{{ route('data.dataentry.index') }}">
+            <a href="{{route('data.dataentry.create')}}">
+
+              <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Create Project</button>
+
+            </a>
+            <div class="input-group ">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-search"></i></div>
+              </div>
+              <input class="form-control " id="search" name="item" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
+              value="{{Request::get('item')?Request::get('item'):'' }}">
+            </div>
+            
+          </form>
+        </nav>
+
+        <div id="search-items">
+         @include('appl.dataentry.project.list')
+       </div>
+
+     </div>
+   </div>
+ </div>
+</div>
+
+@endsection
+
+

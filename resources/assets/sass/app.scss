@@ -1,0 +1,25 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+$fa-font-path: "../fonts" !default;
+@import "~font-awesome/scss/font-awesome.scss";
+
+// Variables
+// @import "variables";
+
+
+$theme-colors: (
+  "primary": #2f82ca,
+  "danger": #C0392B,
+  "success":#16A085,
+  "info":#519ada,
+  "warning":#E9D460
+);
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+
+
+

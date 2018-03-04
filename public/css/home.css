@@ -1,0 +1,207 @@
+ html, body {
+                background-color: #fff;
+                color: #636b6f;
+                font-family: 'Raleway', sans-serif;
+                font-weight: 100;
+                height: 100vh;
+                margin: 0;
+            }
+
+            .full-height {
+                height: 100vh;
+            }
+
+            .flex-center {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+
+            .position-ref {
+                position: relative;
+            }
+
+            .top-right {
+                position: absolute;
+                right: 10px;
+                top: 18px;
+            }
+
+            .content {
+                text-align: center;
+            }
+
+            .title {
+                font-size: 84px;
+            }
+
+            .links > a {
+                color: #636b6f;
+                padding: 0 25px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+
+            .m-b-md {
+                margin-bottom: 30px;
+            }
+
+#app{height: 100%;}
+.wrapper-bg{background-color: #f5f8fa;min-height:100%;  position:relative;height: stretch;}
+.wrapper{ max-width: 900px;margin:0px auto; }
+.margintop-20{margin-top: 20px;}
+.marginbottom-20{margin-bottom: 20px;}
+
+
+
+.nav-bg{background: white;}
+.logo-small{ height:30px; }
+.s15{ font-size: 15px; }
+.s10{ font-size: 10px; }
+
+
+.sortable{ border:1px solid #bfe0d9; background: #f7fffd; padding: 10px; margin:0px; list-style: none;}
+ul.sortable li{ border:1px solid #bfe0d9; background: #daf3ee;
+    margin-bottom: 5px;padding: 5px; padding-left: 10px; }
+ul.sortable li:last-child{ margin-bottom: 0px; }
+ul.sortable li.current{ border:1px solid #17a085; }
+
+ul.list{ list-style:none;margin:10px;margin-left:15px; margin-right: 0px; margin-top: -10px;
+    border:0;border-left:1px solid #aedaff; padding: 5px 0px 0px; }
+
+ul.list li{  position:relative;margin:10px;padding:5px;padding-left: 10px; background:#e3f3ff;border:1px solid #aedaff; }
+ul.list-first{ padding-top:20px;margin: 5px; margin-top: -20px; margin-right: -5px; }
+
+
+ul.list li:before{
+    content:"";
+    position:absolute;
+    width:13px;
+    height:10px;
+    border: 1px solid;
+    left:-13px;
+    top:5px;
+    border-color: #aedaff transparent transparent transparent;
+}
+
+// Resetting from the mobile up!
+// 
+// Dropping the root* element font size to 14px is something
+// I do on almost all projects, a 16px font size on mobiles
+// is not normally needed. --> Only my opinion of course!
+//
+// At mobile size I used the scale "Major Second" from 
+// type-cale.com to set out the heading sizes as well as the
+// "Major Third" scale for the .display-* classes however my
+// technique was to begin the scale from the h1's front size.
+// To do this simply do the h1 font size * scale size. So in 
+// in this example it was 1.602 * 1.250 = 2.0025 I went with 
+// 2em to keep it simple.
+//
+//------------------------------------------------------------//
+html,
+body {
+    font-size: 14px !important;
+}
+h1 {
+    font-size: 1.602em;
+}
+h2 {
+    font-size: 1.424em;
+}
+h3 {
+    font-size: 1.266em;
+}
+h4 {
+    font-size: 1.125em;
+}
+h5 {
+    font-size: 0.889em;
+}
+h6 {
+    font-size: 0.79em;
+}
+.display-1 {
+    font-size: 3.906em;
+}
+.display-2 {
+    font-size: 3.125em;
+}
+.display-3 {
+    font-size: 2.5em;
+}
+.display-4 {
+    font-size: 2em;
+}
+
+// Medium devices (tablets, 48em and up)
+// 
+// At this point you have overridden Bootstraps rem's and are
+// into module based font sizes should you require it. 
+//
+// I took a while over this change because I felt that there
+// is no reason why I cant use a modified scale on another 
+// device size. So I did, the headings have now taken on
+// "Perfect Fourth" and the dislpay-* has been put to the
+// Bootstrap defaults.
+//
+//------------------------------------------------------------//
+@media (min-width: 48em) {
+    h1 {
+      font-size: 2.441em;
+    }
+    h2 {
+        font-size: 1.953em;
+    }
+    h3 {
+        font-size: 1.563em;
+    }
+    h4 {
+        font-size: 1.25em;
+    }
+    .display-1 {
+        font-size: 6em;
+    }
+    .display-2 {
+        font-size: 5.5em;
+    }
+    .display-3 {
+        font-size: 4.5em;
+    }
+    .display-4 {
+        font-size: 3.5em;
+    }
+}
+
+// Large devices (desktops, 62em and up)
+@media (min-width: 62em) {
+    html,
+    body {
+        font-size: 16px !important;
+    }
+}
+
+// Extra large devices (large desktops, 75em and up)
+@media (min-width: 75em) {
+    html,
+    body {
+        font-size: 18px !important;
+    }
+}
+
+// Pen Specific Styles
+.jumbotron {
+    font-size: 16px;
+    @media (min-width: 62em) {
+        font-size: 20px;
+    }
+    h1 {
+        border-bottom: 4px solid #0275d8;
+    }
+    p.lead {
+        border-radius: 4px;
+    }
+}
