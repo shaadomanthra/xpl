@@ -7,8 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'PacketPlug') }}</title>
-
+    <title>{{ config('app.name', 'PacketPrep') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
@@ -19,7 +18,6 @@
     @yield('content-main')
     </div>
     <!-- Scripts -->
-
      @include('snippets.scripts')
     </body>
     </html>

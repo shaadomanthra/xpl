@@ -21,7 +21,8 @@ Route::get('/packetprep',function(){
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{username}', 'User\UserController@index')->name('profile');
+Route::get('/user/activate/{token_name(token)}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
 Route::resource('dataentry','dataentry\projectController',[
 	'as'=>'data',

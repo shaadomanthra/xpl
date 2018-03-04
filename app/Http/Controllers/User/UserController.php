@@ -4,6 +4,7 @@ namespace PacketPrep\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
+use PacketPrep\User;
 
 class UserController extends Controller
 {
@@ -12,9 +13,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($username)
     {
         
+        if(strpos($username, '@')===0)
+        {
+
+            $username = substr($username, 1);
+            $user = User::where('username',$username)->first();
+            if($user)
+            {
+                return view('appl.user.index')->with('user',$user);
+            }else
+                abort(404);
+        }
+        else
+            abort(404);
+       
     }
 
     /**

@@ -88,7 +88,6 @@ class RegisterController extends Controller
 
     public function activateUser($token)
     {
-        dd($token);
         $user = User::where('activation_token', $token)->first();
         if(isset($user) ){;
             if(!$user->status) {
