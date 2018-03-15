@@ -19,9 +19,16 @@ Route::get('/packetprep',function(){
 	return view('appl.pages.packetprep');
 });
 
+
+Route::get('/home', function () { return redirect('/'); });
+Route::get('/apply', function () { return view('welcome'); })->name('apply');
 Auth::routes();
 
 Route::get('/{username}', 'User\UserController@index')->name('profile');
+Route::get('/{username}/edit', 'User\UserController@edit')->name('profile.edit');
+Route::put('/{username}', 'User\UserController@update')->name('profile.update');
+Route::delete('/{username}', 'User\UserController@destroy')->name('profile.delete');
+
 Route::get('/user/activate/{token_name(token)}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
 Route::resource('dataentry','dataentry\projectController',[

@@ -12,6 +12,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+    <style>
+    .ck-editor__editable {
+        min-height: 200px;
+    }
+    </style>
     </head>
     <body>
     <div id="app" >
