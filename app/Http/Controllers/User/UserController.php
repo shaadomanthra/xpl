@@ -25,15 +25,24 @@ class UserController extends Controller
             $username = substr($username, 1);
             $user = User::where('username',$username)->first();
             $user_details = User_Details::where('user_id',$user->id)->first();
+
+
             if($user)
             {
-                if($user_details->privacy==0)
+                if(!isset($user_details->privacy))
+                    $view = 'private';
+
+                elseif($user_details->privacy==0)
                     $view = 'index';
                 elseif($user_details->privacy==1){
 
                     if(auth::user())
                       $view = 'index';
+                      else
+                        $view = 'private';
+
                 }else{
+
                         if(!auth::user())
                             $view = 'private';
                         elseif(auth::user()->id == $user->id)
@@ -45,6 +54,7 @@ class UserController extends Controller
 
                 return view('appl.user.'.$view)
                             ->with('user',$user)
+                            ->with('mathjax',true)
                             ->with('user_details',$user_details);
 
             }else{
@@ -65,8 +75,10 @@ class UserController extends Controller
      */
     public function edit($username)
     {
+
         $username = substr($username, 1);
         $user = User::where('username',$username)->first();
+        $this->authorize($user);
         $user_details = User_Details::where('user_id',$user->id)->first();
         $user_details->countries = $user_details->country();
         if($user)
@@ -91,7 +103,7 @@ class UserController extends Controller
         $username = substr($username, 1);
         $user = User::where('username',$username)->first();
         $user_details = User_Details::where('user_id',$user->id)->first();
-
+        $this->authorize($user);
         /* create user details if not defined */
         if(!$user_details)
         {
@@ -105,7 +117,7 @@ class UserController extends Controller
 
         // update basic data
         $user->name = $request->name;
-        if($request->password != 'nochange'){
+        if($request->password){
             if($request->password == $request->repassword)
                 $user->password = Hash::make($request->password);
             else
@@ -119,7 +131,7 @@ class UserController extends Controller
 
         //update user details
         $user_details->user_id = $user->id;
-        $user_details->bio = $request->bio;
+        $user_details->bio = summernote_imageupload($user,$request->bio);
         $user_details->country = $request->country;
         $user_details->city = ($request->city)?$request->city:' ';
         $user_details->facebook_link = $request->facebook_link;

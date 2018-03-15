@@ -31,11 +31,11 @@
       </div>
       <div class="form-group">
         <label for="formGroupExampleInput ">Password</label>
-        <input type="password" class="form-control" name="password"  value="nochange" >
+        <input type="password" class="form-control" name="password"  autocomplete="current-password" >
       </div>
       <div class="form-group">
         <label for="formGroupExampleInput ">Re-Password</label>
-        <input type="password" class="form-control" name="repassword"  value="nochange" >
+        <input type="password" class="form-control" name="repassword"   autocomplete="current-password">
       </div>
       <div class="form-group">
         <label for="formGroupExampleInput2">Biodata</label>

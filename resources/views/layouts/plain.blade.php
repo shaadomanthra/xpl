@@ -1,9 +1,10 @@
 @extends('layouts.head')
 @section('content-main')
-<div class="wrapper-bg bg-primary" >
-    <div class="position-ref full-height">
-        @yield('content')
+<div class="wrapper margintop-20 ">
+        <div class="container">    
+            @yield('content')
+        </div>  
+    <br>  
     </div>
-</div>
 @endsection
 

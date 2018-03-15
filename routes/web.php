@@ -20,8 +20,9 @@ Route::get('/packetprep',function(){
 });
 
 
-Route::get('/home', function () { return redirect('/'); });
+Route::get('/home', function () { return redirect('/'); })->name('home');
 Route::get('/apply', function () { return view('welcome'); })->name('apply');
+Route::resource('team','User\TeamController');
 Auth::routes();
 
 Route::get('/{username}', 'User\UserController@index')->name('profile');
@@ -29,7 +30,11 @@ Route::get('/{username}/edit', 'User\UserController@edit')->name('profile.edit')
 Route::put('/{username}', 'User\UserController@update')->name('profile.update');
 Route::delete('/{username}', 'User\UserController@destroy')->name('profile.delete');
 
+
+
 Route::get('/user/activate/{token_name(token)}', 'Auth\RegisterController@activateUser')->name('activateuser');
+
+
 
 Route::resource('dataentry','dataentry\projectController',[
 	'as'=>'data',

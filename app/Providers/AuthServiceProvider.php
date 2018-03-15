@@ -2,8 +2,11 @@
 
 namespace PacketPrep\Providers;
 
+
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use PacketPrep\Policies\UserPolicy;
+use PacketPrep\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'PacketPrep\Model' => 'PacketPrep\Policies\ModelPolicy',
+        User::class => UserPolicy::class,
     ];
 
     /**
