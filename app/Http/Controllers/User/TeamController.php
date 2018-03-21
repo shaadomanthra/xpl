@@ -17,76 +17,21 @@ class TeamController extends Controller
     {
         $search = $request->search;
         $item = $request->item;
-        $users = $user->where('name','LIKE',"%{$item}%")
+        if(\auth::user())
+        $user = \auth::user();
+        if($user->role != 2){
+            $users = $user->where('name','LIKE',"%{$item}%")
+                        ->whereIn('status',[1,3])
                         ->orderBy('name','asc')
                         ->paginate(config('global.no_of_records'));
+        }else{
+            $users = $user->where('name','LIKE',"%{$item}%")
+                        ->orderBy('name','asc')
+                        ->paginate(config('global.no_of_records'));
+        }
+        
         $view = $search ? 'list': 'index';
         return view('appl.user.team.'.$view)->with('users',$users);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

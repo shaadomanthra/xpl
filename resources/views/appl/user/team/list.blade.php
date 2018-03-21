@@ -6,6 +6,7 @@
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
                 <th scope="col">Joined</th>
+                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -18,13 +19,24 @@
                   </a>
                 </td>
                 <td>{{ ($user->created_at) ? $user->created_at->diffForHumans() : '' }}</td>
+                <td>
+                  @if($user->status==0)
+                    Unactivated
+                  @elseif($user->status ==1)
+                    Active
+                  @elseif($user->status==2)
+                    Blocked
+                   @else
+                   Frozen
+                   @endif     
+                </td>
               </tr>
               @endforeach      
             </tbody>
           </table>
         </div>
         @else
-        <div class="card card-body bg-light">
+        <div class="card card-body bg-light mb-3">
           No Users listed
         </div>
         @endif

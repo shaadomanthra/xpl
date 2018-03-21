@@ -11,7 +11,6 @@
   <div class="card">
     <div class="card-body">
       <h1>Edit Profile </h1>
-      @include('flash::message')
       <form method="post" action="{{route('profile.update','@'.$user->username)}}">
       <div class="form-group">
         <label for="formGroupExampleInput ">Name</label>
@@ -19,7 +18,12 @@
       </div>
       <div class="form-group">
         <label for="formGroupExampleInput ">Designation</label>
-        <input type="text" class="form-control" name="designation"  value="{{ ($user->designation)?$user->designation:'Not Assigned' }}" disabled>
+        <input type="text" class="form-control" name="designation"  value="{{ ($user_details->designation)?$user_details->designation:'Not Assigned' }}" disabled>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Image</label>
+        <input type="text" class="form-control" name="Image"  value="we use gravatar for the profile picture" disabled>
+        <p class="mt-1 text-secondary">Follow the link to change your image <a href="https://en.gravatar.com">gravatar.com</a> </p>
       </div>
       <div class="form-group">
         <label for="formGroupExampleInput ">Username</label>
@@ -46,10 +50,18 @@
         <label for="formGroupExampleInput ">Country</label>
         <select class="form-control" name="country">
           @foreach($user_details->countries as $code =>$country)
-          @if($code==$user_details->country)
+          @if(isset($user_details->country))
+            @if($code==$user_details->country)
+              <option value="{{$code}}" selected>{{$country}}</option>
+              @else
+              <option value="{{$code}}">{{$country}}</option>
+            @endif
+          @else
+            @if($code=='IN')
             <option value="{{$code}}" selected>{{$country}}</option>
             @else
             <option value="{{$code}}">{{$country}}</option>
+            @endif
           @endif
           @endforeach
         </select>

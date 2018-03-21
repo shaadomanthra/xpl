@@ -21,7 +21,7 @@ class user_details extends Model
     public $timestamps = false;
 
 
-    public static function country($item=null){
+    public static function getCountry($item=null){
     	$countries =
 			array(
 			"AF" => "Afghanistan",

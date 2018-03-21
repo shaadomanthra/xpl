@@ -17,6 +17,11 @@
                     <li class="nav-item ">
                         <a class="nav-link" href="{{url('/')}}">Home </a>
                     </li>
+
+                    @if(\Auth::user()->checkRole(['administrator','investor','patron','promoter','employee']))
+                    <li><a class="nav-link" href="{{ route('system') }}">System</a></li>
+                    @endif
+
                     <li><a class="nav-link" href="{{ route('data.dataentry.index') }}">Data Entry</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -11,28 +11,28 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () { return view('welcome'); });
 
-Route::get('/packetprep',function(){
-	return view('appl.pages.packetprep');
-});
+Route::get('/about',function(){ return view('appl.pages.packetprep'); })->name('about');
+Route::get('/contact',function(){ return view('appl.pages.contact'); })->name('contact');
 
+Auth::routes();
 
 Route::get('/home', function () { return redirect('/'); })->name('home');
 Route::get('/apply', function () { return view('welcome'); })->name('apply');
-Route::resource('team','User\TeamController');
-Auth::routes();
+Route::get('team','User\TeamController@index')->name('team');
 
-Route::get('/{username}', 'User\UserController@index')->name('profile');
-Route::get('/{username}/edit', 'User\UserController@edit')->name('profile.edit');
-Route::put('/{username}', 'User\UserController@update')->name('profile.update');
-Route::delete('/{username}', 'User\UserController@destroy')->name('profile.delete');
+Route::resource('role','User\RoleController')->middleware('auth');
+Route::resource('docs','Content\DocController');
+Route::resource('docs/{doc}/chapter','Content\ChapterController');
 
+Route::get('/system', 'System\UpdateController@system')->name('system')->middleware('auth');
+Route::resource('system/update','System\UpdateController')->middleware('auth');
+Route::resource('system/finance','System\FinanceController')->middleware('auth');
+Route::resource('system/goal','System\GoalController')->middleware('auth');
+Route::resource('system/report','System\ReportController')->middleware('auth');
 
-
-Route::get('/user/activate/{token_name(token)}', 'Auth\RegisterController@activateUser')->name('activateuser');
+Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
 
 
@@ -42,5 +42,15 @@ Route::resource('dataentry','dataentry\projectController',[
 Route::resource('dataentry/{project}/category','dataentry\CategoryController',[
 	'as'=>'project',
 	])->middleware('auth');
+
+
+Route::get('/{username}', 'User\UserController@index')->name('profile');
+Route::get('/{username}/edit', 'User\UserController@edit')->name('profile.edit');
+Route::get('/{username}/manage', 'User\UserController@manage')->name('profile.manage');
+Route::put('/{username}', 'User\UserController@update')->name('profile.update');
+Route::delete('/{username}', 'User\UserController@destroy')->name('profile.delete');
+
+
+
 
 

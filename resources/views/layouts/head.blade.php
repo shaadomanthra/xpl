@@ -1,7 +1,8 @@
     <!DOCTYPE html>
-    <html lang="{{ app()->getLocale() }}">
+    <html lang="en">
     <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,6 +32,10 @@
          src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
       </script>
     @endif
+
+    @if(isset($jqueryui))
+    <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
+      @endif
 
     </head>
     <body>

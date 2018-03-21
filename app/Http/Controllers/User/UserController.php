@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
+use PacketPrep\Models\User\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,33 +20,35 @@ class UserController extends Controller
     public function index($username)
     {
         
+        
+
         if(strpos($username,'@')===0)
         {
 
             $username = substr($username, 1);
             $user = User::where('username',$username)->first();
+
             $user_details = User_Details::where('user_id',$user->id)->first();
 
 
             if($user)
             {
-                if(!isset($user_details->privacy))
-                    $view = 'private';
+                if(!isset($user_details))
+                    $view = 'index';
 
                 elseif($user_details->privacy==0)
                     $view = 'index';
                 elseif($user_details->privacy==1){
-
-                    if(auth::user())
+                    if(auth::user() || auth::user()->isAdmin())
                       $view = 'index';
-                      else
-                        $view = 'private';
+                    else
+                      $view = 'private';
 
                 }else{
 
                         if(!auth::user())
                             $view = 'private';
-                        elseif(auth::user()->id == $user->id)
+                        elseif(auth::user()->id == $user->id || auth::user()->isAdmin())
                             $view = 'index';
                         else
                             $view = 'private';
@@ -54,7 +57,6 @@ class UserController extends Controller
 
                 return view('appl.user.'.$view)
                             ->with('user',$user)
-                            ->with('mathjax',true)
                             ->with('user_details',$user_details);
 
             }else{
@@ -80,7 +82,11 @@ class UserController extends Controller
         $user = User::where('username',$username)->first();
         $this->authorize($user);
         $user_details = User_Details::where('user_id',$user->id)->first();
-        $user_details->countries = $user_details->country();
+        if(!$user_details)
+            $user_details = new User_Details();
+            
+        $user_details->countries = $user_details->getCountry();
+            
         if($user)
         {
             return view('appl.user.edit')
@@ -131,7 +137,9 @@ class UserController extends Controller
 
         //update user details
         $user_details->user_id = $user->id;
+
         $user_details->bio = summernote_imageupload($user,$request->bio);
+        //dd($user_details->bio);
         $user_details->country = $request->country;
         $user_details->city = ($request->city)?$request->city:' ';
         $user_details->facebook_link = $request->facebook_link;
@@ -142,6 +150,72 @@ class UserController extends Controller
         return redirect()->route('profile','@'.$username);
 
     }
+
+    /**
+     * Edit the specified resource from storage by manager
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function manage($username,Request $request)
+    {
+        $username = substr($username, 1);
+        $user = User::where('username',$username)->first();
+        $this->authorize($user);
+
+        $user_details = User_Details::where('user_id',$user->id)->first();
+
+        $all_userroles = (new Role)->get()->pluck('id');
+
+        if($request->update)
+        {
+            if(!$user_details){
+                $user_details = new User_Details;
+                $user_details->user_id = $user->id;
+                $user_details->country = 'IN';
+                $user_details->city = '';
+            }
+
+            $user_details->designation = $request->designation;
+            $user_details->save();
+               
+                
+            foreach($all_userroles as $u_role){
+                $role_name = 'role_'.$u_role;
+                if($request->$role_name){
+                    if(!$user->roles->contains($u_role))
+                        $user->roles()->attach($u_role);
+                }else{
+                    if($user->roles->contains($u_role)){
+                        $user->roles()->detach($u_role);
+                    }
+                }
+            }
+
+            $user->status = $request->status;
+            $user->save();
+
+            flash('User data updated!')->success();
+            return redirect()->route('profile','@'.$username);
+        }
+
+        $userroles = array();
+        foreach($user->roles as $role){
+            array_push($userroles, $role->id);
+        }
+
+        $roles = Role::displayUserRoleUnorderedList((new Role)->get()->toTree(),['select_id'=>$userroles]);   
+
+        if($user)
+        {
+            return view('appl.user.manage')
+                    ->with('user',$user)
+                    ->with('user_details',$user_details)
+                    ->with('roles',$roles);
+        }else
+            abort(404,'User not found');
+    }
+
 
     /**
      * Remove the specified resource from storage.

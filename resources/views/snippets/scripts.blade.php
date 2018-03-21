@@ -3,7 +3,7 @@
 <script src="{{ asset('js/global.js')}}"></script>
 
 <!-- include summernote css/js-->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+<link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
  
  <script>
@@ -15,6 +15,18 @@
       });
           });
 </script>
+
+
+@if(isset($jqueryui))
+ <script type="text/javascript"
+         src="{{asset('jquery-ui/jquery-ui.min.js')}}">
+  </script>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+  } );
+  </script>
+  @endif
 
 <script type="text/javascript">
 

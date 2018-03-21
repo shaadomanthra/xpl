@@ -47,10 +47,21 @@ class UserPolicy
             false;
     }
 
+     /**
+     * Determine if the given post can be updated by the user.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Post  $post
+     * @return bool
+     */
+    public function manage(User $user, User $u)
+    { 
+        return $user->checkRole(['administrator','user-manager']);
+    }
 
     public function before($user, $ability)
     {
-        if ($user->role==3) {
+        if ($user->isAdmin()) {
             return true;
         }
     }

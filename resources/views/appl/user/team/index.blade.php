@@ -15,13 +15,14 @@
     <div class="card">
       <div class="card-body pb-1">
         <nav class="navbar navbar-light bg-light justify-content-between mb-3">
-          <a class="navbar-brand"><i class="fa fa-user"></i> Packetprep Team </a>
+          <a class="navbar-brand"><i class="fa fa-user"></i> The Team </a>
 
           <form class="form-inline" method="GET" action="{{ route('data.dataentry.index') }}">
-            <a href="{{route('data.dataentry.create')}}">
+            <a href="{{route('role.index')}}">
 
-              <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Add Member</button>
-
+              @can('manage',auth::user())
+              <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3"><i class="fa fa-user-plus"></i> Roles</button>
+              @endcan
             </a>
             <div class="input-group ">
               <div class="input-group-prepend">

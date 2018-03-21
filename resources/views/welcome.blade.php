@@ -11,11 +11,7 @@
 		<p> Welcome aboard</p>
 
 		 <p class="lead">We are here to make the learning simple, interesting and effective.</p>
-		 <hr class="my-4">
-		 <blockquote class="blockquote">
-		  <p class="mb-0">Coming together is a beginning. Keeping together is progress. Working together is success.</p>
-		  <footer class="blockquote-footer">Henry Ford</footer>
-		</blockquote>
+		 
 		<a class="btn border border-info text-info mt-2" href="{{ route('profile','@'.auth::user()->username) }}"> Profile</a>
 		<a class="btn border border-success text-success mt-2" href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();" role="button">Logout</a>

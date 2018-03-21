@@ -63,29 +63,19 @@
 .s10{ font-size: 10px; }
 
 
-.sortable{ border:1px solid #bfe0d9; background: #f7fffd; padding: 10px; margin:0px; list-style: none;}
-ul.sortable li{ border:1px solid #bfe0d9; background: #daf3ee;
+.sortable{ border:1px solid #eee; background: #f8f8f8; padding: 10px; margin:0px; list-style: none;}
+ul.sortable li{ border:1px solid #eee; background: #fff;
     margin-bottom: 5px;padding: 5px; padding-left: 10px; }
 ul.sortable li:last-child{ margin-bottom: 0px; }
-ul.sortable li.current{ border:1px solid #17a085; }
+ul.sortable li.current{ border:1px solid #6c757d; }
 
+/* Nestset Listing */
 ul.list{ list-style:none;margin:10px;margin-left:15px; margin-right: 0px; margin-top: -10px;
-    border:0;border-left:1px solid #aedaff; padding: 5px 0px 0px; }
-
-ul.list li{  position:relative;margin:10px;padding:5px;padding-left: 10px; background:#e3f3ff;border:1px solid #aedaff; }
+    border:0;border-left:1px solid #eee; padding: 5px 0px 0px; }
+ul.list li{  position:relative;margin:10px;padding:5px;padding-left: 10px; background:#fff;border:1px solid #eee; }
 ul.list-first{ padding-top:20px;margin: 5px; margin-top: -20px; margin-right: -5px; }
-
-
-ul.list li:before{
-    content:"";
-    position:absolute;
-    width:13px;
-    height:10px;
-    border: 1px solid;
-    left:-13px;
-    top:5px;
-    border-color: #aedaff transparent transparent transparent;
-}
+ul.list li:before{ content:""; position:absolute; width:13px; height:10px; border: 1px solid;
+    left:-13px;top:5px; border-color: #eee transparent transparent transparent;}
 
 // Resetting from the mobile up!
 // 
