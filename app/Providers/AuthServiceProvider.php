@@ -28,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
         \PacketPrep\Models\System\Finance::class => \PacketPrep\Policies\FinancePolicy::class,
         \PacketPrep\Models\System\Goal::class => \PacketPrep\Policies\GoalPolicy::class,
         \PacketPrep\Models\System\Report::class => \PacketPrep\Policies\ReportPolicy::class,
+        \PacketPrep\Models\Social\Blog::class => \PacketPrep\Policies\BlogPolicy::class,
+        \PacketPrep\Models\Social\Social::class => \PacketPrep\Policies\SocialPolicy::class,
     ];
 
     /**

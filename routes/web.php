@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function () { return view('welcome'); });
+Route::get('/', function () { return view('welcome'); })->name('root');
 
 Route::get('/about',function(){ return view('appl.pages.packetprep'); })->name('about');
 Route::get('/contact',function(){ return view('appl.pages.contact'); })->name('contact');
@@ -31,6 +31,13 @@ Route::resource('system/update','System\UpdateController')->middleware('auth');
 Route::resource('system/finance','System\FinanceController')->middleware('auth');
 Route::resource('system/goal','System\GoalController')->middleware('auth');
 Route::resource('system/report','System\ReportController')->middleware('auth');
+
+Route::get('/social', 'Social\MediaController@social')->name('social')->middleware('auth');
+Route::post('/social/imageupload', 'Social\BlogController@image_upload')->name('imageupload');
+Route::get('/social/imageremove', 'Social\BlogController@image_remove')->name('imageremove');
+Route::resource('social/blog','Social\BlogController')->middleware('auth');
+Route::resource('social/media','Social\MediaController')->middleware('auth');
+
 
 Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 

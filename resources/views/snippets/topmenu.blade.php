@@ -22,6 +22,10 @@
                     <li><a class="nav-link" href="{{ route('system') }}">System</a></li>
                     @endif
 
+                    @if(\Auth::user()->checkRole(['administrator','editor','social-media-moderator','social-media-writer','blog-moderator','blog-writer','employee']))
+                    <li><a class="nav-link" href="{{ route('social') }}">Social</a></li>
+                    @endif
+
                     <li><a class="nav-link" href="{{ route('data.dataentry.index') }}">Data Entry</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
