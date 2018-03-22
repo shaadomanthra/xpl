@@ -39,7 +39,7 @@ class UserController extends Controller
                 elseif($user_details->privacy==0)
                     $view = 'index';
                 elseif($user_details->privacy==1){
-                    if(auth::user() || auth::user()->isAdmin())
+                    if(auth::user())
                       $view = 'index';
                     else
                       $view = 'private';

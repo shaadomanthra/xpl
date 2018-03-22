@@ -4,7 +4,7 @@ namespace PacketPrep\Http\Controllers\dataentry;
 
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
-use PacketPrep\Models\Dataentry\Project as ProjectModel;
+use PacketPrep\Models\Dataentry\Project as Project;
 use PacketPrep\Models\Dataentry\Category as Category;
 
 class CategoryController extends Controller
@@ -24,7 +24,8 @@ class CategoryController extends Controller
         $this->project_name='';
         if(request()->route('project')){
             $this->slug = request()->route('project');   
-            $this->project_name = ProjectModel::getName($this->slug);
+            $this->project_name = Project::getName($this->slug);
+            $this->project = Project::get($this->slug);
         } 
 
     }
@@ -33,16 +34,9 @@ class CategoryController extends Controller
     {
 
 
-        /*$data = [
-                    [ 'id' => 74, 'name' => 'fae', 'slug'=>'fae',  'children' => [['id' => 75, 'name' => 'gold', 'slug'=>'gold']]],
-                    [ 'id' => 73, 'name' => 'fog', 'slug'=>'fog', 
-                         ],
-            ]; */
-
-        //Category::rebuildSubtree($parent, $data);    
-        //dd((array)$parent);
-        //$node = Category::defaultOrder()->descendantsAndSelf($parent->id)->toTree();
-        $node = Category::defaultOrder()->get()->toTree();
+        $parent =  Category::where('slug',$this->project->slug)->first();   
+        $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
+        //$node = Category::defaultOrder()->get()->toTree();
         if(count($node))
             $nodes = $category->displayUnorderedList($node,['project_slug'=>$this->slug]);
         else
@@ -57,8 +51,10 @@ class CategoryController extends Controller
      */
     public function create(Category $category)
     {
-        $select_options = $category->displaySelectOption($category->get()->toTree());
-        return view('appl.dataentry.category.create')->withProject($this)->with('select_options',$select_options);
+        $parent =  Category::where('slug',$this->project->slug)->first();  
+        $select_options = $category->displaySelectOption($parent->descendantsAndSelf($parent->id)->toTree());
+        return view('appl.dataentry.category.createedit')
+                ->with('project',$this)->with('select_options',$select_options)->with('stub','Create');
     }
 
     /**
@@ -89,7 +85,7 @@ class CategoryController extends Controller
         else
             $child->save();
         flash('A new category('.$request->name.') is created!')->success();
-        return redirect()->route('project.category.index',$request->project_slug);
+        return redirect()->route('category.index',$request->project_slug);
         
     }
 
@@ -121,7 +117,7 @@ class CategoryController extends Controller
             do{
                 ($category_slug==$firstchild->slug) ? $class = ' class="current" ' : $class = ' ' ;
                     
-                $list= $list.'<li '.$class.' data-slug="'.$firstchild->slug.'"><a href="'.route('project.category.show',
+                $list= $list.'<li '.$class.' data-slug="'.$firstchild->slug.'"><a href="'.route('category.show',
                 [   
                     'category'=> $firstchild->slug,
                     'project'=> $project_slug,
@@ -140,7 +136,7 @@ class CategoryController extends Controller
             $list ="<ul class='sortable'>";
              foreach($siblings as $child){
                 ($category_slug==$child->slug) ? $class = ' class="current" ' : $class = ' ' ;
-                $list= $list.'<li '.$class.' data-slug="'.$child->slug.'"><a href="'.route('project.category.show',
+                $list= $list.'<li '.$class.' data-slug="'.$child->slug.'"><a href="'.route('category.show',
                 [   
                     'category'=> $child->slug,
                     'project'=> $project_slug,
@@ -172,6 +168,7 @@ class CategoryController extends Controller
     {
        
         $node = Category::where('slug',$category_slug)->first();
+        $root = Category::where('slug',$project_slug)->first();
 
         $parent = Category::getParent($node);
         if(!$parent){
@@ -180,14 +177,15 @@ class CategoryController extends Controller
         }
         //dd('done');
 
-        $select_options = Category::displaySelectOption($node->defaultOrder()->get()->toTree(),
+        $select_options = Category::displaySelectOption(Category::defaultOrder()->descendantsOf($root->id)->toTree(),
             [   'select_id'     =>  $parent->id,
                 'disable_id'    =>  $node->id,
             ]
         );
 
+
         if($node)
-            return view('appl.dataentry.category.edit')->withProject($this)->with('category',$node)->with('parent',$parent)->with('select_options',$select_options);
+            return view('appl.dataentry.category.createedit')->withProject($this)->with('category',$node)->with('parent',$parent)->with('select_options',$select_options)->with('stub','Update');
         else
             abort(404);
     }
@@ -216,7 +214,7 @@ class CategoryController extends Controller
         $category->save();
 
         flash('Category(<b>'.$request->name.'</b>) successfully updated!')->success();
-        return redirect()->route('project.category.show',[   
+        return redirect()->route('category.show',[   
                     'category'=> $category_slug,
                     'project'=> $project_slug,
                 ]);
@@ -234,6 +232,6 @@ class CategoryController extends Controller
         $node = Category::where('slug',$category_slug)->first();
         $node->delete();
         flash('Category ('.$category_slug.')Tree Successfully deleted!')->success();
-        return redirect()->route('project.category.index',$project_slug);
+        return redirect()->route('category.index',$project_slug);
     }
 }

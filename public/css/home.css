@@ -73,9 +73,10 @@ ul.sortable li.current{ border:1px solid #6c757d; }
 ul.list{ list-style:none;margin:10px;margin-left:15px; margin-right: 0px; margin-top: -10px;
     border:0;border-left:1px solid #eee; padding: 5px 0px 0px; }
 ul.list li{  position:relative;margin:10px;padding:5px;padding-left: 10px; background:#fff;border:1px solid #eee; }
-ul.list-first{ padding-top:20px;margin: 5px; margin-top: -20px; margin-right: -5px; }
+ul.list-first{ margin: 5px; margin-top: -20px; margin-right: -5px; }
 ul.list li:before{ content:""; position:absolute; width:13px; height:10px; border: 1px solid;
     left:-13px;top:5px; border-color: #eee transparent transparent transparent;}
+
 
 // Resetting from the mobile up!
 // 

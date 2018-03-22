@@ -12,13 +12,28 @@
       </ol>
     </nav>
     @include('flash::message')  
+    <div class="card mb-3">
+        <div class="card-body bg-light">
+          <div  class="row ">
+            <div class="col-2">
+            <div class="text-center"><i class="fa fa-gg-circle fa-5x"></i> </div>
+            </div>
+            <div class="col-9">
+              <h1 class=" mb-2"> Data Entry App</h1>
+              <p class="mb-0">
+                This is an app to stream line digital media marketing using blog posts and feeds for social media.
+              </p>
+            </div>
+         </div>
+        </div>
+    </div>
     <div class="card">
-      <div class="card-body">
+      <div class="card-body mb-0">
         <nav class="navbar navbar-light bg-light justify-content-between mb-3">
-          <a class="navbar-brand">Projects </a>
+          <a class="navbar-brand"><i class="fa fa-inbox"></i> Projects </a>
 
-          <form class="form-inline" method="GET" action="{{ route('data.dataentry.index') }}">
-            <a href="{{route('data.dataentry.create')}}">
+          <form class="form-inline" method="GET" action="{{ route('dataentry.index') }}">
+            <a href="{{route('dataentry.create')}}">
 
               <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Create Project</button>
 

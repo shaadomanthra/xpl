@@ -12,6 +12,7 @@ class Category extends Model
      protected $fillable = [
         'name',
         'slug',
+        'parent_id',
         // add all other fields
     ];
     public $timestamps = false;
@@ -35,7 +36,7 @@ class Category extends Model
     	foreach ($categories as $category) {
     		$hasChildren = (count($category->children) > 0);
 
-            $d = $d.'<li class="item" id="'.$category->id.'" ><a href="'.route('project.category.show',
+            $d = $d.'<li class="item" id="'.$category->id.'" ><a href="'.route('category.show',
             	[	
             		'category'=> $category->slug,
             		'project'=> $options['project_slug'],
@@ -48,7 +49,7 @@ class Category extends Model
             }
         }
         if($i==1)
-        $d = '<ul class="list list-first" >'.$d.'</ul>';
+        $d = '<ul class="list list-first" >'.$d.'<li>Uncategorized</li></ul>';
     	else
     	$d = '<ul class="list" >'.$d.'</ul>';	
         return $d;
@@ -57,11 +58,12 @@ class Category extends Model
 
 
 	 public static function displaySelectOption($categories,$options=null,$prefix='&nbsp;',$disable=false){
-
+/*
 	 	if($prefix=='&nbsp;')
 	 	$d = '<option value="0">FIRST LEVEL ROOT (DEFAULT)</option>';	
 	 	else
-    	$d = '';
+    	$d = '';*/
+        $d='';
     	foreach ($categories as $category) {
     		$hasChildren = (count($category->children) > 0);
 

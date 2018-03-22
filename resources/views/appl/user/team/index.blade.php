@@ -17,7 +17,7 @@
         <nav class="navbar navbar-light bg-light justify-content-between mb-3">
           <a class="navbar-brand"><i class="fa fa-user"></i> The Team </a>
 
-          <form class="form-inline" method="GET" action="{{ route('data.dataentry.index') }}">
+          <form class="form-inline" method="GET" action="{{ route('dataentry.index') }}">
             <a href="{{route('role.index')}}">
 
               @can('manage',auth::user())

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use PacketPrep\Exceptions\Handler;
 use PacketPrep\Http\Controllers\Controller;
-use PacketPrep\Models\Dataentry\Project as ProjectModel;
+use PacketPrep\Models\Dataentry\Project;
+use PacketPrep\Models\Dataentry\Category;
+use PacketPrep\Models\User\Role;
 
 class projectController extends Controller
 {
@@ -15,13 +17,15 @@ class projectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ProjectModel $project,Request $request)
+    public function index(Project $project,Request $request)
     {
         $search = $request->search;
         $item = $request->item;
         $projects = $project->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
         $view = $search ? 'list': 'index';
-        return view('appl.dataentry.project.'.$view)->withProjects($projects);
+
+        return view('appl.dataentry.project.'.$view)
+        ->with('projects',$projects);
     }
 
     /**
@@ -31,7 +35,17 @@ class projectController extends Controller
      */
     public function create()
     {
-        return view('appl.dataentry.project.create');
+        $users = array();
+        $users['data_lead'] = Role::getUsers('data-lead');
+        $users['feeder'] = Role::getUsers('feeder');
+        $users['proof_reader'] = Role::getUsers('proof-reader');
+        $users['renovator'] = Role::getUsers('renovator');
+        $users['validator'] = Role::getUsers('validator');
+
+        return view('appl.dataentry.project.createedit')
+                ->with('stub','Create')
+                ->with('jqueryui',true)
+                ->with('users',$users);
     }
 
     /**
@@ -40,13 +54,31 @@ class projectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Project $project,Request $request)
     {
+
         try{
             $request->slug = str_replace(' ', '-', $request->slug);
-            $project = ProjectModel::create($request->all());
+            $project->name = $request->name;
+            $project->slug = $request->slug;
+            $project->user_id_data_manager = $request->user_id_data_manager;
+            $project->user_id_data_lead = $request->user_id_data_lead;
+            $project->user_id_feeder = $request->user_id_feeder;
+            $project->user_id_proof_reader = $request->user_id_proof_reader;
+            $project->user_id_renovator = $request->user_id_renovator;
+            $project->user_id_validator = $request->user_id_validator;
+            $project->status = $request->status;
+            $project->target = $request->target;
+            $project->save(); 
+
+            // save category
+            $category = new Category;
+            $child_attributes =['name'=>$request->name,'slug'=>$request->slug];
+            $child = new Category($child_attributes);
+            $child->save();
+
             flash('A new project('.$request->name.') is created!')->success();
-            return redirect()->route('data.dataentry.index');
+            return redirect()->route('dataentry.index');
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
@@ -66,9 +98,9 @@ class projectController extends Controller
      */
     public function show($id)
     {
-        $project = ProjectModel::where('slug',$id)->first();
+        $project = Project::where('slug',$id)->first();
         if($project)
-            return view('appl.dataentry.project.show')->withProject($project);
+            return view('appl.dataentry.project.show')->with('project',$project);
         else
             abort(404);
     }
@@ -82,9 +114,21 @@ class projectController extends Controller
      */
     public function edit($id)
     {
-        $project = ProjectModel::where('slug',$id)->first();
+        $project = Project::where('slug',$id)->first();
+
+        $users = array();
+        $users['data_lead'] = Role::getUsers('data-lead');
+        $users['feeder'] = Role::getUsers('feeder');
+        $users['proof_reader'] = Role::getUsers('proof-reader');
+        $users['renovator'] = Role::getUsers('renovator');
+        $users['validator'] = Role::getUsers('validator');
+
         if($project)
-            return view('appl.dataentry.project.edit')->withProject($project);
+            return view('appl.dataentry.project.createedit')
+                ->with('stub','Update')
+                ->with('jqueryui',true)
+                ->with('users',$users)
+                ->with('project',$project);
         else
             abort(404);
     }
@@ -101,12 +145,20 @@ class projectController extends Controller
 
         try{
             $request->slug = str_replace(' ', '-', $request->slug);
-            $projectToUpdate = ProjectModel::where('slug',$id)->first();
-            $projectToUpdate->name = $request->name;
-            $projectToUpdate->slug = $request->slug;
-            $projectToUpdate->save();
+            $project = Project::where('id',$id)->first();
+            $project->name = $request->name;
+            $project->slug = $request->slug;
+            $project->user_id_data_manager = $request->user_id_data_manager;
+            $project->user_id_data_lead = $request->user_id_data_lead;
+            $project->user_id_feeder = $request->user_id_feeder;
+            $project->user_id_proof_reader = $request->user_id_proof_reader;
+            $project->user_id_renovator = $request->user_id_renovator;
+            $project->user_id_validator = $request->user_id_validator;
+            $project->status = $request->status;
+            $project->target = $request->target;
+            $project->save(); 
             flash('Project (<b>'.$request->name.'</b>) Successfully updated!')->success();
-            return redirect()->route('data.dataentry.show',$request->slug);
+            return redirect()->route('dataentry.show',$request->slug);
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
@@ -125,10 +177,12 @@ class projectController extends Controller
      */
     public function destroy($id)
     {
-        
-        ProjectModel::where('slug',$id)->first()->delete();
+        $project = Project::where('id',$id)->first();
+        $node = Category::where('slug',$project->slug)->first();
+        $node->delete();
+        $project->delete();
         flash('Project Successfully deleted!')->success();
-        return redirect()->route('data.dataentry.index');
+        return redirect()->route('dataentry.index');
        
     }
 }

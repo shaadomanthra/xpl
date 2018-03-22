@@ -4,9 +4,9 @@
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('data.dataentry.index')}}">Data Entry</a></li>
-      <li class="breadcrumb-item " ><a href="{{ route('data.dataentry.show',$project->slug)}}"> {{$project->project_name}}</a> </li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('project.category.index',$project->slug)}}"> Categories</a> </li>
+      <li class="breadcrumb-item"><a href="{{ route('dataentry.index')}}">Data Entry</a></li>
+      <li class="breadcrumb-item " ><a href="{{ route('dataentry.show',$project->slug)}}"> {{$project->project_name}}</a> </li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('category.index',$project->slug)}}"> Categories</a> </li>
       <li class="breadcrumb-item active" aria-current="page"> {{ $category->name }} </li>
     </ol>
   </nav>
@@ -15,22 +15,21 @@
   <div class="row">
 
     <div class="col-md-9">
-      <div class="card border-success mb-3">
-        <div class="card-body text-success">
+      <div class="card  mb-3">
+        <div class="card-body ">
           
-          <div class="card text-white bg-success mb-3" >
+          <nav class="navbar navbar-light bg-light justify-content-between mb-3 p-3">
+          <a class="navbar-brand"><i class="fa fa-bars"></i> {{ $category->name }}
+            </a>
+
+          <span class="s15 float-right"><i class="fa fa-hashtag "></i>{{ $category->slug }}</span>
+        </nav>
+
           
-          <div class="card-body">
-            <p class="h2 mb-0">
-              <i class="fa fa-bars"></i> {{ $category->name }}
-            <span class="s15"><i class="fa fa-hashtag "></i>{{ $category->slug }}</span>
-            </p>
-          </div>
-        </div>
 
           @if($parent)
           <p class="h4 ">
-            <span class="badge badge-warning " >  PARENT : {{ $parent->name }}&nbsp; 
+            <span class="badge badge-secondary" >  PARENT : {{ $parent->name }}&nbsp; 
               <span class="s10">
               <i class="fa fa-hashtag "></i>{{ $parent->slug }}
             </span>
@@ -51,15 +50,15 @@
           
           
            <span class="btn-group mt-4" role="group" aria-label="Basic example">
-              <a href="{{ route('project.category.edit',['project'=>$project->slug,'category'=>$category->slug]) }}" class="btn btn-outline-success" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+              <a href="{{ route('category.edit',['project'=>$project->slug,'category'=>$category->slug]) }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               
                @if($list) 
-              <a href="{{ route('project.category.show',['project'=>$project->slug,'category'=>$category->slug]).'?order=up' }}" class="btn btn-outline-success" data-tooltip="tooltip" data-placement="top" title="Move Up"
+              <a href="{{ route('category.show',['project'=>$project->slug,'category'=>$category->slug]).'?order=up' }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Move Up"
                 ><i class="fa fa-arrow-up"></i></a>
-              <a href="{{ route('project.category.show',['project'=>$project->slug,'category'=>$category->slug]).'?order=down' }}" class="btn btn-outline-success" data-tooltip="tooltip" data-placement="top" title="Move Down"><i class="fa fa-arrow-down"></i></a>
+              <a href="{{ route('category.show',['project'=>$project->slug,'category'=>$category->slug]).'?order=down' }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Move Down"><i class="fa fa-arrow-down"></i></a>
                @endif
               
-              <a href="#" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
+              <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
         </div>
       </div>
@@ -92,7 +91,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         
-        <form method="post" action="{{route('project.category.destroy',['project'=>$project->slug,'category'=>$category->slug])}}">
+        <form method="post" action="{{route('category.destroy',['project'=>$project->slug,'category'=>$category->slug])}}">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         	<button type="submit" class="btn btn-danger">Delete Permanently</button>

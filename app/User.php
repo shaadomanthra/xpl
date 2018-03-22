@@ -39,6 +39,9 @@ class User extends Authenticatable
     }
 
 
+    
+    
+
     public function checkRole($roles){
         $user = \Auth::user();
         if($user->isAdmin())

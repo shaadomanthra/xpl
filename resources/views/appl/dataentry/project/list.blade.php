@@ -14,7 +14,7 @@
               <tr>
                 <th scope="row">{{ $projects->currentpage() ? ($projects->currentpage()-1) * $projects->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
-                  <a href=" {{ route('data.dataentry.show',$project->slug) }} ">
+                  <a href=" {{ route('dataentry.show',$project->slug) }} ">
                   {{ $project->name }}
                   </a>
                 </td>

@@ -43,12 +43,8 @@ Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser'
 
 
 
-Route::resource('dataentry','dataentry\projectController',[
-	'as'=>'data',
-	])->middleware('auth');
-Route::resource('dataentry/{project}/category','dataentry\CategoryController',[
-	'as'=>'project',
-	])->middleware('auth');
+Route::resource('dataentry','dataentry\projectController')->middleware('auth');
+Route::resource('dataentry/{project}/category','dataentry\CategoryController')->middleware('auth');
 
 
 Route::get('/{username}', 'User\UserController@index')->name('profile');

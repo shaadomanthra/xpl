@@ -98,6 +98,15 @@ class ChapterController extends Controller
     {
         $chapter = Chapter::where('slug',$chapter_slug)->first();
         $doc = Doc::where('slug',$doc_slug)->first();
+
+
+         $order = $request->get('order');
+        
+        if($order=='up')
+            $chapter->up();
+        elseif($order=='down')
+            $chapter->down();
+        
         $chapter->privacy = $doc->privacy;
         $chapter->status = $doc->status;
 
@@ -111,12 +120,7 @@ class ChapterController extends Controller
         
         $parent = Chapter::getParent($chapter);
 
-        $order = $request->get('order');
-        
-        if($order=='up')
-            $chapter->up();
-        elseif($order=='down')
-            $chapter->down();
+       
 
         $chapter->prev =$chapter->next =null;
         $all_chapters = Chapter::defaultOrder()->whereDescendantOf(Chapter::where('slug',$doc_slug)->first())->pluck('slug');

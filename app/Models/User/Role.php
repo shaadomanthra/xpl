@@ -25,6 +25,14 @@ class Role extends Model
         return $this->belongsToMany('PacketPrep\User');
     }
 
+    public static function getUsers($role){
+        $role = Role::where('slug',$role)->get()->first();
+        if($role){
+            return $role->users;
+        }else
+         return null;
+    }
+
 
     public static function getParent($role){
     	$result = Role::defaultOrder()->ancestorsOf($role->id);
