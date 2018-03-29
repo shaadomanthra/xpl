@@ -4,7 +4,7 @@
             <thead>
               <tr>
                 <th scope="col">#({{$questions->total()}})</th>
-                <th scope="col">Slug </th>
+                <th scope="col">Reference</th>
                 <th scope="col">Question </th>
                 <th scope="col">Created at</th>
               </tr>
@@ -16,7 +16,7 @@
                 <td>
                   <a href=" {{ route('question.show',[$project->slug,$question->id]) }} ">
                   <div>
-                    {!! $question->slug !!}
+                    {!! $question->reference !!}
                   </div>
                   </a>
                 </td>
