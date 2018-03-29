@@ -71,13 +71,14 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
+        $user = \auth::user();
 
         try{
             $social = new Social;
             $social->user_id_moderator = $request->user_id_moderator;
             $social->user_id_writer = $request->user_id_writer;
             $social->network= $request->network;
-            $social->content = ($request->content)?$request->content:' ';
+            $social->content = ($request->content)? summernote_imageupload($user,$request->content):' ';
             $social->image = ($request->image)?$request->image:' ';
             $social->status= $request->status;
             $social->schedule= $request->schedule;
@@ -210,12 +211,13 @@ class MediaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = \auth::user();
         try{
             $social = Social::where('id',$id)->first();
             $social->user_id_moderator = $request->user_id_moderator;
             $social->user_id_writer = $request->user_id_writer;
             $social->network= $request->network;
-            $social->content = ($request->content)?$request->content:' ';
+            $social->content = ($request->content)? summernote_imageupload($user,$request->content) :' ';
             $social->image = ($request->image)?$request->image:' ';
             $social->status= $request->status;
             $social->schedule= $request->schedule;

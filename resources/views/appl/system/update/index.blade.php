@@ -7,16 +7,25 @@
   <div class="col-md-9">
 
     @include('flash::message')  
+
+     <div class="card mb-3 bg-light">
+      <div class="card-body ">
+        <h1 class="mb-0"><i class="fa fa-bullhorn"></i> Updates
+        <span class="float-right">
+         @can('create',$update)
+            <a href="{{route('update.create')}}">
+              <button type="button" class="btn btn-outline-success "><i class="fa fa-plus"></i> New</button>
+            </a>
+            @endcan 
+        </span>
+        </h1>
+      </div>
+    </div>
+    
+
     <div class="card mb-3">
       <div class="card-body ">
-        <nav class="navbar navbar-light bg-light justify-content-between mb-3">
-          <a class="navbar-brand"><i class="fa fa-bullhorn"></i> Updates </a>
-          @can('create',$update)
-            <a href="{{route('update.create')}}">
-              <button type="button" class="btn btn-outline-success my-2 my-sm-2 "><i class="fa fa-plus"></i> New</button>
-            </a>
-            @endcan
-        </nav>
+        
 
         <div id="search-items">
           @if($updates->total()!=0)

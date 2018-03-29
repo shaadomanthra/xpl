@@ -50,6 +50,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+        $user = \auth::user();
 
         try{
             $blog = new Blog;
@@ -58,7 +59,7 @@ class BlogController extends Controller
             $blog->title= $request->title;
             $blog->slug= $request->slug;
             $blog->intro = ($request->intro)?$request->intro:' ';
-            $blog->content = ($request->content)?$request->content:' ';
+            $blog->content = ($request->content)? summernote_imageupload($user,$request->content):' ';
             $blog->image = ($request->image)?$request->image:' ';
             $blog->keywords= $request->keywords;
             $blog->label_id= $request->label_id;
@@ -193,6 +194,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = \auth::user();
         try{
             $blog = blog::where('id',$id)->first();
             $blog->user_id_moderator = $request->user_id_moderator;
@@ -200,7 +202,7 @@ class BlogController extends Controller
             $blog->title= $request->title;
             $blog->slug= $request->slug;
             $blog->intro = ($request->intro)?$request->intro:' ';
-            $blog->content = ($request->content)?$request->content:' ';
+            $blog->content = ($request->content)?summernote_imageupload($user,$request->content):' ';
             $blog->keywords= $request->keywords;
             $blog->image= ($request->image)?$request->image:' ';
             $blog->label_id= $request->label_id;

@@ -8,19 +8,19 @@
 
     @include('flash::message')  
     <div class="card mb-3">
-      <div class="card-body ">
-        <nav class="navbar navbar-light bg-light justify-content-between mb-3">
-          <a class="navbar-brand"><i class="fa fa-rupee"></i> Cash Flow </a>
+      <div class="card-body bg-light">
+        <h1 class="mb-1"><i class="fa fa-rupee"></i> Cash Flow
+          <span class="float-right">
           @can('create',$finance)
             <a href="{{route('finance.create')}}">
-              <button type="button" class="btn btn-outline-success my-2 my-sm-2 "><i class="fa fa-plus"></i> New</button>
+              <button type="button" class="btn btn-outline-success "><i class="fa fa-plus"></i> New</button>
             </a>
             @endcan
-        </nav>
+        </span>
+        </h1>
 
-        <div class="card bg-light mb-5 p-3">
-          <div class="card-body">
-             Financial Year : <span class="text-info">{{ (request()->year)? '20'.(request()->year).'-'.(request()->year+1) : '20'.($finances->curr_year).'-'.($finances->curr_year+1) }} </span>
+        <div class="">
+           Financial Year : <span class="text-info">{{ (request()->year)? '20'.(request()->year).'-'.(request()->year+1) : '20'.($finances->curr_year).'-'.($finances->curr_year+1) }} </span>
              &nbsp;&nbsp;
              @if(!request()->month && request()->quater)
              Quater: 
@@ -71,10 +71,15 @@
              @endif
               </span>
               @endif
-
-            <div class="row mb-0 mt-4 ">
+        </div>
+        
+      </div>
+    </div>
+    <div class="mb-3 ">
+          <div class="">
+            <div class="row mb-0 mt-2 no-gutters ">
               <div class="col-md-4">
-                  <div class="card border-secondary text-secondary bg-light">
+                  <div class="card border text-secondary mr-3">
                       <div class="card-body">
                         <div class="card-title">Cash In</div>
                           <h1><i class="fa fa-rupee"></i>{{ $finances->cashin }}</h1>
@@ -82,7 +87,7 @@
                   </div>
               </div>
                <div class="col-md-4">
-                  <div class="card border-secondary text-secondary bg-light">
+                  <div class="card border text-secondary mr-3">
                       <div class="card-body">
                         <div class="card-title">Cash Out</div>
                           <h1><i class="fa fa-rupee"></i>{{ $finances->cashout }}</h1>
@@ -106,8 +111,10 @@
 
           </div>
         </div>
-
-        <div id="search-items" class="p-3">
+    <div class="card mb-3">
+      <div class="card-body ">
+        
+        <div id="search-items" class="p-3 pb-0">
           @if($finances->total()!=0)
             @foreach($finances as $key=>$finance)  
              @if($key != 0)
@@ -145,12 +152,12 @@
             
             @endforeach      
           @else
-          <div class="card card-body bg-light mb-3">
+          <div class="card card-body bg-light ">
             No entry recorded
           </div>
           @endif
-          <div class="mt-4">
-          <nav aria-label="Page navigation example">
+          <div class="">
+          <nav aria-label="Page navigation example" class="card-nav @if($finances->total() > config('global.no_of_records'))mt-3 @endif">
             {{$finances->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
           </nav>
         </div>

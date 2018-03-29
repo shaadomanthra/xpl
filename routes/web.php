@@ -11,7 +11,16 @@
 |
 */
 
+
 Route::get('/', function () { return view('welcome'); })->name('root');
+
+// usage inside a laravel route
+Route::get('/image', function()
+{
+    $img = Image::make('img/puzzle.png')->resize(300, 200);
+
+    return $img->response('png');
+});
 
 Route::get('/about',function(){ return view('appl.pages.packetprep'); })->name('about');
 Route::get('/contact',function(){ return view('appl.pages.contact'); })->name('contact');
@@ -42,9 +51,12 @@ Route::resource('social/media','Social\MediaController')->middleware('auth');
 Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
 
-
+Route::get('/material', 'dataentry\projectController@material')->name('material');
 Route::resource('dataentry','dataentry\projectController')->middleware('auth');
 Route::resource('dataentry/{project}/category','dataentry\CategoryController')->middleware('auth');
+Route::resource('dataentry/{project}/tag','dataentry\TagController')->middleware('auth');
+Route::resource('dataentry/{project}/passage','dataentry\PassageController')->middleware('auth');
+Route::resource('dataentry/{project}/question','dataentry\QuestionController')->middleware('auth');
 
 
 Route::get('/{username}', 'User\UserController@index')->name('profile');

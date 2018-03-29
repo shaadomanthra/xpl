@@ -3,20 +3,105 @@
 <script src="{{ asset('js/global.js')}}"></script>
 
 <!-- include summernote css/js-->
-<link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
-<script src="{{asset('js/jquery.form.js')}}"></script>    
+<script src="{{asset('js/jquery.form.js')}}"></script>  
+<script src="{{asset('js/jquery.form.js')}}"></script>  
+
+<!-- Codemirror-->
+<script src="{{asset('js/codemirror/lib/codemirror.js')}}"></script>  
+<script src="{{asset('js/codemirror/mode/xml/xml.js')}}"></script>  
+<script src="{{asset('js/codemirror/mode/javascript/javascript.js')}}"></script>  
+<script src="{{asset('js/codemirror/addon/display/autorefresh.js')}}"></script>  
+<script src="{{asset('js/codemirror/mode/markdown/markdown.js')}}"></script>  
+<script src="{{asset('js/highlight/highlight.pack.js')}}"></script>  
  
  <script>
         $(document).ready(function() {
             $('.summernote').summernote({
-        placeholder: 'Hello ! Write something...',
-        tabsize: 2,
-        height: 300
-      });
+                placeholder: 'Hello ! Write something...',
+                tabsize: 2,
+                height: 200,                // set editor height
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+                focus: true, 
+                codemirror: { // codemirror options
+                  theme: 'monokai'
+                },
+              });
           });
+
+        if(document.getElementById("code"))
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+          lineNumbers: true,
+          styleActiveLine: true,
+          matchBrackets: true,
+          autoRefresh:true,
+          mode:  'javascript',
+          indentUnit: 4
+        });
 </script>
 
+<script>
+  $(document).ready(function() {
+
+      $(document).on('click','.view',function(){
+          $item = '.'+$(this).data('item');
+          if($($item).is(":visible")){
+            $($item).slideUp();
+          }
+          else{
+            $($item).slideDown();
+          }
+      });
+
+       $(document).on('click','.btn-attach',function(){
+          $id= $(this).data('id');
+          $data = $('.passage_'+$id).html();
+          $('input[name="passage_id"]').val($id);
+          $('.passage').html($data);
+
+      });
+
+       $(document).on('click','.btn-dettach',function(){
+          $('input[name="passage_id"]').val('');
+          $('.passage').html('');
+      });
+
+  });
+</script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+@if(isset($question['dynamic']))
+<script>
+$(document).ready(function() {
+
+      var v = new Object();
+      var items = ['question','a','b','c','d','e','answer','explanation','passage'];
+      v.number = parseInt({{(request()->get('number'))?request()->get('number'):'1'}});
+      {!! $question['dynamic'] !!}
+
+      items.forEach(function(element) {
+        var $item = '.'+element;
+        var content = $($item).html();
+        for (var name in v) {
+          $key = '@'+name;
+          if(content){
+            var re = new RegExp($key,"g");
+            content = content.replace(re, v[name]);
+          }
+          
+          //$($item).html(newstr);
+        }
+
+        if(content)
+          $( $item ).replaceWith( '<div class="pt-1 '+element+'">'+content+'</div>' );
+
+      });
+      
+  });
+
+ </script>
+@endif
 
 <script>
   $(document).ready(function() {

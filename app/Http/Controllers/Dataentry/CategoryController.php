@@ -32,8 +32,6 @@ class CategoryController extends Controller
 
     public function index(Category $category)
     {
-
-
         $parent =  Category::where('slug',$this->project->slug)->first();   
         $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
         //$node = Category::defaultOrder()->get()->toTree();

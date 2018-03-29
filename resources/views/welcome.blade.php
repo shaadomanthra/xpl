@@ -41,16 +41,7 @@
 	</div>
 </div>
   </div>
-<div class="card bg-light">
-	<div class="card-body">
-<div class="links">
-    <a href="{{url('/about')}}">About</a>
-    <a href="{{url('/team')}}">Team</a>
-    <a href="{{url('/docs')}}">Docs</a>
-    <a href="{{url('/contact')}}">Contact</a>
-</div>
-</div>
-</div>
+
 
 </div>
 @endsection           

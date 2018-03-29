@@ -5,16 +5,23 @@
 <div  class="row ">
   <div class="col-md-9">
     @include('flash::message')  
-    <div class="card mb-3">
+    <div class="card mb-3 bg-light">
       <div class="card-body ">
-        <nav class="navbar navbar-light bg-light justify-content-between mb-4">
-          <a class="navbar-brand"><i class="fa fas fa-align-right"></i> Reports </a>
-          @can('create',$report)
+        <h1 class="mb-0"><i class="fa fas fa-align-right"></i> Reports </a>
+        <span class="float-right">
+           @can('create',$report)
             <a href="{{route('report.create')}}">
-              <button type="button" class="btn btn-outline-success my-2 my-sm-2 "><i class="fa fa-plus"></i> New</button>
+              <button type="button" class="btn btn-outline-success"><i class="fa fa-plus"></i> New</button>
             </a>
             @endcan
-        </nav>
+        </span>
+        </h1>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body ">
+       
 
         <div id="search-items" class="p-3 ">
           @if($reports->total()!=0)

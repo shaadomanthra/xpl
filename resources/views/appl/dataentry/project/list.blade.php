@@ -1,6 +1,6 @@
  @if($projects->total()!=0)
         <div class="table-responsive">
-          <table class="table table-bordered ">
+          <table class="table table-bordered mb-0">
             <thead>
               <tr>
                 <th scope="col">#({{$projects->total()}})</th>
@@ -30,6 +30,6 @@
           No projects listed
         </div>
         @endif
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation  " class="card-nav @if($projects->total() > config('global.no_of_records'))mt-3 @endif">
         {{$projects->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
       </nav>

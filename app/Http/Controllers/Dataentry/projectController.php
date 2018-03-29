@@ -28,6 +28,11 @@ class projectController extends Controller
         ->with('projects',$projects);
     }
 
+
+    public function material(){
+        return view('appl.dataentry.index');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -146,6 +151,12 @@ class projectController extends Controller
         try{
             $request->slug = str_replace(' ', '-', $request->slug);
             $project = Project::where('id',$id)->first();
+
+            $category = Category::where('slug',$project->slug)->first();
+            $category->name = $request->name;
+            $category->slug = $request->slug;
+            $category->save();
+
             $project->name = $request->name;
             $project->slug = $request->slug;
             $project->user_id_data_manager = $request->user_id_data_manager;
@@ -157,6 +168,7 @@ class projectController extends Controller
             $project->status = $request->status;
             $project->target = $request->target;
             $project->save(); 
+
             flash('Project (<b>'.$request->name.'</b>) Successfully updated!')->success();
             return redirect()->route('dataentry.show',$request->slug);
         }

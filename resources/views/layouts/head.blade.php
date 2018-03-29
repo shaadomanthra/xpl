@@ -13,11 +13,13 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
-    <style>
-    .ck-editor__editable {
-        min-height: 200px;
-    }
-    </style>
+    
+    <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
+    <link href="{{asset('js/codemirror/lib/codemirror.css')}}" rel="stylesheet">
+    <link href="{{asset('js/codemirror/theme/mbo.css')}}" rel="stylesheet">
+
+    <link href="{{asset('js/highlight/styles/default.css')}}" rel="stylesheet">
+    <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
     
     @if(isset($mathjax))
     <script type="text/x-mathjax-config">
@@ -35,13 +37,23 @@
 
     @if(isset($jqueryui))
     <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
-      @endif
+    @endif
 
     </head>
     <body>
     <div id="app" >
     @yield('content-main')
+
     </div>
+ 
+    <div class="bg-dark">
+    <footer class=" wrapper  text-light footer">
+        <div class="container py-3">
+            @include('snippets.bottommenu')
+        </div>
+    </footer>
+</div>
+
     <!-- Scripts -->
      @include('snippets.scripts')
     </body>

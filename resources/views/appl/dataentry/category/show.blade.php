@@ -18,7 +18,7 @@
       <div class="card  mb-3">
         <div class="card-body ">
           
-          <nav class="navbar navbar-light bg-light justify-content-between mb-3 p-3">
+          <nav class="navbar navbar-light bg-light justify-content-between border mb-3 p-3">
           <a class="navbar-brand"><i class="fa fa-bars"></i> {{ $category->name }}
             </a>
 

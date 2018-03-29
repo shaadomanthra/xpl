@@ -17,11 +17,11 @@
     <div class="col-md-9">
       <div class="card">
       <div class="card-body mb-0 ">
-        <nav class="navbar navbar-light bg-light justify-content-between mb-3 p-3">
+        <nav class="navbar navbar-light bg-light justify-content-between border mb-3 p-3">
           <a class="navbar-brand"><i class="fa fa-tasks"></i> Categories</a>
 
           <a href="{{route('category.create',$project->slug)}}">
-              <button type="button" class="btn btn-outline-secondary float-right"><i class="fa fa-plus"></i> New</button>
+              <button type="button" class="btn btn-outline-success float-right"><i class="fa fa-plus"></i> New</button>
             </a>
           
         </nav>
@@ -32,7 +32,9 @@
           {!! $nodes !!}
           </div>
           @else
-          No Categories defined !
+          <div class="card card-body bg-light">
+          No Categories listed
+        </div>
           @endif
        </div>
 

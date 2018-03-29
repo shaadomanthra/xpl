@@ -4,6 +4,7 @@ namespace PacketPrep\Models\Dataentry;
 
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
+use PacketPrep\Models\Dataentry\Question;
 
 class Category extends Model
 {
@@ -17,6 +18,12 @@ class Category extends Model
     ];
     public $timestamps = false;
 
+   
+    public function questions()
+    {
+        return $this->belongsToMany('PacketPrep\Models\Dataentry\Question');
+    }
+
     public static function getParent($category){
     	$result = Category::defaultOrder()->ancestorsOf($category->id);
     	//dd($result);
@@ -28,6 +35,7 @@ class Category extends Model
     		return null;
 
     }
+
 
 
     public static function displayUnorderedList($categories,$options=null,$i=1){
@@ -55,6 +63,32 @@ class Category extends Model
         return $d;
     }
 
+
+    public static function displayUnorderedCheckList($categories,$options=null,$i=1){
+
+        $d = '';
+        foreach ($categories as $category) {
+            $hasChildren = (count($category->children) > 0);
+
+            $state = null;
+            if(isset($options['category_id']))
+            if(in_array($category->id , $options['category_id']))
+                $state = 'checked';
+
+            $d = $d.'<li class="item" id="'.$category->id.'" >
+            <input  type="checkbox" name="category[]" value="'.$category->id.'"  '.$state.'> '
+            .$category->name.'</li>';
+
+            if($hasChildren) {
+                $d = $d.Category::displayUnorderedCheckList($category->children,$options,$i+1);
+            }
+        }
+        if($i==1)
+        $d = '<ul class="list list-first" >'.$d.'</ul>';
+        else
+        $d = '<ul class="list" >'.$d.'</ul>';   
+        return $d;
+    }
 
 
 	 public static function displaySelectOption($categories,$options=null,$prefix='&nbsp;',$disable=false){
