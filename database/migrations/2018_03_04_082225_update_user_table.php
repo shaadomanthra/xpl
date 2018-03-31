@@ -15,6 +15,7 @@ class UpdateUserTable extends Migration
     {
          Schema::table('users', function (Blueprint $table) {
             $table->string('username')->unique();
+            $table->integer('role')->default(1);
             $table->string('activation_token')->nullable();
             $table->integer('status')->default(0);
         });
@@ -28,7 +29,7 @@ class UpdateUserTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['username', 'activation_token', 'status']);
+            $table->dropColumn(['username', 'activation_token', 'status','role']);
         });
     }
 }
