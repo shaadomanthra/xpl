@@ -10,7 +10,7 @@ use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\User\Role;
 
-class projectController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.

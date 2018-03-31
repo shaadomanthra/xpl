@@ -4,7 +4,7 @@ namespace PacketPrep\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 
-class user_details extends Model
+class User_Details extends Model
 {
     
     /**
