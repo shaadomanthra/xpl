@@ -51,12 +51,12 @@ Route::resource('social/media','Social\MediaController')->middleware('auth');
 Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
 
-Route::get('/material', 'dataentry\ProjectController@material')->name('material');
-Route::resource('dataentry','dataentry\ProjectController')->middleware('auth');
-Route::resource('dataentry/{project}/category','dataentry\CategoryController')->middleware('auth');
-Route::resource('dataentry/{project}/tag','dataentry\TagController')->middleware('auth');
-Route::resource('dataentry/{project}/passage','dataentry\PassageController')->middleware('auth');
-Route::resource('dataentry/{project}/question','dataentry\QuestionController')->middleware('auth');
+Route::get('/material', 'Dataentry\ProjectController@material')->name('material');
+Route::resource('dataentry','Dataentry\ProjectController')->middleware('auth');
+Route::resource('dataentry/{project}/category','Dataentry\CategoryController')->middleware('auth');
+Route::resource('dataentry/{project}/tag','Dataentry\TagController')->middleware('auth');
+Route::resource('dataentry/{project}/passage','Dataentry\PassageController')->middleware('auth');
+Route::resource('dataentry/{project}/question','Dataentry\QuestionController')->middleware('auth');
 
 
 Route::get('/{username}', 'User\UserController@index')->name('profile');
