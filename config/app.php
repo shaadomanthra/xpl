@@ -167,6 +167,7 @@ return [
         Laracasts\Flash\FlashServiceProvider::class,
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        BC\Laravel\DropboxDriver\ServiceProvider::class,
 
         /*
          * Package Service Providers...
