@@ -51,8 +51,8 @@ Route::resource('social/media','Social\MediaController')->middleware('auth');
 Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
 
-Route::get('/material', 'dataentry\projectController@material')->name('material');
-Route::resource('dataentry','dataentry\projectController')->middleware('auth');
+Route::get('/material', 'dataentry\ProjectController@material')->name('material');
+Route::resource('dataentry','dataentry\ProjectController')->middleware('auth');
 Route::resource('dataentry/{project}/category','dataentry\CategoryController')->middleware('auth');
 Route::resource('dataentry/{project}/tag','dataentry\TagController')->middleware('auth');
 Route::resource('dataentry/{project}/passage','dataentry\PassageController')->middleware('auth');
