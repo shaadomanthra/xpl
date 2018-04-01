@@ -13,6 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+        // this is a sample comment
         $this->middleware('auth');
     }
 
