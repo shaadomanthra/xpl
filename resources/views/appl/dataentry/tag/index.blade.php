@@ -2,16 +2,12 @@
 @section('content')
 
 
-<nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Tags</li>
-      </ol>
-    </nav>
+@include('appl.dataentry.snippets.breadcrumbs')
+@include('flash::message')
+
 <div  class="row ">
 
   <div class="col-md-9">
-    @include('flash::message')  
     <div class="card">
       <div class="card-body mb-0">
         <nav class="navbar navbar-light bg-light justify-content-between p-3 mb-3 border">
@@ -43,13 +39,19 @@
                   @foreach($coll as $a=>$tag)
                   @if($a==0)
                   <a href="{{ route('tag.show',[$project->slug,$tag->id])}}">
-                    {{ $tag->value}}
+                    {{ $tag->value}} 
+                  </a>
+                  <a href="{{route('tag.question',[$project->slug,$tag->id,''])}}">
+                  ({{count($tag->questions)}})
                   </a>
                   @else
                     {{','}}
                     <a href="{{ route('tag.show',[$project->slug,$tag->id])}}">
                     {{$tag->value }}
-                  </a>
+                    </a>
+                    <a href="{{route('tag.question',[$project->slug,$tag->id,''])}}">
+                    ({{count($tag->questions)}})
+                    </a>
                     @endif
                   @endforeach
 
@@ -69,8 +71,8 @@
    </div>
  </div>
   <div class="col-md-3 pl-md-0">
-      @include('appl.dataentry.project.snippets.menu')
-    </div>
+      @include('appl.dataentry.snippets.menu')
+  </div>
 </div>
 
 @endsection

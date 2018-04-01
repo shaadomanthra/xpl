@@ -15,7 +15,7 @@ class TagController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-        public $project;
+    public $project;
     
 
     public function __construct(){
@@ -41,7 +41,9 @@ class TagController extends Controller
                           return $item->name;
                         });
         
-        return view('appl.dataentry.tag.index')->with('project',$this->project)->with('tags',$tags)->with('i',1);
+        return view('appl.dataentry.tag.index')
+            ->with('project',$this->project)
+            ->with('tags',$tags)->with('i',1);
     }
 
     /**

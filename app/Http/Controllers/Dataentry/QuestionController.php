@@ -38,7 +38,11 @@ class QuestionController extends Controller
     {
         $search = $request->search;
         $item = $request->item;
-        $questions = $question->where('question','LIKE',"%{$item}%")
+        $questions = $question
+                        ->where(function ($query) use ($item) {
+                                $query->where('question','LIKE',"%{$item}%")
+                                      ->orWhere('reference', 'LIKE', "%{$item}%");
+                            })
                         ->where('project_id',$this->project->id)
                         ->orderBy('created_at','desc ')
                         ->paginate(config('global.no_of_records'));
@@ -165,29 +169,29 @@ class QuestionController extends Controller
     public function show($project_slug,$id)
     {
         $question = Question::where('id',$id)->first();
-        $passage = Passage::where('id',$question->passage_id)->first();
 
-        $questions = Question::select('id')
-                            ->where('project_id',$this->project->id)
-                            ->orderBy('created_at','desc ')
-                            ->get();
-        $details = ['prev'=>null,'next'=>null,'qno'=>null]; 
-        
-        foreach($questions as $key=>$q){
+        if($question){
+            $passage = Passage::where('id',$question->passage_id)->first();
+            $questions = Question::select('id')
+                                ->where('project_id',$this->project->id)
+                                ->orderBy('created_at','desc ')
+                                ->get();
+            $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'project']; 
 
-            if($q->id == $question->id){
+            $details['curr'] = route('question.show',[$project_slug,$question->id]);
+            foreach($questions as $key=>$q){
 
-                if($key!=0)
-                    $details['prev'] = $questions[$key-1]->id;
+                if($q->id == $question->id){
 
-                if(count($questions) != $key+1)
-                    $details['next'] = $questions[$key+1]->id;
+                    if($key!=0)
+                        $details['prev'] = route('question.show',[$project_slug,$questions[$key-1]->id]);
 
-                $details['qno'] = $key + 1 ;
-            }
-        }                    
-        
-        if($question)
+                    if(count($questions) != $key+1)
+                        $details['next'] = route('question.show',[$project_slug,$questions[$key+1]->id]);
+
+                    $details['qno'] = $key + 1 ;
+                }
+            } 
             return view('appl.dataentry.question.show')
                     ->with('project',$this->project)
                     ->with('mathjax',true)
@@ -195,9 +199,144 @@ class QuestionController extends Controller
                     ->with('passage',$passage)
                     ->with('details',$details)
                     ->with('questions',$questions);
+        }
         else
-            abort(404);
+            abort(404,'Question not found');
     }
+
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function category($project_slug,$category_slug,$id=null)
+    {
+        
+
+        if($category_slug == 'uncategorized')
+        {
+            $category = new Category();
+            $category->name = 'Uncategorized';
+            $category->slug = 'uncategorized';
+            $category_slug = 'uncategorized';
+            $category->questions = Category::getUncategorizedQuestions($this->project);
+
+        }else
+            $category = Category::where('slug',$category_slug)->first();
+
+        if($id==null){
+            if($category_slug=='uncategorized')
+                $id = $category->questions->first()->id;
+            elseif($category->questions){
+                $id = $category->questions[0]->id;
+            }else
+                $id=null;
+        }
+        
+
+
+        if($id){
+            $question = Question::where('id',$id)->first();
+
+            if($question){
+                $passage = Passage::where('id',$question->passage_id)->first();
+                $questions = $category->questions;
+
+                $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'category']; 
+            
+                $details['curr'] = route('category.question',[$project_slug,$category_slug,$question->id]);
+                foreach($questions as $key=>$q){
+
+                    if($q->id == $question->id){
+
+                        if($key!=0)
+                            $details['prev'] = route('category.question',[$project_slug,$category_slug,$questions[$key-1]->id]);
+
+                        if(count($questions) != $key+1)
+                            $details['next'] = route('category.question',[$project_slug,$category_slug,$questions[$key+1]->id]);
+
+                        $details['qno'] = $key + 1 ;
+                    }
+                } 
+
+                return view('appl.dataentry.question.show')
+                        ->with('project',$this->project)
+                        ->with('mathjax',true)
+                        ->with('question',$question)
+                        ->with('passage',$passage)
+                        ->with('details',$details)
+                        ->with('category',$category)
+                        ->with('questions',$questions);
+            }else
+                abort('404','Question not found');
+            
+        }
+        else
+            abort(403);
+
+    }
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function tag($project_slug,$tag_id,$id=null)
+    {
+        
+        $tag = Tag::where('id',$tag_id)->first();
+
+        if($id==null){
+            if($tag->questions){
+                $id = $tag->questions[0]->id;
+            }else
+                $id=null;
+        }
+        
+
+
+        if($id){
+            $question = Question::where('id',$id)->first();
+
+            if($question){
+                $passage = Passage::where('id',$question->passage_id)->first();
+                $questions = $tag->questions;
+
+                $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'tag']; 
+            
+                $details['curr'] = route('tag.question',[$project_slug,$tag_id,$question->id]);
+                foreach($questions as $key=>$q){
+
+                    if($q->id == $question->id){
+
+                        if($key!=0)
+                            $details['prev'] = route('tag.question',[$project_slug,$tag_id,$questions[$key-1]->id]);
+
+                        if(count($questions) != $key+1)
+                            $details['next'] = route('tag.question',[$project_slug,$tag_id,$questions[$key+1]->id]);
+
+                        $details['qno'] = $key + 1 ;
+                    }
+                } 
+
+                return view('appl.dataentry.question.show')
+                        ->with('project',$this->project)
+                        ->with('mathjax',true)
+                        ->with('question',$question)
+                        ->with('passage',$passage)
+                        ->with('details',$details)
+                        ->with('tag',$tag)
+                        ->with('questions',$questions);
+            }else
+                abort('404','Question not found');
+            
+        }
+        else
+            abort(403);
+
+    }    
 
     /**
      * Show the form for editing the specified resource.

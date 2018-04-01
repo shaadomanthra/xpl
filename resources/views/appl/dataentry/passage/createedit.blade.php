@@ -1,13 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('dataentry.index')}}">Data Entry</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{ $stub }} Passage</li>
-    </ol>
-  </nav>
+  @include('appl.dataentry.snippets.breadcrumbs')
   @include('flash::message')
   <div class="card">
     <div class="card-body">

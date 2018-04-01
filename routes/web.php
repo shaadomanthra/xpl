@@ -54,7 +54,11 @@ Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser'
 Route::get('/material', 'Dataentry\ProjectController@material')->name('material');
 Route::resource('dataentry','Dataentry\ProjectController')->middleware('auth');
 Route::resource('dataentry/{project}/category','Dataentry\CategoryController')->middleware('auth');
+Route::get('dataentry/{project}/category/{category}/question','Dataentry\QuestionController@category')->middleware('auth')->name('category.question');
+Route::get('dataentry/{project}/category/{category}/question/{id}','Dataentry\QuestionController@category')->middleware('auth')->name('category.question');
 Route::resource('dataentry/{project}/tag','Dataentry\TagController')->middleware('auth');
+Route::get('dataentry/{project}/tag/{tag}/question','Dataentry\QuestionController@tag')->middleware('auth')->name('tag.question');
+Route::get('dataentry/{project}/tag/{tag}/question/{id}','Dataentry\QuestionController@tag')->middleware('auth')->name('tag.question');
 Route::resource('dataentry/{project}/passage','Dataentry\PassageController')->middleware('auth');
 Route::resource('dataentry/{project}/question','Dataentry\QuestionController')->middleware('auth');
 

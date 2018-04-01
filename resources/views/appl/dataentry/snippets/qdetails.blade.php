@@ -12,7 +12,7 @@
 			</a>
 		</span>
 	</div>
-	<div class="card-body details" style="display:none;">
+	<div class="card-body details">
 		<div class="bg-light p-1 rounded border mb-2">Details</div>
 		<div class="row">
 			<div class="col-5">Ref</div>
@@ -67,7 +67,9 @@
 		<div class="bg-light p-1 rounded border mb-2 mt-3">Categories</div>
 		<div class="">
 			@foreach($question->categories as $category)
-				{{ $category->name }}<br>
+			<a href="{{ route('category.show',[$project->slug,$category->slug])}}">
+				{{ $category->name }}
+			</a><br>
 			@endforeach
 		</div>
 		@endif
@@ -79,7 +81,9 @@
 			<div class="row">
 			<div class="col-6">{{ $tag->name }}</div>
 			<div class="col-6">
+				<a href="{{ route('tag.show',[$project->slug,$tag->id])}}">
 				{{ $tag->value }}
+				</a>
 			</div>
 			</div>
 			@endforeach

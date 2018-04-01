@@ -4,8 +4,9 @@ namespace PacketPrep\Http\Controllers\dataentry;
 
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
-use PacketPrep\Models\Dataentry\Project as Project;
-use PacketPrep\Models\Dataentry\Category as Category;
+use PacketPrep\Models\Dataentry\Project;
+use PacketPrep\Models\Dataentry\Category;
+use PacketPrep\Models\Dataentry\Question;
 
 class CategoryController extends Controller
 {
@@ -15,17 +16,13 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-        public $slug;  
-        public $project_name;
+    public $project;
     
 
     public function __construct(){
-        $this->slug='';
-        $this->project_name='';
+        $this->project='';
         if(request()->route('project')){
-            $this->slug = request()->route('project');   
-            $this->project_name = Project::getName($this->slug);
-            $this->project = Project::get($this->slug);
+            $this->project = Project::get(request()->route('project'));
         } 
 
     }
@@ -34,12 +31,19 @@ class CategoryController extends Controller
     {
         $parent =  Category::where('slug',$this->project->slug)->first();   
         $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
+        $question = Question::where('project_id',$this->project->id)->orderBy('created_at','desc')->first();
+        if($question)
+            $question->count  = Question::getTotalQuestionCount($this->project);
         //$node = Category::defaultOrder()->get()->toTree();
         if(count($node))
-            $nodes = $category->displayUnorderedList($node,['project_slug'=>$this->slug]);
+            $nodes = $category->displayUnorderedList($node,['project'=>$this->project]);
         else
             $nodes =null;
-        return view('appl.dataentry.category.index')->withProject($this)->with('nodes',$nodes);
+
+        return view('appl.dataentry.category.index')
+                ->with('project',$this->project)
+                ->with('question',$question)
+                ->with('nodes',$nodes);
     }
 
     /**
@@ -52,7 +56,9 @@ class CategoryController extends Controller
         $parent =  Category::where('slug',$this->project->slug)->first();  
         $select_options = $category->displaySelectOption($parent->descendantsAndSelf($parent->id)->toTree());
         return view('appl.dataentry.category.createedit')
-                ->with('project',$this)->with('select_options',$select_options)->with('stub','Create');
+                ->with('project',$this->project)
+                ->with('select_options',$select_options)
+                ->with('stub','Create');
     }
 
     /**
@@ -70,7 +76,6 @@ class CategoryController extends Controller
         $child = new Category($child_attributes);
 
         $slug_exists_test = Category::where('slug','=',$request->slug)->first();
-
 
         if($slug_exists_test)
         {
@@ -95,6 +100,9 @@ class CategoryController extends Controller
      */
     public function show($project_slug,$category_slug, Request $request)
     {
+
+        if($category_slug=='uncategorized')
+            return redirect()->route('category.index',$project_slug);
 
         $category = Category::where('slug',$category_slug)->first();
         $parent = Category::getParent($category);
@@ -150,7 +158,12 @@ class CategoryController extends Controller
 
 
         if($category)
-            return view('appl.dataentry.category.show')->withProject($this)->with('category',$category)->with('parent',$parent)->with('list',$list)->with('jqueryui',true);
+            return view('appl.dataentry.category.show')
+                    ->with('project',$this->project)
+                    ->with('category',$category)
+                    ->with('parent',$parent)
+                    ->with('list',$list)
+                    ->with('jqueryui',true);
         else
             abort(404);
     }
@@ -183,7 +196,12 @@ class CategoryController extends Controller
 
 
         if($node)
-            return view('appl.dataentry.category.createedit')->withProject($this)->with('category',$node)->with('parent',$parent)->with('select_options',$select_options)->with('stub','Update');
+            return view('appl.dataentry.category.createedit')
+                    ->with('project',$this->project)
+                    ->with('category',$node)
+                    ->with('parent',$parent)
+                    ->with('select_options',$select_options)
+                    ->with('stub','Update');
         else
             abort(404);
     }

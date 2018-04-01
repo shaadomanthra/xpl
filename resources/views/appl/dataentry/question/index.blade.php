@@ -1,19 +1,12 @@
 @extends('layouts.app')
 @section('content')
 
+@include('appl.dataentry.snippets.breadcrumbs')
+@include('flash::message')
 
-<nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Question</li>
-      </ol>
-    </nav>
 <div  class="row ">
 
   <div class="col-md-9">
-
-    
-    @include('flash::message')  
  
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
@@ -54,8 +47,8 @@
    </div>
  </div>
   <div class="col-md-3 pl-md-0">
-      @include('appl.dataentry.project.snippets.menu')
-    </div>
+      @include('appl.dataentry.snippets.menu')
+  </div>
 </div>
 
 @endsection

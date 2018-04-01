@@ -28,4 +28,8 @@ class Project extends Model
     public static function get($slug){
         return (new Project)->where('slug',$slug)->first();
     }
+
+    public static function getID($slug){
+        return (new Project)->where('slug',$slug)->first()->id;
+    }
 }

@@ -1,15 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('dataentry.index')}}">Data Entry</a></li>
-      <li class="breadcrumb-item " ><a href="{{ route('dataentry.show',$project->slug)}}">{{$project->project_name}}</a> </li>
-      <li class="breadcrumb-item active" aria-current="page">Categories </li>
-    </ol>
-  </nav>
-
+  @include('appl.dataentry.snippets.breadcrumbs')
   @include('flash::message')
 
   <div class="row">
@@ -27,14 +19,23 @@
         </nav>
 
         <div id="search-items">
+          <div class="card mb-3">
+            <div class="card-body"> {{ $project->name }}
+              @if($question)
+              <a href="{{ route('question.show',[$project->slug,$question->id]) }}">
+              @endif
+              <span class="float-right">Questions({{ ($question)?$question->count:'0' }})</span>
+              @if($question)
+              </a>
+              @endif
+              </a>
+            </div>
+          </div>
            @if($nodes)
           <div class="dd">
           {!! $nodes !!}
           </div>
           @else
-          <div class="card card-body bg-light">
-          No Categories listed
-        </div>
           @endif
        </div>
 
@@ -45,7 +46,7 @@
   </div>
 
      <div class="col-md-3 pl-md-0">
-      @include('appl.dataentry.project.snippets.menu')
+      @include('appl.dataentry.snippets.menu')
     </div>
     
   </div> 

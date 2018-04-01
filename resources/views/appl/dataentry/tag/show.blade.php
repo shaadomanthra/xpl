@@ -1,16 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
-   <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('dataentry.index')}}">Data Entry</a></li>
-      <li class="breadcrumb-item " ><a href="{{ route('dataentry.show',$project->slug)}}">{{$project->name}}</a> </li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('tag.index',$project->slug)}}">Categories</a> </li>
-      <li class="breadcrumb-item active" aria-current="page">{{ $tag->value }} </li>
-    </ol>
-  </nav>
-  @include('flash::message')
+@include('appl.dataentry.snippets.breadcrumbs')
+@include('flash::message')
 
   <div class="row">
 
@@ -18,11 +10,15 @@
       <div class="card  mb-3">
         <div class="card-body ">
           
-          <nav class="navbar navbar-light bg-light justify-content-between border mb-3 p-3">
+        <nav class="navbar navbar-light bg-light justify-content-between border mb-3 p-3">
           <a class="navbar-brand"><i class="fa fa-bars"></i> {{ $tag->value }}
+            <i class="fa fa-hashtag "></i>{{ $tag->name}}
+          </a>
+          <span class="s15 float-right">
+            <a href="{{route('tag.question',[$project->slug,$tag->id,''])}}">
+                  Questions ({{count($tag->questions)}})
             </a>
-
-          <span class="s15 float-right"><i class="fa fa-hashtag "></i>{{ $tag->name}}</span>
+          </span>
         </nav>
 
           
@@ -39,7 +35,7 @@
     </div>
 
      <div class="col-md-3 pl-md-0">
-      @include('appl.dataentry.project.snippets.menu')
+      @include('appl.dataentry.snippets.menu')
     </div>
 
   </div> 

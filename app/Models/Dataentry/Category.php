@@ -5,6 +5,7 @@ namespace PacketPrep\Models\Dataentry;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 use PacketPrep\Models\Dataentry\Question;
+use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
@@ -40,6 +41,7 @@ class Category extends Model
 
     public static function displayUnorderedList($categories,$options=null,$i=1){
 
+        
     	$d = '';
     	foreach ($categories as $category) {
     		$hasChildren = (count($category->children) > 0);
@@ -47,20 +49,43 @@ class Category extends Model
             $d = $d.'<li class="item" id="'.$category->id.'" ><a href="'.route('category.show',
             	[	
             		'category'=> $category->slug,
-            		'project'=> $options['project_slug'],
+            		'project'=> $options['project']->slug,
             	]
 
-            ).'">'.$category->name.'</a></li>';
+            ).'">'.$category->name.'</a>'.
+            '<a href="'.route('category.question',[$options['project']->slug,$category->slug,''])
+            .'"><span class="float-right">Questions('.count($category->questions).')</span></a></li>';
 
             if($hasChildren) {
                 $d = $d.Category::displayUnorderedList($category->children,$options,$i+1);
             }
         }
-        if($i==1)
-        $d = '<ul class="list list-first" >'.$d.'<li>Uncategorized</li></ul>';
+        if($i==1){
+            $total_ques = Question::getTotalQuestionCount($options['project']);
+            $categorized_ques = Category::getCategorizedQuestionCount($options['project']);
+            $d = '<ul class="list list-first" >'.$d.'<li>Uncategorized <a href="'.route('category.question',[$options['project']->slug,'uncategorized',''])
+            .'"><span class="float-right">Questions('.($total_ques-$categorized_ques).')</span></a></li></ul>';
+        }
     	else
     	$d = '<ul class="list" >'.$d.'</ul>';	
         return $d;
+    }
+
+
+    public static function getCategorizedQuestionCount($project){
+        $parent =  Category::where('slug',$project->slug)->first();   
+        $category_id_list = Category::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
+        return ( DB::table('category_question')->whereIn('category_id', $category_id_list)->distinct()->get(['question_id'])->count());
+        
+    }
+
+    public static function getUncategorizedQuestions($project){
+        $parent =  Category::where('slug',$project->slug)->first();   
+        $category_id_list = Category::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
+        $question_id_list = DB::table('category_question')->whereIn('category_id', $category_id_list)->pluck('question_id')->toArray();
+
+        $questions = Question::where('project_id',$project->id)->whereNotIn('id',$question_id_list)->get();
+        return $questions;
     }
 
 
