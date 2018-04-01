@@ -59,7 +59,10 @@ class User extends Authenticatable
     }
 
     public function getName($id){
-        return  User::where('id',$id)->get()->first()->name;
+        if($id)
+            return  User::where('id',$id)->get()->first()->name;
+        else
+            return null;
 
     }
 

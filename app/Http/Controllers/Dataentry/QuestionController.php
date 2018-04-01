@@ -171,8 +171,15 @@ class QuestionController extends Controller
         $question = Question::where('id',$id)->first();
 
         if($question){
+
+            if(request()->get('publish'))
+            {
+                $question->status = 2;
+                $question->save();
+            }
+
             $passage = Passage::where('id',$question->passage_id)->first();
-            $questions = Question::select('id')
+            $questions = Question::select('id','status')
                                 ->where('project_id',$this->project->id)
                                 ->orderBy('created_at','desc ')
                                 ->get();
@@ -241,6 +248,13 @@ class QuestionController extends Controller
             $question = Question::where('id',$id)->first();
 
             if($question){
+
+                 if(request()->get('publish'))
+                {
+                    $question->status = 2;
+                    $question->save();
+                }
+
                 $passage = Passage::where('id',$question->passage_id)->first();
                 $questions = $category->questions;
 
@@ -301,6 +315,13 @@ class QuestionController extends Controller
             $question = Question::where('id',$id)->first();
 
             if($question){
+
+                 if(request()->get('publish'))
+                {
+                    $question->status = 2;
+                    $question->save();
+                }
+            
                 $passage = Passage::where('id',$question->passage_id)->first();
                 $questions = $tag->questions;
 

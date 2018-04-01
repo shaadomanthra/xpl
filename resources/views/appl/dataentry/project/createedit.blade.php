@@ -83,29 +83,7 @@
         </select>
       </div>
 
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Renovator</label>
-        <select class="form-control" name="user_id_renovator">
-          <option value=""  >None</option>
-          @if(isset($users['renovator']))
-          @foreach($users['renovator'] as $user)
-          <option value="{{ $user->id }}" @if(isset($project)) @if($project->user_id_renovator== $user->id) selected @endif @endif >{{ $user->name }}</option>
-          @endforeach
-          @endif
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Validator</label>
-        <select class="form-control" name="user_id_validator">
-          <option value=""  >None</option>
-          @if(isset($users['validator']))
-          @foreach($users['validator'] as $user)
-          <option value="{{ $user->id }}" @if(isset($project)) @if($project->user_id_validator == $user->id) selected @endif @endif >{{ $user->name }}</option>
-          @endforeach
-          @endif
-        </select>
-      </div>
+      
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Target</label>

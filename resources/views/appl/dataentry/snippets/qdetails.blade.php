@@ -1,7 +1,7 @@
 <div class="card">
-	<div class="card-header">{{ strtoupper($question->reference) }} <span class="btn view badge badge-warning" data-item="details">view</span>
+	<div class="card-header">{{ strtoupper($question->reference) }} <span class="btn view badge badge-warning" data-item="details">hide</span>
 		<span class="float-right">
-			<a href="">
+			<a href="#" data-toggle="modal" data-target="#exampleModal2">
 			<i class="fa fa-paper-plane" data-tooltip="tooltip" data-placement="top" title="Publish"></i>
 			</a> &nbsp;
 			<a href="{{ route('question.edit',['project'=>$project->slug,'question'=>$question->id]) }}">
@@ -16,7 +16,11 @@
 		<div class="bg-light p-1 rounded border mb-2">Details</div>
 		<div class="row">
 			<div class="col-5">Ref</div>
-			<div class="col-7 mb-2"><span class=" text-primary">{{ strtoupper($question->reference) }}</span></div>
+			<div class="col-7 mb-2">
+				<a href="{{route('question.show',[$project->slug,$question->id])}}">
+				<span class=" text-primary">{{ strtoupper($question->reference) }}</span>
+				</a>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-5">Slug</div>
@@ -36,29 +40,16 @@
 				@endif
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-5">Stage</div>
-			<div class="col-7 mb-2">
-				@if($question->stage==1)
-				<div class="badge badge-secondary">Feeding</div>
-				@elseif($question->stage==2)
-				<div class="badge badge-secondary">Proof Reading</div>
-				@elseif($question->stage==3)
-				<div class="badge badge-secondary">Renovation</div>
-				@elseif($question->stage==4)
-				<div class="badge badge-secondary">Validation</div>
-				@else
-				<div class="badge badge-success">Live</div>
-				@endif
-			</div>
-		</div>
+		
 		<div class="row">
 			<div class="col-5">Status</div>
 			<div class="col-7">
 				@if($question->status==0)
-				<div class="text-info"><i class="fa fa-minus-square"></i> Draft</div>
+				<div class="text-secondary"><i class="fa fa-minus-square"></i> Draft</div>
+				@elseif($question->status==1)
+				<div class="text-secondary s15"><i class="fa fa-plus-square"></i> Published</div>
 				@else
-				<div class="text-success s15"><i class="fa fa-check-square"></i> Published</div>
+				<div class="text-success s15"><i class="fa fa-check-square"></i> Live</div>
 				@endif
 			</div>
 		</div>

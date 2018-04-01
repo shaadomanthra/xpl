@@ -261,7 +261,7 @@
 
         <div class="form-group mt-3">
         <label for="formGroupExampleInput ">Status</label>
-        <select class="form-control" name="status">
+        <select class="form-control" name="status" >
           <option value="0" @if(isset($question)) @if($question->status==0) selected @endif @endif >Draft</option>
           <option value="1" @if(isset($question)) @if($question->status==1) selected @endif @endif >Published</option>
         </select>
@@ -276,14 +276,7 @@
 
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="project_id" value="{{ $project->id }}">
-        <input type="hidden" name="stage" value="
-            @if(auth::user()->checkRole(['feeder'])) 1 
-            @elseif(auth::user()->checkRole(['proof-reader'])) 2
-            @elseif(auth::user()->checkRole(['renovator'])) 3
-            @elseif(auth::user()->checkRole(['validator'])) 4
-            @else 5
-            @endif
-             ">
+        <input type="hidden" name="stage" value="1">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       </div>
 

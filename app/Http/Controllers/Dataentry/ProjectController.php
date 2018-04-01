@@ -8,6 +8,7 @@ use PacketPrep\Exceptions\Handler;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Dataentry\Category;
+use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\User\Role;
 
 class ProjectController extends Controller
@@ -104,8 +105,15 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::where('slug',$id)->first();
+        $details['drafts'] = Question::where('project_id',$project->id)->where('status',0)->count();
+        $details['published'] = Question::where('project_id',$project->id)->where('status',1)->count();
+        $details['live'] = Question::where('project_id',$project->id)->where('status',2)->count();
+        $details['total'] = $details['drafts'] + $details['published'] + $details['live'];
+
         if($project)
-            return view('appl.dataentry.project.show')->with('project',$project);
+            return view('appl.dataentry.project.show')
+                    ->with('project',$project)
+                    ->with('details',$details);
         else
             abort(404);
     }

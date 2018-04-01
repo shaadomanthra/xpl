@@ -44,7 +44,8 @@
 				<a href="{{ route('tag.question',[$project->slug,$tag->id,$q->id]) }}">
 				@endif
 				<div class="pr-1">
-				<div class="border w100 p-1 text-center rounded @if($q->id==$question->id) active @endif">{{ $key + 1 }}</div>
+				<div class="border w100 p-1 text-center rounded @if($q->id==$question->id) active @endif @if($q->status == 0) @elseif($q->status == 1) border-secondary @else border-success  @endif" style="border:1px solid #eee;
+				    ">{{ ($key + 1 ) }}</div>
 				</div>
 				</a>
 			</div>
