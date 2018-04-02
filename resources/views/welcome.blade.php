@@ -28,7 +28,7 @@
 
 		  <p class="lead">
 		  	
-		  	<a class="btn border border-primary btn-lg" href="{{ route('apply') }}" role="button">Apply Now</a>
+		  	<a class="btn border border-primary btn-lg" href="{{ route('job.index') }}" role="button">Apply Now</a>
 		    <a class="btn border border-success text-success btn-lg" href="{{ route('login') }}" role="button">Login</a>
 		  </p>
 		  @endif

@@ -38,7 +38,8 @@ class PassageController extends Controller
         $item = $request->item;
         $api = $request->api;
 
-        
+        $this->authorize('view', $passage);
+
         if($api){
             $passages = $passage
                         ->where('project_id',$this->project->id)
@@ -66,6 +67,7 @@ class PassageController extends Controller
 
         return view('appl.dataentry.passage.'.$view)
         ->with('project',$this->project)
+        ->with('passage',$passage)
         ->with('passages',$passages);
     }
 
@@ -74,8 +76,9 @@ class PassageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Passage $passage)
     {
+        $this->authorize('create', $passage);
         return view('appl.dataentry.passage.createedit')
                 ->with('project',$this->project)->with('stub','Create');
     }
@@ -121,6 +124,7 @@ class PassageController extends Controller
     public function show($project_slug,$id)
     {
         $passage = Passage::where('id',$id)->first();
+        $this->authorize('view', $passage);
         if($passage)
             return view('appl.dataentry.passage.show')
                     ->with('project',$this->project)
@@ -139,6 +143,7 @@ class PassageController extends Controller
     public function edit($project_slug,$id)
     {
         $passage = Passage::where('id',$id)->first();
+        $this->authorize('update', $passage);
 
         if($passage)
             return view('appl.dataentry.passage.createedit')
@@ -185,6 +190,8 @@ class PassageController extends Controller
     {
 
         $passage = Passage::where('id',$id)->first();
+        $this->authorize('update', $passage);
+
         $passage->passage = summernote_imageremove($passage->passage);
         $passage->delete();
         flash('Passage Successfully deleted!')->success();

@@ -13,13 +13,14 @@
         <div class="card-body bg-light">
           <div  class="row ">
             <div class="col-2">
-            <div class="text-center"><i class="fa fa-medium fa-5x"></i> </div>
+            <div class="text-center"><i class="fa fa-telegram fa-5x"></i> </div>
             </div>
             <div class="col-9">
               <h1 class=" mb-2"> Material App</h1>
-              <p class="mb-0">
-                Backend of our product to create, process, validate and publish the data. 
-              </p>
+              <blockquote class="blockquote mb-0">
+                <p class="mb-0">Data is a precious thing and will last longer than the systems themselves.</p>
+                <footer class="blockquote-footer"><cite title="Source Title">Tim Berners-Lee</cite></footer>
+              </blockquote>
             </div>
          </div>
         </div>

@@ -11,10 +11,11 @@
       <div class="card-body mb-0 ">
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3 p-3">
           <a class="navbar-brand"><i class="fa fa-tasks"></i> Categories</a>
-
+          @can('create',$category)
           <a href="{{route('category.create',$project->slug)}}">
               <button type="button" class="btn btn-outline-success float-right"><i class="fa fa-plus"></i> New</button>
             </a>
+          @endcan
           
         </nav>
 

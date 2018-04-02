@@ -19,11 +19,13 @@
           {!! $passage->passage !!}
         </div>
         
+        @can('update',$passage)
            <span class="btn-group mt-4" role="group" aria-label="Basic example">
               <a href="{{ route('passage.edit',['project'=>$project->slug,'passage'=>$passage->id]) }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               
               <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
+        @endcan
         </div>
       </div>
 

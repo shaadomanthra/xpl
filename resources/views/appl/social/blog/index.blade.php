@@ -8,7 +8,7 @@
 
     <div class="card bg-light mb-3">
       <div class="card-body">
-        <h1 class="mt-1"><i class="fa fas fa-reddit"></i> Blog 
+        <h1 class="mt-1"><i class="fa fas fa-align-justify"></i> Blog 
           @can('create',$blog)
             <a href="{{route('blog.create')}}" class="float-right">
               <button type="button" class="btn btn-sm btn-outline-success my-0 my-sm-0 mr-1"><i class="fa fa-plus"></i> New</button>

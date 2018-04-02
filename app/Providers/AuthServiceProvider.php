@@ -30,6 +30,15 @@ class AuthServiceProvider extends ServiceProvider
         \PacketPrep\Models\System\Report::class => \PacketPrep\Policies\ReportPolicy::class,
         \PacketPrep\Models\Social\Blog::class => \PacketPrep\Policies\BlogPolicy::class,
         \PacketPrep\Models\Social\Social::class => \PacketPrep\Policies\SocialPolicy::class,
+
+        \PacketPrep\Models\Dataentry\Project::class => \PacketPrep\Policies\Dataentry\ProjectPolicy::class,
+        \PacketPrep\Models\Dataentry\Category::class => \PacketPrep\Policies\Dataentry\CategoryPolicy::class,
+        \PacketPrep\Models\Dataentry\Tag::class => \PacketPrep\Policies\Dataentry\TagPolicy::class,
+        \PacketPrep\Models\Dataentry\Passage::class => \PacketPrep\Policies\Dataentry\PassagePolicy::class,
+        \PacketPrep\Models\Dataentry\Question::class => \PacketPrep\Policies\Dataentry\QuestionPolicy::class,
+
+        \PacketPrep\Models\Recruit\Job::class => \PacketPrep\Policies\Recruit\JobPolicy::class,
+        \PacketPrep\Models\Recruit\Form::class => \PacketPrep\Policies\Recruit\FormPolicy::class,
     ];
 
     /**

@@ -31,6 +31,9 @@ class CategoryController extends Controller
     {
         $parent =  Category::where('slug',$this->project->slug)->first();   
         $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
+
+        $this->authorize('view', $category);
+
         $question = Question::where('project_id',$this->project->id)->orderBy('created_at','desc')->first();
         if($question)
             $question->count  = Question::getTotalQuestionCount($this->project);
@@ -43,6 +46,7 @@ class CategoryController extends Controller
         return view('appl.dataentry.category.index')
                 ->with('project',$this->project)
                 ->with('question',$question)
+                ->with('category',$category)
                 ->with('nodes',$nodes);
     }
 
@@ -53,6 +57,8 @@ class CategoryController extends Controller
      */
     public function create(Category $category)
     {
+        $this->authorize('create', $category);
+
         $parent =  Category::where('slug',$this->project->slug)->first();  
         $select_options = $category->displaySelectOption($parent->descendantsAndSelf($parent->id)->toTree());
         return view('appl.dataentry.category.createedit')
@@ -74,6 +80,8 @@ class CategoryController extends Controller
         $child_attributes =['name'=>$request->name,'slug'=>$request->slug];
         $parent = Category::where('id','=',$request->parent_id)->first();
         $child = new Category($child_attributes);
+
+        $this->authorize('update', $parent);
 
         $slug_exists_test = Category::where('slug','=',$request->slug)->first();
 
@@ -106,6 +114,8 @@ class CategoryController extends Controller
 
         $category = Category::where('slug',$category_slug)->first();
         $parent = Category::getParent($category);
+
+        $this->authorize('view', $parent);
 
         $order = $request->get('order');
         
@@ -180,6 +190,8 @@ class CategoryController extends Controller
        
         $node = Category::where('slug',$category_slug)->first();
         $root = Category::where('slug',$project_slug)->first();
+
+        $this->authorize('update', $node);
 
         $parent = Category::getParent($node);
         if(!$parent){

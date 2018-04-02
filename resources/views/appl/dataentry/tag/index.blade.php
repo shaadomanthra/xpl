@@ -13,9 +13,11 @@
         <nav class="navbar navbar-light bg-light justify-content-between p-3 mb-3 border">
           <a class="navbar-brand"><i class="fa fa-tags"></i> Tags </a>
 
+          @can('create',$tag)
           <a href="{{route('tag.create',$project->slug)}}">
               <button type="button" class="btn btn-outline-success float-right"><i class="fa fa-plus"></i> New</button>
             </a>
+          @endcan
         </nav>
 
          @if(count($tags)!=0)

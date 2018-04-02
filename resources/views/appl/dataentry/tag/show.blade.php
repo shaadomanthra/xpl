@@ -10,7 +10,7 @@
       <div class="card  mb-3">
         <div class="card-body ">
           
-        <nav class="navbar navbar-light bg-light justify-content-between border mb-3 p-3">
+        <nav class="navbar navbar-light bg-light justify-content-between border p-3">
           <a class="navbar-brand"><i class="fa fa-bars"></i> {{ $tag->value }}
             <i class="fa fa-hashtag "></i>{{ $tag->name}}
           </a>
@@ -20,14 +20,16 @@
             </a>
           </span>
         </nav>
-
           
-          
+          @can('update',$tag)
+          <div class="mt-3">
            <span class="btn-group mt-4" role="group" aria-label="Basic example">
               <a href="{{ route('tag.edit',['project'=>$project->slug,'tag'=>$tag->id]) }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               
               <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
+          </div>
+          @endcan
         </div>
       </div>
 

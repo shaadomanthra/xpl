@@ -18,9 +18,10 @@
             </div>
             <div class="col-9">
               <h1 class=" mb-2"> Social App</h1>
-              <p class="mb-0">
-                This is an app to stream line digital media marketing using blog posts and feeds for social media.
-              </p>
+              <blockquote class="blockquote mb-0">
+                <p class="mb-0">Engage, Enlighten, Encourage and especially…just be yourself! Social media is a community effort, everyone is an asset.</p>
+                <footer class="blockquote-footer"><cite title="Source Title">Susan Cooper</cite></footer>
+              </blockquote>
             </div>
          </div>
         </div>

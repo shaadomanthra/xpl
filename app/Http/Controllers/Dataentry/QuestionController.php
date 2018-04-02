@@ -49,8 +49,12 @@ class QuestionController extends Controller
 
         $view = $search ? 'list': 'index';
 
+        $question->project_id = $this->project->id;
+        $this->authorize('view', $question);
+
         return view('appl.dataentry.question.'.$view)
         ->with('project',$this->project)
+        ->with('question',$question)
         ->with('questions',$questions);
     }
 
@@ -59,8 +63,12 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Question $question)
     {
+
+        $question->project_id = $this->project->id;
+        $this->authorize('create', $question);
+
         $passages = Passage::where('project_id',$this->project->id)->orderBy('created_at','desc ')
                         ->paginate(config('global.no_of_records'));
 
@@ -169,6 +177,7 @@ class QuestionController extends Controller
     public function show($project_slug,$id)
     {
         $question = Question::where('id',$id)->first();
+        $this->authorize('view', $question);
 
         if($question){
 
@@ -246,6 +255,7 @@ class QuestionController extends Controller
 
         if($id){
             $question = Question::where('id',$id)->first();
+            $this->authorize('view', $question);
 
             if($question){
 
@@ -313,6 +323,7 @@ class QuestionController extends Controller
 
         if($id){
             $question = Question::where('id',$id)->first();
+            $this->authorize('view', $question);
 
             if($question){
 
@@ -368,6 +379,7 @@ class QuestionController extends Controller
     public function edit($project_slug,$id)
     {
         $question = Question::where('id',$id)->first();
+        $this->authorize('update', $question);
 
 
         // merge answer for maq question
@@ -495,7 +507,9 @@ class QuestionController extends Controller
      */
     public function destroy($project_slug,$id)
     {
-        Question::where('id',$id)->first()->delete();
+        $question = Question::where('id',$id)->first();
+        $this->authorize('view', $question);
+        $question->delete();
         flash('Question Successfully deleted!')->success();
         return redirect()->route('question.index',$project_slug);
     }

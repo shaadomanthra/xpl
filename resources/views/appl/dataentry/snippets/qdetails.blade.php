@@ -1,16 +1,23 @@
 <div class="card">
 	<div class="card-header">{{ strtoupper($question->reference) }} <span class="btn view badge badge-warning" data-item="details">hide</span>
+
+		
 		<span class="float-right">
+			@can('publish',$question)
 			<a href="#" data-toggle="modal" data-target="#exampleModal2">
 			<i class="fa fa-paper-plane" data-tooltip="tooltip" data-placement="top" title="Publish"></i>
 			</a> &nbsp;
+			@endcan
+			@can('update',$question)
 			<a href="{{ route('question.edit',['project'=>$project->slug,'question'=>$question->id]) }}">
 			<i class="fa fa-pencil-square" data-tooltip="tooltip" data-placement="top" title="Edit"></i> 
 			</a>&nbsp;
 			<a href="#" data-toggle="modal" data-target="#exampleModal">
 			<i class="fa fa-trash" data-tooltip="tooltip" data-placement="top" title="Delete"></i>
 			</a>
+			@endcan
 		</span>
+		
 	</div>
 	<div class="card-body details">
 		<div class="bg-light p-1 rounded border mb-2">Details</div>

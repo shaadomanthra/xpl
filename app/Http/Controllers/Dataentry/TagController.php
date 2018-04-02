@@ -41,9 +41,13 @@ class TagController extends Controller
                           return $item->name;
                         });
         
+        $this->authorize('view', $tag);
+
         return view('appl.dataentry.tag.index')
             ->with('project',$this->project)
-            ->with('tags',$tags)->with('i',1);
+            ->with('tags',$tags)
+            ->with('tag',$tag)
+            ->with('i',1);
     }
 
     /**
@@ -51,8 +55,10 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Tag $tag)
     {   //dd(request()->route('project'));
+        $this->authorize('create', $tag);
+
         return view('appl.dataentry.tag.createedit')
                 ->with('project',$this->project)->with('stub','Create');
     }
@@ -92,6 +98,7 @@ class TagController extends Controller
     public function show($project_slug,$id)
     {
         $tag = Tag::where('id',$id)->first();
+        $this->authorize('view', $tag);
         if($tag)
             return view('appl.dataentry.tag.show')->with('project',$this->project)->with('tag',$tag);
         else
@@ -107,6 +114,7 @@ class TagController extends Controller
     public function edit($project_slug,$id)
     {
         $tag = Tag::where('id',$id)->first();
+        $this->authorize('update', $tag);
         if($tag)
             return view('appl.dataentry.tag.createedit')
                     ->with('project',$this->project)
@@ -150,6 +158,7 @@ class TagController extends Controller
     public function destroy($project_slug, $id)
     {
         Tag::where('id',$id)->first()->delete();
+        $this->authorize('update', $tag);
         flash('Tag Successfully deleted!')->success();
         return redirect()->route('tag.index',$project_slug);
     }

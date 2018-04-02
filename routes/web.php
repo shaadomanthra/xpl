@@ -22,6 +22,16 @@ Route::get('/image', function()
     return $img->response('png');
 });
 
+
+Route::get("/email", function() {
+   Mail::raw('Now I know how to send emails with Laravel', function($message)
+	{
+		$message->subject('Hi There!!');
+		$message->from(config('mail.from.address'), config("app.name"));
+		$message->to('packetcode@gmail.com');
+	});
+});
+
 Route::get('/about',function(){ return view('appl.pages.packetprep'); })->name('about');
 Route::get('/contact',function(){ return view('appl.pages.contact'); })->name('contact');
 
@@ -61,6 +71,11 @@ Route::get('dataentry/{project}/tag/{tag}/question','Dataentry\QuestionControlle
 Route::get('dataentry/{project}/tag/{tag}/question/{id}','Dataentry\QuestionController@tag')->middleware('auth')->name('tag.question');
 Route::resource('dataentry/{project}/passage','Dataentry\PassageController')->middleware('auth');
 Route::resource('dataentry/{project}/question','Dataentry\QuestionController')->middleware('auth');
+
+
+Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');
+Route::resource('job','Recruit\JobController');
+Route::resource('form','Recruit\FormController');
 
 
 Route::get('/{username}', 'User\UserController@index')->name('profile');

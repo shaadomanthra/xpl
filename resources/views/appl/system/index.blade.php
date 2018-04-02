@@ -18,9 +18,10 @@
             </div>
             <div class="col-9">
               <h1 class=" mb-2"> System App</h1>
-              <p class="mb-0">
-                This is an internal app developed for packetprep team to maintain transparency and accountability.
-              </p>
+              <blockquote class="blockquote mb-0">
+                <p class="mb-0">Ideas are cheap. Ideas are easy. Ideas are common. Everybody has ideas. Ideas are highly, highly overvalued. Execution is all that matters.</p>
+                <footer class="blockquote-footer"><cite title="Source Title">Casey Neistat</cite></footer>
+              </blockquote>
             </div>
          </div>
         </div>

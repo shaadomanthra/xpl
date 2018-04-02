@@ -69,3 +69,10 @@ if (! function_exists('summernote_imageremove')) {
         return $detail;
     }
 }
+
+if (! function_exists('scriptStripper')) {
+    function scriptStripper($input)
+    {
+        return preg_replace('#<script(.*?)>(.*?)</script>#is', '', $input);
+    }
+}

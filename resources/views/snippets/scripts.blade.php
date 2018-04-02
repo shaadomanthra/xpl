@@ -16,6 +16,21 @@
 <script src="{{asset('js/highlight/highlight.pack.js')}}"></script>  
  
  <script>
+  $(document).ready(function() {
+            $('.summernote2').summernote({
+        toolbar: [
+          // [groupName, [list of button]]
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']]
+        ]
+      });
+});
+
+ </script>
+ <script>
         $(document).ready(function() {
             $('.summernote').summernote({
                 placeholder: 'Hello ! Write something...',
@@ -29,6 +44,9 @@
                 },
               });
           });
+
+        
+        
 
         if(document.getElementById("code"))
         var editor = CodeMirror.fromTextArea(document.getElementById("code"), {

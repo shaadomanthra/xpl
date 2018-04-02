@@ -20,13 +20,15 @@ class ProjectController extends Controller
      */
     public function index(Project $project,Request $request)
     {
+        $this->authorize('view', $project);
+
         $search = $request->search;
         $item = $request->item;
         $projects = $project->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
         $view = $search ? 'list': 'index';
 
         return view('appl.dataentry.project.'.$view)
-        ->with('projects',$projects);
+        ->with('projects',$projects)->with('project',new Project());
     }
 
 
@@ -41,6 +43,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $project = new Project();
+        $this->authorize('create', $project);
+
         $users = array();
         $users['data_lead'] = Role::getUsers('data-lead');
         $users['feeder'] = Role::getUsers('feeder');
@@ -51,6 +56,7 @@ class ProjectController extends Controller
         return view('appl.dataentry.project.createedit')
                 ->with('stub','Create')
                 ->with('jqueryui',true)
+                ->with('project',$project)
                 ->with('users',$users);
     }
 
@@ -105,6 +111,9 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::where('slug',$id)->first();
+        
+        $this->authorize('view', $project);
+
         $details['drafts'] = Question::where('project_id',$project->id)->where('status',0)->count();
         $details['published'] = Question::where('project_id',$project->id)->where('status',1)->count();
         $details['live'] = Question::where('project_id',$project->id)->where('status',2)->count();
@@ -128,6 +137,7 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::where('slug',$id)->first();
+        $this->authorize('update', $project);
 
         $users = array();
         $users['data_lead'] = Role::getUsers('data-lead');
@@ -159,6 +169,8 @@ class ProjectController extends Controller
         try{
             $request->slug = str_replace(' ', '-', $request->slug);
             $project = Project::where('id',$id)->first();
+
+            $this->authorize('update', $project);
 
             $category = Category::where('slug',$project->slug)->first();
             $category->name = $request->name;
@@ -198,6 +210,7 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         $project = Project::where('id',$id)->first();
+        $this->authorize('update', $project);
         $node = Category::where('slug',$project->slug)->first();
         $node->delete();
         $project->delete();

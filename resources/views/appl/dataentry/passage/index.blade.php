@@ -12,11 +12,11 @@
           <a class="navbar-brand"><i class="fa fa-clipboard"></i> Passages</a>
 
           <form class="form-inline" method="GET" action="{{ route('dataentry.index') }}">
+            @can('create',$passage)
             <a href="{{route('passage.create',$project->slug)}}">
-
               <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3"><i class="fa fa-plus"></i> New</button>
-
             </a>
+            @endcan
             <div class="input-group ">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fa fa-search"></i></div>

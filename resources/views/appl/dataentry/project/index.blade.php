@@ -13,11 +13,12 @@
           <a class="navbar-brand"><i class="fa fa-inbox"></i> Data Entry </a>
 
           <form class="form-inline" method="GET" action="{{ route('dataentry.index') }}">
+
+            @can('create',$project)
             <a href="{{route('dataentry.create')}}">
-
               <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Create Project</button>
-
             </a>
+            @endcan
             <div class="input-group ">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fa fa-search"></i></div>

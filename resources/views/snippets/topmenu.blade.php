@@ -12,7 +12,7 @@
                     <!-- Authentication Links -->
                     @guest
                     <li><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                    <li><a class="nav-link" href="{{ route('apply') }}">Apply Now</a></li>
+                    <li><a class="nav-link" href="{{ route('job.index') }}">Apply Now</a></li>
                     @else
                     <li class="nav-item ">
                         <a class="nav-link" href="{{url('/')}}">Home </a>
@@ -24,7 +24,7 @@
 
                     <li><a class="nav-link" href="{{ route('material') }}">Material</a></li>
 
-                    <li><a class="nav-link" href="{{ route('root') }}">Recruit</a></li>
+                    <li><a class="nav-link" href="{{ route('recruit') }}">Recruit</a></li>
 
                     @if(\Auth::user()->checkRole(['administrator','editor','social-media-moderator','social-media-writer','blog-moderator','blog-writer','employee']))
                     <li><a class="nav-link" href="{{ route('social') }}">Social</a></li>
