@@ -44,13 +44,13 @@
 			  <div class="form-group row">
 			    <label class="col-sm-3 col-form-label">Message</label>
 			    <div class="col-sm-8">
-			      <textarea class="form-control summernote" name="message" rows="6">{{ (old('message')) ? old('message') : '' }}</textarea>
+			      <textarea class="form-control" name="message" rows="6">{{ (old('message')) ? old('message') : '' }}</textarea>
 			    </div>
 			  </div>
 
 
 			  <div class="form-group row">
-			    <label  class="col-sm-3 col-form-label">&nbsp;</label>
+			    <label  class="col-sm-3 col-form-label"></label>
 			    <div class="col-sm-9">
 			    	<div class="g-recaptcha mb-3" data-sitekey="6Lc9yFAUAAAAALZlJ3hsqVZQKjOGNIrXezGmawtf"></div>
 			      <button class="btn btn-lg btn-outline-info" type="submit" >Send</button>

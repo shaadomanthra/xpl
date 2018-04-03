@@ -17,6 +17,11 @@ Route::get('/', function () { return view('welcome'); })->name('root');
 // usage inside a laravel route
 Route::post('/contactform', function()
 {
+
+	if(!request()->get('name') || !request()->get('email') || !request()->get('subject') || !request()->get('message')){
+		flash('Input fields cannot be empty !')->error();
+		return redirect()->back()->withInput();
+	}
 	$captcha = $_POST['g-recaptcha-response'];
 	if(!$captcha){
 		flash('Please verify using recaptcha !')->error();
