@@ -70,7 +70,7 @@
 			    South Lalaguda, 
 			    Hyderabad <br>
 			    Telangana - 500017<br>
-			    <abbr title="Phone">P:</abbr> +91 86880 79590
+			    Phone: +91 86880 79590
 			  </address>
 
 

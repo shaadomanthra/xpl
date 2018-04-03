@@ -39,6 +39,9 @@ class AuthServiceProvider extends ServiceProvider
 
         \PacketPrep\Models\Recruit\Job::class => \PacketPrep\Policies\Recruit\JobPolicy::class,
         \PacketPrep\Models\Recruit\Form::class => \PacketPrep\Policies\Recruit\FormPolicy::class,
+
+        \PacketPrep\Models\Library\Repository::class => \PacketPrep\Policies\Library\RepositoryPolicy::class,
+        \PacketPrep\Models\Library\Structure::class => \PacketPrep\Policies\Library\StructurePolicy::class,
     ];
 
     /**

@@ -25,21 +25,21 @@
                 <div class="w-100 text-center float-center" > 
                   <span class="text-center float-center">
                 <a href="{{route('chapter.show',[$doc->slug,$chapter->prev]) }}" class="text-center float-center">
-                <i class="fa fa-angle-double-left"></i>
+                <i class="fa fa-angle-double-left fa-2x"></i>
                 </a>
               </span>
             </div>
                 @endif
               </div>
               <div class="col-9 col-md-10 ">
-                {{ $chapter->title }}
+                <h2 class="mt-1">{{ $chapter->title }}</h2>
               </div>
               <div class="col-1 col-md-1 ">
                 @if($chapter->next)
                 <div class="w-100 " > 
                   <span class="text-center ">
                   <a href="{{route('chapter.show',[$doc->slug,$chapter->next]) }}" class="">
-                    <i class="fa fa-angle-double-right "></i>
+                    <i class="fa fa-angle-double-right fa-2x"></i>
                   </a> 
                 </span>
                 </div>

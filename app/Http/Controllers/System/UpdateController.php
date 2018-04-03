@@ -35,6 +35,11 @@ class UpdateController extends Controller
             ->with('updates',$updates);
     }
 
+    public function welcome(){
+        $goals = Goal::where('prime',1)->where('status',0)->get();
+        return view('welcome')->with('goals',$goals); 
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -12,7 +12,7 @@
 */
 
 
-Route::get('/', function () { return view('welcome'); })->name('root');
+Route::get('/', 'System\UpdateController@welcome')->name('root');
 
 // usage inside a laravel route
 Route::post('/contactform', function()
@@ -90,6 +90,9 @@ Route::get('dataentry/{project}/tag/{tag}/question','Dataentry\QuestionControlle
 Route::get('dataentry/{project}/tag/{tag}/question/{id}','Dataentry\QuestionController@tag')->middleware('auth')->name('tag.question');
 Route::resource('dataentry/{project}/passage','Dataentry\PassageController')->middleware('auth');
 Route::resource('dataentry/{project}/question','Dataentry\QuestionController')->middleware('auth');
+
+Route::resource('library','Library\RepositoryController')->middleware('auth');
+Route::resource('library/{repository}/structure','Library\structureController')->middleware('auth');
 
 
 Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');

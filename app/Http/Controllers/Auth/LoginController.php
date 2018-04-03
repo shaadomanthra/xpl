@@ -63,6 +63,16 @@ class LoginController extends Controller
             auth()->logout();
             return back()->with('warning', 'Kindly activate your account with the link provided in the activation mail sent to your inbox');
         }
+
+        if ($user->status==2) {
+            auth()->logout();
+            return back()->with('warning', 'Your account is in blocked state. Kindly contact administrator for the access.');
+        }
+
+        if ($user->status==3) {
+            auth()->logout();
+            return back()->with('warning', 'Your account is in frozen state. Kindly contact administrator for the access.');
+        }
         return redirect()->intended($this->redirectPath());
     }
 

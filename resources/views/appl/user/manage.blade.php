@@ -27,7 +27,6 @@
       <div class="form-group">
         <label for="formGroupExampleInput ">User Roles</label>
           {!! $roles !!}
-        
       </div>
       
 

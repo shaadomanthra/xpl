@@ -25,11 +25,7 @@
          </div>
         </div>
     </div>
-    <div class="card">
-      <div class="card-body mb-0">
-        sample
-     </div>
-   </div>
+    
  </div>
 
   <div class="col-md-3 pl-md-0">

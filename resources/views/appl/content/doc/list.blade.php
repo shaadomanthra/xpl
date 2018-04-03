@@ -5,9 +5,10 @@
               <tr>
                 <th scope="col">#({{$docs->total()}})</th>
                 <th scope="col">Name </th>
-                <th scope="col">Joined</th>
                 <th scope="col">Visibility</th>
+                @if(!auth::guest())
                 <th scope="col">Status</th>
+                @endif
               </tr>
             </thead>
             <tbody>
@@ -19,7 +20,6 @@
                   {{ $doc->name }}
                   </a>
                 </td>
-                <td>{{ ($doc->created_at) ? $doc->created_at->diffForHumans() : '' }}</td>
                  <td>
                   @if($doc->privacy==0)
                     Public
@@ -27,6 +27,7 @@
                     Site Members Only
                    @endif     
                 </td>
+                @if(!auth::guest())
                 <td>
                   @if($doc->status==0)
                     Draft
@@ -34,6 +35,7 @@
                     Published
                    @endif     
                 </td>
+                @endif
               </tr>
               @endforeach      
             </tbody>
