@@ -35,6 +35,11 @@
       </script>
     @endif
 
+
+    @if(isset($recaptcha))
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    @endif
+
     @if(isset($jqueryui))
     <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     @endif

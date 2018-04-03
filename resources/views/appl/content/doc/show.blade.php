@@ -17,7 +17,7 @@
 
         <div class="card-body ">
   
-        <nav class="navbar navbar-light bg-light justify-content-between mb-3">
+        <nav class="navbar navbar-light bg-light justify-content-between p-3 border mb-3">
           <a class="navbar-brand"><i class="fa fa-file"></i> {{ $doc->name }}</a>
           <span class="btn-group float-right" role="group" aria-label="Basic example">
              @can('create',$doc)

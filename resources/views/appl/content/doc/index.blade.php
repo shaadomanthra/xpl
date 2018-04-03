@@ -14,7 +14,7 @@
     @include('flash::message')  
     <div class="card">
       <div class="card-body pb-1">
-        <nav class="navbar navbar-light bg-light justify-content-between mb-3">
+        <nav class="navbar navbar-light bg-light justify-content-between p-3 border mb-3">
           <a class="navbar-brand"><i class="fa fa-book"></i> Documentation </a>
 
           <form class="form-inline" method="GET" action="{{ route('docs.index') }}">

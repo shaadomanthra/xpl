@@ -13,10 +13,10 @@
     <div class="card mb-3">
         <div class="card-body bg-light">
           <div  class="row ">
-            <div class="col-2">
+            <div class="col-4 col-md-3 col-lg-2">
             <div class="text-center"><i class="fa fa-chrome fa-5x"></i> </div>
             </div>
-            <div class="col-9">
+            <div class="col-8 col-md-9 col-lg-10">
               <h1 class=" mb-2"> System App</h1>
               <blockquote class="blockquote mb-0">
                 <p class="mb-0">Ideas are cheap. Ideas are easy. Ideas are common. Everybody has ideas. Ideas are highly, highly overvalued. Execution is all that matters.</p>
@@ -62,7 +62,7 @@
      </div>
    </div>
 
-   <div class="card">
+   <div class="card mb-3 mb-md-0">
       <div class="card-body ">
         <h2>Core Values</h2>
         <p class="mb-0 pb-0">

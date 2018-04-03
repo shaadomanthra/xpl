@@ -13,10 +13,10 @@
     <div class="card mb-3">
         <div class="card-body bg-light">
           <div  class="row ">
-            <div class="col-2">
+            <div class="col-4 col-md-3 col-lg-2">
             <div class="text-center"><i class="fa fa-gg-circle fa-5x"></i> </div>
             </div>
-            <div class="col-9">
+            <div class="col-8 col-md-9 col-lg-10">
               <h1 class=" mb-2"> Social App</h1>
               <blockquote class="blockquote mb-0">
                 <p class="mb-0">Engage, Enlighten, Encourage and especially…just be yourself! Social media is a community effort, everyone is an asset.</p>
@@ -29,7 +29,7 @@
 
     
 
-   <div class="card">
+   <div class="card mb-3">
       <div class="card-body pb-1">
         <h2 class="mb-4"><i class="fa fa-camera-retro"></i> Social Media - Weekly </h2>
         @if($socials)

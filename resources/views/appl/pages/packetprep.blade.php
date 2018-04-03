@@ -2,61 +2,22 @@
 
 @section('content')
 
-<nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">About</li>
-      </ol>
-    </nav>
+<img src="{{ asset('img/about_cover.jpg')}}" class="w-100"/>
 
-<div class="card">
+<div class="bg-white">
 
-	<div class="card-body">
-		<nav class="navbar navbar-light bg-light justify-content-between mb-3">
-          <a class="navbar-brand"><i class="fa fa-bars"></i> About PacketPrep</a>
-     	 </nav>
-		<p class="card-text">
-			<div class="embed-responsive embed-responsive-16by9">
-				<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/76r-BsW5l7I?rel=0" allowfullscreen></iframe>
-			</div>
-			<br>
+	<div class="card-body p-4 ">
+		<h1 class="display-2 mt-3 text-center ">Mission </h1>
+		<p class="lead p-3 text-center">
+		  To develop comprehensive content that makes learning <br>simple, interesting and effective. 
+		</p>
 
-			<dl class="row">
-				<dt class="col-sm-3">Packetprep</dt>
-				<dd class="col-sm-9">
-					It will be the biggest repository of quality concept-wise video lectures hosted on youtube and supported with a synchronized study notes, solved examples, practice questions, then chapter wise as well as full length mock tests.  It will be the one stop platform for students who rely on self study.
-					<br><br>
-				</dd>
-
-				<dt class="col-sm-3">Vision</dt>
-				<dd class="col-sm-9">
-					<p>To create a world-class learning platform for self study</p>
-				</dd>
-
-				<dt class="col-sm-3">Mission</dt>
-				<dd class="col-sm-9">To develop comprehensive content that makes learning simple, interesting and effective.
-					<br><br>
-					<b>Strategy</b>
-
-					<ul>
-						<li>To create CRISS(Crisp, Relevant, Interesting, Simple and Systematic) content for learning </li>
-						<li>To build clear, meaningful, and qualitative question bank for exercises and tests </li>
-						<li>Informative blogs to inspire young minds</li>
-					</ul>
-				</dd>
-
-				<dt class="col-sm-3 ">Values</dt>
-				<dd class="col-sm-9">
-					<ul>
-						<li>Passion driven</li>
-						<li>Creative work</li>
-						<li>Original content</li>
-						<li>Empower learners</li>
-						<li>Customer support</li>
-					</ul>
-				</dd>
-			</dl>
-
+		<h1 class="display-4 mt-3 text-center ">About </h1>
+		<div class="p-3 pr-md-5 pb-5 pl-md-5">
+		<p class="text-center ">At Packetprep, we all come to work every day because we want to make learning super simple, interesting and effective. And we chose video as the right medium to connect to the learners. </p>
+		<p class="text-center">Here at Packetprep, we produce visually appealing, crisp content driven educational videos for competitive exams like GATE, GRE, CAT, JEE, NEET etc. To make the learning effective and comprehensive, we also develop support material like study notes, worksheets, practice questions and mock tests.</p>
+		</div>
+		
 		</div>
 	</div>
 	@endsection           

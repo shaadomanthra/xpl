@@ -91,6 +91,16 @@ ul.list li:before{ content:""; position:absolute; width:13px; height:10px; borde
     left:-13px;top:5px; border-color: #eee transparent transparent transparent;}
 
 
+/*user profile*/
+.name,a.link{ color:white; }
+
+@media (max-width: 720px) {
+    /*user profile*/
+    .name,a.link{ color:#484e51; }
+
+}    
+
+
 // Resetting from the mobile up!
 // 
 // Dropping the root* element font size to 14px is something

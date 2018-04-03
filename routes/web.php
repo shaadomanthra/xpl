@@ -15,25 +15,39 @@
 Route::get('/', function () { return view('welcome'); })->name('root');
 
 // usage inside a laravel route
-Route::get('/image', function()
+Route::post('/contactform', function()
 {
-    $img = Image::make('img/puzzle.png')->resize(300, 200);
+	$captcha = $_POST['g-recaptcha-response'];
+	if(!$captcha){
+		flash('Please verify using recaptcha !')->error();
+		return redirect()->back()->withInput();
+	}
+	$secretKey = "6Lc9yFAUAAAAACg-A58P_L7IlpHjTB69xkA2Xt65";
+	$ip = $_SERVER['REMOTE_ADDR'];
+	$response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
 
-    return $img->response('png');
-});
+	$responseKeys = json_decode($response,true);
+	if(intval($responseKeys["success"]) !== 1) {
+		flash('Recaptcha error kindly retry')->error();
+		return redirect()->back()->withInput();
+	} else {
 
+		Mail::raw(scriptStripper(request()->message), function($message)
+		{
+			$message->subject(scriptStripper(request()->subject));
+			$message->replyTo(scriptStripper(request()->email), scriptStripper(request()->name));
+			$message->from('team@packetprep.com', 'Packetprep');
+			$message->to('packetcode@gmail.com');
+		});
+		flash('Successfully sent your message to packetprep team !')->success()->important();
+		return redirect()->back();
+	}
+    
+})->name('contactform');
 
-Route::get("/email", function() {
-   Mail::raw('Now I know how to send emails with Laravel', function($message)
-	{
-		$message->subject('Hi There!!');
-		$message->from(config('mail.from.address'), config("app.name"));
-		$message->to('packetcode@gmail.com');
-	});
-});
 
 Route::get('/about',function(){ return view('appl.pages.packetprep'); })->name('about');
-Route::get('/contact',function(){ return view('appl.pages.contact'); })->name('contact');
+Route::get('/contact',function(){ return view('appl.pages.contact')->with('recaptcha',true); })->name('contact');
 
 Auth::routes();
 

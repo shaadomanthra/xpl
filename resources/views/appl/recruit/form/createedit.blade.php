@@ -142,6 +142,10 @@
         </textarea>
       </div>
 
+      @if($stub=='Create')
+      <div class="g-recaptcha mb-3" data-sitekey="6Lc9yFAUAAAAALZlJ3hsqVZQKjOGNIrXezGmawtf"></div>
+      @endif
+
       @can('update',$form)
       <div class="form-group">
         <label for="formGroupExampleInput2">reason</label>

@@ -48,6 +48,7 @@ class FormController extends Controller
                 ->with('stub','Create')
                 ->with('job',$job)
                 ->with('jqueryui',true)
+                ->with('recaptcha',true)
                 ->with('form',$form);
     }
 
@@ -73,21 +74,37 @@ class FormController extends Controller
                  return redirect()->back()->withInput();
             }
 
-            $form->name = scriptStripper($request->name);
-            $form->email= scriptStripper($request->email);
-            $form->dob = scriptStripper($request->dob);
-            $form->phone = scriptStripper($request->phone);
-            $form->address = scriptStripper($request->address);
-            $form->education = scriptStripper($request->education);
-            $form->experience = scriptStripper($request->experience);
-            $form->why = scriptStripper($request->why);
-            $form->reason = scriptStripper($request->reason);
-            $form->status = $request->status;
-            $form->job_id = $request->job_id;
-            $form->user_id = null;
-            $form->save(); 
-            return view('appl.recruit.form.success');
+            $captcha = $_POST['g-recaptcha-response'];
+            if(!$captcha){
+              flash('Please verify using recaptcha !')->error();
+              return redirect()->back()->withInput();
+            }
+            $secretKey = "6Lc9yFAUAAAAACg-A58P_L7IlpHjTB69xkA2Xt65";
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+
+            $responseKeys = json_decode($response,true);
+            if(intval($responseKeys["success"]) !== 1) {
+              flash('Recaptcha error kindly retry')->error();
+              return redirect()->back()->withInput();
+            } else {
+                  $form->name = scriptStripper($request->name);
+                $form->email= scriptStripper($request->email);
+                $form->dob = scriptStripper($request->dob);
+                $form->phone = scriptStripper($request->phone);
+                $form->address = scriptStripper($request->address);
+                $form->education = scriptStripper($request->education);
+                $form->experience = scriptStripper($request->experience);
+                $form->why = scriptStripper($request->why);
+                $form->reason = scriptStripper($request->reason);
+                $form->status = $request->status;
+                $form->job_id = $request->job_id;
+                $form->user_id = null;
+                $form->save(); 
+                return view('appl.recruit.form.success');
+            }
         }
+            
         catch (QueryException $e){
             flash('Some unknown error occured. Kindly retry!')->error();
             return redirect()->back()->withInput();
@@ -130,6 +147,7 @@ class FormController extends Controller
             return view('appl.recruit.Form.createedit')
                 ->with('stub','Update')
                 ->with('job',$job)
+                ->with('recaptcha',true)
                 ->with('form',$form);
         else
             abort(404);

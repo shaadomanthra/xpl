@@ -21,13 +21,13 @@
                 <td>{{ ($user->created_at) ? $user->created_at->diffForHumans() : '' }}</td>
                 <td>
                   @if($user->status==0)
-                    Unactivated
+                    <span class="badge badge-secondary">Unactivated</span>
                   @elseif($user->status ==1)
-                    Active
+                    <span class="badge badge-success">Active</span>
                   @elseif($user->status==2)
-                    Blocked
+                    <span class="badge badge-danger">Blocked</span>
                    @else
-                   Frozen
+                   <span class="badge badge-warning">Frozen</span>
                    @endif     
                 </td>
               </tr>

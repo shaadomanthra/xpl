@@ -18,26 +18,38 @@
 
         <div class="card-body ">
 
-          <div class="bg-light p-2 mb-3">
-            @if($chapter->prev)
-            <a href="{{route('chapter.show',[$doc->slug,$chapter->prev]) }}">
-            <i class="fa fa-angle-double-left"></i>
-            </a>
-            @endif
-          <a class="navbar-brand ml-2">
-            {{ $chapter->title }}
-          </a>
-          @if($chapter->next)
-          <span class="float-right mt-2"> 
-            <a href="{{route('chapter.show',[$doc->slug,$chapter->next]) }}">
-              <i class="fa fa-angle-double-right"></i>
-            </a> 
-          </span>
-          @endif
+          <div class="bg-light  p-3 border mb-2">
+            <div class="row  s">
+              <div class="col-1 col-md-1 ">
+                @if($chapter->prev)
+                <div class="w-100 text-center float-center" > 
+                  <span class="text-center float-center">
+                <a href="{{route('chapter.show',[$doc->slug,$chapter->prev]) }}" class="text-center float-center">
+                <i class="fa fa-angle-double-left"></i>
+                </a>
+              </span>
+            </div>
+                @endif
+              </div>
+              <div class="col-9 col-md-10 ">
+                {{ $chapter->title }}
+              </div>
+              <div class="col-1 col-md-1 ">
+                @if($chapter->next)
+                <div class="w-100 " > 
+                  <span class="text-center ">
+                  <a href="{{route('chapter.show',[$doc->slug,$chapter->next]) }}" class="">
+                    <i class="fa fa-angle-double-right "></i>
+                  </a> 
+                </span>
+                </div>
+                @endif
+              </div>
+            </div>
         </div>
 
 
-          <div >{!!$chapter->content!!}</div>
+          <div class="p-3">{!!$chapter->content!!}</div>
           
           
           <span class="btn-group mt-4" role="group" aria-label="Basic example">
@@ -46,7 +58,7 @@
               <a href="{{ route('chapter.show',[$doc->slug,$chapter->prev]) }}" class="btn btn-outline-secondary" title="Previous Chapter"
                 ><i class="fa fa-angle-double-left"></i> prev</a>
                 @endif
-
+              <a href="{{ route('docs.show',[$doc->slug]) }}" class="btn btn-outline-secondary"  title="Index"> <i class="fa fa-bars"></i> Index</a>
                 @if($chapter->next) 
               <a href="{{ route('chapter.show',[$doc->slug,$chapter->next]) }}" class="btn btn-outline-secondary"  title="Next Chapter">next <i class="fa fa-angle-double-right"></i></a>
                @endif
