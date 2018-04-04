@@ -5,6 +5,7 @@ namespace PacketPrep\Models\Library;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 use Illuminate\Support\Facades\DB;
+use PacketPrep\Models\Library\Lquestion as Question;
 
 class Structure extends Model
 {
@@ -19,7 +20,28 @@ class Structure extends Model
     ];
     public $timestamps = false;
 
-        public static function getParent($struct){
+    
+    public function versions()
+    {
+        return $this->hasMany('PacketPrep\Models\Library\Version');
+    }
+
+    public function videos()
+    {
+        return $this->hasMany('PacketPrep\Models\Library\Video');
+    }
+
+    public function documents()
+    {
+        return $this->hasMany('PacketPrep\Models\Library\Document');
+    }
+
+     public function questions()
+    {
+        return $this->belongsToMany('PacketPrep\Models\Library\Lquestion');
+    }
+
+    public static function getParent($struct){
     	$result = Structure::defaultOrder()->ancestorsOf($struct->id);
     	//dd($result);
     	if(count($result)>0)
@@ -35,20 +57,21 @@ class Structure extends Model
 
     public static function displayUnorderedList($structures,$options=null,$i=1){
 
-        
     	$d = '';
     	foreach ($structures as $struct) {
     		$hasChildren = (count($struct->children) > 0);
 
-            $d = $d.'<li class="item" id="'.$struct->id.'" ><a href="'.route('structure.show',
-            	[	
-            		'structure'=> $struct->slug,
-            		'repo'=> $options['repo']->slug,
-            	]
+            $counter ='';
+            if($struct->type=='variant')
+                $counter =  '<a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right"> <i class="fa fa-comments"></i> Questions('.count($struct->questions).')</span></a>';
+            if($struct->type == 'concept')
+                $counter = '<a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-file-text"></i> Versions('.count($struct->versions).')</span></a>';
+            if($struct->type == 'lesson')
+                $counter = '<a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-youtube-play"></i> Videos('.count($struct->videos).')</span></a>';
+            if($struct->type == 'chapter')
+                $counter = '<a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-file-pdf-o"></i> Documents('.count($struct->documents).')</span></a>';
 
-            ).'">'.$struct->name.'</a>'.
-            '<a href="'.route('structure.question',[$options['repo']->slug,$struct->slug,''])
-            .'"><span class="float-right">Questions('.count($struct->questions).')</span></a></li>';
+            $d = $d.'<li class="item" id="'.$struct->id.'" ><a href="'.route('structure.show',[$struct->slug,$options['repo']->slug,]).'">'.$struct->name.'</a>'.$counter.'</li>';
 
             if($hasChildren) {
                 $d = $d.Structure::displayUnorderedList($struct->children,$options,$i+1);
@@ -57,7 +80,7 @@ class Structure extends Model
         if($i==1){
             $total_ques = Question::getTotalQuestionCount($options['repo']);
             $categorized_ques = Structure::getCategorizedQuestionCount($options['repo']);
-            $d = '<ul class="list list-first" >'.$d.'<li>Uncategorized <a href="'.route('structure.question',[$options['repo']->slug,'uncategorized',''])
+            $d = '<ul class="list list-first" >'.$d.'<li>Uncategorized <a href="'.route('question.show',[$options['repo']->slug,'uncategorized',''])
             .'"><span class="float-right">Questions('.($total_ques-$categorized_ques).')</span></a></li></ul>';
         }
     	else
@@ -69,14 +92,14 @@ class Structure extends Model
     public static function getCategorizedQuestionCount($repo){
         $parent =  Structure::where('slug',$repo->slug)->first();   
         $struct_id_list = Structure::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
-        return ( DB::table('Structure_question')->whereIn('Structure_id', $struct_id_list)->distinct()->get(['question_id'])->count());
+        return ( DB::table('lquestion_structure')->whereIn('structure_id', $struct_id_list)->distinct()->get(['lquestion_id'])->count());
         
     }
 
     public static function getUncategorizedQuestions($repo){
         $parent =  Structure::where('slug',$repo->slug)->first();   
         $struct_id_list = Structure::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
-        $question_id_list = DB::table('Structure_question')->whereIn('Structure_id', $struct_id_list)->pluck('question_id')->toArray();
+        $question_id_list = DB::table('lquestion_structure')->whereIn('structure_id', $struct_id_list)->pluck('lquestion_id')->toArray();
 
         $questions = Question::where('repo_id',$repo->id)->whereNotIn('id',$question_id_list)->get();
         return $questions;
@@ -90,13 +113,25 @@ class Structure extends Model
             $hasChildren = (count($struct->children) > 0);
 
             $state = null;
-            if(isset($options['Structure_id']))
-            if(in_array($struct->id , $options['Structure_id']))
+            if(isset($options['structure_id']))
+            if(in_array($struct->id , $options['structure_id']))
                 $state = 'checked';
 
-            $d = $d.'<li class="item" id="'.$struct->id.'" >
-            <input  type="checkbox" name="Structure[]" value="'.$struct->id.'"  '.$state.'> '
-            .$struct->name.'</li>';
+            $color = '';
+            if(isset($options['type']))
+                if($struct->type != 'variant'){
+                    $state = 'disabled';
+                }
+
+            if($state == 'disabled'){
+                $d = $d.'<li class="item " id="'.$struct->id.'" >'
+                .$struct->name.'</li>';
+            }else{
+                $d = $d.'<li class="item" id="'.$struct->id.'" >
+                 <input  type="checkbox" name="structure[]" value="'.$struct->id.'"  '.$state.'> '
+                .$struct->name.'</li>';
+            }
+            
 
             if($hasChildren) {
                 $d = $d.Structure::displayUnorderedCheckList($struct->children,$options,$i+1);
@@ -121,13 +156,34 @@ class Structure extends Model
     		$hasChildren = (count($struct->children) > 0);
 
     		$state = null;
+            if(isset($options['select_id']))
     		if($struct->id == $options['select_id'])
     			$state = 'selected';
-
+            if(isset($options['disable_id']))
     		if($struct->id == $options['disable_id'] || $disable){
     			$state = 'disabled';
     			$disable = true;
     		}
+
+            if($options['type']=='chapter'){
+                if($struct->type !='subject')
+                    $state = 'disabled';
+            }
+
+            if($options['type']=='lesson'){
+                if($struct->type !='chapter')
+                    $state = 'disabled';
+            }
+
+            if($options['type']=='concept'){
+                if($struct->type !='lesson')
+                    $state = 'disabled';
+            }
+
+            if($options['type']=='variant'){
+                if($struct->type !='concept')
+                    $state = 'disabled';
+            }
 
     		if(!$hasChildren)
 			$d = $d.'<option value="'.$struct->id.'" '.$state.'>'.$prefix.$struct->name.'</option>';
@@ -138,6 +194,7 @@ class Structure extends Model
             if($hasChildren) {
                 $d = $d.Structure::displaySelectOption($struct->children,$options,$prefix.'&nbsp;&nbsp;&nbsp;',$disable);
             }
+            if(isset($options['disable_id']))
             if($struct->id == $options['disable_id'])
             	$disable = false;
         }

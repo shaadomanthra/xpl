@@ -42,6 +42,12 @@ class AuthServiceProvider extends ServiceProvider
 
         \PacketPrep\Models\Library\Repository::class => \PacketPrep\Policies\Library\RepositoryPolicy::class,
         \PacketPrep\Models\Library\Structure::class => \PacketPrep\Policies\Library\StructurePolicy::class,
+        \PacketPrep\Models\Library\Ltag::class => \PacketPrep\Policies\Library\LtagPolicy::class,
+        \PacketPrep\Models\Library\Lpassage::class => \PacketPrep\Policies\Library\LpassagePolicy::class,
+        \PacketPrep\Models\Library\Lquestion::class => \PacketPrep\Policies\Library\LquestionPolicy::class,
+        \PacketPrep\Models\Library\Version::class => \PacketPrep\Policies\Library\VersionPolicy::class,
+        \PacketPrep\Models\Library\Video::class => \PacketPrep\Policies\Library\VideoPolicy::class,
+        \PacketPrep\Models\Library\Document::class => \PacketPrep\Policies\Library\DocumentPolicy::class,
     ];
 
     /**

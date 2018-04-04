@@ -102,7 +102,7 @@ class PassageController extends Controller
                 return redirect()->back()->withInput();
             }
 
-            $passage_content = summernote_imageupload($user,$request->passage);
+            $passage_content = summernote_imageupload(\auth::user(),$request->passage);
 
             $request->merge(['passage'=>$passage_content]);
             $passage = Passage::create($request->all());

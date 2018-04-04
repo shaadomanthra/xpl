@@ -157,7 +157,8 @@ class TagController extends Controller
      */
     public function destroy($project_slug, $id)
     {
-        Tag::where('id',$id)->first()->delete();
+        $tag = Tag::where('id',$id)->first();
+        $tag->delete();
         $this->authorize('update', $tag);
         flash('Tag Successfully deleted!')->success();
         return redirect()->route('tag.index',$project_slug);

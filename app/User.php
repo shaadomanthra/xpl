@@ -33,6 +33,12 @@ class User extends Authenticatable
     /**
      * The roles that belong to the user.
      */
+
+    public function details()
+    {
+        return $this->hasOne('PacketPrep\Models\User\User_Details');
+    }
+
     public function roles()
     {
         return $this->belongsToMany('PacketPrep\Models\User\Role');

@@ -15,8 +15,8 @@
 
           <span class="s15"><i class="fa fa-hashtag "></i>{{ $struct->slug }}</span>
             </a>
-          <a href="{{ route('struct.question',[$repo->slug,$struct->slug,''])}}">
-            <span class="s15">Questions ({{ count($struct->questions)}})</span>
+          <a href="{{ route('question.show',[$repo->slug,$struct->slug,''])}}">
+            <span class="s15">Questions (0)</span>
           </a>
         </nav>
 
@@ -46,12 +46,12 @@
           
           @can('update',$struct)
            <span class="btn-group mt-4" role="group" aria-label="Basic example">
-              <a href="{{ route('struct.edit',['repo_slug'=>$repo->slug,'struct'=>$struct->slug]) }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+              <a href="{{ route('structure.edit',['repo_slug'=>$repo->slug,'struct'=>$struct->slug]) }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               
                @if($list) 
-              <a href="{{ route('struct.show',['repo_slug'=>$repo->slug,'struct'=>$struct->slug]).'?order=up' }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Move Up"
+              <a href="{{ route('structure.show',['repo_slug'=>$repo->slug,'struct'=>$struct->slug]).'?order=up' }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Move Up"
                 ><i class="fa fa-arrow-up"></i></a>
-              <a href="{{ route('struct.show',['repo_slug'=>$repo->slug,'struct'=>$struct->slug]).'?order=down' }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Move Down"><i class="fa fa-arrow-down"></i></a>
+              <a href="{{ route('structure.show',['repo_slug'=>$repo->slug,'struct'=>$struct->slug]).'?order=down' }}" class="btn btn-outline-primary" data-tooltip="tooltip" data-placement="top" title="Move Down"><i class="fa fa-arrow-down"></i></a>
                @endif
               
               <a href="#" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
@@ -88,7 +88,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         
-        <form method="post" action="{{route('struct.destroy',['repo_slug'=>$repo->slug,'struct'=>$struct->slug])}}">
+        <form method="post" action="{{route('structure.destroy',['repo_slug'=>$repo->slug,'struct'=>$struct->slug])}}">
         <input type="hidden" name="_method" value="DELETE">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         	<button type="submit" class="btn btn-danger">Delete Permanently</button>

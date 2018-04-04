@@ -11,34 +11,34 @@ if (! function_exists('summernote_imageupload')) {
             $images = $dom->getElementsByTagName('img');
 
             foreach($images as $k => $img){
+
                 $data = $img->getAttribute('src');
-                if(!strpos($data, ';'))
-                	break;
-                list($type, $data) = explode(';', $data);
-                list(, $data)      = explode(',', $data);
-                $data = base64_decode($data);
 
-                $base_folder = "/img/upload/";
-                $image_name=  $user->username.'_'. time().'_'.$k.'.png';
-                $temp_path = public_path() . $base_folder . 'temp_' . $image_name;
-                $path = public_path() . $base_folder . $image_name;
+                if(strpos($data, ';'))
+                {
+                    list($type, $data) = explode(';', $data);
+                    list(, $data)      = explode(',', $data);
+                    $data = base64_decode($data);
 
+                    $base_folder = "/img/upload/";
+                    $image_name=  $user->username.'_'. time().'_'.$k.'.png';
+                    $temp_path = public_path() . $base_folder . 'temp_' . $image_name;
+                    $path = public_path() . $base_folder . $image_name;
+                    file_put_contents($temp_path, $data);
+                    //resize
+                    $imgr = Image::make($temp_path);
+                    $imgr->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+                    $imgr->save($path);
 
-                file_put_contents($temp_path, $data);
+                    unlink(trim($temp_path));
 
-
-                //resize
-                $imgr = Image::make($temp_path);
-                $imgr->resize(800, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                });
-                $imgr->save($path);
-
-                unlink(trim($temp_path));
-
-                $img->removeAttribute('src');
-                $img->setAttribute('src', $base_folder.$image_name);
+                    $img->removeAttribute('src');
+                    $img->setAttribute('src', $base_folder.$image_name);
+                }
+                
             }
             $detail = $dom->saveHTML();
         }
@@ -76,3 +76,25 @@ if (! function_exists('scriptStripper')) {
         return preg_replace('#<script(.*?)>(.*?)</script>#is', '', $input);
     }
 }
+
+if (! function_exists('url_exists')) {
+function url_exists($url) {
+    if (!$fp = curl_init($url)) return false;
+    return true;
+}
+}
+
+if (! function_exists('youtube_video_exists')) {
+function youtube_video_exists($url) {
+    $videoUrl = "http://www.youtube.com/watch?v=".$url;
+    $videoJson = "http://www.youtube.com/oembed?url=$videoUrl&format=json";
+    $headers = get_headers($videoJson);
+    $code = substr($headers[0], 9, 3);
+    if ($code != "404") {
+       return true;
+    }
+    return false;    
+
+}
+}
+

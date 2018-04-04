@@ -12,9 +12,18 @@
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3 p-3">
           <a class="navbar-brand"><i class="fa fa-tasks"></i> Structures</a>
           @can('create',$struct)
-          <a href="{{route('structure.create',$repo->slug)}}">
-              <button type="button" class="btn btn-outline-success float-right"><i class="fa fa-plus"></i> New</button>
-            </a>
+             <div class="btn-group ">
+             
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-plus"></i> New
+            </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'chapter'])}}">Chapter</a>
+                <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'lesson'])}}">Lesson</a>
+                <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'concept'])}}">Concept</a>
+                <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'variant'])}}">Variant</a>
+              </div>
+            </div>
           @endcan
           
         </nav>

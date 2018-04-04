@@ -3,6 +3,7 @@
 namespace PacketPrep\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
+use PacketPrep\User;
 
 class User_Details extends Model
 {
@@ -13,6 +14,20 @@ class User_Details extends Model
      * @var string
      */
     protected $table = 'user_details';
+
+    protected $fillable = [
+        'user_id',
+        'bio',
+        'designation',
+        'country',
+        'city',
+        'facebook_link',
+        'twitter_link',
+        'privacy',
+
+        // add all other fields
+    ];
+    
     /**
      * Indicates if the model should be timestamped.
      *
@@ -20,6 +35,10 @@ class User_Details extends Model
      */
     public $timestamps = false;
 
+
+    public function users(){
+    	return $this->belongsTo('PacketPrep\User');
+    }
 
     public static function getCountry($item=null){
     	$countries =

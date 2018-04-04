@@ -16,7 +16,7 @@
           <form class="form-inline" method="GET" action="{{ route('question.index',$project->slug) }}">
            
            @can('create',$question)
-             <div class="btn-group show mr-3">
+             <div class="btn-group mr-3">
              
               <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fa fa-plus"></i> New

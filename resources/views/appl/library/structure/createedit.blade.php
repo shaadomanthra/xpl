@@ -5,9 +5,9 @@
   @include('flash::message')
   <div class="card">
     <div class="card-body">
-      <h1 class="bg-light p-3 mb-3">
+      <h1 class="bg-light p-3 mb-3 border">
         @if($stub=='Create')
-          Create Structure
+          Create Structure : {{ ucfirst(request()->type) }}
         @else
           Update Structure
         @endif  
@@ -54,13 +54,16 @@
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Type</label>
-        <select class="form-control" name="type">
-          <option value="1" @if(isset($struct)) @if($struct->status==1) selected @endif @endif >Subject</option>
-          <option value="2" @if(isset($struct)) @if($struct->status==2) selected @endif @endif >Chapter</option>
-          <option value="3" @if(isset($struct)) @if($struct->status==3) selected @endif @endif >Lesson</option>
-          <option value="4" @if(isset($struct)) @if($struct->status==4) selected @endif @endif >Concept</option>
-          <option value="5" @if(isset($struct)) @if($struct->status==5) selected @endif @endif >Variant</option>
-        </select>
+        <input type="text" class="form-control" name="type" id="formGroupExampleInput2" 
+        @if( request()->get('type') )
+         value=" {{ request()->get('type') }}"
+        @else 
+          value="concept"
+        @endif
+         disabled>
+        <input type="hidden" name="type" value="@if(request()->get('type')) 
+        {{ request()->get('type') }}
+        @else concept @endif">
       </div>
       
       <button type="submit" class="btn btn-info">Save</button>

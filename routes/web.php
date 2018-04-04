@@ -93,6 +93,16 @@ Route::resource('dataentry/{project}/question','Dataentry\QuestionController')->
 
 Route::resource('library','Library\RepositoryController')->middleware('auth');
 Route::resource('library/{repository}/structure','Library\structureController')->middleware('auth');
+Route::get('library/{repository}/structure/{structure}/question','Library\LquestionController@structure')->middleware('auth')->name('structure.question');
+Route::get('library/{repository}/structure/{structure}/question/{id}','Library\LquestionController@structure')->middleware('auth')->name('structure.question');
+Route::resource('library/{repository}/ltag','Library\LtagController')->middleware('auth');
+Route::get('library/{repository}/ltag/{tag}/question','Library\LquestionController@tag')->middleware('auth')->name('ltag.question');
+Route::get('library/{repository}/ltag/{tag}/question/{id}','Library\LquestionController@tag')->middleware('auth')->name('ltag.question');
+Route::resource('library/{repository}/lpassage','Library\LpassageController')->middleware('auth');
+Route::resource('library/{repository}/lquestion','Library\LquestionController')->middleware('auth');
+Route::resource('library/{repository}/version','Library\VersionController')->middleware('auth');
+Route::resource('library/{repository}/video','Library\VideoController')->middleware('auth');
+Route::resource('library/{repository}/document','Library\DocumentController')->middleware('auth');
 
 
 Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');

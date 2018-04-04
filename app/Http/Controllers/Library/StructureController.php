@@ -56,12 +56,17 @@ class StructureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Structure $struct)
+    public function create(Structure $struct,Request $request)
     {
         $this->authorize('create', $struct);
 
+        if($request->type)
+            $type = $request->type;
+        else
+            $type = 'chapter';
+
         $parent =  Structure::where('slug',$this->repo->slug)->first();  
-        $select_options = $struct->displaySelectOption($parent->descendantsAndSelf($parent->id)->toTree());
+        $select_options = $struct->displaySelectOption($parent->descendantsAndSelf($parent->id)->toTree(),['type'=>$type]);
         return view('appl.library.structure.createedit')
                 ->with('repo',$this->repo)
                 ->with('select_options',$select_options)
@@ -78,7 +83,7 @@ class StructureController extends Controller
     {
 
         $request->slug = str_replace(' ', '-', $request->slug);
-        $child_attributes =['name'=>$request->name,'slug'=>$request->slug];
+        $child_attributes =['name'=>$request->name,'slug'=>$request->slug,'type'=>$request->type];
         $parent = Structure::where('id','=',$request->parent_id)->first();
         $child = new Structure($child_attributes);
 
@@ -97,7 +102,7 @@ class StructureController extends Controller
         else
             $child->save();
         flash('A new Structure('.$request->name.') is created!')->success();
-        return redirect()->route('Structure.index',$request->repo_slug);
+        return redirect()->route('structure.index',$request->repo_slug);
         
     }
 
@@ -134,9 +139,9 @@ class StructureController extends Controller
             do{
                 ($struct_slug==$firstchild->slug) ? $class = ' class="current" ' : $class = ' ' ;
                     
-                $list= $list.'<li '.$class.' data-slug="'.$firstchild->slug.'"><a href="'.route('Structure.show',
+                $list= $list.'<li '.$class.' data-slug="'.$firstchild->slug.'"><a href="'.route('structure.show',
                 [   
-                    'Structure'=> $firstchild->slug,
+                    'structure'=> $firstchild->slug,
                     'repo'=> $repo_slug,
                 ]).'">'.$firstchild->name.'</a></li>';
 
@@ -153,9 +158,9 @@ class StructureController extends Controller
             $list ="<ul class='sortable'>";
              foreach($siblings as $child){
                 ($struct_slug==$child->slug) ? $class = ' class="current" ' : $class = ' ' ;
-                $list= $list.'<li '.$class.' data-slug="'.$child->slug.'"><a href="'.route('Structure.show',
+                $list= $list.'<li '.$class.' data-slug="'.$child->slug.'"><a href="'.route('structure.show',
                 [   
-                    'Structure'=> $child->slug,
+                    'structure'=> $child->slug,
                     'repo'=> $repo_slug,
                 ]).'">'.$child->name.'</a></li>';
              }
@@ -171,7 +176,7 @@ class StructureController extends Controller
         if($struct)
             return view('appl.library.structure.show')
                     ->with('repo',$this->repo)
-                    ->with('Structure',$struct)
+                    ->with('struct',$struct)
                     ->with('parent',$parent)
                     ->with('list',$list)
                     ->with('jqueryui',true);
@@ -204,6 +209,7 @@ class StructureController extends Controller
         $select_options = Structure::displaySelectOption(Structure::defaultOrder()->descendantsOf($root->id)->toTree(),
             [   'select_id'     =>  $parent->id,
                 'disable_id'    =>  $node->id,
+                'type' => $node->type,
             ]
         );
 
@@ -211,7 +217,7 @@ class StructureController extends Controller
         if($node)
             return view('appl.library.structure.createedit')
                     ->with('repo',$this->repo)
-                    ->with('Structure',$node)
+                    ->with('struct',$node)
                     ->with('parent',$parent)
                     ->with('select_options',$select_options)
                     ->with('stub','Update');
@@ -233,6 +239,7 @@ class StructureController extends Controller
         $struct = Structure::where('slug',$struct_slug)->first();
         $new_parent = Structure::where('id',$request->parent_id)->first();
         // change the parent
+        if($new_parent)
         $new_parent->appendNode($struct);
 
         //get the new reference to the Structure item
@@ -243,8 +250,8 @@ class StructureController extends Controller
         $struct->save();
 
         flash('Structure(<b>'.$request->name.'</b>) successfully updated!')->success();
-        return redirect()->route('Structure.show',[   
-                    'Structure'=> $struct_slug,
+        return redirect()->route('structure.show',[   
+                    'structure'=> $request->slug,
                     'repo'=> $repo_slug,
                 ]);
         
@@ -261,6 +268,6 @@ class StructureController extends Controller
         $node = Structure::where('slug',$struct_slug)->first();
         $node->delete();
         flash('Structure ('.$struct_slug.')Tree Successfully deleted!')->success();
-        return redirect()->route('Structure.index',$repo_slug);
+        return redirect()->route('structure.index',$repo_slug);
     }
 }
