@@ -22,15 +22,15 @@
                     <li><a class="nav-link" href="{{ route('system') }}">System</a></li>
                     @endif
 
-                    @if(\Auth::user()->checkRole(['administrator','data-manager','data-lead','feeder','proof-reader','renovator','validator','restructure-lead','thinker','manager','employee']))
+                    @if(\Auth::user()->checkRole(['administrator','investor','patron','promoter','data-manager','data-lead','feeder','proof-reader','renovator','validator','restructure-lead','thinker','manager','employee']))
                     <li><a class="nav-link" href="{{ route('material') }}">Material</a></li>
                     @endif
 
-                    @if(\Auth::user()->checkRole(['administrator','hr-manager','recruiter','employee']))
+                    @if(\Auth::user()->checkRole(['administrator','investor','patron','promoter','hr-manager','recruiter','employee']))
                     <li><a class="nav-link" href="{{ route('recruit') }}">Recruit</a></li>
                     @endif
 
-                    @if(\Auth::user()->checkRole(['administrator','editor','social-media-moderator','social-media-writer','blog-moderator','blog-writer','employee']))
+                    @if(\Auth::user()->checkRole(['administrator','editor','social-media-moderator','investor','patron','promoter','social-media-writer','blog-moderator','blog-writer','employee']))
                     <li><a class="nav-link" href="{{ route('social') }}">Social</a></li>
                     @endif
 

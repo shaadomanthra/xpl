@@ -36,15 +36,16 @@
                <h4 class="text-secondary ">{{ $user_details->designation }}</h4>
              </div>
                @endif
-               <div>
+             @endif  
+              <div>
               @can('update',$user)
               <a href="{{route('profile.edit','@'.$user->username)}}"><i class="fa fa-edit"></i></a>
               @endcan
               @can('manage',$user)
               <a href="{{route('profile.manage','@'.$user->username)}}"><i class="fa fa-gear"></i></a>
               @endcan
-                </div>
-              @endif
+              </div>
+              
 
              @if($user_details)
              <p>{!! $user_details->bio !!}</p>
@@ -62,7 +63,7 @@
     <div class="card-body bg-light">
       <div class="row">
         <div class="col-6"><h1 class="mb-0"> Position</h1></div>
-        <div class="col-6">
+        <div class="col-6 mt-2">
           @if(count($user->roles))
             @foreach($user->roles as $roles)
               {{ $roles->name }} <br>

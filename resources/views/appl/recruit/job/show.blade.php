@@ -4,6 +4,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    @if(!auth::guest()) <li class="breadcrumb-item"><a href="{{ route('recruit') }}">Recruit</a></li> @endif
     <li class="breadcrumb-item "><a href="{{ route('job.index')}}">Jobs</a></li>
     <li class="breadcrumb-item active" aria-current="page">
       {{ $job->title }}

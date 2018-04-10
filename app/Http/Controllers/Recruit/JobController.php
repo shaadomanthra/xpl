@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Recruit;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Recruit\Job;
+use PacketPrep\Models\Recruit\Form;
 
 class JobController extends Controller
 {
@@ -25,10 +26,6 @@ class JobController extends Controller
         ->with('jobs',$jobs)->with('job',new Job());
     }
 
-
-    public function material(){
-        return view('appl.dataentry.index');
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -65,7 +62,7 @@ class JobController extends Controller
             $job->title = $request->title;
             $job->slug = $request->slug;
             $job->user_id= $request->user_id;
-            $job->content = $request->content;
+            $job->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
             $job->vacancy = $request->vacancy;
             $job->status = $request->status;
             $job->save(); 
@@ -84,7 +81,15 @@ class JobController extends Controller
     }
 
     public function recruit(){
-        return view('appl.recruit.index');
+
+        if(\Auth::user()->checkRole(['administrator','investor','patron','promoter','hr-manager','recruiter','employee',''])){
+            $jobs = job::limit(3)->orderBy('created_at','desc')->get();
+            $forms = form::limit(1)->orderBy('created_at','desc')->get();
+            $forms->count = Form::getCount();
+            return view('appl.recruit.index')->with('jobs',$jobs)->with('forms',$forms);
+        }else
+            abort('403','Unauthorized Access');
+        
     }
     /**
      * Display the specified resource.
@@ -147,7 +152,7 @@ class JobController extends Controller
             $request->slug = str_replace(' ', '-', $request->slug);
             $job->title = $request->title;
             $job->slug = $request->slug;
-            $job->content = $request->content;
+            $job->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
             $job->vacancy = $request->vacancy;
             $job->status = $request->status;
             $job->save(); 
@@ -174,6 +179,7 @@ class JobController extends Controller
     {
         $job = Job::where('id',$id)->first();
         $this->authorize('update', $job);
+        $job->content = summernote_imageremove($job->content);
         $job->delete();
         flash('Job Successfully deleted!')->success();
         return redirect()->route('job.index');

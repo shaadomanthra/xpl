@@ -102,7 +102,7 @@
              </div>
             @endforeach      
           @else
-          <div class="card card-body bg-light mb-3">
+          <div class="card card-body mb-3">
             No Reports listed
           </div>
           @endif

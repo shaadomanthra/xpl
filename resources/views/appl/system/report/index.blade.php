@@ -36,7 +36,7 @@
       <div class="card-body ">
        
 
-        <div id="search-items" class="p-3 ">
+        <div id="search-items" class="p-3">
           @if($reports->total()!=0)
             @foreach($reports as $key=>$report)  
 
@@ -73,15 +73,15 @@
              
             @endforeach      
           @else
-          <div class="card card-body bg-light mb-3">
+          <div class="card card-body bg-light ">
             No Reports listed
           </div>
           @endif
-          <div class="mt-4">
+          <div class="mt-0">
           <nav aria-label="Page navigation example">
             {{$reports->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
           </nav>
-        </div>
+          </div>
         </div>
 
       </div>

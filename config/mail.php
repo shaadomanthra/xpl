@@ -60,6 +60,8 @@ return [
         'name' => env('MAIL_FROM_NAME', 'PacketPrep'),
     ],
 
+    'report' => env('MAIL_REPORT_ADDRESS','packetcode@gmail.com'),
+
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol

@@ -7,6 +7,8 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Recruit\Form;
 use PacketPrep\Models\Recruit\Job;
 use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Mail;
+use PacketPrep\Mail\FormAlert;
 
 class FormController extends Controller
 {
@@ -20,13 +22,14 @@ class FormController extends Controller
         $this->authorize('update', $form);
         $search = $request->search;
         $item = $request->item;
-        $forms = $form->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+        $forms = $form->getForms();
         $view = $search ? 'list': 'index';
-
-
+        $jobs = Job::get();
 
         return view('appl.recruit.form.'.$view)
-        ->with('forms',$forms)->with('form',new Form());
+                ->with('forms',$forms)
+                ->with('jobs',$jobs)
+                ->with('form',new Form());
     }
 
 
@@ -101,6 +104,9 @@ class FormController extends Controller
                 $form->job_id = $request->job_id;
                 $form->user_id = null;
                 $form->save(); 
+
+                Mail::to(config('mail.report'))->send(new FormAlert($form));
+
                 return view('appl.recruit.form.success');
             }
         }

@@ -4,6 +4,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('recruit') }}">Recruit</a></li> 
     <li class="breadcrumb-item "><a href="{{ route('job.index')}}">Jobs</a></li>
     <li class="breadcrumb-item active" aria-current="page">
       @if($stub=='Create')
@@ -17,7 +18,7 @@
 @include('flash::message')
   <div class="card">
     <div class="card-body">
-      <h1>
+      <h1 class="bg-light p-3 border mb-3">
         @if($stub=='Create')
           Post Job
         @else

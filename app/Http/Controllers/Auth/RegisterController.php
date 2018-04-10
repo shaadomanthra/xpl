@@ -3,6 +3,7 @@
 namespace PacketPrep\Http\Controllers\Auth;
 
 use PacketPrep\User;
+use PacketPrep\Models\User\User_Details;
 use PacketPrep\Mail\ActivateUser;
 use PacketPrep\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -93,6 +94,14 @@ class RegisterController extends Controller
             if(!$user->status) {
                 $user->status = 1;
                 $user->save();
+                //update user details
+                $user_details = new User_Details;
+                $user_details->user_id = $user->id;
+                $user_details->privacy = 0;
+                $user_details->country = 'IN';
+                $user_details->city = '';
+                $user_details->save();
+
                 $status = "Your e-mail is verified. You can now login.";
             }else{
                 $status = "Your e-mail is already verified. You can now login.";
