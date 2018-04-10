@@ -2,12 +2,18 @@
 
 @section('content')
 
-<div class="jumbotron bg-white border">
+<div class="jumbotron bg-white border mt-4">
 
 	<div class="row">
 		<div class="col-md-8 ">
 			@if(auth::user())
-			<h2>Hi, {{ auth::user()->name}}</h2>
+			<div class="row mt-2">
+				<div class="col-12 col-md-3">
+					<img class="img-thumbnail rounded-circle mb-3"src="{{ Gravatar::src(auth::user()->email, 100) }}">
+				</div>
+				<div class="col-12 col-md-9">
+
+					<h2>Hi, {{ auth::user()->name}}</h2>
 			<p> Welcome aboard</p>
 
 			<p class="lead">We are here to make the learning simple, interesting and effective.</p>
@@ -18,6 +24,12 @@
 			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 				{{ csrf_field() }}
 			</form>
+
+				</div>
+			</div>
+            
+             
+			
 			@else
 
 			<h1 class="display-4">Hello World !</h1>
@@ -31,7 +43,7 @@
 			@endif
 
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-4 d-none d-md-block">
 			<div class="text-center mt-3 mt-mb-0">
 				<img src="{{ asset('/img/puzzle.png')}}" width="200px"/>
 			</div>
@@ -40,60 +52,11 @@
 </div>
 
 @if(auth::user())
-<div class="row">
-	<div class=" col-6 col-md-2">
-		<div class="card text-center mb-3">
-			<a href="{{route('update.index')}}">
-				<div class="card-body">
-					<i class="fa fa-bullhorn fa-2x"></i><br>Updates
-				</div>
-			</a>
-		</div>
-
-		<div class="card text-center mb-3">
-			<a href="{{route('dataentry.index')}}">
-				<div class="card-body">
-					<i class="fa fas fa-inbox fa-2x"></i><br>Dataentry
-				</div>
-			</a>
-		</div>
-
-		<div class="card text-center mb-3">
-			<a href="{{route('blog.index')}}">
-				<div class="card-body">
-					<i class="fa fa-align-justify fa-2x"></i><br>Blog
-				</div>
-			</a>
-		</div>
-
-	</div>
-	<div class="col-6 col-md-2">
-		<div class="card text-center mb-3">
-			<a href="{{route('report.index')}}">
-				<div class="card-body">
-					<i class="fa fas fa-align-right fa-2x"></i><br>Reports
-				</div>
-			</a>
-		</div>
-
-		<div class="card text-center mb-3">
-			<a href="{{route('library.index')}}">
-				<div class="card-body">
-					<i class="fa fas fa-university fa-2x"></i><br>Library
-				</div>
-			</a>
-		</div>
-		<div class="card text-center mb-3">
-			<a href="{{route('media.index')}}">
-				<div class="card-body">
-					<i class="fa fa-camera-retro fa-2x"></i><br>Social 
-				</div>
-			</a>
-		</div>
-	</div>
-	<div class="col-md-8">
-		<div class="card mb-3">
-			<div class="card-body ">
+<div class="row ">
+	
+	<div class="col-12 col-md-6 ">
+		<div class="card mb-4 mr-md-1" style="min-height:212px;">
+			<div class="card-body bg-light">
 				<div class="row no-gutter">
 					<div class="col-6">
 						<h2>Vision</h2> 
@@ -110,9 +73,10 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<div class="card mb-3">
+		</div> 
+	</div>
+	<div class="col-12 col-md-6">
+		<div class="card mb-md-3">
 			<div class="card-body bg-success text-white">
 				<h2><b>Prime Goals</b></h2>
 				<p class="mb-0 pb-0">
@@ -126,21 +90,6 @@
 				</p>
 			</div>
 		</div>
-
-		<div class="card  mb-md-0">
-			<div class="card-body ">
-				<h2>Core Values</h2>
-				<p class="mb-0 pb-0">
-					<ol class="mb-0 pb-0">
-						<li>Passion driven</li>
-						<li>Creative Mindset</li>
-						<li>Original content</li>
-						<li>Empower learners</li>
-						<li>Student centric</li>
-					</ol>
-				</p>
-			</div>
-		</div>   
 	</div>
 </div>
 

@@ -18,6 +18,7 @@
             <div class="mt-3 mt-md-5 ">
              <h2 class="mb-md-4 name" >{{ $user->name }} 
 
+              @if($user_details)
               @if($user_details->facebook_link)
                 <a href="{{$user_details->facebook_link}}" class="link"><i class="fa fa-facebook-square"></i> </a>
                 @endif
@@ -25,6 +26,7 @@
                 @if($user_details->twitter_link)
                 <a href="{{$user_details->twitter_link}}" class="link"><i class="fa fa-twitter-square"></i> </a>
                 @endif
+              @endif  
 
               
              </h2>

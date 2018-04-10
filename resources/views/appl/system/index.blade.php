@@ -28,48 +28,29 @@
     </div>
 
     <div class="row mb-3 ">
-      <div class="col-md-6 mb-4 mb-md-0">
-          <div class="card">
+      <div class="col-md-6">
+          <div class="card mb-4">
               <div class="card-body">
-                <h1 class="mb-4"><i class="fa fa-bullhorn"></i> Updates 
+                <h2 class="mb-4"><i class="fa fa-bullhorn"></i> Updates 
                   <span class="s15 float-right">
                     <a href="{{ route('update.index') }}"><button class="btn btn-outline-info btn-sm">View All</button></a>
                     </span>
-                </h1>
+                </h2>
                 @foreach($updates as $update)
                   <div><b><a href="{{ route('profile','@'.$update->user->username)}}">{{ $update->user->name }}</a></b></div>
                   {!! str_limit(strip_tags($update->content),100) !!} <a href="{{ route('update.show',$update->id) }}">readmore</a><br><Br>
                 @endforeach
               </div>
           </div>
-      </div>
-      <div class="col-md-6 mb-4 ">
-          <div class="card">
-              <div class="card-body">
-                <h1 class="mb-4"><i class="fa fa-flag"></i> Goals
-                  <span class="s15 float-right">
-                    <a href="{{ route('goal.index') }}"><button class="btn btn-outline-info btn-sm">View All</button></a>
-                    </span>
-                </h1>
-                @foreach($goals as $goal)
-                  <div><b class="text-primary">{{ \carbon\carbon::parse($goal->end_at)->format('d M Y') }}</b></div>
-                  <div class="mb-3">
-                  {!! str_limit(strip_tags($goal->title),100) !!} 
-                </div>
-                @endforeach
-              </div>
-          </div>
-      </div>
 
-      @can('view',$finance)
-      <div class="col-md-6 mb-4 mb-md-0">
+          @can('view',$finance)
           <div class="card">
               <div class="card-body">
-                <h1 class="mb-4"><i class="fa fa-rupee"></i> Cash Flow
+                <h2 class="mb-4"><i class="fa fa-rupee"></i> Cash
                   <span class="s15 float-right">
                     <a href="{{ route('finance.index') }}"><button class="btn btn-outline-info btn-sm">View All</button></a>
                     </span>
-                </h1>
+                </h2>
                 <div class="p-3 border mb-3 bg-light">
                 <div>Balance</div>
                   @if($finance->cashin - $finance->cashout > -1)
@@ -78,30 +59,48 @@
                     <h1 class="text-danger"> - <i class="fa fa-rupee"></i>{{ $finance->cashout - $finance->cashin   }}</h1>
                   @endif
                 </div>
-                <div class="row">
-                    <div class="col-6">
+                <div class="row no-gutters">
+                    <div class="col-6 col-md-12 col-lg-6 mb-3 mb-lg-0">
                         <div>Cash In</div>
-                        <h1 class="text-secondary"><i class="fa fa-rupee"></i>  {{ $finance->cashin }}</h1>
+                        <h3 class="text-secondary"><i class="fa fa-rupee"></i>  {{ $finance->cashin }}</h3>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 col-md-12 col-lg-6">
                         <div>Cash Out</div>
-                        <h1 class="text-secondary"><i class="fa fa-rupee"></i> {{ $finance->cashout }}</h1>
+                        <h3 class="text-secondary"><i class="fa fa-rupee"></i> {{ $finance->cashout }}</h3>
                     </div>
                 </div>
               </div>
           </div>
+        @endcan
+
+
       </div>
-      @endcan
+      <div class="col-md-6 ">
+          <div class="card mb-4">
+              <div class="card-body">
+                <h2 class="mb-4"><i class="fa fa-flag"></i> Goals
+                  <span class="s15 float-right">
+                    <a href="{{ route('goal.index') }}"><button class="btn btn-outline-info btn-sm">View All</button></a>
+                    </span>
+                </h2>
+                @foreach($goals as $goal)
+                  <div><b class="text-primary">{{ \carbon\carbon::parse($goal->end_at)->format('d M Y') }}</b></div>
+                  <div class="mb-3">
+                  {!! str_limit(strip_tags($goal->title),100) !!} 
+                </div>
+                @endforeach
+              </div>
+          </div>
+
 
       @can('view',$finance)
-      <div class="col-md-6 mb-3 mb-md-0">
           <div class="card">
               <div class="card-body">
-                <h1 class="mb-4"><i class="fa fa-align-right"></i> Reports
+                <h2 class="mb-4"><i class="fa fa-align-right"></i> Reports
                   <span class="s15 float-right">
                     <a href="{{ route('report.week') }}"><button class="btn btn-outline-info btn-sm">View All</button></a>
                     </span>
-                </h1>
+                </h2>
                 @foreach($reports as $report)
                   <div><b class="text-primary">{{ $report->user->name }}</b>
                     <span class="s10 float-right">{{ $report->created_at->diffForHumans()}}</span>
@@ -112,8 +111,12 @@
                 @endforeach
               </div>
           </div>
-      </div>
       @endcan
+
+      </div>
+
+      
+
 
     </div>
 
