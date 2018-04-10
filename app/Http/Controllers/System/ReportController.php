@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\System;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\System\Report;
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
@@ -20,10 +21,32 @@ class ReportController extends Controller
         if(\Auth::guest())
             return redirect('login');
         
-        $reports = $report->orderBy('created_at','desc ')
-                    ->paginate(config('global.no_of_records'));
+
+        $reports =  $report->getReports();
+         
         
         return view('appl.system.report.index')
+            ->with('report',$report)
+            ->with('reports',$reports);
+    }
+
+
+    public function  week(Report $report){
+
+        $this->authorize('view', $report);
+        if(\Auth::guest())
+            return redirect('login');
+        
+        $today = Carbon::today();
+        $reports =  $report->where('created_at', '>', $today->subDays(7))->orderBy('created_at','desc ')
+                        ->get()->groupBy(function($date) {
+                            return Carbon::parse($date->created_at)->format('d'); // grouping by years
+                            //return Carbon::parse($date->created_at)->format('m'); // grouping by months
+                        });
+         
+    
+        
+        return view('appl.system.report.week')
             ->with('report',$report)
             ->with('reports',$reports);
     }
@@ -54,11 +77,11 @@ class ReportController extends Controller
             $report = new Report;
             $report->user_id = $request->user_id;
             $report->type= $request->type;
-            $report->content = ($request->content)?$request->content:' ';
+            $report->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
             $report->save();
 
             flash('A new Report('.$request->id.') is created!')->success();
-            return redirect()->route('report.index');
+            return redirect()->route('report.week');
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
@@ -111,11 +134,11 @@ class ReportController extends Controller
             $report = Report::where('id',$id)->first();
             $report->user_id = $request->user_id;
             $report->type= $request->type;
-            $report->content = ($request->content)?$request->content:' ';
+            $report->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
             $report->save();
 
             flash('Report (<b>id '.$report->id.'</b>) Successfully updated!')->success();
-            return redirect()->route('report.index');
+            return redirect()->route('report.week');
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
@@ -134,9 +157,10 @@ class ReportController extends Controller
      */
     public function destroy($id)
     {
-        $report = new Report;
+        $report = Report::where('id',$id)->first();
         $this->authorize('create', $report);
-        Report::where('id',$id)->first()->delete();
+        $report->content = summernote_imageremove($report->content);
+        $report->delete();
         flash('Report Successfully deleted!')->success();
         return redirect()->route('report.index');
     }

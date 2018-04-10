@@ -6,7 +6,7 @@
   <div class="card">
     <div class="card-body">
 
-      <nav class="navbar navbar-light bg-light justify-content-between mb-3">
+      <nav class="navbar navbar-light bg-light justify-content-between mb-3 p-3 border">
           <a class="navbar-brand"><i class="fa fa-bullhorn"></i> {{ $stub }} Update </a>
       </nav>    
       

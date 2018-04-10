@@ -4,7 +4,6 @@
  html, body {
                 background-color: #fff;
                 color: #484e51;
-                
                 height: 100vh;
                 height: 100%;
                 margin: 0;
@@ -55,7 +54,7 @@
 
 #app{}
 .wrapper-bg{background-color: #f5f8fa; flex: 1; position:relative;}
-.wrapper{ max-width: 900px;margin:0px auto; }
+.wrapper{ max-width: 900px; margin:0px auto; }
 .margintop-20{margin-top: 20px;}
 .marginbottom-20{margin-bottom: 20px;}
 #app {
@@ -89,6 +88,7 @@ ul.list-first{ margin: 5px; margin-top: -20px; margin-right: -5px; }
 ul.list li:before{ content:""; position:absolute; width:13px; height:10px; border: 1px solid;
     left:-13px;top:5px; border-color: #eee transparent transparent transparent;}
 
+.card-body p img.class{ width:100%; }
 
 /*user profile*/
 .name,a.link{ color:white; }
@@ -121,6 +121,7 @@ body {
 }
 h1 {
     font-size: 1.602em;
+    line-height: 1.5em;
 }
 h2 {
     font-size: 1.424em;

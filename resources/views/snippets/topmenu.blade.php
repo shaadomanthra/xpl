@@ -18,13 +18,15 @@
                         <a class="nav-link" href="{{url('/')}}">Home </a>
                     </li>
 
-                    @if(\Auth::user()->checkRole(['administrator','investor','patron','promoter','employee']))
+                    @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','intern']))
                     <li><a class="nav-link" href="{{ route('system') }}">System</a></li>
                     @endif
 
                     <li><a class="nav-link" href="{{ route('material') }}">Material</a></li>
 
+                    @if(\Auth::user()->checkRole(['administrator','hr-manager','recruiter','employee']))
                     <li><a class="nav-link" href="{{ route('recruit') }}">Recruit</a></li>
+                    @endif
 
                     @if(\Auth::user()->checkRole(['administrator','editor','social-media-moderator','social-media-writer','blog-moderator','blog-writer','employee']))
                     <li><a class="nav-link" href="{{ route('social') }}">Social</a></li>

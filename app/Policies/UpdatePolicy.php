@@ -29,7 +29,7 @@ class UpdatePolicy
      */
     public function view(User $user)
     {
-        return $user->checkRole(['administrator','investor','patron','promoter','employee']);
+        return $user->checkRole(['administrator','investor','patron','promoter','employee','intern']);
     }
 
 
@@ -56,7 +56,12 @@ class UpdatePolicy
     public function edit(User $user,Update $update)
     { 
         if($user->checkRole(['administrator','manager']) && $update->status !=1)
+        {
+            if($user->id == $update->user_id)
             return true;
+            else
+                return false;
+        }
         else
             return false;
     }

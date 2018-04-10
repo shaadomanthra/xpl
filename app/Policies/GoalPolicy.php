@@ -29,7 +29,7 @@ class GoalPolicy
      */
     public function view(User $user)
     {
-        return $user->checkRole(['administrator','investor','patron','promoter','employee']);
+        return $user->checkRole(['administrator','investor','patron','promoter','employee','intern']);
     }
 
 
@@ -56,7 +56,12 @@ class GoalPolicy
     public function edit(User $user,Goal $goal)
     { 
         if($user->checkRole(['administrator','manager']) && $goal->status !=1)
+        {
+            if($user->id == $goal->user_id)
             return true;
+            else
+                return false;
+        }
         else
             return false;
     }

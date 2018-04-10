@@ -19,9 +19,20 @@
       <div class="form-group">
         <label for="formGroupExampleInput ">Type</label>
         <select class="form-control" name="type">
-          <option value="0" @if(isset($report)) @if($report->type==0) selected @endif @endif >Today</option>
-          <option value="1" @if(isset($report)) @if($report->type==1) selected @endif @endif >This Week</option>
-          <option value="2" @if(isset($report)) @if($report->type==2) selected @endif @endif >This Month</option>
+          
+           @if(\Auth::user()->checkRole(['administrator']))
+           <option value="0" @if(isset($report)) @if($report->type==0) selected @endif @endif >Today</option>
+           <option value="1" @if(isset($report)) @if($report->type==1) selected @endif @endif >This Week</option>
+           <option value="2" @if(isset($report)) @if($report->type==2) selected @endif @endif >This Month</option>
+           @else
+            <option value="0" @if(isset($report)) @if($report->type==0) selected @endif @endif >Today</option>
+             @if(in_array(\Carbon\carbon::now()->format( 'l' ),['Friday','Saturday','Sunday']) && !in_array(\Carbon\carbon::now()->format( 'd' ),[28,29,30,31]))
+              <option value="1" @if(isset($report)) @if($report->type==1) selected @endif @endif >This Week</option>
+              @elseif(in_array(\Carbon\carbon::now()->format( 'd' ),[28,29,30,31]) )
+              <option value="2" @if(isset($report)) @if($report->type==2) selected @endif @endif >This Month</option>
+              @endif
+           @endif
+          
         </select>
       </div>
 

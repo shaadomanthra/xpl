@@ -20,8 +20,7 @@ class GoalController extends Controller
         if(\Auth::guest())
             return redirect('login');
         
-        $goals = $goal->orderBy('created_at','desc ')
-                    ->paginate(config('global.no_of_records'));
+        $goals = $goal->getGoals();
         
         return view('appl.system.goal.index')
             ->with('goal',$goal)
@@ -59,8 +58,8 @@ class GoalController extends Controller
             $goal = new Goal;
             $goal->user_id = $request->user_id;
             $goal->title = $request->title;
-            $goal->content = ($request->content)?$request->content:' ';
-            $goal->endnote = ($request->endnote)?$request->endnote:' ';
+            $goal->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
+            $goal->endnote = ($request->endnote)? summernote_imageupload(\auth::user(),$request->endnote):' ';
             $goal->prime = $request->prime;
             $goal->status = $request->status;
             $goal->end_at = $request->end_at;
@@ -121,8 +120,8 @@ class GoalController extends Controller
             $goal = Goal::where('id',$id)->first();
             $goal->user_id = $request->user_id;
             $goal->title = $request->title;
-            $goal->content = ($request->content)?$request->content:' ';
-            $goal->endnote = ($request->endnote)?$request->endnote:' ';
+            $goal->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
+            $goal->endnote = ($request->endnote)? summernote_imageupload(\auth::user(),$request->endnote):' ';
             $goal->prime = $request->prime;
             $goal->status = $request->status;
             $goal->end_at = $request->end_at;
@@ -148,9 +147,11 @@ class GoalController extends Controller
      */
     public function destroy($id)
     {
-        $goal = new Goal;
+        $goal = Goal::where('id',$id)->first();
         $this->authorize('create', $goal);
-        Goal::where('id',$id)->first()->delete();
+        $goal->content = summernote_imageremove($goal->content);
+        $goal->endnote = summernote_imageremove($goal->endnote);
+        $goal->delete();
         flash('Goal Successfully deleted!')->success();
         return redirect()->route('goal.index');
     }

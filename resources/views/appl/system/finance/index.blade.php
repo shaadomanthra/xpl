@@ -79,7 +79,7 @@
           <div class="">
             <div class="row mb-0 mt-2 no-gutters ">
               <div class="col-md-4">
-                  <div class="card border text-secondary mr-3">
+                  <div class="card border text-secondary mb-3 mb-md-0 mr-md-3">
                       <div class="card-body">
                         <div class="card-title">Cash In</div>
                           <h1><i class="fa fa-rupee"></i>{{ $finances->cashin }}</h1>
@@ -87,7 +87,7 @@
                   </div>
               </div>
                <div class="col-md-4">
-                  <div class="card border text-secondary mr-3">
+                  <div class="card border text-secondary mb-3 mb-md-0 mr-md-3">
                       <div class="card-body">
                         <div class="card-title">Cash Out</div>
                           <h1><i class="fa fa-rupee"></i>{{ $finances->cashout }}</h1>
@@ -95,7 +95,7 @@
                   </div>
               </div>
               <div class="col-md-4">
-                  <div class="card border-secondary text-secondary ">
+                  <div class="card border-secondary text-secondary">
                       <div class="card-body">
                         <div class="card-title">Balance</div>
                         @if($finances->cashin - $finances->cashout > -1)
@@ -129,7 +129,7 @@
                 @endif
                 
               </div>
-              <div class="col-3">
+              <div class="col-6 col-lg-3">
                 
                 <h1 class="mb-0 @if($finance->flow==0)text-success @else text-danger @endif"> &nbsp;<i class="fa fa-rupee"></i>{{ $finance->amount }} 
                     @can('edit',$finance)  
@@ -141,12 +141,12 @@
 
                 <div class="mb-3"></div>
               </div>
-              <div class="col-5">
+              <div class="col-12 col-lg-5">
                 {!! $finance->content !!}
               </div>
-              <div class="col-3">
+              <div class="col-12 col-lg-3">
                  <a href="{{ route('profile','@'.\auth::user()->getUsername($finance->user_id))}}">{{ \auth::user()->getName($finance->user_id)}}</a><br>
-                <small >{{ $finance->created_at->diffForHumans() }}</small>
+                <small >{{ \carbon\carbon::parse($finance->transaction_at)->format('d M Y') }}</small>
               </div>
             </div>
             

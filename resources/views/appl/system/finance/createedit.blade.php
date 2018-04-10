@@ -6,7 +6,7 @@
   <div class="card">
     <div class="card-body">
 
-      <nav class="navbar navbar-light bg-light justify-content-between mb-3">
+      <nav class="navbar navbar-light bg-light justify-content-between mb-3 p-3 border">
           <a class="navbar-brand"><i class="fa fa-rupee"></i> {{ $stub }} Entry </a>
       </nav>    
       
@@ -43,6 +43,11 @@
         <label for="formGroupExampleInput2">Details</label>
          <textarea class="form-control summernote" name="content"  rows="5">{{isset($finance)?$finance->content:''}}</textarea>
       </div>
+
+       <div class="form-group">
+        <label for="formGroupExampleInput ">Transaction Date</label>
+      <input type="text" class="form-control" name="transaction_at"   value="{{isset($finance->transaction_at)? \carbon\carbon::parse($finance->transaction_at)->format('Y-m-d'):''}}" id="datepicker">
+    </div>
 
       <div class="form-group">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">

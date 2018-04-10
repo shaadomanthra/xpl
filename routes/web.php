@@ -68,7 +68,11 @@ Route::get('/system', 'System\UpdateController@system')->name('system')->middlew
 Route::resource('system/update','System\UpdateController')->middleware('auth');
 Route::resource('system/finance','System\FinanceController')->middleware('auth');
 Route::resource('system/goal','System\GoalController')->middleware('auth');
+Route::get('system/report/week','System\ReportController@week')->middleware('auth')->name('report.week');
 Route::resource('system/report','System\ReportController')->middleware('auth');
+
+
+
 
 Route::get('/social', 'Social\MediaController@social')->name('social')->middleware('auth');
 Route::post('/social/imageupload', 'Social\BlogController@image_upload')->name('imageupload');

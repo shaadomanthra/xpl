@@ -114,7 +114,7 @@
 
 		<div class="card mb-3">
 			<div class="card-body bg-success text-white">
-				<h2><b>Goals</b></h2>
+				<h2><b>Prime Goals</b></h2>
 				<p class="mb-0 pb-0">
 					<ol class="mb-0 pb-0">
 						@if(isset($goals))

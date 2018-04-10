@@ -74,7 +74,7 @@ class FinanceController extends Controller
         if(\Carbon\Carbon::now()->month<4)  
             $finances->curr_year = substr(\Carbon\Carbon::now()->year, 2)-1;
         else
-        $finances->curr_year = substr(\Carbon\Carbon::now()->year, 2);
+            $finances->curr_year = substr(\Carbon\Carbon::now()->year, 2);
         
         $view = $search ? 'list': 'index';
         return view('appl.system.finance.'.$view)
@@ -92,6 +92,7 @@ class FinanceController extends Controller
          $this->authorize('create', $finance);
         return view('appl.system.finance.createedit')
                 ->with('finance',$finance)
+                ->with('jqueryui',true)
                 ->with('stub','Create');
     }
 
@@ -106,10 +107,11 @@ class FinanceController extends Controller
         try{
             $finance = new Finance;
             $finance->user_id = $request->user_id;
-            $finance->content = $request->content;
+            $finance->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
             $finance->amount = $request->amount;
             $finance->flow = $request->flow;
             $finance->year = $request->year;
+            $finance->transaction_at = $request->transaction_at;
             $finance->save();
 
             flash('A new finance entry is created!')->success();
@@ -148,6 +150,7 @@ class FinanceController extends Controller
         if($finance)
             return view('appl.system.finance.createedit')
                     ->with('finance',$finance)
+                    ->with('jqueryui',true)
                     ->with('stub','Update');
         else
             abort(404);
@@ -165,10 +168,11 @@ class FinanceController extends Controller
         try{
             $finance = Finance::where('id',$id)->first();
             $finance->user_id = $request->user_id;
-            $finance->content = $request->content;
+            $finance->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
             $finance->amount = $request->amount;
             $finance->flow = $request->flow;
             $finance->year = $request->year;
+            $finance->transaction_at = $request->transaction_at;
             $finance->save();
 
             flash('Finance (<b>id '.$id.'</b>) Successfully Financed!')->success();
@@ -191,9 +195,10 @@ class FinanceController extends Controller
      */
     public function destroy($id)
     {
-        $finance = new Finance;
+        $finance = Finance::where('id',$id)->first();
         $this->authorize('create', $finance);
-        Finance::where('id',$id)->first()->delete();
+        $finance->content = summernote_imageremove($finance->content);
+        $finance->delete();
         flash('Finance Successfully deleted!')->success();
         return redirect()->route('finance.index');
     }

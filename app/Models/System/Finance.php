@@ -18,12 +18,12 @@ class Finance extends Model
 
     public function getRecords($start=null,$end=null){
     	if($start && $end)
-    		return Finance::whereDate('created_at', '>', date($start))
-                    ->whereDate('created_at', '<', date($end))
-                    ->orderBy('created_at','desc ')
+    		return Finance::whereDate('transaction_at', '>=', date($start))
+                    ->whereDate('transaction_at', '<', date($end))
+                    ->orderBy('transaction_at','desc ')
                     ->paginate(config('global.no_of_records'));
         else
-        	return Finance::orderBy('created_at','desc ')
+        	return Finance::orderBy('transaction_at','desc ')
                     ->paginate(config('global.no_of_records'));
                     
     }
@@ -36,8 +36,8 @@ class Finance extends Model
     		$type=1;
 
     	if($start && $end)
-    		return Finance::whereDate('created_at', '>', date($start))
-                    ->whereDate('created_at', '<', date($end))
+    		return Finance::whereDate('transaction_at', '>=', date($start))
+                    ->whereDate('transaction_at', '<', date($end))
                     ->where('flow',$type)->sum('amount');
         else
         	return Finance::where('flow',$type)->sum('amount');
