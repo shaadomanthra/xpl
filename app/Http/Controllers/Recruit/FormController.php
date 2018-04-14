@@ -19,7 +19,7 @@ class FormController extends Controller
      */
     public function index(Form $form,Request $request)
     {
-        $this->authorize('update', $form);
+        $this->authorize('view', $form);
         $search = $request->search;
         $item = $request->item;
         $forms = $form->getForms();
@@ -131,7 +131,7 @@ class FormController extends Controller
     public function show($id)
     {
         $form = Form::where('id',$id)->first();
-        $this->authorize('update', $form);
+        $this->authorize('view', $form);
         if($form)
             return view('appl.recruit.form.show')
                     ->with('form',$form);
@@ -153,7 +153,7 @@ class FormController extends Controller
         $this->authorize('edit', $form);
 
         if($form)
-            return view('appl.recruit.Form.createedit')
+            return view('appl.recruit.form.createedit')
                 ->with('stub','Update')
                 ->with('job',$job)
                 ->with('recaptcha',true)

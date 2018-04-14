@@ -4,6 +4,8 @@ namespace PacketPrep\Policies\Library;
 
 use PacketPrep\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use PacketPrep\Models\Library\Lquestion;
+use PacketPrep\Models\Library\Repository;
 
 class LquestionPolicy
 {
@@ -28,7 +30,7 @@ class LquestionPolicy
      */
     public function view(User $user)
     {
-        return $user->checkRole(['administrator','data-manager','data-lead','feeder','proof-reader','renovator','validator']);
+        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator']);
     }
 
 
@@ -39,9 +41,9 @@ class LquestionPolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function create(User $user,Question $question)
+    public function create(User $user,Lquestion $question)
     { 
-        $project = (new Project())->where('id',$question->project_id)->first();
+        $project = (new Repository())->where('id',$question->project_id)->first();
         if($user->checkRole(['administrator','data-manager','data-lead','feeder'])){
             if($user->id == $project->user_id_data_manager || $user->id == $project->user_id_data_lead || $user->id == $project->user_id_feeder)
                 return true;
@@ -60,9 +62,9 @@ class LquestionPolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function publish(User $user,Question $question)
+    public function publish(User $user,Lquestion $question)
     { 
-        $project = (new Project())->where('id',$question->project_id)->first();
+        $project = (new Repository())->where('id',$question->project_id)->first();
         if($user->checkRole(['administrator','data-manager','data-lead','proof-reader'])){
             if($user->id == $project->user_id_data_manager || $user->id == $project->user_id_data_lead || $user->id == $project->user_id_proof_reader)
                 if($question->status==1)
@@ -83,9 +85,9 @@ class LquestionPolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function update(User $user,Question $question)
+    public function update(User $user,Lquestion $question)
     { 
-        $project = (new Project())->where('id',$question->project_id)->first();
+        $project = (new Repository())->where('id',$question->project_id)->first();
         
          if($user->checkRole(['administrator','data-manager','data-lead','feeder'])){
             if($user->id == $project->user_id_data_manager || $user->id == $project->user_id_data_lead || $user->id == $project->user_id_feeder)

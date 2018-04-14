@@ -46,7 +46,7 @@
 
             <div class="row">
               <div class="col-12 col-md-4 col-lg-3">
-                <h3>{{ \carbon\carbon::parse($report->updated_at)->format('d M Y') }}</h3>
+                <h3>{{ \carbon\carbon::parse($report->created_at)->format('d M Y') }}</h3>
                 
                 
               </div>

@@ -29,7 +29,7 @@ class FormPolicy
      */
     public function view(User $user)
     {
-        return true;
+        return $user->checkRole(['administrator','investor','patron','promoter','employee','hr-manager','recruiter']);
     }
 
 

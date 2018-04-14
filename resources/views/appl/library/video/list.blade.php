@@ -18,7 +18,6 @@
                   <a href=" {{ route('video.show',[$repo->slug,$video->id]) }} ">
                   {{ $video->name }}
                   </a><br>
-                  <img src="{{ $video->getThumbnail($video->video)}}"  style="width:100px"/>
                 </td>
                 <td><a href="{{ route('profile','@'.$video->user->username) }}">{{ $video->user->name }}</a></td>
                 <td>{{ $video->structure->name }}</td>

@@ -46,14 +46,14 @@
 
               <div class="d-none d-md-block">
                 <div class="bg-light p-2 rounded border text-center">
-                <div>{{ \carbon\carbon::parse($item[0]->updated_at)->format('M') }}</div>
+                <div>{{ \carbon\carbon::parse($item[0]->created_at)->format('M') }}</div>
                 <h1>{{ $key }}</h1>
-                <div>{{ \carbon\carbon::parse($item[0]->updated_at)->format('Y') }}</div>
+                <div>{{ \carbon\carbon::parse($item[0]->created_at)->format('Y') }}</div>
                 </div>
               </div>
               <div class="d-block d-md-none">
                 <div class="bg-light p-2 rounded border pl-3">
-                <div>{{ \carbon\carbon::parse($item[0]->updated_at)->format('d M Y') }}</div>
+                <div>{{ \carbon\carbon::parse($item[0]->created_at)->format('d M Y') }}</div>
                 </div>
               </div>
               </div>
@@ -80,7 +80,7 @@
                       <div class="">
                       <a href="{{ route('profile','@'.\auth::user()->getUsername($report->user_id))}}">{{ \auth::user()->getName($report->user_id)}}</a><br>
 
-                      <small>{{ $report->updated_at->diffForHumans() }}</small>
+                      <small>{{ $report->created_at->diffForHumans() }}</small>
                       @can('edit',$report)  
                       <a href="{{ route('report.edit',$report->id) }}">
                       <i class="fa fa-edit"></i>
