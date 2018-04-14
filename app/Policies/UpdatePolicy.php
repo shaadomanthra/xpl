@@ -29,6 +29,7 @@ class UpdatePolicy
      */
     public function view(User $user)
     {
+
         return $user->checkRole(['administrator','investor','patron','promoter','employee','intern']);
     }
 

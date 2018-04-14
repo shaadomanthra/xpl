@@ -30,6 +30,31 @@ class UpdateController extends Controller
             ->with('updates',$updates);
     }
 
+
+    public function public_updates(Update $update){
+
+        $updates = $update->where('privacy',1)->where('status',1)->orderBy('created_at','desc ')
+                        ->paginate(config('global.no_of_records'));
+        return view('appl.system.update.public')
+            ->with('update',$update)
+            ->with('updates',$updates);
+    }
+
+    public function public_view($id)
+    {
+        $update = Update::where('id',$id)->first();
+
+        if($update)
+            if($update->privacy==1)
+            return view('appl.system.update.show')
+                    ->with('update',$update)
+                    ->with('stub','Update');
+            else
+                abort('403','Restricted Access');
+        else
+            abort(404);            
+    }
+
     public function welcome(){
         $goals = Goal::where('prime',1)->where('status',0)->orderBy('end_at','asc')->get();
         $updates = Update::where('status',1)->limit(2)->get();
@@ -62,6 +87,7 @@ class UpdateController extends Controller
             $update->user_id = $request->user_id;
             $update->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
             $update->type = $request->type;
+            $update->privacy = $request->privacy;
             $update->status = $request->status;
             $update->save();
 
@@ -190,6 +216,7 @@ class UpdateController extends Controller
             $update->content = ($request->content)? summernote_imageupload(\auth::user(),$request->content):' ';
             $update->type = $request->type;
             $update->status = $request->status;
+            $update->privacy = $request->privacy;
             $update->save();
 
             flash('Update (<b>id '.$id.'</b>) Successfully updated!')->success();

@@ -4,8 +4,12 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    @if(\auth::guest())
+    <li class="breadcrumb-item " ><a href="{{ route('updates')}}">Updates</a></li>
+    @else
     <li class="breadcrumb-item " ><a href="{{ route('system')}}">System</a></li>
     <li class="breadcrumb-item " ><a href="{{ route('update.index')}}">Updates</a></li>
+    @endif
     <li class="breadcrumb-item active" aria-current="page">#{{ $update->id }}</li>
   </ol>
 </nav>
@@ -17,9 +21,9 @@
             <div class="row  mb-md-0">
               <div class="col-12 col-md-2 text-right d-none d-md-block">
                 <img class="img-thumbnail  mb-3"src="{{ Gravatar::src($update->user->email, 120) }}"><br>
-                <a href="{{ route('profile','@'.\auth::user()->getUsername($update->user_id))}}">
-                	<h3 class="mb-0 p-0">{{ \auth::user()->getName($update->user_id)}}</h3></a><br>
-                <div>{{ \auth::user()->getDesignation($update->user_id)}}</div>
+                <a href="{{ route('profile','@'.$update->user->name)}}">
+                	<h3 class="mb-0 p-0">{{ $update->user->name }}</h3></a><br>
+                <div>{{ $update->user->details->designation }}</div>
                 <small class="text-secondary mb-4">{{ $update->created_at->diffForHumans() }}</small>
                 @can('edit',$update)
                   <div class="mt-2 mb-4">
@@ -41,8 +45,8 @@
                 <div class="mb-3">
 
                 <div class=" d-block d-md-none ">
-                <a href="{{ route('profile','@'.\auth::user()->getUsername($update->user_id))}}">
-                  <h3 class="mb-0 p-0">{{ \auth::user()->getName($update->user_id)}}</h3></a><br>
+                <a href="{{ route('profile','@'.$update->user->username)}}">
+                  <h3 class="mb-0 p-0">{{ $update->user->name }}</h3></a><br>
                 </div>	
 
                 @if($update->type==2)

@@ -32,6 +32,14 @@
       </div>
 
       <div class="form-group">
+        <label for="formGroupExampleInput ">Privacy</label>
+        <select class="form-control" name="privacy">
+          <option value="0" @if(isset($update)) @if($update->privacy==0) selected @endif @endif >Site Members Only</option>
+          <option value="1" @if(isset($update)) @if($update->privacy==1) selected @endif @endif >Public</option>
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="formGroupExampleInput2">Content</label>
          <textarea class="form-control summernote" name="content"  rows="5">{{isset($update)?$update->content:''}}</textarea>
       </div>

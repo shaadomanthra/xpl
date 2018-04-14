@@ -81,6 +81,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('docs','Content\DocController');
 	Route::resource('docs/{doc}/chapter','Content\ChapterController');
 
+	Route::get('/updates', 'System\UpdateController@public_updates')->name('updates');
+	Route::get('/updates/{id}', 'System\UpdateController@public_view')->name('updates.view');
 	Route::get('/system', 'System\UpdateController@system')->name('system')->middleware('auth');
 	Route::resource('system/update','System\UpdateController')->middleware('auth');
 	Route::resource('system/finance','System\FinanceController')->middleware('auth');
