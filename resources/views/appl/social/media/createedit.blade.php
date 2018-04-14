@@ -1,7 +1,12 @@
 @extends('layouts.app')
 @section('content')
 
-@include('appl.system.snippets.breadcrumb')
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Social</li>
+  </ol>
+</nav>
   @include('flash::message')
   <div class="card">
     <div class="card-body">

@@ -198,6 +198,7 @@ return [
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         BC\Laravel\DropboxDriver\ServiceProvider::class,
+        Thujohn\Twitter\TwitterServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -262,6 +263,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
 
     ],
 

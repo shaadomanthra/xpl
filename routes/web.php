@@ -13,6 +13,14 @@
 
 use PacketPrep\Http\Middleware\RequestFilter;
 
+/*
+Route::get('/tweet', function()
+{
+	$uploaded_media = Twitter::uploadMedia(['media' => File::get(public_path('img/blog/packetcode_1521662053_pexels-photo-278918.jpeg'))]);
+	return Twitter::postTweet(['status' => 'Laravel is beautiful', 'media_ids' => $uploaded_media->media_id_string]);
+
+}); */
+
 
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
@@ -20,6 +28,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
 
+
+	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/about',function(){ return view('appl.pages.packetprep'); })->name('about');
 	Route::get('/contact',function(){ return view('appl.pages.contact')->with('recaptcha',true); })->name('contact');
 
