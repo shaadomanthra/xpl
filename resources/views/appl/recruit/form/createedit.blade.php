@@ -153,7 +153,7 @@
             @if($stub=='Create')
             {{ (old('reason')) ? old('reason') : '' }}
             @else
-            {{ $form->address }}
+            {{ $form->reason }}
             @endif
         </textarea>
       </div>
