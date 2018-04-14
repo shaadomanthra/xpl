@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class FormAlert extends Mailable
+class Formalerts extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,6 +29,6 @@ class FormAlert extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.formalert');
+        return $this->subject('Job Applicant Alert')->markdown('mail.formalert');
     }
 }

@@ -30,9 +30,7 @@
                     <li><a class="nav-link" href="{{ route('recruit') }}">Recruit</a></li>
                     @endif
 
-                    @if(\Auth::user()->checkRole(['administrator','editor','social-media-moderator','investor','patron','promoter','social-media-writer','blog-moderator','blog-writer','employee']))
-                    <li><a class="nav-link" href="{{ route('social') }}">Social</a></li>
-                    @endif
+                   
 
 
                     

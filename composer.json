@@ -7,6 +7,7 @@
     "require": {
         "php": ">=7.0.0",
         "benjamincrozat/laravel-dropbox-driver": "^2.0",
+        "facebook/graph-sdk": "^5.6",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "^6.2",
         "intervention/image": "^2.4",
@@ -16,7 +17,8 @@
         "laravel/tinker": "~1.0",
         "spatie/laravel-backup": "^5.5",
         "thomaswelton/laravel-gravatar": "^1.1",
-        "thujohn/twitter": "^2.2"
+        "thujohn/twitter": "^2.2",
+        "facebook/graph-sdk" : "~5.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

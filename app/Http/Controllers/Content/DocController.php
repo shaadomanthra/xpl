@@ -194,10 +194,10 @@ class DocController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Doc $doc,$doc_slug)
+    public function destroy($doc_slug)
     {
-        
-        $this->authorize('create', $doc);
+
+        $this->authorize('create', new Doc());
         Doc::where('slug',$doc_slug)->first()->delete();
         flash('Doc Successfully deleted!')->success();
         return redirect()->route('docs.index');

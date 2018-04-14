@@ -7,19 +7,19 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ActivateUser extends Mailable
+class ContactMessage extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+     public $contact;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($contact)
     {
-        $this->user = $user;
+        $this->contact = $contact;
     }
 
     /**
@@ -29,6 +29,6 @@ class ActivateUser extends Mailable
      */
     public function build()
     {
-        return $this->subject('Packetprep - User Activation Mail')->markdown('mail.activateuser');
+        return $this->subject($this->contact['subj'])->markdown('mail.contactmessage');
     }
 }

@@ -8,7 +8,7 @@ use PacketPrep\Models\Recruit\Form;
 use PacketPrep\Models\Recruit\Job;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\Facades\Mail;
-use PacketPrep\Mail\FormAlert;
+use PacketPrep\Mail\Formalerts;
 
 class FormController extends Controller
 {
@@ -104,8 +104,11 @@ class FormController extends Controller
                 $form->job_id = $request->job_id;
                 $form->user_id = null;
                 $form->save(); 
+                
+                $applicant = Form::where('email',$form->email)->where('job_id',$form->job_id)->first();
 
-                Mail::to(config('mail.report'))->send(new FormAlert($form));
+
+                Mail::to(config('mail.report'))->send(new Formalerts($applicant));
 
                 return view('appl.recruit.form.success');
             }

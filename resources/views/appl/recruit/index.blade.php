@@ -38,8 +38,8 @@
                     </span>
                 </h2>
                 @foreach($jobs as $job)
-                  <div><b><a href="{{ route('job.show',$job->id) }}">{{ $job->title }}</a></b></div>
-                  {!! str_limit(strip_tags($job->content),100) !!} <a href="{{ route('job.show',$job->id) }}">readmore</a><br><Br>
+                  <div><b><a href="{{ route('job.show',$job->slug) }}">{{ $job->title }}</a></b></div>
+                  {!! str_limit(strip_tags($job->content),100) !!} <a href="{{ route('job.show',$job->slug) }}">readmore</a><br><Br>
                 @endforeach
               </div>
           </div>

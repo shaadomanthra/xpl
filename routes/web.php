@@ -21,6 +21,44 @@ Route::get('/tweet', function()
 
 }); */
 
+/*
+use Facebook\Facebook;
+
+
+Route::get('/fb',function(){
+	
+	$fb = new \Facebook\Facebook([
+	  'app_id' => '164735766925437',
+	  'app_secret' => 'f995936dfc78e3057fdaca03fc470fe9',
+	  'default_graph_version' => 'v2.10',
+	  'default_access_token' => 'EAACV04jekH0BAGfDE6qnNZBcO8vsVa7lpZAxCLAGM0zMoxKZAgYgk29JJaibvoD5NBNZCOikFLxgD3Aot7tetZB0f0KvZB6BlCJcpDK83okni5CoPP5rVjQrRq7z1mZCVJVM6q3r0DEKUfZCucyZCbQ9WsQqjslMX4aiBKea0FMZAcitYc9vEEtaJqrZCIuZCNr8RgwZD', // optional
+	]);
+
+	// Use one of the helper classes to get a Facebook\Authentication\AccessToken entity.
+	//   $helper = $fb->getRedirectLoginHelper();
+	//   $helper = $fb->getJavaScriptHelper();
+	//   $helper = $fb->getCanvasHelper();
+	//   $helper = $fb->getPageTabHelper();
+
+	try {
+	  // Get the \Facebook\GraphNodes\GraphUser object for the current user.
+	  // If you provided a 'default_access_token', the '{access-token}' is optional.
+	  $response = $fb->get('1446477072125301?fields=access_token');
+	} catch(\Facebook\Exceptions\FacebookResponseException $e) {
+	  // When Graph returns an error
+	  echo 'Graph returned an error: ' . $e->getMessage();
+	  exit;
+	} catch(\Facebook\Exceptions\FacebookSDKException $e) {
+	  // When validation fails or other local issues
+	  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+	  exit;
+	}
+
+	dd($response);
+	$me = $response;
+	echo 'Logged in as ' . $me->getName();
+});
+*/
 
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
@@ -50,15 +88,13 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('system/report/week','System\ReportController@week')->middleware('auth')->name('report.week');
 	Route::resource('system/report','System\ReportController')->middleware('auth');
 
-
-
-
+	/*
 	Route::get('/social', 'Social\MediaController@social')->name('social')->middleware('auth');
 	Route::post('/social/imageupload', 'Social\BlogController@image_upload')->name('imageupload');
 	Route::get('/social/imageremove', 'Social\BlogController@image_remove')->name('imageremove');
 	Route::resource('social/blog','Social\BlogController')->middleware('auth');
 	Route::resource('social/media','Social\MediaController')->middleware('auth');
-
+	*/
 
 	Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 

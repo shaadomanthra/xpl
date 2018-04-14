@@ -1,6 +1,6 @@
 
 <div class="list-group">
-	<a href="{{ route('social')}}" class="list-group-item list-group-item-action {{  request()->is('recruit') ? 'active' : ''  }} ">
+	<a href="{{ route('recruit')}}" class="list-group-item list-group-item-action {{  request()->is('recruit') ? 'active' : ''  }} ">
 		 <i class="fa fa-reddit"></i> Recruit
 	</a>
 	<a href="{{ route('job.index')}}" class="list-group-item list-group-item-action {{  request()->is('job*') ? 'active' : ''  }} ">

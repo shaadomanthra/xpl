@@ -9,6 +9,7 @@ use PacketPrep\Models\System\Goal;
 use PacketPrep\Models\System\Finance;
 use PacketPrep\Models\System\Report;
 use Illuminate\Support\Facades\Mail;
+use PacketPrep\Mail\ContactMessage;
 
 class UpdateController extends Controller
 {
@@ -160,13 +161,16 @@ class UpdateController extends Controller
             return redirect()->back()->withInput();
         } else {
 
-            Mail::raw(scriptStripper(request()->message), function($message)
-            {
-                $message->subject(scriptStripper(request()->subject));
-                $message->replyTo(scriptStripper(request()->email), scriptStripper(request()->name));
-                $message->from('team@packetprep.com', 'Packetprep');
-                $message->to('packetcode@gmail.com');
-            });
+            $contact['subject'] = request()->subject;
+            $contact['message'] = request()->message;
+            $contact['email'] = request()->email;
+            $contact['name'] = request()->name;
+            $contact['subj'] = 'Message from '.$contact['name'];
+            Mail::to(config('mail.report'))->send(new ContactMessage($contact));
+            $contact['subj'] = 'Message Delivered to Packetprep Team';
+            Mail::to($contact['email'])->send(new ContactMessage($contact));
+
+            
             flash('Successfully sent your message to packetprep team !')->success()->important();
             return redirect()->back();
         }

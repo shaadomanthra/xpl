@@ -199,6 +199,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         BC\Laravel\DropboxDriver\ServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
+        PacketPrep\Providers\FacebookServiceProvider::class,
 
         /*
          * Package Service Providers...
