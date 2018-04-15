@@ -14,7 +14,7 @@
           @can('update',$project)
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route('dataentry.edit',$project->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-              <a href="{{ route('dataentry.edit',$project->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Fork"><i class="fa fa-retweet"></i></a>
+              <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#forkModal" data-tooltip="tooltip" data-placement="top" title="Fork"><i class="fa fa-retweet"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
             @endcan
@@ -42,6 +42,17 @@
             <div class="col-md-8">
               <a href="{{ route('profile','@'.auth::user()->getUserName($project->user_id_feeder)) }}">
                 {{ auth::user()->getName($project->user_id_feeder) }}
+              </a>
+            </div>
+          </div>
+          @endif
+
+           @if($project->user_id_proof_reader)
+          <div class="row mb-2">
+            <div class="col-md-4">Data Proof Reader</div>
+            <div class="col-md-8">
+              <a href="{{ route('profile','@'.auth::user()->getUserName($project->user_id_feeder)) }}">
+                {{ auth::user()->getName($project->user_id_proof_reader) }}
               </a>
             </div>
           </div>
@@ -134,6 +145,41 @@
         	<button type="submit" class="btn btn-danger">Delete Permanently</button>
         </form>
       </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Modal -->
+<div class="modal fade" id="forkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Fork the Project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="get" action="{{route('dataentry.fork')}}">
+      <div class="modal-body">
+        <div class="form-group">
+        <label for="formGroupExampleInput ">Project Name</label>
+        <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the New Project Name" >
+        </div>
+        <div class="form-group">
+        <label for="formGroupExampleInput ">Project Slug</label>
+        <input type="text" class="form-control" name="slug" id="formGroupExampleInput" placeholder="Enter the New Project Slug" >
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <input type="hidden" name="user_id_data_manager" value="{{ auth::user()->id }}">
+        <input type="hidden" name="project_slug" value="{{ $project->slug }}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-primary">Fork</button>
+        
+      </div>
+      </form>
     </div>
   </div>
 </div>

@@ -5,7 +5,7 @@
 @include('flash::message')
   <div class="card">
     <div class="card-body">
-      <h1>
+      <h1 class="p-3 border bg-light mb-3">
         @if($stub=='Create')
           Create Project
         @else
@@ -16,7 +16,7 @@
       @if($stub=='Create')
       <form method="post" action="{{route('dataentry.store')}}" >
       @else
-      <form method="post" action="{{route('dataentry.update',$project->id)}}" >
+      <form method="post" action="{{route('dataentry.update',$project->slug)}}" >
       @endif  
       <div class="form-group">
         <label for="formGroupExampleInput ">Project Name</label>

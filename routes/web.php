@@ -102,6 +102,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 
 	Route::get('/material', 'Dataentry\ProjectController@material')->name('material');
+	Route::get('dataentry/fork','Dataentry\ProjectController@fork')->middleware('auth')->name('dataentry.fork');
 	Route::resource('dataentry','Dataentry\ProjectController')->middleware('auth');
 	Route::resource('dataentry/{project}/category','Dataentry\CategoryController')->middleware('auth');
 	Route::get('dataentry/{project}/category/{category}/question','Dataentry\QuestionController@category')->middleware('auth')->name('category.question');
@@ -124,6 +125,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('library/{repository}/version','Library\VersionController')->middleware('auth');
 	Route::resource('library/{repository}/video','Library\VideoController')->middleware('auth');
 	Route::resource('library/{repository}/document','Library\DocumentController')->middleware('auth');
+
+	Route::resource('course','Course\CourseController')->middleware('auth');
+	Route::resource('course/{course}/index','Course\IndexController')->middleware('auth');
 
 
 	Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');

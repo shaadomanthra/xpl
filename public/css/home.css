@@ -54,7 +54,7 @@
 
 #app{}
 .wrapper-bg{background-color: #f5f8fa; flex: 1; position:relative;}
-.wrapper{ max-width: 900px; margin:0px auto; }
+.wrapper{ max-width: 1150px; margin:0px auto; }
 .margintop-20{margin-top: 20px;}
 .marginbottom-20{margin-bottom: 20px;}
 #app {
@@ -70,6 +70,8 @@
 .logo-small{ height:30px; }
 .s15{ font-size: 15px; }
 .s10{ font-size: 10px; }
+.fa-light{ color:#e8e6df; }
+.fa-dark{ color:#f9be50; }
 .CodeMirror{border:1px solid silver;}
 .card-nav ul{ margin-bottom: 0px; }
 .qset .active{ background: #ececec; }

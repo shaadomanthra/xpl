@@ -176,6 +176,15 @@ $(document).ready(function() {
   			}
   		});
   	});
+
+    $('.btn-close').on('click',function(){
+      var video = $('#intro').attr("src");
+      $("#intro").attr("src","");
+      $("#intro").attr("src",video);
+    });
+
   });
+
+  
 
 </script>

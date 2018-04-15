@@ -48,6 +48,9 @@ class AuthServiceProvider extends ServiceProvider
         \PacketPrep\Models\Library\Version::class => \PacketPrep\Policies\Library\VersionPolicy::class,
         \PacketPrep\Models\Library\Video::class => \PacketPrep\Policies\Library\VideoPolicy::class,
         \PacketPrep\Models\Library\Document::class => \PacketPrep\Policies\Library\DocumentPolicy::class,
+
+        \PacketPrep\Models\Course\Course::class => \PacketPrep\Policies\Course\CoursePolicy::class,
+        \PacketPrep\Models\Course\Index::class => \PacketPrep\Policies\Course\IndexPolicy::class,
     ];
 
     /**

@@ -20,6 +20,7 @@ class Project extends Model
         // add all other fields
     ];
 
+
     public static function getName($slug){
     	 $model = new Project;
     	 return $model->where('slug',$slug)->first()->name;

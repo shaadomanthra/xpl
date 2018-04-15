@@ -110,7 +110,10 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
+
+
         $project = Project::where('slug',$id)->first();
+
         
         $this->authorize('view', $project);
 
@@ -163,12 +166,12 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
 
         try{
             $request->slug = str_replace(' ', '-', $request->slug);
-            $project = Project::where('id',$id)->first();
+            $project = Project::where('slug',$slug)->first();
 
             $this->authorize('update', $project);
 
@@ -177,16 +180,18 @@ class ProjectController extends Controller
             $category->slug = $request->slug;
             $category->save();
 
+
+
             $project->name = $request->name;
             $project->slug = $request->slug;
-            $project->user_id_data_manager = $request->user_id_data_manager;
-            $project->user_id_data_lead = $request->user_id_data_lead;
-            $project->user_id_feeder = $request->user_id_feeder;
-            $project->user_id_proof_reader = $request->user_id_proof_reader;
-            $project->user_id_renovator = $request->user_id_renovator;
-            $project->user_id_validator = $request->user_id_validator;
+            $project->user_id_data_manager = $request->get('user_id_data_manager')?$request->get('user_id_data_manager'):null;
+            $project->user_id_data_lead = $request->get('user_id_data_lead')?$request->get('user_id_data_lead'):null;
             $project->status = $request->status;
             $project->target = $request->target;
+            $project->user_id_proof_reader = $request->get('user_id_proof_reader')?$request->get('user_id_proof_reader'):null;
+            $project->user_id_feeder = $request->get('user_id_feeder')?$request->get('user_id_feeder'):null;
+             
+
             $project->save(); 
 
             flash('Project (<b>'.$request->name.'</b>) Successfully updated!')->success();
@@ -199,6 +204,46 @@ class ProjectController extends Controller
                  return redirect()->back()->withInput();
             }
         }
+    }
+
+
+    public function fork(){
+
+        $request = request();
+        $project = Project::where('slug',$request->project_slug)->first();
+        
+        $this->authorize('update', $project);
+
+        $proj_exists  = Project::where('slug',$request->slug)->first();
+
+        if(!$proj_exists){
+             // create new project
+            $project_new = new Project();
+            $project_new->name = $request->name;
+            $project_new->slug = $request->slug;
+            $project_new->user_id_data_manager = $request->user_id_data_manager;
+            $project_new->status = 0;
+            $project_new->save();
+
+
+            // base category
+            $category = new Category();
+            $category->name = $request->name;
+            $category->slug = $request->slug;
+            $category->save();
+
+            
+
+
+            flash('Project (<b>'.$request->name.'</b>) Successfully created!')->success();
+            return redirect()->route('dataentry.index');
+
+        }else{
+            flash('The slug(<b>'.$request->slug.'</b>) is already taken. Kindly use a different slug.')->error();
+            return redirect()->back()->withInput();
+        }
+       
+
     }
 
     /**
