@@ -102,6 +102,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 
 	Route::get('/material', 'Dataentry\ProjectController@material')->name('material');
+	Route::get('dataentry/qdb','Dataentry\QdbController@index')->middleware('auth')->name('qdb.index');
+	Route::get('dataentry/qdb/replace','Dataentry\QdbController@replacement')->middleware('auth')->name('qdb.replace');
+
 	Route::get('dataentry/fork','Dataentry\ProjectController@fork')->middleware('auth')->name('dataentry.fork');
 	Route::resource('dataentry','Dataentry\ProjectController')->middleware('auth');
 	Route::resource('dataentry/{project}/category','Dataentry\CategoryController')->middleware('auth');

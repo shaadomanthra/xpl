@@ -51,7 +51,7 @@
           <div class="row mb-2">
             <div class="col-md-4">Data Proof Reader</div>
             <div class="col-md-8">
-              <a href="{{ route('profile','@'.auth::user()->getUserName($project->user_id_feeder)) }}">
+              <a href="{{ route('profile','@'.auth::user()->getUserName($project->user_id_proof_reader)) }}">
                 {{ auth::user()->getName($project->user_id_proof_reader) }}
               </a>
             </div>

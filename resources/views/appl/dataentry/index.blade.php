@@ -9,14 +9,15 @@
 
     
     @include('flash::message')  
-    <div class="card mb-3">
+
+  <div class="card mb-4">
         <div class="card-body bg-light">
           <div  class="row ">
-            <div class="col-2">
+            <div class="col-md-3 col-lg-2 d-none d-md-block">
             <div class="text-center"><i class="fa fa-telegram fa-5x"></i> </div>
             </div>
-            <div class="col-9">
-              <h1 class=" mb-2"> Material App</h1>
+            <div class="col-12 col-md-9 col-lg-10">
+               <h1 class=" mb-2"> Material App</h1>
               <blockquote class="blockquote mb-0">
                 <p class="mb-0">Data is a precious thing and will last longer than the systems themselves.</p>
                 <footer class="blockquote-footer"><cite title="Source Title">Tim Berners-Lee</cite></footer>

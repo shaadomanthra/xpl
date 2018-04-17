@@ -2,11 +2,11 @@
 <div class="form-group mt-3">
 	<label for="formGroupExampleInput ">Answer</label>
 	<select class="form-control"  name="answer">
-		<option value="A" @if(isset($question)) @if($question->answer=='A') selected @endif @endif >A</option>
-		<option value="B" @if(isset($question)) @if($question->answer=='B') selected @endif @endif >B</option>
-		<option value="C" @if(isset($question)) @if($question->answer=='C') selected @endif @endif >C</option>
-		<option value="D" @if(isset($question)) @if($question->answer=='D') selected @endif @endif >D</option>
-		<option value="E" @if(isset($question)) @if($question->answer=='E') selected @endif @endif >E</option>
+		<option value="A" @if(isset($question)) @if(strtoupper($question->answer)=='A') selected @endif @endif >A</option>
+		<option value="B" @if(isset($question)) @if(strtoupper($question->answer)=='B') selected @endif @endif >B</option>
+		<option value="C" @if(isset($question)) @if(strtoupper($question->answer)=='C') selected @endif @endif >C</option>
+		<option value="D" @if(isset($question)) @if(strtoupper($question->answer)=='D') selected @endif @endif >D</option>
+		<option value="E" @if(isset($question)) @if(strtoupper($question->answer)=='E') selected @endif @endif >E</option>
 	</select>
 </div>
 @elseif($type=='naq' || $type=='eq')

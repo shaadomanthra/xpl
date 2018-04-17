@@ -5,7 +5,7 @@
   @include('flash::message')
   <div class="card">
     <div class="card-body">
-      <h1 class="bg-light p-3 mb-3">
+      <h1 class="bg-light border p-3 mb-3">
         @if($stub=='Create')
           Create Category
         @else

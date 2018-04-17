@@ -28,6 +28,8 @@
         jax: ["input/TeX","output/HTML-CSS"],
         tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
       });
+
+      
     </script>
 
     <script type="text/javascript"

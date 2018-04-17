@@ -8,8 +8,11 @@ use PacketPrep\Exceptions\Handler;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Dataentry\Category;
+use PacketPrep\Models\Dataentry\Tag;
+use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\User\Role;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -25,10 +28,11 @@ class ProjectController extends Controller
         $search = $request->search;
         $item = $request->item;
         $projects = $project->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+        $project->count = $project->getAllQuestionsCount($project->where('name','LIKE',"%{$item}%")->get());
         $view = $search ? 'list': 'index';
 
         return view('appl.dataentry.project.'.$view)
-        ->with('projects',$projects)->with('project',new Project());
+        ->with('projects',$projects)->with('project',$project);
     }
 
 
@@ -70,17 +74,21 @@ class ProjectController extends Controller
     {
 
         try{
-            $request->slug = str_replace(' ', '-', $request->slug);
+
+            if(!$request->slug )
+            $request->slug  = $request->name;
+            $request->slug = strtolower(str_replace(' ', '-', $request->slug));
+
             $project->name = $request->name;
             $project->slug = $request->slug;
             $project->user_id_data_manager = $request->user_id_data_manager;
-            $project->user_id_data_lead = $request->user_id_data_lead;
-            $project->user_id_feeder = $request->user_id_feeder;
-            $project->user_id_proof_reader = $request->user_id_proof_reader;
-            $project->user_id_renovator = $request->user_id_renovator;
-            $project->user_id_validator = $request->user_id_validator;
+            $project->user_id_data_lead = ($request->user_id_data_lead) ? $request->user_id_data_lead : null;
+            $project->user_id_feeder = ($request->user_id_feeder)? $request->user_id_feeder : null;
+            $project->user_id_proof_reader = ($request->user_id_proof_reader) ? $request->user_id_proof_reader : null;
+            $project->user_id_renovator = ($request->user_id_renovator) ? $request->user_id_renovator : null;
+            $project->user_id_validator = ($request->user_id_validator) ? $request->user_id_validator : null;
             $project->status = $request->status;
-            $project->target = $request->target;
+            $project->target = ($request->target) ? $request->target : null;
             $project->save(); 
 
             // save category
@@ -187,7 +195,7 @@ class ProjectController extends Controller
             $project->user_id_data_manager = $request->get('user_id_data_manager')?$request->get('user_id_data_manager'):null;
             $project->user_id_data_lead = $request->get('user_id_data_lead')?$request->get('user_id_data_lead'):null;
             $project->status = $request->status;
-            $project->target = $request->target;
+            $project->target = ($request->target) ? $request->target : null;
             $project->user_id_proof_reader = $request->get('user_id_proof_reader')?$request->get('user_id_proof_reader'):null;
             $project->user_id_feeder = $request->get('user_id_feeder')?$request->get('user_id_feeder'):null;
              
@@ -217,6 +225,7 @@ class ProjectController extends Controller
         $proj_exists  = Project::where('slug',$request->slug)->first();
 
         if(!$proj_exists){
+
              // create new project
             $project_new = new Project();
             $project_new->name = $request->name;
@@ -225,15 +234,103 @@ class ProjectController extends Controller
             $project_new->status = 0;
             $project_new->save();
 
-
             // base category
             $category = new Category();
             $category->name = $request->name;
             $category->slug = $request->slug;
             $category->save();
 
-            
+            //copy categories
+            $parent =  Category::where('slug',$project->slug)->first();   
+            $categories = Category::defaultOrder()->descendantsOf($parent->id)->toFlatTree();
+            foreach ($categories as  $cat) {
+                $child_attributes =['name'=>$cat->name,'slug'=> $project_new->slug.'_'.$cat->slug,'project_id'=>$project_new->id];
+                $parent = Category::where('slug',$project_new->slug.'_'.Category::where('id','=',$cat->parent_id)->first()->slug)->first();
+                $child = new Category($child_attributes);
+                if($parent)
+                    $parent->appendNode($child); 
+                else
+                    $category->appendNode($child);
+            }
 
+            // copy tags
+            $tags = Tag::where('project_id',$project->id)->get();
+            foreach($tags as $item){
+                $tag = new Tag();
+                $tag->name = $item->name;
+                $tag->value = $item->value;
+                $tag->user_id = $item->user_id;
+                $tag->project_id = $project_new->id;
+                if(!Tag::where('project_id',$project_new->id)->where('value',$item->value)->first())
+                $tag->save();
+            }
+
+            // copy passages
+            $passages = Passage::where('project_id',$project->id)->get();
+            foreach($passages as $item){
+                $passage = new Passage();
+                $passage->name = $item->name;
+                $passage->passage = $item->passage;
+                $passage->user_id = $item->user_id;
+                $passage->project_id = $project_new->id;
+                $passage->stage = $item->stage;
+                $passage->status = $item->status;
+                if(!Passage::where('project_id',$project_new->id)->where('passage',$item->passage)->first())
+                $passage->save();
+            }
+
+            // copy questions
+            $questions = Question::where('project_id',$project->id)->get();
+            foreach($questions as $item){
+                $question = new Question();
+                $question->slug = $item->slug;
+                $question->reference = $item->reference;
+                $question->type = $item->type;
+                $question->question = $item->question;
+                $question->a=$item->a;
+                $question->b=$item->b;
+                $question->c=$item->c;
+                $question->d=$item->d;
+                $question->e=$item->e;
+                $question->answer=$item->answer;
+                $question->explanation=$item->explanation;
+                $question->dynamic=$item->dynamic;
+                $question->project_id=$project_new->id;
+                if(Passage::where('id',$item->passage_id)->first())
+                $question->passage_id = Passage::where('passage',Passage::where('id',$item->passage_id)->first()->passage)->where('project_id',$project_new->id)->first()->id;
+                $question->user_id = $item->user_id;
+                $question->stage = $item->stage;
+                $question->status = $item->status;
+                if(!Question::where('project_id',$project_new->id)->where('slug',$item->slug)->first())
+                $question->save();
+
+                // attach Categories
+                $categories = $item->categories;
+                // update categories
+                if($categories)
+                foreach($categories as $category){
+                    $new_cat = Category::where('slug',$project_new->slug.'_'.$category->slug)->first();
+                    if($new_cat)
+                    if(!$question->categories->contains($new_cat->id))
+                            $question->categories()->attach($new_cat->id);
+                    
+                }   
+
+                // attach tags
+                $tags = $item->tags;
+                
+                if($tags)
+                foreach($tags as $tag){
+                    if(isset($tag->value)){
+                        $new_tag = Tag::where('project_id',$project_new->id)->where('value',$tag->value)->first();
+                        if($new_tag)
+                        if(!$question->tags->contains($new_tag->id))
+                            $question->tags()->attach($new_tag->id); 
+                    }
+                       
+                } 
+
+            }
 
             flash('Project (<b>'.$request->name.'</b>) Successfully created!')->success();
             return redirect()->route('dataentry.index');
@@ -256,9 +353,22 @@ class ProjectController extends Controller
     {
         $project = Project::where('id',$id)->first();
         $this->authorize('update', $project);
-        $node = Category::where('slug',$project->slug)->first();
-        $node->delete();
+
+        $qids = Question::where('project_id',$id)->pluck('id')->toArray();
+        //detach tags and categories
+        DB::table('category_question')->whereIn('question_id', $qids)->delete();
+        DB::table('question_tag')->whereIn('question_id', $qids)->delete();
+        // delete questions
+        Question::where('project_id',$id)->delete();
+        //delete passages
+        Passage::where('project_id',$id)->delete();
+        //delete tags
+        Tag::where('project_id',$id)->delete();
+        //delete categories
+        Category::where('slug',$project->slug)->first()->delete();
+        //delete project
         $project->delete();
+
         flash('Project Successfully deleted!')->success();
         return redirect()->route('dataentry.index');
        

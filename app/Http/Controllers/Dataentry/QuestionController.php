@@ -10,6 +10,7 @@ use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Tag;
 
+
 class QuestionController extends Controller
 {
     /**
@@ -36,6 +37,8 @@ class QuestionController extends Controller
      */
     public function index(Request $request, Question $question)
     {
+
+
         $search = $request->search;
         $item = $request->item;
         $questions = $question
@@ -121,6 +124,9 @@ class QuestionController extends Controller
             $request->merge(['answer' => $answer]);
         }
 
+        if(!$request->passage_id){
+            $request->merge(['passage_id' => null]);
+        }
 
         $categories = $request->get('category');
         $tags = $request->get('tag');
@@ -177,6 +183,9 @@ class QuestionController extends Controller
     public function show($project_slug,$id)
     {
         $question = Question::where('id',$id)->first();
+
+
+      
         $this->authorize('view', $question);
 
         if($question){
@@ -246,7 +255,11 @@ class QuestionController extends Controller
             if($category_slug=='uncategorized')
                 $id = $category->questions->first()->id;
             elseif($category->questions){
+                if(isset($category->questions[0]))
                 $id = $category->questions[0]->id;
+                else
+                $id = null ;
+
             }else
                 $id=null;
         }
@@ -314,7 +327,10 @@ class QuestionController extends Controller
 
         if($id==null){
             if($tag->questions){
+                if(isset($tag->questions[0]))
                 $id = $tag->questions[0]->id;
+                else
+                $id = null ;
             }else
                 $id=null;
         }
@@ -454,7 +470,7 @@ class QuestionController extends Controller
             $question->answer = $request->answer;
             $question->explanation = $request->explanation;
             $question->dynamic = $request->dynamic;
-            $question->passage_id= $request->passage_id;
+            $question->passage_id= ($request->passage_id)?$request->passage_id:null;
             $question->status = $request->status;
             $question->save(); 
 

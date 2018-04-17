@@ -36,11 +36,11 @@
 		<div class="row">
 			<div class="col-5">Type</div>
 			<div class="col-7 mb-2">
-				@if($question->type==1)
+				@if($question->type=='mcq')
 				Multiple Choice Question
-				@elseif($question->type==2)
+				@elseif($question->type=='maq')
 				Multi Answer Question
-				@elseif($question->type==3)
+				@elseif($question->type=='naq')
 				Numerical Answer Question
 				@else
 				Explanation Question

@@ -79,7 +79,24 @@ class TagController extends Controller
                 return redirect()->back()->withInput();
             }
 
-            $tag = Tag::create($request->all());
+            $tags = explode(',', $request->value);
+            foreach($tags as $t){
+               $tag_exists = Tag::where('name',$request->name)
+                                    ->where('value',$t)
+                                    ->where('project_id',$request->project_id)
+                                    ->first();
+                if(!$tag_exists){
+                    $tag = new Tag();
+                    $tag->name = $request->name;
+                    $tag->user_id = \auth::user()->id;
+                    $tag->value = $t;
+                    $tag->project_id = $request->project_id;
+                    $tag->save();
+                }
+
+            }
+
+            //$tag = Tag::create($request->all());
             flash('A new tag ('.$request->name.') is created!')->success();
             return redirect()->route('tag.index',$this->project->slug);
         }

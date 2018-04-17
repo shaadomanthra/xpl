@@ -261,10 +261,20 @@
 
         <div class="form-group mt-3">
         <label for="formGroupExampleInput ">Status</label>
+        @can('publish',$question)
+        <select class="form-control" name="status" >
+          <option value="0" @if(isset($question)) @if($question->status==0) selected @endif @endif >Draft</option>
+          <option value="1" @if(isset($question)) @if($question->status==1) selected @endif @endif >Published</option>
+          <option value="2" @if(isset($question)) @if($question->status==2) selected @endif @endif >Live</option>
+        </select>
+        @endcan
+
+        @cannot('publish',$question)
         <select class="form-control" name="status" >
           <option value="0" @if(isset($question)) @if($question->status==0) selected @endif @endif >Draft</option>
           <option value="1" @if(isset($question)) @if($question->status==1) selected @endif @endif >Published</option>
         </select>
+        @endcannot
       </div>
 
        <div class="form-group mt-3">

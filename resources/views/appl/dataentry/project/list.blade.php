@@ -5,7 +5,8 @@
               <tr>
                 <th scope="col">#({{$projects->total()}})</th>
                 <th scope="col">Project </th>
-                <th scope="col">Slug</th>
+                <th scope="col">Questions</th>
+                <th scope="col">Status</th>
                 <th scope="col">Created at</th>
               </tr>
             </thead>
@@ -18,7 +19,14 @@
                   {{ $project->name }}
                   </a>
                 </td>
-                <td>{{ $project->slug }}</td>
+                <td>{{ $project->getQuesCount($project->id) }}</td>
+                <td>
+                  @if($project->status==0)
+                    <span class="badge badge-warning">In Progress</span>
+                  @else
+                    <span class="badge badge-success">Completed</span>
+                  @endif
+                </td>
                 <td>{{ ($project->created_at) ? $project->created_at->diffForHumans() : '' }}</td>
               </tr>
               @endforeach      

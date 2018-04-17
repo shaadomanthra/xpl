@@ -76,8 +76,11 @@ class CategoryController extends Controller
     public function store(Request $request,Category $category)
     {
 
-        $request->slug = str_replace(' ', '-', $request->slug);
-        $child_attributes =['name'=>$request->name,'slug'=>$request->slug];
+        if(!$request->slug )
+            $request->slug  = $request->name;
+        
+        $request->slug = strtolower(str_replace(' ', '-', $request->slug));
+        $child_attributes =['name'=>$request->name,'slug'=>$request->slug,'project_id'=>$this->project->id];
         $parent = Category::where('id','=',$request->parent_id)->first();
         $child = new Category($child_attributes);
 
@@ -239,6 +242,7 @@ class CategoryController extends Controller
         //update category details 
         $category->name = $request->name;
         $category->slug = str_replace(' ', '-', $request->slug);
+        $category->project_id = $this->project->id;
         $category->save();
 
         flash('Category(<b>'.$request->name.'</b>) successfully updated!')->success();

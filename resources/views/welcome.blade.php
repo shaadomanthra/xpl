@@ -7,9 +7,9 @@
 	<div class="row">
 		<div class="col-md-8 ">
 			@if(auth::user())
-			<div class="row mt-2">
+			<div class="row mt-2 ">
 				<div class="col-12 col-md-3">
-					<img class="img-thumbnail rounded-circle mb-3"src="{{ Gravatar::src(auth::user()->email, 100) }}">
+					<img class="img-thumbnail rounded-circle mb-3" src="{{ Gravatar::src(auth::user()->email, 140) }}">
 				</div>
 				<div class="col-12 col-md-9">
 
@@ -55,7 +55,7 @@
 <div class="row ">
 	
 	<div class="col-12 col-md-6 ">
-		<div class="card mb-4 mr-md-1" style="min-height:212px;">
+		<div class="card mb-4 mr-md-1" style="min-height:220px;">
 			<div class="card-body bg-light">
 				<div class="row no-gutter">
 					<div class="col-6">
@@ -76,7 +76,7 @@
 		</div> 
 	</div>
 	<div class="col-12 col-md-6">
-		<div class="card mb-md-3">
+		<div class="card mb-md-3" style="min-height:220px;">
 			<div class="card-body bg-success text-white">
 				<h2><b>Prime Goals</b></h2>
 				<p class="mb-0 pb-0">

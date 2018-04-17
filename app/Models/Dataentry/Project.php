@@ -20,6 +20,27 @@ class Project extends Model
         // add all other fields
     ];
 
+    public function questions()
+    {
+        return $this->hasMany('PacketPrep\Models\Dataentry\Question');
+    }
+
+    public function getQuesCount($project_id){
+        $details['drafts'] = Question::where('project_id',$project_id)->where('status',0)->count();
+        $details['published'] = Question::where('project_id',$project_id)->where('status',1)->count();
+        $details['live'] = Question::where('project_id',$project_id)->where('status',2)->count();
+        $details['total'] = $details['drafts'] + $details['published'] + $details['live'];
+        return $details['total'];
+    }
+
+    public function getAllQuestionsCount($projects){
+
+        $count=0;
+        foreach($projects as $project){
+            $count = $count + count($project->questions);
+        }
+        return $count;
+    }
 
     public static function getName($slug){
     	 $model = new Project;

@@ -41,6 +41,11 @@ class Question extends Model
         return $this->belongsToMany('PacketPrep\Models\Dataentry\Tag');
     }
 
+    public function passage()
+    {
+        return $this->hasOne('PacketPrep\Models\Dataentry\Passage');
+    }
+
 
     public static function getTotalQuestionCount($project){
             return Question::where('project_id',$project->id)->count();
