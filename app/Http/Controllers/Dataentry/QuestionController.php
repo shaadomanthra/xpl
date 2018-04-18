@@ -41,13 +41,17 @@ class QuestionController extends Controller
 
         $search = $request->search;
         $item = $request->item;
+
+        ($request->order) ? $order = $request->order : $order = 'desc';
+        ($request->orderby) ? $orderby = $request->orderby : $orderby = 'created_at';
+
         $questions = $question
                         ->where(function ($query) use ($item) {
                                 $query->where('question','LIKE',"%{$item}%")
                                       ->orWhere('reference', 'LIKE', "%{$item}%");
                             })
                         ->where('project_id',$this->project->id)
-                        ->orderBy('created_at','desc ')
+                        ->orderBy($orderby,$order)
                         ->paginate(config('global.no_of_records'));
 
         $view = $search ? 'list': 'index';

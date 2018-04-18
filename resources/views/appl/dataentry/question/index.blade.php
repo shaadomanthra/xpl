@@ -51,6 +51,20 @@
  </div>
   <div class="col-md-3 pl-md-0">
       @include('appl.dataentry.snippets.menu')
+
+       <div class="list-group  mb-0 mt-3">
+    <a href="#" class="list-group-item list-group-item-action list-group-item-light  disabled" >
+      <h2 class="mb-0"><i class="fa fa-sliders"></i> Order</h2>
+    </a>
+    <a href="{{ route('question.index',['project_slug'=>$project->slug,'order'=>'asc','orderby'=>'created_at'])}}" class="list-group-item list-group-item-action list-group-item-light  {{  request()->get('created_at') ? 'active' : ''  }}">
+      Created At
+    </a>
+
+    <a href="{{ route('question.index',['project_slug'=>$project->slug, 'order'=>'asc','orderby'=>'reference'])}}" class="list-group-item list-group-item-action list-group-item-light  {{  request()->get('reference') ? 'active' : ''  }}">
+      Reference
+    </a>
+   
+  </div>
   </div>
 </div>
 
