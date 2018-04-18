@@ -37,8 +37,6 @@ class QuestionController extends Controller
      */
     public function index(Request $request, Question $question)
     {
-
-
         $search = $request->search;
         $item = $request->item;
 
@@ -414,6 +412,8 @@ class QuestionController extends Controller
         $passages = Passage::where('project_id',$this->project->id)->orderBy('created_at','desc ')
                         ->paginate(config('global.no_of_records'));
 
+        $question->answer = strtoupper(strip_tags(trim(preg_replace('/\s\s+/', ' ', $question->answer))));
+
         // Categories
         $category_parent =  Category::where('slug',$this->project->slug)->first();   
         $category_node = Category::defaultOrder()->descendantsOf($category_parent->id)->toTree();
@@ -464,6 +464,7 @@ class QuestionController extends Controller
         $tags = $request->get('tag');
 
         try{
+
             $question = Question::where('id',$id)->first();
             $question->reference = strtoupper($request->reference);
             $question->question = $request->question;

@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\DB;
 class QdbController extends Controller
 {
     public function index(){
-
-
-
     	
     	//$this->remove_questions();
     	//dd();
@@ -138,6 +135,35 @@ class QdbController extends Controller
     	
     	//echo $q->explanation;
     	//echo $this->img_replace($q->explanation);
+
+    }
+
+    public function exportQuestion(){
+
+        $qset = Question::get();
+        $ques = [];
+        foreach($qset as $a=>$q){
+        
+            $ques[$a]['id'] = $q->id;
+            $ques[$a]['slug'] = $q->slug;
+            $ques[$a]['answer'] = $q->answer;
+        }
+
+        $json_data = json_encode($ques,JSON_PRETTY_PRINT);
+        file_put_contents('ques_answers.json', $json_data);
+
+    }
+
+    public function importQuestion(){
+        $ques = json_decode(file_get_contents('ques_answers.json'));
+        foreach($ques as $q){
+            $slug = $q->slug;
+            $answer = $q->answer;
+            $question = Question::where('slug',$slug)->first();
+            
+            $question->answer = strtoupper($this->answerSanitize($answer));
+            $question->save();
+        }
 
     }
 
