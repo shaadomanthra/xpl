@@ -161,8 +161,11 @@ class QdbController extends Controller
             $answer = $q->answer;
             $question = Question::where('slug',$slug)->first();
             
-            $question->answer = strtoupper($this->answerSanitize($answer));
-            $question->save();
+            if($question){
+                $question->answer = strtoupper($this->answerSanitize($answer));
+                $question->save();
+            }
+            
         }
 
     }
