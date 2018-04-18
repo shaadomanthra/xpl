@@ -18,7 +18,7 @@
         "spatie/laravel-backup": "^5.5",
         "thomaswelton/laravel-gravatar": "^1.1",
         "thujohn/twitter": "^2.2",
-        "facebook/graph-sdk" : "~5.0"
+        "mathjax/mathjax": "2.7.4"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
