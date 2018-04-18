@@ -110,6 +110,7 @@ class QuestionController extends Controller
                 ->with('passage','')
                 ->with('type',$type)
                 ->with('tags',$tags)
+                ->with('question',$question)
                 ->with('categories',$categories)
                 ->with('stub','Create');
     }
