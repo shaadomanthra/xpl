@@ -8,7 +8,7 @@ use PacketPrep\Models\Library\Repository;
 use PacketPrep\Models\Library\Structure;
 
 
-class StructureController extends Controller
+class structureController extends Controller
 {
     /**
      * Display a listing of the resource.
