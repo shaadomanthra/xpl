@@ -19,7 +19,8 @@
             </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'chapter'])}}">Chapter</a>
-                <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'lesson'])}}">Lesson</a>
+                <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'topic'])}}">Topic</a>
+                <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'subtopic'])}}">Subtopic</a>
                 <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'concept'])}}">Concept</a>
                 <a class="dropdown-item" href="{{ route('structure.create',['repo_slug'=>$repo->slug,'type'=>'variant'])}}">Variant</a>
               </div>

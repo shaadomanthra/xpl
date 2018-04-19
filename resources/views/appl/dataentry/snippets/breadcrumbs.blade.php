@@ -68,7 +68,11 @@
 	      			<li class="breadcrumb-item" ><a href="{{ route('passage.show',[$project->slug,$passage->id]) }}">{{ $passage->name }}</a></li>
 	      			<li class="breadcrumb-item" >Edit</li>
 	      			@else
+	      			@if(isset($passage->name))
 	      			<li class="breadcrumb-item" >{{ $passage->name }}</li>
+	      			@else
+	      			<li class="breadcrumb-item" >Create</li>
+	      			@endif
 	      			@endif
 	      		@else
 	      			<li class="breadcrumb-item" >Passages</li>	

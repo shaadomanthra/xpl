@@ -63,15 +63,18 @@ class Structure extends Model
 
             $counter ='';
             if($struct->type=='variant')
-                $counter =  '<a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right"> <i class="fa fa-comments"></i> Questions('.count($struct->questions).')</span></a>';
+                $counter =  ' <span class="s10 text-secondary">Variant</span> <a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right"> <i class="fa fa-comments"></i> Questions('.count($struct->questions).')</span></a>';
             if($struct->type == 'concept')
-                $counter = '<a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-file-text"></i> Versions('.count($struct->versions).')</span></a>';
-            if($struct->type == 'lesson')
-                $counter = '<a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-youtube-play"></i> Videos('.count($struct->videos).')</span></a>';
+                $counter = ' <span class="s10 text-secondary">Concept</span> <a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-file-text"></i> Versions('.count($struct->versions).')</span></a>';
+            if($struct->type == 'topic')
+                $counter = ' <span class="s10 text-secondary">Topic</span> <a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-youtube-play"></i> Videos('.count($struct->videos).')</span></a>';
+            if($struct->type == 'subtopic')
+                $counter = ' <span class="s10 text-secondary">Sub Topic</span> <a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-youtube-play"></i> Videos('.count($struct->videos).')</span></a>';
             if($struct->type == 'chapter')
-                $counter = '<a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-file-pdf-o"></i> Documents('.count($struct->documents).')</span></a>';
+                $counter = ' <span class="s10 text-secondary">Chapter</span> <a href="'.route('lquestion.show',[$options['repo']->slug,$struct->slug,'']).'"><span class="float-right">  <i class="fa fa-file-pdf-o"></i> Documents('.count($struct->documents).')</span></a>';
 
-            $d = $d.'<li class="item" id="'.$struct->id.'" ><a href="'.route('structure.show',[$struct->slug,$options['repo']->slug,]).'">'.$struct->name.'</a>'.$counter.'</li>';
+
+            $d = $d.'<li class="item" id="'.$struct->id.'" ><a href="'.route('structure.show',[$options['repo']->slug,$struct->slug,]).'">'.$struct->name.'</a>'.$counter.'</li>';
 
             if($hasChildren) {
                 $d = $d.Structure::displayUnorderedList($struct->children,$options,$i+1);
@@ -155,6 +158,7 @@ class Structure extends Model
     	foreach ($structures as $struct) {
     		$hasChildren = (count($struct->children) > 0);
 
+            $item = null;
     		$state = null;
             if(isset($options['select_id']))
     		if($struct->id == $options['select_id'])
@@ -166,21 +170,31 @@ class Structure extends Model
     		}
 
             if($options['type']=='chapter'){
+                $item = 'chapter';
                 if($struct->type !='subject')
                     $state = 'disabled';
             }
 
-            if($options['type']=='lesson'){
+            if($options['type']=='topic'){
+                $item = 'topic';
                 if($struct->type !='chapter')
                     $state = 'disabled';
             }
 
+            if($options['type']=='subtopic'){
+                $item = 'subtopic';
+                if($struct->type !='topic')
+                    $state = 'disabled';
+            }
+
             if($options['type']=='concept'){
-                if($struct->type !='lesson')
+                $item = 'concept';
+                if($struct->type !='subtopic')
                     $state = 'disabled';
             }
 
             if($options['type']=='variant'){
+                $item = 'variant';
                 if($struct->type !='concept')
                     $state = 'disabled';
             }

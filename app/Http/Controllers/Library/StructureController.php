@@ -121,7 +121,7 @@ class structureController extends Controller
         $struct = Structure::where('slug',$struct_slug)->first();
         $parent = Structure::getParent($struct);
 
-        $this->authorize('view', $parent);
+        $this->authorize('view', $struct);
 
         $order = $request->get('order');
         
@@ -171,6 +171,7 @@ class structureController extends Controller
                 $list =null;
 
         }
+
 
 
         if($struct)
