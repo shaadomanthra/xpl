@@ -203,7 +203,7 @@ class CategoryController extends Controller
         }
         //dd('done');
 
-        $select_options = Category::displaySelectOption(Category::defaultOrder()->descendantsOf($root->id)->toTree(),
+        $select_options = Category::displaySelectOption(Category::defaultOrder()->descendantsAndSelf($root->id)->toTree(),
             [   'select_id'     =>  $parent->id,
                 'disable_id'    =>  $node->id,
             ]

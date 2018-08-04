@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Qdb extends Model
 {
-    protected $table = 'qdb_question';
+    protected $table = 'qinput_question';
 }

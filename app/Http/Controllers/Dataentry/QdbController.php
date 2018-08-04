@@ -16,14 +16,53 @@ class QdbController extends Controller
 {
     public function index(){
     	
+        dd();
     	//$this->remove_questions();
     	//dd();
-    	$slug = 'verbal-ability';
-    	$our_slug = 'verbal-ability';
-    	$project_id = Project::where('slug','general-aptitude')->first()->id;
-    	//dd($project_id);
-    	$qset = Qdb::where('course',$slug)->get();
+    	$slug = '87';
+    	$our_slug = 'heights-and-distances';
+    	$project_id = Project::where('slug','arithmetic')->first()->id;
 
+    	//dd($project_id);
+    	$qset = Qdb::where('cat_id',$slug)->get();
+
+
+        //dd($qset);
+        //create tags
+        foreach($qset as $q ){
+
+            $exam_tag_exists = Tag::where('name','exam')
+                            ->where('value',strtolower($q->exam))
+                            ->where('project_id',$project_id)
+                            ->first();
+
+            if(!$exam_tag_exists){
+                $tag = new Tag();
+                $tag->name = 'exam';
+                $tag->value = strtolower($q->exam);
+                $tag->project_id = $project_id;
+                $tag->user_id = \auth::user()->id;
+                $tag->save();
+            }
+
+            $year_tag_exists = Tag::where('name','year')
+                            ->where('value',$q->year)
+                            ->where('project_id',$project_id)
+                            ->first();
+
+            if(!$year_tag_exists){
+                $tag = new Tag();
+                $tag->name = 'year';
+                $tag->value = $q->year;
+                $tag->project_id = $project_id;
+                $tag->user_id = \auth::user()->id;
+                $tag->save();
+            }
+
+
+            //echo $q->exam." ".$q->year."<br>";
+        }
+        //dd();
 
     	foreach($qset as $q )
     	{
@@ -32,14 +71,14 @@ class QdbController extends Controller
 
     		
 
-    		 $question_exists = Question::where('slug',$q->hash)
+    		 $question_exists = Question::where('slug',$q->qhash)
                             ->where('project_id',$project_id)
                             ->first();
 
             if(!$question_exists){
                 $ques = new Question();
                 $ques->reference = $q->qno;
-                $ques->slug = $q->hash;
+                $ques->slug = $q->qhash;
                 $ques->type = $q->type;
                 $ques->question = $q->question;
                 $ques->a = htmlspecialchars_decode($q->a);
@@ -59,32 +98,25 @@ class QdbController extends Controller
        			$category = Category::where('slug',$our_slug)->first();
        			
        			$year= Tag::where('value',$q->year)->where('project_id',$project_id)->first();
-       			$set = Tag::where('value',$q->qset)->where('project_id',$project_id)->first();
-       			$mark = Tag::where('value',$q->mark)->where('project_id',$project_id)->first();
+       			$exam = Tag::where('value',strtolower($q->exam))->where('project_id',$project_id)->first();
 
 
        			$ques->categories()->attach($category->id);
        			if($year)
        			$ques->tags()->attach($year->id);
-       			if($set)
-       			$ques->tags()->attach($set->id);
-       			if($mark)
-       			$ques->tags()->attach($mark->id);
+       			if($exam)
+       			$ques->tags()->attach($exam->id);
             }else{
             	$year= Tag::where('value',$q->year)->where('project_id',$project_id)->first();
-       			$set = Tag::where('value',$q->qset)->where('project_id',$project_id)->first();
-       			$mark = Tag::where('value',$q->mark)->where('project_id',$project_id)->first();
+       			$exam= Tag::where('value',strtolower($q->exam))->where('project_id',$project_id)->first();
 
 	       		$ques = $question_exists;
 	            if($year)
 	            	if(!$ques->tags->contains($year->id))
 	       			$ques->tags()->attach($year->id);
-	       		if($set)
-	       			if(!$ques->tags->contains($set->id))
-	       			$ques->tags()->attach($set->id);
-	       		if($mark)
-	       			if(!$ques->tags->contains($mark->id))
-	       			$ques->tags()->attach($mark->id);
+	       		if($exam)
+	       			if(!$ques->tags->contains($exam->id))
+	       			$ques->tags()->attach($exam->id);
             }
 
             

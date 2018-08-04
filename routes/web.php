@@ -73,9 +73,14 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Auth::routes();
 
+
+
+
 	Route::get('/home', function () { return redirect('/'); })->name('home');
 	Route::get('/apply', function () { return view('welcome'); })->name('apply');
 	Route::get('team','User\TeamController@index')->name('team');
+
+	Route::resource('product','Product\ProductController')->middleware('auth');
 
 	Route::resource('role','User\RoleController')->middleware('auth');
 	Route::resource('docs','Content\DocController');
