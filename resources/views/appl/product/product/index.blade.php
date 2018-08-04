@@ -1,6 +1,5 @@
 @extends('layouts.nowrap-product')
 @section('content')
-<div class="line" style="padding:1px;background:#eee"></div>
 <div class="bg-white p-4  mb-4 ">
 	<div class="wrapper ">  
 	<div class="container">

@@ -53,7 +53,7 @@
             }
 
 #app{}
-.wrapper-bg{background-color: #f5f8fa; flex: 1; position:relative;}
+.wrapper-bg{background-color: #ECF0F1; flex: 1; position:relative;}
 .wrapper{ max-width: 1150px; margin:0px auto; }
 .margintop-20{margin-top: 20px;}
 .marginbottom-20{margin-bottom: 20px;}
@@ -62,7 +62,7 @@
   min-height: calc(100vh - 150px);
   flex-direction: column;
 }
-.footer{ height:150px; }
+.footer{ height:150px;color:rgba(255, 255, 255, 0.5); }
 
 
 .nav-bg{background: white;}

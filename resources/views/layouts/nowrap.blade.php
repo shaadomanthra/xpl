@@ -4,7 +4,7 @@
     <div class="nav-bg">
         <div class="wrapper">
         <div id="app ">
-            @include('snippets.topmenu')
+            @include('snippets.topmenu-product')
         </div>
         </div>
     </div>    

@@ -1,7 +1,38 @@
-@extends('layouts.app')
+@extends('layouts.nowrap-product')
 
 @section('content')
 
+<div class="bg-white p-4  mb-4 ">
+	<div class="wrapper ">  
+	<div class="container">
+	<div class="row">
+		<div class="col-12 col-md-8">
+			<h1 class="mt-2 mb-4 mb-md-2">
+			<img src="{{asset('img/logo_sample.png')}}" width="70px" >
+       &nbsp;  Pragathi Degree College
+
+			</h1>
+
+		</div>
+		<div class="col-12 col-md-4">
+      <div class="mt-3">
+    <form class="form" method="GET" action="{{ route('course.index') }}">
+            <div class="input-group ">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-search"></i></div>
+              </div>
+              <input class="form-control form-control-lg" id="search" name="item" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
+              value="{{Request::get('item')?Request::get('item'):'' }}">
+            </div>
+          </form>
+    </div>
+  		</div>
+	</div>
+	</div>
+</div>
+</div>
+
+<div class="container">
 <div class="jumbotron bg-white border mt-4">
 
 	<div class="row">
@@ -32,20 +63,24 @@
 			
 			@else
 
-			<h1 class="display-4">Hello World !</h1>
-			<p class="lead">We are here to make the learning simple, interesting and effective.</p>
+			
+			
+			<div class="ml-4">
+			<h1 class="display-4">Online Library </h1>
+			<p class="lead">One stop repository of educational content for self learners</p>
 			<hr class="my-4">
 			<p>If you believe in our mission and willing to contribute  then join us...<br> lets build an amazing product.</p>
 			<p class="lead">
 				<a class="btn border border-primary btn-lg" href="{{ route('job.index') }}" role="button">Apply Now</a>
 				<a class="btn border border-success text-success btn-lg" href="{{ route('login') }}" role="button">Login</a>
 			</p>
+		</div>
 			@endif
 
 		</div>
 		<div class="col-md-4 d-none d-md-block">
 			<div class="text-center mt-3 mt-mb-0">
-				<img src="{{ asset('/img/puzzle.png')}}" width="200px"/>
+				<img src="{{ asset('/img/678.jpg')}}" width="500px"/>
 			</div>
 		</div>
 	</div>
@@ -94,6 +129,8 @@
 </div>
 
 @endif
+
+</div>
 
 </div>
 @endsection           
