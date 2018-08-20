@@ -1,15 +1,16 @@
-@extends('layouts.head')
+@extends('layouts.login')
 @section('content-main')
-    <div class="wrapper-bg ">
-    <div class="nav-bg">
-        <div class="wrapper">
-        <div id="app ">
-            @include('snippets.topmenu-product')
-        </div>
-        </div>
-    </div>    
-       
+<style>
+body{
+	background: #ECF0F1;
+}
+
+</style>
+    <div class="wrapper-bg-2 ">
+      
+    <div class="" style="max-width:400px; margin:0px auto;padding-top:50px;padding-bottom: 50px;">
     @yield('content')
+    </div>
        
     </div>
 @endsection

@@ -68,23 +68,41 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
+        $url = url()->full();
+        if($this->hasSubdomain($url)){
+            $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $subdomain = $exploded[0];
+            
+        }else
+            $subdomain = null;
+
+
         $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
+            'client_slug' => $subdomain,
             'password' => bcrypt($data['password']),
             'activation_token' => str_random(20),
         ]);
 
-        Mail::to($user->email)->send(new ActivateUser($user));
+
+        //Mail::to($user->email)->send(new ActivateUser($user));
 
         return $user;
+    }
+
+    public function hasSubdomain($url) {
+        $parsed = parse_url($url);
+        $exploded = explode('.', $parsed["host"]);
+        return (count($exploded) > 2);
     }
 
     protected function registered(Request $request, $user)
     {
         $this->guard()->logout();
-        return redirect('/login')->with('status', 'We sent you an activation code. Check your email and click on the link to verify. Usually it takes 5 to 15mins for the mail to reach your inbox.');
+        return redirect('/login')->with('status', 'Your account is successfully created. Kindly Contact the Website Administrator to activate your account.');
     }
 
     public function activateUser($token)

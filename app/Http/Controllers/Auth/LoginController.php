@@ -61,7 +61,7 @@ class LoginController extends Controller
     {
         if (!$user->status) {
             auth()->logout();
-            return back()->with('warning', 'Kindly activate your account with the link provided in the activation mail sent to your inbox');
+            return back()->with('warning', 'Kindly contact the website adminstrator to activate your account.');
         }
 
         if ($user->status==2) {

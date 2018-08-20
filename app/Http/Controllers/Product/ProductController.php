@@ -26,6 +26,46 @@ class ProductController extends Controller
         return view('appl.product.product.index')->with('tags',$tags['exam']);
     }
 
+    public function welcome(){
+
+        $url = url()->full();
+        if($this->hasSubdomain($url)){
+            $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $subdomain = $exploded[0];
+            $file = "../json/".$subdomain.".json";
+            $filedata = json_decode(file_get_contents($file));
+            if(file_exists($file)){
+                if($subdomain == 'corporate')
+                {
+                    return view('appl.product.corporate.index');
+                }
+                else{
+                    
+                    if($filedata->status==0)
+                        return view('appl.product.front.unpublished')->with('subdomain',$subdomain);
+                    elseif($filedata->status==1)
+                         return view('welcome');
+                    elseif($filedata->status==2)
+                        return view('appl.product.front.hold')->with('subdomain',$subdomain);
+                    else
+                        return view('appl.product.front.terminated')->with('subdomain',$subdomain);
+
+                }       
+            }
+            else
+                return view('appl.product.front.notfound')->with('subdomain',$subdomain);
+        }
+        else
+            return view('appl.product.front.index'); 
+    }
+
+    public function hasSubdomain($url) {
+        $parsed = parse_url($url);
+        $exploded = explode('.', $parsed["host"]);
+        return (count($exploded) > 2);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

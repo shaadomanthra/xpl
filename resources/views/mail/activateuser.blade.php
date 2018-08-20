@@ -1,13 +1,13 @@
 
 @component('mail::message')
-# Hi {{$user['name']}}!, Welcome to PacketPrep.
+# Hi {{$user['name']}}!, Welcome to Online Library.
 
-Your registered email-id is {{$user['email']}} , Please click on the below link to verify your email account.
+Your registered email-id is {{$user['email']}} <br>
 
-@component('mail::button', ['url' => url('user/activate', $user->activation_token)])
-Verify Email
+@component('mail::panel')
+Password : <b>{{$user['password']}}</b>
 @endcomponent
 
 Thanks,<br>
-{{ config('app.name') }}
+Online Library
 @endcomponent

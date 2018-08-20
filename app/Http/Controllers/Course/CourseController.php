@@ -15,7 +15,7 @@ class CourseController extends Controller
      */
     public function index(Course $course,Request $request)
     {
-        $this->authorize('view', $course);
+        //$this->authorize('view', $course);
 
         $search = $request->search;
         $item = $request->item;
@@ -88,7 +88,7 @@ class CourseController extends Controller
     {
         $course = Course::where('slug',$id)->first();
         
-        $this->authorize('view', $course);
+        
 
 
         if($course)

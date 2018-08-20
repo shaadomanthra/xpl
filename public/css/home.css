@@ -54,6 +54,7 @@
 
 #app{}
 .wrapper-bg{background-color: #ECF0F1; flex: 1; position:relative;}
+.wrapper-bg-2{ background-color: #ECF0F1; height:100%;}
 .wrapper{ max-width: 1150px; margin:0px auto; }
 .margintop-20{margin-top: 20px;}
 .marginbottom-20{margin-bottom: 20px;}
@@ -92,6 +93,8 @@ ul.list li:before{ content:""; position:absolute; width:13px; height:10px; borde
 
 .card-body p img.class{ width:100%; }
 
+.titlea{ font-family: 'Anton', sans-serif; }
+.subtitlea{ font-family: 'Open Sans', sans-serif; }
 /*user profile*/
 .name,a.link{ color:white; }
 

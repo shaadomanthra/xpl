@@ -13,56 +13,11 @@
 
 use PacketPrep\Http\Middleware\RequestFilter;
 
-/*
-Route::get('/tweet', function()
-{
-	$uploaded_media = Twitter::uploadMedia(['media' => File::get(public_path('img/blog/packetcode_1521662053_pexels-photo-278918.jpeg'))]);
-	return Twitter::postTweet(['status' => 'Laravel is beautiful', 'media_ids' => $uploaded_media->media_id_string]);
 
-}); */
-
-/*
-use Facebook\Facebook;
-
-
-Route::get('/fb',function(){
-	
-	$fb = new \Facebook\Facebook([
-	  'app_id' => '164735766925437',
-	  'app_secret' => 'f995936dfc78e3057fdaca03fc470fe9',
-	  'default_graph_version' => 'v2.10',
-	  'default_access_token' => 'EAACV04jekH0BAGfDE6qnNZBcO8vsVa7lpZAxCLAGM0zMoxKZAgYgk29JJaibvoD5NBNZCOikFLxgD3Aot7tetZB0f0KvZB6BlCJcpDK83okni5CoPP5rVjQrRq7z1mZCVJVM6q3r0DEKUfZCucyZCbQ9WsQqjslMX4aiBKea0FMZAcitYc9vEEtaJqrZCIuZCNr8RgwZD', // optional
-	]);
-
-	// Use one of the helper classes to get a Facebook\Authentication\AccessToken entity.
-	//   $helper = $fb->getRedirectLoginHelper();
-	//   $helper = $fb->getJavaScriptHelper();
-	//   $helper = $fb->getCanvasHelper();
-	//   $helper = $fb->getPageTabHelper();
-
-	try {
-	  // Get the \Facebook\GraphNodes\GraphUser object for the current user.
-	  // If you provided a 'default_access_token', the '{access-token}' is optional.
-	  $response = $fb->get('1446477072125301?fields=access_token');
-	} catch(\Facebook\Exceptions\FacebookResponseException $e) {
-	  // When Graph returns an error
-	  echo 'Graph returned an error: ' . $e->getMessage();
-	  exit;
-	} catch(\Facebook\Exceptions\FacebookSDKException $e) {
-	  // When validation fails or other local issues
-	  echo 'Facebook SDK returned an error: ' . $e->getMessage();
-	  exit;
-	}
-
-	dd($response);
-	$me = $response;
-	echo 'Logged in as ' . $me->getName();
-});
-*/
 
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
-	Route::get('/', 'System\UpdateController@welcome')->name('root');
+	Route::get('/', 'Product\ProductController@welcome')->name('root');
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
 
@@ -81,6 +36,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('team','User\TeamController@index')->name('team');
 
 	Route::resource('product','Product\ProductController')->middleware('auth');
+	Route::resource('client','Product\ClientController')->middleware('auth');
+	Route::resource('client/{client}/clientuser','Product\ClientuserController')->middleware('auth');
 
 	Route::resource('role','User\RoleController')->middleware('auth');
 	Route::resource('docs','Content\DocController');
@@ -136,8 +93,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('library/{repository}/video','Library\VideoController')->middleware('auth');
 	Route::resource('library/{repository}/document','Library\DocumentController')->middleware('auth');
 
-	Route::resource('course','Course\CourseController')->middleware('auth');
-	Route::resource('course/{course}/index','Course\IndexController')->middleware('auth');
+	Route::resource('course','Course\CourseController');
+	Route::resource('course/{course}/index','Course\IndexController');
 
 
 	Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');

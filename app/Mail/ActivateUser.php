@@ -29,6 +29,6 @@ class ActivateUser extends Mailable
      */
     public function build()
     {
-        return $this->subject('Packetprep - User Activation Mail')->markdown('mail.activateuser');
+        return $this->subject('Online Library - Account Details')->markdown('mail.activateuser');
     }
 }

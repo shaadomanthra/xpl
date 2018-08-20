@@ -1,0 +1,11 @@
+{
+    "id": 2,
+    "name": "Pranathi Degree College",
+    "slug": "pranathi",
+    "user_id_creator": 1,
+    "user_id_owner": 12,
+    "user_id_manager": null,
+    "status": "2",
+    "created_at": "2018-08-20 08:58:07",
+    "updated_at": "2018-08-20 12:46:13"
+}
