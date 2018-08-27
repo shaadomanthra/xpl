@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'PacketPrep') }}</title>
     <!-- Styles -->
-     <link href="https://fonts.googleapis.com/css?family=Cabin|Lobster|Open+Sans" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Cabin|Lobster|Open+Sans|Satisfy|Poiret+One" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
@@ -26,7 +26,7 @@
     <div class="nav-bg-dark">
     <footer class=" wrapper  text-light footer">
         <div class="container py-3">
-            @include('snippets.footer')
+            @include('snippets.bottommenu-corporate')
         </div>
     </footer>
 </div>

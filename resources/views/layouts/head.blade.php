@@ -13,7 +13,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
-    
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro|Satisfy|Poiret+One" rel="stylesheet">
     <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
     <link href="{{asset('js/codemirror/lib/codemirror.css')}}" rel="stylesheet">
     <link href="{{asset('js/codemirror/theme/mbo.css')}}" rel="stylesheet">
@@ -52,7 +52,13 @@
 
     </div>
  
-
+    <div class="nav-bg-black">
+    <footer class=" wrapper  text-light footer">
+        <div class="container py-3">
+            @include('snippets.bottommenu')
+        </div>
+    </footer>
+</div>
 
     <!-- Scripts -->
      @include('snippets.scripts')

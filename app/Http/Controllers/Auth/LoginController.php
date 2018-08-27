@@ -56,12 +56,32 @@ class LoginController extends Controller
         ];
     }
 
+    public function hasSubdomain($url) {
+        $parsed = parse_url($url);
+        $exploded = explode('.', $parsed["host"]);
+        return (count($exploded) > 2);
+    }
 
     public function authenticated(Request $request, $user)
     {
+        $url = url()->full();
+        if($this->hasSubdomain($url)){
+            $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $subdomain = $exploded[0];
+            
+        }else
+            $subdomain = null;
+
         if (!$user->status) {
             auth()->logout();
             return back()->with('warning', 'Kindly contact the website adminstrator to activate your account.');
+        }
+
+        if($user->client_slug != 'corporate')
+        if ($user->client_slug != $subdomain) {
+            auth()->logout();
+            return back()->with('warning', 'You dont have access to this website. Kindly Contact the website administrator');
         }
 
         if ($user->status==2) {

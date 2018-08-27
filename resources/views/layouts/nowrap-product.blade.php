@@ -1,15 +1,15 @@
 @extends('layouts.head')
 @section('content-main')
-    <div class="wrapper-bg ">
-    <div class="nav-bg-dark">
+    <div class="wrapper-bg wrapper-bg-3">
+    <div class="nav-bg-silver">
         <div class="wrapper ">
-        <div id="app ">
+        <div id="app " class="p-2">
             @include('snippets.topmenu-product')
         </div>
         </div>
     </div>    
       
-      <div style="background:#ECF0F1"> 
+      <div > 
     @yield('content')
 </div>
        

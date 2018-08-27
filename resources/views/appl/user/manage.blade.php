@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.corporate-body')
 @section('content')
   <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb border">
       <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('profile','@'.$user->username)}}">User</a></li>
+      <li class="breadcrumb-item"><a href="{{ url('/team')}}">Team</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('profile','@'.$user->username)}}">{{ $user->name}}</a></li>
       <li class="breadcrumb-item active" aria-current="page">Manage User</li>
     </ol>
   </nav>

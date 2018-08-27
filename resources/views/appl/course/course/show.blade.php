@@ -1,13 +1,15 @@
 @extends('layouts.nowrap-product')
 @section('content')
 
-<div class="line" style="padding:1px; background:#eee" ></div>
-<div class="bg-white p-3 pt-4 pb-4 p-md-4  mb-4 ">
-	@include('flash::message')  
-	<div class="wrapper ">  
-	<div class="container">
-	<div class="row pt-4 pb-4">
-		<div class="col-12 col-md-7 col-lg-8">
+@include('flash::message')  
+
+
+<div class="wrapper " >
+    <div class="container" >    
+          
+    <div class="row mt-3" >
+	<div class="col-12 col-md-4 col-lg-3  mt-3">
+	<div class="bg-light p-4 border mb-4">
 			<h1 class="mb-4 mb-md-3">
 			<i class="fa fa-align-right"></i> {{ $course->name }} <span class="s15 text-secondary"> 2hr 3min</span>
 			@can('update',$course)
@@ -19,255 +21,143 @@
 			{!! $course->description !!}
 			<button class="btn btn-outline-info btn-lg" data-toggle="modal" data-target="#myModal"><i class ="fa fa-video-camera"></i> Watch Intro</button>
 		</div>
-		<div class="col-12 col-md-5 col-lg-4">
-			<div class=" mt-2">
-			<h2 class=" mb-3 mt-5 mt-md-0" >Priority Index <i class="fa fa-info-circle s15 text-secondary " data-toggle="tooltip" data-placement="top" title="More Information" ></i></h2>
-			<div class=" bg-white " >
-				
-				<h1>
-				<i class="fa fa-star fa-dark"></i>  
-				<i class="fa fa-star fa-dark"></i> 
-				<i class="fa fa-star fa-light"></i> 
-				<i class="fa fa-star fa-light"></i> 
-				<i class="fa fa-star fa-light"></i> &nbsp;<span class="fa-dark"><b>3.0</b></span></h1>
-			
-			</div>
-			</div>
-
-			<div class=" mt-5">
-			<h2 class=" mb-3" >Marks Weightage <i class="fa fa-info-circle s15 text-secondary " data-toggle="tooltip" data-placement="top" title="More Information" ></i></h2>
-			<div class=" bg-white " >
-				<div class="row no-gutters">
-					<div class="col-4">
-						<div class="bg-light border rounded p-3 text-center mr-1">
-							<div class="">Max</div>
-							<h1>{{ $course->weightage_min }}</h1>
-						</div>
-					</div>
-					<div class="col-4 ">
-						<div class="bg-light border rounded p-3 text-center ml-1 mr-1">
-							<div class="">Avg</div>
-							<h1>{{ $course->weightage_avg }}</h1>
-						</div>
-					</div>
-					<div class="col-4 ">
-						<div class="bg-light border rounded p-3 text-center ml-1">
-							<div class="">Min</div>
-							<h1>{{ $course->weightage_max }}</h1>
-						</div>
-					</div>
-				</div>
-			
-			</div>
-			</div>
-
-  		</div>
-</div>
+		
 	</div>
-</div>
-</div>
 
-<div class="wrapper " >
-    <div class="container" >    
-          
-    <div class="row mt-5" >
-	
+	<div class="col-12 col-md-8 col-lg-9 mt-3">
 
-	<div class="col-12 col-md-7 col-lg-8">
+
+<div class="p-3 border mb-5"> 
+	<div class="row">
+		<div class="col-12 col-md-2 pb-2 pb-md-0"><h3 class="mt-2">Exam Filter</h3></div>
+		<div class="col-12 col-md-4"><select class="custom-select  mb-2">
+  <option selected>All Questions</option>
+  <option value="1">SSC</option>
+  <option value="2">IBPS</option>
+  <option value="3">SBI</option>
+</select>
+	</div>
+	<div class="col-12 col-md-6"><h3><div class="float-right mt-2">Questions(1200)</div></h3></div>
+	</div>
+			
+		</div>
 
 	<div class="row ml-0 mr-0 mr-md-2 mb-3 mb-md-5">
-		<div class="col-2 d-none d-lg-block">
-			<div class="  border rounded text-center p-3" style="font-size:40px;background:#eef1f3">1</div>
-		</div>
-			<div class=" col-12 col-lg-10">
+		
+			<div class=" col-12 ">
 				
 				<div class="row">
-					<div class="col-8"><h2 class="mb-3"> <span class="d-inline d-lg-none">1.</span> Propositional Logic </h2></div>
-					<div class="col-4"><h2 class=" text-secondary float-right">20m 56s </h2></div>
+					<div class="col-8"><h2 class="mb-3"> <span class="bg-light p-1 pr-3 pl-3 border">1</span> &nbsp;Problems on Ages </h2></div>
+					<div class="col-4"><h2 class=" text-secondary float-right">10m 56s </h2></div>
 				</div>
 
 				<p class="mb-3">
-					This chapter covers identifying the propositions, basic logical connectives like conjunction, disjunction, exclusive or, implication, bi-implication, precedence rules. Finding tautology, contradiction, satisfiable and unsatisfiable formulae. Finding two formulae are equivalent using logical equivalence rules. Checking if the argument is valid or not using rules of inference.
+					This chapter covers basic questions on ages concept. Generally three type of questions asked from this topic, one is based on ratios, second is based on relationships and the thrid is data sufficiency questions.
 				</p>
 				
 							<div class=" mb-3">
 				<div class="ml-4 mb-3">
 					<div class="row">
-						<div class="col-8">
+						<div class="col-9">
 							<a href="{{ url('courses/video') }}">
-								<i class="fa fa-play-circle-o"></i> Propositions, Negation and Conjunction
-							</a> 
+								<i class="fa fa-play-circle-o"></i> Introduction to Problems on Ages and Type 1 Questions 
+							</a> &nbsp;
+							<span class="badge badge-warning">Practice 12Q</span>
 						</div>
-						<div class="col-4"><span class="float-right">12m 3s </span></div>
+						<div class="col-3"><span class="float-right">6m 3s </span></div>
 					</div>
 				</div>
 				<div class="ml-4 mb-3">
 					<div class="row">
-						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Or, Exor, If-then, Iff, Precedence</a> </div>
-						<div class="col-4"><span class="float-right">30m 35s </span></div>
+						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Type 2 - Relationship Data Questions</a>&nbsp;
+							<span class="badge badge-warning">Practice 8Q</span> </div>
+						<div class="col-4"><span class="float-right">7m 35s </span></div>
 					</div>
 				</div>
 
 				<div class="ml-4 mb-3">
 					<div class="row">
-						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Logical Equivalence</a> </div>
-						<div class="col-4"><span class="float-right">34m 5s </span></div>
+						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Type 3 - Data Sufficiency Questions</a> &nbsp;
+							<span class="badge badge-warning">Practice 4Q</span></div>
+						<div class="col-4"><span class="float-right">4m 5s </span></div>
 					</div>
 				</div>
-				<div class="ml-2  pt-3 pb-3 mb-3 pl-3" style="background:#eef1f3">
-					<a href="{{ url('courses/lecture') }}">
-						<i class="fa fa-th"></i>  Checkpoint ML101
-					</a> 
-					<span class=" mr-3 text-secondary float-right"> <i class="fa fa-lock"></i> </span>
-				</div>
+				
 
-				<div class="ml-4 mb-3">
-					<div class="row">
-						<div class="col-8">
-							<a href="{{ url('courses/video') }}">
-								<i class="fa fa-play-circle-o"></i> Propositions, Negation and Conjunction
-							</a> 
-						</div>
-						<div class="col-4"><span class="float-right">12m 3s </span></div>
-					</div>
-				</div>
-				<div class="ml-4 mb-3">
-					<div class="row">
-						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Or, Exor, If-then, Iff, Precedence</a> </div>
-						<div class="col-4"><span class="float-right">30m 35s </span></div>
-					</div>
-				</div>
-
-				<div class="ml-4 mb-3">
-					<div class="row">
-						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Logical Validity</a> </div>
-						<div class="col-4"><span class="float-right">3m 35s </span></div>
-					</div>
-				</div>
 
 				
 
-				<div class="ml-2  pt-3 pb-3 mb-1 pl-3" style="background:#eef1f3">
-					<a href="{{ url('courses/lecture') }}">
-						<i class="fa fa-file-text-o"></i>  Key Notes
-					</a> 
-					<span class=" mr-3 text-secondary float-right"> <i class="fa fa-lock"></i> </span>
-				</div>
-
-				<div class="ml-2  pt-3 pb-3 mb-1 pl-3" style="background:#eef1f3"><a href="#"><i class="fa fa-university"></i>  Archive Questions </a> <span class=" mr-3 text-secondary float-right"> <i class="fa fa-lock"></i> </span>
-				</div>
-
-				<div class="ml-2  pt-3 pb-3 mb-1 pl-3" style="background:#eef1f3"><a href="#"><i class="fa fa-paper-plane-o"></i>  Exercise Questions </a> <span class=" mr-3 text-secondary float-right"> <i class="fa fa-lock"></i> </span>
-				</div>
+				
 
 			</div>
 
 			</div>
 	</div>
-
 
 	<div class="row ml-0 mr-0 mr-md-2 mb-3 mb-md-5">
-		<div class="col-2 d-none d-lg-block">
-			<div class="  border rounded text-center p-3" style="font-size:40px;background:#eef1f3">2</div>
-		</div>
-			<div class=" col-12 col-lg-10">
-
-				<div class="row">
-					<div class="col-8"><h2 class="mb-3"> <span class="d-inline d-lg-none">2.</span> Propositional Logic </h2></div>
-					<div class="col-4"><h2 class=" text-secondary float-right">20m 56s </h2></div>
-				</div>
+		
+			<div class=" col-12 ">
 				
+				<div class="row">
+					<div class="col-8"><h2 class="mb-3"> <span class="bg-light p-1 pr-3 pl-3 border">2</span> &nbsp; Simple Interest </h2></div>
+					<div class="col-4"><h2 class=" text-secondary float-right">15m 28s </h2></div>
+				</div>
 
 				<p class="mb-3">
-					This chapter covers identifying the propositions, basic logical connectives like conjunction, disjunction, exclusive or, implication, bi-implication, precedence rules. Finding tautology, contradiction, satisfiable and unsatisfiable formulae. Finding two formulae are equivalent using logical equivalence rules. Checking if the argument is valid or not using rules of inference.
+					This chapter covers basic questions on ages concept. Generally three type of questions asked from this topic, one is based on ratios, second is based on relationships and the thrid is data sufficiency questions.
 				</p>
 				
-			<div class=" mb-3">
-				<div class="ml-4">
-					<div class="row">
-						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Propositions, Negation and Conjunction</a> </div>
-						<div class="col-4"><span class="float-right">12m 3s </span></div>
-					</div>
-					<hr> 
-				</div>
-				<div class="ml-4">
-					<div class="row">
-						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Or, Exor, If-then, Iff, Precedence</a> </div>
-						<div class="col-4"><span class="float-right">30m 35s </span></div>
-					</div>
-					<hr> 
-				</div>
-
-				<div class="ml-4">
-					<div class="row">
-						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Logical Equivalence</a> </div>
-						<div class="col-4"><span class="float-right">34m 5s </span></div>
-					</div>
-					<hr> 
-				</div>
-
+							<div class=" mb-3">
 				<div class="ml-4 mb-3">
 					<div class="row">
-						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Logical Validity</a> </div>
+						<div class="col-9">
+							<a href="{{ url('courses/video') }}">
+								<i class="fa fa-play-circle-o"></i> Introduction to Simple Interest and Type 1 Questions 
+							</a> &nbsp;
+							<span class="badge badge-warning">Practice 9Q</span>
+						</div>
+						<div class="col-3"><span class="float-right">4m 3s </span></div>
+					</div>
+				</div>
+				<div class="ml-4 mb-3">
+					<div class="row">
+						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Type 2 - Corelation Type Questions </a>&nbsp;
+							<span class="badge badge-warning">Practice 2Q</span> </div>
 						<div class="col-4"><span class="float-right">3m 35s </span></div>
 					</div>
 				</div>
 
+				<div class="ml-4 mb-3">
+					<div class="row">
+						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Type 3 - Formula Based Questions</a> &nbsp;
+							<span class="badge badge-warning">Practice 3Q</span></div>
+						<div class="col-4"><span class="float-right">5m 51s </span></div>
+					</div>
+				</div>
+				
+				<div class="ml-4 mb-3">
+					<div class="row">
+						<div class="col-8"><a href="#"><i class="fa fa-play-circle-o"></i> Type 4 - Miscelleneous Questions</a> &nbsp;
+							<span class="badge badge-warning">Practice 5Q</span></div>
+						<div class="col-4"><span class="float-right">3m 5s </span></div>
+					</div>
+				</div>
+
 				
 
-				<div class="ml-2  pt-3 pb-3 mb-1 pl-3" style="background:#eef1f3"><a href="#"><i class="fa fa-file-text-o"></i>  Key Points </a> <span class=" mr-3 text-secondary float-right"> <i class="fa fa-lock"></i> </span>
-				</div>
-
-				<div class="ml-2  pt-3 pb-3 mb-1 pl-3" style="background:#eef1f3"><a href="#"><i class="fa fa-list-ul"></i>  Solved Examples </a> <span class=" mr-3 text-secondary float-right"> <i class="fa fa-lock"></i> </span>
-				</div>
-
-				<div class="ml-2  pt-3 pb-3 mb-1 pl-3" style="background:#eef1f3"><a href="#"><i class="fa fa-th"></i>  Practice Questions </a> <span class=" mr-3 text-secondary float-right"> <i class="fa fa-lock"></i> </span>
-				</div>
-
-				<div class="ml-2  pt-3 pb-3 mb-1 pl-3" style="background:#eef1f3"><a href="#"><i class="fa fa-paper-plane"></i>  Chapter Test </a> <span class=" mr-3 text-secondary float-right"> <i class="fa fa-lock"></i> </span>
-				</div>
+				
 
 			</div>
-		</div>
+
+			</div>
 	</div>
+
+	
 
 	</div>
 	
 
-	<div class="col-12 col-md-5 col-lg-4">
-
-		<div class=" rounded mb-4 mb-md-5 mt-2">
-			<div class=" bg-white " >
-			  <div class="card-body rounded bg-success text-light">
-				<h2><b> <i class="fa fa-diamond" ></i> Premium Access </b></h2>
-				<div class="mb-3"> Get full access to Study Notes, Worksheets, Solved Examples, Practice Questions and Online Tests for Mathemtatical Logic.</div>
-				<button class="btn btn-outline-light"><i class="fa fa-rupee"></i> {{ $course->price }}</button>
-
-			  </div>
-			</div>
-		</div>
-
-		<div class="border mb-4 mb-lg-5 ">
-			<h2 class="  p-4   mb-0" style="background:#eef1f3">Important Topics <i class="fa fa-info-circle s15 text-secondary " data-toggle="tooltip" data-placement="top" title="More Information" ></i></h2>
-			<div class=" bg-white " >
-			  <div class="card-body">
-				{!! $course->important_topics !!}
-			  </div>
-			</div>
-		</div>
-
-		<div class="border mb-4 ">
-			<h2 class="  p-4   mb-0" style="background:#eef1f3">Reference Books <i class="fa fa-info-circle s15 text-secondary " data-toggle="tooltip" data-placement="top" title="More Information" ></i></h2>
-			<div class=" bg-white " >
-			  <div class="card-body">
-				{!! $course->reference_books !!}
-			  </div>
-			</div>
-		</div>
-
-	</div>
-
-</div>
+	
 
      </div>   
 </div>
@@ -284,8 +174,8 @@
      
       <div class="modal-body">
        <div class="embed-responsive embed-responsive-16by9">
-  <iframe id="intro" class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $course->intro_youtube }}" allowfullscreen></iframe>
-</div>
+		<iframe src="//player.vimeo.com/video/22428395"></iframe>
+	</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>

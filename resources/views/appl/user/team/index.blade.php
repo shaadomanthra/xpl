@@ -1,12 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.corporate-body')
 @section('content')
 
 <div  class="row ">
 
   <div class="col">
 
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
+    <nav aria-label="breadcrumb ">
+      <ol class="breadcrumb border">
         <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Team</li>
       </ol>

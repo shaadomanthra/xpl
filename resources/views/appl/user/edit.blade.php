@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.nowrap')
 @section('content')
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">

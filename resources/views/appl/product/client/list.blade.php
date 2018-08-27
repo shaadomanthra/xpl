@@ -8,6 +8,9 @@
                 <th scope="col">Slug</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
+                @if(\auth::user()->isAdmin())
+                <th scope="col">Created by</th>
+                @endif
               </tr>
             </thead>
             <tbody>
@@ -32,6 +35,9 @@
                     @endif
                 </td>
                 <td>{{ ($client->created_at) ? $client->created_at->diffForHumans() : '' }}</td>
+                 @if(\auth::user()->isAdmin())
+                 <td>{{ \auth::user()->getName($client->user_id_creator) }}</td>
+                 @endif
               </tr>
               @endforeach      
             </tbody>

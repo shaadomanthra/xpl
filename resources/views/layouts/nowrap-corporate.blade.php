@@ -8,11 +8,11 @@
         </div>
         </div>
     </div>    
-    <div class="wrapper margintop-20 " >
-        <div class="container" >    
+    <div class="" >
+          
             @yield('content')
-        </div>  
-    <br>  
+         
+    
     </div>
     </div>
 @endsection

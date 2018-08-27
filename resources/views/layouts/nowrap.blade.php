@@ -8,7 +8,7 @@ body{
 </style>
     <div class="wrapper-bg-2 ">
       
-    <div class="" style="max-width:400px; margin:0px auto;padding-top:50px;padding-bottom: 50px;">
+    <div class="container" style="padding-top:50px;padding-bottom: 50px;">
     @yield('content')
     </div>
        

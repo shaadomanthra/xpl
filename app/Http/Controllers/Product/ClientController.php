@@ -21,7 +21,19 @@ class ClientController extends Controller
 
         $search = $request->search;
         $item = $request->item;
-        $clients = $client->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+        $user = \auth::user();
+        if($user->role != 2){
+           $clients = $client->where('name','LIKE',"%{$item}%")
+                            ->where('user_id_creator',$user->id)
+                            ->orderBy('created_at','desc ')
+                            ->paginate(config('global.no_of_records')); 
+        }else{
+            $clients = $client->where('name','LIKE',"%{$item}%")
+                            ->orderBy('created_at','desc ')
+                            ->paginate(config('global.no_of_records'));
+
+        }
+        
         $view = $search ? 'list': 'index';
 
         return view('appl.product.client.'.$view)
@@ -104,7 +116,7 @@ class ClientController extends Controller
     {
         $client = client::where('slug',$id)->first();
 
-        $this->authorize('view', $client);
+        $this->authorize('edit', $client);
 
         if($client)
             return view('appl.product.client.show')
@@ -124,7 +136,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = client::where('slug',$id)->first();
-        $this->authorize('update', $client);
+        $this->authorize('edit', $client);
 
         $users = array();
         $users['client_owner'] = Role::getUsers('client-owner');
