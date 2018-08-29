@@ -13,9 +13,8 @@ $requestParamList = array("MID" => PAYTM_MERCHANT_MID , "ORDERID" => $ORDER_ID);
 $checkSum = getChecksumFromArray($requestParamList,PAYTM_MERCHANT_KEY); 
 $requestParamList['CHECKSUMHASH'] = urlencode($checkSum);  
 $data_string = json_encode($requestParamList,JSON_PRETTY_PRINT);
-echo "Request <br>";  
+echo "Request \n";  
 print_r ($data_string);
-echo "<br><br>"; 
 $ch = curl_init(); // initiate curl 
 $url = PAYTM_STATUS_QUERY_URL; //Paytm server where you want to post data  
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
@@ -30,6 +29,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 $output = curl_exec($ch); // execute 
 $info = curl_getinfo($ch);  
 $data = json_decode($output, true); 
-echo "Response<br><pre>"; 
-print_r($data); 
-echo "</pre>"; ?>
+echo "\n\nResponse\n"; 
+echo json_encode($data, JSON_PRETTY_PRINT);
+echo "\n";
+ ?>
