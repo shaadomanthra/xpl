@@ -23,9 +23,14 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
+	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');
+	Route::get('/refund',function(){ return view('appl.product.pages.refund'); })->name('refund');
+	Route::get('/disclaimer',function(){ return view('appl.product.pages.disclaimer'); })->name('disclaimer');
 	Route::get('/about',function(){ return view('appl.pages.about'); })->name('about');
 	Route::get('/contact',function(){ return view('appl.pages.contact')->with('recaptcha',true); })->name('contact');
 	Route::get('/features',function(){ return view('appl.product.pages.features'); })->name('features');
+	Route::get('/checkout',function(){ return view('appl.product.pages.checkout'); })->name('checkout');
+	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success')->middleware('auth');
 	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->name('pricing');
 	Route::get('/about-corporate',function(){ return view('appl.product.pages.about'); })->name('about-corporate');
 	Route::get('/terms-corporate',function(){ return view('appl.product.pages.terms'); })->name('terms-corporate');

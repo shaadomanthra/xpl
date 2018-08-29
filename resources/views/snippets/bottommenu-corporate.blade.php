@@ -3,6 +3,9 @@
 		<nav class="nav ml-md-0 " >
 		  <a class="nav-link " style="color:#495f73" href="{{url('/about-corporate')}}">About</a>
 		  <a class="nav-link " style="color:#495f73" href="{{url('/terms-corporate')}}">Terms</a>
+		  <a class="nav-link " style="color:#495f73" href="{{url('/privacy')}}">Privacy</a>
+		  <a class="nav-link " style="color:#495f73" href="{{url('/refund')}}">Refund and Cancellation</a>
+		  <a class="nav-link " style="color:#495f73" href="{{url('/disclaimer')}}">Disclaimer</a>
 		  <a class="nav-link " style="color:#495f73" href="{{url('/contact-corporate')}}">Contact</a>
 		</nav>
 	</div>

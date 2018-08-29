@@ -12,44 +12,63 @@
 <div class="row">
 	<div class="col-12 col-md-4">
 		<div class="card text-white mb-3" style="background: #01a3a4">
-  <div class="card-header"><span class="subtitleb">Basic</span> <span class="subtitleb float-right"><i class="fa fa-rupee"></i> 55,000</span></div>
+  <div class="card-header"><span class="subtitleb">Basic</span> <span class="subtitleb float-right"><i class="fa fa-rupee"></i> 55,000 / year</span></div>
   
   <div class="card-body">
-    <h5 class="card-title">Installation </h5>
-    <h2><i class="fa fa-rupee"></i> 15,000</h2><br>
-    <h5 class="card-title">Accounts Limit</h5>
-    <h2>200</h2><br>
-    <h5 class="card-title">Cost Per Account</h5>
-    <h2><i class="fa fa-rupee"></i> 200</h2><br>
+    <h5 class="card-title">Installation Charges</h5>
+    <h2 style="opacity: 0.6;font-weight: 800"><i class="fa fa-rupee"></i> 15,000</h2><br>
+    <h5 class="card-title">Account Charges</h5>
+    <h2 style="opacity: 0.6;font-weight: 800" ><i class="fa fa-rupee"></i> 40,000</h2>
+    <hr>
+    <h3> Service Offered</h3>
+    <hr>
+    <p ><b class="text-white">200 Accounts</b> <span style="opacity: 0.5">: You can create upto 200 student accounts with a validity of 1 year</span></p>
+    <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">- You can watch the videos any number of times without restrictions</span></p>
+    <p> <b>Free Maintenance </b><span style="opacity: 0.6">- We take the responsibility to maintain your website with zero downtime</span></p>
+    <a href="{{ route('checkout')}}?package=basic"><button class="btn btn-outline-light">Buy Now</button></a>
+
+
   </div>
 </div>
 	</div>
 
 	<div class="col-12 col-md-4">
 		<div class="card text-white  mb-3" style="background: #2e86de">
-  <div class="card-header"><span class="subtitlec">Pro</span> <span class="subtitlec float-right"><i class="fa fa-rupee"></i> 85,000</span></div>
+  <div class="card-header"><span class="subtitlec">Pro</span> <span class="subtitlec float-right"><i class="fa fa-rupee"></i> 85,000 / year</span></div>
   <div class="card-body">
-    <h4 class="card-title">Installation </h4>
-    <h1><i class="fa fa-rupee"></i> 10,000</h1><br>
-    <h4 class="card-title">Accounts Limit</h4>
-    <h1>500</h1><br>
-    <h4 class="card-title">Cost Per Account</h4>
-    <h1><i class="fa fa-rupee"></i> 150</h1><br>
+    <h5 class="card-title">Installation Charges</h5>
+    <h1 style="opacity: 0.6; font-weight: 800"><i class="fa fa-rupee"></i> 10,000</h1><br>
+    <h5 class="card-title">Account Charges</h5>
+    <h1 style="opacity: 0.6;font-weight: 800" ><i class="fa fa-rupee"></i> 75,000</h1>
+    <hr>
+    <h3> Service Offered</h3>
+    <hr>
+    <p ><b class="text-white">500 Accounts</b> <span style="opacity: 0.5">: You can create upto 500 student accounts with a validity of 1 year</span></p>
+    <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">- You can watch the videos any number of times without restrictions</span></p>
+    <p> <b>Free Maintenance </b><span style="opacity: 0.6">- We take the responsibility to maintain your website with zero downtime</span></p>
+    <a href="{{ route('checkout')}}?package=pro"><button class="btn btn-outline-light">Buy Now</button></a>
+
   </div>
 </div>
 	</div>
 
 	<div class="col-12 col-md-4">
 				<div class="card text-white  mb-3" style="background: #3c6382">
-  <div class="card-header"><span class="subtitleb">Ultimate</span> <span class="subtitleb float-right"><i class="fa fa-rupee"></i> 1,00,000</span></div>
+  <div class="card-header"><span class="subtitleb">Ultimate</span> <span class="subtitleb float-right"><i class="fa fa-rupee"></i> 1,00,000 / year</span></div>
   
   <div class="card-body">
-    <h5 class="card-title">Installation </h5>
-    <h2>Free</h2><br>
-    <h5 class="card-title">Accounts Limit</h5>
-    <h2>1000</h2><br>
-    <h5 class="card-title">Cost Per Account</h5>
-    <h2><i class="fa fa-rupee"></i> 100</h2><br>
+      <h5 class="card-title">Installation Charges</h5>
+    <h2 style="opacity: 0.6;font-weight: 800">Free</h2><br>
+    <h5 class="card-title">Account Charges</h5>
+    <h2 style="opacity: 0.6;font-weight: 800" ><i class="fa fa-rupee"></i> 1,00,000</h2>
+    <hr>
+    <h3> Service Offered</h3>
+    <hr>
+    <p ><b class="text-white">1000 Accounts</b> <span style="opacity: 0.5">: You can create upto 1000 student accounts with a validity of 1 year</span></p>
+    <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">- You can watch the videos any number of times without restrictions</span></p>
+    <p> <b>Free Maintenance </b><span style="opacity: 0.6">- We take the responsibility to maintain your website with zero downtime</span></p>
+    <a href="{{ route('checkout')}}?package=ultimate"><button class="btn btn-outline-light">Buy Now</button></a>
+
   </div>
 </div>
 </div>

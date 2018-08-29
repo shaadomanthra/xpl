@@ -90,8 +90,8 @@
                 <p class="pb-5" style="color:#69839c">We will setup a dedicated website with content, with you college branding </p>
             </div>
             <div class="col-12 col-md-4">
-                <p><i class="fa fa-5x fa-recycle"></i></p>
-                <h2>Zero Maintenance</h2>
+                <p><i class="fa fa-5x fa-wrench"></i></p>
+                <h2>Periodic Maintenance</h2>
                 <p class="pb-5" style="color:#69839c">We take the responsibility to maintain your website with zero downtime</p>
             </div>
             <div class="col-12 col-md-4">
