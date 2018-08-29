@@ -18,6 +18,7 @@ use PacketPrep\Http\Middleware\RequestFilter;
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	Route::get('/', 'Product\ProductController@welcome')->name('root');
+	Route::post('/', function(){ return view('appl.product.pages.checkout_success'); });
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
 
@@ -30,7 +31,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/contact',function(){ return view('appl.pages.contact')->with('recaptcha',true); })->name('contact');
 	Route::get('/features',function(){ return view('appl.product.pages.features'); })->name('features');
 	Route::get('/checkout',function(){ return view('appl.product.pages.checkout'); })->name('checkout');
-	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success')->middleware('auth');
+	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success');
 
 	Route::post('/payment/status', 'Product\OrderController@paymentCallback');
 	Route::get('/payment/order', 'Product\OrderController@order');
