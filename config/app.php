@@ -213,6 +213,7 @@ return [
         // PacketPrep\Providers\BroadcastServiceProvider::class,
         PacketPrep\Providers\EventServiceProvider::class,
         PacketPrep\Providers\RouteServiceProvider::class,
+        Anand\LaravelPaytmWallet\PaytmWalletServiceProvider::class,
 
     ],
 
@@ -265,6 +266,7 @@ return [
         'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
+        'PaytmWallet' => Anand\LaravelPaytmWallet\Facades\PaytmWallet::class,
 
     ],
 

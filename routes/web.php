@@ -31,6 +31,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/features',function(){ return view('appl.product.pages.features'); })->name('features');
 	Route::get('/checkout',function(){ return view('appl.product.pages.checkout'); })->name('checkout');
 	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success')->middleware('auth');
+
+	Route::post('/payment/status', 'Product\OrderController@paymentCallback');
+	Route::get('/payment/order', 'Product\OrderController@order');
 	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->name('pricing');
 	Route::get('/about-corporate',function(){ return view('appl.product.pages.about'); })->name('about-corporate');
 	Route::get('/terms-corporate',function(){ return view('appl.product.pages.terms'); })->name('terms-corporate');

@@ -35,4 +35,13 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'paytm-wallet' => [
+        'env' => 'local', // values : (local | production)
+        'merchant_id' => 'QUEDBE64489893677306',
+        'merchant_key' => 'NlcRdn0jXZk8lZSM',
+        'merchant_website' => 'WEBSTAGING',
+        'channel' => 'WEB',
+        'industry_type' => 'Retail',
+    ],
+
 ];
