@@ -18,7 +18,7 @@ use PacketPrep\Http\Middleware\RequestFilter;
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	Route::get('/', 'Product\ProductController@welcome')->name('root');
-	Route::post('/', function(){ return view('appl.product.pages.checkout_success'); });
+	Route::post('/', function(){ return redirect('pgResponse.php'); });
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
 
