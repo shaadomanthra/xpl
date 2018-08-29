@@ -8,7 +8,7 @@ require_once("./lib/encdec_paytm.php");
 $ORDER_ID = $_GET['orderid']; 
 $requestParamList = array(); 
 $responseParamList = array();  
-$requestParamList = array("MID" => PAYTM_MERCHANT_MID , "ORDERID" => "ORDS51973186");   
+$requestParamList = array("MID" => PAYTM_MERCHANT_MID , "ORDERID" => $ORDER_ID);   
 $checkSum = getChecksumFromArray($requestParamList,PAYTM_MERCHANT_KEY); 
 $requestParamList['CHECKSUMHASH'] = urlencode($checkSum);  
 $data_string = "JsonData=".json_encode($requestParamList); 
