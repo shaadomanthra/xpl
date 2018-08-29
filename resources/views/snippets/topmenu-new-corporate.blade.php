@@ -13,13 +13,14 @@
                  <ul class="navbar-nav ml-auto">
                     
                     <li class="mr-3 mt-2 mt-lg-0"><a class="nav-link " href="{{ url('/') }}"><i class="fa fas fa-home"></i> Home</a></li>
+                    <li class="mr-3  mt-lg-0"><a class="nav-link " href="{{ url('features') }}"><i class="fa fas fa-question-circle"></i> FAQ</a></li>
+                   <li class="mr-3 "><a class="nav-link " href="{{ url('pricing') }}"><i class="fa fa-rupee"></i> Pricing</a></li>
                     
                     
 
                     <!-- Authentication Links -->
                     @guest
-                    <li class="mr-3  mt-lg-0"><a class="nav-link " href="{{ url('features') }}"><i class="fa fas fa-question-circle"></i> FAQ</a></li>
-                   <li class="mr-3 "><a class="nav-link " href="{{ url('pricing') }}"><i class="fa fa-rupee"></i> Pricing</a></li>
+                    
                     <li class="mr-2"><a class="nav-link " href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
                     
                     @else

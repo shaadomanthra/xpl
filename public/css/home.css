@@ -64,7 +64,7 @@
   min-height: calc(100vh - 150px);
   flex-direction: column;
 }
-.footer{ height:150px;color:rgba(255, 255, 255, 0.5); }
+.footer{ min-height:150px;color:rgba(255, 255, 255, 0.5); }
 
 
 .nav-bg{background: white;}
