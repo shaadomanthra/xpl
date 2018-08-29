@@ -5,7 +5,7 @@ header("Expires: 0");
 require_once("./lib/config_paytm.php"); 
 require_once("./lib/encdec_paytm.php");  
 
-$ORDER_ID = ""; 
+$ORDER_ID = $_GET['orderid']; 
 $requestParamList = array(); 
 $responseParamList = array();  
 $requestParamList = array("MID" => PAYTM_MERCHANT_MID , "ORDERID" => "ORDS51973186");   
