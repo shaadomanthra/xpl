@@ -94,6 +94,14 @@ ul.list-first{ margin: 5px; margin-top: -20px; margin-right: -5px; }
 ul.list li:before{ content:""; position:absolute; width:13px; height:10px; border: 1px solid;
     left:-13px;top:5px; border-color: #eee transparent transparent transparent;}
 
+ul.list2{ list-style:none; margin-left:25px; margin-right: 0px; margin-top: -10px;
+    border:0; padding: 5px 0px 0px; }
+
+ul.list2 li{  position:relative;margin:10px;padding:5px; background:#fff; }
+ul.list2-first{ margin: 5px; margin-left:5px; margin-top: -20px;}
+.title-list{ font-size: 20px; }
+.title-normal{ font-size: 15px; }
+
 .card-body p img.class{ width:100%; }
 
 .logo-product{ width:70px; }
@@ -105,6 +113,28 @@ ul.list li:before{ content:""; position:absolute; width:13px; height:10px; borde
 .subtitleb{ font-family:  'Satisfy',sans-serif;font-size:20px }
 /*user profile*/
 .name,a.link{ color:white; }
+
+/*question*/
+
+.qyellow{
+    background:#F8EFBA;border:1px solid #e4d998;
+}
+.qgreen{
+    background:#c8f7c5;border:1px solid #66cc99;
+}
+.qred{
+    background:#f1a9a0;border:1px solid #e08283;
+}
+.qborder{
+    border:2px solid #dee2e6;
+}
+.qgreen-border{
+    border:2px solid #66cc99;
+}
+.qred-border{
+    border:2px solid #e08283;
+}
+
 
 @media (max-width: 720px) {
     /*user profile*/

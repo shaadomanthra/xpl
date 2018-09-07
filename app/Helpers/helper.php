@@ -99,3 +99,34 @@ function youtube_video_exists($url) {
 }
 }
 
+if (! function_exists('vimeoVideoDuration')) {
+function vimeoVideoDuration($id) {
+
+ try {
+$authorization = 'your_vimeo_api_authorization_token_goes_here';
+$ch = curl_init();
+
+curl_setopt_array($ch, array(
+    CURLOPT_URL => "https://api.vimeo.com/videos/$id?fields=duration",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "GET",
+    CURLOPT_HTTPHEADER => array(
+        "authorization: Bearer {$authorization}",
+        "cache-control: no-cache",
+    ),
+));
+
+    $res = curl_exec($ch);
+    $obj = json_decode($res, true);
+    return $obj['duration'];
+
+} catch (Exception $e) {
+   # returning 0 if the Vimeo API fails for some reason.
+   return "0";
+}
+}
+}

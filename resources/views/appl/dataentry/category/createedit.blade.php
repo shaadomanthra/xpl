@@ -44,6 +44,28 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="project_slug" value="{{ $project->slug }}">
       </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Video Link</label>
+        <input type="text" class="form-control" name="video_link" id="formGroupExampleInput" placeholder="Enter the Video Link" 
+            @if($stub=='Create')
+            value="{{ (old('video_link')) ? old('video_link') : '' }}"
+            @else
+            value = "{{ $category->video_link }}"
+            @endif>
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Video Description</label>
+        <textarea class="form-control summernote" name="video_desc"  rows="5">
+            @if($stub=='Create')
+            {{ (old('video_desc')) ? old('video_desc') : '' }}
+            @else
+            {{ $category->video_desc }}
+            @endif
+        </textarea>
+      </div>
+
       <div class="form-group">
         <label for="formGroupExampleInput ">Parent Category</label>
 

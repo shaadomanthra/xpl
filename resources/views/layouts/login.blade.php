@@ -19,7 +19,7 @@
 
     </head>
     <body>
-    <div >
+    <div  style="max-width:400px;margin:0px auto;">
     @yield('content-main')
 
     </div>

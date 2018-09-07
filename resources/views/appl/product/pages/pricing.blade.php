@@ -22,6 +22,7 @@
     <h2 style="opacity: 0.6;font-weight: 800"><i class="fa fa-rupee"></i> 5,000</h2><br>
     <h5 class="card-title">Charges per account</h5>
     <h2 style="opacity: 0.6;font-weight: 800" ><i class="fa fa-rupee"></i> 200</h2>
+    <p> The Account charges will be calculated on 20th of a month which has to be paid on or before 30th of the same month.</p> <p style="opacity:0.6">The amount charged per account will be Rs. 200</p>
     <hr>
     <h3> Service Offered</h3>
     <hr>

@@ -5,6 +5,9 @@ namespace PacketPrep\Http\Controllers\Course;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Dataentry\Project;
+use PacketPrep\Models\Dataentry\Tag;
+use PacketPrep\Models\Dataentry\Category;
 
 class CourseController extends Controller
 {
@@ -87,13 +90,84 @@ class CourseController extends Controller
     public function show($id)
     {
         $course = Course::where('slug',$id)->first();
-        
-        
+        $categories = Category::where('slug',$id)->first();
 
+        if(request()->get('exam'))
+            session(['exam' => request()->get('exam')]);
+
+        $project = Project::where('slug',$id)->first();
+        $parent =  Category::where('slug',$id)->first(); 
+        $ques_count  =0; 
+        $nodes = null;
+        $exams = null;
+        if($parent){
+            $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
+
+            $ques_count = Category::getCategorizedQuestionCount($project);
+            $exams =  Tag::where('project_id',$project->id)->where('name','exam')
+                        ->orderBy('created_at','desc')->get();
+                     
+            if(count($node))
+            $nodes = Category::displayUnorderedListCourse($node,['project'=>$project,'parent'=>$parent]);
+            else
+            $nodes =null;
+        } 
+       
+
+        //dd($nodes);
 
         if($course)
             return view('appl.course.course.show')
-                    ->with('course',$course);
+                    ->with('course',$course)
+                    ->with('ques_count',$ques_count)
+                    ->with('exams',$exams)
+                    ->with('nodes',$nodes);
+        else
+            abort(404);
+    }
+
+     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function video($course,$category)
+    {
+        $course = Course::where('slug',$course)->first();
+        $category = Category::where('slug',$category)->first();
+        $parent = Category::getParent($category);
+        
+        foreach($parent->descendants as $k => $item){
+            if($item->slug ==$category->slug)
+            {
+                if($k==0)
+                {
+                    $prev = null;
+                    if(isset($parent->descendants[$k+1]))
+                    $next = $parent->descendants[$k+1];
+                    else
+                        $next =null;
+                }elseif($k == (count($parent->descendants)-1)){
+                    $prev = $parent->descendants[$k-1];
+                    $next = null;
+                }
+                else{
+                    $prev = $parent->descendants[$k-1];
+                    $next = $parent->descendants[$k+1];
+                }
+
+
+            }
+        }
+
+        if($course)
+            return view('appl.course.course.video')
+                ->with('course',$course)
+                ->with('category',$category)
+                ->with('parent',$parent)
+                ->with('next',$next)
+                ->with('prev',$prev);
         else
             abort(404);
     }

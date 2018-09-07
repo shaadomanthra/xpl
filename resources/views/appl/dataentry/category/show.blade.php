@@ -33,6 +33,11 @@
           @endif
           <br>
 
+          @if($category->video_link)
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe src="//player.vimeo.com/video/{{ $category->video_link }}"></iframe>
+          </div><br>
+          @endif
           
           <h3>Siblings </h3>
           <div id="sortlist" data-value="">

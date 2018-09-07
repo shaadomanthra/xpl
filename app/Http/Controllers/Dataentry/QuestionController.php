@@ -9,6 +9,8 @@ use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Tag;
+use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Course\Practice;
 
 
 class QuestionController extends Controller
@@ -232,6 +234,121 @@ class QuestionController extends Controller
             abort(404,'Question not found');
     }
 
+         /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function categoryCourseSave($project_slug,$category_slug,$id)
+    {
+        $category = Category::where('slug',$category_slug)->first();
+        $question = Question::where('id',$id)->first();
+
+        if($question){
+
+            $practice = new Practice;
+            $practice->qid = $id;
+            $practice->user_id = \auth::user()->id;
+            $practice->response = strtoupper(request()->get('response'));
+            $practice->answer = strtoupper($question->answer);
+            ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
+            $practice->save();
+        }
+        return redirect()->route('course.question',[$project_slug,$category_slug,$id]);
+
+
+    }
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function categoryCourse($project_slug,$category_slug,$id=null)
+    {
+        
+        if($category_slug == 'uncategorized')
+        {
+            $category = new Category();
+            $category->name = 'Uncategorized';
+            $category->slug = 'uncategorized';
+            $category_slug = 'uncategorized';
+            $category->questions = Category::getUncategorizedQuestions($this->project);
+
+        }else
+            $category = Category::where('slug',$category_slug)->first();
+
+        if($id==null){
+            if($category_slug=='uncategorized')
+                $id = $category->questions->first()->id;
+            elseif($category->questions){
+                if(isset($category->questions[0]))
+                $id = $category->questions[0]->id;
+                else
+                $id = null ;
+
+            }else
+                $id=null;
+        }
+        
+        
+
+        if($id){
+            $question = Question::where('id',$id)->first();
+
+
+           // $this->authorize('view', $question);
+
+            if($question){
+
+                 if(request()->get('publish'))
+                {
+                    $question->status = 2;
+                    $question->save();
+                }
+
+                $passage = Passage::where('id',$question->passage_id)->first();
+                $questions = $category->getQuestions();
+
+                $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'category']; 
+            
+                $details['curr'] = route('course.question',[$project_slug,$category_slug,$question->id]);
+                foreach($questions as $key=>$q){
+
+                    if($q->id == $question->id){
+
+                        if($key!=0)
+                            $details['prev'] = route('course.question',[$project_slug,$category_slug,$questions[$key-1]->id]);
+
+                        if(count($questions) != $key+1)
+                            $details['next'] = route('course.question',[$project_slug,$category_slug,$questions[$key+1]->id]);
+
+                        $details['qno'] = $key + 1 ;
+                    }
+                } 
+
+                $details['display_type'] = 'Topic';
+                $details['course'] = Course::where('slug',$project_slug)->first();
+                $details['response'] = $question->practice($question->id);
+
+                return view('appl.dataentry.question.show_course')
+                        ->with('project',$this->project)
+                        ->with('mathjax',true)
+                        ->with('question',$question)
+                        ->with('passage',$passage)
+                        ->with('details',$details)
+                        ->with('category',$category)
+                        ->with('questions',$questions);
+            }else
+                abort('404','Question not found');
+            
+        }
+        else
+            abort(403);
+
+    }
 
         /**
      * Display the specified resource.

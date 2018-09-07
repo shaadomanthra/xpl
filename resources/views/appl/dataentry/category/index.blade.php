@@ -9,6 +9,7 @@
     <div class="col-md-9">
       <div class="card">
       <div class="card-body mb-0 ">
+        
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3 p-3">
           <a class="navbar-brand"><i class="fa fa-tasks"></i> Categories</a>
           @can('create',$category)

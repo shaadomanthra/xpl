@@ -15,6 +15,8 @@ class Category extends Model
         'name',
         'slug',
         'parent_id',
+        'video_link',
+        'video_desc',
         // add all other fields
     ];
     public $timestamps = false;
@@ -23,6 +25,24 @@ class Category extends Model
     public function questions()
     {
         return $this->belongsToMany('PacketPrep\Models\Dataentry\Question');
+    }
+
+    public static function category_tag_questions($category,$exam)
+    {   
+
+        if($exam && $exam!='all'){
+            $ques_category = DB::table('category_question')->where('category_id', $category->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
+        $tag = Tag::where('value',$exam)->first();
+        if($tag)
+        $ques_tag = DB::table('question_tag')->where('tag_id', $tag->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
+        else
+            $ques_tag =0;
+
+        $list = array_intersect($ques_tag, $ques_category);
+            return $list;
+        }else
+            return $category->questions()->pluck('id')->toArray();
+        
     }
 
     public static function getParent($category){
@@ -35,6 +55,55 @@ class Category extends Model
     	else
     		return null;
 
+    }
+
+
+    public static function displayUnorderedListCourse($categories,$options=null,$i=1,$last=null){
+
+        
+        $d = '';
+        $j=1;
+        foreach ($categories as $category) {
+            $hasChildren = (count($category->children) > 0);
+
+            if($category->parent_id == $options['parent']->id){
+                $d = $d.'<li class="item title-list" id="'.$category->slug.'" > <span class="bg-light p-1 pr-3 pl-3 border">'.$j.'</span> &nbsp;'.$category->name;
+                if($category->video_desc)
+                $d = $d.'<div class="pt-3 title-normal">'.$category->video_desc.'</div>';
+                $d= $d.'</li>';
+            }else{
+               $d = $d.'<li class="item" id="'.$category->slug.'" ><a href="'.route('course.category.video',
+                [   
+                    'course'=> $options['project']->slug,
+                    'category'=> $category->slug,
+                    
+                ]
+
+            ).'"><i class="fa fa-play-circle-o"></i> '.$category->name.'</a>&nbsp';
+
+               if(count($category->category_tag_questions($category,session('exam')))!=0)
+            $d = $d.
+            '<a href="'.route('course.question',[$options['project']->slug,$category->slug,''])
+            .'"><span class="badge badge-warning"> Practice '.count(Category::category_tag_questions($category,session('exam'))).'Q</span></a> </li>'; 
+            else
+                $d=$d.'</li>';
+
+            }
+            
+            $j++;
+
+            if($hasChildren) {
+                $d = $d.Category::displayUnorderedListCourse($category->children,$options,$i+1,$last=$j);
+            }
+        }
+        if($i==1){
+            $total_ques = Question::getTotalQuestionCount($options['project']);
+            $categorized_ques = Category::getCategorizedQuestionCount($options['project']);
+            $d = '<ul class="list2 list2-first" >'.$d.'</ul>';
+        }
+        else
+        $d = '<ul class="list2 " >'.$d.'</ul>';   
+        return $d;
     }
 
 
@@ -73,9 +142,21 @@ class Category extends Model
 
 
     public static function getCategorizedQuestionCount($project){
-        $parent =  Category::where('slug',$project->slug)->first();   
-        $category_id_list = Category::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
-        return ( DB::table('category_question')->whereIn('category_id', $category_id_list)->distinct()->get(['question_id'])->count());
+
+        if (request()->session()->has('exam') && session('exam') != 'all') 
+        {
+            $exam = session('exam');
+            $tag = Tag::where('value',$exam)->where('project_id',$project->id)->first();
+            if($tag)
+                return count($tag->questions);
+            else
+                return null;
+        }else{
+            $parent =  Category::where('slug',$project->slug)->first();   
+            $category_id_list = Category::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
+            return ( DB::table('category_question')->whereIn('category_id', $category_id_list)->distinct()->get(['question_id'])->count());
+        }
+        
         
     }
 
@@ -88,6 +169,22 @@ class Category extends Model
         return $questions;
     }
 
+     public function getQuestions(){
+
+        $exam = session('exam');
+
+        if($exam && $exam!='all'){
+            $ques_category = DB::table('category_question')->where('category_id', $this->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
+        $tag = Tag::where('value',$exam)->first();
+        $ques_tag = DB::table('question_tag')->where('tag_id', $tag->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
+
+        $list = array_intersect($ques_tag, $ques_category);
+        $questions = Question::whereIn('id', $list)->get();
+            return $questions;
+
+        }else
+            return $this->questions;
+    }
 
     public static function displayUnorderedCheckList($categories,$options=null,$i=1){
 

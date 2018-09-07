@@ -1,9 +1,15 @@
 $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 $('#flash-overlay-modal').modal();
 
-$(function () {
-  $('[data-tooltip="tooltip"]').tooltip()
-});
+$(document).ready(function() {
+    $('.exam').on('change', function() {
+    	window.location=window.location.pathname+'?exam='+this.value;
+  	});
+
+  });
+
+  
+ 
 
 
 

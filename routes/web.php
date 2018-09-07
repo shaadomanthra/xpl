@@ -157,8 +157,11 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('library/{repository}/document','Library\DocumentController')->middleware('auth');
 
 	Route::resource('course','Course\CourseController');
-	Route::resource('course/{course}/index','Course\IndexController');
-
+	//Route::resource('course/{course}/index','Course\IndexController');
+	Route::get('course/{course}/{category}/video','Course\CourseController@video')->name('course.category.video')->middleware('auth');
+	Route::get('course/{project}/{category}/practice','Dataentry\QuestionController@categoryCourse')->name('course.question')->middleware('auth');
+	Route::get('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourse')->name('course.question')->middleware('auth');
+	Route::post('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourseSave')->name('course.question')->middleware('auth');
 
 	Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');
 	Route::resource('job','Recruit\JobController');
