@@ -7,6 +7,8 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\User\Role;
 use PacketPrep\User;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class ClientController extends Controller
 {
@@ -86,6 +88,7 @@ class ClientController extends Controller
             $client->user_id_owner = ($request->user_id_owner)?$request->user_id_owner:null;
             $client->user_id_manager = null;
             $client->status = $request->status;
+            $client->contact = $request->contact;
             $client->save(); 
 
 
@@ -100,6 +103,46 @@ class ClientController extends Controller
            $error_code = $e->errorInfo[1];
             if($error_code == 1062){
                 flash('The slug(<b>'.$request->slug.'</b>) is already taken. Kindly use a different slug.')->error();
+                 return redirect()->back()->withInput();
+            }
+        }
+        
+    }
+
+
+        /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function imageupload(Request $request)
+    {
+
+        try{
+            $request->client_slug = str_replace(' ', '-', $request->client_slug);
+
+           // Image::make(Input::file('image'))->resize(300, 200)->save('foo.jpg');
+            //dd($request->all());
+            //$path = $request->file('')->store('img/clients');
+
+            $img = Image::make($_FILES['input_img']['tmp_name']);
+
+            $img->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+            // save image
+            $img->save('img/clients/'.$request->client_slug.'.png');
+
+
+            flash('Image is successfully uploaded!')->success();
+            return redirect()->route('client.show',$request->client_slug);
+        }
+        catch (QueryException $e){
+           $error_code = $e->errorInfo[1];
+            if($error_code == 1062){
+                flash('The image could not be uploaded')->error();
                  return redirect()->back()->withInput();
             }
         }
@@ -173,6 +216,7 @@ class ClientController extends Controller
             $client->name = $request->name;
             $client->slug = strtolower($request->slug);
             $client->status = $request->status;
+            $client->contact = htmlentities($request->contact);
             $client->save(); 
 
             $newJsonString = json_encode($client, JSON_PRETTY_PRINT);

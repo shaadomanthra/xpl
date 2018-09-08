@@ -1,7 +1,13 @@
 
- <nav class="navbar navbar-expand-lg navbar-light " >
+ <nav class="navbar navbar-expand-lg navbar-dark " >
             <a class="navbar-brand abs" href="{{ url('/') }}">
-                <img src="{{ asset('/img/logo-onlinelibrary-simple.png') }}" width="70px" class="logo-product ml-md-1" /> <span class="logo-text">&nbsp;&nbsp;Pragathi Degree college</span>
+                 @if(file_exists(public_path().'/img/clients/'.subdomain().'.png'))
+              <img src="{{ asset('/img/clients/'.subdomain().'.png')}}" width="70px" class="logo-product ml-md-1" />
+              @else
+              <img src="{{ asset('/img/logo-onlinelibrary-simple.png') }}" width="70px" class="logo-product ml-md-1" /> 
+              @endif
+                
+                <span class="logo-text">&nbsp;&nbsp; {{ subdomain_name() }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

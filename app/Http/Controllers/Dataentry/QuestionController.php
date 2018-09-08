@@ -11,6 +11,7 @@ use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Tag;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Course\Practice;
+use Illuminate\Support\Facades\DB;
 
 
 class QuestionController extends Controller
@@ -249,9 +250,14 @@ class QuestionController extends Controller
 
             $practice = new Practice;
             $practice->qid = $id;
+            $practice->course_id = request()->get('course_id');
             $practice->user_id = \auth::user()->id;
             $practice->response = strtoupper(request()->get('response'));
             $practice->answer = strtoupper($question->answer);
+
+            $now =  microtime(true);
+            $start = session('start');
+            $practice->time = $now-$start;
             ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
             $practice->save();
         }
@@ -291,12 +297,32 @@ class QuestionController extends Controller
 
             }else
                 $id=null;
+
+            $exam = session('exam');
+
+            if($exam && $exam!='all'){
+            $ques_category = DB::table('category_question')->where('category_id', $category->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
+            $tag = Tag::where('value',$exam)->first();
+            if($tag)
+            $ques_tag = DB::table('question_tag')->where('tag_id', $tag->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
+            else
+                $ques_tag =0;
+
+            $list = array_intersect($ques_tag, $ques_category);
+            $id = reset($list);
+            }else
+                $id=$category->questions()->pluck('id')->toArray()[0];
+
+             
         }
         
         
 
         if($id){
+
+           
             $question = Question::where('id',$id)->first();
+
 
 
            // $this->authorize('view', $question);
@@ -311,6 +337,7 @@ class QuestionController extends Controller
 
                 $passage = Passage::where('id',$question->passage_id)->first();
                 $questions = $category->getQuestions();
+                //dd($question);
 
                 $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'category']; 
             
@@ -326,12 +353,16 @@ class QuestionController extends Controller
                             $details['next'] = route('course.question',[$project_slug,$category_slug,$questions[$key+1]->id]);
 
                         $details['qno'] = $key + 1 ;
+
                     }
+
                 } 
 
                 $details['display_type'] = 'Topic';
                 $details['course'] = Course::where('slug',$project_slug)->first();
                 $details['response'] = $question->practice($question->id);
+
+                session(['start' => microtime(true)]) ;
 
                 return view('appl.dataentry.question.show_course')
                         ->with('project',$this->project)

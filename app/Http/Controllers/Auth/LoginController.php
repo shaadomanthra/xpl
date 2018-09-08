@@ -64,12 +64,14 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
+
+        if($user->role==2)
+            return redirect()->intended($this->redirectPath());
         $url = url()->full();
         if($this->hasSubdomain($url)){
             $parsed = parse_url($url);
             $exploded = explode('.', $parsed["host"]);
             $subdomain = $exploded[0];
-            
         }else
             $subdomain = null;
 

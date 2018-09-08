@@ -8,7 +8,7 @@
 	</div>
 	<div class="col-12 col-md-6">
 		<div class=" float-md-right text-secondary">
-		  &nbsp;&nbsp;&nbsp;&copy; Pragathi Degree College
+		  &nbsp;&nbsp;&nbsp;&copy; {{subdomain_name()}}
 		</div>
 	</div>
 </div>

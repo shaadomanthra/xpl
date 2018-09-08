@@ -3,6 +3,8 @@
 namespace PacketPrep\Models\Course;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use PacketPrep\Models\Dataentry\Tag;
 
 class Course extends Model
 {
@@ -35,5 +37,88 @@ class Course extends Model
 
     public static function getID($slug){
         return (new Course)->where('slug',$slug)->first()->id;
+    }
+
+
+    public static function attempted($course){
+
+        $exam = session('exam');
+        $tag = Tag::where('value',$exam)->first();
+        if($tag){
+            $ques_tag = DB::table('question_tag')->where('tag_id', $tag->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
+            return DB::table('practices')
+                    ->where('course_id', $course->id)
+                    ->where('user_id',\auth()->user()->id)
+                    ->whereIn('qid',$ques_tag)
+                    ->count();
+        }
+        else
+        {
+                return DB::table('practices')
+                    ->where('course_id', $course->id)
+                    ->where('user_id',\auth()->user()->id)
+                    ->count();
+
+        }
+
+
+        
+        
+    }
+
+    public static function time($course){
+        
+        $exam = session('exam');
+        $tag = Tag::where('value',$exam)->first();
+        if($tag){
+            $ques_tag = DB::table('question_tag')->where('tag_id', $tag->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
+            return round(DB::table('practices')
+                    ->where('course_id', $course->id)
+                    ->where('user_id',\auth()->user()->id)
+                    ->whereIn('qid',$ques_tag)
+                    ->avg('time'),2);
+        }
+        else
+        {
+                return round(DB::table('practices')
+                    ->where('course_id', $course->id)
+                    ->where('user_id',\auth()->user()->id)
+                    ->avg('time'),2);
+
+        }
+
+    }
+
+    public static function accuracy($course){
+        $exam = session('exam');
+        $tag = Tag::where('value',$exam)->first();
+        if($tag){
+            $ques_tag = DB::table('question_tag')->where('tag_id', $tag->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
+            $sum = DB::table('practices')
+                    ->where('course_id', $course->id)
+                    ->where('user_id',\auth()->user()->id)
+                    ->whereIn('qid',$ques_tag)
+                    ->sum('accuracy');
+            $count = DB::table('practices')
+                    ->where('course_id', $course->id)
+                    ->where('user_id',\auth()->user()->id)
+                    ->whereIn('qid',$ques_tag)
+                    ->count();
+        }
+        else
+        {
+            $sum = DB::table('practices')->where('course_id', $course->id)->where('user_id',\auth()->user()->id)->sum('accuracy');
+            $count = DB::table('practices')->where('course_id', $course->id)->where('user_id',\auth()->user()->id)->count();
+                
+
+        }
+
+         
+         if($count){
+            return round(($sum*100)/$count,2);
+         }
+         else
+            return null;
+
     }
 }

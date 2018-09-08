@@ -1,11 +1,12 @@
 {
-    "name": "Ganesh",
+    "id": 7,
+    "name": "Ganesh Degree College",
     "slug": "ganesh",
-    "user_id_creator": "8",
+    "user_id_creator": 8,
     "user_id_owner": null,
     "user_id_manager": null,
     "status": "1",
-    "updated_at": "2018-08-20 21:56:18",
     "created_at": "2018-08-20 21:56:18",
-    "id": 7
+    "updated_at": "2018-09-07 21:39:06",
+    "contact": "<p><span style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);"><b>Krishna Kanth</b></span><br style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);"><span style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);">Accounts Manager</span><br style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);"><span style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);">Phone: +91 86880 79590</span><br style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);"><br style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);"><span style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);"><b>Rajesh Ramani</b></span><br style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);"><span style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);">Administrative Team</span><br style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);"><span style="caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);">Phone: +91 86880 79590</span><br></p>"
 }

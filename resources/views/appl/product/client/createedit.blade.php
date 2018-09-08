@@ -59,6 +59,17 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       </div>
 
+      <div class="form-group">
+        <label for="formGroupExampleInput">Contact Details</label>
+         <textarea  class="form-control summernote2" name="contact"  rows="5">
+            @if($stub=='Create')
+            {{ (old('contact')) ? old('contact') : '' }}
+            @else
+            {{ $client->contact }}
+            @endif
+        </textarea>
+      </div>
+
 
 
       <div class="form-group">

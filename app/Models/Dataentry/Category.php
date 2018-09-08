@@ -67,7 +67,7 @@ class Category extends Model
             $hasChildren = (count($category->children) > 0);
 
             if($category->parent_id == $options['parent']->id){
-                $d = $d.'<li class="item title-list" id="'.$category->slug.'" > <span class="bg-light p-1 pr-3 pl-3 border">'.$j.'</span> &nbsp;'.$category->name;
+                $d = $d.'<li class="item title-list" id="'.$category->slug.'" > <span class="bg-light p-1 pr-3 pl-3 border rounded">'.$j.'</span> &nbsp;'.$category->name;
                 if($category->video_desc)
                 $d = $d.'<div class="pt-3 title-normal">'.$category->video_desc.'</div>';
                 $d= $d.'</li>';

@@ -152,6 +152,7 @@
 
       <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="project_id" value="{{ $project->id }}">
+        <input type="hidden" name="course_id" value="{{ $details['course']->id }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
     
     @if(!$details['response'])

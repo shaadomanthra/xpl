@@ -13,6 +13,8 @@
      <link href="https://fonts.googleapis.com/css?family=Cabin|Lobster|Open+Sans|Satisfy|Poiret+One" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    
+    <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
 
 

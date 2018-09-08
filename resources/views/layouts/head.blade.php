@@ -52,7 +52,7 @@
 
     </div>
  
-    <div class="nav-bg-black">
+    <div class="nav-bg-light">
     <footer class=" wrapper  text-light footer">
         <div class="container py-3">
             @include('snippets.bottommenu')

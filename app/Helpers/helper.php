@@ -99,6 +99,70 @@ function youtube_video_exists($url) {
 }
 }
 
+
+if (! function_exists('subdomain')) {
+function subdomain() {
+    $url = url()->full();
+
+    $parsed = parse_url($url);
+        $exploded = explode('.', $parsed["host"]);
+     if(count($exploded) > 2){
+        $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $subdomain = $exploded[0];
+            return $subdomain;
+     }
+     else
+        return null;
+
+}
+}
+
+if (! function_exists('subdomain_name')) {
+function subdomain_name() {
+    $url = url()->full();
+
+    $parsed = parse_url($url);
+        $exploded = explode('.', $parsed["host"]);
+     if(count($exploded) > 2){
+        $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $subdomain = $exploded[0];
+
+            $json = json_decode(file_get_contents(base_path('json/'.$subdomain.'.json')));
+            
+
+            return $json->name;
+
+     }
+     else
+        return null;
+
+}
+}
+
+if (! function_exists('subdomain_contact')) {
+function subdomain_contact() {
+    $url = url()->full();
+
+    $parsed = parse_url($url);
+        $exploded = explode('.', $parsed["host"]);
+     if(count($exploded) > 2){
+        $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $subdomain = $exploded[0];
+
+            $json = json_decode(file_get_contents(base_path('json/'.$subdomain.'.json')));
+            
+            return htmlspecialchars_decode($json->contact);
+
+     }
+     else
+        return null;
+
+}
+}
+
 if (! function_exists('vimeoVideoDuration')) {
 function vimeoVideoDuration($id) {
 

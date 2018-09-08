@@ -5,7 +5,6 @@
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
 <script src="{{asset('js/jquery.form.js')}}"></script>  
-<script src="{{asset('js/jquery.form.js')}}"></script>  
 
 <!-- Codemirror-->
 <script src="{{asset('js/codemirror/lib/codemirror.js')}}"></script>  

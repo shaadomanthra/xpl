@@ -101,6 +101,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('product','Product\ProductController')->middleware('auth');
 	Route::resource('client','Product\ClientController')->middleware('auth');
 	Route::resource('client/{client}/clientuser','Product\ClientuserController')->middleware('auth');
+	Route::post('client/image','Product\ClientController@imageupload')->name('client.image')->middleware('auth');
 
 	Route::resource('role','User\RoleController')->middleware('auth');
 	Route::resource('docs','Content\DocController');
