@@ -166,16 +166,13 @@ class OrderController extends Controller
         if ($_POST["STATUS"] == "TXN_SUCCESS") {
           $order->payment_status = 'Successful';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
-          if(subdomain()=='corporate')
-          return view('appl.product.pages.checkout_success')->with('order',$order);
-          else{
-            $slug = Client::getClientSlug($order->client_id);
+          
+          $slug = Client::getClientSlug($order->client_id);
             if($slug)
               $url = $slug.'.onlinelibrary.co/admin/ordersuccess?order_id='.$order->order_id.'&credit_count='.$order->credit_count;
             else
               return view('appl.product.pages.checkout_success')->with('order',$order);
             return Redirect::to($url);
-          } 
           
 
           //Process your transaction here as success transaction.
@@ -184,17 +181,13 @@ class OrderController extends Controller
         else {
           $order->payment_status = 'Failure';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
-          if(subdomain()=='corporate')
-          return view('appl.product.pages.checkout_txn_failure');
-          else
-          {
-            $slug = Client::getClientSlug($order->client_id);
+          
+          $slug = Client::getClientSlug($order->client_id);
             if($slug)
               $url = $slug.'.onlinelibrary.co/admin/orderfailure';
             else
               return view('appl.product.pages.checkout_txn_failure');
             return Redirect::to($url);
-          }
           
         }
 
@@ -273,7 +266,7 @@ class OrderController extends Controller
         $order = new Order();
         ($request->get('order_id'))? $request->get('order_id'):$order->order_id = 'ORD_12345_SAMPLE';
         ($request->get('credit_count'))?$request->get('credit_count') :$order->credit_count = '200';
-        
+
         return view('appl.product.admin.ordersuccess')->with('client',$client)->with('order',$order);
     }
 
