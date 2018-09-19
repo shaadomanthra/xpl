@@ -15,7 +15,7 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('mail.packetprep.com'),
+        'domain' => env('mail.onlinelibrary.co'),
         'secret' => env('key-62404258f1dee0412ceefa926d97750d'),
     ],
 
