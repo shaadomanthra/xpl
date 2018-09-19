@@ -32,6 +32,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/faq',function(){ return view('appl.product.pages.faq'); })->name('faq');
 	Route::get('/checkout',function(){ return view('appl.product.pages.checkout'); })->name('checkout')->middleware('auth');
 	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success');
+	Route::get('/credit-rates',function(){ return view('appl.product.pages.credit_rates'); })->name('credit-rate');
 
 
 	Route::get('/payment/status', 'Product\OrderController@status')->name('payment.status');

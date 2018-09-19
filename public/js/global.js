@@ -6,7 +6,15 @@ $(document).ready(function() {
     	window.location=window.location.pathname+'?exam='+this.value;
   	});
 
+  
+
+  	$( ".credit_count" ).keypress(function() {
+	  alert('a');
+	});
+
   });
+
+
 
   
  

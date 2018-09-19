@@ -165,22 +165,24 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="bg-light p-3 border rounded">
-                <h1> Buy Credits</h1>
+                <h1> Buy Credits  </h1>
                 <form method="post" action="{{ route('payment.order')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 
                 <div class="form-group mb-2">
-                    <label for="exampleFormControlSelect1" class="mb-2">Credit Rate - <i class="fa fa-rupee"></i> {{ $client->getPackageRate()}} / account</label>
+                    <label for="exampleFormControlSelect1" class="mb-2">Credit Rate - <i class="fa fa-rupee"></i> {{ $client->getOfferRate()}} / credit</label>
                     <input class="form-check-input" type="hidden" name="type" id="exampleRadios1" value="paytm" >
                     <br>
-                    <input class="form-control" type="text" name="credit_count"  value="" placeholder="Number of Accounts" >
+                    <input class="form-control credit_count" type="text" name="credit_count"  value="10"  >
                     
                     <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="credit">
                     <input class="form-check-input" type="hidden" name="credit_rate"  value="{{$client->getPackageRate()}}">
                     <input class="form-check-input" type="hidden" name="txn_amount"  value="1">
-                  
+                    <div class="mt-3 display-4"><i class="fa fa-rupee"></i><span class="price"> 200000</span></div>
                     <br>
-                  <button class="btn btn-lg btn-outline-primary" type="submit">Buy via PayTM</button>
+                  <button class="btn btn-lg btn-outline-primary" type="submit">Buy via PayTM</button> 
+                  <hr>
+                  <p> The credit Rate calculation is given <a href="{{ route('credit-rate') }}">here</a></p>
                 </div>
 
                 </form>

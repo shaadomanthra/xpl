@@ -59,6 +59,24 @@ class Client extends Model
     }
 
 
+    public function getOfferRate(){
+
+        $slug = $this->slug;
+        $user = \auth::user();
+
+        $sum = Order::where('client_id',$user->client_id())->Where('status',1)->sum('credit_count');
+        if($sum < 200){
+            return '200';
+        }
+        elseif($sum > 199 && $sum < 500){
+            return '175';
+        }elseif($sum > 499 && $sum < 1000){
+            return '150';
+        }elseif($sum > 999 )
+            return '125';
+    }
+
+
     public function getCreditPoints(){
 
         $slug = $this->slug;
