@@ -37,6 +37,15 @@ class OrderController extends Controller
           
           $order = new Order();
           $order->order_id = 'ORD_'.rand(100000,999999);
+
+          $o_check = Order::where('order_id',$order->order_id)->first();
+          while($o_check){
+            $order->order_id = 'ORD_'.rand(100000,999999);
+            $o_check = Order::where('order_id',$order->order_id)->first();
+            if(!$o_check)
+              break;
+          }
+
           $order->client_id = $user->client_id();
           $order->user_id = $user->id;
           $order->txn_amount = $request->txn_amount;
