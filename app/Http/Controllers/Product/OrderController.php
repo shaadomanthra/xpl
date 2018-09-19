@@ -164,17 +164,19 @@ class OrderController extends Controller
           }
 
         if ($_POST["STATUS"] == "TXN_SUCCESS") {
-          return view('appl.product.pages.checkout_success')->with('order',$order);
           $order->payment_status = 'Successful';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
+          return view('appl.product.pages.checkout_success')->with('order',$order);
+          
 
           //Process your transaction here as success transaction.
           //Verify amount & order id received from Payment gateway with your application's order id and amount.
         }
         else {
-          return view('appl.product.pages.checkout_txn_failure');
           $order->payment_status = 'Failure';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
+          return view('appl.product.pages.checkout_txn_failure');
+          
         }
 
         
