@@ -154,7 +154,7 @@
                       <dd class="col-sm-9">{{ $client->name }}</dd>
 
                       <dt class="col-sm-3">Website</dt>
-                      <dd class="col-sm-9"><span class="badge badge-warning">{{ $client->slug}}.onlinelibrary.co</span></dd>
+                      <dd class="col-sm-9"><a href="https://{{ $client->slug}}.onlinelibrary.co" ><span class="badge badge-warning">{{ $client->slug}}.onlinelibrary.co</span></a></dd>
 
                       <dt class="col-sm-3">Credit Points</dt>
                       <dd class="col-sm-9"><h1>0 / {{ $client->getCreditPoints() }}</h1></dd>

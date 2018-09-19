@@ -37,8 +37,8 @@ class ProductController extends Controller
             $file = "../json/".$subdomain.".json";
             $filedata = json_decode(file_get_contents($file));
             if(file_exists($file)){
-                $client = Client::where('slug',subdomain())->first();
-                
+                $client = Client::where('slug',\auth::user()->client_slug)->first();
+
                 if($subdomain == 'corporate')
                 {
                     return view('appl.product.corporate.index')->with('client',$client);
