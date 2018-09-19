@@ -5,6 +5,9 @@ namespace PacketPrep\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Order;
+use Illuminate\Support\Facades\Mail;
+use PacketPrep\Mail\OrderSuccess;
+use PacketPrep\Mail\OrderCreated;
 
 
 class OrderController extends Controller
@@ -59,7 +62,9 @@ class OrderController extends Controller
             $order->txn_amount = $request->credit_count*$request->credit_rate;
           }
 
+          
           $order->save();
+          $order->payment_status = 'Pending';
 
 
           $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->client_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount;
@@ -97,12 +102,15 @@ class OrderController extends Controller
 
           $order->payment_mode = 'cheque';
           $order->txn_id = $request->cheque;
+          
 
           $order->save();
+          $order->payment_status = 'Pending';
           
 
           return view('appl.product.pages.checkout_success')->with('order',$order);
         }
+        Mail::to($user->email)->send(new OrderCreated($user,$order));
         
     }
 
@@ -133,6 +141,7 @@ class OrderController extends Controller
       $isValidChecksum = verifychecksum_e($paramList, PAYTM_MERCHANT_KEY, $paytmChecksum); //will return TRUE or FALSE string.
 
 
+      $user = \auth::user();
       if($isValidChecksum == "TRUE") {
         //echo "<b>Checksum matched and following are the transaction details:</b>" . "<br/>";
         if (isset($_POST) && count($_POST)>0 )
@@ -143,21 +152,29 @@ class OrderController extends Controller
             $order->bank_txn_id = $_POST['BANKTXNID'];
             $order->bank_name = $_POST['BANKNAME'];
             $order->txn_id = $_POST['TXNID'];
-            if ($_POST["STATUS"] == "TXN_SUCCESS")
-            $order->status = 1;
-            else
-            $order->status = 2;
+            if ($_POST["STATUS"] == "TXN_SUCCESS"){
+              $order->status = 1;
+            }
+            else{
+              $order->status = 2;
+              
+            }
 
             $order->save();
           }
 
         if ($_POST["STATUS"] == "TXN_SUCCESS") {
           return view('appl.product.pages.checkout_success')->with('order',$order);
+          $order->payment_status = 'Successful';
+          Mail::to($user->email)->send(new OrderSuccess($user,$order));
+
           //Process your transaction here as success transaction.
           //Verify amount & order id received from Payment gateway with your application's order id and amount.
         }
         else {
           return view('appl.product.pages.checkout_txn_failure');
+          $order->payment_status = 'Failure';
+          Mail::to($user->email)->send(new OrderSuccess($user,$order));
         }
 
         

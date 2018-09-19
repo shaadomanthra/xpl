@@ -8,8 +8,17 @@ $(document).ready(function() {
 
   
 
-  	$( ".credit_count" ).keypress(function() {
-	  alert('a');
+  	$( ".credit_count" ).keyup(function() {
+	  var price = parseInt($('.credit_count').val());
+	  var r = $('.credit_count').val();
+	  var rate = parseInt($('.credit_rate').text());
+
+	  var amount = price * rate;
+	  if(amount)
+	  	$('.price').text(amount);
+	  else
+		$('.price').text(0);
+
 	});
 
   });

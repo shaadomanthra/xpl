@@ -170,7 +170,7 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 
                 <div class="form-group mb-2">
-                    <label for="exampleFormControlSelect1" class="mb-2">Credit Rate - <i class="fa fa-rupee"></i> {{ $client->getOfferRate()}} / credit</label>
+                    <label for="exampleFormControlSelect1" class="mb-2">Credit Rate - <i class="fa fa-rupee"></i> <span class="credit_rate">{{ $client->getOfferRate()}}</span> / credit</label>
                     <input class="form-check-input" type="hidden" name="type" id="exampleRadios1" value="paytm" >
                     <br>
                     <input class="form-control credit_count" type="text" name="credit_count"  value="10"  >
