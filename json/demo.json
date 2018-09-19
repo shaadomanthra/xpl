@@ -1,60 +1,12 @@
 {
     "id": 4,
-    "name": "Demo College of Engineering",
+    "name": "XYZ College",
     "slug": "demo",
     "user_id_creator": 1,
     "user_id_owner": 1,
     "user_id_manager": null,
     "status": 1,
     "created_at": "2018-08-20 09:26:03",
-    "updated_at": "2018-09-09 07:21:18",
-    "contact": "&lt;p&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;b&gt;Krishna Rajesh&lt;/b&gt;&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Accounts Manager&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Phone: +91 86880 79590&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;b&gt;Rajesh krishna KS&lt;/b&gt;&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Administrative Team&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Phone: +91 86880 795907&lt;/span&gt;&lt;br&gt;&lt;/p&gt;",
-    "courses": [
-        {
-            "id": 3,
-            "name": "Quantitative Aptitude",
-            "slug": "arithmetic",
-            "user_id": 1,
-            "description": "This course has been designed for the students who preparing for the Bank exams like SBI PO,SBI Clerk, IBPS PO,IBPS Clerk and&nbsp;Government exams like SSC, IB, CBI, LIC. &nbsp;",
-            "intro_youtube": "yt",
-            "intro_vimeo": "132680577",
-            "weightage_min": 23,
-            "weightage_avg": 343,
-            "weightage_max": 4534,
-            "price": 5453,
-            "important_topics": "<p>fsfasf</p>",
-            "reference_books": "<p>sfsaf</p>",
-            "status": 1,
-            "created_at": "2018-04-16 02:39:37",
-            "updated_at": "2018-09-07 16:45:31",
-            "pivot": {
-                "client_id": 4,
-                "course_id": 3,
-                "visible": 1
-            }
-        },
-        {
-            "id": 1,
-            "name": "Logical Reasoning",
-            "slug": "logical-reasoning",
-            "user_id": 1,
-            "description": "This course has been designed for the students who preparing for the Bank exams like SBI PO,SBI Clerk, IBPS PO,IBPS Clerk andu00a0Government exams like SSC, IB, CBI, LIC.",
-            "intro_youtube": "MtUxFCicxuM",
-            "intro_vimeo": "vimeo",
-            "weightage_min": 4,
-            "weightage_avg": 5,
-            "weightage_max": 6,
-            "price": 1982,
-            "important_topics": "<ul><li>important topics</li><li>This is second important topic</li><li>Another one here</li></ul>",
-            "reference_books": "<ul><li>the reference books</li><li>Book two</li></ul>",
-            "status": 1,
-            "created_at": "2018-04-16 01:26:34",
-            "updated_at": "2018-09-09 01:36:05",
-            "pivot": {
-                "client_id": 4,
-                "course_id": 1,
-                "visible": 0
-            }
-        }
-    ]
+    "updated_at": "2018-09-19 21:47:46",
+    "contact": "&lt;p&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;b&gt;Krishna Rajesh&lt;/b&gt;&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Accounts Manager&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Phone: +91 86880 79590&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;b&gt;Rajesh krishna KS&lt;/b&gt;&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Administrative Team&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Phone: +91 86880 795907&lt;/span&gt;&lt;br&gt;&lt;/p&gt;"
 }

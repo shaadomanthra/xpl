@@ -39,6 +39,10 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('/payment/order', 'Product\OrderController@order')->name('payment.order');
 	Route::get('/admin/transactions', 'Product\OrderController@list_transactions')->name('order.list');
 	Route::get('/admin/transactions/{order_id}', 'Product\OrderController@show_transaction')->name('order.show');
+	Route::get('/admin/buy', 'Product\OrderController@buycredits')->name('order.buy');
+	Route::get('/admin/ordersuccess', 'Product\OrderController@ordersuccess')->name('order.success');
+	Route::get('/admin/orderfailure', 'Product\OrderController@orderfailure')->name('order.failure');
+	
 
 
 	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->name('pricing');

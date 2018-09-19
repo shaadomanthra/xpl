@@ -26,20 +26,19 @@
                 <div class="card-body">
                   <h3><u>Credit Points</u></h3>
                   <div class="display-1">0/ {{ $client->getCreditPoints() }}</div>
-                  <hr>
-                  <p>Are you falling short of credits? Contact us for exciting offers.</p>
-                  <a href="#" class="btn btn-outline-primary">Buy Credits</a>
+                  
                 </div>
               </div>
               
+            
               <div class="card mb-3 mr-md-2">
                 <div class="card-body">
                   <h3>Technical Support</h3>
                   <dl class="row">
                     <dt class="col-sm-3"><i class="fa fa-envelope"></i> Email</dt>
-                    <dd class="col-sm-9"> administrator@onlinelibrary.co</dd>
+                    <dd class="col-sm-9"> <span class="float-right">administrator@onlinelibrary.co</span></dd>
                     <dt class="col-sm-4"><i class="fa fa-phone"></i> Phone</dt>
-                    <dd class="col-sm-8"> +91 95151 25110</dd>
+                    <dd class="col-sm-8"> <span class="float-right">+91 95151 25110</span></dd>
                   </dl>
                 </div>
               </div>

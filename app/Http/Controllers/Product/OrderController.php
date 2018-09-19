@@ -166,7 +166,10 @@ class OrderController extends Controller
         if ($_POST["STATUS"] == "TXN_SUCCESS") {
           $order->payment_status = 'Successful';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
+          if(subdomain()=='corporate')
           return view('appl.product.pages.checkout_success')->with('order',$order);
+          else
+          return view('appl.product.admin.ordersuccess')->with('order',$order); 
           
 
           //Process your transaction here as success transaction.
@@ -175,7 +178,10 @@ class OrderController extends Controller
         else {
           $order->payment_status = 'Failure';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
+          if(subdomain()=='corporate')
           return view('appl.product.pages.checkout_txn_failure');
+          else
+          return view('appl.product.admin.orderfailure')->with('order',$order); 
           
         }
 
@@ -184,7 +190,10 @@ class OrderController extends Controller
 
       }
       else {
+        if(subdomain()=='corporate')
         return view('appl.product.pages.checkout_checksum_failure');
+        else
+        return view('appl.product.admin.orderfailure');
         //Process transaction as suspicious.
       }
 
@@ -231,5 +240,32 @@ class OrderController extends Controller
 
         return view('appl.product.order.'.$view)
         ->with('orders',$orders)->with('order',$order);
+    }
+
+        /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function buycredits(Request $request)
+    {
+        $client = Client::where('slug',\auth::user()->client_slug)->first();
+        return view('appl.product.admin.buy')->with('client',$client);
+    }
+
+    public function ordersuccess(Request $request)
+    {
+        $client = Client::where('slug',\auth::user()->client_slug)->first();
+        $order = new Order();
+        $order->order_id = 'ORD_12345_SAMPLE';
+        $order->credit_count = '200';
+        return view('appl.product.admin.ordersuccess')->with('client',$client)->with('order',$order);
+    }
+
+    public function orderfailure(Request $request)
+    {
+        $client = Client::where('slug',\auth::user()->client_slug)->first();
+        return view('appl.product.admin.orderfailure')->with('client',$client);
     }
 }
