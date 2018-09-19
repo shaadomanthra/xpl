@@ -17,6 +17,8 @@ class Order extends Model
         'bank_name',
         'txn_amount',
         'status',
+        'credit_count',
+        'credit_rate',
         // add all other fields
     ];
 }

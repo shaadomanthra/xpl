@@ -88,6 +88,7 @@ class AdminController extends Controller
             }
 
 
+            $client->courses = null;
             $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
             file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));
 
@@ -103,27 +104,7 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+   
 
     /**
      * Update the specified resource in storage.

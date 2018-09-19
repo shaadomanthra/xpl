@@ -8,7 +8,7 @@ use PacketPrep\Models\Product\Order;
 use Illuminate\Support\Facades\Mail;
 use PacketPrep\Mail\OrderSuccess;
 use PacketPrep\Mail\OrderCreated;
-
+use PacketPrep\Models\Product\Client;
 
 class OrderController extends Controller
 {
@@ -190,4 +190,46 @@ class OrderController extends Controller
 
     //return view('appl.product.pages.checkout_success');
     }    
+
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_transaction($id)
+    {
+        $order = Order::where('order_id',$id)->first();
+
+      
+
+        if($order)
+            return view('appl.product.order.show')
+                    ->with('order',$order);
+        else
+            abort(404);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function list_transactions(Request $request)
+    {
+        $order = new Order();
+        $search = $request->search;
+        $item = $request->item;
+        $client_id = Client::where('slug',\auth::user()->client_slug)->first()->id;
+        $orders = $order->where('order_id','LIKE',"%{$item}%")
+                  ->where('client_id',$client_id)
+                  ->orderBy('created_at','desc ')
+                  ->paginate(config('global.no_of_records'));
+        $view = $search ? 'list': 'index';
+
+        return view('appl.product.order.'.$view)
+        ->with('orders',$orders)->with('order',$order);
+    }
 }

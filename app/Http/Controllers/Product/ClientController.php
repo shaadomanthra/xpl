@@ -94,6 +94,7 @@ class ClientController extends Controller
             $client->user_id_manager = null;
             $client->status = $request->status;
             $client->contact = $request->contact;
+
             $client->save(); 
 
             $course_list =  Course::all()->pluck('id')->toArray();
@@ -110,6 +111,7 @@ class ClientController extends Controller
                 
             } 
 
+            $client->courses = null;
 
             $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
             file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));
@@ -259,6 +261,8 @@ class ClientController extends Controller
             }
 
 
+            $client->courses = null;
+            
             $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
             file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));
 

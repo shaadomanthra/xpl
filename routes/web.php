@@ -37,6 +37,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/payment/status', 'Product\OrderController@status')->name('payment.status');
 	Route::post('/payment/order', 'Product\OrderController@order')->name('payment.order');
+	Route::get('/admin/transactions', 'Product\OrderController@list_transactions')->name('order.list');
+	Route::get('/admin/transactions/{order_id}', 'Product\OrderController@show_transaction')->name('order.show');
 
 
 	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->name('pricing');

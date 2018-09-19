@@ -42,7 +42,6 @@ class Client extends Model
 
     public function getPackageRate(){
 
-        $slug = $this->slug;
         $user = \auth::user();
 
         $o = Order::where('client_id',$user->client_id())->where(function ($query) {
@@ -61,7 +60,6 @@ class Client extends Model
 
     public function getOfferRate(){
 
-        $slug = $this->slug;
         $user = \auth::user();
 
         $sum = Order::where('client_id',$user->client_id())->Where('status',1)->sum('credit_count');
@@ -79,7 +77,6 @@ class Client extends Model
 
     public function getCreditPoints(){
 
-        $slug = $this->slug;
         $user = \auth::user();
 
         $sum = Order::where('client_id',$user->client_id())->Where('status',1)->sum('credit_count');
@@ -88,7 +85,6 @@ class Client extends Model
 
     public function getPackageName(){
 
-         $slug = $this->slug;
         $user = \auth::user();
 
         $o = Order::where('client_id',$user->client_id())->where(function ($query) {

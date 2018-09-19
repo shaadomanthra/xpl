@@ -1,7 +1,13 @@
 @extends('layouts.app')
 @section('content')
 
-@include('appl.dataentry.snippets.breadcrumbs')
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb border">
+    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Admin</a></li>
+    <li class="breadcrumb-item">Settings</li>
+  </ol>
+</nav>
 @include('flash::message')
 <div  class="row ">
 

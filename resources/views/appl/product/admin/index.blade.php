@@ -2,6 +2,12 @@
 @section('content')
 
 
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb border">
+    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    <li class="breadcrumb-item">Admin</li>
+  </ol>
+</nav>
 @include('flash::message')
 <div  class="row ">
 
@@ -19,7 +25,7 @@
               <div class="card mb-3 mr-md-2">
                 <div class="card-body">
                   <h3><u>Credit Points</u></h3>
-                  <div class="display-1">0/200</div>
+                  <div class="display-1">0/ {{ $client->getCreditPoints() }}</div>
                   <hr>
                   <p>Are you falling short of credits? Contact us for exciting offers.</p>
                   <a href="#" class="btn btn-outline-primary">Buy Credits</a>
