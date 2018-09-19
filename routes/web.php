@@ -30,7 +30,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/about',function(){ return view('appl.pages.about'); })->name('about');
 	Route::get('/contact',function(){ return view('appl.pages.contact')->with('recaptcha',true); })->name('contact');
 	Route::get('/faq',function(){ return view('appl.product.pages.faq'); })->name('faq');
-	Route::get('/checkout',function(){ return view('appl.product.pages.checkout'); })->name('checkout');
+	Route::get('/checkout',function(){ return view('appl.product.pages.checkout'); })->name('checkout')->middleware('auth');
 	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success');
 
 
