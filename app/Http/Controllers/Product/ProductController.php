@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Dataentry\Tag;
+use PacketPrep\Models\Product\Client;
 
 class ProductController extends Controller
 {
@@ -36,16 +37,19 @@ class ProductController extends Controller
             $file = "../json/".$subdomain.".json";
             $filedata = json_decode(file_get_contents($file));
             if(file_exists($file)){
+                $client = Client::where('slug',subdomain())->first();
+                
                 if($subdomain == 'corporate')
                 {
-                    return view('appl.product.corporate.index');
+                    return view('appl.product.corporate.index')->with('client',$client);
                 }
                 else{
+                    
                     
                     if($filedata->status==0)
                         return view('appl.product.front.unpublished')->with('subdomain',$subdomain);
                     elseif($filedata->status==1)
-                         return view('welcome');
+                         return view('welcome')->with('client',$client);
                     elseif($filedata->status==2)
                         return view('appl.product.front.hold')->with('subdomain',$subdomain);
                     else

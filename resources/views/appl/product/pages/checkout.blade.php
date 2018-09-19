@@ -40,9 +40,9 @@
 <div class="card bg-light mb-3"> 
   <div class="card-body">
     <div class="form-check mb-2">
-  <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
-  <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="20000">
-  <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="flex">
+    <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
+    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="20000">
+    <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="flex">
   
   <label class="form-check-label" for="exampleRadios1">
     Pay with Paytm &nbsp; <img src="{{ asset('/img/paytm_logo.png')}}" width="70px" style="margin-top:-5px;"/>
@@ -92,13 +92,15 @@
 <div class="card bg-light mb-3"> 
 	<div class="card-body">
 		<div class="form-check mb-2">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
+    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="50000">
+    <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="basic">
   <label class="form-check-label" for="exampleRadios1">
     Pay with Paytm &nbsp; <img src="{{ asset('/img/paytm_logo.png')}}" width="70px" style="margin-top:-5px;"/>
   </label>
 </div>
 <div class="form-check ">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="cheque">
   <label class="form-check-label" for="exampleRadios2">
     <div class="mb-2">Pay by Cheque</div>
     <input type="text" class="form-control" name="cheque" id="exampleFormControlInput1" placeholder="Cheque Number">
@@ -141,13 +143,15 @@
 <div class="card bg-light mb-3"> 
 	<div class="card-body">
 		<div class="form-check mb-2">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
+    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="85000">
+    <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="pro">
   <label class="form-check-label" for="exampleRadios1">
     Pay with Paytm &nbsp; <img src="{{ asset('/img/paytm_logo.png')}}" width="70px" style="margin-top:-5px;"/>
   </label>
 </div>
 <div class="form-check ">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="cheque">
   <label class="form-check-label" for="exampleRadios2">
     <div class="mb-2">Pay by Cheque</div>
     <input type="text" class="form-control" name="cheque" id="exampleFormControlInput1" placeholder="Cheque Number">
@@ -188,13 +192,15 @@
 <div class="card bg-light mb-3"> 
 	<div class="card-body">
 		<div class="form-check mb-2">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
+    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="125000">
+    <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="ultimate">
   <label class="form-check-label" for="exampleRadios1">
     Pay with Paytm &nbsp; <img src="{{ asset('/img/paytm_logo.png')}}" width="70px" style="margin-top:-5px;"/>
   </label>
 </div>
 <div class="form-check ">
-  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="cheque">
   <label class="form-check-label" for="exampleRadios2">
     <div class="mb-2">Pay by Cheque</div>
     <input type="text" class="form-control" name="cheque" id="exampleFormControlInput1" placeholder="Cheque Number">

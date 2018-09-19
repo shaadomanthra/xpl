@@ -18,9 +18,19 @@ class OrderController extends Controller
     public function order(Request $request)
     {
       //dd($request->all());
+        $user = \auth::user();
+        $o = Order::where('client_id',$user->client_id())->where(function ($query) {
+                $query->where('package', '=', 'flex')
+                      ->orWhere('package', '=', 'basic')
+                      ->orWhere('package', '=', 'pro')
+                      ->orWhere('package', '=', 'ultimate');
+            })->first();
 
+        if($o && $request->package!='credit'){
+          return view('appl.product.pages.checkout_denail')->with('order',$o);
+        }
         if($request->type=='paytm'){
-          $user = \auth::user();
+          
           $order = new Order();
           $order->order_id = 'ORD_'.rand(100000,999999);
           $order->client_id = $user->client_id();
@@ -28,6 +38,27 @@ class OrderController extends Controller
           $order->txn_amount = $request->txn_amount;
           $order->status=0;
           $order->package = $request->package;
+
+          if($request->package=='flex')
+          {
+            $order->credit_count = 200;
+            $order->credit_rate = 200;
+          }elseif($request->package=='basic'){
+            $order->credit_count = 200;
+            $order->credit_rate = 175;
+          }elseif($request->package=='pro')
+          {
+            $order->credit_count = 500;
+            $order->credit_rate = 150;
+          }elseif($request->package=='ultimate'){
+            $order->credit_count = 1000;
+            $order->credit_rate = 125;
+          }else{
+            $order->credit_count = $request->credit_count;
+            $order->credit_rate = $request->credit_rate;
+            $order->txn_amount = $request->credit_count*$request->credit_rate;
+          }
+
           $order->save();
 
 
@@ -35,7 +66,42 @@ class OrderController extends Controller
           
           header('Location: '.url('/').'/pgRedirect.php?'.$data);
         }else{
-          echo 'cheque payment';
+
+          $user = \auth::user();
+          $order = new Order();
+          $order->order_id = 'ORD_'.rand(100000,999999);
+          $order->client_id = $user->client_id();
+          $order->user_id = $user->id;
+          $order->txn_amount = $request->txn_amount;
+          $order->status=1;
+          $order->package = $request->package;
+
+          if($request->package=='flex')
+          {
+            $order->credit_count = 200;
+            $order->credit_rate = 200;
+          }elseif($request->package=='basic'){
+            $order->credit_count = 200;
+            $order->credit_rate = 175;
+          }elseif($request->package=='pro')
+          {
+            $order->credit_count = 500;
+            $order->credit_rate = 150;
+          }elseif($request->package=='ultimate'){
+            $order->credit_count = 1000;
+            $order->credit_rate = 125;
+          }else{
+            $order->credit_count = $request->credit_count;
+            $order->credit_rate = $request->credit_rate;
+          }
+
+          $order->payment_mode = 'cheque';
+          $order->txn_id = $request->cheque;
+
+          $order->save();
+          
+
+          return view('appl.product.pages.checkout_success')->with('order',$order);
         }
         
     }
@@ -69,19 +135,23 @@ class OrderController extends Controller
 
       if($isValidChecksum == "TRUE") {
         //echo "<b>Checksum matched and following are the transaction details:</b>" . "<br/>";
-        if ($_POST["STATUS"] == "TXN_SUCCESS") {
-
-          if (isset($_POST) && count($_POST)>0 )
+        if (isset($_POST) && count($_POST)>0 )
           { 
             $order = Order::where('order_id',$_POST['ORDERID'])->first();
-            $order->status = 1;
+            
             $order->payment_mode = $_POST['PAYMENTMODE'];
             $order->bank_txn_id = $_POST['BANKTXNID'];
             $order->bank_name = $_POST['BANKNAME'];
             $order->txn_id = $_POST['TXNID'];
+            if ($_POST["STATUS"] == "TXN_SUCCESS")
+            $order->status = 1;
+            else
+            $order->status = 2;
+
             $order->save();
           }
 
+        if ($_POST["STATUS"] == "TXN_SUCCESS") {
           return view('appl.product.pages.checkout_success')->with('order',$order);
           //Process your transaction here as success transaction.
           //Verify amount & order id received from Payment gateway with your application's order id and amount.

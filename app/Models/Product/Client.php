@@ -40,5 +40,53 @@ class Client extends Model
 
     }
 
+    public function getPackageRate(){
+
+        $slug = $this->slug;
+        $user = \auth::user();
+
+        $o = Order::where('client_id',$user->client_id())->where(function ($query) {
+                $query->where('package', '=', 'flex')
+                      ->orWhere('package', '=', 'basic')
+                      ->orWhere('package', '=', 'pro')
+                      ->orWhere('package', '=', 'ultimate');
+            })->first();
+
+        if($o)
+            return $o->credit_rate;
+        else
+            return '200';
+    }
+
+
+    public function getCreditPoints(){
+
+        $slug = $this->slug;
+        $user = \auth::user();
+
+        $sum = Order::where('client_id',$user->client_id())->Where('status',1)->sum('credit_count');
+        return $sum;
+    }
+
+    public function getPackageName(){
+
+         $slug = $this->slug;
+        $user = \auth::user();
+
+        $o = Order::where('client_id',$user->client_id())->where(function ($query) {
+                $query->where('package', '=', 'flex')
+                      ->orWhere('package', '=', 'basic')
+                      ->orWhere('package', '=', 'pro')
+                      ->orWhere('package', '=', 'ultimate');
+            })->first();
+
+        if($o)
+            return $o->package;
+        else
+            return null;
+    }
+
+
+
 
 }

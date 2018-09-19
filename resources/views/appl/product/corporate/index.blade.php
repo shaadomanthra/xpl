@@ -141,7 +141,58 @@
         </div>
     </div>
 </div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-12 col-md-8">
+                <div>
+                    <h1> <u>Account Details</u></h1>
+                    <dl class="row">
+                      <dt class="col-sm-3">Name</dt>
+                      <dd class="col-sm-9">{{ $client->name }}</dd>
+
+                      <dt class="col-sm-3">Website</dt>
+                      <dd class="col-sm-9"><span class="badge badge-warning">{{ $client->slug}}.onlinelibrary.co</span></dd>
+
+                      <dt class="col-sm-3">Credit Points</dt>
+                      <dd class="col-sm-9"><h1>0 / {{ $client->getCreditPoints() }}</h1></dd>
+                      <dt class="col-sm-3">Package</dt>
+                      <dd class="col-sm-9">{{ $client->getPackageName() }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="bg-light p-3 border rounded">
+                <h1> Buy Credits</h1>
+                <form method="post" action="{{ route('payment.order')}}">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                
+                <div class="form-group mb-2">
+                    <label for="exampleFormControlSelect1" class="mb-2">Credit Rate - <i class="fa fa-rupee"></i> {{ $client->getPackageRate()}} / account</label>
+                    <input class="form-check-input" type="hidden" name="type" id="exampleRadios1" value="paytm" >
+                    <br>
+                    <input class="form-control" type="text" name="credit_count"  value="" placeholder="Number of Accounts" >
+                    
+                    <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="credit">
+                    <input class="form-check-input" type="hidden" name="credit_rate"  value="{{$client->getPackageRate()}}">
+                    <input class="form-check-input" type="hidden" name="txn_amount"  value="1">
+                  
+                    <br>
+                  <button class="btn btn-lg btn-outline-primary" type="submit">Buy via PayTM</button>
+                </div>
+
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+</div>
+
+
 
 @endif
 
