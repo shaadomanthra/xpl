@@ -23,7 +23,7 @@ class OrderController extends Controller
           $user = \auth::user();
           $order = new Order();
           $order->order_id = 'ORD_'.rand(100000,999999);
-          $order->client_id = $user->client_slug;
+          $order->client_id = $user->client_id();
           $order->user_id = $user->id;
           $order->txn_amount = $request->txn_amount;
           $order->status=0;

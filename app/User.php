@@ -5,6 +5,7 @@ namespace PacketPrep;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PacketPrep\Models\User\Role;
+use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\User\User_Details;
 
 class User extends Authenticatable
@@ -79,6 +80,11 @@ class User extends Authenticatable
         else
             return null;
 
+    }
+
+    public function client_id(){
+        $slug = $this->client_slug;
+        return Client::where('slug',$slug)->first()->id;
     }
 
     public function getUserName($id){
