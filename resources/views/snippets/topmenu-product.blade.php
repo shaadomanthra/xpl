@@ -29,6 +29,13 @@
                     <li class="mr-2"><a class="nav-link " href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
                     
                     @else
+
+
+                    @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-owner','client-manager']))
+                    <li class="mr-2"><a class="nav-link " href="{{ route('admin.index') }}"><i class="fa fa-bars"></i> Admin</a></li>
+                    @endif
+
+                    
                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

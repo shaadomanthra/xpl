@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Client;
+use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\User\Role;
 use PacketPrep\User;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -50,6 +51,8 @@ class ClientController extends Controller
     public function create()
     {
         $client = new client();
+        $courses = Course::all();
+
         $this->authorize('create', $client);
 
         $users = array();
@@ -58,6 +61,7 @@ class ClientController extends Controller
                 ->with('stub','Create')
                 ->with('jqueryui',true)
                 ->with('client',$client)
+                ->with('courses',$courses)
                 ->with('users',$users);
     }
 
@@ -71,6 +75,7 @@ class ClientController extends Controller
      */
     public function store(client $client,Request $request)
     {
+        $courses = $request->get('course');
 
         try{
             $request->slug = str_replace(' ', '-', $request->slug);
@@ -90,6 +95,20 @@ class ClientController extends Controller
             $client->status = $request->status;
             $client->contact = $request->contact;
             $client->save(); 
+
+            $course_list =  Course::all()->pluck('id')->toArray();
+            //update tags
+            if($courses)
+            foreach($course_list as $course){
+                if(in_array($course, $courses)){
+                    if(!$client->courses->contains($course))
+                        $client->courses()->attach($course,['visible' => 1]);
+                }else{
+                    if($client->courses->contains($course))
+                        $client->courses()->detach($course);
+                }
+                
+            } 
 
 
             $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
@@ -179,6 +198,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = client::where('slug',$id)->first();
+        $courses = Course::all();
         $this->authorize('edit', $client);
 
         $users = array();
@@ -190,6 +210,7 @@ class ClientController extends Controller
                 ->with('stub','Update')
                 ->with('jqueryui',true)
                 ->with('users',$users)
+                ->with('courses',$courses)
                 ->with('client',$client);
         else
             abort(404);
@@ -204,7 +225,9 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $engineers = $request->get('engineers');
+        $courses = $request->get('course');
 
         try{
             $request->slug = str_replace(' ', '-', $request->slug);
@@ -218,6 +241,23 @@ class ClientController extends Controller
             $client->status = $request->status;
             $client->contact = htmlentities($request->contact);
             $client->save(); 
+
+            $course_list =  Course::all()->pluck('id')->toArray();
+            //update tags
+            if($courses)
+            foreach($course_list as $course){
+                if(in_array($course, $courses)){
+                    if(!$client->courses->contains($course))
+                        $client->courses()->attach($course,['visible' => 1]);
+                }else{
+                    if($client->courses->contains($course))
+                        $client->courses()->detach($course);
+                }
+                
+            } else{
+                $client->courses()->detach();
+            }
+
 
             $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
             file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));

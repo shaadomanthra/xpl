@@ -16,7 +16,7 @@
 <p>A white label product is manufactured by one company and packaged and sold by other companies under various brand names. The end product appears as though it has been manufactured by the marketer.</p>
 
 <h1>What is the installation cost?</h1>
-<p> There is a one time installation fee of Rs.15,000 for Basic Package and Rs.10,000 for Pro package and Free installation for Ultimate package.</p>
+<p> There is a one time installation fee of Rs. 20,000 for Flex package, Rs.15,000 for Basic Package, Rs.10,000 for Pro package and Rs. 5000 for Ultimate package.</p>
 
 <h1>Is there any maintenance Fee?</h1>
 <p> There is no maintenance Fee for the product, we complete take the responsibility to maintain the server 24 by 7 with zero downtime. </p>

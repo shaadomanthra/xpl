@@ -182,6 +182,8 @@ class CourseController extends Controller
     public function edit($id)
     {
         $course = Course::where('slug',$id)->first();
+        
+
         $this->authorize('update', $course);
 
 

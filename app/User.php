@@ -44,6 +44,12 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\User\Role');
     }
 
+    public function courses(){
+        return $this->belongsToMany('PacketPrep\Models\Course\Course');
+    }
+
+    
+
     public function repositories()
     {
         return $this->belongsToMany('PacketPrep\Models\Library\Respository');

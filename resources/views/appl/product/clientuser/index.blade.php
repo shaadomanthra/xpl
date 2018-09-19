@@ -5,7 +5,7 @@
 
   <div class="col">
 
-  <nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
     <li class="breadcrumb-item"><a href="{{ route('client.index') }}">Clients</a></li>

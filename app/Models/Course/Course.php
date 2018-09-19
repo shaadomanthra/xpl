@@ -26,6 +26,29 @@ class Course extends Model
         // add all other fields
     ];
 
+    public function users(){
+        return $this->belongsToMany('Packetprep\User');
+    }
+
+    public function clients(){
+        return $this->belongsToMany('PacketPrep\Models\Product\Client')->withPivot('visible');
+    }
+
+    public function getVisibility($client_id,$course_id){
+
+        if(!is_int($client_id))
+        {
+            $client_id = DB::table('clients')
+                ->where('slug', $client_id)
+                ->first()->id;
+        }
+        return DB::table('client_course')
+                ->where('client_id', $client_id)
+                ->where('course_id', $course_id)
+                ->first()->visible;
+    }
+
+    
 
     public static function getName($slug){
     	 return (new Course)->where('slug',$slug)->first()->name;

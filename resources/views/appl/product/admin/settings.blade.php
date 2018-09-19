@@ -1,25 +1,30 @@
-@extends('layouts.corporate-body')
+@extends('layouts.app')
 @section('content')
 
-@include('appl.product.snippets.breadcrumbs')
+@include('appl.dataentry.snippets.breadcrumbs')
 @include('flash::message')
-  <div class="card">
+<div  class="row ">
+
+  <div class="col-md-9">
+ 
+    <div class="">
+      <div class="mb-0">
+        <nav class="navbar navbar-light bg-light justify-content-between border rounded p-3 mb-3">
+          <a class="navbar-brand"><i class="fa fa-gear"></i> Settings </a>
+
+        </nav>
+
+        <div class="card">
     <div class="card-body">
-      <h1 class="bg-light border p-3 mb-3">
-        @if($stub=='Create')
-          Create Client
-        @else
-          Update Client
-        @endif  
-       </h1>
+      
       
       @if($stub=='Create')
-      <form method="post" action="{{route('client.store')}}" >
+      <form method="post" action="{{route('admin.settings')}}" >
       @else
-      <form method="post" action="{{route('client.update',$client->id)}}" >
+      <form method="post" action="{{route('admin.settings')}}" >
       @endif  
       <div class="form-group">
-        <label for="formGroupExampleInput ">Client Name</label>
+        <label for="formGroupExampleInput ">Name</label>
         <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the College Name" 
             @if($stub=='Create')
             value="{{ (old('name')) ? old('name') : '' }}"
@@ -30,7 +35,7 @@
        
       </div>
       <div class="form-group">
-        <label for="formGroupExampleInput2">Client Slug</label>
+        <label for="formGroupExampleInput2">Unique URL</label>
         @if($stub=='Create')
         <input type="text" class="form-control" name="slug" id="formGroupExampleInput2" placeholder="Unique Identifier"
             @if($stub=='Create')
@@ -51,9 +56,7 @@
 
         @endif  
 
-        @if($stub=='Update')
-        <input type="hidden" name="_method" value="PUT">
-        @endif
+        
 
         <input type="hidden" name="user_id_creator" value="{{ auth::user()->id }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -71,35 +74,36 @@
       </div>
 
       <div class="form-group">
-        <label for="formGroupExampleInput">Courses</label>
+        <label for="formGroupExampleInput"><b>Courses Published</b></label>
          <div class=" card p-3">
           @foreach($courses as $course)
-          @if($course->status==1)
+          
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="course[]" value="{{$course->id}}" id="defaultCheck1" @if($client->courses->contains($course->id))) checked @endif>
+            <input class="form-check-input" type="checkbox" name="course[]" value="{{$course->id}}" id="defaultCheck1" @if($course->getVisibility($client->id,$course->id)==1) checked @endif>
             <label class="form-check-label" for="defaultCheck1">
               {{ $course->name }}
             </label>
           </div>
-          @endif
           @endforeach
          </div>
       </div>
 
+      
 
 
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Status</label>
-        <select class="form-control" name="status">
-          <option value="0" @if(isset($client)) @if($client->status==0) selected @endif @endif >Unpublished</option>
-          <option value="1" @if(isset($client)) @if($client->status==1) selected @endif @endif >Published</option>
-          <option value="2" @if(isset($client)) @if($client->status==2) selected @endif @endif >Request Hold</option>
-          <option value="3" @if(isset($client)) @if($client->status==3) selected @endif @endif >Terminated</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn btn-info">Save</button>
+      <button type="submit" class="btn btn-lg btn-success">Save</button>
     </form>
     </div>
   </div>
+        
+
+     </div>
+   </div>
+ </div>
+  <div class="col-md-3 pl-md-0">
+      @include('appl.product.snippets.adminmenu')
+    </div>
+</div>
+
 @endsection
+

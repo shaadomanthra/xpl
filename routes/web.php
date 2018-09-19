@@ -76,7 +76,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/disclaimer',function(){ return view('appl.product.pages.disclaimer'); })->name('disclaimer');
 	Route::get('/about',function(){ return view('appl.pages.about'); })->name('about');
 	Route::get('/contact',function(){ return view('appl.pages.contact')->with('recaptcha',true); })->name('contact');
-	Route::get('/features',function(){ return view('appl.product.pages.features'); })->name('features');
+	Route::get('/faq',function(){ return view('appl.product.pages.faq'); })->name('faq');
 	Route::get('/checkout',function(){ return view('appl.product.pages.checkout'); })->name('checkout');
 	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success');
 
@@ -102,6 +102,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('client','Product\ClientController')->middleware('auth');
 	Route::resource('client/{client}/clientuser','Product\ClientuserController')->middleware('auth');
 	Route::post('client/image','Product\ClientController@imageupload')->name('client.image')->middleware('auth');
+	Route::get('admin','Product\AdminController@index')->name('admin.index')->middleware('auth');
+	Route::get('admin/settings','Product\AdminController@settings')->name('admin.settings')->middleware('auth');
+	Route::post('admin/settings','Product\AdminController@settings_store')->name('admin.settings')->middleware('auth');
 
 	Route::resource('role','User\RoleController')->middleware('auth');
 	Route::resource('docs','Content\DocController');

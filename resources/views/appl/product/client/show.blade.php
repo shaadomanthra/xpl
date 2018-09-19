@@ -73,7 +73,7 @@
 
 
 
-          <div class="row mb-0">
+          <div class="row mb-2">
             <div class="col-md-4">Website Status</div>
             <div class="col-md-8">
               @if($client->status==0)
@@ -85,6 +85,20 @@
               @else
                 <span class="badge badge-danger">Terminated</span>
               @endif
+            </div>
+          </div>
+
+          <div class="row mb-0">
+            <div class="col-md-4">Courses </div>
+            <div class="col-md-8">
+              @if(count($client->courses))
+              @foreach($client->courses as $course)
+              <div class="">{{$course->name}}</div>
+              @endforeach
+              @else
+              <span> --</span>
+              @endif
+              
             </div>
           </div>
 

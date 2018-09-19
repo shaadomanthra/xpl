@@ -3,6 +3,7 @@
 namespace PacketPrep\Models\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Client extends Model
 {
@@ -19,6 +20,24 @@ class Client extends Model
     public function users()
     {
         return $this->belongsToMany('PacketPrep\User');
+    }
+
+    public function courses(){
+        return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('visible');;
+    }
+
+    public function updateVisibility($client_id,$course_id=null,$visible){
+
+        if($course_id)
+        return DB::table('client_course')
+                ->where('client_id', $client_id)
+                ->where('course_id', $course_id)
+                ->update(['visible' => $visible]);
+        else
+        return DB::table('client_course')
+                ->where('client_id', $client_id)
+                ->update(['visible' => $visible]);
+
     }
 
 
