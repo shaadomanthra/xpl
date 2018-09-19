@@ -178,9 +178,9 @@
                     <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="credit">
                     <input class="form-check-input" type="hidden" name="credit_rate"  value="{{$client->getPackageRate()}}">
                     <input class="form-check-input" type="hidden" name="txn_amount"  value="1">
-                    <div class="mt-3 display-4"><i class="fa fa-rupee"></i><span class="price"> 200000</span></div>
+                    <div class="mt-3 display-4"><i class="fa fa-rupee"></i><span class="price"> {{ ($client->getOfferRate()*10)}}</span></div>
                     <br>
-                  <button class="btn btn-lg btn-outline-primary" type="submit">Buy via PayTM</button> 
+                  <button class="btn btn-lg btn-outline-primary" type="submit">Buy Online</button> 
                   <hr>
                   <p> The credit Rate calculation is given <a href="{{ route('credit-rate') }}">here</a></p>
                 </div>
