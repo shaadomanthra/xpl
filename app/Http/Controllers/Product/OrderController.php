@@ -172,7 +172,7 @@ class OrderController extends Controller
               $url = $slug.'.onlinelibrary.co/admin/ordersuccess?order_id='.$order->order_id.'&credit_count='.$order->credit_count;
             else
               return view('appl.product.pages.checkout_success')->with('order',$order);
-            return Redirect::to($url);
+            return redirect()->away($url);
           
 
           //Process your transaction here as success transaction.
@@ -187,7 +187,7 @@ class OrderController extends Controller
               $url = $slug.'.onlinelibrary.co/admin/orderfailure';
             else
               return view('appl.product.pages.checkout_txn_failure');
-            return Redirect::to($url);
+            return redirect()->away($url);
           
         }
 
