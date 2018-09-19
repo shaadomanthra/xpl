@@ -169,7 +169,7 @@ class OrderController extends Controller
           
           $slug = Client::getClientSlug($order->client_id);
             if($slug)
-              $url = $slug.'.onlinelibrary.co/admin/ordersuccess?order_id='.$order->order_id.'&credit_count='.$order->credit_count;
+              $url = 'https://'.$slug.'.onlinelibrary.co/admin/ordersuccess?order_id='.$order->order_id.'&credit_count='.$order->credit_count;
             else
               return view('appl.product.pages.checkout_success')->with('order',$order);
             return redirect()->away($url);
@@ -184,7 +184,7 @@ class OrderController extends Controller
           
           $slug = Client::getClientSlug($order->client_id);
             if($slug)
-              $url = $slug.'.onlinelibrary.co/admin/orderfailure';
+              $url = 'https://'.$slug.'.onlinelibrary.co/admin/orderfailure';
             else
               return view('appl.product.pages.checkout_txn_failure');
             return redirect()->away($url);
