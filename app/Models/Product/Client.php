@@ -41,7 +41,7 @@ class Client extends Model
     }
 
 
-    public function getClientSlug($id){
+    public static function getClientSlug($id){
 
 
         $slug = Client::where('client_id',$id)->first()->slug;
