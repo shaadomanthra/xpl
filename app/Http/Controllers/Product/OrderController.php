@@ -264,8 +264,8 @@ class OrderController extends Controller
     {
         $client = Client::where('slug',\auth::user()->client_slug)->first();
         $order = new Order();
-        ($request->get('order_id'))? $request->get('order_id'):$order->order_id = 'ORD_12345_SAMPLE';
-        ($request->get('credit_count'))?$request->get('credit_count') :$order->credit_count = '200';
+        ($request->get('order_id'))? $order->order_id = $request->get('order_id'):$order->order_id = 'ORD_12345_SAMPLE';
+        ($request->get('credit_count'))?$order->credit_count = $request->get('credit_count') :$order->credit_count = '200';
 
         return view('appl.product.admin.ordersuccess')->with('client',$client)->with('order',$order);
     }
