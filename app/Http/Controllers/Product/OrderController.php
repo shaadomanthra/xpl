@@ -62,7 +62,7 @@ class OrderController extends Controller
           $order->save();
 
 
-          $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->client_id.'&INDUSTRY_TYPE_ID=Retail&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount;
+          $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->client_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount;
           
           header('Location: '.url('/').'/pgRedirect.php?'.$data);
         }else{
