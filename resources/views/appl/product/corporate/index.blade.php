@@ -176,7 +176,7 @@
                     <input class="form-control credit_count" type="text" name="credit_count"  value="10"  >
                     
                     <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="credit">
-                    <input class="form-check-input" type="hidden" name="credit_rate"  value="{{$client->getPackageRate()}}">
+                    <input class="form-check-input" type="hidden" name="credit_rate"  value="{{$client->getOfferRate()}}">
                     <input class="form-check-input" type="hidden" name="txn_amount"  value="1">
                     <div class="mt-3 display-4"><i class="fa fa-rupee"></i><span class="price"> {{ ($client->getOfferRate()*10)}}</span></div>
                     <br>
