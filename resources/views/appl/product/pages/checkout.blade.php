@@ -3,10 +3,63 @@
 
 @section('content')
 
-
+<form method="post" action="{{ route('payment.order')}}">
+   <input type="hidden" name="_token" value="{{ csrf_token() }}">
 <div class="bg-white">
 <div class="card-body p-4 ">
 <h1><i class="fa fa-cart"></i> Checkout</h1><br>
+
+@if(request()->get('package')=='flex')
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Product</th>
+      <th scope="col">Detail</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td scope="row" rowspan=2>Flex Package (Custom accounts, Unlimited bandwidth, One year validity)</td>
+      <td>Installation Fee</td>
+      <td><i class="fa fa-rupee"></i> 20,000</td>
+    </tr>
+     <tr>
+      <td>Account Fee</td>
+      <td><i class="fa fa-rupee"></i> 0</td>
+    </tr>
+    <tr>
+
+      <td colspan=2>Total Amount</td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 20,000</span></td>
+    </tr>
+   
+  </tbody>
+</table>
+
+<div class="card bg-light mb-3"> 
+  <div class="card-body">
+    <div class="form-check mb-2">
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
+  <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="20000">
+  <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="flex">
+  
+  <label class="form-check-label" for="exampleRadios1">
+    Pay with Paytm &nbsp; <img src="{{ asset('/img/paytm_logo.png')}}" width="70px" style="margin-top:-5px;"/>
+  </label>
+</div>
+<div class="form-check ">
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="cheque">
+  <label class="form-check-label" for="exampleRadios2">
+    <div class="mb-2">Pay by Cheque</div>
+    <input type="text" class="form-control" name="cheque" id="exampleFormControlInput1" placeholder="Cheque Number">
+ 
+  </label>
+</div>
+  </div>
+</div>
+
+@endif
 
 @if(request()->get('package')=='basic')
 <table class="table table-bordered">
@@ -25,12 +78,12 @@
     </tr>
      <tr>
       <td>Account Fee</td>
-      <td><i class="fa fa-rupee"></i> 40,000</td>
+      <td><i class="fa fa-rupee"></i> 35,000</td>
     </tr>
     <tr>
 
       <td colspan=2>Total Amount</td>
-      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 55,000</span></td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 50,000</span></td>
     </tr>
    
   </tbody>
@@ -47,11 +100,14 @@
 <div class="form-check ">
   <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
   <label class="form-check-label" for="exampleRadios2">
-    Pay by Cheque
+    <div class="mb-2">Pay by Cheque</div>
+    <input type="text" class="form-control" name="cheque" id="exampleFormControlInput1" placeholder="Cheque Number">
   </label>
 </div>
 	</div>
 </div>
+
+
 @endif
 
 @if(request()->get('package')=='pro')
@@ -93,7 +149,8 @@
 <div class="form-check ">
   <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
   <label class="form-check-label" for="exampleRadios2">
-    Pay by Cheque
+    <div class="mb-2">Pay by Cheque</div>
+    <input type="text" class="form-control" name="cheque" id="exampleFormControlInput1" placeholder="Cheque Number">
   </label>
 </div>
 	</div>
@@ -113,16 +170,16 @@
     <tr>
       <td scope="row" rowspan=2>Ultimate Package (1000 accounts, Unlimited bandwidth, One year validity)</td>
       <td>Installation Fee</td>
-      <td><i class="fa fa-rupee"></i> 0</td>
+      <td><i class="fa fa-rupee"></i> 5000</td>
     </tr>
      <tr>
       <td>Account Fee</td>
-      <td><i class="fa fa-rupee"></i> 1,00,000</td>
+      <td><i class="fa fa-rupee"></i> 1,25,000</td>
     </tr>
     <tr>
 
       <td colspan=2>Total Amount</td>
-      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 1,00,000</span></td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 1,30,000</span></td>
     </tr>
    
   </tbody>
@@ -139,16 +196,18 @@
 <div class="form-check ">
   <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
   <label class="form-check-label" for="exampleRadios2">
-    Pay by Cheque
+    <div class="mb-2">Pay by Cheque</div>
+    <input type="text" class="form-control" name="cheque" id="exampleFormControlInput1" placeholder="Cheque Number">
   </label>
 </div>
 	</div>
 </div>
 @endif
 
-<a href="{{route('checkout-success')}}"><button class="btn btn-lg btn-primary">Next</button></a>
+<button class="btn btn-lg btn-primary" type="submit">Next</button>
 
 
 </div>		
 </div>
+</form>
 @endsection           

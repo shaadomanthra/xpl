@@ -74,10 +74,23 @@ class ClientuserController extends Controller
                  return redirect()->back()->withInput();
         }
 
+
+
         $parts = explode("@", $request->email);
         $username = $parts[0];
         $client_slug = $client->slug;
         $password = str_random(5);
+
+        $user = User::where('username',$username)->first();
+
+        if($user){         
+            while(1){
+                $username = $username.'_'.str_random(5);
+                $user = User::where('username',$username)->first();
+                if(!$user)
+                    break;
+            }
+        }
         
         $user = User::create([
             'name' => $request->name,

@@ -6,7 +6,6 @@
 	<div class="titlea">Pricing</div>
 </div>
 
-
 <div class="container mb-md-5">
 <div class=" ">
 <div class="row">
@@ -27,7 +26,7 @@
     
     <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">- Watch the videos any number of times without restrictions</span></p>
     <p> <b>Free Maintenance </b><span style="opacity: 0.6">- We take the responsibility to maintain your website with zero downtime</span></p>
-    <a href="{{ route('checkout')}}?package=ultimate"><button class="btn btn-outline-light">Buy Now</button></a>
+    <a href="{{ route('checkout')}}?package=flex"><button class="btn btn-outline-light">Buy Now</button></a>
 
   </div>
 </div>
@@ -39,7 +38,7 @@
   
   <div class="card-body">
       <h5 class="card-title">Installation Charges</h5>
-    <h2 style="opacity: 0.6;font-weight: 800"><i class="fa fa-rupee"></i> 15,000</h1><br>
+    <h2 style="opacity: 0.6;font-weight: 800"><i class="fa fa-rupee"></i> 15,000</h2><br>
     <h5 class="card-title">Account Charges@Rs.175</h5>
     <h2 style="opacity: 0.6;font-weight: 800" ><i class="fa fa-rupee"></i> 35,000</h2>
     <hr>
@@ -48,7 +47,7 @@
     <p ><b class="text-white">200 Accounts</b> <span style="opacity: 0.5">: Create upto 200 student accounts with a validity of 1 year</span></p>
     <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">- Watch the videos any number of times without restrictions</span></p>
     <p> <b>Free Maintenance </b><span style="opacity: 0.6">- We take the responsibility to maintain your website with zero downtime</span></p>
-    <a href="{{ route('checkout')}}?package=ultimate"><button class="btn btn-outline-light">Buy Now</button></a>
+    <a href="{{ route('checkout')}}?package=basic"><button class="btn btn-outline-light">Buy Now</button></a>
 
   </div>
 </div>
@@ -103,4 +102,5 @@
 
 </div>		
 </div>
+
 @endsection           

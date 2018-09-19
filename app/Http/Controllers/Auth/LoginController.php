@@ -80,11 +80,18 @@ class LoginController extends Controller
             return back()->with('warning', 'Kindly contact the website adminstrator to activate your account.');
         }
 
-        if($user->client_slug != 'corporate')
-        if ($user->client_slug != $subdomain) {
-            auth()->logout();
-            return back()->with('warning', 'You dont have access to this website. Kindly Contact the website administrator');
+        if($subdomain != 'corporate'){
+            if($user->client_slug != 'corporate')
+            if ($user->client_slug != $subdomain) {
+                auth()->logout();
+                return back()->with('warning', 'You dont have access to this website. Kindly Contact the website administrator');
+            }
+        }else{
+            if(!$user->checkRole(['administrator','manager','investor','patron','promoter','employee','marketing-manager','marketing-executive','client-owner','client-manager']))
+               auth()->logout();
+                return back()->with('warning', 'You dont have access to this website. Kindly Contact the website administrator'); 
         }
+        
 
         if ($user->status==2) {
             auth()->logout();

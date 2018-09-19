@@ -9,11 +9,11 @@ require_once("./lib/encdec_paytm.php");
 $checkSum = "";
 $paramList = array();
 
-$ORDER_ID = $_POST["ORDER_ID"];
-$CUST_ID = $_POST["CUST_ID"];
-$INDUSTRY_TYPE_ID = $_POST["INDUSTRY_TYPE_ID"];
-$CHANNEL_ID = $_POST["CHANNEL_ID"];
-$TXN_AMOUNT = $_POST["TXN_AMOUNT"];
+$ORDER_ID = $_GET["ORDER_ID"];
+$CUST_ID = $_GET["CUST_ID"];
+$INDUSTRY_TYPE_ID = $_GET["INDUSTRY_TYPE_ID"];
+$CHANNEL_ID = $_GET["CHANNEL_ID"];
+$TXN_AMOUNT = $_GET["TXN_AMOUNT"];
 
 // Create an array having all required parameters for creating checksum.
 $paramList["MID"] = PAYTM_MERCHANT_MID;
