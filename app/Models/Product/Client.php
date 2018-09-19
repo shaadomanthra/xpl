@@ -40,6 +40,18 @@ class Client extends Model
 
     }
 
+
+    public function getClientSlug($id){
+
+
+        $slug = Client::where('client_id',$id)->first()->slug;
+
+        if($slug)
+            return $slug;
+        else
+            return null;
+    }
+
     public function getPackageRate(){
 
         $user = \auth::user();
