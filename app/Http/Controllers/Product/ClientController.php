@@ -111,7 +111,7 @@ class ClientController extends Controller
                 
             } 
 
-            $client->courses = null;
+            unset($client->courses);
 
             $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
             file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));
@@ -261,7 +261,7 @@ class ClientController extends Controller
             }
 
 
-            $client->courses = null;
+            unset($client->courses);
             
             $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
             file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));
