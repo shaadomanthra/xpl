@@ -79,7 +79,7 @@ class OrderController extends Controller
             $order->bank_txn_id = $_POST['BANKTXNID'];
             $order->bank_name = $_POST['BANKNAME'];
             $order->txn_id = $_POST['TXNID'];
-            $order->save()
+            $order->save();
           }
 
           return view('appl.product.pages.checkout_success')->with('order',$order);
