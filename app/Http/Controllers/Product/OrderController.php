@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use PacketPrep\Mail\OrderSuccess;
 use PacketPrep\Mail\OrderCreated;
 use PacketPrep\Models\Product\Client;
+use PacketPrep\User;
 
 class OrderController extends Controller
 {
@@ -141,13 +142,14 @@ class OrderController extends Controller
       $isValidChecksum = verifychecksum_e($paramList, PAYTM_MERCHANT_KEY, $paytmChecksum); //will return TRUE or FALSE string.
 
 
-      $user = \auth::user();
+      
       if($isValidChecksum == "TRUE") {
         //echo "<b>Checksum matched and following are the transaction details:</b>" . "<br/>";
         if (isset($_POST) && count($_POST)>0 )
           { 
             $order = Order::where('order_id',$_POST['ORDERID'])->first();
-            
+            $user = User::where('id',$order->user_id)->first();
+
             $order->payment_mode = $_POST['PAYMENTMODE'];
             $order->bank_txn_id = $_POST['BANKTXNID'];
             $order->bank_name = $_POST['BANKNAME'];
@@ -196,10 +198,15 @@ class OrderController extends Controller
 
       }
       else {
-        if(subdomain()=='corporate')
-        return view('appl.product.pages.checkout_checksum_failure');
-        else
-        return view('appl.product.admin.orderfailure');
+
+        $order = Order::where('order_id',$_POST['ORDERID'])->first();
+        $slug = Client::getClientSlug($order->client_id);
+            if($slug)
+              $url = 'https://'.$slug.'.onlinelibrary.co/admin/orderfailure';
+            else
+              return view('appl.product.pages.checkout_checksum_failure');
+            return redirect()->away($url);
+        
         //Process transaction as suspicious.
       }
 
