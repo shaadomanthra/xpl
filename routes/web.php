@@ -121,6 +121,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('dataentry/{project}/tag/{tag}/question/{id}','Dataentry\QuestionController@tag')->middleware('auth')->name('tag.question');
 	Route::resource('dataentry/{project}/passage','Dataentry\PassageController')->middleware('auth');
 	Route::resource('dataentry/{project}/question','Dataentry\QuestionController')->middleware('auth');
+	Route::get('question/attach/{question}/{category}','Dataentry\QuestionController@attachCategory');
+	Route::get('question/detach/{question}/{category}','Dataentry\QuestionController@detachCategory');
 
 	Route::resource('library','Library\RepositoryController')->middleware('auth');
 	Route::resource('library/{repository}/structure','Library\structureController')->middleware('auth');

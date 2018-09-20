@@ -275,6 +275,7 @@ class QuestionController extends Controller
     public function categoryCourse($project_slug,$category_slug,$id=null)
     {
         
+
         if($category_slug == 'uncategorized')
         {
             $category = new Category();
@@ -299,6 +300,7 @@ class QuestionController extends Controller
                 $id=null;
 
             $exam = session('exam');
+
 
             if($exam && $exam!='all'){
             $ques_category = DB::table('category_question')->where('category_id', $category->id)->distinct()->get(['question_id'])->pluck('question_id')->toArray();
@@ -364,6 +366,7 @@ class QuestionController extends Controller
 
                 session(['start' => microtime(true)]) ;
 
+                
                 return view('appl.dataentry.question.show_course')
                         ->with('project',$this->project)
                         ->with('mathjax',true)
@@ -416,6 +419,8 @@ class QuestionController extends Controller
         }
         
 
+        $list = $category->descendants;
+
 
         if($id){
             $question = Question::where('id',$id)->first();
@@ -456,6 +461,7 @@ class QuestionController extends Controller
                         ->with('passage',$passage)
                         ->with('details',$details)
                         ->with('category',$category)
+                        ->with('list',$list)
                         ->with('questions',$questions);
             }else
                 abort('404','Question not found');
@@ -667,6 +673,33 @@ class QuestionController extends Controller
             flash('There is some error in storing the data...kindly retry.')->error();
             return redirect()->back()->withInput();
         }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function attachCategory($question_id,$category_id)
+    {
+        $question = Question::where('id',$question_id)->first();
+        if(!$question->categories->contains($category_id))
+            $question->categories()->attach($category_id);
+    }
+
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detachCategory($question_id,$category_id)
+    {
+        $question = Question::where('id',$question_id)->first();
+        if($question->categories->contains($category_id))
+            $question->categories()->detach($category_id);
     }
 
     /**

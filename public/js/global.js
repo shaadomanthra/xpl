@@ -41,6 +41,26 @@ $(document).ready(function() {
     	$('.course_validity').text(course_validity);
   	});
 
+
+  	$('.n').on('change', function() {
+
+  		 var val = $(this).data('id');
+  		
+  		 var ques = $(this).data('ques');
+  		 var url = $(this).data('url');
+
+  		 if (this.checked) {
+                $.get( url + "/question/attach/" + ques + "/" + val + "/", function( data ) {
+				  console.log( "attached." );
+				});
+            }else{
+            	$.get( url + "/question/detach/" + ques + "/" + val + "/", function( data ) {
+				  console.log("detached." );
+				});
+            }
+  
+  	});
+
   });
 
 

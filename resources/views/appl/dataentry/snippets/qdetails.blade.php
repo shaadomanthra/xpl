@@ -19,6 +19,27 @@
 		</span>
 		
 	</div>
+
+
+	@if(isset($list))
+	@if(count($list)!=0)
+	<div class="card-body details">
+		<div class="bg-light p-1 rounded border mb-2">Category</div>
+		
+		<div class="row">
+			<div class="col-12 mb-1">
+				@foreach($list as $k=>$cat)
+				 <div class="form-check">
+				    <input type="checkbox" class="form-check-input n" name="category" data-id="{{$cat->id}}" data-url="{{ url('/') }}" data-ques={{ $question->id }} @if($cat->questions->contains($question->id)) checked @endif>
+				    <label class="form-check-label" for="exampleCheck1">{{$cat->name}}</label>
+				  </div>
+				@endforeach
+			</div>
+		</div>
+	</div>
+	@endif
+	@endif
+
 	<div class="card-body details">
 		<div class="bg-light p-1 rounded border mb-2">Details</div>
 		<div class="row">
