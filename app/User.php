@@ -108,10 +108,14 @@ class User extends Authenticatable
 
     public function client_id(){
         $slug = $this->client_slug;
+        if(!$slug)
+            $slug = 'demo';
         return Client::where('slug',$slug)->first()->id;
     }
     public function getClient(){
         $slug = $this->client_slug;
+        if(!$slug)
+            $slug = 'demo';
         return Client::where('slug',$slug)->first();
     }
 
