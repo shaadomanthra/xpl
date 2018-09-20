@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use PacketPrep\Models\User\Role;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\User\User_Details;
+use PacketPrep\Notifications\MailResetPasswordToken;
 
 class User extends Authenticatable
 {
@@ -29,6 +30,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+        /**
+     * Send a password reset email to the user
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new MailResetPasswordToken($token));
+    }
 
 
     /**

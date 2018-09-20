@@ -63,8 +63,14 @@ class ProductController extends Controller
             else
                 return view('appl.product.front.notfound')->with('subdomain',$subdomain);
         }
-        else
+        else{
+
+            if(\auth::user()->client_slug)
+            {
+                    return redirect('https://'.\auth::user()->client_slug.'.onlinelibrary.co');
+            }
             return view('appl.product.front.index'); 
+        }
     }
 
     public function hasSubdomain($url) {
