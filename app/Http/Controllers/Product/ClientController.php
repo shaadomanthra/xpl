@@ -250,7 +250,7 @@ class ClientController extends Controller
             foreach($course_list as $course){
                 if(in_array($course, $courses)){
                     if(!$client->courses->contains($course))
-                        $client->courses()->attach($course,['visible' => 1]);
+                        $client->courses()->attach($course,['visible' => 0]);
                 }else{
                     if($client->courses->contains($course))
                         $client->courses()->detach($course);

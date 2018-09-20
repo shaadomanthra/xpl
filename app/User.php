@@ -46,7 +46,7 @@ class User extends Authenticatable
     }
 
     public function courses(){
-        return $this->belongsToMany('PacketPrep\Models\Course\Course');
+        return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('credits','validity','created_at','valid_till');
     }
 
     
@@ -62,6 +62,20 @@ class User extends Authenticatable
         $user = \Auth::user();
         if($user->isAdmin())
             return true;
+        $userroles = array();
+        foreach($user->roles as $role)
+            array_push($userroles, $role->slug);
+        
+        foreach($roles as $r){
+            if(in_array($r, $userroles)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function checkUserRole($roles){
+        $user = $this;
         $userroles = array();
         foreach($user->roles as $role)
             array_push($userroles, $role->slug);

@@ -18,7 +18,7 @@
 				</a>
 				@endcan
 			</h1>
-			<div class="text-light mb-3">
+			<div class=" mb-3" style="color:white">
 			{!! $course->description !!}
 		</div>
 			<button class="btn btn-outline-light btn-lg" data-toggle="modal" data-target="#myModal"><i class ="fa fa-video-camera"></i> Watch Intro</button>

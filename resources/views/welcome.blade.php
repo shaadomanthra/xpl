@@ -113,7 +113,11 @@ Anthony J Dangelo</p>
 		</div>
 		<div class="col-12 col-md-5 ">
 			<div class="text-center mt-5 mt-md-1">
+                @if(!auth::user())
 				<img src="{{ asset('/img/678.jpg')}}" class="w-100 p-4"/>
+                @else
+                <img src="{{ asset('/img/student_front.png')}}" class="w-100 p-4"/>
+                @endif
 			</div>
 		</div>
 	</div>

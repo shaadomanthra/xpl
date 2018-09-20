@@ -42,10 +42,16 @@ class Course extends Model
                 ->where('slug', $client_id)
                 ->first()->id;
         }
-        return DB::table('client_course')
+        $entry =DB::table('client_course')
                 ->where('client_id', $client_id)
                 ->where('course_id', $course_id)
-                ->first()->visible;
+                ->first();
+
+        if($entry)
+            return $entry->visible;
+        else
+
+        return null;
     }
 
     

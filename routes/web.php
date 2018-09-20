@@ -42,8 +42,16 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/admin/buy', 'Product\OrderController@buycredits')->name('order.buy');
 	Route::get('/admin/ordersuccess', 'Product\OrderController@ordersuccess')->name('order.success');
 	Route::get('/admin/orderfailure', 'Product\OrderController@orderfailure')->name('order.failure');
-	
-
+	Route::get('admin/image','Product\AdminController@image')->name('admin.image')->middleware('auth');
+	Route::post('admin/image','Product\AdminController@imageupload')->name('admin.image')->middleware('auth');
+	Route::get('admin/user','Product\AdminController@user')->name('admin.user')->middleware('auth');
+	Route::get('admin/adduser','Product\AdminController@adduser')->name('admin.user.create')->middleware('auth');
+	Route::post('admin/adduser','Product\AdminController@storeuser')->name('admin.user.store')->middleware('auth');
+	Route::get('admin/edituser/{user}','Product\AdminController@edituser')->name('admin.user.edit')->middleware('auth');
+	Route::put('admin/updateuser/{user}','Product\AdminController@updateuser')->name('admin.user.update')->middleware('auth');
+	Route::get('admin/user/{user}','Product\AdminController@viewuser')->name('admin.user.view')->middleware('auth');
+	Route::get('admin/user/{user}/course','Product\AdminController@usercourse')->name('admin.user.course')->middleware('auth');
+	Route::post('admin/user/{user}/course','Product\AdminController@storeusercourse')->name('admin.user.course')->middleware('auth');
 
 	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->name('pricing');
 	Route::get('/about-corporate',function(){ return view('appl.product.pages.about'); })->name('about-corporate');

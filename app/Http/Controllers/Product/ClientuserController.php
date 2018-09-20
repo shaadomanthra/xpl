@@ -69,6 +69,13 @@ class ClientuserController extends Controller
         $client = client::where('slug',$client)->first();
         $user = User::where('email',$request->email)->first();
 
+        list($u, $domain) = explode('@', $request->email);
+
+        if ($domain != 'gmail.com') {
+            flash('Kindly use only gmail.com for email address.')->error();
+                 return redirect()->back()->withInput();
+        }
+
         if($user){
                 flash('The user (<b>'.$request->email.'</b>) account exists. Kindly use a different email.')->error();
                  return redirect()->back()->withInput();
@@ -115,6 +122,7 @@ class ClientuserController extends Controller
             $client->user_id_manager = $user->id;
         }
         $client->save();
+
 
         Mail::to($user->email)->send(new ActivateUser($user));
 

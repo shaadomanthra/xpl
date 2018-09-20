@@ -53,10 +53,7 @@ class AdminPolicy
     public function edit(User $user,Client $client)
     { 
         if($user->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager'])){
-            if($client->user_id_creator==$user->id )
-                return true;
-            else
-                return false;
+           return true;
         }
         else
             return false;

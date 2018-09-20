@@ -5,7 +5,9 @@
 Your registered email-id is {{$user['email']}} <br>
 
 @component('mail::panel')
-Password : <b>{{$user['password']}}</b>
+Username : <b>{{$user['username']}}</b><br>
+Password : <b>{{$user['password']}}</b><br>
+Url : <a href="https://{{ $user['client_slug'] }}.onlinelibrary.co">{{ $user['client_slug'] }}.onlinelibrary.co</a>
 @endcomponent
 
 Thanks,<br>

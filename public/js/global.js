@@ -21,6 +21,26 @@ $(document).ready(function() {
 
 	});
 
+
+	$('.course_data').on('change', function() {
+		var course_id = $(".course_data option:selected").val();
+		var course_name = $(".course_data option:selected").text();
+		var credit = $(".course_"+course_id).val();
+		console.log(course_id+' '+course_name);
+    	$('.course_id').val(course_id);
+    	$('.course_name').text(course_name);
+    	$('.credit_count').text(credit);
+  	});
+
+  	$('.validity_data').on('change', function() {
+
+		var validity = $(".validity_data option:selected").val();
+		var course_validity = $(".validity_data option:selected").text();
+		console.log(validity+' '+course_validity);
+    	$('.validity').val(validity);
+    	$('.course_validity').text(course_validity);
+  	});
+
   });
 
 

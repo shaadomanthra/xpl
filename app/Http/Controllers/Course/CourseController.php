@@ -99,7 +99,7 @@ class CourseController extends Controller
         $parent =  Category::where('slug',$id)->first(); 
         $ques_count  =0; 
         $nodes = null;
-        $exams = null;
+        $exams = array();
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
 

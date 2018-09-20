@@ -41,6 +41,29 @@ class Client extends Model
     }
 
 
+    public function getCreditsUsedCount($client_id=null){
+
+        if(!$client_id)
+            $client_id = $this->id;
+
+        return DB::table('course_user')
+                ->where('client_id', $client_id)->sum('credits');
+
+    }
+
+    public function getCreditsIssued($client_id=null){
+
+        if(!$client_id)
+            $client_id = $this->id;
+
+        $records= DB::table('course_user')
+                ->where('client_id', $client_id)->limit(5)->get();
+
+                return $records;
+
+    }
+
+
     public static function getClientSlug($id){
 
 
