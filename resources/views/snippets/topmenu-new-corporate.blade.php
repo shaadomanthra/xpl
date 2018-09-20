@@ -28,6 +28,10 @@
                     @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
                     <li><a class="nav-link" href="{{ route('team') }}"><i class="fa fa-users"></i> Team</a></li>
                     @endif
+                    
+                    @if(\Auth::user()->checkRole(['administrator','investor','patron','promoter','data-manager','data-lead','feeder','proof-reader','renovator','validator','restructure-lead','thinker','manager','employee']))
+                    <li><a class="nav-link" href="{{ route('material') }}">Material</a></li>
+                    @endif
 
                     @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','marketing-manager','marketing-executive']))
                     <li><a class="nav-link" href="{{ route('client.index') }}"><i class="fa fa-university"></i> Clients</a></li>
