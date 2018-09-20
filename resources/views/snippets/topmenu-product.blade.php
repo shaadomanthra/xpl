@@ -27,6 +27,7 @@
                     
                    
                     <li class="mr-2"><a class="nav-link " href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                    <li class="mr-2"><a class="nav-link " href="{{ route('register') }}"><i class="fa fa-location-arrow"></i> Sign up</a></li>
                     
                     @else
 

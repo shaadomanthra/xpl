@@ -137,7 +137,14 @@ class CourseController extends Controller
 
 
         $course = Course::where('slug',$course)->first();
-        $this->authorize('view', $course);
+
+        if(!\auth::user()->courses()->where('course_id',$course->id)->count())
+        {
+            return view('appl.course.course.access');
+        }
+
+            
+        //$this->authorize('view', $course);
 
         $category = Category::where('slug',$category)->first();
         $parent = Category::getParent($category);

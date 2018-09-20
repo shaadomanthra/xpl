@@ -276,6 +276,13 @@ class QuestionController extends Controller
     {
         
 
+        if(!\auth::user()->courses()->where('slug',$project_slug)->count())
+        {
+
+            
+            return view('appl.course.course.access');
+        }
+
         if($category_slug == 'uncategorized')
         {
             $category = new Category();

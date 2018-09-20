@@ -4,7 +4,7 @@ namespace PacketPrep\Http\Controllers\Auth;
 
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
-use PacketPrep\Mail\ActivateUser;
+use PacketPrep\Mail\ActivateUser2;
 use PacketPrep\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -51,10 +51,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
+        
+
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:20|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users|regex:/(.*)@gmail\.com/i',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -83,12 +86,13 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'client_slug' => $subdomain,
+            'status'=> 1,
             'password' => bcrypt($data['password']),
             'activation_token' => str_random(20),
         ]);
 
 
-        //Mail::to($user->email)->send(new ActivateUser($user));
+        Mail::to($user->email)->send(new ActivateUser2($user));
 
         return $user;
     }
@@ -101,8 +105,8 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
-        $this->guard()->logout();
-        return redirect('/login')->with('status', 'Your account is successfully created. Kindly Contact the Website Administrator to activate your account.');
+        //$this->guard()->logout();
+        return redirect('/');//->with('status', 'Your account is successfully created. You can login now.');
     }
 
     public function activateUser($token)

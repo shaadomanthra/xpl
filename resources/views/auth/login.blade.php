@@ -64,10 +64,14 @@
 
                         <div class="form-group">
                             <div class="col-md-12 col-md-offset-4">
+                                
                                 <button type="submit" class="btn btn-primary">
                                     Login
                                 </button>
-
+                                <a class="btn btn-success" href="{{ url('/register') }}">
+                                    Sign up
+                                </a>
+                                <br>
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>
