@@ -35,8 +35,9 @@ class ProductController extends Controller
             $exploded = explode('.', $parsed["host"]);
             $subdomain = $exploded[0];
             $file = "../json/".$subdomain.".json";
-            $filedata = json_decode(file_get_contents($file));
+            
             if(file_exists($file)){
+                $filedata = json_decode(file_get_contents($file));
                 if(\auth::user())
                 $client = Client::where('slug',\auth::user()->client_slug)->first();
                 else
