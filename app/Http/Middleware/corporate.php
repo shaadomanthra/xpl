@@ -4,7 +4,7 @@ namespace PacketPrep\Http\Middleware;
 
 use Closure;
 
-class corporate
+class Corporate
 {
     /**
      * Handle an incoming request.
