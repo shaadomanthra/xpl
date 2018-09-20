@@ -24,9 +24,15 @@ class AdminPolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function view(User $user)
+    public function view(User $user,Client $client)
     {
-        return $user->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']);
+        if($user->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+            if($client->getPackageName())
+                return true;
+        }
+        return false; 
+
     }
 
 
@@ -39,7 +45,12 @@ class AdminPolicy
      */
     public function create(User $user,Client $client)
     { 
-        return $user->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']);
+       if($user->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+            if($client->getPackageName())
+                return true;
+        }
+        return false;
     }
 
 
@@ -53,7 +64,8 @@ class AdminPolicy
     public function edit(User $user,Client $client)
     { 
         if($user->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager'])){
-           return true;
+           if($client->getPackageName())
+                return true;
         }
         else
             return false;

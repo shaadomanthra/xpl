@@ -32,7 +32,9 @@
 
 
                     @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-owner','client-manager']))
+                    @if(\Auth::user()->getClient()->getPackageName())
                     <li class="mr-2"><a class="nav-link " href="{{ route('admin.index') }}"><i class="fa fa-bars"></i> Admin</a></li>
+                    @endif
                     @endif
 
                     

@@ -21,7 +21,7 @@
                     <h1 class="titlea mb-5"> The Product</h1>
                
                      <div class="embed-responsive embed-responsive-16by9">
-        <iframe src="//player.vimeo.com/video/212122806"></iframe>
+        <iframe src="//player.vimeo.com/video/291319744"></iframe>
     </div>
                 
         
@@ -156,14 +156,15 @@
                       <dt class="col-sm-3">Website</dt>
                       <dd class="col-sm-9"><a href="https://{{ $client->slug}}.onlinelibrary.co" ><span class="badge badge-warning">{{ $client->slug}}.onlinelibrary.co</span></a></dd>
 
-                      <dt class="col-sm-3">Credit Points</dt>
-                      <dd class="col-sm-9"><h1>0 / {{ $client->getCreditPoints() }}</h1></dd>
+                      <dt class="col-sm-3">Credit Usage</dt>
+                      <dd class="col-sm-9"><h1>{{ $client->getCreditsUsedCount() }} / {{ $client->getCreditPoints() }}</h1></dd>
                       <dt class="col-sm-3">Package</dt>
-                      <dd class="col-sm-9">{{ $client->getPackageName() }}</dd>
+                      <dd class="col-sm-9">{{ ($client->getPackageName())?$client->getPackageName():'-' }}</dd>
                     </dl>
                 </div>
             </div>
             <div class="col-12 col-md-4">
+                @if($client->getPackageName())
                 <div class="bg-light p-3 border rounded">
                 <h1> Buy Credits  </h1>
                 <form method="post" action="{{ route('payment.order')}}">
@@ -187,6 +188,13 @@
 
                 </form>
                 </div>
+                @else
+                  <div class="bg-light p-3 border rounded">
+                <h1> Buy Package </h1>
+                <p>To start using our services kindly buy a package of your choice.</p>
+                <a href="{{ route('pricing')}}"><button class="btn btn-primary">more details</button></a>
+                </div>
+                @endif
             </div>
         </div>
     </div>

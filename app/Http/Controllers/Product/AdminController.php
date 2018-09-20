@@ -29,6 +29,8 @@ class AdminController extends Controller
     {
         $slug = subdomain();
         $client = client::where('slug',$slug)->first();
+        $this->authorize('view', $client);
+
 
         return view('appl.product.admin.index')->with('client',$client);
     }

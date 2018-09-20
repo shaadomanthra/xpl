@@ -24,7 +24,7 @@
             <div class="col-12 col-md-6">
               <div class="card mb-3 mr-md-2">
                 <div class="card-body">
-                  <h3><u>Credit Points</u></h3>
+                  <h3><u>Credit Usage</u></h3>
                   <div class="display-1">{{ $client->getCreditsUsedCount() }}/ {{ $client->getCreditPoints() }}</div>
                   
                 </div>

@@ -134,7 +134,11 @@ class CourseController extends Controller
      */
     public function video($course,$category)
     {
+
+
         $course = Course::where('slug',$course)->first();
+        $this->authorize('view', $course);
+
         $category = Category::where('slug',$category)->first();
         $parent = Category::getParent($category);
         

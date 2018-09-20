@@ -1,12 +1,12 @@
 {
     "id": 4,
-    "name": "XYZ College",
+    "name": "Online Library",
     "slug": "demo",
     "user_id_creator": 1,
     "user_id_owner": 1,
     "user_id_manager": null,
     "status": 1,
     "created_at": "2018-08-20 09:26:03",
-    "updated_at": "2018-09-19 21:47:46",
+    "updated_at": "2018-09-20 13:20:12",
     "contact": "&lt;p&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;b&gt;Krishna Rajesh&lt;/b&gt;&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Accounts Manager&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Phone: +91 86880 79590&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;b&gt;Rajesh krishna KS&lt;/b&gt;&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Administrative Team&lt;/span&gt;&lt;br style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;&lt;span style=&quot;caret-color: rgb(72, 78, 81); color: rgb(72, 78, 81);&quot;&gt;Phone: +91 86880 795907&lt;/span&gt;&lt;br&gt;&lt;/p&gt;"
 }

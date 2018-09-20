@@ -100,6 +100,10 @@ class User extends Authenticatable
         $slug = $this->client_slug;
         return Client::where('slug',$slug)->first()->id;
     }
+    public function getClient(){
+        $slug = $this->client_slug;
+        return Client::where('slug',$slug)->first();
+    }
 
     public function getUserName($id){
         return  User::where('id',$id)->get()->first()->username;

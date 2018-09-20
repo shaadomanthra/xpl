@@ -48,7 +48,6 @@ class ProductController extends Controller
                 }
                 else{
                     
-                    
                     if($filedata->status==0)
                         return view('appl.product.front.unpublished')->with('subdomain',$subdomain);
                     elseif($filedata->status==1)

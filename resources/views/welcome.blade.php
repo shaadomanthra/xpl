@@ -22,6 +22,8 @@
 			<p class="lead">Develop a passion for learning. If you do, you will never cease to grow - 
 Anthony J Dangelo</p>
 
+
+
 			
 			<a class="btn border border-success text-success mt-2" href="{{ route('logout') }}" onclick="event.preventDefault();
 			document.getElementById('logout-form').submit();" role="button">Logout</a>
@@ -29,8 +31,44 @@ Anthony J Dangelo</p>
 				{{ csrf_field() }}
 			</form>
 
+            <br><br>
+
+@if(count(auth::user()->courses)!=0)
+            <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Course</th>
+      <th scope="col">Valid till</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(auth::user()->courses as $k=>$course)
+     <tr>
+      <th scope="row">{{ $k+1}}</th>
+      <td>{{$course->name}}</td>
+      <td>{{date('d M Y', strtotime($course->pivot->valid_till))}}</td>
+      <td> @if(strtotime($course->pivot->valid_till) > strtotime(date('Y-m-d')))
+        <span class="badge badge-success">Active</span>
+@else
+        <span class="badge badge-secondary">Expired</span>
+@endif
+      </td>
+    </tr>
+    @endforeach
+    
+  </tbody>
+</table>
+@endif
+            
+
 				</div>
+
+
 			</div>
+
+
             
              
 			

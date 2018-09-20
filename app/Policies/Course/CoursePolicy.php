@@ -27,9 +27,19 @@ class CoursePolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function view(User $user)
+    public function view(User $user, Course $course)
     {
-        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator']);
+        if($user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','client-owner','client-manager','manager']))
+         {
+            return true;
+         }else{
+            foreach($course->users as $u){
+            if($u->id == $user->id)
+                return true;
+            }
+         }
+
+        return false;
     }
 
 
