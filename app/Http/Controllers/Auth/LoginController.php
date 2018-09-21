@@ -81,6 +81,7 @@ class LoginController extends Controller
         }
 
         if($subdomain != 'corporate'){
+            if(!$user->checkRole(['administrator','manager','investor','patron','promoter','employee']))
             if($user->client_slug != 'corporate')
             if ($user->client_slug != $subdomain) {
                 auth()->logout();
