@@ -6,6 +6,25 @@ $(document).ready(function() {
     	window.location=window.location.pathname+'?exam='+this.value;
   	});
 
+
+    /* scroll to */
+
+
+    var loc = $(location).attr('href').split("/")[8];
+    if(!$.isNumeric(loc)){
+    	var loc = $(location).attr('href').split("/")[7];
+    }
+    
+    if($.isNumeric(loc)){
+    	var b = $('.qset').offset().top;
+	    var a = $('#q'+loc).offset().top - b;
+	  	$('.qset').scrollTop(a);
+    }
+    
+    
+    //var target = $().text(); // get the text of the span
+    //var scrollPos = $('#' + target).position().top; // use the text of the span to create an ID and get the top position of that element
+    
   
 
   	$( ".credit_count" ).keyup(function() {

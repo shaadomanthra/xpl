@@ -80,6 +80,7 @@
 .CodeMirror{border:1px solid silver;}
 .card-nav ul{ margin-bottom: 0px; }
 .qset .active{ background: #ececec; }
+.qitems{position:relative;}
 
 .sortable{ border:1px solid #eee; background: #f8f8f8; padding: 10px; margin:0px; list-style: none;}
 ul.sortable li{ border:1px solid #eee; background: #fff;

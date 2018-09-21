@@ -41,15 +41,15 @@
             </div>
             <div class="col-12 col-md-4">
                 <h2><i class="fa fa-user"></i> Student Friendly</h2>
-                <p class="pb-5" style="color:#99e4f1">We have built the learning modules to makes student learning simple, interesting and effective.</p>
+                <p class="pb-5" style="color:#99e4f1">We have built the learning modules to makes student's learning simple, interesting and effective.</p>
                 <h2><i class="fa fa-puzzle-piece"></i> Mock Tests</h2>
                 <p class="pb-5" style="color:#99e4f1">Timed bound tests have been included to give a real time experience of Competitive exams.</p>
             </div>
             <div class="col-12 col-md-4">
                 <h2><i class="fa fa-paper-plane"></i> Learn on Go</h2>
-                <p class="pb-5" style="color:#99e4f1">Online learning  make it easy to prepare for exams from any location and at student convenient time.</p>
+                <p class="pb-5" style="color:#99e4f1">Online learning  makes it easy to prepare for exams from any location and at student convenient time.</p>
                 <h2><i class="fa fa-bar-chart"></i> Performance Analytics</h2>
-                <p class="pb-5" style="color:#99e4f1">Detailed analytics for pactice and  tests will help student to track his mistakes and work on it.  </p>
+                <p class="pb-5" style="color:#99e4f1">Detailed analytics for mock tests will help student to track his mistakes and work on it.  </p>
             </div>
         </div>
                 

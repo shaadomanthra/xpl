@@ -32,7 +32,7 @@
 		</div>
 		</div>
 		<div class="qset" style="max-height: 170px;overflow-y: auto;">
-		<div class="row no-gutters">
+		<div class="row no-gutters qitems">
 			@foreach($questions as $key => $q)
 			<div class="col-3 mb-1">
 				
@@ -44,8 +44,8 @@
 				<a href="{{ route('tag.question',[$project->slug,$tag->id,$q->id]) }}">
 				@endif
 				<div class="pr-1">
-				<div class="border w100 p-1 text-center rounded @if($q->id==$question->id) active @endif @if($q->status == 0) @elseif($q->status == 1) border-secondary @else border-success  @endif" style="border:1px solid #eee;
-				    ">{{ ($key + 1 ) }}</div>
+				<div class="border w100 p-1 text-center rounded @if($q->id==$question->id) active @endif @if($q->status == 0) @elseif($q->status == 1) border-secondary @else border-success  @endif" style="border:1px solid #eee; 
+				    " id="q{{ ($q->id )}}">{{ ($key + 1 ) }}</div>
 				</div>
 				</a>
 			</div>

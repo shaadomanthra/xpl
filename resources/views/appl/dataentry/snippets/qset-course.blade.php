@@ -45,7 +45,7 @@
 				@endif
 				<div class="pr-1">
 				<div class="w100 p-1 text-center rounded @if($q->id==$question->id) active @endif 
-					@if($q->practice($q->id)) @if($q->practice($q->id)->accuracy == 0) qred-border @else qgreen-border @endif @else qborder  @endif" 
+					@if($q->practice($q->id)) @if($q->practice($q->id)->accuracy == 0) qred-border @else qgreen-border @endif @else qborder  @endif" id="q{{ ($q->id )}}"
 				    >{{ ($key + 1 ) }}</div>
 				</div>
 				</a>
