@@ -77,9 +77,7 @@ class Client extends Model
 
     public function getPackageRate(){
 
-        $user = \auth::user();
-
-        $o = Order::where('client_id',$user->client_id())->where(function ($query) {
+        $o = Order::where('client_id', $this->id)->where(function ($query) {
                 $query->where('package', '=', 'flex')
                       ->orWhere('package', '=', 'basic')
                       ->orWhere('package', '=', 'pro')
@@ -95,9 +93,7 @@ class Client extends Model
 
     public function getOfferRate(){
 
-        $user = \auth::user();
-
-        $sum = Order::where('client_id',$user->client_id())->Where('status',1)->sum('credit_count');
+        $sum = Order::where('client_id',$this->id)->Where('status',1)->sum('credit_count');
         if($sum < 200){
             return '200';
         }
@@ -112,17 +108,13 @@ class Client extends Model
 
     public function getCreditPoints(){
 
-        $user = \auth::user();
-
-        $sum = Order::where('client_id',$user->client_id())->Where('status',1)->sum('credit_count');
+        $sum = Order::where('client_id',$this->id)->Where('status',1)->sum('credit_count');
         return $sum;
     }
 
     public function getPackageName(){
 
-        $user = \auth::user();
-
-        $o = Order::where('client_id',$user->client_id())->where(function ($query) {
+        $o = Order::where('client_id',$this->id)->where(function ($query) {
                 $query->where('package', '=', 'flex')
                       ->orWhere('package', '=', 'basic')
                       ->orWhere('package', '=', 'pro')

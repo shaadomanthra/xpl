@@ -20,9 +20,9 @@
   </thead>
   <tbody>
     <tr>
-      <td scope="row" rowspan=2>Flex Package (Custom accounts, Unlimited bandwidth, One year validity)</td>
-      <td>Installation Fee</td>
-      <td><i class="fa fa-rupee"></i> 20,000</td>
+      <td scope="row" rowspan=2>Flex Package (200 credits, Unlimited bandwidth, One year validity)</td>
+      <td>Number of Accounts</td>
+      <td>200</td>
     </tr>
      <tr>
       <td>Account Fee</td>
@@ -31,7 +31,7 @@
     <tr>
 
       <td colspan=2>Total Amount</td>
-      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 20,000</span></td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 0</span></td>
     </tr>
    
   </tbody>
@@ -40,19 +40,14 @@
 <div class="card bg-light mb-3"> 
   <div class="card-body">
     <div class="form-check mb-2">
-    <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
-    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="20000">
-    <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="flex">
+    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="00">
+    <input class="form-check-input" type="hidden" name="package"  value="flex">
+    <input class="form-check-input" type="hidden" name="cheque"  value="0">
   
-  <label class="form-check-label" for="exampleRadios1">
-    Pay with Paytm &nbsp; <img src="{{ asset('/img/paytm_logo.png')}}" width="70px" style="margin-top:-5px;"/>
-  </label>
+ 
 </div>
 <div class="form-check ">
-  <input class="form-check-input" type="radio" name="type" id="exampleRadios2" value="cheque">
-  <label class="form-check-label" for="exampleRadios2">
-    <div class="mb-2">Pay by Cheque</div>
-    <input type="text" class="form-control" name="cheque" id="exampleFormControlInput1" placeholder="Cheque Number">
+  
  
   </label>
 </div>
@@ -72,18 +67,18 @@
   </thead>
   <tbody>
     <tr>
-      <td scope="row" rowspan=2>Basic Package (200 accounts, Unlimited bandwidth, One year validity)</td>
-      <td>Installation Fee</td>
-      <td><i class="fa fa-rupee"></i> 15,000</td>
+      <td scope="row" rowspan=2>Basic Package (250 accounts, Unlimited bandwidth, One year validity)</td>
+      <td>Number of Accounts</td>
+      <td> 250</td>
     </tr>
      <tr>
       <td>Account Fee</td>
-      <td><i class="fa fa-rupee"></i> 35,000</td>
+      <td><i class="fa fa-rupee"></i> 1,00,000</td>
     </tr>
     <tr>
 
       <td colspan=2>Total Amount</td>
-      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 50,000</span></td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 1,00,000</span></td>
     </tr>
    
   </tbody>
@@ -93,7 +88,7 @@
 	<div class="card-body">
 		<div class="form-check mb-2">
   <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
-    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="50000">
+    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="100000">
     <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="basic">
   <label class="form-check-label" for="exampleRadios1">
     Pay with Paytm &nbsp; <img src="{{ asset('/img/paytm_logo.png')}}" width="70px" style="margin-top:-5px;"/>
@@ -124,17 +119,17 @@
   <tbody>
     <tr>
       <td scope="row" rowspan=2>Pro Package (500 accounts, Unlimited bandwidth, One year validity)</td>
-      <td>Installation Fee</td>
-      <td><i class="fa fa-rupee"></i> 10,000</td>
+      <td>Number of Accounts</td>
+      <td>500</td>
     </tr>
      <tr>
       <td>Account Fee</td>
-      <td><i class="fa fa-rupee"></i> 75,000</td>
+      <td><i class="fa fa-rupee"></i> 1,50,000</td>
     </tr>
     <tr>
 
       <td colspan=2>Total Amount</td>
-      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 85,000</span></td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 1,50,000</span></td>
     </tr>
    
   </tbody>
@@ -144,7 +139,7 @@
 	<div class="card-body">
 		<div class="form-check mb-2">
   <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
-    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="85000">
+    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="150000">
     <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="pro">
   <label class="form-check-label" for="exampleRadios1">
     Pay with Paytm &nbsp; <img src="{{ asset('/img/paytm_logo.png')}}" width="70px" style="margin-top:-5px;"/>
@@ -173,17 +168,17 @@
   <tbody>
     <tr>
       <td scope="row" rowspan=2>Ultimate Package (1000 accounts, Unlimited bandwidth, One year validity)</td>
-      <td>Installation Fee</td>
-      <td><i class="fa fa-rupee"></i> 5000</td>
+      <td>Number of Accounts</td>
+      <td><i class="fa fa-rupee"></i> 1000</td>
     </tr>
      <tr>
       <td>Account Fee</td>
-      <td><i class="fa fa-rupee"></i> 1,25,000</td>
+      <td><i class="fa fa-rupee"></i> 2,00,000</td>
     </tr>
     <tr>
 
       <td colspan=2>Total Amount</td>
-      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 1,30,000</span></td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 2,00,000</span></td>
     </tr>
    
   </tbody>
@@ -193,7 +188,7 @@
 	<div class="card-body">
 		<div class="form-check mb-2">
   <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked>
-    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="125000">
+    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="200000">
     <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="ultimate">
   <label class="form-check-label" for="exampleRadios1">
     Pay with Paytm &nbsp; <img src="{{ asset('/img/paytm_logo.png')}}" width="70px" style="margin-top:-5px;"/>

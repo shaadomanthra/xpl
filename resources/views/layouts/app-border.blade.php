@@ -11,7 +11,7 @@
       
     
     <div class="container"> 
-    <div class="border m-4 ">
+    <div class="border mt-3 mb-3 ">
     @yield('content')
     </div>
     </div>

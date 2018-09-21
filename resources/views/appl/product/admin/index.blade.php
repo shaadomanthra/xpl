@@ -78,7 +78,7 @@
               </div>
               <div class="card mb-3 ml-md-2">
                 <div class="card-body">
-                  <h3 class="card-title">Logo<a href="{{ route('admin.settings')}}">
+                  <h3 class="card-title">Logo<a href="{{ route('admin.image')}}">
                     <span class="float-right"><i class="fa fa-edit"></i></span></a> </h3>
                    @if(file_exists(public_path().'/img/clients/'.subdomain().'.png'))
               <img src="{{ asset('/img/clients/'.subdomain().'.png')}}" width="40px" class="logo-product ml-md-1" />

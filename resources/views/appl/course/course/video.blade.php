@@ -40,9 +40,9 @@
       
     </div>
     <div class="col-12 col-md-4">
-      @if(count($category->questions)!=0)
+      @if(count($category->category_tag_questions($category,session('exam')))!=0)
       <div class="text-md-center mt-3 mt-md-0 mb-3 mb-md-0">
-        <a href="{{route('course.question',[$course->slug,$category->slug,''])}}"><i class="fa fa-bars"></i> &nbsp;Practice ({{ count($category->questions)}}Q)</a>
+        <a href="{{route('course.question',[$course->slug,$category->slug,''])}}"><i class="fa fa-bars"></i> &nbsp;Practice ({{ count($category->category_tag_questions($category,session('exam')))}}Q)</a>
     </div>
     @endif
     </div>

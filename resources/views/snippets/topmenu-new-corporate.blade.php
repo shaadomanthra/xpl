@@ -13,24 +13,33 @@
                  <ul class="navbar-nav ml-auto">
                     
                     <li class="mr-3 mt-2 mt-lg-0"><a class="nav-link " href="{{ url('/') }}"><i class="fa fas fa-home"></i> Home</a></li>
-                    <li class="mr-3  mt-lg-0"><a class="nav-link " href="{{ url('faq') }}"><i class="fa fas fa-question-circle"></i> FAQ</a></li>
-                   <li class="mr-3 "><a class="nav-link " href="{{ url('pricing') }}"><i class="fa fa-rupee"></i> Pricing</a></li>
+
+                    
                     
                     
 
                     <!-- Authentication Links -->
                     @guest
+
+                    <li class="mr-3  mt-lg-0"><a class="nav-link " href="{{ url('faq') }}"><i class="fa fas fa-question-circle"></i> FAQ</a></li>
+                   <li class="mr-3 "><a class="nav-link " href="{{ url('pricing') }}"><i class="fa fa-rupee"></i> Pricing</a></li>
                     
                     <li class="mr-2"><a class="nav-link " href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
                     
                     @else
+                   
+                   @if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+                    
+                    <li class="mr-3  mt-lg-0"><a class="nav-link " href="{{ url('faq') }}"><i class="fa fas fa-question-circle"></i> FAQ</a></li>
+                   <li class="mr-3 "><a class="nav-link " href="{{ url('pricing') }}"><i class="fa fa-rupee"></i> Pricing</a></li>
+                   @endif
                    
                     @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
                     <li><a class="nav-link" href="{{ route('team') }}"><i class="fa fa-users"></i> Team</a></li>
                     @endif
                     
                     @if(\Auth::user()->checkRole(['administrator','investor','patron','promoter','data-manager','data-lead','feeder','proof-reader','renovator','validator','restructure-lead','thinker','manager','employee']))
-                    <li><a class="nav-link" href="{{ route('material') }}">Material</a></li>
+                    <li><a class="nav-link" href="{{ route('material') }}"><i class="fa fa-th"></i> Material</a></li>
                     @endif
 
                     @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','marketing-manager','marketing-executive']))

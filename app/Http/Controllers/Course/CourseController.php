@@ -97,13 +97,18 @@ class CourseController extends Controller
 
         $project = Project::where('slug',$id)->first();
         $parent =  Category::where('slug',$id)->first(); 
+        $x = $parent->questionCount_level2($project);
+
         $ques_count  =0; 
         $nodes = null;
         $exams = array();
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
 
-            $ques_count = Category::getCategorizedQuestionCount($project);
+            if($parent->questionCount_level2($project))
+            $ques_count = $parent->questionCount_level2($project);
+            else
+                $ques_count = 0;
             $exams =  Tag::where('project_id',$project->id)->where('name','exam')
                         ->orderBy('created_at','desc')->get();
                      
@@ -121,6 +126,7 @@ class CourseController extends Controller
                     ->with('course',$course)
                     ->with('ques_count',$ques_count)
                     ->with('exams',$exams)
+                    ->with('project',$project)
                     ->with('nodes',$nodes);
         else
             abort(404);
@@ -137,11 +143,16 @@ class CourseController extends Controller
 
 
         $course = Course::where('slug',$course)->first();
+        
 
-        if(!\auth::user()->courses()->where('course_id',$course->id)->count())
+        if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','client-owner'])){
+        if(!\auth::user()->courses()->where('course_id',$course->id)->count() || $course->validityExpired())
         {
             return view('appl.course.course.access');
         }
+
+        }
+        
 
             
         //$this->authorize('view', $course);

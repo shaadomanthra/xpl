@@ -21,24 +21,24 @@
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>0 < Credit Points  < 200 </td>
-      <td><i class="fa fa-rupee"></i> 200 </td>
+      <td>0 < Credit Points  < 250 </td>
+      <td><i class="fa fa-rupee"></i> 500 </td>
      
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>200 < Credit Points  < 500</td>
-      <td><i class="fa fa-rupee"></i> 175 </td>
+      <td>250 < Credit Points  < 500</td>
+      <td><i class="fa fa-rupee"></i> 400 </td>
     </tr>
     <tr>
       <th scope="row">3</th>
       <td>500 < Credit Points  < 1000</td>
-      <td><i class="fa fa-rupee"></i> 150 </td>
+      <td><i class="fa fa-rupee"></i> 300 </td>
     </tr>
     <tr>
       <th scope="row">4</th>
-      <td>1000 < Credit Points  </td>
-      <td><i class="fa fa-rupee"></i> 125 </td>
+      <td>1000 < Credit Points   </td>
+      <td><i class="fa fa-rupee"></i> 200 </td>
     </tr>
   </tbody>
 </table>

@@ -14,7 +14,7 @@ $(document).ready(function() {
     if(!$.isNumeric(loc)){
     	var loc = $(location).attr('href').split("/")[7];
     }
-    
+
     if($.isNumeric(loc)){
     	var b = $('.qset').offset().top;
 	    var a = $('#q'+loc).offset().top - b;
@@ -30,13 +30,23 @@ $(document).ready(function() {
   	$( ".credit_count" ).keyup(function() {
 	  var price = parseInt($('.credit_count').val());
 	  var r = $('.credit_count').val();
-	  var rate = parseInt($('.credit_rate').text());
+	  var rate = 500;
+	  if(r < 250)
+	  	rate = 500;
+	  else if( r > 249 && r < 500)
+	  	rate = 400;
+	  else if( r > 499 && r < 1000)
+	  	rate = 300;
+	  else
+	  	rate = 200;
 
 	  var amount = price * rate;
 	  if(amount)
 	  	$('.price').text(amount);
 	  else
 		$('.price').text(0);
+
+		$('.credit_rate').val(rate);
 
 	});
 

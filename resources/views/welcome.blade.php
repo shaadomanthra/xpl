@@ -34,7 +34,7 @@ Anthony J Dangelo</p>
             <br><br>
 
 @if(count(auth::user()->courses)!=0)
-            <table class="table table-bordered">
+            <table class="table table-bordered table-responsive">
   <thead>
     <tr>
       <th scope="col">#</th>

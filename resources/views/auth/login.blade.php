@@ -68,10 +68,13 @@
                                 <button type="submit" class="btn btn-primary">
                                     Login
                                 </button>
+                                @if(subdomain() != 'corporate')
                                 <a class="btn btn-success" href="{{ url('/register') }}">
                                     Sign up
                                 </a>
                                 <br>
+                                @endif
+                                
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Forgot Your Password?
                                 </a>

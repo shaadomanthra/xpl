@@ -69,7 +69,7 @@ class User extends Authenticatable
     
 
     public function checkRole($roles){
-        $user = \Auth::user();
+        $user = $this;
         if($user->isAdmin())
             return true;
         $userroles = array();

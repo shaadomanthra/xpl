@@ -106,6 +106,35 @@ class Category extends Model
         return $d;
     }
 
+       public static function QuestionCounter($categories,$options=null,$i=1,$count=null){
+
+        
+        $d = '';
+        $j=1;
+        $sum = 0;
+        foreach ($categories as $category) {
+            $hasChildren = (count($category->children) > 0);
+
+            if($category->parent_id == $options['parent']->id){
+                $count = $count;
+            }else{
+
+            if(count($category->category_tag_questions($category,session('exam')))!=0)
+            $count = $count + count($category->category_tag_questions($category,session('exam')));
+            //echo $count."<br>";
+            
+
+            }
+            
+            $j++;
+
+            if($hasChildren) {
+                $count =  Category::QuestionCounter($category->children,$options,$i+1,$count);
+            }
+        }  
+        return $count;
+    }
+
 
 
     public static function displayUnorderedList($categories,$options=null,$i=1){
@@ -159,6 +188,36 @@ class Category extends Model
         
         
     }
+
+
+    public static function QuestionCount_level2($project){
+
+        $parent =  Category::where('slug',$project->slug)->first(); 
+            //dd($parent);
+            $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
+            return  Category::QuestionCounter($node,['project'=>$project,'parent'=>$parent]);
+
+
+        if (request()->session()->has('exam') && session('exam') != 'all') 
+        {
+            $exam = session('exam');
+            $tag = Tag::where('value',$exam)->where('project_id',$project->id)->first();
+            if($tag)
+                return count($tag->questions);
+            else
+                return null;
+        }else{
+            $parent =  Category::where('slug',$project->slug)->first(); 
+            //dd($parent);
+            $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
+            return  Category::QuestionCounter($node,['project'=>$project,'parent'=>$parent]);
+        }
+        
+        
+    }
+
+
+
 
     public static function getUncategorizedQuestions($project){
         $parent =  Category::where('slug',$project->slug)->first();   

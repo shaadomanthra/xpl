@@ -67,6 +67,7 @@
 
 
 
+@if(!$user->checkRole(['administrator','manager','investor','patron','promoter','employee','client-owner','client-manager']))
        <div class="card mb-3">
         <div class="card-header">
           <h2>Courses 
@@ -110,7 +111,7 @@ No Courses Added
         </div>
       </div>
 
-       
+   @endif    
         
 
      </div>

@@ -25,15 +25,14 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 
                 <div class="form-group mb-2">
-                    <label for="exampleFormControlSelect1" class="mb-2">Credit Rate - <i class="fa fa-rupee"></i> <span class="credit_rate">{{ $client->getOfferRate()}}</span> / credit</label>
+                   
                     <input class="form-check-input" type="hidden" name="type" id="exampleRadios1" value="paytm" >
-                    <br>
                     <input class="form-control credit_count" type="text" name="credit_count"  value="10"  >
                     
                     <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="credit">
-                    <input class="form-check-input" type="hidden" name="credit_rate"  value="{{$client->getOfferRate()}}">
+                    <input class="form-check-input credit_rate" type="hidden" name="credit_rate"  value="500">
                     <input class="form-check-input" type="hidden" name="txn_amount"  value="1">
-                    <div class="mt-3 display-4"><i class="fa fa-rupee"></i><span class="price"> {{ ($client->getOfferRate()*10)}}</span></div>
+                    <div class="mt-3 display-4"><i class="fa fa-rupee"></i><span class="price"> 5000</span></div>
                     <br>
                   <button class="btn btn-lg btn-outline-primary" type="submit">Buy Online</button> 
                  
@@ -60,24 +59,24 @@
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>0 < Credit Points  < 200 </td>
-      <td><i class="fa fa-rupee"></i> 200 </td>
+      <td>0 < Credit Points  < 249 </td>
+      <td><i class="fa fa-rupee"></i> 500 </td>
      
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>200 < Credit Points  < 500</td>
-      <td><i class="fa fa-rupee"></i> 175 </td>
+      <td>250 < Credit Points  < 499</td>
+      <td><i class="fa fa-rupee"></i> 400 </td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td>500 < Credit Points  < 1000</td>
-      <td><i class="fa fa-rupee"></i> 150 </td>
+      <td>500 < Credit Points  < 999</td>
+      <td><i class="fa fa-rupee"></i> 300 </td>
     </tr>
     <tr>
       <th scope="row">4</th>
       <td>1000 < Credit Points  </td>
-      <td><i class="fa fa-rupee"></i> 125 </td>
+      <td><i class="fa fa-rupee"></i> 200 </td>
     </tr>
   </tbody>
 </table>

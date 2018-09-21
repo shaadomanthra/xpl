@@ -55,6 +55,23 @@ class Course extends Model
     }
 
     
+    public function validityExpired(){
+
+        $course_id = $this->id;
+        $user_id = \auth::user()->id;
+
+        $entry =DB::table('course_user')
+                ->where('course_id', $course_id)
+                ->where('user_id', $user_id)
+                ->first();
+
+
+        if(strtotime($entry->valid_till) > strtotime(date('Y-m-d')))
+            return false;
+        else
+            return true;
+
+    }
 
     public static function getName($slug){
     	 return (new Course)->where('slug',$slug)->first()->name;

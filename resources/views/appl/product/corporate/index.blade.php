@@ -142,6 +142,7 @@
     </div>
 </div>
 
+@if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','marketing-manager','marketing-executive']))
 <div class="card mb-3">
     <div class="card-body">
         <div class="row">
@@ -171,15 +172,14 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 
                 <div class="form-group mb-2">
-                    <label for="exampleFormControlSelect1" class="mb-2">Credit Rate - <i class="fa fa-rupee"></i> <span class="credit_rate">{{ $client->getOfferRate()}}</span> / credit</label>
+                    
                     <input class="form-check-input" type="hidden" name="type" id="exampleRadios1" value="paytm" >
-                    <br>
                     <input class="form-control credit_count" type="text" name="credit_count"  value="10"  >
                     
                     <input class="form-check-input" type="hidden" name="package" id="exampleRadios1" value="credit">
-                    <input class="form-check-input" type="hidden" name="credit_rate"  value="{{$client->getOfferRate()}}">
+                    <input class="form-check-input credit_rate" type="hidden" name="credit_rate"  value="500">
                     <input class="form-check-input" type="hidden" name="txn_amount"  value="1">
-                    <div class="mt-3 display-4"><i class="fa fa-rupee"></i><span class="price"> {{ ($client->getOfferRate()*10)}}</span></div>
+                    <div class="mt-3 display-4"><i class="fa fa-rupee"></i><span class="price"> 5000</span></div>
                     <br>
                   <button class="btn btn-lg btn-outline-primary" type="submit">Buy Online</button> 
                   <hr>
@@ -199,6 +199,7 @@
         </div>
     </div>
 </div>
+@endif
 
 </div>
 

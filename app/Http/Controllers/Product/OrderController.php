@@ -54,22 +54,22 @@ class OrderController extends Controller
 
           if($request->package=='flex')
           {
-            $order->credit_count = 200;
-            $order->credit_rate = 200;
+            $order->credit_count = 250;
+            $order->credit_rate = 500;
           }elseif($request->package=='basic'){
-            $order->credit_count = 200;
-            $order->credit_rate = 175;
+            $order->credit_count = 250;
+            $order->credit_rate = 400;
           }elseif($request->package=='pro')
           {
             $order->credit_count = 500;
-            $order->credit_rate = 150;
+            $order->credit_rate = 300;
           }elseif($request->package=='ultimate'){
             $order->credit_count = 1000;
-            $order->credit_rate = 125;
+            $order->credit_rate = 200;
           }else{
             $order->credit_count = $request->credit_count;
             $order->credit_rate = $request->credit_rate;
-            $order->txn_amount = $request->credit_count*$request->credit_rate;
+            $order->txn_amount = $request->credit_count * $request->credit_rate;
           }
 
           
@@ -93,30 +93,35 @@ class OrderController extends Controller
 
           if($request->package=='flex')
           {
-            $order->credit_count = 200;
-            $order->credit_rate = 200;
+            $order->credit_count = 250;
+            $order->credit_rate = 500;
           }elseif($request->package=='basic'){
-            $order->credit_count = 200;
-            $order->credit_rate = 175;
+            $order->credit_count = 250;
+            $order->credit_rate = 400;
           }elseif($request->package=='pro')
           {
             $order->credit_count = 500;
-            $order->credit_rate = 150;
+            $order->credit_rate = 300;
           }elseif($request->package=='ultimate'){
             $order->credit_count = 1000;
-            $order->credit_rate = 125;
+            $order->credit_rate = 200;
           }else{
             $order->credit_count = $request->credit_count;
             $order->credit_rate = $request->credit_rate;
           }
 
-          $order->payment_mode = 'cheque';
-          $order->txn_id = $request->cheque;
-          
+          if($request->cheque == 0){
+            $order->payment_mode = 'flex';
+            $order->txn_id = $request->cheque;
+            $order->save();
+            $order->payment_status = 'Successful';
 
-          $order->save();
-          $order->payment_status = 'Pending';
-          
+          }else{
+            $order->payment_mode = 'cheque';
+            $order->txn_id = rand(100000,999999);
+            $order->save();
+            $order->payment_status = 'Pending';
+          }
 
           return view('appl.product.pages.checkout_success')->with('order',$order);
         }
