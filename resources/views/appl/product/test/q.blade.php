@@ -91,7 +91,7 @@
          <div class="row no-gutters">
           <div class="col-2 col-md-2">
             <div class="pr-3" >
-          <div class="text-center p-1 rounded bg-light w100 " > 
+          <div class="text-center p-1 rounded bg-light w100 border" > 
                 
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="E" @if($details['response']=='E') checked @endif
                 >
