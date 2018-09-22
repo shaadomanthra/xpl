@@ -87,6 +87,7 @@ class ProductController extends Controller
         }
         else{
 
+            if(\auth::user())
             if(\auth::user()->client_slug)
             {
                     return redirect('https://'.\auth::user()->client_slug.'.onlinelibrary.co');
