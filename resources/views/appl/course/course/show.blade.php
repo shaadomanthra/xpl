@@ -46,7 +46,7 @@
 				</div>
 				<div class="col-12 mb-3 mb-md-0 col-md-3"> 
 					<div class="  rounded p-3 " style="background: #ffeaa7;">
-						Questions Attempted <div style="font-size: 25px;font-weight: 900;">{{ $course->attempted($course)}} / {{ $ques_count }} </div>
+						Questions Attempted <div style="font-size: 25px;font-weight: 900;">{{ $course->attempted($course)}} / {{ ($ques_count)?$ques_count:'0' }} </div>
 
 			</div></div>
 				<div class="col-12 mb-3 mb-md-0 col-md-3"> <div class="  rounded p-3 " style="background: #fab1a0;">Performance Accuracy <div style="font-size: 25px;font-weight: 900;">

@@ -97,18 +97,17 @@ class CourseController extends Controller
 
         $project = Project::where('slug',$id)->first();
         $parent =  Category::where('slug',$id)->first(); 
-        $x = $parent->questionCount_level2($project);
 
-        $ques_count  =0; 
+        //$x = $parent->questionCount_level2($project);
+
+        $ques_count  = 0; 
         $nodes = null;
         $exams = array();
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
 
-            if($parent->questionCount_level2($project))
             $ques_count = $parent->questionCount_level2($project);
-            else
-                $ques_count = 0;
+            
             $exams =  Tag::where('project_id',$project->id)->where('name','exam')
                         ->orderBy('created_at','desc')->get();
                      

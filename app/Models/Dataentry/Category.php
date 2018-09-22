@@ -108,7 +108,21 @@ class Category extends Model
 
        public static function QuestionCounter($categories,$options=null,$i=1,$count=null){
 
-        
+        if(session('exam'))
+        {
+            $exam = session('exam');
+        } 
+        else
+            $exam = 'all';
+
+        $file = "../json/ques/".$exam.".json";
+
+        if(file_exists($file)){
+            $filedata = json_decode(file_get_contents($file));
+            $count = $filedata->count;
+            return $count;
+        }
+
         $d = '';
         $j=1;
         $sum = 0;
@@ -122,8 +136,6 @@ class Category extends Model
             if(count($category->category_tag_questions($category,session('exam')))!=0)
             $count = $count + count($category->category_tag_questions($category,session('exam')));
             //echo $count."<br>";
-            
-
             }
             
             $j++;
@@ -131,7 +143,14 @@ class Category extends Model
             if($hasChildren) {
                 $count =  Category::QuestionCounter($category->children,$options,$i+1,$count);
             }
-        }  
+        } 
+
+        $obj = new Category();
+        $obj->count = $count; 
+
+        $newJsonString = json_encode($obj, JSON_PRETTY_PRINT);
+        file_put_contents(base_path('json/ques/'.$exam.'.json'), stripslashes($newJsonString));
+        
         return $count;
     }
 
@@ -197,6 +216,7 @@ class Category extends Model
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
             return  Category::QuestionCounter($node,['project'=>$project,'parent'=>$parent]);
 
+        /*
 
         if (request()->session()->has('exam') && session('exam') != 'all') 
         {
@@ -211,7 +231,7 @@ class Category extends Model
             //dd($parent);
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
             return  Category::QuestionCounter($node,['project'=>$project,'parent'=>$parent]);
-        }
+        }*/
         
         
     }
