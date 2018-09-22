@@ -101,7 +101,7 @@ $(document).ready(function() {
     function myTimer() {
         var count = $('.qset').data('counter')+1;
         $('.qset').data('counter',count);
-        console.log(count);
+        //console.log(count);
     }
 
     $(document).on('click','.testqno', function() {
@@ -215,10 +215,11 @@ $(document).ready(function() {
       $('.qset').data('counter',0);
 
       if(opt){
+
         $('#q'+qno).addClass('qblue-border');
         $('.qno').addClass('qblue');
         $.get( url + "/" + qno + "/save",{'question_id':qno,'response':opt,'time':time,'user_id':user}, function( data ) {
-          console.log('saved');
+          console.log('saved : change');
 
         });
       }

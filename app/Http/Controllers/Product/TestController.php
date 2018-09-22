@@ -225,8 +225,10 @@ class TestController extends Controller
     	$test->question_id = $request->get('question_id');
     	$test->test_id = $tag_slug;
     	$test->user_id = $request->get('user_id');
+    	if($request->get('response'))
     	$test->response = strtoupper($request->get('response'));
     	$test->answer = strtoupper($question->answer);
+    	if($request->get('time'))
     	$test->time = $test->time+$request->get('time');
 
     	if($test->response == $test->answer)
