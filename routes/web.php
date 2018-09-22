@@ -28,7 +28,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/refund',function(){ return view('appl.product.pages.refund'); })->name('refund')->middleware('corporate');;
 	Route::get('/disclaimer',function(){ return view('appl.product.pages.disclaimer'); })->name('disclaimer')->middleware('corporate');;
 	Route::get('/about',function(){ return view('appl.pages.about'); })->name('about');
-	Route::get('/contact',function(){ return view('appl.pages.contact')->with('recaptcha',true); })->name('contact');
+	Route::get('/contact','Product\ProductController@contact')->name('contact');
 	Route::get('/faq',function(){ return view('appl.product.pages.faq'); })->name('faq')->middleware('corporate');;
 	Route::get('/checkout',function(){ return view('appl.product.pages.checkout'); })->name('checkout')->middleware('auth')->middleware('corporate');;
 	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success')->middleware('corporate');;

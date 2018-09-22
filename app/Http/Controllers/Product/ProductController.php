@@ -34,7 +34,7 @@ class ProductController extends Controller
             $parsed = parse_url($url);
             $exploded = explode('.', $parsed["host"]);
             $subdomain = $exploded[0];
-            
+
             $filedata = json_decode(file_get_contents('http://json.onlinelibrary.co/json/'.$subdomain.'.json'));
 
             //dd($filedata);
@@ -106,9 +106,17 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function contact()
     {
-        //
+        $url = url()->full();
+        if($this->hasSubdomain($url)){
+            $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $subdomain = $exploded[0];
+            $client = Client::where('slug',$subdomain)->first();
+
+           return view('appl.pages.contact')->with('client',$client); 
+        }
     }
 
     /**

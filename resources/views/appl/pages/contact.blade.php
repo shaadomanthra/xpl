@@ -11,7 +11,7 @@
 <br>
 <p>
 	<h2> {{ subdomain_name() }}</h2><Br>
-	{!! subdomain_contact() !!}
+	{!! html_entity_decode($client->contact) !!}
 </p>
 
 
