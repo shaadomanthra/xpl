@@ -270,6 +270,18 @@ var x = setInterval(function() {
 
     @if(isset($tag))
     alert('The Test time has expired. ');
+    var qno = $('.qno').data('qqno');
+      var time = $('.qset').data('counter');
+      var user = $('.qset').data('user');
+      var url = $('.qset').data('url');
+      var opt = $('input[name=response]:checked').val();
+      $('.qset').data('counter',0);
+
+        $.get( url + "/" + qno + "/save",{'question_id':qno,'response':opt,'time':time,'user_id':user}, function( data ) {
+          console.log('saved');
+
+        });
+      
     window.location.href = "{{ route('onlinetest.submit',$tag->value) }}";
     @endif
   }

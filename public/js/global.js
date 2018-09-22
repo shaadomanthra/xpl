@@ -106,13 +106,15 @@ $(document).ready(function() {
 
     $(document).on('click','.testqno', function() {
       var qno = $(this).data('qno');
+      var qqno = $('.qno').data('qqno');
       var last = $('.qset').data('lastsno');
+      var time = $('.qset').data('counter');
       var sno = $('#q'+qno).data('sno');
+      var user = $('.qset').data('user');
       
       $('.qset').data('counter',0);
 
       
-
       var testname = $(this).data('testname');
       var url = $('.qset').data('url');
       $('.testqno').removeClass('active');
@@ -139,6 +141,11 @@ $(document).ready(function() {
 
       }
 
+      $.get( url + "/" + qqno + "/save",{'question_id':qqno,'time':time,'user_id':user}, function( data ) {
+          console.log('saved');
+
+        });
+
       $.get( url + "/" + qno + "/", function( data ) {
           $( "div.question_block" ).replaceWith( data );
 
@@ -152,7 +159,9 @@ $(document).ready(function() {
       var user = $('.qset').data('user');
       var url = $('.qset').data('url');
       var opt = $('input[name=response]:checked').val();
+      
       if(opt){
+        $('.qset').data('counter',0);
         $('#q'+qno).addClass('qblue-border');
         $('.qno').addClass('qblue');
         $.get( url + "/" + qno + "/save",{'question_id':qno,'response':opt,'time':time,'user_id':user}, function( data ) {
@@ -177,8 +186,10 @@ $(document).ready(function() {
       $('input[name="response"]').prop('checked', false);
       console.log('cleared');
 
+
       var time = $('.qset').data('counter');
       var user = $('.qset').data('user');
+      $('.qset').data('counter',0);
       
       $.get( url + "/" + qno + "/clear",{'question_id':qno,'time':time,'user_id':user}, function( data ) {
           console.log('saved');
@@ -200,6 +211,7 @@ $(document).ready(function() {
       var user = $('.qset').data('user');
       var url = $('.qset').data('url');
       var opt = $('input[name=response]:checked').val();
+      $('.qset').data('counter',0);
 
       if(opt){
         $('#q'+qno).addClass('qblue-border');
