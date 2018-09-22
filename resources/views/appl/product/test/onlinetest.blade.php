@@ -15,7 +15,7 @@
 			<div class="card text-white  mb-3" style="background: #e66767">
 				<div class="card-body"> 
 					<div class="display-4">Practice Test <span class="float-right badge badge-light">#1</span></div>
-					<div class="mb-4">30 Questions | 30 minutes</div>
+					<div class="mb-4">{{ $tests['test1_count']}} Questions | {{ $tests['test1_count']}}  minutes</div>
 					@if(!$tests['test1'])
 					<a href="{{ route('onlinetest.instructions','test1') }}" >
 					<button class="btn btn-lg btn-outline-light">Try now</button>
@@ -32,7 +32,7 @@
 			<div class="card text-white  mb-3" style="background: #54a0ff">
 				<div class="card-body"> 
 					<div class="display-4">Practice Test <span class="float-right badge badge-light">#2</span></div>
-					<div class="mb-4">30 Questions | 30 minutes</div>
+					<div class="mb-4">{{ $tests['test2_count']}}  Questions | {{ $tests['test2_count']}}  minutes</div>
 					@if(!$tests['test2'])
 					<a href="{{ route('onlinetest.instructions','test2') }}" >
 					<button class="btn btn-lg btn-outline-light">Try now</button>
@@ -49,7 +49,7 @@
 			<div class="card text-white  mb-3" style="background: #8395a7">
 				<div class="card-body"> 
 					<div class="display-4">Practice Test <span class="float-right badge badge-light">#3</span></div>
-					<div class="mb-4">30 Questions | 30 minutes</div>
+					<div class="mb-4">{{ $tests['test3_count']}}  Questions | {{ $tests['test3_count']}}  minutes</div>
 					@if(!$tests['test3'])
 					<a href="{{ route('onlinetest.instructions','test3') }}" >
 					<button class="btn btn-lg btn-outline-light">Try now</button>
@@ -66,7 +66,7 @@
 			<div class="card text-white  mb-3" style="background: #63cdda">
 				<div class="card-body"> 
 					<div class="display-4">Practice Test <span class="float-right badge badge-light">#4</span></div>
-					<div class="mb-4">30 Questions | 30 minutes</div>
+					<div class="mb-4">{{ $tests['test4_count']}}  Questions | {{ $tests['test4_count']}}  minutes</div>
 					@if(!$tests['test4'])
 					<a href="{{ route('onlinetest.instructions','test4') }}" >
 					<button class="btn btn-lg btn-outline-light">Try now</button>
@@ -83,7 +83,7 @@
 			<div class="card text-white  mb-3" style="background: #786fa6">
 				<div class="card-body"> 
 					<div class="display-4">Practice Test <span class="float-right badge badge-light">#5</span></div>
-					<div class="mb-4">30 Questions | 30 minutes</div>
+					<div class="mb-4">{{ $tests['test5_count']}}  Questions | {{ $tests['test5_count']}}  minutes</div>
 					@if(!$tests['test5'])
 					<a href="{{ route('onlinetest.instructions','test5') }}" >
 					<button class="btn btn-lg btn-outline-light">Try now</button>

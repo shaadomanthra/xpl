@@ -240,7 +240,7 @@ $(document).ready(function() {
 @if(isset($timer))
 <script>
 // Set the date we're counting down to
-var countDownDate = addMinutes(new Date(),30);
+var countDownDate = addMinutes(new Date(),{{ count($questions) }});
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -259,13 +259,17 @@ var x = setInterval(function() {
   document.getElementById("timer").innerHTML =  hours + "h "
   + minutes + "m " + seconds + "s ";
 
+  document.getElementById("timer2").innerHTML =  hours + "h "
+  + minutes + "m " + seconds + "s ";
+
   // If the count down is finished, write some text 
   if (distance < 0) {
     clearInterval(x);
     document.getElementById("timer").innerHTML = "EXPIRED";
+    document.getElementById("timer2").innerHTML = "EXPIRED";
 
     @if(isset($tag))
-    alert('The Test time has expired. ')
+    alert('The Test time has expired. ');
     window.location.href = "{{ route('onlinetest.submit',$tag->value) }}";
     @endif
   }

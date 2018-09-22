@@ -9,6 +9,7 @@ use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Product\Test;
+use PacketPrep\User;
 
 
 class TestController extends Controller
@@ -193,7 +194,7 @@ class TestController extends Controller
                 } 
 
                 $questions = Test::where('test_id',$tag->value)->where('user_id',\auth::user()->id)->get();
-                
+
                 return view('appl.product.test.solutions')
                         ->with('mathjax',true)
                         ->with('question',$question)
@@ -355,26 +356,39 @@ class TestController extends Controller
     {
     	$tests = ['test1'=>null,'test2'=>null,'test3'=>null,'test4'=>null,'test5'=>null];
 
-    	if(!\auth::user()){
-    		return view('appl.product.test.onlinetest')->with('tests',$tests);
-    	}else{
+    	if(\auth::user())
+    		$user = \auth::user();
+    	else
+    		$user = User::where('username','krishnateja')->first();
 
-    		
-
-    		foreach($tests as $test => $val){
+    	foreach($tests as $test => $val){
     			$tag = Tag::where('value',$test)->first();
     			$questions = $tag->questions;
 
+    			if(count($questions)==0)
+    				$tests[$test.'_count'] = 0;
     			foreach($questions as $key=>$q){
-		           	$t = Test::where('question_id',$q->id)->where('user_id',\auth::user()->id)->first();
-		           	if($t)
-		           	{
-		           		$tests[$test] = true;
-		           		break;
-		           	}
+    				if(isset($q->id)){
+    					$t = Test::where('question_id',$q->id)->where('user_id',$user->id)->first();
+
+			         	$tests[$test.'_count'] = count($questions);
+			           	if($t && \auth::user())
+			           	{
+			           		$tests[$test] = true;
+			           		break;
+			           	}else{
+			           		$tests[$test] = false;
+			           		break;
+			           	}
+    				}
+		           	
 		        } 
 
     		}
+
+    	if(!\auth::user()){
+    		return view('appl.product.test.onlinetest')->with('tests',$tests);
+    	}else{
 
     		return view('appl.product.test.onlinetest')->with('tests',$tests);
     	}

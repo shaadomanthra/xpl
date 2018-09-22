@@ -13,6 +13,35 @@
   <div class="row">
 
     <div class="col-md-9">
+
+      <div class=" mb-3 d-block d-md-none ">
+    <div class="bg-light p-2 pr-3 pl-3 rounded border">
+    <div class="text-bold mb-3">Solutions : <a href="{{ route('onlinetest.analysis',$tag->value)}}">
+    {{ ucfirst($tag->value)  }} - Analysis
+    </a></div>
+
+    <div class="border p-2 mb-2 rounded">
+    <div class="row ">
+      <div class="col-3">
+        @if($details['prev'])
+        <a href="{{ $details['prev'] }}">
+        <div class=" w100 p-1 text-center pl-2"><i class="fa fa-angle-double-left"></i></div>
+        </a>
+        @endif
+      </div>
+      <div class="col-6"> <div class="mt-1 text-center">Q({{ count($questions) }})</div></div>
+      <div class="col-3"> 
+        @if($details['next'])
+        <a href="{{ $details['next'] }}">
+        <div class=" w100 p-1 text-center mr-3"><i class="fa fa-angle-double-right"></i></div>
+        </a>
+        @endif
+      </div>
+    </div>
+    </div>
+    </div>
+</div>
+
     <div class="question_block">
 
       @if($passage)

@@ -5,6 +5,31 @@
   <div class="row">
 
     <div class="col-md-9">
+
+      <div class=" mb-3 d-block d-md-none ">
+  <div class="">
+    <div class="mb-2 text-center"> Timer : <span class="text-bold " id="timer2"></span></div>
+    
+
+    <div class="border bg-light p-2 mb-2 rounded">
+    <div class="row ">
+      <div class="col-3">
+        
+        <div class="left testqno w100 p-1 text-center pl-2 @if(!$details['prev']) d-none @endif" data-qno="{{$details['prev']}}" data-testname="{{$tag->value}}"><i class="fa fa-angle-double-left" ></i></div>
+        
+      </div>
+      <div class="col-6"> <div class="mt-1 text-center">Q(<span class="qset_qno">1</span>/{{ count($questions) }})</div></div>
+      <div class="col-3"> 
+        
+        <div class="right testqno w100 p-1 text-center mr-3 @if(!$details['next']) d-none @endif" data-qno="{{$details['next']}}" data-testname="{{$tag->value}}"><i class="fa fa-angle-double-right" ></i></div>
+      </div>
+    </div>
+    </div>
+    
+  </div>
+</div>
+
+
     <div class="question_block">
 
       @if($passage)
@@ -118,17 +143,17 @@
          	<button type="button" class="btn  btn-outline-primary testqno @if(!$details['prev']) d-none @endif" data-qno="{{$details['prev']}}" data-testname="{{$tag->value}}">
 	          <i class="fa fa-angle-double-left"></i> Previous
 	      </button>
-	        <button type="button" class="btn  btn-info qno-save" data-qno="{{$details['curr']}}">
+	        <button type="button" class="btn  btn-info qno-save mb-2" data-qno="{{$details['curr']}}">
 	          Save Response
 	      </button>
-	      <button type="button" class="btn  btn-secondary qno-clear" data-qno="{{$details['curr']}}">
+	      <button type="button" class="btn  btn-secondary qno-clear mb-2" data-qno="{{$details['curr']}}">
 	          Clear Response
 	      </button>
 	      <a href="#" data-toggle="modal" data-target="#exampleModal">
-	      <button type="button" class="btn  btn-success qno-submit" data-qno="{{$details['curr']}}" data-tooltip="tooltip" data-placement="top" title="Submit">
+	      <button type="button" class="btn  btn-success qno-submit mb-2" data-qno="{{$details['curr']}}" data-tooltip="tooltip" data-placement="top" title="Submit">
 	          Submit Test
 	      </button></a>
-	      <button type="button" class="btn  btn-outline-primary testqno @if(!$details['next']) d-none @endif" data-qno="{{$details['next']}}" data-testname="{{$tag->value}}" >
+	      <button type="button" class="btn  btn-outline-primary mb-2 testqno @if(!$details['next']) d-none @endif" data-qno="{{$details['next']}}" data-testname="{{$tag->value}}" >
 	           Next <i class="fa fa-angle-double-right"></i>
 	      </button>
     	</div>
