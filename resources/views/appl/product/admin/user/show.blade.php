@@ -38,7 +38,7 @@
     {{ $user->email }}
   </dd>
 
-@if(!$user->checkUserRole(['client-owner','client-manager']))
+@if(!$user->checkUserRole(['client-owner','client-manager','administrator','manager']))
   <dt class="col-sm-3">Password</dt>
   <dd class="col-sm-9">{{ $user->activation_token}}</dd>
   @else
@@ -67,7 +67,7 @@
 
 
 
-@if(!$user->checkRole(['administrator','manager','investor','patron','promoter','employee','client-owner','client-manager']))
+@if($user->checkRole(['administrator','manager','investor','patron','promoter','employee','client-owner','client-manager']))
        <div class="card mb-3">
         <div class="card-header">
           <h2>Courses 
