@@ -108,20 +108,7 @@ class Category extends Model
 
        public static function QuestionCounter($categories,$options=null,$i=1,$count=null){
 
-        if(session('exam'))
-        {
-            $exam = session('exam');
-        } 
-        else
-            $exam = 'all';
-
-        $file = "../json/ques/".$exam.".json";
-
-        if(file_exists($file)){
-            $filedata = json_decode(file_get_contents($file));
-            $count = $filedata->count;
-            return $count;
-        }
+        
 
         $d = '';
         $j=1;
@@ -145,11 +132,6 @@ class Category extends Model
             }
         } 
 
-        $obj = new Category();
-        $obj->count = $count; 
-
-        $newJsonString = json_encode($obj, JSON_PRETTY_PRINT);
-        file_put_contents(base_path('json/ques/'.$exam.'.json'), stripslashes($newJsonString));
         
         return $count;
     }
@@ -212,9 +194,42 @@ class Category extends Model
     public static function QuestionCount_level2($project){
 
         $parent =  Category::where('slug',$project->slug)->first(); 
+
+            $url = url()->full();
+            $parsed = parse_url($url);
+
+            $exploded = explode('.', $parsed["host"]);
+            $subdomain = $exploded[0];
+            $domain = $exploded[1];
+            $ext = $exploded[2];
+
             //dd($parent);
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
-            return  Category::QuestionCounter($node,['project'=>$project,'parent'=>$parent]);
+            if(session('exam'))
+            {
+                $exam = session('exam');
+            } 
+            else
+                $exam = 'all';
+
+            $file = "../json/ques/".$exam.".".$ext.".json";
+
+            if(file_exists($file)){
+                $filedata = json_decode(file_get_contents($file));
+                $count = $filedata->count;
+                return $count;
+            }
+
+
+            $count = Category::QuestionCounter($node,['project'=>$project,'parent'=>$parent]);
+
+            $obj = new Category();
+            $obj->count = $count; 
+
+            $newJsonString = json_encode($obj, JSON_PRETTY_PRINT);
+            file_put_contents(base_path('json/ques/'.$exam.'.'.$ext.'.json'), stripslashes($newJsonString));
+
+            return $count;
 
         /*
 
