@@ -250,6 +250,7 @@ class CourseController extends Controller
             $course->important_topics = $request->important_topics;
             $course->reference_books = $request->reference_books;
             $course->status = $request->status;
+            $course->image = $request->image;
             $course->save(); 
 
             flash('Course (<b>'.$request->name.'</b>) Successfully updated!')->success();

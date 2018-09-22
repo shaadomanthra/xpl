@@ -71,6 +71,17 @@
           >
       </div>
 
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Image</label>
+        <input type="text" class="form-control" name="image" id="formGroupExampleInput2" placeholder="Image to display"
+            @if($stub=='Create')
+            value="{{ (old('image')) ? old('image') : '' }}"
+            @else
+            value = "{{ $course->image }}"
+            @endif
+          >
+      </div>
+
        <div class="form-group">
         <label for="formGroupExampleInput2">Description</label>
          <textarea class="form-control summernote" name="description"  rows="5">{{isset($course->description)?$course->description:''}}</textarea>

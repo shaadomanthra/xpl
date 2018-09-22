@@ -23,6 +23,7 @@ class Course extends Model
         'important_topics',
         'reference_books',
         'status',
+        'image',
         // add all other fields
     ];
 
