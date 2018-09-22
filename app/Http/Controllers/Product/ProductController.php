@@ -34,14 +34,18 @@ class ProductController extends Controller
             $parsed = parse_url($url);
             $exploded = explode('.', $parsed["host"]);
             $subdomain = $exploded[0];
-            $file = "../json/".$subdomain.".json";
+            //$file = "../json/".$subdomain.".json";
             
-            if(file_exists($file)){
-                $filedata = json_decode(file_get_contents($file));
+            $client = Client::where('slug',$subdomain)->first();
+            
+
+            if($client){
+                $filedata = $client;//json_decode(file_get_contents($file));
+                /*
                 if(\auth::user())
-                $client = Client::where('slug',\auth::user()->client_slug)->first();
+                    $client = Client::where('slug',\auth::user()->client_slug)->first();
                 else
-                    $client =null;
+                    $client =null; */
 
                 if($subdomain == 'corporate')
                 {
