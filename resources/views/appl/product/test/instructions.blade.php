@@ -12,7 +12,7 @@
 	<div class=" border p-3 rounded">
 		<ul>
 			<li> This test contains {{ count($tag->questions)}} questions to be answered in  {{ count($tag->questions)}} minutes</li>
-			<li> For every questions there are four options A,B,C,D out of which only one option is correct</li>
+			<li> For every question there are either four options A,B,C,D or five options A,B,C,D,E out of which only one option is correct</li>
 			<li> Each question carries 1 mark and there is no negative marking</li>
 
 		</ul>
