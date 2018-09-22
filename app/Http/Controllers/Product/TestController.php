@@ -180,10 +180,10 @@ class TestController extends Controller
                     if($q->question_id == $question->id){
 
                         if($key!=0)
-                            $details['prev'] = route('onlinetest.solutions.q',[$tag->value,$questions[$key-1]->id]);
+                            $details['prev'] = route('onlinetest.solutions.q',[$tag->value,$questions[$key-1]->question_id]);
 
                         if(count($questions) != $key+1)
-                            $details['next'] = route('onlinetest.solutions.q',[$tag->value,$questions[$key+1]->id]);
+                            $details['next'] = route('onlinetest.solutions.q',[$tag->value,$questions[$key+1]->question_id]);
 
                         $details['qno'] = $key + 1 ;
                     }
