@@ -36,10 +36,12 @@ class ProductController extends Controller
             $subdomain = $exploded[0];
             $file = "../json/".$subdomain.".json";
             
-            $client = Client::where('slug',$subdomain)->first();
             if(!file_exists($file)){
+                $client = Client::where('slug',$subdomain)->first();
                 $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
                 file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));
+            }else{
+                $client = json_decode(file_get_contents($file));
             }
 
 
