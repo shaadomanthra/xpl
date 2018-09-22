@@ -71,6 +71,12 @@
 
          
 
+           <div class="row mb-2">
+            <div class="col-md-4">Website URL</div>
+            <div class="col-md-8">
+              <a href="https://{{$client->slug}}.onlinelibrary.co"><span class="badge badge-warning">{{$client->slug}}.onlinelibrary.co</span></a>
+            </div>
+          </div>
 
 
           <div class="row mb-2">

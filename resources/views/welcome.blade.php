@@ -33,34 +33,34 @@ Anthony J Dangelo</p>
 
             <br><br>
 
-@if(count(auth::user()->courses)!=0)
-            <table class="table table-bordered table-responsive">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Course</th>
-      <th scope="col">Valid till</th>
-      <th scope="col">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach(auth::user()->courses as $k=>$course)
-     <tr>
-      <th scope="row">{{ $k+1}}</th>
-      <td>{{$course->name}}</td>
-      <td>{{date('d M Y', strtotime($course->pivot->valid_till))}}</td>
-      <td> @if(strtotime($course->pivot->valid_till) > strtotime(date('Y-m-d')))
-        <span class="badge badge-success">Active</span>
-@else
-        <span class="badge badge-secondary">Expired</span>
-@endif
-      </td>
-    </tr>
-    @endforeach
-    
-  </tbody>
-</table>
-@endif
+        @if(count(auth::user()->courses)!=0)
+            <table class="table table-responsive table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Course</th>
+                  <th scope="col">Valid till</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach(auth::user()->courses as $k=>$course)
+                 <tr>
+                  <th scope="row">{{ $k+1}}</th>
+                  <td>{{$course->name}}</td>
+                  <td>{{date('d M Y', strtotime($course->pivot->valid_till))}}</td>
+                  <td> 
+                    @if(strtotime($course->pivot->valid_till) > strtotime(date('Y-m-d')))
+                    <span class="badge badge-success">Active</span>
+                    @else
+                    <span class="badge badge-secondary">Expired</span>
+                    @endif
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+        @endif
             
 
 				</div>

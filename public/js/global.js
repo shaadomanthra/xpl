@@ -90,8 +90,134 @@ $(document).ready(function() {
   
   	});
 
-  });
 
+
+    /* test */
+
+    
+
+    var myVar = setInterval(myTimer, 1000);
+
+    function myTimer() {
+        var count = $('.qset').data('counter')+1;
+        $('.qset').data('counter',count);
+        console.log(count);
+    }
+
+    $(document).on('click','.testqno', function() {
+      var qno = $(this).data('qno');
+      var last = $('.qset').data('lastsno');
+      var sno = $('#q'+qno).data('sno');
+      
+      $('.qset').data('counter',0);
+
+      
+
+      var testname = $(this).data('testname');
+      var url = $('.qset').data('url');
+      $('.testqno').removeClass('active');
+      $('#q'+qno).addClass('active');
+      $('.qset_qno').text(sno);
+
+      if(sno==1){
+        $('.left').addClass('d-none');
+        $('.left').removeClass('d-block');
+        $('.right').addClass('d-block');
+        $('.right').data('qno',$('.s2').data('qno'));
+        
+
+      }else if(sno == last){
+        $('.left').addClass('d-block');
+        $('.right').addClass('d-none');
+        $('.right').removeClass('d-block');
+        $('.left').data('qno',$('.s'+(sno-1)).data('qno'));
+      }else{
+        $('.left').addClass('d-block');
+        $('.right').addClass('d-block');
+        $('.right').data('qno',$('.s'+(sno+1)).data('qno'));
+        $('.left').data('qno',$('.s'+(sno-1)).data('qno'));
+
+      }
+
+      $.get( url + "/" + qno + "/", function( data ) {
+          $( "div.question_block" ).replaceWith( data );
+
+        });
+
+    });
+
+    $(document).on('click','.qno-save', function() {
+      var qno = $(this).data('qno');
+      var time = $('.qset').data('counter');
+      var user = $('.qset').data('user');
+      var url = $('.qset').data('url');
+      var opt = $('input[name=response]:checked').val();
+      if(opt){
+        $('#q'+qno).addClass('qblue-border');
+        $('.qno').addClass('qblue');
+        $.get( url + "/" + qno + "/save",{'question_id':qno,'response':opt,'time':time,'user_id':user}, function( data ) {
+          console.log('saved');
+
+        });
+      }
+    else
+      alert('Option not selected');
+     
+
+       
+
+    });
+
+    $(document).on('click','.qno-clear', function() {
+      var qno = $(this).data('qno');
+      $('#q'+qno).removeClass('qblue-border');
+      $('.qno').removeClass('qblue');
+      $('.qno').addClass('qyellow');
+      var url = $('.qset').data('url');
+      $('input[name="response"]').prop('checked', false);
+      console.log('cleared');
+
+      var time = $('.qset').data('counter');
+      var user = $('.qset').data('user');
+      
+      $.get( url + "/" + qno + "/clear",{'question_id':qno,'time':time,'user_id':user}, function( data ) {
+          console.log('saved');
+        });
+
+     
+/*
+      $.get( url + "/" + qno + "/", function( data ) {
+          $( "div.question_block" ).replaceWith( data );
+
+        }); */
+
+    });
+
+    $(document).on('change','input[name=response]', function() {
+
+      var qno = $('.qno').data('qqno');
+      var time = $('.qset').data('counter');
+      var user = $('.qset').data('user');
+      var url = $('.qset').data('url');
+      var opt = $('input[name=response]:checked').val();
+
+      if(opt){
+        $('#q'+qno).addClass('qblue-border');
+        $('.qno').addClass('qblue');
+        $.get( url + "/" + qno + "/save",{'question_id':qno,'response':opt,'time':time,'user_id':user}, function( data ) {
+          console.log('saved');
+
+        });
+      }
+    else
+      alert('Option not selected');
+
+    });
+
+    
+
+    
+});
 
 
   

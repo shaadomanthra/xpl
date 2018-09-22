@@ -124,6 +124,9 @@ ul.list2-first{ margin: 5px; margin-left:5px; margin-top: -20px;}
 .qgreen{
     background:#c8f7c5;border:1px solid #66cc99;
 }
+.qblue{
+    background:#F8EFBA;border:1px solid #2b81cd;
+}
 .qred{
     background:#f1a9a0;border:1px solid #e08283;
 }
@@ -136,6 +139,13 @@ ul.list2-first{ margin: 5px; margin-left:5px; margin-top: -20px;}
 .qred-border{
     border:2px solid #e08283;
 }
+
+.qblue-border{
+    border:2px solid #2b81cd;
+}
+
+/*test*/
+.testqno{ cursor: pointer; }
 
 
 @media (max-width: 720px) {

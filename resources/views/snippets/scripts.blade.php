@@ -13,6 +13,52 @@
 <script src="{{asset('js/codemirror/addon/display/autorefresh.js')}}"></script>  
 <script src="{{asset('js/codemirror/mode/markdown/markdown.js')}}"></script>  
 <script src="{{asset('js/highlight/highlight.pack.js')}}"></script>  
+
+@if(isset($chart))
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script> 
+
+<script>
+
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Correct",  "Incorrect", "Unattempted"],
+        datasets: [{
+            label: 'Responses',
+            data: [{{ $details['correct']}}, {{ $details['incorrect']}}, {{ $details['unattempted']}}],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+
+                'rgba(75, 192, 192, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+
+</script>
+
+@endif
+
+
+
  
  <script>
   $(document).ready(function() {
@@ -189,3 +235,44 @@ $(document).ready(function() {
   
 
 </script>
+
+
+@if(isset($timer))
+<script>
+// Set the date we're counting down to
+var countDownDate = addMinutes(new Date(),30);
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="demo"
+  document.getElementById("timer").innerHTML =  hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  // If the count down is finished, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("timer").innerHTML = "EXPIRED";
+
+    @if(isset($tag))
+    alert('The Test time has expired. ')
+    window.location.href = "{{ route('onlinetest.submit',$tag->value) }}";
+    @endif
+  }
+}, 1000);
+
+function addMinutes(date, minutes) {
+    return new Date(date.getTime() + minutes*60000);
+}
+</script>
+@endif

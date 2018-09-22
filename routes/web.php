@@ -64,6 +64,19 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads')->middleware('corporate');
 
 
+	/*test */
+	Route::get('/onlinetest', 'Product\TestController@main')->name('onlinetest');
+	Route::get('/onlinetest/{test}/instructions','Product\TestController@instructions')->name('onlinetest.instructions')->middleware('auth');
+	Route::get('/onlinetest/{test}/questions','Product\TestController@index')->name('onlinetest.questions')->middleware('auth');
+	Route::get('/onlinetest/{test}/questions/{id}','Product\TestController@index')->name('onlinetest.questions.id');
+	Route::get('/onlinetest/{test}/questions/{id}/save','Product\TestController@save')->name('onlinetest.questions.save');
+	Route::get('/onlinetest/{test}/questions/{id}/clear','Product\TestController@clear')->name('onlinetest.questions.clear');
+	Route::get('/onlinetest/{test}/submit','Product\TestController@submit')->name('onlinetest.submit');
+	Route::get('/onlinetest/{test}/analysis','Product\TestController@analysis')->name('onlinetest.analysis')->middleware('auth');
+	Route::get('/onlinetest/{test}/solutions','Product\TestController@solutions')->name('onlinetest.solutions')->middleware('auth');
+	Route::get('/onlinetest/{test}/solutions/{question}','Product\TestController@solutions')->name('onlinetest.solutions.q')->middleware('auth');
+
+
 	Auth::routes();
 
 

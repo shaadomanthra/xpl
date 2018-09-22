@@ -5,7 +5,7 @@
       <div class="p-5">
       <h1 class="mt-5"><span class="text-secondary"><i class="fa fa-exclamation-triangle"></i>&nbsp; Error</span> </h1>
       <h4>Website[{{$subdomain}}] is Terminated</h4>
-      <p class="lead">The website you are searching for has been terminated from our domain directory. Kindly write to us at <i class="text-secondary">packetcode@gmail.com</i> for further clarifications.</p>
+      <p class="lead">The website you are searching for has been terminated from our domain directory. Kindly write to us at <i class="text-secondary">administrator@onlinelibrary.co</i> for further clarifications.</p>
       <hr>
       <p>Online Library - A repository of high quality digital content.</p>
       </div>
