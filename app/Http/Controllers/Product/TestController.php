@@ -55,8 +55,7 @@ class TestController extends Controller
 	            }
 
 
-                
-            
+              
                 $details['curr'] = $question->id;
                 
                 $tests = ['test1','test2','test3','test4','test5'];
@@ -384,7 +383,7 @@ class TestController extends Controller
     					
 			         	$t = Test::where('question_id',$q->id)->where('user_id',$user->id)->first();
 
-			         	if($t)
+			         	if($t && \auth::user())
 				           	{
 				           		$tests[$test] = true;
 				           		break;
