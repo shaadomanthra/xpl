@@ -174,9 +174,10 @@ class TestController extends Controller
                 $details['curr'] = route('onlinetest.solutions.q',[$tag->value,$question->id]);
                 
                 $tests = ['test1','test2','test3','test4','test5'];
+                $questions = Test::where('test_id',$tag->value)->where('user_id',\auth::user()->id)->get();
                 foreach($questions as $key=>$q){
 
-                    if($q->id == $question->id){
+                    if($q->question_id == $question->id){
 
                         if($key!=0)
                             $details['prev'] = route('onlinetest.solutions.q',[$tag->value,$questions[$key-1]->id]);
@@ -193,7 +194,7 @@ class TestController extends Controller
 
                 } 
 
-                $questions = Test::where('test_id',$tag->value)->where('user_id',\auth::user()->id)->get();
+                
 
                 return view('appl.product.test.solutions')
                         ->with('mathjax',true)
@@ -292,12 +293,16 @@ class TestController extends Controller
     	$u=0;
     	foreach($questions as $key=>$q){
            	$t = Test::where('question_id',$q->id)->where('user_id',\auth::user()->id)->first();
-           	$sum = $sum + $t->time;
+           	if(isset($t)){
+           		$sum = $sum + $t->time;
+           		$details['testdate'] = $t->created_at->diffForHumans();
+           	}
+           	
 
            	$ques = Question::where('id',$q->id)->first();
            	
            	
-
+           	if($t)
            	if($t->response){
            		$details['attempted'] = $details['attempted'] + 1;	
            		if($t->accuracy==1){
@@ -331,7 +336,8 @@ class TestController extends Controller
         	$details['performance'] = 'Need to Improve';
 
         $details['avgpace'] = round($sum / count($questions),2);
-        $details['testdate'] = $t->created_at->diffForHumans();
+        
+        
         
 
     	return view('appl.product.test.analysis')
@@ -364,27 +370,33 @@ class TestController extends Controller
     	foreach($tests as $test => $val){
     			$tag = Tag::where('value',$test)->first();
     			$questions = $tag->questions;
+    				
 
     			if(count($questions)==0)
     				$tests[$test.'_count'] = 0;
-    			foreach($questions as $key=>$q){
-    				if(isset($q->id)){
-    					$t = Test::where('question_id',$q->id)->where('user_id',$user->id)->first();
+    			else
+    				$tests[$test.'_count'] = count($questions);
 
-			         	$tests[$test.'_count'] = count($questions);
-			           	if($t && \auth::user())
-			           	{
-			           		$tests[$test] = true;
-			           		break;
-			           	}else{
-			           		$tests[$test] = false;
-			           		break;
-			           	}
+    			foreach($questions as $key=>$q){
+    				if($q){
+    					
+			         	$t = Test::where('question_id',$q->id)->where('user_id',$user->id)->first();
+
+			         	if($t)
+				           	{
+				           		$tests[$test] = true;
+				           		break;
+				           	}else{
+				           		$tests[$test] = false;
+				           		break;
+				           	}
+			           	
     				}
 		           	
 		        } 
 
     		}
+
 
     	if(!\auth::user()){
     		return view('appl.product.test.onlinetest')->with('tests',$tests);
