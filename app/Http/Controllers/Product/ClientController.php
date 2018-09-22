@@ -113,8 +113,11 @@ class ClientController extends Controller
 
             unset($client->courses);
 
-            $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
-            file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));
+            $param = "?";
+            foreach($client->toArray() as $key=>$value){
+                    $param = $param.$key."=".$value."&";
+            }
+            $data =  file_get_contents('http://json.onlinelibrary.co/json.php'.$param);
 
 
             flash('A new client('.$request->name.') is created!')->success();
@@ -263,8 +266,11 @@ class ClientController extends Controller
 
             unset($client->courses);
             
-            $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
-            file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));
+            $param = "?";
+            foreach($client->toArray() as $key=>$value){
+                    $param = $param.$key."=".$value."&";
+            }
+            $data =  file_get_contents('http://json.onlinelibrary.co/json.php'.$param);
 
             flash('client (<b>'.$request->name.'</b>) Successfully updated!')->success();
             return redirect()->route('client.show',$request->slug);
