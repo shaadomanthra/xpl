@@ -34,14 +34,25 @@ class ProductController extends Controller
             $parsed = parse_url($url);
             $exploded = explode('.', $parsed["host"]);
             $subdomain = $exploded[0];
-            $file = "../json/".$subdomain.".json";
             
-            if(!file_exists($file)){
+            $filedata = json_decode(file_get_contents('http://json.onlinelibrary.co/json/'.$subdomain.'.json'));
+
+            //dd($filedata);
+            
+            if(!$filedata){
                 $client = Client::where('slug',$subdomain)->first();
-                $newJsonString = json_encode($client, JSON_PRETTY_PRINT);
-                file_put_contents(base_path('json/'.$client->slug.'.json'), stripslashes($newJsonString));
+
+                //dd($client);
+                $param = "?";
+                foreach($client->toArray() as $key=>$value){
+                    $param = $param.$key."=".$value."&";
+                }
+
+
+                 $data =  file_get_contents('http://json.onlinelibrary.co/json.php'.$param);
+
             }else{
-                $client = json_decode(file_get_contents($file));
+                $client = $filedata;
             }
 
 

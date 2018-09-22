@@ -129,7 +129,8 @@ function subdomain_name() {
             $exploded = explode('.', $parsed["host"]);
             $subdomain = $exploded[0];
 
-            $json = json_decode(file_get_contents(base_path('json/'.$subdomain.'.json')));
+            
+            $json = json_decode(file_get_contents('http://json.onlinelibrary.co/json/'.$subdomain.'.json'));
             
 
             return $json->name;
@@ -152,7 +153,7 @@ function subdomain_contact() {
             $exploded = explode('.', $parsed["host"]);
             $subdomain = $exploded[0];
 
-            $json = json_decode(file_get_contents(base_path('json/'.$subdomain.'.json')));
+            $json = json_decode(file_get_contents('http://json.onlinelibrary.co/json/'.$subdomain.'.json'));
             
             return htmlspecialchars_decode($json->contact);
 

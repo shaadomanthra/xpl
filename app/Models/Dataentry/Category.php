@@ -212,22 +212,22 @@ class Category extends Model
             else
                 $exam = 'all';
 
-            $file = "../json/ques/".$exam.".".$ext.".json";
+            $file = "http://json.onlinelibrary.co/json/".$exam.".".$ext.".json";
+            $data = json_decode(file_get_contents($file));
 
-            if(file_exists($file)){
-                $filedata = json_decode(file_get_contents($file));
-                $count = $filedata->count;
+            if($data){
+                $count = $data->count;
                 return $count;
             }
 
 
             $count = Category::QuestionCounter($node,['project'=>$project,'parent'=>$parent]);
 
-            $obj = new Category();
-            $obj->count = $count; 
+            
+            $slug = $exam.'.'.$ext; 
 
-            $newJsonString = json_encode($obj, JSON_PRETTY_PRINT);
-            file_put_contents(base_path('json/ques/'.$exam.'.'.$ext.'.json'), stripslashes($newJsonString));
+            $data =  file_get_contents('http://json.onlinelibrary.co/json.php?slug='.$slug.'&count='.$count);
+            //file_put_contents(base_path('json/ques/'.$exam.'.'.$ext.'.json'), stripslashes($newJsonString));
 
             return $count;
 
