@@ -43,13 +43,15 @@ class ProductController extends Controller
                 $client = Client::where('slug',$subdomain)->first();
 
                 //dd($client);
-                $param = "?";
-                foreach($client->toArray() as $key=>$value){
-                    $param = $param.$key."=".$value."&";
+                if($client){
+                    $param = "?";
+                    foreach($client->toArray() as $key=>$value){
+                        $param = $param.$key."=".$value."&";
+                    }
+                    $data =  file_get_contents('http://json.onlinelibrary.co/json.php'.$param);
+
                 }
-
-
-                 $data =  file_get_contents('http://json.onlinelibrary.co/json.php'.$param);
+                
 
             }else{
                 $client = $filedata;
