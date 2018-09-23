@@ -40,9 +40,9 @@
 <div class="card bg-light mb-3"> 
   <div class="card-body">
     <div class="form-check mb-2">
-    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="20">
+    <input class="form-check-input" type="hidden" name="txn_amount" value="20">
     <input class="form-check-input" type="hidden" name="package"  value="test">
-    <input class="form-check-input" type="hidden" name="cheque"  value="0">
+    <input class="form-check-input" type="hidden" name="cheque"  value="20">
   <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked> paytm
  
 </div>

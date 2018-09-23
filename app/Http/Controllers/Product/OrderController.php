@@ -67,6 +67,9 @@ class OrderController extends Controller
           }elseif($request->package=='ultimate'){
             $order->credit_count = 1000;
             $order->credit_rate = 200;
+          }elseif($request->package=='test'){
+            $order->credit_count = 10;
+            $order->credit_rate = 2;
           }else{
             $order->credit_count = $request->credit_count;
             $order->credit_rate = $request->credit_rate;
@@ -74,6 +77,7 @@ class OrderController extends Controller
           }
 
           
+          //dd($order);
           $order->save();
           $order->payment_status = 'Pending';
 
