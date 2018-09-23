@@ -10,6 +10,33 @@
 <div class=" ">
 <div class="row">
 
+@if(\Auth::user())
+@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+<div class="col-12 col-md-3">
+        <div class="card text-white  mb-3"  style="background: #ee5253">
+  <div class="card-header"><span class="subtitleb">Test</span></div>
+  
+  <div class="card-body">
+      <h5 class="card-title">Number of Accounts</h5>
+    <h2 style="opacity: 0.6;font-weight: 800"> 10</h2><br>
+    <h5 class="card-title">Account Charges </h5>
+    <h2 style="opacity: 0.6;font-weight: 300" >You will be charged at Rs.2 per account</h2>
+    <hr>
+    <h3> Service Offered</h3>
+    <hr>
+    <p ><b class="text-white">250 Accounts</b> <span style="opacity: 0.5">: Create upto 250 student accounts</span></p>
+    
+    <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">: Watch the videos any number of times without restrictions</span></p>
+    <p> <b>Validity  </b><span style="opacity: 0.6">: 1 year </span></p>
+    <p> <b>Free Maintenance </b><span style="opacity: 0.6">: We take the responsibility to maintain your website with zero downtime</span></p>
+    <a href="{{ route('checkout')}}?package=test"><button class="btn btn-outline-light">Add </button></a>
+
+  </div>
+</div>
+</div>
+@endif
+@endif
+
   <div class="col-12 col-md-3">
         <div class="card text-white  mb-3"  style="background: #ee5253">
   <div class="card-header"><span class="subtitleb">Flex</span></div>

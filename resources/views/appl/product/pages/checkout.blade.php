@@ -9,6 +9,53 @@
 <div class="card-body p-4 ">
 <h1><i class="fa fa-cart"></i> Checkout</h1><br>
 
+@if(request()->get('package')=='test')
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Product</th>
+      <th scope="col">Detail</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td scope="row" rowspan=2>Flex Package (10 credits, Unlimited bandwidth, One year validity)</td>
+      <td>Number of Accounts</td>
+      <td>10</td>
+    </tr>
+     <tr>
+      <td>Account Fee</td>
+      <td><i class="fa fa-rupee"></i> 20</td>
+    </tr>
+    <tr>
+
+      <td colspan=2>Total Amount</td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> 20</span></td>
+    </tr>
+   
+  </tbody>
+</table>
+
+<div class="card bg-light mb-3"> 
+  <div class="card-body">
+    <div class="form-check mb-2">
+    <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="20">
+    <input class="form-check-input" type="hidden" name="package"  value="test">
+    <input class="form-check-input" type="hidden" name="cheque"  value="0">
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked> paytm
+ 
+</div>
+<div class="form-check ">
+  
+ 
+  </label>
+</div>
+  </div>
+</div>
+
+@endif
+
 @if(request()->get('package')=='flex')
 <table class="table table-bordered">
   <thead>
@@ -43,7 +90,7 @@
     <input class="form-check-input" type="hidden" name="txn_amount" id="exampleRadios1" value="00">
     <input class="form-check-input" type="hidden" name="package"  value="flex">
     <input class="form-check-input" type="hidden" name="cheque"  value="0">
-  
+    
  
 </div>
 <div class="form-check ">

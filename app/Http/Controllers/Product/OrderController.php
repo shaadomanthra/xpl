@@ -30,7 +30,8 @@ class OrderController extends Controller
                       ->orWhere('package', '=', 'ultimate');
             })->first();
 
-        if($o && $request->package!='credit'){
+
+        if($o && ($request->package!='credit' && $request->package!='test')){
           return view('appl.product.pages.checkout_denail')->with('order',$o);
         }
         if($request->type=='paytm'){
@@ -105,7 +106,11 @@ class OrderController extends Controller
           }elseif($request->package=='ultimate'){
             $order->credit_count = 1000;
             $order->credit_rate = 200;
-          }else{
+          }elseif($request->package=='test'){
+            $order->credit_count = 10;
+            $order->credit_rate = 2;
+          }
+          else{
             $order->credit_count = $request->credit_count;
             $order->credit_rate = $request->credit_rate;
           }
