@@ -275,7 +275,7 @@ class QuestionController extends Controller
     public function categoryCourse($project_slug,$category_slug,$id=null)
     {
         
-         $tests = ['test1','test2','test3','test4','test5'];
+        $tests = ['test1','test2','test3','test4','test5'];
         $course = Course::where('slug',$project_slug)->first();
         if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','client-owner']))
         if(!\auth::user()->courses()->where('course_id',$course->id)->count() || $course->validityExpired())

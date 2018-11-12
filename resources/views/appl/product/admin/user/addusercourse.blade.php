@@ -35,10 +35,10 @@
         <label for="formGroupExampleInput ">Validity</label>
         <select class="form-control validity_data" name="validity_data">
           <option value="1" >1 month</option>
-          @for($i=2;$i < 12;$i++)
+          @for($i=2;$i < 24;$i++)
           <option value="{{$i}}">{{$i}} months</option>
           @endfor
-           <option value="12" selected>12 months</option>
+           <option value="24" selected>24 months</option>
         </select>
         
         @foreach($client->courses as $course)
@@ -71,7 +71,7 @@
         </div>
         <div class="form-group">
         <label for="formGroupExampleInput ">Validity</label>
-        <div class="course_validity display-4">12 Months</div>
+        <div class="course_validity display-4">24 Months</div>
         </div>
         <div class="form-group">
         <label for="formGroupExampleInput ">Credits</label>
@@ -81,7 +81,7 @@
       <div class="modal-footer">
         
         
-        <input type="hidden" name="validity" class="validity" value="12">
+        <input type="hidden" name="validity" class="validity" value="24">
         <input type="hidden" name="course_id" class="course_id" value="{{$client->courses[0]->id}}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn btn-primary">Confirm</button>
