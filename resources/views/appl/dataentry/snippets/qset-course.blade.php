@@ -1,7 +1,10 @@
 <div class="card bg-light mb-3 d-none d-md-block ">
 	<div class="card-body">
 		<div class="text-bold ">{{ ucfirst($details['display_type']) }}</div>
-		<a href="{{ route('course.category.video',[$project->slug,$category->slug])}}"><h2>
+		@if($category->video_link)
+		<a href="{{ route('course.category.video',[$project->slug,$category->slug])}}">
+		@endif
+		<h2>
 		@if($details['display_type'] == 'project')
 			{{ $project->name }}
 		@elseif($details['display_type'] == 'Topic')
@@ -9,7 +12,10 @@
 		@elseif($details['display_type'] == 'tag')	
 			{{ $tag->name.' : '.$tag->value }}
 		@endif
-		</h2></a>
+		</h2>
+		@if($category->video_link)
+		</a>
+		@endif
 		<br>
 
 		<div class="border p-2 mb-2 rounded">

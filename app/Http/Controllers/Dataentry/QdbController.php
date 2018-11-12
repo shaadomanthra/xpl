@@ -8,6 +8,7 @@ use PacketPrep\Models\Dataentry\Qdb;
 use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Tag;
+use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Dataentry\Project;
 use Illuminate\Support\Facades\DB;
 
@@ -19,12 +20,13 @@ class QdbController extends Controller
         dd();
     	//$this->remove_questions();
     	//dd();
-    	$slug = '87';
-    	$our_slug = 'heights-and-distances';
-    	$project_id = Project::where('slug','arithmetic')->first()->id;
+    	$slug = '120';
+    	$our_slug = 'double-synonyms';
+    	$project_id = Project::where('slug','general-english')->first()->id;
 
     	//dd($project_id);
     	$qset = Qdb::where('cat_id',$slug)->get();
+
 
 
         //dd($qset);
@@ -59,6 +61,28 @@ class QdbController extends Controller
                 $tag->save();
             }
 
+            // if passage exists
+            if($q->pid)
+            {
+                $passage = DB::table('qinput_passage')->where('id', $q->pid)->first();
+                $passage_exists = Passage::where('passage', htmlspecialchars_decode($passage->passage))
+                            ->where('project_id',$project_id)
+                            ->first();
+
+                if(!$passage_exists)
+                {
+                    $pass = new Passage();
+                    $pass->name = $q->pid;
+                    $pass->passage = htmlspecialchars_decode($passage->passage);
+                    $pass->project_id = $project_id;
+                    $pass->user_id = \auth::user()->id;
+                    $pass->status = 1;
+                    $pass->save();
+                }
+
+
+            }
+
 
             //echo $q->exam." ".$q->year."<br>";
         }
@@ -68,8 +92,6 @@ class QdbController extends Controller
     	{
     		
     		$q->question = htmlspecialchars_decode($q->question);
-
-    		
 
     		 $question_exists = Question::where('slug',$q->qhash)
                             ->where('project_id',$project_id)
@@ -92,13 +114,19 @@ class QdbController extends Controller
                 $ques->project_id  = $project_id;
                 $ques->stage = 0;
                 $ques->status =0;
-       			$ques->save();
+                
+                $passage_ = Passage::where('name',$q->pid)->where('project_id',$project_id)->first();
+                if($passage_)
+                    $ques->passage_id = $passage_->id;
+       			
+                $ques->save();
 
        			
        			$category = Category::where('slug',$our_slug)->first();
        			
        			$year= Tag::where('value',$q->year)->where('project_id',$project_id)->first();
        			$exam = Tag::where('value',strtolower($q->exam))->where('project_id',$project_id)->first();
+                
 
 
        			$ques->categories()->attach($category->id);
@@ -106,6 +134,8 @@ class QdbController extends Controller
        			$ques->tags()->attach($year->id);
        			if($exam)
        			$ques->tags()->attach($exam->id);
+
+
             }else{
             	$year= Tag::where('value',$q->year)->where('project_id',$project_id)->first();
        			$exam= Tag::where('value',strtolower($q->exam))->where('project_id',$project_id)->first();
@@ -212,7 +242,7 @@ class QdbController extends Controller
     }
 
     public function remove_questions(){
-    	$item = 'graph-theory';
+    	$item = 'cause-and-effect-reasoning';
     	$qset = Question::whereHas('categories', function ($query) use ($item)  {
 			    $query->where('slug', 'like', $item);
 			})->get(); 
@@ -222,6 +252,8 @@ class QdbController extends Controller
     		$q->tags()->detach();
     		$q->delete();
     	}
+
+        dd();
     }
     public function img_replace($editor_data){
     	$detail=$editor_data;

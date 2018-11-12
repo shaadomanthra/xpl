@@ -22,8 +22,10 @@ class CourseController extends Controller
 
         $search = $request->search;
         $item = $request->item;
-        $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+        $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','asc')->paginate(config('global.no_of_records'));
         $view = $search ? 'list': 'index';
+
+
 
         return view('appl.course.course.'.$view)
         ->with('courses',$courses)->with('course',new Course());

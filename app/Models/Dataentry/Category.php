@@ -72,14 +72,21 @@ class Category extends Model
                 $d = $d.'<div class="pt-3 title-normal">'.$category->video_desc.'</div>';
                 $d= $d.'</li>';
             }else{
-               $d = $d.'<li class="item" id="'.$category->slug.'" ><a href="'.route('course.category.video',
+
+                if($category->video_link)
+               $d = $d.'<li class="item" id="'.$category->slug.'" >
+               <a href="'.route('course.category.video',
                 [   
                     'course'=> $options['project']->slug,
                     'category'=> $category->slug,
                     
                 ]
 
-            ).'"><i class="fa fa-play-circle-o"></i> '.$category->name.'</a>&nbsp';
+                ).'"><i class="fa fa-play-circle-o"></i> '.$category->name.'</a>&nbsp';
+               else
+                $d = $d.'<li class="item" id="'.$category->slug.'" >
+               <i class="fa fa-bars"></i> '.$category->name.'&nbsp';
+
 
                if(count($category->category_tag_questions($category,session('exam')))!=0)
             $d = $d.
