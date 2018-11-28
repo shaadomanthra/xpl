@@ -147,6 +147,7 @@ $(document).ready(function() {
         });
 
       $.get( url + "/" + qno + "/", function( data ) {
+          console.log(data);
           $( "div.question_block" ).replaceWith( data );
           MathJax.Hub.Queue(["Typeset",MathJax.Hub, "div.question_block"]);
 

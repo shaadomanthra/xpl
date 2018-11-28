@@ -3,6 +3,7 @@
 namespace PacketPrep\Models\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use PacketPrep\Models\Exam\Section;
 
 class Test extends Model
 {
@@ -17,4 +18,14 @@ class Test extends Model
 
         // add all other fields
     ];
+
+    public function section()
+    {
+        return $this->belongsTo('PacketPrep\Models\Exam\Section');
+    }
+
+    public function question()
+    {
+        return $this->belongsTo('PacketPrep\Models\Dataentry\Question');
+    }
 }

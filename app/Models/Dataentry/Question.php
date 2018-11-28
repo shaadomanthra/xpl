@@ -8,6 +8,7 @@ use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Tag;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Coures\Practice;
+use PacketPrep\Models\Exam\Section;
 
 class Question extends Model
 {
@@ -32,6 +33,10 @@ class Question extends Model
         // add all other fields
     ];
 
+    public function sections()
+    {
+        return $this->belongsToMany('PacketPrep\Models\Exam\Section');
+    }
 
     public function categories()
     {

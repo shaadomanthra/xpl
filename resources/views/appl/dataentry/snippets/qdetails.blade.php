@@ -9,7 +9,7 @@
 			</a> &nbsp;
 			@endcan
 			@can('update',$question)
-			<a href="{{ route('question.edit',['project'=>$project->slug,'question'=>$question->id]) }}">
+			<a href="{{ route('question.edit',['project'=>$project->slug,'question'=>$question->id,'url'=> url()->current()]) }}">
 			<i class="fa fa-pencil-square" data-tooltip="tooltip" data-placement="top" title="Edit"></i> 
 			</a>&nbsp;
 			<a href="#" data-toggle="modal" data-target="#exampleModal">

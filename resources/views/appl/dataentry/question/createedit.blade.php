@@ -80,6 +80,9 @@
        <li class="nav-item">
         <a class="nav-link" id="tag-tab" data-toggle="tab" href="#tag" role="tab" aria-controls="tag" aria-selected="false">Tag</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" id="tag-tab" data-toggle="tab" href="#exam" role="tab" aria-controls="exam" aria-selected="false">Exam</a>
+      </li>
 
        <li class="nav-item">
         <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">Details</a>
@@ -210,6 +213,10 @@
       <div class="tab-pane fade" id="tag" role="tabpanel" aria-labelledby="tag-tab">
         @include('appl.dataentry.snippets.tag')
       </div>
+
+      <div class="tab-pane fade" id="exam" role="tabpanel" aria-labelledby="tag-tab">
+        @include('appl.dataentry.snippets.exam')
+      </div>
       <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
         
         <div class="form-group mt-3">
@@ -286,6 +293,8 @@
 
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="project_id" value="{{ $project->id }}">
+        <input type="hidden" name="url" value=" {{ request()->get('url') }}">
+       
         <input type="hidden" name="stage" value="1">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       </div>

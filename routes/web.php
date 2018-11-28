@@ -107,6 +107,26 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('system/report/week','System\ReportController@week')->middleware('auth')->name('report.week');
 	Route::resource('system/report','System\ReportController')->middleware('auth');
 
+
+	Route::resource('exam','Exam\ExamController')->middleware('auth');
+	Route::resource('exam/{exam}/sections','Exam\SectionController')->middleware('auth');
+	Route::get('exam/{exam}/question','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.questions');
+	Route::get('exam/{exam}/question/{id}','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.question');
+
+	Route::get('test','Exam\AssessmentController@index')->name('assessment.index');
+	Route::get('test/{test}/submit','Exam\AssessmentController@submit')->name('assessment.submit');
+	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis')->name('assessment.analysis')->middleware('auth');
+	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
+	Route::get('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q')->middleware('auth');
+	Route::get('test/{test}','Exam\AssessmentController@try')->middleware('auth')->name('assessment.try');
+	Route::get('test/{test}/instructions','Exam\AssessmentController@instructions')->middleware('auth')->name('assessment.instructions');
+
+	Route::get('test/{test}/{id}','Exam\AssessmentController@try')->name('assessment.try.id');
+	Route::get('test/{test}/{id}/save','Exam\AssessmentController@save')->name('assessment.save');
+	Route::get('test/{test}/{id}/clear','Exam\AssessmentController@clear')->name('assessment.clear');
+	
+	
+
 	/*
 	Route::get('/social', 'Social\MediaController@social')->name('social')->middleware('auth');
 	Route::post('/social/imageupload', 'Social\BlogController@image_upload')->name('imageupload');

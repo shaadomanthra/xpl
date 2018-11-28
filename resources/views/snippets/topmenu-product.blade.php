@@ -20,7 +20,7 @@
                     
                     <li class="mr-3 mt-2 mt-lg-0"><a class="nav-link " href="{{ url('/') }}"><i class="fa fas fa-home"></i> Home</a></li>
                     <li class="mr-3  mt-lg-0"><a class="nav-link " href="{{ route('course.index') }}"><i class="fa fas fa-list-alt"></i> Courses</a></li>
-                    <li class="mr-3  mt-lg-0"><a class="nav-link " href="{{ route('onlinetest') }}"><i class="fa fas fa-gg"></i> Online Tests</a></li>
+                    <li class="mr-3  mt-lg-0"><a class="nav-link " href="{{ route('assessment.index') }}"><i class="fa fas fa-gg"></i> Online Tests</a></li>
                     
 
                     <!-- Authentication Links -->

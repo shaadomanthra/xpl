@@ -56,6 +56,7 @@
 						   <dd class="col-sm-6">{{ $details['avgpace']}}  sec</dd>
 						   <dt class="col-sm-6">Test Conducted </dt>
 						   <dd class="col-sm-6">{{ $details['testdate']}} </dd>
+
 						</dl>
 
 					</div>

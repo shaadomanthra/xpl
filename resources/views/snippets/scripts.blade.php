@@ -240,7 +240,11 @@ $(document).ready(function() {
 @if(isset($timer))
 <script>
 // Set the date we're counting down to
+@if(!isset($time))
 var countDownDate = addMinutes(new Date(),{{ count($questions) }});
+@else
+var countDownDate = addMinutes(new Date(),{{ ($time) }});
+@endif
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -268,7 +272,7 @@ var x = setInterval(function() {
     document.getElementById("timer").innerHTML = "EXPIRED";
     document.getElementById("timer2").innerHTML = "EXPIRED";
 
-    @if(isset($tag))
+    @if(isset($tag)||isset($exam))
     alert('The Test time has expired. ');
     var qno = $('.qno').data('qqno');
       var time = $('.qset').data('counter');
@@ -282,7 +286,11 @@ var x = setInterval(function() {
 
         });
       
-    window.location.href = "{{ route('onlinetest.submit',$tag->value) }}";
+      @if(isset($tag)) 
+      window.location.href = "{{ route('onlinetest.submit',$tag->value) }}";
+      @else
+      window.location.href = "{{ route('assessment.submit',$exam->slug) }}";
+      @endif
     @endif
   }
 }, 1000);

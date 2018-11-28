@@ -11,6 +11,8 @@ use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Tag;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Course\Practice;
+use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Section;
 use Illuminate\Support\Facades\DB;
 
 
@@ -97,6 +99,9 @@ class QuestionController extends Controller
                           return $item->name;
                         });
 
+        // exams
+        $exams =  Exam::orderBy('name','desc ')->get();
+
         // Question Types
         $allowed_types = ['mcq','naq','maq','eq'];
         if(in_array(request()->get('type'), $allowed_types)){
@@ -113,6 +118,7 @@ class QuestionController extends Controller
                 ->with('tags',$tags)
                 ->with('question',$question)
                 ->with('categories',$categories)
+                ->with('exams',$exams)
                 ->with('stub','Create');
     }
 
@@ -136,6 +142,7 @@ class QuestionController extends Controller
 
         $categories = $request->get('category');
         $tags = $request->get('tag');
+        $sections = $request->get('sections');
 
          try{
 
@@ -155,7 +162,7 @@ class QuestionController extends Controller
 
             // keep the reference in capitals
             $request->merge(['reference' => strtoupper($request->reference)]);
-            $question = Question::create($request->except(['category','tag']));
+            $question = Question::create($request->except(['category','tag','sections']));
 
             // create categories
             if($categories)
@@ -169,6 +176,13 @@ class QuestionController extends Controller
             foreach($tags as $tag){
                 if(!$question->tags->contains($tag))
                     $question->tags()->attach($tag);
+            }
+
+            // create tags
+            if($sections)
+            foreach($sections as $section){
+                if(!$question->sections->contains($section))
+                    $question->sections()->attach($section);
             }
 
             flash('A new question is created!')->success();
@@ -549,7 +563,93 @@ class QuestionController extends Controller
         else
             abort(403);
 
-    }    
+    }   
+
+
+            /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function exam($exam_slug,$id=null)
+    {
+        
+        $exam = Exam::where('slug',$exam_slug)->first();
+
+
+        if($id == null)
+        if(count($exam->sections)!=0)
+        foreach($exam->sections as $section){
+            if(count($section->questions)!=0)
+            foreach($section->questions as $question)
+            {
+                $id = $question->id;
+                break; 
+            }else
+                $id = null;
+            break;
+        }else
+            $id = null;
+        
+
+        if($id){
+            $question = Question::where('id',$id)->first();
+            $this->authorize('view', $question);
+
+            if($question){
+
+                 if(request()->get('publish'))
+                {
+                    $question->status = 2;
+                    $question->save();
+                }
+            
+                $passage = Passage::where('id',$question->passage_id)->first();
+                //$questions = $tag->questions;
+                $questions = array();
+                $i=0;
+                foreach($exam->sections as $section){
+                    foreach($section->questions as $q){
+                        $questions[$i] = $q;
+                        $i++;
+                    }
+                }
+                
+
+                $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'tag']; 
+            
+                $details['curr'] = route('exam.question',[$exam_slug,$question->id]);
+                foreach($questions as $key=>$q){
+
+                    if($q->id == $question->id){
+
+                        if($key!=0)
+                            $details['prev'] = route('exam.question',[$exam_slug,$questions[$key-1]->id]);
+
+                        if(count($questions) != $key+1)
+                            $details['next'] = route('exam.question',[$exam_slug,$questions[$key+1]->id]);
+
+                        $details['qno'] = $key + 1 ;
+                    }
+                } 
+
+                return view('appl.dataentry.question.show_exam')
+                        ->with('mathjax',true)
+                        ->with('question',$question)
+                        ->with('passage',$passage)
+                        ->with('details',$details)
+                        ->with('exam',$exam)
+                        ->with('questions',$questions);
+            }else
+                abort('404','Question not found');
+            
+        }
+        else
+            abort(403);
+
+    } 
+
 
     /**
      * Show the form for editing the specified resource.
@@ -591,6 +691,9 @@ class QuestionController extends Controller
                         {
                           return $item->name;
                         });
+
+        $exams =  Exam::orderBy('name','desc ')->get();
+
         $question->tags = $question->tags->pluck('id')->toArray();         
 
         if($question)
@@ -601,6 +704,7 @@ class QuestionController extends Controller
                     ->with('passage',$passage)
                     ->with('categories',$categories)
                     ->with('tags',$tags)
+                    ->with('exams',$exams)
                     ->with('type',$question->type)
                     ->with('stub','Update');
         else
@@ -624,6 +728,7 @@ class QuestionController extends Controller
 
         $categories = $request->get('category');
         $tags = $request->get('tag');
+        $sections = $request->get('sections');
 
         try{
 
@@ -674,8 +779,29 @@ class QuestionController extends Controller
                 
             } 
 
+            $section_list =  Section::orderBy('created_at','desc ')
+                        ->get()->pluck('id')->toArray();
+            //update exam sections
+            if($sections)
+            foreach($section_list as $section){
+                if(in_array($section, $sections)){
+                    if(!$question->sections->contains($section))
+                        $question->sections()->attach($section);
+                }else{
+                    if($question->sections->contains($section))
+                        $question->sections()->detach($section);
+                }
+                
+            }else{
+                $question->sections()->detach();
+            } 
+
             flash('Question (<b>'.$question->slug.'</b>) Successfully updated!')->success();
+            //dd(request()->get('url'));
+            if(!request()->get('url'))
             return redirect()->route('question.show',[$project_slug,$id]);
+            else
+            return redirect(request()->get('url'));
         }
         catch (QueryException $e){
             flash('There is some error in storing the data...kindly retry.')->error();
