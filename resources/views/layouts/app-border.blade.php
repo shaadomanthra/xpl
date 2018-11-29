@@ -1,19 +1,20 @@
 @extends('layouts.head')
 @section('content-main')
-    <div class="wrapper-bg wrapper-bg-3">
-    <div class="nav-bg-black">
+    <div class="wrapper-bg">
+    <div class="nav-bg p-2" style="background: rgb(35, 111, 177);">
         <div class="wrapper ">
-        <div id="app " class="p-2">
-            @include('snippets.topmenu-product')
+        <div id="app " >
+            @include('snippets.topmenu')
         </div>
         </div>
     </div>    
       
-    
-    <div class="container"> 
-    <div class="border mt-3 mb-3 ">
-    @yield('content')
-    </div>
+
+<div class="wrapper margintop-20 ">
+        <div class="container">    
+            @yield('content')
+        </div>  
+    <br>  
     </div>
        
     </div>

@@ -9,10 +9,36 @@ use Illuminate\Support\Facades\Mail;
 use PacketPrep\Mail\OrderSuccess;
 use PacketPrep\Mail\OrderCreated;
 use PacketPrep\Models\Product\Client;
+use PacketPrep\Models\Course\Course;
 use PacketPrep\User;
 
 class OrderController extends Controller
 {
+
+
+
+    public function checkout(Request $request){
+
+      $course = $request->get('course');
+      $test = $request->get('test');
+
+      if($course){
+        $course = Course::where('slug',$course)->first();
+
+          if(!$course)
+            return view('appl.product.pages.checkout-invalid');
+          else{
+              $details['product'] = 'Course: '.$course->name.' ( Video lectures, Practice Questions, Two year validity)';
+              $details['price'] = $course->price;
+              $details['type'] = 'course';
+              $details['value'] = $course->slug;
+              return view('appl.product.pages.checkout')->with('details',$details);
+          }
+
+      }
+
+
+    }
 
 	 /**
      * Redirect the user to the Payment Gateway.
@@ -21,17 +47,12 @@ class OrderController extends Controller
      */
     public function order(Request $request)
     {
-      //dd($request->all());
+        //dd($request->all());
         $user = \auth::user();
-        $o = Order::where('client_id',$user->client_id())->where(function ($query) {
-                $query->where('package', '=', 'flex')
-                      ->orWhere('package', '=', 'basic')
-                      ->orWhere('package', '=', 'pro')
-                      ->orWhere('package', '=', 'ultimate');
-            })->first();
+        $o = Order::where('type',$request->get('type'))->where('value',$request->get('value'))->first();
 
 
-        if($o && ($request->package!='credit' && $request->package!='test')){
+        if($o){
           return view('appl.product.pages.checkout_denail')->with('order',$o);
         }
         if($request->type=='paytm'){
@@ -47,92 +68,23 @@ class OrderController extends Controller
               break;
           }
 
-          $order->client_id = $user->client_id();
           $order->user_id = $user->id;
           $order->txn_amount = $request->txn_amount;
           $order->status=0;
-          $order->package = $request->package;
+          $order->type = $request->get('type');
+          $order->value = $request->get('value');
 
-          if($request->package=='flex')
-          {
-            $order->credit_count = 250;
-            $order->credit_rate = 500;
-          }elseif($request->package=='basic'){
-            $order->credit_count = 250;
-            $order->credit_rate = 400;
-          }elseif($request->package=='pro')
-          {
-            $order->credit_count = 500;
-            $order->credit_rate = 300;
-          }elseif($request->package=='ultimate'){
-            $order->credit_count = 1000;
-            $order->credit_rate = 200;
-          }elseif($request->package=='test'){
-            $order->credit_count = 10;
-            $order->credit_rate = 2;
-          }else{
-            $order->credit_count = $request->credit_count;
-            $order->credit_rate = $request->credit_rate;
-            $order->txn_amount = $request->credit_count * $request->credit_rate;
-          }
-
-          
+      
           //dd($order);
           $order->save();
           $order->payment_status = 'Pending';
 
 
-          $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->client_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount;
+          $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->user_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount;
           
           header('Location: '.url('/').'/pgRedirect.php?'.$data);
         }else{
 
-          $user = \auth::user();
-          $order = new Order();
-          $order->order_id = 'ORD_'.rand(100000,999999);
-          $order->client_id = $user->client_id();
-          $order->user_id = $user->id;
-          $order->txn_amount = $request->txn_amount;
-          $order->status=1;
-          $order->package = $request->package;
-
-          if($request->package=='flex')
-          {
-            $order->credit_count = 250;
-            $order->credit_rate = 500;
-          }elseif($request->package=='basic'){
-            $order->credit_count = 250;
-            $order->credit_rate = 400;
-          }elseif($request->package=='pro')
-          {
-            $order->credit_count = 500;
-            $order->credit_rate = 300;
-          }elseif($request->package=='ultimate'){
-            $order->credit_count = 1000;
-            $order->credit_rate = 200;
-          }elseif($request->package=='test'){
-            $order->credit_count = 10;
-            $order->credit_rate = 2;
-          }
-          else{
-            $order->credit_count = $request->credit_count;
-            $order->credit_rate = $request->credit_rate;
-          }
-
-          if($request->cheque == 0){
-            $order->payment_mode = 'flex';
-            $order->txn_id = $request->cheque;
-            $order->save();
-            $order->payment_status = 'Successful';
-
-          }else{
-            $order->payment_mode = 'cheque';
-            $order->txn_id = rand(100000,999999);
-            $order->save();
-            $order->payment_status = 'Pending';
-          }
-
-          return view('appl.product.pages.checkout_success')->with('order',$order);
         }
         Mail::to($user->email)->send(new OrderCreated($user,$order));
         
@@ -191,13 +143,9 @@ class OrderController extends Controller
         if ($_POST["STATUS"] == "TXN_SUCCESS") {
           $order->payment_status = 'Successful';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
-          
-          $slug = Client::getClientSlug($order->client_id);
-            if($slug)
-              $url = 'https://'.$slug.'.onlinelibrary.co/admin/ordersuccess?order_id='.$order->order_id.'&credit_count='.$order->credit_count;
-            else
-              return view('appl.product.pages.checkout_success')->with('order',$order);
-            return redirect()->away($url);
+        
+        return view('appl.product.pages.checkout_success')->with('order',$order);
+            
           
 
           //Process your transaction here as success transaction.
@@ -206,29 +154,17 @@ class OrderController extends Controller
         else {
           $order->payment_status = 'Failure';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
-          
-          $slug = Client::getClientSlug($order->client_id);
-            if($slug)
-              $url = 'https://'.$slug.'.onlinelibrary.co/admin/orderfailure';
-            else
-              return view('appl.product.pages.checkout_txn_failure');
-            return redirect()->away($url);
-          
+          return view('appl.product.pages.checkout_txn_failure');
         }
 
-        
-        
 
       }
       else {
 
         $order = Order::where('order_id',$_POST['ORDERID'])->first();
-        $slug = Client::getClientSlug($order->client_id);
-            if($slug)
-              $url = 'https://'.$slug.'.onlinelibrary.co/admin/orderfailure';
-            else
-              return view('appl.product.pages.checkout_checksum_failure');
-            return redirect()->away($url);
+        
+        return view('appl.product.pages.checkout_checksum_failure');
+            
         
         //Process transaction as suspicious.
       }
@@ -278,17 +214,7 @@ class OrderController extends Controller
         ->with('orders',$orders)->with('order',$order);
     }
 
-        /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function buycredits(Request $request)
-    {
-        $client = Client::where('slug',\auth::user()->client_slug)->first();
-        return view('appl.product.admin.buy')->with('client',$client);
-    }
+     
 
     public function ordersuccess(Request $request)
     {

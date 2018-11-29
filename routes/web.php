@@ -22,17 +22,17 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
 
-
+	Route::get('/dashboard',function(){ return view('welcome2'); })->name('dashboard')->middleware('auth');
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
-	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy')->middleware('corporate');;
-	Route::get('/refund',function(){ return view('appl.product.pages.refund'); })->name('refund')->middleware('corporate');;
-	Route::get('/disclaimer',function(){ return view('appl.product.pages.disclaimer'); })->name('disclaimer')->middleware('corporate');;
+	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');
+	Route::get('/refund',function(){ return view('appl.product.pages.refund'); })->name('refund');
+	Route::get('/disclaimer',function(){ return view('appl.product.pages.disclaimer'); })->name('disclaimer');
 	Route::get('/about',function(){ return view('appl.pages.about'); })->name('about');
 	Route::get('/contact','Product\ProductController@contact')->name('contact');
 	Route::get('/faq',function(){ return view('appl.product.pages.faq'); })->name('faq')->middleware('corporate');;
-	Route::get('/checkout',function(){ return view('appl.product.pages.checkout'); })->name('checkout')->middleware('auth')->middleware('corporate');;
-	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success')->middleware('corporate');;
-	Route::get('/credit-rates',function(){ return view('appl.product.pages.credit_rates'); })->name('credit-rate')->middleware('corporate');;
+	Route::get('/checkout','Product\OrderController@checkout')->name('checkout')->middleware('auth');
+	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success')->middleware('auth');
+	Route::get('/credit-rates',function(){ return view('appl.product.pages.credit_rates'); })->name('credit-rate')->middleware('auth');;
 
 
 	Route::get('/payment/status', 'Product\OrderController@status')->name('payment.status');
@@ -53,15 +53,15 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('admin/user/{user}/course','Product\AdminController@usercourse')->name('admin.user.course')->middleware('auth');
 	Route::post('admin/user/{user}/course','Product\AdminController@storeusercourse')->name('admin.user.course')->middleware('auth');
 
-	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->middleware('corporate')->name('pricing');
+	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->name('pricing');
 
-	Route::get('/about-corporate',function(){ return view('appl.product.pages.about'); })->name('about-corporate')->middleware('corporate');
+	Route::get('/about-corporate',function(){ return view('appl.product.pages.about'); })->name('about-corporate');
 
-	Route::get('/terms-corporate',function(){ return view('appl.product.pages.terms'); })->name('terms-corporate')->middleware('corporate');
+	Route::get('/terms-corporate',function(){ return view('appl.product.pages.terms'); })->name('terms-corporate');
 
-	Route::get('/contact-corporate',function(){ return view('appl.product.pages.contact'); })->name('contact-corporate')->middleware('corporate');
+	Route::get('/contact-corporate',function(){ return view('appl.product.pages.contact'); })->name('contact-corporate');
 
-	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads')->middleware('corporate');
+	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads');
 
 
 	/*test */

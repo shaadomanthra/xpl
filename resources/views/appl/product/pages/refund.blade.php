@@ -1,5 +1,5 @@
 
-@extends('layouts.corporate-body')
+@extends('layouts.app')
 
 @section('content')
 
@@ -23,8 +23,8 @@ Our focus is complete customer satisfaction. In the event, if you are displeased
 
 <p>We will try our best to create the best value for our clients.</p>
 
-<p>In case any client is not completely satisfied with our services we can provide a complete refund only when 
-<ul><li>The client sends a request within 5 days of payment and </li><li> No student accounts are created</li></ul> </p>
+<p>In case any user is not completely satisfied with our services we can provide a complete refund, only when 
+the user sends a request within 5 days of the payment.  </p>
 
 <p>If paid by credit card, refunds will be issued to the original credit card provided at the time of purchase and in case of payment gateway name payments refund will be made to the same account.</p>
 

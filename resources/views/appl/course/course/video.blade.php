@@ -3,7 +3,18 @@
 @section('content')
 
 
-<div class="bg-white">
+<div class="d-none d-md-block">
+  <nav aria-label="breadcrumb ">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('course.index')}}">Courses</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('course.show',$course->slug)}}">{{ $course->name }}</a></li>
+      <li class="breadcrumb-item">{{ $category->name }}</li>
+    </ol>
+  </nav>
+</div>
+
+<div class="">
 <div class="row ">
   <div class="col-12 col-md-3 d-none d-md-block">
     <div class="list-group">
@@ -19,7 +30,7 @@
     <h1 class="mb-4"> <div class=""><i class="fa fa-youtube-play"></i> &nbsp;{{ $category->name }} </div></h1>
 
 @if($category->video_link)
-<div class="embed-responsive embed-responsive-16by9 bg-light">
+<div class="embed-responsive embed-responsive-16by9 " style="background: #eee;">
     <iframe src="//player.vimeo.com/video/{{ $category->video_link }}"></iframe>
   </div>
 

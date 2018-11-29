@@ -8,7 +8,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'PacketPrep') }}</title>
+    <title>{{ config('app.name', 'Packet Prep') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
@@ -52,15 +52,14 @@
 
     </div>
  
-    <div class="nav-bg-light">
-    <footer class=" wrapper  text-light footer">
+ <div class="bg-dark">
+    <footer class="wrapper text-light footer">
         <div class="container py-3">
             @include('snippets.bottommenu')
         </div>
     </footer>
 </div>
-
     <!-- Scripts -->
      @include('snippets.scripts')
-    </body>
-    </html>
+</body>
+</html>

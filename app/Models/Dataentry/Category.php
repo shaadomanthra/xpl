@@ -202,43 +202,7 @@ class Category extends Model
 
         $parent =  Category::where('slug',$project->slug)->first(); 
 
-            $url = url()->full();
-            $parsed = parse_url($url);
-
-            $exploded = explode('.', $parsed["host"]);
-            $subdomain = $exploded[0];
-            $domain = $exploded[1];
-            $ext = $exploded[2];
-
-            //dd($parent);
-            $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
-            if(session('exam'))
-            {
-                $exam = session('exam');
-            } 
-            else
-                $exam = 'all';
-
-            $file = "http://json.onlinelibrary.co/json/".$exam.".".$ext.".json";
-            $data = json_decode(file_get_contents($file));
-
-            if($data){
-                $count = $data->count;
-                return $count;
-            }
-
-
-            $count = Category::QuestionCounter($node,['project'=>$project,'parent'=>$parent]);
-
             
-            $slug = $exam.'.'.$ext; 
-
-            $data =  file_get_contents('http://json.onlinelibrary.co/json.php?slug='.$slug.'&count='.$count);
-            //file_put_contents(base_path('json/ques/'.$exam.'.'.$ext.'.json'), stripslashes($newJsonString));
-
-            return $count;
-
-        /*
 
         if (request()->session()->has('exam') && session('exam') != 'all') 
         {
@@ -253,7 +217,7 @@ class Category extends Model
             //dd($parent);
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
             return  Category::QuestionCounter($node,['project'=>$project,'parent'=>$parent]);
-        }*/
+        }
         
         
     }

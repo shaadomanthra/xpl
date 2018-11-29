@@ -29,73 +29,10 @@ class ProductController extends Controller
 
     public function welcome(){
 
-        $url = url()->full();
-        if($this->hasSubdomain($url)){
-            $parsed = parse_url($url);
-            $exploded = explode('.', $parsed["host"]);
-            $subdomain = $exploded[0];
 
-            $filedata = json_decode(file_get_contents('http://json.onlinelibrary.co/json/'.$subdomain.'.json'));
-
-            //dd($filedata);
-            
-            if(!$filedata){
-                $client = Client::where('slug',$subdomain)->first();
-
-                //dd($client);
-                if($client){
-                    $param = "?";
-                    foreach($client->toArray() as $key=>$value){
-                        $param = $param.$key."=".$value."&";
-                    }
-                    $data =  file_get_contents('http://json.onlinelibrary.co/json.php'.$param);
-
-                }
-                
-
-            }else{
-                $client = $filedata;
-            }
-
-
-
-            if($client){
-                $filedata = $client;//json_decode(file_get_contents($file));
-                /*
-                if(\auth::user())
-                    $client = Client::where('slug',\auth::user()->client_slug)->first();
-                else
-                    $client =null; */
-
-                if($subdomain == 'corporate')
-                {
-                    return view('appl.product.corporate.index')->with('client',$client);
-                }
-                else{
-                    
-                    if($filedata->status==0)
-                        return view('appl.product.front.unpublished')->with('subdomain',$subdomain);
-                    elseif($filedata->status==1)
-                         return view('welcome')->with('client',$client);
-                    elseif($filedata->status==2)
-                        return view('appl.product.front.hold')->with('subdomain',$subdomain);
-                    else
-                        return view('appl.product.front.terminated')->with('subdomain',$subdomain);
-
-                }       
-            }
-            else
-                return view('appl.product.front.notfound')->with('subdomain',$subdomain);
-        }
-        else{
-
-            if(\auth::user())
-            if(\auth::user()->client_slug)
-            {
-                    return redirect('https://'.\auth::user()->client_slug.'.onlinelibrary.co');
-            }
-            return view('appl.product.front.index'); 
-        }
+        $client = Client::where('slug','demo')->first();
+        return view('welcome')->with('client',$client);
+        
     }
 
     public function hasSubdomain($url) {

@@ -1,4 +1,4 @@
-@extends('layouts.corporate-body')
+@extends('layouts.app')
 
 @section('content')
 
@@ -14,8 +14,8 @@
 
 		<h1 class="display-4 mt-3 text-center ">About </h1>
 		<div class="p-3 pr-md-5 pb-5 pl-md-5">
-		<p class="text-center ">At Quedb Edtech, we all come to work every day because we want to make learning super simple, interesting and effective. And we chose video as the right medium to connect to the learners. </p>
-		<p class="text-center">Here at Quedb Edtech, we produce visually appealing, crisp content driven educational videos for Aptitude based exams like Bank PO, Govt exams etc. To make the learning effective and comprehensive, we also develop support material like study notes, worksheets, practice questions and mock tests.</p>
+		<p class="text-center ">At PacketPrep, we all come to work every day because we want to make learning super simple, interesting and effective. And we chose video as the right medium to connect to the learners. </p>
+		<p class="text-center">Here at PacketPrep, we produce visually appealing, crisp content driven educational videos for Aptitude based exams like Bank PO, Govt exams, Campus Recruitment etc. To make the learning effective and comprehensive, we also develop support material like study notes, worksheets, practice questions and mock tests.</p>
 		</div>
 		
 		</div>

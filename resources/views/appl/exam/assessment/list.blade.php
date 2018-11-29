@@ -1,12 +1,14 @@
  @if($exams->total()!=0)     
- <div class="row">
+ <div class="row {{ $i=0}}">
     
   @foreach($exams as $key=>$exam)  
   @if($exam->status ==1)
 <div class="col-3 mb-4"> 
   
-          <div class="card bg-light">
+          <div class="bg-white border">
+            <div  style="background: #ebf3f7">&nbsp;</div>
               <div class="card-body">
+                <span class="badge badge-warning">Test #{{++$i}}</span>
                   <h1>{{ $exam->name }}</h1>
                     {{ $exam->question_count() }} Questions | {{ $exam->time() }} min<br>
 

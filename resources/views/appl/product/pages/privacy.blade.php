@@ -1,12 +1,12 @@
 
-@extends('layouts.corporate-body')
+@extends('layouts.app')
 
 @section('content')
 
 
 <div class="bg-white">
 <div class="card-body p-4 ">
-<h1>Privacy Policy</h1>
+<div class="display-2">Privacy Policy</div><br>
 
 <p>
 The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to Quedb Edtech Private Limited and the terms "You" /"Your" / "Yourself" refer to the users. </p>
@@ -56,7 +56,7 @@ The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to Q
 <p>Redressal Mechanism: Any complaints, abuse or concerns with regards to content and or comment or breach of these terms shall be immediately informed to the designated Grievance Officer as mentioned below via in writing or through email signed with the electronic signature to ……Quedb Edtech Private Limited  ("Grievance Officer"). </p>
 
 <b>Mr. Krishna Teja </b> (Grievance Officer)<br>
-www.corporate.onlinelibrary.co<br><br>
+www.packetprep.com<br><br>
 
 <h4>Company Name & Address    </h4>
 Quedb Edtech Private Limited<bR>

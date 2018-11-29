@@ -1,7 +1,6 @@
 @extends('layouts.nowrap-product')
 @section('content')
-<div class="line" style="padding:1px;background:#eee"></div>
-<div class=" p-4  mb-4 border-bottom">
+<div class=" p-4  bg-white mb-4 border-bottom">
   <div class="wrapper ">  
   <div class="container">
   <div class="row">
@@ -12,7 +11,7 @@
     </div>
     <div class="col-12 col-md-4">
 
-      <form class="form-inline" method="GET" action="{{ route('assessment.index') }}">
+      <form class="form" method="GET" action="{{ route('assessment.index') }}">
 
             <div class="input-group ">
               <div class="input-group-prepend">

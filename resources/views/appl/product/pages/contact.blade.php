@@ -1,5 +1,5 @@
 
-@extends('layouts.corporate-body')
+@extends('layouts.app')
 
 @section('content')
 

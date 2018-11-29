@@ -1,5 +1,5 @@
 
-@extends('layouts.corporate-body')
+@extends('layouts.app')
 
 @section('content')
 
@@ -23,7 +23,7 @@ Tarnaka - Moula Ali Road,<Br>
 South Lalaguda, Hyderabad, <br>
 Telangana - 500017</p>
 <p>Email: founder@packetprep.com<br>
-Website: www.corporate.onlinelibrary.co</p>
+Website: www.packetprep.com</p>
 
 </div>
 </div>

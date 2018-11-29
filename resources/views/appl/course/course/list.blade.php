@@ -21,7 +21,7 @@
   </div>
   @else
 
-  @if($course->status==1 && $course->getVisibility(subdomain(),$course->id)) 
+  @if($course->status==1 ) 
   <div class="col-12 col-md-6 col-lg-4">
   <div class="border mb-3 mb-md-4 mt-md-2">
     <h2 class="  p-4 pt-5 mb-0" style="background: #f8f8f8; @if($course->image)background-image: url('{{$course->image}}');background-size: 100% 100px; @endif border-bottom:1px solid #eee;height:100px;">  @if(!$course->image)
@@ -44,7 +44,7 @@
 
   @else
 
-  @if($course->status==1 && $course->getVisibility(subdomain(),$course->id)) 
+  @if($course->status==1 ) 
   <div class="col-12 col-md-6 col-lg-4">
   <div class="border mb-3 mb-md-4 mt-md-2">
     <h2 class="  p-4 pt-5 mb-0" style="background: #f8f8f8; @if($course->image)background-image: url('{{$course->image}}');background-size: 100% 100px; @endif border-bottom:1px solid #eee;height:100px;"> @if(!$course->image)
