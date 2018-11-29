@@ -49,7 +49,7 @@ class OrderController extends Controller
     {
         //dd($request->all());
         $user = \auth::user();
-        $o = Order::where('type',$request->get('type'))->where('value',$request->get('value'))->first();
+        $o = Order::where('type',$request->get('type'))->where('value',$request->get('value'))->where('user_id',$user->id)->first();
 
 
         if($o){
