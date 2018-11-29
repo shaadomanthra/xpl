@@ -77,7 +77,11 @@ class OrderController extends Controller
       
           //dd($order);
           $order->save();
-          $order->payment_status = 'Pending';
+          $order->payment_status = 'Successful';
+          //Mail::to($user->email)->send(new OrderSuccess($user,$order));
+        
+          return view('appl.product.pages.checkout_success')->with('order',$order);
+
 
 
           $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->user_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount;
