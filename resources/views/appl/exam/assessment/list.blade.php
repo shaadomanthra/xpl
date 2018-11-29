@@ -3,7 +3,7 @@
     
   @foreach($exams as $key=>$exam)  
   @if($exam->status ==1)
-<div class="col-3 mb-4"> 
+<div class="col-12 col-md-3 mb-4"> 
   
           <div class="bg-white border">
             <div  style="background: #ebf3f7">&nbsp;</div>
