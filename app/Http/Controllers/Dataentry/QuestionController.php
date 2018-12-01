@@ -204,7 +204,7 @@ class QuestionController extends Controller
     {
         $question = Question::where('id',$id)->first();
 
-
+        $exams =  Exam::orderBy('name','desc ')->get();
       
         $this->authorize('view', $question);
 
@@ -243,6 +243,7 @@ class QuestionController extends Controller
                     ->with('question',$question)
                     ->with('passage',$passage)
                     ->with('details',$details)
+                    ->with('exams',$exams)
                     ->with('questions',$questions);
         }
         else
@@ -440,7 +441,7 @@ class QuestionController extends Controller
                 $id=null;
         }
         
-
+        $exams =  Exam::orderBy('name','desc ')->get();
         $list = $category->descendants;
 
 
@@ -484,6 +485,8 @@ class QuestionController extends Controller
                         ->with('details',$details)
                         ->with('category',$category)
                         ->with('list',$list)
+                        ->with('exams',$exams)
+                        ->with('stub','Create')
                         ->with('questions',$questions);
             }else
                 abort('404','Question not found');
@@ -834,6 +837,34 @@ class QuestionController extends Controller
         $question = Question::where('id',$question_id)->first();
         if($question->categories->contains($category_id))
             $question->categories()->detach($category_id);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function attachSection($question_id,$section_id)
+    {
+        $question = Question::where('id',$question_id)->first();
+        if(!$question->sections->contains($section_id))
+            $question->sections()->attach($section_id);
+    }
+
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function detachSection($question_id,$section_id)
+    {
+        $question = Question::where('id',$question_id)->first();
+        if($question->sections->contains($section_id))
+            $question->sections()->detach($section_id);
     }
 
     /**

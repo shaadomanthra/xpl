@@ -9,6 +9,7 @@ use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Product\Test;
 use PacketPrep\User;
 
@@ -27,17 +28,26 @@ class AssessmentController extends Controller
         else
             $user = User::where('username','krishnateja')->first();
 
-        
+        $examtypes = Examtype::all();
 
-
+        $filter = $request->get('filter');
         $search = $request->search;
         $item = $request->item;
-        $exams = $exam->where('name','LIKE',"%{$item}%")->paginate(config('global.no_of_records'));
+
+        if($filter){
+            $examtype = Examtype::where('slug',$filter)->first();
+            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+        }
+        else
+            $exams = $exam->where('name','LIKE',"%{$item}%")->paginate(config('global.no_of_records'));
+
+        
+        
 
         $view = $search ? 'list': 'index';
 
         return view('appl.exam.assessment.'.$view)
-            ->with('exams',$exams)->with('exam',$exam);
+            ->with('exams',$exams)->with('exam',$exam)->with('examtypes',$examtypes);
 
     }
 

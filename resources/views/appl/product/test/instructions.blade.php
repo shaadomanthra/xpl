@@ -7,7 +7,7 @@
 
 <div class="mb-md-5 mb-3">
 	<div class="container">
-		<div class="p-3  display-3 border rounded bg-light mb-4">Test  - Instructions</div>
+		<div class="p-3  display-3 border rounded bg-white mb-4">Test  - Instructions</div>
 
 	<div class=" border p-3 rounded">
 		<ul>

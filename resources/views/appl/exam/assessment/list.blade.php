@@ -3,7 +3,7 @@
     
   @foreach($exams as $key=>$exam)  
   @if($exam->status ==1)
-<div class="col-12 col-md-3 mb-4"> 
+<div class="col-12 col-md-4 mb-4"> 
   
           <div class="bg-white border">
             <div  style="background: #ebf3f7">&nbsp;</div>
@@ -32,7 +32,10 @@
   </div>          
 @else
   <div class="card card-body bg-light">
-    No Tests listed
+    No tests listed 
+    @if(request()->has('filter'))
+      in {{ request()->get('filter')}}
+    @endif
   </div>
 @endif
 

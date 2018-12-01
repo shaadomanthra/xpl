@@ -47,6 +47,15 @@
       </div>
 
       <div class="form-group">
+        <label for="formGroupExampleInput ">Examtype</label>
+        <select class="form-control" name="examtype_id">
+          @foreach($examtypes as $et)
+          <option value="{{ $et->id }}"  @if($exam->examtype_id== $et->id) selected @endif  >{{ $et->name }}</option>
+          @endforeach
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="formGroupExampleInput ">Description</label>
         <textarea class="form-control summernote" name="description"  rows="5">
             @if($stub=='Create')

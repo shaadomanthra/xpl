@@ -47,10 +47,8 @@
 						  <dd class="col-sm-6">{{ $details['marks']}} / {{ $details['total'] }} </dd>
 
 						  <dt class="col-sm-6">Attempted</dt>
-						  <dd class="col-sm-6">{{ $details['attempted']}} Ques</dd>
+						  <dd class="col-sm-6">{{ $details['attempted']}} /  {{ ($details['unattempted']+$details['attempted'])}} Ques</dd>
 
-						  <dt class="col-sm-6">Unattempted</dt>
-						   <dd class="col-sm-6">{{ $details['unattempted']}}  Ques</dd>
 
 						   <dt class="col-sm-6">Correct</dt>
 						   <dd class="col-sm-6">{{ $details['correct']}}  Ques</dd>

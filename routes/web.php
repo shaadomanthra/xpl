@@ -109,6 +109,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 
 	Route::resource('exam','Exam\ExamController')->middleware('auth');
+	Route::resource('examtype','Exam\ExamtypeController')->middleware('auth');
 	Route::resource('exam/{exam}/sections','Exam\SectionController')->middleware('auth');
 	Route::get('exam/{exam}/question','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.questions');
 	Route::get('exam/{exam}/question/{id}','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.question');
@@ -127,13 +128,13 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	
 
-	/*
+	
 	Route::get('/social', 'Social\MediaController@social')->name('social')->middleware('auth');
 	Route::post('/social/imageupload', 'Social\BlogController@image_upload')->name('imageupload');
 	Route::get('/social/imageremove', 'Social\BlogController@image_remove')->name('imageremove');
-	Route::resource('social/blog','Social\BlogController')->middleware('auth');
+	Route::resource('blog','Social\BlogController')->middleware('auth');
 	Route::resource('social/media','Social\MediaController')->middleware('auth');
-	*/
+	
 
 	Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
@@ -156,6 +157,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('dataentry/{project}/question','Dataentry\QuestionController')->middleware('auth');
 	Route::get('question/attach/{question}/{category}','Dataentry\QuestionController@attachCategory');
 	Route::get('question/detach/{question}/{category}','Dataentry\QuestionController@detachCategory');
+
+	Route::get('question/attachsection/{question}/{section}','Dataentry\QuestionController@attachSection');
+	Route::get('question/detachsection/{question}/{section}','Dataentry\QuestionController@detachSection');
 
 	Route::resource('library','Library\RepositoryController')->middleware('auth');
 	Route::resource('library/{repository}/structure','Library\structureController')->middleware('auth');

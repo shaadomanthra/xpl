@@ -67,13 +67,7 @@
         	</div>
         	<div class="col-10 col-md-10"><div class="pt-1 question">{!! $question->question!!}</div>
 
-          @if(count($question->tags)!=0)
-      @foreach($question->tags as $k => $tag)
-      @if(!in_array($exam->slug,$tests))
-      <span class="badge @if($k==0) badge-danger @else  badge-warning @endif mb-3">{{ strtoupper($exam->slug) }}</span>
-      @endif
-      @endforeach
-    @endif
+     
 
         </div>
         </div>

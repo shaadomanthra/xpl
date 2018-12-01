@@ -9,8 +9,8 @@
 
 */
 define('PAYTM_ENVIRONMENT', 'TEST'); // PROD
-define('PAYTM_MERCHANT_KEY', 'NlcRdn0jXZk8lZSM'); //Change this constant's value with Merchant key downloaded from portal
-define('PAYTM_MERCHANT_MID', 'QUEDBE64489893677306'); //Change this constant's value with MID (Merchant ID) received from Paytm
+define('PAYTM_MERCHANT_KEY', 'iJQ2VBDkeVColSYW'); //Change this constant's value with Merchant key downloaded from portal
+define('PAYTM_MERCHANT_MID', 'QUEDBE75099509383354'); //Change this constant's value with MID (Merchant ID) received from Paytm
 define('PAYTM_MERCHANT_WEBSITE', 'WEBSTAGING'); //Change this constant's value with Website name received from Paytm
 
 /*$PAYTM_DOMAIN = "pguat.paytm.com";

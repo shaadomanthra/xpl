@@ -56,11 +56,11 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@onlinelibrary.co'),
-        'name' => env('MAIL_FROM_NAME', 'Online Library'),
+        'address' => env('MAIL_FROM_ADDRESS', 'no-reply@packetprep.com'),
+        'name' => env('MAIL_FROM_NAME', 'Packet Prep'),
     ],
 
-    'report' => env('MAIL_REPORT_ADDRESS','administrator@onlinelibrary.co'),
+    'report' => env('MAIL_REPORT_ADDRESS','founder@packetprep.com'),
 
     /*
     |--------------------------------------------------------------------------

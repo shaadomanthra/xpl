@@ -5,6 +5,7 @@ namespace PacketPrep\Models\Exam;
 use Illuminate\Database\Eloquent\Model;
 use PacketPrep\Models\Product\Test;
 
+
 class Exam extends Model
 {
 	protected $fillable = [
@@ -20,6 +21,12 @@ class Exam extends Model
     public function sections()
     {
         return $this->hasMany('PacketPrep\Models\Exam\Section');
+    }
+
+
+    public function examtype()
+    {
+        return $this->belongsTo('PacketPrep\Models\Exam\Examtype');
     }
 
     public function question_count()

@@ -74,13 +74,13 @@ class OrderController extends Controller
           $order->type = $request->get('type');
           $order->value = $request->get('value');
 
-      
+          $order->payment_status = 'Pending';
           //dd($order);
           $order->save();
-          $order->payment_status = 'Successful';
+          
           //Mail::to($user->email)->send(new OrderSuccess($user,$order));
         
-          return view('appl.product.pages.checkout_success')->with('order',$order);
+          //return view('appl.product.pages.checkout_success')->with('order',$order);
 
 
 

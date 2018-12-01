@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Exam;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Examtype;
 
 class ExamController extends Controller
 {
@@ -19,7 +20,8 @@ class ExamController extends Controller
 
         $search = $request->search;
         $item = $request->item;
-        $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+        
+        $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));   
         $view = $search ? 'list': 'index';
 
         return view('appl.exam.exam.'.$view)
@@ -34,13 +36,14 @@ class ExamController extends Controller
     public function create()
     {
         $exam = new Exam();
+        $examtypes = Examtype::all();
         $this->authorize('create', $exam);
 
 
         return view('appl.exam.exam.createedit')
                 ->with('stub','Create')
                 ->with('jqueryui',true)
-                ->with('exam',$exam);
+                ->with('exam',$exam)->with('examtypes',$examtypes);
     }
 
     /**
@@ -60,6 +63,7 @@ class ExamController extends Controller
             $exam->name = $request->name;
             $exam->slug = $request->slug;
             $exam->user_id = $request->user_id;
+            $exam->examtype_id = $request->examtype_id;
             $exam->description = ($request->description) ? $request->description: null;
             $exam->instructions = ($request->instructions) ? $request->instructions : null;
             $exam->status = $request->status;
@@ -106,6 +110,7 @@ class ExamController extends Controller
     public function edit($id)
     {
         $exam= Exam::where('slug',$id)->first();
+        $examtypes = Examtype::all();
         $this->authorize('update', $exam);
 
 
@@ -113,6 +118,7 @@ class ExamController extends Controller
             return view('appl.exam.exam.createedit')
                 ->with('stub','Update')
                 ->with('jqueryui',true)
+                ->with('examtypes',$examtypes)
                 ->with('exam',$exam);
         else
             abort(404);
@@ -135,6 +141,7 @@ class ExamController extends Controller
             $exam->name = $request->name;
             $exam->slug = $request->slug;
             $exam->user_id = $request->user_id;
+            $exam->examtype_id = $request->examtype_id;
             $exam->description = ($request->description) ? $request->description: null;
             $exam->instructions = ($request->instructions) ? $request->instructions : null;
             $exam->status = $request->status;

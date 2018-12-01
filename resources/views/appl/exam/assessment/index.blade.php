@@ -32,9 +32,36 @@
 <div class="wrapper " >
     <div class="container" >  
     
-      <div id="search-items">
-      @include('appl.exam.assessment.list')
-    </div>
+      <div class="row">
+        <div class="col-3">
+
+
+<div class="list-group">
+
+  <a href="{{ route('assessment.index')}}" class="list-group-item list-group-item-action  {{  (request()->has('filter')) ? '' : 'active'  }} ">
+     All Tests
+  </a>
+  @foreach($examtypes as $et)
+  <a href="{{ route('assessment.index')}}?filter={{$et->slug}}" class="list-group-item list-group-item-action  {{  (request()->get('filter')==$et->slug) ? 'active' : ''  }} ">
+     {{ $et->name }} ({{ count($et->exams)}})
+  </a>
+  @endforeach
+
+  
+  
+</div>
+
+        </div>
+
+        <div class="col-9">
+          <div id="search-items">
+            @include('appl.exam.assessment.list')
+          </div>
+        </div>
+      </div>
+
+
+      
 
      </div>   
 </div>

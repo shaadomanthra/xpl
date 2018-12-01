@@ -108,6 +108,8 @@
       </div>
       @endif
 
+      @include('appl.dataentry.snippets.exam')
+
     </div>
 
      <div class="col-md-3 pl-md-0">

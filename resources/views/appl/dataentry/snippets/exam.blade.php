@@ -13,43 +13,31 @@
         @foreach($exams as $exam)  
         <tr>
           <td>
-            {{ $exam->name }}
+            {{ $exam->name }} <span class="badge badge-secondary">{{$exam->slug}}</span>
           </td>
           <td>
             @foreach($exam->sections as $a => $section)
             @if($a==0)
-            <input  type="checkbox" name="sections[]" value="{{$section->id}}" 
-              @if($stub=='Create')
-                @if(old('section'))
-                  @if(in_array($section->id,old('section')))
-                  checked
-                  @endif
-                @endif
-              @else
+            <input  class="section" type="checkbox" name="sections[]" value="{{$section->id}}" data-id="{{ $section->id }}" data-ques="{{$question->id}}" data-url="{{ url('/') }}"
+              
                 @if($question->sections)
                   @if(in_array($section->id,$question->sections->pluck('id')->toArray()))
                   checked
                   @endif
                 @endif
-              @endif
+              
             > 
             {{ $section->name}}
             @else
             {{','}}
-            <input  type="checkbox" name="sections[]" value="{{$section->id}}"
-              @if($stub=='Create')
-                @if(old('section'))
-                  @if(in_array($section->id,old('section')))
-                  checked
-                  @endif
-                @endif
-              @else
+            <input  class="section" type="checkbox" name="sections[]" value="{{$section->id}}"
+              
                 @if($question->sections)
                   @if(in_array($section->id,$question->sections->pluck('id')->toArray()))
                   checked
                   @endif
                 @endif
-              @endif
+              
             > 
             {{$section->name }}
             @endif
