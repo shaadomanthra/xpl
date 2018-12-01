@@ -74,9 +74,10 @@ class OrderController extends Controller
           $order->type = $request->get('type');
           $order->value = $request->get('value');
 
-          $order->payment_status = 'Pending';
+          
           //dd($order);
           $order->save();
+          $order->payment_status = 'Pending';
           
           //Mail::to($user->email)->send(new OrderSuccess($user,$order));
         
