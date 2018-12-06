@@ -83,6 +83,7 @@
         <select class="form-control" name="status">
           <option value="0" @if(isset($exam)) @if($exam->status==0) selected @endif @endif >Draft</option>
           <option value="1" @if(isset($exam)) @if($exam->status==1) selected @endif @endif >Published</option>
+          <option value="2" @if(isset($exam)) @if($exam->status==2) selected @endif @endif >Premium</option>
         </select>
       </div>
 

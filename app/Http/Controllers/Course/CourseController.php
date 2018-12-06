@@ -8,6 +8,10 @@ use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Dataentry\Tag;
 use PacketPrep\Models\Dataentry\Category;
+use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\Product\Order;
+use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Examtype;
 
 class CourseController extends Controller
 {
@@ -92,6 +96,22 @@ class CourseController extends Controller
     public function show($id)
     {
         $course = Course::where('slug',$id)->first();
+        $product = Product::where('slug',$id)->first();
+
+        $user = \Auth::user();
+        if($product && $user){
+            $order = Order::where('product_id',$product->id)->where('user_id',$user->id)->orderBy('id', 'desc')->first();
+            if($order)
+            if($order->status == 1){
+            $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
+
+            if(!$user->courses->contains($course->id))
+                $user->courses()->attach($course->id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'client_id'=>4,'credits'=>1]);
+            }
+        }
+        
+
+       // dd($user->courses()->find($course->id));
         $categories = Category::where('slug',$id)->first();
 
         if(request()->get('exam'))
@@ -105,13 +125,18 @@ class CourseController extends Controller
         $ques_count  = 0; 
         $nodes = null;
         $exams = array();
+
+        $examtype = Examtype::where('slug',$id)->first();
+        if($examtype)
+        $exams = Exam::where('examtype_id',$examtype->id)->get();
+
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
 
             $ques_count = $parent->questionCount_level2($project);
             
-            $exams =  Tag::where('project_id',$project->id)->where('name','exam')
-                        ->orderBy('created_at','desc')->get();
+            //$exams =  Tag::where('project_id',$project->id)->where('name','exam')
+              //          ->orderBy('created_at','desc')->get();
                      
             if(count($node))
             $nodes = Category::displayUnorderedListCourse($node,['project'=>$project,'parent'=>$parent]);
@@ -125,6 +150,7 @@ class CourseController extends Controller
         if($course)
             return view('appl.course.course.show')
                     ->with('course',$course)
+                    ->with('product',$product)
                     ->with('ques_count',$ques_count)
                     ->with('exams',$exams)
                     ->with('project',$project)

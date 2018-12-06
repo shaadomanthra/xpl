@@ -5,7 +5,7 @@
               <tr>
                 <th scope="col">#({{$sections->total()}})</th>
                 <th scope="col">Sections </th>
-                <th scope="col">Instructions</th>
+                <th scope="col">Questions</th>
                 <th scope="col">Created at</th>
               </tr>
             </thead>

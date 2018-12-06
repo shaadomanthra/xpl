@@ -77,6 +77,7 @@ class DocController extends Controller
             $doc->slug = $request->slug;
             $doc->author_id = $request->author_id;
             $doc->status = $request->status;
+            $doc->image = $request->image;
             $doc->privacy = $request->privacy;
             $doc->save();
 
@@ -105,6 +106,7 @@ class DocController extends Controller
      */
     public function show($doc_slug,Request $request)
     {
+        
         $doc = Doc::where('slug',$doc_slug)->first();
 
         if(\auth::guest() && $doc->privacy==1)
@@ -167,6 +169,7 @@ class DocController extends Controller
             $doc->name = $request->name;
             $doc->slug = $request->slug;
             $doc->status = $request->status;
+            $doc->image = $request->image;
             $doc->privacy = $request->privacy;
             $doc->save();
 

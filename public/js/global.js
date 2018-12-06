@@ -97,6 +97,8 @@ $(document).ready(function() {
        var ques = $(this).data('ques');
        var url = $(this).data('url');
 
+       console.log( val + " | " + ques + " | " + url );
+
        if (this.checked) {
                 $.get( url + "/question/attachsection/" + ques + "/" + val + "/", function( data ) {
           console.log( "attached." );

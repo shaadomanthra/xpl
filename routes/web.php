@@ -17,18 +17,18 @@ use PacketPrep\Http\Middleware\RequestFilter;
 
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
-	Route::get('/', 'Product\ProductController@welcome')->name('root');
+	Route::get('/', function(){ return view('welcome'); })->name('root');
 	Route::post('/', 'Product\OrderController@callback');
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
 
 	Route::get('/dashboard',function(){ return view('welcome2'); })->name('dashboard')->middleware('auth');
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
+	Route::get('/premium',function(){ return view('appl.pages.premium'); })->name('premium');
 	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');
 	Route::get('/refund',function(){ return view('appl.product.pages.refund'); })->name('refund');
 	Route::get('/disclaimer',function(){ return view('appl.product.pages.disclaimer'); })->name('disclaimer');
 	Route::get('/about',function(){ return view('appl.pages.about'); })->name('about');
-	Route::get('/contact','Product\ProductController@contact')->name('contact');
 	Route::get('/faq',function(){ return view('appl.product.pages.faq'); })->name('faq')->middleware('corporate');;
 	Route::get('/checkout','Product\OrderController@checkout')->name('checkout')->middleware('auth');
 	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success')->middleware('auth');
@@ -37,6 +37,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/payment/status', 'Product\OrderController@status')->name('payment.status');
 	Route::post('/payment/order', 'Product\OrderController@order')->name('payment.order');
+	Route::get('/transactions', 'Product\OrderController@transactions')->name('order.transactions')->middleware('auth');
+	Route::get('/transactions/{order_id}', 'Product\OrderController@transaction')->name('order.transaction')->middleware('auth');
 	Route::get('/admin/transactions', 'Product\OrderController@list_transactions')->name('order.list');
 	Route::get('/admin/transactions/{order_id}', 'Product\OrderController@show_transaction')->name('order.show');
 	Route::get('/admin/buy', 'Product\OrderController@buycredits')->name('order.buy');
@@ -95,9 +97,26 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('admin/settings','Product\AdminController@settings_store')->name('admin.settings')->middleware('auth');
 
 	Route::resource('role','User\RoleController')->middleware('auth');
-	Route::resource('docs','Content\DocController');
-	Route::resource('docs/{doc}/chapter','Content\ChapterController');
+	Route::resource('tracks','Content\DocController',['names' => [
+        'index' => 'docs.index',
+        'store' => 'docs.store',
+        'create' => 'docs.create',
+        'show' => 'docs.show',
+        'edit'=> 'docs.edit',
+        'update'=>'docs.update',
+        'destroy'=>'docs.destroy',
+    ]]);
+	Route::resource('tracks/{doc}/chapter','Content\ChapterController',['names' => [
+        'index' => 'chapter.index',
+        'store' => 'chapter.store',
+        'create' => 'chapter.create',
+        'show' => 'chapter.show',
+        'edit'=> 'chapter.edit',
+        'update'=>'chapter.update',
+        'destroy'=>'chapter.destroy',
+    ]]);
 
+	Route::get('/proficiency-test', 'Product\TestController@proficiency_test')->name('proficiency_test');
 	Route::get('/updates', 'System\UpdateController@public_updates')->name('updates');
 	Route::get('/updates/{id}', 'System\UpdateController@public_view')->name('updates.view');
 	Route::get('/system', 'System\UpdateController@system')->name('system')->middleware('auth');
@@ -114,6 +133,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('exam/{exam}/question','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.questions');
 	Route::get('exam/{exam}/question/{id}','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.question');
 
+	Route::get('certificate/{exam}/{user}','Exam\AssessmentController@certificate')->name('certificate');
+	Route::get('certificate/sample','Exam\AssessmentController@certificate_sample')->name('certificate.sample');
+	Route::get('report/{exam}/{user}','Exam\AssessmentController@report')->name('report');
 	Route::get('test','Exam\AssessmentController@index')->name('assessment.index');
 	Route::get('test/{test}/submit','Exam\AssessmentController@submit')->name('assessment.submit');
 	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis')->name('assessment.analysis')->middleware('auth');

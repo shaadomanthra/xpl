@@ -6,7 +6,6 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('assessment.index') }}">Online Tests</a></li>
     <li class="breadcrumb-item">{{ ucfirst($exam->name) }} </li>
     <li class="breadcrumb-item">Analysis </li>
   </ol>
@@ -15,7 +14,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('proficiency_test') }}">Proficiency Test</a></li>
+    <li class="breadcrumb-item">{{$user->name }} - Proficiency Test</li>
     <li class="breadcrumb-item">Analysis </li>
   </ol>
 </nav>
@@ -25,7 +24,7 @@
 
 <div class="mb-md-5">
 	<div class="">
-		<div class="p-3  display-3 border rounded bg-light mb-4">{{ ucfirst($exam->name) }} - Analysis</div>
+		<div class="p-3  display-3 border rounded bg-light mb-4">{{$user->name }} - {{ ucfirst($exam->name) }} - Analysis</div>
 
 		<div class="row">
 			<div class="col-12 col-md-4 mb-3">

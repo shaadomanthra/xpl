@@ -9,6 +9,9 @@ use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Product\Test;
+use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\Product\ORder;
+use PacketPrep\Models\Exam\Exam;
 use PacketPrep\User;
 
 
@@ -345,6 +348,19 @@ class TestController extends Controller
                         ->with('tag',$tag)
                         ->with('details',$details)
                         ->with('chart',true);
+
+    }
+
+    public function proficiency_test(Request $request)
+    {
+
+        $exam = Exam::where('slug','proficiency-test')->first();
+        $order = null;
+        if(\auth::user()){
+            $product = Product::where('slug','proficiency-test')->first();
+            $order = ORder::where('user_id',\auth::user()->id)->where('product_id',$product->id)->first();
+        }
+        return view('appl.product.test.proficiency')->with('order',$order)->with('exam',$exam);
 
     }
 

@@ -18,7 +18,7 @@
           <td>
             @foreach($exam->sections as $a => $section)
             @if($a==0)
-            <input  class="section" type="checkbox" name="sections[]" value="{{$section->id}}" data-id="{{ $section->id }}" data-ques="{{$question->id}}" data-url="{{ url('/') }}"
+            <input  class="section" type="checkbox" name="sections[]" value="{{$section->id}}" data-id="{{ $section->id }}" data-ques="{{$question->id}}" data-url="{{ URL::to('/') }}"
               
                 @if($question->sections)
                   @if(in_array($section->id,$question->sections->pluck('id')->toArray()))
@@ -30,7 +30,7 @@
             {{ $section->name}}
             @else
             {{','}}
-            <input  class="section" type="checkbox" name="sections[]" value="{{$section->id}}"
+            <input  class="section" type="checkbox" name="sections[]" value="{{$section->id}}" data-id="{{ $section->id }}" data-ques="{{$question->id}}" data-url="{{ URL::to('/') }}"
               
                 @if($question->sections)
                   @if(in_array($section->id,$question->sections->pluck('id')->toArray()))

@@ -4,21 +4,43 @@
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('docs.index')}}">Docs</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('docs.index')}}">Tracks</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{ $doc->name }}</li>
     </ol>
   </nav>
   @include('flash::message')
 
   <div class="row">
-    <div class="col-md-12">
+
+    <div class="col-12 col-md-3">
+
+
+
+     <div class="bg-white border mb-3 rounded">
+              <div class="">
+                @if($doc->image)
+                <div class="bg-white ">
+                  <img src="{{ $doc->image }}" class="w-100"/>
+                </div>
+                @endif
+                <div class=" p-3" style="background: #fff">
+                  <h1>{{ $doc->name }}</h1>
+
+              </div>
+              </div>
+          </div>
+
+   
+
+    </div>
+    <div class="col-12 col-md-9">
       <div class="card  mb-3">
 
 
         <div class="card-body ">
   
         <nav class="navbar navbar-light bg-light justify-content-between p-3 border mb-3">
-          <a class="navbar-brand"><i class="fa fa-file"></i> {{ $doc->name }}</a>
+          <a class="navbar-brand"> {{ $doc->name }}</a>
           <span class="btn-group float-right" role="group" aria-label="Basic example">
              @can('create',$doc)
               <a href="{{ route('chapter.create',$doc->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Add"><i class="fa fa-plus"></i> Chapter</a>
@@ -36,6 +58,10 @@
         No Chapters defined !
         @endif
         </div>
+      </div>
+
+      <div class=" border p-4 rounded mb-3">
+        @include('appl.pages.disqus')
       </div>
 
 

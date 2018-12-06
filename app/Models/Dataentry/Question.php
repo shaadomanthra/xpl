@@ -53,6 +53,11 @@ class Question extends Model
         return $this->hasOne('PacketPrep\Models\Dataentry\Passage');
     }
 
+    public function project()
+    {
+        return $this->belongsTo('PacketPrep\Models\Dataentry\Project');
+    }
+
     public static function practice($id=null)
     {
         if($id==null)

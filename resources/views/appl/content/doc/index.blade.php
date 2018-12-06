@@ -1,48 +1,62 @@
-@extends('layouts.app')
+@extends('layouts.nowrap-product')
 @section('content')
 
-<div  class="row ">
-
-  <div class="col">
-
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Docs</li>
-      </ol>
-    </nav>
-    @include('flash::message')  
-    <div class="card">
-      <div class="card-body pb-1">
-        <nav class="navbar navbar-light bg-light justify-content-between p-3 border mb-3">
-          <a class="navbar-brand"><i class="fa fa-book"></i> Documentation </a>
-
-          <form class="form-inline" method="GET" action="{{ route('docs.index') }}">
+<div class=" p-4  bg-white mb-4 border-bottom">
+  <div class="wrapper ">  
+  <div class="container">
+  <div class="row">
+    <div class="col-12 col-md-8">
+      <h1 class="mt-2 mb-4 mb-md-2">
+      <i class="fa fa-spotify"></i> &nbsp;Tracks
+      @can('create',$doc)
             <a href="{{route('docs.create')}}">
-
-              @can('create',$doc)
-              <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3"><i class="fa fa-plus"></i> New</button>
-              @endcan
+              <button type="button" class="btn btn-outline-success btn-sm my-2 my-sm-2 mr-sm-3"><i class="fa fa-plus"></i> New</button>
             </a>
+            @endcan
+      </h1>
+
+    </div>
+    <div class="col-12 col-md-4">
+
+      <form class="form" method="GET" action="{{ route('assessment.index') }}">
+
             <div class="input-group ">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fa fa-search"></i></div>
               </div>
-              <input class="form-control " id="search" name="item" data-url="{{Request::url()}}" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
+              <input class="form-control form-control-lg" id="search" name="item" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
               value="{{Request::get('item')?Request::get('item'):'' }}">
             </div>
             
           </form>
-        </nav>
 
-        <div id="search-items">
-         @include('appl.content.doc.list')
-       </div>
-
-     </div>
-   </div>
- </div>
+      </div>
+  </div>
+  </div>
 </div>
+</div>
+
+
+<div class="wrapper " >
+    <div class="container" >  
+    
+      <div class="row">
+        
+
+        <div class="col-12 ">
+          <div id="search-items">
+            @include('appl.content.doc.list')
+          </div>
+        </div>
+      </div>
+
+
+      
+
+     </div>   
+</div>
+
+
 
 @endsection
 

@@ -1,5 +1,5 @@
  @if($exams->total()!=0)     
- <div class="row {{ $i=0}}">
+ <div class="row ">
     
   @foreach($exams as $key=>$exam)  
   @if($exam->status ==1)
@@ -8,7 +8,7 @@
           <div class="bg-white border">
             <div  style="background: #ebf3f7">&nbsp;</div>
               <div class="card-body">
-                <span class="badge badge-warning">Test #{{++$i}}</span>
+                <span class="badge badge-warning">Test #{{ $exam->slug }}</span>
                   <h1>{{ $exam->name }}</h1>
                     {{ $exam->question_count() }} Questions | {{ $exam->time() }} min<br>
 
@@ -31,7 +31,7 @@
     @endforeach  
   </div>          
 @else
-  <div class="card card-body bg-light">
+  <div class="card card-body bg-light mb-4">
     No tests listed 
     @if(request()->has('filter'))
       in {{ request()->get('filter')}}
@@ -39,6 +39,9 @@
   </div>
 @endif
 
-<nav aria-label="Page navigation  " class="card-nav @if($exams->total() > config('global.no_of_records'))mt-3 @endif">
+<div class="mb-4">
+<nav aria-label="Page navigation " class="card-nav @if($exams->total() > config('global.no_of_records'))mt-3 @endif">
   {{$exams->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
 </nav>
+
+</div>

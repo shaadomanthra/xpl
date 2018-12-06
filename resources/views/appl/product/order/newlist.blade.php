@@ -1,6 +1,6 @@
  @if($orders->total()!=0)
-        <div class="table-responsive ">
-          <table class="table table-bordered mb-0">
+        <div class="table-responsive">
+          <table class="table table-bordered bg-white mb-0">
             <thead>
               <tr>
                 <th scope="col">#({{$orders->total()}})</th>
@@ -15,7 +15,7 @@
               <tr>
                 <th scope="row">{{ $orders->currentpage() ? ($orders->currentpage()-1) * $orders->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
-                  <a href=" {{ route('order.show',$order->order_id) }} ">
+                  <a href=" {{ route('order.transaction',$order->order_id) }} ">
                   {{ $order->order_id }}
                   </a>
                 </td>

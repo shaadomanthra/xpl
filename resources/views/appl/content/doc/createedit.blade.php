@@ -4,16 +4,16 @@
    <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('docs.index')}}">Docs</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('docs.index')}}">Tracks</a></li>
       <li class="breadcrumb-item active" aria-current="page"> {{ $stub }} </li>
     </ol>
   </nav>
   @include('flash::message')
-  <div class="card">
+  <div class="card border">
     <div class="card-body">
 
-      <nav class="navbar navbar-light bg-light justify-content-between mb-3">
-          <a class="navbar-brand"><i class="fa fa-file"></i>{{ $stub }} Doc </a>
+      <nav class="navbar navbar-light bg-light justify-content-between mb-3 border p-3">
+          <a class="navbar-brand"><i class="fa fa-file"></i> {{ $stub }} Track </a>
       </nav>    
       
       @if($stub=='Create')
@@ -23,12 +23,24 @@
       @endif  
       <div class="form-group">
         <label >Name</label>
-        <input type="text" class="form-control" name="name"  placeholder="Enter the Doc Name" 
+        <input type="text" class="form-control" name="name"  placeholder="Enter the Track Name" 
 
             @if($stub=='Create')
             value="{{ (old('name')) ? old('name') : '' }}"
             @else
             value = "{{ $doc->name }}"
+            @endif
+
+            >
+      </div>
+      <div class="form-group">
+        <label >Image</label>
+        <input type="text" class="form-control" name="image"  placeholder="Enter the image url" 
+
+            @if($stub=='Create')
+            value="{{ (old('image')) ? old('image') : '' }}"
+            @else
+            value = "{{ $doc->image }}"
             @endif
 
             >

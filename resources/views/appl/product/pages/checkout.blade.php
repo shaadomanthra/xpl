@@ -18,15 +18,15 @@
   </thead>
   <tbody>
     <tr>
-      <td scope="row" rowspan=2>{{ $details['product']}}</td>
-      <td>{{ $details['price']}}</td>
+      <td scope="row" rowspan=2>{!! $product->description !!}</td>
+      <td>{{ $product->price }}</td>
     </tr>
      <tr>
     </tr>
     <tr>
 
       <td >Total Amount</td>
-      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> {{ $details['price']}} </span></td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> {{ $product->price }} </span></td>
     </tr>
    
   </tbody>
@@ -35,9 +35,8 @@
 <div class="card bg-light mb-3"> 
   <div class="card-body">
     <div class="form-check mb-2">
-    <input class="form-check-input" type="hidden" name="txn_amount" value="{{ $details['price']}}">
-    <input class="form-check-input" type="hidden" name="type"  value="{{ $details['type']}}">
-    <input class="form-check-input" type="hidden" name="value"  value="{{ $details['value']}}">
+    <input class="form-check-input" type="hidden" name="txn_amount" value="{{ $product->price }}">
+    <input class="form-check-input" type="hidden" name="product_id"  value="{{ $product->id }}">
   <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked> paytm
  
 </div>

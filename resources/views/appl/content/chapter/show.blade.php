@@ -4,7 +4,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('docs.index')}}">Docs</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('docs.index')}}">Tracks</a></li>
       <li class="breadcrumb-item "><a href="{{ route('docs.show',$doc->slug)}}">{{ $doc->name }}</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{ $chapter->title }} </li>
     </ol>
@@ -12,7 +12,37 @@
   @include('flash::message')
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-12 col-md-3">
+
+
+
+     <div class="bg-white border mb-3 rounded">
+              <div class="">
+                @if($doc->image)
+                <div class="bg-white ">
+                  <img src="{{ $doc->image }}" class="w-100"/>
+                </div>
+                @endif
+                <div class=" p-3" style="background: #fff">
+                  <h1>{{ $doc->name }}</h1>
+
+              </div>
+              </div>
+          </div>
+
+    <div class="list-group">
+
+      @foreach($chapters as $ch)
+      <a href="{{ route('chapter.show',[$doc->slug,$ch->slug])}}" class="list-group-item list-group-item-action  {{  request()->is('tracks/'.$doc->slug.'/chapter/'.$ch->slug) ? 'active' : 'bg-white'  }} ">
+         {{ $ch->title }} 
+      </a>
+      @endforeach
+
+      
+    </div>
+
+    </div>
+    <div class="col-12 col-md-9">
       <div class="card  mb-3">
 
 
@@ -20,20 +50,27 @@
 
           <div class="bg-light  p-3 border mb-2">
             <div class="row  s">
-              <div class="col-1 col-md-1 ">
+              
                 @if($chapter->prev)
+                <div class="col-1 col-md-1 ">
                 <div class="w-100 text-center float-center" > 
                   <span class="text-center float-center">
                 <a href="{{route('chapter.show',[$doc->slug,$chapter->prev]) }}" class="text-center float-center">
                 <i class="fa fa-angle-double-left fa-2x"></i>
                 </a>
-              </span>
-            </div>
-                @endif
-              </div>
-              <div class="col-9 col-md-10 ">
+                </span>
+                </div>
+                </div>
+                <div class="col-9 col-md-10 ">
                 <h2 class="mt-1">{{ $chapter->title }}</h2>
               </div>
+              @else
+              <div class="col-11 col-md-11 ">
+                <h2 class="mt-1">{{ $chapter->title }}</h2>
+              </div>
+                @endif
+              
+              
               <div class="col-1 col-md-1 ">
                 @if($chapter->next)
                 <div class="w-100 " > 
@@ -58,13 +95,17 @@
               <a href="{{ route('chapter.show',[$doc->slug,$chapter->prev]) }}" class="btn btn-outline-secondary" title="Previous Chapter"
                 ><i class="fa fa-angle-double-left"></i> prev</a>
                 @endif
-              <a href="{{ route('docs.show',[$doc->slug]) }}" class="btn btn-outline-secondary"  title="Index"> <i class="fa fa-bars"></i> Index</a>
+              
                 @if($chapter->next) 
               <a href="{{ route('chapter.show',[$doc->slug,$chapter->next]) }}" class="btn btn-outline-secondary"  title="Next Chapter">next <i class="fa fa-angle-double-right"></i></a>
                @endif
               
             </span>
         </div>
+      </div>
+
+      <div class=" border p-4 rounded mb-3">
+        @include('appl.pages.disqus')
       </div>
 
       @can('update',$chapter)

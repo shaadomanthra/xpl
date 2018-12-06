@@ -91,7 +91,7 @@ class Category extends Model
                if(count($category->category_tag_questions($category,session('exam')))!=0)
             $d = $d.
             '<a href="'.route('course.question',[$options['project']->slug,$category->slug,''])
-            .'"><span class="badge badge-warning"> Practice '.count(Category::category_tag_questions($category,session('exam'))).'Q</span></a> </li>'; 
+            .'"><span class="badge badge-warning"> Practice Questions</span></a> </li>'; 
             else
                 $d=$d.'</li>';
 
@@ -104,8 +104,8 @@ class Category extends Model
             }
         }
         if($i==1){
-            $total_ques = Question::getTotalQuestionCount($options['project']);
-            $categorized_ques = Category::getCategorizedQuestionCount($options['project']);
+            //$total_ques = Question::getTotalQuestionCount($options['project']);
+            //$categorized_ques = Category::getCategorizedQuestionCount($options['project']);
             $d = '<ul class="list2 list2-first" >'.$d.'</ul>';
         }
         else

@@ -4,8 +4,7 @@ namespace PacketPrep\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
-use PacketPrep\Models\Dataentry\Tag;
-use PacketPrep\Models\Product\Client;
+use PacketPrep\Models\Product\Product;
 
 class ProductController extends Controller
 {
@@ -14,50 +13,41 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Product $product,Request $request)
     {
 
-        $tags =  Tag::where('project_id','39')
-                        ->orderBy('created_at','desc ')
-                        ->get()->groupBy(function($item)
-                        {
-                          return $item->name;
-                        });
+        $this->authorize('view', $product);
 
-        return view('appl.product.product.index')->with('tags',$tags['exam']);
-    }
-
-    public function welcome(){
-
-
-        $client = Client::where('slug','demo')->first();
-        return view('welcome')->with('client',$client);
+        $search = $request->search;
+        $item = $request->item;
         
+        $products = $product->where('name','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')
+                    ->paginate(config('global.no_of_records'));   
+        $view = $search ? 'list': 'index';
+
+        return view('appl.product.product.'.$view)
+        ->with('products',$products)->with('product',$product);
     }
 
-    public function hasSubdomain($url) {
-        $parsed = parse_url($url);
-        $exploded = explode('.', $parsed["host"]);
-        return (count($exploded) > 2);
-    }
-
+    
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function contact()
+    public function create()
     {
-        $url = url()->full();
-        if($this->hasSubdomain($url)){
-            $parsed = parse_url($url);
-            $exploded = explode('.', $parsed["host"]);
-            $subdomain = $exploded[0];
-            $client = Client::where('slug',$subdomain)->first();
+        $product = new Product();
+        $this->authorize('create', $product);
 
-           return view('appl.pages.contact')->with('client',$client); 
-        }
+
+        return view('appl.product.product.createedit')
+                ->with('stub','Create')
+                ->with('jqueryui',true)
+                ->with('product',$product);
     }
+   
 
     /**
      * Store a newly created resource in storage.
@@ -65,9 +55,30 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Product $product, Request $request)
     {
-        //
+         try{
+
+            if(!$request->slug )
+            $request->slug  = $request->name;
+            $request->slug = strtolower(str_replace(' ', '-', $request->slug));
+
+            $product->name = $request->name;
+            $product->slug = $request->slug;
+            $product->description = ($request->description) ? $request->description: null;
+            $product->price = $request->price;
+            $product->save(); 
+
+            flash('A new product('.$request->name.') is created!')->success();
+            return redirect()->route('product.index');
+        }
+        catch (QueryException $e){
+           $error_code = $e->errorInfo[1];
+            if($error_code == 1062){
+                flash('The slug(<b>'.$request->slug.'</b>) is already taken. Kindly use a different slug.')->error();
+                 return redirect()->back()->withInput();;
+            }
+        }
     }
 
     /**
@@ -78,7 +89,16 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product= Product::where('slug',$id)->first();
+
+        
+        $this->authorize('view', $product);
+
+        if($product)
+            return view('appl.product.product.show')
+                    ->with('product',$product);
+        else
+            abort(404);
     }
 
     /**
@@ -89,7 +109,17 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product= Product::where('slug',$id)->first();
+        $this->authorize('update', $product);
+
+
+        if($product)
+            return view('appl.product.product.createedit')
+                ->with('stub','Update')
+                ->with('jqueryui',true)
+                ->with('product',$product);
+        else
+            abort(404);
     }
 
     /**
@@ -99,9 +129,29 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        try{
+            $product = Product::where('slug',$slug)->first();
+
+            $this->authorize('update', $product);
+
+            $product->name = $request->name;
+            $product->slug = $request->slug;
+            $product->description = ($request->description) ? $request->description: null;
+            $product->price = $request->price;
+            $product->save(); 
+
+            flash('Product (<b>'.$request->name.'</b>) Successfully updated!')->success();
+            return redirect()->route('product.show',$request->slug);
+        }
+        catch (QueryException $e){
+           $error_code = $e->errorInfo[1];
+            if($error_code == 1062){
+                flash('The slug(<b>'.$request->slug.'</b>) is already taken. Kindly use a different slug.')->error();
+                 return redirect()->back()->withInput();
+            }
+        }
     }
 
     /**
@@ -110,8 +160,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+     public function destroy($id)
     {
-        //
+        $product = Product::where('id',$id)->first();
+        $this->authorize('update', $product);
+        $product->delete();
+
+        flash('Product Successfully deleted!')->success();
+        return redirect()->route('product.index');
     }
 }

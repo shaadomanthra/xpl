@@ -7,7 +7,7 @@
 	<div class="row">
 		<div class="col-12 col-md-8">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-list-alt"></i> &nbsp;Courses
+			<i class="fa fa-youtube-play"></i> &nbsp;Courses
 			@can('create',$course)
             <a href="{{route('course.create')}}">
               <button type="button" class="btn btn-outline-success btn-sm my-2 my-sm-2 mr-sm-3"><i class="fa fa-plus"></i> New</button>

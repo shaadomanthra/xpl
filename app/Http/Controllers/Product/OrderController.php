@@ -10,6 +10,7 @@ use PacketPrep\Mail\OrderSuccess;
 use PacketPrep\Mail\OrderCreated;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Product\Product;
 use PacketPrep\User;
 
 class OrderController extends Controller
@@ -19,20 +20,17 @@ class OrderController extends Controller
 
     public function checkout(Request $request){
 
-      $course = $request->get('course');
+      $product = $request->get('product');
       $test = $request->get('test');
 
-      if($course){
-        $course = Course::where('slug',$course)->first();
+      if($product){
+        $product = Product::where('slug',$product)->first();
 
-          if(!$course)
+          if(!$product)
             return view('appl.product.pages.checkout-invalid');
           else{
-              $details['product'] = 'Course: '.$course->name.' ( Video lectures, Practice Questions, Two year validity)';
-              $details['price'] = $course->price;
-              $details['type'] = 'course';
-              $details['value'] = $course->slug;
-              return view('appl.product.pages.checkout')->with('details',$details);
+              
+              return view('appl.product.pages.checkout')->with('product',$product);
           }
 
       }
@@ -49,10 +47,12 @@ class OrderController extends Controller
     {
         //dd($request->all());
         $user = \auth::user();
-        $o = Order::where('type',$request->get('type'))->where('value',$request->get('value'))->where('user_id',$user->id)->first();
+        $o = Order::where('product_id',$request->get('product_id'))
+              ->where('user_id',$user->id)->first();
 
 
-        if($o){
+        if($o)
+        if($o->status == 1 ){
           return view('appl.product.pages.checkout_denail')->with('order',$o);
         }
         if($request->type=='paytm'){
@@ -71,8 +71,7 @@ class OrderController extends Controller
           $order->user_id = $user->id;
           $order->txn_amount = $request->txn_amount;
           $order->status=0;
-          $order->type = $request->get('type');
-          $order->value = $request->get('value');
+          $order->product_id = $request->get('product_id');
 
           
           //dd($order);
@@ -82,7 +81,6 @@ class OrderController extends Controller
           //Mail::to($user->email)->send(new OrderSuccess($user,$order));
         
           //return view('appl.product.pages.checkout_success')->with('order',$order);
-
 
 
           $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->user_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount;
@@ -219,6 +217,33 @@ class OrderController extends Controller
         ->with('orders',$orders)->with('order',$order);
     }
 
+
+    public function transactions(Request $request)
+    {
+        $order = new Order();
+        $search = $request->search;
+        $user = \auth::user();
+        $item = $request->item;
+        $orders = $order->where('order_id','LIKE',"%{$item}%")
+                  ->where('user_id',$user->id)
+                  ->orderBy('created_at','desc ')
+                  ->paginate(config('global.no_of_records'));
+        $view = $search ? 'newlist': 'transactions';
+
+        return view('appl.product.order.'.$view)
+        ->with('orders',$orders)->with('order',$order);
+    }
+
+    public function transaction($id)
+    {
+        $order = Order::where('order_id',$id)->first();
+
+        if($order)
+            return view('appl.product.order.transaction')
+                    ->with('order',$order);
+        else
+            abort(404);
+    }
      
 
     public function ordersuccess(Request $request)

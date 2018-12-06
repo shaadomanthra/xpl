@@ -21,9 +21,12 @@
     <div class="row mt-md-3" >
 	<div class="col-12 col-md-4 col-lg-4 mt-1">
 		<div class="border mb-3">
-		<h2 class="  p-4 pt-5 mb-0" style="background: #f8f8f8; @if($course->image)background-image: url('{{$course->image}}');background-size: 100% 100px; @endif border-bottom:1px solid #eee;height:100px;"> @if(!$course->image)
-      {{ $course->name }}
-    @endif  </h2>
+		<h2 class="  p-4  mb-0" style="background: #ecf2f6;  border-bottom:1px solid #eee;height:120px;"> 
+			@if($course->image) 
+		      <img src="{{ $course->image }}" style="width:70px" class="float-right"/> 
+		      @endif 
+		      <div class="pt-4">{{ $course->name }}</div>
+		</h2>
 		<div class=" p-4 mb-3  bg-white " style="">
 
 			<div class=" mb-3" style="">
@@ -34,15 +37,37 @@
 				</a>
 				@endcan
 		</div>
-			<h2>Premium Access </h2>
-			<div> Video Lectures<br> Practice Questions</div>
+			@if(\auth::user())
+			@if(\auth::user()->courses()->find($course->id))
+			<h2 class="mt-3">Valid till</h2>
+			<div class="mb-3"><span class="badge badge-success">  {{date('d M Y', strtotime(\auth::user()->courses()->find($course->id)->pivot->valid_till))}}</span></div>
+			@else
 			<h2 class="mt-3">Validity</h2>
-			<div> 2 years</div>
-			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $course->price }}</h1>
+			<div> 2 years </div>
+			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
+			@endif
+			@else
+			<h2 class="mt-3">Validity</h2>
+			<div> 2 years </div>
+			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
+			@endif
+			
+			@if($course->intro_vimeo)
 			<button class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#myModal"><i class ="fa fa-video-camera"></i> Watch Intro</button>
-			<a href="{{ route('checkout') }}?course={{ $course->slug }}">
+			@endif
+			@if(\auth::user())
+			@if(!\auth::user()->courses()->find($course->id))
+			<a href="{{ route('checkout') }}?product={{ $course->slug }}">
 			<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
 			</a>
+			@endif
+			@else
+			<a href="{{ route('checkout') }}?product={{ $course->slug }}">
+			<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
+			</a>
+
+			@endif
+			
 		</div>
 	</div>
 	</div>		
@@ -116,6 +141,51 @@
 		<div class="row ml-0 mr-0  mb-0 mb-md-3 bg-white pt-4 rounded" >
 			{!! $nodes !!}
 		</div>
+
+@if(count($exams)!=0) 
+		<div class=" ">
+			<h1 class="mb-4 p-3 border rounded"> <i class="fa fas fa-gg"></i> Online Tests</h1>
+
+
+			     
+ <div class="row ">
+    
+  @foreach($exams as $key=>$exam)  
+  @if($exam->status ==1)
+<div class="col-12 col-md-6 mb-4"> 
+  
+          <div class="bg-white border">
+            <div  style="background: #ebf3f7">&nbsp;</div>
+              <div class="card-body">
+                <span class="badge badge-primary">Test #{{ $exam->slug }}</span>
+                  <h1>{{ $exam->name }}</h1>
+                    {{ $exam->question_count() }} Questions | {{ $exam->time() }} min<br>
+
+                    <div class="pt-2">
+                   @if(!$exam->attempted())
+                  <a href="{{ route('assessment.instructions',$exam->slug) }}">
+                  <button class="btn btn-outline-primary btn-sm"> <i class="fa fa-paper-plane" ></i> Try Now</button>
+                  </a>
+                  @else
+                  <a href="{{ route('assessment.analysis',$exam->slug) }}">
+                  <button class="btn btn-outline-primary btn-sm"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
+                  </a>
+                  @endif
+                </div>
+              </div>
+          </div>
+    
+</div>
+  @endif
+    @endforeach  
+  </div>       
+
+		</div>
+		@endif
+
+		
+
+      
 	</div>
 	</div>
 
@@ -133,7 +203,7 @@
      
       <div class="modal-body">
        <div class="embed-responsive embed-responsive-16by9">
-		<iframe src="//player.vimeo.com/video/{{ $course->intro_vimeo }}"></iframe>
+		<iframe src="//player.vimeo.com/video/{{ $course->intro_vimeo }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 			</div>
       </div>
       <div class="modal-footer">

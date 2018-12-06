@@ -150,24 +150,8 @@ ul.sortable li{ border:1px solid #bfe0d9; background: #daf3ee;
 ul.sortable li:last-child{ margin-bottom: 0px; }
 ul.sortable li.current{ border:1px solid #17a085; }
 
-ul.list{ list-style:none;margin:10px;margin-left:15px; margin-right: 0px; margin-top: -10px;
-    border:0;border-left:1px solid #aedaff; padding: 5px 0px 0px; }
-
-ul.list li{  position:relative;margin:10px;padding:5px;padding-left: 10px; background:#e3f3ff;border:1px solid #aedaff; }
-ul.list-first{ padding-top:20px;margin: 5px; margin-top: -20px; margin-right: -5px; }
-
-
-ul.list li:before{
-    content:"";
-    position:absolute;
-    width:13px;
-    height:10px;
-    border: 1px solid;
-    left:-13px;
-    top:5px;
-    border-color: #aedaff transparent transparent transparent;
-}
-
+.premium { color:white;background: #16A085; font-size:11px; border:1px solid transparent; padding:3px 7px; border-radius: 5px; }
+.premium:hover{ opacity: 0.9 }
 /*question*/
 
 .qyellow{

@@ -11,10 +11,123 @@ use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Product\Test;
+use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\Product\Order;
 use PacketPrep\User;
 
 class AssessmentController extends Controller
 {
+
+
+    public function certificate($exam,$user,Request $request)
+    {
+
+        $user = User::where('username',$user)->first();
+        $exam = Exam::where('slug',$exam)->first();
+        $date = Test::where('test_id',$exam->id)
+                        ->where('user_id',$user->id)->first()->created_at;
+                        
+        return view('appl.exam.assessment.certificate')->with('date',$date)->with('user',$user)->with('exam',$exam);
+
+    }
+
+    public function certificate_sample(Request $request)
+    {
+
+        $user = User::where('username','shaadomanthra_xPk3N')->first();
+        $user->name = 'ROBINHOOD';
+        $exam = Exam::where('slug','proficiency-test')->first();
+
+        $date = Test::where('test_id',$exam->id)
+                        ->where('user_id',$user->id)->first()->created_at;
+                        
+        return view('appl.exam.assessment.certificate')->with('date',$date)->with('user',$user)->with('exam',$exam);
+
+    }
+
+    public function report($exam,$user,Request $request)
+    {
+
+        $user = User::where('username',$user)->first();
+        $exam = Exam::where('slug',$exam)->first();
+
+        $questions = array();
+        $i=0;
+        foreach($exam->sections as $section){
+            foreach($section->questions as $q){
+                $questions[$i] = $q;
+                    $i++;
+            }
+        }
+        
+        $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0];
+        $details['course'] = $exam->name;
+        $sum = 0;
+        $c=0; $i=0; $u=0;
+
+        $tests = Test::where('test_id',$exam->id)
+                        ->where('user_id',$user->id)->get();
+
+        foreach($tests as $key=>$t){
+
+            //dd($t->section->negative);
+            if(isset($t)){
+                $sum = $sum + $t->time;
+                $details['testdate'] = $t->created_at->diffForHumans();
+            }
+            
+            //$ques = Question::where('id',$q->id)->first();
+            if($t->response){
+                $details['attempted'] = $details['attempted'] + 1;  
+                if($t->accuracy==1){
+                    $details['c'][$c]['category'] = $t->question->categories->first();
+                    $details['c'][$c]['question'] = $t->question;
+                    $c++;
+                    $details['correct'] = $details['correct'] + 1;
+                    $details['marks'] = $details['marks'] + $t->section->mark;
+                }
+                else{
+                    $details['i'][$i]['category'] = $t->question->categories->first();
+                    $details['i'][$i]['question'] = $t->question;
+                    $i++;
+                    $details['incorrect'] = $details['incorrect'] + 1; 
+                    $details['marks'] = $details['marks'] - $t->section->negative; 
+                }
+
+                
+            }else{
+                $details['u'][$u]['category'] = $t->question->categories->first();
+                $details['u'][$u]['question'] = $t->question;
+                    $u++;
+                $details['unattempted'] = $details['unattempted'] + 1;  
+            }
+
+            $details['total'] = $details['total'] + $t->section->mark;
+
+        } 
+        $success_rate = $details['correct']/count($questions);
+        if($success_rate > 0.9)
+            $details['performance'] = 'Excellent';
+        elseif(0.7 < $success_rate && $success_rate < 0.9)
+            $details['performance'] = 'Good';
+        elseif(0.4 < $success_rate && $success_rate < 0.7)
+            $details['performance'] = 'Average';
+        else
+            $details['performance'] = 'Need to Improve';
+
+        $details['avgpace'] = round($sum / count($questions),2);
+        
+        
+        
+
+        return view('appl.exam.assessment.analysis-report')
+                        ->with('exam',$exam)
+                        ->with('user',$user)
+                        ->with('details',$details)
+                        ->with('chart',true);
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -59,6 +172,14 @@ class AssessmentController extends Controller
     public function instructions($test)
     {
         $exam = Exam::where('slug',$test)->first();
+
+        if($exam->status == 2){
+            $product = Product::where('slug',$test)->first();
+            $order = ORder::where('user_id',\auth::user()->id)->where('product_id',$product->id)->first();
+            if(!$order)
+                return view('appl.course.course.access');
+        }
+
         return view('appl.exam.assessment.instructions')
                 ->with('exam',$exam);
     }
@@ -72,6 +193,7 @@ class AssessmentController extends Controller
     public function try($test,$id=null, Request $request)
     {
         $exam = Exam::where('slug',$test)->first();
+
 
         $completed = 0;
 
@@ -407,13 +529,15 @@ class AssessmentController extends Controller
             if($t->response){
                 $details['attempted'] = $details['attempted'] + 1;  
                 if($t->accuracy==1){
-                    $details['c'][$c] = $t->question->categories->where('parent_id','<>','307')->first();
+                    $details['c'][$c]['category'] = $t->question->categories->first();
+                    $details['c'][$c]['question'] = $t->question;
                     $c++;
                     $details['correct'] = $details['correct'] + 1;
                     $details['marks'] = $details['marks'] + $t->section->mark;
                 }
                 else{
-                    $details['i'][$i] = $t->question->categories->where('parent_id','<>','307')->first();
+                    $details['i'][$i]['category'] = $t->question->categories->first();
+                    $details['i'][$i]['question'] = $t->question;
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
                     $details['marks'] = $details['marks'] - $t->section->negative; 
@@ -421,7 +545,8 @@ class AssessmentController extends Controller
 
                 
             }else{
-                $details['u'][$u] = $q->categories->where('parent_id','<>','307')->first();
+                $details['u'][$u]['category'] = $t->question->categories->first();
+                $details['u'][$u]['question'] = $t->question;
                     $u++;
                 $details['unattempted'] = $details['unattempted'] + 1;  
             }

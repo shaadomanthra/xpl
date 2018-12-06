@@ -35,6 +35,7 @@ class ChapterController extends Controller
      */
     public function index()
     {
+        
         return redirect()->route('docs.show',$this->doc->slug);
     }
 
@@ -96,6 +97,7 @@ class ChapterController extends Controller
      */
     public function show($doc_slug,$chapter_slug,Request $request)
     {
+
         $chapter = Chapter::where('slug',$chapter_slug)->first();
         $doc = Doc::where('slug',$doc_slug)->first();
 
@@ -124,6 +126,11 @@ class ChapterController extends Controller
 
         $chapter->prev =$chapter->next =null;
         $all_chapters = Chapter::defaultOrder()->whereDescendantOf(Chapter::where('slug',$doc_slug)->first())->pluck('slug');
+
+         $chapters = Chapter::defaultOrder()->whereDescendantOf($parent)->get();
+
+
+
         foreach($all_chapters as $key => $slug){
             if($slug == $chapter->slug)
             {
@@ -168,6 +175,7 @@ class ChapterController extends Controller
             return view('appl.content.chapter.show')
                     ->with('doc',$this->doc)
                     ->with('chapter',$chapter)
+                    ->with('chapters',$chapters)
                     ->with('parent',$parent)
                     ->with('list',$list);
         else

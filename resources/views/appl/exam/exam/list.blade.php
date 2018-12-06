@@ -21,10 +21,12 @@
                 </td>
                 <td>
                   @if($exam->status==0)
-                    <span class="badge badge-warning">Draft</span>
-                  @else
-                    <span class="badge badge-success">Published</span>
-                  @endif
+                <span class="badge badge-warning">Draft</span>
+                @elseif($exam->status==1)
+                  <span class="badge badge-success">Published</span>
+                @else
+                  <span class="badge badge-primary">Premium</span>
+                @endif
                 </td>
                 <td>{{ ($exam->created_at) ? $exam->created_at->diffForHumans() : '' }}</td>
               </tr>

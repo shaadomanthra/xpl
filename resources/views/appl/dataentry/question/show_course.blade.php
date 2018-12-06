@@ -179,6 +179,12 @@
       </div>
       @endif
 
+      @if( $details['response'])
+      <div class=" mt-3 border p-4 rounded mb-3">
+        @include('appl.pages.disqus')
+      </div>
+      @endif
+
     </div>
 
      <div class="col-md-3 pl-md-0">

@@ -31,7 +31,7 @@
 
 @if($category->video_link)
 <div class="embed-responsive embed-responsive-16by9 " style="background: #eee;">
-    <iframe src="//player.vimeo.com/video/{{ $category->video_link }}"></iframe>
+    <iframe src="//player.vimeo.com/video/{{ $category->video_link }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
   </div>
 
 @endif
@@ -78,6 +78,10 @@
     {!! $category->video_desc !!}
   </div>
   @endif
+
+  <div class=" mt-3 border p-4 rounded mb-3">
+        @include('appl.pages.disqus')
+      </div>
   </div>
 
 

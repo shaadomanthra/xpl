@@ -11,5 +11,5 @@ Payment Status : <b>{{$order['payment_status']}}</b><br>
 
 In case of any query kindly <a href="{{route('contact-corporate')}}">contact</a> our admin team.<br><br>
 Thanks,<br>
-Online Library
+PacketPrep
 @endcomponent
