@@ -36,6 +36,7 @@ define('PAYTM_TXN_URL', $PAYTM_TXN_URL);
 
 ?>
 
+
 <?php
 /*
 
@@ -47,8 +48,8 @@ define('PAYTM_TXN_URL', $PAYTM_TXN_URL);
 
 */
 define('PAYTM_ENVIRONMENT', 'PROD'); // PROD
-define('PAYTM_MERCHANT_KEY', 'ZkJs2jWo!RTdo2dh'); //Change this constant's value with Merchant key downloaded from portal
-define('PAYTM_MERCHANT_MID', 'QUEDBE62168345106047'); //Change this constant's value with MID (Merchant ID) received from Paytm
+define('PAYTM_MERCHANT_KEY', 'Jz@S6JTZM8XNTO9Z'); //Change this constant's value with Merchant key downloaded from portal
+define('PAYTM_MERCHANT_MID', 'QUEDBE78431242157062'); //Change this constant's value with MID (Merchant ID) received from Paytm
 define('PAYTM_MERCHANT_WEBSITE', 'WEBPROD'); //Change this constant's value with Website name received from Paytm
 
 /*$PAYTM_DOMAIN = "pguat.paytm.com";
