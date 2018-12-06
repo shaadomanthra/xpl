@@ -25,7 +25,7 @@
                     <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li> 
                    <li class="mr-3 "><a class="nav-link " href="{{ url('proficiency-test') }}"><i class="fa fa-gg"></i> Proficiency Test</a></li>
                     
-                    <li class="mr-3 "><a class="nav-link " href="{{ url('test') }}"><span class="premium"><i class="fa fa-bullseye"></i> Premium Access</span></a></li>
+                    <li class="mr-3 "><a class="nav-link " href="{{ url('premium') }}"><span class="premium"><i class="fa fa-bullseye"></i> Premium Access</span></a></li>
 
                     <!-- Authentication Links -->
                     @guest
