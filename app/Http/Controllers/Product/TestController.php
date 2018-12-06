@@ -10,7 +10,7 @@ use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Product\Product;
-use PacketPrep\Models\Product\ORder;
+use PacketPrep\Models\Product\Order;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\User;
 
@@ -358,7 +358,7 @@ class TestController extends Controller
         $order = null;
         if(\auth::user()){
             $product = Product::where('slug','proficiency-test')->first();
-            $order = ORder::where('user_id',\auth::user()->id)->where('product_id',$product->id)->first();
+            $order = Order::where('user_id',\auth::user()->id)->where('product_id',$product->id)->first();
         }
         return view('appl.product.test.proficiency')->with('order',$order)->with('exam',$exam);
 

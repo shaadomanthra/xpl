@@ -84,7 +84,7 @@ class OrderController extends Controller
 
 
           $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->user_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount;
-          
+          dd($data);
           header('Location: '.url('/').'/pgRedirect.php?'.$data);
         }else{
 
