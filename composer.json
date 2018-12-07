@@ -11,6 +11,7 @@
         "facebook/graph-sdk": "^5.6",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "^6.2",
+        "instamojo/instamojo-php": "^0.3.0",
         "intervention/image": "^2.4",
         "kalnoy/nestedset": "^4.3",
         "laracasts/flash": "^3.0",

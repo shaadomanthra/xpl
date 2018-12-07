@@ -87,6 +87,8 @@
 
 
           <div class="p-3">{!!$chapter->content!!}</div>
+
+         
           
           
           <span class="btn-group mt-4" role="group" aria-label="Basic example">
@@ -95,6 +97,12 @@
               <a href="{{ route('chapter.show',[$doc->slug,$chapter->prev]) }}" class="btn btn-outline-secondary" title="Previous Chapter"
                 ><i class="fa fa-angle-double-left"></i> prev</a>
                 @endif
+
+                 @can('create',$doc)
+           
+            <a href="{{route('chapter.edit',[$doc->slug,$chapter->slug])}}" class="btn btn-outline-secondary"  ><i class="fa fa-edit"></i></a>
+            <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
+            @endcan
               
                 @if($chapter->next) 
               <a href="{{ route('chapter.show',[$doc->slug,$chapter->next]) }}" class="btn btn-outline-secondary"  title="Next Chapter">next <i class="fa fa-angle-double-right"></i></a>

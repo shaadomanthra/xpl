@@ -9,11 +9,11 @@ require_once("./lib/encdec_paytm.php");
 $checkSum = "";
 $paramList = array();
 
-$ORDER_ID = $_GET["ORDER_ID"];
-$CUST_ID = $_GET["CUST_ID"];
-$INDUSTRY_TYPE_ID = $_GET["INDUSTRY_TYPE_ID"];
-$CHANNEL_ID = $_GET["CHANNEL_ID"];
-$TXN_AMOUNT = $_GET["TXN_AMOUNT"];
+$ORDER_ID = $_POST["ORDER_ID"];
+$CUST_ID = $_POST["CUST_ID"];
+$INDUSTRY_TYPE_ID = $_POST["INDUSTRY_TYPE_ID"];
+$CHANNEL_ID = $_POST["CHANNEL_ID"];
+$TXN_AMOUNT = $_POST["TXN_AMOUNT"];
 
 // Create an array having all required parameters for creating checksum.
 $paramList["MID"] = PAYTM_MERCHANT_MID;
@@ -23,9 +23,25 @@ $paramList["INDUSTRY_TYPE_ID"] = $INDUSTRY_TYPE_ID;
 $paramList["CHANNEL_ID"] = $CHANNEL_ID;
 $paramList["TXN_AMOUNT"] = $TXN_AMOUNT;
 $paramList["WEBSITE"] = PAYTM_MERCHANT_WEBSITE;
+$paramList["CALLBACK_URL"] = "http://localhost/xampp/RedirectionFlow/pgResponse.php";
+
+//$paramList["THEME"] = "merchant4";
+
+$paramList["AUTH_MODE"] = "USRPWD";
+$paramList["PAYMENT_TYPE_ID"] = 'PPI'; //PPI,CC,DC,NB
+$paramList["PAYMENT_MODE_ONLY"] = 'NO';
+
+
+
+
+
+//$paramList["AUTH_MODE"] = "3D";
+//$paramList["PAYMENT_TYPE_ID"] = 'NB'; //PPI,CC,DC,NB
+//$paramList["PAYMENT_MODE_ONLY"] = 'YES';
+//$paramList["BANK_CODE"] = "SYNBK";
 
 /*
-$paramList["CALLBACK_URL"] = "http://localhost/PaytmKit/pgResponse.php";
+$paramList["CALLBACK_URL"] = "http://localhost/xampp/RedirectionFlow/pgResponse.php";
 $paramList["MSISDN"] = $MSISDN; //Mobile number of customer
 $paramList["EMAIL"] = $EMAIL; //Email ID of customer
 $paramList["VERIFIED_BY"] = "EMAIL"; //

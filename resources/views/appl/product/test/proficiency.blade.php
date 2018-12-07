@@ -42,7 +42,7 @@
     
       <div class="row ">
         <div class="col-12 ">
-          <div class="bg-white p-4 border rounded mb-4">
+          <div class=" p-4 rounded mb-4" style="background: rgba(255, 232, 105, 0.68) !important;border:1px solid yellow;">
         <div class="row">
           <div class="col-12 col-md-9">
 

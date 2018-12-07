@@ -62,6 +62,9 @@
       <input type="hidden" name="_method" value="PUT">
       @endif
       <button type="submit" class="btn btn-info">Save</button>
+      <a href="">
+      <button type="button" class="btn btn-danger">Delete</button>
+      </a>
     </form>
     </div>
   </div>

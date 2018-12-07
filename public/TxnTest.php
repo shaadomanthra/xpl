@@ -38,7 +38,7 @@
 				<tr>
 					<td>3</td>
 					<td><label>INDUSTRY_TYPE_ID ::*</label></td>
-					<td><input id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="12" size="12" name="INDUSTRY_TYPE_ID" autocomplete="off" value="Retail"></td>
+					<td><input id="INDUSTRY_TYPE_ID" tabindex="4" maxlength="30" size="30" name="INDUSTRY_TYPE_ID" autocomplete="off" value="Retail"></td>
 				</tr>
 				<tr>
 					<td>4</td>
