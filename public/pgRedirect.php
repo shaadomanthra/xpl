@@ -31,6 +31,9 @@ $paramList["AUTH_MODE"] = "USRPWD";
 $paramList["PAYMENT_TYPE_ID"] = 'PPI'; //PPI,CC,DC,NB
 $paramList["PAYMENT_MODE_ONLY"] = 'NO';
 
+var_dump($paramList);
+exit();
+
 
 
 
