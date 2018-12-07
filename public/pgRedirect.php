@@ -23,7 +23,7 @@ $paramList["INDUSTRY_TYPE_ID"] = $INDUSTRY_TYPE_ID;
 $paramList["CHANNEL_ID"] = $CHANNEL_ID;
 $paramList["TXN_AMOUNT"] = $TXN_AMOUNT;
 $paramList["WEBSITE"] = PAYTM_MERCHANT_WEBSITE;
-$paramList["CALLBACK_URL"] = "http://localhost/xampp/RedirectionFlow/pgResponse.php";
+$paramList["CALLBACK_URL"] = "https://packetprep.com/pgResponse.php";
 
 //$paramList["THEME"] = "merchant4";
 
