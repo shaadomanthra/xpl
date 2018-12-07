@@ -74,7 +74,7 @@ class OrderController extends Controller
           $order->product_id = $request->get('product_id');
 
           
-          //dd($order);
+           //dd($order);
           $order->save();
           $order->payment_status = 'Pending';
           
