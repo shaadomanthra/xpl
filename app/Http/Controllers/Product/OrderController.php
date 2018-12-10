@@ -13,6 +13,7 @@ use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Product\Product;
 use PacketPrep\User;
 use Illuminate\Support\Facades\DB;
+use Instamojo as Instamojo;
 
 class OrderController extends Controller
 {
@@ -23,6 +24,8 @@ class OrderController extends Controller
 
       $product = $request->get('product');
       $test = $request->get('test');
+
+      
 
       if($product){
         $product = Product::where('slug',$product)->first();
@@ -38,6 +41,42 @@ class OrderController extends Controller
 
 
     }
+
+
+    public function instamojo(Request $request){
+    $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
+
+      try {
+          $response = $api->paymentRequestCreate(array(
+              "purpose" => "FIFA 16",
+              "amount" => "10",
+              "send_email" => false,
+              "email" => "krishnatejags@gmail.com",
+              "redirect_url" => "https://packetprep.com/payment_return"
+              ));
+          print_r($response);
+      }
+      catch (Exception $e) {
+          print('Error: ' . $e->getMessage());
+      }
+
+    }
+
+    public function instamojo_return(Request $request){
+
+      try {
+            $id = $request->get('id');
+            $response = $api->paymentRequestStatus([$id]);
+            print_r($response);
+        }
+        catch (Exception $e) {
+            print('Error: ' . $e->getMessage());
+        }
+
+
+    }
+
+
 
 	 /**
      * Redirect the user to the Payment Gateway.
