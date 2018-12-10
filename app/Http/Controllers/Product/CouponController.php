@@ -56,6 +56,33 @@ class CouponController extends Controller
                 ->with('obj',$obj)
                 ->with('app',$this);
     }
+
+
+    public function getamount($amount,$code)
+    {
+        $obj = Obj::where('code',$code)->first();
+        
+        if($obj){
+            if($obj->status == 0){
+                $status = 'Coupon Inactive';
+            }elseif(strtotime($obj->expiry) < strtotime(date('Y-m-d'))){
+                $status = 'Coupon Expired';
+            }else{
+                $amount = floor($amount * (1 - ($obj->percent / 100)));
+                $status = 'Coupon Successfully Added';
+            }
+
+            
+        }else{
+            $status = 'Invalid Coupon Code';
+        }
+
+        $data = (object)['amount'=>$amount,'status'=>$status];
+        $data = json_encode($data);
+        echo $data;
+
+        
+    }
    
 
     /**

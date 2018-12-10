@@ -26,7 +26,19 @@
     <tr>
 
       <td >Total Amount</td>
-      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> {{ $product->price }} </span></td>
+      <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> <span class="total">{{ $product->price }} </span></span></td>
+
+      
+    </tr>
+    <tr style="background: #eee">
+      <td ><div class="mb-2">Coupon Code (optional)</div><input type="text" class="form-control mb-2 coupon-input" name="coupon" id="formGroupExampleInput2" placeholder="" style="width:100px"
+          >
+          <input type="hidden" class="url"  id="" value="{{ url('/') }}" >
+          
+          <button class="btn btn-sm coupon-button" type="button">Add</button></td>
+      <td style="width:40%">
+          <span class="status"></span>
+      </td>
     </tr>
    
   </tbody>
@@ -35,16 +47,13 @@
 <div class="card bg-light mb-3"> 
   <div class="card-body">
     <div class="form-check mb-2">
-    <input class="form-check-input" type="hidden" name="txn_amount" value="{{ $product->price }}">
+    <input class="form-check-input amount" type="hidden" name="txn_amount" value="{{ $product->price }}">
     <input class="form-check-input" type="hidden" name="product_id"  value="{{ $product->id }}">
+
   <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="instamojo" checked> Pay Online
  
 </div>
-<div class="form-check ">
-  
- 
-  </label>
-</div>
+
   </div>
 </div>
 
@@ -52,7 +61,6 @@
 
 
 <button class="btn btn-lg btn-primary" type="submit">Next</button>
-
 
 </div>		
 </div>

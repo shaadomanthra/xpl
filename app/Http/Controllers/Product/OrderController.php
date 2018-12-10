@@ -11,6 +11,7 @@ use PacketPrep\Mail\OrderCreated;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\Product\Coupon;
 use PacketPrep\User;
 use Illuminate\Support\Facades\DB;
 use Instamojo as Instamojo;
@@ -126,6 +127,9 @@ class OrderController extends Controller
           $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
           try {
             
+
+            if($request->txn_amount<10)
+                return view('appl.product.pages.checkout_amount_less');
               //dd($request->all());
             $user = \auth::user();
             $o = Order::where('product_id',$request->get('product_id'))
@@ -166,6 +170,13 @@ class OrderController extends Controller
                 $o_check = Order::where('order_id',$order->order_id)->first();
                 if(!$o_check)
                   break;
+              }
+
+              if($request->get('coupon'))
+              {
+                $coupon = Coupon::where('code',$request->get('coupon'))->first();
+                if($coupon)
+                $order->coupon_id = $coupon->id;
               }
 
               $order->user_id = $user->id;

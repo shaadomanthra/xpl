@@ -24,11 +24,15 @@
     
       <div class="row ">
         <div class="col-12 ">
-          <div class="bg-white p-4 border rounded mb-4">
+          <div class=" p-4  rounded mb-4" style="background: rgba(75, 192, 192, 0.2); border:1px solid rgba(75, 192, 192, 1);">
         <div class="row">
           <div class="col-12 col-md-9">
-
-              <h1> Under Construction</h1>
+              <div class="display-3 mb-3">  Complete Access to</div>
+              <div class="display-1 text-bold mb-3">  PacketPrep Services </div>
+              <div class="display-3 pb-5">  for 2 years</div>
+              <a href="{{ route('checkout')}}?product=premium-access">
+                <button class="btn btn-outline-success btn-lg">Buy Now</button>
+              </a>
               
 
           </div>

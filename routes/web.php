@@ -155,6 +155,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	
 	Route::resource('/coupon', 'Product\CouponController')->middleware('auth');
+	Route::get('/coupon/getamount/{amount}/{code}', 'Product\CouponController@getamount');
 	
 	Route::get('/social', 'Social\MediaController@social')->name('social')->middleware('auth');
 	Route::post('/social/imageupload', 'Social\BlogController@image_upload')->name('imageupload');
