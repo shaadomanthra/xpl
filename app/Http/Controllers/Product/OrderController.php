@@ -88,6 +88,7 @@ class OrderController extends Controller
         if ($response->status=='Completed') {
           $order->payment_status = 'Successful';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
+        }
         
         return view('appl.product.pages.checkout_success')->with('order',$order);
             
