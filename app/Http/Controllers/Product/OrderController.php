@@ -66,6 +66,7 @@ class OrderController extends Controller
           { 
             $order = Order::where('order_id',$id)->first();
             $user = User::where('id',$order->user_id)->first();
+            $product = Product::where('id',$order->product_id)->first();
 
             $order->payment_mode = $response['payments'][0]['instrument_type'];
             $order->bank_txn_id = $response['payments'][0]['payment_id'];
