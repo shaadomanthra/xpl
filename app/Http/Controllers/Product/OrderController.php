@@ -90,7 +90,8 @@ class OrderController extends Controller
         }else{
 
         }
-        Mail::to($user->email)->send(new OrderCreated($user,$order));
+
+        //Mail::to($user->email)->send(new OrderCreated($user,$order));
         
     }
 
