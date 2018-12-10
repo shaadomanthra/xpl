@@ -5,7 +5,7 @@
               <tr>
                 <th scope="col">#({{$orders->total()}})</th>
                 <th scope="col">Order ID </th>
-                <th scope="col">Credits</th>
+                <th scope="col">Credited</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
               </tr>

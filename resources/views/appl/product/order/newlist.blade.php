@@ -5,7 +5,7 @@
               <tr>
                 <th scope="col">#({{$orders->total()}})</th>
                 <th scope="col">Order ID </th>
-                <th scope="col">Credits</th>
+                <th scope="col">Product</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
               </tr>
@@ -19,7 +19,7 @@
                   {{ $order->order_id }}
                   </a>
                 </td>
-                <td>{{ $order->credit_count }}</td>
+                <td>{{ (isset($order->product->name))?$order->product->name:'-' }}</td>
                 <td>
                   @if($order->status==0)
                     <span class="badge badge-warning">Pending</span>

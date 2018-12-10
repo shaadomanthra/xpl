@@ -20,4 +20,8 @@ class Order extends Model
         'credit_rate',
         // add all other fields
     ];
+
+     public function product(){
+        return $this->belongsTo('PacketPrep\Models\Product\Product');
+    }
 }

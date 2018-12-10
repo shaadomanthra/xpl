@@ -30,7 +30,7 @@
         </nav>
 
         <div id="search-items">
-         @include('appl.product.order.list')
+         @include('appl.product.order.newlist')
        </div>
 
  </div>

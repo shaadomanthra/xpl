@@ -33,6 +33,8 @@
 
           <dt class="col-sm-3">Transaction Amount</dt>
           <dd class="col-sm-9"><i class="fa fa-rupee"></i> {{ $order->txn_amount }}</dd>
+          <dt class="col-sm-3">Product</dt>
+          <dd class="col-sm-9">{{ (isset($order->product->name))?$order->product->name:'-' }}</dd>
           <dt class="col-sm-3">Status</dt>
           <dd class="col-sm-9"> @if($order->status==0)
                     <span class="badge badge-warning">Pending</span>
