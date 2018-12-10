@@ -72,7 +72,10 @@ $checkSum = getChecksumFromArray($paramList,PAYTM_MERCHANT_KEY);
 			<input type="hidden" name="CHECKSUMHASH" value="<?php echo $checkSum ?>">
 			</tbody>
 		</table>
-		
+		<script type="text/javascript">
+			document.f1.submit();
+		</script>
+	</form>
 	</form>
 </body>
 </html>
