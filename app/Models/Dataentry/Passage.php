@@ -15,4 +15,9 @@ class Passage extends Model
         'status',
         // add all other fields
     ];
+
+    public function questions()
+    {
+        return $this->hasMany('PacketPrep\Models\Dataentry\Question');
+    }
 }

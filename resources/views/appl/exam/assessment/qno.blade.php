@@ -1,11 +1,11 @@
-<div class="card bg-light mb-3 d-none d-md-block ">
+<div class="card mb-3 text-white d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
 		<h4> Timer</h4>
 		<h1 class="text-bold " id="timer"></h1>
 		
 		<br>
 
-		<div class="border p-2 mb-2 rounded">
+		<div class=" p-2 mb-2 rounded" style="border:2px solid #bb061c">
 		<div class="row ">
 			<div class="col-3">
 				

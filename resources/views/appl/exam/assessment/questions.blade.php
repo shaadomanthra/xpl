@@ -6,12 +6,12 @@
 
     <div class="col-md-9">
 
-      <div class=" mb-3 d-block d-md-none ">
-  <div class="">
+    <div class=" mb-3 d-block d-md-none ">
+  <div class="blogd text-white pl-3 pr-3 pb-2 pt-3 pb-2 rounded" style="background:#ca2428">
     <div class="mb-2 text-center"> Timer : <span class="text-bold " id="timer2"></span></div>
     
 
-    <div class="border bg-light p-2 mb-2 rounded">
+    <div class="p-2 mb-2 rounded" style="border:2px solid #bb061c">
     <div class="row ">
       <div class="col-3">
         
@@ -33,10 +33,10 @@
     <div class="question_block">
 
       @if($passage)
-      <div class="card mb-3">
+      <div class="card mb-3" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
         <div class="card-body">
           <b>Passage</b> <span class="btn view badge badge-warning" data-item="passage">view</span><br>
-          <div class="passage" style="display: none;">
+          <div class="passage pt-2" style="display: none;">
           {!! $passage->passage !!}
           </div>
         </div>
@@ -47,7 +47,7 @@
           
         <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3 " >
+        		<div class="pr-3 pb-2 " >
         			<div class="text-center p-1 rounded  w100 qno @if(!$details['response']) qyellow @else  qblue @endif "  style="" data-qqno="{{$question->id}}">
         				{{ $details['qno'] }}
         			</div>
@@ -63,7 +63,7 @@
         @if($question->a)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 border" >
                 
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="A" @if($details['response']=='A') checked @endif > A </div>
@@ -76,7 +76,7 @@
         @if($question->b)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 border" >
                 
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="B" @if($details['response']=='B') checked @endif>  B</div>
@@ -89,7 +89,7 @@
         @if($question->c)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 border" >
                 
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="C" @if($details['response']=='C')  checked @endif> C</div>
@@ -102,7 +102,7 @@
         @if($question->d)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 border" >
                 
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="D" @if($details['response']=='D') checked @endif>
@@ -115,8 +115,8 @@
 
         @if($question->e)
          <div class="row no-gutters">
-        	<div class="col-2 col-md-2">
-        		<div class="pr-3" >
+        	<div class="col-3 col-md-2">
+        		<div class="pr-3 pb-2" >
         	<div class="text-center p-1 rounded bg-light w100 border" > 
                 
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="E" @if($details['response']=='E') checked @endif
@@ -125,7 +125,7 @@
               </div>
         		</div>
         	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
+        	<div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
         </div>
         @endif
          
@@ -134,12 +134,10 @@
   
   	<div class="card mb-3">
          <div class="card-body">
-         	<button type="button" class="btn  btn-outline-primary testqno @if(!$details['prev']) d-none @endif" data-qno="{{$details['prev']}}" data-testname="{{$exam->slug}}">
+         	<button type="button" class="btn  btn-outline-primary mb-2 testqno @if(!$details['prev']) d-none @endif" data-qno="{{$details['prev']}}" data-testname="{{$exam->slug}}">
 	          <i class="fa fa-angle-double-left"></i> Previous
 	      </button>
-	        <button type="button" class="btn  btn-info qno-save mb-2" data-qno="{{$details['curr']}}">
-	          Save Response
-	      </button>
+	        
 	      <button type="button" class="btn  btn-secondary qno-clear mb-2" data-qno="{{$details['curr']}}">
 	          Clear Response
 	      </button>

@@ -52,8 +52,10 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('admin/edituser/{user}','Product\AdminController@edituser')->name('admin.user.edit')->middleware('auth');
 	Route::put('admin/updateuser/{user}','Product\AdminController@updateuser')->name('admin.user.update')->middleware('auth');
 	Route::get('admin/user/{user}','Product\AdminController@viewuser')->name('admin.user.view')->middleware('auth');
-	Route::get('admin/user/{user}/course','Product\AdminController@usercourse')->name('admin.user.course')->middleware('auth');
-	Route::post('admin/user/{user}/course','Product\AdminController@storeusercourse')->name('admin.user.course')->middleware('auth');
+	Route::get('admin/user/{user}/product','Product\AdminController@userproduct')->name('admin.user.product')->middleware('auth');
+	Route::post('admin/user/{user}/product','Product\AdminController@storeuserproduct')->name('admin.user.product')->middleware('auth');
+	Route::get('admin/user/{user}/product/{id}','Product\AdminController@edit_userproduct')->name('admin.user.product.edit')->middleware('auth');
+	Route::post('admin/user/{user}/product/{id}','Product\AdminController@update_userproduct')->name('admin.user.product.update')->middleware('auth');
 
 	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->name('pricing');
 
@@ -149,7 +151,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('test/{test}/{id}/clear','Exam\AssessmentController@clear')->name('assessment.clear');
 	
 	
-
+	Route::resource('/coupon', 'Product\CouponController')->middleware('auth');
 	
 	Route::get('/social', 'Social\MediaController@social')->name('social')->middleware('auth');
 	Route::post('/social/imageupload', 'Social\BlogController@image_upload')->name('imageupload');

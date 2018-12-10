@@ -153,8 +153,12 @@ $(document).ready(function() {
           //$($item).html(newstr);
         }
 
-        if(content)
-          $( $item ).replaceWith( '<div class="pt-1 '+element+'">'+content+'</div>' );
+        if(content){
+          if(element =='passage')
+          $( $item ).replaceWith( '<div class="pt-1 '+element+'" style="display:none">'+content+'</div>' );
+          else
+          $( $item ).replaceWith( '<div class="pt-2 '+element+'">'+content+'</div>' );
+        }
 
       });
       

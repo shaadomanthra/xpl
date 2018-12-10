@@ -19,6 +19,9 @@
                  <ul class="navbar-nav ml-auto mt-4 mt-md-0">
                     @guest
                     @else
+                    @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+                    <li><a class="nav-link" href="{{ route('admin.index') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+                    @endif
                     
                     @endguest
                     <li class="mr-3 "><a class="nav-link " href="{{ url('course') }}"><i class="fa fas fa-youtube-play"></i> Courses</a></li>

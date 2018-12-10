@@ -38,29 +38,42 @@
 				@endcan
 		</div>
 			@if(\auth::user())
-			@if(\auth::user()->courses()->find($course->id))
-			<h2 class="mt-3">Valid till</h2>
-			<div class="mb-3"><span class="badge badge-success">  {{date('d M Y', strtotime(\auth::user()->courses()->find($course->id)->pivot->valid_till))}}</span></div>
-			@else
-			<h2 class="mt-3">Validity</h2>
-			<div> 2 years </div>
-			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
-			@endif
+				@if($entry)
+				<h2 class="mt-3">Valid till</h2>
+				<div class="mb-3"><span class="badge badge-success">  {{date('d M Y', strtotime($entry->valid_till))}}</span></div>
+					@if($entry->status ==1)
+						@if(strtotime($entry->valid_till) > strtotime(date('Y-m-d')))
+						<h2 class="mt-3">Status</h2>
+						<div class="mb-3"><span class="badge badge-success">  Active</span></div>
+						@else
+						<h2 class="mt-3">Status</h2>
+						<div class="mb-3"><span class="badge badge-danger">  Expired</span></div>
+						@endif
+					@elseif($entry->status == 0)
+						<h2 class="mt-3">Status</h2>
+						<div class="mb-3"><span class="badge badge-secondary">  Disabled</span></div>
+					@endif
+
+				@endif
+				
 			@else
 			<h2 class="mt-3">Validity</h2>
 			<div> 2 years </div>
 			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
 			@endif
 			
+			
 			@if($course->intro_vimeo)
 			<button class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#myModal"><i class ="fa fa-video-camera"></i> Watch Intro</button>
 			@endif
 			@if(\auth::user())
-			@if(!\auth::user()->courses()->find($course->id))
-			<a href="{{ route('checkout') }}?product={{ $course->slug }}">
-			<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
-			</a>
-			@endif
+				@if(\auth::user()->productvalidity($course->slug)==2)
+				<a href="{{ route('checkout') }}?product={{ $course->slug }}">
+				<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
+				</a>
+
+				@endif
+			
 			@else
 			<a href="{{ route('checkout') }}?product={{ $course->slug }}">
 			<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>

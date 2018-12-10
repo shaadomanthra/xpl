@@ -6,8 +6,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use PacketPrep\Models\User\Role;
 use PacketPrep\Models\Product\Client;
+use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\User\User_Details;
 use PacketPrep\Notifications\MailResetPasswordToken;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -59,6 +61,40 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('credits','validity','created_at','valid_till');
     }
 
+    public function products(){
+        return $this->belongsToMany('PacketPrep\Models\Product\Product')->withPivot('status','validity','created_at','valid_till');
+    }
+
+    public function productvalid($slug){
+        $product_id = Product::where('slug',$slug)->first()->id;
+        $user_id = \auth::user()->id;
+
+        $entry = DB::table('product_user')
+                ->where('product_id', $product_id)
+                ->where('user_id', $user_id)
+                ->first();
+        if(!$entry)       
+            return 2;
+
+
+        if(strtotime($entry->valid_till) > strtotime(date('Y-m-d')))
+            return 0;
+        elseif($entry->status==0)
+            return -1;
+        else
+            return 1;
+    }
+
+    public function productvalidity($slug){
+        $product_id = Product::where('slug',$slug)->first()->id;
+        $user_id = \auth::user()->id;
+
+        $entry = DB::table('product_user')
+                ->where('product_id', $product_id)
+                ->where('user_id', $user_id)
+                ->first();
+        return $entry->valid_till;
+    }
     
 
     public function repositories()

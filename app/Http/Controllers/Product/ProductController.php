@@ -67,6 +67,7 @@ class ProductController extends Controller
             $product->slug = $request->slug;
             $product->description = ($request->description) ? $request->description: null;
             $product->price = $request->price;
+            $product->status = $request->status;
             $product->save(); 
 
             flash('A new product('.$request->name.') is created!')->success();
@@ -140,6 +141,7 @@ class ProductController extends Controller
             $product->slug = $request->slug;
             $product->description = ($request->description) ? $request->description: null;
             $product->price = $request->price;
+            $product->status = $request->status;
             $product->save(); 
 
             flash('Product (<b>'.$request->name.'</b>) Successfully updated!')->success();

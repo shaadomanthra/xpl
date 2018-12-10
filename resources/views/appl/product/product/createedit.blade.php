@@ -56,6 +56,7 @@
             @endif
         </textarea>
       </div>
+
       <div class="form-group">
         <label for="formGroupExampleInput ">Price</label>
         <input type="number" class="form-control" name="price" id="formGroupExampleInput" placeholder="Enter the Price" 
@@ -65,6 +66,13 @@
             value = "{{ $product->price }}"
             @endif
           >
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Status</label>
+        <select class="form-control" name="status">
+          <option value="0" @if(isset($product)) @if($product->status==0) selected @endif @endif >Private</option>
+          <option value="1" @if(isset($product)) @if($product->status==1) selected @endif @endif > Public</option>
+        </select>
       </div>
 
       <button type="submit" class="btn btn-info">Save</button>

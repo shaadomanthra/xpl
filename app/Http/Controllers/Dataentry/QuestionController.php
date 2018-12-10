@@ -13,6 +13,7 @@ use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Course\Practice;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Section;
+use PacketPrep\Models\Product\Product;
 use Illuminate\Support\Facades\DB;
 
 
@@ -292,10 +293,15 @@ class QuestionController extends Controller
         
         $tests = ['test1','test2','test3','test4','test5'];
         $course = Course::where('slug',$project_slug)->first();
-        if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','client-owner']))
-        if(!\auth::user()->courses()->where('course_id',$course->id)->count() || $course->validityExpired())
+
+        $product = Product::where('slug',$project_slug)->first();
+
+        if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','client-owner'])){
+        if(!\auth::user()->products()->where('product_id',$product->id)->count() || $product->validityExpired())
         {
             return view('appl.course.course.access');
+        }
+
         }
 
         if($category_slug == 'uncategorized')

@@ -13,7 +13,7 @@ use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\User;
-
+use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
@@ -353,14 +353,16 @@ class TestController extends Controller
 
     public function proficiency_test(Request $request)
     {
-
         $exam = Exam::where('slug','proficiency-test')->first();
-        $order = null;
-        if(\auth::user()){
-            $product = Product::where('slug','proficiency-test')->first();
-            $order = Order::where('user_id',\auth::user()->id)->where('product_id',$product->id)->first();
+        $user = \Auth::user();
+        $entry=null;
+        if($user){
+        $entry = DB::table('product_user')
+                ->where('product_id', '7')
+                ->where('user_id', $user->id)
+                ->first();
         }
-        return view('appl.product.test.proficiency')->with('order',$order)->with('exam',$exam);
+        return view('appl.product.test.proficiency')->with('entry',$entry)->with('exam',$exam);
 
     }
 

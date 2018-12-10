@@ -11,7 +11,7 @@
     </div>
     <div class="col-12 col-md-4">
 
-    @if($order == null)
+    @if(!$entry)
       <a href="{{ route('checkout') }}?product=proficiency-test">
       <button class="btn btn-outline-primary float-right mt-2">Buy Now</button>
       </a>
@@ -106,7 +106,7 @@
             <p>A verified certificate from PacketPrep can provide proof for an employer, company or other institution that you have successfully completed an online course and took the assessment. </p>
             
 
-            @if($order == null)
+            @if(!$entry)
       <a href="{{ route('certificate.sample') }}">
       <button class="btn btn-outline-light">View Sample</button>
       </a>

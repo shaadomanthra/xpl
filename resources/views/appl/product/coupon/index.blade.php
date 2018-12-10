@@ -4,27 +4,25 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin')}}">Admin</a></li>
-    <li class="breadcrumb-item">Products</li>
+    <li class="breadcrumb-item">{{ ucfirst($app->module) }}</li>
   </ol>
 </nav>
 
 @include('flash::message')
 <div  class="row ">
 
-  <div class="col-12 col-md-9">
+  <div class="col-md-12">
  
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-inbox"></i> Products </a>
+          <a class="navbar-brand"><i class="fa fa-bars"></i> {{ ucfirst($app->module) }} </a>
 
-          
-          <form class="form-inline" method="GET" action="{{ route('product.index') }}">
-            
-            @can('create',$product)
-            <a href="{{route('product.create')}}">
-              <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Create product</button>
+          <form class="form-inline" method="GET" action="{{ route($app->module.'.index') }}">
+
+            @can('create',$obj)
+            <a href="{{route($app->module.'.create')}}">
+              <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Create {{ ucfirst($app->module) }}</button>
             </a>
             @endcan
             <div class="input-group ">
@@ -39,15 +37,12 @@
         </nav>
 
         <div id="search-items">
-         @include('appl.product.product.list')
+         @include('appl.'.$app->app.'.'.$app->module.'.list')
        </div>
 
      </div>
    </div>
  </div>
- <div class="col-md-3 pl-md-0">
-      @include('appl.product.snippets.adminmenu')
-    </div>
 </div>
 
 @endsection

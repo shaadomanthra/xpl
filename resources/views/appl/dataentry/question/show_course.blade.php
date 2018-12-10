@@ -19,12 +19,12 @@
   </div>
 </div>
 
-<div class="d-block d-md-none mb-3">
-  <div class="bg-light border rounded p-3">
+<div class="d-block d-md-none mb-3" >
+  <div class=" blogd text-white rounded p-3" style="background:#ca2428">
     <div class="row ">
       <div class="col-3">
         @if($details['prev'])
-        <a href="{{ $details['prev'] }}">
+        <a class="white-link" href="{{ $details['prev'] }}">
         <div class=" w100 p-1 text-center pl-2"><i class="fa fa-angle-double-left"></i></div>
         </a>
         @endif
@@ -32,7 +32,7 @@
       <div class="col-6"> <div class="mt-1 text-center">Q({{$details['qno']}}/{{ count($questions) }})</div></div>
       <div class="col-3"> 
         @if($details['next'])
-        <a href="{{ $details['next'] }}">
+        <a class="white-link"  href="{{ $details['next'] }}">
         <div class=" w100 p-1 text-center mr-3"><i class="fa fa-angle-double-right"></i></div>
         </a>
         @endif
@@ -48,10 +48,10 @@
     <div class="col-md-9">
 
       @if($passage)
-      <div class="card mb-3">
-        <div class="card-body">
-          <b>Passage</b> <span class="btn view badge badge-warning" data-item="passage">view</span><br>
-          <div class="passage" style="display: none;">
+      <div class=" mb-3" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
+        <div class="p-3" >
+          <b class="">Passage</b> <span class="btn view badge badge-warning" data-item="passage">view</span><br>
+          <div class="passage pt-2" style="display: none;">
           {!! $passage->passage !!}
           </div>
         </div>
@@ -62,7 +62,7 @@
           
         <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3 " >
+        		<div class="pr-3 pb-2 " >
         			<div class="text-center p-1 rounded  w100 @if(!$details['response']) qyellow @else @if($details['response']->accuracy ==1) qgreen @else qred @endif @endif "  style="">
         				{{ $details['qno'] }}
         			</div>
@@ -78,7 +78,7 @@
         @if($question->a)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2 " >
         			<div class="text-center p-1 rounded bg-light w100  {{ $question->color($details['response'],'A')}}" >
                 @if(!$details['response']) 
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="A"> @endif A </div>
@@ -91,7 +91,7 @@
         @if($question->b)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 {{ $question->color($details['response'],'B')}}" >
                 @if(!$details['response'])
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="B"> @endif B</div>
@@ -104,7 +104,7 @@
         @if($question->c)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 {{ $question->color($details['response'],'C')}}" >
                 @if(!$details['response'])
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="C"> @endif C</div>
@@ -117,7 +117,7 @@
         @if($question->d)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 {{ $question->color($details['response'],'D')}}" >
                 @if(!$details['response'])
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="D">
@@ -130,8 +130,8 @@
 
         @if($question->e)
          <div class="row no-gutters">
-        	<div class="col-2 col-md-2">
-        		<div class="pr-3" >
+        	<div class="col-3 col-md-2">
+        		<div class="pr-3 pb-2" >
         	<div class="text-center p-1 rounded bg-light w100 {{ $question->color($details['response'],'E')}}" > 
                 @if(!$details['response'])
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="E">@endif 
@@ -139,7 +139,7 @@
               </div>
         		</div>
         	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
+        	<div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
         </div>
         @endif
          
@@ -162,10 +162,31 @@
     @endif
 
       @if($question->answer && $details['response'])
-      <div class="card mb-3 ">
+      <div class="card bg-light mb-3 ">
       	<div class="card-body">
-      		<h3>Answer</h3>
-      		<div class="answer">{!! $question->answer !!}</div>
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <div class="bg-light p-3 border rounded mb-3 mb-md-0">
+                <h3><i class="fa fa-lightbulb-o"></i> Correct Answer</h3>
+                <div class="answer">{!! $question->answer !!}</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="bg-light p-3 border rounded mb-3 mb-md-0" >
+
+                <h3><i class="fa fa-flash"></i> Your Response</h3>
+                <div class="answer">{{ $details['response']->response }}</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="bg-light p-3 border rounded" >
+
+                <h3><i class="fa fa-clock-o"></i> Response Time</h3>
+                <div class="answer">{{ $details['response']->time}} sec</div>
+              </div>
+            </div>
+          </div>
+      		
       	</div>
       </div>
       @endif

@@ -29,7 +29,7 @@ $paramList["CALLBACK_URL"] = "https://packetprep.com/pgResponse.php";
 
 $paramList["AUTH_MODE"] = "USRPWD";
 $paramList["PAYMENT_TYPE_ID"] = 'PPI'; //PPI,CC,DC,NB
-$paramList["PAYMENT_MODE_ONLY"] = 'NO';
+$paramList["PAYMENT_MODE_ONLY"] = 'YES';
 
 
 
@@ -72,9 +72,7 @@ $checkSum = getChecksumFromArray($paramList,PAYTM_MERCHANT_KEY);
 			<input type="hidden" name="CHECKSUMHASH" value="<?php echo $checkSum ?>">
 			</tbody>
 		</table>
-		<script type="text/javascript">
-			document.f1.submit();
-		</script>
+		
 	</form>
 </body>
 </html>

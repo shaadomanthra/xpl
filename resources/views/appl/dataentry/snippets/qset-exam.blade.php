@@ -1,4 +1,4 @@
-<div class="card bg-light mb-3 d-none d-md-block ">
+<div class="card mb-3 d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
 		<div class="text-bold ">Exam</div>
 		<a href="{{ route('exam.show',$exam->slug)}}">

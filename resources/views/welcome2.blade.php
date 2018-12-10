@@ -33,27 +33,31 @@
 
             <br><br>
 
-        @if(count(auth::user()->courses)!=0)
+        @if(count(auth::user()->products)!=0)
             <table class="table table-responsive ">
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Course</th>
+                  <th scope="col">Product</th>
                   <th scope="col">Valid till</th>
                   <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach(auth::user()->courses as $k=>$course)
+                @foreach(auth::user()->products as $k=>$product)
                  <tr>
                   <th scope="row">{{ $k+1}}</th>
-                  <td>{{$course->name}}</td>
-                  <td>{{date('d M Y', strtotime($course->pivot->valid_till))}}</td>
+                  <td>{{$product->name}}</td>
+                  <td>{{date('d M Y', strtotime($product->pivot->valid_till))}}</td>
                   <td> 
-                    @if(strtotime($course->pivot->valid_till) > strtotime(date('Y-m-d')))
-                    <span class="badge badge-success">Active</span>
+                    @if(strtotime($product->pivot->valid_till) > strtotime(date('Y-m-d')))
+                      @if($product->pivot->status==1)
+                      <span class="badge badge-success">Active</span>
+                      @else
+                      <span class="badge badge-secondary">Disabled</span>
+                      @endif
                     @else
-                    <span class="badge badge-secondary">Expired</span>
+                        <span class="badge badge-danger">Expired</span>
                     @endif
                   </td>
                 </tr>

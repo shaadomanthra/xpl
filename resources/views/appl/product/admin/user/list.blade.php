@@ -6,7 +6,6 @@
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
                 <th scope="col">Email</th>
-                <th scope="col">Credits</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
               </tr>
@@ -21,7 +20,7 @@
                   </a>
                 </td>
                 <td>{{ $user->email }}</td>
-                <td>{{ ($user->courses->sum('pivot.credits'))? $user->courses->sum('pivot.credits') : '-'}}</td>
+                
                 <td>
                   @if($user->status==0)
                     <span class="badge badge-secondary">Inactive</span>

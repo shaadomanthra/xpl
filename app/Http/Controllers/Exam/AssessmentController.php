@@ -14,6 +14,7 @@ use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
 use PacketPrep\User;
+use Illuminate\Support\Facades\DB;
 
 class AssessmentController extends Controller
 {
@@ -175,8 +176,15 @@ class AssessmentController extends Controller
 
         if($exam->status == 2){
             $product = Product::where('slug',$test)->first();
-            $order = ORder::where('user_id',\auth::user()->id)->where('product_id',$product->id)->first();
-            if(!$order)
+            $user = \Auth::user();
+            $entry=null;
+            if($user){
+            $entry = DB::table('product_user')
+                    ->where('product_id', $product->id)
+                    ->where('user_id', $user->id)
+                    ->first();
+            }
+            if(!$entry)
                 return view('appl.course.course.access');
         }
 
@@ -368,6 +376,7 @@ class AssessmentController extends Controller
                 if($test){
                     $details['response'] = $test->response;
                     $details['accuracy'] = $test->accuracy;
+                    $details['time'] = $test->time;
                 }else{
                     $details['response'] = null;
                 }

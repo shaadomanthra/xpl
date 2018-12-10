@@ -8,6 +8,7 @@
                 <th scope="col">Products </th>
                 <th scope="col">Description</th>
                 <th scope="col">Price</th>
+                <th scope="col">Status</th>
                 <th scope="col">Created at</th>
               </tr>
             </thead>
@@ -24,7 +25,14 @@
                   {!! $product->description !!}
                 </td>
                 <td>
-                  {{ $product->price }}
+                  <i class="fa fa-rupee"></i>{{ $product->price }}
+                </td>
+                <td>
+                  @if($product->status==0)
+                    <span class="badge badge-warning">Private</span>
+                  @else
+                    <span class="badge badge-success">Public</span>
+                  @endif
                 </td>
                 <td>{{ ($product->created_at) ? $product->created_at->diffForHumans() : '' }}</td>
               </tr>

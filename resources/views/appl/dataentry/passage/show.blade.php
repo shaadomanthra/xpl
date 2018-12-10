@@ -18,6 +18,28 @@
         <div>
           {!! $passage->passage !!}
         </div>
+
+        <div class="bg-light border p-3 rounded">
+          <div class="pb-2">Questions ({{ count($passage->questions) }})</div>
+
+          @foreach($passage->questions as $k=>$question)
+          @if($k!=0)
+          {{ ','}}
+          <a href=" {{ route('question.show',[$project->slug,$question->id]) }} ">
+                  <span>
+                    {!! $question->id !!}
+                  </span>
+                  </a>
+          
+          @else
+          <a href=" {{ route('question.show',[$project->slug,$question->id]) }} ">
+                  <span>
+                    {!! $question->id !!}
+                  </span>
+                  </a>
+           @endif       
+          @endforeach
+        </div>
         
         @can('update',$passage)
            <span class="btn-group mt-4" role="group" aria-label="Basic example">

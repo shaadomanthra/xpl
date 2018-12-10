@@ -3,11 +3,10 @@
 	<a href="{{ route('admin.index') }}" class="list-group-item list-group-item-action {{ request()->is('admin') ? 'active' : ''}}">
 		<i class="fa fa-dashboard"></i> Admin Home 
 	</a>
-	<a href="{{ route('admin.user')}}" class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : ''}}"><i class="fa fa-user"></i> User Accounts</a>
-	<a href="{{ route('admin.image')}}" class="list-group-item list-group-item-action {{ request()->is('admin/image') ? 'active' : ''}}"><i class="fa fas fa-image"></i> Update Logo</a>
-	<a href="{{ route('order.buy')}}" class="list-group-item list-group-item-action {{ request()->is('admin/buy') ? 'active' : ''}}"><i class="fa fa-rupee"></i> Buy Credits</a>
-	<a href="{{ route('order.list')}}" class="list-group-item list-group-item-action {{ request()->is('admin/transactions') ? 'active' : ''}}"><i class="fa fas fa-shopping-cart"></i> Transactions</a>
-
-	<a href="{{ route('admin.settings')}}" class="list-group-item list-group-item-action {{ request()->is('admin/settings') ? 'active' : ''}}"><i class="fa fa-gear"></i> Settings</a>
+	<a href="{{ route('admin.user')}}" class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : ''}}"><i class="fa fa-user"></i> Users</a>
+	<a href="{{ route('product.index')}}" class="list-group-item list-group-item-action {{ request()->is('product*') ? 'active' : ''}}"><i class="fa fa-inbox"></i> Products</a>
+	<a href="{{ route('material')}}" class="list-group-item list-group-item-action {{ request()->is('material') ? 'active' : ''}}"><i class="fa fa-telegram"></i> Material</a>
+	<a href="{{ route('exam.index')}}" class="list-group-item list-group-item-action {{ request()->is('exam') ? 'active' : ''}}"><i class="fa fa-th"></i> Exams</a>
+	
 
 </div>

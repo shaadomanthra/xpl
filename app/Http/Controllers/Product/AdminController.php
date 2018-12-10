@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\User\Role;
 use PacketPrep\User;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -27,12 +28,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $slug = subdomain();
-        $client = client::where('slug',$slug)->first();
-        $this->authorize('view', $client);
+        //$slug = subdomain();
+        //$client = client::where('slug',$slug)->first();
+        //$this->authorize('view', $client);
 
 
-        return view('appl.product.admin.index')->with('client',$client);
+        return view('appl.product.admin.index');//->with('client',$client);
     }
 
 
@@ -184,33 +185,27 @@ class AdminController extends Controller
      */
     public function user(Request $request)
     {
-        $slug = subdomain();
-        $client = client::where('slug',$slug)->first();
         $user = new User();
         $search = $request->search;
         $item = $request->item;
-        $users = $user->where('client_slug',$slug)->where(function ($query) use ($item) {
+        $users = $user->where(function ($query) use ($item) {
                                 $query->where('name','LIKE',"%{$item}%")
                                       ->orWhere('email', 'LIKE', "%{$item}%");
-                            })->paginate(config('global.no_of_records'));
+                            })->orderBy('created_at','desc')->paginate(config('global.no_of_records'));
         
         $view = $search ? 'list': 'index';
 
-        return view('appl.product.admin.user.'.$view)->with('client',$client)->with('users',$users);
+        return view('appl.product.admin.user.'.$view)->with('users',$users);
     }
 
     public function adduser(Request $request)
     {
-        $slug = subdomain();
-        $client = client::where('slug',$slug)->first();
 
-        return view('appl.product.admin.user.createedit')->with('client',$client)->with('stub','Create');
+        return view('appl.product.admin.user.createedit')->with('stub','Create');
     }
 
     public function storeuser(Request $request)
     {
-        $slug = subdomain();
-        $client = client::where('slug',$slug)->first();
         
 
         list($u, $domain) = explode('@', $request->email);
@@ -231,7 +226,6 @@ class AdminController extends Controller
 
         $parts = explode("@", $request->email);
         $username = $parts[0];
-        $client_slug = $client->slug;
         $password = str_random(5);
 
         $user = User::where('username',$username)->first();
@@ -249,7 +243,6 @@ class AdminController extends Controller
             'name' => $request->name,
             'username' => $username,
             'email' => $request->email,
-            'client_slug' => $client_slug,
             'password' => bcrypt($password),
             'activation_token' => $password,
             'status'=>1,
@@ -266,28 +259,20 @@ class AdminController extends Controller
 
     public function viewuser($id,Request $request)
     {
-        $slug = subdomain();
-        $client = client::where('slug',$slug)->first();
         $user = User::where('username',$id)->first();
-
-
-        return view('appl.product.admin.user.show')->with('client',$client)->with('user',$user);
+        return view('appl.product.admin.user.show')->with('user',$user);
     }
 
     public function edituser($id,Request $request)
     {
-        $slug = subdomain();
-        $client = client::where('slug',$slug)->first();
         $user = User::where('username',$id)->first();
 
-        return view('appl.product.admin.user.createedit')->with('client',$client)->with('user',$user)->with('stub','Update');
+        return view('appl.product.admin.user.createedit')->with('user',$user)->with('stub','Update');
     } 
 
 
     public function updateuser($id,Request $request)
     {
-        $slug = subdomain();
-        $client = client::where('slug',$slug)->first();
         $user = User::where('username',$id)->first();
 
         $user->name = $request->get('name');
@@ -298,27 +283,64 @@ class AdminController extends Controller
         return redirect()->route('admin.user.view',$user->username);
     } 
 
-    public function usercourse($id)
+    public function userproduct($id)
     {
-        $slug = subdomain();
-        $client = client::where('slug',$slug)->first();
+        $products = Product::where('status',1)->get();
         $user = User::where('username',$id)->first();
-        return view('appl.product.admin.user.addusercourse')->with('client',$client)->with('user',$user);
+        return view('appl.product.admin.user.adduserproduct')->with('products',$products)->with('user',$user);
     } 
 
-    public function storeusercourse($id,Request $request)
+    public function storeuserproduct($id,Request $request)
     {
-        $slug = subdomain();
-        $client = client::where('slug',$slug)->first();
+        //dd($request->all());
         $user = User::where('username',$id)->first();
-
-        $credits = Course::where('id',$request->get('course_id'))->first()->price;
 
         $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(($request->get('validity'))*31).' days'));
-        $user->courses()->attach($request->get('course_id'),['validity'=>$request->get('validity'),'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'client_id'=>$client->id,'credits'=>$credits]);
 
-        flash('Course successfully added!')->success();
+        if($request->get('product_id')!=-1){
+            if(!$user->products->contains($request->get('product_id'))){
+                $product = Product::where('id',$request->get('product_id'))->first();
+                if($product->status!=0)
+                $user->products()->attach($request->get('product_id'),['validity'=>$request->get('validity'),'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>$request->get('status')]);
+            }
+        }else{
+            $products = Product::all();
+            foreach($products as $product){
+                if(!$user->products->contains($product->id))
+                if($product->status!=0)
+                $user->products()->attach($product->id,['validity'=>$request->get('validity'),'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>$request->get('status')]);
+            }
+
+        }
+
+        flash('Product successfully added!')->success();
         return redirect()->route('admin.user.view',$user->username);
     } 
+
+
+    public function edit_userproduct($id,$product_id){
+        $products = Product::where('status',1)->get();
+        $product = Product::where('id',$product_id)->first();
+        $user = User::where('id',$id)->first();
+        return view('appl.product.admin.user.edituserproduct')
+                ->with('products',$products)
+                ->with('product',$product)
+                ->with('user',$user);
+    }
+
+    public function update_userproduct($id,$product_id,Request $request){
+        //dd($request->all());
+        $user = User::where('id',$id)->first();
+
+        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(($request->get('validity'))*31).' days'));
+
+        $status = $request->get('status');
+        $validity = $request->get('validity');
+
+        Product::update_pivot($product_id,$id,$validity,$status,$valid_till);
+
+        flash('Product successfully updated!')->success();
+        return redirect()->route('admin.user.view',$user->username);
+    }
 
 }

@@ -11,10 +11,14 @@
       @if($passage)
       <div class="card mb-3">
         <div class="card-body">
-          <b>Passage</b> <span class="btn view badge badge-warning" data-item="passage">view</span><br>
-          <div class="passage" style="display: none;">
+          <b class="pb-2">Passage</b>@can('update',$passage)
+              <a href="{{ route('passage.edit',['project'=>$project->slug,'passage'=>$passage->id]) }}" class="btn  float-right" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+              <a href="{{ route('passage.show',['project'=>$project->slug,'passage'=>$passage->id]) }}" class="btn  float-right" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-eye"></i></a>
+          @endcan <span class="btn view badge badge-warning" data-item="passage">view</span>
+          <div style="display: none;" class="passage pt-2" >
           {!! $passage->passage !!}
           </div>
+          
         </div>
       </div>
       @endif
@@ -23,7 +27,7 @@
           
         <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3 " >
+        		<div class="pr-3 pb-2 " >
         			<div class="text-center p-1 rounded  w100 "  style="background:#F8EFBA;border:1px solid #e4d998;">
         				{{ $details['qno'] }}
         			</div>
@@ -35,7 +39,7 @@
         @if($question->a)
          <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 border" >A</div>
         		</div>
         	</div>
@@ -46,7 +50,7 @@
         @if($question->b)
          <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 border" >B</div>
         		</div>
         	</div>
@@ -57,7 +61,7 @@
         @if($question->c)
          <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 border" >C</div>
         		</div>
         	</div>
@@ -68,7 +72,7 @@
         @if($question->d)
          <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 border" >D</div>
         		</div>
         	</div>
@@ -79,7 +83,7 @@
         @if($question->e)
          <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 border" >E</div>
         		</div>
         	</div>

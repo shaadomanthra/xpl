@@ -60,7 +60,7 @@
           
         <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3 " >
+        		<div class="pr-3 pb-2 " >
         			<div class="text-center p-1 rounded  w100 qyellow"  style="">
         				{{ $details['qno'] }}
         			</div>
@@ -80,7 +80,7 @@
         @if($question->a)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100  " >
                  A </div>
         		</div>
@@ -92,7 +92,7 @@
         @if($question->b)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 " >
                  B</div>
         		</div>
@@ -104,7 +104,7 @@
         @if($question->c)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 " >
                C</div>
         		</div>
@@ -116,7 +116,7 @@
         @if($question->d)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 rounded bg-light w100 " >
                  D</div>
         		</div>
@@ -128,7 +128,7 @@
         @if($question->e)
          <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 pb-2" >
         	<div class="text-center p-1 rounded bg-light w100 " > 
                 
                 E

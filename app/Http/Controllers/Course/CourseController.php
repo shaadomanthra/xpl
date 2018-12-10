@@ -12,6 +12,7 @@ use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Examtype;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -99,16 +100,12 @@ class CourseController extends Controller
         $product = Product::where('slug',$id)->first();
 
         $user = \Auth::user();
-        if($product && $user){
-            $order = Order::where('product_id',$product->id)->where('user_id',$user->id)->orderBy('id', 'desc')->first();
-            if($order)
-            if($order->status == 1){
-            $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
-
-            if(!$user->courses->contains($course->id))
-                $user->courses()->attach($course->id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'client_id'=>4,'credits'=>1]);
-            }
-        }
+        $entry=null;
+        if($user)
+        $entry = DB::table('product_user')
+                ->where('product_id', $product->id)
+                ->where('user_id', $user->id)
+                ->first();
         
 
        // dd($user->courses()->find($course->id));
@@ -154,6 +151,7 @@ class CourseController extends Controller
                     ->with('ques_count',$ques_count)
                     ->with('exams',$exams)
                     ->with('project',$project)
+                    ->with('entry',$entry)
                     ->with('nodes',$nodes);
         else
             abort(404);
@@ -168,12 +166,14 @@ class CourseController extends Controller
     public function video($course,$category)
     {
 
-
+        $product = Product::where('slug',$course)->first();
         $course = Course::where('slug',$course)->first();
+
+        
         
 
         if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','client-owner'])){
-        if(!\auth::user()->courses()->where('course_id',$course->id)->count() || $course->validityExpired())
+        if(!\auth::user()->products()->where('product_id',$product->id)->count() || $product->validityExpired())
         {
             return view('appl.course.course.access');
         }

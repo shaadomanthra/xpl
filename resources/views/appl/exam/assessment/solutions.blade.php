@@ -5,7 +5,8 @@
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
     <li class="breadcrumb-item"><a href="{{ route('assessment.index') }}">Online Tests</a></li>
-    <li class="breadcrumb-item">{{ ucfirst($exam->name) }} </li>
+
+    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.analysis',$exam->slug)}}">{{ ucfirst($exam->name) }} - Analysis </a></li>
     <li class="breadcrumb-item">Solutions </li>
   </ol>
 </nav>
@@ -141,11 +142,32 @@
       </div>
   
   	
-    @if($question->answer )
-      <div class="card mb-3 bg-light">
+      @if($question->answer )
+      <div class="card bg-light mb-3 ">
         <div class="card-body">
-          <h3>Answer</h3>
-          <div class="answer">{!! $question->answer !!}</div>
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <div class="bg-light p-3 border rounded mb-3 mb-md-0">
+                <h3><i class="fa fa-lightbulb-o"></i> Correct Answer</h3>
+                <div class="answer">{!! $question->answer !!}</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="bg-light p-3 border rounded mb-3 mb-md-0" >
+
+                <h3><i class="fa fa-flash"></i> Your Response</h3>
+                <div class="p-1">{{ ($details['response'])?$details['response']:'-' }}</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="bg-light p-3 border rounded" >
+
+                <h3><i class="fa fa-clock-o"></i> Response Time</h3>
+                <div class="p-1">{{ $details['time']}} sec</div>
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
       @endif

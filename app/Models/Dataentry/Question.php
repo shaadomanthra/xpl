@@ -50,7 +50,7 @@ class Question extends Model
 
     public function passage()
     {
-        return $this->hasOne('PacketPrep\Models\Dataentry\Passage');
+        return $this->belongsTo('PacketPrep\Models\Dataentry\Passage');
     }
 
     public function project()

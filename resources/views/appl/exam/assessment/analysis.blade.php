@@ -43,7 +43,7 @@
 			<div class="col-12 col-md-4 mb-3">
 				<div class="card p-3" style="">
 					<div class="p-2">
-						<canvas id="myChart" width="295" height="250"></canvas>
+						<canvas id="myChart" width="295" height="228"></canvas>
 
 					</div>
 				</div>
@@ -89,7 +89,7 @@
 		</div>
 		@endif
 
-			<div class="card mb-3 "  style="">
+			<div class="card mb-3 "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
 			<div class="card-body">
 				<h1> Concept Breakup</h1>
 				<p>
@@ -105,7 +105,9 @@
 						@if($item['category']['name'])
 						<div class="mb-3">
 							<div class="">{{ ucfirst($item['category']['name']) }}</div>
-							<a href="{{route('course.show',$item['question']->project->slug)}}#{{$item['category']['slug']}}"><div class="text-small"><small><i class="fa fa-youtube-play"></i> Learn Now </small></div></a>
+							<div class="blogd">
+							<a class="orange-link" href="{{route('course.show',$item['question']->project->slug)}}#{{$item['category']['slug']}}"><div class="text-small"><small><i class="fa fa-youtube-play"></i> Learn Now </small></div></a>
+							</div>
 						</div>
 						@endif
 						@endforeach
@@ -125,7 +127,9 @@
 						@if($item['category']['name'])
 						<div class="mb-3">
 							<div class="">{{ ucfirst($item['category']['name']) }}</div>
-							<a href="{{route('course.show',$item['question']->project->slug)}}#{{$item['category']['slug']}}"><div class="text-small"><small><i class="fa fa-youtube-play"></i> Learn Now </small></div></a>
+							<div class="blogd">
+							<a class="orange-link" href="{{route('course.show',$item['question']->project->slug)}}#{{$item['category']['slug']}}"><div class="text-small"><small><i class="fa fa-youtube-play"></i> Learn Now </small></div></a>
+							</div>
 						</div>
 						@endif
 						@endforeach
@@ -144,7 +148,9 @@
 						@if($item['category']['name'])
 						<div class="mb-3">
 							<div class="">{{ ucfirst($item['category']['name']) }}</div>
-							<a href="{{route('course.show',$item['question']->project->slug)}}#{{$item['category']['slug']}}"><div class="text-small"><small><i class="fa fa-youtube-play"></i> Learn Now </small></div></a>
+							<div class="blogd">
+							<a class="orange-link" href="{{route('course.show',$item['question']->project->slug)}}#{{$item['category']['slug']}}"><div class="text-small"><small><i class="fa fa-youtube-play"></i> Learn Now </small></div></a>
+							</div>
 						</div>
 						@endif
 						@endforeach

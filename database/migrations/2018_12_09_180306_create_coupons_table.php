@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateDocsTable extends Migration
+class CreateCouponsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class UpdateDocsTable extends Migration
      */
     public function up()
     {
-        Schema::table('docs', function (Blueprint $table) {
-            $table->string('image')->nullable();
+        Schema::create('coupons', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('code');
+            $table->integer('percent');
+            $table->integer('status');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class UpdateDocsTable extends Migration
      */
     public function down()
     {
-        Schema::table('docs', function (Blueprint $table) {
-            $table->dropColumn(['image']);
-        });
+        Schema::dropIfExists('coupons');
     }
 }
