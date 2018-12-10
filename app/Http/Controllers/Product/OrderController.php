@@ -140,22 +140,23 @@ class OrderController extends Controller
               
               $response = $api->paymentRequestCreate(array(
                   "buyer_name" => $user->name,
-                  "purpose" => $product->description,
-                  "amount" => $order->txn_amount,
+                  "purpose" => strip_tags($product->description),
+                  "amount" =>  $request->txn_amount,
                   "send_email" => false,
                   "email" => $user->email,
                   "redirect_url" => "https://packetprep.com/order_payment"
                   ));
 
+              //dd($response);
               $order = new Order();
-              $order->order_id = $response->id;
+              $order->order_id = $response['id'];
 
               $o_check = Order::where('order_id',$order->order_id)->first();
               while($o_check){
                 $response = $api->paymentRequestCreate(array(
                   "buyer_name" => $user->name,
-                  "purpose" => $product->description,
-                  "amount" => $order->txn_amount,
+                  "purpose" => strip_tags($product->description),
+                  "amount" =>  $request->txn_amount,
                   "send_email" => false,
                   "email" => $user->email,
                   "redirect_url" => "https://packetprep.com/order_payment"
@@ -180,7 +181,7 @@ class OrderController extends Controller
 
               
 
-              return Redirect::to($response->longurl);
+              return redirect($response['longurl']);
 
           }
           catch (Exception $e) {
