@@ -49,7 +49,7 @@ class OrderController extends Controller
       try {
           $response = $api->paymentRequestCreate(array(
               "purpose" => "FIFA 16",
-              "amount" => "10",
+              "amount" => "5",
               "send_email" => false,
               "email" => "krishnatejags@gmail.com",
               "redirect_url" => "https://packetprep.com/payment_return"
