@@ -27,10 +27,10 @@ $paramList["CALLBACK_URL"] = "https://packetprep.com/pgResponse.php";
 
 //$paramList["THEME"] = "merchant4";
 
-
+/*
 $paramList["AUTH_MODE"] = "USRPWD";
 $paramList["PAYMENT_TYPE_ID"] = 'PPI'; //PPI,CC,DC,NB
-$paramList["PAYMENT_MODE_ONLY"] = 'YES';
+$paramList["PAYMENT_MODE_ONLY"] = 'YES';*/
 
 
 
