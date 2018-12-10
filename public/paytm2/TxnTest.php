@@ -14,7 +14,7 @@
 	<h1>Merchant Check Out Page</h1>
 	<pre>
 	</pre>
-	<form method="post" action="pgRedirect.php">
+	<form method="get" action="pgRedirect.php">
 		<table border="1">
 			<tbody>
 				<tr>
