@@ -37,7 +37,7 @@
     <div class="form-check mb-2">
     <input class="form-check-input" type="hidden" name="txn_amount" value="{{ $product->price }}">
     <input class="form-check-input" type="hidden" name="product_id"  value="{{ $product->id }}">
-  <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="paytm" checked> paytm
+  <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="instamojo" checked> Pay Online
  
 </div>
 <div class="form-check ">

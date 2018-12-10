@@ -46,19 +46,7 @@ class OrderController extends Controller
     public function instamojo(Request $request){
     $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
 
-      try {
-          $response = $api->paymentRequestCreate(array(
-              "purpose" => "FIFA 16",
-              "amount" => "10",
-              "send_email" => false,
-              "email" => "krishnatejags@gmail.com",
-              "redirect_url" => "https://packetprep.com/payment_return"
-              ));
-          dd($response);
-      }
-      catch (Exception $e) {
-          print('Error: ' . $e->getMessage());
-      }
+      
 
     }
 
@@ -73,6 +61,36 @@ class OrderController extends Controller
             }
             else
               echo "input the id";
+
+          if($response->status=='Completed')
+          { 
+            $order = Order::where('order_id',$id)->first();
+            $user = User::where('id',$order->user_id)->first();
+
+            $order->payment_mode = $response['payment']['instrument_type'];
+            $order->bank_txn_id = $response['payment']['payment_id'];
+            $order->bank_name = $response['payment']['billing_instrument'];
+            $order->txn_id = $response['payment']['payment_id'];
+            if($response->status=='Completed'){
+              $order->status = 1;
+              $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
+              if(!$user->products->contains($product->id))
+              $user->products()->attach($order->product_id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+            }
+            else{
+              $order->status = 2;
+              
+            }
+
+            $order->save();
+          }
+
+        if ($response->status=='Completed') {
+          $order->payment_status = 'Successful';
+          Mail::to($user->email)->send(new OrderSuccess($user,$order));
+        
+        return view('appl.product.pages.checkout_success')->with('order',$order);
+            
         }
         catch (Exception $e) {
             print('Error: ' . $e->getMessage());
@@ -90,47 +108,87 @@ class OrderController extends Controller
      */
     public function order(Request $request)
     {
-        //dd($request->all());
-        $user = \auth::user();
-        $o = Order::where('product_id',$request->get('product_id'))
-              ->where('user_id',$user->id)->first();
-
-
-        if($o)
-        if($o->status == 1 ){
-          return view('appl.product.pages.checkout_denail')->with('order',$o);
-        }
-        if($request->type=='paytm'){
-          
-          $order = new Order();
-          $order->order_id = 'ORD_'.rand(100000,999999);
-
-          $o_check = Order::where('order_id',$order->order_id)->first();
-          while($o_check){
-            $order->order_id = 'ORD_'.rand(100000,999999);
-            $o_check = Order::where('order_id',$order->order_id)->first();
-            if(!$o_check)
-              break;
-          }
-
-          $order->user_id = $user->id;
-          $order->txn_amount = $request->txn_amount;
-          $order->status=0;
-          $order->product_id = $request->get('product_id');
-
-          
-           //dd($order);
-          $order->save();
-          $order->payment_status = 'Pending';
+        
           
           //Mail::to($user->email)->send(new OrderSuccess($user,$order));
         
           //return view('appl.product.pages.checkout_success')->with('order',$order);
 
 
-          $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->user_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount;
+          /* paytm
+          $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->user_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount; 
           
-          header('Location: '.url('/').'/pgRedirect.php?'.$data);
+          header('Location: '.url('/').'/pgRedirect.php?'.$data); */
+          if($request->type=='instamojo'){
+
+          $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
+          try {
+            
+              //dd($request->all());
+            $user = \auth::user();
+            $o = Order::where('product_id',$request->get('product_id'))
+                  ->where('user_id',$user->id)->first();
+            $product = Product::where('id',$request->get('product_id'))->first();
+
+
+            if($o)
+            if($o->status == 1 ){
+              return view('appl.product.pages.checkout_denail')->with('order',$o);
+            }
+            
+              
+              $response = $api->paymentRequestCreate(array(
+                  "buyer_name" => $user->name,
+                  "purpose" => $product->description,
+                  "amount" => $order->txn_amount,
+                  "send_email" => false,
+                  "email" => $user->email,
+                  "redirect_url" => "https://packetprep.com/order_payment"
+                  ));
+
+              $order = new Order();
+              $order->order_id = $response->id;
+
+              $o_check = Order::where('order_id',$order->order_id)->first();
+              while($o_check){
+                $response = $api->paymentRequestCreate(array(
+                  "buyer_name" => $user->name,
+                  "purpose" => $product->description,
+                  "amount" => $order->txn_amount,
+                  "send_email" => false,
+                  "email" => $user->email,
+                  "redirect_url" => "https://packetprep.com/order_payment"
+                  ));
+                $order->order_id = $response->id;
+                $o_check = Order::where('order_id',$order->order_id)->first();
+                if(!$o_check)
+                  break;
+              }
+
+              $order->user_id = $user->id;
+              $order->txn_amount = $request->txn_amount;
+              $order->status=0;
+              $order->product_id = $request->get('product_id');
+
+              
+               //dd($order);
+              $order->save();
+              $order->payment_status = 'Pending';
+
+              
+
+              
+
+              return Redirect::to($response->longurl);
+
+          }
+          catch (Exception $e) {
+              print('Error: ' . $e->getMessage());
+          }
+
+
+
+          
         }else{
 
         }

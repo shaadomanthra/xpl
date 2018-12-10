@@ -19,9 +19,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	Route::get('/', function(){ return view('welcome'); })->name('root');
 	Route::post('/', 'Product\OrderController@callback');
-	Route::get('/instamojo', 'Product\OrderController@instamojo');
-	Route::get('/payment_return', 'Product\OrderController@instamojo_return');
-	Route::post('/payment_return', 'Product\OrderController@instamojo_return');
+	Route::get('/instamojo', 'Product\OrderController@instamojo')->middleware('auth');
+	Route::get('/order_payment', 'Product\OrderController@instamojo_return');
+	Route::post('/order_payment', 'Product\OrderController@instamojo_return');
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
 
