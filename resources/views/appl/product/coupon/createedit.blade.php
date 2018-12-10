@@ -40,6 +40,10 @@
             @endif
           >
       </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Expiry</label>
+      <input type="text" class="form-control" name="expiry"   value="{{isset($obj->expiry)? \carbon\carbon::parse($obj->expiry)->format('Y-m-d'):''}}" id="datepicker">
+      </div>
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>

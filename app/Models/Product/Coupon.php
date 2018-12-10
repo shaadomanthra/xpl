@@ -13,7 +13,8 @@ class Coupon extends Model
     protected $fillable = [
         'code',
         'percent',
-        'status'
+        'status',
+        'expiry'
         // add all other fields
     ];
 }
