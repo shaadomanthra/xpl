@@ -57,7 +57,7 @@ class OrderController extends Controller
             //dd($id);
             if($id){
             $response = $api->paymentRequestStatus($id);
-            dd($response);
+            //dd($response);
             }
             else
               echo "input the id";
