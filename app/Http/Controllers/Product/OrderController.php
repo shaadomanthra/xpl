@@ -67,10 +67,10 @@ class OrderController extends Controller
             $order = Order::where('order_id',$id)->first();
             $user = User::where('id',$order->user_id)->first();
 
-            $order->payment_mode = $response['payments']['instrument_type'];
-            $order->bank_txn_id = $response['payments']['payment_id'];
-            $order->bank_name = $response['payments']['billing_instrument'];
-            $order->txn_id = $response['payments']['payment_id'];
+            $order->payment_mode = $response['payments'][0]['instrument_type'];
+            $order->bank_txn_id = $response['payments'][0]['payment_id'];
+            $order->bank_name = $response['payments'][0]['billing_instrument'];
+            $order->txn_id = $response['payments'][0]['payment_id'];
             if($response['status']=='Completed'){
               $order->status = 1;
               $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
