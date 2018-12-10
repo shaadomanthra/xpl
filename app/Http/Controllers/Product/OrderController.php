@@ -57,12 +57,12 @@ class OrderController extends Controller
             //dd($id);
             if($id){
             $response = $api->paymentRequestStatus($id);
-            dd($response);
+            //dd($response);
             }
             else
               echo "input the id";
 
-          if($response->status=='Completed')
+          if($response['status']=='Completed')
           { 
             $order = Order::where('order_id',$id)->first();
             $user = User::where('id',$order->user_id)->first();
@@ -71,7 +71,7 @@ class OrderController extends Controller
             $order->bank_txn_id = $response['payment']['payment_id'];
             $order->bank_name = $response['payment']['billing_instrument'];
             $order->txn_id = $response['payment']['payment_id'];
-            if($response->status=='Completed'){
+            if($response['status']=='Completed'){
               $order->status = 1;
               $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
               if(!$user->products->contains($product->id))
@@ -85,7 +85,7 @@ class OrderController extends Controller
             $order->save();
           }
 
-        if ($response->status=='Completed') {
+        if ($response['status']=='Completed') {
           $order->payment_status = 'Successful';
           Mail::to($user->email)->send(new OrderSuccess($user,$order));
         }
