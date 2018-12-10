@@ -54,7 +54,7 @@ class OrderController extends Controller
               "email" => "krishnatejags@gmail.com",
               "redirect_url" => "https://packetprep.com/payment_return"
               ));
-          print_r($response);
+          dd($response);
       }
       catch (Exception $e) {
           print('Error: ' . $e->getMessage());
@@ -66,8 +66,13 @@ class OrderController extends Controller
       $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
       try {
             $id = $request->get('id');
-            $response = $api->paymentRequestStatus([$id]);
-            print_r($response);
+            //dd($id);
+            if($id){
+            $response = $api->paymentRequestStatus($id);
+            dd($response);
+            }
+            else
+              echo "input the id";
         }
         catch (Exception $e) {
             print('Error: ' . $e->getMessage());
