@@ -25,9 +25,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
 
-	Route::get('/dashboard',function(){ return view('welcome2'); })->name('dashboard')->middleware('auth');
+	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
-	Route::get('/premium',function(){ return view('appl.pages.premium'); })->name('premium');
+	Route::get('/premium','Product\ProductController@premium')->name('premium');
 	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');
 	Route::get('/refund',function(){ return view('appl.product.pages.refund'); })->name('refund');
 	Route::get('/disclaimer',function(){ return view('appl.product.pages.disclaimer'); })->name('disclaimer');

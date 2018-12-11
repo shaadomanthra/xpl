@@ -76,8 +76,20 @@ class OrderController extends Controller
             if($response['status']=='Completed'){
               $order->status = 1;
               $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
-              if(!$user->products->contains($product->id))
-              $user->products()->attach($order->product_id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+
+              if(!$user->products->contains($product->id)){
+
+                $user->products()->attach($order->product_id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+
+                if($product->slug=='premium-access'){
+                  $products = Product::all();
+                  foreach($products as $product){
+                      if(!$user->products->contains($product->id))
+                      if($product->status!=0)
+                      $user->products()->attach($product->id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                  }
+                }
+              }
             }
             else{
               $order->status = 2;

@@ -5,6 +5,12 @@ namespace PacketPrep\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\Product\Order;
+use Illuminate\Support\Facades\Mail;
+use PacketPrep\Mail\OrderSuccess;
+use PacketPrep\Mail\OrderCreated;
+use Illuminate\Support\Facades\DB;
+use Instamojo as Instamojo;
 
 class ProductController extends Controller
 {
@@ -28,6 +34,81 @@ class ProductController extends Controller
 
         return view('appl.product.product.'.$view)
         ->with('products',$products)->with('product',$product);
+    }
+
+
+    public function premium(Request $request)
+    {
+        $product = Product::where('slug','premium-access')->first();
+        $user = \Auth::user();
+        $entry=null;
+        if($user){
+        $entry = DB::table('product_user')
+                ->where('product_id', $product->id)
+                ->where('user_id', $user->id)
+                ->first();
+        }
+        return view('appl.pages.premium')->with('entry',$entry);
+    }
+
+    public function welcome(Request $request)
+    {
+        $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
+      try {
+
+          $user = \auth::user();
+          $orders = Order::where('user_id',$user->id)->get();
+
+          foreach($orders as $order){
+            if($order->status == 0)
+            {
+                $response = $api->paymentRequestStatus($order->order_id);
+
+                if($response['status']=='Completed')
+                  { 
+                
+                    $product = Product::where('id',$order->product_id)->first();
+
+                    $order->payment_mode = $response['payments'][0]['instrument_type'];
+                    $order->bank_txn_id = $response['payments'][0]['payment_id'];
+                    $order->bank_name = $response['payments'][0]['billing_instrument'];
+                    $order->txn_id = $response['payments'][0]['payment_id'];
+                    if($response['status']=='Completed'){
+                      $order->status = 1;
+                      $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
+
+                      if(!$user->products->contains($product->id)){
+
+                        
+
+                        if($product->slug=='premium-access'){
+                          $products = Product::all();
+                          foreach($products as $product){
+                              if(!$user->products->contains($product->id))
+                              if($product->status!=0)
+                              $user->products()->attach($product->id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                          }
+                        }else{
+                            $user->products()->attach($order->product_id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                        }
+                      }
+                    }
+                    $order->save();
+                    if ($response['status']=='Completed') {
+                      $order->payment_status = 'Successful';
+                      Mail::to($user->email)->send(new OrderSuccess($user,$order));
+                    }
+                }
+            }
+            
+            }
+        }
+        catch (Exception $e) {
+            print('Error: ' . $e->getMessage());
+        }
+
+
+        return view('welcome2');
     }
 
     
