@@ -53,6 +53,13 @@
 						<h2 class="mt-3">Status</h2>
 						<div class="mb-3"><span class="badge badge-secondary">  Disabled</span></div>
 					@endif
+				@else
+				<h2 class="mt-3">Validity</h2>
+			<div> 2 years </div>
+			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
+			<a href="{{ route('checkout') }}?product={{ $course->slug }}">
+			<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
+			</a>
 
 				@endif
 				

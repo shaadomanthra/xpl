@@ -93,7 +93,10 @@ class User extends Authenticatable
                 ->where('product_id', $product_id)
                 ->where('user_id', $user_id)
                 ->first();
+        if($entry)
         return $entry->valid_till;
+        else
+        return null;
     }
     
 
