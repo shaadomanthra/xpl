@@ -175,14 +175,14 @@
               <div class="bg-light p-3 border rounded mb-3 mb-md-0" >
 
                 <h3><i class="fa fa-flash"></i> Your Response</h3>
-                <div class="answer">{{ $details['response']->response }}</div>
+                <div class="">{{ $details['response']->response }}</div>
               </div>
             </div>
             <div class="col-12 col-md-4">
               <div class="bg-light p-3 border rounded" >
 
                 <h3><i class="fa fa-clock-o"></i> Response Time</h3>
-                <div class="answer">{{ $details['response']->time}} sec</div>
+                <div class="">{{ $details['response']->time}} sec</div>
               </div>
             </div>
           </div>

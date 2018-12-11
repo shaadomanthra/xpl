@@ -392,6 +392,7 @@ class QuestionController extends Controller
                 $details['course'] = Course::where('slug',$project_slug)->first();
                 $details['response'] = $question->practice($question->id);
 
+                //dd($details);
                 session(['start' => microtime(true)]) ;
 
                 
