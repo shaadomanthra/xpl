@@ -23,7 +23,7 @@
 		
 		@foreach($exam->sections as $section)
 				@if(count($exam->sections)!=1)
-				<div class="card mb-1 "><div class="card-body p-1 ">{{$section->name}}</div></div>
+				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
 				@endif
 				<div class="row no-gutters ">
 

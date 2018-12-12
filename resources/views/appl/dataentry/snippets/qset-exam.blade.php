@@ -1,18 +1,18 @@
 <div class="card mb-3 d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
-		<div class="text-bold ">Exam</div>
-		<a href="{{ route('exam.show',$exam->slug)}}">
+		<div class="text-bold " style="color:#da737f">Exam</div>
+		<a class="white-link" href="{{ route('exam.show',$exam->slug)}}">
 		<h2>
 		{{ $exam->name }}
 		</h2>
 		</a>
 		<br>
 
-		<div class="border p-2 mb-2 rounded">
+		<div class="p-2 mb-2 rounded text-white" style="border:2px solid #bb061c">
 		<div class="row ">
 			<div class="col-3">
 				@if($details['prev'])
-				<a href="{{ $details['prev'] }}">
+				<a class="white-link" href="{{ $details['prev'] }}">
 				<div class=" w100 p-1 text-center pl-2"><i class="fa fa-angle-double-left"></i></div>
 				</a>
 				@endif
@@ -20,7 +20,7 @@
 			<div class="col-6"> <div class="mt-1 text-center">Q({{ count($questions) }})</div></div>
 			<div class="col-3"> 
 				@if($details['next'])
-				<a href="{{ $details['next'] }}">
+				<a class="white-link" href="{{ $details['next'] }}">
 				<div class=" w100 p-1 text-center mr-3"><i class="fa fa-angle-double-right"></i></div>
 				</a>
 				@endif
@@ -32,12 +32,12 @@
 
 			
 			@foreach($exam->sections as $section)
-				<div class="card mb-1 "><div class="card-body p-1 ">{{$section->name}}</div></div>
+				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
 				<div class="row no-gutters">
 
 				@foreach($section->questions as $k=> $q)
 				<div class="col-3 mb-1">
-				<a href="{{ route('exam.question',[$exam->slug,$q->id]) }}">
+				<a class="white-link" href="{{ route('exam.question',[$exam->slug,$q->id]) }}">
 				<div class="pr-1">
 				<div class="w100 p-1 text-center rounded @if($q->id==$question->id) active @endif 
 					@if($q->practice($q->id)) @if($q->practice($q->id)->accuracy == 0) qred-border @else qgreen-border @endif @else qborder  @endif" id="q{{ ($q->id )}}"

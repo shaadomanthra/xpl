@@ -586,7 +586,7 @@ class QuestionController extends Controller
     {
         
         $exam = Exam::where('slug',$exam_slug)->first();
-
+        $exams =  Exam::orderBy('name','desc ')->get();
 
         if($id == null)
         if(count($exam->sections)!=0)
@@ -650,6 +650,7 @@ class QuestionController extends Controller
                         ->with('passage',$passage)
                         ->with('details',$details)
                         ->with('exam',$exam)
+                        ->with('exams',$exams)
                         ->with('questions',$questions);
             }else
                 abort('404','Question not found');

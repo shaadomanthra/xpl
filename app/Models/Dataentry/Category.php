@@ -73,7 +73,7 @@ class Category extends Model
                 $d= $d.'</li>';
             }else{
 
-                if($category->video_link)
+                if($category->video_link){
                $d = $d.'<li class="item" id="'.$category->slug.'" >
                <a href="'.route('course.category.video',
                 [   
@@ -83,17 +83,23 @@ class Category extends Model
                 ]
 
                 ).'"><i class="fa fa-play-circle-o"></i> '.$category->name.'</a>&nbsp';
-               else
-                $d = $d.'<li class="item" id="'.$category->slug.'" >
-               <i class="fa fa-bars"></i> '.$category->name.'&nbsp';
 
 
-               if(count($category->category_tag_questions($category,session('exam')))!=0)
-            $d = $d.
-            '<a href="'.route('course.question',[$options['project']->slug,$category->slug,''])
-            .'"><span class="badge badge-warning"> Practice Questions</span></a> </li>'; 
-            else
-                $d=$d.'</li>';
+                   if(count($category->category_tag_questions($category,session('exam')))!=0)
+                    $d = $d.
+                        '<a href="'.route('course.question',[$options['project']->slug,$category->slug,''])
+                        .'"><span class="badge badge-warning"> Practice '.count(Category::category_tag_questions($category,session('exam'))).'Q</span></a> </li>'; 
+                    else
+                    $d=$d.'</li>';
+
+               }else{
+                    $d = $d;
+
+               }
+                
+
+
+               
 
             }
             

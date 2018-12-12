@@ -2,13 +2,13 @@
  <div class="row ">
     
   @foreach($exams as $key=>$exam)  
-  @if($exam->status ==1)
+  @if($exam->status !=0)
 <div class="col-12 col-md-4 mb-4"> 
   
           <div class="bg-white border">
             <div  style="background: #ebf3f7">&nbsp;</div>
               <div class="card-body">
-                <span class="badge badge-warning">Test #{{ $exam->slug }}</span>
+                <span class="badge badge-warning">#{{ $exam->slug }}</span>
                   <h1>{{ $exam->name }}</h1>
                     {{ $exam->question_count() }} Questions | {{ $exam->time() }} min<br>
 

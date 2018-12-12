@@ -66,29 +66,80 @@
           <div class="bg-white p-4 border rounded mb-4">
         <h1 class="bg-light p-3 border mb-3"> Syllabus</h1>
         <div class="row">
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-6">
+
             <h3> Quantitative Aptitude</h3>
-            <ul>
+            <div class="row">
+            <div class="col-12 col-md-6">
+              <ul>
               <li>Number System</li>
               <li>LCM HCF</li>
-
+              <li>Decimal Fractions</li>
+              <li>Simplifications</li>
+              <li>Squares and Square Roots</li>
+              <li>Average</li>
+              <li> Problems on Numbers</li>
+              <li>Problems on Ages</li>
+              <li>Surds and Indices</li>
+              <li>Percentage</li>
+              <li>Profit and Loss</li>
+              <li>Partnership</li>
+              <li>Chain Rule</li>
+              <li>Time and Work</li>
 
             </ul>
+
+            </div>
+            <div class="col-12 col-md-6">
+              <ul>
+
+              <li>Pipes and Cisterns</li>
+              <li>Time and Distance</li>
+              <li>Problems on Trains</li>
+              <li>Boats and streams</li>
+              <li>Alligation or Mixture</li>
+              <li>Simple Interest</li>
+              <li>Compound Interest</li>
+              <li>Logarithms</li>
+              <li>Area</li>
+              <li>Volume and Surface Area</li>
+              <li>Calendar</li>
+              <li>Clocks</li>
+              <li>Permutation and Combinations</li>
+              <li>Probability</li>
+              <li>Heights and Distances</li>
+            </ul>
+            </div>
+            </div>
+            
           </div>
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-3">
             <h3> Mental Ability</h3>
             <ul>
-              <li>Number System</li>
-              <li>LCM HCF</li>
+              <li>Series Completion</li>
+              <li>Analogy</li>
+              <li>Sequential Output Tracing</li>
+              <li>Classification</li>
+              <li>Logical Venn Diagrams</li>
+              <li>Direction Sense Test</li>
+              <li>Logical Sequence of Words</li>
+              <li>Assertion and Reason</li>
+              <li>Situation Reaction Test</li>
+              <li>Verification of Truth of the statement</li> 
               
 
             </ul>
           </div>
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-3">
             <h3> Logical Reasoning</h3>
             <ul>
-              <li>Number System</li>
-              <li>LCM HCF</li>
+              <li>Logic</li>
+              <li>Deriving Conclusions from passages</li>
+              <li>Assumptions</li>
+              <li>Arguments</li>
+              <li>Courses of Action </li>
+              <li>Conclusions</li>
+              <li>Cause and Effect Reasoning </li>
               
 
             </ul>

@@ -88,6 +88,8 @@ class CourseController extends Controller
         
     }
 
+ 
+
     /**
      * Display the specified resource.
      *
@@ -130,15 +132,42 @@ class CourseController extends Controller
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
 
-            $ques_count = $parent->questionCount_level2($project);
+            $file_count = '../static/'.$course->slug.'_count.txt';
+            $file_nodes = '../static/'.$course->slug.'_nodes.txt';
+
+
+            if(request()->get('refresh'))
+            {
+                $ques_count = $parent->questionCount_level2($project);
+                file_put_contents($file_count,$ques_count);
+                $nodes = Category::displayUnorderedListCourse($node,['project'=>$project,'parent'=>$parent]);
+                file_put_contents($file_nodes,$nodes);
+            }
+
+            if(!file_exists($file_count)){
+                $ques_count = $parent->questionCount_level2($project);
+                file_put_contents($file_count,$ques_count);
+            }
+            else{
+                $ques_count = file_get_contents($file_count);
+            }
+
             
             //$exams =  Tag::where('project_id',$project->id)->where('name','exam')
               //          ->orderBy('created_at','desc')->get();
                      
-            if(count($node))
-            $nodes = Category::displayUnorderedListCourse($node,['project'=>$project,'parent'=>$parent]);
+            if(count($node)){
+                if(!file_exists($file_nodes)){
+                     $nodes = Category::displayUnorderedListCourse($node,['project'=>$project,'parent'=>$parent]);
+                    file_put_contents($file_nodes,$nodes);
+                }
+                else{
+                    $nodes = file_get_contents($file_nodes);
+                }
+
+            }
             else
-            $nodes =null;
+                $nodes =null;
         } 
        
 

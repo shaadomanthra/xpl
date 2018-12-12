@@ -1,6 +1,6 @@
-<div class="card bg-light mb-3">
+<div class="card  text-white mb-3 blogd" style="background:#ca2428">
 	<div class="card-body">
-		<div class="text-bold ">{{ ucfirst($details['display_type']) }}</div>
+		<div class="text-bold " style="color:#da737f">{{ ucfirst($details['display_type']) }}</div>
 		<h2>
 		@if($details['display_type'] == 'project')
 			{{ $project->name }}
@@ -12,11 +12,11 @@
 		</h2>
 		<br>
 
-		<div class="border p-2 mb-2 rounded">
+		<div class="p-2 mb-2 rounded" style="border:2px solid #bb061c">
 		<div class="row ">
 			<div class="col-3">
 				@if($details['prev'])
-				<a href="{{ $details['prev'] }}">
+				<a class="white-link" href="{{ $details['prev'] }}">
 				<div class=" w100 p-1 text-center pl-2"><i class="fa fa-angle-double-left"></i></div>
 				</a>
 				@endif
@@ -24,7 +24,7 @@
 			<div class="col-6"> <div class="mt-1 text-center">Q({{ count($questions) }})</div></div>
 			<div class="col-3"> 
 				@if($details['next'])
-				<a href="{{ $details['next'] }}">
+				<a class="white-link" href="{{ $details['next'] }}">
 				<div class=" w100 p-1 text-center mr-3"><i class="fa fa-angle-double-right"></i></div>
 				</a>
 				@endif
@@ -37,15 +37,14 @@
 			<div class="col-3 mb-1">
 				
 				@if($details['display_type'] == 'project')
-				<a href="{{ route('question.show',[$project->slug,$q->id]) }}">
+				<a class="white-link" href="{{ route('question.show',[$project->slug,$q->id]) }}">
 				@elseif($details['display_type'] == 'category')
-				<a href="{{ route('category.question',[$project->slug,$category->slug,$q->id]) }}">
+				<a class="white-link" href="{{ route('category.question',[$project->slug,$category->slug,$q->id]) }}">
 				@elseif($details['display_type'] == 'tag')	
-				<a href="{{ route('tag.question',[$project->slug,$tag->id,$q->id]) }}">
+				<a class="white-link" href="{{ route('tag.question',[$project->slug,$tag->id,$q->id]) }}">
 				@endif
 				<div class="pr-1">
-				<div class="border w100 p-1 text-center rounded @if($q->id==$question->id) active @endif @if($q->status == 0) @elseif($q->status == 1) border-secondary @else border-success  @endif" style="border:1px solid #eee; 
-				    " id="q{{ ($q->id )}}">{{ ($key + 1 ) }}</div>
+				<div class="qborder w100 p-1 text-center rounded @if($q->id==$question->id) active @endif @if($q->status == 0) @elseif($q->status == 1) border-secondary @else border-success  @endif" id="q{{ ($q->id )}}">{{ ($key + 1 ) }}</div>
 				</div>
 				</a>
 			</div>

@@ -81,7 +81,7 @@
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
-        			<div class="text-center p-1 rounded bg-light w100  " >
+        			<div class="text-center p-1 border rounded bg-light w100  " >
                  A </div>
         		</div>
         	</div>
@@ -93,7 +93,7 @@
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
-        			<div class="text-center p-1 rounded bg-light w100 " >
+        			<div class="text-center p-1 border rounded bg-light w100 " >
                  B</div>
         		</div>
         	</div>
@@ -105,7 +105,7 @@
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
-        			<div class="text-center p-1 rounded bg-light w100 " >
+        			<div class="text-center p-1 border rounded bg-light w100 " >
                C</div>
         		</div>
         	</div>
@@ -117,7 +117,7 @@
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
-        			<div class="text-center p-1 rounded bg-light w100 " >
+        			<div class="text-center p-1 border rounded bg-light w100 " >
                  D</div>
         		</div>
         	</div>
@@ -129,7 +129,7 @@
          <div class="row no-gutters">
         	<div class="col-2 col-md-2">
         		<div class="pr-3 pb-2" >
-        	<div class="text-center p-1 rounded bg-light w100 " > 
+        	<div class="text-center p-1 border rounded bg-light w100 " > 
                 
                 E
               </div>
@@ -158,6 +158,8 @@
       		<div class="explanation">{!! $question->explanation !!}</div>
       	</div>
       </div>
+
+      @include('appl.dataentry.snippets.exam')
      
 
     </div>
