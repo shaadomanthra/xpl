@@ -132,9 +132,16 @@ class CourseController extends Controller
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
 
-            $file_count = '../static/'.$course->slug.'_count.txt';
-            $file_nodes = '../static/'.$course->slug.'_nodes.txt';
+            
 
+            $url = url()->full();
+            $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $domain = $exploded[0];
+
+            $file_count = '../static/'.$domain.'_'.$course->slug.'_count.txt';
+            $file_nodes = '../static/'.$domain.'_'.$course->slug.'_nodes.txt';
+            
 
             if(request()->get('refresh'))
             {
