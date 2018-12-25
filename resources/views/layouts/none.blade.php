@@ -10,19 +10,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'OnlineLibrary') }}</title>
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
     <style>
-
-html,body{
-  height: 200px;
-}
-.container {
-  width: auto;
-  max-width: 680px;
-}
-</style>
+    html,body{
+      height: 200px;
+    }
+    .container {
+      width: auto;
+      max-width: 680px;
+    }
+    </style>
     </head>
     <body>
     

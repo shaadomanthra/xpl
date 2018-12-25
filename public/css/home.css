@@ -52,6 +52,39 @@
                 margin-bottom: 30px;
             }
 
+h1 {
+    font-size: 1.602em;
+    line-height: 1.5em;
+}
+h2 {
+    font-size: 1.424em;
+}
+h3 {
+    font-size: 1.266em;
+}
+h4 {
+    font-size: 1.125em;
+}
+h5 {
+    font-size: 0.889em;
+}
+h6 {
+    font-size: 0.79em;
+}
+.display-1 {
+    font-size: 3.906em;
+}
+.display-2 {
+    font-size: 3.125em;
+}
+.display-3 {
+    font-size: 2.5em;
+}
+.display-4 {
+    font-size: 2em;
+}
+
+
 .wrapper-bg{background-color: #f5f8fa; min-height:100%;flex: 1; position:relative; height: stretch;background-repeat: no-repeat;
     background-size: auto;
 -webkit-background-size: cover;
@@ -136,9 +169,6 @@ ul.list2-first{ margin: 5px; margin-left:5px; margin-top: -20px;}
 .fa-light{ color:#e8e6df; }
 .fa-dark{ color:#f9be50; }
 #app {
-    display: flex;
-  min-height: calc(100vh - 150px);
-  flex-direction: column;
 }
 .footer{ height:150px; }
 
@@ -186,26 +216,12 @@ ul.sortable li.current{ border:1px solid #17a085; }
 /*test*/
 .testqno{ cursor: pointer; }
 
-
-@media (max-width: 720px) {
-    /*user profile*/
-    .name,a.link{ color:#484e51; }
-    .logo-product{ width:40px; }
-    .logo-text{ font-family: 'Source Sans Pro', cursive; font-size: 15px;}
-    .titlea{ font-family: 'Poiret One', cursive;font-size:30px; }
-    .subtitlea{ font-family: 'Poiret One', sans-serif;font-size:20px }
-    .subtitlec{ font-family: 'Satisfy', sans-serif;font-size:20px }
-    .subtitleb{ font-family:  'Satisfy',sans-serif;font-size:15px }
-
-
-}    
-
+ 
 .heading1 {
     font-size: 5.02em;
     line-height: 1.5em;
-    font-family: sans-serif;
-    font-weight: 300;
-    font-family: 'Oswald', sans-serif;
+    font-family: impact;
+    font-weight: 800;
     }
     .heading2 {
         font-size: 1.524em;
@@ -215,17 +231,33 @@ ul.sortable li.current{ border:1px solid #17a085; }
     .heading3 {
         font-size: 1.866em;
         font-family: sans-serif;
-        font-family: 'Oswald', sans-serif;
-        font-weight: 300;
+        font-weight: 700;
     }
 
 .blog-body{ padding: 30px; }
 .blog-content{
     font-size: 20px;
     line-height: 35px;
-}    
+}  
+
+
+.bg1{
+    background: rgb(35, 111, 177);
+}  
+
+.bg3{background:linear-gradient(to top, rgba(22, 160, 133,0.0), rgb(35, 111, 177)); height:100%}
 
 @media (max-width: 720px) {
+
+    /*user profile*/
+    .name,a.link{ color:#484e51; }
+    .logo-product{ width:40px; }
+    .logo-text{ font-family: 'Source Sans Pro', cursive; font-size: 15px;}
+    .titlea{ font-family: 'Poiret One', cursive;font-size:30px; }
+    .subtitlea{ font-family: 'Poiret One', sans-serif;font-size:20px }
+    .subtitlec{ font-family: 'Satisfy', sans-serif;font-size:20px }
+    .subtitleb{ font-family:  'Satisfy',sans-serif;font-size:15px }
+
     .heading1 {
     font-size: 2.02em;
     line-height: 1.5em;
@@ -240,131 +272,5 @@ ul.sortable li.current{ border:1px solid #17a085; }
 }  
 
 
-// Resetting from the mobile up!
-// 
-// Dropping the root* element font size to 14px is something
-// I do on almost all projects, a 16px font size on mobiles
-// is not normally needed. --> Only my opinion of course!
-//
-// At mobile size I used the scale "Major Second" from 
-// type-cale.com to set out the heading sizes as well as the
-// "Major Third" scale for the .display-* classes however my
-// technique was to begin the scale from the h1's front size.
-// To do this simply do the h1 font size * scale size. So in 
-// in this example it was 1.602 * 1.250 = 2.0025 I went with 
-// 2em to keep it simple.
-//
-//------------------------------------------------------------//
-html,
-body {
-    font-size: 14px !important;
-}
-h1 {
-    font-size: 1.602em;
-    line-height: 1.5em;
-}
-h2 {
-    font-size: 1.424em;
-}
-h3 {
-    font-size: 1.266em;
-}
-h4 {
-    font-size: 1.125em;
-}
-h5 {
-    font-size: 0.889em;
-}
-h6 {
-    font-size: 0.79em;
-}
-.display-1 {
-    font-size: 3.906em;
-}
-.display-2 {
-    font-size: 3.125em;
-}
-.display-3 {
-    font-size: 2.5em;
-}
-.display-4 {
-    font-size: 2em;
-}
 
 
-// Medium devices (tablets, 48em and up)
-// 
-// At this point you have overridden Bootstraps rem's and are
-// into module based font sizes should you require it. 
-//
-// I took a while over this change because I felt that there
-// is no reason why I cant use a modified scale on another 
-// device size. So I did, the headings have now taken on
-// "Perfect Fourth" and the dislpay-* has been put to the
-// Bootstrap defaults.
-//
-//------------------------------------------------------------//
-@media (min-width: 48em) {
-    h1 {
-      font-size: 2.441em;
-    }
-    h2 {
-        font-size: 1.953em;
-    }
-    h3 {
-        font-size: 1.563em;
-    }
-    h4 {
-        font-size: 1.25em;
-    }
-    .display-1 {
-        font-size: 6em;
-    }
-    .display-2 {
-        font-size: 5.5em;
-    }
-    .display-3 {
-        font-size: 4.5em;
-    }
-    .display-4 {
-        font-size: 3.5em;
-    }
-
-    .titlea{ font-family: 'Poiret One', cursive;font-size:40px; }
-    .subtitlea{ font-family: 'Poiret One', sans-serif;font-size:25px }
-}
-
-// Large devices (desktops, 62em and up)
-@media (min-width: 62em) {
-    html,
-    body {
-        font-size: 16px !important;
-    }
-    .titlea{ font-family: 'Poiret One', cursive;font-size:50px; }
-    .subtitlea{ font-family: 'Poiret One', sans-serif;font-size:30px }
-}
-
-// Extra large devices (large desktops, 75em and up)
-@media (min-width: 75em) {
-    html,
-    body {
-        font-size: 18px !important;
-    }
-    .titlea{ font-family: 'Poiret One', cursive;font-size:60px; }
-    .subtitlea{ font-family: 'Poiret One', sans-serif;font-size:30px }
-
-}
-
-// Pen Specific Styles
-.jumbotron {
-    font-size: 16px;
-    @media (min-width: 62em) {
-        font-size: 20px;
-    }
-    h1 {
-        border-bottom: 4px solid #0275d8;
-    }
-    p.lead {
-        border-radius: 4px;
-    }
-}

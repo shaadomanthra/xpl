@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
     <head>
     <meta charset="utf-8">
@@ -10,19 +10,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'PacketPrep') }}</title>
     <!-- Styles -->
-     <link href="https://fonts.googleapis.com/css?family=Cabin|Lobster|Open+Sans|Satisfy|Poiret+One" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     
+    @if(isset($editor))
     <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
+    @endif
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
-
-
     </head>
     <body>
     <div id="app" >
     @yield('content-main')
-
     </div>
  
     <div class="nav-bg-dark">
@@ -31,7 +28,7 @@
             @include('snippets.bottommenu-corporate')
         </div>
     </footer>
-</div>
+    </div>
 
     <!-- Scripts -->
      @include('snippets.scripts')

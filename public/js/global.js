@@ -1,15 +1,13 @@
 $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 $('#flash-overlay-modal').modal();
 
+
 $(document).ready(function() {
     $('.exam').on('change', function() {
     	window.location=window.location.pathname+'?exam='+this.value;
   	});
 
-
     /* scroll to */
-
-
     var loc = $(location).attr('href').split("/")[8];
     if(!$.isNumeric(loc)){
     	var loc = $(location).attr('href').split("/")[7];
@@ -272,6 +270,85 @@ $(document).ready(function() {
 
     
 });
+
+  $(document).ready(function() {
+
+      // passage 
+      $(document).on('click','.view',function(){
+          $item = '.'+$(this).data('item');
+          if($($item).is(":visible")){
+            $($item).slideUp();
+          }
+          else{
+            $($item).slideDown();
+          }
+      });
+
+       $(document).on('click','.btn-attach',function(){
+          $id= $(this).data('id');
+          $data = $('.passage_'+$id).html();
+          $('input[name="passage_id"]').val($id);
+          $('.passage').html($data);
+
+      });
+
+       $(document).on('click','.btn-dettach',function(){
+          $('input[name="passage_id"]').val('');
+          $('.passage').html('');
+      });
+
+
+
+      // image upload
+     $('form#uploadimage').ajaxForm({
+        beforeSend:function(){
+
+        },
+        uploadProgress:function(event,position,total,percentComplete){
+        },
+        success:function(){
+        },
+        complete:function(response){
+          var rooturl = $('.root').data('rooturl');
+          $( ".image_container" ).replaceWith("<div class='image_container'><img src='"+rooturl+'/'+response.responseText+"'  class='image' width='25%'/></div>");
+          $('.formimage').val(response.responseText);
+         
+        }
+       });
+
+     // image remove
+     $(document).on('click','.btn-remove',function(){
+        var rooturl = $('.root').data('rooturl')+'/social/imageremove';
+        var image = $('.formimage').val();
+        $.get(rooturl,{'image':image},function(data){
+            $( ".image_container" ).replaceWith("<div class='image_container'></div>");
+            $('.formimage').val(' ');
+        });
+     });
+
+
+     // search data
+     $('#search').on('keyup',function(){
+      $value=$(this).val();
+      $url = $(this).data('url');
+      $.ajax({
+        type : 'get',
+        url : $url,
+        data:{'search':true,'item':$value},
+        success:function(data){
+          $('#search-items').html(data);
+        }
+      });
+    });
+
+     // video close
+    $('.btn-close').on('click',function(){
+      var video = $('#intro').attr("src");
+      $("#intro").attr("src","");
+      $("#intro").attr("src",video);
+    });
+
+  });
 
 
   

@@ -9,22 +9,26 @@
     <meta name="description" content="PacketPrep is an online video learning preparation platform for quantitative aptitude, logical reasoning, mental ability, general english and interview skills.">
       <meta name="keywords" content="quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures, gate preparation, gate lectures">
       <meta name="author" content="Krishna Teja G S">
-      <meta name="google-site-verification" content="yLlPK2iIdUaVEKFdZ5k9VV6IPC-a3GoCK_aBGmYt-xE" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Packet Prep') }}</title>
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro|Satisfy|Poiret+One" rel="stylesheet">
+  
+    @if(isset($editor))
     <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
+    @endif
+
+    @if(isset($code))
     <link href="{{asset('js/codemirror/lib/codemirror.css')}}" rel="stylesheet">
     <link href="{{asset('js/codemirror/theme/mbo.css')}}" rel="stylesheet">
 
     <link href="{{asset('js/highlight/styles/default.css')}}" rel="stylesheet">
     <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
+    @endif
     
     @if(isset($mathjax))
     <script type="text/x-mathjax-config">
@@ -33,14 +37,9 @@
         jax: ["input/TeX","output/HTML-CSS"],
         tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
       });
-
-      
     </script>
-
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     @endif
-
 
     @if(isset($recaptcha))
     <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -54,7 +53,6 @@
     <body>
     <div id="app" >
     @yield('content-main')
-
     </div>
  
  <div class="bg-dark">

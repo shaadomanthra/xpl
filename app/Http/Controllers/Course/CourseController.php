@@ -49,6 +49,7 @@ class CourseController extends Controller
 
         return view('appl.course.course.createedit')
                 ->with('stub','Create')
+                ->with('editor','true')
                 ->with('course',$course);
     }
 
@@ -275,6 +276,7 @@ class CourseController extends Controller
         if($course)
             return view('appl.course.course.createedit')
                 ->with('stub','Update')
+                ->with('editor','true')
                 ->with('course',$course);
         else
             abort(404);

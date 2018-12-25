@@ -6,21 +6,18 @@
   -o-background-size: cover;
   background-size: cover;">
   <div class="pt-0">   
-       <div class="nav-bg p-2" style="background: rgb(35, 111, 177);">
-        <div class="wrapper">
+    <div class="nav-bg p-2 bg1" >
+      <div class="wrapper">
         <div id="app ">
             @include('snippets.topmenu')
         </div>
-        </div>
-        </div> 
+      </div>
+    </div> 
 
-    <div style="background:linear-gradient(to top, rgba(22, 160, 133,0.0), rgb(35, 111, 177)); height:100%">
-    @yield('content')
-</div>
-</div>
+    <div class="bg3" >
+        @yield('content')
     </div>
-  
-</div>
+  </div>
 </div>
 @endsection
 

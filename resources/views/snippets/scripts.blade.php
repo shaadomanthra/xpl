@@ -1,66 +1,14 @@
 
-<script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/global.js')}}"></script>
 
+<script src="{{ asset('js/script.js')}}"></script>
+
+
+@if(isset($editor))
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
 <script src="{{asset('js/jquery.form.js')}}"></script>  
 
-<!-- Codemirror-->
-<script src="{{asset('js/codemirror/lib/codemirror.js')}}"></script>  
-<script src="{{asset('js/codemirror/mode/xml/xml.js')}}"></script>  
-<script src="{{asset('js/codemirror/mode/javascript/javascript.js')}}"></script>  
-<script src="{{asset('js/codemirror/addon/display/autorefresh.js')}}"></script>  
-<script src="{{asset('js/codemirror/mode/markdown/markdown.js')}}"></script>  
-<script src="{{asset('js/highlight/highlight.pack.js')}}"></script>  
-
-@if(isset($chart))
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script> 
-
 <script>
-
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ["Correct",  "Incorrect", "Unattempted"],
-        datasets: [{
-            label: 'Responses',
-            data: [{{ $details['correct']}}, {{ $details['incorrect']}}, {{ $details['unattempted']}}],
-            backgroundColor: [
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
-            ],
-            borderColor: [
-
-                'rgba(75, 192, 192, 1)',
-                'rgba(255,99,132,1)',
-                'rgba(255, 206, 86, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
-
-
-</script>
-
-@endif
-
-
-
- 
- <script>
   $(document).ready(function() {
             $('.summernote2').summernote({
         toolbar: [
@@ -101,35 +49,64 @@ var myChart = new Chart(ctx, {
         });
 </script>
 
-<script>
-  $(document).ready(function() {
+@endif
 
-      $(document).on('click','.view',function(){
-          $item = '.'+$(this).data('item');
-          if($($item).is(":visible")){
-            $($item).slideUp();
-          }
-          else{
-            $($item).slideDown();
-          }
-      });
 
-       $(document).on('click','.btn-attach',function(){
-          $id= $(this).data('id');
-          $data = $('.passage_'+$id).html();
-          $('input[name="passage_id"]').val($id);
-          $('.passage').html($data);
-
-      });
-
-       $(document).on('click','.btn-dettach',function(){
-          $('input[name="passage_id"]').val('');
-          $('.passage').html('');
-      });
-
-  });
-</script>
+@if(isset($code))
+<!-- Codemirror-->
+<script src="{{asset('js/codemirror/lib/codemirror.js')}}"></script>  
+<script src="{{asset('js/codemirror/mode/xml/xml.js')}}"></script>  
+<script src="{{asset('js/codemirror/mode/javascript/javascript.js')}}"></script>  
+<script src="{{asset('js/codemirror/addon/display/autorefresh.js')}}"></script>  
+<script src="{{asset('js/codemirror/mode/markdown/markdown.js')}}"></script>  
+<script src="{{asset('js/highlight/highlight.pack.js')}}"></script>  
 <script>hljs.initHighlightingOnLoad();</script>
+@endif
+
+@if(isset($chart))
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Correct",  "Incorrect", "Unattempted"],
+        datasets: [{
+            label: 'Responses',
+            data: [{{ $details['correct']}}, {{ $details['incorrect']}}, {{ $details['unattempted']}}],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+
+                'rgba(75, 192, 192, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+@endif
+
+
+
+ 
+ 
+
 
 @if(isset($question['dynamic']))
 <script>
@@ -163,41 +140,10 @@ $(document).ready(function() {
       });
       
   });
-
  </script>
 @endif
 
-<script>
-  $(document).ready(function() {
 
-     $('form#uploadimage').ajaxForm({
-        beforeSend:function(){
-
-        },
-        uploadProgress:function(event,position,total,percentComplete){
-        },
-        success:function(){
-        },
-        complete:function(response){
-          var rooturl = $('.root').data('rooturl');
-          $( ".image_container" ).replaceWith("<div class='image_container'><img src='"+rooturl+'/'+response.responseText+"'  class='image' width='25%'/></div>");
-          $('.formimage').val(response.responseText);
-         
-        }
-       });
-
-     $(document).on('click','.btn-remove',function(){
-        var rooturl = $('.root').data('rooturl')+'/social/imageremove';
-        var image = $('.formimage').val();
-        $.get(rooturl,{'image':image},function(data){
-            $( ".image_container" ).replaceWith("<div class='image_container'></div>");
-            $('.formimage').val(' ');
-        });
-     });
-  });
-      
-
-</script>
 
 @if(isset($jqueryui))
  <script type="text/javascript"
@@ -208,37 +154,8 @@ $(document).ready(function() {
     $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
   } );
   </script>
-  @endif
+@endif
 
-<script type="text/javascript">
-
-  $(document).ready(function() {
-  	$('#search').on('keyup',function(){
-  		$value=$(this).val();
-      $url = $(this).data('url');
-  		$.ajax({
-  			type : 'get',
-  			url : $url,
-  			data:{'search':true,'item':$value},
-  			success:function(data){
-  				$('#search-items').html(data);
-  			}
-  		});
-  	});
-
-    $('.btn-close').on('click',function(){
-      var video = $('#intro').attr("src");
-      $("#intro").attr("src","");
-      $("#intro").attr("src",video);
-    });
-
-  });
-
-  
-
-  
-
-</script>
 
 
 @if(isset($timer))
