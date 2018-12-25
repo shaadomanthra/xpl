@@ -16,7 +16,7 @@
                 <ul class="navbar-nav ">
                      
                  </ul>
-                 <ul class="navbar-nav ml-auto mt-4 mt-md-0">
+                 <ul class="navbar-nav ml-auto mt-4 mt-lg-0">
                     @guest
                     @else
                     @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))

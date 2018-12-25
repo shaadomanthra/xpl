@@ -9,7 +9,7 @@
     <meta name="author" content="Krishna Teja G S">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Packet Prep') }}</title>
+    <title>PacketPrep - Prepare for Campus Placements, Bank Exams and Government Jobs </title>
 
     <!-- Styles -->
    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
