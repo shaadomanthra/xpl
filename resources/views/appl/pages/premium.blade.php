@@ -1,6 +1,6 @@
 @extends('layouts.nowrap-product')
 @section('content')
-<div class=" p-4   text-white mb-4 border-bottom" style="background: linear-gradient(to top, rgba(39, 174, 96,0.7), rgb(35, 113, 178)), url({{asset('img/bg/13.jpg')}}); height: stretch;background-repeat: no-repeat;background-size: auto;
+<div class=" p-4   text-white mb-4 border-bottom" style="background: linear-gradient(to top, rgba(39, 174, 96,0.7), rgb(35, 113, 178)), url({{asset('img/bg/1030.jpg')}}); height: stretch;background-repeat: no-repeat;background-size: auto;
 -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
