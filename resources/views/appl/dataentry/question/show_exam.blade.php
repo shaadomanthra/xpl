@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Test '.$exam->name.' | PacketPrep')
 @section('content')
 
 <div class="d-none d-md-block">

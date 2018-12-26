@@ -294,10 +294,23 @@ class QuestionController extends Controller
         $tests = ['test1','test2','test3','test4','test5'];
         $course = Course::where('slug',$project_slug)->first();
 
-        $product = Product::where('slug',$project_slug)->first();
+        $user = \Auth::user();
+        $entry=null;
+        if($user)
+        foreach($course->products as $product)
+        {
+            if($product->users()->find($user->id)){
+                $entry = DB::table('product_user')
+                    ->where('product_id', $product->id)
+                    ->where('user_id', $user->id)
+                    ->first();
+                 $p = $product;   
+            }
+            
+        }
 
         if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','client-owner'])){
-        if(!\auth::user()->products()->where('product_id',$product->id)->count() || $product->validityExpired())
+        if(!$entry|| $p->validityExpired())
         {
             return view('appl.course.course.access');
         }

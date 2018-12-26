@@ -63,10 +63,38 @@
                   @endif
             </div>
           </div>
-          
-          
 
+          <div class="row mb-2">
+            <div class="col-md-4">Courses</div>
+            <div class="col-md-8">
+            @if(count($product->courses)!=0)
+            <ul>
+             @foreach($product->courses as $course)
+              <li>{{ $course->name }} </li>
+             @endforeach
+           </ul>
+           @else
+              <div>- NA -</div>
+            @endif 
+            </div>
+          </div>
 
+          <div class="row mb-2">
+            <div class="col-md-4">Exams</div>
+            <div class="col-md-8">
+            @if(count($product->exams)!=0)
+            <ul>
+             @foreach($product->exams as $exam)
+              <li>{{ $exam->name }} </li>
+             @endforeach
+           </ul>
+           @else
+              <div>- NA -</div>
+            @endif 
+            </div>
+          </div>
+          
+        
          
         </div>
       </div>

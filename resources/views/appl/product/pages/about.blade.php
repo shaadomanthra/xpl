@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'About | PacketPrep')
 @section('content')
 
 <img src="{{ asset('img/about_cover.jpg')}}" class="w-100"/>

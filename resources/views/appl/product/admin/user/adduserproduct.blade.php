@@ -23,7 +23,6 @@
       <div class="form-group">
         <label for="formGroupExampleInput ">Product</label>
         <select class="form-control course_data" name="product_id">
-          <option value="-1" >All</option>
           @foreach($products as $product)
           <option value="{{$product->id}}" >{{$product->name}}</option>
           

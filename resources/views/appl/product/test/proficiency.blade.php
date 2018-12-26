@@ -1,4 +1,5 @@
 @extends('layouts.nowrap-product')
+@section('title', 'Proficiency Test - Digital Certificate | PacketPrep')
 @section('content')
 <div class=" p-4  bg-white mb-4 border-bottom">
   <div class="wrapper ">  

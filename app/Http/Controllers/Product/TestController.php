@@ -354,13 +354,20 @@ class TestController extends Controller
     public function proficiency_test(Request $request)
     {
         $exam = Exam::where('slug','proficiency-test')->first();
+        
         $user = \Auth::user();
         $entry=null;
-        if($user){
-        $entry = DB::table('product_user')
-                ->where('product_id', '7')
-                ->where('user_id', $user->id)
-                ->first();
+        if($user)
+        foreach($exam->products as $product)
+        {
+            if($product->users()->find($user->id)){
+                $entry = DB::table('product_user')
+                    ->where('product_id', $product->id)
+                    ->where('user_id', $user->id)
+                    ->first();
+                 $p = $product;   
+            }
+            
         }
         return view('appl.product.test.proficiency')->with('entry',$entry)->with('exam',$exam);
 

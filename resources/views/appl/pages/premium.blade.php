@@ -1,4 +1,5 @@
 @extends('layouts.nowrap-product')
+@section('title', 'Premium Access to Services | PacketPrep')
 @section('content')
 <div class=" p-4   text-white mb-4 border-bottom" style="background: linear-gradient(to top, rgba(39, 174, 96,0.7), rgb(35, 113, 178)), url({{asset('img/bg/1030.jpg')}}); height: stretch;background-repeat: no-repeat;background-size: auto;
 -webkit-background-size: cover;
@@ -14,7 +15,7 @@
           <h1 class="mt-2 mb-4 mb-md-2"> Be a <span class="badge badge-warning">PRIME USER</span> and get<br>
 
       </h1>
-      <div class="display-3 mb-3">  Complete Access to</div>
+      <div class="display-3 mb-3">  Premium Access to</div>
               <div class="display-1 text-bold mb-3" style="font-weight: 900">  PacketPrep Services </div>
               <div class="display-3 pb-5">  for 2 years at just <span class="text-warning" style="font-weight: 800"><i class="fa fa-rupee "></i> 2000</span></div>
                @if(!$entry)
@@ -54,7 +55,7 @@
         <div class="col-12 col-md-8 ">
           <div class=" p-4  rounded mb-4" style="background: rgba(75, 192, 192, 0.2); border:1px solid rgba(75, 192, 192, 1);">
           <div class="">
-            <h1 class="pb-2 mb-3" style="border-bottom:1px solid rgba(75, 192, 192, 1);"> Description</h1>
+            <h1 class="pb-2 mb-3" style="border-bottom:1px solid rgba(75, 192, 192, 1);"> Courses Included</h1>
             <div class="h5">Quantitiative Aptitude | 120 Lessons | 1000+ Questions | 5 Online Tests</div>
             <p>Quantitative Aptitude is the most important requisite for clearing any competitive exam. We have designed this course to help you master the core concepts of quant with ease.</p>
             <div class="h5">Mental Ability | 12 Lessons | 2000+ Questions | 5 Online Tests</div>

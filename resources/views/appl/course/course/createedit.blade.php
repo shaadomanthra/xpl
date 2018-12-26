@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create/Edit Course | PacketPrep')
 @section('content')
 
 

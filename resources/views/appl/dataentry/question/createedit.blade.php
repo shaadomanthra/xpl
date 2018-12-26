@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create/Edit Questions | PacketPrep')
 @section('content')
 
 @include('appl.dataentry.snippets.breadcrumbs')

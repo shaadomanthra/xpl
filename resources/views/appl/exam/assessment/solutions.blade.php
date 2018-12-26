@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Solutions - '.$exam->name.' - '.\auth::user()->name.' | PacketPrep')
 @section('content')
 
 <nav aria-label="breadcrumb">

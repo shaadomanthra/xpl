@@ -75,6 +75,65 @@
         </select>
       </div>
 
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Courses</label>
+        <div class="border p-2">
+          <div class="row">
+        @foreach($courses as $a=>$course)
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="courses[]" value="{{$course->id}}"
+              @if($stub=='Create')
+                @if(old('course'))
+                  @if(in_array($course->id,old('course')))
+                  checked
+                  @endif
+                @endif
+              @else
+                @if($product->courses)
+                  @if(in_array($course->id,$product->courses->pluck('id')->toArray()))
+                  checked
+                  @endif
+                @endif
+              @endif
+            > 
+            {{$course->name }}
+          </div>
+        @endforeach
+        </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Exams</label>
+        <div class="border p-2">
+          <div class="row">
+        @foreach($exams as $a=>$exam)
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="exams[]" value="{{$exam->id}}"
+              @if($stub=='Create')
+                @if(old('exam'))
+                  @if(in_array($exam->id,old('exam')))
+                  checked
+                  @endif
+                @endif
+              @else
+                @if($product->exams)
+                  @if(in_array($exam->id,$product->exams->pluck('id')->toArray()))
+                  checked
+                  @endif
+                @endif
+              @endif
+            > 
+            {{$exam->name }}
+          </div>
+        @endforeach
+        </div>
+        </div>
+      </div>
+
+       
+
       <button type="submit" class="btn btn-info">Save</button>
     </form>
     </div>

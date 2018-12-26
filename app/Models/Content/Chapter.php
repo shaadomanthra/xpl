@@ -13,6 +13,8 @@ class Chapter extends Model
         'title',
         'slug',
         'content',
+        'description',
+        'keywords'
         // add all other fields
     ];
 

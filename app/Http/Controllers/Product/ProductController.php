@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
+use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Course\Course;
 use Illuminate\Support\Facades\Mail;
 use PacketPrep\Mail\OrderSuccess;
 use PacketPrep\Mail\OrderCreated;
@@ -122,10 +124,15 @@ class ProductController extends Controller
         $product = new Product();
         $this->authorize('create', $product);
 
+        $exams = Exam::where('status','2')->get();
+        $courses = Course::all();
 
         return view('appl.product.product.createedit')
                 ->with('stub','Create')
+                ->with('exams',$exams)
+                ->with('courses',$courses)
                 ->with('jqueryui',true)
+                ->with('editor',true)
                 ->with('product',$product);
     }
    
@@ -144,12 +151,36 @@ class ProductController extends Controller
             $request->slug  = $request->name;
             $request->slug = strtolower(str_replace(' ', '-', $request->slug));
 
+            $exams = $request->get('exams');
+            $courses = $request->get('courses');
+            
             $product->name = $request->name;
             $product->slug = $request->slug;
             $product->description = ($request->description) ? $request->description: null;
             $product->price = $request->price;
             $product->status = $request->status;
             $product->save(); 
+
+             if($exams){
+                $product->exams()->detach();
+                foreach($exams as $exam){
+                if(!$product->exams->contains($exam))
+                    $product->exams()->attach($exam);
+                }
+            }
+            else{
+                
+            }
+
+            if($courses){
+                $product->courses()->detach();
+                foreach($courses as $course){
+                    if(!$product->courses->contains($course))
+                        $product->courses()->attach($course);
+                }
+            }else{
+                $product->courses()->detach();
+            }
 
             flash('A new product('.$request->name.') is created!')->success();
             return redirect()->route('product.index');
@@ -193,12 +224,18 @@ class ProductController extends Controller
     {
         $product= Product::where('slug',$id)->first();
         $this->authorize('update', $product);
+        $exams = Exam::where('status','2')->get();
+        $courses = Course::all();
+
 
 
         if($product)
             return view('appl.product.product.createedit')
                 ->with('stub','Update')
                 ->with('jqueryui',true)
+                ->with('editor',true)
+                ->with('exams',$exams)
+                ->with('courses',$courses)
                 ->with('product',$product);
         else
             abort(404);
@@ -218,11 +255,36 @@ class ProductController extends Controller
 
             $this->authorize('update', $product);
 
+            $exams = $request->get('exams');
+            $courses = $request->get('courses');
             $product->name = $request->name;
             $product->slug = $request->slug;
             $product->description = ($request->description) ? $request->description: null;
             $product->price = $request->price;
             $product->status = $request->status;
+
+            if($exams){
+                $product->exams()->detach();
+                foreach($exams as $exam){
+                if(!$product->exams->contains($exam))
+                    $product->exams()->attach($exam);
+                }
+            }
+            else{
+                
+            }
+
+            if($courses){
+                $product->courses()->detach();
+                foreach($courses as $course){
+                    if(!$product->courses->contains($course))
+                        $product->courses()->attach($course);
+                }
+            }else{
+                $product->courses()->detach();
+            }
+
+
             $product->save(); 
 
             flash('Product (<b>'.$request->name.'</b>) Successfully updated!')->success();

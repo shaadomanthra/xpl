@@ -18,7 +18,15 @@ class Product extends Model
     ];
 
     public function users(){
-        return $this->belongsToMany('Packetprep\User');
+        return $this->belongsToMany('PacketPrep\User');
+    }
+
+    public function exams(){
+        return $this->belongsToMany('PacketPrep\Models\Exam\Exam');
+    }
+
+    public function courses(){
+        return $this->belongsToMany('PacketPrep\Models\Course\Course');
     }
 
     public static function  update_pivot($product_id,$user_id,$validity,$status,$valid_till){

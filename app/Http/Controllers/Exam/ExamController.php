@@ -43,6 +43,7 @@ class ExamController extends Controller
         return view('appl.exam.exam.createedit')
                 ->with('stub','Create')
                 ->with('jqueryui',true)
+                ->with('editor',true)
                 ->with('exam',$exam)->with('examtypes',$examtypes);
     }
 
@@ -118,6 +119,7 @@ class ExamController extends Controller
             return view('appl.exam.exam.createedit')
                 ->with('stub','Update')
                 ->with('jqueryui',true)
+                ->with('editor',true)
                 ->with('examtypes',$examtypes)
                 ->with('exam',$exam);
         else

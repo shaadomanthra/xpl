@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Practice Questions for '.$category->name.' | Q'.$details['qno'].' | PacketPrep')
 @section('content')
 
 <div class="d-none d-md-block">

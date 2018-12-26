@@ -175,15 +175,22 @@ class AssessmentController extends Controller
         $exam = Exam::where('slug',$test)->first();
 
         if($exam->status == 2){
-            $product = Product::where('slug',$test)->first();
+            
             $user = \Auth::user();
             $entry=null;
-            if($user){
-            $entry = DB::table('product_user')
-                    ->where('product_id', $product->id)
-                    ->where('user_id', $user->id)
-                    ->first();
+            if($user)
+            foreach($exam->products as $product)
+            {
+                if($product->users()->find($user->id)){
+                    $entry = DB::table('product_user')
+                        ->where('product_id', $product->id)
+                        ->where('user_id', $user->id)
+                        ->first();
+                     $p = $product;   
+                }
+                
             }
+
             if(!$entry)
                 return view('appl.course.course.access');
         }

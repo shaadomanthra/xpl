@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create/Edit Chapter | PacketPrep')
 @section('content')
 
    <nav aria-label="breadcrumb">
@@ -49,6 +50,16 @@
       <div class="form-group">
         <label for="formGroupExampleInput2">Content</label>
          <textarea class="form-control summernote" name="content"  rows="10">{{isset($chapter)?$chapter->content:''}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Description</label>
+         <textarea class="form-control " name="description"  rows="5">{{isset($chapter)?$chapter->description:''}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Keywords</label>
+         <textarea class="form-control " name="keywords"  rows="3">{{isset($chapter)?$chapter->keywords:''}}</textarea>
       </div>
 
       <div class="form-group">

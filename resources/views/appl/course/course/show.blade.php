@@ -1,11 +1,8 @@
 @extends('layouts.app')
+@section('title', $course->name.' | PacketPrep')
 @section('content')
 
 @include('flash::message')  
-
-
-
-  
 
 	<div class="d-none d-md-block">
   <nav aria-label="breadcrumb ">

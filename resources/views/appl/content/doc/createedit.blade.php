@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create/Edit Track Page | PacketPrep')
 @section('content')
 
    <nav aria-label="breadcrumb">

@@ -81,14 +81,6 @@ class OrderController extends Controller
 
                 $user->products()->attach($order->product_id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
 
-                if($product->slug=='premium-access'){
-                  $products = Product::all();
-                  foreach($products as $product){
-                      if(!$user->products->contains($product->id))
-                      if($product->status!=0)
-                      $user->products()->attach($product->id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
-                  }
-                }
               }
             }
             else{

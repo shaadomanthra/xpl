@@ -1,5 +1,11 @@
 @extends('layouts.nowrap-product')
 
+@section('title', 'Dashboard | PacketPrep')
+
+@section('description', 'Know you packetprep products and services here.')
+
+@section('keywords', 'quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures, gate preparation, gate lectures')
+
 @section('content')
 
 

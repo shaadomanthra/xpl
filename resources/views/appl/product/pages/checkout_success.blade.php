@@ -1,6 +1,6 @@
 
 @extends('layouts.app')
-
+@section('title', 'Transaction Successful '.$order->order_id.' | PacketPrep')
 @section('content')
 
 

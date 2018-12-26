@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Questions | PacketPrep')
 @section('content')
 
 @include('appl.dataentry.snippets.breadcrumbs')
@@ -8,7 +9,23 @@
 
     <div class="col-md-9">
 
-      @if($passage)
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="question-tab" data-toggle="tab" href="#question" role="tab" aria-controls="question" aria-selected="true">Question</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="exams-tab" data-toggle="tab" href="#exams" role="tab" aria-controls="exams" aria-selected="false">Exams</a>
+        
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="category-tab" data-toggle="tab" href="#category" role="tab" aria-controls="a" aria-selected="false">Category</a>
+      </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="question" role="tabpanel" aria-labelledby="question-tab">
+        <br>
+        @if($passage)
       <div class="card mb-3">
         <div class="card-body">
           <b class="pb-2">Passage</b>@can('update',$passage)
@@ -26,68 +43,68 @@
         <div class="card-body ">
           
         <div class="row no-gutters">
-        	<div class="col-2 col-md-2">
-        		<div class="pr-3 pb-2 " >
-        			<div class="text-center p-1 rounded  w100 "  style="background:#F8EFBA;border:1px solid #e4d998;">
-        				{{ $details['qno'] }}
-        			</div>
-        		</div>
-        	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 question">{!! $question->question!!}</div></div>
+          <div class="col-2 col-md-2">
+            <div class="pr-3 pb-2 " >
+              <div class="text-center p-1 rounded  w100 "  style="background:#F8EFBA;border:1px solid #e4d998;">
+                {{ $details['qno'] }}
+              </div>
+            </div>
+          </div>
+          <div class="col-10 col-md-10"><div class="pt-1 question">{!! $question->question!!}</div></div>
         </div>
 
         @if($question->a)
          <div class="row no-gutters">
-        	<div class="col-2 col-md-2">
-        		<div class="pr-3 pb-2" >
-        			<div class="text-center p-1 rounded bg-light w100 border" >A</div>
-        		</div>
-        	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 a">{!! $question->a!!}</div></div>
+          <div class="col-2 col-md-2">
+            <div class="pr-3 pb-2" >
+              <div class="text-center p-1 rounded bg-light w100 border" >A</div>
+            </div>
+          </div>
+          <div class="col-10 col-md-10"><div class="pt-1 a">{!! $question->a!!}</div></div>
         </div>
         @endif
 
         @if($question->b)
          <div class="row no-gutters">
-        	<div class="col-2 col-md-2">
-        		<div class="pr-3 pb-2" >
-        			<div class="text-center p-1 rounded bg-light w100 border" >B</div>
-        		</div>
-        	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 b">{!! $question->b!!}</div></div>
+          <div class="col-2 col-md-2">
+            <div class="pr-3 pb-2" >
+              <div class="text-center p-1 rounded bg-light w100 border" >B</div>
+            </div>
+          </div>
+          <div class="col-10 col-md-10"><div class="pt-1 b">{!! $question->b!!}</div></div>
         </div>
         @endif
 
         @if($question->c)
          <div class="row no-gutters">
-        	<div class="col-2 col-md-2">
-        		<div class="pr-3 pb-2" >
-        			<div class="text-center p-1 rounded bg-light w100 border" >C</div>
-        		</div>
-        	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 c">{!! $question->c!!}</div></div>
+          <div class="col-2 col-md-2">
+            <div class="pr-3 pb-2" >
+              <div class="text-center p-1 rounded bg-light w100 border" >C</div>
+            </div>
+          </div>
+          <div class="col-10 col-md-10"><div class="pt-1 c">{!! $question->c!!}</div></div>
         </div>
         @endif
         
         @if($question->d)
          <div class="row no-gutters">
-        	<div class="col-2 col-md-2">
-        		<div class="pr-3 pb-2" >
-        			<div class="text-center p-1 rounded bg-light w100 border" >D</div>
-        		</div>
-        	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 d">{!! $question->d!!}</div></div>
+          <div class="col-2 col-md-2">
+            <div class="pr-3 pb-2" >
+              <div class="text-center p-1 rounded bg-light w100 border" >D</div>
+            </div>
+          </div>
+          <div class="col-10 col-md-10"><div class="pt-1 d">{!! $question->d!!}</div></div>
         </div>
         @endif
 
         @if($question->e)
          <div class="row no-gutters">
-        	<div class="col-2 col-md-2">
-        		<div class="pr-3 pb-2" >
-        			<div class="text-center p-1 rounded bg-light w100 border" >E</div>
-        		</div>
-        	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
+          <div class="col-2 col-md-2">
+            <div class="pr-3 pb-2" >
+              <div class="text-center p-1 rounded bg-light w100 border" >E</div>
+            </div>
+          </div>
+          <div class="col-10 col-md-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
         </div>
         @endif
          
@@ -96,23 +113,54 @@
 
       @if($question->answer)
       <div class="card mb-3 ">
-      	<div class="card-body">
-      		<h3>Answer</h3>
-      		<div class="answer">{!! $question->answer !!}</div>
-      	</div>
+        <div class="card-body">
+          <h3>Answer</h3>
+          <div class="answer">{!! $question->answer !!}</div>
+        </div>
       </div>
       @endif
 
       @if($question->explanation)
       <div class="card mb-3 mb-md-0">
-      	<div class="card-body">
-      		<h3>Explanation</h3>
-      		<div class="explanation">{!! $question->explanation !!}</div>
-      	</div>
+        <div class="card-body">
+          <h3>Explanation</h3>
+          <div class="explanation">{!! $question->explanation !!}</div>
+        </div>
       </div>
       @endif
+        
+      </div>
 
-      @include('appl.dataentry.snippets.exam')
+      <div class="tab-pane fade  " id="exams" role="tabpanel" aria-labelledby="exams-tab">
+          @include('appl.dataentry.snippets.exam')
+      </div>
+      <div class="tab-pane fade " id="category" role="tabpanel" aria-labelledby="category-tab">
+        @if(isset($list))
+        @if(count($list)!=0)
+        <div class="card mt-3">
+        <div class="card-body details">
+          <div class="bg-light p-1 rounded border mb-2">Category</div>
+          
+          <div class="row">
+            <div class="col-12 mb-1">
+              @foreach($list as $k=>$cat)
+               <div class="form-check">
+                  <input type="checkbox" class="form-check-input n" name="category" data-id="{{$cat->id}}" data-url="{{ url('/') }}" data-ques={{ $question->id }} @if($cat->questions->contains($question->id)) checked @endif>
+                  <label class="form-check-label" for="exampleCheck1">{{$cat->name}}</label>
+                </div>
+              @endforeach
+            </div>
+          </div>
+        </div>
+      </div>
+        @endif
+        @endif
+      </div>
+
+      </div>
+      
+
+      
 
     </div>
 

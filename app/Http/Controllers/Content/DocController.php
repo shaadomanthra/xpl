@@ -25,26 +25,34 @@ class DocController extends Controller
             $docs = $doc->where('name','LIKE',"%{$item}%")
                         ->where('privacy',0)
                         ->where('status',1)
-                        ->orderBy('created_at','desc ')
+                        ->orderBy('id','asc')
                         ->paginate(config('global.no_of_records'));
+
         }else{
 
             if(\auth::user()->checkRole(['administrator','editor','documenter']))
                 $docs = $doc->where('name','LIKE',"%{$item}%")
-                        ->orderBy('created_at','desc ')
+                        ->orderBy('id','asc')
                         ->paginate(config('global.no_of_records'));
             else
                 $docs = $doc->where('name','LIKE',"%{$item}%")
                         ->where('status',1)
-                        ->orderBy('created_at','desc ')
+                        ->orderBy('id','asc ')
                         ->paginate(config('global.no_of_records'));
                             
+        }
+
+
+        $keywords = '';
+        foreach($docs as $d){
+            $keywords = $keywords.''.strtolower($d->name).',';
         }
         
 
         $view = $search ? 'list': 'index';
         return view('appl.content.doc.'.$view)
             ->with('doc',$doc)
+            ->with('keywords',$keywords)
             ->with('docs',$docs);
     }
 
@@ -125,8 +133,13 @@ class DocController extends Controller
         else
             $chapters =null;
 
+        $keywords = strtolower($doc->name).',';
+        foreach($chap as $c)
+            $keywords = $keywords.strtolower($c->title).',';
+
         if($doc)
             return view('appl.content.doc.show')
+                    ->with('keywords',$keywords)
                     ->with('doc',$doc)
                     ->with('chapters',$chapters);
         else

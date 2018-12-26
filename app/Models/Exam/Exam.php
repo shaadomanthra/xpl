@@ -23,6 +23,10 @@ class Exam extends Model
         return $this->hasMany('PacketPrep\Models\Exam\Section');
     }
 
+    public function products()
+    {
+        return $this->belongsToMany('PacketPrep\Models\Product\Product');
+    }
 
     public function examtype()
     {

@@ -44,7 +44,7 @@
 				<a class="white-link" href="{{ route('tag.question',[$project->slug,$tag->id,$q->id]) }}">
 				@endif
 				<div class="pr-1">
-				<div class="qborder w100 p-1 text-center rounded @if($q->id==$question->id) active @endif @if($q->status == 0) @elseif($q->status == 1) border-secondary @else border-success  @endif" id="q{{ ($q->id )}}">{{ ($key + 1 ) }}</div>
+				<div class="qborder w100 p-1 text-center rounded @if($q->id==$question->id) active @endif @if($q->status == 0)  @elseif($q->status == 1) border-success @else border-warning  @endif" id="q{{ ($q->id )}}">{{ ($key + 1 ) }}</div>
 				</div>
 				</a>
 			</div>

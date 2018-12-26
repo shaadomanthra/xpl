@@ -8,7 +8,9 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'PacketPrep') }}</title>
+    <meta name="description" content="@yield('description')">
+    <meta name="keywords" content="@yield('keywords')">
+    <title>@yield('title')</title>
     <!-- Styles -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     

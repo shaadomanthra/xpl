@@ -38,7 +38,7 @@
   </div>
 @endif
 
-<nav aria-label="Page navigation  " class="card-nav @if($docs->total() > config('global.no_of_records'))mt-3 @endif">
+<nav aria-label="Page navigation  " class="card-nav @if($docs->total() > config('global.no_of_records'))mt-3 mb-5 @endif">
   {{$docs->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
 </nav>
 

@@ -1,6 +1,6 @@
 
 @extends('layouts.app')
-
+@section('title', 'Privacy Policy | PacketPrep')
 @section('content')
 
 

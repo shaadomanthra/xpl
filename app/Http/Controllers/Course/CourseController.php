@@ -105,10 +105,16 @@ class CourseController extends Controller
         $user = \Auth::user();
         $entry=null;
         if($user)
-        $entry = DB::table('product_user')
-                ->where('product_id', $product->id)
-                ->where('user_id', $user->id)
-                ->first();
+        foreach($course->products as $product)
+        {
+            if($product->users()->find($user->id)){
+                $entry = DB::table('product_user')
+                    ->where('product_id', $product->id)
+                    ->where('user_id', $user->id)
+                    ->first();
+            }
+            
+        }
         
 
        // dd($user->courses()->find($course->id));
@@ -203,14 +209,26 @@ class CourseController extends Controller
     public function video($course,$category)
     {
 
-        $product = Product::where('slug',$course)->first();
         $course = Course::where('slug',$course)->first();
 
-        
+        $user = \Auth::user();
+        $entry=null;
+        if($user)
+        foreach($course->products as $product)
+        {
+            if($product->users()->find($user->id)){
+                $entry = DB::table('product_user')
+                    ->where('product_id', $product->id)
+                    ->where('user_id', $user->id)
+                    ->first();
+                 $p = $product;   
+            }
+            
+        }
         
 
-        if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','client-owner'])){
-        if(!\auth::user()->products()->where('product_id',$product->id)->count() || $product->validityExpired())
+        if(!$user->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','client-owner'])){
+        if(!$entry || $p->validityExpired())
         {
             return view('appl.course.course.access');
         }

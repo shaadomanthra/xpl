@@ -1,4 +1,10 @@
 @extends('layouts.app')
+@section('title', $chapter->title.' | PacketPrep')
+
+@section('description', $chapter->description )
+
+@section('keywords', $chapter->keywords)
+
 @section('content')
 
   <nav aria-label="breadcrumb">

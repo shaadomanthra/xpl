@@ -1,4 +1,10 @@
 @extends('layouts.app')
+@section('title', $doc->name.' | PacketPrep')
+
+@section('description', 'Packetpreps '.$doc->name.' will help you prepare for campus placements with ease' )
+
+@section('keywords', $keywords)
+
 @section('content')
 
    <nav aria-label="breadcrumb">

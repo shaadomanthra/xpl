@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Transcation - '.$order->order_id.' | PacketPrep')
 @section('content')
 
 <nav aria-label="breadcrumb">

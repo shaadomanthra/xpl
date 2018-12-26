@@ -28,7 +28,11 @@ class Course extends Model
     ];
 
     public function users(){
-        return $this->belongsToMany('Packetprep\User');
+        return $this->belongsToMany('PacketPrep\User');
+    }
+
+    public function products(){
+        return $this->belongsToMany('PacketPrep\Models\Product\Product');
     }
 
     public function clients(){

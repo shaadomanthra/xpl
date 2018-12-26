@@ -299,32 +299,6 @@ $(document).ready(function() {
 
 
 
-      // image upload
-     $('form#uploadimage').ajaxForm({
-        beforeSend:function(){
-
-        },
-        uploadProgress:function(event,position,total,percentComplete){
-        },
-        success:function(){
-        },
-        complete:function(response){
-          var rooturl = $('.root').data('rooturl');
-          $( ".image_container" ).replaceWith("<div class='image_container'><img src='"+rooturl+'/'+response.responseText+"'  class='image' width='25%'/></div>");
-          $('.formimage').val(response.responseText);
-         
-        }
-       });
-
-     // image remove
-     $(document).on('click','.btn-remove',function(){
-        var rooturl = $('.root').data('rooturl')+'/social/imageremove';
-        var image = $('.formimage').val();
-        $.get(rooturl,{'image':image},function(data){
-            $( ".image_container" ).replaceWith("<div class='image_container'></div>");
-            $('.formimage').val(' ');
-        });
-     });
 
 
      // search data

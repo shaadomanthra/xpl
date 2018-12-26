@@ -55,6 +55,7 @@ class ChapterController extends Controller
         return view('appl.content.chapter.createedit')
                 ->with('doc',$this->doc)
                 ->with('stub','Create')
+                ->with('editor','true')
                 ->with('select_options',$select_options);
     }
 
@@ -68,7 +69,7 @@ class ChapterController extends Controller
     {
         $this->authorize('edit', $chapter);
         $request->slug = str_replace(' ', '-', $request->slug);
-        $child_attributes =['title'=>$request->title,'slug'=>$request->slug,'content'=>$request->content];
+        $child_attributes =['title'=>$request->title,'slug'=>$request->slug,'content'=>$request->content,'description'=>$request->description,'keywords'=>$request->keywords];
         $parent = Chapter::where('id','=',$request->parent_id)->first();
         $child = new Chapter($child_attributes);
 
@@ -212,6 +213,7 @@ class ChapterController extends Controller
                     ->with('chapter',$node)
                     ->with('parent',$parent)
                     ->with('stub','Update')
+                    ->with('editor','true')
                     ->with('select_options',$select_options);
         else
             abort(404);
@@ -242,6 +244,8 @@ class ChapterController extends Controller
         $chapter->title = $request->title;
         $chapter->slug = str_replace(' ', '-', $request->slug);
         $chapter->content = $request->content;
+        $chapter->description = $request->description;
+        $chapter->keywords = $request->keywords;
         $chapter->save();
 
         flash('chapter(<b>'.$request->title.'</b>) successfully updated!')->success();

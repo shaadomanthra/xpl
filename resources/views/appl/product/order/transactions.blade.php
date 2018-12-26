@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Transctions | PacketPrep')
 @section('content')
 
 <nav aria-label="breadcrumb">

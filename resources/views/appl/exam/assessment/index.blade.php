@@ -1,4 +1,5 @@
 @extends('layouts.nowrap-product')
+@section('title', 'Online Practice Tests for Placements | PacketPrep')
 @section('content')
 <div class=" p-4  bg-white mb-4 border-bottom">
   <div class="wrapper ">  
@@ -6,7 +7,7 @@
   <div class="row">
     <div class="col-12 col-md-8">
       <h1 class="mt-2 mb-4 mb-md-2">
-      <i class="fa fa-gg"></i> &nbsp;Online Tests
+      <i class="fa fa-gg"></i> &nbsp;Online Practice Tests
       </h1>
     </div>
     <div class="col-12 col-md-4">

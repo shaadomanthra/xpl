@@ -20,12 +20,18 @@
                     @guest
                     @else
                     @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-                    <li><a class="nav-link" href="{{ route('admin.index') }}"><i class="fa fa-dashboard"></i> Admin</a></li>
+                    <li class="mr-3"><a class="nav-link" href="{{ route('admin.index') }}"><i class="fa fa-home"></i> Admin</a></li>
                     @endif
+
+                    <li class="mr-3"><a class="nav-link" href="{{ route('dashboard') }}"
+                            ><i class="fa fa-dashboard"></i>
+                           Dashboard
+                             </a></li>
                     
                     @endguest
                     <li class="mr-3 "><a class="nav-link " href="{{ url('course') }}"><i class="fa fas fa-youtube-play"></i> Courses</a></li>
-                    <!--<li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>  -->
+                    <!--
+                    <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>   -->
                    <li class="mr-3 "><a class="nav-link " href="{{ url('proficiency-test') }}"><i class="fa fa-gg"></i> Proficiency Test</a></li>
                     
                     <li class="mr-3 "><a class="nav-link " href="{{ url('premium') }}"><span class="premium"><i class="fa fa-bullseye"></i> Premium Access</span></a></li>

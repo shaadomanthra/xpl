@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Learn '.$category->name.' | PacketPrep')
 
 @section('content')
 
