@@ -247,7 +247,10 @@ ul.sortable li.current{ border:1px solid #17a085; }
 
 .bg3{background:linear-gradient(to top, rgba(22, 160, 133,0.0), rgb(35, 111, 177)); height:100%}
 
+
 @media (max-width: 720px) {
+
+    .container{ max-width: 720px; }
 
     /*user profile*/
     .name,a.link{ color:#484e51; }

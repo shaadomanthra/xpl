@@ -49,6 +49,7 @@ class Product extends Model
                 ->where('user_id', $user_id)
                 ->first();
 
+        
 
         if(strtotime($entry->valid_till) > strtotime(date('Y-m-d')) && $entry->status==1)
             return false;

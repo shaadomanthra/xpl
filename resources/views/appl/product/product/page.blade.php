@@ -1,10 +1,16 @@
 @extends('layouts.app')
 @section('content')
 
+@section('title',  $product->name .' Product Page | PacketPrep')
+
+@section('description', 'The following page lists the product '.$product->name.', '.$product->description)
+
+@section('keywords', 'packetprep products')
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item">Product</li>
+    <li class="breadcrumb-item"><a href="{{ url('/productpage')}}">Products</a></li>
     <li class="breadcrumb-item">{{ $product->name}}</li>
   </ol>
 </nav>
@@ -46,6 +52,24 @@
             </h1>
             </div>
           </div>
+          <hr>
+          @else
+          <div class="row mb-2">
+            <div class="col-md-4">Status</div>
+            <div class="col-md-8">
+              @if(strtotime(\auth::user()->products->find($product->id)->pivot->valid_till) > strtotime(date('Y-m-d')))
+                      @if(\auth::user()->products->find($product->id)->pivot->status==1)
+                      <span class="badge badge-success">Active</span>
+                      @else
+                      <span class="badge badge-secondary">Disabled</span>
+                      @endif
+                    @else
+                        <span class="badge badge-danger">Expired</span>
+                    @endif
+            </div>
+          </div>
+          <hr>
+
           @endif
           <div class="row mb-2">
             <div class="col-md-4">Validity</div>
@@ -54,6 +78,10 @@
             </div>
           </div>
           <hr>
+
+          
+
+          
 
           @if(count($product->courses)!=0)
           <div class="row mb-2">
@@ -99,6 +127,8 @@
                 <button class="btn btn-outline-primary btn-lg ">Buy Now</button>
               </a>
               @else
+
+
               <div class=" border p-3 rounded bg-light"><h1>You have access to above content valid till<br>
                  <span class="badge badge-primary">{{ date('d M Y', strtotime(\auth::user()->products->find($product->id)->pivot->valid_till)) }}</span>
                  </h1>

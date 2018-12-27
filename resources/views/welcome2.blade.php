@@ -11,10 +11,10 @@
 
 <div class="container mt-4">
 
-<div class="mb-4  p-3 pt-5 bg-white ">
+<div class="mb-4  p-3 pt-5 bg-white" style="border:1px solid #cae1ec;">
 
 	<div class="row">
-		<div class="col-md-7 ">
+		<div class="col-md-8 ">
 			@if(auth::user())
 			<div class="row mt-0 mt-mb-4">
 				<div class="col-12 col-md-3">
@@ -39,12 +39,44 @@
 
             <br><br>
 
-        @if(count(auth::user()->products)!=0)
-            <table class="table table-responsive ">
+        
+            
+
+				</div>
+
+
+			</div>
+
+
+            
+             
+			
+			@else
+
+			@endif
+
+		</div>
+    <div class="col-12 col-md-1  ">
+      &nbsp;
+    </div>
+		<div class="col-12 col-md-3  ">
+			<div class="float-right ">
+                <img src="{{ asset('/img/student_front.png')}}" class="w-100 p-3 pt-0"/>
+                
+			</div>
+		</div>
+	</div>
+</div>
+
+
+  @if(count(auth::user()->products)!=0)
+  <div class="rounded table-responsive">
+            <table class="table table-bordered ">
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Product</th>
+                  <th scope="col">Products</th>
+                  <th scope="col">Type</th>
                   <th scope="col">Valid till</th>
                   <th scope="col">Status</th>
                 </tr>
@@ -54,6 +86,13 @@
                  <tr>
                   <th scope="row">{{ $k+1}}</th>
                   <td><a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a></td>
+                  <td>
+                    @if($product->price==0)
+                      <span class="badge badge-warning">Free</span>
+                      @else
+                      <span class="badge badge-info">Premium</span>
+                      @endif
+                  </td>
                   <td>{{date('d M Y', strtotime($product->pivot->valid_till))}}</td>
                   <td> 
                     @if(strtotime($product->pivot->valid_till) > strtotime(date('Y-m-d')))
@@ -70,109 +109,10 @@
                 @endforeach
               </tbody>
             </table>
+            </div>
+  <br><br>
         @endif
-            
-
-				</div>
-
-
-			</div>
-
-
-            
-             
-			
-			@else
-
-			
-			
-
-			<div class="pt-0 mt-0 mt-md-4 pt-md-4">
-				
-				 @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('warning'))
-                        <div class="alert alert-warning">
-                            {{ session('warning') }}
-                        </div>
-                    @endif
-                    
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-6 control-label">E-Mail Address / Username</label>
-
-                            <div class="col-md-10">
-                                <input type="text" class="form-control" name="email" placeholder="" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-10">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-                                <a class="btn btn-outline-success" href="{{ url('/register') }}">
-                                    Sign up
-                                </a>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-
-			
-		</div>
-			@endif
-
-		</div>
-		<div class="col-12 col-md-5 ">
-			<div class="text-center mt-5 mt-md-1">
-                @if(!auth::user())
-				<img src="{{ asset('/img/678.jpg')}}" class="w-100 p-4"/>
-                @else
-                <img src="{{ asset('/img/student_front.png')}}" class="w-100 p-4"/>
-                @endif
-			</div>
-		</div>
-	</div>
-</div>
+  
 
 
 </div>

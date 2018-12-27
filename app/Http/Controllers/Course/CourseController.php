@@ -226,14 +226,15 @@ class CourseController extends Controller
             
         }
         
+        //dd($entry);
 
-        if(!$user->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','client-owner'])){
+        
         if(!$entry || $p->validityExpired())
         {
             return view('appl.course.course.access');
         }
 
-        }
+        
         
 
             

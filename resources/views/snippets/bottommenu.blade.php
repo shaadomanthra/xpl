@@ -4,7 +4,7 @@
 
 		<nav class="nav ml-md-0 mb-2" >
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/about-corporate')}}">About</a>
-		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('https://blog.packetprep.com')}}">Blog</a>
+		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/productpage')}}">Products</a>
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('test')}}">Tests</a>
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/terms-corporate')}}">Terms</a>
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/privacy')}}">Privacy</a>

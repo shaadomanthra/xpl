@@ -124,7 +124,7 @@ class ProductController extends Controller
         $product = new Product();
         $this->authorize('create', $product);
 
-        $exams = Exam::where('status','2')->get();
+        $exams = Exam::all();
         $courses = Course::all();
 
         return view('appl.product.product.createedit')
@@ -216,6 +216,22 @@ class ProductController extends Controller
     }
 
 
+    public function products(Product $product,Request $request)
+    {
+
+        $search = $request->search;
+        $item = $request->item;
+        
+        $products = $product->where('name','LIKE',"%{$item}%")->where('status',1)
+                    ->orderBy('created_at','desc ')
+                    ->paginate(config('global.no_of_records'));   
+        $view = $search ? 'list2': 'index2';
+
+        return view('appl.product.product.'.$view)
+        ->with('products',$products)->with('product',$product);
+
+    }
+
     public function page($id)
     {
         $product= Product::where('slug',$id)->first();
@@ -249,7 +265,7 @@ class ProductController extends Controller
     {
         $product= Product::where('slug',$id)->first();
         $this->authorize('update', $product);
-        $exams = Exam::where('status','2')->get();
+        $exams = Exam::all();
         $courses = Course::all();
 
 
