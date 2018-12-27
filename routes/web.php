@@ -94,6 +94,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('team','User\TeamController@index')->name('team');
 
 	Route::resource('product','Product\ProductController')->middleware('auth');
+	Route::get('productpage/{product}','Product\ProductController@page')->name('productpage');
 	Route::resource('client','Product\ClientController')->middleware('auth');
 	Route::resource('client/{client}/clientuser','Product\ClientuserController')->middleware('auth');
 	Route::post('client/image','Product\ClientController@imageupload')->name('client.image')->middleware('auth');
@@ -136,6 +137,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('examtype','Exam\ExamtypeController')->middleware('auth');
 	Route::resource('exam/{exam}/sections','Exam\SectionController')->middleware('auth');
 	Route::get('exam/{exam}/question','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.questions');
+	Route::get('exam/create','Exam\ExamController@createExam')->middleware('auth')->name('exam.create');
 	Route::get('exam/{exam}/question/{id}','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.question');
 
 	Route::get('certificate/{exam}/{user}','Exam\AssessmentController@certificate')->name('certificate');

@@ -75,11 +75,11 @@ class OrderController extends Controller
             $order->txn_id = $response['payments'][0]['payment_id'];
             if($response['status']=='Completed'){
               $order->status = 1;
-              $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
+              $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($product->validity*31).' days'));
 
               if(!$user->products->contains($product->id)){
 
-                $user->products()->attach($order->product_id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                $user->products()->attach($order->product_id,['validity'=>$product->validity,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
 
               }
             }
@@ -126,7 +126,7 @@ class OrderController extends Controller
           $data = 'ORDER_ID='.$order->order_id.'&CUST_ID='.$order->user_id.'&INDUSTRY_TYPE_ID=Retail109&CHANNEL_ID=WEB&TXN_AMOUNT='.$order->txn_amount; 
           
           header('Location: '.url('/').'/pgRedirect.php?'.$data); */
-          if($request->type=='instamojo'){
+          if($request->type=='instamojo' && $request->txn_amount!=0){
 
           $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
           try {
@@ -208,6 +208,74 @@ class OrderController extends Controller
 
           
         }else{
+          $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
+
+          try {
+            
+
+            $user = \auth::user();
+            $o = Order::where('product_id',$request->get('product_id'))
+                  ->where('user_id',$user->id)->first();
+            $product = Product::where('id',$request->get('product_id'))->first();
+
+
+            if($o)
+            if($o->status == 1 ){
+              return view('appl.product.pages.checkout_denail')->with('order',$o);
+            }
+            
+              
+      
+
+              //dd($response);
+              $order = new Order();
+              $order->order_id = 'ORD_'.substr(md5(mt_rand()), 0, 10);
+
+              $o_check = Order::where('order_id',$order->order_id)->first();
+              while($o_check){
+                $order->order_id = 'ORD_'.substr(md5(mt_rand()), 0, 10);
+                $o_check = Order::where('order_id',$order->order_id)->first();
+                if(!$o_check)
+                  break;
+              }
+
+              if($request->get('coupon'))
+              {
+                $coupon = Coupon::where('code',$request->get('coupon'))->first();
+                if($coupon)
+                $order->coupon_id = $coupon->id;
+              }
+
+              $order->user_id = $user->id;
+              $order->txn_amount = $request->txn_amount;
+              $order->status=1;
+              $order->payment_mode = 'DIRECT';
+              $order->txn_id = $order->order_id;
+              $order->product_id = $request->get('product_id');
+
+              
+               //dd($order);
+              $order->save();
+              $order->payment_status = 'Successful';
+              Mail::to($user->email)->send(new OrderSuccess($user,$order));
+
+
+              $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($product->validity*31).' days'));
+
+              if(!$user->products->contains($product->id)){
+
+                $user->products()->attach($order->product_id,['validity'=>$product->validity,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+
+              }
+
+
+              return view('appl.product.pages.checkout_success')->with('order',$order);
+
+          }
+          catch (Exception $e) {
+              print('Error: ' . $e->getMessage());
+          }
+
 
         }
 

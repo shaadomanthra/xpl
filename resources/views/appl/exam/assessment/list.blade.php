@@ -8,15 +8,53 @@
           <div class="bg-white border">
             <div  style="background: #ebf3f7">&nbsp;</div>
               <div class="card-body">
-                <span class="badge badge-warning">#{{ $exam->slug }}</span>
+                @if($exam->status==1)
+                <span class="badge badge-warning">FREE</span>
+                @elseif($exam->status ==2)
+                <span class="badge badge-info">PREMIUM</span>
+                @endif
                   <h1>{{ $exam->name }}</h1>
                     {{ $exam->question_count() }} Questions | {{ $exam->time() }} min<br>
 
                     <div class="pt-2">
                    @if(!$exam->attempted())
+                  
+                  @if($exam->status==1) 
                   <a href="{{ route('assessment.instructions',$exam->slug) }}">
-                  <button class="btn btn-outline-primary btn-sm"> <i class="fa fa-paper-plane" ></i> Try Now</button>
+                  <button class="btn btn-outline-primary btn-sm">
+                    <i class="fa fa-paper-plane" ></i> Try Now
+                  </button>
                   </a>
+                  @elseif($exam->status == 2)
+
+                  @if(\auth::user())
+                  @if(\auth::user()->productValid($exam->products->first()->slug)==2)
+                  <a href="{{ route('productpage',$exam->getProductSlug()) }}">
+                  <button class="btn btn-outline-primary btn-sm">
+                    <i class="fa fa-lock" ></i> Buy Now
+                  </button>
+                  </a>
+
+                  @else
+                  <a href="{{ route('assessment.instructions',$exam->slug) }}">
+                  <button class="btn btn-outline-primary btn-sm">
+                    <i class="fa fa-paper-plane" ></i> Try Now
+                  </button>
+                  </a>
+
+                  @endif
+                  @else
+                  <a href="{{ route('productpage',$exam->getProductSlug()) }}">
+                  <button class="btn btn-outline-primary btn-sm">
+                    <i class="fa fa-lock" ></i> Buy Now
+                  </button>
+                  </a>
+                  @endif
+
+                  
+                  @endif
+
+                  
                   @else
                   <a href="{{ route('assessment.analysis',$exam->slug) }}">
                   <button class="btn btn-outline-primary btn-sm"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>

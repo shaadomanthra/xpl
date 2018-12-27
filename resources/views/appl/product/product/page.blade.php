@@ -4,8 +4,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin')}}">Admin</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('product.index') }}">Products</a></li>
+    <li class="breadcrumb-item">Product</li>
     <li class="breadcrumb-item">{{ $product->name}}</li>
   </ol>
 </nav>
@@ -14,17 +13,11 @@
 
   <div class="row">
 
-    <div class="col-12 col-md-9">
+    <div class="col-12 col-md-12">
       <div class="card bg-light mb-3">
         <div class="card-body text-secondary">
           <p class="h2 mb-0"><i class="fa fa-inbox "></i> {{ $product->name }} 
 
-          @can('update',$product)
-            <span class="btn-group float-right" role="group" aria-label="Basic example">
-              <a href="{{ route('product.edit',$product->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-              <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
-            </span>
-            @endcan
           </p>
         </div>
       </div>
@@ -32,73 +25,86 @@
      
       <div class="card mb-4">
         <div class="card-body">
-          <div class="row mb-2">
-            <div class="col-md-4">Product slug</div>
-            <div class="col-md-8">
-              {{ $product->slug}}
-            </div>
-          </div>
+          
 
           <div class="row mb-2">
-            <div class="col-md-4">Description</div>
-            <div class="col-md-8">
+            <div class="col-12 col-md-4">Description</div>
+            <div class="col-12 col-md-8">
               {!! $product->description !!}
             </div>
           </div>
+          <hr>
 
          
+         @if(!$entry)
           <div class="row mb-2">
-            <div class="col-md-4">Price</div>
-            <div class="col-md-8">
-              Rs. {{ $product->price }}
+            <div class="col-12 col-md-4">Price</div>
+            <div class="col-12 col-md-8">
+              <h1>
+
+              <i class="fa fa-rupee"></i> {{ $product->price }}
+            </h1>
             </div>
           </div>
-
+          @endif
           <div class="row mb-2">
             <div class="col-md-4">Validity</div>
             <div class="col-md-8">
               {{ $product->validity }} months
             </div>
           </div>
-          <div class="row mb-2">
-            <div class="col-md-4">Status</div>
-            <div class="col-md-8">
-             @if($product->status==0)
-                    <span class="badge badge-warning">Private</span>
-                  @else
-                    <span class="badge badge-success">Public</span>
-                  @endif
-            </div>
-          </div>
+          <hr>
 
+          @if(count($product->courses)!=0)
           <div class="row mb-2">
-            <div class="col-md-4">Courses</div>
-            <div class="col-md-8">
-            @if(count($product->courses)!=0)
+            <div class="col-12 col-md-4">Courses Included</div>
+            <div class="col-12 col-md-8">
+            
+            
              @foreach($product->courses as $course)
              <div class="p-3 border rounded mb-2">
-              <a href="{{ route('course.show',$course->slug) }}">{{ $course->name }}</a> 
+             <a href="{{ route('course.show',$course->slug) }}">{{ $course->name }}</a> 
             </div>
              @endforeach
-           @else
-              <div>- NA -</div>
-            @endif 
+              
+             
+            
             </div>
           </div>
+          @endif 
 
+          @if(count($product->exams)!=0)
           <div class="row mb-2">
-            <div class="col-md-4">Exams</div>
-            <div class="col-md-8">
-            @if(count($product->exams)!=0)
-             @foreach($product->exams as $exam)
+            <div class="col-12 col-md-4">Exams Included</div>
+            <div class="col-12 col-md-8">
+            
+            @foreach($product->exams as $exam)
              <div class="p-3 border rounded mb-2">
              <a href="{{ route('assessment.instructions',$exam->slug) }}">{{ $exam->name }}</a>
             </div>
-             
              @endforeach
-           @else
-              <div>- NA -</div>
-            @endif 
+           
+           
+            </div>
+          </div>
+           @endif 
+
+           <div class="row mb-2">
+            <div class="col-12 col-md-4"></div>
+            <div class="col-12 col-md-8">
+
+              @if(!$entry)
+              
+              <a href="{{ route('checkout')}}?product={{$product->slug}}">
+                <button class="btn btn-outline-primary btn-lg ">Buy Now</button>
+              </a>
+              @else
+              <div class=" border p-3 rounded bg-light"><h1>You have access to above content valid till<br>
+                 <span class="badge badge-primary">{{ date('d M Y', strtotime(\auth::user()->products->find($product->id)->pivot->valid_till)) }}</span>
+                 </h1>
+               </div>
+              @endif
+
             </div>
           </div>
           
@@ -113,9 +119,7 @@
       
 
     </div>
-    <div class="col-md-3 pl-md-0">
-      @include('appl.product.snippets.adminmenu')
-    </div>
+    
 
     
 

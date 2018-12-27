@@ -46,6 +46,15 @@ class Exam extends Model
 
     }
 
+    public function getProductSlug(){
+
+        $p = $this->products->first();
+        if($p)
+            return $p->slug;
+        else
+            return 0;
+    }
+
     public function time()
     {
         $exam = $this;$count =0;

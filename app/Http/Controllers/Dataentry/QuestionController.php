@@ -120,6 +120,8 @@ class QuestionController extends Controller
                 ->with('question',$question)
                 ->with('categories',$categories)
                 ->with('exams',$exams)
+                ->with('code',true)
+                ->with('editor',true)
                 ->with('stub','Create');
     }
 
@@ -730,6 +732,8 @@ class QuestionController extends Controller
                     ->with('tags',$tags)
                     ->with('exams',$exams)
                     ->with('type',$question->type)
+                    ->with('code',true)
+                    ->with('editor',true)
                     ->with('stub','Update');
         else
             abort(404);

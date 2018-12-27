@@ -80,6 +80,7 @@ class PassageController extends Controller
     {
         $this->authorize('create', $passage);
         return view('appl.dataentry.passage.createedit')
+                ->with('editor',true)
                 ->with('project',$this->project)->with('stub','Create');
     }
 
@@ -149,6 +150,7 @@ class PassageController extends Controller
             return view('appl.dataentry.passage.createedit')
                     ->with('project',$this->project)
                     ->with('passage',$passage)
+                    ->with('editor',true)
                     ->with('stub','Update');
         else
             abort(404);

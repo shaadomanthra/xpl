@@ -53,7 +53,7 @@
                 @foreach(auth::user()->products as $k=>$product)
                  <tr>
                   <th scope="row">{{ $k+1}}</th>
-                  <td>{{$product->name}}</td>
+                  <td><a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a></td>
                   <td>{{date('d M Y', strtotime($product->pivot->valid_till))}}</td>
                   <td> 
                     @if(strtotime($product->pivot->valid_till) > strtotime(date('Y-m-d')))

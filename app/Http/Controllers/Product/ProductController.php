@@ -153,12 +153,13 @@ class ProductController extends Controller
 
             $exams = $request->get('exams');
             $courses = $request->get('courses');
-            
+
             $product->name = $request->name;
             $product->slug = $request->slug;
             $product->description = ($request->description) ? $request->description: null;
             $product->price = $request->price;
             $product->status = $request->status;
+            $product->validity = $request->validity;
             $product->save(); 
 
              if($exams){
@@ -214,6 +215,30 @@ class ProductController extends Controller
             abort(404);
     }
 
+
+    public function page($id)
+    {
+        $product= Product::where('slug',$id)->first();
+
+
+        $user = \Auth::user();
+        $entry=null;
+        if($user)
+        $entry = DB::table('product_user')
+                    ->where('product_id', $product->id)
+                    ->where('user_id', $user->id)
+                    ->first();
+        
+
+        if($product)
+            return view('appl.product.product.page')
+                    ->with('entry',$entry)
+                    ->with('product',$product);
+        else
+            return view('appl.product.product.pageerror')
+                    ->with('product',$product);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -261,6 +286,7 @@ class ProductController extends Controller
             $product->slug = $request->slug;
             $product->description = ($request->description) ? $request->description: null;
             $product->price = $request->price;
+             $product->validity = $request->validity;
             $product->status = $request->status;
 
             if($exams){

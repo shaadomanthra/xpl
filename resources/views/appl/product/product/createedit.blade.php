@@ -57,6 +57,17 @@
         </textarea>
       </div>
 
+       <div class="form-group">
+        <label for="formGroupExampleInput ">Validity</label>
+        <select class="form-control validity_data" name="validity">
+          <option value="1" >1 month</option>
+          @for($i=2;$i < 24;$i++)
+          <option value="{{$i}}">{{$i}} months</option>
+          @endfor
+           <option value="24" selected>24 months</option>
+        </select>
+      </div>
+
       <div class="form-group">
         <label for="formGroupExampleInput ">Price</label>
         <input type="number" class="form-control" name="price" id="formGroupExampleInput" placeholder="Enter the Price" 
@@ -67,6 +78,7 @@
             @endif
           >
       </div>
+
       <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">

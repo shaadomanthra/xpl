@@ -13,29 +13,31 @@
   <thead>
     <tr>
       <th scope="col">Product</th>
+      <th scope="col">Validity</th>
       <th scope="col">Price</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td scope="row" rowspan=2>{!! $product->description !!}</td>
+      <td scope="row" rowspan=1>{!! $product->description !!}</td>
+      <td>{{ $product->validity }} months</td>
       <td>{{ $product->price }}</td>
     </tr>
      <tr>
     </tr>
     <tr>
 
-      <td >Total Amount</td>
+      <td scope="row" colspan=2>Total Amount</td>
       <td><span class="badge badge-warning" style="font-size: 20px"><i class="fa fa-rupee"></i> <span class="total">{{ $product->price }} </span></span></td>
 
       
     </tr>
     <tr style="background: #eee">
-      <td ><div class="mb-2">Coupon Code (optional)</div><input type="text" class="form-control mb-2 coupon-input" name="coupon" id="formGroupExampleInput2" placeholder="" style="width:100px"
+      <td scope="row" colspan=2><div class="mb-2">Coupon Code (optional)</div><input type="text" class="form-control mb-2 coupon-input" name="coupon" id="formGroupExampleInput2" placeholder="" style="width:100px"
           >
           <input type="hidden" class="url"  id="" value="{{ url('/') }}" >
           
-          <button class="btn btn-sm coupon-button" type="button">Add</button></td>
+          <button class="btn btn-sm btn-outline-secondary coupon-button" type="button">Add</button></td>
       <td style="width:40%">
           <span class="status"></span>
       </td>

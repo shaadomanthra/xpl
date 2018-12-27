@@ -13,6 +13,10 @@
 	<hr>
 In case of any query contact the adminstrator, the contact details are mentioned in this <a href="{{ route('contact-corporate')}}">link</a></p>
 
+<a href="{{ route('productpage',$order->product->slug) }}">
+<button class="btn btn-outline-primary btn-lg"> View Product</button>
+</a>
+
 </div>
 </div>
 @endsection

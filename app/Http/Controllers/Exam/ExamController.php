@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Exam;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Examtype;
 
 class ExamController extends Controller
@@ -45,6 +46,50 @@ class ExamController extends Controller
                 ->with('jqueryui',true)
                 ->with('editor',true)
                 ->with('exam',$exam)->with('examtypes',$examtypes);
+    }
+
+
+    public function createExam()
+    {
+       for($i=4;$i<11;$i++){
+            $this->createExamLoop($i);
+       }
+    }
+
+    public function createExamLoop($n)
+    {
+        //create exam
+        $exam = new Exam();
+        $exam->name = 'Cocubes Aptitude Practice Test #'.$n;
+        $exam->slug = 'cocubes-aptitude-'.$n;
+        $exam->user_id = \auth::user()->id;
+        $exam->instructions = '<ul ><li>This test contains 45 questions to be answered in 45 minutes</li><li>For every question there are either four options A,B,C,D or five options A,B,C,D,E out of which only one option is correct</li><li>Each question carries 1 mark and there is no negative marking</li></ul>';
+        $exam->status = 2;
+        $exam->examtype_id = 6;//general
+        $e = Exam::where('slug',$exam->slug)->first();
+
+        if(!$e)
+            $exam->save();
+        else
+            $exam =$e;
+
+
+        $sections = ['General English','Analytical Reasoning','Numerical Reasoning'];
+        //create sections
+        foreach($sections as $s){
+            $section = new Section();
+            $section->exam_id = $exam->id;
+            $section->name = $s;
+            $section->mark = 1;
+            $section->user_id = \auth::user()->id;
+            $section->negative =0;
+            $section->time = 15;
+            $c = Section::where('name',$section->name)->where('exam_id',$exam->id)->first();
+            if(!$c)
+            $section->save();
+
+        }
+
     }
 
     /**
