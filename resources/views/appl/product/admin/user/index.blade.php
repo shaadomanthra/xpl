@@ -19,10 +19,14 @@
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
           <a class="navbar-brand"><i class="fa fa-user"></i> User Accounts </a>
 
-          <form class="form-inline" method="GET" action="{{ route('dataentry.index') }}">
+
+          <form class="form-inline" method="GET" >
 
             <a href="{{route('admin.user.create')}}">
               <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Add User</button>
+            </a>
+             <a href="{{route('admin.user')}}?recent=true">
+            <button type="button" class="btn btn-outline-secondary  my-2 my-sm-2 mr-sm-3">Recent</button>
             </a>
             
             <div class="input-group ">

@@ -139,6 +139,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('exam/{exam}/sections','Exam\SectionController')->middleware('auth');
 	Route::get('exam/{exam}/question','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.questions');
 	Route::get('exam/create','Exam\ExamController@createExam')->middleware('auth')->name('exam.create');
+	Route::post('exam/create','Exam\ExamController@storeExam')->middleware('auth')->name('exam.save');
 	Route::get('exam/{exam}/question/{id}','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.question');
 
 	Route::get('certificate/{exam}/{user}','Exam\AssessmentController@certificate')->name('certificate');

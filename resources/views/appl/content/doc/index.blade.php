@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-12 col-md-8">
       <h1 class="mt-2 mb-4 mb-md-2">
-      <i class="fa fa-spotify"></i> &nbsp;Placement Preparation Tracks
+      <i class="fa fa-spotify"></i> &nbsp;Preparation Tracks
       @can('create',$doc)
             <a href="{{route('docs.create')}}">
               <button type="button" class="btn btn-outline-success btn-sm my-2 my-sm-2 mr-sm-3"><i class="fa fa-plus"></i> New</button>

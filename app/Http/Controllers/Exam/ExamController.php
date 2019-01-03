@@ -7,6 +7,8 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Examtype;
+use PacketPrep\Models\Dataentry\Category;
+use PacketPrep\Models\Dataentry\Question;
 
 class ExamController extends Controller
 {
@@ -51,21 +53,109 @@ class ExamController extends Controller
 
     public function createExam()
     {
-       for($i=4;$i<11;$i++){
+        
+        $examtypes = Examtype::all();
+       /* 
+       for($i=1;$i<4;$i++){
             $this->createExamLoop($i);
-       }
+       }*/
+
+       // Quantitative Aptitude
+       return view('appl.exam.exam.createexam')
+                ->with('stub','Create')
+                ->with('jqueryui',true)
+                ->with('editor',true)->with('examtypes',$examtypes);
+       
+
     }
 
-    public function createExamLoop($n)
+    public function storeExam(Request $request)
+    {
+        
+       for($i=$request->get('l_start');$i<$request->get('l_end');$i++){
+            $this->createExamLoop($request,$i);
+       }
+
+       return view('appl.exam.exam.message');
+    }
+
+
+
+    public function get_questions($slug){
+
+       $result = array();
+       $ques= array();
+       $k=0;
+       $category = Category::where('slug',$slug)->first();
+       $siblings = $category->descendants()->withDepth()->having('depth', '=', 1)->get();
+
+
+       if($slug == 'general-english' )
+       foreach($siblings as $s){
+            $inner = $s->descendants()->get();
+
+            $result[$s->name] = $s->questions->pluck('id')->toArray();
+                if(count($result[$s->name])!=0){
+                   $id = array_rand($result[$s->name],1);
+                   $ques[++$k] = $result[$s->name][$id]; 
+                }
+       }
+
+       if($slug == 'logical-reasoning' || $slug == 'mental-ability')
+       foreach($siblings as $s){
+            $inner = $s->descendants()->get();
+
+            $result[$s->name] = array();
+            foreach($inner as $in){
+                $result[$in->name] = $in->questions->pluck('id')->toArray();
+
+                if(count($result[$in->name])!=0){
+                   $id = array_rand($result[$in->name],1);
+                   $ques[++$k] = $result[$in->name][$id]; 
+                }
+            }
+       }
+
+       if($slug == 'quantitative-aptitude' )
+       foreach($siblings as $s){
+            $inner = $s->descendants()->get();
+
+            $result[$s->name] = array();
+            foreach($inner as $in){
+
+                $result[$s->name] = array_merge($result[$s->name] , $in->questions->pluck('id')->toArray());
+            }
+
+            if(count($result[$s->name])!=0){
+               $id = array_rand($result[$s->name],1);
+               $ques[++$k] = $result[$s->name][$id]; 
+            }
+            
+       }
+
+       foreach($ques as $id => $q){
+
+            $q = Question::find($q);
+            if($q->type !='mcq'){
+                unset($ques[$id]);
+            }
+          
+       }
+
+       return $ques;
+    }
+
+    public function createExamLoop($request,$n)
     {
         //create exam
         $exam = new Exam();
-        $exam->name = 'Cocubes Aptitude Practice Test #'.$n;
-        $exam->slug = 'cocubes-aptitude-'.$n;
+        $exam->name = $request->name.$n;
+        $exam->slug = $request->slug.$n;
         $exam->user_id = \auth::user()->id;
-        $exam->instructions = '<ul ><li>This test contains 45 questions to be answered in 45 minutes</li><li>For every question there are either four options A,B,C,D or five options A,B,C,D,E out of which only one option is correct</li><li>Each question carries 1 mark and there is no negative marking</li></ul>';
-        $exam->status = 2;
-        $exam->examtype_id = 6;//general
+        $exam->instructions = $request->instructions;
+        $exam->status = $request->status;
+        $exam->examtype_id = $request->examtype_id;//general
+        $count = 15;
         $e = Exam::where('slug',$exam->slug)->first();
 
         if(!$e)
@@ -74,20 +164,61 @@ class ExamController extends Controller
             $exam =$e;
 
 
-        $sections = ['General English','Analytical Reasoning','Numerical Reasoning'];
         //create sections
-        foreach($sections as $s){
-            $section = new Section();
-            $section->exam_id = $exam->id;
-            $section->name = $s;
-            $section->mark = 1;
-            $section->user_id = \auth::user()->id;
-            $section->negative =0;
-            $section->time = 15;
-            $c = Section::where('name',$section->name)->where('exam_id',$exam->id)->first();
-            if(!$c)
-            $section->save();
+        for($k=1;$k<5;$k++){
 
+            if($request->get('sec_'.$k)){
+                $section = new Section();
+                $section->exam_id = $exam->id;
+                $section->name = $request->get('sec_'.$k);
+                $section->mark = $request->get('sec_mark_'.$k);
+                $section->user_id = \auth::user()->id;
+                $section->negative = $request->get('sec_negative_'.$k);
+                $section->time = $request->get('sec_time_'.$k);
+
+                $c = Section::where('name',$section->name)->where('exam_id',$exam->id)->first();
+                if(!$c){
+                    $section->save();
+                    $c = Section::where('name',$section->name)->where('exam_id',$exam->id)->first();
+                }
+
+                if(count($c->questions) ==0 )
+                {
+
+                   $topic = $request->get('sec_slug_'.$k);
+                   $count = $request->get('sec_count_'.$k);
+                    // questions connect
+                   $ques_set = array();
+               
+                   $ques = $this->get_questions($topic);
+                   if(count($ques) < $count)
+                   {
+                        while(1){
+                         $ques = array_merge($ques,$this->get_questions($topic));
+                         if(count($ques) > $count)
+                            break;
+                        }
+                   }
+
+                   $i =0;
+                   foreach($ques as $q){
+                        $ques_set[$i] = $q;
+
+                        if($i == ($count - 1) )
+                            break;
+                        $i++;
+
+                   }
+                  
+                   foreach($ques_set as $i => $q){
+                        $question = Question::where('id',$q)->first();
+                        if(!$question->sections->contains($c->id))
+                            $question->sections()->attach($c->id);
+                   }
+
+                }
+            }
+            
         }
 
     }

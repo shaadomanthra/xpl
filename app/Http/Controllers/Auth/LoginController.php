@@ -65,6 +65,9 @@ class LoginController extends Controller
     public function authenticated(Request $request, $user)
     {
 
+        $user->updated_at = date('Y-m-d H:i:s');
+        $user->save();
+        
         if($user->role==2)
             return redirect()->intended($this->redirectPath());
         

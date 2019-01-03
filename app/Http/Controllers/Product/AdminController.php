@@ -188,6 +188,14 @@ class AdminController extends Controller
         $user = new User();
         $search = $request->search;
         $item = $request->item;
+        $recent = $request->get('recent');
+
+        if($recent){
+        $users = $user->where(function ($query) use ($item) {
+                                $query->where('name','LIKE',"%{$item}%")
+                                      ->orWhere('email', 'LIKE', "%{$item}%");
+                            })->orderBy('updated_at','desc')->paginate(config('global.no_of_records'));
+        }else
         $users = $user->where(function ($query) use ($item) {
                                 $query->where('name','LIKE',"%{$item}%")
                                       ->orWhere('email', 'LIKE', "%{$item}%");

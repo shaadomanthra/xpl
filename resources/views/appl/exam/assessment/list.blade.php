@@ -28,27 +28,38 @@
                   @elseif($exam->status == 2)
 
                   @if(\auth::user())
-                  @if(\auth::user()->productValid($exam->products->first()->slug)==2)
-                  <a href="{{ route('productpage',$exam->getProductSlug()) }}">
-                  <button class="btn btn-outline-primary btn-sm">
-                    <i class="fa fa-lock" ></i> Buy Now
-                  </button>
-                  </a>
+                  @if($exam->products->first())
+                    @if(\auth::user()->productValid($exam->products->first()->slug)==2)
+                    <a href="{{ route('productpage',$exam->getProductSlug()) }}">
+                    <button class="btn btn-outline-primary btn-sm">
+                      <i class="fa fa-lock" ></i> Buy Now
+                    </button>
+                    </a>
+                    @elseif(\auth::user()->productValid($exam->products->first()->slug)==1)
+                      <span class="text-danger">Expired</span>
+
+                    @elseif(\auth::user()->productValid($exam->products->first()->slug)==0)  
+                      <a href="{{ route('assessment.instructions',$exam->slug) }}">
+                    <button class="btn btn-outline-primary btn-sm">
+                      <i class="fa fa-paper-plane" ></i> Try Now
+                    </button>
+                    </a>
+                    @endif
 
                   @else
-                  <a href="{{ route('assessment.instructions',$exam->slug) }}">
-                  <button class="btn btn-outline-primary btn-sm">
-                    <i class="fa fa-paper-plane" ></i> Try Now
-                  </button>
-                  </a>
+
+                    
 
                   @endif
                   @else
-                  <a href="{{ route('productpage',$exam->getProductSlug()) }}">
-                  <button class="btn btn-outline-primary btn-sm">
-                    <i class="fa fa-lock" ></i> Buy Now
-                  </button>
-                  </a>
+
+                    @if($exam->products->first())
+                    <a href="{{ route('productpage',$exam->getProductSlug()) }}">
+                    <button class="btn btn-outline-primary btn-sm">
+                      <i class="fa fa-lock" ></i> Buy Now
+                    </button>
+                    </a>
+                    @endif
                   @endif
 
                   

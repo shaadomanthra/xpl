@@ -7,7 +7,7 @@
                 <th scope="col">Name </th>
                 <th scope="col">Email</th>
                 <th scope="col">Status</th>
-                <th scope="col">Created at</th>
+                <th scope="col">Last Login</th>
               </tr>
             </thead>
             <tbody>
@@ -30,7 +30,7 @@
                     <span class="badge badge-warning">Blocked</span>
                   @endif
                 </td>
-                <td>{{ ($user->created_at) ? $user->created_at->diffForHumans() : '' }}</td>
+                <td>{{ ($user->updated_at) ? $user->updated_at->diffForHumans() : '' }}</td>
               </tr>
               @endforeach      
             </tbody>

@@ -4,6 +4,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin')}}">Admin</a></li>
     <li class="breadcrumb-item">{{ ucfirst($app->module) }}</li>
   </ol>
 </nav>
@@ -11,7 +12,7 @@
 @include('flash::message')
 <div  class="row ">
 
-  <div class="col-md-12">
+  <div class="col-md-9">
  
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
@@ -43,6 +44,9 @@
      </div>
    </div>
  </div>
+ <div class="col-md-3 pl-md-0 mb-3">
+      @include('appl.product.snippets.adminmenu')
+    </div>
 </div>
 
 @endsection

@@ -214,6 +214,7 @@ return [
         PacketPrep\Providers\EventServiceProvider::class,
         PacketPrep\Providers\RouteServiceProvider::class,
         Anand\LaravelPaytmWallet\PaytmWalletServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
 
@@ -267,6 +268,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
         'PaytmWallet' => Anand\LaravelPaytmWallet\Facades\PaytmWallet::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

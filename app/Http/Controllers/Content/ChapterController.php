@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Content\Chapter;
 use PacketPrep\Models\Content\Doc;
+use PDF;
 
 class ChapterController extends Controller
 {
@@ -172,6 +173,13 @@ class ChapterController extends Controller
                 $list =null;
 
         }
+        //dd(storage_path());
+        /*$apple = new Chapter;
+        $apple->name = 'Apple';
+        $pdf = PDF::loadView('appl.content.chapter.pdf',compact('apple'));
+        return $pdf->save('invoice.pdf'); */
+
+
         if($chapter)
             return view('appl.content.chapter.show')
                     ->with('doc',$this->doc)
