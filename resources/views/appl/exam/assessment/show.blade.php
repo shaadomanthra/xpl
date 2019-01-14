@@ -30,9 +30,15 @@
 				</a>
 				@else
 				@if($exam->products->first())
-				<a href="{{route('productpage',$exam->products->first()->slug)}}">
-				<button class="btn btn-lg btn-success"> Buy Now </button>
-				</a>
+					@if($exam->status ==1)
+					<a href="{{route('productpage',$exam->products->first()->slug)}}">
+					<button class="btn btn-lg btn-success"> View </button>
+					</a>
+					@else
+					<a href="{{route('productpage',$exam->products->first()->slug)}}">
+					<button class="btn btn-lg btn-success"> Buy Now </button>
+					</a>
+					@endif
 				@elseif($exam->status==1)
 				<a href="{{route('assessment.instructions',$exam->slug)}}">
 				<button class="btn btn-lg btn-success"> View Instruction </button>
