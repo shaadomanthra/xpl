@@ -118,9 +118,7 @@
         </div>
       </div>
 
-      <div class=" border p-4 rounded mb-3">
-        @include('appl.pages.disqus')
-      </div>
+      
 
       @can('update',$chapter)
       <div class="card">

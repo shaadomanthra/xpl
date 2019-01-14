@@ -91,7 +91,10 @@
             
              @foreach($product->courses as $course)
              <div class="p-3 border rounded mb-2">
-             <a href="{{ route('course.show',$course->slug) }}">{{ $course->name }}</a> 
+             <a href="{{ route('course.show',$course->slug) }}">{{ $course->name }}</a> <br>
+             @if($course->description)
+             {!! $course->description !!}
+             @endif
             </div>
              @endforeach
               
@@ -105,10 +108,13 @@
           <div class="row mb-2">
             <div class="col-12 col-md-4">Exams Included</div>
             <div class="col-12 col-md-8">
-            
+           
             @foreach($product->exams as $exam)
              <div class="p-3 border rounded mb-2">
-             <a href="{{ route('assessment.instructions',$exam->slug) }}">{{ $exam->name }}</a>
+             <a href="{{ route('assessment.show',$exam->slug) }}">{{ $exam->name }}</a>
+             @if($exam->description)
+             {!! $exam->description !!}
+             @endif
             </div>
              @endforeach
            
@@ -124,7 +130,13 @@
               @if(!$entry)
               
               <a href="{{ route('checkout')}}?product={{$product->slug}}">
-                <button class="btn btn-outline-primary btn-lg ">Buy Now</button>
+                <button class="btn btn-outline-primary btn-lg ">
+                @if($product->price==0)
+                Access Now
+                @else
+                Buy Now
+                @endif
+                </button>
               </a>
               @else
 

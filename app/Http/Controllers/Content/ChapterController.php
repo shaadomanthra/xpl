@@ -70,7 +70,7 @@ class ChapterController extends Controller
     {
         $this->authorize('edit', $chapter);
         $request->slug = str_replace(' ', '-', $request->slug);
-        $child_attributes =['title'=>$request->title,'slug'=>$request->slug,'content'=>$request->content,'description'=>$request->description,'keywords'=>$request->keywords];
+        $child_attributes =['title'=>$request->title,'slug'=>$request->slug,'content'=>$request->content];
         $parent = Chapter::where('id','=',$request->parent_id)->first();
         $child = new Chapter($child_attributes);
 
@@ -100,7 +100,9 @@ class ChapterController extends Controller
     public function show($doc_slug,$chapter_slug,Request $request)
     {
 
+
         $chapter = Chapter::where('slug',$chapter_slug)->first();
+        $this->authorize('edit', $chapter);
         $doc = Doc::where('slug',$doc_slug)->first();
 
 
@@ -252,8 +254,6 @@ class ChapterController extends Controller
         $chapter->title = $request->title;
         $chapter->slug = str_replace(' ', '-', $request->slug);
         $chapter->content = $request->content;
-        $chapter->description = $request->description;
-        $chapter->keywords = $request->keywords;
         $chapter->save();
 
         flash('chapter(<b>'.$request->title.'</b>) successfully updated!')->success();

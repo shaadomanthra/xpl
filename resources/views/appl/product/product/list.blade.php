@@ -7,7 +7,7 @@
                 <th scope="col">#({{$products->total()}})</th>
                 <th scope="col">Products </th>
                 <th scope="col">Description</th>
-                <th scope="col">Price</th>
+                <th scope="col" style="width: 10%">Price</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
               </tr>

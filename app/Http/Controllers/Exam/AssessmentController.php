@@ -511,6 +511,35 @@ class AssessmentController extends Controller
 
     }
 
+    public function show($id)
+    {
+        $exam= Exam::where('slug',$id)->first();
+        
+        $entry=null;
+            
+            $user = \Auth::user();
+            
+            if($user)
+            foreach($exam->products as $product){
+                if($product->users()->find($user->id)){
+                    $entry = DB::table('product_user')
+                        ->where('product_id', $product->id)
+                        ->where('user_id', $user->id)
+                        ->first();
+                     $p = $product;   
+                }
+                
+            }
+
+
+        if($exam)
+            return view('appl.exam.assessment.show')
+                    ->with('exam',$exam)->with('entry',$entry);
+        else
+            abort(404);
+            
+    }
+
     public function analysis($slug,Request $request)
     {
 

@@ -11,6 +11,8 @@ class Doc extends Model
         'name',
         'slug',
         'image',
+        'description',
+        'keywords'
         // add all other fields
     ];
     

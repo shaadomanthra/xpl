@@ -60,6 +60,16 @@
       </div>
 
       <div class="form-group">
+        <label for="formGroupExampleInput2">Description</label>
+         <textarea class="form-control " name="description"  rows="5">{{isset($doc)?$doc->description:''}}</textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Keywords</label>
+         <textarea class="form-control " name="keywords"  rows="3">{{isset($doc)?$doc->keywords:''}}</textarea>
+      </div>
+
+      <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
           <option value="0" @if(isset($doc)) @if($doc->status==0) selected @endif @endif >Draft</option>

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title', $doc->name.' | PacketPrep')
 
-@section('description', 'Packetpreps '.$doc->name.' will help you prepare for campus placements with ease' )
+@section('description', $doc->description )
 
-@section('keywords', $keywords)
+@section('keywords', $doc->keywords)
 
 @section('content')
 
@@ -22,10 +22,10 @@
 
 
 
-     <div class="bg-white border mb-3 rounded">
+     <div class="bg-light border  rounded">
               <div class="">
                 @if($doc->image)
-                <div class="bg-white ">
+                <div class="bg-light ">
                   <img src="{{ $doc->image }}" class="w-100"/>
                 </div>
                 @endif
@@ -36,6 +36,16 @@
               </div>
           </div>
 
+    <div class="list-group sticky-top pt-3 ">
+
+      @foreach($chapters as $ch)
+      <a href="{{ route('docs.show',$doc->slug)}}#{{$ch->slug}}" class="list-group-item list-group-item-action  bg-light">
+         {{ $ch->title }} 
+      </a>
+      @endforeach
+
+      
+    </div>
    
 
     </div>
@@ -45,8 +55,8 @@
 
         <div class="card-body ">
   
-        <nav class="navbar navbar-light bg-light justify-content-between p-3 border mb-3">
-          <a class="navbar-brand"> {{ $doc->name }}</a>
+        <div class="p-3 border ">
+          <h1>{{ $doc->name }}</h1>
           <span class="btn-group float-right" role="group" aria-label="Basic example">
              @can('create',$doc)
               <a href="{{ route('chapter.create',$doc->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Add"><i class="fa fa-plus"></i> Chapter</a>
@@ -54,12 +64,28 @@
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
               @endcan
             </span>
-        </nav>
+            <p>{{ $doc->description }}</p>
+        </div>
 
         @if($chapters)
-        <div class="dd">
-        {!! $chapters !!}
-        </div>
+        
+        @foreach($chapters as $chapter)
+          <div class="pt-3" id="{{$chapter->slug}}">
+          <h2 class="p-3  border bg-light " >{!!$chapter->title!!}
+            <span class="float-right"  aria-label="Basic example">
+             @can('create',$doc)
+           
+           <a href="{{route('chapter.show',[$doc->slug,$chapter->slug])}}" class=""  ><i class="fa fa-eye"></i></a>
+            <a href="{{route('chapter.edit',[$doc->slug,$chapter->slug])}}" class=""  ><i class="fa fa-edit"></i></a>
+           
+            @endcan
+            </span>
+          </h2>
+          <div class="p-3">{!!$chapter->content!!}</div>
+          </div>
+
+        @endforeach
+
         @else
         No Chapters defined !
         @endif

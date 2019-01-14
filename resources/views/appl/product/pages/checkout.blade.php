@@ -21,7 +21,7 @@
     <tr>
       <td scope="row" rowspan=1>{!! $product->description !!}</td>
       <td>{{ $product->validity }} months</td>
-      <td>{{ $product->price }}</td>
+      <td>@if($product->price==0) - FREE - @else {{ $product->price}} @endif</td>
     </tr>
      <tr>
     </tr>
@@ -32,6 +32,7 @@
 
       
     </tr>
+    @if($product->price!=0)
     <tr style="background: #eee">
       <td scope="row" colspan=2><div class="mb-2">Coupon Code (optional)</div><input type="text" class="form-control mb-2 coupon-input" name="coupon" id="formGroupExampleInput2" placeholder="" style="width:100px"
           >
@@ -42,25 +43,27 @@
           <span class="status"></span>
       </td>
     </tr>
+    @endif
    
   </tbody>
 </table>
 
+@if($product->price!=0)
 <div class="card bg-light mb-3"> 
   <div class="card-body">
     <div class="form-check mb-2">
-    <input class="form-check-input amount" type="hidden" name="txn_amount" value="{{ $product->price }}">
-    <input class="form-check-input" type="hidden" name="product_id"  value="{{ $product->id }}">
+    
 
   <input class="form-check-input" type="radio" name="type" id="exampleRadios1" value="instamojo" checked> Pay Online
  
 </div>
 
   </div>
+
 </div>
-
-
-
+ @endif
+ <input class="form-check-input amount" type="hidden" name="txn_amount" value="{{ $product->price }}">
+    <input class="form-check-input" type="hidden" name="product_id"  value="{{ $product->id }}">
 
 <button class="btn btn-lg btn-primary" type="submit">Next</button>
 

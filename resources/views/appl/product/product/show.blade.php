@@ -22,6 +22,7 @@
           @can('update',$product)
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route('product.edit',$product->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+              <a href="{{ route('productpage',$product->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-eye"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
             @endcan
@@ -77,7 +78,10 @@
             @if(count($product->courses)!=0)
              @foreach($product->courses as $course)
              <div class="p-3 border rounded mb-2">
-              <a href="{{ route('course.show',$course->slug) }}">{{ $course->name }}</a> 
+              <a href="{{ route('course.show',$course->slug) }}">{{ $course->name }}</a> <br>
+             @if($course->description)
+             {!! $course->description !!}
+             @endif
             </div>
              @endforeach
            @else
@@ -92,7 +96,10 @@
             @if(count($product->exams)!=0)
              @foreach($product->exams as $exam)
              <div class="p-3 border rounded mb-2">
-             <a href="{{ route('assessment.instructions',$exam->slug) }}">{{ $exam->name }}</a>
+             <a href="{{ route('assessment.show',$exam->slug) }}">{{ $exam->name }}</a>
+             @if($exam->description)
+             {!! $exam->description !!}
+             @endif
             </div>
              
              @endforeach

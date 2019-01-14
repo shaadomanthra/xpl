@@ -29,6 +29,7 @@ class ClientuserController extends Controller
         $item = $request->item;
         $client = client::where('slug',$client)->first();
 
+        
         $user = new user();
         $users = $user->where('name','LIKE',"%{$item}%")
                         ->where('client_slug',$client->slug)

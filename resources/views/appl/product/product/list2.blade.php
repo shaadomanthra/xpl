@@ -4,11 +4,11 @@
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{$products->total()}})</th>
-                <th scope="col">Products </th>
+                <th scope="col" style="width: 6%">#({{$products->total()}})</th>
+                <th scope="col" style="width: 25%">Products </th>
                 <th scope="col">Description</th>
-                <th scope="col">Price</th>
-                <th scope="col">Validity</th>
+                <th scope="col" style="width: 10%" >Price</th>
+                <th scope="col" style="width: 10%">Validity</th>
               </tr>
             </thead>
             <tbody>

@@ -19,52 +19,11 @@
                     <div class="pt-2">
                    @if(!$exam->attempted())
                   
-                  @if($exam->status==1) 
-                  <a href="{{ route('assessment.instructions',$exam->slug) }}">
+                  <a href="{{ route('assessment.show',$exam->slug) }}">
                   <button class="btn btn-outline-primary btn-sm">
-                    <i class="fa fa-paper-plane" ></i> Try Now
+                    <i class="fa fa-paper-plane" ></i> Details
                   </button>
                   </a>
-                  @elseif($exam->status == 2)
-
-                  @if(\auth::user())
-                  @if($exam->products->first())
-                    @if(\auth::user()->productValid($exam->products->first()->slug)==2)
-                    <a href="{{ route('productpage',$exam->getProductSlug()) }}">
-                    <button class="btn btn-outline-primary btn-sm">
-                      <i class="fa fa-lock" ></i> Buy Now
-                    </button>
-                    </a>
-                    @elseif(\auth::user()->productValid($exam->products->first()->slug)==1)
-                      <span class="text-danger">Expired</span>
-
-                    @elseif(\auth::user()->productValid($exam->products->first()->slug)==0)  
-                      <a href="{{ route('assessment.instructions',$exam->slug) }}">
-                    <button class="btn btn-outline-primary btn-sm">
-                      <i class="fa fa-paper-plane" ></i> Try Now
-                    </button>
-                    </a>
-                    @endif
-
-                  @else
-
-                    
-
-                  @endif
-                  @else
-
-                    @if($exam->products->first())
-                    <a href="{{ route('productpage',$exam->getProductSlug()) }}">
-                    <button class="btn btn-outline-primary btn-sm">
-                      <i class="fa fa-lock" ></i> Buy Now
-                    </button>
-                    </a>
-                    @endif
-                  @endif
-
-                  
-                  @endif
-
                   
                   @else
                   <a href="{{ route('assessment.analysis',$exam->slug) }}">

@@ -87,9 +87,11 @@ class DocController extends Controller
             $doc->status = $request->status;
             $doc->image = $request->image;
             $doc->privacy = $request->privacy;
+            $doc->description = $request->description;
+            $doc->keywords = $request->keywords;
             $doc->save();
 
-            $chapter_attributes = ['title'=>$request->name,'slug'=>$request->slug];
+            $chapter_attributes = ['title'=>$request->title,'slug'=>$request->slug,'content'=>$request->content];
             $chapter = new Chapter($chapter_attributes);
             $chapter->save();
 
@@ -127,21 +129,15 @@ class DocController extends Controller
 
         $parent = Chapter::where('slug',$doc_slug)->first();
         $chap = Chapter::defaultOrder()->whereDescendantOf($parent)->get()->toTree();
-    
-        if(count($chap))
-            $chapters = Chapter::displayUnorderedList($chap,['doc_slug'=>$doc_slug]);
-        else
-            $chapters =null;
 
-        $keywords = strtolower($doc->name).',';
-        foreach($chap as $c)
-            $keywords = $keywords.strtolower($c->title).',';
+
+        $keywords = '';
 
         if($doc)
             return view('appl.content.doc.show')
                     ->with('keywords',$keywords)
                     ->with('doc',$doc)
-                    ->with('chapters',$chapters);
+                    ->with('chapters',$chap);
         else
             abort(404);
     }
@@ -184,6 +180,8 @@ class DocController extends Controller
             $doc->status = $request->status;
             $doc->image = $request->image;
             $doc->privacy = $request->privacy;
+            $doc->description = $request->description;
+            $doc->keywords = $request->keywords;
             $doc->save();
 
             $chapter = Chapter::where('slug',$doc_slug)->first();
