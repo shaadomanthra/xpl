@@ -149,7 +149,7 @@ class OrderController extends Controller
               
               $response = $api->paymentRequestCreate(array(
                   "buyer_name" => $user->name,
-                  "purpose" => strip_tags($product->description),
+                  "purpose" => strip_tags($product->name),
                   "amount" =>  $request->txn_amount,
                   "send_email" => false,
                   "email" => $user->email,
@@ -164,7 +164,7 @@ class OrderController extends Controller
               while($o_check){
                 $response = $api->paymentRequestCreate(array(
                   "buyer_name" => $user->name,
-                  "purpose" => strip_tags($product->description),
+                  "purpose" => strip_tags($product->name),
                   "amount" =>  $request->txn_amount,
                   "send_email" => false,
                   "email" => $user->email,
