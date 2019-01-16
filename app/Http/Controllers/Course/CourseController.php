@@ -142,9 +142,14 @@ class CourseController extends Controller
             
         }
 
-        
+        $course->keywords = $course->name;
+        $course->description = strip_tags($course->description);
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
+
+            foreach($node as $n){
+                $course->keywords = $course->keywords.', '.$n->name;
+            }
 
             
 

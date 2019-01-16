@@ -1,5 +1,8 @@
 @extends('layouts.nowrap-product')
 @section('title', 'Courses for Placement Preparation, Bank Exams and Government Jobs  | PacketPrep')
+@section('description', 'The courses list include quantiative aptitude, logical reasoning, mental ability, verbal ability and interview skills')
+@section('keywords', 'quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures, gate preparation, gate lectures')
+
 @section('content')
 <div class="line" style="padding:1px;background:#eee"></div>
 <div class=" p-4  mb-3 mb-md-4 border-bottom bg-white">

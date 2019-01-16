@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('title', $course->name.' | PacketPrep')
+@section('keywords', $course->keywords)
+@section('description', $course->description)
 @section('content')
 
 @include('flash::message')  
