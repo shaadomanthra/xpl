@@ -17,6 +17,7 @@ class Category extends Model
         'parent_id',
         'video_link',
         'video_desc',
+        'pdf_link'
         // add all other fields
     ];
     public $timestamps = false;
@@ -74,6 +75,12 @@ class Category extends Model
             }else{
 
                 if($category->video_link){
+
+                    if(!youtube_video_exists($category->video_link)){
+                        $icon = '<i class="fa fa-lock"></i>';
+                    }else
+                     $icon = '<i class="fa fa-circle-o" aria-hidden="true"></i>';
+                     
                $d = $d.'<li class="item" id="'.$category->slug.'" >
                <a href="'.route('course.category.video',
                 [   
@@ -82,7 +89,7 @@ class Category extends Model
                     
                 ]
 
-                ).'"><i class="fa fa-play-circle-o"></i> '.$category->name.'</a>&nbsp';
+                ).'">'.$icon.' '.$category->name.'</a>&nbsp';
 
 
                    if(count($category->category_tag_questions($category,session('exam')))!=0)
@@ -92,7 +99,19 @@ class Category extends Model
                     else
                     $d=$d.'</li>';
 
-               }else{
+               }elseif($category->pdf_link){
+                    $icon = '<i class="fa fa-lock"></i>';
+                    $d = $d.'<li class="item item-pdf" id="'.$category->slug.'"  >
+               <a href="'.route('course.category.video',
+                [   
+                    'course'=> $options['project']->slug,
+                    'category'=> $category->slug,
+                    
+                ]
+
+                ).'">'.$icon.' '.$category->name.'</a>&nbsp';
+               }
+               else{
                     $d = $d;
 
                }

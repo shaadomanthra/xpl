@@ -1,5 +1,14 @@
 @extends('layouts.app')
+
+@if($category->pdf_link)
+@section('title', 'Download '.$category->name.' | PacketPrep')
+@else
 @section('title', 'Learn '.$category->name.' | PacketPrep')
+@endif
+
+@if($category->video_desc )
+@section('description', $category->video_desc )
+@endif
 
 @section('content')
 
@@ -19,25 +28,64 @@
 <div class="row ">
   <div class="col-12 col-md-3 d-none d-md-block">
     <div class="list-group">
-  <a href="{{route('course.show',$course->slug)}}#{{$parent->slug}}" class="list-group-item list-group-item-action disabled">
-    <h2><i class="fa fa-angle-double-left"></i>&nbsp; {{ $parent->name }}</h2>
+  <a href="{{route('course.show',$course->slug)}}#{{$parent->slug}}" class="list-group-item list-group-item-action ">
+    <h2><i class="fa fa-angle-double-left "></i>&nbsp; {{ $parent->name }}</h2>
   </a>
   @foreach($parent->descendants as $k => $item)
-  <a href="{{ route('course.category.video',[$course->slug,$item->slug])}} " class="list-group-item list-group-item-action @if($item->slug == $category->slug) active @endif"><span class="border badge badge-light mb-1">{{$k+1}}</span> &nbsp;{{ $item->name }}</a>
+  @if($item->video_link || $item->pdf_link)
+  <a href="{{ route('course.category.video',[$course->slug,$item->slug])}} " class="list-group-item list-group-item-action @if($item->slug == $category->slug) active @endif">
+    @if(youtube_video_exists($item->video_link))
+    <i class="fa fa-circle-o" aria-hidden="true"></i>
+    @else
+      <i class="fa fa-lock"></i>
+    @endif
+    &nbsp;{{ $item->name }}</a>
+  @endif
   @endforeach
 </div>
   </div>
   <div class="col-12 col-md-9">
-    <h1 class="mb-4"> <div class=""><i class="fa fa-youtube-play"></i> &nbsp;{{ $category->name }} </div></h1>
+    <h1 class="mb-4"> <div class="">
+      @if($category->pdf_link)
+      <i class="fa fa-file-pdf-o"></i> &nbsp;
+      @else
+      <i class="fa fa-youtube-play"></i> &nbsp;
+      @endif
+      {{ $category->name }} </div></h1>
+
+
 
 @if($category->video_link)
-<div class="embed-responsive embed-responsive-16by9 " style="background: #eee;">
-    <iframe src="//player.vimeo.com/video/{{ $category->video_link }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          @if(youtube_video_exists($category->video_link))
+          
+          <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
+    <iframe src="https://www.youtube.com/embed/{{ $category->video_link }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+  </div>
+          @else
+          <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
+          <iframe src="//player.vimeo.com/video/{{ $category->video_link }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          </div>
+          @endif
+          
+          @endif
+@if($category->pdf_link)
+<div class="p-5 bg-white">
+  <div class="row">
+    <div class="col-12 col-md-2"><i class="fa fa-file-pdf-o fa-5x"></i></div>
+    <div class="col-12 col-md-10">{!! $category->video_desc !!}<br>
+      <a href="{{ $category->pdf_link }}">
+      <button class="btn btn-primary mt-3 btn-lg">Download PDF</button>
+      </a>
+    </div>
+
   </div>
 
-@endif
+</div>
 
-<div class=" p-3" style="background: #eee; font-size: 20px;">
+
+@endif          
+
+<div class=" p-3 border" style="background: #eee; font-size: 20px;">
   <div class="row">
     <div class="col-12 col-md-4">
       @if($prev)
@@ -74,8 +122,8 @@
   </div>
   </div>
 
-  @if($category->video_desc)
-  <div class="p-5 bg-light">
+  @if($category->video_desc && $category->video_link)
+  <div class="p-4 mt-3 bg-white border">
     {!! $category->video_desc !!}
   </div>
   @endif

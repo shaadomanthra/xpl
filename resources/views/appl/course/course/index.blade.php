@@ -1,5 +1,5 @@
 @extends('layouts.nowrap-product')
-@section('title', 'Courses for Placement Preparation | PacketPrep')
+@section('title', 'Courses for Placement Preparation, Bank Exams and Government Jobs  | PacketPrep')
 @section('content')
 <div class="line" style="padding:1px;background:#eee"></div>
 <div class=" p-4  mb-3 mb-md-4 border-bottom bg-white">

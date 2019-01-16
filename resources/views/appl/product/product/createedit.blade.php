@@ -62,9 +62,9 @@
         <select class="form-control validity_data" name="validity">
           <option value="1" >1 month</option>
           @for($i=2;$i < 24;$i++)
-          <option value="{{$i}}">{{$i}} months</option>
+          <option value="{{$i}}" @if(isset($product)) @if($product->validity == $i) selected @endif @endif>{{$i}} months</option>
           @endfor
-           <option value="24" selected>24 months</option>
+           <option value="24" >24 months</option>
         </select>
       </div>
 

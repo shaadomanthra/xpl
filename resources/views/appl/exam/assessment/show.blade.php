@@ -25,9 +25,16 @@
 					@endif</h1>
 				{!! $exam->description  !!}
 				@if($entry)
-				<a href="{{route('assessment.instructions',$exam->slug)}}">
+				
+				  @if(!$exam->attempted())
+                  <a href="{{route('assessment.instructions',$exam->slug)}}">
 				<button class="btn btn-lg btn-success"> View Instruction </button>
 				</a>
+                  @else
+                  <a href="{{ route('assessment.analysis',$exam->slug) }}">
+                  <button class="btn btn-lg btn-success"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
+                  </a>
+                  @endif
 				@else
 				@if($exam->products->first())
 					@if($exam->status ==1)

@@ -138,8 +138,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('examtype','Exam\ExamtypeController')->middleware('auth');
 	Route::resource('exam/{exam}/sections','Exam\SectionController')->middleware('auth');
 	Route::get('exam/{exam}/question','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.questions');
-	Route::get('exam/create','Exam\ExamController@createExam')->middleware('auth')->name('exam.create');
-	Route::post('exam/create','Exam\ExamController@storeExam')->middleware('auth')->name('exam.save');
+	Route::get('exam/createexam','Exam\ExamController@createExam')->middleware('auth')->name('exam.createexam');
+	Route::post('exam/createexam','Exam\ExamController@storeExam')->middleware('auth')->name('exam.save');
 	Route::get('exam/{exam}/question/{id}','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.question');
 
 	Route::get('certificate/{exam}/{user}','Exam\AssessmentController@certificate')->name('certificate');
@@ -209,7 +209,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::resource('course','Course\CourseController');
 	//Route::resource('course/{course}/index','Course\IndexController');
-	Route::get('course/{course}/{category}/video','Course\CourseController@video')->name('course.category.video')->middleware('auth');
+	Route::get('course/{course}/{category}/view','Course\CourseController@video')->name('course.category.video')->middleware('auth');
 	Route::get('course/{project}/{category}/practice','Dataentry\QuestionController@categoryCourse')->name('course.question')->middleware('auth');
 	Route::get('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourse')->name('course.question')->middleware('auth');
 	Route::post('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourseSave')->name('course.question')->middleware('auth');

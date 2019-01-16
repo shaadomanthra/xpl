@@ -100,7 +100,8 @@ class CourseController extends Controller
     public function show($id)
     {
         $course = Course::where('slug',$id)->first();
-        $product = Product::where('slug',$id)->first();
+        $product = $course->products->first();
+        
 
         $user = \Auth::user();
         $entry=null;
@@ -135,7 +136,13 @@ class CourseController extends Controller
         $examtype = Examtype::where('slug',$id)->first();
         if($examtype)
         $exams = Exam::where('examtype_id',$examtype->id)->get();
+        else{
 
+            $exams = Exam::where('slug','LIKE',"%{$course->slug}%")->get();
+            
+        }
+
+        
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
 
@@ -152,9 +159,11 @@ class CourseController extends Controller
 
             if(request()->get('refresh'))
             {
+
                 $ques_count = $parent->questionCount_level2($project);
                 file_put_contents($file_count,$ques_count);
                 $nodes = Category::displayUnorderedListCourse($node,['project'=>$project,'parent'=>$parent]);
+
                 file_put_contents($file_nodes,$nodes);
             }
 
@@ -225,10 +234,10 @@ class CourseController extends Controller
             }
             
         }
-        
-        //dd($entry);
+        $category = Category::where('slug',$category)->first();
+        //dd($category);
 
-        
+        if(!youtube_video_exists($category->video_link))
         if(!$entry || $p->validityExpired())
         {
             return view('appl.course.course.access');
@@ -240,7 +249,7 @@ class CourseController extends Controller
             
         //$this->authorize('view', $course);
 
-        $category = Category::where('slug',$category)->first();
+        
         $parent = Category::getParent($category);
         
         foreach($parent->descendants as $k => $item){

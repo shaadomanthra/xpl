@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use PacketPrep\Models\User\Role;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\User\User_Details;
 use PacketPrep\Notifications\MailResetPasswordToken;
 use Illuminate\Support\Facades\DB;
@@ -86,11 +87,13 @@ class User extends Authenticatable
     }
 
     public function productvalidity($slug){
-        $product_id = Product::where('slug',$slug)->first()->id;
+        $course = Course::where('slug',$slug)->first();
+        //dd($course->products->first());
         $user_id = \auth::user()->id;
-
+        $entry = null;
+        if($course->products->first())
         $entry = DB::table('product_user')
-                ->where('product_id', $product_id)
+                ->where('product_id', $course->products->first()->id)
                 ->where('user_id', $user_id)
                 ->first();
         if($entry)

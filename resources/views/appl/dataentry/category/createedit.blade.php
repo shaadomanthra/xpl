@@ -55,6 +55,16 @@
             @endif>
       </div>
 
+       <div class="form-group">
+        <label for="formGroupExampleInput ">PDF Link</label>
+        <input type="text" class="form-control" name="pdf_link" id="formGroupExampleInput" placeholder="Enter the PDF Link" 
+            @if($stub=='Create')
+            value="{{ (old('pdf_link')) ? old('pdf_link') : '' }}"
+            @else
+            value = "{{ $category->pdf_link }}"
+            @endif>
+      </div>
+
       <div class="form-group">
         <label for="formGroupExampleInput ">Video Description</label>
         <textarea class="form-control summernote" name="video_desc"  rows="5">

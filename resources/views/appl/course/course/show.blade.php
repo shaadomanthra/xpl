@@ -51,18 +51,22 @@
 						<div class="mb-3"><span class="badge badge-secondary">  Disabled</span></div>
 					@endif
 				@else
+				@if($product)
 				<h2 class="mt-3">Validity</h2>
-			<div> 2 years </div>
+			<div> {{ $product->validity}} months</div>
+
 			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
-			<a href="{{ route('checkout') }}?product={{ $course->slug }}">
+			<a href="{{ route('productpage',$product->slug) }}">
 			<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
 			</a>
+			@endif
 
 				@endif
 				
 			@else
+
 			<h2 class="mt-3">Validity</h2>
-			<div> 2 years </div>
+			<div> {{ $product->validity}} months</div>
 			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
 			@endif
 			
@@ -72,14 +76,14 @@
 			@endif
 			@if(\auth::user())
 				@if(\auth::user()->productvalidity($course->slug)==2)
-				<a href="{{ route('checkout') }}?product={{ $course->slug }}">
+				<a href="{{ route('productpage',$product->slug) }}">
 				<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
 				</a>
 
 				@endif
 			
 			@else
-			<a href="{{ route('checkout') }}?product={{ $course->slug }}">
+			<a href="{{ route('productpage',$product->slug) }}">
 			<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
 			</a>
 
@@ -168,20 +172,25 @@
  <div class="row ">
     
   @foreach($exams as $key=>$exam)  
-  @if($exam->status ==1)
+  @if($exam->status != 0)
 <div class="col-12 col-md-6 mb-4"> 
   
           <div class="bg-white border">
             <div  style="background: #ebf3f7">&nbsp;</div>
               <div class="card-body">
-                <span class="badge badge-primary">#{{ $exam->slug }}</span>
+              	@if($exam->status==1)
+                <span class="badge badge-warning">FREE</span>
+                @else
+                <span class="badge badge-primary">PREMIUM</span>
+
+                @endif
                   <h1>{{ $exam->name }}</h1>
                     {{ $exam->question_count() }} Questions | {{ $exam->time() }} min<br>
 
                     <div class="pt-2">
                    @if(!$exam->attempted())
-                  <a href="{{ route('assessment.instructions',$exam->slug) }}">
-                  <button class="btn btn-outline-primary btn-sm"> <i class="fa fa-paper-plane" ></i> Try Now</button>
+                  <a href="{{ route('assessment.show',$exam->slug) }}">
+                  <button class="btn btn-outline-primary btn-sm"> <i class="fa fa-paper-plane" ></i> Details</button>
                   </a>
                   @else
                   <a href="{{ route('assessment.analysis',$exam->slug) }}">
