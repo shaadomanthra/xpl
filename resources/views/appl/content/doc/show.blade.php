@@ -55,7 +55,7 @@
 
         <div class="card-body ">
   
-        <div class="p-3 border ">
+        <div class="p-3 " style="background-color:#daeeff; border: 1px solid #a1d4f3">
           <h1>{{ $doc->name }}</h1>
           <span class="btn-group float-right" role="group" aria-label="Basic example">
              @can('create',$doc)

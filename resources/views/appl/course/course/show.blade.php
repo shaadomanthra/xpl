@@ -59,7 +59,13 @@
 
 			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
 			<a href="{{ route('productpage',$product->slug) }}">
-			<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
+			<button class="btn btn-success btn-lg" >
+				@if($product->price==0)
+				Access Now
+				@else
+				<i class ="fa fa-shopping-cart"></i> Buy
+				@endif
+			</button>
 			</a>
 			@endif
 

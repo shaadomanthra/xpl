@@ -100,7 +100,14 @@ class CourseController extends Controller
     public function show($id)
     {
         $course = Course::where('slug',$id)->first();
-        $product = $course->products->first();
+        
+        $p = null;
+        foreach($course->products as $product)
+        {
+            if($product != 'premium-access')
+                $p = $product;
+        }
+        
         
 
         $user = \Auth::user();
@@ -204,7 +211,7 @@ class CourseController extends Controller
         if($course)
             return view('appl.course.course.show')
                     ->with('course',$course)
-                    ->with('product',$product)
+                    ->with('product',$p)
                     ->with('ques_count',$ques_count)
                     ->with('exams',$exams)
                     ->with('project',$project)
