@@ -11,6 +11,43 @@
 
 <div class="container mt-4">
 
+@if(\auth::user()->services->first())
+@if(\auth::user()->services->first()->pivot->status==0)
+  <div class="border p-4 mb-4">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h1>Activate your Paid Services</h1>
+    <form method="post" action="{{route('product.activate')}}" >
+      <p>Collect your Product Activation code from your college administrative office / Placement Office</p>
+      <div class="form-group">
+        <input type="text" class="form-control" name="code" id="formGroupExampleInput" placeholder="Enter Activation Code" >
+      </div>
+      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+      
+    </form>
+        
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="ml-3">
+        <h1>For Queries Contact</h1>
+        <dl class="row">
+  <dt class="col-sm-3">Email</dt>
+  <dd class="col-sm-9"> founder@packetprep.com</dd>
+  <dt class="col-sm-3">Phone</dt>
+  <dd class="col-sm-9"> +91 95151 25110</dd>
+</dl>
+      </div>
+        
+      </div>
+    </div>
+    
+  </div>
+ @endif 
+ @endif
+
 <div class="mb-4  p-3 pt-5 bg-white" style="border:1px solid #cae1ec;">
 
 	<div class="row">

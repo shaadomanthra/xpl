@@ -41,7 +41,7 @@
           >
        
       </div>
-      <div class="form-group">
+      <div class="form-group ">
         <label for="formGroupExampleInput2">Email</label>
        
        @if($stub!='Update')
@@ -52,11 +52,115 @@
             value = "{{ $user->email }}"
             @endif
           >
-          @else
+        @else
            <input type="text" class="form-control" name="email" id="formGroupExampleInput2" placeholder="Email address"
             value = "{{ $user->email }}" disabled
           >
-          @endif
+        @endif
+
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Phone </label>
+        <input type="text" class="form-control" name="phone" id="formGroupExampleInput" placeholder="Enter your Phone Number" 
+            @if($stub=='Create')
+            value="{{ (old('phone')) ? old('phone') : '' }}"
+            @else
+            value = "{{ ($user_details)?$user_details->phone:'' }}"
+            @endif
+          >
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Phone 2</label>
+        <input type="text" class="form-control" name="phone_2" id="formGroupExampleInput" placeholder="Enter your Second Phone Number" 
+            @if($stub=='Create')
+            value="{{ (old('phone_2')) ? old('phone_2') : '' }}"
+            @else
+            value = "{{ ($user_details)?$user_details->phone_2:'' }}"
+            @endif
+          >
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Roll Number </label>
+        <input type="text" class="form-control" name="roll_number" id="formGroupExampleInput" placeholder="Enter your Roll Number" 
+            @if($stub=='Create')
+            value="{{ (old('roll_number')) ? old('roll_number') : '' }}"
+            @else
+            value = "{{ ($user_details)?$user_details->roll_number :''}}"
+            @endif
+          >
+      </div>
+
+      
+
+      @if(isset($colleges))
+      <div class="form-group">
+        <label for="formGroupExampleInput ">College</label>
+        <select class="form-control" name="college_id">
+          @foreach($colleges as $c)
+          <option value="{{$c->id}}" @if(isset($user)) @if($user->colleges->first()) @if($c->id == $user->colleges->first()->id ) selected @endif @endif @endif >{{ $c->name }}</option>
+          @endforeach         
+        </select>
+      </div>
+      @endif
+
+      @if(isset($branches))
+      <div class="form-group border p-3">
+        <label for="formGroupExampleInput ">Branches</label><br>
+        @foreach($branches as $branch)
+        <input  type="checkbox" name="branches[]" value="{{$branch->id}}" 
+              @if($stub!='Create')
+                  @if(in_array($branch->id, $user->branches()->pluck('id')->toArray()))
+                  checked
+                  @endif
+              @endif
+            > {{ $branch->name }} <br>
+        @endforeach
+
+      </div>
+      @endif
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Year of Passing</label>
+        <select class="form-control" name="year_of_passing">
+          @for($i=2019;$i < 2029;$i++)
+          <option value="{{$i}}" @if(isset($user_details))@if($user_details->year_of_passing== $i) selected @endif @endif> {{ $i }}</option>
+          @endfor
+        </select>
+      </div>
+
+      @if(isset($services))
+      <div class="form-group border p-3">
+        <label for="formGroupExampleInput ">Services</label><br>
+        @foreach($services as $service)
+        <input  type="checkbox" name="services[]" value="{{$service->id}}" 
+              @if($stub!='Create')
+                  @if(in_array($service->id, $user->services()->pluck('id')->toArray()))
+                  checked
+                  @endif
+              @endif
+            > {{ $service->name }} <br>
+        @endforeach
+      </div>
+      @endif
+
+      @if(isset($metrics))
+      <div class="form-group border p-3">
+        <label for="formGroupExampleInput ">Metrics</label><br>
+        @foreach($metrics as $metric)
+        <input  type="checkbox" name="metrics[]" value="{{$metric->id}}" 
+              @if($stub!='Create')
+                  @if(in_array($metric->id, $user->metrics()->pluck('id')->toArray()))
+                  checked
+                  @endif
+              @endif
+            > {{ $metric->name }} <br>
+        @endforeach
+      </div>
+      @endif
+
 
         @if($stub=='Update')
         <input type="hidden" name="_method" value="PUT">
@@ -64,8 +168,10 @@
 
         <input type="hidden" name="user_id_creator" value="{{ auth::user()->id }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-      </div>
-        <div class="form-group">
+      
+
+
+      <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
           <option value="1" @if(isset($user))@if($user->status==1) selected @endif @endif>Active</option>

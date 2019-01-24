@@ -58,6 +58,31 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\User\Role');
     }
 
+    public function zones()
+    {
+        return $this->belongsToMany('PacketPrep\Models\College\Zone');
+    }
+
+    public function branches()
+    {
+        return $this->belongsToMany('PacketPrep\Models\College\Branch');
+    }
+
+    public function colleges()
+    {
+        return $this->belongsToMany('PacketPrep\Models\College\College');
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany('PacketPrep\Models\College\Service')->withPivot(['code','status']);
+    }
+
+    public function metrics()
+    {
+        return $this->belongsToMany('PacketPrep\Models\College\Metric');
+    }
+
     public function courses(){
         return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('credits','validity','created_at','valid_till');
     }

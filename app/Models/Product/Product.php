@@ -29,6 +29,11 @@ class Product extends Model
         return $this->belongsToMany('PacketPrep\Models\Course\Course');
     }
 
+     public function service()
+    {
+        return $this->hasOne('PacketPrep\Models\College\Service');
+    }
+
     public static function  update_pivot($product_id,$user_id,$validity,$status,$valid_till){
 
         

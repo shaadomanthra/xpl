@@ -8,6 +8,10 @@
 	<a href="{{ route('material')}}" class="list-group-item list-group-item-action {{ request()->is('material') ? 'active' : ''}}"><i class="fa fa-telegram"></i> Material</a>
 	<a href="{{ route('exam.index')}}" class="list-group-item list-group-item-action {{ request()->is('exam') ? 'active' : ''}}"><i class="fa fa-th"></i> Exams</a>
 	<a href="{{ route('coupon.index')}}" class="list-group-item list-group-item-action {{ request()->is('coupon') ? 'active' : ''}}"><i class="fa fa-bars"></i> Coupons</a>
-	
+	<a href="{{ route('college.index')}}" class="list-group-item list-group-item-action {{ request()->is('college') ? 'active' : ''}}"><i class="fa fa-bars"></i> Colleges</a>
+	<a href="{{ route('branch.index')}}" class="list-group-item list-group-item-action {{ request()->is('branch') ? 'active' : ''}}"><i class="fa fa-bars"></i> Branch</a>
+	<a href="{{ route('zone.index')}}" class="list-group-item list-group-item-action {{ request()->is('zone') ? 'active' : ''}}"><i class="fa fa-bars"></i> Zone</a>
+	<a href="{{ route('metric.index')}}" class="list-group-item list-group-item-action {{ request()->is('metric') ? 'active' : ''}}"><i class="fa fa-bars"></i> Metric</a>
+	<a href="{{ route('service.index')}}" class="list-group-item list-group-item-action {{ request()->is('service') ? 'active' : ''}}"><i class="fa fa-bars"></i> Service</a>
 
 </div>

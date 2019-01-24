@@ -22,6 +22,9 @@
           @if(!$user->checkUserRole(['administrator','manager']))
           <a href="{{ route('admin.user.edit',$user->username) }}"><i class="fa fa-edit"></i> edit </a>
           @endif
+          @if(!$user->checkUserRole(['administrator','manager']))
+          <a href="{{ route('admin.user.print',$user->username) }}"><i class="fa fa-print"></i> print </a>
+          @endif
         </nav>
 
         <div class="card mb-3">
@@ -38,8 +41,23 @@
     {{ $user->email }}
   </dd>
 
+
+  <dt class="col-sm-3">Phone</dt>
+  <dd class="col-sm-9">
+    {{ ($user->details)?$user->details->phone:'' }}
+  </dd>
+
+  <dt class="col-sm-3">Phone 2</dt>
+  <dd class="col-sm-9">
+    {{ ($user->details)?$user->details->phone_2:'' }}
+  </dd>
+
+  
+
+  
+
 @if(!$user->checkUserRole(['client-owner','client-manager','administrator','manager']))
-  <dt class="col-sm-3">Activation Code</dt>
+  <dt class="col-sm-3">Password/Activation</dt>
   <dd class="col-sm-9">{{ $user->activation_token}}</dd>
   @else
   <dt class="col-sm-3">Account Access</dt>
@@ -65,6 +83,74 @@
         </div>
       </div>
 
+              <div class="card mb-3">
+      <div class="card-body">
+        
+        <dl class="row">
+  @if($user->colleges()->first())        
+  <dt class="col-sm-3">College Name</dt>
+  <dd class="col-sm-9">{{ $user->colleges()->first()->name}}</dd>
+  @endif
+
+  @if($user->branches())
+  <dt class="col-sm-3">Branch</dt>
+  <dd class="col-sm-9">
+  @foreach($user->branches()->get() as $branch)
+    {{ $branch->name}} &nbsp;
+  @endforeach
+  </dd>
+  @endif
+
+  <dt class="col-sm-3">Roll Number</dt>
+  <dd class="col-sm-9">
+    {{ ($user->details)?$user->details->roll_number:'' }}
+  </dd>
+
+  <dt class="col-sm-3">Year of Passing</dt>
+  <dd class="col-sm-9">
+    {{ ($user->details)?$user->details->year_of_passing:'' }}
+  </dd>
+
+  
+</dl>
+
+         
+  
+        </div>
+      </div>
+
+
+      <div class="card mb-3">
+      <div class="card-body">
+        
+        <dl class="row">
+          @if($user->services())
+          <dt class="col-sm-3">Services</dt>
+          <dd class="col-sm-9">
+          @foreach($user->services()->get() as $service)
+            {{ $service->name}} <br>
+          @endforeach
+          </dd>
+          @endif
+        </dl>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+      <div class="card-body">
+        
+        <dl class="row">
+          @if($user->metrics())
+          <dt class="col-sm-3">Metrics</dt>
+          <dd class="col-sm-9">
+          @foreach($user->metrics()->get() as $metric)
+            {{ $metric->name}} <br>
+          @endforeach
+          </dd>
+          @endif
+        </dl>
+        </div>
+      </div>
 
 
 @if($user->checkRole(['administrator','manager','investor','patron','promoter','employee','client-owner','client-manager']))

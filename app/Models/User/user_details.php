@@ -24,6 +24,10 @@ class User_Details extends Model
         'facebook_link',
         'twitter_link',
         'privacy',
+        'phone',
+        'phone_2',
+        'year_of_passing',
+        'roll_number',
 
         // add all other fields
     ];

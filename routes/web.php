@@ -55,6 +55,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('admin/edituser/{user}','Product\AdminController@edituser')->name('admin.user.edit')->middleware('auth');
 	Route::put('admin/updateuser/{user}','Product\AdminController@updateuser')->name('admin.user.update')->middleware('auth');
 	Route::get('admin/user/{user}','Product\AdminController@viewuser')->name('admin.user.view')->middleware('auth');
+	Route::get('u/{user}','Product\AdminController@printuser')->name('admin.user.print')->middleware('auth');
 	Route::get('admin/user/{user}/product','Product\AdminController@userproduct')->name('admin.user.product')->middleware('auth');
 	Route::post('admin/user/{user}/product','Product\AdminController@storeuserproduct')->name('admin.user.product')->middleware('auth');
 	Route::get('admin/user/{user}/product/{id}','Product\AdminController@edit_userproduct')->name('admin.user.product.edit')->middleware('auth');
@@ -133,6 +134,13 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('system/report/week','System\ReportController@week')->middleware('auth')->name('report.week');
 	Route::resource('system/report','System\ReportController')->middleware('auth');
 
+
+	Route::resource('zone','College\ZoneController')->middleware('auth');
+	Route::resource('branch','College\BranchController')->middleware('auth');
+	Route::resource('college','College\CollegeController')->middleware('auth');
+	Route::resource('metric','College\MetricController')->middleware('auth');
+	Route::resource('service','College\ServiceController')->middleware('auth');
+	Route::post('productactivate','Product\ProductController@activate')->middleware('auth')->name('product.activate');
 
 	Route::resource('exam','Exam\ExamController')->middleware('auth');
 	Route::resource('examtype','Exam\ExamtypeController')->middleware('auth');

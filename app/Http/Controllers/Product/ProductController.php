@@ -8,6 +8,9 @@ use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\College\Service;
+use PacketPrep\User;
+
 use Illuminate\Support\Facades\Mail;
 use PacketPrep\Mail\OrderSuccess;
 use PacketPrep\Mail\OrderCreated;
@@ -53,8 +56,53 @@ class ProductController extends Controller
         return view('appl.pages.premium')->with('entry',$entry);
     }
 
+
+    public function activate(Request $request)
+    {
+        $code = $request->get('code');
+        $user_id = $request->get('user_id');
+        $user = User::where('id',$user_id)->first();
+        $entry = DB::table('service_user')
+                ->where('code', $code)
+                ->where('user_id', $user_id)
+                ->first();
+        if($entry){
+
+          $services = DB::table('service_user')
+                ->where('code', $code)
+                ->where('user_id', $user_id)
+                ->get();
+          foreach($services as $service){
+            $s= Service::where('id',$service->service_id)->first();
+            
+              $product = Product::where('id',$s->product_id)->first();
+              $pid = $product->id;
+                        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
+                        if(!$user->products->contains($pid)){
+                            $product = Product::where('id',$pid)->first();
+                            if($product->status!=0)
+                            $user->products()->attach($pid,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                        }
+
+          }
+
+          DB::table('service_user')
+                ->where('code', $code)
+                ->where('user_id', $user_id)
+                ->update(['status'=>1]);
+
+          
+        }else
+          abort('404','Your Code is Invalid');
+
+      
+        return view('appl.product.pages.productactivation');
+    }
+
     public function welcome(Request $request)
     {
+
+      
         $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
       try {
 
