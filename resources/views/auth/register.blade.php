@@ -80,6 +80,16 @@
                         </div>
 
                         <div class="form-group">
+                            <div class="col-md-12 col-md-offset-12">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="terms" > Agree with the <a href="{{url('/terms-corporate')}}">terms and conditions</a> and <a href="{{url('/privacy')}}">privacy policy</a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <div class="col-md-12 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Register

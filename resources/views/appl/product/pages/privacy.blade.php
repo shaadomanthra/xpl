@@ -27,6 +27,13 @@ The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to Q
 
 <p>Such information will not be considered as sensitive if it is freely available and accessible in the public domain or is furnished under the Right to Information Act, 2005 or any other law for the time being in force.</p>
 
+<p>We periodically send promotional emails and sms about our company new products and services, and our partnered companies promotions, which we think you may find interesting using the email and phone number you have provided.</p>
+<p>From time to time, we may also use your information to contact you for market research purposes. we may contact you by email, phone, sms or mail. we may use this information to customize the website according to your needs.</p>
+
+<p>To Contact you via email, phone or text message, to deliver certain services and information you have requested.</p> 
+
+
+
 <h2>COOKIES</h2>
 <p>To improve the responsiveness of the sites for our users, we may use "cookies", or similar electronic tools to collect information to assign each visitor a unique, random number as a User Identification (User ID) to understand the user's individual interests using the Identified Computer. Unless you voluntarily identify yourself (through registration, for example), we will have no way of knowing who you are, even if we assign a cookie to your computer. The only personal information a cookie can contain is information you supply (an example of this is when you ask for our Personalised Horoscope). A cookie cannot read data off your hard drive. Our advertisers may also assign their own cookies to your browser (if you click on their ads), a process that we do not control. </p>
 
