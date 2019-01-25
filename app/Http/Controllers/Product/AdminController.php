@@ -438,6 +438,9 @@ class AdminController extends Controller
         $user->save();
 
         $user_details = User_Details::where('user_id',$user->id)->first();
+        if(!$user_details){
+            $user_details = new User_Details;
+        }
         $user_details->user_id = $user->id;
         $user_details->country = 'IN';
         $user_details->phone = $request->get('phone');
