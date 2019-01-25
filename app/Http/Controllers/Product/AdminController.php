@@ -23,6 +23,7 @@ use PacketPrep\Mail\ActivateUser;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -36,9 +37,33 @@ class AdminController extends Controller
         //$slug = subdomain();
         //$client = client::where('slug',$slug)->first();
         //$this->authorize('view', $client);
+        $users = new AdminController;
+        $users->total = User::count();
+
+        $last_year = (new \Carbon\Carbon('first day of last year'))->year;
+        $this_year = (new \Carbon\Carbon('first day of this year'))->year;
 
 
-        return view('appl.product.admin.index');//->with('client',$client);
+        $last_year_first_day = (new \Carbon\Carbon('first day of January '.$last_year))->startofMonth()->toDateTimeString();
+        $this_year_first_day = (new \Carbon\Carbon('first day of January '.$this_year))->startofMonth()->toDateTimeString();
+        $users->last_year  = User::where('created_at','>', $last_year_first_day)->where('created_at','<', $this_year_first_day)->count();
+        $users->this_year  = User::where(DB::raw('YEAR(created_at)'), '=', $this_year)->count();
+
+        
+
+
+        $last_month_first_day = (new \Carbon\Carbon('first day of last month'))->startofMonth()->toDateTimeString();
+        $this_month_first_day = (new \Carbon\Carbon('first day of this month'))->startofMonth()->toDateTimeString();
+        
+        $users->last_month  = User::where('created_at','>', $last_month_first_day)->where('created_at','<', $this_month_first_day)->count();
+        
+
+        $users->this_month  = User::where(DB::raw('MONTH(created_at)'), '=', date('n'))->count();
+
+        $metrics = Metric::all();
+        
+
+        return view('appl.product.admin.index')->with('users',$users)->with('metrics',$metrics);
     }
 
 

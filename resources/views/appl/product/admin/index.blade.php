@@ -21,37 +21,56 @@
         </nav>
 
         <div class="row no-gutters">
-            <div class="col-12 col-md-6">
-            
+            <div class="col-12 col-md-4">
               <div class="card mb-3 mr-md-2">
                 <div class="card-body">
-                  <h3>Technical Support</h3>
-                  <dl class="row">
-                    <dt class="col-sm-3"><i class="fa fa-envelope"></i> Email</dt>
-                    <dd class="col-sm-9"> <span class="float-right">administrator@onlinelibrary.co</span></dd>
-                    <dt class="col-sm-4"><i class="fa fa-phone"></i> Phone</dt>
-                    <dd class="col-sm-8"> <span class="float-right">+91 95151 25110</span></dd>
-                  </dl>
+                  <h3>Total Users</h3>
+                    <div class="display-1"><i class="fa fa-user"></i> {{ $users->total }}</div>
                 </div>
               </div>
-
-              
-              
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
               <div class="card mb-3 ml-md-2">
                 <div class="card-body">
-                  <h3 class="card-title"><u>Account Details </u><a href="{{ route('admin.settings')}}">
-                    <span class="float-right"><i class="fa fa-edit"></i></span></a> </h3>
-                  <dl class="row">
-                    
-
-                  </dl>
+                  <h3 class="card-title">This Month</h3>
+                    <div class="display-4 mb-4">{{ $users->this_month }}</div>
+                  <h3 class="card-title">Last Month</h3>
+                    <div class="display-4">{{ $users->last_month }}</div>
                 </div>
               </div>
-              
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="card mb-3 ml-md-2">
+                <div class="card-body">
+                  <h3 class="card-title">This Year</h3>
+                    <div class="display-4 mb-4">{{ $users->this_year }}</div>
+                  <h3 class="card-title">Last Year</h3>
+                    <div class="display-4">{{ $users->last_year }}</div>
+                  
+                </div>
+              </div>
             </div>
             
+        </div>
+
+        <nav class="navbar navbar-light bg-white justify-content-between border rounded p-3 mb-3">
+          <a class="navbar-brand"><i class="fa fa-bar-chart"></i> Metrics</a>
+
+        </nav>
+
+        <div class="row no-gutters">
+
+          @foreach($metrics as $metric)
+          <div class="col-12 col-md-4">
+              <div class="card bg-light mb-3 ml-md-2">
+                <div class="card-body">
+                  <h3 class="card-title">{{ $metric->name }}</h3>
+                    <div class="display-4 mb-4">{{ $metric->users->count() }}</div>
+                </div>
+              </div>
+            </div>
+            @endforeach
+
         </div>
 
      </div>

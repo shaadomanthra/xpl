@@ -10,4 +10,9 @@ class Metric extends Model
         'name',
         // add all other fields
     ];
+
+    public function users(){
+        return $this->belongsToMany('PacketPrep\User');
+    }
+    
 }
