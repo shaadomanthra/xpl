@@ -2,7 +2,7 @@
 @section('content')
 
 
-<div  class="row p-5">
+<div  class="row ">
  @if($users->total()!=0)
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
