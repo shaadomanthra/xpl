@@ -140,6 +140,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('college','College\CollegeController')->middleware('auth');
 	Route::resource('metric','College\MetricController')->middleware('auth');
 	Route::resource('service','College\ServiceController')->middleware('auth');
+	Route::get('college/{college}/userlist','College\CollegeController@userlist')->middleware('auth')->name('college.userlist');
 	Route::post('productactivate','Product\ProductController@activate')->middleware('auth')->name('product.activate');
 
 	Route::resource('exam','Exam\ExamController')->middleware('auth');

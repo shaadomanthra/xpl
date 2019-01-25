@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\College\Service')->withPivot(['code','status']);
     }
 
+    public function myservice()
+    {
+        return $this->belongsToMany('PacketPrep\Models\College\Service')->withPivot(['code','status']);
+    }
+
     public function metrics()
     {
         return $this->belongsToMany('PacketPrep\Models\College\Metric');

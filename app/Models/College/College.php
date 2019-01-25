@@ -22,6 +22,10 @@ class College extends Model
         'tpo_phone'
     ];
 
+    public function users(){
+        return $this->belongsToMany('PacketPrep\User');
+    }
+
     public function branches(){
         return $this->belongsToMany('PacketPrep\Models\College\Branch');
     }

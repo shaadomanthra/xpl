@@ -122,9 +122,24 @@ class CollegeController extends Controller
     public function show($id)
     {
         $obj = Obj::where('id',$id)->first();
+
+        
         $this->authorize('view', $obj);
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
+                    ->with('obj',$obj)->with('app',$this);
+        else
+            abort(404);
+    }
+
+    public function userlist($id)
+    {
+        $obj = Obj::where('id',$id)->first();
+
+        
+        $this->authorize('view', $obj);
+        if($obj)
+            return view('appl.'.$this->app.'.'.$this->module.'.userlist')
                     ->with('obj',$obj)->with('app',$this);
         else
             abort(404);
