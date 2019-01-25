@@ -351,15 +351,19 @@ class AdminController extends Controller
                 $user->metrics()->detach();
         } 
 
-        //college
-        if(!$user->colleges->contains($college_id))
+        if($college_id){
+            $user->colleges()->detach();
             $user->colleges()->attach($college_id);
+        }
 
         $col = College::where('id',$college_id)->first();
         $zone_id = $col->zones->first()->id;
 
-        if(!$user->zones->contains($zone_id))
-            $user->colleges()->attach($zone_id);
+        if($zone_id){
+            $user->zones()->detach();
+            $user->zones()->attach($zone_id);
+        }
+            
 
 
         $user->password = $password;
@@ -414,13 +418,15 @@ class AdminController extends Controller
         $user->status = $request->get('status');
         $user->save();
 
-        $user_details = new user_details;
+        $user_details = User_Details::where('user_id',$user->id)->first();
         $user_details->user_id = $user->id;
         $user_details->country = 'IN';
         $user_details->phone = $request->get('phone');
         $user_details->phone_2 = $request->get('phone_2');
         $user_details->year_of_passing = $request->get('year_of_passing');
         $user_details->roll_number = $request->get('roll_number');
+
+
         $user_details->save();
 
 
@@ -497,14 +503,17 @@ class AdminController extends Controller
                 $user->metrics()->detach();
         } 
 
-        //college
-        if(!$user->colleges->contains($college_id))
+        //dd($college_id);
+        if($college_id){
+            $user->colleges()->detach();
             $user->colleges()->attach($college_id);
+        }
 
         $col = College::where('id',$college_id)->first();
         $zone_id = $col->zones->first()->id;
         
-        if(!$user->zones->contains($zone_id)){
+        if($zone_id){
+            $user->zones()->detach();
             $user->zones()->attach($zone_id);
         }
 

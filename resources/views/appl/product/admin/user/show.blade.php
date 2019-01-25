@@ -51,6 +51,10 @@
   <dd class="col-sm-9">
     {{ ($user->details)?$user->details->phone_2:'' }}
   </dd>
+  @if($user->zones()->first())        
+  <dt class="col-sm-3">Zone</dt>
+  <dd class="col-sm-9">{{ $user->zones()->first()->name}}</dd>
+  @endif
 
   
 
