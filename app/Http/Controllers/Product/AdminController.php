@@ -213,7 +213,7 @@ class AdminController extends Controller
 
     public function adduser(Request $request)
     {
-        $colleges = College::all();
+        $colleges = College::orderby('created_at','desc')->get();
         $metrics = Metric::all();
         $services = Service::all();
         $branches = Branch::all();
@@ -392,7 +392,7 @@ class AdminController extends Controller
     {
         $user = User::where('username',$id)->first();
         $user_details = $user->details;
-        $colleges = College::all();
+        $colleges = College::orderby('created_at','desc')->get();
         $metrics = Metric::all();
         $services = Service::all();
         $branches = Branch::all();
