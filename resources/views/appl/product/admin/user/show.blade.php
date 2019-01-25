@@ -31,6 +31,8 @@
       <div class="card-body">
         
         <dl class="row">
+          <dt class="col-sm-3">id</dt>
+  <dd class="col-sm-9">{{ $user->id}}</dd>
   <dt class="col-sm-3">Name</dt>
   <dd class="col-sm-9">{{ $user->name}}</dd>
 

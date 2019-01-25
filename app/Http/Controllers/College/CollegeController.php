@@ -123,7 +123,7 @@ class CollegeController extends Controller
     {
         $obj = Obj::where('id',$id)->first();
 
-        
+        dd($obj->users);
         $this->authorize('view', $obj);
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')

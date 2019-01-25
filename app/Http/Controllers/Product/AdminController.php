@@ -381,6 +381,25 @@ class AdminController extends Controller
         return view('appl.product.admin.user.show')->with('user',$user);
     }
 
+    public function listuser(Request $request)
+    {
+        $user = new User();
+        $search = $request->search;
+        $item = $request->item;
+        $recent = $request->get('recent');
+        $from = $request->get('from');
+        $to = $request->get('to');
+        
+        if($from && $to)
+        $users = $user->where('id','>=',$from)->where('id','<=',$to)->orderBy('created_at','desc')->paginate(500);
+        else
+        $users = $user->orderBy('created_at','desc')->paginate(500);
+        
+        $view = $search ? 'list': 'index';
+
+        return view('appl.product.admin.user.userlist')->with('users',$users);
+    }
+
     public function printuser($id,Request $request)
     {
         $user = User::where('username',$id)->first();
