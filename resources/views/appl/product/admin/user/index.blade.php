@@ -17,7 +17,7 @@
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-user"></i> User Accounts </a>
+          <a class="navbar-brand"><i class="fa fa-user"></i> Users @if($metric) - {{$metric}} @endif </a>
 
 
           <form class="form-inline" method="GET" >

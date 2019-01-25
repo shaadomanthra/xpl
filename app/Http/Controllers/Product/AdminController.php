@@ -219,12 +219,17 @@ class AdminController extends Controller
         $search = $request->search;
         $item = $request->item;
         $recent = $request->get('recent');
+        $metric = $request->get('metric');
 
         if($recent){
         $users = $user->where(function ($query) use ($item) {
                                 $query->where('name','LIKE',"%{$item}%")
                                       ->orWhere('email', 'LIKE', "%{$item}%");
                             })->orderBy('updated_at','desc')->paginate(config('global.no_of_records'));
+        }elseif($metric){
+            $m = Metric::where('name',$metric)->first();
+        $users = $m->users()->orderBy('created_at','desc')->paginate(config('global.no_of_records'));
+
         }else
         $users = $user->where(function ($query) use ($item) {
                                 $query->where('name','LIKE',"%{$item}%")
@@ -233,7 +238,7 @@ class AdminController extends Controller
         
         $view = $search ? 'list': 'index';
 
-        return view('appl.product.admin.user.'.$view)->with('users',$users);
+        return view('appl.product.admin.user.'.$view)->with('users',$users)->with('metric',$metric);
     }
 
     public function adduser(Request $request)

@@ -65,7 +65,7 @@
               <div class="card bg-light mb-3 ml-md-2">
                 <div class="card-body">
                   <h3 class="card-title">{{ $metric->name }}</h3>
-                    <div class="display-4 mb-4">{{ $metric->users->count() }}</div>
+                    <div class="display-4 mb-4"><a href=" {{ route('admin.user') }}?metric={{$metric->name}} ">{{ $metric->users->count() }}</a></div>
                 </div>
               </div>
             </div>
