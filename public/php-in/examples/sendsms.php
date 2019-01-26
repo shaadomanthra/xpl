@@ -9,7 +9,7 @@
 	// Data for text message. This is the text message data.
 	$sender = "PCKPRP"; // This is who the message appears to be from.
 	$numbers = "918688079590"; // A single number or a comma-seperated list of numbers
-	$message = "This is a test message from the PHP API script.";
+	$message = "Thank you for registering with PacketPrep. Your Verification Code is 12345";
 	// 612 chars or less
 	// A single number or a comma-seperated list of numbers
 	$message = urlencode($message);
