@@ -166,7 +166,7 @@
         <input type="hidden" name="_method" value="PUT">
         @endif
 
-        <input type="hidden" name="user_id_creator" value="{{ auth::user()->id }}">
+        <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       
 

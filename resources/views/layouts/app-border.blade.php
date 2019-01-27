@@ -1,12 +1,8 @@
-@extends('layouts.head')
+@extends('layouts.headnew')
 @section('content-main')
 <div class="wrapper-bg">
-    <div class="nav-bg p-2 bg1" >
-        <div class="wrapper ">
-            <div id="app " >
-            @include('snippets.topmenu')
-            </div>
-        </div>
+    <div class="nav-bg p-1 bg1" >
+        
     </div>    
     <div class="wrapper margintop-20 ">
         <div class="container">    

@@ -241,6 +241,52 @@ class AdminController extends Controller
         return view('appl.product.admin.user.'.$view)->with('users',$users)->with('metric',$metric);
     }
 
+
+    public function estudentregister(Request $request)
+    {
+        $colleges = College::orderby('created_at','desc')->get();
+        $metrics = Metric::all();
+        $services = Service::all();
+        $branches = Branch::all();
+
+        if(!$request->code)
+            abort('403','Activation code Required');
+        else
+            $user = User::where('username',$request->code)->first();
+
+        return view('appl.product.admin.user.estudentproduct')
+            ->with('stub','Create')
+            ->with('colleges',$colleges)
+                ->with('services',$services)
+                ->with('metrics',$metrics)
+                ->with('user',$user)
+                ->with('branches',$branches);
+    }
+
+    public function dstudentregister(Request $request)
+    {
+        $colleges = College::orderby('created_at','desc')->get();
+        $metrics = Metric::all();
+        $services = Service::all();
+        $branches = Branch::all();
+
+         if(!$request->code)
+            abort('403','Activation code Required');
+        else
+            $user = User::where('username',$request->code)->first();
+
+        return view('appl.product.admin.user.dstudentproduct')
+            ->with('stub','Create')
+            ->with('colleges',$colleges)
+                ->with('services',$services)
+                ->with('metrics',$metrics)
+                ->with('user',$user)
+                ->with('branches',$branches);
+    }
+
+
+
+
     public function adduser(Request $request)
     {
         $colleges = College::orderby('created_at','desc')->get();
@@ -256,10 +302,11 @@ class AdminController extends Controller
                 ->with('branches',$branches);
     }
 
-    public function storeuser(Request $request)
+    public function studentstore(Request $request)
     {
         
-
+        //dd($request->all());
+        $direct = $request->get('type');
         list($u, $domain) = explode('@', $request->email);
 
         if ($domain != 'gmail.com') {
@@ -290,6 +337,7 @@ class AdminController extends Controller
                     break;
             }
         }
+
         
         $user = User::create([
             'name' => $request->name,
@@ -297,6 +345,7 @@ class AdminController extends Controller
             'email' => $request->email,
             'password' => bcrypt($password),
             'activation_token' => $password,
+            'user_id' =>$request->user_id,
             'status'=>1,
         ]);
 
@@ -401,7 +450,163 @@ class AdminController extends Controller
         Mail::to($user->email)->send(new ActivateUser($user));
 
         flash('A new user('.$request->name.') is created!')->success();
+        if(!$direct)
         return redirect()->route('admin.user.view',$user->username);
+        else
+        return view('appl.product.admin.user.successstudent');   
+
+    }
+
+    public function storeuser(Request $request)
+    {
+        
+        $direct = $request->get('type');
+        list($u, $domain) = explode('@', $request->email);
+
+        if ($domain != 'gmail.com') {
+            flash('Kindly use only gmail.com for email address.')->error();
+                 return redirect()->back()->withInput();
+        }
+
+        $user = User::where('email',$request->email)->first();
+
+        if($user){
+                flash('The user (<b>'.$request->email.'</b>) account exists. Kindly use a different email.')->error();
+                 return redirect()->back()->withInput();
+        }
+
+
+
+        $parts = explode("@", $request->email);
+        $username = $parts[0];
+        $password = str_random(5);
+
+        $user = User::where('username',$username)->first();
+
+        if($user){         
+            while(1){
+                $username = $username.'_'.str_random(5);
+                $user = User::where('username',$username)->first();
+                if(!$user)
+                    break;
+            }
+        }
+        
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $username,
+            'email' => $request->email,
+            'password' => bcrypt($password),
+            'activation_token' => $password,
+            'user_id' => $request->user_id,
+            'status'=>1,
+        ]);
+
+        $user_details = new user_details;
+        $user_details->user_id = $user->id;
+        $user_details->country = 'IN';
+        $user_details->phone = $request->get('phone');
+        $user_details->phone_2 = $request->get('phone_2');
+        $user_details->year_of_passing = $request->get('year_of_passing');
+        $user_details->roll_number = $request->get('roll_number');
+        $user_details->save();
+
+        $college_id = $request->get('college_id');
+        $branches = $request->get('branches');
+        $services = $request->get('services');
+        $metrics = $request->get('metrics');
+
+        //branches
+        $branch_list =  Branch::orderBy('created_at','desc ')
+                        ->get()->pluck('id')->toArray();
+        if($branches)
+            foreach($branch_list as $branch){
+                if(in_array($branch, $branches)){
+                    if(!$user->branches->contains($branch))
+                        $user->branches()->attach($branch);
+                }else{
+                    if($user->branches->contains($branch))
+                        $user->branches()->detach($branch);
+                }
+                
+        }else{
+                $user->branches()->detach();
+        } 
+
+        //Services
+        $service_list =  Service::orderBy('created_at','desc ')
+                        ->get()->pluck('id')->toArray();
+        if($services)
+            foreach($service_list as $service){
+                if(in_array($service, $services)){
+                    $s = Service::where('id',$service)->first();
+                    
+                    if($s->product){
+                    $p = $s->product->price;
+                    if($p !=0){
+                        if(!$user->services->contains($service))
+                        $user->services()->attach($service,['code' => 'D'.$user->id,'status'=>0]);
+                    }else{
+                        $pid = $s->product->id;
+                        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
+                        if(!$user->products->contains($pid)){
+                            $product = Product::where('id',$pid)->first();
+                            if($product->status!=0)
+                            $user->products()->attach($pid,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                        }
+
+                    }
+                    }
+                }else{
+                    if($user->services->contains($service))
+                        $user->services()->detach($service);
+                }
+                
+        }else{
+                $user->services()->detach();
+        } 
+
+        //Metrics
+        $metric_list =  Metric::orderBy('created_at','desc ')
+                        ->get()->pluck('id')->toArray();
+        if($metrics)
+            foreach($metric_list as $metric){
+                if(in_array($metric, $metrics)){
+                    if(!$user->metrics->contains($metric))
+                        $user->metrics()->attach($metric);
+                }else{
+                    if($user->metrics->contains($metric))
+                        $user->metrics()->detach($metric);
+                }
+                
+        }else{
+                $user->metrics()->detach();
+        } 
+
+        if($college_id){
+            $user->colleges()->detach();
+            $user->colleges()->attach($college_id);
+        }
+
+        $col = College::where('id',$college_id)->first();
+        $zone_id = $col->zones->first()->id;
+
+        if($zone_id){
+            $user->zones()->detach();
+            $user->zones()->attach($zone_id);
+        }
+            
+
+
+        $user->password = $password;
+
+        Mail::to($user->email)->send(new ActivateUser($user));
+
+        flash('A new user('.$request->name.') is created!')->success();
+        if(!$direct)
+        return redirect()->route('admin.user.view',$user->username);
+        else
+        return view('appl.product.admin.user.successstudent');   
 
     }
 

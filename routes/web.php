@@ -105,6 +105,10 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('admin','Product\AdminController@index')->name('admin.index')->middleware('auth');
 	Route::get('admin/settings','Product\AdminController@settings')->name('admin.settings')->middleware('auth');
 	Route::post('admin/settings','Product\AdminController@settings_store')->name('admin.settings')->middleware('auth');
+	Route::get('eregister','Product\AdminController@estudentregister')->name('student.eregister');
+	Route::get('dregister','Product\AdminController@dstudentregister')->name('student.dregister');
+	Route::post('studentstore','Product\AdminController@studentstore')->name('admin.user.studentstore');
+
 
 	Route::resource('role','User\RoleController')->middleware('auth');
 	Route::resource('tracks','Content\DocController',['names' => [
@@ -144,6 +148,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('service','College\ServiceController')->middleware('auth');
 	Route::get('college/{college}/userlist','College\CollegeController@userlist')->middleware('auth')->name('college.userlist');
 	Route::post('productactivate','Product\ProductController@activate')->middleware('auth')->name('product.activate');
+
+	
 
 	Route::resource('exam','Exam\ExamController')->middleware('auth');
 	Route::resource('examtype','Exam\ExamtypeController')->middleware('auth');
