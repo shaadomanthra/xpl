@@ -95,6 +95,23 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/home', function () { return redirect('/'); })->name('home');
 	Route::get('/apply', function () { return view('welcome'); })->name('apply');
 	Route::get('team','User\TeamController@index')->name('team');
+	Route::get('/referral', function () { 
+
+		if(\auth::user()->colleges->first())
+		$type = substr(\auth::user()->colleges->first()->type,0,1);
+		else
+		$type = 'd';
+
+		$username = \auth::user()->username;
+
+		$users = \auth::user()->where('user_id',\auth::user()->id)->orderBy('updated_at','desc')->paginate(config('global.no_of_records'));
+
+		return view('appl.user.referral')
+				->with('type',$type)
+				->with('username',$username)
+				->with('users',$users); 
+			})->middleware('auth')->name('referral');
+
 
 	Route::resource('product','Product\ProductController')->middleware('auth');
 	Route::get('productpage','Product\ProductController@products')->name('products');
