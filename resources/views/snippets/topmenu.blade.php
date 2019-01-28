@@ -51,10 +51,7 @@
                             >
                            Profile
                              </a>
-                             <a class="dropdown-item"  href="{{ route('referral') }}"
-                            >
-                           Referrals
-                             </a>
+                             
                             <a class="dropdown-item"  href="{{ route('order.transactions') }}"
                             >
                             Transactions
