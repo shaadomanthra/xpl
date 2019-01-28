@@ -380,6 +380,17 @@ class AdminController extends Controller
                 $user->branches()->detach();
         } 
 
+        //pro access
+        $pid = 18;
+                        $month = 3;
+
+                        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
+                        if(!$user->products->contains($pid)){
+                            $product = Product::where('id',$pid)->first();
+                            if($product->status!=0)
+                            $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                        }
+
         //Services
         $service_list =  Service::orderBy('created_at','desc ')
                         ->get()->pluck('id')->toArray();
@@ -395,11 +406,15 @@ class AdminController extends Controller
                         $user->services()->attach($service,['code' => 'D'.$user->id,'status'=>0]);
                     }else{
                         $pid = $s->product->id;
-                        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
+                        $month = 24;
+                        if($s->product->validity)
+                            $month = $s->product->validity;
+
+                        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
                         if(!$user->products->contains($pid)){
                             $product = Product::where('id',$pid)->first();
                             if($product->status!=0)
-                            $user->products()->attach($pid,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                            $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
                         }
 
                     }
@@ -548,11 +563,14 @@ class AdminController extends Controller
                         $user->services()->attach($service,['code' => 'D'.$user->id,'status'=>0]);
                     }else{
                         $pid = $s->product->id;
-                        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
+                        $month = 24;
+                        if($s->product->validity)
+                            $month = $s->product->validity;
+                        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
                         if(!$user->products->contains($pid)){
                             $product = Product::where('id',$pid)->first();
                             if($product->status!=0)
-                            $user->products()->attach($pid,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                            $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
                         }
 
                     }

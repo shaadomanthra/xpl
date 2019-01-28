@@ -8,7 +8,7 @@
       <div class="bg-light border p-3 mb-3">
       <h1 class="">
         @if($stub=='Create')
-          Degree Student Registration - Premium Service ( Rs. 2000 )
+          Degree Student Registration - Premium Service 
         @else
           Update User
         @endif  
@@ -123,7 +123,7 @@
         <label for="formGroupExampleInput ">Year of Passing</label>
         <select class="form-control" name="year_of_passing">
           @for($i=2019;$i < 2029;$i++)
-          <option value="{{$i}}" @if(isset($user))@if($user->details->year_of_passing== $i) selected @endif @endif> {{ $i }}</option>
+          <option value="{{$i}}" @if(isset($user->details))@if($user->details->year_of_passing== $i) selected @endif @endif> {{ $i }}</option>
           @endfor
         </select>
       </div>
