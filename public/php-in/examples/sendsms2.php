@@ -6,7 +6,7 @@ $textlocal = new Textlocal('packetcode@gmail.com', 'c1120d3477ff90880eb3327e1526
 
 $numbers = array(919515125110);
 $sender = 'PKTPRP';
-$message = 'Welcome to PacketPrep. Your Username is krishna, and Password is xYd34, website: packetprep.com';
+$message = 'Welcome to PacketPrep. Your Username is krishna,and Password is xYd34, website: packetprep.com';
 
 try {
     $result = $textlocal->sendSms($numbers, $message, $sender);
