@@ -1,25 +1,17 @@
 <?php
-	// Account details
-	$apiKey = urlencode('3dwqaXLT//Q-CSiScJnMvEXQeu8WVBSjmTExhIaWpF');
-	
-	// Message details
-	$numbers = array(918688079590, 919515125110);
-	$sender = urlencode('PCKPRP');
-	$message = rawurlencode('This is your message');
- 
-	$numbers = implode(',', $numbers);
- 
-	// Prepare data for POST request
-	$data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
- 
-	// Send the POST request with cURL
-	$ch = curl_init('https://api.textlocal.in/send/');
-	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	$response = curl_exec($ch);
-	curl_close($ch);
-	
-	// Process your response here
-	echo $response;
+
+require('../textlocal.class.php');
+
+$textlocal = new Textlocal('packetcode@gmail.com', 'c1120d3477ff90880eb3327e1526a4f76114d87812ad7d9da247eac6fdb74f13');
+
+$numbers = array(919515125110);
+$sender = 'PKTPRP';
+$message = 'Welcome to PacketPrep. Your Username is krishnateja, and Password is xYd34, website: packetprep.com';
+
+try {
+    $result = $textlocal->sendSms($numbers, $message, $sender);
+    print_r($result);
+} catch (Exception $e) {
+    die('Error: ' . $e->getMessage());
+}
 ?>

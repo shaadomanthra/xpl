@@ -40,6 +40,7 @@
                     <div class="display-1">
                     	<div class="" style="font-size: 80px;"><img src="{{ asset('/img/friendship.png')}}" class=" p-3 pt-0" style="width:100px"/> <span class="mt-3">{{ $users->total }} </span></div>
                     </div>
+                    <br>
                 </div>
               </div>
             </div>
