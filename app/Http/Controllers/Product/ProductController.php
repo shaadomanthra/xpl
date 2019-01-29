@@ -11,6 +11,11 @@ use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\College\Service;
 use PacketPrep\User;
 
+use PacketPrep\Models\College\College;
+use PacketPrep\Models\College\Zone;
+use PacketPrep\Models\College\Metric;
+use PacketPrep\Models\College\Branch;
+
 use Illuminate\Support\Facades\Mail;
 use PacketPrep\Mail\OrderSuccess;
 use PacketPrep\Mail\OrderCreated;
@@ -39,6 +44,39 @@ class ProductController extends Controller
 
         return view('appl.product.product.'.$view)
         ->with('products',$products)->with('product',$product);
+    }
+
+    public function statistics(Request $request){
+      //$slug = subdomain();
+        //$client = client::where('slug',$slug)->first();
+        //$this->authorize('view', $client);
+        $users = new ProductController;
+        $users->total = User::count();
+
+        $last_year = (new \Carbon\Carbon('first day of last year'))->year;
+        $this_year = (new \Carbon\Carbon('first day of this year'))->year;
+
+
+        $last_year_first_day = (new \Carbon\Carbon('first day of January '.$last_year))->startofMonth()->toDateTimeString();
+        $this_year_first_day = (new \Carbon\Carbon('first day of January '.$this_year))->startofMonth()->toDateTimeString();
+        $users->last_year  = User::where('created_at','>', $last_year_first_day)->where('created_at','<', $this_year_first_day)->count();
+        $users->this_year  = User::where(DB::raw('YEAR(created_at)'), '=', $this_year)->count();
+
+        
+
+
+        $last_month_first_day = (new \Carbon\Carbon('first day of last month'))->startofMonth()->toDateTimeString();
+        $this_month_first_day = (new \Carbon\Carbon('first day of this month'))->startofMonth()->toDateTimeString();
+        
+        $users->last_month  = User::where('created_at','>', $last_month_first_day)->where('created_at','<', $this_month_first_day)->count();
+        
+
+        $users->this_month  = User::where(DB::raw('MONTH(created_at)'), '=', date('n'))->count();
+
+        $metrics = Metric::all();
+        
+
+        return view('appl.product.pages.stats')->with('users',$users)->with('metrics',$metrics);
     }
 
 

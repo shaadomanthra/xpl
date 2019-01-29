@@ -6,7 +6,7 @@ $textlocal = new Textlocal('packetcode@gmail.com', 'c1120d3477ff90880eb3327e1526
 
 $numbers = array(918688079590,919515125110);
 $sender = 'PCKPRP';
-$message = 'This is a message';
+$message = 'Thank you for registering with PacketPrep. Your Verification Code is 45678';
 
 try {
     $result = $textlocal->sendSms($numbers, $message, $sender);

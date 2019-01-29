@@ -115,6 +115,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::resource('product','Product\ProductController')->middleware('auth');
 	Route::get('productpage','Product\ProductController@products')->name('products');
+	Route::get('stats','Product\ProductController@statistics')->name('statistics');
 	Route::get('productpage/{product}','Product\ProductController@page')->name('productpage');
 	Route::resource('client','Product\ClientController')->middleware('auth');
 	Route::resource('client/{client}/clientuser','Product\ClientuserController')->middleware('auth');
