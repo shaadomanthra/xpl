@@ -49,12 +49,22 @@
     <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     @endif
 
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9550642194256443",
+    enable_page_level_ads: true
+  });
+</script>
+
     </head>
     <body>
     <div id="app" >
     @yield('content-main')
     </div>
  
+
  <div class="bg-dark">
     <footer class="wrapper text-light footer">
         <div class="container py-3">
