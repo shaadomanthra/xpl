@@ -37,9 +37,8 @@
               <tr>
                 <th scope="row">{{ $users->currentpage() ? ($users->currentpage()-1) * $users->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
-                  <a href=" {{ route('admin.user.view',$user->username) }} ">
                   {{ $user->name }}
-                  </a>
+                  
                 </td>
                 <td>{{ $user->colleges->first()->name }}</td>
                 
