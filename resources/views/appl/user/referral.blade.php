@@ -29,6 +29,7 @@
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
                 <th scope="col">College</th>
+                <th scope="col">Branch</th>
                 <th scope="col">Status</th>
               </tr>
             </thead>
@@ -41,6 +42,7 @@
                   
                 </td>
                 <td>{{ $user->colleges->first()->name }}</td>
+                <td>{{ $user->branches->first()->name }}</td>
                 
                 <td>
                   @if($user->status==0)
