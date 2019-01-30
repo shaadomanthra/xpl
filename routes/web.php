@@ -206,7 +206,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/social/imageremove', 'Social\BlogController@image_remove')->name('imageremove');
 	Route::resource('blog','Social\BlogController')->middleware('auth');
 	Route::resource('social/media','Social\MediaController')->middleware('auth');
-	
+	Route::get('/social/word', 'Social\WordController@index')->name('word');
 
 	Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
