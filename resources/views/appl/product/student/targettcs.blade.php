@@ -188,7 +188,7 @@
 
    <div class="bg-light p-4 border ">
       Disclaimer : <br>
-      PacketPrep are no way connected to TCS or any other software company. PacketPrep only provides guidance to students on preparation techiques to crack interviews. 
+      PacketPrep is no way connected to TCS or any other software company. PacketPrep only provides guidance to students on preparation techiques to crack interviews. 
       </div>
       
    </div>
