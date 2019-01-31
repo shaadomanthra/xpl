@@ -13,7 +13,7 @@
           Update User
         @endif  
        </h1>
-       <p>A 100 day online learning program to help students crack TCS Ninja All india Recruitment Test. <br>  </p>
+       <p>A 100 day online learning program to help students crack <a href="{{ route('targettcs')}}">TCS Ninja - National Qualifier Test</a> <br>  </p>
      </div>
       
       @if($stub=='Create')
@@ -68,7 +68,7 @@
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">
-        <label for="formGroupExampleInput ">Roll Number </label>
+        <label for="formGroupExampleInput ">College Roll Number (FULL) </label>
         <input type="text" class="form-control" name="roll_number" id="formGroupExampleInput" placeholder="Enter your Roll Number" 
             @if($stub=='Create')
             value="{{ (old('roll_number')) ? old('roll_number') : '' }}"
@@ -137,7 +137,7 @@
         
         <div class="row">
         <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="15"> MS in US  <br>
+        <input  type="checkbox" name="metrics[]" value="15"> MS in US or Aborad  <br>
         </div>
         <div class="col-12 col-md-4">
         <input  type="checkbox" name="metrics[]" value="5"> MBA  <br>
@@ -170,17 +170,15 @@
         <div class="col-12 col-md-4">
         <input  type="checkbox" name="metrics[]" value="10"> Computer Programming (C/JAVA/SAP) <br>
         </div>
-        <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="11"> Graphic Design  <br>
-        </div>
+       
       </div>
       </div>
       @endif
 
       <div class="form-group border bg-light p-3">
         <div class="form-group">
-        <label for="formGroupExampleInput ">Referral Code</label>
-        <input type="text" class="form-control" name="code" id="formGroupExampleInput" placeholder="Enter Activation Code"  value="{{ \request()->code}}" disabled
+        <label for="formGroupExampleInput ">Referral Code (Optional)</label>
+        <input type="text" class="form-control" name="code" id="formGroupExampleInput" placeholder="Enter Referral Code"  value="{{ (\request()->code)? \request()->code : ''}}"
             
           >
        
@@ -195,6 +193,7 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="user_id" value="{{ $user->id }}">
         <input type="hidden" name="type" value="direct">
+        <input type="hidden" name="coll" value="engg">
       
 
 

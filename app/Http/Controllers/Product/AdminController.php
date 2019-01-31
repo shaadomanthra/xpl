@@ -250,9 +250,10 @@ class AdminController extends Controller
         $branches = Branch::all();
 
         if(!$request->code)
-            abort('403','Activation code Required');
+            $user = User::where('username','demo123')->first();
         else
             $user = User::where('username',$request->code)->first();
+        
 
         return view('appl.product.admin.user.estudentproduct')
             ->with('stub','Create')
@@ -307,6 +308,7 @@ class AdminController extends Controller
         
         //dd($request->all());
         $direct = $request->get('type');
+        $coll = $request->get('coll');
         list($u, $domain) = explode('@', $request->email);
 
         if ($domain != 'gmail.com') {
@@ -320,8 +322,6 @@ class AdminController extends Controller
                 flash('The user (<b>'.$request->email.'</b>) account exists. Kindly use a different email.')->error();
                  return redirect()->back()->withInput();
         }
-
-
 
         $parts = explode("@", $request->email);
         $username = $parts[0];
@@ -380,6 +380,7 @@ class AdminController extends Controller
                 $user->branches()->detach();
         } 
 
+        if(!$coll){
         //pro access
         $pid = 18;
                         $month = 3;
@@ -390,6 +391,7 @@ class AdminController extends Controller
                             if($product->status!=0)
                             $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
                         }
+        }
 
         //Services
         $service_list =  Service::orderBy('created_at','desc ')

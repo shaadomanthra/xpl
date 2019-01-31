@@ -99,6 +99,12 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 		return view('appl.product.pages.share');
 			})->name('share');
+
+	Route::get('/targettcs', 'Product\StudentController@targettcs')->name('targettcs');
+	Route::get('/sreferral', 'Product\StudentController@referral')->name('sreferral');
+	Route::get('/ambassador', 'Product\StudentController@ambassador')->name('ambassador');
+	Route::get('/proaccess', 'Product\StudentController@proaccess')->name('proaccess')->middleware('auth');
+
 	Route::get('/referral', function () { 
 
 		if(\auth::user()->colleges->first())
