@@ -24,4 +24,9 @@ class Order extends Model
      public function product(){
         return $this->belongsTo('PacketPrep\Models\Product\Product');
     }
+
+    public function user(){
+        return $this->belongsTo('PacketPrep\User');
+    }
+
 }

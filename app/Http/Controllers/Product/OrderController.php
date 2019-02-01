@@ -399,9 +399,7 @@ class OrderController extends Controller
         $order = new Order();
         $search = $request->search;
         $item = $request->item;
-        $client_id = Client::where('slug',\auth::user()->client_slug)->first()->id;
         $orders = $order->where('order_id','LIKE',"%{$item}%")
-                  ->where('client_id',$client_id)
                   ->orderBy('created_at','desc ')
                   ->paginate(config('global.no_of_records'));
         $view = $search ? 'list': 'index';

@@ -48,7 +48,7 @@
                            {{ Auth::user()->name }} <span class="caret"></span>
                        </a>
                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item"  href="{{ route('dashboard') }}"
+                            <a class="dropdown-item"  href="{{ route('profile','@'.\auth::user()->username)}}"
                             >
                            Profile
                              </a>

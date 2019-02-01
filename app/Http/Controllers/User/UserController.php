@@ -91,6 +91,7 @@ class UserController extends Controller
         {
             return view('appl.user.edit')
                     ->with('user',$user)
+                    ->with('editor',true)
                     ->with('user_details',$user_details);
         }else
             abort(404,'User not found');
@@ -138,13 +139,14 @@ class UserController extends Controller
         //update user details
         $user_details->user_id = $user->id;
 
-        $user_details->bio = summernote_imageupload($user,$request->bio);
+        $user_details->bio = scriptStripper(summernote_imageupload($user,$request->bio));
         //dd($user_details->bio);
         $user_details->country = $request->country;
         $user_details->city = ($request->city)?$request->city:' ';
         $user_details->facebook_link = $request->facebook_link;
         $user_details->twitter_link = $request->twitter_link;
         $user_details->privacy = $request->privacy;
+        $user_details->phone = $request->phone;
         $user_details->save();
         flash('User data updated!')->success();
         return redirect()->route('profile','@'.$username);

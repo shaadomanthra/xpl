@@ -1,4 +1,4 @@
-@extends('layouts.corporate-body')
+@extends('layouts.app')
 @section('content')
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb border">

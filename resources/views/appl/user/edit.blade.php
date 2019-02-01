@@ -1,4 +1,4 @@
-@extends('layouts.nowrap')
+@extends('layouts.app')
 @section('content')
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -32,6 +32,10 @@
       <div class="form-group">
         <label for="formGroupExampleInput ">Email</label>
         <input type="text" class="form-control" name="email"  value="{{ $user->email }}" disabled>
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Phone</label>
+        <input type="text" class="form-control" name="phone"  value="@if($user->details){{  $user->details->phone }} @endif" >
       </div>
       <div class="form-group">
         <label for="formGroupExampleInput ">Password</label>
@@ -71,6 +75,8 @@
         <label for="formGroupExampleInput ">City (optional)</label>
         <input type="text" class="form-control" name="city"  placeholder="Enter your city name" value="{{ $user_details->city }}">
       </div>
+
+
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Facebook URL (optional)</label>

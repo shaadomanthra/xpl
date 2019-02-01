@@ -1,4 +1,4 @@
-@extends('layouts.nowrap')
+@extends('layouts.app')
 @section('content')
 
 <div  class="row ">
