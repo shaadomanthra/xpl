@@ -40,7 +40,7 @@
         </div>
         <div class="col-12 col-md-6">
           <div class="form-group ">
-        <label for="formGroupExampleInput2">Email</label>
+        <label for="formGroupExampleInput2">Email (Only Gmail ID Accepted)</label>
        
        @if($stub!='Update')
         <input type="text" class="form-control" name="email" id="formGroupExampleInput2" placeholder="Email address"
@@ -81,7 +81,7 @@
         <div class="col-12 col-md-6">
           <div class="form-group">
         <label for="formGroupExampleInput ">Phone </label>
-        <input type="text" class="form-control" name="phone" id="formGroupExampleInput" placeholder="Enter your Phone Number" 
+        <input type="number" minlength="1" class="form-control" name="phone" id="formGroupExampleInput" placeholder="Enter your Phone Number" 
             @if($stub=='Create')
             value="{{ (old('phone')) ? old('phone') : '' }}"
             @else
@@ -100,7 +100,9 @@
         <label for="formGroupExampleInput ">College</label>
         <select class="form-control" name="college_id">
           @foreach($colleges as $c)
+          @if($c->type=='btech')
           <option value="{{$c->id}}" @if(isset($user)) @if($user->colleges->first()) @if($c->id == $user->colleges->first()->id ) selected @endif @endif @endif >{{ $c->name }}</option>
+          @endif
           @endforeach         
         </select>
       </div>
@@ -112,7 +114,9 @@
         <label for="formGroupExampleInput ">Branch</label><br>
         <select class="form-control" name="branches[]">
           @foreach($branches as $b)
+          @if(in_array($b->name,['CSE','IT','EEE','ECE','MECH','CIVIL','OTHER']))
           <option value="{{$b->id}}" @if(isset($user)) @if($user->branches->first()) @if($b->id == $user->branches->first()->id ) selected @endif @endif @endif >{{ $b->name }}</option>
+          @endif
           @endforeach         
         </select>
       </div>
@@ -168,7 +172,16 @@
         <input  type="checkbox" name="metrics[]" value="12"> Communication  <br>
         </div>
         <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="10"> Computer Programming (C/JAVA/SAP) <br>
+        <input  type="checkbox" name="metrics[]" value="10"> Computer Programming (C/JAVA/OTHER) <br>
+        </div>
+        <div class="col-12 col-md-4">
+        <input  type="checkbox" name="metrics[]" value="16"> MATLAB <br>
+        </div>
+        <div class="col-12 col-md-4">
+        <input  type="checkbox" name="metrics[]" value="17"> AutoCAD <br>
+        </div>
+        <div class="col-12 col-md-4">
+        <input  type="checkbox" name="metrics[]" value="11"> Animation/Design <br>
         </div>
        
       </div>

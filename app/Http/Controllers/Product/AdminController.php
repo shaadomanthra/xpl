@@ -244,7 +244,7 @@ class AdminController extends Controller
 
     public function estudentregister(Request $request)
     {
-        $colleges = College::orderby('created_at','desc')->get();
+        $colleges = College::orderby('name','asc')->get();
         $metrics = Metric::all();
         $services = Service::all();
         $branches = Branch::all();
@@ -309,6 +309,29 @@ class AdminController extends Controller
         //dd($request->all());
         $direct = $request->get('type');
         $coll = $request->get('coll');
+
+        if($request->name==null){
+            flash('Name cannot be empty')->error();
+                 return redirect()->back()->withInput();
+        }
+
+        if($request->email==null){
+            flash('Email cannot be empty')->error();
+                 return redirect()->back()->withInput();
+        }
+
+        if($request->roll_number==null){
+            flash('Roll Number number cannot be empty')->error();
+                 return redirect()->back()->withInput();
+        }
+
+        if($request->phone==null){
+            flash('Phone number cannot be empty')->error();
+                 return redirect()->back()->withInput();
+        }
+
+        
+
         list($u, $domain) = explode('@', $request->email);
 
         if ($domain != 'gmail.com') {

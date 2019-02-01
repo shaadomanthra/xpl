@@ -11,6 +11,8 @@ class StudentController extends Controller
 {
     
 
+	
+
     public function targettcs(Request $request)
     {
         return view('appl.product.student.targettcs');
@@ -18,12 +20,23 @@ class StudentController extends Controller
 
     public function referral(Request $request)
     {
+    	$type=null;
+    	if(\auth::user())
+	    	if(\auth::user()->colleges->first())
+			$type = substr(\auth::user()->colleges->first()->type,0,1);
+			else
+			$type = 'd';
+
     	$user = null;$product=null;
     	if(\auth::user()){
     		$user = \auth::user();
     		$product = $user->products()->where('product_user.product_id',18)->first();
     	}
-        return view('appl.product.student.referral')->with('user',$user)->with('product',$product);
+
+        return view('appl.product.student.referral')
+        ->with('user',$user)
+        ->with('product',$product)
+        ->with('type',$type);
     }
 
     public function proaccess(Request $request)

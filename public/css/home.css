@@ -107,6 +107,13 @@ h6 {
     width: 100%;
     height: 100%;
 }
+input:invalid {
+  border: 1px solid red;
+}
+
+input:valid {
+  border: 1px solid green;
+}
 
 .wrapper-bg-2{ background-color: #ECF0F1; height:100%;}
 .wrapper-bg-3{ background-color: #fff; height:100%;}

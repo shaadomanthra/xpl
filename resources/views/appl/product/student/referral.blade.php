@@ -20,20 +20,35 @@
 			
 			</h1>
       <p>Help us reach more people ! </p>
-      <p>Refer 3 students and get 3 month pro-access to premium aptitude content. It includes 200+ video lectures, 5000+ practice questions and numerous online assessments on various topics of qunatitative aptitude, logical reasoning, mental ability and interview skills.</p>
+      <p>Refer 3 students and get 3 month pro-access to premium aptitude content. It includes 200+ video lectures, 5000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability and interview skills.</p>
       <div class="mt-4 p-4 border rounded mb-4">
         <h2> Referral Link</h2>
         @guest
         Login to get the referral link
         @else
-        <a href="{{ route('student.eregister') }}?code={{\auth::user()->username}}">{{ route('student.eregister') }}?code={{\auth::user()->username}}</a>
+        <a href="{{ route('student.'.$type.'register') }}?code={{$user->username}}">{{ route('student.'.$type.'register') }}?code={{$user->username}}</a>
         @endguest
       </div>
 
+      @guest
+      
+        
+
+      @else
       <div class="mt-4 p-4 border rounded mb-4">
+        <h2> Message to share on whatsup/facebook</h2>
+        <p> Hi, <br><br>PacketPrep - an education technology company is offering online coaching for campus placements, bank exams and government jobs.</p>
+        <p> Their premium service includes 200+ video lectures, 5000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability and interview skills.</p>
+        <p> For direct registration they are charging Rs.2000 but through this referral code it is FREE for 3 months.</p>
+        <p> Here is the registration link <br><a href="{{ route('student.'.$type.'register') }}?code={{$user->username}}">{{ route('student.'.$type.'register') }}?code={{$user->username}}</a></p>
+        <p> regards, <br>
+          {{\auth::user()->name}}
+        </p>
+      </div>
+      <div class="mt-4 p-4 border rounded mb-4">
+
+
         <h2> Referrals</h2>
-        @guest
-        @else
           <div class="row mb-4">
             <div class="col-12 col-md-4">
               <div class="border p-4">
@@ -56,6 +71,7 @@
             </div>
           </div>
 
+
           @if(count($user->referrals)>=3)
             @if(!$product)
             <a href="{{ route('proaccess')}}"><button class="btn btn-lg btn-outline-primary"> Pro Access</button></a>
@@ -67,8 +83,9 @@
             
           @endif
 
-        @endguest
+        
       </div>
+      @endguest
 		</div>
 	</div>
 </div>

@@ -169,7 +169,9 @@
           <div class="bg-white p-4 border mb-4">
           <h1> Campus Ambassador</h1>
           <p>Do you have the leadership qualities to take our services to your college? if yes then join us.</p>
+          <a href="{{ route('ambassador')}}">
           <button class="btn btn-lg btn-outline-secondary">Know more</button>
+        </a>  
         </div>
 
         </div>
