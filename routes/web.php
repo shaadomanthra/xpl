@@ -104,6 +104,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/sreferral', 'Product\StudentController@referral')->name('sreferral');
 	Route::get('/ambassador', 'Product\StudentController@ambassador')->name('ambassador');
 	Route::get('/proaccess', 'Product\StudentController@proaccess')->name('proaccess')->middleware('auth');
+	Route::get('/ambassador/apply', 'Product\StudentController@apply')->name('ambassador.apply')->middleware('auth');
+	Route::post('/ambassador/apply', 'Product\StudentController@save')->name('ambassador.save')->middleware('auth');
 
 	Route::get('/referral', function () { 
 
@@ -261,7 +263,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');
 	Route::resource('job','Recruit\JobController');
-	Route::resource('form','Recruit\FormController');
+	Route::resource('form','Recruit\FormController')->middleware('auth');
 
     Route::get('/{username}', 'User\UserController@index')->name('profile');
 	Route::get('/{username}/edit', 'User\UserController@edit')->name('profile.edit');

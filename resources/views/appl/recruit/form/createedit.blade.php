@@ -49,7 +49,7 @@
         <label for="formGroupExampleInput ">Full Name</label>
         <input type="text" class="form-control" name="name" id="formGroupExampleInput" 
             @if($stub=='Create')
-            value="{{ (old('name')) ? old('name') : '' }}"
+            value="@if(\auth::user()) {{ \auth::user()->name }}@endif"
             @else
             value = "{{ $form->name }}"
             @endif
@@ -80,7 +80,7 @@
         <label for="formGroupExampleInput ">Email</label>
         <input type="email" class="form-control" name="email" id="formGroupExampleInput" placeholder="" 
             @if($stub=='Create')
-            value="{{ (old('email')) ? old('email') : '' }}"
+            value="@if(\auth::user()) {{ \auth::user()->email }}@endif"
             @else
             value = "{{ $form->email }}"
             @endif
@@ -91,7 +91,7 @@
         <label for="formGroupExampleInput ">Phone</label>
         <input type="text" class="form-control" name="phone" id="formGroupExampleInput" placeholder="" 
             @if($stub=='Create')
-            value="{{ (old('phone')) ? old('phone') : '' }}"
+            value="@if(\auth::user())@if(\auth::user()->details) {{ \auth::user()->details->phone }}@endif @endif"
             @else
             value = "{{ $form->phone }}"
             @endif
@@ -99,30 +99,21 @@
       </div>
 
      <div class="form-group">
-        <label for="formGroupExampleInput2">Address</label>
+        <label for="formGroupExampleInput2">Address </label>
          <textarea id="summernote" class="form-control summernote2" name="address"  rows="3">
-            @if($stub=='Create')
-            {{ (old('address')) ? old('address') : '' }}
+@if($stub=='Create')
+            
             @else
             {{ $form->address }}
             @endif
         </textarea>
       </div>
 
-      <div class="form-group">
-        <label for="formGroupExampleInput2">Education</label>
-         <textarea id="summernote" class="form-control summernote2" name="education"  rows="3">
-            @if($stub=='Create')
-            {{ (old('education')) ? old('education') : '' }}
-            @else
-            {{ $form->education }}
-            @endif
-        </textarea>
-      </div>
+      
 
       <div class="form-group">
         <label for="formGroupExampleInput2">Experience</label>
-         <textarea id="summernote" class="form-control summernote2" name="experience"  rows="3">
+         <textarea id="summernote" class="form-control summernote2" name="experience"  rows="3" placeholder="Mention if you are a class representative or if you have participated in any of the events as a coordinator">
             @if($stub=='Create')
             {{ (old('experience')) ? old('experience') : '' }}
             @else
@@ -172,7 +163,8 @@
       <input type="hidden" name="reason" value="">
       <input type="hidden" name="status" value="0">
       @endcannot
-
+      <input type="hidden" name="user_id" value="@if(\auth::user()) {{ \auth::user()->id }}@endif ">
+      <input type="hidden" name="education" value="">
       <button type="submit" class="btn btn-info">Save</button>
     </form>
     </div>

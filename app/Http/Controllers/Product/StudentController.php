@@ -67,4 +67,14 @@ class StudentController extends Controller
         return view('appl.product.student.ambassador');
     }
 
+    public function apply(Request $request)
+    {
+        return view('appl.product.student.ambassador');
+    }
+    
+    public function save(Request $request)
+    {
+        return view('appl.product.student.ambassador');
+    }
+
 }

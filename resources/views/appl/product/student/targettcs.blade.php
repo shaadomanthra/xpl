@@ -15,7 +15,7 @@
 			
 			</h1>
       <p>To help students prepare for TCS Ninja -  National Qualifier Test, PacketPrep is starting a 100 day online training program . This module includes daily concept lectures, practice questions and online assessments covering aptitude, reasoning and coding.  </p>
-      <p> <b>Elegibility :</b> Btech 3rd year ( 2020 passout batch)<br>
+      <p> <b>Eligibility :</b> Btech 3rd year ( 2020 passout batch)<br>
         <b> Stream :</b> All Branches<br>
       <b>Starts on :</b> 15th May 2019</p>
 
@@ -40,7 +40,7 @@
       <div class="row">
 
         <div class="col-12 col-md-8">
-          <h1 class="mb-4"> Whats Inlcuded?</h1>
+          <h1 class="mb-4"> What's Included?</h1>
       <div class="row mb-4">
         <div class="col-4 col-md-2"><i class="fa fa-4x fa-youtube-play"></i></div>
         <div class="col-8 col-md-10">
@@ -190,7 +190,7 @@
 
    <div class="bg-light p-4 border ">
       Disclaimer : <br>
-      PacketPrep is no way connected to TCS or any other software company. PacketPrep only provides guidance to students on preparation techiques to crack interviews. 
+      PacketPrep is no way connected to TCS or any other software company. PacketPrep only provides guidance to students on preparation techniques to crack interviews. 
       </div>
       
    </div>

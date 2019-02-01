@@ -102,7 +102,7 @@ class FormController extends Controller
                 $form->reason = scriptStripper($request->reason);
                 $form->status = $request->status;
                 $form->job_id = $request->job_id;
-                $form->user_id = null;
+                $form->user_id = ($request->user_id)?$request->user_id:null;
                 $form->save(); 
                 
                 $applicant = Form::where('email',$form->email)->where('job_id',$form->job_id)->first();
