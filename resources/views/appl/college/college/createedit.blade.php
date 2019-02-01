@@ -70,6 +70,10 @@
                   @if(in_array($branch->id, $obj->branches()->pluck('id')->toArray()))
                   checked
                   @endif
+              @else
+                  @if(in_array($branch->id, [9,10,11,12,13,14,15]))
+                  checked
+                  @endif 
               @endif
             > {{ $branch->name }} &nbsp;&nbsp;
         @endforeach
@@ -83,7 +87,7 @@
           <option value="degree" @if(isset($obj)) @if($obj->type=='degree') selected @endif @endif >Degree</option>
           <option value="degreepg" @if(isset($obj)) @if($obj->type=='degreepg') selected @endif @endif >Degree and PG</option>
           <option value="pg" @if(isset($obj)) @if($obj->type=='pg') selected @endif @endif >PG</option>
-          <option value="btech" @if(isset($obj)) @if($obj->type=='btech') selected @endif @endif >Btech</option>
+          <option value="btech" @if($stub=='Create') selected @endif @if(isset($obj)) @if($obj->type=='btech') selected @endif @endif >Btech</option>
           <option value="btechmtech" @if(isset($obj)) @if($obj->type=='btechmtech') selected @endif @endif >Btech and Mtech</option>
 
         </select>
