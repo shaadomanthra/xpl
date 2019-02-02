@@ -264,6 +264,29 @@ class AdminController extends Controller
                 ->with('branches',$branches);
     }
 
+
+    public function sstudentregister(Request $request)
+    {
+        $colleges = College::orderby('name','asc')->get();
+        $metrics = Metric::all();
+        $services = Service::all();
+        $branches = Branch::all();
+
+        if(!$request->code)
+            $user = User::where('username','demo123')->first();
+        else
+            $user = User::where('username',$request->code)->first();
+        
+
+        return view('appl.product.admin.user.register')
+            ->with('stub','Create')
+            ->with('colleges',$colleges)
+                ->with('services',$services)
+                ->with('metrics',$metrics)
+                ->with('user',$user)
+                ->with('branches',$branches);
+    }
+
     public function dstudentregister(Request $request)
     {
         $colleges = College::orderby('created_at','desc')->get();

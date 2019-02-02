@@ -44,7 +44,7 @@
       <div class="row mb-4">
         <div class="col-4 col-md-2"><i class="fa fa-4x fa-youtube-play"></i></div>
         <div class="col-8 col-md-10">
-          <h2> Daily Video Lecture</h2>
+          <h2> Daily Video Lectures</h2>
           <p> Every day a new concept will be taught along with 5 solved questions</p>
         </div>
       </div>
@@ -59,7 +59,7 @@
       <div class="row mb-4">
         <div class="col-4 col-md-2"><i class="fa fa-4x fa-tasks"></i></div>
         <div class="col-8 col-md-10">
-          <h2> Daily Online Test</h2>
+          <h2> Daily Online Tests</h2>
           <p> After practicing, students can attempt a quick 5 question test </p>
         </div>
       </div>
@@ -70,7 +70,7 @@
           <ul>
             <li>You will learn 100 most important concepts to crack TCS exam</li>
             <li> Exposure to 1500 questions which is sufficient to master core aptitude concepts</li>
-            <li>This is a quick learning module, if you can spend 15mins daily on this, your chance of succeeding the exam will double</li>
+            <li>This is a quick learning module, if you can spend 15 minutes each day, your chances of success in the exam will multiply</li>
             <li> Above all, the program is FREE of cost</li>
 
           </ul>
@@ -82,7 +82,7 @@
    </div>
 
    <div class="bg-white p-4 border mb-4">
-    <h2 class="mb-4">Schedule</h2>
+    <h2 class="mb-4">Weekly Schedule (15th May to Aug 25th)</h2>
 
         <div class="table-responsive ">
           <table class="table table-bordered mb-0">

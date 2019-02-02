@@ -136,6 +136,13 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('admin/settings','Product\AdminController@settings')->name('admin.settings')->middleware('auth');
 	Route::post('admin/settings','Product\AdminController@settings_store')->name('admin.settings')->middleware('auth');
 	Route::get('eregister','Product\AdminController@estudentregister')->name('student.eregister');
+	Route::get('sregister','Product\AdminController@sstudentregister')->name('student.sregister');
+
+	Route::get('register/type',function () { 
+
+		return view('auth.type'); 
+			})->name('register.type');
+
 	Route::get('dregister','Product\AdminController@dstudentregister')->name('student.dregister');
 	Route::post('studentstore','Product\AdminController@studentstore')->name('admin.user.studentstore');
 

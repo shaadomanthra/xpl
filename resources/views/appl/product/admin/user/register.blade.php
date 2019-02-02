@@ -8,12 +8,11 @@
       <div class="bg-light border p-3 mb-3">
       <h1 class="">
         @if($stub=='Create')
-          Engineering Student Registration  
+         Degree Student Registration 
         @else
           Update User
         @endif  
        </h1>
-       
      </div>
       
       @if($stub=='Create')
@@ -100,7 +99,7 @@
         <label for="formGroupExampleInput ">College</label>
         <select class="form-control" name="college_id">
           @foreach($colleges as $c)
-          @if($c->type=='btech')
+          @if($c->type!='btech')
           <option value="{{$c->id}}" @if(isset($user)) @if($user->colleges->first()) @if($c->id == $user->colleges->first()->id ) selected @endif @endif @endif >{{ $c->name }}</option>
           @endif
           @endforeach         
@@ -114,7 +113,7 @@
         <label for="formGroupExampleInput ">Branch</label><br>
         <select class="form-control" name="branches[]">
           @foreach($branches as $b)
-          @if(in_array($b->name,['CSE','IT','EEE','ECE','MECH','CIVIL','OTHER']))
+          @if(!in_array($b->name,['CSE','IT','EEE','ECE','MECH','CIVIL','OTHER']))
           <option value="{{$b->id}}" @if(isset($user)) @if($user->branches->first()) @if($b->id == $user->branches->first()->id ) selected @endif @endif @endif >{{ $b->name }}</option>
           @endif
           @endforeach         
@@ -141,13 +140,16 @@
         
         <div class="row">
         <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="15"> MS in US or Aborad  <br>
+        <input  type="checkbox" name="metrics[]" value="4"> MSC/MCOM <br>
         </div>
         <div class="col-12 col-md-4">
         <input  type="checkbox" name="metrics[]" value="5"> MBA  <br>
         </div>
         <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="6"> MTECH  <br>
+        <input  type="checkbox" name="metrics[]" value="3"> Business  <br>
+        </div>
+        <div class="col-12 col-md-4">
+        <input  type="checkbox" name="metrics[]" value="7"> Banking Job <br>
         </div>
         <div class="col-12 col-md-4">
         <input  type="checkbox" name="metrics[]" value="8"> Government JOB  <br>
@@ -155,9 +157,7 @@
         <div class="col-12 col-md-4">
         <input  type="checkbox" name="metrics[]" value="9"> Software / IT JOB  <br>
         </div>
-        <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="3"> Business <br>
-        </div>
+        
       </div>
        
       </div>
@@ -172,18 +172,17 @@
         <input  type="checkbox" name="metrics[]" value="12"> Communication  <br>
         </div>
         <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="10"> Computer Programming (C/JAVA/OTHER) <br>
+        <input  type="checkbox" name="metrics[]" value="10"> Computer Programming (C/JAVA/SAP) <br>
         </div>
         <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="16"> MATLAB <br>
+        <input  type="checkbox" name="metrics[]" value="11"> Animation  <br>
         </div>
         <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="17"> AutoCAD <br>
+        <input  type="checkbox" name="metrics[]" value="13"> Tally  <br>
         </div>
         <div class="col-12 col-md-4">
-        <input  type="checkbox" name="metrics[]" value="11"> Animation/Design <br>
+        <input  type="checkbox" name="metrics[]" value="14"> MS Office  <br>
         </div>
-       
       </div>
       </div>
       @endif
