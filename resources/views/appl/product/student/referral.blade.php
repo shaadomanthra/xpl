@@ -53,7 +53,7 @@
             <div class="col-12 col-md-4">
               <div class="border p-4">
                 <div class=""><b>First</b></div>
-                {{ ($user->referrals->get(0))?$user->referrals->get(0)->name : ' - NA -'}}
+                {{ ($user->referrals->get(0))?$user->referrals->get(0)->name : ' - '}}
               </div>
             </div>
 
@@ -66,7 +66,7 @@
             <div class="col-12 col-md-4">
               <div class="border p-4">
                 <div class=""><b>Third</b></div>
-                {{ ($user->referrals->get(2))?$user->referrals->get(2)->name : ' -  '}}
+                {{ ($user->referrals->get(2))?$user->referrals->get(2)->name : ' - '}}
               </div>
             </div>
           </div>
