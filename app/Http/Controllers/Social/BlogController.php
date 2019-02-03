@@ -42,6 +42,7 @@ class BlogController extends Controller
         return view('appl.social.blog.createedit')
                 ->with('blog',$blog)
                 ->with('jqueryui',true)
+                ->with('editor',true)
                 ->with('stub','Create');
     }
 
@@ -183,6 +184,7 @@ class BlogController extends Controller
             return view('appl.social.blog.createedit')
                     ->with('jqueryui',true)
                     ->with('blog',$blog)
+                    ->with('editor',true)
                     ->with('stub','Update');
         else
             abort(404);

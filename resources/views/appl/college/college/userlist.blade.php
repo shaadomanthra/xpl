@@ -55,7 +55,7 @@
         </div>
         @else
         <div class="card card-body bg-light">
-          No {{ $app->module }} listed
+          No {{ $app->module }} student listed
         </div>
         @endif
         

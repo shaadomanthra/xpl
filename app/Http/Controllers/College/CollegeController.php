@@ -7,6 +7,7 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\College\College as Obj;
 use PacketPrep\Models\College\Zone;
 use PacketPrep\Models\College\Branch;
+use PacketPrep\Models\College\Metric;
 
 class CollegeController extends Controller
 {
@@ -128,6 +129,22 @@ class CollegeController extends Controller
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
                     ->with('obj',$obj)->with('app',$this);
+        else
+            abort(404);
+    }
+
+
+    public function show2($id)
+    {
+        $obj = Obj::where('id',$id)->first();
+
+        $metrics = Metric::all();
+
+        //dd($obj->users);
+        $this->authorize('view', $obj);
+        if($obj)
+            return view('appl.'.$this->app.'.'.$this->module.'.show2')
+                    ->with('college',$obj)->with('app',$this)->with('metrics',$metrics);
         else
             abort(404);
     }
