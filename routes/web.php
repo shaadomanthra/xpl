@@ -184,6 +184,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('metric','College\MetricController')->middleware('auth');
 	Route::resource('service','College\ServiceController')->middleware('auth');
 	Route::get('college/{college}/view','College\CollegeController@show2')->middleware('auth')->name('college.view');
+	Route::get('college/{college}/students','College\CollegeController@students')->middleware('auth')->name('college.students');
 	Route::get('college/{college}/userlist','College\CollegeController@userlist')->middleware('auth')->name('college.userlist');
 	Route::post('productactivate','Product\ProductController@activate')->middleware('auth')->name('product.activate');
 

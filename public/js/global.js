@@ -7,6 +7,8 @@ $(document).ready(function() {
     	window.location=window.location.pathname+'?exam='+this.value;
   	});
 
+    
+
     /* scroll to */
     var loc = $(location).attr('href').split("/")[8];
     if(!$.isNumeric(loc)){
