@@ -13,7 +13,8 @@
         @if(request()->get('metric')) <br>Metric:  <b>{{request()->get('metric')}}</b> @endif
       </p>
   </div>
-<div  class="row ">
+
+<div  class="row p-4">
  @if(count($users)!=0)
         <div class="table-responsive">
           <table class="table table-bordered mb-0">

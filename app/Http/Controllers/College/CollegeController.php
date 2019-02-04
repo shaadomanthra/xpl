@@ -214,6 +214,7 @@ class CollegeController extends Controller
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show2')
                     ->with('college',$obj)->with('app',$this)
+                    ->with('obj',$obj)->with('app',$this)
                     ->with('metrics',$metrics)
                     ->with('data',$data);
         else
