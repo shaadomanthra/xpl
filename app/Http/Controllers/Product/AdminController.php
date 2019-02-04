@@ -250,7 +250,7 @@ class AdminController extends Controller
         $branches = Branch::all();
 
         if(!$request->code)
-            $user = User::where('username','demo123')->first();
+            $user = User::where('username','krishnateja')->first();
         else
             $user = User::where('username',$request->code)->first();
         
@@ -273,7 +273,7 @@ class AdminController extends Controller
         $branches = Branch::all();
 
         if(!$request->code)
-            $user = User::where('username','demo123')->first();
+            $user = User::where('username','krishnateja')->first();
         else
             $user = User::where('username',$request->code)->first();
         
@@ -353,6 +353,12 @@ class AdminController extends Controller
                  return redirect()->back()->withInput();
         }
 
+        if($request->code != null){
+            $u = User::where('username',$request->code)->first();
+            if($u){
+                $request->user_id = $u->id;
+            }
+        }
         
 
         list($u, $domain) = explode('@', $request->email);
@@ -439,7 +445,7 @@ class AdminController extends Controller
             }
         }
 
-        
+
         if($request->user_id == 60){
         //pro access
         $pid = 18;
