@@ -188,6 +188,15 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('college/{college}/userlist','College\CollegeController@userlist')->middleware('auth')->name('college.userlist');
 	Route::post('productactivate','Product\ProductController@activate')->middleware('auth')->name('product.activate');
 
+	Route::get('zone/{zone}/students','College\ZoneController@students')->middleware('auth')->name('zone.students');
+	Route::get('zone/{zone}/view','College\ZoneController@show2')->middleware('auth')->name('zone.view');
+
+	Route::get('metric/{metric}/students','College\MetricController@students')->middleware('auth')->name('metric.students');
+	Route::get('metric/{metric}/view','College\MetricController@show2')->middleware('auth')->name('metric.view');
+
+	Route::get('branch/{branch}/students','College\BranchController@students')->middleware('auth')->name('branch.students');
+	Route::get('branch/{branch}/view','College\BranchController@show2')->middleware('auth')->name('branch.view');
+
 	
 
 	Route::resource('exam','Exam\ExamController')->middleware('auth');

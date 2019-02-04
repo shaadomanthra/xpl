@@ -10,4 +10,15 @@ class Zone extends Model
         'name',
         // add all other fields
     ];
+
+
+    public function colleges(){
+        return $this->belongsToMany('PacketPrep\Models\College\College');
+    }
+
+    public function users(){
+        return $this->belongsToMany('PacketPrep\User');
+    }
+
+
 }

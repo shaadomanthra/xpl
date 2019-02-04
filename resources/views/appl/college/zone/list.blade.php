@@ -6,6 +6,8 @@
               <tr>
                 <th scope="col">#({{$objs->total()}})</th>
                 <th scope="col">Name </th>
+                <th scope="col">Colleges </th>
+                <th scope="col">Students </th>
                 <th scope="col">Created at</th>
               </tr>
             </thead>
@@ -14,11 +16,16 @@
               <tr>
                 <th scope="row">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
-                  <a href=" {{ route($app->module.'.show',$obj->id) }} ">
+                  <a href=" {{ route($app->module.'.view',$obj->id) }} ">
                   {{ $obj->name }}
                   </a>
                 </td>
-                
+                <td>
+                  {{ count($obj->colleges)}}
+                </td>
+                <td>
+                  {{ count($obj->users)}}
+                </td>
                 <td>{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</td>
               </tr>
               @endforeach      

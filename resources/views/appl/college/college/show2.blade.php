@@ -15,7 +15,7 @@
 			
 			</h1>
       <div>Location : {{ $college->location }}</div>
-      <div>Zone : {{ $college->zone }}</div>
+      <div>Zone : <a href="{{ route('zone.view',$college->zones->first()->id)}}">{{ $college->zones->first()->name }}</a></div>
       <div>Type  : {{ $college->type }}</div>
       
       
