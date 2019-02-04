@@ -407,7 +407,7 @@ class AdminController extends Controller
         $user_details->phone = $request->get('phone');
         $user_details->phone_2 = $request->get('phone_2');
         $user_details->year_of_passing = $request->get('year_of_passing');
-        $user_details->roll_number = $request->get('roll_number');
+        $user_details->roll_number = strtoupper($request->get('roll_number'));
         $user_details->save();
 
         $college_id = $request->get('college_id');

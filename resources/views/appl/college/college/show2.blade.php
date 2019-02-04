@@ -231,7 +231,7 @@
         <div class="col-12 col-md-4">
           <div class=" border p-3 mb-3">
             <h4 class="mb-4"> Communication </h4>
-            <div class="display-2"><a href="{{ route('college.students',$college->id)}}?metric=Communication @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif"> {{ $data['metrics']['Spoken English'] }}</a></div>
+            <div class="display-2"><a href="{{ route('college.students',$college->id)}}?metric=Spoken English @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif"> {{ $data['metrics']['Spoken English'] }}</a></div>
             </div>
         </div>
         <div class="col-12 col-md-4">
