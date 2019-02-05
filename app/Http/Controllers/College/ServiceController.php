@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\College\Service as Obj;
 use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\College\Metric;
+use PacketPrep\Models\College\Branch;
 
 class ServiceController extends Controller
 {
@@ -85,6 +87,160 @@ class ServiceController extends Controller
             }
         }
     }
+
+    public function students($id,Request $request)
+    {
+        if(is_numeric($id))
+            $obj = Obj::where('id',$id)->first();
+        else
+           $obj = Obj::where('name',$id)->first(); 
+
+        $branch = $request->get('branch');
+        $year_of_passing = $request->get('year_of_passing');
+        $metric= $request->get('metric');
+        $zone = $request->get('zone');
+
+
+
+        $users = $obj->users()->get();
+
+        if($branch){
+            if($year_of_passing){
+            $users = $obj->users()->whereHas('branches', function ($query) use ($branch) {
+                                $query->where('name', '=', $branch);
+                            })->whereHas('details', function ($query) use ($year_of_passing) {
+                                $query->where('year_of_passing', '=', $year_of_passing);
+                            })->get();
+            }else
+            $users = $obj->users()->whereHas('branches', function ($query) use ($branch) {
+                                $query->where('name', '=', $branch);
+                            })->get();
+        }else{
+
+            if($year_of_passing){
+            $users = $obj->users()->whereHas('details', function ($query) use ($year_of_passing) {
+                                $query->where('year_of_passing', '=', $year_of_passing);
+                            })->get();
+            }
+        }
+
+        if($metric){
+            if($year_of_passing){
+            $users = $obj->users()->whereHas('metrics', function ($query) use ($metric) {
+                                $query->where('name', '=', $metric);
+                            })->whereHas('details', function ($query) use ($year_of_passing) {
+                                $query->where('year_of_passing', '=', $year_of_passing);
+                            })->get();
+            }else
+            $users = $obj->users()->whereHas('metrics', function ($query) use ($metric) {
+                                $query->where('name', '=', $metric);
+                            })->get();
+
+        }
+
+
+
+        
+        $this->authorize('view', $obj);
+        if($obj)
+            return view('appl.'.$this->app.'.'.$this->module.'.student')
+                    ->with('obj',$obj)->with('app',$this)->with('users',$users);
+        else
+            abort(404);
+    }
+
+    public function show2($id,Request $request)
+    {
+        if(is_numeric($id))
+            $obj = Obj::where('id',$id)->first();
+        else
+           $obj = Obj::where('name',$id)->first(); 
+       
+        $this->authorize('view', $obj);
+
+        $year_of_passing = $request->get('year_of_passing');
+        $metrics = Metric::all();
+        $obj->branches = Branch::all();
+        $data = array();
+
+        if($year_of_passing)
+        {
+            
+
+            foreach($obj->branches as $b){
+            $data['branches'][$b->name] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->whereHas('branches', function ($query) use ($b) {
+                            $query->where('name', '=', $b->name);
+                        })->count(); 
+            }
+
+            foreach($metrics as $m){
+                $data['metrics'][$m->name] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->whereHas('metrics', function ($query) use ($m) {
+                                $query->where('name', '=', $m->name);
+                            })->count(); 
+            }
+
+            $data['users']['all'] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->count();
+
+            $data['users']['pro'] =  $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->whereHas('services', function ($query) use ($m) {
+                                $query->where('name', '=', 'Pro Access');
+                            })->count();
+
+            $data['users']['premium'] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->whereHas('services', function ($query) use ($m) {
+                                $query->where('name', '=', 'Premium Access');
+                            })->count();
+
+            
+        }else{
+
+            foreach($obj->branches as $b){
+            $data['branches'][$b->name] = $obj->users()->whereHas('branches', function ($query) use ($b) {
+                            $query->where('name', '=', $b->name);
+                        })->count(); 
+            }
+
+            foreach($metrics as $m){
+                $data['metrics'][$m->name] = $obj->users()->whereHas('metrics', function ($query) use ($m) {
+                                $query->where('name', '=', $m->name);
+                            })->count(); 
+            }
+
+            $data['users']['all'] = $obj->users()->count();
+            $data['users']['pro'] =  $obj->users()->whereHas('services', function ($query) use ($m) {
+                                $query->where('name', '=', 'Pro Access');
+                            })->count();
+            $data['users']['premium'] = $obj->users()->whereHas('services', function ($query) use ($m) {
+                                $query->where('name', '=', 'Premium Access');
+                            })->count();
+            
+        }
+
+        
+
+        
+
+
+        //dd($obj->users);
+        
+        if($obj)
+            return view('appl.'.$this->app.'.'.$this->module.'.show2')
+                    ->with('college',$obj)->with('app',$this)
+                    ->with('obj',$obj)->with('app',$this)
+                    ->with('metrics',$metrics)
+                    ->with('data',$data);
+        else
+            abort(404);
+    }
+
 
     /**
      * Display the specified resource.

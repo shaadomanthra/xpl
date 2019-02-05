@@ -15,5 +15,9 @@ class Service extends Model
         return $this->belongsTo('PacketPrep\Models\Product\Product');
     }
 
+	public function users(){
+        return $this->belongsToMany('PacketPrep\User');
+    }
+
 
 }

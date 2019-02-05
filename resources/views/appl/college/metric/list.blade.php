@@ -6,6 +6,7 @@
               <tr>
                 <th scope="col">#({{$objs->total()}})</th>
                 <th scope="col">Name </th>
+                <th scope="col">Student </th>
                 <th scope="col">Created at</th>
               </tr>
             </thead>
@@ -17,6 +18,9 @@
                   <a href=" {{ route($app->module.'.show',$obj->id) }} ">
                   {{ $obj->name }}
                   </a>
+                </td>
+                <td>
+                  {{ count($obj->users) }}
                 </td>
                 
                 <td>{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</td>

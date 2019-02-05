@@ -134,6 +134,94 @@ class CollegeController extends Controller
     }
 
 
+    public function show3(Request $request)
+    {
+
+        $year_of_passing = $request->get('year_of_passing');
+        $metrics = Metric::all();
+        $branches = Branch::all();
+        $data = array();
+
+        if($year_of_passing)
+        {
+            
+            foreach($obj->branches as $b){
+            $data['branches'][$b->name] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->whereHas('branches', function ($query) use ($b) {
+                            $query->where('name', '=', $b->name);
+                        })->count(); 
+            }
+
+            foreach($metrics as $m){
+                $data['metrics'][$m->name] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->whereHas('metrics', function ($query) use ($m) {
+                                $query->where('name', '=', $m->name);
+                            })->count(); 
+            }
+
+            $data['users']['all'] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->count();
+
+            $data['users']['pro'] =  $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->whereHas('services', function ($query) use ($m) {
+                                $query->where('name', '=', 'Pro Access');
+                            })->count();
+
+            $data['users']['premium'] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
+                $query->where('year_of_passing',$year_of_passing);
+            })->whereHas('services', function ($query) use ($m) {
+                                $query->where('name', '=', 'Premium Access');
+                            })->count();
+
+            
+        }else{
+
+            foreach($obj->branches as $b){
+            $data['branches'][$b->name] = $obj->users()->whereHas('branches', function ($query) use ($b) {
+                            $query->where('name', '=', $b->name);
+                        })->count(); 
+            }
+
+            foreach($metrics as $m){
+                $data['metrics'][$m->name] = $obj->users()->whereHas('metrics', function ($query) use ($m) {
+                                $query->where('name', '=', $m->name);
+                            })->count(); 
+            }
+
+            $data['users']['all'] = $obj->users()->count();
+            $data['users']['pro'] =  $obj->users()->whereHas('services', function ($query) use ($m) {
+                                $query->where('name', '=', 'Pro Access');
+                            })->count();
+            $data['users']['premium'] = $obj->users()->whereHas('services', function ($query) use ($m) {
+                                $query->where('name', '=', 'Premium Access');
+                            })->count();
+            
+        }
+
+        
+
+        
+
+
+        //dd($obj->users);
+        
+        if($obj)
+            return view('appl.'.$this->app.'.'.$this->module.'.show2')
+                    ->with('college',$obj)->with('app',$this)
+                    ->with('obj',$obj)->with('app',$this)
+                    ->with('metrics',$metrics)
+                    ->with('data',$data);
+        else
+            abort(404);
+    }
+
+
+
+
     public function show2($id,Request $request)
     {
         $obj = Obj::where('id',$id)->first();

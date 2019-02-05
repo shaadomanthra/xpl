@@ -21,7 +21,7 @@
         <div class="col-12 col-md-4">
           <div class="border bg-light rounded mt-4 p-3">
             <h2>Users</h2>
-            <div class="display-1"><a href="{{ route('zone.students',$obj->id)}}">{{ $data['users']['all']  }}</a></div>
+            <div class="display-1"><a href="{{ route('metric.students',$obj->id)}}">{{ $data['users']['all']  }}</a></div>
           </div>
 
         </div>
@@ -51,7 +51,7 @@
       
 
        <div class="float-right ">
-          <img src="{{ asset('/img/map.jpg')}}" class="w-100 p-3 pt-0"/>    
+          <img src="{{ asset('/img/metric.jpg')}}" class="w-100 p-3 pt-0"/>    
       </div>
     
 
@@ -72,7 +72,7 @@
 
       <div class="row">
         <div class="col-12 col-md-4">
-          <form method="get"  action="{{route('zone.view',$obj->id)}}" >
+          <form method="get"  action="{{route('metric.view',$obj->id)}}" >
       <div class="form-group">
         <h1  class="border p-3 mb-3">Year of Passing</h1>
         <select class="form-control year" name="year_of_passing">
@@ -96,8 +96,8 @@
 
             @foreach($obj->branches as $b)
             <tr>
-              <td>{{ $b->name }} </td>
-              <td><a href="{{ route('zone.students',$obj->id)}}?branch={{$b->name}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $data['branches'][$b->name] }}</a></td>
+              <td><a href="{{ route('branch.view', $b->id)}}">{{ $b->name }}</a> </td>
+              <td><a href="{{ route('metric.students',$obj->id)}}?branch={{$b->name}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $data['branches'][$b->name] }}</a></td>
             </tr> 
             @endforeach
 

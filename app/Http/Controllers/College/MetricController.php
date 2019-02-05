@@ -200,13 +200,13 @@ class MetricController extends Controller
 
             $data['users']['pro'] =  $obj->users()->whereHas('details',function($query) use($year_of_passing){
                 $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('services', function ($query) use ($m) {
+            })->whereHas('services', function ($query)   {
                                 $query->where('name', '=', 'Pro Access');
                             })->count();
 
             $data['users']['premium'] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
                 $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('services', function ($query) use ($m) {
+            })->whereHas('services', function ($query)  {
                                 $query->where('name', '=', 'Premium Access');
                             })->count();
 

@@ -197,6 +197,10 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('branch/{branch}/students','College\BranchController@students')->middleware('auth')->name('branch.students');
 	Route::get('branch/{branch}/view','College\BranchController@show2')->middleware('auth')->name('branch.view');
 
+	Route::get('service/{service}/students','College\ServiceController@students')->middleware('auth')->name('service.students');
+	Route::get('service/{service}/view','College\ServiceController@show2')->middleware('auth')->name('service.view');
+
+	Route::get('admin/analysis','College\CollegeController@show3')->middleware('auth')->name('admin.analysis');
 	
 
 	Route::resource('exam','Exam\ExamController')->middleware('auth');

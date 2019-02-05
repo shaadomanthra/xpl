@@ -61,9 +61,17 @@ class AdminController extends Controller
         $users->this_month  = User::where(DB::raw('MONTH(created_at)'), '=', date('n'))->count();
 
         $metrics = Metric::all();
+        $branches = Branch::all();
+        $services = Service::all();
+        $zones = Zone::all();
         
 
-        return view('appl.product.admin.index')->with('users',$users)->with('metrics',$metrics);
+        return view('appl.product.admin.index')
+                    ->with('users',$users)
+                    ->with('metrics',$metrics)
+                    ->with('branches',$branches)
+                    ->with('services',$services)
+                    ->with('zones',$zones);
     }
 
 
