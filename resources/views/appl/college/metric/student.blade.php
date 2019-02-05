@@ -36,13 +36,13 @@
                  
                 </td>
                 <td>
-                  {{ $user->name }}
+                  <a href=" {{ route('admin.user.view',$user->username)}}">{{ $user->name }}</a>
                 </td>
                 
                 <td>
                   @if($user->branches())
                   @foreach($user->branches()->get() as $branch)
-                      {{ $branch->name}} &nbsp;
+                      <a href="{{ route('branch.view',$branch->name)}}">{{ $branch->name}}</a> &nbsp;
                   @endforeach
                   @endif
                 </td>

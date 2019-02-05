@@ -30,32 +30,48 @@
         <div class="card mb-3">
       <div class="card-body">
         
-        <dl class="row">
-          <dt class="col-sm-3">id</dt>
-  <dd class="col-sm-9">{{ $user->id}}</dd>
-  <dt class="col-sm-3">Name</dt>
-  <dd class="col-sm-9">{{ $user->name}}</dd>
+        <div class="row">
+          <div class="col-12 col-md-4">
+          <img src="{{ asset('/img/user.png')}}" class="w-100 p-3 pt-0"/>    
+          </div>
+          <div class="col-12 col-md-8">
+                    <dl class="row">
+          <dt class="col-sm-5">id</dt>
+  <dd class="col-sm-7">{{ $user->id}}</dd>
+  <dt class="col-sm-5">Name</dt>
+  <dd class="col-sm-7">{{ $user->name}}</dd>
+  @if($user->user_id)
+  <dt class="col-sm-5">Reference</dt>
+  <dd class="col-sm-7">
+    <a href="{{ route('admin.user.view', \auth::user()->where('id',$user->user_id)->first()->username) }}">
+      {{ \auth::user()->where('id',$user->user_id)->first()->name}}
+    </a>
+  </dd>
+  @endif
 
-  <dt class="col-sm-3">Username</dt>
-  <dd class="col-sm-9">{{ $user->username}}</dd>
-  <dt class="col-sm-3">Email</dt>
-  <dd class="col-sm-9">
+  <dt class="col-sm-5">Username</dt>
+  <dd class="col-sm-7">{{ $user->username}}</dd>
+  <dt class="col-sm-5">Email</dt>
+  <dd class="col-sm-7">
     {{ $user->email }}
   </dd>
 
 
-  <dt class="col-sm-3">Phone</dt>
-  <dd class="col-sm-9">
+  <dt class="col-sm-5">Phone</dt>
+  <dd class="col-sm-7">
     {{ ($user->details)?$user->details->phone:'' }}
   </dd>
 
-  <dt class="col-sm-3">Phone 2</dt>
-  <dd class="col-sm-9">
+  @if($user->details)
+  <dt class="col-sm-5">Phone 2</dt>
+  <dd class="col-sm-7">
     {{ ($user->details)?$user->details->phone_2:'' }}
   </dd>
+  @endif
+
   @if($user->zones()->first())        
-  <dt class="col-sm-3">Zone</dt>
-  <dd class="col-sm-9">{{ $user->zones()->first()->name}}</dd>
+  <dt class="col-sm-5">Zone</dt>
+  <dd class="col-sm-7"><a href="{{ route('zone.view',$user->zones()->first()->name) }}">{{ $user->zones()->first()->name}}</a></dd>
   @endif
 
   
@@ -63,16 +79,16 @@
   
 
 @if(!$user->checkUserRole(['client-owner','client-manager','administrator','manager']))
-  <dt class="col-sm-3">Password/Activation</dt>
-  <dd class="col-sm-9">{{ $user->activation_token}}</dd>
+  <dt class="col-sm-5">Password/Activation</dt>
+  <dd class="col-sm-7">{{ $user->activation_token}}</dd>
   @else
-  <dt class="col-sm-3">Account Access</dt>
-  <dd class="col-sm-9"><span class="badge badge-danger">Administrator</span></dd>
+  <dt class="col-sm-5">Account Access</dt>
+  <dd class="col-sm-7"><span class="badge badge-danger">Administrator</span></dd>
   @endif
-  <dt class="col-sm-3">Created </dt>
-  <dd class="col-sm-9">{{ $user->created_at->diffforHumans()}}</dd>
-  <dt class="col-sm-3">Status</dt>
-  <dd class="col-sm-9">
+  <dt class="col-sm-5">Created </dt>
+  <dd class="col-sm-7">{{ $user->created_at->diffforHumans()}}</dd>
+  <dt class="col-sm-5">Status</dt>
+  <dd class="col-sm-7">
      @if($user->status==0)
                     <span class="badge badge-secondary">Inactive</span>
                   @elseif($user->status==1)
@@ -83,6 +99,10 @@
   </dd>
   
 </dl>
+            
+          </div>
+        </div>
+
 
          
   
@@ -91,18 +111,24 @@
 
               <div class="card mb-3">
       <div class="card-body">
-        
-        <dl class="row">
+
+        <div class="row">
+          <div class="col-12 col-md-2">
+          <img src="{{ asset('/img/college.png')}}" class="w-100 p-3 pt-0"/>    
+          </div>
+
+          <div class="col-12 col-md-9">
+            <dl class="row">
   @if($user->colleges()->first())        
   <dt class="col-sm-3">College Name</dt>
-  <dd class="col-sm-9">{{ $user->colleges()->first()->name}}</dd>
+  <dd class="col-sm-9"><a href="{{ route('college.view',$user->colleges()->first()->name ) }}">{{ $user->colleges()->first()->name}}</a></dd>
   @endif
 
   @if($user->branches())
   <dt class="col-sm-3">Branch</dt>
   <dd class="col-sm-9">
   @foreach($user->branches()->get() as $branch)
-    {{ $branch->name}} &nbsp;
+    <a href="{{ route('branch.view',$branch->name ) }}">{{ $branch->name}}</a> &nbsp;
   @endforeach
   </dd>
   @endif
@@ -120,6 +146,12 @@
   
 </dl>
 
+
+          </div>
+
+        </div>
+        
+        
          
   
         </div>
@@ -128,35 +160,49 @@
 
       <div class="card mb-3">
       <div class="card-body">
-        
-        <dl class="row">
+
+        <div class="row">
+          <div class="col-12 col-md-2">
+          <img src="{{ asset('/img/metrics.png')}}" class="w-100 p-3 pt-0"/>    
+          </div>
+
+          <div class="col-12 col-md-9">
+            <dl class="row">
           @if($user->services())
           <dt class="col-sm-3">Services</dt>
           <dd class="col-sm-9">
+          @if($user->services()->count() )
           @foreach($user->services()->get() as $service)
-            {{ $service->name}} <br>
+            <a href="{{ route('service.view',$service->name ) }}">{{ $service->name}}</a> <br>
           @endforeach
+          @else
+            -
+          @endif
           </dd>
           @endif
         </dl>
-        </div>
-      </div>
 
-      <div class="card mb-3">
-      <div class="card-body">
-        
         <dl class="row">
           @if($user->metrics())
           <dt class="col-sm-3">Metrics</dt>
           <dd class="col-sm-9">
           @foreach($user->metrics()->get() as $metric)
-            {{ $metric->name}} <br>
+            <a href="{{ route('metric.view',$metric->name ) }}">{{ $metric->name}}</a> <br>
           @endforeach
           </dd>
+          @else
+           -
           @endif
         </dl>
+
+          </div>
+        </div>
+        
+        
         </div>
       </div>
+
+      
 
 
 @if($user->checkRole(['administrator','manager','investor','patron','promoter','employee','client-owner','client-manager']))
