@@ -52,7 +52,7 @@ class AmbassadorController extends Controller
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('obj',$obj)
                 ->with('app',$this)
-                ->with('data',$data);
+                ->with('data',$data)->with('k',1)->with('j',1);
     }
 
     public function college(Obj $obj,Request $request)
@@ -109,7 +109,7 @@ class AmbassadorController extends Controller
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('obj',$college)
                 ->with('app',$this)
-                ->with('user_list',$user_list);
+                ->with('user_list',$user_list)->with('i',1);
     }
 
 }

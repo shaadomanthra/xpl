@@ -56,7 +56,7 @@
                         <th scope="col">Score </th>
                       </tr>
                     </thead>
-                    <tbody class="{{ $k=0}}">
+                    <tbody class="{{ $k }}">
                       @foreach($data['colleges'] as $college => $score)
                       <tr>
                         <td class="{{ $k++}}">{{ $college }}</td>
@@ -87,7 +87,7 @@
                         <th scope="col">Score </th>
                       </tr>
                     </thead>
-                    <tbody class="{{ $j==0}}">
+                    <tbody class="{{ $j}}">
                       @foreach($data['users'] as $user => $score)
                       <tr>
                         <td class="{{ $j++}}">{{ $user }}</td>
