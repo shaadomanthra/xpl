@@ -21,7 +21,7 @@
               <tr>
                 <th scope="col">#({{count($user_list)}})</th>
                 <th scope="col">Roll Number </th>
-                <th scope="col" {{ $i=0}}>Name</th>
+                <th scope="col" {{ $i=1}}>Name</th>
               </tr>
             </thead>
             <tbody>
