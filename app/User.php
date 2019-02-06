@@ -48,6 +48,11 @@ class User extends Authenticatable
      * The roles that belong to the user.
      */
 
+    public function ambassadors()
+    {
+        return $this->hasMany('PacketPrep\Models\College\Ambassador');
+    }
+
     public function referrals()
     {
         return $this->hasMany('PacketPrep\User');

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
+use PacketPrep\Models\College\College;
+use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\User\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -86,11 +88,17 @@ class UserController extends Controller
             $user_details = new User_Details();
             
         $user_details->countries = $user_details->getCountry();
+
+        $colleges = College::orderby('name','asc')->get();
+        $branches = Branch::all();
+
             
         if($user)
         {
             return view('appl.user.edit')
                     ->with('user',$user)
+                    ->with('colleges',$colleges)
+                    ->with('branches',$branches)
                     ->with('editor',true)
                     ->with('user_details',$user_details);
         }else
@@ -148,6 +156,31 @@ class UserController extends Controller
         $user_details->privacy = $request->privacy;
         $user_details->phone = $request->phone;
         $user_details->save();
+
+
+        $college_id = $request->get('college_id');
+        $branches = $request->get('branches');
+
+        $branch_list =  Branch::orderBy('created_at','desc ')
+                        ->get()->pluck('id')->toArray();
+        if($branches)
+            foreach($branch_list as $branch){
+                if(in_array($branch, $branches)){
+                    if(!$user->branches->contains($branch))
+                        $user->branches()->attach($branch);
+                }else{
+                    if($user->branches->contains($branch))
+                        $user->branches()->detach($branch);
+                }
+                
+        }else{
+                $user->branches()->detach();
+        } 
+        if($college_id){
+            $user->colleges()->detach();
+            $user->colleges()->attach($college_id);
+        }
+
         flash('User data updated!')->success();
         return redirect()->route('profile','@'.$username);
 

@@ -14,6 +14,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use PacketPrep\Models\User\User_Details;
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\College\Zone;
+use PacketPrep\Models\College\Ambassador;
 use PacketPrep\Models\College\Service;
 use PacketPrep\Models\College\Metric;
 use PacketPrep\Models\College\Branch;
@@ -362,9 +363,10 @@ class AdminController extends Controller
         }
 
         if($request->code != null){
-            $u = User::where('username',$request->code)->first();
-            if($u){
-                $request->user_id = $u->id;
+            $us = User::where('username',$request->code)->first();
+            if($us){
+                $request->user_id = $us->id;
+
             }
         }
         
@@ -417,6 +419,15 @@ class AdminController extends Controller
         $user_details->year_of_passing = $request->get('year_of_passing');
         $user_details->roll_number = strtoupper($request->get('roll_number'));
         $user_details->save();
+
+
+        if(isset($us)){
+            $a = new Ambassador;
+            $a->user_id = $us->id;
+            $a->uid = $user->id;
+            $a->mode = 'onboard';
+            $a->save();
+        }
 
         $college_id = $request->get('college_id');
         $branches = $request->get('branches');

@@ -166,7 +166,7 @@
     </div>
 
     
-     <div class="bg-success text-white border border-success p-3 rounded">
+     <div class="bg-success text-white border border-success p-3 rounded mb-4">
       <h2><i class="fa fa-handshake-o"></i> Referral</h2>
       <p>Refer 3 friends and get 3 months pro access to our premium content on aptitude.</p>
       <a href="{{ route('sreferral') }}">

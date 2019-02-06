@@ -22,6 +22,10 @@ class College extends Model
         'tpo_phone'
     ];
 
+    public function ambassadors(){
+        return $this->hasMany('PacketPrep\Models\College\Ambassador');
+    }
+
     public function users(){
         return $this->belongsToMany('PacketPrep\User');
     }

@@ -50,6 +50,12 @@
              @if($user_details)
              <p>{!! $user_details->bio !!}</p>
              @endif
+
+              @if($user->colleges()->first())
+             <p>{{ $user->colleges()->first()->name }} - 
+             {{ $user->branches()->first()->name }}</p>
+             @endif
+
             </div>
 
           </div>

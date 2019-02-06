@@ -76,6 +76,28 @@
         <input type="text" class="form-control" name="city"  placeholder="Enter your city name" value="{{ $user_details->city }}">
       </div>
 
+        @if(isset($colleges))
+      <div class="form-group">
+        <label for="formGroupExampleInput ">College</label>
+        <select class="form-control" name="college_id">
+          @foreach($colleges as $c)
+          <option value="{{$c->id}}" @if(isset($user)) @if($user->colleges->first()) @if($c->id == $user->colleges->first()->id ) selected @endif @endif @endif >{{ $c->name }}</option>
+          
+          @endforeach         
+        </select>
+      </div>
+      @endif
+          @if(isset($branches))
+      <div class="form-group ">
+        <label for="formGroupExampleInput ">Branch</label><br>
+        <select class="form-control" name="branches[]">
+          @foreach($branches as $b)
+          <option value="{{$b->id}}" @if(isset($user)) @if($user->branches->first()) @if($b->id == $user->branches->first()->id ) selected @endif @endif @endif >{{ $b->name }}</option>
+          @endforeach         
+        </select>
+      </div>
+      @endif
+
 
 
       <div class="form-group">

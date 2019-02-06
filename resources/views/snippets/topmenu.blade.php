@@ -52,6 +52,13 @@
                             >
                            Profile
                              </a>
+                             @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','ambassador']))
+                             <a class="dropdown-item"  href="{{ route('ambassador.connect')}}"
+                            >
+                           Campus Connect
+                             </a>
+                             @endif
+
                              
                             <a class="dropdown-item"  href="{{ route('order.transactions') }}"
                             >
