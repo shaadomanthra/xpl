@@ -144,7 +144,13 @@
             </div>
             <div class="col-12 col-md-5">
               <h2> Validity</h2>
-              <div class="display-4">2 Years</div>
+              <div class="display-4">
+              @if($service->name =='Pro Access')
+                3 Months
+              @else
+                2 Years
+              @endif
+              </div>
             </div>
         </div>
         
