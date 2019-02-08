@@ -420,19 +420,20 @@ class AdminController extends Controller
         $user_details->roll_number = strtoupper($request->get('roll_number'));
         $user_details->save();
 
+        $college_id = $request->get('college_id');
+        $branches = $request->get('branches');
+        $services = $request->get('services');
+        $metrics = $request->get('metrics');
 
         if(isset($us)){
             $a = new Ambassador;
             $a->user_id = $us->id;
             $a->uid = $user->id;
+            $a->college_id = $college_id;
             $a->mode = 'onboard';
             $a->save();
         }
 
-        $college_id = $request->get('college_id');
-        $branches = $request->get('branches');
-        $services = $request->get('services');
-        $metrics = $request->get('metrics');
 
         //branches
         $branch_list =  Branch::orderBy('created_at','desc ')
