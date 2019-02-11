@@ -127,6 +127,7 @@
              
 
     <div class="p-2"></div>
+    @if(isset($service))
       <div class="card mb-5">
       <div class="card-body">
         <div class="row">
@@ -142,6 +143,7 @@
                 @endif
               </div>
             </div>
+            
             <div class="col-12 col-md-5">
               <h2> Validity</h2>
               <div class="display-4">
@@ -152,10 +154,12 @@
               @endif
               </div>
             </div>
+            
         </div>
         
         </div>
       </div>
+      @endif
 
       <div class="p-2"></div>
       <hr>

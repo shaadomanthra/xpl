@@ -121,7 +121,7 @@
             <dl class="row">
   @if($user->colleges()->first())        
   <dt class="col-sm-3">College Name</dt>
-  <dd class="col-sm-9"><a href="{{ route('college.view',$user->colleges()->first()->name ) }}">{{ $user->colleges()->first()->name}}</a></dd>
+  <dd class="col-sm-9"><a href="{{ route('college.view',$user->colleges()->first()->id ) }}">{{ $user->colleges()->first()->name}}</a></dd>
   @endif
 
   @if($user->branches())
