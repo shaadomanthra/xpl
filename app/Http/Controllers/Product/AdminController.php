@@ -432,6 +432,10 @@ class AdminController extends Controller
             $a->college_id = $college_id;
             $a->mode = 'onboard';
             $a->save();
+
+            if($us->id!=1){
+                $coll = null;
+            }   
         }
 
 
