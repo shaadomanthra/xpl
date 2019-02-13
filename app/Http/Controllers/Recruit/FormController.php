@@ -26,12 +26,12 @@ class FormController extends Controller
 
         foreach($forms as $k=>$form){
             if($form->user){
-                if($form->user->colleges){
+                if($form->user()->first()->colleges()->first()){
                     if($form->user()->first()->colleges()->first()->name)
                         $forms[$k]->college =   $form->user()->first()->colleges()->first()->name; 
                 }   
 
-                if($form->user->branches){
+                if($form->user()->first()->branches()->first()){
                     if($form->user()->first()->branches()->first()->name)
                         $forms[$k]->branch =   $form->user()->first()->branches()->first()->name; 
                 }   
