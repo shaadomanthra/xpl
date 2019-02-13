@@ -38,9 +38,9 @@
                 </td>
 
                 <td>
-                  @if($list[$user]->referrals()->first())
-                      @if($list[$user]->referrals()->first()->name != 'Krishna Teja')
-                        {{ $list[$user]->referrals()->first()->name }}
+                  @if($list[$user])
+                      @if($list[$user] != 'Krishna Teja')
+                        {{ $list[$user] }}
                       @endif
                   @endif
                 </td>

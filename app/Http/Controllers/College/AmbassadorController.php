@@ -100,7 +100,10 @@ class AmbassadorController extends Controller
         $list2 = array();
         foreach($users as $k => $u){
             $list[$u->name] = $u->details->roll_number;
-            $list2[$u->name] = $u;
+            if($u->user_id)
+            $list2[$u->name] = \auth::user()->where('id',$u->user_id)->first()->name;
+            else
+            $list2[$u->name]  = null;
         }
         $user_list  = array_sort($list);
 
@@ -159,9 +162,12 @@ class AmbassadorController extends Controller
     	$list = array();
         $list2 = array();
     	foreach($users as $k => $u){
-    		$list[$u->name] = $u->details->roll_number;
-            $list2[$u->name] = $u;
-    	}
+            $list[$u->name] = $u->details->roll_number;
+            if($u->user_id)
+            $list2[$u->name] = \auth::user()->where('id',$u->user_id)->first()->name;
+            else
+            $list2[$u->name]  = null;
+        }
     	$user_list  = array_sort($list);
 
 

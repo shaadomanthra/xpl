@@ -58,6 +58,9 @@ class User extends Authenticatable
         return $this->hasMany('PacketPrep\User');
     }
 
+    
+
+
     public function details()
     {
         return $this->hasOne('PacketPrep\Models\User\User_Details');
