@@ -119,6 +119,12 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 		else
 		$type = 'd';
 
+
+		if($type=='b')
+			$type ='e';
+
+
+
 		$username = \auth::user()->username;
 
 		$users = \auth::user()->where('user_id',\auth::user()->id)->orderBy('updated_at','desc')->paginate(config('global.no_of_records'));
