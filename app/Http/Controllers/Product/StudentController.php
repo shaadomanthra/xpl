@@ -27,6 +27,11 @@ class StudentController extends Controller
 			else
 			$type = 'd';
 
+
+
+        if($type=='b')
+            $type='e';
+
     	$user = null;$product=null;
     	if(\auth::user()){
     		$user = \auth::user();
