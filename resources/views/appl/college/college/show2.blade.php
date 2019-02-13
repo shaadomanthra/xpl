@@ -16,7 +16,8 @@
 			</h1>
       <div>Location : {{ $college->location }}</div>
       <div>Zone : <a href="{{ route('zone.view',$college->zones->first()->id)}}">{{ $college->zones->first()->name }}</a></div>
-      <div>Type  : {{ $college->type }}</div>
+      <div class="mb-3">Type  : {{ $college->type }}</div>
+      <div><a href="{{ route('ambassador.college.view',$college->id) }}"><button class="btn btn-outline-primary">Campus Connect</button></a></div>
       
       
 
