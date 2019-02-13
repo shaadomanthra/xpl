@@ -39,7 +39,7 @@
         <h2> Message to share on whatsup/facebook</h2>
         <p> Hi, <br><br>PacketPrep - an education technology company is offering online coaching for campus placements, bank exams and government jobs.</p>
         <p> Their premium service includes 200+ video lectures, 5000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability and interview skills.</p>
-        <p> For direct registration they are charging Rs.2000 but through this referral code it is FREE for 3 months.</p>
+       
         <p> Here is the registration link <br><a href="{{ route('student.'.$type.'register') }}?code={{$user->username}}">{{ route('student.'.$type.'register') }}?code={{$user->username}}</a></p>
         <p> regards, <br>
           {{\auth::user()->name}}

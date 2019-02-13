@@ -21,7 +21,8 @@
               <tr>
                 <th scope="col">#({{count($user_list)}})</th>
                 <th scope="col">Roll Number </th>
-                <th scope="col" {{ $i=1}}>Name</th>
+                <th scope="col" >Name</th>
+                <th scope="col" >Referral</th>
               </tr>
             </thead>
             <tbody>
@@ -34,6 +35,14 @@
                 </td>
                 <td>
                   {{ $user }}
+                </td>
+
+                <td>
+                  @if($list[$user]->referrals()->first())
+                      @if($list[$user]->referrals()->first()->name != 'Krishna Teja')
+                        {{ $list[$user]->referrals()->first()->name }}
+                      @endif
+                  @endif
                 </td>
                 
               </tr>

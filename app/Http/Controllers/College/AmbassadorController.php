@@ -97,8 +97,10 @@ class AmbassadorController extends Controller
     	}
 
     	$list = array();
+        $list2 = array();
     	foreach($users as $k => $u){
     		$list[$u->name] = $u->details->roll_number;
+            $list2[$u->name] = $u;
     	}
     	$user_list  = array_sort($list);
 
@@ -109,7 +111,7 @@ class AmbassadorController extends Controller
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('obj',$college)
                 ->with('app',$this)
-                ->with('user_list',$user_list)->with('i',1);
+                ->with('user_list',$user_list)->with('list',$list2)->with('i',1);
     }
 
 }
