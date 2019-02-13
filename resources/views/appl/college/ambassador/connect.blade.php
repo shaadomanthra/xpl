@@ -13,6 +13,7 @@
 			<h1 class="mt-2 mb-4 mb-md-2">
 			<i class="fa fa-university"></i> &nbsp; Campus Connect
 			</h1>
+
 		</div>
 		<div class="col-12 col-md-4">
       
@@ -29,7 +30,10 @@
             <div class="card">
               <div class="card-body ">
                 <div> My College</div>
-                <h1 class="mb-5"><a href="{{ route('ambassador.college')}}">{{ $data['college']->name }}</a></h1>
+                <h1 class="mb-3"><a href="{{ route('ambassador.college')}}">{{ $data['college']->name }}</a></h1>
+
+                <a href="{{ route('ambassador.college')}}" class="btn btn-outline-primary mb-4 btn-lg ">View Details</a>
+
                 <div class="rounded text-white p-3 mb-3" style="background:#74b9ff">
                   <h3>College Score</h3>
                   <div class="display-1">{{ $data['college_score'] }}</div>
@@ -39,6 +43,11 @@
                   <h3>My Score</h3>
                   <div class="display-1">{{  $data['my_score']}} </div>
                 </div>
+
+                <p>
+        <div class=" border p-3 "><h3>Referral Link</h3>
+           <a href="{{ route('student.eregister') }}?code={{$data['username']}}">{{ route('student.eregister') }}?code={{$data['username']}}</a></div>
+      </p>
               </div>
             </div>
         </div>

@@ -27,6 +27,7 @@ class AmbassadorController extends Controller
         $data['college_score'] = $college->users()->count();
         $data['my_score'] = \auth::user()->referrals()->count();
         $data['college'] = $college;
+        $data['username'] = \auth::user()->username;
         
 
         $users = \auth::user()->whereHas('roles', function ($query)  {

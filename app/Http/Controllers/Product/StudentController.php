@@ -27,8 +27,6 @@ class StudentController extends Controller
 			else
 			$type = 'd';
 
-
-
         if($type=='b')
             $type='e';
 
