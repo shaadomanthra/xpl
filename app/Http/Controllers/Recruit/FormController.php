@@ -152,12 +152,12 @@ class FormController extends Controller
         if($form->user){
                 if($form->user()->first()->colleges()->first()){
                     if($form->user()->first()->colleges()->first()->name)
-                        $forms->college =   $form->user()->first()->colleges()->first()->name; 
+                        $form->college =   $form->user()->first()->colleges()->first()->name; 
                 }   
 
                 if($form->user()->first()->branches()->first()){
                     if($form->user()->first()->branches()->first()->name)
-                        $forms->branch =   $form->user()->first()->branches()->first()->name; 
+                        $form->branch =   $form->user()->first()->branches()->first()->name; 
                 }   
             }
 
