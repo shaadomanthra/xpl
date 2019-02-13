@@ -5,6 +5,8 @@
               <tr>
                 <th scope="col">#({{$forms->total()}})</th>
                 <th scope="col">Name</th>
+                <th scope="col">College</th>
+                <th scope="col">Branch</th>
                 <th scope="col">Applied for</th>
                 <th scope="col">Status</th>
               </tr>
@@ -18,6 +20,9 @@
                   {{ $form->name }}
                   </a>
                 </td>
+                <td>{{ ($form->college)? ($form->college) : '-' }}</td>
+                 <td>{{ ($form->branch)? ($form->branch) : '-' }}</td>
+               
                 <td>{{ $form->job->title }}</td>
                 <td>@if($form->status==0) <span class="badge badge-secondary">Open</span> @elseif($form->status==1) <span class="badge badge-success">Accepted</span>@else <span class="badge badge-danger">Rejected</span> @endif</td>
               </tr>

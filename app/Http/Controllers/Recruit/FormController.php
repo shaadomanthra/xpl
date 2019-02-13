@@ -23,6 +23,22 @@ class FormController extends Controller
         $search = $request->search;
         $item = $request->item;
         $forms = $form->getForms();
+
+        foreach($forms as $k=>$form){
+            if($form->user){
+                if($form->user->colleges){
+                    if($form->user()->first()->colleges()->first()->name)
+                        $forms[$k]->college =   $form->user()->first()->colleges()->first()->name; 
+                }   
+
+                if($form->user->branches){
+                    if($form->user()->first()->branches()->first()->name)
+                        $forms[$k]->branch =   $form->user()->first()->branches()->first()->name; 
+                }   
+            }
+        }
+
+        //dd($forms->first()->user()->first()->colleges()->first()->name);
         $view = $search ? 'list': 'index';
         $jobs = Job::get();
 
@@ -132,6 +148,19 @@ class FormController extends Controller
     {
         $form = Form::where('id',$id)->first();
         $this->authorize('view', $form);
+
+        if($form->user){
+                if($form->user->colleges){
+                    if($form->user()->first()->colleges()->first()->name)
+                        $forms->college =   $form->user()->first()->colleges()->first()->name; 
+                }   
+
+                if($form->user->branches){
+                    if($form->user()->first()->branches()->first()->name)
+                        $forms->branch =   $form->user()->first()->branches()->first()->name; 
+                }   
+            }
+
         if($form)
             return view('appl.recruit.form.show')
                     ->with('form',$form);

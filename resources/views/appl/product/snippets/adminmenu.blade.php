@@ -6,6 +6,8 @@
 	<a href="{{ route('admin.user')}}" class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : ''}}"><i class="fa fa-user"></i> Users</a>
 	@if(\Auth::user()->checkRole(['administrator']))
 	<a href="{{ route('product.index')}}" class="list-group-item list-group-item-action {{ request()->is('product*') ? 'active' : ''}}"><i class="fa fa-inbox"></i> Products</a>
+	<a href="{{ route('job.index')}}" class="list-group-item list-group-item-action {{ request()->is('job*') ? 'active' : ''}}"><i class="fa fa-list"></i> Jobs</a>
+	<a href="{{ route('form.index')}}" class="list-group-item list-group-item-action {{ request()->is('form*') ? 'active' : ''}}"><i class="fa fa-list"></i> Applicants</a>
 	<a href="{{ route('order.list')}}" class="list-group-item list-group-item-action {{ request()->is('admin/transactions*') ? 'active' : ''}}"><i class="fa fa-list"></i> Transactions</a>
 	<a href="{{ route('material')}}" class="list-group-item list-group-item-action {{ request()->is('material') ? 'active' : ''}}"><i class="fa fa-telegram"></i> Material</a>
 	<a href="{{ route('exam.index')}}" class="list-group-item list-group-item-action {{ request()->is('exam') ? 'active' : ''}}"><i class="fa fa-th"></i> Exams</a>

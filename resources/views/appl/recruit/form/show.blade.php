@@ -38,6 +38,16 @@
                 <td>Email </td>
                 <td> {{ $form->email }}</td>
               </tr>
+
+               <tr>
+                <td>College </td>
+                <td> {{ ($form->college) ? ($form->college) : '-' }}</td>
+              </tr>
+
+               <tr>
+                <td>Branch </td>
+                <td> {{ ($form->branch) ? ($form->branch) : '-' }}</td>
+              </tr>
               <tr>
                 <td>Phone</td>
                 <td>{{ $form->phone }}</td>

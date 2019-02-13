@@ -27,6 +27,11 @@ class Form extends Model
         return $this->belongsTo('PacketPrep\Models\Recruit\Job');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('PacketPrep\User');
+    }
+
 
     public function getForms(){
         $request = request();
