@@ -41,8 +41,13 @@
                   {{ $user->name }}
                   
                 </td>
-                <td>{{ $user->colleges->first()->name }}</td>
-                <td>{{ $user->branches->first()->name }}</td>
+                <td>@if($user->colleges->first())
+                    {{ $user->colleges->first()->name }}
+                    @endif
+                </td>
+                <td>@if($user->branches->first()) 
+                  {{ $user->branches->first()->name }}
+                  @endif</td>
                 
                 <td>
                   @if($user->status==0)
