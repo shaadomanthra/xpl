@@ -41,16 +41,72 @@ class AmbassadorController extends Controller
         	$score_2[$c->name] = $c->users()->count();
         }
         
+        $coll = array();
         foreach($users as $u){
         	$score[$u->name] = $u->referrals()->count();
+
+            if($u->colleges()->first())
+            $coll[$u->name] = $u->colleges()->first()->name;
+            else
+            $coll[$u->name] = '';  
         }
         $data['users'] = array_reverse(array_sort($score));
 
         $data['colleges'] =  array_reverse(array_sort($score_2));
 
+        $data['coll'] = $coll;
         //dd($data);
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
+                ->with('obj',$obj)
+                ->with('app',$this)
+                ->with('data',$data)->with('k',1)->with('j',1);
+    }
+
+
+    public function list(Obj $obj,Request $request)
+    {
+
+        $this->authorize('view', $obj);
+        $view = 'connect';
+
+        $college = \auth::user()->colleges()->first();
+
+        $data = array();
+        $data['college_score'] = $college->users()->count();
+        $data['my_score'] = \auth::user()->referrals()->count();
+        $data['college'] = $college;
+        $data['username'] = \auth::user()->username;
+        
+
+        $users = \auth::user()->whereHas('roles', function ($query)  {
+                                $query->where('name', '=', 'Campus Ambassador');
+                            })->get();
+
+        $colleges = College::all();
+        $score = array(); $score_2 = array();
+
+        foreach($colleges as $c){
+            $score_2[$c->name] = $c->users()->count();
+        }
+        
+        $coll = array();
+        foreach($users as $u){
+            $score[$u->name] = $u->referrals()->count();
+
+            if($u->colleges()->first())
+            $coll[$u->name] = $u->colleges()->first()->name;
+            else
+            $coll[$u->name] = '';   
+
+        }
+        $data['users'] = array_reverse(array_sort($score));
+
+        $data['colleges'] =  $coll;
+
+        //dd($data);
+
+        return view('appl.'.$this->app.'.'.$this->module.'.ambassador')
                 ->with('obj',$obj)
                 ->with('app',$this)
                 ->with('data',$data)->with('k',1)->with('j',1);

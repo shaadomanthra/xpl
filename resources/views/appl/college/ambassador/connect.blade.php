@@ -14,6 +14,7 @@
 			<i class="fa fa-university"></i> &nbsp; Campus Connect
 			</h1>
 
+
 		</div>
 		<div class="col-12 col-md-4">
       
@@ -42,6 +43,7 @@
                 <div class=" rounded text-white p-3" style="background: #e17055">
                   <h3>My Score</h3>
                   <div class="display-1">{{  $data['my_score']}} </div>
+                  <a href="{{ route('referral')}}" class="btn btn-outline-light mb-4 btn-sm ">My Referrals</a>
                 </div>
 
                 <p>
@@ -87,12 +89,17 @@
               <div class="card-body " style="background:#dfe6e9; border:1px solid #b2bec3;">
                 <div> </div>
                 <div class="">
-                  <h3 class="mb-4">Top Ambassadors</h3>
+                  <h3 class="mb-4">Top Ambassadors &nbsp;
+                    <a href="{{ route('ambassador.list') }}">
+                      <button class="btn btn-outline-dark btn-sm">view all</button>
+                    </a>
+                  </h3>
                   <div class="table-responsive">
                   <table class="table  mb-0">
                     <thead>
                       <tr>
                         <th scope="col">Name </th>
+                        <th scope="col">College</th>
                         <th scope="col">Score </th>
                       </tr>
                     </thead>
@@ -100,6 +107,7 @@
                       @foreach($data['users'] as $user => $score)
                       <tr>
                         <td class="{{ $j++}}">{{ $user }}</td>
+                        <td> {{ $data['coll'][$user] }}</td>
                         <td> {{ $score }}</td>
                       </tr>
                       @if($j==6)

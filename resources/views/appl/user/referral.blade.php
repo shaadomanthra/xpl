@@ -3,8 +3,8 @@
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('ambassador.connect') }}">Campus Connect</a></li>
     <li class="breadcrumb-item">Referral </li>
   </ol>
 </nav>
@@ -14,7 +14,7 @@
   <div class="col-md-12">
  
         <div class="bg-white  border mb-3 p-3">
-          <div class="navbar-brand"><i class="fa fa-user"></i> My Referrals </div>
+          <div class="navbar-brand"><i class="fa fa-user"></i> My Referrals - {{ $username }}</div>
           <p>Referral URL : <a href="{{ route('student.'.$type.'register') }}?code={{$username}}">{{ route('student.'.$type.'register') }}?code={{$username}}</a></p>
 
           

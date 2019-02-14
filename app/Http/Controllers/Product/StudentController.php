@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 
 use PacketPrep\Models\Product\Product;
+use PacketPrep\User;
 
 class StudentController extends Controller
 {
@@ -39,6 +40,29 @@ class StudentController extends Controller
         return view('appl.product.student.referral')
         ->with('user',$user)
         ->with('product',$product)
+        ->with('type',$type);
+    }
+
+
+    public function userreferral($u, Request $request)
+    {
+        $user = User::where('username',$u)->first();
+
+        $type=null;
+        if($user)
+            if($user->colleges->first())
+            $type = substr($user->colleges->first()->type,0,1);
+            else
+            $type = 'd';
+
+        if($type=='b')
+            $type='e';
+
+        $users = \auth::user()->where('user_id',$user->id)->orderBy('updated_at','desc')->paginate(config('global.no_of_records'));
+
+        return view('appl.user.referral')
+        ->with('user',$user)->with('username',$user->username)
+        ->with('users',$users)
         ->with('type',$type);
     }
 
