@@ -47,7 +47,15 @@
                     <tbody class="{{ $j}}">
                       @foreach($data['users'] as $user => $score)
                       <tr>
-                        <td class="{{ $j++}}">{{ $user }}</td>
+                        <td class="{{ $j++}}">
+
+                        @if(\auth::user()->checkRole(['administrator']))
+                        <a href="{{ route('user.referral',$data['username'][$user]) }}">
+                          @endif
+                          {{ $user }}
+                        @if(\auth::user()->checkRole(['administrator']))
+                        </a>
+                        @endif</td>
                         <td> {{ $data['colleges'][$user] }}</td>
                         <td> {{ $score }}</td>
                       </tr>

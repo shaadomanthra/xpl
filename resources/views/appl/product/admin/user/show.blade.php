@@ -24,6 +24,7 @@
           @endif
           @if(!$user->checkUserRole(['administrator','manager']))
           <a href="{{ route('admin.user.print',$user->username) }}"><i class="fa fa-print"></i> print </a>
+           <a href="{{ route('user.referral',$user->username) }}"><i class="fa fa-users"></i> Referrals </a>
           @endif
         </nav>
 

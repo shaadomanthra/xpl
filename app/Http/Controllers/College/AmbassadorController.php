@@ -91,9 +91,11 @@ class AmbassadorController extends Controller
         }
         
         $coll = array();
+        $username = array();
         foreach($users as $u){
             $score[$u->name] = $u->referrals()->count();
 
+            $username[$u->name] = $u->username;
             if($u->colleges()->first())
             $coll[$u->name] = $u->colleges()->first()->name;
             else
@@ -103,6 +105,7 @@ class AmbassadorController extends Controller
         $data['users'] = array_reverse(array_sort($score));
 
         $data['colleges'] =  $coll;
+        $data['username'] =  $username;
 
         //dd($data);
 
