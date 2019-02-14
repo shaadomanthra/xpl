@@ -6,6 +6,7 @@
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
                 <th scope="col">Email</th>
+                <th scope="col">College</th>
                 <th scope="col">Status</th>
                 <th scope="col">Last Login</th>
               </tr>
@@ -20,6 +21,14 @@
                   </a>
                 </td>
                 <td>{{ $user->email }}</td>
+                 <td>
+                  @if($user->colleges()->first())
+                    {{ $user->colleges()->first()->name }} 
+                    @if($user->branches()->first())
+                     - {{ $user->branches()->first()->name }} 
+                    @endif
+                  @endif 
+                </td>
                 
                 <td>
                   @if($user->status==0)
