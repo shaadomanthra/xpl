@@ -756,7 +756,7 @@ class AdminController extends Controller
     {
         $user = User::where('username',$id)->first();
         $user_details = $user->details;
-        $colleges = College::orderby('created_at','desc')->get();
+        $colleges = College::orderby('name','asc')->get();
         $metrics = Metric::all();
         $services = Service::all();
         $branches = Branch::all();
