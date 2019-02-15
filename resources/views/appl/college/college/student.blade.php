@@ -25,6 +25,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Branch</th>
                 <th scope="col">Year of Passing</th>
+                <th scope="col">Referral</th>
               </tr>
             </thead>
             <tbody>
@@ -48,6 +49,12 @@
                 </td>
                 <td>
                  {{ ($user->details)?$user->details->year_of_passing:'-' }}
+                </td>
+                <td>
+                  @if($user->user_id)
+                   {{ $user->getName($user->user_id) }} <br><small> {{ $user->getCollege($user->user_id) }}</small>
+
+                  @endif
                 </td>
               </tr>
               @endforeach      

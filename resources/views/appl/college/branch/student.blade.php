@@ -24,6 +24,7 @@
                 <th scope="col">Roll Number </th>
                 <th scope="col">Name</th>
                 <th scope="col">Branch</th>
+                <th scope="col">Referral</th>
                 <th scope="col">Year of Passing</th>
               </tr>
             </thead>
@@ -45,6 +46,9 @@
                       <a href="{{ route('branch.view',$branch->name)}}">{{ $branch->name}}</a> &nbsp;
                   @endforeach
                   @endif
+                </td>
+                <td>
+                 {{ ($user->details)?$user->details->year_of_passing:'-' }}
                 </td>
                 <td>
                  {{ ($user->details)?$user->details->year_of_passing:'-' }}

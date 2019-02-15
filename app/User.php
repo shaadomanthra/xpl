@@ -183,6 +183,12 @@ class User extends Authenticatable
         return false;
     }
 
+    public function getCollege($id){
+        if($id)
+            return  User::where('id',$id)->first()->colleges()->first()->name;
+        else
+            return null;
+    }
     public function getName($id){
         if($id)
             return  User::where('id',$id)->get()->first()->name;
