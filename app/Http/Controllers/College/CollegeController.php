@@ -29,9 +29,18 @@ class CollegeController extends Controller
         $search = $request->search;
         $item = $request->item;
         
-        $objs = $obj->where('name','LIKE',"%{$item}%")
+       /* $objs = $obj->where('name','LIKE',"%{$item}%")
+                    ->with('users')->get()->sortBy(function($user)
+                        {
+                            return $hackathon->participants->count();
+                        })
+                    ->with('users', function ($query)  {
+                                $query->where('name', '=', 'Campus Ambassador');
+                            })
                     ->orderBy('created_at','desc ')
-                    ->paginate(config('global.no_of_records'));   
+                    ->paginate(config('global.no_of_records'));   */
+        $objs = $obj->where('name','LIKE',"%{$item}%")->withCount('users')->orderBy('users_count', 'desc')->paginate(config('global.no_of_records')); 
+
         $view = $search ? 'list': 'index';
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
