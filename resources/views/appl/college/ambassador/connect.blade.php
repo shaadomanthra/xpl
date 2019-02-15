@@ -101,6 +101,7 @@
                         <th scope="col">Name </th>
                         <th scope="col">College</th>
                         <th scope="col">Score </th>
+                        <th scope="col">Level </th>
                       </tr>
                     </thead>
                     <tbody class="{{ $j}}">
@@ -109,6 +110,21 @@
                         <td class="{{ $j++}}">{{ $user }}</td>
                         <td> {{ $data['coll'][$user] }}</td>
                         <td> {{ $score }}</td>
+                        <td> @if($score > 49 && $score < 80)
+                            <div class="text-secondary"><i class ="fa fa-trophy"></i> Silver</div>
+                            @elseif($score > 79 && $score < 100)
+                            <div class="text-warning"><i class ="fa fa-trophy"></i> Gold</div>
+
+                            @elseif($score > 99 )
+                            <div class="text-primary"><i class ="fa fa-trophy"></i> Platinum</div>
+
+                            @else
+                            <div class="text-secondary"> - </div>
+
+                            @endif
+
+
+                        </td>
                       </tr>
                       @if($j==6)
                       @break
