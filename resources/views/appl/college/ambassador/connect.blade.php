@@ -44,6 +44,23 @@
                   <h3>My Score</h3>
                   <div class="display-1">{{  $data['my_score']}} </div>
                   <a href="{{ route('referral')}}" class="btn btn-outline-light mb-4 btn-sm ">My Referrals</a>
+
+                  <h3> My Level</h3>
+                  <div class="">
+                    @if($data['my_score'] > 49 && $data['my_score'] < 80)
+                            <div class="bg-white p-2 border text-secondary  rounded display-1"><i class ="fa fa-shield"></i> Silver</div>
+                            @elseif($data['my_score'] > 79 && $data['my_score'] < 100)
+                            <div class="bg-white p-2 border text-success rounded display-1"><i class ="fa fa-graduation-cap"></i> Gold</div>
+
+                            @elseif($data['my_score'] > 99 )
+                            <div class="bg-white p-2 border text-primary rounded display-1"><i class ="fa fa-trophy"></i> Platinum</div>
+
+                            @else
+                            <div class="text-white display-1"> - </div>
+                            <div class="text-light" style="opacity:0.5"> You have to reach a minimum score of 50 to enter silver level</div>
+                            @endif
+                  </div>
+
                 </div>
 
                 <p>
@@ -111,18 +128,16 @@
                         <td> {{ $data['coll'][$user] }}</td>
                         <td> {{ $score }}</td>
                         <td> @if($score > 49 && $score < 80)
-                            <div class="text-secondary"><i class ="fa fa-trophy"></i> Silver</div>
+                            <div class="bg-white p-2 border text-secondary"><i class ="fa fa-shield"></i> Silver</div>
                             @elseif($score > 79 && $score < 100)
-                            <div class="text-warning"><i class ="fa fa-trophy"></i> Gold</div>
+                            <div class="bg-white p-2 border text-success"><i class ="fa fa-graduation-cap"></i> Gold</div>
 
                             @elseif($score > 99 )
-                            <div class="text-primary"><i class ="fa fa-trophy"></i> Platinum</div>
+                            <div class="bg-white p-2 border text-primary"><i class ="fa fa-trophy"></i> Platinum</div>
 
                             @else
                             <div class="text-secondary"> - </div>
-
                             @endif
-
 
                         </td>
                       </tr>
