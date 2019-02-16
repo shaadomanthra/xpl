@@ -470,7 +470,20 @@ class AdminController extends Controller
         }
 
 
-        if($request->user_id == 60 || $request->user_id == 55){
+
+        
+
+        //Services
+        $service_list =  Service::orderBy('created_at','desc ')
+                        ->get()->pluck('id')->toArray();
+        if($services)
+            foreach($service_list as $service){
+                if(in_array($service, $services)){
+                    $s = Service::where('id',$service)->first();
+                    
+                    if($s->id ==12 ){
+
+                        if($request->user_id == 60 || $request->user_id == 55){
         //pro access
         $pid = 18;
                         $month = 3;
@@ -483,14 +496,7 @@ class AdminController extends Controller
             }
         }
 
-        //Services
-        $service_list =  Service::orderBy('created_at','desc ')
-                        ->get()->pluck('id')->toArray();
-        if($services)
-            foreach($service_list as $service){
-                if(in_array($service, $services)){
-                    $s = Service::where('id',$service)->first();
-                    
+                    }
                     if($s->product){
                     $p = $s->product->price;
                     if($p !=0){
@@ -639,6 +645,20 @@ class AdminController extends Controller
         }else{
                 $user->branches()->detach();
         } 
+
+
+        if($user->user_id == 60 || $request->user_id == 55){
+        //pro access
+        $pid = 18;
+                        $month = 3;
+
+                        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
+                        if(!$user->products->contains($pid)){
+                            $product = Product::where('id',$pid)->first();
+                            if($product->status!=0)
+                            $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+            }
+        }
 
         //Services
         $service_list =  Service::orderBy('created_at','desc ')
@@ -819,7 +839,7 @@ class AdminController extends Controller
                 $user->branches()->detach();
         } 
 
-        if($user->user_id == 60){
+        if($user->user_id == 60 || $request->user_id == 55){
         //pro access
         $pid = 18;
                         $month = 3;
