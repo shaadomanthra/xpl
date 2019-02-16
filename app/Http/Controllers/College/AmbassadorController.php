@@ -239,4 +239,10 @@ class AmbassadorController extends Controller
                 ->with('user_list',$user_list)->with('list',$list2)->with('i',1);
     }
 
+    public function onboard(){
+
+        return view('appl.'.$this->app.'.'.$this->module.'.ambassador-onboard');
+    }
+
+
 }

@@ -114,6 +114,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/ambassador/college/{college}','College\AmbassadorController@college2')->name('ambassador.college.view')->middleware('auth');
 	Route::get('/ambassador/students/{college}','College\AmbassadorController@students2')->name('ambassador.students.view')->middleware('auth');
+	Route::get('/ambassador/onboard','College\AmbassadorController@onboard')->name('ambassador.onboard')->middleware('auth');
 
 
 	Route::get('/referral', function () { 

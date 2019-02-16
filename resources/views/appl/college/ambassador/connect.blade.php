@@ -69,6 +69,8 @@
       </p>
               </div>
             </div>
+            <div class=" mt-4 border p-3 "><h3>Instructions</h3>
+           <a class="btn btn-outline-primary btn-sm" href="{{ route('ambassador.onboard') }}">Onboarding Instructions</a></div>
         </div>
         <div class="col-12 col-md-8">
             <div class="card mb-4">
