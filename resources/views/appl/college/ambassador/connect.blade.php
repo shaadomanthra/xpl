@@ -49,18 +49,18 @@
                   <div class="">
                     @if($data['my_score'] > 49 && $data['my_score'] < 80)
                             <div class="bg-white p-2 border text-secondary  rounded display-3"><i class ="fa fa-shield"></i> Silver</div>
-                            <div class="text-light" style="opacity:0.5"> just another {{(80-$data['my_score'])}} points to reach gold level</div>
+                            <div class="text-light mt-2" style="opacity:0.5"> just another {{(80-$data['my_score'])}} points to reach gold level</div>
                             @elseif($data['my_score'] > 79 && $data['my_score'] < 100)
                             <div class="bg-white p-2 border text-success rounded display-3"><i class ="fa fa-graduation-cap"></i> Gold</div>
 
-                            <div class="text-light" style="opacity:0.5"> just another {{(100-$data['my_score'])}} points to reach platinum level</div>
+                            <div class="text-light mt-2" style="opacity:0.5"> just another {{(100-$data['my_score'])}} points to reach platinum level</div>
 
                             @elseif($data['my_score'] > 99 )
                             <div class="bg-white p-2 border text-primary rounded display-3"><i class ="fa fa-trophy"></i> Platinum</div>
 
                             @else
                             <div class="text-white display-1"> - </div>
-                            <div class="text-light" style="opacity:0.5"> You have to reach a minimum score of 50 to enter silver level</div>
+                            <div class="text-light " style="opacity:0.5"> You have to reach a minimum score of 50 to enter silver level</div>
                             @endif
                   </div>
 
