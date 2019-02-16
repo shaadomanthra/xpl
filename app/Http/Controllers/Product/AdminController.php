@@ -470,7 +470,7 @@ class AdminController extends Controller
         }
 
 
-        if($request->user_id == 60){
+        if($request->user_id == 60 || $request->user_id == 55){
         //pro access
         $pid = 18;
                         $month = 3;
