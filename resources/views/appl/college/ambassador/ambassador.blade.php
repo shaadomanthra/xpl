@@ -31,7 +31,7 @@
         <div class="col-12 col-md-12">
             
 
-            <div class="card">
+            <div class="card mb-3">
               <div class="card-body " >
                 <div> </div>
                 <div class="">
@@ -46,12 +46,12 @@
                         <th scope="col">Level </th>
                       </tr>
                     </thead>
-                    <tbody class="{{ $j}}">
+                    <tbody class="{{ $j = 0}}">
                       @foreach($data['users'] as $user => $score)
                       <tr>
                         <td class="">{{ $i++ }}
                         </td>
-                        <td class="{{ $j++}}">
+                        <td class="">
 
                         @if(\auth::user()->checkRole(['administrator']))
                         <a href="{{ route('user.referral',$data['username'][$user]) }}">
@@ -61,7 +61,7 @@
                         </a>
                         @endif</td>
                         <td> {{ $data['colleges'][$user] }}</td>
-                        <td> {{ $score }}</td>
+                        <td class="{{ $j=$j+$score }}"> {{ $score }}</td>
                         <td> @if($score > 49 && $score < 80)
                             <div class="bg-white p-2 border text-secondary"><i class ="fa fa-shield"></i> Silver</div>
                             @elseif($score > 79 && $score < 100)
@@ -81,10 +81,17 @@
                       @endforeach    
                     </tbody>
                   </table>
+
+                  
                 </div>
                 </div>
+                
               </div>
             </div>
+            @if(\auth::user()->checkRole(['administrator']))
+                    <div class="p-3 border">Total Referrals   
+                      <div class="display-2">{{ $j }}</div></div>
+                  @endif
         </div>
       </div>
      </div>   
