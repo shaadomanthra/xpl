@@ -155,17 +155,8 @@
 
    
       <div class="row">
-        <div class="col-12 col-md-4">
-          <div class="bg-white p-4 border mb-4">
-          <h1> Registration</h1>
-          <p>To serve the best with the best resource, we are limiting the registrations to 10000 students, so Hurry Up! </p>
-          <a href="{{ route('student.eregister')}}">
-          <button class="btn btn-lg btn-success">Register Now</button>
-          </a>
-        </div>
-
-        </div>
-        <div class="col-12 col-md-4">
+        
+        <div class="col-12 col-md-6">
           <div class="bg-white p-4 border mb-4">
           <h1> Campus Ambassador</h1>
           <p>Do you have the leadership qualities to take our services to your college? if yes then join us.</p>
@@ -175,7 +166,7 @@
         </div>
 
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
           <div class="bg-white p-4 border mb-4">
           <h1>Pro Access</h1>
           <p>Refer 3 friends and get 3 months pro access to our premium content on aptitude.</p>

@@ -22,6 +22,9 @@
             <li> Strong Network among students</li>
             <li>Commitment to work till the end of program</li>
           </ul>
+      <p> <a href="{{ route('job.show','campus-ambassador')}}">
+          <button class="btn btn-lg btn-success">Apply Now</button>
+          </a></p>
 
 
 		</div>
