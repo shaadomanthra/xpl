@@ -95,6 +95,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/home', function () { return redirect('/'); })->name('home');
 	Route::get('/apply', function () { return view('welcome'); })->name('apply');
 	Route::get('team','User\TeamController@index')->name('team');
+	Route::get('user/export','User\TeamController@export')->name('export')->middleware('auth');
+	
 	Route::get('/share', function () { 
 
 		return view('appl.product.pages.share');

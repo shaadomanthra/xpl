@@ -7,6 +7,9 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
 
+use PacketPrep\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class TeamController extends Controller
 {
     /**
@@ -53,5 +56,11 @@ class TeamController extends Controller
         $view = $search ? 'list': 'index';
         return view('appl.user.team.'.$view)->with('users',$users);
     }
+
+    public function export() 
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
 
 }

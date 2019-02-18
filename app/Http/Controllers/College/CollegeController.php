@@ -8,6 +8,8 @@ use PacketPrep\Models\College\College as Obj;
 use PacketPrep\Models\College\Zone;
 use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\College\Metric;
+use PacketPrep\User;
+use PacketPrep\Models\User\User_Details;
 
 class CollegeController extends Controller
 {
@@ -318,6 +320,8 @@ class CollegeController extends Controller
             abort(404);
     }
 
+
+
     public function students($id,Request $request)
     {
         $obj = Obj::where('id',$id)->first();
@@ -326,6 +330,7 @@ class CollegeController extends Controller
         $metric= $request->get('metric');
 
         $users = $obj->users()->get();
+
 
         if($branch){
             if($year_of_passing){
