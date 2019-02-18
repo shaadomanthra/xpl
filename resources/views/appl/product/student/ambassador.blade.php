@@ -22,7 +22,7 @@
             <li> Strong Network among students</li>
             <li>Commitment to work till the end of program</li>
           </ul>
-      <p> <a href="{{ route('job.show','campus-ambassador')}}">
+      <p> <a href="{{ route('form.create',['job'=>'campus-ambassador'])}}">
           <button class="btn btn-lg btn-success">Apply Now</button>
           </a></p>
 
@@ -84,7 +84,7 @@
           <div class="bg-white p-4 border mb-4 mb-md-0">
           <h1> Apply Now</h1>
           <p>Take your first step of leading the club </p>
-          <a href="{{ route('job.show','campus-ambassador')}}">
+          <a href="{{ route('form.create',['job'=>'campus-ambassador'])}}">
           <button class="btn btn-lg btn-success">Apply Now</button>
           </a>
         </div>
