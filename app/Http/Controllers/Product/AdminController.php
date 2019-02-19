@@ -660,6 +660,16 @@ class AdminController extends Controller
             }
         }
 
+         if($request->get('ambassador')==1){
+            if(!$user->roles->contains(37))
+                $user->roles()->attach(37);
+        }
+
+        if($request->get('ambassador')==2){
+            if($user->roles->contains(37))
+                $user->roles()->detach(37);
+        }
+
         //Services
         $service_list =  Service::orderBy('created_at','desc ')
                         ->get()->pluck('id')->toArray();
@@ -850,6 +860,16 @@ class AdminController extends Controller
                             if($product->status!=0)
                             $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
             }
+        }
+
+        if($request->get('ambassador')==1){
+            if(!$user->roles->contains(37))
+                $user->roles()->attach(37);
+        }
+
+        if($request->get('ambassador')==2){
+            if($user->roles->contains(37))
+                $user->roles()->detach(37);
         }
 
         //Services

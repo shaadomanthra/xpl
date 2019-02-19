@@ -75,6 +75,16 @@
   <dd class="col-sm-7"><a href="{{ route('zone.view',$user->zones()->first()->name) }}">{{ $user->zones()->first()->name}}</a></dd>
   @endif
 
+  @if($user->roles()->first())        
+  <dt class="col-sm-5">Role</dt>
+
+  <dd class="col-sm-7">
+    @foreach($user->roles()->get() as $k=> $r)
+    <span class="badge badge-warning">{{ $r->name }}</span><br>
+    @endforeach
+  </dd>
+  @endif
+
   
 
   

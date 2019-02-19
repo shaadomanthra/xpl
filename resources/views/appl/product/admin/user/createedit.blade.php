@@ -169,6 +169,14 @@
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Campus Ambassador</label>
+        <select class="form-control" name="ambassador">
+           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->first()->id!=37) selected @endif @endif @endif>No</option>
+          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->first()->id==37) selected @endif @endif @endif>Yes</option>
+         
+        </select>
+      </div>
 
 
       <div class="form-group">

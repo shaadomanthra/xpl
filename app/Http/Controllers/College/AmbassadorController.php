@@ -115,6 +115,58 @@ class AmbassadorController extends Controller
                 ->with('data',$data)->with('k',1)->with('j',1);
     }
 
+
+    public function list2(Obj $obj,Request $request)
+    {
+
+        $this->authorize('view', $obj);
+        $view = 'connect';
+
+        $college = \auth::user()->colleges()->first();
+
+        $data = array();
+        $data['college_score'] = $college->users()->count();
+        $data['my_score'] = \auth::user()->referrals()->count();
+        $data['college'] = $college;
+        $data['username'] = \auth::user()->username;
+        
+
+        $users = \auth::user()->whereHas('roles', function ($query)  {
+                                $query->where('name', '=', 'Campus Ambassador');
+                            })->get();
+
+        $colleges = College::all();
+        $score = array(); $score_2 = array();
+
+        foreach($colleges as $c){
+            $score_2[$c->name] = $c->users()->count();
+        }
+        
+        $coll = array();
+        $username = array();
+        foreach($users as $u){
+            $score[$u->name] = $u->referrals()->count();
+
+            $username[$u->name] = $u->username;
+            if($u->colleges()->first())
+            $coll[$u->name] = $u->colleges()->first()->name;
+            else
+            $coll[$u->name] = '';   
+
+        }
+        $data['users'] = array_reverse(array_sort($score));
+
+        $data['colleges'] =  $coll;
+        $data['username'] =  $username;
+
+        //dd($data);
+
+        return view('appl.'.$this->app.'.'.$this->module.'.ambassador-admin')
+                ->with('obj',$obj)
+                ->with('app',$this)
+                ->with('data',$data)->with('k',1)->with('j',1);
+    }
+
     public function college2($college, Obj $obj,Request $request)
     {
         $college = College::where('id',$college)->first();
