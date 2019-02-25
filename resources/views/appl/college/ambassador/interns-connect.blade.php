@@ -79,6 +79,7 @@
                       <button class="btn btn-outline-dark btn-sm">view all</button>
                     </a>
                   </h3>
+                  @if(count($data['users']))
                   <div class="table-responsive">
                   <table class="table  mb-0">
                     <thead>
@@ -115,6 +116,9 @@
                     </tbody>
                   </table>
                 </div>
+                @else
+                  <p>- No data -</p>
+                @endif
                 </div>
               </div>
             </div>

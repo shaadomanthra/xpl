@@ -93,7 +93,8 @@ class AmbassadorController extends Controller
 
 
         
-        $coll = array();$branch =array();
+        $coll = array();
+        $branch =array();
         foreach($users as $u){
             $data['my_score'] = $data['my_score'] + $u->referrals()->count();
             $score[$u->name] = $u->referrals()->count();
@@ -119,7 +120,9 @@ class AmbassadorController extends Controller
                             })->get();
 
 
-        $colls = array(); $branches =array();$scores = array();
+        $colls = array(); 
+        $branches =array();
+        $scores = array();
         foreach($intern_generalist  as $u){
             $scores[$u->name] = $u->referrals()->count();
 
@@ -136,8 +139,8 @@ class AmbassadorController extends Controller
 
         $data['intern_generalist'] = array_reverse(array_sort($scores));
 
-        $data['colls'] = $coll;
-        $data['branches'] = $branch;
+        $data['colls'] = $colls;
+        $data['branches'] = $branches;
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('obj',$obj)
