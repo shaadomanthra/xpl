@@ -110,7 +110,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('/ambassador/apply', 'Product\StudentController@save')->name('ambassador.save')->middleware('auth');
 
 	Route::get('/intern/connect','College\AmbassadorController@internconnect')->name('intern.connect')->middleware('auth');
-	Route::get('/intern/generalist','College\AmbassadorController@interngeneralist')->name('intern.generalist')->middleware('auth');
+	Route::get('/intern/generalist','College\AmbassadorController@interngeneralist')->name('intern.generalist');
 
 	Route::get('/ambassador/connect','College\AmbassadorController@connect')->name('ambassador.connect')->middleware('auth');
 	Route::get('/ambassador/list','College\AmbassadorController@list')->name('ambassador.list')->middleware('auth');
