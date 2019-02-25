@@ -124,7 +124,7 @@
               <div class="card-body " style="background: #f7f1e3; border:1px solid #fdcb6e;">
                 <div> </div>
                 <div class="">
-                  <h3 class="mb-4">Inters Generalists</h3>
+                  <h3 class="mb-4">Intern Generalists</h3>
                   <div class="table-responsive">
                   <table class="table  mb-0">
                     <thead>

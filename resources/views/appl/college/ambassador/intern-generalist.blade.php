@@ -1,6 +1,6 @@
 @extends('layouts.nowrap-product')
-@section('title', 'Campus Ambassador | Internship | PacketPrep')
-@section('description', 'Do you have the leadership qualities to take our services to your college? if yes then join us.')
+@section('title', 'Intern Generalist | Internship | PacketPrep')
+@section('description', 'A Paid Internship opportunity for packetprep campus ambassadors')
 @section('keywords', 'internship, campus ambassador, packetprep')
 
 @section('content')
@@ -11,7 +11,7 @@
 	<div class="row">
 		<div class="col-12 col-md-8">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-trophy"></i> &nbsp;Inten Generalist
+			<i class="fa fa-trophy"></i> &nbsp;Intern Generalist
 			
 			</h1>
       <p>A Paid Internship opportunity for campus ambassadors</p>
