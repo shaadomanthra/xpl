@@ -122,6 +122,7 @@
                       <tr>
                         <th scope="col">Name </th>
                         <th scope="col">College</th>
+                        <th scope="col">Branch</th>
                         <th scope="col">Score </th>
                         <th scope="col">Level </th>
                       </tr>
@@ -131,6 +132,7 @@
                       <tr>
                         <td class="{{ $j++}}">{{ $user }}</td>
                         <td> {{ $data['coll'][$user] }}</td>
+                        <td> {{ $data['branch'][$user] }}</td>
                         <td> {{ $score }}</td>
                         <td> @if($score > 49 && $score < 80)
                             <div class="bg-white p-2 border rounded text-secondary"><i class ="fa fa-shield"></i> Silver</div>

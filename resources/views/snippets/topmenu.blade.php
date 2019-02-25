@@ -59,6 +59,12 @@
                              </a>
                              @endif
 
+                             @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','intern-generalist']))
+                             <a class="dropdown-item"  href="{{ route('intern.connect')}}"
+                            >
+                           Interns Connect
+                             </a>
+                             @endif
                              
                             <a class="dropdown-item"  href="{{ route('order.transactions') }}"
                             >
