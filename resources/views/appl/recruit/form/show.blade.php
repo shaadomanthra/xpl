@@ -32,7 +32,7 @@
             <tbody>
               <tr>
                 <td>Name</td>
-                <td> {{ $form->name }}</td>
+                <td> <a href="{{ route('admin.user.view',$form->username) }}">{{ $form->name }}</a></td>
               </tr> 
               <tr>
                 <td>Email </td>

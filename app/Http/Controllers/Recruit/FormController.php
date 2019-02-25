@@ -150,6 +150,8 @@ class FormController extends Controller
         $this->authorize('view', $form);
 
         if($form->user){
+
+                $form->username = $form->user->username;
                 if($form->user()->first()->colleges()->first()){
                     if($form->user()->first()->colleges()->first()->name)
                         $form->college =   $form->user()->first()->colleges()->first()->name; 
