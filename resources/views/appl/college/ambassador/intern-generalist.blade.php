@@ -46,10 +46,10 @@
         <div class="col-12 col-md-6">
           <h1 class="mb-4"> Job Description</h1>
       <ul>
-            <li>Promote campus ambassador program to your friends in other colelges </li>
+            <li>Promote campus ambassador program to your friends in other colleges </li>
             <li>Conduct telephonic interview to the deserving candidates</li>
-            <li>Pick up best candidates as campus ambassadors </li>
-            <li>Stay connected to them over WhatsApp</li>
+            <li>Pick up the best candidates as campus ambassadors </li>
+            <li>Stay connected with them over WhatsApp</li>
             <li>Follow up with them for the referral registration</li>
 
           </ul>
@@ -59,11 +59,11 @@
           <h1 class="mb-4"> Benefits</h1>
           <ul>
             <li>You will be paid equivalent to the coins earned</li>
-            <li> Top 3 Intern Generalists in level B and above be will updated to Intern Specialist Position</li>
+            <li> Top 3 Intern Generalists in level B and above, will be updated to Intern Specialist Position</li>
             <li> Cash Awards for Level B and above
                 <ul>
-                  <li>Top Performer : Rs. 2000</li>
-                  <li>Runner up : Rs. 1000</li>
+                  <li>Top Performer with Highest Coins : Rs. 2000</li>
+                  <li>Runner up with Second Highest Coins : Rs. 1000</li>
                 </ul>
             </li>
 
@@ -82,7 +82,7 @@
    
       <div class="row">
         
-        <div class="col-12 col-md-12">
+        <div class="col-12 col-md-4">
           <div class="bg-white p-4 border ">
           <h1> Understanding Coins</h1>
           <ul>
@@ -90,6 +90,42 @@
             <li>Eg: If you have score 120 then you earn 120 coins, and if an ambassador under you makes score 50 then you get 50 coins.</li>
             <li>One coin is equivalent to One Rupee</li>
           </ul>
+        </div>
+
+        </div>
+
+        <div class="col-12 col-md-8">
+          <div class="bg-white p-4 border ">
+          <h1> Understanding Levels </h1>
+          <div class="table-responsive table-bordered">
+                  <table class="table  mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col">Level </th>
+                        <th scope="col">Coins </th>
+                      </tr>
+                    </thead>
+                    <tbody class="">
+                      <tr>
+                        <td>D</td>
+                        <td>0 to 299 coins</td>
+                      </tr>
+                      <tr>
+                        <td>C</td>
+                        <td>300 to 599 coins</td>
+                      </tr>
+                      <tr>
+                        <td>B</td>
+                        <td>600 to 999 coins</td>
+                      </tr>
+                      <tr>
+                        <td>A</td>
+                        <td>1000 coins and above</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+          
         </div>
 
         </div>
