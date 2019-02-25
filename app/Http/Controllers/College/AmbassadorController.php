@@ -231,6 +231,7 @@ class AmbassadorController extends Controller
         }
         
         $coll = array();
+        $branch = array();
         $username = array();
         foreach($users as $u){
             $score[$u->name] = $u->referrals()->count();
@@ -239,13 +240,19 @@ class AmbassadorController extends Controller
             if($u->colleges()->first())
             $coll[$u->name] = $u->colleges()->first()->name;
             else
-            $coll[$u->name] = '';   
+            $coll[$u->name] = '';  
+
+            if($u->branches()->first())
+            $branch[$u->name] = $u->branches()->first()->name;
+            else
+            $branch[$u->name] = '';  
 
         }
         $data['users'] = array_reverse(array_sort($score));
 
         $data['colleges'] =  $coll;
         $data['username'] =  $username;
+          $data['branch'] = $branch;
 
         //dd($data);
 
