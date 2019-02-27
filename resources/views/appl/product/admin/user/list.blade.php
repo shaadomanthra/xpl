@@ -5,10 +5,8 @@
               <tr>
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
-                <th scope="col">Email</th>
-                <th scope="col">College</th>
-                <th scope="col">Status</th>
-                <th scope="col">Last Login</th>
+                <th scope="col">Details</th>
+                <th scope="col">Referral</th>
               </tr>
             </thead>
             <tbody>
@@ -18,9 +16,9 @@
                 <td>
                   <a href=" {{ route('admin.user.view',$user->username) }} ">
                   {{ $user->name }}
-                  </a>
+                  </a><br>
+                  {{ $user->email }}
                 </td>
-                <td>{{ $user->email }}</td>
                  <td>
                   @if($user->colleges()->first())
                     {{ $user->colleges()->first()->name }} 
@@ -28,18 +26,12 @@
                      - {{ $user->branches()->first()->name }} 
                     @endif
                   @endif 
+                  - {{ ($user->updated_at) ? $user->updated_at->diffForHumans() : '' }}
                 </td>
                 
                 <td>
-                  @if($user->status==0)
-                    <span class="badge badge-secondary">Inactive</span>
-                  @elseif($user->status==1)
-                    <span class="badge badge-success">Active</span>
-                    @elseif($user->status==2)
-                    <span class="badge badge-warning">Blocked</span>
-                  @endif
+                 {{ $user->where('id',$user->user_id)->first()->name }}
                 </td>
-                <td>{{ ($user->updated_at) ? $user->updated_at->diffForHumans() : '' }}</td>
               </tr>
               @endforeach      
             </tbody>
