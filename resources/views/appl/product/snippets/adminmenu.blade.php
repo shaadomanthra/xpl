@@ -15,6 +15,7 @@
 	<a href="{{ route('ambassador.list2')}}" class="list-group-item list-group-item-action {{ request()->is('admin/ambassador*') ? 'active' : ''}}"><i class="fa fa-bars"></i> Ambassadors</a>
 	
 	<a href="{{ route('form.index')}}" class="list-group-item list-group-item-action {{ request()->is('form*') ? 'active' : ''}}"><i class="fa fa-list"></i> Applicants</a>
+	<a href="{{ route('referral.list')}}" class="list-group-item list-group-item-action {{ request()->is('referral*') ? 'active' : ''}}"><i class="fa fa-list"></i> Referrals </a>
 	<a href="{{ route('college.index')}}" class="list-group-item list-group-item-action {{ request()->is('college') ? 'active' : ''}}"><i class="fa fa-bars"></i> Colleges</a>
 	<a href="{{ route('branch.index')}}" class="list-group-item list-group-item-action {{ request()->is('branch') ? 'active' : ''}}"><i class="fa fa-bars"></i> Branch</a>
 	<a href="{{ route('zone.index')}}" class="list-group-item list-group-item-action {{ request()->is('zone') ? 'active' : ''}}"><i class="fa fa-bars"></i> Zone</a>

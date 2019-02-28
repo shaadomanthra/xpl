@@ -66,6 +66,17 @@ class StudentController extends Controller
         ->with('type',$type);
     }
 
+
+    public function referrallist( Request $request)
+    {
+        $users = User::has('referrals')->get();
+
+
+
+        return view('appl.user.referrallist')
+        ->with('users',$users);
+    }
+
     public function proaccess(Request $request)
     {
     	$user = null;

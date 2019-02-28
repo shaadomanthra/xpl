@@ -123,6 +123,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/ambassador/onboard','College\AmbassadorController@onboard')->name('ambassador.onboard')->middleware('auth');
 
 
+
 	Route::get('/referral', function () { 
 
 		if(\auth::user()->colleges->first())
@@ -145,7 +146,10 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 				->with('users',$users); 
 			})->middleware('auth')->name('referral');
 
+	Route::get('/referral/list','Product\StudentController@referrallist')->middleware('auth')->name('referral.list');
 	Route::get('/referral/{user}','Product\StudentController@userreferral')->middleware('auth')->name('user.referral');
+
+	
 
 	Route::resource('product','Product\ProductController')->middleware('auth');
 	Route::get('productpage','Product\ProductController@products')->name('products');
