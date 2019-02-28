@@ -66,14 +66,23 @@ class StudentController extends Controller
                         ->whereHas('colleges', function ($query) use($name) {
                                 $query->where('name', '!=', $name);
                             })->orderBy('updated_at','desc')
-                            ->paginate(config('global.no_of_records')); 
-                            
+                            ->paginate(150); 
+
         }else
-        $users = \auth::user()->where('user_id',$user->id)->orderBy('updated_at','desc')->paginate(config('global.no_of_records'));
+        $users = \auth::user()->where('user_id',$user->id)->orderBy('updated_at','desc')->paginate(150);
+
+        $college = array();
+        foreach($users as $u){
+            if(!array_key_exists($u->colleges->first()->name, $college))
+            $college[$u->colleges->first()->name] = 1;
+            else
+            $college[$u->colleges->first()->name] = $college[$u->colleges->first()->name] +1;
+        }
 
         return view('appl.user.referral')
         ->with('user',$user)->with('username',$user->username)
         ->with('users',$users)
+        ->with('colleges',$college)
         ->with('type',$type);
     }
 

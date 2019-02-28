@@ -14,29 +14,30 @@
   <div class="col-md-12">
  
         <div class="bg-white  border mb-3 p-3">
-          <div class="navbar-brand"><i class="fa fa-user"></i> My Referrals - {{ $username }}</div>
+          <div class="navbar-brand"><i class="fa fa-user"></i> My Referrals - @if(!request()->get('othercollege')) My College @else Other Colleges @endif -{{ $username }} <a href="{{ route('user.referral',$username) }}? @if(!request()->get('othercollege')) othercollege=true @endif"><button class="btn btn-outline-primary btn-sm"> @if(request()->get('othercollege')) View All @else Other Colleges @endif </button></a></div>
           <p>Referral URL : <a href="{{ route('student.'.$type.'register') }}?code={{$username}}">{{ route('student.'.$type.'register') }}?code={{$username}}</a></p>
 
           
         </div>
 
-        <div id="search-items bg-white">
+        <div class="row">
+          <div class="col-12 col-md-8">
            @if($users->total()!=0)
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{$users->total()}})</th>
-                <th scope="col">Name </th>
-                <th scope="col">College</th>
-                <th scope="col">Branch</th>
-                <th scope="col">Status</th>
+                <th >#({{$users->total()}})</th>
+                <th >Name </th>
+                <th>College</th>
+                <th >Branch</th>
+                <th >Status</th>
               </tr>
             </thead>
             <tbody>
               @foreach($users as $key=>$user)  
               <tr>
-                <th scope="row">{{ $users->currentpage() ? ($users->currentpage()-1) * $users->perpage() + ( $key + 1) : $key+1 }}</th>
+                <th >{{ $users->currentpage() ? ($users->currentpage()-1) * $users->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
                   {{ $user->name }}
                   
@@ -72,7 +73,35 @@
         {{$users->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
       </nav>
 
+    </div>
+    <div class="col-12 col-md-4">
+
+      <div class="table-responsive bg-white">
+          <table class="table table-bordered mb-0">
+            <thead>
+              <tr>
+                <th scope="col">College ({{count($colleges)}})</th>
+                <th scope="col">Count ({{array_sum($colleges)}})</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($colleges as $college=>$count)  
+              <tr>
+                <td>{{ $college }}</td>
+                <td>
+                  {{ $count}}
+                  
+                </td>
+               
+              </tr>
+              @endforeach      
+            </tbody>
+          </table>
+        </div>
+
+    </div>
        </div>
+
 
  </div>
 
