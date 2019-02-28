@@ -45,7 +45,7 @@
                         <th scope="col">Score </th>
                       </tr>
                     </thead>
-                    <tbody class="{{ $j = 0}} {{ $l=0 }} {{$m=0}}">
+                    <tbody class="{{ $j = 0}} {{ $l=0 }} {{$m=0}} {{ $a=0}} {{ $g=0}}">
                       @foreach($users as $user )
                       <tr>
                         <td class="">{{ $i++ }}
@@ -72,7 +72,10 @@
 
                           <div class="d-none">
                         @if(!$user->roles->where('name','Campus Ambassador')->first())
-                            {{ $l=$l+$user->referrals->count()  }}
+                            <span>{{ $l=$l+$user->referrals->count()  }}</span> <span>{{ $g =$g+1}}</span>
+                        @else
+
+                          {{ $a++ }}
                         @endif  
                       </div>
 
@@ -98,12 +101,12 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
-                            <div class="p-3 border">Ambassador  
+                            <div class="p-3 border">Ambassador @ {{$a}}   
                               <div class="display-2">{{ $m }}</div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
-                            <div class="p-3 border">General  
+                            <div class="p-3 border">General @ {{$g}}  
                               <div class="display-2">{{ $l }}</div>
                             </div>
                         </div>
