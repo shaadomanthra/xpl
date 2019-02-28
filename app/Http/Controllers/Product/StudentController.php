@@ -37,6 +37,8 @@ class StudentController extends Controller
     		$product = $user->products()->where('product_user.product_id',18)->first();
     	}
 
+        
+
         return view('appl.product.student.referral')
         ->with('user',$user)
         ->with('product',$product)

@@ -138,12 +138,23 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 		$username = \auth::user()->username;
 
-		$users = \auth::user()->where('user_id',\auth::user()->id)->orderBy('updated_at','desc')->paginate(config('global.no_of_records'));
+		$users = \auth::user()->where('user_id',\auth::user()->id)->orderBy('updated_at','desc')->paginate(150);
+
+		$college = array();
+        foreach($users as $u){
+            if(!array_key_exists($u->colleges->first()->name, $college))
+            $college[$u->colleges->first()->name] = 1;
+            else
+            $college[$u->colleges->first()->name] = $college[$u->colleges->first()->name] +1;
+        }
+
 
 		return view('appl.user.referral')
 				->with('type',$type)
 				->with('username',$username)
+				->with('colleges',$college)
 				->with('users',$users); 
+
 			})->middleware('auth')->name('referral');
 
 	Route::get('/referral/list','Product\StudentController@referrallist')->middleware('auth')->name('referral.list');
