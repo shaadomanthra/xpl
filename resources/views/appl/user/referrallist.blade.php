@@ -53,7 +53,10 @@
                         <td class="">
 
                         <a href="{{ route('admin.user.view',$user->username) }}">
-                          {{ $user->name }}
+                          {{ $user->name }}<br>
+                          @foreach($user->roles()->get() as $k=> $r)
+                          <span class="badge badge-warning">{{ $r->name }}</span><br>
+                          @endforeach
                         </a>
                         </td>
                         <td> {{ ($user->colleges()->first())?$user->colleges()->first()->name:'' }}</td>
