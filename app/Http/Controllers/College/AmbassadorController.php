@@ -236,14 +236,25 @@ class AmbassadorController extends Controller
         $coll = array();
         $branch = array();
         $username = array();
+        $network = array();
         foreach($users as $u){
             $score[$u->name] = $u->referrals()->count();
+
+            
 
             $username[$u->name] = $u->username;
             if($u->colleges()->first())
             $coll[$u->name] = $u->colleges()->first()->name;
             else
             $coll[$u->name] = '';  
+
+            $name = $coll[$u->name];
+          
+            $network[$u->name] = $u->referrals()->whereHas('colleges', function ($query) use($name) {
+                                $query->where('name', '!=', $name);
+                            })->count();
+
+           
 
             if($u->branches()->first())
             $branch[$u->name] = $u->branches()->first()->name;
@@ -255,7 +266,9 @@ class AmbassadorController extends Controller
 
         $data['colleges'] =  $coll;
         $data['username'] =  $username;
-          $data['branch'] = $branch;
+        $data['branch'] = $branch;
+        $data['network'] = $network;
+
 
         //dd($data);
 

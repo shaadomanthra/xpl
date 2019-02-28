@@ -48,6 +48,8 @@ class StudentController extends Controller
     {
         $user = User::where('username',$u)->first();
 
+
+
         $type=null;
         if($user)
             if($user->colleges->first())
@@ -58,6 +60,15 @@ class StudentController extends Controller
         if($type=='b')
             $type='e';
 
+        $name = $user->colleges->first()->name;
+        if($request->get('othercollege')){
+            $users = \auth::user()->where('user_id',$user->id)
+                        ->whereHas('colleges', function ($query) use($name) {
+                                $query->where('name', '!=', $name);
+                            })->orderBy('updated_at','desc')
+                            ->paginate(config('global.no_of_records')); 
+                            
+        }else
         $users = \auth::user()->where('user_id',$user->id)->orderBy('updated_at','desc')->paginate(config('global.no_of_records'));
 
         return view('appl.user.referral')
