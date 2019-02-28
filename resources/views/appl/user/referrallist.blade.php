@@ -11,7 +11,7 @@
     <div class="">
       <div class="">
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3 p-3">
-          <a class="navbar-brand"><i class="fa fa-bars"></i> Referrals </a>
+          <a class="navbar-brand"><i class="fa fa-bars"></i> Referrals ({{count($users)}})</a>
 
           
         </nav>
