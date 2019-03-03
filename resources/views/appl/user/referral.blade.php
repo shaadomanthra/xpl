@@ -14,7 +14,7 @@
   <div class="col-md-12">
  
         <div class="bg-white  border mb-3 p-3">
-          <div class="navbar-brand"><i class="fa fa-user"></i> My Referrals - @if(!request()->get('othercollege')) My College @else Other Colleges @endif -{{ $username }} <a href="{{ route('user.referral',$username) }}? @if(!request()->get('othercollege')) othercollege=true @endif"><button class="btn btn-outline-primary btn-sm"> @if(request()->get('othercollege')) View All @else Other Colleges @endif </button></a></div>
+          <div class="navbar-brand"><i class="fa fa-user"></i> My Referrals - @if(!request()->get('othercollege')) All Colleges @else Other Colleges @endif -{{ $username }} <a href="{{ route('user.referral',$username) }}? @if(!request()->get('othercollege')) othercollege=true @endif"><button class="btn btn-outline-primary btn-sm"> @if(request()->get('othercollege')) View All @else Other Colleges @endif </button></a></div>
           <p>Referral URL : <a href="{{ route('student.'.$type.'register') }}?code={{$username}}">{{ route('student.'.$type.'register') }}?code={{$username}}</a></p>
 
           
@@ -85,6 +85,7 @@
               </tr>
             </thead>
             <tbody>
+              @if($colleges)
               @foreach($colleges as $college=>$count)  
               <tr>
                 <td>{{ $college }}</td>
@@ -94,7 +95,8 @@
                 </td>
                
               </tr>
-              @endforeach      
+              @endforeach 
+              @endif     
             </tbody>
           </table>
         </div>

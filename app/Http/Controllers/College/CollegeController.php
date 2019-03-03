@@ -176,17 +176,17 @@ class CollegeController extends Controller
                 $query->where('year_of_passing',$year_of_passing);
             })->count();
 
-            $data['users']['pro'] =  $obj->users()->whereHas('details',function($query) use($year_of_passing){
+            $data['users']['pro'] =  0;/*$obj->users()->whereHas('details',function($query) use($year_of_passing){
                 $query->where('year_of_passing',$year_of_passing);
             })->whereHas('services', function ($query) use ($m) {
                                 $query->where('name', '=', 'Pro Access');
-                            })->count();
+                            })->count(); */
 
-            $data['users']['premium'] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
+            $data['users']['premium'] = 0; /*$obj->users()->whereHas('details',function($query) use($year_of_passing){
                 $query->where('year_of_passing',$year_of_passing);
             })->whereHas('services', function ($query) use ($m) {
                                 $query->where('name', '=', 'Premium Access');
-                            })->count();
+                            })->count(); */
 
             
         }else{
@@ -204,12 +204,12 @@ class CollegeController extends Controller
             }
 
             $data['users']['all'] = $obj->users()->count();
-            $data['users']['pro'] =  $obj->users()->whereHas('services', function ($query) use ($m) {
+            $data['users']['pro'] =  0; /*$obj->users()->whereHas('services', function ($query) use ($m) {
                                 $query->where('name', '=', 'Pro Access');
-                            })->count();
-            $data['users']['premium'] = $obj->users()->whereHas('services', function ($query) use ($m) {
+                            })->count(); */
+            $data['users']['premium'] = 0; /*$obj->users()->whereHas('services', function ($query) use ($m) {
                                 $query->where('name', '=', 'Premium Access');
-                            })->count();
+                            })->count(); */
             
         }
 

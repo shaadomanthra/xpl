@@ -30,7 +30,7 @@
                 </td>
                 
                 <td>
-                 {{ $user->where('id',$user->user_id)->first()->name }}
+                 {{ ($user->user_id)?$user->where('id',$user->user_id)->first()->name:'' }}
                 </td>
               </tr>
               @endforeach      
