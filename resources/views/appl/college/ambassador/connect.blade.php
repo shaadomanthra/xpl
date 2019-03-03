@@ -91,10 +91,12 @@
                     </thead>
                     <tbody class="{{ $k }}">
                       @foreach($data['colleges'] as $college => $score)
+                      @if($college!='- Not in List -') 
                       <tr>
-                        <td class="{{ $k++}}">{{ $college }}</td>
+                        <td class="{{ $k++ }}">{{ $college }}</td>
                         <td> {{ $score }}</td>
                       </tr>
+                      @endif
                       @if($k==6)
                       @break
                       @endif
