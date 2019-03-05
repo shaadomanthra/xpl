@@ -114,7 +114,7 @@
         <label for="formGroupExampleInput ">Branch</label><br>
         <select class="form-control" name="branches[]">
           @foreach($branches as $b)
-          @if(in_array($b->name,['CSE','IT','EEE','ECE','MECH','CIVIL','OTHER']))
+          @if(in_array($b->name,['CSE','IT','EEE','ECE','MECH','CIVIL','CHEMICAL','OTHER']))
           <option value="{{$b->id}}" @if(isset($user)) @if($user->branches->first()) @if($b->id == $user->branches->first()->id ) selected @endif @endif @endif >{{ $b->name }}</option>
           @endif
           @endforeach         
