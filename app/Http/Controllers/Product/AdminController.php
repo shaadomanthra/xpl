@@ -38,6 +38,13 @@ class AdminController extends Controller
         //$slug = subdomain();
         //$client = client::where('slug',$slug)->first();
         //$this->authorize('view', $client);
+
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+        
+
         $users = new AdminController;
         $users->total = User::count();
 
@@ -224,6 +231,11 @@ class AdminController extends Controller
      */
     public function user(Request $request)
     {
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+
         $user = new User();
         $search = $request->search;
         $item = $request->item;
@@ -326,6 +338,11 @@ class AdminController extends Controller
         $metrics = Metric::all();
         $services = Service::all();
         $branches = Branch::all();
+
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
 
         return view('appl.product.admin.user.createedit')
             ->with('stub','Create')
@@ -752,12 +769,21 @@ class AdminController extends Controller
 
     public function viewuser($id,Request $request)
     {
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+
         $user = User::where('username',$id)->first();
         return view('appl.product.admin.user.show')->with('user',$user);
     }
 
     public function listuser(Request $request)
     {
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
         $user = new User();
         $search = $request->search;
         $item = $request->item;
@@ -777,6 +803,11 @@ class AdminController extends Controller
 
     public function printuser($id,Request $request)
     {
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+
         $user = User::where('username',$id)->first();
 
         return view('appl.product.admin.user.print')->with('user',$user);
@@ -784,6 +815,11 @@ class AdminController extends Controller
 
     public function edituser($id,Request $request)
     {
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+
         $user = User::where('username',$id)->first();
         $user_details = $user->details;
         $colleges = College::orderby('name','asc')->get();

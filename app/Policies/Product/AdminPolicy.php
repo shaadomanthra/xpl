@@ -24,11 +24,10 @@ class AdminPolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function view(User $user,Client $client)
+    public function view(User $user)
     {
         if($user->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
         {
-            if($client->getPackageName())
                 return true;
         }
         return false; 

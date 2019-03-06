@@ -91,8 +91,12 @@ class StudentController extends Controller
 
     public function referrallist( Request $request)
     {
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+        
         $users = User::has('referrals')->get();
-
 
 
         return view('appl.user.referrallist')
