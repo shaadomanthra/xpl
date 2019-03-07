@@ -57,6 +57,7 @@
           @if(isset($blog->image ))
             @if($blog->image!=' ')
             <img src="{{ URL::to('/').'/'.$blog->image }}" class="image"  width="25%"/>
+            <input type="hidden" class="form-control" name="image" value="{{ $blog->image }}">
             @endif
           @endif
           </div>  
