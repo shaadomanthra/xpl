@@ -17,34 +17,11 @@
       
 
 
-      <div class="card bg-light mb-3">
-        <div class="card-body">
-        <form method="post" id="uploadimage"  action="{{route('imageupload')}}"  enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="formGroupExampleInput " class="root" data-rooturl="{{URL::to('/')}}">Header Image</label>
-          <input type="file" class="form-control" name="fileToUpload" id="fileToUpload" >
-          <br>
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <input type="hidden" name="username" value="{{ auth::user()->username }}">
-          <div class="image_container">
-          @if(isset($blog->image ))
-            @if($blog->image!=' ')
-            <img src="{{ URL::to('/').'/'.$blog->image }}" class="image"  width="25%"/>
-            @endif
-          @endif
-          </div>  
-        </div>
-        <button type="button" class="btn btn-danger btn-remove ">Remove</button>
-        <button type="submit" class="btn btn-info btn-image ">upload</button>
-       </form>
-
-      </div>
-    </div>
 
       @if($stub=='Create')
-      <form method="post" action="{{route('blog.store')}}" >
+      <form method="post" action="{{route('blog.store')}}" enctype="multipart/form-data">
       @else
-      <form method="post" action="{{route('blog.update',$blog->id)}}" >
+      <form method="post" action="{{route('blog.update',$blog->id)}}" enctype="multipart/form-data" >
       @endif  
       
       
@@ -71,6 +48,19 @@
         >
       </div>
 
+       <div class="form-group">
+          <label for="formGroupExampleInput " class="root" data-rooturl="{{URL::to('/')}}">Header Image</label>
+          <input type="file" class="form-control" name="fileToUpload" id="fileToUpload" >
+          <br>
+          <input type="hidden" name="username" value="{{ auth::user()->username }}">
+          <div class="image_container">
+          @if(isset($blog->image ))
+            @if($blog->image!=' ')
+            <img src="{{ URL::to('/').'/'.$blog->image }}" class="image"  width="25%"/>
+            @endif
+          @endif
+          </div>  
+        </div>
       
 
       <div class="form-group">

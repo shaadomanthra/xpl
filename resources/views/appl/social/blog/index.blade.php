@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title', 'Blog | PacketPrep')
+@section('description', 'Get connected to packetprep updates through out blogs')
+@section('keywords', 'college,packetprep,campus connect, blog')
 @section('content')
 
 <nav aria-label="breadcrumb">

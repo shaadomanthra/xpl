@@ -52,6 +52,11 @@ class BlogController extends Controller
     {
         $user = \auth::user();
 
+        $status = $this->image_upload($request);
+        $image =null;
+        if($status['success'])
+            $image = $status['image'];
+
         try{
             $blog = new Blog;
             $blog->user_id_moderator = $request->user_id_moderator;
@@ -60,7 +65,7 @@ class BlogController extends Controller
             $blog->slug= $request->slug;
             $blog->intro = ($request->intro)?$request->intro:' ';
             $blog->content = ($request->content)? summernote_imageupload($user,$request->content):' ';
-            $blog->image = ($request->image)?$request->image:' ';
+            $blog->image = $image ;
             $blog->keywords= $request->keywords;
             $blog->label_id= $request->label_id;
             $blog->status= $request->status;
@@ -86,9 +91,10 @@ class BlogController extends Controller
         unlink(trim($file));
     }
 
-    public function image_upload(){
+    public function image_upload($request){
 
-        $request = new Request;
+        $p = explode('.',$_FILES["fileToUpload"]['name']);
+        
 
         $status = array();
         $target_dir = "img/blog/";
@@ -98,12 +104,13 @@ class BlogController extends Controller
             $username = \auth::user()->username;
 
         if(isset($_FILES["fileToUpload"])){
-        $target_file = $target_dir .$username.'_'.time().'_'. basename($_FILES["fileToUpload"]["name"]);
+        $target_file = $target_dir .$username.'_'.$request->slug.'.'.end($p) ;
         $status['image'] = $target_file;
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        
         // Check if image file is a actual image or fake image
-        if(isset($_POST["submit"])) {
+        
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             if($check !== false) {
                 $status['message'] = "File is an image - " . $check["mime"] . ".";
@@ -114,7 +121,8 @@ class BlogController extends Controller
                 $status['success']  = 0;
                  return $status;
             }
-        }
+      
+
         // Check if file already exists
         if (file_exists($target_file)) {
             $status['message'] = "Sorry, file already exists.";
@@ -145,10 +153,7 @@ class BlogController extends Controller
 
         }
 
-        if($status['success'])
-            echo $status['image'];
-        else
-            echo 0;
+        return $status;
 
     }
 
@@ -196,6 +201,12 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $user = \auth::user();
+
+        $status = $this->image_upload($request);
+        $image = null;
+        if($status['success'])
+            $image = $status['image'];
+
         try{
             $blog = blog::where('id',$id)->first();
             $blog->user_id_moderator = $request->user_id_moderator;
@@ -205,7 +216,7 @@ class BlogController extends Controller
             $blog->intro = ($request->intro)?$request->intro:' ';
             $blog->content = ($request->content)?summernote_imageupload($user,$request->content):' ';
             $blog->keywords= $request->keywords;
-            $blog->image= ($request->image)?$request->image:' ';
+            $blog->image= $image;
             $blog->label_id= $request->label_id;
             $blog->status= $request->status;
             $blog->schedule= $request->schedule;

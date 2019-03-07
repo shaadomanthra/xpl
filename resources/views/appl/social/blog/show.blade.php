@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title', $blog->title.'| PacketPrep')
+@section('description', strip_tags($blog->intro).'')
+@section('keywords', $blog->keywords )
 @section('content')
  <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
