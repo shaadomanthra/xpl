@@ -22,7 +22,7 @@
 
             @if($blog->image !=' ')
             <a href="{{ route('blog.show',$blog->slug) }}">
-            <img src="{{ route('root').'/'.$blog->image}}" width="100%">
+            <img src="{{ $blog->image }}" width="100%">
             </a>
             @endif
 

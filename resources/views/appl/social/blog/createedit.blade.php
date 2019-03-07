@@ -50,14 +50,13 @@
 
        <div class="form-group">
           <label for="formGroupExampleInput " class="root" data-rooturl="{{URL::to('/')}}">Header Image</label>
-          <input type="file" class="form-control" name="fileToUpload" id="fileToUpload" >
-          <br>
+          <input type="text" class="form-control" name="image" value="@if($blog->image) {{$blog->image}} @endif">
           <input type="hidden" name="username" value="{{ auth::user()->username }}">
           <div class="image_container">
           @if(isset($blog->image ))
             @if($blog->image!=' ')
             <img src="{{ URL::to('/').'/'.$blog->image }}" class="image"  width="25%"/>
-            <input type="hidden" class="form-control" name="image" value="{{ $blog->image }}">
+            
             @endif
           @endif
           </div>  
@@ -125,7 +124,7 @@
 
       <div class="form-group">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <input type="hidden" name="image" class="formimage" value="@if(isset($blog->image)) {{$blog->image}} @else &nbsp; @endif">
+        
         <input type="hidden" name="user_id_writer" value="@if(isset($blog->user_id_writer)) {{$blog->user_id_writer}} @else {{auth::user()->id }} @endif">
         <input type="hidden" name="user_id_moderator" value="@if(isset($blog->user_id_moderator)) {{$blog->user_id_moderator}} @else {{auth::user()->id }} @endif">
       </div>

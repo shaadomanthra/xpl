@@ -18,7 +18,7 @@
     @include('flash::message')  
 
             @if($blog->image !=' ')
-            <img src="{{ route('root').'/'.$blog->image}}" width="100%">
+            <img src="{{ $blog->image }}" width="100%">
             @endif
 
             <div class="mb-3" style="background:white">

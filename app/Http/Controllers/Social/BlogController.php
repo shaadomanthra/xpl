@@ -54,12 +54,8 @@ class BlogController extends Controller
     {
         $user = \auth::user();
 
-        $status = $this->image_upload($request);
-        $image =null;
-        if($status['success'])
-            $image = $status['image'];
-        else
-            dd($status);
+        $image =$request->image;
+        
 
         try{
             $blog = new Blog;
@@ -69,7 +65,7 @@ class BlogController extends Controller
             $blog->slug= $request->slug;
             $blog->intro = ($request->intro)?$request->intro:' ';
             $blog->content = ($request->content)? summernote_imageupload($user,$request->content):' ';
-            $blog->image = $image ;
+            $blog->image = $image;
             $blog->keywords= $request->keywords;
             $blog->label_id= $request->label_id;
             $blog->status= $request->status;
@@ -204,13 +200,7 @@ class BlogController extends Controller
         $user = \auth::user();
 
         $image = $request->image;
-        if($_FILES["fileToUpload"]["tmp_name"]){
-            $status = $this->image_upload($request);
-            if($status['success'])
-            $image = $status['image'];
-            else
-            dd($status);
-        }
+        //dd($request->all());
 
         try{
             $blog = blog::where('id',$id)->first();
@@ -249,9 +239,7 @@ class BlogController extends Controller
     {
         $blog = blog::where('id',$id)->first();
         $this->authorize('create', $blog);
-        if (file_exists($blog->image)) {
-            unlink($blog->image);
-          } 
+        
         $blog->content = summernote_imageremove($blog->content);
         $blog->delete();
         flash('Blog Successfully deleted!')->success();
