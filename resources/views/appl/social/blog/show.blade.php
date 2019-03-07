@@ -1,14 +1,17 @@
 @extends('layouts.app')
 @section('content')
-
-<nav aria-label="breadcrumb">
+ <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Social</li>
+    <li class="breadcrumb-item "><a href="{{ url('/blog')}}">Blog</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ $blog->title}}</li>
   </ol>
 </nav>
+
 <div  class="row ">
-  <div class="col-md-12">
+  <div class="col-md-9">
+
+   
     @include('flash::message')  
 
             @if($blog->image !=' ')
@@ -50,6 +53,15 @@
                 
           
   </div>
+
+  <div class="col-12 col-md-3">
+    <a href="{{ route('ambassador')}}">
+      <img src="{{ asset('/img/campus_ambassador.jpg')}}" class="w-100 mb-3"/> 
+    </a> 
+    <a href="{{ route('course.show','interview-skills') }}">
+      <img src="{{ asset('/img/gd.jpg')}}" class="w-100 mb-3"/> 
+    </a> 
+    </div>
 
 </div>
 @endsection

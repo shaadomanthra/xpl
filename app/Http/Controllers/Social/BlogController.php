@@ -15,10 +15,6 @@ class BlogController extends Controller
      */
     public function index(Blog $blog)
     {
-        $this->authorize('view', $blog);
-
-        if(\Auth::guest())
-            return redirect('login');
         
         $blogs = $blog->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records'));

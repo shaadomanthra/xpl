@@ -4,32 +4,23 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Social</li>
+    <li class="breadcrumb-item active" aria-current="page">Blog</li>
   </ol>
 </nav>
 <div  class="row ">
-  <div class="col-md-9">
+  <div class="col-12 col-md-9">
     @include('flash::message')  
 
-    <div class="card bg-light mb-3">
-      <div class="card-body">
-        <h1 class="mt-1"><i class="fa fas fa-align-justify"></i> Blog 
-          @can('create',$blog)
-            <a href="{{route('blog.create')}}" class="float-right">
-              <button type="button" class="btn btn-sm btn-outline-success my-0 my-sm-0 mr-1"><i class="fa fa-plus"></i> New</button>
-            </a>
-            @endcan
-        </h1>
-        
-      </div>
-    </div>
+    
 
         <div id="search-items" class=" ">
           @if($blogs->total()!=0)
             @foreach($blogs as $key=>$blog)  
 
             @if($blog->image !=' ')
+            <a href="{{ route('blog.show',$blog->slug) }}">
             <img src="{{ route('root').'/'.$blog->image}}" width="100%">
+            </a>
             @endif
 
             <div class="mb-3" style="background:white">
@@ -54,7 +45,7 @@
 
               </div>
               <div class="col-3">
-                      <a href="{{ route('profile','@'.\auth::user()->getUsername($blog->user_id_writer))}}">{{ \auth::user()->getName($blog->user_id_writer)}}</a><br>
+                      <a href="{{ route('profile','@'.$blog->getUsername($blog->user_id_writer))}}">{{ $blog->getName($blog->user_id_writer)}}</a><br>
                 <small>{{ $blog->updated_at->diffForHumans() }}</small><br>
                 @can('edit',$blog)  
                 <a href="{{ route('blog.edit',$blog->id) }}">
@@ -84,8 +75,31 @@
 
   </div>
 
-  <div class="col-md-3 pl-md-0">
-      @include('appl.social.snippets.menu')
+  <div class="col-12 col-md-3">
+
+    @if(\auth::user())
+    @if(\auth::user()->isAdmin())
+    <div class="card bg-light mb-3">
+      <div class="card-body">
+        <h1 class="mt-1"><i class="fa fas fa-align-justify"></i> Blog 
+          @can('create',$blog)
+            <a href="{{route('blog.create')}}" class="float-right">
+              <button type="button" class="btn btn-sm btn-outline-success my-0 my-sm-0 mr-1"><i class="fa fa-plus"></i> New</button>
+            </a>
+            @endcan
+        </h1>
+        
+      </div>
+    </div>
+    @endif
+    @endif
+
+    <a href="{{ route('ambassador')}}">
+      <img src="{{ asset('/img/campus_ambassador.jpg')}}" class="w-100 mb-3"/> 
+    </a> 
+    <a href="{{ route('course.show','interview-skills') }}">
+      <img src="{{ asset('/img/gd.jpg')}}" class="w-100 mb-3"/> 
+    </a> 
     </div>
 </div>
 @endsection

@@ -22,5 +22,6 @@
 	<a href="{{ route('metric.index')}}" class="list-group-item list-group-item-action {{ request()->is('metric') ? 'active' : ''}}"><i class="fa fa-bars"></i> Metric</a>
 	<a href="{{ route('service.index')}}" class="list-group-item list-group-item-action {{ request()->is('service') ? 'active' : ''}}"><i class="fa fa-bars"></i> Service</a>
 	<a href="{{ route('word')}}" class="list-group-item list-group-item-action {{ request()->is('word') ? 'active' : ''}}"><i class="fa fa-bars"></i> Words</a>
+	<a href="{{ route('blog.index')}}" class="list-group-item list-group-item-action {{ request()->is('blog') ? 'active' : ''}}"><i class="fa fa-bars"></i> Blog</a>
 
 </div>
