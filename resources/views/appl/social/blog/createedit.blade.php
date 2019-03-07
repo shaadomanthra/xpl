@@ -52,10 +52,10 @@
           <label for="formGroupExampleInput " class="root" data-rooturl="{{URL::to('/')}}">Header Image</label>
           <input type="text" class="form-control" name="image" value="@if($blog->image) {{$blog->image}} @endif">
           <input type="hidden" name="username" value="{{ auth::user()->username }}">
-          <div class="image_container">
+          <div class="image_container p-3 bg-light mt-3 border">
           @if(isset($blog->image ))
             @if($blog->image!=' ')
-            <img src="{{ URL::to('/').'/'.$blog->image }}" class="image"  width="25%"/>
+            <img src="{{ $blog->image }}" class="image"  width="25%"/>
             
             @endif
           @endif
