@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Social\Blog;
 
+use Image;
+
 class BlogController extends Controller
 {
     /**
@@ -123,12 +125,7 @@ class BlogController extends Controller
             }
       
 
-        // Check if file already exists
-        if (file_exists($target_file)) {
-            $status['message'] = "Sorry, file already exists.";
-            $status['success']  = 0;
-             return $status;
-        }
+        
         // Check file size
         if ($_FILES["fileToUpload"]["size"] > 10000000) {
             $status['message'] = "Sorry, your file is too large.";
@@ -150,6 +147,14 @@ class BlogController extends Controller
                 $status['message'] = "Sorry, there was an error uploading your file.";
                 $status['success']  = 0;
             }
+
+            $imgr = Image::make($target_file);
+                    $imgr->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+                    $imgr->save($target_file);
+            
 
         }
 
