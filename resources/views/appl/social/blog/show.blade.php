@@ -22,10 +22,10 @@
             @endif
 
             <div class="mb-3" style="background:white">
-            <div class="card-body p-4">
+            <div class="card-body p-4 ">
 
             <div class="row">
-              <div class="col-9">
+              <div class="col-12">
                 
                 <div >
     
@@ -37,10 +37,8 @@
                 
                 </div>
 
-              
-
-              </div>
-              <div class="col-3">
+                <hr>
+                <div class="">
                       <a href="{{ route('profile','@'.\auth::user()->getUsername($blog->user_id_writer))}}">{{ \auth::user()->getName($blog->user_id_writer)}}</a><br>
                 <small>{{ $blog->updated_at->diffForHumans() }}</small><br>
                 @can('edit',$blog)  
@@ -49,10 +47,18 @@
                 </a>
                 @endcan
               </div>
+
+              </div>
+              
             </div>
+
+
 
              </div>
             </div>
+            <div class=" mt-3 border p-4 rounded mb-3">
+        @include('appl.pages.disqus')
+      </div>
                 
           
   </div>
