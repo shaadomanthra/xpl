@@ -58,6 +58,8 @@ class BlogController extends Controller
         $image =null;
         if($status['success'])
             $image = $status['image'];
+        else
+            dd($status);
 
         try{
             $blog = new Blog;
@@ -126,12 +128,6 @@ class BlogController extends Controller
       
 
         
-        // Check file size
-        if ($_FILES["fileToUpload"]["size"] > 10000000) {
-            $status['message'] = "Sorry, your file is too large.";
-            $status['success']  = 0;
-             return $status;
-        }
         // Allow certain file formats
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
         && $imageFileType != "gif" ) {
@@ -211,6 +207,8 @@ class BlogController extends Controller
         $image = null;
         if($status['success'])
             $image = $status['image'];
+        else
+            dd($status);
 
         try{
             $blog = blog::where('id',$id)->first();
