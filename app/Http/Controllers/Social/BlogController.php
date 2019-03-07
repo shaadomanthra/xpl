@@ -204,7 +204,8 @@ class BlogController extends Controller
         $user = \auth::user();
 
         $status = $this->image_upload($request);
-        $image = null;
+        $image = $request->image;
+        if(isset($_FILES["fileToUpload"]))
         if($status['success'])
             $image = $status['image'];
         else
