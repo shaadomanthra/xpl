@@ -81,7 +81,7 @@
   <div class="col-12 col-md-3">
 
     @if(\auth::user())
-    @if(\auth::user()->isAdmin())
+    @if(\auth::user()->checkRole(['administrator','employee','social-media-moderator','social-media-writer']))
     <div class="card bg-light mb-3">
       <div class="card-body">
         <h1 class="mt-1"><i class="fa fas fa-align-justify"></i> Blog 
