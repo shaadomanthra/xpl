@@ -203,13 +203,14 @@ class BlogController extends Controller
     {
         $user = \auth::user();
 
-        $status = $this->image_upload($request);
         $image = $request->image;
-        if(isset($_FILES["fileToUpload"]))
-        if($status['success'])
+        if(isset($_FILES["fileToUpload"])){
+            $status = $this->image_upload($request);
+            if($status['success'])
             $image = $status['image'];
-        else
+            else
             dd($status);
+        }
 
         try{
             $blog = blog::where('id',$id)->first();
