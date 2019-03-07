@@ -247,9 +247,13 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        $blog = new blog;
+        $blog = blog::where('id',$id)->first();
         $this->authorize('create', $blog);
-        blog::where('id',$id)->first()->delete();
+        if (file_exists($blog->image)) {
+            unlink($blog->image);
+          } 
+        $blog->content = summernote_imageremove($blog->content);
+        $blog->delete();
         flash('Blog Successfully deleted!')->success();
         return redirect()->route('blog.index');
     }

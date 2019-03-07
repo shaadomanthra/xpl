@@ -56,7 +56,7 @@ class BlogPolicy
     public function edit(User $user,Blog $blog)
     { 
         if($user->checkRole(['administrator','editor','blog-moderator','blog-writer','social-media-moderator','social-media-writer'])){
-            if($blog->user_id==$user->id )
+            if($blog->user_id_writer==$user->id )
                 return true;
             else
                 return false;
