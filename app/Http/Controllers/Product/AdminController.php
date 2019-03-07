@@ -43,7 +43,7 @@ class AdminController extends Controller
         {
              abort(403,'Unauthorised Access');   
         }
-        
+
 
         $users = new AdminController;
         $users->total = User::count();
@@ -255,6 +255,7 @@ class AdminController extends Controller
         $users = $user->where(function ($query) use ($item) {
                                 $query->where('name','LIKE',"%{$item}%")
                                       ->orWhere('email', 'LIKE', "%{$item}%");
+                                      
                             })->orderBy('created_at','desc')->paginate(config('global.no_of_records'));
         
         $view = $search ? 'list': 'index';

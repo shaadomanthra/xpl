@@ -39,7 +39,7 @@
 
                 <hr>
                 <div class="">
-                      <a href="{{ route('profile','@'.\auth::user()->getUsername($blog->user_id_writer))}}">{{ \auth::user()->getName($blog->user_id_writer)}}</a><br>
+                      <a href="{{ route('profile','@'.$blog->getUsername($blog->user_id_writer))}}">{{ $blog->getName($blog->user_id_writer)}}</a><br>
                 <small>{{ $blog->updated_at->diffForHumans() }}</small><br>
                 @can('edit',$blog)  
                 <a href="{{ route('blog.edit',$blog->id) }}">
