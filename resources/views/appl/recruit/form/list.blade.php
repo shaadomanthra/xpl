@@ -19,6 +19,11 @@
                   <a href=" {{ route('form.show',$form->id) }} ">
                   {{ $form->name }}
                   </a>
+                  @if($form->user)
+                  @foreach($form->user->roles()->get() as $k=> $r)
+                  <span class="badge badge-warning">{{ $r->name }}</span><br>
+                  @endforeach
+                  @endif
                 </td>
                 <td>{{ ($form->college)? ($form->college) : '-' }}</td>
                  <td>{{ ($form->branch)? ($form->branch) : '-' }}</td>
