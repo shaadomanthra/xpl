@@ -313,6 +313,7 @@ class AdminController extends Controller
     {
         $colleges = College::orderby('created_at','desc')->get();
         $metrics = Metric::all();
+
         $services = Service::all();
         $branches = Branch::all();
 
@@ -431,6 +432,7 @@ class AdminController extends Controller
 
         $user_details = new user_details;
         $user_details->user_id = $user->id;
+        $user_details->bio = $request->get('bio');
         $user_details->country = 'IN';
         $user_details->phone = $request->get('phone');
         $user_details->phone_2 = $request->get('phone_2');
@@ -635,6 +637,7 @@ class AdminController extends Controller
 
         $user_details = new user_details;
         $user_details->user_id = $user->id;
+        $user_details->bio = $request->get('bio');
         $user_details->country = 'IN';
         $user_details->phone = $request->get('phone');
         $user_details->phone_2 = $request->get('phone_2');

@@ -93,6 +93,7 @@
       </div>
       
 
+
       <div class="row">
         <div class="col-12 col-md-4">
           @if(isset($colleges))
@@ -132,6 +133,16 @@
         </select>
       </div>
         </div>
+      </div>
+
+      <div class="form-group border bg-light p-3">
+        <div class="form-group">
+        <label for="formGroupExampleInput ">College name, if it is not listed  (Optional)</label>
+        <input type="text" class="form-control" name="bio" id="formGroupExampleInput" placeholder="Enter Full College Name"  value="{{ (\request()->bio)? \request()->bio : ''}}"
+            
+          >
+       
+      </div>
       </div>
       
 
@@ -197,6 +208,8 @@
        
       </div>
       </div>
+
+      
 
 
         @if($stub=='Update')
