@@ -3,13 +3,14 @@
 
 
 @include('flash::message')
+<h1 class="border p-3 text-center display-3"> PacketPrep Network - Prospective Students </h1>
 <div  class="row ">
   <div class="col-4">
   <div class="row no-gutters bg-light  border p-3 mb-4 ">
             <div class="col-12 ">
               <div class=" p-3 mb-3  bg-light mr-md-2">
                 
-                  <h3>Total Users</h3>
+                  <h3>Total Students</h3>
                     <div class="display-1 mb-4">
                       <i class="fa fa-user"></i> {{ $users->total }}
                     </div>
@@ -55,7 +56,7 @@
       <div class="mb-0">
 
    <div class="bg-white p-4 border mb-3">
-      <h1  class="border rounded p-3 mb-3"> Career Path </h1>
+      <h1  class="border rounded p-3 mb-3"> Student Choice - Career Path </h1>
       <div class="row">
         <div class="col-6 col-md-2">
             <img src="{{ asset('/img/job.png')}}" class="w-100 p-3 pt-0"/>  
@@ -146,7 +147,7 @@
    </div>
 
 
-   <h1  class="border rounded p-3 mb-4"> Skills to Improve </h1>
+   <h1  class="border rounded p-3 mb-4"> Student Choice - Skills to Improve </h1>
        <div class="row">
         <div class="col-6 col-md-4">
           <div class="border  p-3 mb-3">
@@ -167,30 +168,30 @@
             </div>
         </div>
 
-        <div class="col-6 col-md-4">
+        <div class="col-6 col-md-3">
           <div class=" border p-3 mb-3">
             <h4 class="mb-4"><a href="{{ route('metric.view','Matlab')}}">Matlab</a></h4>
-            <div class="display-2"> <a href="{{ route('metric.students','Matlab')}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $metrics->where('name','Matlab')->first()->users()->count() }}</a></div>
+            <div class="display-4"> <a href="{{ route('metric.students','Matlab')}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $metrics->where('name','Matlab')->first()->users()->count() }}</a></div>
             </div>
         </div>
 
-        <div class="col-6 col-md-4">
+        <div class="col-6 col-md-3">
           <div class=" border p-3 mb-3">
             <h4 class="mb-4"><a href="{{ route('metric.view','AutoCAD')}}">AutoCAD</a></h4>
-            <div class="display-2"> <a href="{{ route('metric.students','AutoCAD')}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $metrics->where('name','AutoCAD')->first()->users()->count() }}</a></div>
+            <div class="display-4"> <a href="{{ route('metric.students','AutoCAD')}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $metrics->where('name','AutoCAD')->first()->users()->count() }}</a></div>
             </div>
         </div>
 
-        <div class="col-6 col-md-4">
+        <div class="col-6 col-md-3">
           <div class=" border p-3 mb-3">
             <h4 class="mb-4"><a href="{{ route('metric.view','Tally')}}">Tally</a></h4>
-            <div class="display-2"> <a href="{{ route('metric.students','Tally')}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $metrics->where('name','Tally')->first()->users()->count() }}</a></div>
+            <div class="display-4"> <a href="{{ route('metric.students','Tally')}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $metrics->where('name','Tally')->first()->users()->count() }}</a></div>
             </div>
         </div>
-        <div class="col-6 col-md-4">
+        <div class="col-6 col-md-3">
           <div class=" border p-3 mb-3">
             <h4 class="mb-4"><a href="{{ route('metric.view','Animation')}}">Animation</a></h4>
-            <div class="display-2"><a href="{{ route('metric.students','Animation')}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $metrics->where('name','Animation')->first()->users()->count() }}</a></div>
+            <div class="display-4"><a href="{{ route('metric.students','Animation')}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $metrics->where('name','Animation')->first()->users()->count() }}</a></div>
             </div>
         </div>
 

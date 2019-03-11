@@ -4,17 +4,14 @@
 
 
 @include('flash::message')
+<h1 class="border p-3 text-center display-3"> PacketPrep Network - Top Colleges </h1>
 <div  class="row ">
 
   <div class="col-md-12">
  
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
-        <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-bars"></i> PacketPrep - College Network</a>
-
-          
-        </nav>
+        
 
         <div id="search-items">
          
