@@ -186,6 +186,9 @@ class CollegeController extends Controller
 
         $users = new CollegeController;
         $users->total = User::count();
+        $users->ambassadors = User::whereHas('roles', function ($query)  {
+                                $query->where('name', '=', 'Campus Ambassador');
+                            })->count();
 
         $metrics = Metric::all();
         $branches = Branch::all();

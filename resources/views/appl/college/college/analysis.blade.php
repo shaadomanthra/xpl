@@ -10,9 +10,13 @@
               <div class=" p-3 mb-3  bg-light mr-md-2">
                 
                   <h3>Total Users</h3>
-                    <div class="display-1">
+                    <div class="display-1 mb-4">
                       <i class="fa fa-user"></i> {{ $users->total }}
                     </div>
+                    <h3> Campus Ambassadors</h3>
+                    <div class="display-3"> {{ $users->ambassadors }}
+                    </div>
+                    
               </div>
 
 
