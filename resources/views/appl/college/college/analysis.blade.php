@@ -31,10 +31,12 @@
             </tr>
 
             @foreach($branches as $b)
+            @if($b->name != 'MCA' && $b->name != 'Mechatronics' && $b->name != 'CHEMICAL' )
             <tr>
               <td><a href="{{ route('branch.view', $b->id)}}">{{ $b->name }} </a></td>
               <td><a href="{{ route('branch.students',$b->id)}}?branch={{$b->name}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $b->users->count() }}</a></td>
             </tr> 
+            @endif
             @endforeach
 
           </table>
