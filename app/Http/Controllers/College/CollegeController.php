@@ -66,13 +66,7 @@ class CollegeController extends Controller
         
         $objs = $obj->where('name','LIKE',"%{$item}%")->where('type','btech')->where('name','!=','- Not in List -')->withCount('users')->orderBy('users_count', 'desc')->paginate(25); 
 
-        foreach($objs as $key=>$college){
-            $objs[$key]->amb = \auth::user()->whereHas('colleges',function($query) use($college){
-                $query->where('name',$college->name);
-            })->whereHas('roles',function($query) {
-                $query->where('role_id',37);
-            })->count();
-        }
+        
 
         //dd($objs);
         $view = $search ? 'list': 'index';
@@ -179,7 +173,7 @@ class CollegeController extends Controller
     public function analysis(Request $request)
     {
 
-        
+
         //$slug = subdomain();
         //$client = client::where('slug',$slug)->first();
         //$this->authorize('view', $client);

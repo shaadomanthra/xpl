@@ -27,7 +27,6 @@
                 <th scope="col">#({{$objs->total()}})</th>
                 <th scope="col">College</th>
                 <th scope="col">Students </th>
-                <th scope="col">Ambassadors</th>
               </tr>
             </thead>
             <tbody>
@@ -41,7 +40,6 @@
                   {{ count($obj->users)}}
                 </td>
                 
-                <td>{{ $obj->amb }}</td>
               </tr>
               @endforeach      
             </tbody>
