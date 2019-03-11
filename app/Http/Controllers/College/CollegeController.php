@@ -11,6 +11,7 @@ use PacketPrep\Models\College\Metric;
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
 
+
 class CollegeController extends Controller
 {
     public function __construct(){
@@ -51,6 +52,36 @@ class CollegeController extends Controller
                 ->with('app',$this);
     }
 
+    public function top30(Obj $obj,Request $request)
+    {
+
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+
+
+        $search = $request->search;
+        $item = $request->item;
+        
+        $objs = $obj->where('name','LIKE',"%{$item}%")->where('type','btech')->where('name','!=','- Not in List -')->withCount('users')->orderBy('users_count', 'desc')->paginate(25); 
+
+        foreach($objs as $key=>$college){
+            $objs[$key]->amb = \auth::user()->whereHas('colleges',function($query) use($college){
+                $query->where('name',$college->name);
+            })->whereHas('roles',function($query) {
+                $query->where('role_id',37);
+            })->count();
+        }
+
+        //dd($objs);
+        $view = $search ? 'list': 'index';
+
+        return view('appl.'.$this->app.'.'.$this->module.'.top30')
+                ->with('objs',$objs)
+                ->with('obj',$obj)
+                ->with('app',$this);
+    }
     
     /**
      * Show the form for creating a new resource.
@@ -145,89 +176,34 @@ class CollegeController extends Controller
     }
 
 
-    public function show3(Request $request)
+    public function analysis(Request $request)
     {
 
-        $year_of_passing = $request->get('year_of_passing');
-        $metrics = Metric::all();
-        $branches = Branch::all();
-        $data = array();
+        
+        //$slug = subdomain();
+        //$client = client::where('slug',$slug)->first();
+        //$this->authorize('view', $client);
 
-        if($year_of_passing)
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
         {
-            
-            foreach($obj->branches as $b){
-            $data['branches'][$b->name] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('branches', function ($query) use ($b) {
-                            $query->where('name', '=', $b->name);
-                        })->count(); 
-            }
-
-            foreach($metrics as $m){
-                $data['metrics'][$m->name] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('metrics', function ($query) use ($m) {
-                                $query->where('name', '=', $m->name);
-                            })->count(); 
-            }
-
-            $data['users']['all'] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->count();
-
-            $data['users']['pro'] =  0;/*$obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Pro Access');
-                            })->count(); */
-
-            $data['users']['premium'] = 0; /*$obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Premium Access');
-                            })->count(); */
-
-            
-        }else{
-
-            foreach($obj->branches as $b){
-            $data['branches'][$b->name] = $obj->users()->whereHas('branches', function ($query) use ($b) {
-                            $query->where('name', '=', $b->name);
-                        })->count(); 
-            }
-
-            foreach($metrics as $m){
-                $data['metrics'][$m->name] = $obj->users()->whereHas('metrics', function ($query) use ($m) {
-                                $query->where('name', '=', $m->name);
-                            })->count(); 
-            }
-
-            $data['users']['all'] = $obj->users()->count();
-            $data['users']['pro'] =  0; /*$obj->users()->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Pro Access');
-                            })->count(); */
-            $data['users']['premium'] = 0; /*$obj->users()->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Premium Access');
-                            })->count(); */
-            
+             abort(403,'Unauthorised Access');   
         }
 
+
+        $users = new CollegeController;
+        $users->total = User::count();
+
+        $metrics = Metric::all();
+        $branches = Branch::all();
+        $zones = Zone::all();
         
 
-        
-
-
-        //dd($obj->users);
-        
-        if($obj)
-            return view('appl.'.$this->app.'.'.$this->module.'.show2')
-                    ->with('college',$obj)->with('app',$this)
-                    ->with('obj',$obj)->with('app',$this)
+        return view('appl.'.$this->app.'.'.$this->module.'.analysis')
+                    ->with('users',$users)
                     ->with('metrics',$metrics)
-                    ->with('data',$data);
-        else
-            abort(404);
+                    ->with('branches',$branches)
+                    ->with('zones',$zones);
+        
     }
 
 

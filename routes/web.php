@@ -214,15 +214,19 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('system/report/week','System\ReportController@week')->middleware('auth')->name('report.week');
 	Route::resource('system/report','System\ReportController')->middleware('auth');
 
+	Route::get('college/top30','College\CollegeController@top30')->middleware('auth')->name('college.top30');
 
 	Route::resource('zone','College\ZoneController')->middleware('auth');
 	Route::resource('branch','College\BranchController')->middleware('auth');
 	Route::resource('college','College\CollegeController')->middleware('auth');
 	Route::resource('metric','College\MetricController')->middleware('auth');
 	Route::resource('service','College\ServiceController')->middleware('auth');
+
 	Route::get('college/{college}/view','College\CollegeController@show2')->middleware('auth')->name('college.view');
+
 	Route::get('college/{college}/students','College\CollegeController@students')->middleware('auth')->name('college.students');
 	Route::get('college/{college}/userlist','College\CollegeController@userlist')->middleware('auth')->name('college.userlist');
+	
 	Route::post('productactivate','Product\ProductController@activate')->middleware('auth')->name('product.activate');
 
 	Route::get('zone/{zone}/students','College\ZoneController@students')->middleware('auth')->name('zone.students');
@@ -237,7 +241,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('service/{service}/students','College\ServiceController@students')->middleware('auth')->name('service.students');
 	Route::get('service/{service}/view','College\ServiceController@show2')->middleware('auth')->name('service.view');
 
-	Route::get('admin/analysis','College\CollegeController@show3')->middleware('auth')->name('admin.analysis');
+	Route::get('admin/analysis','College\CollegeController@analysis')->middleware('auth')->name('admin.analysis');
 	
 
 	Route::resource('exam','Exam\ExamController')->middleware('auth');

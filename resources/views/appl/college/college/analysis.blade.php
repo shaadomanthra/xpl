@@ -1,95 +1,29 @@
-@extends('layouts.app')
+@extends('layouts.plain')
 @section('content')
 
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item">Admin</li>
-  </ol>
-</nav>
 @include('flash::message')
 <div  class="row ">
-
-  <div class="col-md-9">
- 
-    <div class="">
-      <div class="mb-0">
-        <nav class="navbar navbar-light bg-white justify-content-between border rounded p-3 mb-3">
-          <a class="navbar-brand"><i class="fa fa-dashboard"></i> Admin </a>
-
-          <a href="{{ route('admin.analysis')}}"><button class="btn btn-sm btn-outline-primary"><i class="fa fa-print"></i> Analsyis </button></a>
-          <a href="{{ route('college.top30')}}"><button class="btn btn-sm btn-outline-primary"><i class="fa fa-print"></i> Top Colleges </button></a>
-        </nav>
-
-        <div class="row no-gutters bg-light  border p-3 mb-4 ">
-            <div class="col-12 col-md-4">
+  <div class="col-4">
+  <div class="row no-gutters bg-light  border p-3 mb-4 ">
+            <div class="col-12 ">
               <div class=" p-3 mb-3  bg-light mr-md-2">
-                <div class="">
+                
                   <h3>Total Users</h3>
-                    <div class="display-1"><i class="fa fa-user"></i> {{ $users->total }}</div>
-                </div>
+                    <div class="display-1">
+                      <i class="fa fa-user"></i> {{ $users->total }}
+                    </div>
               </div>
+
+
             </div>
-            <div class="col-6 col-md-4">
-              <div class="card mb-3 ml-md-2">
-                <div class="card-body">
-                  <h3 class="card-title">This Month</h3>
-                    <div class="display-4 mb-4">{{ $users->this_month }}</div>
-                  <h3 class="card-title">Last Month</h3>
-                    <div class="display-4">{{ $users->last_month }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="col-6 col-md-4">
-              <div class="card mb-3 ml-md-2">
-                <div class="card-body">
-                  <h3 class="card-title">This Year</h3>
-                    <div class="display-4 mb-4">{{ $users->this_year }}</div>
-                  <h3 class="card-title">Last Year</h3>
-                    <div class="display-4">{{ $users->last_year }}</div>
-                  
-                </div>
-              </div>
-            </div>
-            
-        </div>
-
-        
-
-        <div class="row no-gutters">
-
-          <div class="col-12 col-md-12">
-
-     <div class="bg-white p-4 border mb-3">
-
-      <div class="row">
-        <div class="col-12 col-md-6">
-            <h1  class="border p-3 mb-3"> Zones</h1>
-          <table class="table table-bordered">
-            <tr>
-              <th>Zone</th>
-              <th>Colleges</th>
-              <th>Students</th>
-            </tr>
-
-            @foreach($zones as $z)
-            <tr>
-              <td><a href="{{ route('zone.view', $z->id)}}">{{ $z->name }} </a></td>
-              <td>{{ $z->colleges->count() }}</td>
-              <td><a href="{{ route('zone.students',$z->id)}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $z->users->count() }}</a></td>
-            </tr> 
-            @endforeach
-
-          </table>
-        </div>
-
-        <div class="col-12 col-md-6">
+            <div class="">
+                  <div class="col-12 ">
           <h1  class="border p-3 mb-3"> Branches</h1>
           <table class="table table-bordered">
             <tr>
               <th>Branch</th>
-              <th>Number of students</th>
+              <th>Students</th>
             </tr>
 
             @foreach($branches as $b)
@@ -103,11 +37,16 @@
       
           
         </div>
-      </div>
-      
+              </div>
+            
+            
+        </div>
+ </div>
 
-   </div>
-
+  <div class="col-md-8">
+ 
+    <div class="">
+      <div class="mb-0">
 
    <div class="bg-white p-4 border mb-3">
       <h1  class="border rounded p-3 mb-3"> Career Path </h1>
@@ -257,11 +196,10 @@
         </div>
 
      </div>
+
    </div>
  </div>
-  <div class="col-md-3 pl-md-0 mb-3">
-      @include('appl.product.snippets.adminmenu')
-    </div>
+
 </div>
 
 @endsection

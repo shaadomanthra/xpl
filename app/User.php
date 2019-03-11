@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function ambassadors()
     {
-        return $this->hasMany('PacketPrep\Models\College\Ambassador');
+        return $this->belongsTo('PacketPrep\Models\College\Ambassador');
     }
 
     public function referrals()

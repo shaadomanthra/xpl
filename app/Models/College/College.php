@@ -3,6 +3,7 @@
 namespace PacketPrep\Models\College;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class College extends Model
 {
@@ -37,4 +38,6 @@ class College extends Model
     public function zones(){
         return $this->belongsToMany('PacketPrep\Models\College\Zone');
     }
+
+   
 }
