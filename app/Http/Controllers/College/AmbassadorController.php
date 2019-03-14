@@ -91,7 +91,6 @@ class AmbassadorController extends Controller
                                 $query->where('name', '=', 'Campus Ambassador');
                             })->get();
 
-
         
         $coll = array();
         $branch =array();
@@ -123,8 +122,18 @@ class AmbassadorController extends Controller
         $colls = array(); 
         $branches =array();
         $scores = array();
+
         foreach($intern_generalist  as $u){
             $scores[$u->name] = $u->referrals()->count();
+
+             $amb = $u->referrals()->whereHas('roles', function ($query)  {
+                                $query->where('name', '=', 'Campus Ambassador');
+                            })->get();
+             foreach($amb as $a){
+                $scores[$u->name] = $scores[$u->name] + $a->referrals()->count();
+             }
+
+
 
             if($u->colleges()->first())
             $colls[$u->name] = $u->colleges()->first()->name;
