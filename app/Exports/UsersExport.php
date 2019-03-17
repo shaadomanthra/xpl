@@ -15,11 +15,12 @@ class UsersExport implements FromCollection
     {
     	$year_of_passing = '2020';
 
-        $data = User::whereHas('branches', function ($query)  {
-                                $query->whereIn('name', ['CSE','IT','ECE','EEE','MECH','CIVIL']);
-                            })->whereHas('details', function ($query) use ($year_of_passing) {
-                                $query->where('year_of_passing', '=', $year_of_passing);
+        $data = User::whereHas('colleges', function ($query)  {
+                                $query->whereIn('name', ['Mahatma Gandhi Institute Of Technology']);
+                            })->whereHas('metrics', function ($query)  {
+                                $query->where('name', '=', 'MS in Abroad');
                             })->get();
+        //dd($data);
 
         $users = new UsersExport();
         foreach($data as $k => $d){

@@ -59,6 +59,14 @@ class TeamController extends Controller
 
     public function export() 
     {
+        $year_of_passing = '2020';
+
+        $data = User::whereHas('colleges', function ($query)  {
+                                $query->whereIn('name', ['Mahatma Gandhi Institute Of Technology']);
+                            })->whereHas('metrics', function ($query)  {
+                                $query->where('name', '=', 'MS in Abroad');
+                            })->get();
+        dd($data);
         return Excel::download(new UsersExport, 'users.xlsx');
     }
 
