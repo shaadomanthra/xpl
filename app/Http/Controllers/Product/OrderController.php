@@ -181,6 +181,7 @@ class OrderController extends Controller
                 $coupon = Coupon::where('code',$request->get('coupon'))->first();
                 if($coupon)
                 $order->coupon_id = $coupon->id;
+                $order->coupon = $request->get('coupon');
               }
 
               $order->user_id = $user->id;
@@ -244,6 +245,7 @@ class OrderController extends Controller
                 $coupon = Coupon::where('code',$request->get('coupon'))->first();
                 if($coupon)
                 $order->coupon_id = $coupon->id;
+              $order->coupon = $request->get('coupon');
               }
 
               $order->user_id = $user->id;

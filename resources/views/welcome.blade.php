@@ -16,5 +16,10 @@
     <a href="{{ route('register.type')}}"><button class="btn btn-outline-light btn-lg">Register Now</button></a>
 	</div>
 </div>
-@endsection         
+
+
+
+
+@endsection    
+
 

@@ -5,10 +5,12 @@ namespace PacketPrep\Http\Controllers\User;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\User;
+use PacketPrep\Models\College\College;
 use PacketPrep\Models\User\User_Details;
 
 use PacketPrep\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 class TeamController extends Controller
 {
@@ -59,14 +61,8 @@ class TeamController extends Controller
 
     public function export() 
     {
-        $year_of_passing = '2020';
+        
 
-        $data = User::whereHas('colleges', function ($query)  {
-                                $query->whereIn('name', ['Mahatma Gandhi Institute Of Technology']);
-                            })->whereHas('metrics', function ($query)  {
-                                $query->where('name', '=', 'MS in Abroad');
-                            })->get();
-        dd($data);
         return Excel::download(new UsersExport, 'users.xlsx');
     }
 

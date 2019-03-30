@@ -49,23 +49,21 @@ $(document).ready(function() {
 		$('.credit_rate').val(rate);
 
 	});
-
-    $( ".coupon-button" ).on('click',function() {
-      var code = $(".coupon-input").val();
-      var amount = $(".amount").val();
-      var url = $(".url").val();
-      if(!code)
-        alert('Enter Valid Code');
-      else{
-          $.get( url + "/coupon/getamount/" + amount + "/" + code + "/", function( data ) {
-              var obj = JSON.parse(data);
-              $( "span.total" ).replaceWith( obj.amount );
-              $(".amount").val(obj.amount);
-              $( "span.status" ).replaceWith('<span class="border bg-white rounded p-2">'+obj.status+'</span>' );
-          });
-      }
-      
-
+    
+$(".coupon-button").on('click', function () {
+    var code = $(".coupon-input").val();
+    var amount = $(".amount").val();
+    var product = $(".product").val();
+    
+    var url = $(".url").val();
+    if (!code){  alert('Enter Valid Code');  }else {
+      $.get(url + "/coupon/getamount/" + amount + "/" + code + "/" + product + "/", function (data) {
+        var obj = JSON.parse(data);
+        $("span.total").replaceWith(obj.amount);
+        $(".amount").val(obj.amount);
+        $("span.status").replaceWith('<span class="border bg-white rounded p-2">' + obj.status + '</span>');
+      });
+    }
   });
 
 

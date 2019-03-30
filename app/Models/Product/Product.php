@@ -12,7 +12,8 @@ class Product extends Model
         'slug',
         'description',
         'price',
-        'status'
+        'status',
+        'discount'
 
         // add all other fields
     ];

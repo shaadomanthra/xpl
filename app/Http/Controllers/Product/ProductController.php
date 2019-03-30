@@ -245,6 +245,7 @@ class ProductController extends Controller
             $product->description = ($request->description) ? $request->description: null;
             $product->price = $request->price;
             $product->status = $request->status;
+            $product->discount = $request->discount;
             $product->validity = $request->validity;
             $product->save(); 
 
@@ -389,6 +390,7 @@ class ProductController extends Controller
             $product->description = ($request->description) ? $request->description: null;
             $product->price = $request->price;
              $product->validity = $request->validity;
+             $product->discount = $request->discount;
             $product->status = $request->status;
 
             if($exams){

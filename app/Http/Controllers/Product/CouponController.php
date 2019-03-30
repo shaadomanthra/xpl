@@ -5,6 +5,8 @@ namespace PacketPrep\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Coupon as Obj;
+use PacketPrep\User;
+use PacketPrep\Models\Product\Product;
 
 class CouponController extends Controller
 {
@@ -58,7 +60,7 @@ class CouponController extends Controller
     }
 
 
-    public function getamount($amount,$code)
+    public function getamount($amount,$code,$product)
     {
         $obj = Obj::where('code',$code)->first();
         
@@ -74,7 +76,24 @@ class CouponController extends Controller
 
             
         }else{
-            $status = 'Invalid Coupon Code';
+            $amb = User::where('username',$code)->first();
+
+
+            if($amb){
+                $true = $amb->checkRole(['ambassador']);
+
+                if($true){
+                    $p = Product::where('id',$product)->first();
+                    $amount = $amount - $p->discount;
+                    $status = 'Rs.'.$p->discount.' discount coupon successfully added';
+                }else
+                {
+                    $status = 'Invalid Coupon Code - Product ID error';
+                }
+            }else{
+                $status = 'Invalid Coupon Code ';
+            }
+            
         }
 
         $data = (object)['amount'=>$amount,'status'=>$status];

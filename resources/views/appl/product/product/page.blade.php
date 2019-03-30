@@ -72,9 +72,19 @@
 
           @endif
           <div class="row mb-2">
-            <div class="col-md-4">Validity</div>
+            <div class="col-md-4">
+              @if(count($product->exams)==0 && count($product->courses)==0 )
+              Training
+              @else
+              Validity
+              @endif
+              </div>
             <div class="col-md-8">
+              @if(count($product->exams)==0 && count($product->courses)==0 )
+              Classroom program
+              @else
               {{ $product->validity }} months
+              @endif
             </div>
           </div>
           <hr>
@@ -123,6 +133,21 @@
           </div>
            @endif 
 
+
+           @if(count($product->exams)==0 && count($product->courses)==0 )
+          <div class="row mb-2">
+            <div class="col-12 col-md-4">Service Included</div>
+            <div class="col-12 col-md-8">
+           
+           <div class="p-3 border rounded mb-2">
+            <h3>Classroom Training</h3>
+            <p class="bg-light p-3  rounded"> Kindly carry the print out of the following page to the packetprep office, after payment. </p>
+          </div>
+           
+            </div>
+          </div>
+           @endif 
+
            <div class="row mb-2">
             <div class="col-12 col-md-4"></div>
             <div class="col-12 col-md-8">
@@ -141,7 +166,7 @@
               @else
 
 
-              <div class=" border p-3 rounded bg-light"><h1>You have access to above content valid till<br>
+              <div class=" border p-3 rounded bg-light"><h1>Service is activated - validity upto<br>
                  <span class="badge badge-primary">{{ date('d M Y', strtotime(\auth::user()->products->find($product->id)->pivot->valid_till)) }}</span>
                  </h1>
                </div>

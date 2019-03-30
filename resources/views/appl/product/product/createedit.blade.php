@@ -78,6 +78,16 @@
             @endif
           >
       </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Discount</label>
+        <input type="number" class="form-control" name="discount" id="formGroupExampleInput" placeholder="Enter the Discount" 
+            @if($stub=='Create')
+            value="{{ (old('discount')) ? old('discount') : '' }}"
+            @else
+            value = "{{ $product->discount }}"
+            @endif
+          >
+      </div>
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>

@@ -35,7 +35,7 @@
                     <li class="mr-3 "><a class="nav-link " href="{{ url('targettcs') }}"><i class="fa fa-ravelry"></i> Target TCS</a></li>
                    <li class="mr-3 "><a class="nav-link " href="{{ url('proficiency-test') }}"><i class="fa fa-gg"></i> Proficiency Test</a></li>
                     
-                    <li class="mr-3 "><a class="nav-link " href="{{ url('premium') }}"><span class="premium"><i class="fa fa-bullseye"></i> Premium Access</span></a></li>
+                    <li class="mr-3 "><a class="nav-link " href="{{ url('bootcamp') }}"><span class="premium"><i class="fa fa-bullseye"></i> Coding Bootcamp</span></a></li>
 
                     <!-- Authentication Links -->
                     @guest

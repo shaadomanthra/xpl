@@ -73,6 +73,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads');
 
+	/*customer */
+	Route::get('/bootcamp','Product\CustomerController@bootcamp')->name('bootcamp');
+	Route::get('/firstacademy','Product\CustomerController@firstacademy')->name('firstacademy');
 
 	/*test */
 	Route::get('/onlinetest', 'Product\TestController@main')->name('onlinetest');
@@ -270,7 +273,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	
 	Route::resource('/coupon', 'Product\CouponController')->middleware('auth');
-	Route::get('/coupon/getamount/{amount}/{code}', 'Product\CouponController@getamount');
+	Route::get('/coupon/getamount/{amount}/{code}/{product}', 'Product\CouponController@getamount');
 	
 	Route::get('/social', 'Social\MediaController@social')->name('social')->middleware('auth');
 	Route::post('/social/imageupload', 'Social\BlogController@image_upload')->name('imageupload');

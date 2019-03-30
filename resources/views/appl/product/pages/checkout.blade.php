@@ -13,14 +13,22 @@
   <thead>
     <tr>
       <th scope="col">Product</th>
+      @if($product->price<5000)
       <th scope="col">Validity</th>
+      @else
+      <th scope="col">Training</th>
+      @endif
       <th scope="col">Price</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td scope="row" rowspan=1>{!! $product->description !!}</td>
+      @if($product->price<5000)
       <td>{{ $product->validity }} months</td>
+      @else
+       <td>Classroom</td>
+      @endif
       <td>@if($product->price==0) - FREE - @else {{ $product->price}} @endif</td>
     </tr>
      <tr>
@@ -63,7 +71,7 @@
 </div>
  @endif
  <input class="form-check-input amount" type="hidden" name="txn_amount" value="{{ $product->price }}">
-    <input class="form-check-input" type="hidden" name="product_id"  value="{{ $product->id }}">
+<input class="form-check-input product" type="hidden" name="product_id"  value="{{ $product->id }}">
 
 <button class="btn btn-lg btn-primary" type="submit">Next</button>
 
