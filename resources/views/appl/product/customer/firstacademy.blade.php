@@ -31,7 +31,7 @@
 		<div class="col-12 col-md-6">
 
 		   <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/ejGEJ86fv5c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe src="//player.vimeo.com/video/327440260" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
 
   		</div>
@@ -52,29 +52,23 @@
    
       <div class="row">
         
-         <div class="col-12 col-md-6">
-          <div class="bg-white border mb-4">
-            
-          <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/M765gB_IUL0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="p-3">
-          <h1 >Coding & Career</h1>
-          <p > Cracking job in a top Multi National Company is a tough task, but  consitent preparation and commitment can make you land in your dream job. This video answers the common questions students have regarding the career, learning apsects, growth.</p>
-        </div>
-          </div>
-        </div>
+        
 
         <div class="col-12 col-md-6">
           <div class="bg-white border mb-4">
             
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/AKuu0IanGKU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe src="//player.vimeo.com/video/327447675" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
-          <div class="p-3">
-          <h1 >Coding & Money</h1>
-          <p > Everybody dreams of an independent life, pocket full cash and happy going. If have good programming skill, you can easliy make money. This video explains different websites to look for parttime jobs, how to make good commercial projects and details on freelancing.</p>
+          </div>
         </div>
+        <div class="col-12 col-md-6">
+          <div class="bg-white border mb-4">
+            
+          <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
+         <iframe src="//player.vimeo.com/video/327448474" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          </div>
+         
           </div>
         </div>
 
@@ -88,27 +82,32 @@
           <div class="bg-white border mb-4">
             
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/4nBO1yj8RAo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe src="//player.vimeo.com/video/327448096" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
-          <div class="p-3">
-          <h1 >Coding & Startup</h1>
-          <p > Startup is the new big thing. Startup is the way forward for Digital India. If you have a great idea and dont know how to build your project, then coding bootcamp is the right place to learn the basics of building commercial application. </p>
-        </div>
+          
           </div>
         </div>
 
-        <div class="col-12 col-md-6">
+        
+
+         <div class="col-12 col-md-6">
           <div class="bg-white border mb-4">
             
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/HIYbB17wNmo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+         <iframe src="//player.vimeo.com/video/327448242" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
-          <div class="p-3">
-          <h1 >Coding & Abroad Studies</h1>
-          <p > If you have plans for abroad study, you can watch this video to understand the importance of coding, impact of mini and major project for MS application, how coding bootcamp can help you crack Research assitantship.</p>
-        </div>
+         
           </div>
         </div>
+         <div class="col-12 col-md-6">
+          <div class="bg-white border mb-4">
+            
+          <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
+          <iframe src="//player.vimeo.com/video/327448452" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          </div>
+          </div>
+        </div>
+
       </div>
       
  
