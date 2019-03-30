@@ -11,10 +11,10 @@
 	<div class="row">
 		<div class="col-12 col-md-6">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-code"></i> &nbsp;Coding Bootcamp
+			<i class="fa fa-code"></i> &nbsp;Coding Bootcamp - Summer Internship
 			
 			</h1>
-      <p>Build your first commercial web application with us at packetprep.  A great opportunity to utilize your summer time to build a great realtime project, where you will write the code from scratch to the end. </p>
+      <p>Build your first commercial web application with us at packetprep.  A great opportunity to utilize your summer time to build a great realtime project, where you will learn to write code from scratch to the end. </p>
       <p> <b>Eligibility :</b> CSE & IT<br>
       <b>Date :</b> 15th May  to 4th June 2019<br>
        <b> Batch :</b> 9:00 am to 1:00 pm (open) & 2:00 pm to 6:00 pm<br>  
@@ -94,57 +94,73 @@
 
 
    
-<!--
+
    
       <div class="row">
         
-        <div class="col-12 col-md-6">
-          <div class="bg-white p-4 border mb-4">
-          <h1> Career Prospects</h1>
+         <div class="col-12 col-md-6">
+          <div class="bg-white border mb-4">
+            
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/ejGEJ86fv5c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe  src="https://www.youtube.com/embed/M765gB_IUL0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
-
+          <div class="p-3">
+          <h1 >Coding & Career</h1>
+          <p > Cracking job in a top Multi National Company is a tough task, but  consitent preparation and commitment can make you land in your dream job. This video answers the common questions students have regarding the career, learning apsects, growth.</p>
+        </div>
+          </div>
         </div>
 
-        </div>
         <div class="col-12 col-md-6">
-          <div class="bg-white p-4 border mb-4">
-          <h1>Making Money</h1>
+          <div class="bg-white border mb-4">
+            
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/ejGEJ86fv5c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe  src="https://www.youtube.com/embed/AKuu0IanGKU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
+          <div class="p-3">
+          <h1 >Coding & Money</h1>
+          <p > Everybody dreams of an independent life, pocket full cash and happy going. If have good programming skill, you can easliy make money. This video explains different websites to look for parttime jobs, how to make good commercial projects and details on freelancing.</p>
+        </div>
           </div>
         </div>
+
       </div>
 
       <div class="row">
         
-        <div class="col-12 col-md-6">
-          <div class="bg-white p-4 border mb-4">
-          <h1> Startup Idea</h1>
-          <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/ejGEJ86fv5c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
+        
 
+         <div class="col-12 col-md-6">
+          <div class="bg-white border mb-4">
+            
+          <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
+          <iframe  src="https://www.youtube.com/embed/4nBO1yj8RAo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="p-3">
+          <h1 >Coding & Startup</h1>
+          <p > Startup is the new big thing. Startup is the way forward for Digital India. If you have a great idea and dont know how to build your project, then coding bootcamp is the right place to learn the basics of building commercial application. </p>
+        </div>
+          </div>
         </div>
 
-        </div>
         <div class="col-12 col-md-6">
-          <div class="bg-white p-4 border mb-4">
-          <h1>Abroad Studies</h1>
+          <div class="bg-white border mb-4">
+            
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/ejGEJ86fv5c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe  src="https://www.youtube.com/embed/HIYbB17wNmo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
+          <div class="p-3">
+          <h1 >Coding & Abroad Studies</h1>
+          <p > If you have plans for abroad study, you can watch this video to understand the importance of coding, impact of mini and major project for MS application, how coding bootcamp can help you crack Research assitantship.</p>
+        </div>
           </div>
         </div>
       </div>
       
-   -->
+ 
 
    <div class="bg-light p-4 border ">
-      Note : <br>
-      In case of any query, you can whatsapp us at +91 95151 25110 or mail us at founder@packetprep.com
+      In case of any query, you can whatsapp us at <i class="text-secondary">+91 95151 25110</i> or mail us at <i class="text-secondary">founder@packetprep.com</i>
       </div>
       
    </div>

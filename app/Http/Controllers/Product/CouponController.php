@@ -88,7 +88,7 @@ class CouponController extends Controller
                     $status = 'Rs.'.$p->discount.' discount coupon successfully added';
                 }else
                 {
-                    $status = 'Invalid Coupon Code - Product ID error';
+                    $status = 'Invalid Coupon Code - Ambassador error';
                 }
             }else{
                 $status = 'Invalid Coupon Code ';
