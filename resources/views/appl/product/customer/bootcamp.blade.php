@@ -27,7 +27,7 @@
         <h2 > <i class="fa fa-rupee"></i>  10,000 </h2>
         <div> Collect your discount coupon from campus ambassador</div>
       </div>
-      <a href="{{ url('productpage/cb') }}"">
+      <a href="{{ url('productpage/cb') }}">
       <button class="btn btn-lg btn-success mb-3"> Reserve your seat now</button>
       </a>
 
