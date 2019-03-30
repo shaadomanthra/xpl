@@ -41,6 +41,18 @@ class CouponController extends Controller
                 ->with('app',$this);
     }
 
+
+    public function referral(Request $request){
+
+        return view('appl.product.coupon.referral');
+    }
+
+    public function coupon(Request $request){
+
+        $user = \auth::user();
+        return view('appl.product.coupon.download')->with('user',$user);
+    }
+
     
     /**
      * Show the form for creating a new resource.

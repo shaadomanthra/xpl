@@ -158,7 +158,7 @@
         
         <div class="col-12 col-md-6">
           <div class="bg-white p-4 border mb-4">
-          <h1> Campus Ambassador</h1>
+          <h1> Campus Ambassador (3rd year)</h1>
           <p>Do you have the leadership qualities to take our services to your college? if yes then join us.</p>
           <a href="{{ route('ambassador')}}">
           <button class="btn btn-lg btn-outline-secondary">Know more</button>
@@ -168,12 +168,13 @@
         </div>
         <div class="col-12 col-md-6">
           <div class="bg-white p-4 border mb-4">
-          <h1>Pro Access</h1>
-          <p>Refer 3 friends and get 3 months pro access to our premium content on aptitude.</p>
-          <a href="{{ route('sreferral')}}">
+          <h1> Campus Coordinator (1st & 2nd year)</h1>
+          <p>Do you have the leadership qualities to take our services to your college? if yes then join us.</p>
+          <a href="{{ route('coordinator')}}">
           <button class="btn btn-lg btn-outline-secondary">Know more</button>
-        </a>
-          </div>
+        </a>  
+        </div>
+
         </div>
       </div>
       

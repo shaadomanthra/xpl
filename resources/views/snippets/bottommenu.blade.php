@@ -13,6 +13,7 @@
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/disclaimer')}}">Disclaimer</a>
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/sreferral')}}">Referral</a>
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/targettcs')}}">Target TCS</a>
+		   <a class="text-secondary mr-2 mr-md-3"  href="{{url('/firstacademy')}}">First Academy</a>
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/blog')}}">Blog</a>
 
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/contact-corporate')}}">Contact</a>

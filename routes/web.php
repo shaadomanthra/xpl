@@ -77,6 +77,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/bootcamp','Product\CustomerController@bootcamp')->name('bootcamp');
 	Route::get('/firstacademy','Product\CustomerController@firstacademy')->name('firstacademy');
 
+	Route::get('/couponreferral','Product\CouponController@referral')->name('coupon.referral')->middleware('auth');
+	Route::get('/couponcode','Product\CouponController@coupon')->name('coupon.code')->middleware('auth');
+
 	/*test */
 	Route::get('/onlinetest', 'Product\TestController@main')->name('onlinetest');
 	Route::get('/onlinetest/{test}/instructions','Product\TestController@instructions')->name('onlinetest.instructions')->middleware('auth');
@@ -108,6 +111,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/targettcs', 'Product\StudentController@targettcs')->name('targettcs');
 	Route::get('/sreferral', 'Product\StudentController@referral')->name('sreferral');
 	Route::get('/ambassador', 'Product\StudentController@ambassador')->name('ambassador');
+	Route::get('/coordinator', 'Product\StudentController@coordinator')->name('coordinator');
 	Route::get('/proaccess', 'Product\StudentController@proaccess')->name('proaccess')->middleware('auth');
 	Route::get('/ambassador/apply', 'Product\StudentController@apply')->name('ambassador.apply')->middleware('auth');
 	Route::post('/ambassador/apply', 'Product\StudentController@save')->name('ambassador.save')->middleware('auth');

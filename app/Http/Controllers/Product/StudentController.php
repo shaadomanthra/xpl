@@ -131,6 +131,11 @@ class StudentController extends Controller
         return view('appl.product.student.ambassador');
     }
 
+    public function coordinator(Request $request)
+    {
+        return view('appl.product.student.coordinator');
+    }
+
     public function apply(Request $request)
     {
         return view('appl.product.student.ambassador');
