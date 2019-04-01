@@ -60,6 +60,10 @@
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
           <iframe src="//player.vimeo.com/video/327447675" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
+          <div class="p-3">
+          <h1 >Study Abroad</h1>
+          <p > Should you go abroad? Can one not have a successful career here? This video looks at addressing the most basic question of them all while giving you a few pointers on where to begin.</p>
+        </div>
           </div>
         </div>
         <div class="col-12 col-md-6">
@@ -68,6 +72,10 @@
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
          <iframe src="//player.vimeo.com/video/327448474" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
+          <div class="p-3">
+          <h1 >IELTS Myths</h1>
+          <p > Why am I not getting a score I want? Where did I go wrong? Let us help you put an end all the misinformation that is floating around. Take the first step the right way!</p>
+        </div>
          
           </div>
         </div>
@@ -84,6 +92,10 @@
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
           <iframe src="//player.vimeo.com/video/327448096" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
+          <div class="p-3">
+          <h1 >GRE Myths</h1>
+          <p > Taking the GRE and confused about all the words you need to learn? Is M1 a nightmare? Do you even need the GRE? This video might come as a pleasant surprise, and as a surprise relief. Give it a watch! </p>
+        </div>
           
           </div>
         </div>
@@ -96,6 +108,10 @@
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
          <iframe src="//player.vimeo.com/video/327448242" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
+          <div class="p-3">
+          <h1 >Application Process</h1>
+          <p > The Whole application process is confusiing, difficult, and fraught with possibilities of missteps. This video serves as the primer to the entire process. Call this international Applications One-Oh-One!</p>
+        </div>
          
           </div>
         </div>
@@ -105,6 +121,10 @@
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
           <iframe src="//player.vimeo.com/video/327448452" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
+          <div class="p-3">
+          <h1 >First Academy Team</h1>
+          <p > Saying we are the best is easy. Learn why we can say it with confidence. From training to authoring books. From having international certifications to providing examiner grade evaluations, learn what makes us the best!</p>
+        </div>
           </div>
         </div>
 
