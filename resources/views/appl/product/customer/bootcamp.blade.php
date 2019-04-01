@@ -15,28 +15,47 @@
 			
 			</h1>
       <p>Build your first commercial web application with us at packetprep.  A great opportunity to utilize your summer time to build a great realtime project, where you will learn to write code from scratch to the end. </p>
-      <p> <b>Eligibility :</b> CSE & IT<br>
-      <b>Date :</b> 15th May  to 4th June 2019<br>
-       <b> Batch :</b> 9:00 am to 1:00 pm (open) & 2:00 pm to 6:00 pm<br>  
+      <p> <b>Eligibility : </b> CSE & IT<br>
+       <b> Batches :</b> 
+       <ul>
+        <li>May 20th to May 31st  2019
+          <ul>
+           <li>Batch 1 - 9:00 am to 1:00 pm (open)</li>
+           <li>Batch 2 - 2:00 pm to 6:00 pm (open)</li> 
+          </ul>
+        </li> 
+        <li>June 3rd to June 14th  2019
+          <ul>
+           <li>Batch 3 - 9:00 am to 1:00 pm </li>
+           <li>Batch 4 - 2:00 pm to 6:00 pm </li> 
+          </ul>
+        </li> 
+        <li>June 17th to June 28th  2019
+          <ul>
+           <li>Batch 5 - 9:00 am to 1:00 pm </li>
+           <li>Batch 6 - 2:00 pm to 6:00 pm </li> 
+          </ul>
+        </li> 
+       
+        </ul>  
        
        <b> Location:</b> PacketPrep Office, Tarnaka, Hyderabad.<br>  
 
     </p>
      
       <div class="p-3 rounded mb-3" style="background: #f2f2f2">      
-        <h2 > <i class="fa fa-rupee"></i>  10,000 </h2>
+        <h2 > <i class="fa fa-rupee"></i>  6,000 </h2>
         
       </div>
       <a href="{{ url('productpage/cb') }}">
       <button class="btn btn-lg btn-success mb-3"> Reserve your seat now</button>
       </a>
 
-
 		</div>
 		<div class="col-12 col-md-6">
 
 		   <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/ejGEJ86fv5c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe src="//player.vimeo.com/video/327689457" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
 
   		</div>
@@ -58,8 +77,8 @@
       <div class="row mb-4">
         <div class="col-4 col-md-2"><i class="fa fa-4x fa-rocket"></i></div>
         <div class="col-8 col-md-10">
-          <h2> 60 hour Classroom Training</h2>
-          <p> It is 4hour/day intensive training for 15 days </p>
+          <h2> 40 hour Classroom Training</h2>
+          <p> It is 4hour/day intensive training for 10 days </p>
         </div>
       </div>
       <div class="row mb-4">
