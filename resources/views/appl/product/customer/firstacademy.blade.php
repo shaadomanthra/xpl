@@ -12,7 +12,7 @@
 	<div class="row">
 		<div class="col-12 col-md-6">
 			<h1 class="mt-2 mb-4 mb-md-2">
-      <img src="{{ asset('/img/fa_logo.png')}}" style="width:25px"/>   &nbsp;FirstAcademy </h1>
+      <img src="{{ asset('/img/fa_logo.png')}}" style="width:25px"/>   &nbsp;First Academy </h1>
       
       <p>Platinum Partner - British Council. The most awarded training institute in South India. The most awesome classes on this side of the solar system. </p>
       <h3 class="mb-3">PacketPrep - Exclusive discount coupon for GRE & IELTS Classroom Training</h2>
