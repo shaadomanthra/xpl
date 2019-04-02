@@ -14,14 +14,14 @@
   <div class="col-md-12">
  
         <div class="bg-white  border mb-3 p-3">
-          <div class="navbar-brand"><i class="fa fa-user"></i> My Referrals - @if(!request()->get('othercollege')) All Colleges @else Other Colleges @endif -{{ $username }} <a href="{{ route('user.referral',$username) }}? @if(!request()->get('othercollege')) othercollege=true @endif"><button class="btn btn-outline-primary btn-sm"> @if(request()->get('othercollege')) View All @else Other Colleges @endif </button></a></div>
+          <div class="navbar-brand"><i class="fa fa-user"></i> My Referrals - @if(!request()->get('othercollege')) All Colleges @else Other Colleges @endif - {{ $username }} </div>
           <p>Referral URL : <a href="{{ route('student.'.$type.'register') }}?code={{$username}}">{{ route('student.'.$type.'register') }}?code={{$username}}</a></p>
 
           
         </div>
 
         <div class="row">
-          <div class="col-12 col-md-8">
+          <div class="col-12 @if($colleges) col-md-8 @endif" >
            @if($users->total()!=0)
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
@@ -31,7 +31,7 @@
                 <th >Name </th>
                 <th>College</th>
                 <th >Branch</th>
-                <th >Status</th>
+                <th >Phone</th>
               </tr>
             </thead>
             <tbody>
@@ -51,12 +51,8 @@
                   @endif</td>
                 
                 <td>
-                  @if($user->status==0)
-                    <span class="badge badge-secondary">Inactive</span>
-                  @elseif($user->status==1)
-                    <span class="badge badge-success">Active</span>
-                    @elseif($user->status==2)
-                    <span class="badge badge-warning">Blocked</span>
+                  @if($user->details->first()) 
+                  {{ ($user->details)?$user->details->phone:''  }}
                   @endif
                 </td>
               </tr>
@@ -74,6 +70,7 @@
       </nav>
 
     </div>
+    @if($colleges)
     <div class="col-12 col-md-4">
 
       <div class="table-responsive bg-white">
@@ -102,6 +99,7 @@
         </div>
 
     </div>
+    @endif
        </div>
 
 
