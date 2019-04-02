@@ -21,19 +21,7 @@
         <li>May 20th to May 31st  2019
           <ul>
            <li>Batch 1 - 9:00 am to 1:00 pm (open)</li>
-           <li>Batch 2 - 2:00 pm to 6:00 pm (open)</li> 
-          </ul>
-        </li> 
-        <li>June 3rd to June 14th  2019
-          <ul>
-           <li>Batch 3 - 9:00 am to 1:00 pm </li>
-           <li>Batch 4 - 2:00 pm to 6:00 pm </li> 
-          </ul>
-        </li> 
-        <li>June 17th to June 28th  2019
-          <ul>
-           <li>Batch 5 - 9:00 am to 1:00 pm </li>
-           <li>Batch 6 - 2:00 pm to 6:00 pm </li> 
+           <li>Batch 2 - 2:00 pm to 6:00 pm </li> 
           </ul>
         </li> 
        
