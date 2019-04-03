@@ -691,6 +691,16 @@ class AdminController extends Controller
                 $user->roles()->detach(37);
         }
 
+        if($request->get('coordinator')==1){
+            if(!$user->roles->contains(40))
+                $user->roles()->attach(40);
+        }
+
+        if($request->get('coordinator')==2){
+            if($user->roles->contains(40))
+                $user->roles()->detach(40);
+        }
+
         //Services
         $service_list =  Service::orderBy('created_at','desc ')
                         ->get()->pluck('id')->toArray();
@@ -910,6 +920,16 @@ class AdminController extends Controller
         if($request->get('ambassador')==2){
             if($user->roles->contains(37))
                 $user->roles()->detach(37);
+        }
+
+        if($request->get('coordinator')==1){
+            if(!$user->roles->contains(40))
+                $user->roles()->attach(40);
+        }
+
+        if($request->get('coordinator')==2){
+            if($user->roles->contains(40))
+                $user->roles()->detach(40);
         }
 
         //Services

@@ -11,7 +11,7 @@
 	<div class="row">
 		<div class="col-12 col-md-8">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-trophy" {{ $i=1}}></i> &nbsp; All Ambassadors ({{count($data['users'])}})
+			<i class="fa fa-trophy" {{ $i=1}}></i> &nbsp; All Ambassadors  & Coordinators({{count($data['users'])}})
 			</h1>
       <a href="{{ route('ambassador.connect') }}"><i class="fa fa-angle-double-left"></i> return to campus connect</a>
 

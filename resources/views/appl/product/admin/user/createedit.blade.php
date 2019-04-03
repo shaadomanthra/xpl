@@ -180,6 +180,15 @@
 
 
       <div class="form-group">
+        <label for="formGroupExampleInput ">Campus Coordinator</label>
+        <select class="form-control" name="coordinator">
+           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->first()->id!=40) selected @endif @endif @endif>No</option>
+          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->first()->id==40) selected @endif @endif @endif>Yes</option>
+         
+        </select>
+      </div>
+
+      <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
           <option value="1" @if(isset($user))@if($user->status==1) selected @endif @endif>Active</option>

@@ -32,14 +32,8 @@
 <div class="wrapper " >
     <div class="container pb-5" >  
       <div class="row">
-        <div class="col-12 col-md-3">
-            <div class="list-group">
-             <a href="#" class="list-group-item list-group-item-action active">Onboarding</a>
-             <a href="#" class="list-group-item list-group-item-action">Participation</a>
-             <a href="#" class="list-group-item list-group-item-action">Premium</a>
-            </div>
-        </div>
-        <div class="col-12 col-md-9">
+        
+        <div class="col-12 col-md-12">
             <div class="row">
               @foreach($branches as $k => $b)
                 <div class="col-12 col-md-4 mb-4">

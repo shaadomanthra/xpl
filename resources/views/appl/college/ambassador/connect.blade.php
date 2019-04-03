@@ -113,7 +113,7 @@
               <div class="card-body " style="background:#dfe6e9; border:1px solid #b2bec3;">
                 <div> </div>
                 <div class="">
-                  <h3 class="mb-4">Top Ambassadors &nbsp;
+                  <h3 class="mb-4">Top Ambassadors & Coordinators &nbsp;
                     <a href="{{ route('ambassador.list') }}">
                       <button class="btn btn-outline-dark btn-sm">view all</button>
                     </a>

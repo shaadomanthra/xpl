@@ -52,7 +52,7 @@
                             >
                            Profile
                              </a>
-                             @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','ambassador']))
+                             @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','ambassador','coordinator']))
                              <a class="dropdown-item"  href="{{ route('ambassador.connect')}}"
                             >
                            Campus Connect

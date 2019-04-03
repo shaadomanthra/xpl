@@ -31,7 +31,8 @@ class AmbassadorController extends Controller
         
 
         $users = \auth::user()->whereHas('roles', function ($query)  {
-                                $query->where('name', '=', 'Campus Ambassador');
+                                $query->where('name', '=', 'Campus Ambassador')->orWhere('name','=','Campus Coordinator');
+
                             })->get();
 
         $colleges = College::all();
@@ -173,7 +174,7 @@ class AmbassadorController extends Controller
         
 
         $users = \auth::user()->whereHas('roles', function ($query)  {
-                                $query->where('name', '=', 'Campus Ambassador');
+                                $query->where('name', '=', 'Campus Ambassador')->orWhere('name','=','Campus Coordinator');
                             })->get();
 
         $colleges = College::all();
@@ -232,7 +233,7 @@ class AmbassadorController extends Controller
         
 
         $users = \auth::user()->whereHas('roles', function ($query)  {
-                                $query->where('name', '=', 'Campus Ambassador');
+                                $query->where('name', '=', 'Campus Ambassador')->orWhere('name','=','Campus Coordinator');
                             })->get();
 
         $colleges = College::all();
@@ -347,12 +348,14 @@ class AmbassadorController extends Controller
     {
     	$college = \auth::user()->colleges()->first();
 
+        
     	$branches = array();
 
     	foreach($college->branches as $k=> $b){
-    		  $branches[$b->name] = \auth::user()->whereHas('colleges', function ($query) use ($college)  			{
-                                $query->where('name', '=', $college->name);
-                            })->whereHas('branches',function ($query) use ($b)  			{
+
+    		  $branches[$b->name] = $college->users()
+                        ->whereHas('branches',
+                            function ($query) use ($b) {
                                 $query->where('name', '=', $b->name);
                             })->count();
     	}

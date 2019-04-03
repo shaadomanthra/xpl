@@ -16,7 +16,7 @@ class AmbassadorPolicy
      */
      public function view(User $user)
     {
-        return $user->checkRole(['administrator','investor','patron','promoter','employee','marketing-manager','marketing-executive','manager','ambassador']);
+        return $user->checkRole(['administrator','investor','patron','promoter','employee','marketing-manager','marketing-executive','manager','ambassador','coordinator']);
     }
 
 
