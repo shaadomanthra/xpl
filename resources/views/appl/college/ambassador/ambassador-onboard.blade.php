@@ -11,7 +11,7 @@
 	<div class="row">
 		<div class="col-12 col-md-8">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-user" ></i> &nbsp; Ambassadors Onboarding Instructions 
+			<i class="fa fa-user" ></i> &nbsp; Ambassadors & Coordinators Onboarding Instructions 
 			</h1>
       <a href="{{ route('ambassador.connect') }}"><i class="fa fa-angle-double-left"></i> return to campus connect</a>
 
@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
-                      <p class="border bg-light p-3 mb-3"> This video gives a brief introduction about packetprep, its mission, details on 100 day Target TCS program, the role of campus ambassador and finally reasons to register. </p>
+                      <p class="border bg-light p-3 mb-3"> This video gives a brief introduction about packetprep, its mission, details on 100 day Target TCS program, the role of campus ambassador & coordinator and finally reasons to register. </p>
                     </div>
                 </div>
                 <h2> About Campus Connect</h2>
@@ -105,8 +105,8 @@
 
             <p class="border p-3"><b>Message</b><br>
               Hi friends,<br>
-              Great Opportunity for all of us to get prepared for TCS exam.<br><br>
-              PacketPrep, a training company is starting a free online course from 15th May. Also they are giving 3 month access to their high quality video lectures and practice questions.<br><br>
+              Great Opportunity !<br><Br>
+              PacketPrep, a training company is starting a free online course on aptitude and coding from 15th May. Also they are giving 3 month access to their high quality video lectures and practice questions.<br><br>
               You can use the following link to register<br>
               <a href="{{ route('student.eregister') }}?code={{\auth::user()->username}}">{{ route('student.eregister') }}?code={{ \auth::user()->username }}</a>
             </p>
