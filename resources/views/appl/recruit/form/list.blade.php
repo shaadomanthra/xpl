@@ -21,7 +21,7 @@
                   </a>
                   @if($form->user)
                   @foreach($form->user->roles()->get() as $k=> $r)
-                  <span class="badge badge-warning">{{ $r->name }}</span><br>
+                  <span class="badge @if($r->name=='Campus Ambassador') badge-warning @else badge-secondary @endif">{{ $r->name }}</span><br>
                   @endforeach
                   @endif
                 </td>
