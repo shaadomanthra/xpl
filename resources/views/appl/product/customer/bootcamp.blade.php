@@ -89,7 +89,7 @@
         <div class="col-12 col-md-4">
           <h1 class="mb-4"> Training Highlights</h1>
           <ul>
-            <li>You will learn the basics of PHP, MySql, HTML, CSS and JQuery. </li>
+            <li>You will learn PHP, MySql, HTML, CSS and JQuery. </li>
             <li> You will learn how to book domain name, hosting and deploying the code on global server</li>
             <li>The most critical aspect, how to integrate payment gateway for online transactions where money is directly sent to the bank account</li>
             <li> Small batch size and Personal Guidance </li>
@@ -99,6 +99,95 @@
         </div>
 
      </div>
+
+   </div>
+
+      <div class="bg-white p-4 border mb-4">
+    <h2 class="mb-4">Training Schedule </h2>
+
+        <div class="table-responsive ">
+          <table class="table table-bordered mb-0">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col" style="width: 10%">Day </th>
+                <th scope="col">Module</th>
+                <th scope="col">What you will Learn?</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <th scope="row">1</th>
+                <td> 20th May </td>
+                <td> Drafting Project Requirements</td>
+                <td> Understanding the importance of doing project requirement analysis, drawing storyboards for layouts, choosing flatcolorui for color scheme, page designs on paper and in photoshop.</td>
+              </tr>  
+
+              <tr>
+                <th scope="row">2</th>
+                <td> 21st May</td>
+                <td> Creating the layout with HTML,CSS and JAVASCRIPT</td>
+                <td>Converting the project draft to implementation using html and css, baiscs animations using javascript, usage  of library code like jquery. </td>
+              </tr>  
+
+              <tr>
+                <th scope="row">3</th>
+                <td> 22nd May </td>
+                <td> Responsive Website coding with BOOTSTRAP </td>
+                <td> Making the design adaptive for desktop, mobile and tablet devices. Bootstrap techonology baiscs and usage, foundation api basics and usage. </td>
+              </tr>  
+
+              <tr>
+                <th scope="row">4</th>
+                <td> 23rd May </td>
+                <td> PHP Basics</td>
+                <td>Writing clean code using PHP, procedural and object oriented code design, inserting php tags in html, core logic implementation</td>
+              </tr>  
+
+              <tr>
+                <th scope="row">5 </th>
+                <td> 24th May</td>
+                <td> MySQL Basics </td>
+                <td> Understanding how to use sql to make queries, data normalization, primary and foreign key importance, data coherence. </td>
+              </tr>  
+
+              <tr>
+                <th scope="row">6</th>
+                <td> 27th May </td>
+                <td> MVC Architecture for Application</td>
+                <td> Model,View and Controller architecture for request processing and data display in browser.</td>
+              </tr>  
+
+              <tr>
+                <th scope="row">7</th>
+                <td> 28th May</td>
+                <td> Login System with security </td>
+                <td>Form for registration, Form for login, security features like handling sql injection, cross site scripting and spam requests.</td>
+              </tr>   
+              <tr>
+                <th scope="row">8</th>
+                <td> 29th May</td>
+                <td> Ecommerce Module </td>
+                <td> Creaitng a gallery for products with checkout option, products and transactions table in sql, validation of payment receiving and delivering the service</td>
+              </tr> 
+              <tr>
+                <th scope="row">9</th>
+                <td> 30th May</td>
+                <td> Payment Gateway Integration</td>
+                <td> Working with Instamojo payment gateway api in php, connecting bank accounts for immediate withdrawl, trail transactions using API.</td>
+              </tr> 
+              <tr>
+                <th scope="row">10</th>
+                <td> 31st May</td>
+                <td> Deployment on Server</td>
+                <td>Registering a domian and hosting, Connecting domain to hosting with nameservers, usage of cpanel for server maintenance, uploading code using filezilla ftp, live website testing with console.</td>
+              </tr> 
+            </tbody>
+          </table>
+        </div>
+       
+
 
    </div>
 
