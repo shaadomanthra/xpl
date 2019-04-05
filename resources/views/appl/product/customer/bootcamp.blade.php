@@ -15,16 +15,20 @@
 			
 			</h1>
       <p>Build your first commercial web application with us at packetprep.  A great opportunity to utilize your summer time to build a great realtime project, where you will learn to write code from scratch to the end. </p>
-      <p> <b>Eligibility : </b> CSE & IT<br>
+      <p> <b>Eligibility : </b> Any Branch<br>
        <b> Batches :</b> 
        <ul>
         <li>May 20th to May 31st  2019
           <ul>
-           <li>Batch 1 - 9:00 am to 1:00 pm (open)</li>
+           <li>Batch 1 - 9:00 am to 1:00 pm </li>
            <li>Batch 2 - 2:00 pm to 6:00 pm </li> 
           </ul>
         </li> 
-       
+       <li>June 3rd to June 14th  2019
+          <ul>
+           <li>Batch 3 - 9:00 am to 1:00 pm </li>
+          </ul>
+        </li> 
         </ul>  
        
        <b> Location:</b> PacketPrep Office, Tarnaka, Hyderabad.<br>  
@@ -66,7 +70,7 @@
         <div class="col-4 col-md-2"><i class="fa fa-4x fa-rocket"></i></div>
         <div class="col-8 col-md-10">
           <h2> 40 hour Classroom Training</h2>
-          <p> It is 4hour/day intensive training for 10 days </p>
+          <p> It is 4hour/day intensive training for 10 days. (2 days extra for Non CS/IT students to teach basics)</p>
         </div>
       </div>
       <div class="row mb-4">
@@ -116,7 +120,12 @@
               </tr>
             </thead>
             <tbody>
-              
+              <tr>
+                <th scope="row"></th>
+                <td> 16th &17th May </td>
+                <td> Basics of programming (for Non CS/IT Students)</td>
+                <td> Programming concepts like conditional statements, interative loops, functions and datatypes. Code software installations. Errors and Debugging Methods. </td>
+              </tr> 
               <tr>
                 <th scope="row">1</th>
                 <td> 20th May </td>
