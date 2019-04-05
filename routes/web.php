@@ -17,7 +17,7 @@ use PacketPrep\Http\Middleware\RequestFilter;
 
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
-	Route::get('/', function(){ return view('welcome'); })->name('root');
+	Route::get('/', function(){ return view('welcome3'); })->name('root');
 	Route::post('/', 'Product\OrderController@callback');
 	Route::get('/instamojo', 'Product\OrderController@instamojo')->middleware('auth');
 	Route::get('/order_payment', 'Product\OrderController@instamojo_return');

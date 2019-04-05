@@ -33,6 +33,7 @@
        
        <b> Location:</b> PacketPrep Office, Tarnaka, Hyderabad.<br>  
 
+      
     </p>
      
       <div class="p-3 rounded mb-3" style="background: #f2f2f2">      
@@ -43,6 +44,8 @@
       <button class="btn btn-lg btn-success mb-3"> Reserve your seat now</button>
       </a>
 
+      <div class="p-3 bg-warning mb-3 rounded"><b>Note:</b><br> Students who need 4 or 5 weeks internship certificate can do a mini project with us FREE of cost (only for bootcamp participants) <a href="{{ route('bootcamp')}}#mini-project">more details here</a></div>
+
 		</div>
 		<div class="col-12 col-md-6">
 
@@ -52,6 +55,7 @@
 
   		</div>
 	</div>
+
 	</div>
 
 </div>
@@ -69,7 +73,7 @@
       <div class="row mb-4">
         <div class="col-4 col-md-2"><i class="fa fa-4x fa-rocket"></i></div>
         <div class="col-8 col-md-10">
-          <h2> 40 hour Classroom Training</h2>
+          <h2> 2 weeks - 40 hour Classroom Training</h2>
           <p> It is 4hour/day intensive training for 10 days. (2 days extra for Non CS/IT students to teach basics)</p>
         </div>
       </div>
@@ -201,16 +205,16 @@
    </div>
 
 
-     <div class="bg-white p-4 border mb-3">
-      <h1 class="bg-light border p-3 rounded mb-3"> Mini Projects</h1>
-      <p> Students who undergo training in coding bootcamp will also be given an opportunity to do a FREE mini project for academic purpose. Insterested students can select of the following projects, we will give training/implementation support for extra 10 days. And best team's code will be integrated to packetprep's platfrom with your names as credits at the bottom.</p>
+     <div id="mini-project" class="bg-white p-4 border mb-3">
+      <h1 class="bg-light border p-3 rounded mb-3"> Mini Projects (Optional) </h1>
+      <p> Students who undergo training in coding bootcamp will also be given an opportunity to do a FREE mini project for academic purpose. Interested students can select one of the following projects, we will give training/implementation support for extra 2 or 3 weeks (10 to 15 days). <br><p class="bg-warning p-3 rounded">The best team's code will be integrated to packetprep's platfrom with their names as credits at the bottom. This will be of great value to students who are applying for abroad universities or  core companies interview.</p></p>
       <div class="row">
         
         <div class="col-12 col-md-4">
           <h2 class="mb-4"> Social Wall</h2>
           <p>The Social Wall project is a client-server Web application built over an RDBMS. It is an application that runs on a portal site, in which different users (and user groups) can publish and revise daily journal entries, and these entries will be made public for others to view.  In essence, it gives everyone his or her own personal editorial column to publish to the world. </p>
           <a href="https://drive.google.com/file/d/1Ug0fCPyVAsSU2waxirNUZixRkfzeZHo8/view?usp=sharing">
-          <button class="btn btn-success"> Download Abstract</button>
+          <button class="btn btn-success mb-3"> Download Abstract</button>
         </a>
         </div>
 
@@ -218,7 +222,7 @@
           <h2 class="mb-4"> Q/A Forum</h2>
           <p>Everyone has questions to be answered. Our Question Answer Forum is the place where anyone can post a question and seek answers from the community. The best questions/answers can up voted and liked. This will the one stop platform for people to interact and answer users doubts. </p>
           <a href="https://drive.google.com/file/d/13VlC-wSG652h7jC6cALFsyUAIfk09RKt/view?usp=sharing">
-          <button class="btn btn-success"> Download Abstract</button>
+          <button class="btn btn-success mb-3"> Download Abstract</button>
         </a>
         </div>
         
@@ -226,7 +230,7 @@
           <h2 class="mb-4"> Job Aggregator</h2>
           <p>Sometimes it’s hard to find the right jobs for the right category. This project solves this problem by listing out the jobs/openings based on various parameters. And User can search through the listing based on salary, location, role, experience etc. including government jobs, and bank jobs listing. </p>
           <a href="https://drive.google.com/file/d/1wkpTTc5F1pWyDyUvUUfYV7l9VPevpij_/view?usp=sharing">
-          <button class="btn btn-success"> Download Abstract</button>
+          <button class="btn btn-success mb-3"> Download Abstract</button>
         </a>
         </div>
 
