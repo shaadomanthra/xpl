@@ -15,7 +15,7 @@
 			
 			</h1>
       <p>Build your first commercial web application with us at packetprep.  A great opportunity to utilize your summer time to build a great realtime project, where you will learn to write code from scratch to the end. </p>
-      <p> <b>Eligibility : </b> Any Branch<br>
+      <p> <b>Eligibility : </b> Btech All Branch, 1st yr to 4th yr<br>
        <b> Batches :</b> 
        <ul>
         <li>May 20th to May 31st  2019
