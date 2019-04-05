@@ -15,7 +15,7 @@
 			
 			</h1>
       <p>Build your first commercial web application with us at packetprep.  A great opportunity to utilize your summer time to build a great realtime project, where you will learn to write code from scratch to the end. </p>
-      <p> <b>Eligibility : </b> Btech All Branch, 1st yr to 4th yr<br>
+      <p> <b>Eligibility : </b> Btech All Branches, 1st year to 4th year<br>
        <b> Batches :</b> 
        <ul>
         <li>May 20th to May 31st  2019
@@ -124,7 +124,7 @@
                 <th scope="row"></th>
                 <td> 16th &17th May </td>
                 <td> Basics of programming (for Non CS/IT Students)</td>
-                <td> Programming concepts like conditional statements, interative loops, functions and datatypes. Code software installations. Errors and Debugging Methods. </td>
+                <td> Programming concepts like conditional statements, iterative loops, functions and datatypes. Code software installations. Errors and Debugging Methods. </td>
               </tr> 
               <tr>
                 <th scope="row">1</th>
