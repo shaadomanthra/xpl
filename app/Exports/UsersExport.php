@@ -16,20 +16,16 @@ class UsersExport implements FromCollection
     */
     public function collection()
     {
+
+        /*
     	$year_of_passing = '2020';
 
-        /*$data = User::whereHas('colleges', function ($query)  {
-                                $query->whereIn('name', ['Mahatma Gandhi Institute Of Technology']);
-                            })->whereHas('metrics', function ($query)  {
-                                $query->where('name', '=', 'MS in Abroad');
-                            })->get(); */
-        //dd($data);
+       
 
         $college = College::where('name','Mahatma Gandhi Institute Of Technology')->first();
         $userss = $college->users->pluck('id');
         $entry = DB::table('metric_user')->where('metric_id', 15)->whereIn('user_id',$userss)->pluck('user_id'); 
         
-        //$entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id');
         $users =  User::whereIn('id',$entry)->get();
     
         foreach($users as $k=>$u){
@@ -76,21 +72,13 @@ class UsersExport implements FromCollection
                     $users[$k]->branch = $u->branches()->first()->name;
                 }
 
-                //if($k==100)
-                  //  break;
   
-        }
-
-        /*
-        //$users = new UsersExport();
-        foreach($data as $k => $d){
-            $detail = User_Details::where('user_id',$d->id)->first();
-            if($detail){
-                $data[$k]->phone = $detail->phone;
-                $data[$k]->college = $d->colleges()->first()->name;
-                $data[$k]->branch = $d->branches()->first()->name;
-            }
         } */
+
+        $entry = DB::table('branch_user')->whereIn('branch_id', [9,10])->pluck('user_id'); 
+        $users =  User_Details::whereIn('user_id',$entry)->get();
+    
+      
 
         return $users;
     }
