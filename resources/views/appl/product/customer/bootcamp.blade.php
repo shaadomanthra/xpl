@@ -201,6 +201,38 @@
    </div>
 
 
+     <div class="bg-white p-4 border mb-3">
+      <h1 class="bg-light border p-3 rounded mb-3"> Mini Projects</h1>
+      <p> Students who undergo training in coding bootcamp will also be given an opportunity to do a FREE mini project for academic purpose. Insterested students can select of the following projects, we will give training/implementation support for extra 10 days. And best team's code will be integrated to packetprep's platfrom with your names as credits at the bottom.</p>
+      <div class="row">
+        
+        <div class="col-12 col-md-4">
+          <h2 class="mb-4"> Social Wall</h2>
+          <p>The Social Wall project is a client-server Web application built over an RDBMS. It is an application that runs on a portal site, in which different users (and user groups) can publish and revise daily journal entries, and these entries will be made public for others to view.  In essence, it gives everyone his or her own personal editorial column to publish to the world. </p>
+          <a href="https://drive.google.com/file/d/1Ug0fCPyVAsSU2waxirNUZixRkfzeZHo8/view?usp=sharing">
+          <button class="btn btn-success"> Download Abstract</button>
+        </a>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <h2 class="mb-4"> Q/A Forum</h2>
+          <p>Everyone has questions to be answered. Our Question Answer Forum is the place where anyone can post a question and seek answers from the community. The best questions/answers can up voted and liked. This will the one stop platform for people to interact and answer users doubts. </p>
+          <a href="https://drive.google.com/file/d/13VlC-wSG652h7jC6cALFsyUAIfk09RKt/view?usp=sharing">
+          <button class="btn btn-success"> Download Abstract</button>
+        </a>
+        </div>
+        
+        <div class="col-12 col-md-4">
+          <h2 class="mb-4"> Job Aggregator</h2>
+          <p>Sometimes it’s hard to find the right jobs for the right category. This project solves this problem by listing out the jobs/openings based on various parameters. And User can search through the listing based on salary, location, role, experience etc. including government jobs, and bank jobs listing. </p>
+          <a href="https://drive.google.com/file/d/1wkpTTc5F1pWyDyUvUUfYV7l9VPevpij_/view?usp=sharing">
+          <button class="btn btn-success"> Download Abstract</button>
+        </a>
+        </div>
+
+     </div>
+
+   </div>
    
 
    
