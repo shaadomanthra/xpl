@@ -11,6 +11,8 @@ use PacketPrep\Models\User\User_Details;
 use PacketPrep\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use PacketPrep\Mail\CodingBootcamp;
 
 class TeamController extends Controller
 {
@@ -64,6 +66,37 @@ class TeamController extends Controller
         
 
         return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+    public function bootcampmail(Request $r) 
+    {
+        $start = $r->get('start');
+        $end = $r->get('end');
+
+
+        $entry = DB::table('branch_user')->whereIn('branch_id', [9,10])->pluck('user_id'); 
+        $users =  User::whereIn('id',$entry)->get();
+
+        if($start){
+            for($i=$start;$i<$end;$i++){
+            $user = $users[$i];
+            
+            if($user->client_slug!=3){
+                echo $user->name.'<br>';
+                Mail::to($user->email)->send(new CodingBootcamp($user));
+            }
+
+            $user->client_slug = 3;
+            $user->save();
+
+            } 
+        }else{
+            echo "Enter the start and ending points";
+        }
+        
+
+        
+        
     }
 
 

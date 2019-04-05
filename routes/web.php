@@ -102,6 +102,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/apply', function () { return view('welcome'); })->name('apply');
 	Route::get('team','User\TeamController@index')->name('team');
 	Route::get('user/export','User\TeamController@export')->name('export')->middleware('auth');
+
+	Route::get('user/bootcampmail','User\TeamController@bootcampmail')->name('bootcampmail')->middleware('auth');
 	
 	Route::get('/share', function () { 
 
