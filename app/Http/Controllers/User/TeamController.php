@@ -83,6 +83,7 @@ class TeamController extends Controller
             
             if($user->client_slug!=3){
                 echo $user->name.'<br>';
+                $user->email = str_replace(' ', '',  $user->email);
                 Mail::to($user->email)->send(new CodingBootcamp($user));
             }
 
