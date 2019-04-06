@@ -100,7 +100,7 @@ class AdminController extends Controller
         foreach($data['active'] as $k=>$u){
             $data['top'][$k] = User::where('id',$u->user_id)->first();
             $data['count'][$k]= $u->count;
-            if($k==4)
+            if($k==19)
                 break;
         }
 
