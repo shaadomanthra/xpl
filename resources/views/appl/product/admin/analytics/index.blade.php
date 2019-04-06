@@ -70,6 +70,7 @@
                 <th scope="col">#</th>
                 <th scope="col" style="width: 10%">Name </th>
                 <th scope="col">College</th>
+                <th scope="col">Branch</th>
                 <th scope="col">Questions Solved</th>
               </tr>
             </thead>
@@ -79,6 +80,7 @@
                 <th scope="row">{{ ($k+1) }}</th>
                 <td> {{$u->name }}</td>
                 <td> {{ $u->colleges->first()->name}}</td>
+                <td> {{ $u->branches->first()->name}}</td>
                 <td> {{ $data['count'][$k] }}</td>
               </tr> 
               @endforeach
