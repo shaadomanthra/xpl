@@ -15,6 +15,7 @@ use PacketPrep\Models\User\User_Details;
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\College\Zone;
 use PacketPrep\Models\College\Ambassador;
+use PacketPrep\Models\Course\Practice;
 use PacketPrep\Models\College\Service;
 use PacketPrep\Models\College\Metric;
 use PacketPrep\Models\College\Branch;
@@ -82,6 +83,32 @@ class AdminController extends Controller
                     ->with('zones',$zones);
     }
 
+    public function analytics(){
+
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+
+        $data = array();
+        $data['solved'] = Practice::count();
+        $data['active'] = DB::table('practices')
+                 ->select('user_id', DB::raw('count(*) as count'))
+                 ->groupBy('user_id')
+                 ->orderBy('count','desc')
+                 ->get();
+        foreach($data['active'] as $k=>$u){
+            $data['top'][$k] = User::where('id',$u->user_id)->first();
+            $data['count'][$k]= $u->count;
+            if($k==4)
+                break;
+        }
+
+        return view('appl.product.admin.analytics.index')
+                    ->with('data',$data);
+
+
+    }
 
     /**
      * Show the form for creating a new resource.

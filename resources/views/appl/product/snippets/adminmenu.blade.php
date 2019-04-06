@@ -8,6 +8,7 @@
 	<a href="{{ route('product.index')}}" class="list-group-item list-group-item-action {{ request()->is('product*') ? 'active' : ''}}"><i class="fa fa-inbox"></i> Products</a>
 	<a href="{{ route('job.index')}}" class="list-group-item list-group-item-action {{ request()->is('job*') ? 'active' : ''}}"><i class="fa fa-list"></i> Jobs</a>
 	<a href="{{ route('order.list')}}" class="list-group-item list-group-item-action {{ request()->is('admin/transactions*') ? 'active' : ''}}"><i class="fa fa-list"></i> Transactions</a>
+	<a href="{{ route('admin.analytics')}}" class="list-group-item list-group-item-action {{ request()->is('admin/analytics*') ? 'active' : ''}}"><i class="fa fa-bar-chart"></i> Analytics</a>
 	<a href="{{ route('material')}}" class="list-group-item list-group-item-action {{ request()->is('material') ? 'active' : ''}}"><i class="fa fa-telegram"></i> Material</a>
 	<a href="{{ route('exam.index')}}" class="list-group-item list-group-item-action {{ request()->is('exam') ? 'active' : ''}}"><i class="fa fa-th"></i> Exams</a>
 	<a href="{{ route('coupon.index')}}" class="list-group-item list-group-item-action {{ request()->is('coupon') ? 'active' : ''}}"><i class="fa fa-bars"></i> Coupons</a>

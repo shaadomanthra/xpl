@@ -43,6 +43,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/transactions', 'Product\OrderController@transactions')->name('order.transactions')->middleware('auth');
 	Route::get('/transactions/{order_id}', 'Product\OrderController@transaction')->name('order.transaction')->middleware('auth');
 	Route::get('/admin/transactions', 'Product\OrderController@list_transactions')->name('order.list');
+	Route::get('/admin/analytics', 'Product\AdminController@analytics')->name('admin.analytics');
 	Route::get('/admin/transactions/{order_id}', 'Product\OrderController@show_transaction')->name('order.show');
 	Route::get('/admin/buy', 'Product\OrderController@buycredits')->name('order.buy');
 	Route::get('/admin/ordersuccess', 'Product\OrderController@ordersuccess')->name('order.success');

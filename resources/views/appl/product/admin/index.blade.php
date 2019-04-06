@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title', 'Admin | PacketPrep')
+@section('description', 'Packetprep Admin page data')
+@section('keywords', 'packetprep, admin page')
 @section('content')
 
 
