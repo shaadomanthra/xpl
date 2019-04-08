@@ -7,8 +7,12 @@ use PacketPrep\Http\Controllers\Controller;
 
 class CustomerController extends Controller
 {
-    
 
+	public function development(Request $request){
+
+    	return view('appl.product.customer.development');
+    }
+    
     public function bootcamp(Request $request){
 
     	return view('appl.product.customer.bootcamp');

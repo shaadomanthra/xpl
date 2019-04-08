@@ -75,7 +75,7 @@ class UsersExport implements FromCollection
   
         } */
 
-        $entry = DB::table('branch_user')->whereIn('branch_id', [9,10])->pluck('user_id'); 
+        $entry = DB::table('branch_user')->whereIn('branch_id', [11,12,13,14,15,16,17,18])->pluck('user_id'); 
         $users =  User_Details::whereIn('user_id',$entry)->get();
     
       
