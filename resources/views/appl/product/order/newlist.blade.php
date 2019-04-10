@@ -18,7 +18,7 @@
                 <td>
                   <a href=" {{ route('order.transaction',$order->order_id) }} ">
                   {{ $order->order_id }}
-                  </a>
+                  </a> @if($order->coupon) <br>coupon - {{ $order->coupon }} @endif
                 </td>
                  <td>{{ (isset($order->user->name))?$order->user->name:'-' }}</td>
                 <td>{{ (isset($order->product->name))?$order->product->name:'-' }}</td>

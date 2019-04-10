@@ -11,11 +11,11 @@
 	<div class="row">
 		<div class="col-12 col-md-6">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-gg"></i> &nbsp;Web Design and Web Development
+			<i class="fa fa-gg"></i> &nbsp;  Web Design &   Web Development
 			
 			</h1>
 			<p class="rounded p-1" style="background: #c7ecee">Certificate Program with Placement Assistance</p>
-      <p>Placement Oriented industrial training program in web design and web development with LIVE project. Through this program student will gain deep knowledge in front-end technologies like HTML,CSS,JQUERY and Scripting language PHP and Database MySql. Also student is given training in writing good resume and handling interviews effectively, and given a chance to attend 10 company interviews.</p>
+      <p>Placement Oriented industrial training program in web design and web development with LIVE project. Through this program student will gain deep knowledge in web desining - frontend technologies like HTML,CSS,JQUERY and Web development - Scripting language PHP and Database MySql. Also students are given training in writing good resume and handling interviews effectively, and given a chance to attend 10 company interviews.</p>
       <p> 
        <b> Batches:</b>  From June 3rd 2019 onwards<br>
        
@@ -31,7 +31,7 @@
       </div>
       <div class="bg-light p-3 border rounded mb-3">
         <h3> Reserve your seat now</h3>
-      <p> Discount available for first 10 students. <br>For more details contact : <br>Mr. Syamson - Business Development Officer <br>+91 </p>
+      <p>For more details contact : <br>Mr. Syamson - Business Development Officer <br>+91 97034 49662 </p>
     </div>
 
       
@@ -57,7 +57,7 @@
    
    		<div class="row">
    			<div class="col-12 col-md-4">
-   				<div class="p-3 mb-4 rounded" style="background: #ffbe76;border:1px solid #f0932b;">
+   				<div class="p-3 mb-4 text-white rounded" style="background: #3c6382;border:1px solid #0a3d62;">
    					<h3> Technology Training</h3>
    					<p> You will learn technolgies like HTML,CSS, JQUERY, Bootstrap and Foundation Api,
    					PHP, Wordpress, Joomla, Laravel, MySql, PhpMyAdmin and many more.</p>
@@ -65,14 +65,14 @@
    				</div>
    			</div>
    			<div class="col-12 col-md-4">
-   				<div class="p-3 mb-4 rounded" style="background: #ff7979;border:1px solid #eb4d4b;">
+   				<div class="p-3 mb-4 text-white rounded" style="background: #54a0ff;border:1px solid #2e86de;">
    					<h3> Interview Skills</h3>
    					<p> You will learn how to write good resume, handling group discussion and JAM round, then personal interview. You will be trained on maintaining confidence and etiquette.</p>
 
    				</div>
    			</div>
    			<div class="col-12 col-md-4">
-   				<div class="p-3 mb-4 rounded" style="background: #badc58;border:1px solid #6ab04c;">
+   				<div class="p-3 mb-4 text-white rounded" style="background: #38ada9;border:1px solid #079992;">
    					<h3> Placement Assistance</h3>
    					<p> After the intensive training, through us you will apply for atleast 10 companies. We will make sure you attend the interview with confidence and clear them.</p>
 
@@ -99,9 +99,37 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+            	<tr>
                 <th scope="row"> 1st Month</th>
-                <td> Front-end Technologies</td>
+                <td> Graphic Designing</td>
+                <td> 
+                	<p>
+                		<h3>Photoshop</h3>
+                		<ol>
+                			<li>Graphic Design Concepts</li>
+							<li>Typography and text effects</li>
+							<li> Creating print advertisements like brochures, phamplets etc</li>
+							<li>Editing and retouching images</li>
+							<li>Logo Designing</li>
+							<li>Print design layouts</li>
+							<li>Creating a digital design portfolio</li>
+                		</ol>
+                	</p> 
+
+                	<p>
+                		<h3>Interview Skills - Resume Building</h3>
+                		<ol>
+                			<li>How to write a great resume</li>
+							<li>Importance of skills and proficiency</li>
+							<li>Applying for top companies</li>
+                		</ol>
+                	</p> 
+                	
+                </td>
+              </tr> 
+              <tr>
+                <th scope="row"> 2nd Month</th>
+                <td> Web Designing - Frontend Technologies</td>
                 <td> 
                 	<p>
                 		<h3>HTML 5</h3>
@@ -116,7 +144,7 @@
                 		</ol>
                 	</p> 
                 	<p>
-                		<h3>CSS 3</h3>
+                		<h3>CSS 3 </h3>
                 		<ol>
                 			<li> Introduction CSS</li>
                 			<li> Styling types - Inline, internal and external</li>
@@ -125,25 +153,120 @@
                 			<li> Dynamic Properties - Box layouts, animations</li>
                 		</ol>
                 	</p> 
+                	<p>
+                		<h3>Javascript & Jquery</h3>
+                		<ol>
+                			<li> Introduction JavaScript and Jquery </li>
+                			<li> Syntax, Comments  and Types</li>
+                			<li> Rules in JavaScript & JQuery</li>
+                			<li> Functions ,Variables, Events, alert, operators, Statements, Loops, array, strings</li>
+                			<li> Form and feild Validations </li>
+                			<li> Animated Gallery and Slideshows</li>
+                		</ol>
+                	</p> 
+
+                	<p>
+                		<h3>Bootstrap v4</h3>
+                		<ol>
+                			<li> Introduction Bootstrap Framework</li>
+                			<li> View Port, Grid system, Media queries</li>
+                			<li> Typography, Components </li>
+                			<li> Themes and Utilities</li>
+                		</ol>
+                	</p> 
+
+                	<p>
+                		<h3>Interview Skills - JAM Session</h3>
+                		<ol>
+                			<li>How to handle JAM sessions</li>
+							<li> Tips and Tricks for effective talks</li>
+                		</ol>
+                	</p> 
+
                 </td>
               </tr> 
               <tr>
-                <th scope="row">2nd Month</th>
-                <td> Drafting Project Requirements</td>
-                <td> Understanding the importance of doing project requirement analysis, drawing storyboards for layouts, choosing flatcolorui for color scheme, page designs on paper and in photoshop.</td>
-              </tr>  
-
-              <tr>
-                <th scope="row">3rn Month</th>
-                <td> Creating the layout with HTML,CSS and JAVASCRIPT</td>
-                <td>Converting the project draft to implementation using html and css, baiscs animations using javascript, usage  of library code like jquery. </td>
+                <th scope="row">3rd Month</th>
+                <td> Web Development - Backend Technologies</td>
+                <td> 
+                	<p>
+                		<h3>PHP 7</h3>
+                		<ol>
+                			<li> Introduction to PHP</li>
+                			<li> Installing wamp or xampp</li>
+                			<li> Syntax, comments, variables</li>
+                			<li> Strings, Arrays, Loops, Form elements</li>
+                			<li> Sessions and Cookies</li>
+                			<li> File management</li>
+                			<li> Server management</li>
+                		</ol>
+                	</p> 
+                	<p>
+                		<h3>MySQL</h3>
+                		<ol>
+                			<li> MySQL Database Introduction</li>
+							<li>PHP my Admin, PHP MySQL Integration</li>
+							<li>Connecting Database, Creating Database</li>
+							<li> Creation, Insertion, Deletion of records</li>
+							<li> Adavanced database queries like inner and outer join, keys etc</li>
+                		</ol>
+                	</p> 
+                	<p>
+                		<h3>Interview Skills - Group Discussion</h3>
+                		<ol>
+                			<li>How to handle Group Discussion sessions</li>
+							<li> Do's and Dont's in GD</li>
+                		</ol>
+                	</p> 
+                	
+                </td>
               </tr>  
 
               <tr>
                 <th scope="row">4th Month</th>
-                <td> Responsive Website coding with BOOTSTRAP </td>
-                <td> Making the design adaptive for desktop, mobile and tablet devices. Bootstrap techonology baiscs and usage, foundation api basics and usage. </td>
+                <td> Project Work</td>
+                <td>
+                	<p>
+                		<h3>Personal Website</h3>
+                		<ol>
+                			<li> Writing the project draft</li>
+                			<li> Creating project template</li>
+                			<li> Open Layouts with Data</li>
+                			<li> Contact & Gallery pages </li>
+                		</ol>
+                	</p> 
+                	<p>
+                		<h3>Contacts Management App</h3>
+                		<ol>
+                			<li> Writing the project draft</li>
+                			<li> Frontend layouts</li>
+                			<li> Backend database design</li>
+                			<li> Core project integration</li>
+                			<li> Testting after deployment</li>
+                		</ol>
+                	</p> 
+                	<p>
+                		<h3>Ecommerce website</h3>
+                		<ol>
+                			<li> Writing the project draft</li>
+                			<li> Shopping cart pages</li>
+                			<li> Checkout page</li>
+                			<li> Payment gateway integration</li>
+                			<li> Testing after deployment</li>
+                		</ol>
+                	</p> 
+                	<p>
+                		<h3>Interview Skills - Personal Interview</h3>
+                		<ol>
+                			<li> Importance of Body language</li>
+							<li>Answering questions with confidence</li>
+							<li> How to clear personal interview round</li>
+                		</ol>
+                	</p> 
+                </td>
               </tr>  
+
+              
 
     
             </tbody>
