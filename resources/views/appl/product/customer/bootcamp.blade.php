@@ -27,6 +27,13 @@
        <li>June 3rd to June 14th  2019
           <ul>
            <li>Batch 3 - 9:00 am to 1:00 pm (Open)</li>
+           <li>Batch 4 - 2:00 am to 6:00 pm (Open)</li>
+          </ul>
+        </li> 
+        <li>June 17th to June 29th  2019
+          <ul>
+           <li>Batch 5 - 9:00 am to 1:00 pm </li>
+           <li>Batch 6 - 2:00 am to 6:00 pm </li>
           </ul>
         </li> 
         </ul>  
