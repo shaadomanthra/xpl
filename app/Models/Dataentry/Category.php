@@ -95,9 +95,13 @@ class Category extends Model
                    if(count($category->category_tag_questions($category,session('exam')))!=0)
                     $d = $d.
                         '<a href="'.route('course.question',[$options['project']->slug,$category->slug,''])
-                        .'"><span class="badge badge-warning"> Practice '.count(Category::category_tag_questions($category,session('exam'))).'Q</span></a> </li>'; 
-                    else
-                    $d=$d.'</li>';
+                        .'"><span class="badge badge-warning"> Practice '.count(Category::category_tag_questions($category,session('exam'))).'Q</span></a> '; 
+                    
+
+                if($category->video_desc)
+                $d = $d.'<div class="pt-3 title-normal">'.$category->video_desc.'</div>';
+                else
+                    $d = $d.'</li>';
 
                }elseif($category->pdf_link){
                     $icon = '<i class="fa fa-lock"></i>';
