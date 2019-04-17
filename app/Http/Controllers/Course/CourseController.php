@@ -101,6 +101,9 @@ class CourseController extends Controller
     {
         $course = Course::where('slug',$id)->first();
         
+        if(!$course)
+            abort('404','Course Not Found');
+        
         $p = null;
         foreach($course->products as $product)
         {
