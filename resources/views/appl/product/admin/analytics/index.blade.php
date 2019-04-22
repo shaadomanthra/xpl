@@ -53,7 +53,7 @@
             <div class="col-4"><div class="mt-2"><i class="fa fa-font-awesome fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
             <div class="col-8">
             <div class="  " style="color: rgba(127, 166, 198, 0.93)">
-            Questions Attempted <div style="font-size: 18px;font-weight: 900;color:rgba(127, 166, 198, 1)">{{ $data['solved']}} / {{ $data['total'] }} </div>
+            Questions Attempted <div style="font-size: 18px;font-weight: 900;color:rgba(127, 166, 198, 1)">{{ $data['solved']}} @if(isset($data['user']))/ {{ $data['total'] }} @endif </div>
             </div>
 
             </div>
