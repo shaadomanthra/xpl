@@ -52,6 +52,8 @@
 
   <dt class="col-sm-5">Username</dt>
   <dd class="col-sm-7">{{ $user->username}}</dd>
+  <dt class="col-sm-5">Referral Link</dt>
+  <dd class="col-sm-7">https://packetprep.com/eregister?code={{ $user->username}}</dd>
   <dt class="col-sm-5">Email</dt>
   <dd class="col-sm-7">
     {{ $user->email }}
