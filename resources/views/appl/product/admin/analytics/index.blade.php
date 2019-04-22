@@ -37,12 +37,7 @@
           <br> College: <b>@if($data['college']) {{$data['college']->name }}@else All Colleges @endif</b> 
           <br> Branch: <b>@if($data['branch']) {{$data['branch']->name }}@else All Branches @endif</b>
 
-          <hr>
-          <p>
-            @foreach($data['t'] as $k=>$t)
-              Time lapse {{$k}}: {{ $t}}<br>
-            @endforeach
-          </p> 
+         
           </p>
         
 
@@ -141,13 +136,15 @@
             	@foreach($data['top'] as $k=>$u)
               <tr>
                 <th scope="row">{{ ($k+1) }}</th>
-                <td> {{$u->name }}</td>
+                <td> <a href="{{ route('admin.analytics')}}?student={{$u->id}}">{{$u->name }}</a></td>
                 <td> @if($u->colleges->first())
-                  {{ $u->colleges->first()->name}}
+                  <a href="{{ route('admin.analytics')}}?college={{$u->colleges->first()->id}}">{{ $u->colleges->first()->name}}</a>
                     @endif
                 </td>
                 <td> @if($u->branches->first())
+                  <a href="{{ route('admin.analytics')}}?branch={{$u->branches->first()->id}}">
                   {{ $u->branches->first()->name}}
+                </a>
                   @endif
                 </td>
                 <td> {{ $data['count'][$k] }}</td>

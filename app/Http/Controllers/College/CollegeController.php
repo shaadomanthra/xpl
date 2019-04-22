@@ -263,25 +263,31 @@ class CollegeController extends Controller
             
         }else{
 
+            $user_college = $obj->users->pluck('id')->toArray();
+
             foreach($obj->branches as $b){
-            $data['branches'][$b->name] = $obj->users()->whereHas('branches', function ($query) use ($b) {
+                $user_branch = $b->users->pluck('id')->toArray();
+                $data['branches'][$b->name] = count(array_intersect($user_college, $user_branch));
+            /*$data['branches'][$b->name] = $obj->users()->whereHas('branches', function ($query) use ($b) {
                             $query->where('name', '=', $b->name);
-                        })->count(); 
+                        })->count(); */
             }
 
             foreach($metrics as $m){
-                $data['metrics'][$m->name] = $obj->users()->whereHas('metrics', function ($query) use ($m) {
+                $user_metric = $m->users->pluck('id')->toArray();
+                $data['metrics'][$m->name]= count(array_intersect($user_college, $user_metric));
+                /*$data['metrics'][$m->name] = $obj->users()->whereHas('metrics', function ($query) use ($m) {
                                 $query->where('name', '=', $m->name);
-                            })->count(); 
+                            })->count(); */
             }
 
             $data['users']['all'] = $obj->users()->count();
-            $data['users']['pro'] =  $obj->users()->whereHas('services', function ($query) use ($m) {
+            $data['users']['pro'] =  0;/*$obj->users()->whereHas('services', function ($query) use ($m) {
                                 $query->where('name', '=', 'Pro Access');
-                            })->count();
-            $data['users']['premium'] = $obj->users()->whereHas('services', function ($query) use ($m) {
+                            })->count();*/
+            $data['users']['premium'] = 0;/*$obj->users()->whereHas('services', function ($query) use ($m) {
                                 $query->where('name', '=', 'Premium Access');
-                            })->count();
+                            })->count();*/
             
         }
 

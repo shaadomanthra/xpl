@@ -5,6 +5,8 @@ namespace PacketPrep\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Client;
+use PacketPrep\Models\Dataentry\Question;
+use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\User\Role;
@@ -95,10 +97,13 @@ class AdminController extends Controller
         $course_id = array();
         if($r->get('course')){
             $course_id = Course::where('id',$r->get('course'))->pluck('id');
+            $project_id = Project::where('slug',$data['course']->slug)->pluck('id')->toArray();
             $data['course'] = Course::where('id',$r->get('course'))->first();
         }else{
             $course_id = Course::all()->pluck('id');
+            $course_slug = Course::all()->pluck('slug');
             $data['course'] = null;
+            $project_id = Project::whereIn('slug',$course_slug)->pluck('id')->toArray();
         }
             
         
@@ -113,7 +118,7 @@ class AdminController extends Controller
             $data['branch'] = $user->branches->first();
             $data['solved'] = Practice::whereIn('course_id',$course_id)->where('user_id',$user->id)->count();
 
-            $data['total'] = '10000';
+            $data['total'] = Question::whereIn('project_id',$project_id)->count();
             $data['time'] = round(Practice::whereIn('course_id',$course_id)->where('user_id',$user->id)->avg('time'),2);
 
             $data['sum'] = round(Practice::whereIn('course_id',$course_id)->where('user_id',$user->id)->sum('accuracy'),2);
@@ -164,7 +169,7 @@ class AdminController extends Controller
             $data['t'][3] = (microtime(true) - $lasttime)/60;
             $lasttime = microtime(true) ;
 
-            $data['total'] = '10000';
+            $data['total'] = Question::whereIn('project_id',$project_id)->count();
             $data['time'] = round(Practice::whereIn('course_id',$course_id)->whereIn('user_id',$users)->avg('time'),2);
 
             $data['t'][4] = (microtime(true) - $lasttime)/60;
