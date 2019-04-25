@@ -97,8 +97,9 @@ class AdminController extends Controller
         $course_id = array();
         if($r->get('course')){
             $course_id = Course::where('id',$r->get('course'))->pluck('id');
-            $project_id = Project::where('slug',$data['course']->slug)->pluck('id')->toArray();
+            
             $data['course'] = Course::where('id',$r->get('course'))->first();
+            $project_id = Project::where('slug',$data['course']->slug)->pluck('id')->toArray();
         }else{
             $course_id = Course::all()->pluck('id');
             $course_slug = Course::all()->pluck('slug');

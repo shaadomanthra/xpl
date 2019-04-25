@@ -107,6 +107,67 @@
 
         
 
+<div class="mb-3  p-5" style="background: rgba(204, 232, 255, 0.3);border:1px solid #8db8dc4d;">
+  <div class="row">
+      <div class="col-12 col-md-6">
+        <h1> @if($data['course']) {{ $data['course']->name }}@else All Courses @endif</h1>
+         
+        <img class="mb-5" src="@if($data['course'])@if(isset($data['course']->image)) {{ $data['course']->image }} @endif @endif" width="150px" />
+        <p>Branch</p>
+        <h3>@if($data['branch']) {{ $data['branch']->name }}@else All Branches @endif</h3>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="col-12 mb-3 mb-md-0 "> 
+          <div class="mb-3">
+          <div class="row border  rounded p-2 pt-3 pb-3" style="background: rgba(204, 232, 255, 0.3);border:1px solid #8db8dc4d;">
+            <div class="col-3"><div class="mt-2"><i class="fa fa-font-awesome fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
+            <div class="col-9">
+            <div class="  " style="color: rgba(127, 166, 198, 0.93)">
+            Questions Attempted <div style="font-size: 18px;font-weight: 900;color:rgba(127, 166, 198, 1)">{{ $data['solved']}} @if(isset($data['user']))/ {{ $data['total'] }} @endif </div>
+            </div>
+
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="col-12 mb-3 mb-md-0 "> 
+          <div class="mb-3">
+          <div class="row  rounded p-2 pt-3 pb-3" style="background: rgba(204, 232, 255, 0.3);border:1px solid #8db8dc4d;">
+            <div class="col-3"><div class="mt-2"><i class="fa fa-area-chart fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
+            <div class="col-9">
+            <div class="  " style="color: rgba(127, 166, 198, 0.93)">
+            Performance Accuracy<div style="font-size: 18px;font-weight: 900;color:rgba(127, 166, 198, 1)">@if($data['acurracy'])
+            {{ $data['acurracy']}} %
+          @else
+          --
+          @endif </div>
+            </div>
+
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="col-12 "> 
+          <div class="mb-3">
+          <div class="row border  rounded p-2 pt-3 pb-3" style="background: rgba(204, 232, 255, 0.3);border:1px solid #8db8dc4d;">
+            <div class="col-3"><div class="mt-2"><i class="fa fa-clock-o fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
+            <div class="col-9">
+            <div class="  " style="color: rgba(127, 166, 198, 0.93)">
+            Average Time per question<div style="font-size: 18px;font-weight: 900;color:rgba(127, 166, 198, 1)">@if($data['time'])
+            {{ $data['time']}} sec
+          @else
+          --
+          @endif </div>
+            </div>
+
+            </div>
+          </div>
+        </div>
+        </div>
+
+      </div>
+  </div>
+</div>
         <div class="row no-gutters">
 
           <div class="col-12 col-md-12">
