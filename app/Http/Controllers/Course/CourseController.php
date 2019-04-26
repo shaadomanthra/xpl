@@ -213,9 +213,10 @@ class CourseController extends Controller
                     $categories_[$cat]['incorrect_percent'] = $categories_[$cat]['incorrect']/$categories_[$cat]['total']*100;
                 }
         }
-        //dd($categories_);
         
-        //dd($analysis);
+
+        //check for tests
+
 
         $course->keywords = $course->name;
         $course->description = strip_tags($course->description);
@@ -227,6 +228,15 @@ class CourseController extends Controller
             foreach($node as $k=>$n){
                 $course->keywords = $course->keywords.', '.$n->name;
                 $node[$k]['children'] = Category::defaultOrder()->descendantsOf($n->id)->toTree();
+                foreach($node[$k]['children'] as $m => $c){
+                    if($c->test_link){
+                        $exam = Exam::where('slug',$c->test_link)->first();
+                        if(!$exam->attempted())
+                        $node[$k]['children'][$m]['try'] = 1;
+                        else
+                        $node[$k]['children'][$m]['try'] = 0;
+                    }
+                }
             }
             
             /*

@@ -202,6 +202,18 @@
                      	<span class="badge badge-warning">Practice {{($categories[$c->id]['correct']+$categories[$c->id]['incorrect']) }} / {{$categories[$c->id]['total'] }}</span>
                      	</a>
                      	@endif
+                     	@if($c->test_link)
+                     	@if($c->try)
+                     	<a href="{{ route('assessment.instructions',$c->test_link)}}">
+                     	<span class="badge badge-success"> Try </span>
+                     	</a>
+                     	@else
+                     	<a href="{{ route('assessment.analysis',$c->test_link)}}">
+                     	<span class="badge badge-primary"> Analysis </span>
+                     	</a>
+                     	@endif
+                     	
+                     	@endif
                      	
                      	@if($categories[$c->id]['total']!=0)
                      	<div class="row mt-3">
