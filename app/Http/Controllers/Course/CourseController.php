@@ -260,6 +260,7 @@ class CourseController extends Controller
 
         if($category->test_link){
             $exam = Exam::where('slug',$category->test_link)->first();
+            $category->video_desc = $exam->instructions;
             if(!$exam->attempted())
                 $category->test_link = url('/').'/test/'.$category->test_link .'/instructions';
             else{
