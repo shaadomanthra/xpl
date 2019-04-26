@@ -2,6 +2,8 @@
 
 @if($category->pdf_link)
 @section('title', 'Download '.$category->name.' | PacketPrep')
+@elseif($category->test_link)
+@section('title', 'Attempt '.$category->name.' | PacketPrep')
 @else
 @section('title', 'Learn '.$category->name.' | PacketPrep')
 @endif
