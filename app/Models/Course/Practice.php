@@ -12,6 +12,17 @@ class Practice extends Model
         'response',
         'answer',
         'accuracy',
+        'time',
+        'course_id',
+        'category_id',
         // add all other fields
     ];
+
+    public function users(){
+    	return $this->belongsTo('PacketPrep\User');
+    }
+
+    public function question(){
+    	return $this->belongsTo('PacketPrep\Models\Dataentry\Question','qid','id');
+    }
 }

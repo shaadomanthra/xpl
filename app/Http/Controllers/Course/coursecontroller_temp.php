@@ -163,8 +163,6 @@ class CourseController extends Controller
             $categories_[$cat]['correct'] =0;
             $categories_[$cat]['incorrect']  =0;
             $categories_[$cat]['total'] = 0; 
-            $categories_[$cat]['correct_percent'] =0;        
-            $categories_[$cat]['incorrect_percent'] = 0;
         }
 
         $qset = DB::table('category_question')->whereIn('category_id', $categories_list)->select('category_id', DB::raw('count(*) as count'))->groupBy('category_id')->get();
@@ -190,10 +188,8 @@ class CourseController extends Controller
                     
             }
 
-            //dd($practice);
             foreach($practice as $p){
                 
-                if($p->category_id)
                 if($p->accuracy==1)
                 $categories_[$p->category_id]['correct']++; 
                 else
@@ -202,17 +198,6 @@ class CourseController extends Controller
 
         }
 
-
-        //convert to percentage
-        foreach($categories_list as $cat){
-            if($categories_[$cat]['total']!=0)
-                {
-                  
-                    $categories_[$cat]['correct_percent'] = $categories_[$cat]['correct']/$categories_[$cat]['total']*100;
-                    
-                    $categories_[$cat]['incorrect_percent'] = $categories_[$cat]['incorrect']/$categories_[$cat]['total']*100;
-                }
-        }
         //dd($categories_);
         
         //dd($analysis);
@@ -222,14 +207,13 @@ class CourseController extends Controller
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
 
-        
 
-            foreach($node as $k=>$n){
+            foreach($node as $n){
                 $course->keywords = $course->keywords.', '.$n->name;
-                $node[$k]['children'] = Category::defaultOrder()->descendantsOf($n->id)->toTree();
             }
+
             
-            /*
+
             $url = url()->full();
             $parsed = parse_url($url);
             $exploded = explode('.', $parsed["host"]);
@@ -237,7 +221,6 @@ class CourseController extends Controller
 
             $file_count = '../static/'.$domain.'_'.$course->slug.'_count.txt';
             $file_nodes = '../static/'.$domain.'_'.$course->slug.'_nodes.txt';
-
             
 
             if(request()->get('refresh'))
@@ -257,22 +240,19 @@ class CourseController extends Controller
             else{
                 $ques_count = file_get_contents($file_count);
             }
-            */
+
             
             //$exams =  Tag::where('project_id',$project->id)->where('name','exam')
               //          ->orderBy('created_at','desc')->get();
-                 
-            $ques_count = $parent->questionCount_level2($project);         
+                     
             if(count($node)){
-
-                /*
                 if(!file_exists($file_nodes)){
                      $nodes = Category::displayUnorderedListCourse($node,['project'=>$project,'parent'=>$parent]);
                     file_put_contents($file_nodes,$nodes);
                 }
                 else{
                     $nodes = file_get_contents($file_nodes);
-                }*/
+                }
 
             }
             else
@@ -283,15 +263,14 @@ class CourseController extends Controller
         //dd($nodes);
 
         if($course)
-            return view('appl.course.course.show3')
+            return view('appl.course.course.show')
                     ->with('course',$course)
-                    ->with('categories',$categories_)
                     ->with('product',$p)
                     ->with('ques_count',$ques_count)
                     ->with('exams',$exams)
                     ->with('project',$project)
                     ->with('entry',$entry)
-                    ->with('nodes',$node);
+                    ->with('nodes',$nodes);
         else
             abort(404);
     }

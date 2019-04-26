@@ -272,6 +272,7 @@ class QuestionController extends Controller
             $practice->user_id = \auth::user()->id;
             $practice->response = strtoupper(request()->get('response'));
             $practice->answer = strtoupper($question->answer);
+            $practice->category_id = $question->categories->last()->id;
 
             $now =  microtime(true);
             $start = session('start');
@@ -319,6 +320,7 @@ class QuestionController extends Controller
 
         
 
+        
         if($category_slug == 'uncategorized')
         {
             $category = new Category();
@@ -329,6 +331,10 @@ class QuestionController extends Controller
 
         }else
             $category = Category::where('slug',$category_slug)->first();
+
+
+       
+
 
         if($id==null){
             if($category_slug=='uncategorized')
@@ -410,6 +416,16 @@ class QuestionController extends Controller
                 //dd($details);
                 session(['start' => microtime(true)]) ;
 
+                 //put the data with practice
+        if(\auth::user()){
+            $practice = Practice::where('user_id',\auth::user()->id)->whereIn('qid',$questions)->where('category_id',null)->get();
+            $i=0;
+            foreach($practice as $p){
+                    $i++;
+                    $p->category_id  = $p->question->categories->last()->id;
+                    $p->save();      
+            }
+        }
                 
                 return view('appl.dataentry.question.show_course')
                         ->with('project',$this->project)

@@ -147,9 +147,9 @@ ul.list li:before{ content:""; position:absolute; width:13px; height:10px; borde
     left:-13px;top:5px; border-color: #eee transparent transparent transparent;}
 
 ul.list2{ list-style:none; margin-left:25px; margin-right: 0px; margin-top: -10px;
-    border:0; padding: 5px 0px 0px; }
+    border:0; padding: 5px 0px 0px; min-width:90%;}
 
-ul.list2 li{  position:relative;margin:10px;padding:5px; background:#fff; }
+ul.list2 li{  position:relative;margin:10px;padding:5px; background:#fff;min-width:90%; }
 ul.list2-first{ margin: 5px; margin-left:5px; margin-top: -20px;}
 .title-list{ font-size: 20px; }
 .title-normal{ font-size: 15px; }
