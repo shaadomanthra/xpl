@@ -258,6 +258,15 @@ class CourseController extends Controller
             return view('appl.course.course.access');
         }
 
+        if($category->test_link){
+            $exam = Exam::where('slug',$category->test_link)->first();
+            if(!$exam->attempted())
+                $category->test_link = url('/').'/test/'.$category->test_link .'/instructions';
+            else{
+                $category->test_analysis = true;
+                $category->test_link = url('/').'/test/'.$category->test_link .'/analysis';;
+            }
+        }
         
         
 

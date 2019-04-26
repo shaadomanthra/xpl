@@ -48,6 +48,8 @@
     <h1 class="mb-4"> <div class="">
       @if($category->pdf_link)
       <i class="fa fa-file-pdf-o"></i> &nbsp;
+      @elseif($category->test_link)
+      <i class="fa fa-external-link"></i> &nbsp;
       @else
       <i class="fa fa-youtube-play"></i> &nbsp;
       @endif
@@ -83,7 +85,30 @@
 </div>
 
 
-@endif          
+@endif    
+
+@if($category->test_link)
+<div class="p-5 bg-white">
+  <div class="row">
+    <div class="col-12 col-md-2"><i class="fa fa-external-link fa-5x"></i></div>
+    <div class="col-12 col-md-10">{!! $category->video_desc !!}<br>
+      <a href="{{ $category->test_link }}">
+      <button class="btn btn-primary mt-3 btn-lg">
+      @if(!isset($category->test_analysis))
+      View Instruction
+      @else
+      View Analysis
+      @endif
+    </button>
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+
+@endif        
 
 <div class=" p-3 border" style="background: #eee; font-size: 20px;">
   <div class="row">

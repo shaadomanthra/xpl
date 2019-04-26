@@ -66,6 +66,16 @@
       </div>
 
       <div class="form-group">
+        <label for="formGroupExampleInput ">Test Link</label>
+        <input type="text" class="form-control" name="test_link" id="formGroupExampleInput" placeholder="Enter the Test Link" 
+            @if($stub=='Create')
+            value="{{ (old('test_link')) ? old('test_link') : '' }}"
+            @else
+            value = "{{ $category->test_link }}"
+            @endif>
+      </div>
+
+      <div class="form-group">
         <label for="formGroupExampleInput ">Video Description</label>
         <textarea class="form-control summernote" name="video_desc"  rows="5">
             @if($stub=='Create')

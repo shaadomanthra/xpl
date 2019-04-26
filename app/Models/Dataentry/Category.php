@@ -17,7 +17,8 @@ class Category extends Model
         'parent_id',
         'video_link',
         'video_desc',
-        'pdf_link'
+        'pdf_link',
+        'test_link',
         // add all other fields
     ];
     public $timestamps = false;
@@ -104,8 +105,19 @@ class Category extends Model
                     $d = $d.'</li>';
 
                }elseif($category->pdf_link){
-                    $icon = '<i class="fa fa-lock"></i>';
+                    $icon = '<i class="fa fa-file-pdf-o"></i>';
                     $d = $d.'<li class="item item-pdf" id="'.$category->slug.'"  >
+               <a href="'.route('course.category.video',
+                [   
+                    'course'=> $options['project']->slug,
+                    'category'=> $category->slug,
+                    
+                ]
+
+                ).'">'.$icon.' '.$category->name.'</a>&nbsp';
+               }elseif($category->test_link){
+                    $icon = '<i class="fa fa-external-link"></i>';
+                    $d = $d.'<li class="item " id="'.$category->slug.'"  >
                <a href="'.route('course.category.video',
                 [   
                     'course'=> $options['project']->slug,

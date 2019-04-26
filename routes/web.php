@@ -26,6 +26,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
+
+	
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
 	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');

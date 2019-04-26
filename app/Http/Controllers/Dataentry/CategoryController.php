@@ -80,7 +80,7 @@ class CategoryController extends Controller
             $request->slug  = $request->name;
         
         $request->slug = strtolower(str_replace(' ', '-', $request->slug));
-        $child_attributes =['name'=>$request->name,'slug'=>$request->slug,'project_id'=>$this->project->id,'video_link'=>$request->video_link,'video_desc'=>$request->video_desc,'pdf_link'=>$request->pdf_link];
+        $child_attributes =['name'=>$request->name,'slug'=>$request->slug,'project_id'=>$this->project->id,'video_link'=>$request->video_link,'video_desc'=>$request->video_desc,'pdf_link'=>$request->pdf_link,'test_link'=>$request->test_link];
         $parent = Category::where('id','=',$request->parent_id)->first();
         $child = new Category($child_attributes);
 
@@ -245,6 +245,7 @@ class CategoryController extends Controller
         $category->project_id = $this->project->id;
         $category->video_link = $request->video_link;
         $category->pdf_link = $request->pdf_link;
+        $category->test_link = $request->test_link;
         $category->video_desc = $request->video_desc;
         $category->save();
 
