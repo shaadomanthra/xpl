@@ -75,8 +75,42 @@ class UsersExport implements FromCollection
   
         } */
 
-        $entry = DB::table('branch_user')->whereIn('branch_id', [11,12,13,14,15,16,17,18])->pluck('user_id'); 
-        $users =  User_Details::whereIn('user_id',$entry)->get();
+        $entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id'); 
+        
+        $users =  User::whereIn('id',$entry)->get();
+        $users_details =  User_Details::whereIn('user_id',$entry)->orderBy('user_id')->get();
+        $details = array();
+        foreach($users_details as $detail){
+            $details[$detail->user_id] = $detail;
+        }
+        
+    
+        foreach($users as $k=>$u){
+                unset($users[$k]->created_at);
+                unset($users[$k]->updated_at);
+                unset($users[$k]->password);
+                unset($users[$k]->remember_token);
+                unset($users[$k]->username);
+                unset($users[$k]->status);
+                unset($users[$k]->activation_token);
+                unset($users[$k]->role);
+                unset($users[$k]->client_slug);
+                unset($users[$k]->user_id);
+                if(isset($details[$users[$k]->id])){
+                    $key = $users[$k]->id;
+                    $users[$k]->phone = $details[$key]->phone;
+                    $users[$k]->year_of_passing = $details[$key]->year_of_passing;
+                    $users[$k]->college = $u->colleges()->first()->name;
+                    $users[$k]->branch = $u->branches()->first()->name; 
+                }
+               
+
+  
+        } 
+        //dd($users);
+
+        //$entry = DB::table('branch_user')->whereIn('branch_id', [11,12,13,14,15,16,17,18])->pluck('user_id'); 
+        //$users =  User_Details::whereIn('user_id',$entry)->get();
     
       
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Dataentry\Question;
+use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Product\Product;
@@ -93,23 +94,27 @@ class AdminController extends Controller
         }
 
         $data = array();
-
-        $course_id = array();
+        $item_name = 'category_id';
         if($r->get('course')){
-            $course_id = Course::where('id',$r->get('course'))->pluck('id');
+            $data['item'] = Course::where('id',$r->get('course'))
+                            ->first();
+            $project = Project::where('slug',$data['item']->slug)
+                        ->first();
+            $category = Category::where('slug',$project->slug)->first();
+            $nodes = Category::descendantsOf($category->id);
+        }elseif($r->get('category'))
+        {
+            $data['item'] = Category::where('id',$r->get('category'))->first();
             
-            $data['course'] = Course::where('id',$r->get('course'))->first();
-            $project_id = Project::where('slug',$data['course']->slug)->pluck('id')->toArray();
+            $nodes = Category::descendantsAndSelf($data['item']->id);
         }else{
-            $course_id = Course::all()->pluck('id');
-            $course_slug = Course::all()->pluck('slug');
-            $data['course'] = null;
-            $project_id = Project::whereIn('slug',$course_slug)->pluck('id')->toArray();
-        }
+            $data['item'] = null;
+            $nodes = Category::defaultOrder()->get();
             
+        }
+        $item_id = $nodes->pluck('id')->toArray(); 
+        $data['total'] = DB::table('category_question')->whereIn('category_id', $item_id)->count();
         
-            $data['t'][1] = microtime(true);
-            $lasttime = microtime(true);
 
         $student_id = $r->get('student');
 
@@ -117,30 +122,15 @@ class AdminController extends Controller
             $user = User::where('id',$student_id)->first();
             $data['college'] = $user->colleges->first();
             $data['branch'] = $user->branches->first();
-            $data['solved'] = Practice::whereIn('course_id',$course_id)->where('user_id',$user->id)->count();
-
-            $data['total'] = Question::whereIn('project_id',$project_id)->count();
-            $data['time'] = round(Practice::whereIn('course_id',$course_id)->where('user_id',$user->id)->avg('time'),2);
-
-            $data['sum'] = round(Practice::whereIn('course_id',$course_id)->where('user_id',$user->id)->sum('accuracy'),2);
-            
-            
-            $data['active'] = array(0=>$user);
             $data['user'] = $user;
-
-
-            if($data['solved'])     
-                $data['acurracy'] = round(($data['sum']*100)/$data['solved'],2);
-            else
-                $data['acurracy'] =null;  
-
-
-
+            $practice = Practice::whereIn($item_name,$item_id)
+                        ->where('user_id',$user->id)->get();
+            
+            $data = $this->getData($data,$practice);
 
         }else{
 
             $college_id = $r->get('college');
-
             $branch_id = $r->get('branch');
             $college = College::where('id',$college_id)->first();
             $branch = Branch::where('id',$branch_id)->first();
@@ -158,54 +148,15 @@ class AdminController extends Controller
                 $users = User::all()->pluck('id');
 
 
-            $data['t'][2] = (microtime(true) - $lasttime)/60;
-            $lasttime = microtime(true);
             
             $data['college'] = $college;
             $data['branch'] = $branch;
-            $data['solved'] = Practice::whereIn('course_id',$course_id)->whereIn('user_id',$users)->count();
+
+            $practice = Practice::whereIn($item_name,$item_id)
+                        ->whereIn('user_id',$users)->get();
 
 
-
-            $data['t'][3] = (microtime(true) - $lasttime)/60;
-            $lasttime = microtime(true) ;
-
-            $data['total'] = Question::whereIn('project_id',$project_id)->count();
-            $data['time'] = round(Practice::whereIn('course_id',$course_id)->whereIn('user_id',$users)->avg('time'),2);
-
-            $data['t'][4] = (microtime(true) - $lasttime)/60;
-            $lasttime = microtime(true) ;
-            $data['sum'] = round(Practice::whereIn('course_id',$course_id)->whereIn('user_id',$users)->sum('accuracy'),2);
-            
-            $data['t'][5] = (microtime(true) - $lasttime)/60;
-            $lasttime = microtime(true) ;
-            
-            $data['active'] = DB::table('practices')
-                 ->select('user_id', DB::raw('count(*) as count'))
-                 ->whereIn('user_id',$users)
-                 ->whereIn('course_id',$course_id)
-                 ->groupBy('user_id')
-                 ->orderBy('count','desc')
-                 ->get();
-
-
-            $data['t'][6] = (microtime(true) - $lasttime)/60;
-            $lasttime = microtime(true) ;
-            if($data['solved'])     
-            $data['acurracy'] = round(($data['sum']*100)/$data['solved'],2);
-            else
-            $data['acurracy'] =null;  
-
-
-            if($data['active'])
-            foreach($data['active'] as $k=>$u){
-                $data['top'][$k] = User::where('id',$u->user_id)->first();
-                $data['count'][$k]= $u->count;
-                if($k==19)
-                    break;
-            }
-            $data['t'][7] = (microtime(true) - $lasttime)/60;
-            $lasttime = microtime(true) ;
+            $data = $this->getData($data,$practice);
 
         }
             
@@ -217,55 +168,18 @@ class AdminController extends Controller
 
     }
 
-    public function getData(Request $r){
+    public function getData($data, $practice){
 
-        $course_id = array();
-        $college_id = $r->get('college');
-        $college = College::where('id',$college_id)->first();
-        
-            $branch_id = $r->get('branch');
-            $branch = Branch::where('id',$branch_id)->first();
-            if($college && $branch){
-                $users_college = $college->users()->pluck('id')->toArray();
-                $users_branches = $branch->users()->pluck('id')->toArray();
-                $users = array_intersect($users_branches,$users_college);
-            }elseif($college && $branch==null)
-                $users = $college->users()->pluck('id');
-            elseif($college==null && $branch)
-                $users = $branch->users()->pluck('id');
-            else
-                $users = User::all()->pluck('id');
+        $data['solved'] = $practice->count();
+        $data['time'] = round($practice->avg('time'),2);
+        $data['sum'] = round($practice->sum('accuracy'),2);
 
-        $course = Course::where('id',$r->get('course'))->first();
-            if($course){
-               array_push($course_id, $course->id);
-               $data['course'] = $course; 
-               $data['total'] = '10000';
-               $data['college'] = $college;
-               $data['branch'] = $branch;
-               $data['solved'] = Practice::where('course_id',$course->id)->whereIn('user_id',$users)->count();
-               $data['time'] = round(Practice::where('course_id',$course->id)->whereIn('user_id',$users)->avg('time'),2);
-               $data['sum'] = round(Practice::where('course_id',$course->id)->whereIn('user_id',$users)->sum('accuracy'),2);
-               $data['active'] = DB::table('practices')
-                 ->select('user_id', DB::raw('count(*) as count'))
-                 ->whereIn('user_id',$users)
-                 ->whereIn('course_id',$course_id)
-                 ->groupBy('user_id')
-                 ->orderBy('count','desc')
-                 ->get();
+        $data['active'] = $practice->unique('user_id');
 
-                if($data['solved'])     
-                $data['acurracy'] = round(($data['sum']*100)/$data['solved'],2);
-                else
-                $data['acurracy'] =null;  
-                foreach($data['active'] as $k=>$u){
-                    $data['top'][$k] = User::where('id',$u->user_id)->first();
-                    $data['count'][$k]= $u->count;
-                    if($k==19)
-                        break;
-                }
-            }else
-            abort(404,'Course Not Found');
+        if($data['solved'])     
+            $data['acurracy'] = round(($data['sum']*100)/$data['solved'],2);
+        else
+            $data['acurracy'] =null;  
 
         return $data;
     }
