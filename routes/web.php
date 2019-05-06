@@ -40,12 +40,59 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/credit-rates',function(){ return view('appl.product.pages.credit_rates'); })->name('credit-rate')->middleware('auth');;
 
 
+	//campus
+	Route::get('/campus', 'College\CampusController@main')
+			->name('campus.main')->middleware('auth');
+	Route::get('/campus/admin', 'College\CampusController@admin')
+			->name('campus.admin')->middleware('auth');
+	Route::get('/campus/programs', 'College\CampusController@programs')
+			->name('campus.programs')->middleware('auth');
+	Route::get('/campus/programs/{program}', 'College\CampusController@program_show')
+			->name('campus.programs.show')->middleware('auth');
+	Route::get('/campus/tests', 'College\CampusController@tests')		
+			->name('campus.tests')->middleware('auth');
+	Route::get('/campus/tests/{test}', 'College\CampusController@test_show')
+			->name('campus.tests.show')->middleware('auth');
+	Route::get('/campus/students', 'College\CampusController@students')
+			->name('campus.students')->middleware('auth');
+	Route::get('/campus/students/{student}', 'College\CampusController@student_show')
+			->name('campus.students.show')->middleware('auth');
+
+	Route::post('/campus/batches/{batch}/attach', 'College\BatchController@attachUser')
+			->name('batch.attach')->middleware('auth');
+	Route::get('/campus/batches/{batch}/attach', 'College\BatchController@attachUser')
+			->name('batch.attach')->middleware('auth');
+	Route::post('/campus/batches/{batch}/detach', 'College\BatchController@detachUser')
+			->name('batch.detach')->middleware('auth');
+	Route::get('/campus/batches/{batch}/detach', 'College\BatchController@detachUser')
+			->name('batch.detach')->middleware('auth');
+	
+	Route::resource('/campus/batches', 'College\BatchController',['names' => [
+        'index' => 'batch.index',
+        'store' => 'batch.store',
+        'create' => 'batch.create',
+        'show' => 'batch.show',
+        'edit'=> 'batch.edit',
+        'update'=>'batch.update',
+        'destroy'=>'batch.destroy',
+    ]])->middleware('auth');
+    
+	//Route::resource('/campus/schedules', 'College\ScheduleController')->middleware('auth');
+	//Route::resource('/campus/schedules/{schedule}/modules', 'College\ModulesController')->middleware('auth');
+
+	//analytics
+	Route::get('/admin/analytics/practice_filldata', 'Product\AnalyticsController@practice_filldata')->name('admin.analytics.practice.filldata');
+	Route::get('/admin/analytics/test_filldata', 'Product\AnalyticsController@test_filldata')->name('admin.analytics.test.filldata');
+	Route::get('/admin/analytics/filldata', 'Product\AnalyticsController@filldata')->name('admin.analytics.filldata');
+	Route::get('/admin/analytics/practice', 'Product\AnalyticsController@analytics_practice')->name('admin.analytics');
+	Route::get('/admin/analytics/test', 'Product\AnalyticsController@analytics_test')->name('admin.analytics.test');
+
 	Route::get('/payment/status', 'Product\OrderController@status')->name('payment.status');
 	Route::post('/payment/order', 'Product\OrderController@order')->name('payment.order');
 	Route::get('/transactions', 'Product\OrderController@transactions')->name('order.transactions')->middleware('auth');
 	Route::get('/transactions/{order_id}', 'Product\OrderController@transaction')->name('order.transaction')->middleware('auth');
 	Route::get('/admin/transactions', 'Product\OrderController@list_transactions')->name('order.list');
-	Route::get('/admin/analytics', 'Product\AdminController@analytics')->name('admin.analytics');
+	
 	Route::get('/admin/transactions/{order_id}', 'Product\OrderController@show_transaction')->name('order.show');
 	Route::get('/admin/buy', 'Product\OrderController@buycredits')->name('order.buy');
 	Route::get('/admin/ordersuccess', 'Product\OrderController@ordersuccess')->name('order.success');

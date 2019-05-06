@@ -5,9 +5,9 @@ namespace PacketPrep\Policies\College;
 use PacketPrep\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CollegePolicy
+class CampusPolicy
 {
-   use HandlesAuthorization;
+    use HandlesAuthorization;
 
     /**
      * Create a new policy instance.
@@ -16,7 +16,7 @@ class CollegePolicy
      */
      public function view(User $user)
     {
-        return $user->checkRole(['administrator','investor','patron','promoter','employee','marketing-manager','marketing-executive','manager']);
+        return $user->checkRole(['administrator','manager','marketing-manager','marketing-executive','tpo','placement-team']);
     }
 
 
@@ -29,7 +29,7 @@ class CollegePolicy
      */
     public function create(User $user)
     { 
-        return $user->checkRole(['administrator','manager','marketing-manager','marketing-executive']);
+        return $user->checkRole(['administrator','manager','marketing-manager','marketing-executive','tpo']);
     }
 
 
@@ -42,7 +42,7 @@ class CollegePolicy
      */
     public function edit(User $user)
     { 
-        if($user->checkRole(['administrator','manager'])){
+        if($user->checkRole(['administrator','manager','tpo'])){
             return true;
         }
         else
@@ -57,11 +57,6 @@ class CollegePolicy
      * @return bool
      */
     public function update(User $user)
-    { 
-        return $user->checkRole(['administrator','manager','marketing-manager','marketing-executive']);
-    }
-
-    public function manage(User $user)
     { 
         return $user->checkRole(['administrator','manager','marketing-manager','marketing-executive','tpo']);
     }

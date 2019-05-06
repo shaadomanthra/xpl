@@ -35,6 +35,10 @@ class College extends Model
         return $this->belongsToMany('PacketPrep\Models\College\Branch');
     }
 
+    public function batches(){
+        return $this->hasMany('PacketPrep\Models\College\Batch');
+    }
+
     public function zones(){
         return $this->belongsToMany('PacketPrep\Models\College\Zone');
     }

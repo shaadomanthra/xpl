@@ -79,6 +79,11 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\College\Branch');
     }
 
+     public function batches()
+    {
+        return $this->belongsToMany('PacketPrep\Models\College\Batch');
+    }
+
     public function colleges()
     {
         return $this->belongsToMany('PacketPrep\Models\College\College');

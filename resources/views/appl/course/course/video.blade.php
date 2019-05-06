@@ -36,7 +36,7 @@
   @foreach($parent->descendants as $k => $item)
   @if($item->video_link || $item->pdf_link)
   <a href="{{ route('course.category.video',[$course->slug,$item->slug])}} " class="list-group-item list-group-item-action @if($item->slug == $category->slug) active @endif">
-    @if(youtube_video_exists($item->video_link))
+    @if(youtube_video_exists($videos[0]))
     <i class="fa fa-circle-o" aria-hidden="true"></i>
     @else
       <i class="fa fa-lock"></i>
@@ -59,19 +59,39 @@
 
 
 
-@if($category->video_link)
-          @if(youtube_video_exists($category->video_link))
-          
+      @if($videos[0])
+
+        @if(count($videos)>1)
+          @foreach($videos as $k=>$video)
+          <div class="border mb-3">
+            
+          @if(youtube_video_exists($video))
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-    <iframe src="https://www.youtube.com/embed/{{ $category->video_link }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-  </div>
+            <iframe src="https://www.youtube.com/embed/{{ $video }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          </div>
+          @else
+          <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
+          <iframe src="//player.vimeo.com/video/{{ $video }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          </div>
+          @endif
+          <h3 class="bg-white p-3">Lecture {{($k+1)}}</h3>
+          </div>
+
+
+          @endforeach
+        @else
+          @if(youtube_video_exists($category->video_link))
+          <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
+            <iframe src="https://www.youtube.com/embed/{{ $category->video_link }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          </div>
           @else
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
           <iframe src="//player.vimeo.com/video/{{ $category->video_link }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
           @endif
-          
-          @endif
+        @endif  
+      @endif
+
 @if($category->pdf_link)
 <div class="p-5 bg-white">
   <div class="row">

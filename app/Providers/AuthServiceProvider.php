@@ -64,7 +64,8 @@ class AuthServiceProvider extends ServiceProvider
         \PacketPrep\Models\College\Metric::class => \PacketPrep\Policies\College\MetricPolicy::class,
         \PacketPrep\Models\College\Service::class => \PacketPrep\Policies\College\ServicePolicy::class,
         \PacketPrep\Models\College\Ambassador::class => \PacketPrep\Policies\College\AmbassadorPolicy::class,
-
+         \PacketPrep\Models\College\Batch::class => \PacketPrep\Policies\College\BatchPolicy::class,
+        \PacketPrep\Models\College\Campus::class => \PacketPrep\Policies\College\CampusPolicy::class,
 
         \PacketPrep\Models\Job\Company::class => \PacketPrep\Policies\Job\CompanyPolicy::class,
         \PacketPrep\Models\Job\Opening::class => \PacketPrep\Policies\Job\OpeningPolicy::class,

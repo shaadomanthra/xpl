@@ -172,8 +172,8 @@
       <div class="form-group">
         <label for="formGroupExampleInput ">Campus Ambassador</label>
         <select class="form-control" name="ambassador">
-           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->first()->id!=37) selected @endif @endif @endif>No</option>
-          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->first()->id==37) selected @endif @endif @endif>Yes</option>
+           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(37)) selected @endif @endif @endif>No</option>
+          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(37)) selected @endif @endif @endif>Yes</option>
          
         </select>
       </div>
@@ -182,8 +182,17 @@
       <div class="form-group">
         <label for="formGroupExampleInput ">Campus Coordinator</label>
         <select class="form-control" name="coordinator">
-           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->first()->id!=40) selected @endif @endif @endif>No</option>
-          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->first()->id==40) selected @endif @endif @endif>Yes</option>
+           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(40)) selected @endif @endif @endif>No</option>
+          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(40)) selected @endif @endif @endif>Yes</option>
+         
+        </select>
+      </div>
+
+        <div class="form-group">
+        <label for="formGroupExampleInput ">Training and Placement Officer</label>
+        <select class="form-control" name="tpo">
+           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(41)) selected @endif @endif @endif>No</option>
+          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(41)) selected @endif @endif @endif>Yes</option>
          
         </select>
       </div>

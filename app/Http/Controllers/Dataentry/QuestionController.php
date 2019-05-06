@@ -14,6 +14,8 @@ use PacketPrep\Models\Course\Practice;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\Course\Practices_Course;
+use PacketPrep\Models\Course\Practices_Topic;
 use Illuminate\Support\Facades\DB;
 
 
@@ -279,6 +281,45 @@ class QuestionController extends Controller
             $practice->time = $now-$start;
             ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
             $practice->save();
+
+
+            //update in practices_course
+            $practices_course = Practices_Course::where('user_id',\auth::user()->id)->where('course_id',request()->get('course_id'))->first();
+
+            if(!$practices_course){
+                $practices_course = new Practices_Course;
+            }
+
+            $practices_course->user_id = \auth::user()->id;
+            $practices_course->course_id = request()->get('course_id');
+            $practices_course->attempted += 1;
+            if($practice->accuracy==1)
+                $practices_course->correct += 1;
+            else
+                $practices_course->incorrect += 1;
+            $practices_course->time += $practice->time;
+
+            $practices_course->save();
+
+            //update in practices_topic
+            $practices_topic = Practices_Topic::where('user_id',\auth::user()->id)->where('category_id',$practice->category_id)->first();
+
+            if(!$practices_topic){
+                $practices_topic = new Practices_Topic;
+                $practices_topic->category_id = $practice->category_id;
+            }
+
+
+            $practices_topic->user_id = \auth::user()->id;
+            $practices_topic->attempted += 1;
+            if($practice->accuracy==1)
+                $practices_topic->correct += 1;
+            else
+                $practices_topic->incorrect += 1;
+            $practices_topic->time += $practice->time;
+
+            $practices_topic->save();
+
         }
         return redirect()->route('course.question',[$project_slug,$category_slug,$id]);
 
@@ -306,6 +347,7 @@ class QuestionController extends Controller
                 $entry = DB::table('product_user')
                     ->where('product_id', $product->id)
                     ->where('user_id', $user->id)
+                    ->orderBy('id','desc')
                     ->first();
                  $p = $product;   
             }
@@ -374,8 +416,6 @@ class QuestionController extends Controller
            
             $question = Question::where('id',$id)->first();
 
-
-
            // $this->authorize('view', $question);
 
             if($question){
@@ -416,16 +456,6 @@ class QuestionController extends Controller
                 //dd($details);
                 session(['start' => microtime(true)]) ;
 
-                 //put the data with practice
-        if(\auth::user()){
-            $practice = Practice::where('user_id',\auth::user()->id)->whereIn('qid',$questions)->where('category_id',null)->get();
-            $i=0;
-            foreach($practice as $p){
-                    $i++;
-                    $p->category_id  = $p->question->categories->last()->id;
-                    $p->save();      
-            }
-        }
                 
                 return view('appl.dataentry.question.show_course')
                         ->with('project',$this->project)

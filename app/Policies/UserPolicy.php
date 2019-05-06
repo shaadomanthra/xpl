@@ -59,6 +59,8 @@ class UserPolicy
         return $user->checkRole(['administrator','user-manager']);
     }
 
+    
+
     public function before($user, $ability)
     {
         if ($user->isAdmin()) {
