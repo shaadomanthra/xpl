@@ -120,7 +120,7 @@ class AnalyticsController extends Controller
         
     }
 
-     public function test_filldata(){
+     public function test_filldata(Request $r){
     	if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
         {
              abort(403,'Unauthorised Access');   
