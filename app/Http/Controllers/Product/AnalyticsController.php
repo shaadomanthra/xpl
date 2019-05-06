@@ -93,6 +93,7 @@ class AnalyticsController extends Controller
     		$practice_course->save();
 
     	}
+        dd('practice_extra_tables_updated');
 
     }
 
@@ -110,6 +111,7 @@ class AnalyticsController extends Controller
                     
         }
         dd('practice_table_updated');
+        
     }
 
      public function test_filldata(){
