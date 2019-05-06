@@ -50,7 +50,13 @@ class AnalyticsController extends Controller
              abort(403,'Unauthorised Access');   
         }
 
-    	$practice = Practice::all();
+        $first = $r->get('first');
+        $last = $r->get('last');
+
+        if(!$first && !$last)
+            dd("Enter First Last ");
+
+    	$practice = Practice::where('id','>=',$first)->where('id','<=',$last)->get();
     	
     	
     	foreach($practice as $k=>$p){
@@ -120,7 +126,14 @@ class AnalyticsController extends Controller
              abort(403,'Unauthorised Access');   
         }
 
-    	$tests = test::all();
+        $first = $r->get('first');
+        $last = $r->get('last');
+
+        if(!$first && !$last)
+            dd("Enter First Last ");
+        
+        $tests = test::where('id','>=',$first)->where('id','<=',$last)->get();
+
     	$i=0;
     	foreach($tests as $k=>$t){
     		$tests_overall = Tests_Overall::where('test_id',$t->test_id)->where('user_id',$t->user_id)->first();
