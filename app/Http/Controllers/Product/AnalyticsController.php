@@ -103,7 +103,7 @@ class AnalyticsController extends Controller
              abort(403,'Unauthorised Access');   
         }
 
-    	$practice = Practice::all();
+    	$practice = Practice::whereNull('category_id')->get();
     	
     	 foreach($practice as $p){
             $p->category_id  = $p->question->categories->last()->id;
