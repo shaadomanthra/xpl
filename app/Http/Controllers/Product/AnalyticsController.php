@@ -56,6 +56,8 @@ class AnalyticsController extends Controller
         if(!$first && !$last)
             dd("Enter First Last ");
 
+        dd('No Entry');
+
     	$practice = Practice::where('id','>=',$first)->where('id','<=',$last)->get();
     	
     	
@@ -109,6 +111,7 @@ class AnalyticsController extends Controller
              abort(403,'Unauthorised Access');   
         }
 
+        dd('No Entry');
     	$practice = Practice::whereNull('category_id')->get();
     	
     	 foreach($practice as $p){
@@ -131,6 +134,8 @@ class AnalyticsController extends Controller
 
         if(!$first && !$last)
             dd("Enter First Last ");
+
+        dd('No Entry');
         
         $tests = test::where('id','>=',$first)->where('id','<=',$last)->get();
 
