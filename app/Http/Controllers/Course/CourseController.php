@@ -182,14 +182,7 @@ class CourseController extends Controller
 
             $i=0;
 
-            foreach($practice as $p){
-                    $i++;
-                    if($p->category_id)
-                        break;
-                    $p->category_id  = $p->question->categories->last()->id;
-                    $p->save();
-                    
-            }
+            
 
             //dd($practice);
             foreach($practice as $p){
@@ -230,8 +223,8 @@ class CourseController extends Controller
                 $course->keywords = $course->keywords.', '.$n->name;
                 $node[$k]['children'] = Category::defaultOrder()->descendantsOf($n->id)->toTree();
                 foreach($node[$k]['children'] as $m => $c){
-                    if($c->test_link){
-                        $exam = Exam::where('slug',$c->test_link)->first();
+                    if($c->exam_id){
+                        $exam = Exam::where('id',$c->exam_id)->first();
                         if(!$exam->attempted())
                         $node[$k]['children'][$m]['try'] = 1;
                         else
@@ -333,14 +326,13 @@ class CourseController extends Controller
             return view('appl.course.course.access');
         }
 
-        if($category->test_link){
-            $exam = Exam::where('slug',$category->test_link)->first();
+        if($category->exam_id){
+            $exam = Exam::where('id',$category->exam_id)->first();
             $category->video_desc = $exam->instructions;
             if(!$exam->attempted())
-                $category->test_link = url('/').'/test/'.$category->test_link .'/instructions';
+                $category->test_analysis = false;
             else{
                 $category->test_analysis = true;
-                $category->test_link = url('/').'/test/'.$category->test_link .'/analysis';;
             }
         }
         

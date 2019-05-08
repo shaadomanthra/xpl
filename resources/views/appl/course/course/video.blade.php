@@ -109,19 +109,23 @@
 
 @endif    
 
-@if($category->test_link)
+@if($category->exam_id)
 <div class="p-5 bg-white">
   <div class="row">
     <div class="col-12 col-md-2"><i class="fa fa-external-link fa-5x"></i></div>
     <div class="col-12 col-md-10">{!! $category->video_desc !!}<br>
-      <a href="{{ $category->test_link }}">
-      <button class="btn btn-primary mt-3 btn-lg">
-      @if(!isset($category->test_analysis))
+      @if(!$category->test_analysis)
+      <a href="{{ route('assessment.instructions',$category->exam->slug)}}">
+      <button class="btn btn-success mt-3 btn-lg">
       View Instruction
+      </button>
       @else
+      <a href="{{ route('assessment.analysis',$category->exam->slug)}}">
+      <button class="btn btn-primary mt-3 btn-lg">
       View Analysis
+      </button>
       @endif
-    </button>
+    
       </a>
     </div>
 

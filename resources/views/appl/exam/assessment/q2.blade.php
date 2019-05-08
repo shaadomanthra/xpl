@@ -25,27 +25,28 @@
 			</div>
 		</div>
 		</div>
-		<div class="qset" style="max-height: 170px;overflow-y: auto;">
-		<div class="row no-gutters">
-			@foreach($questions as $key => $q)
-			<div class="col-3 mb-1">
-				
-				@if($details['display_type'] == 'project')
-				<a class="white-link" href="{{ route('assessment.solutions',[$exam->slug,$q->id]) }}">
-				@elseif($details['display_type'] == 'Topic')
-				<a class="white-link" href="{{ route('course.question',[$tag->slug,$category->slug,$q->id]) }}">
-				@elseif($details['display_type'] == 'tag')	
-				<a class="white-link" href="{{ route('assessment.solutions.q',[$exam->slug,$q->question_id]) }}">
+		<div class="qset {{ $i=0 }}" style="max-height: 170px;overflow-y: auto;">
+
+			@foreach($exam->sections as $section)
+				@if(count($exam->sections)!=1)
+				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
 				@endif
-				<div class="pr-1">
-				<div class="w100 p-1 text-center rounded @if($q->question_id==$question->id) active @endif 
-					@if($q->response !=null) @if($q->accuracy == 0) qred-border @else qgreen-border @endif @else qborder  @endif" id="q{{ ($q->id )}}"
-				    >{{ ($key + 1 ) }}</div>
+				<div class="row no-gutters ">
+				@foreach($section->questions as $key=> $q)
+				<div class="col-3 mb-1">
+					<a class="white-link" href="{{ route('assessment.solutions.q',[$exam->slug,$q->id]) }}">
+					<div class="pr-1">
+					<div class="w100 p-1 testqno s text-center rounded @if($q->id==$question->id) active @endif 
+					@if($questions[$i]['response'] !=null) @if($questions[$i]['accuracy'] == 0) qred-border @else qgreen-border @endif @else qborder  @endif" id="q{{$q->id}}" 
+					    >{{ (++$i ) }}</div>
+					</div>
+					</a>
 				</div>
-				</a>
-			</div>
+				@endforeach
+				</div>
 			@endforeach
-		</div>
+
+		
 		</div>
 	</div>
 </div>

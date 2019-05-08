@@ -179,7 +179,7 @@
 			@if(count($n->children))
 				<ul class="list2">
 					@foreach($n->children as $c)
-					@if($c->video_link || $c->pdf_link || $c->test_link)
+					@if($c->video_link || $c->pdf_link || $c->exam_id)
 						<li class="item" id="{{ $c->slug }}"> 
 						<a href="{{ route('course.category.video',[$course->slug,$c->slug]) }}">
 						@if($c->video_link)
@@ -191,7 +191,7 @@
                      	@elseif($c->pdf_link)
                      		<i class="fa fa-file-pdf-o"></i>
 
-                     	@elseif($c->test_link)	
+                     	@elseif($c->exam_id)	
                      		<i class="fa fa-external-link"></i>
                      	@endif
 
@@ -202,13 +202,13 @@
                      	<span class="badge badge-warning">Practice {{($categories[$c->id]['correct']+$categories[$c->id]['incorrect']) }} / {{$categories[$c->id]['total'] }}</span>
                      	</a>
                      	@endif
-                     	@if($c->test_link)
+                     	@if($c->exam_id)
                      	@if($c->try)
-                     	<a href="{{ route('assessment.instructions',$c->test_link)}}">
+                     	<a href="{{ route('assessment.instructions',$c->exam->slug)}}">
                      	<span class="badge badge-success"> Try </span>
                      	</a>
                      	@else
-                     	<a href="{{ route('assessment.analysis',$c->test_link)}}">
+                     	<a href="{{ route('assessment.analysis',$c->exam->slug)}}">
                      	<span class="badge badge-primary"> Analysis </span>
                      	</a>
                      	@endif

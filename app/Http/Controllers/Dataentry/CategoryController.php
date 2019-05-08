@@ -7,6 +7,8 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Question;
+use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Exam\Exam;
 
 class CategoryController extends Controller
 {
@@ -59,10 +61,14 @@ class CategoryController extends Controller
     {
         $this->authorize('create', $category);
 
-        $parent =  Category::where('slug',$this->project->slug)->first();  
+        $parent =  Category::where('slug',$this->project->slug)->first();
+
+        $course = Course::where('slug',$this->project->slug)->first();  
+        $exams = Exam::where('course_id',$course->id)->get();
         $select_options = $category->displaySelectOption($parent->descendantsAndSelf($parent->id)->toTree());
         return view('appl.dataentry.category.createedit')
                 ->with('project',$this->project)
+                ->with('exams',$exams)
                 ->with('select_options',$select_options)
                 ->with('stub','Create');
     }
@@ -79,8 +85,11 @@ class CategoryController extends Controller
         if(!$request->slug )
             $request->slug  = $request->name;
         
+        if(!$request->exam_id)
+        $category->exam_id = null;
+
         $request->slug = strtolower(str_replace(' ', '-', $request->slug));
-        $child_attributes =['name'=>$request->name,'slug'=>$request->slug,'project_id'=>$this->project->id,'video_link'=>$request->video_link,'video_desc'=>$request->video_desc,'pdf_link'=>$request->pdf_link,'test_link'=>$request->test_link];
+        $child_attributes =['name'=>$request->name,'slug'=>$request->slug,'project_id'=>$this->project->id,'video_link'=>$request->video_link,'video_desc'=>$request->video_desc,'pdf_link'=>$request->pdf_link,'test_link'=>$request->test_link,'exam_id'=>$request->exam_id];
         $parent = Category::where('id','=',$request->parent_id)->first();
         $child = new Category($child_attributes);
 
@@ -196,6 +205,9 @@ class CategoryController extends Controller
 
         $this->authorize('update', $node);
 
+        $course = Course::where('slug',$this->project->slug)->first();  
+        $exams = Exam::where('course_id',$course->id)->get();
+
         $parent = Category::getParent($node);
         if(!$parent){
             $parent = new category;
@@ -213,6 +225,7 @@ class CategoryController extends Controller
         if($node)
             return view('appl.dataentry.category.createedit')
                     ->with('project',$this->project)
+                    ->with('exams',$exams)
                     ->with('category',$node)
                     ->with('parent',$parent)
                     ->with('select_options',$select_options)
@@ -246,6 +259,10 @@ class CategoryController extends Controller
         $category->video_link = $request->video_link;
         $category->pdf_link = $request->pdf_link;
         $category->test_link = $request->test_link;
+        if($request->exam_id)
+        $category->exam_id = $request->exam_id;
+        else
+        $category->exam_id = null;
         $category->video_desc = $request->video_desc;
         $category->save();
 

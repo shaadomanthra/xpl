@@ -9,8 +9,12 @@ use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Product\Test;
+use PacketPrep\Models\Exam\Tests_Overall;
+use PacketPrep\Models\Exam\Tests_Section;
+
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
 use PacketPrep\User;
@@ -209,6 +213,27 @@ class AssessmentController extends Controller
     {
         $exam = Exam::where('slug',$test)->first();
 
+        if($exam->status == 2){
+            
+            $user = \Auth::user();
+            $entry=null;
+            if($user)
+            foreach($exam->products as $product)
+            {
+                if($product->users()->find($user->id)){
+                    $entry = DB::table('product_user')
+                        ->where('product_id', $product->id)
+                        ->where('user_id', $user->id)
+                        ->first();
+                     $p = $product;   
+                }
+                
+            }
+
+            if(!$entry)
+                return view('appl.course.course.access');
+        }
+
 
         $completed = 0;
 
@@ -386,6 +411,8 @@ class AssessmentController extends Controller
                     $details['time'] = $test->time;
                 }else{
                     $details['response'] = null;
+                    $details['accuracy'] = null;
+                    $details['time'] = null;
                 }
 
 
@@ -413,7 +440,6 @@ class AssessmentController extends Controller
                    
 
                 } 
-
                 
 
                 return view('appl.exam.assessment.solutions')
@@ -437,27 +463,33 @@ class AssessmentController extends Controller
 
         $exam = Exam::where('slug',$slug)->first();
         $question = Question::where('id',$id)->first();
+        $section = $question->sections()->first();
 
-        $test = Test::where('question_id',$id)->where('test_id',$exam->id)
+        $t = Test::where('question_id',$id)->where('test_id',$exam->id)
                 ->where('user_id',$request->get('user_id'))->first();
-        if(!$test)
-        $test = new Test();
 
-        $test->question_id = $request->get('question_id');
-        $test->test_id = $exam->id;
-        $test->user_id = $request->get('user_id');
+        
+        if(!$t)
+        $t = new Test();
+
+
+        $t->question_id = $request->get('question_id');
+        $t->test_id = $exam->id;
+        $t->user_id = $request->get('user_id');
         if($request->get('response'))
-        $test->response = strtoupper($request->get('response'));
-        $test->answer = strtoupper($question->answer);
+        $t->response = strtoupper($request->get('response'));
+        $t->answer = strtoupper($question->answer);
         if($request->get('time'))
-        $test->time = $test->time+$request->get('time');
+        $t->time = $t->time+$request->get('time');
 
-        if($test->response == $test->answer)
-            $test->accuracy =1;
+        if($t->response == $t->answer)
+            $t->accuracy =1;
         else
-            $test->accuracy=0;
+            $t->accuracy=0;
 
-        $test->save();
+        $t->save();
+
+        
 
     }
 
@@ -467,21 +499,24 @@ class AssessmentController extends Controller
 
         $exam = Exam::where('slug',$slug)->first();
         $question = Question::where('id',$id)->first();
+        $section = $question->sections()->first();
 
-        $test = Test::where('question_id',$id)->where('test_id',$exam->id)
+        $t= Test::where('question_id',$id)->where('test_id',$exam->id)
                 ->where('user_id',$request->get('user_id'))->first();
-        if(!$test)
-        $test = new Test();
+        if(!$t)
+        $t = new Test();
 
-        $test->question_id = $request->get('question_id');
-        $test->test_id = $exam->id;
-        $test->user_id = $request->get('user_id');
-        $test->time = $test->time+$request->get('time');
-        $test->response = strtoupper($request->get('response'));
-        $test->answer = strtoupper($question->answer);
-        $test->accuracy=0;
+        $t->question_id = $request->get('question_id');
+        $t->test_id = $exam->id;
+        $t->user_id = $request->get('user_id');
+        $t->time = $t->time+$request->get('time');
+        $t->response = strtoupper($request->get('response'));
+        $t->answer = strtoupper($question->answer);
+        $t->accuracy=0;
 
-        $test->save();
+        $t->save();
+
+
 
     }
 
@@ -506,6 +541,7 @@ class AssessmentController extends Controller
             $t->status =1;
             $t->save();
         } 
+
 
         return redirect()->route('assessment.analysis',$slug);
 
@@ -540,19 +576,93 @@ class AssessmentController extends Controller
             
     }
 
+    public function updateTestRecords($exam,$user){
+
+        // tests overall and section update
+
+        $tests = Test::where('test_id',$exam->id)->where('user_id',$user->id)->get();
+
+        $tests_overall = Tests_Overall::where('test_id',$exam->id)->where('user_id',$user->id)->first();
+
+
+        $i=0;
+        if(!$tests_overall)
+        foreach($tests as $k=>$t){
+
+            $tests_section = Tests_Section::where('section_id',$t->section_id)->where('user_id',$t->user_id)->first();
+
+            
+            $section = Section::where('id',$t->section_id)->first();
+
+            if(!$tests_overall ){
+                $tests_overall = new Tests_Overall;
+            }
+
+
+            if(!$tests_section ){
+                $tests_section = new Tests_Section;
+            }
+
+            $tests_section->user_id = $t->user_id;
+            $tests_overall->user_id = $t->user_id;
+
+            $tests_section->test_id = $t->test_id;
+            $tests_overall->test_id = $t->test_id;
+            $tests_section->section_id = $t->section_id;
+
+            if(!$t->response){
+
+                $tests_section->unattempted++;
+                $tests_overall->unattempted++;
+
+                
+            }else{
+
+                if($t->accuracy){
+                    $tests_section->correct++;
+                    $tests_overall->correct++;
+
+
+                    $tests_section->score += $section->mark;
+                    $tests_overall->score += $section->mark;
+                }else
+                {
+                    $tests_section->incorrect++;
+                    $tests_overall->incorrect++;
+
+                    $tests_section->score -= $section->negative;
+                    $tests_overall->score -= $section->negative;
+                }
+
+            }
+
+            $tests_section->max += $section->mark;
+            $tests_overall->max += $section->mark;
+            
+
+            $tests_section->time += $t->time;
+            $tests_overall->time += $t->time;
+        
+            $i++;
+            $tests_section->save();
+            $tests_overall->save();
+        }
+
+    }
+
     public function analysis($slug,Request $request)
     {
-
         $exam = Exam::where('slug',$slug)->first();
 
         $questions = array();
         $i=0;
-        foreach($exam->sections as $section){
-            foreach($section->questions as $q){
-                $questions[$i] = $q;
-                    $i++;
-            }
-        }
+
+
+        $student = User::where('username',$request->get('student'))->first();
+
+        if(!$student)
+            $student = \auth::user();
+
         
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0];
         $details['course'] = $exam->name;
@@ -560,8 +670,29 @@ class AssessmentController extends Controller
         $c=0; $i=0; $u=0;
 
         $tests = Test::where('test_id',$exam->id)
-                        ->where('user_id',\auth::user()->id)->get();
+                        ->where('user_id',$student->id)->get();
 
+        //dd($tests);
+        if(!count($tests))
+            return redirect()->route('assessment.instructions',$slug);            
+
+        $this->updateTestRecords($exam,$student);
+
+        $sections = array();
+        foreach($exam->sections as $section){
+            foreach($section->questions as $q){
+                $questions[$i] = $q;
+                $sections[$section->name] = Tests_Section::where('section_id',$section->id)->where('user_id',$student->id)->first();
+                    $i++;
+            }
+        }
+
+        if(count($sections)==1)
+            $sections = null;
+
+        $details['correct_time'] =0;
+        $details['incorrect_time']=0;
+        $details['unattempted_time']=0;
         foreach($tests as $key=>$t){
 
             //dd($t->section->negative);
@@ -578,6 +709,7 @@ class AssessmentController extends Controller
                     $details['c'][$c]['question'] = $t->question;
                     $c++;
                     $details['correct'] = $details['correct'] + 1;
+                    $details['correct_time'] = $details['correct_time'] + $t->time;
                     $details['marks'] = $details['marks'] + $t->section->mark;
                 }
                 else{
@@ -585,37 +717,55 @@ class AssessmentController extends Controller
                     $details['i'][$i]['question'] = $t->question;
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
+                    $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
                     $details['marks'] = $details['marks'] - $t->section->negative; 
                 }
 
                 
             }else{
-                $details['u'][$u]['category'] = $t->question->categories->first();
+                $details['u'][$u]['category'] = $t->question->categories->last();
                 $details['u'][$u]['question'] = $t->question;
                     $u++;
                 $details['unattempted'] = $details['unattempted'] + 1;  
+                $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
             }
 
             $details['total'] = $details['total'] + $t->section->mark;
 
         } 
         $success_rate = $details['correct']/count($questions);
-        if($success_rate > 0.9)
+        if($success_rate > 0.7)
             $details['performance'] = 'Excellent';
-        elseif(0.7 < $success_rate && $success_rate < 0.9)
-            $details['performance'] = 'Good';
         elseif(0.4 < $success_rate && $success_rate < 0.7)
-            $details['performance'] = 'Average';
+            $details['performance'] = 'Good';
         else
             $details['performance'] = 'Need to Improve';
 
         $details['avgpace'] = round($sum / count($questions),2);
         
+        if($details['correct_time'] && $details['correct_time']>59)
+            $details['correct_time'] =round($details['correct_time']/60,2).' min';
+        else
+            $details['correct_time'] = $details['correct_time'].' sec';
+            
+
+        if($details['incorrect_time'] && $details['incorrect_time'] > 59)
+            $details['incorrect_time'] =round($details['incorrect_time']/60,2).' min';
+        else
+            $details['incorrect_time'] = $details['incorrect_time'].' sec';
+
+
+        if($details['unattempted_time'] && $details['unattempted_time']>59)
+            $details['unattempted_time'] =round($details['unattempted_time']/60,2).' min';
+        else 
+            $details['unattempted_time'] = $details['unattempted_time'].' sec';   
+            
         
-        
+        //dd($sections);
 
         return view('appl.exam.assessment.analysis')
                         ->with('exam',$exam)
+                        ->with('sections',$sections)
                         ->with('details',$details)
                         ->with('chart',true);
 

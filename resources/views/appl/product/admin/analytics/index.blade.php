@@ -194,8 +194,8 @@
             <div class="col-4"><div class="mt-2"><i class="fa fa-area-chart fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
             <div class="col-8">
             <div class="  " style="color: rgba(127, 166, 198, 0.93)">
-            Performance Accuracy<div style="font-size: 25px;font-weight: 900;color:rgba(127, 166, 198, 1)">@if($data['acurracy'])
-            {{ $data['acurracy']}} %
+            Performance Accuracy<div style="font-size: 25px;font-weight: 900;color:rgba(127, 166, 198, 1)">@if($data['accuracy'])
+            {{ $data['accuracy']}} %
           @else
           --
           @endif </div>

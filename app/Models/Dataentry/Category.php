@@ -18,12 +18,17 @@ class Category extends Model
         'video_link',
         'video_desc',
         'pdf_link',
-        'test_link',
+        'category_id',
         // add all other fields
     ];
     public $timestamps = false;
 
    
+   public function exam()
+    {
+        return $this->belongsTo('PacketPrep\Models\Exam\Exam');
+    }
+
     public function questions()
     {
         return $this->belongsToMany('PacketPrep\Models\Dataentry\Question');

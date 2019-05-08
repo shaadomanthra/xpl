@@ -16,9 +16,9 @@
      		<a href="{{ url()->current()}}" class="list-group-item list-group-item-action list-group-item-success {{ (request()->get('branch')) ? '' : 'active'}}">
 				 All ({{$branches->total}})
 			</a>
-     		@foreach($college->branches as $branch)
+     		@foreach($college->branches()->orderBy('id')->get() as $branch)
 			<a href="{{ url()->current()}}?branch={{$branch->name}}" class="list-group-item list-group-item-action list-group-item-success {{ (request()->get('branch')==$branch->name) ? 'active' : ''}}">
-				 {{ $branch->name }} ({{ count($branches[$branch->id])}})
+				 {{ $branch->name }} ({{ isset($branches[$branch->id]) ? count($branches[$branch->id]) : '0'}})
 			</a>
 			@endforeach
 		</div>
@@ -69,11 +69,17 @@
 				    Assign Batch
 				  </a>
 
+				  @if(count($college->batches))
 				  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 				  	@foreach($college->batches as $batch)
 				    <a class="dropdown-item" href="{{ route('batch.attach',$batch->id)}}?user_id={{$user->id}}&url={{ url()->current()}}">{{ $batch->name}}</a>
 				    @endforeach
 				  </div>
+				  @else
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				  	<div class="dropdown-item">- No Batches -</div>
+				  </div>
+				  @endif
 				</div>
               @endcan
               @endif

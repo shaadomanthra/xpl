@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Exam;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Dataentry\Category;
@@ -40,6 +41,7 @@ class ExamController extends Controller
     {
         $exam = new Exam();
         $examtypes = Examtype::all();
+        $courses = Course::all();
         $this->authorize('create', $exam);
 
 
@@ -47,7 +49,9 @@ class ExamController extends Controller
                 ->with('stub','Create')
                 ->with('jqueryui',true)
                 ->with('editor',true)
-                ->with('exam',$exam)->with('examtypes',$examtypes);
+                ->with('exam',$exam)
+                ->with('courses',$courses)
+                ->with('examtypes',$examtypes);
     }
 
 
@@ -240,6 +244,8 @@ class ExamController extends Controller
             $exam->name = $request->name;
             $exam->slug = $request->slug;
             $exam->user_id = $request->user_id;
+            if($request->course_id)
+            $exam->course_id = $request->course_id;
             $exam->examtype_id = $request->examtype_id;
             $exam->description = ($request->description) ? $request->description: null;
             $exam->instructions = ($request->instructions) ? $request->instructions : null;
@@ -288,6 +294,8 @@ class ExamController extends Controller
     {
         $exam= Exam::where('slug',$id)->first();
         $examtypes = Examtype::all();
+        $courses = Course::all();
+
         $this->authorize('update', $exam);
 
 
@@ -297,6 +305,7 @@ class ExamController extends Controller
                 ->with('jqueryui',true)
                 ->with('editor',true)
                 ->with('examtypes',$examtypes)
+                ->with('courses',$courses)
                 ->with('exam',$exam);
         else
             abort(404);
@@ -319,6 +328,8 @@ class ExamController extends Controller
             $exam->name = $request->name;
             $exam->slug = $request->slug;
             $exam->user_id = $request->user_id;
+            if($request->course_id)
+            $exam->course_id = $request->course_id;
             $exam->examtype_id = $request->examtype_id;
             $exam->description = ($request->description) ? $request->description: null;
             $exam->instructions = ($request->instructions) ? $request->instructions : null;

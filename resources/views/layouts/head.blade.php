@@ -38,7 +38,7 @@
         tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
       });
     </script>
-    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     @endif
 
     @if(isset($recaptcha))
@@ -49,14 +49,6 @@
     <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     @endif
 
-
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-9550642194256443",
-    enable_page_level_ads: true
-  });
-</script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43617911-7"></script>

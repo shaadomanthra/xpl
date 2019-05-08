@@ -64,7 +64,7 @@
 @endif
 
 @if(isset($chart))
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 <script>
 var ctx = document.getElementById("myChart");
 var myChart = new Chart(ctx, {
@@ -99,6 +99,95 @@ var myChart = new Chart(ctx, {
     }
 });
 </script>
+
+<script type="text/javascript">
+  var optionsOne = {
+  type: 'horizontalBar',
+  data: {
+    labels: ["Correct", "Incorrect", "Unattempted"],
+    datasets: [{
+      label: 'Colors One',
+      data: [7, 11, 8],
+      backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+        title: {
+            display: true,
+            text: 'Chart.js Bar Chart - Stacked'
+          },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+}
+
+var ctxOne = document.getElementById('chartOneContainer').getContext('2d');
+new Chart(ctxOne, optionsOne);
+
+</script>
+
+@if(isset($sections))
+@foreach($sections as $sec => $section)
+<script type="text/javascript">
+  var options_{{$section->section_id}} = {
+  type: 'horizontalBar',
+  data: {
+    labels: ["Correct", "Incorrect", "Unattempted"],
+    datasets: [{
+      label:'',
+      data: [{{$section->correct}}, {{$section->incorrect}}, {{$section->unattempted}}],
+      backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    legend: {
+        display: false
+    },
+        title: {
+            display: true,
+            text: '{{ $sec }} '
+          },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+}
+
+var ctx_{{$section->section_id}} = document.getElementById({{$section->section_id}}+'Container').getContext('2d');
+new Chart(ctx_{{$section->section_id}},options_{{$section->section_id}});
+
+</script>
+@endforeach
+@endif
 
 @endif
 

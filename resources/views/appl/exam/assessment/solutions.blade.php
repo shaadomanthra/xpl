@@ -47,10 +47,10 @@
     <div class="question_block">
 
       @if($passage)
-      <div class="card mb-3">
+      <div class="card mb-3" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
         <div class="card-body">
           <b>Passage</b> <span class="btn view badge badge-warning" data-item="passage">view</span><br>
-          <div class="passage" style="display: none;">
+          <div class="passage pt-2" style="display: none;">
           {!! $passage->passage !!}
           </div>
         </div>
@@ -61,7 +61,7 @@
           
         <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3 " >
+        		<div class="pr-3 mb-2" >
         			<div class="text-center p-1 rounded  w100 qno @if(!$details['response']) qyellow @else @if($details['accuracy']==1) qgreen @else qred @endif @endif "  style="" data-qqno="{{$question->id}}">
         				{{ $details['qno'] }}
         			</div>
@@ -77,7 +77,7 @@
         @if($question->a)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 mb-2" >
               
         			<div class="text-center p-1 rounded bg-light w100  @if($details['response']=='A') @if($details['accuracy']==1) qgreen-border @else qred-border @endif @else @if($question->answer=='A') qgreen-border @else border @endif @endif" >
                  A </div>
@@ -91,7 +91,7 @@
         @if($question->b)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 mb-2" >
         			<div class="text-center p-1 rounded bg-light w100  @if($details['response']=='B') @if($details['accuracy']==1) qgreen-border @else qred-border @endif @else @if($question->answer=='B') qgreen-border @else border @endif @endif" >
                 
                  B</div>
@@ -104,7 +104,7 @@
         @if($question->c)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 mb-2" >
         			<div class="text-center p-1 rounded bg-light w100 @if($details['response']=='C') @if($details['accuracy']==1) qgreen-border @else qred-border @endif @else @if($question->answer=='C') qgreen-border @else border @endif @endif" >
                 C</div>
         		</div>
@@ -116,7 +116,7 @@
         @if($question->d)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 mb-2" >
         			<div class="text-center p-1 rounded bg-light w100 @if($details['response']=='D') @if($details['accuracy']==1) qgreen-border @else qred-border @endif @else @if($question->answer=='D') qgreen-border @else border @endif @endif" >
                 
                 D</div>
@@ -129,7 +129,7 @@
         @if($question->e)
          <div class="row no-gutters">
         	<div class="col-2 col-md-2">
-        		<div class="pr-3" >
+        		<div class="pr-3 mb-2" >
         	<div class="text-center p-1 rounded bg-light w100 @if($details['response']=='E') @if($details['accuracy']==1) qgreen-border @else qred-border @endif @else @if($question->answer=='E') qgreen-border @else border @endif @endif" > 
                 E
               </div>

@@ -65,15 +65,20 @@
             @endif>
       </div>
 
+      
+
+      @if($exams)
       <div class="form-group">
-        <label for="formGroupExampleInput ">Test Link</label>
-        <input type="text" class="form-control" name="test_link" id="formGroupExampleInput" placeholder="Enter the Test Link" 
-            @if($stub=='Create')
-            value="{{ (old('test_link')) ? old('test_link') : '' }}"
-            @else
-            value = "{{ $category->test_link }}"
-            @endif>
+        <label for="formGroupExampleInput ">Exam</label>
+        <select class="form-control" name="exam_id">
+          <option value="">- None -</option>
+          @foreach($exams as $e)
+          <option value="{{$e->id}}"   @if($stub!='Create') @if($e->id==$category->exam_id) selected @endif @endif >{{ $e->name }}</option>
+          @endforeach
+        </select>
       </div>
+
+      @endif
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Video Description</label>

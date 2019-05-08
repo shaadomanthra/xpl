@@ -7,17 +7,28 @@ $(document).ready(function() {
     	window.location=window.location.pathname+'?exam='+this.value;
   	});
 
+    $('.batch').on('change', function() {
+      if ($('input.batch').is(':checked'))
+      window.location=window.location.pathname+'?batch=1';
+      else
+      window.location=window.location.pathname+'?batch=0';
+    });
     
 
     /* scroll to */
     var loc = $(location).attr('href').split("/")[8];
     if(!$.isNumeric(loc)){
+
     	var loc = $(location).attr('href').split("/")[7];
+      if(!$.isNumeric(loc))
+        var loc = $(location).attr('href').split("/")[6];
+      console.log("Questions is :"+loc);
     }
 
     if($.isNumeric(loc)){
     	var b = $('.qset').offset().top;
 	    var a = $('#q'+loc).offset().top - b;
+      console.log('location:'+a+' '+b);
 	  	$('.qset').scrollTop(a);
     }
     

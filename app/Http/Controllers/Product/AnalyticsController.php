@@ -123,6 +123,7 @@ class AnalyticsController extends Controller
         
     }
 
+
      public function test_filldata(Request $r){
     	if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
         {
@@ -135,7 +136,7 @@ class AnalyticsController extends Controller
         if(!$first && !$last)
             dd("Enter First Last ");
 
-        dd('No Entry');
+        //dd('No Entry');
         
         $tests = test::where('id','>=',$first)->where('id','<=',$last)->get();
 
@@ -188,7 +189,11 @@ class AnalyticsController extends Controller
     			    $tests_overall->score -= $section->negative;
 	    		}
 
+
     		}
+
+            $tests_section->max += $section->mark;
+            $tests_overall->max += $section->mark;
     		
 
     		$tests_section->time += $t->time;
@@ -211,7 +216,7 @@ class AnalyticsController extends Controller
 
         $data = array();
         $item_name = 'category_id';
-        if($r->get('course')){
+        if($r->get('course')){ 
             $data['item'] = Course::where('id',$r->get('course'))
                             ->first();
             $project = Project::where('slug',$data['item']->slug)
@@ -305,9 +310,9 @@ class AnalyticsController extends Controller
         $data['active'] = $practice->unique('user_id');
 
         if($data['solved'])     
-            $data['acurracy'] = round(($data['correct']*100)/$data['solved'],2);
+            $data['accuracy'] = round(($data['correct']*100)/$data['solved'],2);
         else
-            $data['acurracy'] =null;  
+            $data['accuracy'] =null;  
 
         return $data;
     }

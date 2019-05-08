@@ -54,6 +54,15 @@
             </div>
           </div>
             @endif
+
+           @if(isset($exam->course->name))
+          <div class="row mb-2">
+            <div class="col-md-4">Course</div>
+            <div class="col-md-8">
+              <i class="fa fa-link"></i> {{ $exam->course->name }}
+            </div>
+          </div>
+            @endif
           <div class="row mb-2">
             <div class="col-md-4">Instructions</div>
             <div class="col-md-8">

@@ -15,6 +15,8 @@ class Exam extends Model
         'description',
         'instructions',
         'status',
+        'examtype_id',
+        'course_id'
         // add all other fields
     ];
     
@@ -31,6 +33,11 @@ class Exam extends Model
     public function examtype()
     {
         return $this->belongsTo('PacketPrep\Models\Exam\Examtype');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo('PacketPrep\Models\Course\Course');
     }
 
     public function question_count()

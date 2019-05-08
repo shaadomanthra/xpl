@@ -89,6 +89,28 @@
 		</div>
 		@endif
 
+	
+		@if(isset($sections))
+		<div class="card mb-3 bg-light"  style="background: #FFF;border: 2px solid #EEE;">
+			<div class="card-header">
+				Section Analysis
+			</div>
+			<div class="card-body">
+			<div class="row">
+				@foreach($sections as $sec =>$section)
+				<div class="col-12 col-md-6">
+						<div class="p-2 " height="200px">
+						<canvas id="{{$section->section_id}}Container" width="600" height="200px"></canvas>
+					</div>
+				</div>
+				@endforeach
+			</div>
+		</div>
+		</div>
+		@endif
+
+		
+
 			<div class="card mb-3 "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
 			<div class="card-body">
 				<h1> Concept Breakup</h1>
@@ -97,7 +119,7 @@
 					<div class="col-12 col-md-4">
 
 						<div class="p-1 mb-3 rounded" style="background: rgba(75, 192, 192, 0.2); border:1px solid rgba(75, 192, 192, 1);">
-							Correct
+							Correct ({{$details['correct_time']}})
 						</div>
 
 						@if(isset($details['c']))
@@ -120,7 +142,7 @@
 					<div class="col-12 col-md-4">
 
 						<div class="p-1 mb-3 rounded" style="background: rgba(255, 99, 132, 0.2); border:1px solid rgba(255,99,132,1)">
-							InCorrect
+							InCorrect ({{$details['incorrect_time']}})
 						</div>
 						@if(isset($details['i']))
 						@foreach($details['i'] as $m=>$item)
@@ -141,7 +163,7 @@
 					<div class="col-12 col-md-4">
 
 						<div class="p-1 mb-3 rounded" style="background: rgba(255, 206, 86, 0.2); border:1px solid rgba(255, 206, 86, 1)">
-							Unattempted
+							Unattempted ({{$details['unattempted_time']}})
 						</div>
 						@if(isset($details['u']))
 						@foreach($details['u'] as $m=>$item)
@@ -169,4 +191,7 @@
 
 	</div>
 </div>
+
+
+
 @endsection           

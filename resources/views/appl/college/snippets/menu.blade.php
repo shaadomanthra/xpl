@@ -9,7 +9,7 @@
 		<i class="fa fa-home"></i> Home
 	</a>
 	<a href="" class="list-group-item list-group-item-action list-group-item-info @if(request()->is('/campus/programs*')) active @endif">
-		<i class="fa fa-navicon"></i> Programs
+		<i class="fa fa-navicon"></i> Courses
 	</a>
 	<a href="{{ route('batch.index')}}" class="list-group-item list-group-item-action list-group-item-info {{ request()->is('campus/batches*') ? 'active' : '' }}">
 		<i class="fa fa-th"></i> Batches
@@ -35,13 +35,13 @@
 	<a href="{{ route('campus.main')}}" class="list-group-item list-group-item-action list-group-item-warning {{ request()->is('campus') ? 'active' : '' }}">
 		<i class="fa fa-home"></i> Home
 	</a>
-	<a href="" class="list-group-item list-group-item-action list-group-item-warning {{ request()->is('campus/admin*') ? 'active' : '' }}">
-		<i class="fa fa-navicon"></i> Programs
+	<a href="" class="list-group-item list-group-item-action list-group-item-warning {{ request()->is('campus/course*') ? 'active' : '' }}">
+		<i class="fa fa-navicon"></i> Courses
 	</a>
-	<a href="" class="list-group-item list-group-item-action list-group-item-warning {{ request()->is('campus/admin*') ? 'active' : '' }}">
+	<a href="" class="list-group-item list-group-item-action list-group-item-warning {{ request()->is('campus/schedule*') ? 'active' : '' }}">
 		<i class="fa fa-calendar"></i> Schedule
 	</a>
-	<a href="" class="list-group-item list-group-item-action list-group-item-warning {{ request()->is('campus/admin*') ? 'active' : '' }}">
+	<a href="" class="list-group-item list-group-item-action list-group-item-warning {{ request()->is('campus/Leaderboard*') ? 'active' : '' }}">
 		<i class="fa fa-trophy"></i> Leaderboard
 	</a>
 </div>
