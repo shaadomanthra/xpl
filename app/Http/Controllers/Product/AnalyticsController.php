@@ -136,7 +136,7 @@ class AnalyticsController extends Controller
         if(!$first && !$last)
             dd("Enter First Last ");
 
-        //dd('No Entry');
+        dd('No Entry');
         
         $tests = test::where('id','>=',$first)->where('id','<=',$last)->get();
 
