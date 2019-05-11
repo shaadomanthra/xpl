@@ -70,10 +70,16 @@ class AnalyticsController extends Controller
     	
     	$m=0;
 
-        $ques_count = 0; $dont=true;
+        $d = array();
+        $d['file_name'] = $file_nodes;
+        $d['first'] = $first;
+        $d['count'] = -1;
+        $ques_count = 0; $dont=false;
         if(!file_exists($file_nodes)){
             file_put_contents($file_nodes,$m);
-            $dont = false;
+            $dont = true;
+        }else{
+            $d['count'] = file_get_contents($file_nodes);
         }
 
 
@@ -118,12 +124,12 @@ class AnalyticsController extends Controller
     		$practice_course->save();
             $m++;
 
-
+            $d['practice'] = $m;
     	}
-        dd('practice_extra_tables_updated - '.$m.' - prev count'.$ques_count);
+        dd($d);
             
         }else{
-            dd('Already updates - '.$m.' - prev count'.$ques_count);
+           dd($d);
 
         }
 
