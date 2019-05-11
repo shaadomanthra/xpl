@@ -55,8 +55,6 @@ class AnalyticsController extends Controller
             $exploded = explode('.', $parsed["host"]);
             $domain = $exploded[0];
 
-        $file_nodes = '../static/'.$domain.'_practice_'.$first.'.txt';
-
 
         $first = $r->get('first');
         $last = $r->get('last');
