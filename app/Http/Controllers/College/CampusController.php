@@ -204,6 +204,7 @@ class CampusController extends Controller
                     //dd($test);
             }
         }
+        dd($practice);
         
     	return view('appl.college.campus.course_show')
                 ->with('college',$college)

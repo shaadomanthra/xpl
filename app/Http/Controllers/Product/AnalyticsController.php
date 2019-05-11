@@ -50,6 +50,14 @@ class AnalyticsController extends Controller
              abort(403,'Unauthorised Access');   
         }
 
+        $url = url()->full();
+            $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $domain = $exploded[0];
+
+        $file_nodes = '../static/'.$domain.'_practice.txt';
+
+
         $first = $r->get('first');
         $last = $r->get('last');
 
@@ -101,8 +109,19 @@ class AnalyticsController extends Controller
     		$practice_course->save();
             $m++;
 
+
     	}
-        dd('practice_extra_tables_updated - '.$m);
+
+        $ques_count = 0;
+        if(!file_exists($file_nodes)){
+            file_put_contents($file_nodes,$m);
+        }else{
+            $ques_count = file_get_contents($file_nodes);
+            $ques_count = $ques_count + $m;
+            file_put_contents($file_nodes,$ques_count);
+        }
+        
+        dd('practice_extra_tables_updated - '.$m.' - prev count'.$ques_count);
 
     }
 
