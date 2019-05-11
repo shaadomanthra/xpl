@@ -35,8 +35,16 @@ class Course extends Model
         return $this->belongsToMany('PacketPrep\Models\Product\Product');
     }
 
+    public function colleges(){
+        return $this->belongsToMany('PacketPrep\Models\College\College');
+    }
+
     public function clients(){
         return $this->belongsToMany('PacketPrep\Models\Product\Client')->withPivot('visible');
+    }
+
+    public function exams(){
+        return $this->hasMany('PacketPrep\Models\Exam\Exam');
     }
 
     public function getVisibility($client_id,$course_id){

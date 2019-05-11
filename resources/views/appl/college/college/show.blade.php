@@ -16,17 +16,19 @@
     <div class="col-md-12">
       <div class="card bg-light mb-3">
         <div class="card-body text-secondary">
-          <p class="h2 mb-0"><i class="fa fa-th "></i> {{ $obj->name }} 
+          <p class="h2 mb-3"><i class="fa fa-th "></i> {{ $obj->name }} 
 
+
+          </p>
           @can('update',$obj)
-            <span class="btn-group float-right" role="group" aria-label="Basic example">
+          
+            <span class="btn-group " role="group" aria-label="Basic example">
               <a href="{{ route($app->module.'.edit',$obj->id) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
               <a href="{{ route('college.view',$obj->id) }}" class="btn btn-outline-secondary"  ><i class="fa fa-bars"></i> College</a>
               <a href="{{ route($app->module.'.userlist',$obj->id) }}" class="btn btn-outline-secondary"  ><i class="fa fa-bars"></i> User List</a>
             </span>
             @endcan
-          </p>
         </div>
       </div>
 
@@ -34,24 +36,37 @@
       <div class="card mb-4">
         <div class="card-body">
           @foreach($obj->getAttributes() as $key=>$item)
+          @if($item && $key!='created_at' && $key!= 'updated_at')
           <div class="row mb-2">
-            <div class="col-md-4">{{ $key }}</div>
-            <div class="col-md-8">{{ $item }}</div>
+            <div class="col-12 col-md-2">{{ strtoupper($key) }}</div>
+            <div class="col-12 col-md-10">{{ $item }}</div>
           </div>
+          @endif
           @endforeach
 
 
           <div class="row mb-2">
-            <div class="col-md-4">Zone</div>
-            <div class="col-md-8"> {{ $obj->zones->first()->name }}</div>
+            <div class="col-12 col-md-2">Zone</div>
+            <div class="col-12 col-md-10"> {{ $obj->zones->first()->name }}</div>
           </div> 
 
           <div class="row mb-2">
-            <div class="col-md-4">Branches</div>
-            <div class="col-md-8"> 
-              @foreach($obj->branches as $branch)
+            <div class="col-12 col-md-2">Branches</div>
+            <div class="col-12 col-md-10"> 
+              @foreach($obj->branches()->orderBy('id')->get() as $branch)
                 {{ $branch->name }} &nbsp;
               @endforeach
+            </div>
+          </div> 
+
+          <div class="row mb-2">
+            <div class="col-12 col-md-2">Courses</div>
+            <div class="col-12 col-md-10"> 
+              <ol>
+              @foreach($obj->courses as $course)
+                <li>{{ $course->name }} </li>
+              @endforeach
+            </ol>
             </div>
           </div> 
 

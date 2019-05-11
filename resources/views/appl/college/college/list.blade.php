@@ -15,12 +15,12 @@
               <tr>
                 <th scope="row">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
-                  <a href=" {{ route($app->module.'.view',$obj->id) }} ">
+                  <a href=" {{ route($app->module.'.show',$obj->id) }} ">
                   {{ $obj->name }}
                   </a>
                 </td>
                  <td>
-                  {{ count($obj->users)}}
+                  {{ $obj->users_count}}
                 </td>
                 
                 <td>{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</td>

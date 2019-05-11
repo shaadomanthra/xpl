@@ -4,41 +4,89 @@ namespace PacketPrep\Models\College;
 
 use Illuminate\Database\Eloquent\Model;
 
+use PacketPrep\Models\College\Branch;
+use PacketPrep\Models\College\College;
+use PacketPrep\Models\College\Campus;
+use PacketPrep\Models\College\Batch;
+use PacketPrep\User;
+use Illuminate\Support\Facades\DB;
+use PacketPrep\Models\Dataentry\Question;
+use PacketPrep\Models\Dataentry\Category;
+use PacketPrep\Models\Dataentry\Project;
+use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Course\Practices_Course;
+use PacketPrep\Models\Course\Practices_Topic;
+
+use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Tests_Overall;
+use PacketPrep\Models\Exam\Tests_Section;
+
 class Campus extends Model
 {
     
 
-    public function getAnalytics($college,$branch,$batch,Request $r){
+    public static function getAnalytics($college,$branch,$batch,$r,$course_id=null,$category_id=null){
 
         $data = array();
         $item_name = 'category_id';
-        if($r->get('course')){ 
-            $data['item'] = Course::where('id',$r->get('course'))
-                            ->first();
-            $project = Project::where('slug',$data['item']->slug)
-                        ->first();
+        if($course_id){ 
+            $data['item'] = Course::where('id',$course_id)->first();
+            $data['item_name'] = 'category_id';
+            $project = Project::where('slug',$data['item']->slug)->first();
             $category = Category::where('slug',$project->slug)->first();
-            $nodes = Category::descendantsOf($category->id);
-            $item_id = $nodes->pluck('id')->toArray(); 
-        }elseif($r->get('category'))
+            $item_id = $category->descendants->pluck('id')->toArray(); 
+
+            $data['total_item'][$course_id] = 0;
+            foreach($category->children as $node){
+	            $descendants = $node->descendants->pluck('id')->toArray();
+        		$data['total_item'][$node->id] = DB::table('category_question')->whereIn('category_id', $descendants)->count();
+        		$data[$node->id]= array("total"=>0,"solved"=>0,"time"=>0,"correct"=>0,"participants"=>0,"vg_solved"=>0,"completion"=>0,"accuracy"=>0);
+        		$data['total_item'][$course_id] = $data['total_item'][$course_id] +$data['total_item'][$node->id];
+            }
+
+        	$data[$course_id]= array("total"=>0,"solved"=>0,"time"=>0,"correct"=>0,"participants"=>0,"vg_solved"=>0,"completion"=>0,"accuracy"=>0);
+        }elseif($category_id)
         {
-            $data['item'] = Category::where('id',$r->get('category'))->first();
+            $data['item'] = Category::where('id',$category_id)->first();
+            $category = $data['item'];
             $nodes = Category::descendantsAndSelf($data['item']->id);
             $item_id = $nodes->pluck('id')->toArray(); 
-        }else{
-            $data['item'] = null;
-            $courses = Course::where('status',1)->get();
-            $item_id = array();
-            foreach($courses as $c){
-                $category = Category::where('slug',$c->slug)->first();
-                $items = Category::descendantsOf($category->id)->pluck('id')->toArray();
-                $item_id = $item_id + $items;
+            $data['item_name'] = 'category_id';
 
+
+            $data['total_item'][$category_id] = 0;
+            foreach($category->children as $node){
+	            $descendants = $node->descendantsAndSelf($node)->pluck('id')->toArray();
+
+        		$data['total_item'][$node->id] = DB::table('category_question')->whereIn('category_id', $descendants)->count();
+        		
+        		$data[$node->id]= array("total"=>$data['total_item'][$node->id],"solved"=>0,"time"=>0,"correct"=>0,"participants"=>0,"vg_solved"=>0,"completion"=>0,"accuracy"=>0);
+        		$data['total_item'][$category_id] = $data['total_item'][$category_id] +$data['total_item'][$node->id];
             }
             
+
+        	$data[$category_id]= array("total"=>$data['total_item'][$category->id],"solved"=>0,"time"=>0,"correct"=>0,"participants"=>0,"vg_solved"=>0,"completion"=>0,"accuracy"=>0);
+
+
+        }else{
+            $data['item'] = null;
+            $data['item_name'] = 'course_id';
+            $courses = $college->courses;
+            $item_id = array();
+            foreach($courses as $c){
+            	$project = Project::where('slug',$c->slug)->first();
+	            $category = Category::where('slug',$project->slug)->first();
+	            $nodes = Category::descendantsOf($category->id);
+	            $ids = $nodes->pluck('id')->toArray(); 
+	            foreach($ids as $id)
+                array_push($item_id,$id);
+        		
+        		$data['total_item'][$c->id] = DB::table('category_question')->whereIn('category_id', $ids)->count();
+        		$data[$c->id]= array("total"=>0,"solved"=>0,"time"=>0,"correct"=>0,"participants"=>0,"vg_solved"=>0,"completion"=>0,"accuracy"=>0);
+            }
         }
 
-        //dd($item_id);
+
         
         $data['total'] = DB::table('category_question')->whereIn('category_id', $item_id)->count();
         
@@ -59,7 +107,7 @@ class Campus extends Model
             $practice = Practices_Topic::whereIn('category_id',$item_id)
                         ->where('user_id',$user->id)->get();
             
-            $data = $this->getData($data,$practice);
+            $data = self::getData($data,$practice);
 
         }else{
 
@@ -83,9 +131,7 @@ class Campus extends Model
                     $branch_ids = $college->branches()->pluck('id')->toArray();
                     $users_item = DB::table('branch_user')->whereIn('branch_id', $branch_ids)->pluck('user_id')->toArray();
                 }
-
                 $users_college = $college->users()->pluck('id')->toArray();
-               
                 $users = array_intersect($users_item,$users_college);
             }
             elseif($college==null && $branch)
@@ -99,40 +145,66 @@ class Campus extends Model
             $data['branch'] = $branch;
             $data['batch'] = $batch;
 
-            if($r->get('course'))
-            $practice = Practices_Course::where('course_id',$r->get('course'))
-                        ->whereIn('user_id',$users)->get();
-            else    
+            if($course_id || $category_id)
             $practice = Practices_Topic::whereIn('category_id',$item_id)
                         ->whereIn('user_id',$users)->get();
+            else{
+            	$practice = Practices_Course::whereIn('course_id',$college->courses()->pluck('id')->toArray())->whereIn('user_id',$users)->get();
+            } 
+              
+            $data = self::getData($data,$practice);
 
-            //dd($item_id);
 
-            $data = $this->getData($data,$practice);
+            // Grouping
+            if($course_id){
+            	foreach($category->children as $child){
+            		$group = $practice->whereIn('category_id',$child->descendants->pluck('id')->toArray());
+            		$data_new = array('total'=>$data['total_item'][$child->id]);
+            		$data[$child->id] = self::getData($data_new,$group);
+            	}
+            	
+            }elseif($category_id)
+            {
+            	foreach($category->children as $child){
+            		$group = $practice->whereIn('category_id',$child->descendantsAndSelf($child)->pluck('id')->toArray());
+            		$data_new = array('total'=>$data['total_item'][$child->id]);
+            		$data[$child->id] = self::getData($data_new,$group);
+            	}
+            }
+            elseif( $branch || $batch){
+            	$practice_group = $practice->groupBy($data['item_name']);
 
+				foreach($practice_group as $k=>$group){
+					$data_new = array('total'=>$data['total_item'][$k]);
+				    $data[$k] = self::getData($data_new,$group);
+				}
+            }
 
+            //dd($data);
         }
         return $data;
     }
 
-    public function getData($data, $practice){
+   
+
+    public static function getData($data, $practice){
 
         $data['solved'] = $practice->sum('attempted');
         if($data['solved'])
-        $data['time'] = round($practice->sum('time')/$data['solved'],2);
+        $data['time'] = round($practice->sum('time')/$data['solved'],1);
         else
             $data['time']  =0;
-        $data['correct'] = round($practice->sum('correct'),2);
+        $data['correct'] = round($practice->sum('correct'),3);
 
         $data['participants'] = count($practice->unique('user_id'));
 
-        if($data['solved'])
-        $data['avg_solved'] = round($data['solved']/$data['participants'],2);
+        if($data['participants'])
+        $data['avg_solved'] = round($data['solved']/$data['participants'],3);
         else
         $data['avg_solved']  = 0;
 
-        if($data['avg_solved'])
-        $data['completion']  = round($data['avg_solved']/$data['total'],2)*100;
+        if($data['total'])
+        $data['completion']  = round($data['avg_solved']/$data['total'],3)*100;
         else
         $data['completion'] =0;
 
@@ -144,20 +216,33 @@ class Campus extends Model
         return $data;
     }
 
-    public function analytics_test($college,$branch,$batch,Request $r){
+    public static function analytics_test($college,$branch,$batch,$r,$course_id=null,$category_id=null){
 
+    	$courses = $college->courses;
 
-
-    	$student = $r->get('student');
-    	
-
-
-    	if($r->get('student')){
-    		$data['user'] =  User::where('id',$student)->first();
-    		$users = array($student);
-    	
+    	$test_id = array();
+    	$data = array();
+    	$data['course']=array();
+    	if(!$course_id){
+    		foreach($courses as $course){
+	    		$data['course'][$course->id] = array();
+	    		foreach($course->exams as $e){
+	    			array_push($data['course'][$course->id],$e->id); 
+	    			array_push($test_id,$e->id);
+	    		}
+	    	}
+    	}else{
+    		$course = Course::where('id',$course_id)->first();
+    		$data['course'][$course->id] = array();
+	    	foreach($course->exams as $e){
+	    		array_push($data['course'][$course->id],$e->id); 
+	    		array_push($test_id,$e->id);
+	    	}
     	}
-    	else if($college && $branch){   
+    	
+
+
+    	if($college && $branch){   
             $users_college = $college->users()->pluck('id')->toArray();
             $users_branches = $branch->users()->pluck('id')->toArray();
             $users = array_intersect($users_branches,$users_college);
@@ -185,43 +270,52 @@ class Campus extends Model
         else
             $users = User::all()->pluck('id');
 
-    
-    	$tests = Tests_Overall::whereIn('user_id',$users)->get();
 
-    	$data = $this->getData_Test($tests);
+    	$tests = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->get()->groupBy('user_id');
+
+    	$data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,'participants'=>0,
+    					"excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0);
+    	$data_tests = self::getData_Test($tests,$data_tests);
+
     	
-    	return $data;
+    	return $data_tests;
 
     }
 
 
-    public function getData_Test($tests){
+    public static function getData_Test($tests,$data){
 
-        $data['solved'] = $tests->sum('attempted');
-        if($data['solved'])
-        $data['time'] = round($practice->sum('time')/$data['solved'],2);
-        else
-            $data['time']  =0;
-        $data['correct'] = round($practice->sum('correct'),2);
+    	foreach($tests as $k=>$t)
+    	{
+    		$data['users'][$k]['score']=$t->sum('score');
+    		$data['users'][$k]['max']=$t->sum('max');
+    		if($data['users'][$k]['score'])
+    		$data['users'][$k]['percent'] = round($data['users'][$k]['score']/$data['users'][$k]['max'],2);
+    		else
+    		$data['users'][$k]['percent'] =0;
 
-        $data['participants'] = count($practice->unique('user_id'));
+    		if($data['users'][$k]['percent']>0.70){
+    			$data['users'][$k]['performance'] = 'excellent';
+    			$data['excellent']++;
+    		}elseif( $data['users'][$k]['percent']> 0.3 && $data['users'][$k]['percent'] <=0.70){
+    			$data['users'][$k]['performance'] = 'good';
+    			$data['good']++;
+    		}else{
+    			$data['users'][$k]['performance'] = 'need_to_improve';
+    			$data['need_to_improve']++;
 
-        if($data['solved'])
-        $data['avg_solved'] = round($data['solved']/$data['participants'],2);
-        else
-        $data['avg_solved']  = 0;
+    		}
+    		$data['participants']++;
 
-        if($data['avg_solved'])
-        $data['completion']  = round($data['avg_solved']/$data['total'],2)*100;
-        else
-        $data['completion'] =0;
+    	}
 
-        if($data['solved'])     
-            $data['accuracy'] = round(($data['correct']*100)/$data['solved'],2);
-        else
-            $data['accuracy'] = 0;  
-
-        return $data;
+    	if($data['participants']){
+    		$data['excellent_percent'] = round(($data['excellent']*100)/$data['participants'],2);
+    		$data['good_percent'] = round($data['good']/$data['participants']*100,2);
+    		$data['need_to_improve_percent'] = round($data['need_to_improve']/$data['participants']*100,2);
+    	}
+    	
+    	return $data;
     }
 
 }

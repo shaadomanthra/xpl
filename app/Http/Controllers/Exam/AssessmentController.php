@@ -111,11 +111,9 @@ class AssessmentController extends Controller
 
         } 
         $success_rate = $details['correct']/count($questions);
-        if($success_rate > 0.9)
+        if($success_rate > 0.7)
             $details['performance'] = 'Excellent';
-        elseif(0.7 < $success_rate && $success_rate < 0.9)
-            $details['performance'] = 'Good';
-        elseif(0.4 < $success_rate && $success_rate < 0.7)
+        elseif(0.3 < $success_rate && $success_rate <= 0.7)
             $details['performance'] = 'Average';
         else
             $details['performance'] = 'Need to Improve';
@@ -736,8 +734,8 @@ class AssessmentController extends Controller
         $success_rate = $details['correct']/count($questions);
         if($success_rate > 0.7)
             $details['performance'] = 'Excellent';
-        elseif(0.4 < $success_rate && $success_rate < 0.7)
-            $details['performance'] = 'Good';
+        elseif(0.3 < $success_rate && $success_rate <= 0.7)
+            $details['performance'] = 'Average';
         else
             $details['performance'] = 'Need to Improve';
 

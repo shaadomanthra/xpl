@@ -56,11 +56,11 @@ class AnalyticsController extends Controller
         if(!$first && !$last)
             dd("Enter First Last ");
 
-        dd('No Entry');
+        //dd('No Entry');
 
     	$practice = Practice::where('id','>=',$first)->where('id','<=',$last)->get();
     	
-    	
+    	$m=0;
     	foreach($practice as $k=>$p){
     		$practice_course = Practices_Course::where('course_id',$p->course_id)->where('user_id',$p->user_id)->first();
     		$practice_topic = Practices_Topic::where('category_id',$p->category_id)->where('user_id',$p->user_id)->first();
@@ -99,9 +99,10 @@ class AnalyticsController extends Controller
     		
     		$practice_topic->save();
     		$practice_course->save();
+            $m++;
 
     	}
-        dd('practice_extra_tables_updated');
+        dd('practice_extra_tables_updated - '.$m);
 
     }
 
@@ -120,6 +121,41 @@ class AnalyticsController extends Controller
                     
         }
         dd('practice_table_updated');
+        
+
+    }
+
+    public function remove_duplicates_practice(Request $r){
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+
+        $first = $r->get('first');
+        $last = $r->get('last');
+
+        if(!$first && !$last)
+            dd("Enter First Last ");
+
+        $practice = Practice::where('id','>=',$first)->where('id','<=',$last)->get();
+        $m=0;
+        foreach($practice as $p){
+            $duplicate = Practice::where('qid',$p->qid)->where('user_id',$p->user_id)->get();
+
+            if(count($duplicate)>1){
+                foreach($duplicate as $k=>$d)
+                {
+                    if($k!=0){
+                        $m++;
+                        $d->delete();
+                    }
+
+                }
+               
+            }
+        }
+
+        dd('practice_table_updated - deleted '.$m);
         
     }
 

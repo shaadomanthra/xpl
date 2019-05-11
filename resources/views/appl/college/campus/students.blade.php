@@ -37,8 +37,12 @@
       <div class="card bg-light mb-3">
         <div class="card-body text-secondary">
           <p class="h2 mb-0"> <i class="fa fa-users "></i> 
-            Students ({{$total}})
-
+            @if(!request()->get('branch')) 
+              All Students <a href="{{ route('campus.admin')}}"><button class="btn btn-outline-secondary float-right"><i class="fa fa-bar-chart"></i> Analytics</button></a>
+            @else 
+              {{ request()->get('branch')}}  <a href="{{ route('campus.admin')}}?branch={{request()->get('branch')}}"><button class="btn btn-outline-secondary float-right"><i class="fa fa-bar-chart"></i> Analytics</button></a>
+            @endif 
+            ({{$total}})
           </p>
         </div>
       </div>

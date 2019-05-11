@@ -45,10 +45,10 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 			->name('campus.main')->middleware('auth');
 	Route::get('/campus/admin', 'College\CampusController@admin')
 			->name('campus.admin')->middleware('auth');
-	Route::get('/campus/programs', 'College\CampusController@programs')
-			->name('campus.programs')->middleware('auth');
-	Route::get('/campus/programs/{program}', 'College\CampusController@program_show')
-			->name('campus.programs.show')->middleware('auth');
+	Route::get('/campus/courses', 'College\CampusController@courses')
+			->name('campus.courses')->middleware('auth');
+	Route::get('/campus/courses/{course}', 'College\CampusController@course_show')
+			->name('campus.courses.show')->middleware('auth');
 	Route::get('/campus/tests', 'College\CampusController@tests')		
 			->name('campus.tests')->middleware('auth');
 	Route::get('/campus/tests/{test}', 'College\CampusController@test_show')
@@ -81,6 +81,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	//Route::resource('/campus/schedules/{schedule}/modules', 'College\ModulesController')->middleware('auth');
 
 	//analytics
+	Route::get('/admin/analytics/practice_remove_duplicates', 'Product\AnalyticsController@remove_duplicates_practice')->name('admin.analytics.practice.remove');
 	Route::get('/admin/analytics/practice_filldata', 'Product\AnalyticsController@practice_filldata')->name('admin.analytics.practice.filldata');
 	Route::get('/admin/analytics/test_filldata', 'Product\AnalyticsController@test_filldata')->name('admin.analytics.test.filldata');
 	Route::get('/admin/analytics/filldata', 'Product\AnalyticsController@filldata')->name('admin.analytics.filldata');

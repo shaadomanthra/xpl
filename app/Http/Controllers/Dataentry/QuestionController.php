@@ -268,57 +268,62 @@ class QuestionController extends Controller
 
         if($question){
 
-            $practice = new Practice;
-            $practice->qid = $id;
-            $practice->course_id = request()->get('course_id');
-            $practice->user_id = \auth::user()->id;
-            $practice->response = strtoupper(request()->get('response'));
-            $practice->answer = strtoupper($question->answer);
-            $practice->category_id = $question->categories->last()->id;
+            $practice = Practice::where('user_id',\auth::user()->id)->where('qid',$id)->first();
+            if(!$practice){
+                $practice = new Practice;
+                $practice->qid = $id;
+                $practice->course_id = request()->get('course_id');
+                $practice->user_id = \auth::user()->id;
+                $practice->response = strtoupper(request()->get('response'));
+                $practice->answer = strtoupper($question->answer);
+                $practice->category_id = $question->categories->last()->id;
 
-            $now =  microtime(true);
-            $start = session('start');
-            $practice->time = $now-$start;
-            ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
-            $practice->save();
+                $now =  microtime(true);
+                $start = session('start');
+                $practice->time = $now-$start;
+                ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
+                $practice->save();
 
 
-            //update in practices_course
-            $practices_course = Practices_Course::where('user_id',\auth::user()->id)->where('course_id',request()->get('course_id'))->first();
+                //update in practices_course
+                $practices_course = Practices_Course::where('user_id',\auth::user()->id)->where('course_id',request()->get('course_id'))->first();
 
-            if(!$practices_course){
-                $practices_course = new Practices_Course;
+                if(!$practices_course){
+                    $practices_course = new Practices_Course;
+                }
+
+                $practices_course->user_id = \auth::user()->id;
+                $practices_course->course_id = request()->get('course_id');
+                $practices_course->attempted += 1;
+                if($practice->accuracy==1)
+                    $practices_course->correct += 1;
+                else
+                    $practices_course->incorrect += 1;
+                $practices_course->time += $practice->time;
+
+                $practices_course->save();
+
+                //update in practices_topic
+                $practices_topic = Practices_Topic::where('user_id',\auth::user()->id)->where('category_id',$practice->category_id)->first();
+
+                if(!$practices_topic){
+                    $practices_topic = new Practices_Topic;
+                    $practices_topic->category_id = $practice->category_id;
+                }
+
+
+                $practices_topic->user_id = \auth::user()->id;
+                $practices_topic->attempted += 1;
+                if($practice->accuracy==1)
+                    $practices_topic->correct += 1;
+                else
+                    $practices_topic->incorrect += 1;
+                $practices_topic->time += $practice->time;
+
+                $practices_topic->save();
+
             }
-
-            $practices_course->user_id = \auth::user()->id;
-            $practices_course->course_id = request()->get('course_id');
-            $practices_course->attempted += 1;
-            if($practice->accuracy==1)
-                $practices_course->correct += 1;
-            else
-                $practices_course->incorrect += 1;
-            $practices_course->time += $practice->time;
-
-            $practices_course->save();
-
-            //update in practices_topic
-            $practices_topic = Practices_Topic::where('user_id',\auth::user()->id)->where('category_id',$practice->category_id)->first();
-
-            if(!$practices_topic){
-                $practices_topic = new Practices_Topic;
-                $practices_topic->category_id = $practice->category_id;
-            }
-
-
-            $practices_topic->user_id = \auth::user()->id;
-            $practices_topic->attempted += 1;
-            if($practice->accuracy==1)
-                $practices_topic->correct += 1;
-            else
-                $practices_topic->incorrect += 1;
-            $practices_topic->time += $practice->time;
-
-            $practices_topic->save();
+            
 
         }
         return redirect()->route('course.question',[$project_slug,$category_slug,$id]);

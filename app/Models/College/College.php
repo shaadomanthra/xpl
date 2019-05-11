@@ -31,6 +31,10 @@ class College extends Model
         return $this->belongsToMany('PacketPrep\User');
     }
 
+    public function courses(){
+        return $this->belongsToMany('PacketPrep\Models\Course\Course');
+    }
+
     public function branches(){
         return $this->belongsToMany('PacketPrep\Models\College\Branch');
     }

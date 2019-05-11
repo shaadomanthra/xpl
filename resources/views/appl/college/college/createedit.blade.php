@@ -82,6 +82,34 @@
       @endif
 
       <div class="form-group">
+        <label for="formGroupExampleInput ">Courses</label>
+        <div class="border p-2">
+          <div class="row">
+        @foreach($courses as $a=>$course)
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="courses[]" value="{{$course->id}}"
+              @if($stub=='Create')
+                @if(old('course'))
+                  @if(in_array($course->id,old('course')))
+                  checked
+                  @endif
+                @endif
+              @else
+                @if($obj->courses)
+                  @if(in_array($course->id,$obj->courses->pluck('id')->toArray()))
+                  checked
+                  @endif
+                @endif
+              @endif
+            > 
+            {{$course->name }}
+          </div>
+        @endforeach
+        </div>
+        </div>
+      </div>
+
+      <div class="form-group">
         <label for="formGroupExampleInput ">Type</label>
         <select class="form-control" name="type">
           <option value="degree" @if(isset($obj)) @if($obj->type=='degree') selected @endif @endif >Degree</option>
@@ -116,8 +144,8 @@
       </div>
 
       <div class="form-group">
-        <label for="formGroupExampleInput ">College Phone</label>
-        <input type="text" class="form-control" name="college_phone" id="formGroupExampleInput" placeholder="Enter the College Phone" 
+        <label for="formGroupExampleInput ">obj Phone</label>
+        <input type="text" class="form-control" name="college_phone" id="formGroupExampleInput" placeholder="Enter the obj Phone" 
             @if($stub=='Create')
             value="{{ (old('college_phone')) ? old('college_phone') : '' }}"
             @else
@@ -127,8 +155,8 @@
       </div>
 
       <div class="form-group">
-        <label for="formGroupExampleInput ">College Email</label>
-        <input type="text" class="form-control" name="college_email" id="formGroupExampleInput" placeholder="Enter the College Email" 
+        <label for="formGroupExampleInput ">obj Email</label>
+        <input type="text" class="form-control" name="college_email" id="formGroupExampleInput" placeholder="Enter the obj Email" 
             @if($stub=='Create')
             value="{{ (old('college_email')) ? old('college_email') : '' }}"
             @else
@@ -138,8 +166,8 @@
       </div>
 
       <div class="form-group">
-        <label for="formGroupExampleInput ">College Website</label>
-        <input type="text" class="form-control" name="college_website" id="formGroupExampleInput" placeholder="Enter the College Website" 
+        <label for="formGroupExampleInput ">obj Website</label>
+        <input type="text" class="form-control" name="college_website" id="formGroupExampleInput" placeholder="Enter the obj Website" 
             @if($stub=='Create')
             value="{{ (old('college_website')) ? old('college_website') : '' }}"
             @else

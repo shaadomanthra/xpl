@@ -8,6 +8,7 @@ use PacketPrep\Models\College\College as Obj;
 use PacketPrep\Models\College\Zone;
 use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\College\Metric;
+use PacketPrep\Models\Course\Course;
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
 
@@ -32,17 +33,10 @@ class CollegeController extends Controller
         $search = $request->search;
         $item = $request->item;
         
-       /* $objs = $obj->where('name','LIKE',"%{$item}%")
-                    ->with('users')->get()->sortBy(function($user)
-                        {
-                            return $hackathon->participants->count();
-                        })
-                    ->with('users', function ($query)  {
-                                $query->where('name', '=', 'Campus Ambassador');
-                            })
-                    ->orderBy('created_at','desc ')
-                    ->paginate(config('global.no_of_records'));   */
+     
         $objs = $obj->where('name','LIKE',"%{$item}%")->withCount('users')->orderBy('users_count', 'desc')->paginate(config('global.no_of_records')); 
+
+
 
         $view = $search ? 'list': 'index';
 
@@ -88,6 +82,7 @@ class CollegeController extends Controller
         $this->authorize('create', $obj);
         $zones = Zone::all();
         $branches = Branch::all();
+        $courses = Course::all();
 
 
         return view('appl.'.$this->app.'.'.$this->module.'.createedit')
@@ -96,6 +91,7 @@ class CollegeController extends Controller
                 ->with('obj',$obj)
                 ->with('zones',$zones)
                 ->with('branches',$branches)
+                ->with('courses',$courses)
                 ->with('app',$this);
     }
    
@@ -137,6 +133,17 @@ class CollegeController extends Controller
 
             if(!$obj->zones->contains($zone_id))
                 $obj->zones()->attach($zone_id);
+
+            $courses = $request->get('courses');
+            if($courses){
+                $obj->courses()->detach();
+                foreach($courses as $course){
+                    if(!$obj->courses->contains($course))
+                        $obj->courses()->attach($course);
+                }
+            }else{
+                $obj->courses()->detach();
+            }
 
             flash('A new ('.$this->app.'/'.$this->module.') item is created!')->success();
             return redirect()->route($this->module.'.index');
@@ -296,7 +303,7 @@ class CollegeController extends Controller
         
 
 
-        //dd($obj->users);
+        dd($obj->users);
         
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show2')
@@ -391,7 +398,7 @@ class CollegeController extends Controller
         $this->authorize('update', $obj);
         $zones = Zone::all();
         $branches = Branch::all();
-
+        $courses = Course::all();
 
 
         if($obj)
@@ -400,6 +407,7 @@ class CollegeController extends Controller
                 ->with('jqueryui',true)
                 ->with('branches',$branches)
                 ->with('zones',$zones)
+                ->with('courses',$courses)
                 ->with('obj',$obj)->with('app',$this);
         else
             abort(404);
@@ -438,6 +446,18 @@ class CollegeController extends Controller
             }else{
                 $obj->branches()->detach();
             } 
+
+            $courses = $request->get('courses');
+            if($courses){
+                $obj->courses()->detach();
+                foreach($courses as $course){
+                    if(!$obj->courses->contains($course))
+                        $obj->courses()->attach($course);
+                }
+            }else{
+                $obj->courses()->detach();
+            }
+
 
             //zone
             $obj->zones()->detach();

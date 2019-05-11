@@ -33,6 +33,7 @@
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
               <a href="#" class="btn btn-outline-secondary"  title="Code" >CODE : {{$obj->code}}</i></a>
             </span>
+            <a href="{{ route('campus.admin')}}?batch_code={{$obj->slug}}"><button class="btn btn-warning float-right mr-2"><i class="fa fa-bar-chart"></i> Analytics</button></a>
             @endcan
           </p>
         </div>
