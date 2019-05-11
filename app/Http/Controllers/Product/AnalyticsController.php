@@ -55,11 +55,13 @@ class AnalyticsController extends Controller
             $exploded = explode('.', $parsed["host"]);
             $domain = $exploded[0];
 
-        $file_nodes = '../static/'.$domain.'_practice.txt';
+        $file_nodes = '../static/'.$domain.'_practice_'.$first.'.txt';
 
 
         $first = $r->get('first');
         $last = $r->get('last');
+
+        $file_nodes = '../static/'.$domain.'_practice_'.$first.'.txt';
 
         if(!$first && !$last)
             dd("Enter First Last ");
@@ -69,6 +71,15 @@ class AnalyticsController extends Controller
     	$practice = Practice::where('id','>=',$first)->where('id','<=',$last)->get();
     	
     	$m=0;
+
+        $ques_count = 0; $dont=true;
+        if(!file_exists($file_nodes)){
+            file_put_contents($file_nodes,$m);
+            $dont = false;
+        }
+
+
+        if($dont){
     	foreach($practice as $k=>$p){
     		$practice_course = Practices_Course::where('course_id',$p->course_id)->where('user_id',$p->user_id)->first();
     		$practice_topic = Practices_Topic::where('category_id',$p->category_id)->where('user_id',$p->user_id)->first();
@@ -111,17 +122,16 @@ class AnalyticsController extends Controller
 
 
     	}
-
-        $ques_count = 0;
-        if(!file_exists($file_nodes)){
-            file_put_contents($file_nodes,$m);
-        }else{
-            $ques_count = file_get_contents($file_nodes);
-            $ques_count = $ques_count + $m;
-            file_put_contents($file_nodes,$ques_count);
-        }
-        
         dd('practice_extra_tables_updated - '.$m.' - prev count'.$ques_count);
+            
+        }else{
+            dd('Already updates - '.$m.' - prev count'.$ques_count);
+
+        }
+
+        
+        
+        
 
     }
 
