@@ -7,6 +7,10 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Coupon as Obj;
 use PacketPrep\User;
 use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\Product\Company_Coupons;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use PacketPrep\Mail\CustomerCoupon;
 
 class CouponController extends Controller
 {
@@ -49,8 +53,73 @@ class CouponController extends Controller
 
     public function coupon(Request $request){
 
+        $model = new Company_Coupons();
         $user = \auth::user();
+        $referral = $request->get('referral');
+        if($referral){
+            if(User::where('username',$referral)->first())
+            $referral_id = User::where('username',$referral)->first()->id;
+            else
+            $referral_id = 60;   
+        }else{
+            $referral_id = 1;
+            $referral = 'krishnateja';
+        }
+        
+        $company = $request->get('company');
+
+        if(!$company)
+            abort('404','Company not declared');
+
+        $model->user_id = $user->id;
+        $model->referral_id = $referral_id;
+        $model->name = $user->name;
+        $model->referral = $referral;
+        $model->company = $company;
+        $model->save();
+
+        if($user->colleges()->first())
+        $user->college = $user->colleges()->first()->name;
+        else
+        $user->college = ' - NA -';
+
+        if($user->branches()->first())
+        $user->branch = $user->branches()->first()->name;
+        else
+        $user->branch = ' - NA -';
+
+        if($user->details()->first()){
+            $user->phone = $user->details()->first()->phone;
+            $user->year_of_passing = $user->details()->first()->year_of_passing;
+        }
+        else{
+            $user->phone = ' - NA -';
+            $user->year_of_passing = ' - NA -';
+        }
+        
+         Mail::to($user->email)->send(new CustomerCoupon($user,$model));
+        
         return view('appl.product.coupon.download')->with('user',$user);
+    }
+
+    public function couponAdmin(Request $request){
+
+        
+        $obj = new Company_Coupons();
+
+        $search = $request->search;
+        $item = $request->item;
+        
+        $objs = $obj->where('name','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')
+                    ->paginate(config('global.no_of_records')); 
+         
+        $view = $search ? 'list': 'couponadmin';
+
+        return view('appl.product.customer.'.$view)
+                ->with('objs',$objs)
+                ->with('obj',$obj)
+                ->with('app',$this);
     }
 
     

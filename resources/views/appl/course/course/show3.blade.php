@@ -172,7 +172,7 @@
 		@foreach($nodes as $n)
 			<li class="item title-list" id="{{ $n->slug}}" > <h3><span class="bg-light p-1 pr-3 pl-3 border rounded">{{++$j}}</span> &nbsp;{{ $n->name }}</h3>
 			@if($n->video_desc)
-			<div class="pt-3 title-normal">{{$n->video_desc}}</div>
+			<div class="pt-3 title-normal">{!! $n->video_desc !!}</div>
 			@endif
 			</li>
 
@@ -229,7 +229,7 @@
 
 						@if($c->video_desc)
                      	<div class="pt-1 pb-2 title-normal">
-                     		{{ $c->video_desc}}
+                     		{!! $c->video_desc !!}
                      	</div>
                      	@endif
                      	</li>

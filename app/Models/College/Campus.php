@@ -216,7 +216,7 @@ class Campus extends Model
         return $data;
     }
 
-    public static function analytics_test($college,$branch,$batch,$r,$course_id=null,$category_id=null){
+    public static function analytics_test($college,$branch,$batch,$r,$course_id=null,$category_id=null,$exam_id =null){
 
     	$courses = $college->courses;
 
@@ -231,6 +231,8 @@ class Campus extends Model
 	            }
             }
             
+    	}else if($exam_id){
+    		array_push($test_id,$exam_id);
     	}
     	else if(!$course_id){
     		foreach($courses as $course){

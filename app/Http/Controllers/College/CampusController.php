@@ -196,16 +196,15 @@ class CampusController extends Controller
             $practice['item'] = $campus->getAnalytics($college,$branch_item,$batch_item,$r,null,$category->id);
             $test['item'] = $campus->analytics_test($college,$branch_item,$batch_item,$r,null,$category->id);
 
-
-
              // topic analysis
             $nodes = $category->children;
 
             $practice['items'] = $nodes; 
             foreach($practice['items'] as $k=> $item){
-                if(!$item->exam_id){
-                    $practice['items'][$k]->url = 
+                $practice['items'][$k]->url = 
                         route('campus.courses.show',$course->slug).'?topic='.$item->slug.$url_parameters;
+                    
+                if(!$item->exam_id){
                     
                     if($test['item']['count']==0)
                     $test['item'][$item->id] = 0;
@@ -228,21 +227,16 @@ class CampusController extends Controller
             $category = Category::where('slug',$project->slug)->first();
             $nodes = $category->children;
 
+            foreach($course->exams as $exam){
+                $test['exam'][$exam->id] = $campus->analytics_test($college,null,null,$r,null,null,$exam->id);
+                $test['exam'][$exam->id]['name'] = $exam->name;
+            }
+
+            //dd($test['exam']);
             $practice['items'] = $nodes; 
             foreach($practice['items'] as $k=> $item){
-                if(!$item->exam_id){
-                    $practice['items'][$k]->url = route('campus.courses.show',$course->slug).'?topic='.$item->slug.$url_parameters;
 
-                    if($test['item']['count']==0)
-                    $test['item'][$item->id] = 0;
-                    else 
-                    $test['item'][$item->id] = $campus->analytics_test($college,null,null,$r,null,$item->id);
-                }else{
-                    $practice['items'][$k]->url = '';
-                    $test['item'][$item->id] = 0;
-                }
-                
-                           //dd($test);
+                $practice['items'][$k]->url = route('campus.courses.show',$course->slug).'?topic='.$item->slug.$url_parameters;
             }
         }
 

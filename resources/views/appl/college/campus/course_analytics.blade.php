@@ -80,9 +80,7 @@
 	      <th scope="col"></th>
 	      <th scope="col"></th>
 	      <th scope="col" class="text-center" colspan="3">Practice</th>
-	      @if($test['item']['count'])
-	      <th scope="col" class="text-center w-50" colspan="2">Test</th>
-	      @endif
+	      
 	    </tr>
 	    <tr>
 	      <th scope="col">#</th>
@@ -91,10 +89,6 @@
 	      <th scope="col" colspan="1">Completion</th>
 	     
 	      <th scope="col" >Accuracy</th>
-	       @if($test['item']['count'])
-	      <th scope="col" colspan="1"><i class="fa fa-user"></i></th>
-	       <th scope="col" >Performance</th>
-	       @endif
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -117,23 +111,7 @@
 				<div class="progress-bar bg-success" role="progressbar" style="width: {{$practice['item'][$batch->id]['accuracy']}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 	      </td>
-	      @if($test['item']['count'])
-	      <td>{{$test['item'][$batch->id]['participants']}}  </td>
-	      <td>
-	      	@if($test['item'][$batch->id]['participants'])
-	      	<div class="mb-3">
-	      		<div class="display-5 mb-3"><img src="{{ asset('/img/medals/excellent.png')}}" style="width:20px;"  />&nbsp;{{$test['item'][$batch->id]['excellent_percent']}}% &nbsp;&nbsp;<img src="{{ asset('/img/medals/good.png')}}" style="width:20px;"  />&nbsp;{{$test['item'][$batch->id]['good_percent']}}% &nbsp;&nbsp;<img src="{{ asset('/img/medals/needtoimprove.png')}}" style="width:20px;"  />&nbsp;{{$test['item'][$batch->id]['need_to_improve_percent']}}%</div>
-	 			<div class="progress" style="height:3px;">
-				  <div class="progress-bar bg-warning" role="progressbar" style="width: {{$test['item'][$batch->id]['excellent_percent']}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-				  <div class="progress-bar bg-info" role="progressbar" style="width: {{$test['item'][$batch->id]['good_percent']}}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-				  <div class="progress-bar bg-danger" role="progressbar" style="width: {{$test['item'][$batch->id]['need_to_improve_percent']}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-				</div>
-			</div>
-			@else
-			 - 	
-			@endif
-	      </td>
-	      @endif
+	     
 	      </tr>
 	      @endif
 	     @endforeach
@@ -143,3 +121,48 @@
 	@endif
 	</div>
 	@endif
+
+
+
+	  @if(isset($test['exam']))
+	 <div class="rounded table-responsive">
+	 @if(count($test['exam']))
+	 <table class="table mt-4 bg-white table-bordered {{$w=0}}">
+	  <thead>
+	    <tr>
+	      <th scope="col">#</th>
+	      <th scope="col">Tests</th>
+	      <th scope="col" colspan="1"><i class="fa fa-user"></i></th>	     
+	      <th scope="col" >Performance</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+
+	    @foreach($test['exam'] as $k=>$exam)
+	   
+	    <tr>
+	      <th scope="row">{{++$w}}</th>
+	      <td><a href="">@if(isset($exam['name'])){{$exam['name']}} @endif </a></td>
+	      <td>{{$exam['participants']}}  </td>
+	      
+	      <td>
+	      	<div class="mb-3">
+	      		<div class="display-5 mb-3"><img src="{{ asset('/img/medals/excellent.png')}}" style="width:20px;"  />&nbsp;{{$exam['excellent_percent']}}% &nbsp;&nbsp;<img src="{{ asset('/img/medals/good.png')}}" style="width:20px;"  />&nbsp;{{$exam['good_percent']}}% &nbsp;&nbsp;<img src="{{ asset('/img/medals/needtoimprove.png')}}" style="width:20px;"  />&nbsp;{{$exam['need_to_improve_percent']}}%</div>
+	 			<div class="progress" style="height:3px;">
+				  <div class="progress-bar bg-warning" role="progressbar" style="width: {{$exam['excellent_percent']}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+				  <div class="progress-bar bg-info" role="progressbar" style="width: {{$exam['good_percent']}}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+				  <div class="progress-bar bg-danger" role="progressbar" style="width: {{$exam['need_to_improve_percent']}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+			</div>
+	      </td>
+	     
+	      </tr>
+	     @endforeach
+	  </tbody>
+	</table>
+	@else
+	@endif
+	</div>
+	@endif
+
+	 

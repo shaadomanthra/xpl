@@ -70,7 +70,7 @@
 
 
 
-      
+  
       <a class="btn border border-success text-success mt-2" href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();" role="button">Logout</a>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -155,6 +155,11 @@
   </div>
 
   <div class="col-12 col-md-3">
+    <a href="{{ route('firstacademy')}}">
+      <img src="{{ asset('/img/firstacademy_banner.jpg')}}" class="w-100 mb-3"/> 
+    </a> 
+
+    <!--
     <div class="bg-warning border border-warning p-3 rounded mb-4">
       <h2> Follows us</h2>
       <p> Get the latest offers and coupons on our social media channels</p>
@@ -164,13 +169,14 @@
       <a class=" text-danger " target="_blank" href="http://youtube.com/packetprep"><i class="fa  fa-3x fa-youtube-square"></i></a>
     
     </div>
+  -->
 
     
-     <div class="bg-success text-white border border-success p-3 rounded mb-4">
+     <div class="bg-warning text-dark border border-warning p-3 rounded mb-4">
       <h2><i class="fa fa-handshake-o"></i> Referral</h2>
       <p>Refer 3 friends and get 3 months pro access to our premium content on aptitude.</p>
       <a href="{{ route('sreferral') }}">
-      <button class="btn btn-lg btn-outline-light">Know more</button>
+      <button class="btn btn-lg btn-outline-dark">Know more</button>
       </a>
     </div>
 
