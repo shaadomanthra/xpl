@@ -48,7 +48,7 @@ class CampusController extends Controller
             $practice['items'] = $college->courses()->orderBy('id')->get(); 
             foreach($practice['items'] as $k=> $item){
 
-                $practice['items'][$k]->url = route('campus.courses.show',$item->slug);
+                $practice['items'][$k]->url = route('campus.courses.show',$item->slug).'?branch='.$branch_item->name;
                 $test['item'][$item->id] = $campus->analytics_test($college,$branch_item,null,$r,$item->id);
                 //dd($test);
             }
@@ -68,7 +68,7 @@ class CampusController extends Controller
             $practice['items'] = $college->courses()->orderBy('id')->get(); 
             foreach($practice['items'] as $k=> $item){
 
-                $practice['items'][$k]->url = route('campus.courses.show',$item->slug);
+                $practice['items'][$k]->url = route('campus.courses.show',$item->slug).'?batch=1&batch_code='.$batch_code;
                 $test['item'][$item->id] = $campus->analytics_test($college,null,$batch_item,$r,$item->id);
                 //dd($test);
             }
@@ -96,6 +96,7 @@ class CampusController extends Controller
                 }
                 $practice['item_name'] = 'Branches';
                 $practice['items'] = $college->branches()->orderBy('id')->get(); 
+                //dd($practice);
                 foreach($practice['items'] as $k=> $item){
                         $practice['items'][$k]->url = route('campus.admin').'?branch='.$item->name;
                 }
@@ -143,13 +144,25 @@ class CampusController extends Controller
         }
 
         $campus = new Campus;
+        $url_parameters='';
         $college_id = $r->get('college');
         if($college_id)
             $college = College::find($college_id);
         else
             $college = \auth::user()->colleges()->first();
 
+        $batch_mode = $r->get('batch');
 
+        if($batch_mode){
+            $menu['item'] = $college->batches;
+            $menu['name'] = 'batch_code';
+            $menu['menu'] = 'Batches';
+            $url_parameters = $url_parameters.'&batch=1'; 
+        }else{
+            $menu['item'] = $college->branches()->orderBy('id')->get();
+            $menu['name'] = 'branch';
+            $menu['menu'] = 'Branches';
+        }
        // dd($nodes);
 
         $course = Course::where('slug',$course_slug)->first();
@@ -159,16 +172,21 @@ class CampusController extends Controller
        // dd($category->children);
 
         $practice['item_name'] = 'Topics';
-
+        $practice['batch_branch'] = null;
         $branch_item = $r->get('branch');
 
         if($branch_item){
+
             $branch_item = Branch::where('name',$branch_item)->first();
+            $practice['batch_branch'] = $branch_item->name;
+            $url_parameters = $url_parameters.'&branch='.$branch_item->name;
         }
 
         $batch_code = $r->get('batch_code');
         if($batch_code){
             $batch_item = Batch::where('slug',$r->get('batch_code'))->first();
+            $practice['batch_branch'] = $batch_item->name;
+            $url_parameters = $url_parameters.'&batch_code='.$batch_item->name;
         }else{
             $batch_item = null;
         }
@@ -178,15 +196,28 @@ class CampusController extends Controller
             $practice['item'] = $campus->getAnalytics($college,$branch_item,$batch_item,$r,null,$category->id);
             $test['item'] = $campus->analytics_test($college,$branch_item,$batch_item,$r,null,$category->id);
 
+
+
              // topic analysis
             $nodes = $category->children;
 
             $practice['items'] = $nodes; 
             foreach($practice['items'] as $k=> $item){
-                $practice['items'][$k]->url = route('campus.courses.show',$item->slug);
-                $test['item'][$item->id] = $campus->analytics_test($college,null,null,$r,null,$item->id);
-                    //dd($test);
+                if(!$item->exam_id){
+                    $practice['items'][$k]->url = 
+                        route('campus.courses.show',$course->slug).'?topic='.$item->slug.$url_parameters;
+                    
+                    if($test['item']['count']==0)
+                    $test['item'][$item->id] = 0;
+                    else    
+                    $test['item'][$item->id] = $campus->analytics_test($college,null,null,$r,null,$item->id);
+                }else{
+                    $practice['items'][$k]->url = '';
+                    $test['item'][$item->id] = 0;
+                }
+                        
             }
+            //dd($test['item']);
 
         }else{
             $practice['item'] = $campus->getAnalytics($college,$branch_item,$batch_item,$r,$course->id);
@@ -199,19 +230,30 @@ class CampusController extends Controller
 
             $practice['items'] = $nodes; 
             foreach($practice['items'] as $k=> $item){
-                $practice['items'][$k]->url = route('campus.courses.show',$item->slug);
-                $test['item'][$item->id] = $campus->analytics_test($college,null,null,$r,null,$item->id);
-                    //dd($test);
+                if(!$item->exam_id){
+                    $practice['items'][$k]->url = route('campus.courses.show',$course->slug).'?topic='.$item->slug.$url_parameters;
+
+                    if($test['item']['count']==0)
+                    $test['item'][$item->id] = 0;
+                    else 
+                    $test['item'][$item->id] = $campus->analytics_test($college,null,null,$r,null,$item->id);
+                }else{
+                    $practice['items'][$k]->url = '';
+                    $test['item'][$item->id] = 0;
+                }
+                
+                           //dd($test);
             }
         }
-        dd($practice);
+
         
     	return view('appl.college.campus.course_show')
                 ->with('college',$college)
                 ->with('course',$course)
                 ->with('category',$category)
                 ->with('test',$test)
-                ->with('practice',$practice);
+                ->with('practice',$practice)
+                ->with('menu',$menu);
     }
 
     public function tests(Request $r){

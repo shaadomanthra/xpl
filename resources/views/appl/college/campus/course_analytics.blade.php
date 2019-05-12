@@ -1,8 +1,8 @@
 
 	 <!-- Course Analytics--> 
-	 <div class="row mt-4">
-	 	<div class="col-12 col-md-6" >
-	 		<div class="" style="background: rgba(229, 80, 57, 0.12);min-height: 340px" >
+	 <div class="row mt-4 no-gutters">
+	 	<div class="col-12 @if($test['item']['count']) col-md-7 @else col-md-12 @endif" >
+	 		<div class="" style="background: rgba(229, 80, 57, 0.12);min-height: 342px" >
 	 			<div class="p-3 display-4 text-white" style="background: #e55039"> Practice</div>
 
 	 			<div class="row">
@@ -42,7 +42,8 @@
 	 			
 	 		</div>
 	 	</div>
-	 	<div class="col-12 col-md-6">
+	 	@if($test['item']['count'])
+	 	<div class="col-12 col-md-5">
 	 		<div class="" style="background: rgba(56, 173, 169, 0.28);min-height: 340px">
 	 			<div class="p-3 display-4 text-white" style="background: #38ada9"> Tests</div>
 	 			<div class="pt-4  pr-4 pl-4 pb-1" >
@@ -65,29 +66,45 @@
 	 			</div>
 	 		</div>
 	 	</div>
+	 	@endif
 	 </div>
 
 	 <!-- Batch Analytics--> 
 
-	 @if(isset($practice['items']))
+	  @if(isset($practice['items']))
 	 <div class="rounded table-responsive">
 	 @if(count($practice['items']))
 	 <table class="table mt-4 bg-white table-bordered ">
 	  <thead>
 	    <tr>
+	      <th scope="col"></th>
+	      <th scope="col"></th>
+	      <th scope="col" class="text-center" colspan="3">Practice</th>
+	      @if($test['item']['count'])
+	      <th scope="col" class="text-center w-50" colspan="2">Test</th>
+	      @endif
+	    </tr>
+	    <tr>
 	      <th scope="col">#</th>
 	      <th scope="col">{{ $practice['item_name']}}</th>
+	      <th scope="col" colspan="1"><i class="fa fa-user"></i></th>
 	      <th scope="col" colspan="1">Completion</th>
+	     
 	      <th scope="col" >Accuracy</th>
+	       @if($test['item']['count'])
+	      <th scope="col" colspan="1"><i class="fa fa-user"></i></th>
 	       <th scope="col" >Performance</th>
+	       @endif
 	    </tr>
 	  </thead>
 	  <tbody>
 
 	    @foreach($practice['items'] as $k=>$batch)
+	    @if($batch->url)
 	    <tr>
 	      <th scope="row">{{++$k}}</th>
 	      <td><a href="{{$batch->url}}">{{$batch->name}}  </a></td>
+	      <td>{{$practice['item'][$batch->id]['participants']}}  </td>
 	      <td>
 	      	<div class="mb-3" style="font-weight: 100"> {{$practice['item'][$batch->id]['completion']}}%</div>
 	      	<div class="progress " style="height: 3px">
@@ -100,8 +117,10 @@
 				<div class="progress-bar bg-success" role="progressbar" style="width: {{$practice['item'][$batch->id]['accuracy']}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 	      </td>
+	      @if($test['item']['count'])
+	      <td>{{$test['item'][$batch->id]['participants']}}  </td>
 	      <td>
-	      	
+	      	@if($test['item'][$batch->id]['participants'])
 	      	<div class="mb-3">
 	      		<div class="display-5 mb-3"><img src="{{ asset('/img/medals/excellent.png')}}" style="width:20px;"  />&nbsp;{{$test['item'][$batch->id]['excellent_percent']}}% &nbsp;&nbsp;<img src="{{ asset('/img/medals/good.png')}}" style="width:20px;"  />&nbsp;{{$test['item'][$batch->id]['good_percent']}}% &nbsp;&nbsp;<img src="{{ asset('/img/medals/needtoimprove.png')}}" style="width:20px;"  />&nbsp;{{$test['item'][$batch->id]['need_to_improve_percent']}}%</div>
 	 			<div class="progress" style="height:3px;">
@@ -109,14 +128,18 @@
 				  <div class="progress-bar bg-info" role="progressbar" style="width: {{$test['item'][$batch->id]['good_percent']}}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
 				  <div class="progress-bar bg-danger" role="progressbar" style="width: {{$test['item'][$batch->id]['need_to_improve_percent']}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
 				</div>
-			</div>	
+			</div>
+			@else
+			 - 	
+			@endif
 	      </td>
+	      @endif
 	      </tr>
+	      @endif
 	     @endforeach
 	  </tbody>
 	</table>
 	@else
-	<div class="rounded border p-3 mt-4">No batches Defined</div>
 	@endif
 	</div>
 	@endif

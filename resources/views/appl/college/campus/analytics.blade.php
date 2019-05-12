@@ -75,10 +75,18 @@
 	 <table class="table mt-4 bg-white table-bordered ">
 	  <thead>
 	    <tr>
+	      <th scope="col"></th>
+	      <th scope="col"></th>
+	      <th scope="col" class="text-center" colspan="3">Practice</th>
+	      <th scope="col" class="text-center" colspan="2">Test</th>
+	    </tr>
+	    <tr>
 	      <th scope="col">#</th>
 	      <th scope="col">{{ $practice['item_name']}}</th>
+	      <th scope="col" colspan="1"><i class="fa fa-user"></i></th>
 	      <th scope="col" colspan="1">Completion</th>
 	      <th scope="col" >Accuracy</th>
+	      <th scope="col" colspan="1"><i class="fa fa-user"></i></th>
 	       <th scope="col" >Performance</th>
 	    </tr>
 	  </thead>
@@ -88,6 +96,7 @@
 	    <tr>
 	      <th scope="row">{{++$k}}</th>
 	      <td><a href="{{$batch->url}}">{{$batch->name}}  </a></td>
+	      <td>{{$practice['item'][$batch->id]['participants']}}  </td>
 	      <td>
 	      	<div class="mb-3" style="font-weight: 100"> {{$practice['item'][$batch->id]['completion']}}%</div>
 	      	<div class="progress " style="height: 3px">
@@ -100,6 +109,7 @@
 				<div class="progress-bar bg-success" role="progressbar" style="width: {{$practice['item'][$batch->id]['accuracy']}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
 	      </td>
+	      <td>{{$test['item'][$batch->id]['participants']}}  </td>
 	      <td>
 	      	
 	      	<div class="mb-3">

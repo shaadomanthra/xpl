@@ -223,7 +223,16 @@ class Campus extends Model
     	$test_id = array();
     	$data = array();
     	$data['course']=array();
-    	if(!$course_id){
+    	if($category_id){
+    		$category = Category::where('id',$category_id)->first();
+            foreach($category->children as $node){
+	            if($node->exam_id){
+	            	array_push($test_id,$node->exam_id);
+	            }
+            }
+            
+    	}
+    	else if(!$course_id){
     		foreach($courses as $course){
 	    		$data['course'][$course->id] = array();
 	    		foreach($course->exams as $e){
@@ -231,7 +240,8 @@ class Campus extends Model
 	    			array_push($test_id,$e->id);
 	    		}
 	    	}
-    	}else{
+    	}
+    	else{
     		$course = Course::where('id',$course_id)->first();
     		$data['course'][$course->id] = array();
 	    	foreach($course->exams as $e){
@@ -239,6 +249,7 @@ class Campus extends Model
 	    		array_push($test_id,$e->id);
 	    	}
     	}
+
     	
 
 
@@ -274,7 +285,7 @@ class Campus extends Model
     	$tests = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->get()->groupBy('user_id');
 
     	$data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,'participants'=>0,
-    					"excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0);
+    					"excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0,"count"=>count($test_id));
     	$data_tests = self::getData_Test($tests,$data_tests);
 
     	
