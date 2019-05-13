@@ -34,7 +34,7 @@
       </div>
       <div class="bg-light p-3 border rounded mb-3">
         <h3> Reserve your seat now</h3>
-      <p>For more details contact : <br>Mr. Syamson - Business Development Officer <br>+91 97034 49662 </p>
+      <p>For more details contact : <br>Mr. Syamson - Business Development Officer <br>+91 95026 97428 </p>
     </div>
 
       
