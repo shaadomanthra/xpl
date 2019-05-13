@@ -125,7 +125,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads');
 
 	/*customer */
-	Route::get('/web-development','Product\CustomerController@development')->name('development');
+	Route::get('/fullstackdevelopment','Product\CustomerController@development')->name('development');
 	Route::get('/bootcamp','Product\CustomerController@bootcamp')->name('bootcamp');
 	Route::get('/firstacademy','Product\CustomerController@firstacademy')->name('firstacademy');
 

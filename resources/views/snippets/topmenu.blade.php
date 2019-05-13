@@ -33,8 +33,25 @@
                     <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>   -->
                     <li class="mr-3 "><a class="nav-link " href="{{ url('targettcs') }}"><i class="fa fa-ravelry"></i> Target TCS</a></li>
                     
-                    <li class="mr-3 "><a class="nav-link " href="{{ url('bootcamp') }}"><span class="premium"><i class="fa fa-bullseye"></i> Coding Bootcamp</span></a></li>
-
+                    <li class="nav-item dropdown mr-2">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <i class="fa fa-bullseye"></i>  Programs <span class="caret"></span>
+                       </a>
+                       <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item"  href="{{ url('bootcamp')}}"
+                            >
+                           Coding Bootcamp
+                             </a>
+                             
+                             
+                            <a class="dropdown-item"  href="{{ url('fullstackdevelopment')}}"
+                            >
+                            Full Stack Development
+                             </a>
+                           
+                        </div>  
+                     </li>
+                   
                     <!-- Authentication Links -->
                     @guest
                     <li class="mr-2"><a class="nav-link " href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a></li>

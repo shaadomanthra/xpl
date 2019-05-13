@@ -1,7 +1,7 @@
 @extends('layouts.nowrap-product')
-@section('title', 'Coding Bootcamp - Summer Internship for Engineering Students  | PacketPrep')
-@section('description', 'Build your first commercial web application with us. A great opportunity to utilize your summer time to build a great realtime project')
-@section('keywords', 'summer internship, coding, bootcamp, engineering students, ')
+@section('title', 'Full Stack Development with Job Placement  | PacketPrep')
+@section('description', 'Placement Oriented industrial training program in full stack development with LIVE project.')
+@section('keywords', 'job placement, coding, full stack development, engineering students, job')
 
 @section('content')
 <div class="line" style="padding:1px;background:#eee"></div>
@@ -11,11 +11,12 @@
 	<div class="row">
 		<div class="col-12 col-md-6">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-gg"></i> &nbsp;  Web Design &   Web Development
+			<i class="fa fa-gg"></i> &nbsp;  Full Stack Development
 			
 			</h1>
-			<p class="rounded p-1" style="background: #c7ecee">Certificate Program with Placement Assistance</p>
-      <p>Placement Oriented industrial training program in web design and web development with LIVE project. Through this program student will gain deep knowledge in web desining - frontend technologies like HTML,CSS,JQUERY and Web development - Scripting language PHP and Database MySql. Also students are given training in writing good resume and handling interviews effectively, and given a chance to attend 10 company interviews.</p>
+			<p class="rounded p-1" style="background: #c7ecee">&nbsp;Certificate Program with Placement Assistance</p>
+      <p>Placement Oriented industrial training program in full stack development with LIVE project. </p>
+      <p>Through this program student will gain deep knowledge in web desining - frontend technologies like HTML,CSS,Javascript with frameworks like Bootstrap and Jquery and Backend development - Scripting language PHP and Database MySql with frameworks like Laravel, Eloquent ORM and Blade. </p><p>Also students are given training in writing good resume and handling interviews effectively, and a chance to attend 5 company interviews.</p>
       <p> 
        <b> Batches:</b>  From June 3rd 2019 onwards<br>
        
@@ -26,8 +27,10 @@
     </p>
      
       <div class="p-3 rounded mb-3" style="background: #f2f2f2">      
-        <h2 > <i class="fa fa-rupee"></i>  40,000 </h2>
-        
+        <h3 > <strike><i class="fa fa-rupee"></i>  45,000</strike> &nbsp;<span class="badge badge-warning">10% OFF</span></h2>
+        <h1 > <i class="fa fa-rupee"></i>  40,000 </h1><hr>
+        <p><small>Installment Facility is available:</small><br>
+        You can pay <i class="fa fa-rupee"></i>5000 each month for 8 months</p>
       </div>
       <div class="bg-light p-3 border rounded mb-3">
         <h3> Reserve your seat now</h3>
@@ -40,7 +43,7 @@
 		<div class="col-12 col-md-6">
 
 		   <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/327689457" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          <iframe src="//player.vimeo.com/video/335839121" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
 
   		</div>
@@ -59,8 +62,8 @@
    			<div class="col-12 col-md-4">
    				<div class="p-3 mb-4 text-white rounded" style="background: #3c6382;border:1px solid #0a3d62;">
    					<h3> Technology Training</h3>
-   					<p> You will learn technolgies like HTML,CSS, JQUERY, Bootstrap and Foundation Api,
-   					PHP, Wordpress, Joomla, Laravel, MySql, PhpMyAdmin and many more.</p>
+   					<p> You will learn technolgies like HTML,CSS, JQUERY, Bootstrap,
+   					PHP, Laravel, Blade Template, MySql, Eloquent ORM, PhpMyAdmin, git basics and many more.</p>
 
    				</div>
    			</div>
@@ -74,7 +77,7 @@
    			<div class="col-12 col-md-4">
    				<div class="p-3 mb-4 text-white rounded" style="background: #38ada9;border:1px solid #079992;">
    					<h3> Placement Assistance</h3>
-   					<p> After the intensive training, through us you will apply for atleast 10 companies. We will make sure you attend the interview with confidence and clear them.</p>
+   					<p> After the intensive training, through us you will apply for atleast 5 companies. We will make sure you attend the interview with confidence and clear them.</p>
 
    				</div>
    			</div>
@@ -129,7 +132,7 @@
               </tr> 
               <tr>
                 <th scope="row"> 2nd Month</th>
-                <td> Web Designing - Frontend Technologies</td>
+                <td> Designing - Frontend Technologies</td>
                 <td> 
                 	<p>
                 		<h3>HTML 5</h3>
@@ -187,7 +190,7 @@
               </tr> 
               <tr>
                 <th scope="row">3rd Month</th>
-                <td> Web Development - Backend Technologies</td>
+                <td> Development - Backend Technologies</td>
                 <td> 
                 	<p>
                 		<h3>PHP 7</h3>
@@ -289,21 +292,21 @@
 
     <div class="bg-white border mb-4">  
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/M765gB_IUL0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe  src="https://www.youtube.com/embed/AKuu0IanGKU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
           <div class="p-3">
-          <h1 >Coding & Career</h1>
-          <p > Cracking job in a top Multi National Company is a tough task, but  consitent preparation and commitment can make you land in your dream job. This video answers the common questions students have regarding the career, learning apsects, growth.</p>
+          <h1 >Coding & Money</h1>
+          <p > Everybody dreams of an independent life, pocket full cash and happy going. If have good programming skill, you can easliy make money. This video explains different websites to look for parttime jobs, how to make good commercial projects and details on freelancing.</p>
         </div>
     </div>
 
     <div class="bg-white border mb-4">  
           <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe  src="https://www.youtube.com/embed/M765gB_IUL0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <iframe  src="https://www.youtube.com/embed/HIYbB17wNmo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
           <div class="p-3">
-          <h1 >Coding & Career</h1>
-          <p > Cracking job in a top Multi National Company is a tough task, but  consitent preparation and commitment can make you land in your dream job. This video answers the common questions students have regarding the career, learning apsects, growth.</p>
+          <h1 >Coding & Abroad Studies</h1>
+          <p > If you have plans for abroad study, you can watch this video to understand the importance of coding, impact of mini and major project for MS application, how coding bootcamp can help you crack Research assitantship.</p>
         </div>
     </div>
 

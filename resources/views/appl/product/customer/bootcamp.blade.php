@@ -26,14 +26,8 @@
         </li> 
        <li>June 3rd to June 14th  2019
           <ul>
-           <li>Batch 3 - 9:00 am to 1:00 pm (Open)</li>
-           <li>Batch 4 - 2:00 am to 6:00 pm (Open)</li>
-          </ul>
-        </li> 
-        <li>June 17th to June 29th  2019
-          <ul>
-           <li>Batch 5 - 9:00 am to 1:00 pm </li>
-           <li>Batch 6 - 2:00 am to 6:00 pm </li>
+           <li>Batch 3 - 9:00 am to 1:00 pm (Closed)</li>
+           <li>Batch 4 - 2:00 am to 6:00 pm (Closed)</li>
           </ul>
         </li> 
         </ul>  
@@ -47,6 +41,7 @@
         <h2 > <i class="fa fa-rupee"></i>  6,000 </h2>
         
       </div>
+      <!--
       <div class="bg-light p-3 border rounded mb-3">
         <h3> Reserve your seat now</h3>
       <a href="{{ url('productpage/cb') }}">
@@ -56,6 +51,7 @@
       <button class="btn btn-lg btn-primary mb-3"> Part Payment</button>
       </a>
     </div>
+  -->
 
       <div class="p-3 bg-warning mb-3 rounded"><b>Note:</b><br> Students who need 4 or 5 weeks internship certificate can do a mini project with us FREE of cost (only for bootcamp participants) <a href="{{ route('bootcamp')}}#mini-project">more details here</a></div>
 
