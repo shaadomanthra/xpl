@@ -380,12 +380,12 @@ class OrderController extends Controller
     public function show_transaction($id)
     {
         $order = Order::where('order_id',$id)->first();
-
+        $user = User::where('id',$order->user_id)->first();
       
 
         if($order)
             return view('appl.product.order.show')
-                    ->with('order',$order);
+                    ->with('order',$order)->with('user',$user);
         else
             abort(404);
     }
@@ -430,10 +430,11 @@ class OrderController extends Controller
     public function transaction($id)
     {
         $order = Order::where('order_id',$id)->first();
+        $user = User::where('id',$order->user_id)->first();
 
         if($order)
             return view('appl.product.order.transaction')
-                    ->with('order',$order);
+                    ->with('order',$order)->with('user',$user);
         else
             abort(404);
     }

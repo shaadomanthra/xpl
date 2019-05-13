@@ -131,7 +131,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/couponreferral','Product\CouponController@referral')->name('coupon.referral')->middleware('auth');
 	Route::get('/couponcode','Product\CouponController@coupon')->name('coupon.code')->middleware('auth');
-	Route::get('/couponadmin','Product\CouponController@couponAdmin')->name('customer.coupon.admin')->middleware('auth');
+	Route::get('/couponadmin','Product\CouponController@couponAdmin')->name('customer.trcoupon.admin')->middleware('auth');
 
 
 	/*test */

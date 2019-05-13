@@ -32,6 +32,27 @@
            {{ $order->package}}
           </dd>
 
+          <dt class="col-sm-3">Name</dt>
+          <dd class="col-sm-9">
+           {{ $user->name}}
+          </dd>
+
+          <dt class="col-sm-3">Phone</dt>
+          <dd class="col-sm-9">
+           {{ ($user->details()->first())?$user->details()->first()->phone : '' }}
+          </dd>
+
+          <dt class="col-sm-3">College</dt>
+          <dd class="col-sm-9">
+           {{ ($user->colleges()->first())?$user->colleges()->first()->name : '' }}
+          </dd>
+
+          <dt class="col-sm-3">Branch</dt>
+          <dd class="col-sm-9">
+           {{ ($user->branches()->first())?$user->branches()->first()->name : '' }}
+          </dd>
+
+
           <dt class="col-sm-3">Payment Mode</dt>
           <dd class="col-sm-9">{{ ($order->payment_mode)?$order->payment_mode:'-' }}</dd>
 
