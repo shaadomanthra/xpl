@@ -9,6 +9,9 @@
 			</a> &nbsp;
 			@endcan
 			@can('update',$question)
+			<a href="#"  data-toggle="modal" data-target="#exampleModal3">
+				<i class="fa fa-retweet" data-tooltip="tooltip" data-placement="top" title="Copy"></i>
+			</a>&nbsp;
 			<a href="{{ route('question.edit',['project'=>$project->slug,'question'=>$question->id,'url'=> url()->current()]) }}">
 			<i class="fa fa-pencil-square" data-tooltip="tooltip" data-placement="top" title="Edit"></i> 
 			</a>&nbsp;
@@ -36,6 +39,14 @@
 		<div class="row">
 			<div class="col-5">Slug</div>
 			<div class="col-7 mb-2"><span class="badge badge-warning">{{ $question->slug }}</span></div>
+		</div>
+		<div class="row">
+			<div class="col-5">Level</div>
+			<div class="col-7 mb-2">@if($question->level)<span class="badge badge-secondary"> Level {{ $question->level }}</span>@else - NA - @endif</div>
+		</div>
+		<div class="row">
+			<div class="col-5">In Test</div>
+			<div class="col-7 mb-2">@if($question->intest)<span class="badge badge-primary"> Yes</span>@else - NA - @endif</div>
 		</div>
 		<div class="row">
 			<div class="col-5">Type</div>

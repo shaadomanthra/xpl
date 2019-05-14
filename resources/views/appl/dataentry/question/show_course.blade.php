@@ -70,7 +70,20 @@
         		</div>
         	</div>
         	<div class="col-10 col-md-10"><div class="pt-1 question">{!! $question->question!!}</div>
-
+          @if($question->level)
+          <span class="badge badge-warning mb-3"> 
+            @if($question->level==1) <small><i  class="fa fa-circle-o " ></i></small> Level 1
+            @elseif($question->level==2) 
+            <small><i  class="fa fa-circle-o " ></i></small>
+            <small><i  class="fa fa-circle-o " ></i></small> Level 2
+            @elseif($question->level==3)
+            <small><i  class="fa fa-circle-o " ></i></small>
+            <small><i  class="fa fa-circle-o " ></i></small>
+            <small><i  class="fa fa-circle-o " ></i></small> Level 3
+            @endif
+            </span>
+          @endif
+          
           
 
         </div>

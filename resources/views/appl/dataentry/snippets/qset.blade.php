@@ -44,7 +44,20 @@
 				<a class="white-link" href="{{ route('tag.question',[$project->slug,$tag->id,$q->id]) }}">
 				@endif
 				<div class="pr-1">
-				<div class="qborder w100 p-1 text-center rounded @if($q->id==$question->id) active @endif @if($q->status == 0)  @elseif($q->status == 1) border-success @else border-warning  @endif" id="q{{ ($q->id )}}">{{ ($key + 1 ) }}</div>
+				<div class="qborder w100 p-1 text-center rounded @if($q->id==$question->id) active @endif @if($q->status == 0)  @elseif($q->status == 1) border-success @else border-warning  @endif" id="q{{ ($q->id )}}"><div class="">{{ ($key + 1 ) }} 
+					@if($q->intest)<small ><i  class="fa fa-tumblr-square" style="opacity:0.3;font-size: 8px;"></i></small>@endif
+					@if($q->level)
+						@if($q->level==1) <small><i  class="fa fa-circle-o level3" ></i></small>
+						@elseif($q->level==2) 
+						<small><i  class="fa fa-circle-o level3" ></i></small>
+						<small><i  class="fa fa-circle-o level3" ></i></small>
+						@elseif($q->level==3)
+						<small><i  class="fa fa-circle-o level3" ></i></small>
+						<small><i  class="fa fa-circle-o level3" ></i></small>
+						<small><i  class="fa fa-circle-o level3" ></i></small>
+						@endif
+					@endif
+				</div></div>
 				</div>
 				</a>
 			</div>

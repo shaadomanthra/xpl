@@ -18,7 +18,20 @@
           <a href="{{ route('category.question',[$project->slug,$category->slug,''])}}">
             <span class="s15">Questions ({{ count($category->questions)}})</span>
           </a>
+
+          
         </nav>
+
+        <div class="p-3 border mb-3">
+          <div class="mb-3">
+            <h3>Topic Name : {{ request()->session()->get('topic_name') }}</h3><br>
+            Module Name : {{ request()->session()->get('module_name') }}<br>
+            Course Name : {{ request()->session()->get('course_name') }}<br>
+          </div>
+          <p class="bg-light mb-3 p-2 border"> We save to session in order to copy questions from one project to other</p>
+          <a class="btn btn-outline-primary" href="{{ route('category.show',[$project->slug,$category->slug])}}?store_session=true">Save to Session
+          </a>
+        </div>
 
           
 

@@ -169,11 +169,12 @@ class QuestionController extends Controller
             $request->merge(['reference' => strtoupper($request->reference)]);
             $question = Question::create($request->except(['category','tag','sections']));
 
+
             // create categories
             if($categories)
             foreach($categories as $category){
                 if(!$question->categories->contains($category))
-                    $question->categories()->attach($category);
+                    $question->categories()->attach($category,array('intest' => $request->intest));
             }
 
             // create tags
@@ -199,6 +200,78 @@ class QuestionController extends Controller
         }
     }
 
+    public function copy($id,Request $r){
+
+        $topic_id = $r->session()->get('topic_id');
+
+        if(!$topic_id){
+            abort('403','Topic Not Defined');
+        }
+
+        $category = Category::where('id',$topic_id)->first();
+
+        $project = Project::where('slug',$r->session()->get('course_slug'))->first();
+
+        $q = Question::where('id',$id)->first();
+        $old_project = Project::where('id',$q->project_id)->first();
+
+        $passage = Passage::where('id',$q->passage_id)->first();
+        
+        if($passage){
+             $p = Passage::where('passage',$passage->passage)
+                    ->where('project_id',$project->id)
+                    ->first();
+             if(!$p){
+                 $p = new Passage();
+                 $p->name = $passage->name;
+                 $p->passage = $passage->passage;
+                 $p->user_id = \auth::user()->id;
+                 $p->project_id = $project->id;
+                 $p->stage = $passage->stage;
+                 $p->status = $passage->status;
+                 $p->save();
+             }
+             $q->passage_id = $p->id;    
+        }
+
+        try{
+            $question = new Question();
+            $question->reference = strtoupper($q->reference);
+            $question->question = $q->question;
+            $question->a = $q->a;
+            $question->b = $q->b;
+            $question->c = $q->c;
+            $question->d = $q->d;
+            $question->e = $q->e;
+            $question->answer = $q->answer;
+            $question->explanation = $q->explanation;
+            $question->dynamic = $q->dynamic;
+            $question->passage_id= $q->passage_id;
+            $question->project_id= $project->id;
+            $question->stage = 0;
+            $question->slug = str_random(10);
+            $question->user_id = \auth::user()->id;
+            $question->status = $q->status;
+            $question->level = $q->level;
+            $question->intest = $q->intest;
+            $question->save(); 
+
+
+            if(!$question->categories->contains($category->id))
+                $question->categories()->attach($category->id,array('intest' => $q->intest)); 
+
+            flash('Question (<b>'.$q->slug.'</b>) Successfully Copied to '.$category->name.'!')->success();
+            
+            return redirect()->back();
+  
+        }
+        catch (QueryException $e){
+            flash('There is some error in storing the data...kindly retry.')->error();
+            return redirect()->back()->withInput();
+        }
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -209,6 +282,12 @@ class QuestionController extends Controller
     {
         $question = Question::where('id',$id)->first();
 
+        $course = Course::where('slug',$project_slug)->first();
+            
+
+        if($course)
+            $exams = $course->exams;
+        else    
         $exams =  Exam::orderBy('name','desc ')->get();
       
         $this->authorize('view', $question);
@@ -343,6 +422,8 @@ class QuestionController extends Controller
         $tests = ['test1','test2','test3','test4','test5'];
         $course = Course::where('slug',$project_slug)->first();
 
+
+
         $user = \Auth::user();
         $entry=null;
         if($user)
@@ -409,7 +490,7 @@ class QuestionController extends Controller
             $list = array_intersect($ques_tag, $ques_category);
             $id = reset($list);
             }else
-                $id=$category->questions()->pluck('id')->toArray()[0];
+                $id=$category->questions()->wherePivot('intest','!=',1)->pluck('id')->toArray()[0];
 
              
         }
@@ -432,7 +513,7 @@ class QuestionController extends Controller
                 }
 
                 $passage = Passage::where('id',$question->passage_id)->first();
-                $questions = $category->getQuestions();
+                $questions = $category->questions()->wherePivot('intest','!=',1)->get();
                 //dd($question);
 
                 $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'category']; 
@@ -514,7 +595,12 @@ class QuestionController extends Controller
                 $id=null;
         }
         
+        $course = Course::where('slug',$project_slug)->first();
+        if($course)
+            $exams = $course->exams;
+        else    
         $exams =  Exam::orderBy('name','desc ')->get();
+
         $list = $category->descendants;
 
 
@@ -824,7 +910,12 @@ class QuestionController extends Controller
             $question->dynamic = $request->dynamic;
             $question->passage_id= ($request->passage_id)?$request->passage_id:null;
             $question->status = $request->status;
+            $question->level = $request->level;
+            $question->intest = $request->intest;
             $question->save(); 
+
+
+            
 
             // Categories
             $category_parent =  Category::where('slug',$this->project->slug)->first();   
@@ -834,7 +925,10 @@ class QuestionController extends Controller
             foreach($category_list as $category){
                 if(in_array($category, $categories)){
                     if(!$question->categories->contains($category))
-                        $question->categories()->attach($category);
+                        $question->categories()->attach($category,array('intest' => $request->intest));
+                    else{
+                       $question->categories()->updateExistingPivot($category, array('intest' => $request->intest)); 
+                    }
                 }else{
                     if($question->categories->contains($category))
                         $question->categories()->detach($category);

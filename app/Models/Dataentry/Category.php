@@ -31,7 +31,7 @@ class Category extends Model
 
     public function questions()
     {
-        return $this->belongsToMany('PacketPrep\Models\Dataentry\Question');
+        return $this->belongsToMany('PacketPrep\Models\Dataentry\Question')->withPivot('intest');;
     }
 
     public static function category_tag_questions($category,$exam)
@@ -48,7 +48,7 @@ class Category extends Model
         $list = array_intersect($ques_tag, $ques_category);
             return $list;
         }else
-            return $category->questions()->pluck('id')->toArray();
+            return $category->questions()->wherePivot('intest','!=',1)->pluck('id')->toArray();
         
     }
 
@@ -327,7 +327,7 @@ class Category extends Model
 	 public static function displaySelectOption($categories,$options=null,$prefix='&nbsp;',$disable=false){
 /*
 	 	if($prefix=='&nbsp;')
-	 	$d = '<option value="0">FIRST LEVEL ROOT (DEFAULT)</option>';	
+	 	$d = '<option value="0">FIRST questionCount_level2 ROOT (DEFAULT)</option>';	
 	 	else
     	$d = '';*/
         $d='';

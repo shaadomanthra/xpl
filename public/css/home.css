@@ -111,6 +111,7 @@ h6 {
 }
 
 
+
 .wrapper-bg-2{ background-color: #ECF0F1; height:100%;}
 .wrapper-bg-3{ background-color: #fff; height:100%;}
 
@@ -129,6 +130,9 @@ h6 {
 .CodeMirror{border:1px solid silver;}
 .card-nav ul{ margin-bottom: 0px; }
 .qset .active{ background: #b70016;  }
+.qset .level1{opacity: 1;font-size: 4px;float: right;color:#8F1D21}
+.qset .level2{opacity: 1;font-size: 4px;float: right;color:#D24D57}
+.qset .level3{opacity: 1;font-size: 4px;float: right;color:#FFA400}
 .qitems{position:relative;}
 .item-pdf{ border: 1px solid #eee; padding:5px; background:#fff; }
 

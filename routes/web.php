@@ -356,6 +356,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('dataentry/{project}/question','Dataentry\QuestionController')->middleware('auth');
 	Route::get('question/attach/{question}/{category}','Dataentry\QuestionController@attachCategory');
 	Route::get('question/detach/{question}/{category}','Dataentry\QuestionController@detachCategory');
+	Route::get('question/copy/{question}','Dataentry\QuestionController@copy')->name('question.copy')->middleware('auth');
 
 	Route::get('question/attachsection/{question}/{section}','Dataentry\QuestionController@attachSection');
 	Route::get('question/detachsection/{question}/{section}','Dataentry\QuestionController@detachSection');

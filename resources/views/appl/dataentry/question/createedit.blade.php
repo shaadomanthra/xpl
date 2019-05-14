@@ -268,6 +268,26 @@
         </div>
 
         <div class="form-group mt-3">
+        <label for="formGroupExampleInput ">Level</label>
+        <select class="form-control" name="level" >
+          <option value="0" @if(isset($question)) @if($question->level==0) selected @endif @endif >None</option>
+          <option value="1" @if(isset($question)) @if($question->level==1) selected @endif @endif >Level 1</option>
+          <option value="2" @if(isset($question)) @if($question->level==2) selected @endif @endif >Level 2</option>
+          <option value="3" @if(isset($question)) @if($question->level==3) selected @endif @endif >Level 3</option>
+        </select>
+
+      </div>
+
+       <div class="form-group mt-3">
+        <label for="formGroupExampleInput ">Include in Test</label>
+        <select class="form-control" name="intest" >
+          <option value="0" @if(isset($question)) @if($question->intest==0) selected @endif @endif >No</option>
+          <option value="1" @if(isset($question)) @if($question->intest==1) selected @endif @endif >Yes</option>
+        </select>
+
+      </div>
+
+        <div class="form-group mt-3">
         <label for="formGroupExampleInput ">Status</label>
         @can('publish',$question)
         <select class="form-control" name="status" >

@@ -220,7 +220,34 @@
         <a href="{{ $details['curr'].'?publish=true'}}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn btn-danger">Publish</button>
-        </form>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Modal 3-->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Copy Question</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3 >Topic Name : {{ request()->session()->get('topic_name') }}</h3>
+        <p> Module Name : {{ request()->session()->get('module_name') }}<br>
+         Course Name : {{ request()->session()->get('course_name') }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <a href="{{ route('question.copy',$question->id)}}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-danger">Copy </button>
+        </a>
       </div>
     </div>
   </div>

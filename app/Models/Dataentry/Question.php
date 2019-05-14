@@ -30,6 +30,8 @@ class Question extends Model
         'project_id',
         'stage',
         'status',
+        'level',
+        'intest',
         // add all other fields
     ];
 
@@ -40,7 +42,7 @@ class Question extends Model
 
     public function categories()
     {
-        return $this->belongsToMany('PacketPrep\Models\Dataentry\Category');
+        return $this->belongsToMany('PacketPrep\Models\Dataentry\Category')->withPivot('intest');;
     }
 
     public function tags()

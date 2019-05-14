@@ -121,11 +121,26 @@ class CategoryController extends Controller
     public function show($project_slug,$category_slug, Request $request)
     {
 
+        
         if($category_slug=='uncategorized')
             return redirect()->route('category.index',$project_slug);
 
         $category = Category::where('slug',$category_slug)->first();
         $parent = Category::getParent($category);
+
+        
+        if($request->get('store_session')){
+            $request->session()->put('topic_id', $category->id);
+            $request->session()->put('module_id', $parent->id); 
+            $request->session()->put('course_id', $parent->getParent($parent)->id); 
+
+            $request->session()->put('topic_name', $category->name);
+            $request->session()->put('module_name', $parent->name); 
+            $request->session()->put('course_name', $parent->getParent($parent)->name);  
+            $request->session()->put('course_slug', $parent->getParent($parent)->slug);  
+        }
+
+        
 
         $this->authorize('view', $parent);
 

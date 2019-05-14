@@ -168,7 +168,7 @@ class CourseController extends Controller
             $categories_[$cat]['incorrect_percent'] = 0;
         }
 
-        $qset = DB::table('category_question')->whereIn('category_id', $categories_list)->select('category_id', DB::raw('count(*) as count'))->groupBy('category_id')->get();
+        $qset = DB::table('category_question')->whereIn('category_id', $categories_list)->select('category_id', DB::raw('count(*) as count'))->where('intest','!=',1)->groupBy('category_id')->get();
         
         foreach($qset as $q){
             $categories_[$q->category_id]['total'] = $q->count;
