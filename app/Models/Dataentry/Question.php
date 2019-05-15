@@ -109,7 +109,7 @@ class Question extends Model
             $str = $ques->question;
             eval("\$str = \"$str\";");
             $ques->question = $str;
-            echo $question->question.'\n\n';
+            echo $ques->question.'\n\n';
 
             $str = $ques->a;
             eval("\$str = \"$str\";");
