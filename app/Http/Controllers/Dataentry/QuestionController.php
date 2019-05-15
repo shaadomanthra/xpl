@@ -302,6 +302,7 @@ class QuestionController extends Controller
     {
         $question = Question::where('id',$id)->first()->dynamic_variable_replacement();
 
+        dd($question);
         $course = Course::where('slug',$project_slug)->first();
 
         if($course)
