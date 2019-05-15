@@ -14,7 +14,9 @@ class Test extends Model
         'response',
         'answer',
         'accuracy',
-        'time',
+        'time','status',
+        'section_id',
+        'dynamic',
 
         // add all other fields
     ];

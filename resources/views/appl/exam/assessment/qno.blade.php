@@ -21,18 +21,19 @@
 		</div>
 		<div class="qset" style="max-height: 170px;overflow-y: auto;" data-url="{{ URL::current() }}" data-lastsno="{{ count($questions)  }}" data-counter="0" data-user="{{ \auth::user()->id }}" data-sno="{{ $i=0 }}">
 		
-		@foreach($exam->sections as $section)
+	
+
+				@foreach($exam->sections as $section)
 				@if(count($exam->sections)!=1)
 				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
 				@endif
 				<div class="row no-gutters ">
-
-				@foreach($section->questions as $key=> $q)
+				@foreach($section_questions[$section->id] as $key=> $q)
 
 			<div class="col-3 mb-1">
 				<div class="pr-1">
-				<div class="w100 p-1 testqno s{{ (++$i ) }} text-center rounded @if($q->id==$question->id) active @endif 
-					qborder @if($details['q'.$q->id]) qblue-border @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}" data-testname="{{$exam->slug}}" data-sno="{{ ($i ) }}" data-new="0" data-time="0"
+				<div class="w100 p-1 testqno s{{ (++$i ) }} text-center rounded @if($q->question_id==$question->id) active @endif 
+					qborder @if($details['q'.$q->question_id]) qblue-border @endif" id="q{{ ($q->question_id )}}" data-qno="{{$q->question_id}}" data-testname="{{$exam->slug}}" data-sno="{{ ($i ) }}" data-new="0" data-time="0"
 				    >{{ ($i ) }}</div>
 				</div>
 			</div>

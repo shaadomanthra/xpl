@@ -234,39 +234,23 @@ class AssessmentController extends Controller
 
 
         $completed = 0;
+        $questions = array();
+        $sections = array();
+        $i= 0;$time = 0;
+
+        $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'tag']; 
+
+        $test_exists = Test::where('test_id',$exam->id)->where('user_id',\auth::user()->id)->first();
 
         if($id==null){
             $view ='questions';
-            if(count($exam->sections)!=0)
-            foreach($exam->sections as $section){
-                if(count($section->questions)!=0)
-                foreach($section->questions as $question)
-                {
-                    $id = $question->id;
-                    break; 
-                }else
-                    $id = null;
-                break;
-            }else
-                $id = null;
-        }else
-            $view = 'q';
-        
-
-
-        if($id){
-            $question = Question::where('id',$id)->first();
-
-
-            if($question){
-            
-                $passage = Passage::where('id',$question->passage_id)->first();
-                
-                $questions = array();
-                $sections = array();
-                $i= 0;$time = 0;
+            if(!$test_exists){
                 foreach($exam->sections as $section){
-                    foreach($section->questions as $q){
+                    $qset = $section->questions->shuffle();
+                    foreach( $qset as $q){
+
+                        if($i==0)
+                            $id = $q->id;
                         $questions[$i] = $q;
                         $sections[$i] = $section;
                         $i++;
@@ -274,22 +258,41 @@ class AssessmentController extends Controller
 
                     $time = $time + $section->time;
                 }
+                $details['response'] = null;
+            }
+            else{
+                $details['response'] = $test_exists->response;
+                $id = $test_exists->question_id;
+            }
 
-                $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'tag']; 
+        }else{
+            $view = 'q';
+            $test = Test::where('question_id',$id)->where('test_id',$exam->id)->where('user_id',\auth::user()->id)->first();
+            $details['response'] = $test->response;
+        }
 
-                $test = Test::where('question_id',$id)->where('test_id',$exam->id)->where('user_id',\auth::user()->id)->first();
-                if($test){
-                    $details['response'] = $test->response;
-                }else{
-                    $details['response'] = null;
-                }
+        $test_responses = Test::where('test_id',$exam->id)->where('user_id',\auth::user()->id)->get();
 
+        // question set
+        $i=0;
+        if($test_responses)
+        foreach($test_responses as $res){
+            $m = new AssessmentController();
+            $m->id = $res->question_id;
+            $questions[$i] = $m;
+            $i++;
+        }
 
-              
-                $details['curr'] = $question->id;
-                
-                $tests = ['test1','test2','test3','test4','test5'];
-                foreach($questions as $key=>$q){
+        // time
+        foreach($exam->sections as $section){
+            $time = $time + $section->time;
+        }
+
+        $question = Question::where('id',$id)->first();
+        $passage = Passage::where('id',$question->passage_id)->first();
+        $details['curr'] = $question->id;
+
+        foreach($questions as $key=>$q){
 
                     if($q->id == $question->id){
 
@@ -313,9 +316,10 @@ class AssessmentController extends Controller
                         $t->user_id = \auth::user()->id;
                         $t->section_id= $sections[$key]->id;
                         $t->response = null;
-                        $t->answer = strtoupper($q->answer);
                         $t->accuracy=0;
                         $t->time=0;
+                        $t->dynamic = rand(1,4);
+                        $t->answer = $this->new_answer(strtoupper($q->answer),$t->dynamic);
                         $t->save();
                     }else{
                         if($t->status != 1){
@@ -337,6 +341,13 @@ class AssessmentController extends Controller
                 } 
 
 
+                
+
+                $test_responses = Test::where('test_id',$exam->id)->where('user_id',\auth::user()->id)->get();
+                $test_response = Test::where('question_id',$question->id)->where('test_id',$exam->id)->where('user_id',\auth::user()->id)->first();
+                $question = $this->option_swap($question,$test_response->dynamic);
+
+                
 
                 if($completed)
                     return redirect()->route('assessment.analysis',$exam->slug);
@@ -349,42 +360,125 @@ class AssessmentController extends Controller
                         ->with('exam',$exam)
                         ->with('timer',true)
                         ->with('time',$time)
+                        ->with('section_questions',$test_responses->groupBy('section_id'))
                         ->with('questions',$questions);
-            }else
-                abort('404','Question not found');
-            
+    }
+
+
+    public function option_swap($question,$dynamic){
+
+            if(!$dynamic){
+                $question['option_a'] = $question['a'];
+                $question['option_b'] = $question['b'];
+                $question['option_c'] = $question['c'];
+                $question['option_d'] = $question['d'];
+                $question['option_e'] = $question['e'];
+            }
+
+            if($dynamic == 4){
+                $question['option_a'] = $question['d'];
+                $question['option_b'] = $question['a'];
+                $question['option_c'] = $question['b'];
+                $question['option_d'] = $question['c'];
+                $question['option_e'] = $question['e'];
+            }
+
+            if($dynamic == 3){
+                $question['option_a'] = $question['c'];
+                $question['option_b'] = $question['d'];
+                $question['option_c'] = $question['a'];
+                $question['option_d'] = $question['b'];
+                $question['option_e'] = $question['e'];
+            }
+
+            if($dynamic == 2){
+                $question['option_a'] = $question['b'];
+                $question['option_b'] = $question['c'];
+                $question['option_c'] = $question['d'];
+                $question['option_d'] = $question['a'];
+                $question['option_e'] = $question['e'];
+            }
+
+            if($dynamic == 1){
+                $question['option_a'] = $question['a'];
+                $question['option_b'] = $question['b'];
+                $question['option_c'] = $question['c'];
+                $question['option_d'] = $question['d'];
+                $question['option_e'] = $question['e'];
+            }
+
+            return $question;
+    }
+
+     public function new_answer($answer,$dynamic){
+     
+        if(!$dynamic)
+            return $answer;
+
+        if($answer == 'A'){
+            if($dynamic == 1) $new_ans = 'A';
+            if($dynamic == 2) $new_ans = 'D';
+            if($dynamic == 3) $new_ans = 'C';
+            if($dynamic == 4) $new_ans = 'B';
         }
-        else
-            abort(403);
+
+        if($answer == 'B'){
+            if($dynamic == 1) $new_ans = 'B';
+            if($dynamic == 2) $new_ans = 'A';
+            if($dynamic == 3) $new_ans = 'D';
+            if($dynamic == 4) $new_ans = 'C';
+        }
+          
+        if($answer == 'C'){
+            if($dynamic == 1) $new_ans = 'C';
+            if($dynamic == 2) $new_ans = 'B';
+            if($dynamic == 3) $new_ans = 'A';
+            if($dynamic == 4) $new_ans = 'D';
+        } 
+
+        if($answer == 'D'){
+            if($dynamic == 1) $new_ans = 'D';
+            if($dynamic == 2) $new_ans = 'C';
+            if($dynamic == 3) $new_ans = 'B';
+            if($dynamic == 4) $new_ans = 'A';
+        }
+
+        if($answer == 'E'){
+            return $answer;
+        }  
+
+        return $new_ans;
     }
 
     public function solutions($slug,$id=null,Request $request)
     {
 
         $exam = Exam::where('slug',$slug)->first();
-         
+
+                
 
         if($id==null){
             $view ='questions';
-            if(count($exam->sections)!=0)
-            foreach($exam->sections as $section){
-                if(count($section->questions)!=0)
-                foreach($section->questions as $question)
-                {
-                    $id = $question->id;
-                    break; 
-                }else
-                    $id = null;
-                break;
-            }else
-                $id = null;
-        }else
+            $response = Test::where('test_id',$exam->id)
+                    ->where('user_id',\auth::user()->id)
+                    ->first();
+            $id = $response->question_id;
+        }else{
+            $response = Test::where('test_id',$exam->id)
+                    ->where('user_id',\auth::user()->id)
+                    ->where('question_id',$id)
+                    ->first();
             $view = 'q';
+        }
         
+
 
 
         if($id){
             $question = Question::where('id',$id)->first();
+
+            $question = $this->option_swap($question,$response->dynamic);
+            $question->answer = $this->new_answer($question->answer,$response->dynamic);
 
 
             if($question){
@@ -392,17 +486,20 @@ class AssessmentController extends Controller
                 $passage = Passage::where('id',$question->passage_id)->first();
                 
                 $questions = array();
+                $sections  = array();
                 $i=0;
-                foreach($exam->sections as $section){
-                    foreach($section->questions as $q){
-                        $questions[$i] = $q;
-                        $i++;
-                    }
-                }
+
+                $test_responses = Test::where('test_id',$exam->id)
+                                    ->where('user_id',\auth::user()->id)
+                                    ->get();
 
                 $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'tag']; 
 
-                $test = Test::where('question_id',$id)->where('user_id',\auth::user()->id)->first();
+                $test = Test::where('test_id',$exam->id)
+                            ->where('question_id',$id)
+                            ->where('user_id',\auth::user()->id)
+                            ->first();
+
                 if($test){
                     $details['response'] = $test->response;
                     $details['accuracy'] = $test->accuracy;
@@ -419,16 +516,15 @@ class AssessmentController extends Controller
                 $details['curr'] = route('assessment.solutions.q',[$exam->slug,$question->id]);
                 
                 $tests = ['test1','test2','test3','test4','test5'];
-                $questions = Test::where('test_id',$exam->id)->where('user_id',\auth::user()->id)->get();
-                foreach($questions as $key=>$q){
+                foreach($test_responses as $key=>$q){
 
                     if($q->question_id == $question->id){
 
                         if($key!=0)
-                            $details['prev'] = route('assessment.solutions.q',[$exam->slug,$questions[$key-1]->question_id]);
+                            $details['prev'] = route('assessment.solutions.q',[$exam->slug,$test_responses[$key-1]->question_id]);
 
-                        if(count($questions) != $key+1)
-                            $details['next'] = route('assessment.solutions.q',[$exam->slug,$questions[$key+1]->question_id]);
+                        if(count($test_responses) != $key+1)
+                            $details['next'] = route('assessment.solutions.q',[$exam->slug,$test_responses[$key+1]->question_id]);
 
                         $details['qno'] = $key + 1 ;
                     }
@@ -438,7 +534,6 @@ class AssessmentController extends Controller
                    
 
                 } 
-                
 
                 return view('appl.exam.assessment.solutions')
                         ->with('mathjax',true)
@@ -446,8 +541,8 @@ class AssessmentController extends Controller
                         ->with('passage',$passage)
                         ->with('details',$details)
                         ->with('exam',$exam)
-                        ->with('tests',$tests)
-                        ->with('questions',$questions);
+                        ->with('section_questions',$test_responses->groupBy('section_id'))
+                        ->with('questions',$test_responses);
             }else
                 abort('404','Question not found');
             
@@ -467,8 +562,11 @@ class AssessmentController extends Controller
                 ->where('user_id',$request->get('user_id'))->first();
 
         
-        if(!$t)
-        $t = new Test();
+        if(!$t){
+            $t = new Test();
+            $t->answer = $question->answer;
+        }
+        
 
 
         $t->question_id = $request->get('question_id');
@@ -476,7 +574,7 @@ class AssessmentController extends Controller
         $t->user_id = $request->get('user_id');
         if($request->get('response'))
         $t->response = strtoupper($request->get('response'));
-        $t->answer = strtoupper($question->answer);
+
         if($request->get('time'))
         $t->time = $t->time+$request->get('time');
 
@@ -509,7 +607,6 @@ class AssessmentController extends Controller
         $t->user_id = $request->get('user_id');
         $t->time = $t->time+$request->get('time');
         $t->response = strtoupper($request->get('response'));
-        $t->answer = strtoupper($question->answer);
         $t->accuracy=0;
 
         $t->save();

@@ -38,15 +38,7 @@
               });
           });
 
-        if(document.getElementById("code"))
-        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-          lineNumbers: true,
-          styleActiveLine: true,
-          matchBrackets: true,
-          autoRefresh:true,
-          mode:  'javascript',
-          indentUnit: 4
-        });
+        
 </script>
 
 @endif
@@ -61,6 +53,19 @@
 <script src="{{asset('js/codemirror/mode/markdown/markdown.js')}}"></script>  
 <script src="{{asset('js/highlight/highlight.pack.js')}}"></script>  
 <script>hljs.initHighlightingOnLoad();</script>
+<script type="text/javascript">
+$(document).ready(function() {
+  if(document.getElementById("code"))
+        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+          lineNumbers: true,
+          styleActiveLine: true,
+          matchBrackets: true,
+          autoRefresh:true,
+          mode:  'javascript',
+          indentUnit: 4
+        });
+});
+</script>
 @endif
 
 @if(isset($chart))

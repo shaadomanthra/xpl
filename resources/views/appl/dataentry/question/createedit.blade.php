@@ -185,7 +185,7 @@
       <div class="tab-pane fade" id="dynamic" role="tabpanel" aria-labelledby="dynamic-tab">
         <div class="form-group mt-3">
         <label for="formGroupExampleInput2">Dynamic</label>
-         <textarea id="code" class="form-control code " name="dynamic"  rows="5">@if($stub=='Create'){{ (old('dynamic')) ? old('dynamic') : '' }}@else{{ $question->dynamic }}@endif
+         <textarea id="code" class="form-control code" name="dynamic"  rows="5">@if($stub=='Create'){{ (old('dynamic')) ? old('dynamic') : '' }}@else{{ $question->dynamic }}@endif
         </textarea>
       </div>
       </div>

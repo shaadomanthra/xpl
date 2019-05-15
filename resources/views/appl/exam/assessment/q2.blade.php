@@ -32,11 +32,14 @@
 				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
 				@endif
 				<div class="row no-gutters ">
-				@foreach($section->questions as $key=> $q)
+				@foreach($section_questions[$section->id] as $key=> $q)
+				
+				
+				
 				<div class="col-3 mb-1">
-					<a class="white-link" href="{{ route('assessment.solutions.q',[$exam->slug,$q->id]) }}">
+					<a class="white-link" href="{{ route('assessment.solutions.q',[$exam->slug,$q->question_id]) }}">
 					<div class="pr-1">
-					<div class="w100 p-1 testqno s text-center rounded @if($q->id==$question->id) active @endif 
+					<div class="w100 p-1 testqno s text-center rounded @if($q->question_id==$question->id) active @endif 
 					@if($questions[$i]['response'] !=null) @if($questions[$i]['accuracy'] == 0) qred-border @else qgreen-border @endif @else qborder  @endif" id="q{{$q->id}}" 
 					    >{{ (++$i ) }}</div>
 					</div>

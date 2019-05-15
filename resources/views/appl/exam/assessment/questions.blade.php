@@ -69,7 +69,7 @@
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="A" @if($details['response']=='A') checked @endif > A </div>
         		</div>
         	</div>
-        	<div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->a!!}</div></div>
+        	<div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->option_a!!}</div></div>
         </div>
         @endif
 
@@ -82,7 +82,7 @@
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="B" @if($details['response']=='B') checked @endif>  B</div>
         		</div>
         	</div>
-        	<div class="col-9 col-md-10"><div class="pt-1 b">{!! $question->b!!}</div></div>
+        	<div class="col-9 col-md-10"><div class="pt-1 b">{!! $question->option_b!!}</div></div>
         </div>
         @endif
 
@@ -95,7 +95,7 @@
                 <input class="form-check-input" type="radio" name="response" id="exampleRadios1" value="C" @if($details['response']=='C')  checked @endif> C</div>
         		</div>
         	</div>
-        	<div class="col-9 col-md-10"><div class="pt-1 c">{!! $question->c!!}</div></div>
+        	<div class="col-9 col-md-10"><div class="pt-1 c">{!! $question->option_c!!}</div></div>
         </div>
         @endif
         
@@ -109,7 +109,7 @@
                 D</div>
         		</div>
         	</div>
-        	<div class="col-9 col-md-10"><div class="pt-1 d">{!! $question->d!!}</div></div>
+        	<div class="col-9 col-md-10"><div class="pt-1 d">{!! $question->option_d!!}</div></div>
         </div>
         @endif
 
@@ -125,7 +125,7 @@
               </div>
         		</div>
         	</div>
-        	<div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
+        	<div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->option_e!!}</div></div>
         </div>
         @endif
          
