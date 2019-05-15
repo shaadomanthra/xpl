@@ -105,31 +105,33 @@ class Question extends Model
         
             include $file; 
             // question
-            $str = $ques->question;
+            $str = preg_replace('/<span[^>]+\>/i', '', $ques->question);
             eval("\$str = \"$str\";");
             $ques->question = $str;
 
-            $str = $ques->a;
+
+
+            $str = preg_replace('/<span[^>]+\>/i', '', $ques->a);
             eval("\$str = \"$str\";");
             $ques->a = $str;
      
-            $str = $ques->b;
+            $str = preg_replace('/<span[^>]+\>/i', '', $ques->b);
             eval("\$str = \"$str\";");
             $ques->b = $str;
 
-            $str = $ques->c;
+            $str = preg_replace('/<span[^>]+\>/i', '', $ques->c);
             eval("\$str = \"$str\";");
             $ques->c = $str;
 
-            $str = $ques->d;
+            $str = preg_replace('/<span[^>]+\>/i', '', $ques->d);
             eval("\$str = \"$str\";");
             $ques->d = $str;
 
-            $str = $ques->e;
+            $str = preg_replace('/<span[^>]+\>/i', '', $ques->e);
             eval("\$str = \"$str\";");
             $ques->e = $str;
 
-            $str = $ques->explanation;
+            $str = preg_replace('/<span[^>]+\>/i', '', $ques->explanation); 
             eval("\$str = \"$str\";");
             $ques->explanation = $str;
         }
