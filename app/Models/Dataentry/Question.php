@@ -91,8 +91,8 @@ class Question extends Model
     }
 
     public function dynamic_variable_replacement($number=null){
-        $question = $this;
-        $file = "../storage/dynamic_code/".$question->id.".php";
+        $ques = $this;
+        $file = "../storage/dynamic_code/".$ques->id.".php";
 
         echo "here\n\n";
         if(isset($_REQUEST['number']))
@@ -101,43 +101,42 @@ class Question extends Model
         if($number == null )
             $number = 1;
 
-        dd($question);
-        if(file_exists($file) && $question->dynamic){
+        if(file_exists($file) && $ques->dynamic){
             
         
             include $file; 
             // question
-            $str = $question->question;
+            $str = $ques->question;
             eval("\$str = \"$str\";");
-            $question->question = $str;
+            $ques->question = $str;
             echo $question->question.'\n\n';
 
-            $str = $question->a;
+            $str = $ques->a;
             eval("\$str = \"$str\";");
-            $question->a = $str;
+            $ques->a = $str;
      
-            $str = $question->b;
+            $str = $ques->b;
             eval("\$str = \"$str\";");
-            $question->b = $str;
+            $ques->b = $str;
 
-            $str = $question->c;
+            $str = $ques->c;
             eval("\$str = \"$str\";");
-            $question->c = $str;
+            $ques->c = $str;
 
-            $str = $question->d;
+            $str = $ques->d;
             eval("\$str = \"$str\";");
-            $question->d = $str;
+            $ques->d = $str;
 
-            $str = $question->e;
+            $str = $ques->e;
             eval("\$str = \"$str\";");
-            $question->e = $str;
+            $ques->e = $str;
 
-            $str = $question->explanation;
+            $str = $ques->explanation;
             eval("\$str = \"$str\";");
-            $question->explanation = $str;
+            $ques->explanation = $str;
         }
 
-        return $question;
+        return $ques;
     }
 
 
