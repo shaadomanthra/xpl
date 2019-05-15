@@ -9,7 +9,14 @@
 	<div class="wrapper ">  
 	<div class="container">
 	<div class="row">
-		<div class="col-12 col-md-6">
+    <div class="col-12 col-md-12">
+
+       <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
+          <iframe src="//player.vimeo.com/video/314457736" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          </div>
+
+      </div>
+		<div class="col-12 col-md-12">
 			<h1 class="mt-2 mb-4 mb-md-2">
 			<i class="fa fa-ravelry"></i> &nbsp;Target TCS
 			
@@ -17,17 +24,11 @@
       <p>To help students prepare for TCS Ninja -  National Qualifier Test, PacketPrep is starting a 100 day online training program . This module includes daily concept lectures, practice questions and online assessments covering aptitude, reasoning and coding.  </p>
       <p> <b>Eligibility :</b> Btech 3rd year ( 2020 passout batch)<br>
         <b> Stream :</b> All Branches<br>
-      <b>Starts on :</b> 15th May 2019</p>
+      <b>Starts on :</b> 20th May 2019</p>
 
 
 		</div>
-		<div class="col-12 col-md-6">
-
-		   <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/314457736" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-          </div>
-
-  		</div>
+		
 	</div>
 	</div>
 </div>
@@ -82,7 +83,7 @@
    </div>
 
    <div class="bg-white p-4 border mb-4">
-    <h2 class="mb-4">Weekly Schedule (15th May to Aug 25th)</h2>
+    <h2 class="mb-4">Weekly Schedule (20th May to Aug 30th)</h2>
 
         <div class="table-responsive ">
           <table class="table table-bordered mb-0">
