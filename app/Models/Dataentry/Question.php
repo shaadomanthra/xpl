@@ -100,6 +100,8 @@ class Question extends Model
 
         if($number == null )
             $number = 1;
+
+        dd($question);
         if(file_exists($file) && $question->dynamic){
             
         
