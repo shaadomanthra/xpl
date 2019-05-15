@@ -94,7 +94,6 @@ class Question extends Model
         $ques = $this;
         $file = "../storage/dynamic_code/".$ques->id.".php";
 
-        echo "here\n\n";
         if(isset($_REQUEST['number']))
             $number = $_REQUEST['number'];
 
@@ -109,7 +108,6 @@ class Question extends Model
             $str = $ques->question;
             eval("\$str = \"$str\";");
             $ques->question = $str;
-            echo $ques->question.'\n\n';
 
             $str = $ques->a;
             eval("\$str = \"$str\";");
