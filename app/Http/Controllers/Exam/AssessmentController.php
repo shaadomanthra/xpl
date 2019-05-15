@@ -345,6 +345,7 @@ class AssessmentController extends Controller
 
                 $test_responses = Test::where('test_id',$exam->id)->where('user_id',\auth::user()->id)->get();
                 $test_response = Test::where('question_id',$question->id)->where('test_id',$exam->id)->where('user_id',\auth::user()->id)->first();
+                $question = $question->dynamic_variable_replacement($test_response->dynamic);
                 $question = $this->option_swap($question,$test_response->dynamic);
 
                 
@@ -475,7 +476,7 @@ class AssessmentController extends Controller
 
 
         if($id){
-            $question = Question::where('id',$id)->first();
+            $question = Question::where('id',$id)->first()->dynamic_variable_replacement($response->dynamic);
 
             $question = $this->option_swap($question,$response->dynamic);
             $question->answer = $this->new_answer($question->answer,$response->dynamic);

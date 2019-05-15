@@ -16,9 +16,9 @@
       
       <p>Platinum Partner - British Council. The most awarded training institute in South India. The most awesome classes on this side of the solar system. </p>
       <hr>
-      <p>Now all packetprep users can attend a demo class, take a mock test and get expert counselling, all for Free.
+      <p>PacketPrep offers all its users an opportunity to attend a session, take a test, and get industry acclaimed expert counselling - all for free!
       </p>
-      <p class="mb-3"> We have reviewed their work, and we found them awesome. Specially their 320+ premium batch is best in industry. If you think they are the right mentors for you, then before you join the course download the discount coupon.</p>
+      <p class="mb-3"> Our team at packetprep have had first hand experience of their student oriented processes, and we have found them to be consistently awesome. Their GRE 320+ premium batch deserves special mention for standing apart and above every other training programme currently available!</p>
      
       <div class="p-3 rounded mb-3" style="background: #f2f2f2">  
       <div class="">Discount </div>    
@@ -121,7 +121,7 @@
           </div>
           <div class="p-3">
           <h1 >What Students Say</h1>
-          <p > Saying we are the best is easy. Learn why we can say it with confidence. From training to authoring books. From having international certifications to providing examiner grade evaluations, learn what makes us the best!</p>
+          <p > Claiming to be the best is easy. What is awesome is being able to make other say it! Take a look at what our students say!</p>
         </div>
           </div>
         </div>

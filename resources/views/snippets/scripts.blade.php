@@ -203,12 +203,19 @@ new Chart(ctx_{{$section->section_id}},options_{{$section->section_id}});
 
 
 @if(isset($question['dynamic']))
+
 <script>
 $(document).ready(function() {
 
       var v = new Object();
       var items = ['question','a','b','c','d','e','answer','explanation','passage'];
       v.number = parseInt({{(request()->get('number'))?request()->get('number'):'1'}});
+
+      @if(isset($question['number']))
+        v.number = {{ $question['number'] }};
+      @endif
+
+      console.log('number :'+v.number);
       {!! $question['dynamic'] !!}
 
       items.forEach(function(element) {

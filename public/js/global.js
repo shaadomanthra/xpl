@@ -26,6 +26,7 @@ $(document).ready(function() {
     }
 
     if($.isNumeric(loc)){
+      console.log('location:'+loc);
     	var b = $('.qset').offset().top;
 	    var a = $('#q'+loc).offset().top - b;
       console.log('location:'+a+' '+b);

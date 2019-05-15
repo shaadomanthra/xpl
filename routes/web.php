@@ -352,6 +352,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('dataentry/{project}/tag','Dataentry\TagController')->middleware('auth');
 	Route::get('dataentry/{project}/tag/{tag}/question','Dataentry\QuestionController@tag')->middleware('auth')->name('tag.question');
 	Route::get('dataentry/{project}/tag/{tag}/question/{id}','Dataentry\QuestionController@tag')->middleware('auth')->name('tag.question');
+	Route::get('questionapi/{question}','Dataentry\QuestionController@show2');
+	
 	Route::resource('dataentry/{project}/passage','Dataentry\PassageController')->middleware('auth');
 	Route::resource('dataentry/{project}/question','Dataentry\QuestionController')->middleware('auth');
 	Route::get('question/attach/{question}/{category}','Dataentry\QuestionController@attachCategory');

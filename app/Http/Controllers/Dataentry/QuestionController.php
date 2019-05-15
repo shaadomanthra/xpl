@@ -18,6 +18,9 @@ use PacketPrep\Models\Course\Practices_Course;
 use PacketPrep\Models\Course\Practices_Topic;
 use Illuminate\Support\Facades\DB;
 
+use DOMDocument;
+use DOMXpath;
+
 
 class QuestionController extends Controller
 {
@@ -169,6 +172,9 @@ class QuestionController extends Controller
             $request->merge(['reference' => strtoupper($request->reference)]);
             $question = Question::create($request->except(['category','tag','sections']));
 
+            if($request->dynamic){
+                $question->dynamic_code_save();
+            }
 
             // create categories
             if($categories)
@@ -278,12 +284,25 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($project_slug,$id)
+    public function show2($id)
     {
         $question = Question::where('id',$id)->first();
+        $passage = Passage::where('id',$question->passage_id)->first();
+
+            return  view('appl.dataentry.question.show2')
+                    ->with('mathjax',true)
+                    ->with('question',$question)
+                    ->with('passage',$passage);
+            
+  
+    }
+
+
+     public function show($project_slug,$id)
+    {
+        $question = Question::where('id',$id)->first()->dynamic_variable_replacement();
 
         $course = Course::where('slug',$project_slug)->first();
-            
 
         if($course)
             $exams = $course->exams;
@@ -321,7 +340,7 @@ class QuestionController extends Controller
                     $details['qno'] = $key + 1 ;
                 }
             } 
-            return view('appl.dataentry.question.show')
+            return  view('appl.dataentry.question.show')
                     ->with('project',$this->project)
                     ->with('mathjax',true)
                     ->with('question',$question)
@@ -329,10 +348,28 @@ class QuestionController extends Controller
                     ->with('details',$details)
                     ->with('exams',$exams)
                     ->with('questions',$questions);
+            
         }
         else
             abort(404,'Question not found');
     }
+
+    public function parseToArray($xpath,$class)
+{
+    $xpathquery="//span[@class='".$class."']";
+    $elements = $xpath->query($xpathquery);
+
+    if (!is_null($elements)) {  
+        $resultarray=array();
+        foreach ($elements as $element) {
+            $nodes = $element->childNodes;
+            foreach ($nodes as $node) {
+              $resultarray[] = $node->nodeValue;
+            }
+        }
+        return $resultarray;
+    }
+}
 
          /**
      * Display the specified resource.
@@ -913,6 +950,10 @@ class QuestionController extends Controller
             $question->level = $request->level;
             $question->intest = $request->intest;
             $question->save(); 
+
+            if($request->dynamic){
+                $question->dynamic_code_save();
+            }
 
 
             
