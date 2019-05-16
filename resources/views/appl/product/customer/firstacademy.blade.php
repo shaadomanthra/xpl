@@ -18,6 +18,7 @@
       <hr>
       <p>PacketPrep offers all its users an opportunity to attend a session, take a test, and get industry acclaimed expert counselling - all for free!
       </p>
+
       <p class="mb-3"> Our team at packetprep have had first hand experience of their student oriented processes, and we have found them to be consistently awesome. Their GRE 320+ premium batch deserves special mention for standing apart and above every other training programme currently available!</p>
      
       <div class="p-3 rounded mb-3" style="background: #f2f2f2">  
@@ -36,6 +37,14 @@
 		   <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
           <iframe src="//player.vimeo.com/video/327440260" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
+
+          <div class="bg-info p-3 mt-3 mb-3 rounded text-white"> Attend Free Session on<br>
+      <div class="display-4 mb-3">22nd or 29th May 2019</div><hr>
+    <p><small>Location:</small> <br><b>First Academy</b>, 707 - 708, Pavani Prestige, Ameerpet,
+Hyderabad.<br>
+Phone :<i>+91 98666 88666</i><br>
+Map : <a href="https://goo.gl/maps/6ZFh2VrcwV5j5Xyx5" style="color: white;opacity: 0.7">https://goo.gl/maps/6ZFh2VrcwV5j5Xyx5</a>
+</p></div>
 
   		</div>
 	</div>
