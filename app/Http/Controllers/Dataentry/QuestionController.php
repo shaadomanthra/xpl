@@ -244,6 +244,7 @@ class QuestionController extends Controller
             $question = new Question();
             $question->reference = strtoupper($q->reference);
             $question->question = $q->question;
+            $question->type = $q->type;
             $question->a = $q->a;
             $question->b = $q->b;
             $question->c = $q->c;
