@@ -262,9 +262,13 @@ class QuestionController extends Controller
             $question->intest = $q->intest;
             $question->save(); 
 
+            if(!$q->intest)
+                $intest = 0;
+            else
+                $intest = $q->intest;
 
             if(!$question->categories->contains($category->id))
-                $question->categories()->attach($category->id,array('intest' => $q->intest)); 
+                $question->categories()->attach($category->id,array('intest' => $intest)); 
 
             flash('Question (<b>'.$q->slug.'</b>) Successfully Copied to '.$category->name.'!')->success();
             
@@ -648,7 +652,7 @@ class QuestionController extends Controller
         if($id){
             $question = Question::where('id',$id)->first();
             $question = $question->dynamic_variable_replacement();
-            
+
             $this->authorize('view', $question);
 
             if($question){
