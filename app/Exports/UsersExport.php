@@ -100,8 +100,16 @@ class UsersExport implements FromCollection
                     $key = $users[$k]->id;
                     $users[$k]->phone = $details[$key]->phone;
                     $users[$k]->year_of_passing = $details[$key]->year_of_passing;
-                    $users[$k]->college = $u->colleges()->first()->name;
-                    $users[$k]->branch = $u->branches()->first()->name; 
+                    
+                    if($u->colleges()->first())
+                        $users[$k]->college = $u->colleges()->first()->name;
+                    else
+                        $users[$k]->college = '';
+
+                    if($u->branches()->first())  
+                        $users[$k]->branch = $u->branches()->first()->name; 
+                    else
+                        $users[$k]->branch = '';
                 }
                
 
