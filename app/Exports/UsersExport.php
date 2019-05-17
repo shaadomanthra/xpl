@@ -75,7 +75,7 @@ class UsersExport implements FromCollection
   
         } */
 
-        $entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id'); 
+        $entry = DB::table('user_details')->where('year_of_passing', 2019)->pluck('user_id'); 
         
         $users =  User::whereIn('id',$entry)->get();
         $users_details =  User_Details::whereIn('user_id',$entry)->orderBy('user_id')->get();
