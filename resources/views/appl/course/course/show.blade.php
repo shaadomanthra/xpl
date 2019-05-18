@@ -79,7 +79,7 @@
 			@endif
 			
 			
-			@if($course->intro_vimeo)
+			@if($course->intro_vimeo || $course->intro_youtube)
 			<button class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#myModal"><i class ="fa fa-video-camera"></i> Watch Intro</button>
 			@endif
 			@if(\auth::user())
@@ -237,7 +237,11 @@
      
       <div class="modal-body">
        <div class="embed-responsive embed-responsive-16by9">
+       	@if($course->intro_vimeo)
 		<iframe src="//player.vimeo.com/video/{{ $course->intro_vimeo }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		@else
+		<iframe src="https://www.youtube.com/embed/{{ $course->intro_youtube }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		@endif
 			</div>
       </div>
       <div class="modal-footer">
