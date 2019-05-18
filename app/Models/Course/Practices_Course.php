@@ -17,5 +17,11 @@ class Practices_Course extends Model
         'time'
     ];
 
+
+    public function user()
+    {
+        return $this->belongsTo('PacketPrep\User');
+    }
+
 }
 

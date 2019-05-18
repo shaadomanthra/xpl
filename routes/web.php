@@ -175,7 +175,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/intern/connect','College\AmbassadorController@internconnect')->name('intern.connect')->middleware('auth');
 	Route::get('/intern/generalist','College\AmbassadorController@interngeneralist')->name('intern.generalist');
 
-	Route::get('/ambassador/connect','College\AmbassadorController@connect')->name('ambassador.connect')->middleware('auth');
+	Route::get('/ambassador/connect','College\AmbassadorController@connect2')->name('ambassador.connect')->middleware('auth');
 	Route::get('/ambassador/list','College\AmbassadorController@list')->name('ambassador.list')->middleware('auth');
 	Route::get('admin/ambassador/list','College\AmbassadorController@list2')->name('ambassador.list2')->middleware('auth');
 	Route::get('/ambassador/college','College\AmbassadorController@college')->name('ambassador.college')->middleware('auth');

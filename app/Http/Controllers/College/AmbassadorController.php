@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\College\Ambassador as Obj;
 use PacketPrep\Models\College\College;
+use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Course\Practices_Course;
+use PacketPrep\Models\Exam\Tests_Overall;
+use Illuminate\Support\Facades\DB;
+use PacketPrep\User;
 
 class AmbassadorController extends Controller
 {
@@ -14,6 +19,73 @@ class AmbassadorController extends Controller
         $this->app      =   'college';
         $this->module   =   'ambassador';
     }
+
+
+    public function connect2(Obj $obj, Request $request){
+
+        if(!\auth::user())
+            abort(403,'Login Requuired');
+
+        $this->authorize('view', $obj);
+        $view = 'connect2';
+
+        $user = \auth::user();
+        $course_id = 4;
+        if($course_id)
+            $course = Course::where('id',$course_id)->first();
+        $users = $user->referrals->pluck('id')->toArray();
+
+        $data = [];
+        
+        $users = $user->referrals->pluck('id')->toArray();
+        $practice = Practices_Course::where('course_id',$course_id)
+                        ->whereIn('user_id',$users)->get();
+
+        $test_id = [];
+        foreach($course->exams as $e){
+            array_push($test_id,$e->id);
+        }
+                            
+        $tests = Tests_Overall::whereIn('user_id',$users)
+                    ->whereIn('test_id',$test_id)
+                    ->get();
+     
+        $data['practice_score'] = $practice->sum('attempted');
+        $data['tests_score'] = $tests->sum('correct');
+        $data['total_score'] = $data['practice_score'] + $data['tests_score'];
+
+        $practice_top = Practices_Course::where('course_id',$course_id)
+                        ->whereIn('user_id',$users)->orderBy('attempted','desc')->limit(5)->get();
+    
+        $user_array = implode(', ', $users);
+        $test_array = implode(', ', $test_id);
+        
+        if($test_id)
+        $tests_top = DB::select("select user_id, SUM(correct) as sum from tests_overall where user_id IN ($user_array) and test_id IN ($test_array) GROUP BY user_id ORDER By sum DESC LIMIT 5");
+        else
+        $tests_top = null;
+        $users_test_top = [];
+
+        if($tests_top)
+        foreach($tests_top as $k=>$t){
+            $tests_top[$k]->user = User::where('id',$t->user_id)->first();
+        }
+
+        $data['tests_top'] = $tests_top;
+        $data['practice_top'] = $practice_top;
+        $data['course'] = $course;
+        //dd($data);
+
+        return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
+                ->with('obj',$obj)
+                ->with('app',$this)
+                ->with('data',$data);
+
+    }
+
+   
+
+    
 
     public function connect(Obj $obj,Request $request)
     {
