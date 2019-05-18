@@ -79,9 +79,14 @@
 			@endif
 			
 			
-			@if($course->intro_vimeo || $course->intro_youtube)
+			@if($course->intro_vimeo )
 			<button class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#myModal"><i class ="fa fa-video-camera"></i> Watch Intro</button>
 			@endif
+
+			@if($course->intro_youtube )
+			<button class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#myModal"><i class ="fa fa-video-camera"></i> Watch Intro</button>
+			@endif
+			
 			@if(\auth::user())
 				@if(\auth::user()->productvalidity($course->slug)==2)
 				<a href="{{ route('productpage',$product->slug) }}">
