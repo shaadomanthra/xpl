@@ -59,7 +59,7 @@
 
 			<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
 			<a href="{{ route('productpage',$product->slug) }}">
-			<button class="btn btn-success btn-lg" >
+			<button class="btn btn-success btn-lg mt-3" >
 				@if($product->price==0)
 				Access Now
 				@else
@@ -80,7 +80,7 @@
 			
 			
 			@if($course->intro_vimeo || $course->intro_youtube)
-			<button class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#myModal"><i class ="fa fa-video-camera"></i> Watch Intro</button>
+			<button class="btn btn-outline-primary btn-lg mt-3" data-toggle="modal" data-target="#myModal"><i class ="fa fa-video-camera"></i> Watch Intro</button>
 			@endif
 			@if(\auth::user())
 				@if(\auth::user()->productvalidity($course->slug)==2)
