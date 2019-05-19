@@ -393,7 +393,7 @@ class CourseController extends Controller
                 ->with('videos',$videos)
                 ->with('parent',$parent)
                 ->with('next',$next)
-                ->with('prev',$prev);
+                ->with('prev',$prev)
                 ->with('access',$access);
         else
             abort(404);
