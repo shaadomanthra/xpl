@@ -29,6 +29,12 @@
 
 
 		</div>
+
+    <div class="mt-3 mb-3">
+      <a href="{{ url('course\targettcs') }}">
+      <button class="btn btn-lg btn-success p-3 pr-4 pl-4"><i class="fa fa-send"></i> &nbsp;Open Course Page</button>
+      </a>
+    </div>
 		
 	</div>
 	</div>
