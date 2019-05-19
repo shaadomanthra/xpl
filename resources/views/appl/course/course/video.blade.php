@@ -174,7 +174,7 @@
   </div>
   </div>
 
-  @if($category->video_desc && $category->video_link)
+  @if($category->video_desc && $category->video_link && !$category->exam_id)
   <div class="p-4 mt-3 bg-white border">
     {!! $category->video_desc !!}
   </div>
