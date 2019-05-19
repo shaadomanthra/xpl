@@ -340,7 +340,12 @@ class CourseController extends Controller
 
         if($category->exam_id){
             $exam = Exam::where('id',$category->exam_id)->first();
+            
+            if($category->video_link)
+            $category->video_desc = $category->video_desc.'<br><hr><h3>'.$exam->name.'</h3>'.$exam->instructions;  
+            else    
             $category->video_desc = $exam->instructions;
+        
             if(!$exam->attempted())
                 $category->test_analysis = false;
             else{
@@ -349,6 +354,7 @@ class CourseController extends Controller
         }
         
         
+
 
             
         //$this->authorize('view', $course);
