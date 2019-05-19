@@ -44,7 +44,7 @@ class AmbassadorController extends Controller
         $practice = Practices_Course::where('course_id',$course_id)
                         ->whereIn('user_id',$users)->get();
 
-        dd($practice);
+        dd($users);
         $test_id = [];
         if(isset($course->exams))
         foreach($course->exams as $e){
