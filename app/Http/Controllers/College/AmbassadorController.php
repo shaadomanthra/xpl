@@ -30,7 +30,7 @@ class AmbassadorController extends Controller
         $view = 'connect2';
 
         $user = \auth::user();
-        $course_id = 4;
+        $course_id = 20;
         if($course_id)
             $course = Course::where('id',$course_id)->first();
         $users = $user->referrals->pluck('id')->toArray();
