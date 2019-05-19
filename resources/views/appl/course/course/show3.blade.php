@@ -105,7 +105,7 @@
 	<div class="col-12 col-md-8 col-lg-8 mt-md-1">
 
 		@if(\auth::user())
-		@if(count($exams))
+		@if($ques_count)
 		<div class="pl-3 mb-0 mb-md-3 mt-0 mt-md-0"> 
 			<div class="row">
 				
