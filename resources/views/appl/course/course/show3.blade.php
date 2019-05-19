@@ -85,14 +85,14 @@
 			@if(\auth::user())
 				@if(\auth::user()->productvalidity($course->slug)==2)
 				<a href="{{ route('productpage',$product->slug) }}">
-				<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
+				<button class="btn btn-success btn-lg mt-3" ><i class ="fa fa-shopping-cart"></i> Buy</button>
 				</a>
 
 				@endif
 			
 			@else
 			<a href="{{ route('productpage',$product->slug) }}">
-			<button class="btn btn-success btn-lg" ><i class ="fa fa-shopping-cart"></i> Buy</button>
+			<button class="btn btn-success btn-lg mt-3" ><i class ="fa fa-shopping-cart"></i> Buy</button>
 			</a>
 
 			@endif
