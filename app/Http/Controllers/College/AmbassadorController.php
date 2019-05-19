@@ -36,12 +36,15 @@ class AmbassadorController extends Controller
         $users = $user->referrals->pluck('id')->toArray();
         array_push($users, $user->id);
 
+
+
         $data = [];
         
         $users = $user->referrals->pluck('id')->toArray();
         $practice = Practices_Course::where('course_id',$course_id)
                         ->whereIn('user_id',$users)->get();
 
+        dd($practice);
         $test_id = [];
         if(isset($course->exams))
         foreach($course->exams as $e){
