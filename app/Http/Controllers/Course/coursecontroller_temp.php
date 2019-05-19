@@ -150,11 +150,21 @@ class CourseController extends Controller
 
         $examtype = Examtype::where('slug',$id)->first();
         if($examtype)
-        $exams = Exam::where('examtype_id',$examtype->id)->get();
+            $exams = Exam::where('examtype_id',$examtype->id)->get();
         else{
-
             $exams = Exam::where('slug','LIKE',"%{$course->slug}%")->get();
             
+        }
+        $topics = Category::defaultOrder()->descendantsOf($parent->id);
+        $exam_ids =[];
+        foreach($topics as $t){
+            if($t->exam_id)
+                array_push($exam_ids, $t->exam_id);
+            
+        }
+        foreach($exams as $k=> $e){
+            if(in_array($e->id, $exam_ids))
+                unset($exams[$k]);
         }
 
         //categories
@@ -327,6 +337,11 @@ class CourseController extends Controller
 
         if($category->exam_id){
             $exam = Exam::where('id',$category->exam_id)->first();
+            
+
+            if($category->video_link)
+            $category->video_desc = $category->video_desc.'<br><hr><h3>'.$exam->name.'</h3>'.$exam->instructions;  
+            else    
             $category->video_desc = $exam->instructions;
 
             if(!$exam->attempted())

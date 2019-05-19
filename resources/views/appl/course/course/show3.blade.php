@@ -205,11 +205,11 @@
                      	@if($c->exam_id)
                      	@if($c->try)
                      	<a href="{{ route('assessment.instructions',$c->exam->slug)}}">
-                     	<span class="badge badge-success"> Try </span>
+                     	<span class="badge badge-success"> <i class="fa fa-circle-o"></i> Try Test</span>
                      	</a>
                      	@else
                      	<a href="{{ route('assessment.analysis',$c->exam->slug)}}">
-                     	<span class="badge badge-primary"> Analysis </span>
+                     	<span class="badge badge-primary"> <i class="fa fa-bar-chart-o"></i> Test Analysis </span>
                      	</a>
                      	@endif
                      	

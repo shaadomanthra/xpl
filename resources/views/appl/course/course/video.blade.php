@@ -113,7 +113,8 @@
 <div class="p-5 bg-white">
   <div class="row">
     <div class="col-12 col-md-2"><i class="fa fa-external-link fa-5x"></i></div>
-    <div class="col-12 col-md-10">{!! $category->video_desc !!}<br>
+    <div class="col-12 col-md-10">
+      {!! $category->video_desc !!}<br>
       @if(!$category->test_analysis)
       <a href="{{ route('assessment.instructions',$category->exam->slug)}}">
       <button class="btn btn-success mt-3 btn-lg">

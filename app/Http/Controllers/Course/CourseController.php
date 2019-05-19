@@ -157,6 +157,18 @@ class CourseController extends Controller
             
         }
 
+        $topics = Category::defaultOrder()->descendantsOf($parent->id);
+        $exam_ids =[];
+        foreach($topics as $t){
+            if($t->exam_id)
+                array_push($exam_ids, $t->exam_id);
+            
+        }
+        foreach($exams as $k=> $e){
+            if(in_array($e->id, $exam_ids))
+                unset($exams[$k]);
+        }
+
         //categories
         $categories_list = Category::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
         $categories_ =array();
