@@ -198,6 +198,7 @@
     <div class="bg-light border mb-3 p-3  rounded">
     <div class="display-4">Restricted Access </div>
     <p>@if(\auth::guest()) Login to view details @else 
+      <p>A course tagged under Premium, has to be purchased to get the complete access. The Buy option will be visible on the course front page.</p>
       <a href="{{ route('course.show',$course->slug) }}"><button class="btn btn-sm btn-success mt-3">View Course Page </button></a>@endif</p>
     </div>
 
