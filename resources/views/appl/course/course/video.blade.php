@@ -9,7 +9,7 @@
 @endif
 
 @if($category->video_desc )
-@section('description', $category->video_desc )
+@section('description', strip_tags($category->video_desc) )
 @endif
 
 @section('content')
@@ -47,6 +47,9 @@
 </div>
   </div>
   <div class="col-12 col-md-9">
+
+  
+    @if($access)
     <h1 class="mb-4"> <div class="">
       @if($category->pdf_link)
       <i class="fa fa-file-pdf-o"></i> &nbsp;
@@ -180,12 +183,28 @@
   </div>
   @endif
 
+
   <div class=" mt-3 border p-4 rounded mb-3">
         @include('appl.pages.disqus')
       </div>
   </div>
 
+  @else
+  <div class="bg-white p-4 border ">
+    <h1><i class="fa fa-youtube-play"></i> {{ $category->name }} <span class="badge badge-warning">Practice {{ count($category->questions()->wherePivot('intest','!=',1)->get())}}Q</span></h1>
+    <p>{!! $category->video_desc !!}</p>
 
+
+    <div class="bg-light border mb-3 p-3  rounded">
+    <div class="display-4">Restricted Access </div>
+    <p>@if(\auth::guest()) Login to view details @else 
+      <a href="{{ route('course.show',$course->slug) }}"><button class="btn btn-sm btn-success mt-3">View Course Page </button></a>@endif</p>
+    </div>
+
+  </div>
+
+  @endif
+  </div>
 
 </div>    
 </div>

@@ -331,11 +331,12 @@ class CourseController extends Controller
         $videos = explode(',', $category->video_link);
 
         
+        $access = true;
 
         if(!youtube_video_exists($videos[0]))
         if(!$entry || $p->validityExpired())
         {
-            return view('appl.course.course.access');
+            $access = false;
         }
 
         if($category->exam_id){
@@ -345,7 +346,7 @@ class CourseController extends Controller
             $category->video_desc = $category->video_desc.'<br><hr><h3>'.$exam->name.'</h3>'.$exam->instructions;  
             else    
             $category->video_desc = $exam->instructions;
-        
+
             if(!$exam->attempted())
                 $category->test_analysis = false;
             else{
@@ -393,6 +394,7 @@ class CourseController extends Controller
                 ->with('parent',$parent)
                 ->with('next',$next)
                 ->with('prev',$prev);
+                ->with('access',$access);
         else
             abort(404);
     }

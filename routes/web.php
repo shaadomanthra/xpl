@@ -378,7 +378,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::resource('course','Course\CourseController');
 	//Route::resource('course/{course}/index','Course\IndexController');
-	Route::get('course/{course}/{category}/view','Course\CourseController@video')->name('course.category.video')->middleware('auth');
+	Route::get('course/{course}/{category}/view','Course\CourseController@video')->name('course.category.video');
 	Route::get('course/{project}/{category}/practice','Dataentry\QuestionController@categoryCourse')->name('course.question')->middleware('auth');
 	Route::get('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourse')->name('course.question')->middleware('auth');
 	Route::post('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourseSave')->name('course.question')->middleware('auth');
