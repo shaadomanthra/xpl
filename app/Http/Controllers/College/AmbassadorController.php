@@ -34,6 +34,7 @@ class AmbassadorController extends Controller
         if($course_id)
             $course = Course::where('id',$course_id)->first();
         $users = $user->referrals->pluck('id')->toArray();
+        array_push($users, $user->id);
 
         $data = [];
         
@@ -42,6 +43,7 @@ class AmbassadorController extends Controller
                         ->whereIn('user_id',$users)->get();
 
         $test_id = [];
+        if(isset($course->exams))
         foreach($course->exams as $e){
             array_push($test_id,$e->id);
         }

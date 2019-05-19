@@ -11,7 +11,7 @@
 	<div class="row">
 		<div class="col-12 col-md-8">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-university"></i> &nbsp; Campus Connect <span class="badge badge-warning">{{ $data['course']->name }} Score</span>
+			<i class="fa fa-university"></i> &nbsp; Campus Connect <span class="badge badge-warning">{{ ($data['course']) ? $data['course']->name : '-NA-' }} Score</span>
 			</h1>
 
 
