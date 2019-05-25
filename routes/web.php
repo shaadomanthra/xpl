@@ -53,6 +53,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 			->name('campus.tests')->middleware('auth');
 	Route::get('/campus/tests/{test}', 'College\CampusController@test_show')
 			->name('campus.tests.show')->middleware('auth');
+	Route::get('/campus/tests/{test}/{student}', 'College\CampusController@test_student')
+			->name('campus.tests.student.show')->middleware('auth');
+
 	Route::get('/campus/students', 'College\CampusController@students')
 			->name('campus.students')->middleware('auth');
 	Route::get('/campus/students/{student}', 'College\CampusController@student_show')

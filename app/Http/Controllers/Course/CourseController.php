@@ -109,27 +109,24 @@ class CourseController extends Controller
         if(!$course)
             abort('404','Course Not Found');
         
-        $p = null;
+        
+        $p = Product::where('slug',$course->slug)->first();
+        if(!$p)
         foreach($course->products as $product)
         {
             if($product != 'premium-access')
                 $p = $product;
         }
-        
 
 
         $user = \Auth::user();
         $entry=null;
-        if($user)
-        foreach($course->products as $product)
-        {
-            if($product->users()->find($user->id)){
+        if($user){
                 $entry = DB::table('product_user')
-                    ->where('product_id', $product->id)
+                    ->whereIn('product_id', $course->products()->pluck('id')->toArray())
                     ->where('user_id', $user->id)
+                    ->orderBy('valid_till','desc')
                     ->first();
-            }
-            
         }
         
 
@@ -197,13 +194,13 @@ class CourseController extends Controller
             
 
             //dd($practice);
-            foreach($practice as $p){
+            foreach($practice as $pr){
                 
-                if($p->category_id)
-                if($p->accuracy==1)
-                $categories_[$p->category_id]['correct']++; 
+                if($pr->category_id)
+                if($pr->accuracy==1)
+                $categories_[$pr->category_id]['correct']++; 
                 else
-                $categories_[$p->category_id]['incorrect']++; 
+                $categories_[$pr->category_id]['incorrect']++; 
             }
 
         }
@@ -282,7 +279,6 @@ class CourseController extends Controller
             
         } 
        
-
         //dd($nodes);
 
         if($course)
@@ -313,18 +309,14 @@ class CourseController extends Controller
 
         $user = \Auth::user();
         $entry=null;
-        if($user)
-        foreach($course->products as $product)
-        {
-            if($product->users()->find($user->id)){
+        if($user){
                 $entry = DB::table('product_user')
-                    ->where('product_id', $product->id)
+                    ->whereIn('product_id', $course->products()->pluck('id')->toArray())
                     ->where('user_id', $user->id)
+                    ->orderBy('valid_till','desc')
                     ->first();
-                 $p = $product;   
-            }
-            
         }
+
         $category = Category::where('slug',$category)->first();
         //dd($category);
 
@@ -333,11 +325,15 @@ class CourseController extends Controller
         
         $access = true;
 
-        if(!youtube_video_exists($videos[0]))
-        if(!$entry || $p->validityExpired())
-        {
-            $access = false;
+        if(!youtube_video_exists($videos[0])){
+            if($entry)
+            {
+                if(strtotime($entry->valid_till) < strtotime(date('Y-m-d')))
+                $access = false;
+            }else
+                $access = false;
         }
+        
 
         if($category->exam_id){
             $exam = Exam::where('id',$category->exam_id)->first();

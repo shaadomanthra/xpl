@@ -472,25 +472,23 @@ class QuestionController extends Controller
 
         $user = \Auth::user();
         $entry=null;
-        if($user)
-        foreach($course->products as $product)
-        {
-            if($product->users()->find($user->id)){
+        if($user){
                 $entry = DB::table('product_user')
-                    ->where('product_id', $product->id)
+                    ->whereIn('product_id', $course->products()->pluck('id')->toArray())
                     ->where('user_id', $user->id)
-                    ->orderBy('id','desc')
+                    ->orderBy('valid_till','desc')
                     ->first();
-                 $p = $product;   
-            }
-            
+
+                    if(strtotime($entry->valid_till) < strtotime(date('Y-m-d')))
+                        return view('appl.course.course.access');
         }
 
         
-        if(!$entry|| $p->validityExpired())
+        if(!$entry)
         {
             return view('appl.course.course.access');
         }
+
 
         
 

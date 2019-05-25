@@ -119,6 +119,7 @@ class User extends Authenticatable
         $entry = DB::table('product_user')
                 ->where('product_id', $product_id)
                 ->where('user_id', $user_id)
+                ->orderBy('id','desc')
                 ->first();
         if(!$entry)       
             return 2;
@@ -141,6 +142,7 @@ class User extends Authenticatable
         $entry = DB::table('product_user')
                 ->where('product_id', $course->products->first()->id)
                 ->where('user_id', $user_id)
+                ->orderBy('id','desc')
                 ->first();
         if($entry)
         return $entry->valid_till;

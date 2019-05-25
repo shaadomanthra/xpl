@@ -198,6 +198,121 @@ new Chart(ctx_{{$section->section_id}},options_{{$section->section_id}});
 
 
 
+@if(isset($test_analysis))
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script>
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: ["Excellent ({{ $details['excellent']}})",  "Good ({{ $details['good']}})", "Need to Improve ({{ $details['need_to_improve']}})"],
+        datasets: [{
+            label: 'Students',
+            data: [{{ $details['excellent']}}, {{ $details['good']}}, {{ $details['need_to_improve']}}],
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+
+                'rgba(75, 192, 192, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        
+    }
+});
+</script>
+
+<script type="text/javascript">
+  var optionsOne = {
+  type: 'doughnut',
+  data: {
+    labels: ["Excellent ", "Good", "Need to Improve "],
+    datasets: [{
+      label: 'Colors One',
+      data: [7, 11, 8],
+      backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    }
+}
+
+var ctxOne = document.getElementById('chartOneContainer').getContext('2d');
+new Chart(ctxOne, optionsOne);
+
+</script>
+
+@if(isset($sections))
+@foreach($sections as $sec => $section)
+<script type="text/javascript">
+  var options_{{$section->id}} = {
+  type: 'horizontalBar',
+  data: {
+    labels: ["Excellent", "Good", "Need to Improve"],
+    datasets: [{
+      label:'',
+      data: [{{$details['section'][$section->id]['excellent']}}, {{$details['section'][$section->id]['good']}}, {{$details['section'][$section->id]['need_to_improve']}}],
+      backgroundColor: [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255,99,132,1)',
+                'rgba(255, 206, 86, 1)'
+            ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    legend: {
+        display: false
+    },
+        title: {
+            display: true,
+            text: '{{ $details["section"][$section->id]["name"] }} '
+          },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+}
+
+var ctx_{{$section->id}} = document.getElementById({{$section->id}}+'Container').getContext('2d');
+new Chart(ctx_{{$section->id}},options_{{$section->id}});
+
+</script>
+@endforeach
+@endif
+
+  
+
+
+@endif
+
  
  
 

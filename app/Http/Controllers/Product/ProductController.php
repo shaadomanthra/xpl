@@ -330,8 +330,9 @@ class ProductController extends Controller
         $entry = DB::table('product_user')
                     ->where('product_id', $product->id)
                     ->where('user_id', $user->id)
+                    ->orderBy('id','desc')
                     ->first();
-        
+
 
         if($product)
             return view('appl.product.product.page')

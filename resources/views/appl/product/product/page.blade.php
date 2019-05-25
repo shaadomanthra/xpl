@@ -166,10 +166,24 @@
               @else
 
 
-              <div class=" border p-3 rounded bg-light"><h1>Service is activated - validity upto<br>
+              <div class=" border p-3 rounded bg-light mb-3"><h1>Service is activated - validity upto<br>
                  <span class="badge badge-primary">{{ date('d M Y', strtotime(\auth::user()->products->find($product->id)->pivot->valid_till)) }}</span>
                  </h1>
                </div>
+
+               @if(strtotime(\auth::user()->products->find($product->id)->pivot->valid_till) < strtotime(date('Y-m-d')))
+               <a href="{{ route('checkout')}}?product={{$product->slug}}">
+                <button class="btn btn-outline-primary btn-lg ">
+                @if($product->price==0)
+                Access Now
+                @else
+                Buy Now
+                @endif
+                </button>
+              </a>
+              @endif
+
+
               @endif
 
             </div>

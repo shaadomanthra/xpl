@@ -143,7 +143,15 @@ class OrderController extends Controller
 
             if($o)
             if($o->status == 1 ){
+              $entry = DB::table('product_user')
+                    ->where('product_id', $product->id)
+                    ->where('user_id', $user->id)
+                    ->orderBy('valid_till','desc')
+                    ->first();
+              if(strtotime($entry->valid_till) > strtotime(date('Y-m-d')))
               return view('appl.product.pages.checkout_denail')->with('order',$o);
+
+              $rebuy = true;
             }
             
               
@@ -181,7 +189,7 @@ class OrderController extends Controller
                 $coupon = Coupon::where('code',$request->get('coupon'))->first();
                 if($coupon)
                 $order->coupon_id = $coupon->id;
-                $order->coupon = $request->get('coupon');
+                //$order->coupon = $request->get('coupon');
               }
 
               $order->user_id = $user->id;
@@ -192,6 +200,7 @@ class OrderController extends Controller
               
                //dd($order);
               $order->save();
+              $order->coupon = $request->get('coupon');
               $order->payment_status = 'Pending';
 
               
@@ -222,7 +231,15 @@ class OrderController extends Controller
 
             if($o)
             if($o->status == 1 ){
-              return view('appl.product.pages.checkout_denail')->with('order',$o);
+              $entry = DB::table('product_user')
+                    ->where('product_id', $product->id)
+                    ->where('user_id', $user->id)
+                    ->orderBy('valid_till','desc')
+                    ->first();
+              if(strtotime($entry->valid_till) > strtotime(date('Y-m-d')))
+                return view('appl.product.pages.checkout_denail')->with('order',$o);
+
+              $rebuy = true;
             }
             
               
@@ -245,7 +262,7 @@ class OrderController extends Controller
                 $coupon = Coupon::where('code',$request->get('coupon'))->first();
                 if($coupon)
                 $order->coupon_id = $coupon->id;
-              $order->coupon = $request->get('coupon');
+                
               }
 
               $order->user_id = $user->id;
@@ -258,17 +275,15 @@ class OrderController extends Controller
               
                //dd($order);
               $order->save();
+              $order->coupon = $request->get('coupon');
               $order->payment_status = 'Successful';
               Mail::to($user->email)->send(new OrderSuccess($user,$order));
 
 
               $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($product->validity*31).' days'));
 
-              if(!$user->products->contains($product->id)){
+              $user->products()->attach($order->product_id,['validity'=>$product->validity,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
 
-                $user->products()->attach($order->product_id,['validity'=>$product->validity,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
-
-              }
 
 
               return view('appl.product.pages.checkout_success')->with('order',$order);
@@ -327,7 +342,6 @@ class OrderController extends Controller
             if ($_POST["STATUS"] == "TXN_SUCCESS"){
               $order->status = 1;
               $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.(24*31).' days'));
-              if(!$user->products->contains($product->id))
               $user->products()->attach($order->product_id,['validity'=>24,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
             }
             else{

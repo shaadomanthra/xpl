@@ -47,6 +47,16 @@
 						@else
 						<h2 class="mt-3">Status</h2>
 						<div class="mb-3"><span class="badge badge-danger">  Expired</span></div>
+						<h1 class="mt-3" style="font-weight: 800"><i class="fa fa-rupee"></i> {{ $product->price }}</h1>
+						<a href="{{ route('productpage',$product->slug) }}">
+						<button class="btn btn-success btn-lg mt-3" >
+							@if($product->price==0)
+								Access Now
+							@else
+							<i class ="fa fa-shopping-cart"></i> Buy
+							@endif
+						</button>
+						</a>
 						@endif
 					@elseif($entry->status == 0)
 						<h2 class="mt-3">Status</h2>
@@ -84,7 +94,7 @@
 			@endif
 			@if(\auth::user())
 				@if(\auth::user()->productvalidity($course->slug)==2)
-				<a href="{{ route('productpage',$product->slug) }}">
+				<a href="{{ route('productpage',$product->slug) }}"> 
 				<button class="btn btn-success btn-lg mt-3" ><i class ="fa fa-shopping-cart"></i> Buy</button>
 				</a>
 

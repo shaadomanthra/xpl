@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\College\College;
+
 use PacketPrep\Models\College\Campus;
 use PacketPrep\Models\College\Batch;
 use PacketPrep\User;
@@ -14,8 +15,11 @@ use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Course\Practices_Course;
 use PacketPrep\Models\Course\Practices_Topic;
+use PacketPrep\Models\Exam\Tests_Section;
 
 class CampusController extends Controller
 {
@@ -81,6 +85,7 @@ class CampusController extends Controller
             if($batch_mode){
                 foreach($college->batches as $batch){
                     $practice['item'][$batch->id] = $campus->getAnalytics($college,null,$batch,$r);
+
                 }
                 $practice['items'] = $college->batches;
 
@@ -131,9 +136,23 @@ class CampusController extends Controller
 
 
 
-    public function courses(Request $r){
+    public function courses(Request $request){
 
-    	return view('appl.college.campus.courses');
+
+        $search = $request->search;
+        $item = $request->item;
+        $college = \auth::user()->colleges->first();
+        $courses = Course::where('name','LIKE',"%{$item}%")
+                    ->whereIn('id',$college->courses->pluck('id')->toArray())
+                    ->orderBy('created_at','desc ')
+                    ->paginate(config('global.no_of_records'));   
+
+        $view = $search ? 'list_course': 'courses';
+
+
+        
+
+    	return view('appl.college.campus.'.$view)->with('courses',$courses);
     }
 
     public function course_show($course_slug,Request $r){
@@ -230,6 +249,7 @@ class CampusController extends Controller
             foreach($course->exams as $exam){
                 $test['exam'][$exam->id] = $campus->analytics_test($college,null,null,$r,null,null,$exam->id);
                 $test['exam'][$exam->id]['name'] = $exam->name;
+                $test['exam'][$exam->id]['url'] = route('campus.tests.show',$exam->slug);
             }
 
             //dd($test['exam']);
@@ -240,7 +260,7 @@ class CampusController extends Controller
             }
         }
 
-        
+        dd($practice);
     	return view('appl.college.campus.course_show')
                 ->with('college',$college)
                 ->with('course',$course)
@@ -250,14 +270,210 @@ class CampusController extends Controller
                 ->with('menu',$menu);
     }
 
-    public function tests(Request $r){
+    public function tests(Request $request){
+        $search = $request->search;
+        $item = $request->item;
+        $college = \auth::user()->colleges->first();
+        $exam_id =[];
+        foreach($college->courses as $course)
+        {
+            foreach($course->exams as $exam)
+            array_push($exam_id,$exam->id );
+        }
 
-    	return view('appl.college.campus.tests');
+        $exams = Exam::where('name','LIKE',"%{$item}%")
+                    ->whereIn('id',$exam_id)
+                    ->orderBy('created_at','desc ')
+                    ->paginate(config('global.no_of_records'));   
+
+        $view = $search ? 'list_test': 'tests';
+
+
+    	return view('appl.college.campus.'.$view)->with('exams',$exams);
     }
 
-    public function test_show(Request $r){
+    public function test_student($exam,$user,Request $r){
 
-    	return view('appl.college.campus.test_show');
+        $student = User::where('username',$user)->first();
+        $exam = Exam::where('slug',$exam)->first();
+
+        $questions = array();
+        $i=0;
+
+
+        if(!$student)
+            $student = \auth::user();
+
+        
+        $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0];
+        $details['course'] = $exam->name;
+        $sum = 0;
+        $c=0; $i=0; $u=0;
+
+        $tests = Test::where('test_id',$exam->id)
+                        ->where('user_id',$student->id)->get();
+
+        
+        if(!count($tests))
+            return view('appl.college.campus.test_student')->with('nodata',true)->with('exam',$exam)
+
+                        ->with('user',$student);     
+
+
+        $sections = array();
+        foreach($exam->sections as $section){
+            foreach($section->questions as $q){
+                $questions[$i] = $q;
+                $sections[$section->name] = Tests_Section::where('section_id',$section->id)->where('user_id',$student->id)->first();
+                    $i++;
+            }
+        }
+
+        if(count($sections)==1)
+            $sections = null;
+
+        $details['correct_time'] =0;
+        $details['incorrect_time']=0;
+        $details['unattempted_time']=0;
+        foreach($tests as $key=>$t){
+
+            //dd($t->section->negative);
+            if(isset($t)){
+                $sum = $sum + $t->time;
+                $details['testdate'] = $t->created_at->diffForHumans();
+            }
+            
+            //$ques = Question::where('id',$q->id)->first();
+            if($t->response){
+                $details['attempted'] = $details['attempted'] + 1;  
+                if($t->accuracy==1){
+                    $details['c'][$c]['category'] = $t->question->categories->first();
+                    $details['c'][$c]['question'] = $t->question;
+                    $c++;
+                    $details['correct'] = $details['correct'] + 1;
+                    $details['correct_time'] = $details['correct_time'] + $t->time;
+                    $details['marks'] = $details['marks'] + $t->section->mark;
+                }
+                else{
+                    $details['i'][$i]['category'] = $t->question->categories->first();
+                    $details['i'][$i]['question'] = $t->question;
+                    $i++;
+                    $details['incorrect'] = $details['incorrect'] + 1; 
+                    $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
+                    $details['marks'] = $details['marks'] - $t->section->negative; 
+                }
+
+                
+            }else{
+                $details['u'][$u]['category'] = $t->question->categories->last();
+                $details['u'][$u]['question'] = $t->question;
+                    $u++;
+                $details['unattempted'] = $details['unattempted'] + 1;  
+                $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
+            }
+
+            $details['total'] = $details['total'] + $t->section->mark;
+
+        } 
+        $success_rate = $details['correct']/count($questions);
+        if($success_rate > 0.7)
+            $details['performance'] = 'Excellent';
+        elseif(0.3 < $success_rate && $success_rate <= 0.7)
+            $details['performance'] = 'Average';
+        else
+            $details['performance'] = 'Need to Improve';
+
+        $details['avgpace'] = round($sum / count($questions),2);
+        
+        if($details['correct_time'] && $details['correct_time']>59)
+            $details['correct_time'] =round($details['correct_time']/60,2).' min';
+        else
+            $details['correct_time'] = $details['correct_time'].' sec';
+            
+
+        if($details['incorrect_time'] && $details['incorrect_time'] > 59)
+            $details['incorrect_time'] =round($details['incorrect_time']/60,2).' min';
+        else
+            $details['incorrect_time'] = $details['incorrect_time'].' sec';
+
+
+        if($details['unattempted_time'] && $details['unattempted_time']>59)
+            $details['unattempted_time'] =round($details['unattempted_time']/60,2).' min';
+        else 
+            $details['unattempted_time'] = $details['unattempted_time'].' sec';   
+            
+        
+        //dd($sections);
+
+        return view('appl.college.campus.test_student')
+                        ->with('exam',$exam)
+                        ->with('sections',$sections)
+                        ->with('details',$details)
+                        ->with('user',$student)
+                        ->with('chart',true);
+    }
+
+    public function test_show($exam_slug,Request $r){
+
+        $exam = Exam::where('slug',$exam_slug)->first();
+        $college = \auth::user()->colleges->first();
+        $sections = $data = null;
+        $campus = new Campus();
+        $batch_code = $r->get('batch_code');
+        $branch_item = $r->get('branch');
+
+        if($branch_item){
+            $branch_item = Branch::where('name',$branch_item)->first();
+            $data['item_name'] = 'Branch';
+            $data['item'] = $branch_item;
+        }
+
+        if($batch_code){
+            $batch_code = Batch::where('slug',$batch_code)->first();
+            $data['item_name'] = 'Batch';
+            $data['item'] = $batch_code;
+        }
+
+
+        $details = $campus->analytics_test($college,$branch_item,$batch_code,$r,null,null,$exam->id);
+        if(count($exam->sections)>1){
+            $details['section'] = $campus->analytics_test_detail($college,$branch_item,$batch_code,$r,$exam->id);
+            $sections = $exam->sections;
+        }
+
+
+        if($r->get('batch')&& !$r->get('batch_code')){
+
+               $batches = $college->batches()->orderBy('id')->get();
+                foreach($batches as $batch){
+                $details['items'][$batch->id] = $campus->analytics_test($college,null,$batch,$r,null,null,$exam->id);
+                $details['items'][$batch->id]['name'] = $batch->name; 
+                $details['items'][$batch->id]['url'] = route('campus.tests.show',$exam->slug).'?batch=1&batch_code='.$batch->slug;
+                }
+                $details['item_name'] = 'Batch'; 
+            
+        }else if(!$r->get('batch')&& !$r->get('batch_code') && !$r->get('branch')){
+            $branches = $college->branches()->orderBy('id')->get();
+
+            foreach($branches as $branch){
+            $details['items'][$branch->id] = $campus->analytics_test($college,$branch,null,$r,null,null,$exam->id);
+
+            $details['items'][$branch->id]['name'] = $branch->name; 
+            $details['items'][$branch->id]['url'] = route('campus.tests.show',$exam->slug).'?branch='.$branch->name;
+                
+            }
+
+            $details['item_name'] = 'Branch';
+        }
+        
+        
+
+    	return view('appl.college.campus.test_show')
+            ->with('exam',$exam)
+            ->with('details',$details)
+            ->with('data',$data)
+            ->with('test_analysis',1)
+            ->with('sections',$sections);
     }
 
     public function students(Request $r){

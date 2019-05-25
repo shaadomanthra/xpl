@@ -142,7 +142,7 @@
 	   
 	    <tr>
 	      <th scope="row">{{++$w}}</th>
-	      <td><a href="">@if(isset($exam['name'])){{$exam['name']}} @endif </a></td>
+	      <td><a href="{{ $exam['url']}}">@if(isset($exam['name'])){{$exam['name']}} @endif </a></td>
 	      <td>{{$exam['participants']}}  </td>
 	      
 	      <td>
