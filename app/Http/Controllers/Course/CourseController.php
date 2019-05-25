@@ -102,14 +102,14 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::where('slug',$id)->first();
+                $course = Course::where('slug',$id)->first();
         
 
 
         if(!$course)
             abort('404','Course Not Found');
         
-        
+
         $p = Product::where('slug',$course->slug)->first();
         if(!$p)
         foreach($course->products as $product)
@@ -128,7 +128,7 @@ class CourseController extends Controller
                     ->orderBy('valid_till','desc')
                     ->first();
         }
-        
+
 
        // dd($user->courses()->find($course->id));
         $categories = Category::where('slug',$id)->first();
@@ -147,13 +147,11 @@ class CourseController extends Controller
 
         $examtype = Examtype::where('slug',$id)->first();
         if($examtype)
-        $exams = Exam::where('examtype_id',$examtype->id)->get();
+            $exams = Exam::where('examtype_id',$examtype->id)->get();
         else{
-
             $exams = Exam::where('slug','LIKE',"%{$course->slug}%")->get();
             
         }
-
         $topics = Category::defaultOrder()->descendantsOf($parent->id);
         $exam_ids =[];
         foreach($topics as $t){
@@ -191,7 +189,6 @@ class CourseController extends Controller
 
             $i=0;
 
-            
 
             //dd($practice);
             foreach($practice as $pr){
@@ -278,7 +275,7 @@ class CourseController extends Controller
             $ques_count = $parent->questionCount_level2($project);         
             
         } 
-       
+
         //dd($nodes);
 
         if($course)
