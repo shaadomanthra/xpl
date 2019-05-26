@@ -20,6 +20,8 @@ use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Course\Practices_Course;
 use PacketPrep\Models\Course\Practices_Topic;
 use PacketPrep\Models\Exam\Tests_Section;
+use PacketPrep\Models\Exam\Tests_Overall;
+
 
 class CampusController extends Controller
 {
@@ -53,6 +55,9 @@ class CampusController extends Controller
             foreach($practice['items'] as $k=> $item){
 
                 $practice['items'][$k]->url = route('campus.courses.show',$item->slug).'?branch='.$branch_item->name;
+                if($college_id){
+                    $practice['items'][$k]->url = $practice['items'][$k]->url.'&college_id='.$college_id;
+                }
                 $test['item'][$item->id] = $campus->analytics_test($college,$branch_item,null,$r,$item->id);
                 //dd($test);
             }
@@ -73,6 +78,9 @@ class CampusController extends Controller
             foreach($practice['items'] as $k=> $item){
 
                 $practice['items'][$k]->url = route('campus.courses.show',$item->slug).'?batch=1&batch_code='.$batch_code;
+                if($college_id){
+                    $practice['items'][$k]->url = $practice['items'][$k]->url.'&college_id='.$college_id;
+                }
                 $test['item'][$item->id] = $campus->analytics_test($college,null,$batch_item,$r,$item->id);
                 //dd($test);
             }
@@ -92,6 +100,9 @@ class CampusController extends Controller
                 $practice['item_name'] = 'Batches';
                 foreach($practice['items'] as $k=> $item){
                         $practice['items'][$k]->url = route('campus.admin').'?batch_code='.$item->slug;
+                        if($college_id){
+                            $practice['items'][$k]->url = $practice['items'][$k]->url.'&college_id='.$college_id;
+                        }
                 }
 
             }    
@@ -104,6 +115,9 @@ class CampusController extends Controller
                 //dd($practice);
                 foreach($practice['items'] as $k=> $item){
                         $practice['items'][$k]->url = route('campus.admin').'?branch='.$item->name;
+                        if($college_id){
+                            $practice['items'][$k]->url = $practice['items'][$k]->url.'&college_id='.$college_id;
+                        }
                 }
             }
             
@@ -125,6 +139,8 @@ class CampusController extends Controller
                 
             }
         }
+
+        //dd($test);
 
     	return view('appl.college.campus.admin')
                 ->with('college',$college)
@@ -584,8 +600,22 @@ class CampusController extends Controller
             $users_branches = $branch->users()->pluck('id')->toArray();
             $user_list = array_intersect($users_branches,$users_college);
             
-        }else
+        }else if($r->get('practice')){
+            $users = $college->users()->pluck('id')->toArray();
+            $user_list = array_unique(Practices_Course::whereIn('course_id',$college->courses()
+                            ->pluck('id')->toArray())
+                        ->whereIn('user_id',$users)
+                        ->pluck('user_id')->toArray());
+            
+        }else if($r->get('test')){
+            $users = $college->users()->pluck('id')->toArray();
+            $user_list = array_unique(Tests_Overall::whereIn('user_id',$users)
+                        ->pluck('user_id')->toArray());
+        }
+        else{
+
             $user_list = $college->users()->pluck('id')->toArray();
+        }
 
         $item = $r->item;
         $search = $r->search;
