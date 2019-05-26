@@ -36,35 +36,22 @@
             <a href="{{ route('campus.admin')}}?batch_code={{$obj->slug}}"><button class="btn btn-warning float-right mr-2"><i class="fa fa-bar-chart"></i> Analytics</button></a>
             @endcan
           </p>
+           <form class="form-inline mt-3 float-right" method="GET" action="{{ route('batch.show',$obj->slug) }}">
+            <div class="input-group ">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-search"></i></div>
+              </div>
+              <input class="form-control " id="search" name="item" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
+              value="{{Request::get('item')?Request::get('item'):'' }}">
+            </div>
+          </form>
         </div>
       </div>
 
      
-          @if(count($obj->users))
-          <div class="row mb-2">
-          @foreach($obj->users as $user)
-            <div class="col-12 col-md-3">
-              <div class="card mb-3">
-                <div class="card-body">
-                <h3>{{ $user['name'] }}</h3>
-                <small>{{ ($user->details()->first())?$user->details()->first()->roll_number:'' }}</small><br>
-              </div>
-              <div class="card-footer">
-              @can('update',$obj)
-              <form method="post" action="{{route($app->module.'.detach',$obj->id)}}">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="user_id" value="{{ $user->id }}">
-                <button class="btn btn-sm btn-outline-danger " type="submit"><i class="fa fa-trash"></i> Remove</button>
-              </form>
-              @endcan
-            </div>
-              </div>
-            </div>
-          @endforeach
-          </div>
-          @else
-           <div class="card"><div class="card-body"> - No Students Added -</div></div>
-          @endif
+      <div id="search-items">
+         @include('appl.college.batch.list_students')
+       </div>
 
 
     </div>

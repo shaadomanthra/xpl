@@ -101,13 +101,25 @@ class BatchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
+
+        
+
         $obj = Obj::where('slug',$id)->first();
         $this->authorize('view', $obj);
+
+        $item = $request->item;
+        $search = $request->search;
+        $college_id = \auth::user()->colleges()->first()->id;
+        $objs = $obj->users()->where('name','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')
+                    ->paginate(config('global.no_of_records'));   
+        $view = $search ? 'list_students': 'show';
+
         if($obj)
-            return view('appl.'.$this->app.'.'.$this->module.'.show')
-                    ->with('obj',$obj)->with('app',$this);
+            return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
+                    ->with('obj',$obj)->with('app',$this)->with('objs',$objs);
         else
             abort(404);
     }

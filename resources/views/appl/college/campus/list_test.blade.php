@@ -16,12 +16,23 @@
                   <h1>{{ $exam->name }}</h1>
                     {{ $exam->question_count() }} Questions | {{ $exam->time() }} min<br>
 
-                    <div class="pt-2">
-                    <a href="{{ route('campus.tests.show',$exam->slug) }}">
+                <div class="pt-2">
+                @if($user)
+                  <a href="{{ route('campus.tests.student.show',[$exam->slug,$user->username]) }}">
                   <button class="btn btn-outline-success btn-sm">
                     <i class="fa fa-bar-chart" ></i> Analysis
                   </button>
                   </a>
+
+                @else
+                  <a href="{{ route('campus.tests.show',$exam->slug) }}">
+                  <button class="btn btn-outline-success btn-sm">
+                    <i class="fa fa-bar-chart" ></i> Analysis
+                  </button>
+                  </a>
+
+                @endif 
+                  
                 </div>
               </div>
           </div>

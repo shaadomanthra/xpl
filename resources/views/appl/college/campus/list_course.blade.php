@@ -12,9 +12,16 @@
 	        <a href="{{ route('course.show',$course->slug) }} ">
 	          <button class="btn btn-outline-primary btn-sm " >View Course</button>
 	        </a>
-	        <a href="{{ route('campus.courses.show',$course->slug) }} ">
-	          <button class="btn btn-outline-success btn-sm " ><i class="fa fa-bar-chart"></i> Analytics</button>
-	        </a>
+	        @if($user)
+	        	<a href="{{ route('campus.courses.student.show',[$course->slug,$user->username]) }} ">
+		          <button class="btn btn-outline-success btn-sm " ><i class="fa fa-bar-chart"></i> Analytics</button>
+		        </a>
+	        @else
+		        <a href="{{ route('campus.courses.show',$course->slug) }} ">
+		          <button class="btn btn-outline-success btn-sm " ><i class="fa fa-bar-chart"></i> Analytics</button>
+		        </a>
+	        @endif
+	        
 	      </div>
 	    </div>
 	  </div>

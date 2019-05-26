@@ -142,6 +142,10 @@ class CampusController extends Controller
         $search = $request->search;
         $item = $request->item;
         $college = \auth::user()->colleges->first();
+        if($request->get('student'))
+            $user = User::where('username',$request->get('student'))->first();
+        else
+            $user = null;
         $courses = Course::where('name','LIKE',"%{$item}%")
                     ->whereIn('id',$college->courses->pluck('id')->toArray())
                     ->orderBy('created_at','desc ')
@@ -149,10 +153,90 @@ class CampusController extends Controller
 
         $view = $search ? 'list_course': 'courses';
 
+    	return view('appl.college.campus.'.$view)
+                ->with('courses',$courses)
+                ->with('user',$user);
+    }
 
-        
+    public function course_student($course_slug,$username,Request $r){
 
-    	return view('appl.college.campus.'.$view)->with('courses',$courses);
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager','tpo']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+
+        $user = User::where('username',$username)->first();
+        $course = Course::where('slug',$course_slug)->first();
+        $college = $user->colleges()->first();
+
+        $campus = new Campus;
+        $url_parameters='';
+
+
+        $batch_mode = $r->get('batch');
+
+       // dd($nodes);
+        $category = Category::where('slug',$r->get('topic'))->first();
+
+       // dd($category->children);
+
+        $practice['item_name'] = 'Topics';
+
+        // course analytics
+        if($category){
+            $practice['item'] = $campus->getAnalytics($college,null,null,$r,null,$category->id,$user->username);
+            $test['item'] = null;
+
+            $test['item']['count'] = 0;
+             // topic analysis
+            $nodes = $category->children;
+
+            $practice['items'] = $nodes; 
+            foreach($practice['items'] as $k=> $item){
+                $practice['items'][$k]->url = 
+                        route('campus.courses.student.show',[$course->slug,$user->username]).'?topic='.$item->slug.$url_parameters;
+                    
+                if($item->exam_id){
+                    
+                    if($test['item']['count']==0)
+                    $test['item'][$item->id] = 0;
+                    else    
+                    $test['item'][$item->id] = 0;
+                }
+                        
+            }
+
+        }else{
+            $practice['item'] = $campus->getAnalytics($college,null,null,$r,$course->id,null,$user->username);
+            $test['item'] = $campus->analytics_test($college,null,null,$r,$course->id,null,null,$user->username);
+
+             // topic analysis
+            $project = Project::where('slug',$course->slug)->first();
+            $category = Category::where('slug',$project->slug)->first();
+            $nodes = $category->children;
+
+            foreach($course->exams as $exam){
+                $test['exam'][$exam->id] = $campus->analytics_test($college,null,null,$r,null,null,$exam->id,$user->username);
+                $test['exam'][$exam->id]['name'] = $exam->name;
+                $test['exam'][$exam->id]['url'] = route('campus.tests.student.show',[$exam->slug,$user->username]);
+            }
+
+            //dd($test['exam']);
+            $practice['items'] = $nodes; 
+            foreach($practice['items'] as $k=> $item){
+
+                $practice['items'][$k]->url = route('campus.courses.student.show',[$course->slug,$user->username]).'?topic='.$item->slug.$url_parameters;
+            }
+        }
+
+        //dd($test);
+        return view('appl.college.campus.course_student')
+                ->with('course',$course)
+                ->with('college',$college)
+                ->with('category',$category)
+                ->with('test',$test)
+                ->with('user',$user)
+                ->with('practice',$practice);
     }
 
     public function course_show($course_slug,Request $r){
@@ -213,8 +297,9 @@ class CampusController extends Controller
         // course analytics
         if($category){
             $practice['item'] = $campus->getAnalytics($college,$branch_item,$batch_item,$r,null,$category->id);
-            $test['item'] = $campus->analytics_test($college,$branch_item,$batch_item,$r,null,$category->id);
+            $test['item'] = null;
 
+            $test['item']['count'] = 0;
              // topic analysis
             $nodes = $category->children;
 
@@ -223,19 +308,15 @@ class CampusController extends Controller
                 $practice['items'][$k]->url = 
                         route('campus.courses.show',$course->slug).'?topic='.$item->slug.$url_parameters;
                     
-                if(!$item->exam_id){
+                if($item->exam_id){
                     
                     if($test['item']['count']==0)
                     $test['item'][$item->id] = 0;
                     else    
-                    $test['item'][$item->id] = $campus->analytics_test($college,null,null,$r,null,$item->id);
-                }else{
-                    $practice['items'][$k]->url = '';
                     $test['item'][$item->id] = 0;
                 }
                         
             }
-            //dd($test['item']);
 
         }else{
             $practice['item'] = $campus->getAnalytics($college,$branch_item,$batch_item,$r,$course->id);
@@ -260,7 +341,6 @@ class CampusController extends Controller
             }
         }
 
-        dd($practice);
     	return view('appl.college.campus.course_show')
                 ->with('college',$college)
                 ->with('course',$course)
@@ -281,6 +361,12 @@ class CampusController extends Controller
             array_push($exam_id,$exam->id );
         }
 
+        if($request->get('student'))
+            $user = User::where('username',$request->get('student'))->first();
+        else
+            $user = null;
+
+
         $exams = Exam::where('name','LIKE',"%{$item}%")
                     ->whereIn('id',$exam_id)
                     ->orderBy('created_at','desc ')
@@ -289,7 +375,9 @@ class CampusController extends Controller
         $view = $search ? 'list_test': 'tests';
 
 
-    	return view('appl.college.campus.'.$view)->with('exams',$exams);
+    	return view('appl.college.campus.'.$view)
+                ->with('exams',$exams)
+                ->with('user',$user);
     }
 
     public function test_student($exam,$user,Request $r){
@@ -410,6 +498,7 @@ class CampusController extends Controller
                         ->with('sections',$sections)
                         ->with('details',$details)
                         ->with('user',$student)
+                        ->with('nodata','')
                         ->with('chart',true);
     }
 
@@ -498,10 +587,16 @@ class CampusController extends Controller
         }else
             $user_list = $college->users()->pluck('id')->toArray();
 
-        $users = User::whereIn('id',$user_list)
+        $item = $r->item;
+        $search = $r->search;
+         
+        $view = $search ? 'list_students': 'students';
+
+        $users = User::whereIn('id',$user_list)->where('name','LIKE',"%{$item}%")
+                ->orderBy('created_at','desc ')
                 ->paginate(config('global.no_of_records'));
 
-    	return view('appl.college.campus.students')
+    	return view('appl.college.campus.'.$view)
             ->with('users',$users)
             ->with('college',$college)
             ->with('total',count($user_list))

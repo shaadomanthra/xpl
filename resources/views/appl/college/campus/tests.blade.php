@@ -19,7 +19,14 @@
 	</nav>
 
         <nav class="navbar navbar-light bg-light justify-content-between border p-3 bg-white rounded mb-3">
-          <a class="navbar-brand"><i class="fa fa-share-square-o"></i> Campus Tests </a>
+          <a class="navbar-brand">
+            @if($user)
+              <i class="fa fa-user"></i> {{ $user->name }} - Tests 
+            @else
+              <i class="fa fa-share-square-o"></i> Campus Tests 
+            @endif
+              
+          </a>
 
           <form class="form-inline float-right" method="GET" action="{{ route('campus.tests') }}">
 

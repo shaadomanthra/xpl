@@ -19,6 +19,11 @@
                  <ul class="navbar-nav ml-auto mt-4 mt-lg-0">
                     @guest
                     @else
+
+                    @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
+                    <li class="mr-3"><a class="nav-link" href="{{ route('campus.admin') }}"><i class="fa fa-gg"></i> Campus Admin</a></li>
+                    @endif 
+
                     @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
                     <li class="mr-3"><a class="nav-link" href="{{ route('admin.index') }}"><i class="fa fa-home"></i> Admin</a></li>
                     @endif

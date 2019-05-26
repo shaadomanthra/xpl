@@ -3,7 +3,7 @@
 @if(\auth::user())
 
 @if(\auth::user()->checkRole(['tpo']))
-<div class=" bg-info mb-3 text-white rounded"><div class="p-3 font-weight-bold">Admin</div>
+<div class=" bg-info mb-3 text-white rounded"><div class="p-3 font-weight-bold">Campus Admin</div>
 <div class="list-group mb-3">
 	<a href="{{ route('campus.admin')}}" class="list-group-item list-group-item-action list-group-item-info {{ request()->is('campus/admin*') ? 'active' : '' }}">
 		<i class="fa fa-home"></i> Home
@@ -19,9 +19,6 @@
 	</a>	
 	<a href="{{ route('campus.students')}}" class="list-group-item list-group-item-action list-group-item-info {{ request()->is('campus/students*') ? 'active' : '' }}">
 		<i class="fa fa-users"></i> Students
-	</a>
-	<a href="" class="list-group-item list-group-item-action list-group-item-info">
-		<i class="fa fa-gear"></i> Settings
 	</a>
 </div>
 </div>

@@ -15,8 +15,15 @@
 							</div>
 			 			</div>
 			 			<div class="p-4 " >
+			 				@if(isset($user))
+
+			 				<div class="display-5 mb-3"> <i class="fa fa-th"></i> Ques Solved </div>
+			 				<div class="display-4">{{$practice['item']['solved']}}/{{$practice['item']['total']}}</div>
+			 				@else
 			 				<div class="display-5 mb-3"> <i class="fa fa-user"></i> Participants </div>
 			 				<div class="display-4">{{$practice['item']['participants']}}</div>
+			 				@endif
+			 				
 			 			</div>
 			 			<div class="p-2"></div>
 	 				</div>
@@ -147,7 +154,7 @@
 	      
 	      <td>
 	      	<div class="mb-3">
-	      		<div class="display-5 mb-3"><img src="{{ asset('/img/medals/excellent.png')}}" style="width:20px;"  />&nbsp;{{$exam['excellent_percent']}}% &nbsp;&nbsp;<img src="{{ asset('/img/medals/good.png')}}" style="width:20px;"  />&nbsp;{{$exam['good_percent']}}% &nbsp;&nbsp;<img src="{{ asset('/img/medals/needtoimprove.png')}}" style="width:20px;"  />&nbsp;{{$exam['need_to_improve_percent']}}%</div>
+	      		<div class="display-5 mb-3"><img src="{{ asset('/img/medals/excellent.png')}}" style="width:20px;"  />&nbsp;{{$exam['excellent']}} &nbsp;&nbsp;<img src="{{ asset('/img/medals/good.png')}}" style="width:20px;"  />&nbsp;{{$exam['good']}} &nbsp;&nbsp;<img src="{{ asset('/img/medals/needtoimprove.png')}}" style="width:20px;"  />&nbsp;{{$exam['need_to_improve']}}</div>
 	 			<div class="progress" style="height:3px;">
 				  <div class="progress-bar bg-warning" role="progressbar" style="width: {{$exam['excellent_percent']}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
 				  <div class="progress-bar bg-info" role="progressbar" style="width: {{$exam['good_percent']}}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>

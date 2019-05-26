@@ -25,7 +25,7 @@ class Campus extends Model
 {
     
 
-    public static function getAnalytics($college,$branch,$batch,$r,$course_id=null,$category_id=null){
+    public static function getAnalytics($college,$branch,$batch,$r,$course_id=null,$category_id=null,$student_username=null){
 
         $data = array();
         $item_name = 'category_id';
@@ -92,6 +92,7 @@ class Campus extends Model
         
         //dd($data['total']);
 
+        if(!$student_username)
         $student_username = $r->get('student');
 
         if($student_username){
@@ -109,7 +110,24 @@ class Campus extends Model
             
 
             $data = self::getData($data,$practice);
-            
+
+            if($course_id){
+                foreach($category->children as $child){
+                    $group = $practice->whereIn('category_id',$child->descendants->pluck('id')->toArray());
+                    $data_new = array('total'=>$data['total_item'][$child->id]);
+                    $data[$child->id] = self::getData($data_new,$group);
+                }
+                
+            }elseif($category_id)
+            {
+                foreach($category->children as $child){
+                    $group = $practice->whereIn('category_id',$child->descendantsAndSelf($child)->pluck('id')->toArray());
+                    $data_new = array('total'=>$data['total_item'][$child->id]);
+                    $data[$child->id] = self::getData($data_new,$group);
+                }
+            }
+           
+
 
         }else{
 
@@ -218,7 +236,18 @@ class Campus extends Model
         return $data;
     }
 
-    public static function analytics_test($college,$branch,$batch,$r,$course_id=null,$category_id=null,$exam_id =null){
+    public static function test_count($category_id){
+        $count =0;
+        $category = Category::where('id',$category_id)->first();
+            foreach($category->children as $node){
+                if($node->exam_id){
+                    $count++;
+                }
+            }
+        return $count;
+    }
+
+    public static function analytics_test($college,$branch,$batch,$r,$course_id=null,$category_id=null,$exam_id =null,$student_username=null){
 
 
     	$courses = $college->courses;
@@ -261,40 +290,58 @@ class Campus extends Model
     		
     	}
 
-    	if($college && $branch){   
-            $users_college = $college->users()->pluck('id')->toArray();
-            $users_branches = $branch->users()->pluck('id')->toArray();
-            $users = array_intersect($users_branches,$users_college);
-        }else if($college && $batch){
-            $users_college = $college->users()->pluck('id')->toArray();
-            $users_batches = $batch->users()->pluck('id')->toArray();
-            $users = array_intersect($users_batches,$users_college);
-        }elseif($college && $branch==null){
+        if(!$student_username)
+        $student_username = $r->get('student');
 
-            if($r->get('batch'))
-            {
-                $batch_ids = Batch::where('college_id',$college->id)->pluck('id');
-                $users_item = DB::table('batch_user')->whereIn('batch_id', $batch_ids)->pluck('user_id')->toArray();
-            }else{
-                $branch_ids = $college->branches()->pluck('id')->toArray();
-                $users_item = DB::table('branch_user')->whereIn('branch_id', $branch_ids)->pluck('user_id')->toArray();
+        if($student_username){
+            $user = User::where('username',$student_username)->first();
+            $tests = Tests_Overall::where('user_id',$user->id)
+                    ->whereIn('test_id',$test_id)->get()->groupBy('test_id');
+
+            $data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,'participants'=>0,
+                            "excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0,"count"=>count($test_id),"pace"=>0,"accuracy"=>0,"avg_pace"=>0,"avg_accuracy"=>0);
+            $data_tests = self::getData_Test($tests,$data_tests);
+
+
+        }else{
+
+            if($college && $branch){   
+                $users_college = $college->users()->pluck('id')->toArray();
+                $users_branches = $branch->users()->pluck('id')->toArray();
+                $users = array_intersect($users_branches,$users_college);
+            }else if($college && $batch){
+                $users_college = $college->users()->pluck('id')->toArray();
+                $users_batches = $batch->users()->pluck('id')->toArray();
+                $users = array_intersect($users_batches,$users_college);
+            }elseif($college && $branch==null){
+
+                if($r->get('batch'))
+                {
+                    $batch_ids = Batch::where('college_id',$college->id)->pluck('id');
+                    $users_item = DB::table('batch_user')->whereIn('batch_id', $batch_ids)->pluck('user_id')->toArray();
+                }else{
+                    $branch_ids = $college->branches()->pluck('id')->toArray();
+                    $users_item = DB::table('branch_user')->whereIn('branch_id', $branch_ids)->pluck('user_id')->toArray();
+                }
+
+                $users_college = $college->users()->pluck('id')->toArray();
+               
+                $users = array_intersect($users_item,$users_college);
             }
+            elseif($college==null && $branch)
+                $users = $branch->users()->pluck('id');
+            else
+                $users = User::all()->pluck('id');
 
-            $users_college = $college->users()->pluck('id')->toArray();
-           
-            $users = array_intersect($users_item,$users_college);
+
+            $tests = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->get()->groupBy('user_id');
+
+            $data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,'participants'=>0,
+                            "excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0,"count"=>count($test_id),"pace"=>0,"accuracy"=>0,"avg_pace"=>0,"avg_accuracy"=>0);
+            $data_tests = self::getData_Test($tests,$data_tests);
+
         }
-        elseif($college==null && $branch)
-            $users = $branch->users()->pluck('id');
-        else
-            $users = User::all()->pluck('id');
-
-
-    	$tests = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->get()->groupBy('user_id');
-
-    	$data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,'participants'=>0,
-    					"excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0,"count"=>count($test_id),"pace"=>0,"accuracy"=>0,"avg_pace"=>0,"avg_accuracy"=>0);
-    	$data_tests = self::getData_Test($tests,$data_tests);
+    	
 
     	return $data_tests;
 
