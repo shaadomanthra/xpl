@@ -27,6 +27,7 @@
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
               <a href="{{ route('college.view',$obj->id) }}" class="btn btn-outline-secondary"  ><i class="fa fa-bars"></i> College</a>
               <a href="{{ route($app->module.'.userlist',$obj->id) }}" class="btn btn-outline-secondary"  ><i class="fa fa-bars"></i> User List</a>
+              <a href="{{ route('campus.admin') }}?college={{$obj->id}}" class="btn btn-outline-secondary"  ><i class="fa fa-bar-chart"></i> Analytics</a>
             </span>
             @endcan
         </div>
