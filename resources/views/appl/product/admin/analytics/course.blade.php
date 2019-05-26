@@ -9,16 +9,17 @@
 	<div class="wrapper ">  
 	<div class="container">
 	<div class="row">
-		<div class="col-12 col-md-8">
+		<div class="col-12 col-md-12">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-university"></i> &nbsp; Analytics <span class="badge badge-warning">{{ ($data['course']) ? $data['course']->name : '-NA-' }} </span>
+			<i class="fa fa-bar-chart"></i> &nbsp; Analytics 
+
+
+      <span class="float-right badge badge-success display-3">{{ $data['total_score'] }}</span>
 			</h1>
+      <h2>Course : <span class="text-secondary">{{ ($data['course']) ? $data['course']->name : '-NA-' }}</span></h2>
 
 
 		</div>
-		<div class="col-12 col-md-4">
-      
-  		</div>
 	</div>
 	</div>
 </div>
