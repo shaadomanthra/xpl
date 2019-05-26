@@ -299,7 +299,8 @@ class AnalyticsController extends Controller
         $practice = Practices_Course::where('course_id',$course_id)
                         ->get();
 
-        //sdd($users);
+        $data['practice_count'] = count($practice->groupBy('user_id'));
+        
         $test_id = [];
         if(isset($course->exams))
         foreach($course->exams as $e){
@@ -308,6 +309,8 @@ class AnalyticsController extends Controller
                             
         $tests = Tests_Overall::whereIn('test_id',$test_id)
                     ->get();
+        $data['test_count'] = count($tests->groupBy('user_id'));
+        
      
         $data['practice_score'] = $practice->sum('attempted');
         $data['tests_score'] = $tests->sum('correct');

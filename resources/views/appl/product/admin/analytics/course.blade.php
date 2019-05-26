@@ -30,9 +30,19 @@
     <div class="row">
       <div class="col-12 col-md-12 ">
         <div class="bg-white rounded p-4 border mb-4">
-            <h3 class="mb-4"> Questions Practiced </h3>
-            <hr>
-            <div class="display-1 mb-4">{{ $data['practice_score']}}</div>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                  <h3 class="mb-4"> Questions Practiced </h3>
+                 <hr>
+                  <div class="display-1 mb-4">{{ $data['practice_score']}}</div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h3 class="mb-4"> Participants </h3>
+                 <hr>
+                  <div class="display-1 mb-4">{{ $data['practice_count']}}</div>
+                </div>
+            </div>
+            
             
             @if(count($data['practice_top']))
             <div class="table table-responsive">
@@ -69,9 +79,19 @@
         </div>
 
         <div class="bg-white rounded p-4 border ">
-            <h3 class="mb-4"> Test Questions Solved</h3>
-            <hr>
-            <div class="display-1 mb-4">{{ $data['tests_score']}}</div>
+            
+            <div class="row">
+                <div class="col-12 col-md-6">
+                 <h3 class="mb-4"> Test Questions Solved</h3>
+                  <hr>
+                  <div class="display-1 mb-4">{{ $data['tests_score']}}</div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h3 class="mb-4"> Participants </h3>
+                 <hr>
+                  <div class="display-1 mb-4">{{ $data['test_count']}}</div>
+                </div>
+            </div>
             
             @if($data['tests_top'])
             <div class="table table-responsive">
