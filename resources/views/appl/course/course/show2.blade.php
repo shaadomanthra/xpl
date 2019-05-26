@@ -17,6 +17,9 @@
 				<a href="{{ route('course.edit',$course->slug) }}">
 				<i class="fa fa-edit"></i>
 				</a>
+				<a href="{{ route('admin.analytics.course') }}?course={{$course->slug}}">
+				<i class="fa fa-bar-chart"></i> 
+				</a>
 				@endcan
 			</h1>
 			<div class=" mb-3" style="color:white">

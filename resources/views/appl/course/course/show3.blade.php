@@ -34,6 +34,9 @@
 				<a href="{{ route('course.edit',$course->slug) }}">
 				<i class="fa fa-edit"></i>
 				</a>
+				<a href="{{ route('admin.analytics.course') }}?course={{$course->slug}}">
+				<i class="fa fa-bar-chart"></i> 
+				</a>
 				@endcan
 		</div>
 			@if(\auth::user())

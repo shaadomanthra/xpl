@@ -87,12 +87,14 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	//Route::resource('/campus/schedules/{schedule}/modules', 'College\ModulesController')->middleware('auth');
 
 	//analytics
+	Route::get('/admin/analytics/course', 'Product\AnalyticsController@analytics_course')->name('admin.analytics.course')->middleware('auth');
 	Route::get('/admin/analytics/practice_remove_duplicates', 'Product\AnalyticsController@remove_duplicates_practice')->name('admin.analytics.practice.remove');
 	Route::get('/admin/analytics/practice_filldata', 'Product\AnalyticsController@practice_filldata')->name('admin.analytics.practice.filldata');
 	Route::get('/admin/analytics/test_filldata', 'Product\AnalyticsController@test_filldata')->name('admin.analytics.test.filldata');
 	Route::get('/admin/analytics/filldata', 'Product\AnalyticsController@filldata')->name('admin.analytics.filldata');
 	Route::get('/admin/analytics/practice', 'Product\AnalyticsController@analytics_practice')->name('admin.analytics');
 	Route::get('/admin/analytics/test', 'Product\AnalyticsController@analytics_test')->name('admin.analytics.test');
+
 
 	Route::get('/payment/status', 'Product\OrderController@status')->name('payment.status');
 	Route::post('/payment/order', 'Product\OrderController@order')->name('payment.order');

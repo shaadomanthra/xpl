@@ -275,6 +275,71 @@ class AnalyticsController extends Controller
         dd('tests filldata updated '.$i);
     }
 
+    public function analytics_course(Request $r){
+
+
+
+        $user = \auth::user();
+
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+
+        if($r->get('course'))
+            $course = Course::where('slug',$r->get('course'))->first();
+        else
+            abort('403','Course Not Mentioned in URL Parameter');
+
+        $course_id = $course->id;
+        $users = User::pluck('id')->toArray();        
+
+        $data = [];
+        
+        $practice = Practices_Course::where('course_id',$course_id)
+                        ->get();
+
+        //sdd($users);
+        $test_id = [];
+        if(isset($course->exams))
+        foreach($course->exams as $e){
+            array_push($test_id,$e->id);
+        }
+                            
+        $tests = Tests_Overall::whereIn('test_id',$test_id)
+                    ->get();
+     
+        $data['practice_score'] = $practice->sum('attempted');
+        $data['tests_score'] = $tests->sum('correct');
+        $data['total_score'] = $data['practice_score'] + $data['tests_score'];
+
+        $practice_top = Practices_Course::where('course_id',$course_id)
+                        ->whereIn('user_id',$users)->orderBy('attempted','desc')->limit(20)->get();
+    
+        $user_array = implode(', ', $users);
+        $test_array = implode(', ', $test_id);
+        
+        if($test_id)
+        $tests_top = DB::select("select user_id, SUM(correct) as sum,SUM(correct) as correct,SUM(incorrect) as wrong,SUM(unattempted) as none  from tests_overall where test_id IN ($test_array) GROUP BY user_id ORDER By sum DESC LIMIT 20");
+        else
+        $tests_top = null;
+        $users_test_top = [];
+
+        if($tests_top)
+        foreach($tests_top as $k=>$t){
+            $tests_top[$k]->user = User::where('id',$t->user_id)->first();
+            $tests_top[$k]->sum = $t->sum + $t->wrong;
+        }
+
+        $data['tests_top'] = $tests_top;
+        $data['practice_top'] = $practice_top;
+        $data['course'] = $course;
+
+
+        return view('appl.product.admin.analytics.course')
+                ->with('data',$data);
+
+    }
 
     public function analytics_practice(Request $r){
 
