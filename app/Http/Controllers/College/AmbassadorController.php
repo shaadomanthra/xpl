@@ -34,7 +34,7 @@ class AmbassadorController extends Controller
 
 
 
-        $course_id = 20;
+        $course_id = 4;
         if($course_id)
             $course = Course::where('id',$course_id)->first();
         $users = $user->referrals->pluck('id')->toArray();
@@ -84,33 +84,64 @@ class AmbassadorController extends Controller
         $data['course'] = $course;
         //dd($data);
 
-         $amb_ids = DB::table('role_user')
-                    ->where('role_id',37)
-                    ->pluck('user_id');
-        $amb_scores = [];
-        $amb_user = [];
-        foreach($amb_ids as $amb){
-            $ambassador = User::where('id',$amb)->first();
-            $users = $ambassador->referrals->pluck('id')->toArray();
-            array_push($users, $user->id);
+        
+        $today = date("Y-m-d");
+        $file = '../static/'.$_SERVER['HTTP_HOST'].'.'.$today.'.json';
+        $data_ = [];
+        if(!file_exists($file)){
+            $now = date("Y-m-d H:i:s");
+            $amb_ids = DB::table('role_user')
+                        ->where('role_id',37)
+                        ->pluck('user_id');
+            $amb_scores = [];
+            $amb_user = [];
+            foreach($amb_ids as $amb){
+                $ambassador = User::where('id',$amb)->first();
+                $amb_user['u'.$amb] = $ambassador;
+                
+                if($ambassador->colleges()->first())
+                $amb_user['u'.$amb]['college'] = $ambassador->colleges()->first()->name;
+                else
+                $amb_user['u'.$amb]['college'] = ' - ';
+                 
+                if($ambassador->branches()->first())
+                $amb_user['u'.$amb]['branch'] = $ambassador->branches()->first()->name;
+                else
+                $amb_user['u'.$amb]['branch'] = ' - ';
 
-            $attempted = Practices_Course::where('course_id',$course_id)
-                        ->whereIn('user_id',$users)->sum('attempted');
-            $correct = Tests_Overall::whereIn('user_id',$users)
-                    ->whereIn('test_id',$test_id)
-                    ->sum('correct');
-            $score = $attempted + $correct; 
-            $amb_scores[$amb] = $score;
-            $amb_user[$amb] = $ambassador;
+                $users = $ambassador->referrals->pluck('id')->toArray();
+                array_push($users, $user->id);
 
+                $attempted = Practices_Course::where('course_id',$course_id)
+                            ->whereIn('user_id',$users)->sum('attempted');
+                $correct = Tests_Overall::whereIn('user_id',$users)
+                        ->whereIn('test_id',$test_id)
+                        ->sum('correct');
+                $score = $attempted + $correct; 
+                $amb_scores['u'.$amb] = $score;
+                
+            }
+            arsort($amb_scores);
+            $data_['amb_scores'] = $amb_scores;
+            $data_['amb_user'] = $amb_user;
+            $data_['now'] = $now;
+            $data_json = json_encode($data_,JSON_PRETTY_PRINT);
+            file_put_contents($file,$data_json );
+            $data_amb = json_decode($data_json);
+        }else{
 
+            $data_amb = json_decode(file_get_contents($file));
+            //dd($data_amb->amb_user);
         }
+        
+        
+       
+        
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('obj',$obj)
                 ->with('app',$this)
-                ->with('amb_user',$amb_user)
-                ->with('amb_scores',$amb_scores)
+                ->with('data_amb',$data_amb)
                 ->with('data',$data);
 
     }

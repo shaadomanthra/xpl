@@ -114,10 +114,12 @@
             @endif
         </div>
 
-                <div class="bg-light rounded p-4 border ">
+            <div class="bg-light rounded p-4 border ">
             <h3 class="mb-4"> Top Ambassadors</h3>
-            
-            @if($amb_user)
+            <div class="bg-light border rounded p-2 mb-3"> Updated on : <i>{{ $data_amb->now }}</i>
+              <div><small>Data will be refreshed for every 24 hours</small></div>
+            </div>
+            @if($data_amb)
             <div class="table table-responsive">
               <table class="table">
                 <thead>
@@ -130,16 +132,11 @@
                 </thead>
                 <tbody>
                   
-                  @foreach($amb_scores as $k=>$t) 
+                  @foreach($data_amb->amb_scores as $k=>$t) 
                   <tr>
                     <td scope="row">{{ (++$m) }}</td>
-                    <td>{{ $amb_user[$k]->name }}</td>
-                    <td>@if($amb_user[$k]->colleges()->first())
-                      {{ $amb_user[$k]->colleges()->first()->name }}
-                        @endif - 
-                        @if($amb_user[$k]->branches()->first())
-                        {{$amb_user[$k]->branches()->first()->name}}
-                        @endif</td>
+                    <td>{{ $data_amb->amb_user->$k->name }}</td>
+                    <td>{{ $data_amb->amb_user->$k->college}} - {{$data_amb->amb_user->$k->branch}} </td>
                     <td>{{ $t }}</td>
                   </tr>
                   @endforeach
