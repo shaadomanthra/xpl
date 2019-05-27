@@ -113,9 +113,9 @@
 @endif    
 
 @if($category->exam_id)
-<div class="p-5 bg-white">
+<div class="p-4 p-md-5 bg-white">
   <div class="row">
-    <div class="col-12 col-md-2"><i class="fa fa-external-link fa-5x"></i></div>
+    <div class="col-12 col-md-2"><span class="d-none d-md-block"><i class="fa fa-external-link fa-5x"></i></span></div>
     <div class="col-12 col-md-10">
       {!! $category->video_desc !!}<br>
       @if(!$category->test_analysis)

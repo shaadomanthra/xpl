@@ -181,7 +181,7 @@
 
 
 		<div class="row ml-0 mr-0  mb-0 mb-md-3 bg-white pt-4 rounded" >
-		<ul class="list2 {{$j=0}}" >
+		<ul class="list2 list2-first {{$j=0}}" >
 		@foreach($nodes as $n)
 			<li class="item title-list" id="{{ $n->slug}}" > <h3><span class="bg-light p-1 pr-3 pl-3 border rounded">{{++$j}}</span> &nbsp;{{ $n->name }}</h3>
 			@if($n->video_desc)
