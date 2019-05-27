@@ -479,8 +479,13 @@ class QuestionController extends Controller
                     ->orderBy('valid_till','desc')
                     ->first();
 
-                    if(strtotime($entry->valid_till) < strtotime(date('Y-m-d')))
+                if($entry)
+                if(strtotime($entry->valid_till) < strtotime(date('Y-m-d')))
                         return view('appl.course.course.access');
+                else{
+                    
+                    return view('appl.course.course.access');
+                }
         }
 
         
