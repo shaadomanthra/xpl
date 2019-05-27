@@ -483,7 +483,7 @@ class QuestionController extends Controller
                 if(strtotime($entry->valid_till) < strtotime(date('Y-m-d')))
                         return view('appl.course.course.access');
                 else{
-                    
+
                     return view('appl.course.course.access');
                 }
         }
@@ -888,6 +888,7 @@ class QuestionController extends Controller
         $passages = Passage::where('project_id',$this->project->id)->orderBy('created_at','desc ')
                         ->paginate(config('global.no_of_records'));
 
+        if(!is_array($question->answer))
         $question->answer = strtoupper(strip_tags(trim(preg_replace('/\s\s+/', ' ', $question->answer))));
 
         // Categories
@@ -946,6 +947,7 @@ class QuestionController extends Controller
         $tags = $request->get('tag');
         $sections = $request->get('sections');
 
+
         try{
 
             $question = Question::where('id',$id)->first();
@@ -957,6 +959,7 @@ class QuestionController extends Controller
             $question->d = $request->d;
             $question->e = $request->e;
             $question->answer = $request->answer;
+            $question->type = $request->type;
             $question->explanation = $request->explanation;
             $question->dynamic = $request->dynamic;
             $question->passage_id= ($request->passage_id)?$request->passage_id:null;

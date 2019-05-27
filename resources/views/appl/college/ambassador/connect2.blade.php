@@ -73,7 +73,7 @@
             @endif
         </div>
 
-        <div class="bg-white rounded p-4 border ">
+        <div class="bg-white rounded p-4 border mb-3">
             <h3 class="mb-4"> Tests score</h3>
             <hr>
             <div class="display-1 mb-4">{{ $data['tests_score']}}</div>
@@ -102,6 +102,45 @@
                         {{$t->user->branches()->first()->name}}
                         @endif</td>
                     <td>{{ $t->sum }}</td>
+                  </tr>
+                  @endforeach
+                  
+                 
+                </tbody>
+              </table>
+            </div>
+            @else
+              <div class=" border p-3">No data to show</div>
+            @endif
+        </div>
+
+                <div class="bg-light rounded p-4 border ">
+            <h3 class="mb-4"> Top Ambassadors</h3>
+            
+            @if($amb_user)
+            <div class="table table-responsive">
+              <table class="table">
+                <thead>
+                  <tr class="border">
+                    <th scope="col" class="border border-dark">#</th>
+                    <th scope="col" class="border border-dark">Top Ambassador</th>
+                    <th scope="col" class="border border-dark">College</th>
+                    <th scope="col" class="border border-dark {{$m=0}}">Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                  @foreach($amb_scores as $k=>$t) 
+                  <tr>
+                    <td scope="row">{{ (++$m) }}</td>
+                    <td>{{ $amb_user[$k]->name }}</td>
+                    <td>@if($amb_user[$k]->colleges()->first())
+                      {{ $amb_user[$k]->colleges()->first()->name }}
+                        @endif - 
+                        @if($amb_user[$k]->branches()->first())
+                        {{$amb_user[$k]->branches()->first()->name}}
+                        @endif</td>
+                    <td>{{ $t }}</td>
                   </tr>
                   @endforeach
                   

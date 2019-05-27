@@ -29,7 +29,11 @@ class AmbassadorController extends Controller
         $this->authorize('view', $obj);
         $view = 'connect2';
 
+
         $user = \auth::user();
+
+
+
         $course_id = 20;
         if($course_id)
             $course = Course::where('id',$course_id)->first();
@@ -80,9 +84,33 @@ class AmbassadorController extends Controller
         $data['course'] = $course;
         //dd($data);
 
+         $amb_ids = DB::table('role_user')
+                    ->where('role_id',37)
+                    ->pluck('user_id');
+        $amb_scores = [];
+        $amb_user = [];
+        foreach($amb_ids as $amb){
+            $ambassador = User::where('id',$amb)->first();
+            $users = $ambassador->referrals->pluck('id')->toArray();
+            array_push($users, $user->id);
+
+            $attempted = Practices_Course::where('course_id',$course_id)
+                        ->whereIn('user_id',$users)->sum('attempted');
+            $correct = Tests_Overall::whereIn('user_id',$users)
+                    ->whereIn('test_id',$test_id)
+                    ->sum('correct');
+            $score = $attempted + $correct; 
+            $amb_scores[$amb] = $score;
+            $amb_user[$amb] = $ambassador;
+
+
+        }
+
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('obj',$obj)
                 ->with('app',$this)
+                ->with('amb_user',$amb_user)
+                ->with('amb_scores',$amb_scores)
                 ->with('data',$data);
 
     }

@@ -244,27 +244,21 @@
         <div class="form-group mt-3">
           <label for="formGroupExampleInput ">Type</label>
           @if($stub=='Update')
-          <select class="form-control"  disabled>
+          <select class="form-control" name="type" >
             <option value="mcq" @if(isset($question)) @if($question->type=='mcq') selected @endif @endif >Multiple Choice Question</option>
             <option value="naq" @if(isset($question)) @if($question->type=='naq') selected @endif @endif >Numerical Answer Question</option>
             <option value="maq" @if(isset($question)) @if($question->type=='maq') selected @endif @endif >Multi Answer Question</option>
             <option value="eq" @if(isset($question)) @if($question->type=='eq') selected @endif @endif >Explanation Question</option>
           </select>
           @else
-          <select class="form-control"  disabled>
+          <select class="form-control" name="type" >
             <option value="mcq" @if($type =='mcq') selected @endif  >Multiple Choice Question</option>
             <option value="naq" @if($type =='naq') selected @endif  >Numerical Answer Question</option>
             <option value="maq" @if($type =='maq') selected @endif  >Multi Answer Question</option>
             <option value="eq" @if($type =='eq') selected @endif  >Explanation Question</option>
           </select>
           @endif
-            <input type="hidden" class="form-control" name="type" id="formGroupExampleInput" 
-              @if($stub=='Create')
-              value="{{ (old('type')) ? old('type') : $type }}"
-              @else
-              value = "{{ $question->type }}"
-              @endif
-            >
+            
         </div>
 
         <div class="form-group mt-3">
