@@ -11,6 +11,7 @@ use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\User\User_Details;
 use PacketPrep\Notifications\MailResetPasswordToken;
 use Illuminate\Support\Facades\DB;
+use PacketPrep\Models\College\College;
 
 class User extends Authenticatable
 {
@@ -86,6 +87,7 @@ class User extends Authenticatable
 
     public function colleges()
     {
+        
         return $this->belongsToMany('PacketPrep\Models\College\College');
     }
 

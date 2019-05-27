@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\College\Batch as Obj;
 use PacketPrep\User;
+use PacketPrep\Models\College\College;
 
 
 class BatchController extends Controller
@@ -27,7 +28,14 @@ class BatchController extends Controller
 
         $search = $request->search;
         $item = $request->item;
-        $college_id = \auth::user()->colleges()->first()->id;
+
+        if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
+
+        $college_id = $college->id;
         $objs = $obj->where('name','LIKE',"%{$item}%")
                     ->where('college_id',$college_id)
                     ->orderBy('created_at','desc ')
@@ -51,7 +59,13 @@ class BatchController extends Controller
         $obj = new Obj();
         $this->authorize('create', $obj);
 
-        $obj->college_id = \auth::user()->colleges()->first()->id;
+        if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
+
+        $obj->college_id = $college->id;
         $obj->slug = substr(md5(microtime()),8);
         $obj->code = strtoupper($this->random_str(3, 'abcdefghijklmnopqrstuvwxyz'));
 
@@ -111,7 +125,14 @@ class BatchController extends Controller
 
         $item = $request->item;
         $search = $request->search;
-        $college_id = \auth::user()->colleges()->first()->id;
+
+        if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
+
+        $college_id = $college->id;
         $objs = $obj->users()->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records'));   
@@ -180,7 +201,11 @@ class BatchController extends Controller
         try{
             $obj = Obj::where('id',$id)->first();
 
-            $college = \auth::user()->colleges()->first();
+            if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
 
             if(\auth::user()->checkRole(['tpo'])){
                 $user = User::Where('id',$request->user_id)->first();

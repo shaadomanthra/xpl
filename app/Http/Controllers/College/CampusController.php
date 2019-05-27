@@ -25,6 +25,7 @@ use PacketPrep\Models\Exam\Tests_Overall;
 
 class CampusController extends Controller
 {
+
     public function main(Request $r){
 
     	return view('appl.college.campus.main');
@@ -37,12 +38,28 @@ class CampusController extends Controller
              abort(403,'Unauthorised Access');   
         }
 
+        if($r->get('set_college')){
+            $college = College::find($r->get('college'));
+            $r->session()->put('college', $college);
+        }
+
+
+        if($r->get('unset_college')){
+            $r->session()->forget('college');
+        }
+
         $campus = new Campus;
         $college_id = $r->get('college');
+
         if($college_id)
             $college = College::find($college_id);
-        else
-            $college = \auth::user()->colleges()->first();
+        else{
+            if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
+        }
 
         $branch_item = $r->get('branch');
         if($branch_item){
@@ -157,7 +174,14 @@ class CampusController extends Controller
 
         $search = $request->search;
         $item = $request->item;
-        $college = \auth::user()->colleges->first();
+        
+
+            if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
+    
         if($request->get('student'))
             $user = User::where('username',$request->get('student'))->first();
         else
@@ -183,7 +207,12 @@ class CampusController extends Controller
 
         $user = User::where('username',$username)->first();
         $course = Course::where('slug',$course_slug)->first();
-        $college = $user->colleges()->first();
+        
+        if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
 
         $campus = new Campus;
         $url_parameters='';
@@ -268,7 +297,13 @@ class CampusController extends Controller
         if($college_id)
             $college = College::find($college_id);
         else
-            $college = \auth::user()->colleges()->first();
+            {
+                if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+                }else
+                    $college = \auth::user()->colleges()->first();
+            }
 
         $batch_mode = $r->get('batch');
 
@@ -369,7 +404,13 @@ class CampusController extends Controller
     public function tests(Request $request){
         $search = $request->search;
         $item = $request->item;
-        $college = \auth::user()->colleges->first();
+        
+        if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
+
         $exam_id =[];
         foreach($college->courses as $course)
         {
@@ -521,7 +562,13 @@ class CampusController extends Controller
     public function test_show($exam_slug,Request $r){
 
         $exam = Exam::where('slug',$exam_slug)->first();
-        $college = \auth::user()->colleges->first();
+        
+        if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
+
         $sections = $data = null;
         $campus = new Campus();
         $batch_code = $r->get('batch_code');
@@ -585,7 +632,12 @@ class CampusController extends Controller
 
         $obj = new CampusController;
 
-        $college = \auth::user()->colleges()->first();
+        if(request()->session()->get('college')){
+                $col = request()->session()->get('college')['id'];
+                $college =  College::where('id',$col)->first();
+            }else
+                $college = \auth::user()->colleges()->first();
+                
         $this->authorize('manage', $college);
 
 

@@ -10,6 +10,19 @@
 @include('flash::message')
 <div  class="row ">
   <div class="col-12 col-md-10">
+
+  	@if(\auth::user()->checkRole(['admin','administrator']))
+  	<div class="bg-warning p-3 rounded mb-3">
+  		<div class="h3">Session College : {{ request()->session()->get('college')['name'] }}</div>
+  		<div class=" mb-3">MyCollege : {{ \auth::user()->colleges()->first()->name }}</div>
+  		<a href="{{ route('campus.admin')}}?college={{ request()->get('college')}}&set_college=true">
+  			<button class="btn btn-outline-dark">Add College</button></a>
+  		<a href="{{ route('campus.admin')}}?college={{ request()->get('college')}}&unset_college=true">
+  			<button class="btn btn-outline-dark">Remove College</button></a>
+  		<a href="{{ route('college.show',$college->id)}}">
+  			<button class="btn btn-outline-dark">View College</button></a>
+  	</div>
+  	@endif
   	<!-- College Header-->
   	@if($batch)
 	  <div class="w-100  rounded p-4 " style="background: rgb(242, 237, 218);border :1px solid rgb(216, 209, 182);">
