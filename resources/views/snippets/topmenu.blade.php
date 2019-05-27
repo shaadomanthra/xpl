@@ -79,6 +79,14 @@
                              </a>
                              @endif
 
+                             @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','ambassador','coordinator','tpo']))
+                             <a class="dropdown-item"  href="{{ route('referral')}}"
+                            >
+                           Referrals
+                             </a>
+                             @endif
+
+
                              
                             <a class="dropdown-item"  href="{{ route('order.transactions') }}"
                             >
