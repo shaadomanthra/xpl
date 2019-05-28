@@ -14,7 +14,6 @@
 			<i class="fa fa-university"></i> &nbsp; Campus Connect <span class="badge badge-warning">{{ ($data['course']) ? $data['course']->name : '-NA-' }} Score</span>
 			</h1>
 
-
 		</div>
 		<div class="col-12 col-md-4">
       
@@ -28,10 +27,32 @@
   <div class="container pb-5" >  
     <div class="row">
       <div class="col-12 col-md-3">
-        <div class="bg-info rounded text-white p-4">
+        <div class="bg-info rounded text-white p-4 mb-4">
           <h1>My Score</h1>
           <div class="display-1">{{ $data['total_score']}}</div>
         </div>
+        <div class="bg-light rounded  border p-4">
+          <h1><i class="fa fa-trophy"></i> Leaderboard</h1>
+          <a href="{{ route('ambassador.leaderboard')}}"><button class="btn btn-sm btn-success mb-4">view</button></a>
+
+          <hr>
+          <p>For score 6000 and above</p>
+          <h3>Cash Awards</h3>
+          <div> Top 1 - Rs.3000</div>
+          <div> Top 2 - Rs.2000</div>
+          <div> Top 3 - Rs.1000</div>
+          <div> Top 4 - Rs.500</div>
+          <div> Top 5 - Rs.500</div>
+          <hr>
+          <p> For score 3000 and above</p>
+          <div class="h5">We will right an exclusive LinkedIn recommendation</div>
+          <hr>
+          <p> For score 1000 and above</p>
+          <div class="h5">Internship Certificate</div>
+          <p> Where we will highlight your leadership skills and motivation abilities</p>
+
+        </div>
+
       </div>
       <div class="col-12 col-md-9 ">
         <div class="bg-white rounded p-4 border mb-4">

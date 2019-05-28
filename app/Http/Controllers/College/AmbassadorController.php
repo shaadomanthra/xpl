@@ -20,6 +20,15 @@ class AmbassadorController extends Controller
         $this->module   =   'ambassador';
     }
 
+    public function leaderboard(){
+
+        $today = date("Y-m-d");
+
+        $file = '../static/'.$_SERVER['HTTP_HOST'].'.'.$today.'.json';
+        $data_amb = json_decode(file_get_contents($file));
+
+        return view('appl.'.$this->app.'.'.$this->module.'.leaderboard')->with('data_amb',$data_amb);
+    }
 
     public function connect2(Obj $obj, Request $request){
 
@@ -28,7 +37,7 @@ class AmbassadorController extends Controller
 
         $this->authorize('view', $obj);
         $view = 'connect2';
-
+        
 
         $user = \auth::user();
 
