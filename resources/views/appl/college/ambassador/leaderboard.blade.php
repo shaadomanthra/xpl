@@ -45,21 +45,21 @@
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>chandra sekhar</td>
+      <td>Maturi Venkata Subba Rao Engineering College - CSE</td>
+      <td>310</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>M v s s s r sahith</td>
+      <td>Maturi Venkata Subba Rao Engineering College - CSE</td>
+      <td>300</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <td>JUVERIA KHATOON</td>
+      <td>Muffakham Jah College of Engineering and Technology - CSE</td>
+      <td>238</td>
     </tr>
   </tbody>
 </table>
