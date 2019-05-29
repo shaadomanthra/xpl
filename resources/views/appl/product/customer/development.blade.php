@@ -18,8 +18,9 @@
       <p>Placement Oriented industrial training program in full stack development with LIVE project. </p>
       <p>Through this program student will gain deep knowledge in web desining - frontend technologies like HTML,CSS,Javascript with frameworks like Bootstrap and Jquery and Backend development - Scripting language PHP and Database MySql with frameworks like Laravel, Eloquent ORM and Blade. </p><p>Also students are given training in writing good resume and handling interviews effectively, and a chance to attend 5 company interviews.</p>
       <p> 
-       <b> Batches:</b>  From June 3rd 2019 onwards<br>
-       
+       <b> Batches:</b>  From July 1st 2019 onwards<br>
+       <b> Eligibility:</b> Graduation, Any Branch<br>  
+       <b> Year of Passing:</b> 2016, 2017, 2018, 2019<br>  
        <b> Duration:</b> 4 months<br>  
        <b> Location:</b> PacketPrep Office, Tarnaka, Hyderabad.<br>  
 
@@ -30,10 +31,10 @@
         <h3 > <strike><i class="fa fa-rupee"></i>  45,000</strike> &nbsp;<span class="badge badge-warning">10% OFF</span></h2>
         <h1 > <i class="fa fa-rupee"></i>  40,000 </h1><hr>
         <p><small>Installment Facility is available:</small><br>
-        You can pay <i class="fa fa-rupee"></i>5000 each month for 8 months</p>
+        You can pay <i class="fa fa-rupee"></i>5000 each month for 9 months</p>
       </div>
       <div class="bg-light p-3 border rounded mb-3">
-        <h3> Reserve your seat now</h3>
+        
       <p>For more details contact : <br>Mr. Syamson - Business Development Officer <br>+91 95026 97428 </p>
     </div>
 
@@ -42,9 +43,22 @@
 		</div>
 		<div class="col-12 col-md-6">
 
-		   <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/335839121" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+		   <div class="embed-responsive embed-responsive-16by9 border mb-3" style="background: #eee;">
+          <iframe src="//player.vimeo.com/video/339074901" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
+        <div class="bg-light border p-3 rounded">
+          <div class="display-3 mb-3">CODE CAMP <span class="badge badge-info">FREE</span></div>
+          <p>Attend FREE training session for three days before you join the fullstack course.</p>
+          <p>Through this 3 day CodeCamp, you will learn basics of html,css, javascript and create a static website and deploy it on to the server.</p>
+          <hr>
+          <p>
+            Batch 1 - 18th July to 20th July, 2:00pm to 4:30 pm<br>
+            Batch 2 - 24th July to 26th July, 2:00pm to 4:30 pm<br>
+            Batch 3 - 27th July to 29th July, 2:00pm to 4:30 pm
+          </p>
+          <hr>
+          <a href="http://bit.ly/2wrKK5D"><button class="btn btn-sm btn-outline-success">Register now</button></a>
+        </div>  
 
   		</div>
 	</div>
@@ -193,7 +207,7 @@
                 <td> Development - Backend Technologies</td>
                 <td> 
                 	<p>
-                		<h3>PHP 7</h3>
+                		<h3>PHP 7 & Laravel Framework</h3>
                 		<ol>
                 			<li> Introduction to PHP</li>
                 			<li> Installing wamp or xampp</li>
@@ -205,7 +219,7 @@
                 		</ol>
                 	</p> 
                 	<p>
-                		<h3>MySQL</h3>
+                		<h3>MySQL & Eloquent ORM</h3>
                 		<ol>
                 			<li> MySQL Database Introduction</li>
 							<li>PHP my Admin, PHP MySQL Integration</li>
@@ -230,7 +244,7 @@
                 <td> Project Work</td>
                 <td>
                 	<p>
-                		<h3>Personal Website</h3>
+                		<h3>Commercial Website</h3>
                 		<ol>
                 			<li> Writing the project draft</li>
                 			<li> Creating project template</li>
@@ -239,17 +253,16 @@
                 		</ol>
                 	</p> 
                 	<p>
-                		<h3>Contacts Management App</h3>
+                		<h3>RESTful API</h3>
                 		<ol>
-                			<li> Writing the project draft</li>
-                			<li> Frontend layouts</li>
-                			<li> Backend database design</li>
-                			<li> Core project integration</li>
-                			<li> Testting after deployment</li>
+                			<li> Understanding the core app functionality</li>
+                			<li> CURD Operations</li>
+                			<li> API Calls</li>
+                			<li> Secuity Features</li>
                 		</ol>
                 	</p> 
                 	<p>
-                		<h3>Ecommerce website</h3>
+                		<h3>Ecommerce Application</h3>
                 		<ol>
                 			<li> Writing the project draft</li>
                 			<li> Shopping cart pages</li>
