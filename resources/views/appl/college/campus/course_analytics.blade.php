@@ -102,6 +102,7 @@
 
 	    @foreach($practice['items'] as $k=>$batch)
 	    @if($batch->url)
+	    @if($practice['item'][$batch->id]['total']!=0)
 	    <tr>
 	      <th scope="row">{{++$k}}</th>
 	      <td><a href="{{$batch->url}}">{{$batch->name}}  </a></td>
@@ -120,6 +121,7 @@
 	      </td>
 	     
 	      </tr>
+	      @endif
 	      @endif
 	     @endforeach
 	  </tbody>
