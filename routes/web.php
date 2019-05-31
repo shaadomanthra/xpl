@@ -40,6 +40,17 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/credit-rates',function(){ return view('appl.product.pages.credit_rates'); })->name('credit-rate')->middleware('auth');;
 
 
+	Route::get('/cprogram',function(){
+		echo "here";
+		if(request()->get('c')){
+
+			$output = shell_exec('./h');
+			echo "<pre>$output</pre>";
+		}
+		
+		//print_r($out);
+
+	});
 	//campus
 	Route::get('/campus', 'College\CampusController@main')
 			->name('campus.main')->middleware('auth');
