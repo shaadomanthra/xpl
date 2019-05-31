@@ -399,7 +399,7 @@ class Campus extends Model
 
     	}
 
-        dd($data);
+        
     	
     	return $data;
     }
