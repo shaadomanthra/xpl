@@ -383,7 +383,15 @@ class Campus extends Model
     		$data['excellent_percent'] = round(($data['excellent']*100)/$data['participants'],2);
     		$data['good_percent'] = round($data['good']/$data['participants']*100,2);
     		$data['need_to_improve_percent'] = round($data['need_to_improve']/$data['participants']*100,2);
+
+
             $data['avg_pace'] = round($data['pace']/$data['participants'],2);
+
+            if($data['avg_pace']< 60)
+                $data['avg_pace'] = $data['avg_pace'].' sec';
+            else
+                $data['avg_pace'] = round($data['avg_pace']/60,2).' min';
+            
             $data['avg_accuracy'] = round($data['accuracy']/$data['participants'],2);
 
     	}

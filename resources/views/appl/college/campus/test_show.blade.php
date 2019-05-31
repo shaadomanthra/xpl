@@ -59,11 +59,11 @@
 						  <dd class="col-sm-6">{{ $details['participants']}}  </dd>
 
 						  <dt class="col-sm-6">Avg Accuracy</dt>
-						  <dd class="col-sm-6">{{ $details['avg_accuracy']}} </dd>
+						  <dd class="col-sm-6">{{ $details['avg_accuracy']}} %</dd>
 
 
 						   <dt class="col-sm-6">Avg Pace</dt>
-						   <dd class="col-sm-6">{{ $details['avg_pace']}} sec</dd>
+						   <dd class="col-sm-6">{{ $details['avg_pace']}} </dd>
 
 						   <dt class="col-sm-6">Excellent</dt>
 						   <dd class="col-sm-6">{{ $details['excellent']}} </dd>
@@ -120,8 +120,8 @@
 		      <th scope="row">{{++$m}}</th>
 		      <td><a href="{{ $batch['url']}}">{{$batch['name']}}  </a></td>
 		      <td>{{$batch['participants']}}  </td>
-		      <td>{{$batch['avg_accuracy']}}  </td>
-		      <td>{{$batch['avg_pace']}}  </td>
+		      <td>{{$batch['avg_accuracy']}}% </td>
+		      <td>{{$batch['avg_pace']}} </td>
 		      
 		      <td>
 		      	

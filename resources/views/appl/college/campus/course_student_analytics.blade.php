@@ -3,7 +3,7 @@
 	 <div class="row mt-4 no-gutters">
 	 	<div class="col-12 @if($test['item']['count']) col-md-7 @else col-md-12 @endif" >
 	 		<div class="" style="background: rgba(229, 80, 57, 0.12);min-height: 342px" >
-	 			<div class="p-3 display-4 text-white" style="background: #e55039"> Practice</div>
+	 			<div class="p-3 display-4 text-white" style="background: #e55039"> Practice <span class="float-right" style="opacity:0.6">{{$practice['item']['solved']}}Q</span></div>
 
 	 			<div class="row">
 	 				<div class="col-6">
@@ -43,9 +43,10 @@
 	 		</div>
 	 	</div>
 	 	@if($test['item']['count'])
+
 	 	<div class="col-12 col-md-5">
 	 		<div class="" style="background: rgba(56, 173, 169, 0.28);min-height: 340px">
-	 			<div class="p-3 display-4 text-white" style="background: #38ada9"> Tests</div>
+	 			<div class="p-3 display-4 text-white" style="background: #38ada9"> Tests <span class="float-right" style="opacity:0.6">{{($test['item']['good']+ $test['item']['excellent'] + $test['item']['need_to_improve'])}}/{{$test['item']['count']}} </span></div>
 	 			<div class="pt-4  pr-4 pl-4 pb-1" >
 	 				<div class="display-5 mb-3"> <img src="{{ asset('/img/medals/excellent.png')}}" style="width:20px;"  />&nbsp;<b>Excellent </b> <span style="color:#39aca9;" >{{$test['item']['excellent']}} / {{$test['item']['count']}} </span><span class="float-right " style="color:#39aca9;">{{$test['item']['excellent_percent']}}%</span></div>
 	 				<div class="progress"  style="height: 8px;">

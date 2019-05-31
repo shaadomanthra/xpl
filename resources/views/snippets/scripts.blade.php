@@ -211,15 +211,16 @@ var myChart = new Chart(ctx, {
             label: 'Students',
             data: [{{ $details['excellent']}}, {{ $details['good']}}, {{ $details['need_to_improve']}}],
             backgroundColor: [
-                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(81, 154, 218, 0.2)',
                 'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
+                
             ],
             borderColor: [
-
-                'rgba(75, 192, 192, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(81, 154, 218, 1)',
                 'rgba(255,99,132,1)',
-                'rgba(255, 206, 86, 1)'
+                
             ],
             borderWidth: 1
         }]
@@ -239,14 +240,16 @@ var myChart = new Chart(ctx, {
       label: 'Colors One',
       data: [7, 11, 8],
       backgroundColor: [
-                'rgba(75, 192, 192, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+                'rgba(81, 154, 218, 0.2)',
                 'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
+                
             ],
             borderColor: [
-                'rgba(75, 192, 192, 1)',
+            'rgba(255, 206, 86, 1)',
+                'rgba(81, 154, 218, 1)',
                 'rgba(255,99,132,1)',
-                'rgba(255, 206, 86, 1)'
+                
             ],
       borderWidth: 1
     }]
@@ -271,14 +274,16 @@ new Chart(ctxOne, optionsOne);
       label:'',
       data: [{{$details['section'][$section->id]['excellent']}}, {{$details['section'][$section->id]['good']}}, {{$details['section'][$section->id]['need_to_improve']}}],
       backgroundColor: [
-                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(81, 154, 218, 0.2)',
                 'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 206, 86, 0.2)'
+                
             ],
             borderColor: [
-                'rgba(75, 192, 192, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(81, 154, 218, 1)',
                 'rgba(255,99,132,1)',
-                'rgba(255, 206, 86, 1)'
+                
             ],
       borderWidth: 1
     }]
