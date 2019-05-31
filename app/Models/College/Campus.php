@@ -350,6 +350,7 @@ class Campus extends Model
 
     public static function getData_Test($tests,$data){
 
+        $data['correct'] = $data['max'] =0;
     	foreach($tests as $k=>$t)
     	{
     		$data['users'][$k]['score']=$t->sum('score');
@@ -374,7 +375,9 @@ class Campus extends Model
 
     		}
     		$data['participants']++;
-            $data['accuracy'] = round($data['users'][$k]['correct']/$data['users'][$k]['max']*100,2);
+            $data['correct'] =  $data['correct']  + $data['users'][$k]['correct'];
+            $data['max'] = $data['max'] + $data['users'][$k]['max'];
+            $data['users'][$k]['accuracy'] = round($data['users'][$k]['correct']/$data['users'][$k]['max']*100,2);
             $data['pace'] = $data['pace'] + $data['users'][$k]['pace'];
 
     	}
@@ -391,10 +394,12 @@ class Campus extends Model
                 $data['avg_pace'] = $data['avg_pace'].' sec';
             else
                 $data['avg_pace'] = round($data['avg_pace']/60,2).' min';
-            
-            $data['avg_accuracy'] = round($data['accuracy']/$data['participants'],2);
+
+            $data['avg_accuracy'] = round($data['correct']/$data['max']*100,2);
 
     	}
+
+        dd($data);
     	
     	return $data;
     }

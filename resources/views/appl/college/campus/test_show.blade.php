@@ -58,7 +58,7 @@
 						  <dt class="col-sm-6">Participants </dt>
 						  <dd class="col-sm-6">{{ $details['participants']}}  </dd>
 
-						  <dt class="col-sm-6">Avg Accuracy</dt>
+						  <dt class="col-sm-6">Overall Accuracy</dt>
 						  <dd class="col-sm-6">{{ $details['avg_accuracy']}} %</dd>
 
 
