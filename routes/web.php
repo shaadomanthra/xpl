@@ -44,8 +44,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 		echo "here";
 		if(request()->get('c')){
 
-			$output = shell_exec('./h');
+			$output = shell_exec('./system');
 			echo "<pre>$output</pre>";
+			echo "outputted";
 		}
 		
 		//print_r($out);

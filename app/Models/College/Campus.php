@@ -39,7 +39,7 @@ class Campus extends Model
             $data['total_item'][$course_id] = 0;
             foreach($category->children as $node){
 	            $descendants = $node->descendants->pluck('id')->toArray();
-        		$data['total_item'][$node->id] = DB::table('category_question')->whereIn('category_id', $descendants)->count();
+        		$data['total_item'][$node->id] = DB::table('category_question')->whereIn('category_id', $descendants)->where('intest',0)->count();
         		$data[$node->id]= array("total"=>0,"solved"=>0,"time"=>0,"correct"=>0,"participants"=>0,"vg_solved"=>0,"completion"=>0,"accuracy"=>0);
         		$data['total_item'][$course_id] = $data['total_item'][$course_id] +$data['total_item'][$node->id];
             }
@@ -58,7 +58,7 @@ class Campus extends Model
             foreach($category->children as $node){
 	            $descendants = $node->descendantsAndSelf($node)->pluck('id')->toArray();
 
-        		$data['total_item'][$node->id] = DB::table('category_question')->whereIn('category_id', $descendants)->count();
+        		$data['total_item'][$node->id] = DB::table('category_question')->whereIn('category_id', $descendants)->where('intest',0)->count();
         		
         		$data[$node->id]= array("total"=>$data['total_item'][$node->id],"solved"=>0,"time"=>0,"correct"=>0,"participants"=>0,"vg_solved"=>0,"completion"=>0,"accuracy"=>0);
         		$data['total_item'][$category_id] = $data['total_item'][$category_id] +$data['total_item'][$node->id];
@@ -81,7 +81,7 @@ class Campus extends Model
 	            foreach($ids as $id)
                 array_push($item_id,$id);
         		
-        		$data['total_item'][$c->id] = DB::table('category_question')->whereIn('category_id', $ids)->count();
+        		$data['total_item'][$c->id] = DB::table('category_question')->whereIn('category_id', $ids)->where('intest',0)->count();
         		$data[$c->id]= array("total"=>0,"solved"=>0,"time"=>0,"correct"=>0,"participants"=>0,"vg_solved"=>0,"completion"=>0,"accuracy"=>0);
             }
         }
