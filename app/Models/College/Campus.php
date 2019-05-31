@@ -88,7 +88,7 @@ class Campus extends Model
 
 
         
-        $data['total'] = DB::table('category_question')->whereIn('category_id', $item_id)->count();
+        $data['total'] = DB::table('category_question')->whereIn('category_id', $item_id)->where('intest',0)->count();
         
         //dd($data['total']);
 
