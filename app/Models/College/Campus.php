@@ -88,9 +88,9 @@ class Campus extends Model
 
 
         
-        $data['total'] = DB::table('category_question')->whereIn('category_id', $item_id)->where('intest',0)->get();
+        $data['total'] = DB::table('category_question')->whereIn('category_id', $item_id)->where('intest',0)->count();
         
-        dd($data['total']);
+        //dd($data['total']);
 
         if(!$student_username)
         $student_username = $r->get('student');
