@@ -112,6 +112,14 @@
 			
 		</div>
 	</div>
+
+	@if($course->id ==20)
+	<div class="bg-light border p-3 mt-3 mb-3">
+		<h1><i class="fa fa-facebook-square"></i> Facebook Group</h1>
+		<p> You can track our posts directly on you facebook feeds by joining this group</p>
+		<a href="https://www.facebook.com/groups/targettcs2019"><button class="btn btn-outline-primary">Join Group</button></a>
+	</div>
+	@endif
 	</div>		
 	
 
