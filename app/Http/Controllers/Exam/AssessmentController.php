@@ -256,7 +256,6 @@ class AssessmentController extends Controller
                         $i++;
                     }
 
-                    $time = $time + $section->time;
                 }
                 $details['response'] = null;
             }
@@ -287,6 +286,7 @@ class AssessmentController extends Controller
         foreach($exam->sections as $section){
             $time = $time + $section->time;
         }
+
 
         $question = Question::where('id',$id)->first();
         $passage = Passage::where('id',$question->passage_id)->first();
