@@ -52,9 +52,9 @@
           <p>Through this 3 day CodeCamp, you will learn basics of html,css, javascript and create a static website and deploy it on to the server.</p>
           <hr>
           <p>
-            Batch 1 - 18th July to 20th July, 2:00pm to 4:30 pm<br>
-            Batch 2 - 24th July to 26th July, 2:00pm to 4:30 pm<br>
-            Batch 3 - 27th July to 29th July, 2:00pm to 4:30 pm
+            Batch 1 - 18th June to 20th June, 2:00pm to 4:30 pm<br>
+            Batch 2 - 24th June to 26th June, 2:00pm to 4:30 pm<br>
+            Batch 3 - 27th June to 29th June, 2:00pm to 4:30 pm
           </p>
           <hr>
           <a href="http://bit.ly/2wrKK5D"><button class="btn btn-sm btn-outline-success">Register now</button></a>
