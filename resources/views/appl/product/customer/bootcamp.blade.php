@@ -4,6 +4,7 @@
 @section('keywords', 'summer internship, coding, bootcamp, engineering students, ')
 
 @section('content')
+<link href="css/lightbox.css" type="text/css" rel="stylesheet">
 <div class="line" style="padding:1px;background:#eee"></div>
 <div class=" p-4  mb-3 mb-md-4 border-bottom bg-white" >
 	<div class="wrapper ">  
@@ -57,7 +58,6 @@
     </div>
 
 
-      <div class="p-3 bg-warning mb-3 rounded"><b>Note:</b><br> Students who need 4 or 5 weeks internship certificate can do a mini project with us FREE of cost (only for bootcamp participants) <a href="{{ route('bootcamp')}}#mini-project">more details here</a></div>
 
 		</div>
 		<div class="col-12 col-md-6">
@@ -75,8 +75,41 @@
 
 </div>
 
+
+
 <div class="wrapper " >
     <div class="container pb-5" >  
+
+      <div class="bg-light border rounded p-3 mb-3">
+        <h1>Batch 1 is Completed</h1>
+        <p>We have successfully trained the first cohort of Coding Bootcamp 2019. Through this program students have learnt the basics of web development which includes html, css, bootstrap, php and mysql.
+
+Together we have built three project namely Resume, Calculator App and Simple Blog.</p>
+<p class="mb-3">Here is the link to one of our student's projects<br>
+<a href="http://isha.packetprep.net">http://isha.packetprep.net</a>
+</p>
+<hr>
+        <div class="row ">
+          <div class="col-12 col-md-6">
+            <h3 class="mb-4"> Listen to our Students Review</h3>
+            <div class="embed-responsive embed-responsive-16by9 border mb-4" style="background: #eee;">
+            <iframe  src="https://www.youtube.com/embed/IUUBwieD6hw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <h3 class="mb-4">Internship Certificates </h3>
+            @for($i=1;$i<9;$i++)
+              <a class="example-image-link" href="img/bootcamp/{{$i}}.jpeg" data-lightbox="example-1"><img class="example-image p-1" src="img/bootcamp/{{$i}}.jpeg" alt="image-1" width="150px" /></a>
+            @endfor
+            <div class="p-3"></div>
+          </div>
+        </div>
+        
+  <div>
+      
+      
+    </div>
+  </div>
    
 	   <div class="bg-white p-4 border mb-3">
       <div class="row">
@@ -87,7 +120,7 @@
         <div class="col-4 col-md-2"><i class="fa fa-4x fa-rocket"></i></div>
         <div class="col-8 col-md-10">
           <h2> 2 weeks - 40 hour Classroom Training</h2>
-          <p> It is 4hour/day intensive training for 10 days. (2 days extra for Non CS/IT students to teach basics)</p>
+          <p> It is 4hour/day intensive training for 10 days. </p>
         </div>
       </div>
       <div class="row mb-4">
@@ -110,7 +143,7 @@
         <div class="col-12 col-md-4">
           <h1 class="mb-4"> Training Highlights</h1>
           <ul>
-            <li>You will learn PHP, MySql, HTML, CSS and JQuery. </li>
+            <li>You will learn PHP, MySql, HTML, CSS and Bootstrap. </li>
             <li> You will learn how to book domain name, hosting and deploying the code on global server</li>
             <li>The most critical aspect, how to integrate payment gateway for online transactions where money is directly sent to the bank account</li>
             <li> Small batch size and Personal Guidance </li>
@@ -130,82 +163,65 @@
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col" style="width: 10%">Day </th>
+                <th scope="col">Day</th>
                 <th scope="col">Module</th>
                 <th scope="col">What you will Learn?</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th scope="row"></th>
-                <td> 16th &17th May </td>
-                <td> Basics of programming (for Non CS/IT Students)</td>
-                <td> Programming concepts like conditional statements, iterative loops, functions and datatypes. Code software installations. Errors and Debugging Methods. </td>
-              </tr> 
-              <tr>
                 <th scope="row">1</th>
-                <td> 20th May </td>
                 <td> Drafting Project Requirements</td>
                 <td> Understanding the importance of doing project requirement analysis, drawing storyboards for layouts, choosing flatcolorui for color scheme, page designs on paper and in photoshop.</td>
               </tr>  
 
               <tr>
                 <th scope="row">2</th>
-                <td> 21st May</td>
                 <td> Creating the layout with HTML,CSS and JAVASCRIPT</td>
                 <td>Converting the project draft to implementation using html and css, baiscs animations using javascript, usage  of library code like jquery. </td>
               </tr>  
 
               <tr>
                 <th scope="row">3</th>
-                <td> 22nd May </td>
                 <td> Responsive Website coding with BOOTSTRAP </td>
                 <td> Making the design adaptive for desktop, mobile and tablet devices. Bootstrap techonology baiscs and usage, foundation api basics and usage. </td>
               </tr>  
 
               <tr>
                 <th scope="row">4</th>
-                <td> 23rd May </td>
                 <td> PHP Basics</td>
                 <td>Writing clean code using PHP, procedural and object oriented code design, inserting php tags in html, core logic implementation</td>
               </tr>  
 
               <tr>
                 <th scope="row">5 </th>
-                <td> 24th May</td>
                 <td> MySQL Basics </td>
                 <td> Understanding how to use sql to make queries, data normalization, primary and foreign key importance, data coherence. </td>
               </tr>  
 
               <tr>
                 <th scope="row">6</th>
-                <td> 27th May </td>
                 <td> MVC Architecture for Application</td>
                 <td> Model,View and Controller architecture for request processing and data display in browser.</td>
               </tr>  
 
               <tr>
                 <th scope="row">7</th>
-                <td> 28th May</td>
                 <td> Login System with security </td>
                 <td>Form for registration, Form for login, security features like handling sql injection, cross site scripting and spam requests.</td>
               </tr>   
               <tr>
                 <th scope="row">8</th>
-                <td> 29th May</td>
                 <td> Ecommerce Module </td>
                 <td> Creaitng a gallery for products with checkout option, products and transactions table in sql, validation of payment receiving and delivering the service</td>
               </tr> 
               <tr>
                 <th scope="row">9</th>
-                <td> 30th May</td>
                 <td> Payment Gateway Integration</td>
                 <td> Working with Instamojo payment gateway api in php, connecting bank accounts for immediate withdrawl, trail transactions using API.</td>
               </tr> 
               <tr>
                 <th scope="row">10</th>
-                <td> 31st May</td>
                 <td> Deployment on Server</td>
                 <td>Registering a domian and hosting, Connecting domain to hosting with nameservers, usage of cpanel for server maintenance, uploading code using filezilla ftp, live website testing with console.</td>
               </tr> 
@@ -217,6 +233,7 @@
 
    </div>
 
+<!--
 
      <div id="mini-project" class="bg-white p-4 border mb-3">
       <h1 class="bg-light border p-3 rounded mb-3"> Mini Projects (Optional) </h1>
@@ -251,6 +268,8 @@
 
    </div>
    
+-->
+
 
    
       <div class="row">
@@ -314,6 +333,7 @@
         </div>
       </div>
       
+     
  
 
    <div class="bg-light p-4 border ">
@@ -325,5 +345,6 @@
 
      </div>   
 </div>
+<script src="js/lightbox-plus-jquery.min.js"></script>
 
 @endsection           
