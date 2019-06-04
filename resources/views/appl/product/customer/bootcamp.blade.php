@@ -99,7 +99,7 @@ Together we have built three project namely Resume, Calculator App and Simple Bl
           <div class="col-12 col-md-6">
             <h3 class="mb-4">Internship Certificates </h3>
             @for($i=1;$i<9;$i++)
-              <a class="example-image-link" href="img/bootcamp/{{$i}}.jpeg" data-lightbox="example-1"><img class="example-image p-1" src="img/bootcamp/{{$i}}.jpeg" alt="image-1" width="150px" /></a>
+              <a class="example-image-link" href="img/bootcamp/{{$i}}.jpeg" data-lightbox="example-1"><img class="example-image p-1" src="img/bootcamp/{{$i}}.jpeg" alt="image-1" width="120px" /></a>
             @endfor
             <div class="p-3"></div>
           </div>
