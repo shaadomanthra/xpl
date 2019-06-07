@@ -469,7 +469,6 @@ class QuestionController extends Controller
         $course = Course::where('slug',$project_slug)->first();
 
 
-
         $user = \Auth::user();
         $entry=null;
         if($user){
@@ -620,6 +619,18 @@ class QuestionController extends Controller
     public function category($project_slug,$category_slug,$id=null)
     {
         
+        $mode = \request()->session()->get('mode');
+        $change = \request()->get('change');
+
+        if($change){
+            \request()->session()->put('mode',\request()->get('mode'));
+        }
+
+        if(!$mode){
+            \request()->session()->put('mode','reference');
+            $mode = \request()->session()->get('mode');
+        }
+
 
         if($category_slug == 'uncategorized')
         {
