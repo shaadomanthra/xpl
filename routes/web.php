@@ -15,6 +15,7 @@ use PacketPrep\Http\Middleware\RequestFilter;
 
 
 
+
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	Route::get('/', function(){ return view('welcome'); })->name('root');
