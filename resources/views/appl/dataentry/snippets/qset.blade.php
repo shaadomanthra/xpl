@@ -18,7 +18,7 @@
 		<div class="row ">
 			<div class="col-3">
 				@if($details['prev'])
-				<a class="white-link" href="{{ $details['prev'] }}">
+				<a class="white-link prev" href="{{ $details['prev'] }}" data-prev="{{ $details['prev'] }}">
 				<div class=" w100 p-1 text-center pl-2"><i class="fa fa-angle-double-left"></i></div>
 				</a>
 				@endif
@@ -26,14 +26,14 @@
 			<div class="col-6"> <div class="mt-1 text-center">Q({{ count($questions) }})</div></div>
 			<div class="col-3"> 
 				@if($details['next'])
-				<a class="white-link" href="{{ $details['next'] }}">
+				<a class="white-link next" href="{{ $details['next'] }}" data-next="{{ $details['next'] }}">
 				<div class=" w100 p-1 text-center mr-3"><i class="fa fa-angle-double-right"></i></div>
 				</a>
 				@endif
 			</div>
 		</div>
 		</div>
-		<div class="qset" style="max-height: 170px;overflow-y: auto;">
+		<div class="qset" style="max-height: 170px;overflow-y: auto;" >
 		<div class="row no-gutters qitems">
 			@foreach($questions as $key => $q)
 			<div class="col-3 mb-1">

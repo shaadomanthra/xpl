@@ -385,6 +385,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('question/attachsection/{question}/{section}','Dataentry\QuestionController@attachSection');
 	Route::get('question/detachsection/{question}/{section}','Dataentry\QuestionController@detachSection');
 
+	Route::get('question/addtest/{question}','Dataentry\QuestionController@addTest');
+	Route::get('question/removetest/{question}','Dataentry\QuestionController@removeTest');
+
 	Route::resource('library','Library\RepositoryController')->middleware('auth');
 	Route::resource('library/{repository}/structure','Library\structureController')->middleware('auth');
 	Route::get('library/{repository}/structure/{structure}/question','Library\LquestionController@structure')->middleware('auth')->name('structure.question');

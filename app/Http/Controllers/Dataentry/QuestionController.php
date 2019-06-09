@@ -347,6 +347,9 @@ class QuestionController extends Controller
                         $details['next'] = route('question.show',[$project_slug,$questions[$key+1]->id]);
 
                     $details['qno'] = $key + 1 ;
+
+                
+
                 }
             } 
             return  view('appl.dataentry.question.show')
@@ -1106,6 +1109,23 @@ class QuestionController extends Controller
         if($question->sections->contains($section_id))
             $question->sections()->detach($section_id);
     }
+
+
+     public function addTest($question_id)
+    {
+        $question = Question::where('id',$question_id)->first();
+        $question->intest = 1;
+        $question->save();
+    }
+
+     public function removeTest($question_id)
+    {
+        $question = Question::where('id',$question_id)->first();
+        $question->intest = 0;
+        $question->save();
+    }
+
+
 
     /**
      * Remove the specified resource from storage.

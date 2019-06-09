@@ -3,6 +3,28 @@ $('#flash-overlay-modal').modal();
 
 
 $(document).ready(function() {
+
+
+    // move questions left and right
+
+    $(document).keypress(function(){
+
+      var key = (event.keyCode ? event.keyCode : event.which); 
+        if (key == 108) {
+          if( $('.prev').length ) {
+            var url = $('.prev').data('prev');
+            window.location= url;
+          }
+        }
+        else if(key == 114){
+          if( $('.next').length ) {
+             var url = $('.next').data('next');
+            window.location= url;
+          }
+         
+        }
+    });
+
     $('.exam').on('change', function() {
     	window.location=window.location.pathname+'?exam='+this.value;
   	});
@@ -133,6 +155,27 @@ $(".coupon-button").on('click', function () {
         });
             }else{
               $.get( url + "/question/detachsection/" + ques + "/" + val + "/", function( data ) {
+          console.log("detached." );
+        });
+            }
+  
+    });
+
+     $('.intest').on('change', function() {
+
+      
+       var ques = $(this).data('ques');
+       var url = $(this).data('url');
+
+       console.log( " | " + ques + " | " + url );
+
+       if (this.checked) {
+
+                $.get( url + "/question/addtest/" + ques + "/" , function( data ) {
+          console.log( "attached." );
+        });
+            }else{
+              $.get( url + "/question/removetest/" + ques + "/" , function( data ) {
           console.log("detached." );
         });
             }

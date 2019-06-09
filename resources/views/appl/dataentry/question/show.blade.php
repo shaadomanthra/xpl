@@ -20,6 +20,9 @@
       <li class="nav-item">
         <a class="nav-link" id="category-tab" data-toggle="tab" href="#category" role="tab" aria-controls="a" aria-selected="false">Category</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" id="test-tab" data-toggle="tab" href="#test" role="tab" aria-controls="a" aria-selected="false">InTest</a>
+      </li>
       </ul>
 
       <div class="tab-content" id="myTabContent">
@@ -155,6 +158,19 @@
       </div>
         @endif
         @endif
+      </div>
+
+      <div class="tab-pane fade  " id="test" role="tabpanel" aria-labelledby="test-tab">
+        <div class="border p-3 mt-3">
+          <input  class="intest" type="checkbox" name="intest" value="{{$question->id}}"  data-ques="{{$question->id}}" data-url="{{ URL::to('/') }}"
+              
+                @if($question->intest)
+                  checked
+                @endif
+              
+            >
+            make it a test question 
+          </div>
       </div>
 
       </div>
