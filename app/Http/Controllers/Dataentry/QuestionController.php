@@ -316,8 +316,9 @@ class QuestionController extends Controller
         if($course)
             $exams = $course->exams;
         else    
-        $exams =  Exam::orderBy('name','desc ')->get();
+        $exams =  Exam::orderBy('name','desc')->get();
       
+        
         $this->authorize('view', $question);
 
         if($question){
@@ -661,7 +662,7 @@ class QuestionController extends Controller
         
         $course = Course::where('slug',$project_slug)->first();
         if($course)
-            $exams = $course->exams;
+            $exams = $course->exams()->orderby('id','desc')->get();
         else    
         $exams =  Exam::orderBy('name','desc ')->get();
 
