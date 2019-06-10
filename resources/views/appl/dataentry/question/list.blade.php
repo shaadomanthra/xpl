@@ -3,18 +3,22 @@
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{$questions->total()}})</th>
-                <th scope="col">Reference</th>
+                <th scope="col">Ref#({{$questions->total()}})</th>
                 <th scope="col">Question </th>
-                <th scope="col">Created at</th>
+                <th scope="col">Level</th>
+                <th scope="col">In Test</th>
               </tr>
             </thead>
             <tbody>
               @foreach($questions as $key=>$question)  
               <tr>
-                <th scope="row">{{ $questions->currentpage() ? ($questions->currentpage()-1) * $questions->perpage() + ( $key + 1) : $key+1 }}</th>
+               
                 <td>
+                  @if(\request()->category_slug)
+                  <a href=" {{ route('category.question',[$project->slug,\request()->category_slug,$question->id]) }} ">
+                  @else
                   <a href=" {{ route('question.show',[$project->slug,$question->id]) }} ">
+                  @endif
                   <div>
                     {!! $question->reference !!}
                   </div>
@@ -25,7 +29,24 @@
                     {!! $question->question !!}
                   </div>
                 </td>
-                <td>{{ ($question->created_at) ? $question->created_at->diffForHumans() : '' }}</td>
+                <td>
+                  @if($question->level )
+                    <span class="badge 
+                      @if($question->level==1)
+                        badge-warning
+                      @elseif($question->level==2)
+                       badge-info
+                      @else
+                        badge-success
+                      @endif">Level {{ $question->level }}
+                    </span>
+                  @endif
+                  </td>
+                  <td>
+                    @if($question->intest)
+                     <span class="badge badge-secondary"> YES</span>
+                    @endif
+                  </td>
               </tr>
               @endforeach      
             </tbody>

@@ -64,6 +64,10 @@
     <a href="{{ route('question.index',['project_slug'=>$project->slug, 'order'=>'asc','orderby'=>'reference'])}}" class="list-group-item list-group-item-action list-group-item-light  {{  request()->get('reference') ? 'active' : ''  }}">
       Reference
     </a>
+
+    <a href="{{ route('question.index',['project_slug'=>$project->slug, 'order'=>'asc','orderby'=>'level','category_slug'=>request()->get('category_slug')])}}" class="list-group-item list-group-item-action list-group-item-light  {{  request()->get('level') ? 'active' : ''  }}">
+      Level
+    </a>
    
   </div>
   </div>

@@ -51,9 +51,23 @@ class QuestionController extends Controller
         $search = $request->search;
         $item = $request->item;
 
+        ($request->category_slug) ? $category_slug = $request->category_slug : $category_slug = null;
         ($request->order) ? $order = $request->order : $order = 'desc';
         ($request->orderby) ? $orderby = $request->orderby : $orderby = 'created_at';
 
+        if($category_slug){
+            $category = Category::where('slug',$category_slug)->first();
+        $qset = $category->questions->pluck('id')->toArray();
+        $questions = $question
+                        ->where(function ($query) use ($item) {
+                                $query->where('question','LIKE',"%{$item}%")
+                                      ->orWhere('reference', 'LIKE', "%{$item}%");
+                            })
+                        ->whereIn('id',$qset)
+                        ->where('project_id',$this->project->id)
+                        ->orderBy($orderby,$order)
+                        ->paginate(500);
+    }else{
         $questions = $question
                         ->where(function ($query) use ($item) {
                                 $query->where('question','LIKE',"%{$item}%")
@@ -61,7 +75,10 @@ class QuestionController extends Controller
                             })
                         ->where('project_id',$this->project->id)
                         ->orderBy($orderby,$order)
-                        ->paginate(config('global.no_of_records'));
+                        ->paginate(500);
+    }
+        
+        
 
         $view = $search ? 'list': 'index';
 
@@ -613,6 +630,9 @@ class QuestionController extends Controller
             abort(403);
 
     }
+
+
+
 
         /**
      * Display the specified resource.

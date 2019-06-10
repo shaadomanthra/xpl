@@ -370,6 +370,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('dataentry','Dataentry\ProjectController')->middleware('auth');
 	Route::resource('dataentry/{project}/category','Dataentry\CategoryController')->middleware('auth');
 	Route::get('dataentry/{project}/category/{category}/question','Dataentry\QuestionController@category')->middleware('auth')->name('category.question');
+	
 	Route::get('dataentry/{project}/category/{category}/question/{id}','Dataentry\QuestionController@category')->middleware('auth')->name('category.question');
 	Route::resource('dataentry/{project}/tag','Dataentry\TagController')->middleware('auth');
 	Route::get('dataentry/{project}/tag/{tag}/question','Dataentry\QuestionController@tag')->middleware('auth')->name('tag.question');

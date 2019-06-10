@@ -19,6 +19,10 @@
             <span class="s15">Questions ({{ count($category->questions)}})</span>
           </a>
 
+          <a href="{{ route('question.index',[$project->slug])}}?category_slug={{$category->slug}}">
+            <span class="s15 badge badge-secondary">Questions List </span>
+          </a>
+
           
         </nav>
 
