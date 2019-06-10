@@ -57,11 +57,11 @@
     <a href="#" class="list-group-item list-group-item-action list-group-item-light  disabled" >
       <h2 class="mb-0"><i class="fa fa-sliders"></i> Order</h2>
     </a>
-    <a href="{{ route('question.index',['project_slug'=>$project->slug,'order'=>'asc','orderby'=>'created_at','category_slug'=>request()->get('category_slug')])}}" class="list-group-item list-group-item-action list-group-item-light  {{  request()->get('created_at') ? 'active' : ''  }}">
+    <a href="{{ route('question.index',['project_slug'=>$project->slug,'order'=>'asc','orderby'=>'created_at' ,'category_slug'=>request()->get('category_slug')])}}" class="list-group-item list-group-item-action list-group-item-light  {{  request()->get('created_at') ? 'active' : ''  }}">
       Created At
     </a>
 
-    <a href="{{ route('question.index',['project_slug'=>$project->slug, 'order'=>'asc','orderby'=>'reference'],'category_slug'=>request()->get('category_slug'))}}" class="list-group-item list-group-item-action list-group-item-light  {{  request()->get('reference') ? 'active' : ''  }}">
+    <a href="{{ route('question.index',['project_slug'=>$project->slug, 'order'=>'asc','orderby'=>'reference' ,'category_slug'=>request()->get('category_slug')])}}" class="list-group-item list-group-item-action list-group-item-light  {{  request()->get('reference') ? 'active' : ''  }}">
       Reference
     </a>
 
