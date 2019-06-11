@@ -379,7 +379,7 @@ class CampusController extends Controller
             $nodes = $category->children;
 
             foreach($course->exams as $exam){
-                $test['exam'][$exam->id] = $campus->analytics_test($college,null,null,$r,null,null,$exam->id);
+                $test['exam'][$exam->id] = $campus->analytics_test($college,$branch_item,$batch_item,$r,null,null,$exam->id);
                 $test['exam'][$exam->id]['name'] = $exam->name;
                 $test['exam'][$exam->id]['url'] = route('campus.tests.show',$exam->slug);
             }
@@ -654,14 +654,37 @@ class CampusController extends Controller
             
         }else if($r->get('practice')){
             $users = $college->users()->pluck('id')->toArray();
-            $user_list = array_unique(Practices_Course::whereIn('course_id',$college->courses()
-                            ->pluck('id')->toArray())
+            if($r->get('course'))
+                $course_id = Course::where('slug',$r->get('course'))->pluck('id')->toArray();
+            else
+                $course_id = $college->courses()->pluck('id')->toArray();
+
+            $user_list = array_unique(Practices_Course::whereIn('course_id',$course_id)
                         ->whereIn('user_id',$users)
                         ->pluck('user_id')->toArray());
+
+            
             
         }else if($r->get('test')){
             $users = $college->users()->pluck('id')->toArray();
-            $user_list = array_unique(Tests_Overall::whereIn('user_id',$users)
+            if($r->get('course')){
+                $course = Course::where('slug',$r->get('course'))->first();
+                $test_id = $course->exams()->pluck('id')->toArray();
+            }
+            else{
+                $test_id = array();
+                if($college->courses()->first())
+                foreach($college->courses as $course){
+                    if($course->exams()->first())
+                    foreach($course->exams as $e)
+                        array_push($test_id,$e->id);
+                }
+                $courses = $college->courses()->pluck('id')->toArray();
+            }
+
+
+            $user_list = array_unique(Tests_Overall::whereIn('test_id',$test_id)
+                        ->whereIn('user_id',$users)
                         ->pluck('user_id')->toArray());
         }
         else{
