@@ -63,6 +63,38 @@
     </tr>
   </tbody>
 </table>
+
+<div class="p-2 bg-light border rounded mb-3">29th May to 11th June 2019</div>
+            <table class="table">
+  <thead>
+    <tr class="border">
+      <th scope="col" class="border border-dark">#</th>
+      <th scope="col" class="border border-dark">Name</th>
+      <th scope="col" class="border border-dark">College</th>
+      <th scope="col" class="border border-dark">Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>J.suryaprakash Reddy</td>
+      <td>Mahatma Gandhi Institute Of Technology - EEE</td>
+      <td>2077</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>P. Laxmi Chandana</td>
+      <td>Anurag Group of institutions - IT</td>
+      <td>1523</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>M v s s s r sahith</td>
+      <td>Maturi Venkata Subba Rao Engineering College - CSE</td>
+      <td>1092</td>
+    </tr>
+  </tbody>
+</table>
         </div>
       </div>
       <div class="col-12 col-md-6">

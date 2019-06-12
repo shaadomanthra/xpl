@@ -5,7 +5,7 @@
 @elseif($category->test_link)
 @section('title', 'Attempt '.$category->name.' | PacketPrep')
 @else
-@section('title', 'Learn '.$category->name.' | PacketPrep')
+@section('title', $category->name.' | PacketPrep')
 @endif
 
 @if($category->video_desc )
@@ -121,7 +121,7 @@
       @if(!$category->test_analysis)
       <a href="{{ route('assessment.instructions',$category->exam->slug)}}">
       <button class="btn btn-success mt-3 btn-lg">
-      View Instruction
+      Take Test
       </button>
       @else
       <a href="{{ route('assessment.analysis',$category->exam->slug)}}">
