@@ -119,7 +119,7 @@ class AmbassadorController extends Controller
                 $amb_user['u'.$amb]['branch'] = ' - ';
 
                 $users = $ambassador->referrals->pluck('id')->toArray();
-                array_push($users, $user->id);
+                array_push($users, $ambassador->id);
 
                 $attempted = Practices_Course::where('course_id',$course_id)
                             ->whereIn('user_id',$users)->sum('attempted');
