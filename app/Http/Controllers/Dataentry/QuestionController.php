@@ -499,12 +499,17 @@ class QuestionController extends Controller
                     ->orderBy('valid_till','desc')
                     ->first();
 
+
                 if($entry){
-                    if(strtotime($entry->valid_till) < strtotime(date('Y-m-d')))
+                    if(strtotime($entry->valid_till) < strtotime(date('Y-m-d'))){
+
+                        
                         return view('appl.course.course.access');
+                    }
                 }
                 else{
 
+                    if($course->products()->first()->price!=0)
                     return view('appl.course.course.access');
                 }
         }
@@ -512,6 +517,7 @@ class QuestionController extends Controller
         
         if(!$entry)
         {
+            if($course->products()->first()->price!=0)
             return view('appl.course.course.access');
         }
 
