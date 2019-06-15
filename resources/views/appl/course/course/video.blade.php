@@ -133,11 +133,12 @@
       </a>
 
       <hr>
-      Practice makes you perfect. So, solve these questions to learn the concepts thoroughly. 
+      <h4>Practice Questions</h4>
+      <p>Practice makes you perfect. So, solve these questions to learn the concepts thoroughly. </p>
 
       <a href="{{route('course.question',[$course->slug,$category->slug,''])}}">
       <button class="btn btn-primary mt-3 btn-lg">
-      Practice Questions
+      Solve Questions
       </button>
       </a>
 
