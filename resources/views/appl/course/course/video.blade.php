@@ -131,6 +131,16 @@
       @endif
     
       </a>
+
+      <hr>
+      Practice makes you perfect. So, solve these questions to learn the concepts thoroughly. 
+
+      <a href="{{route('course.question',[$course->slug,$category->slug,''])}}">
+      <button class="btn btn-primary mt-3 btn-lg">
+      Practice Questions
+      </button>
+      </a>
+
     </div>
 
   </div>
