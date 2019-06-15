@@ -59,7 +59,7 @@
                   @foreach($data['practice_top'] as $k=>$p) 
                   <tr>
                     <td scope="row">{{ ($k+1) }}</td>
-                    <td> {{ $p->user->name }}</td>
+                    <td><a href=" {{ route('admin.user.view',$p->user->username) }} "> {{ $p->user->name }}</a></td>
                     <td>@if($p->user()->first()->colleges()->first())
                       <a href="{{ route('campus.admin')}}?college={{ $p->user()->first()->colleges()->first()->id }}">{{ $p->user()->first()->colleges()->first()->name }}</a>
                         @endif - 

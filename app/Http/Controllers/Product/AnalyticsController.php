@@ -317,13 +317,13 @@ class AnalyticsController extends Controller
         $data['total_score'] = $data['practice_score'] + $data['tests_score'];
 
         $practice_top = Practices_Course::where('course_id',$course_id)
-                        ->whereIn('user_id',$users)->orderBy('attempted','desc')->limit(20)->get();
+                        ->whereIn('user_id',$users)->orderBy('attempted','desc')->limit(50)->get();
     
         $user_array = implode(', ', $users);
         $test_array = implode(', ', $test_id);
         
         if($test_id)
-        $tests_top = DB::select("select user_id, SUM(correct) as sum,SUM(correct) as correct,SUM(incorrect) as wrong,SUM(unattempted) as none  from tests_overall where test_id IN ($test_array) GROUP BY user_id ORDER By sum DESC LIMIT 20");
+        $tests_top = DB::select("select user_id, SUM(correct) as sum,SUM(correct) as correct,SUM(incorrect) as wrong,SUM(unattempted) as none  from tests_overall where test_id IN ($test_array) GROUP BY user_id ORDER By sum DESC LIMIT 50");
         else
         $tests_top = null;
         $users_test_top = [];
