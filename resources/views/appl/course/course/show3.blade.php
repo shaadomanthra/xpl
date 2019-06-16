@@ -136,12 +136,6 @@
 		<img src="{{ asset('img/tcs/mocktest.jpg') }}" class="w-100 border border-primary" />
 	</div>
 	</a>
-
-	<a href="https://packetprep.com/productpage/tcs-nqt-mocktests">
-	<div class="d-block d-md-none">
-		<img src="{{ asset('img/tcs/mocktest_md.jpg') }}" class="w-100 border border-primary" />
-	</div>
-	</a>
 	
 	@endif
 
