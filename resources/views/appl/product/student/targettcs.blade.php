@@ -1,7 +1,7 @@
 @extends('layouts.nowrap-product')
-@section('title', 'Target TCS - Preparation for TCS Ninja National Qualifier Test  | PacketPrep')
-@section('description', 'PacketPrep Target TCS program will help engineering final year students to crack TCS Ninja national qualifier test.')
-@section('keywords', 'quantitative aptitude, mental ability, learning, simple, interesting, logical reasoning, general english, interview skills, tcs, tcs ninja, tcs ninja preparation')
+@section('title', 'Target TCS NQT - Free Preparation for TCS NQT Ninja National Qualifier Test  | PacketPrep')
+@section('description', 'PacketPrep TCS NQT free online course helps students crack tcs offline recruitment with ease')
+@section('keywords', 'tcs, tcs ninja, tcs ninja preparation,tcs nqt, tcs digital, prepare for tcs nqt, study material for tcs nqt')
 
 @section('content')
 <div class="line" style="padding:1px;background:#eee"></div>
@@ -9,7 +9,7 @@
 	<div class="wrapper ">  
 	<div class="container">
 	<div class="row">
-    <div class="col-12 col-md-12">
+    <div class="col-12 col-md-4">
 
        <div class="embed-responsive embed-responsive-16by9 border mb-3" style="background: #eee;">
          <iframe src="https://www.youtube.com/embed/acnBRQNDnJM" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
@@ -17,24 +17,24 @@
 
 
       </div>
-		<div class="col-12 col-md-12">
+		<div class="col-12 col-md-8">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-ravelry"></i> &nbsp;Target TCS
-			
+			<i class="fa fa-ravelry"></i> &nbsp;Target TCS NQT
+			- FREE Online Course to Crack TCS NQT
 			</h1>
-      <p>To help students prepare for TCS Ninja -  National Qualifier Test, PacketPrep is starting a 100 day online training program . This module includes daily concept lectures, practice questions and online assessments covering aptitude, reasoning and coding.  </p>
-      <p> <b>Eligibility :</b> Btech 3rd year ( 2020 passout batch)<br>
+      <p>This is a Free online course to help students prepare for TCS NQT  -  National Qualifier Test. The course includes 100 concept lectures, 700+ practice questions and 100+ online assessments covering quantitative aptitude, programming logic and coding.  </p>
+      <p> <b>Eligibility :</b> Btech 4th year ( 2020 passout batch)<br>
         <b> Stream :</b> All Branches<br>
-      <b>Starts on :</b> 20th May 2019</p>
 
-
-		</div>
-
-    <div class="mt-3 mb-3">
+      <div class="mt-3 mb-3">
       <a href="{{ url('course\targettcs') }}">
       <button class="btn btn-lg btn-success p-3 pr-4 pl-4"><i class="fa fa-send"></i> &nbsp;Open Course Page</button>
       </a>
     </div>
+
+		</div>
+
+    
 		
 	</div>
 	</div>
@@ -43,76 +43,83 @@
 
 <div class="wrapper " >
     <div class="container pb-5" >  
-   
+
+  <a href="https://packetprep.com/productpage/tcs-nqt-mocktests">
+  <div class="d-none d-md-block mb-3">
+    <img src="{{ asset('img/tcs/mocktest.jpg') }}" class="w-100 border border-primary" />
+  </div>
+  </a>
+
+  <a href="https://packetprep.com/productpage/tcs-nqt-mocktests">
+  <div class="d-block d-md-none mb-3">
+    <img src="{{ asset('img/tcs/mocktest_md.jpg') }}" class="w-100 border border-primary" />
+  </div>
+  </a>
+  
 	   <div class="bg-white p-4 border mb-3">
       <div class="row">
 
-        <div class="col-12 col-md-8">
-          <h1 class="mb-4"> What's Included?</h1>
+        <div class="col-12 col-md-12">
+          <h1 class="mb-4"> Important Information</h1>
       <div class="row mb-4">
-        <div class="col-4 col-md-2"><i class="fa fa-4x fa-youtube-play"></i></div>
+        <div class="col-4 col-md-2">
+          <div class="w-100">
+            <a href="https://www.youtube.com/watch?v=bO3Dw8vY13U&list=PLPiOSvowot1I8HGH9N3ZcL4oDGEEqVvTn&index=6">
+            <img src="http://i3.ytimg.com/vi/bO3Dw8vY13U/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+          
+        </div>
         <div class="col-8 col-md-10">
-          <h2> Daily Video Lectures</h2>
-          <p> Every day a new concept will be taught along with 5 solved questions</p>
+          <h2> <a href="https://www.youtube.com/watch?v=bO3Dw8vY13U&list=PLPiOSvowot1I8HGH9N3ZcL4oDGEEqVvTn&index=6">How to register to TCS NQT 2020</a></h2>
+          <p> This video is a detailed walk through of registration for TCS NQT 2020</p>
         </div>
       </div>
       <div class="row mb-4">
-        <div class="col-4 col-md-2"><i class="fa fa-4x fa-newspaper-o"></i></div>
+        <div class="col-4 col-md-2">
+          <div class="w-100">
+            <a href="https://www.youtube.com/watch?v=utk2keCUiu0&list=PLPiOSvowot1I8HGH9N3ZcL4oDGEEqVvTn&index=8">
+            <img src="http://i3.ytimg.com/vi/utk2keCUiu0/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+
+        </div>
         <div class="col-8 col-md-10">
-          <h2> Daily Practice Questions</h2>
-          <p> In sync with the concept for the day, 5 practice questions will be released</p>
+          <h2> <a href="https://www.youtube.com/watch?v=utk2keCUiu0&list=PLPiOSvowot1I8HGH9N3ZcL4oDGEEqVvTn&index=8">TCS NQT 2020 - Detailed Syllabus</a></h2>
+          <p> This lecture gives a detailed syllabus of TCS NQT 2020 pass out <a href="http://bit.ly/tcs-nqt-syllabus-2020">http://bit.ly/tcs-nqt-syllabus-2020</a></p>
         </div>
       </div>
 
       <div class="row mb-4">
-        <div class="col-4 col-md-2"><i class="fa fa-4x fa-tasks"></i></div>
+        <div class="col-4 col-md-2">
+          
+          <div class="w-100">
+            <a href="https://www.youtube.com/watch?v=E64FROe1aXM&list=PLPiOSvowot1I8HGH9N3ZcL4oDGEEqVvTn&index=9">
+            <img src="http://i3.ytimg.com/vi/E64FROe1aXM/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+        </div>
         <div class="col-8 col-md-10">
-          <h2> Daily Online Tests</h2>
-          <p> After practicing, students can attempt a quick 5 question test </p>
+          <h2> <a href="https://www.youtube.com/watch?v=E64FROe1aXM&list=PLPiOSvowot1I8HGH9N3ZcL4oDGEEqVvTn&index=9">
+          TCS NQT 2020 - Test Instructions
+        </a></h2>
+          <p> This lecture highlights the instructions to follow while appearing the TCS NQT test
+          <a href="http://bit.ly/tcs-nqt-instructions">
+           http://bit.ly/tcs-nqt-instructions
+         </a></p>
         </div>
       </div>
         </div>
 
-        <div class="col-12 col-md-4">
-          <h1 class="mb-4"> Program Highlights</h1>
-          <ul>
-            <li>You will learn 100 most important concepts to crack TCS exam</li>
-            <li> Exposure to 1500 questions which is sufficient to master core aptitude concepts</li>
-            <li>This is a quick learning module, if you can spend 15 minutes each day, your chances of success in the exam will multiply</li>
-            <li> Above all, the program is FREE of cost</li>
-
-          </ul>
-
-        </div>
-
+    
      </div>
 
    </div>
 
    
-      <div class="row">
-        
-        <div class="col-12 col-md-6">
-          <div class="bg-white p-4 border mb-4">
-          <h1> Campus Ambassador (3rd year)</h1>
-          <p>Do you have the leadership qualities to take our services to your college? if yes then join us.</p>
-          <a href="{{ route('ambassador')}}">
-          <button class="btn btn-lg btn-outline-secondary">Know more</button>
-        </a>  
-        </div>
+      
 
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="bg-white p-4 border mb-4">
-          <h1> Campus Coordinator (1st & 2nd year)</h1>
-          <p>Do you have the leadership qualities to take our services to your college? if yes then join us.</p>
-          <a href="{{ route('coordinator')}}">
-          <button class="btn btn-lg btn-outline-secondary">Know more</button>
-        </a>  
-        </div>
-
-        </div>
-      </div>
+       
       
    
 
