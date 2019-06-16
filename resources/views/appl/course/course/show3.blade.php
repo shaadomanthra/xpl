@@ -114,16 +114,36 @@
 	</div>
 
 	@if($course->id ==20)
+	<a href="https://packetprep.com/productpage/tcs-nqt-mocktests">
+	<div class="d-block d-md-none">
+		<img src="{{ asset('img/tcs/mocktest_md.jpg') }}" class="w-100 border border-primary" />
+	</div>
+	</a>
 	<div class="bg-light border p-3 mt-3 mb-3">
-		<h1><i class="fa fa-facebook-square"></i> Facebook Group</h1>
-		<p> You can track our posts directly on you facebook feeds by joining this group</p>
-		<a href="https://www.facebook.com/groups/targettcs2019"><button class="btn btn-outline-primary">Join Group</button></a>
+		<h1><i class="fa fa-youtube-play"></i> Youtube Channel</h1>
+		<p> You can track our posts directly on you youtube feeds by subscribing to our channel</p>
+		<a href="https://youtube.com/packetprep"><button class="btn btn-outline-primary">Subscribe Now</button></a>
 	</div>
 	@endif
 	</div>		
 	
 
 	<div class="col-12 col-md-8 col-lg-8 mt-md-1">
+
+	@if($course->id ==20)
+	<a href="https://packetprep.com/productpage/tcs-nqt-mocktests">
+	<div class="d-none d-md-block mb-3">
+		<img src="{{ asset('img/tcs/mocktest.jpg') }}" class="w-100 border border-primary" />
+	</div>
+	</a>
+
+	<a href="https://packetprep.com/productpage/tcs-nqt-mocktests">
+	<div class="d-block d-md-none">
+		<img src="{{ asset('img/tcs/mocktest_md.jpg') }}" class="w-100 border border-primary" />
+	</div>
+	</a>
+	
+	@endif
 
 		@if(\auth::user())
 		@if($ques_count)
