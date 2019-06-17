@@ -52,8 +52,8 @@
              @endif
 
               @if($user->colleges()->first())
-             <p>@if(@if($user->colleges()->first())) {{ $user->colleges()->first()->name }} @endif - 
-             @if($user->branches()->first()) {{  $user->branches()->first()->name  }}@endif </p>
+             <p>@if($user->colleges()->first()) {{ $user->colleges()->first()->name }} @endif - 
+             @if($user->branches()->first()) {{  $user->branches()->first()->name  }} @endif </p>
              @endif
 
             </div>
