@@ -9,644 +9,2423 @@
 
 <url>
   <loc>https://packetprep.com/</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://packetprep.com/course</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/proficiency-test</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/premium</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/targettcs</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/bootcamp</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/fullstackdevelopment</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/login</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://packetprep.com/register</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <loc>https://packetprep.com/register/type</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/about-corporate</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/productpage</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/tracks</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/terms-corporate</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/privacy</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/refund</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/disclaimer</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/sreferral</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
-
+<url>
+  <loc>https://packetprep.com/proficiency-test</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/firstacademy</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/blog</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
 <url>
   <loc>https://packetprep.com/contact-corporate</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.70</priority>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://packetprep.com/course/quantitative-aptitude</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://packetprep.com/course/logical-reasoning</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://packetprep.com/course/mental-ability</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://packetprep.com/course/interview-skills</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://packetprep.com/course/mathematical-logic-gate-cs</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://packetprep.com/course/set-theory-gate-cs</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://packetprep.com/course/free-aptitude-video-lectures</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://packetprep.com/certificate/sample</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <loc>https://packetprep.com/course/study-abroad</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/tcs-nqt-mocktests</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/cb</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/cbp</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://packetprep.com/password/reset</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/pro-access</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/free-aptitude-lectures</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/set-theory-course</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/mathematical-logic-course</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/discrete-mathematics</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/elitmus-premium</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/couches-free-tests</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/aptitude-15</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/cocubes-aptitude-pro</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/premium-access</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/proficiency-test</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/interview-skills</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/mental-ability</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/logical-reasoning</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/productpage/quantitative-aptitude</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/cocubes</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/amcat</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/tcs-nextstep</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/Wipro</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/elitmus</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/accenture</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/Capgemini</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/Cognizant</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/dell</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/deloitte</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/genpact</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/HCL</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/ibm</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/Infosys</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/mindtree</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/mphasis</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/oracle</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/qualcomm</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/tech-mahindra</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/tracks/vmware</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?filter=quantitative-aptitude</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?filter=logical-reasoning</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?filter=mental-ability</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?filter=general-english</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?filter=general</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?filter=elitmus-practice-tests</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?filter=amcat-practice-tests</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?filter=cocubes-practice-tests</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?filter=gate-cs</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/proficiency-test/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/quant1/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/quant2/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/quant3/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/quant4/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/quant5/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/mental-ability-1/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/mental-ability-2/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/mental-ability-3/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/mental-ability-4/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/mental-ability-5/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/logical-reasoning-1/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/logical-reasoning-2/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/logical-reasoning-3/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/logical-reasoning-4/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/logical-reasoning-5/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-1/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-2/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-3/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-4/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-5/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-6/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-7/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-8/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-9/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/cocubes-aptitude-10/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/elitmus-practice-1/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/elitmus-practice-2/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/elitmus-practice-3/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/elitmus-practice-4/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/elitmus-practice-5/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/elitmus-practice-6/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/elitmus-practice-7/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test/elitmus-practice-8/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://packetprep.com/test?page=2</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://packetprep.com/eregister</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/sregister</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/register</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/targettcs</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/coding-for-interviews</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/study-abroad</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/pro-access</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/free-aptitude-lectures</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/set-theory-course</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/mathematical-logic-course</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/discrete-mathematics</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/elitmus-premium</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/aptitude-15</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/cocubes-aptitude-pro</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/premium-access</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/proficiency-test</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/interview-skills</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/mental-ability</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/logical-reasoning</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/quantitative-aptitude</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/cocubes</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/amcat</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/tcs-nextstep</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/Wipro</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/elitmus</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/accenture</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/Capgemini</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/Cognizant</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/dell</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/deloitte</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/genpact</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/HCL</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/ibm</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/Infosys</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/mindtree</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/mphasis</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/oracle</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/qualcomm</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/tech-mahindra</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/tracks/vmware</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=quantitative-aptitude</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=logical-reasoning</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=mental-ability</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=general-english</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=general</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=elitmus-practice-tests</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=amcat-practice-tests</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=cocubes-practice-tests</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=gate-cs</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=pretest</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=posttest</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=targettcs</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/proficiency-test/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/quant1/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/quant2/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/quant3/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/quant4/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/quant5/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/mental-ability-1/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/mental-ability-2/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/mental-ability-3/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/mental-ability-4/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/mental-ability-5/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/logical-reasoning-1/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/logical-reasoning-2/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/logical-reasoning-3/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/logical-reasoning-4/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/logical-reasoning-5/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-1/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-2/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-3/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-4/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-5/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-6/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-7/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-8/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-9/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/cocubes-aptitude-10/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/elitmus-practice-1/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/elitmus-practice-2/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/elitmus-practice-3/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/elitmus-practice-4/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/elitmus-practice-5/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/elitmus-practice-6/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/elitmus-practice-7/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/elitmus-practice-8/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?page=2</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?page=3</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?page=4</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/certificate/sample</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/blog/why-one-should-take-up-mtech</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/blog/live-your-life</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://packetprep.com/ambassador</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/number-classification-primes/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/place-value-face-value/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/units-place-of-exponent/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/number-arithmetic/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/divisibility-and-remainders/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/basic-lcm-hcf/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/fractions-decimals-ratios/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/division-reminder-wordproblems/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/sorting-fractions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/recurring-decimals/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/find-unknown-value/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/fraction-simplification/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/other-type-decimals/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/bodmas-rule/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/fraction-simplification-sim/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/find-unknown-sim/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/divide-distribute-problems/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/simplify-equations/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/other-type-sim/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/introduction-squares/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/basic-questions-squares/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/simplification-of-square-roots/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/perfect-squares/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/find-unknown-value-squares/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/other-types-squares/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/basic-formulae-based-questions-avg/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/addition-removal-items/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/wrong-data-correct-average/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/weighted-averages/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/find-the-unknown-number/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/miscellaneous-questions-pn/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/ratio-problems/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/relationship-data-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/data-sufficiency/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/inverse-indices/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/common-base/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/find-unknown/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/other-type-surds/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/percentage-to-fraction/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/comparison-of-percentages/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/percentage-change/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/limits-of-percentages/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/population/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/expenditure/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/percentage-of-profit/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/percentage-of-loss/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/find-profit-or-loss/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/discounts/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/cost-price-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/introduction-ratio/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/comparing-ratio-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/unknown-proportions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/increment-ratio-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/divide-or-distribute/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/profit-shares-investment/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/new-investor-additional-investment/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/share-or-profit-after-withdrawal/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/direct-proportion/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/indirect-proportion/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/combination-of-efforts/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/efficiency-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/quit-qork-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/other-type-time-work/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/simultaneous-filling/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/simultaneous-filling-emptying/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/rate-of-pipes/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/pipes-turned-off/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/model1/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/model23/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/model4/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/formula-based-questions-trains/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/relative-speed-of-train/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/relative-motion-of-train/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/formula-based-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/ratio-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/speed-related-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/ratio-quantity/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/price-mixture/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/repeated-operations/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/basic-formulae-based-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/two-schemes-diff-rate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/diff-interest-rates-diff-years/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/miscellaneous-questions-si/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/basic-formulae-based-questions-ci/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/simple-compound/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/diff-simple-compound/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/basic-formulae-based-questions-log/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/properties-of-logarithms/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/base-e-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/number-of-digits/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/area-triangles/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/squares-rectangles/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/circles/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/multiple-2d-shapes/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/cube-cuboid/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/cylinders/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/sphere/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/multiple-3d-shapes/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/finding-day/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/number-times-day-month/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/reference-based-day-prediction/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/repetition-calendar/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/based-on-angles/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/type2/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/type3/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/basic-formula-permutations/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/permutation-of-similar-objects/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/objects-position-fixed/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/basic-questions-from-combinations/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/questions-based-on-atleast-clause/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/problems-on-balls-marbles/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/problems-on-rolling-dice/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/problems-on-playing-cards/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/angle-of-elevation/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/quantitative-aptitude/angle-of-depression/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/numbers-topic-test/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/logical-reasoning/arguments/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/logical-reasoning/assumptions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/logical-reasoning/courses-of-action/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/logical-reasoning/conclusions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/logical-reasoning/deriving-conclusions-from-passages/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/logical-reasoning/cause-and-effect-reasoning-lecture/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/analogy/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/sequential-output-tracing/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/classification/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/logical-venn-diagrams/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/direction-sense-test/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/verification-of-truth-of-the-statement/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/situation-reaction-test/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/assertion-and-reason/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/eligibility-test/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/data-sufficiency2/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/inserting-the-missing-character/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/logical-sequence-of-words/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/number-ranking-time-sequence/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/problem-solving-by-substitution/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mental-ability/interchange=of-signs-numbers/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/its-just-a-minute/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/understanding-jam/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/organising-ideas/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/impressive-introduction/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/splendid-conclusion/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/mock-jam-session/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/transitional-words-part-1/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/transitional-words-part-2/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/idioms/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/nouns/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/pronouns/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/parallel-structures/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/things-you-should-not-do-in-a-group-discussion/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/undestanding-gd/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/successful-gd-part-1/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/successful-gd-part-2/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/sentence-starters/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/opinion-statements/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/applying-for-the-right-job/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/preparation-for-interview/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/on-the-day-of-interview/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/a-successful-interview/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/asking-questions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/interview-skills/after-the-interview/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/mathematical-logic-gate-cs_propositions-negation-conjunction/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/mathematical-logic-gate-cs_or-exor-if-then/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/mathematical-logic-gate-cs_tautology-satisfiable-logical-equivalence/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/mathematical-logic-gate-cs_logical-equivalence-laws/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/mathematical-logic-gate-cs_logical-validity/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/mathematical-logic-gate-cs_well-formed-formulae-functionally-complete-normal-forms/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/handwritten-notes-propositional-logic/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/worksheet-propositional-logic/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/mathematical-logic-gate-cs_concept-of-predicates/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/mathematical-logic-gate-cs_equivalence-with-quantifiers/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/mathematical-logic-gate-cs_validity-and-inference-theory-for-quantifiers/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/handwritten-notes-predicate-logic/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/mathematical-logic-gate-cs/worksheet-predicate-logic/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
   <loc>https://packetprep.com/test/mathematical-logic-gate-cs-1/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/basics-of-set-theory-sets-gate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/power-set-gate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/set-operations-gate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/set-identities-gate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/handwritten-notes-sets/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/relations-basics/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/relation-properties/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/number-of-relations-gate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/covering-partition-relations-gate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/equivalence-relation-gate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/handwritten-notes-for-relations/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/functions-introduction/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/types-of-functions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/number-of-onto-functions-gate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/composition-and-inverse-function/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/handwritten-notes-for-functions/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/semigroups-monoids/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/concept-of-groups/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/abelian-group/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/cyclic-groups/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/subgroups-normal-subgroup/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/rings-fields/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/handwritten-notes-for-groups/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/partial-order-hasse-diagram/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/least-greatest-minimal-maximal-partial-order/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/lub-glb-partial-order/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/lattice-introduction-gate/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/properties-of-lattice-distributive-lattice/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/bounded-complete-compliment-lattice/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/set-theory-gate-cs/handwritten-notes-for-partial-order-and-lattice/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/set-theory-gate-cs-1/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>https://packetprep.com/report/proficiency-test/shaadomanthra_xPk3N</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/understanding-jam-apti/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/understanding-group-discussion/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/on-the-day-of-interview-apti/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/verification-of-truth-of-the-statement-apti/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/assertion-and-reason-apti/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/arguments-anti/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/assumptions-anti/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/probability-anti/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/problems-on-ages-apti/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/free-aptitude-video-lectures/simple-interest-apti/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/why-abroad/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/countries-courses/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/planning-preparation/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/requirements-qualifications/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/applying-to-university/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/visa-process/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/handling-failure/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/getting-ready/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/first-week/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/study-abroad/first-academy-gre-ielts/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-check-if-the-given-number-is-even-or-odd/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-check-if-the-given-number-is-a-prime-number/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-check-if-the-given-number-is-palindrome/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-check-if-the-given-number-is-perfect-number/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-check-if-the-given-number-is-armstrong-number/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-find-the-factorial-of-a-number/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-check-if-the-given-number-is-strong-number/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-count-the-digits-of-a-number/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-swap-two-numbers-%28all-methods%29/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-print-fibonacci-series-without-recursion-%E2%98%85-%E2%98%85-%E2%98%85/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-print-hello-world-without-semicolon/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/find-the-largest-of-two-numbers-without-conditional-statement/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-find-the-area-of-a-triangle-when-sides-are-given/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/coding-for-interviews/program-to-find-the-volume-of-a-sphere-when-radius-is-given/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/l1-ratio-proportion-basics/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/ratio-proportion-types/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/l3-statements-arguments/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/l4-reaction-test-reasoning/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/datatypes-programming/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/c-program-even-odd/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/apply-for-right-job-interview-secrets/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-coa/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-coa2/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/l10---statements-and-assumptions---reasoning/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/l11-find-missing-number/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/l12-pointers-programming-concepts/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/prime-coding/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/interview-prep/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-mid1/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/l15-profit-percentage/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-lspr/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-fpol/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-codq/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-loap/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-palindrome/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-otdi/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-sib/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-diir/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-coib/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-docs/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-cp/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-arms/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-strong/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-count-digits/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-factorial/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-fibonacci/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-cooe/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-tawe/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-qoqw/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-tiwq/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-trig1/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-trig2/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-cpswp/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-helloworld/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-largestnum/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-funcio/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-opdma/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-stun/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-numsim/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-fracsim/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-algun/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-divdis/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-algequ/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/course/targettcs/targettcs-gensim/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-1/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-2/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-3/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-4/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-5/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-6/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-7/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-8/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-9/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/tcs-nqt-10/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/elitmus-practice-9/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/elitmus-practice-10/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/pretest-cause-effect/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/posttest-cause-effect/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/productpage/couches-free-tests</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-10/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-9/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-8/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-7/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-6/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-5/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-4/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-3/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-2/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test/amcat-1/details</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-gensim/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-algequ/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-divdis/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-algun/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-fracsim/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-numsim/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-stun/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-opdma/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-funcio/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-trig2/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-trig1/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-tiwq/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-qoqw/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-tawe/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-cooe/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-docs/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-coib/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-diir/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/target-tcs-test-16---simple-interest-basics/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-loap/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-codq/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-fpol/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-lspr/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-prpe/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-mid1/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-ptr/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test?filter=targettcs&amp;page=2</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-rpb/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-rpt/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-starg/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-rt/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-pbt/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-avg1/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-avg2/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/targettcs-asmp/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://packetprep.com/test/target-tcs-test-9---insert-missing-character/details</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
   <loc>https://packetprep.com/test?page=1</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>https://packetprep.com/job/campus-ambassador</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <loc>https://packetprep.com/report/proficiency-test/shaadomanthra_xPk3N</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.51</priority>
 </url>
 <url>
-  <loc>https://packetprep.com/job</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
+  <loc>https://packetprep.com/course/mental-ability/number-series/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
   <priority>0.41</priority>
 </url>
 <url>
-  <loc>https://packetprep.com/job/gatecs-student-internship</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.33</priority>
+  <loc>https://packetprep.com/course/mental-ability/alphabet-series/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.41</priority>
 </url>
 <url>
-  <loc>https://packetprep.com/job/2d-animator</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.33</priority>
+  <loc>https://packetprep.com/course/mental-ability/alpha-numeric-series/view</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.41</priority>
 </url>
 <url>
-  <loc>https://packetprep.com/job/faculty-cs</loc>
-  <lastmod>2019-02-01T10:21:37+00:00</lastmod>
-  <priority>0.33</priority>
+  <loc>https://packetprep.com/test?filter=targettcs&amp;page=1</loc>
+  <lastmod>2019-06-17T01:56:18+00:00</lastmod>
+  <priority>0.41</priority>
 </url>
 
 
