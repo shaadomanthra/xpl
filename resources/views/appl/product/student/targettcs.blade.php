@@ -58,8 +58,73 @@
   
 	   <div class="bg-white p-4 border mb-3">
       <div class="row">
+           <div class="col-12 col-md-7">
+          <h1 class="mb-4"> Study Material - FREE Video Lectures</h1>
+      <div class="row mb-4">
+        <div class="col-4 col-md-2">
+          <div class="w-100">
+            <a href="https://www.youtube.com/playlist?list=PLPiOSvowot1KAgZMjgn1v1peaJb6Kqt8s">
+            <img src="http://i3.ytimg.com/vi/acnBRQNDnJM/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+          
+        </div>
+        <div class="col-8 col-md-10">
+          <h2> <a href="https://www.youtube.com/playlist?list=PLPiOSvowot1KAgZMjgn1v1peaJb6Kqt8s">Complete Course - TCS NQT</a></h2>
+          <p> A 100 day Free online training to help students crack TCS Ninja National Qualifier Test. This course extensively covers all the concepts required for TCS Exam with 500+ practice questions and 50+ Tests.</p>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-4 col-md-2">
+          <div class="w-100">
+            <a href="https://www.youtube.com/watch?v=MpoCnjEBAaM&list=PLPiOSvowot1Kwf5rR42pG54sW6QddeNRP">
+            <img src="http://i3.ytimg.com/vi/MpoCnjEBAaM/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
 
-        <div class="col-12 col-md-12">
+        </div>
+        <div class="col-8 col-md-10">
+          <h2> <a href="https://www.youtube.com/watch?v=MpoCnjEBAaM&list=PLPiOSvowot1Kwf5rR42pG54sW6QddeNRP">Quantitative Aptitude for TCS NQT </a></h2>
+          <p> If you are preparing for TCS National Qualifier Test (TCS NQT) or TCS Ninja or TCS Digital then this playlist would help you go through all the quantitative aptitude concepts</p>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-4 col-md-2">
+          
+          <div class="w-100">
+            <a href="https://www.youtube.com/playlist?list=PLPiOSvowot1LOaRMDI0w5LXuKA1fCwDgQ">
+            <img src="http://i3.ytimg.com/vi/0TNF9QcJOk8/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+        </div>
+        <div class="col-8 col-md-10">
+          <h2> <a href="https://www.youtube.com/playlist?list=PLPiOSvowot1LOaRMDI0w5LXuKA1fCwDgQ">
+          Coding Questions for TCS NQT
+        </a></h2>
+          <p> This playlist will help you master the c programming to write a proper error free code. These lectures are mainly useful for TCS National Qualifier Test (TCS NQT) and TCS Ninja and TCS Digital</p>
+        </div>
+      </div>
+
+         <div class="row mb-4">
+        <div class="col-4 col-md-2">
+          
+          <div class="w-100">
+            <a href="https://www.youtube.com/playlist?list=PLPiOSvowot1I-rpvWorKkTSDanrzrVF8G">
+            <img src="http://i3.ytimg.com/vi/2tfP-hwBeDw/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+        </div>
+        <div class="col-8 col-md-10">
+          <h2> <a href="https://www.youtube.com/playlist?list=PLPiOSvowot1I-rpvWorKkTSDanrzrVF8G">
+          Programming Concepts for TCS NQT
+        </a></h2>
+          <p> Prepare for TCS Programming Concept sections from this playlist. We have taken absolute care to build really good lectures to refresh your programming basics. </p>
+        </div>
+      </div>
+        </div>
+
+        <div class="col-12 col-md-5">
           <h1 class="mb-4"> Important Information</h1>
       <div class="row mb-4">
         <div class="col-4 col-md-2">
