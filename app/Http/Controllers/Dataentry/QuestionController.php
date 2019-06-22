@@ -595,8 +595,8 @@ class QuestionController extends Controller
                 $passage = Passage::where('id',$question->passage_id)->first();
                 $questions = $category->questions()->wherePivot('intest','!=',1)->get();
 
-                if(request()->get('debug'))
-                dd($questions);
+                //if(request()->get('debug'))
+                //dd($questions);
 
                 $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'category']; 
             
@@ -1148,6 +1148,8 @@ class QuestionController extends Controller
     {
         $question = Question::where('id',$question_id)->first();
         $question->intest = 1;
+        $category  = $question->categories()->first()->pluck('id');
+        $question->categories()->updateExistingPivot($category, array('intest' => $question->intest)); 
         $question->save();
     }
 
@@ -1155,6 +1157,8 @@ class QuestionController extends Controller
     {
         $question = Question::where('id',$question_id)->first();
         $question->intest = 0;
+        $category  = $question->categories()->first()->pluck('id');
+        $question->categories()->updateExistingPivot($category, array('intest' => $question->intest)); 
         $question->save();
     }
 
