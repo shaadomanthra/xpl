@@ -1148,8 +1148,13 @@ class QuestionController extends Controller
     {
         $question = Question::where('id',$question_id)->first();
         $question->intest = 1;
-        $category  = $question->categories()->first()->pluck('id');
-        $question->categories()->updateExistingPivot($category, array('intest' => $question->intest)); 
+        if($question->categories->first())
+        {
+            $category  = $question->categories->first()->id;
+             $question->categories()->updateExistingPivot($category, array('intest' => $question->intest)); 
+        }
+
+       
         $question->save();
     }
 
@@ -1157,8 +1162,12 @@ class QuestionController extends Controller
     {
         $question = Question::where('id',$question_id)->first();
         $question->intest = 0;
-        $category  = $question->categories()->first()->pluck('id');
-        $question->categories()->updateExistingPivot($category, array('intest' => $question->intest)); 
+        if($question->categories->first())
+        {
+            $category  = $question->categories->first()->id;
+             $question->categories()->updateExistingPivot($category, array('intest' => $question->intest)); 
+        }
+        
         $question->save();
     }
 
