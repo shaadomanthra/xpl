@@ -565,8 +565,12 @@ class QuestionController extends Controller
 
             $list = array_intersect($ques_tag, $ques_category);
             $id = reset($list);
-            }else
+            }else{
                 $id=$category->questions()->wherePivot('intest','!=',1)->pluck('id')->toArray()[0];
+
+            }
+
+
 
              
         }
@@ -590,7 +594,9 @@ class QuestionController extends Controller
 
                 $passage = Passage::where('id',$question->passage_id)->first();
                 $questions = $category->questions()->wherePivot('intest','!=',1)->get();
-                //dd($question);
+
+                if(request()->get('debug'))
+                dd($questions);
 
                 $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'category']; 
             
