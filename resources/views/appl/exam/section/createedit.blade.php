@@ -76,7 +76,7 @@
 
        <div class="form-group">
         <label for="formGroupsectionspleInput ">Time in minutes</label>
-        <input type="text" class="form-control" name="time" id="formGroupsectionspleInput" placeholder="Enter the time in seconds" 
+        <input type="text" class="form-control" name="time" id="formGroupsectionspleInput" placeholder="Enter the time in minutes" 
             @if($stub=='Create')
             value="{{ (old('time')) ? old('time') : '' }}"
             @else

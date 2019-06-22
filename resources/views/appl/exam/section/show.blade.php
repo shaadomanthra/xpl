@@ -46,6 +46,18 @@
               {{ $section->negative}}
             </div>
           </div>
+           <div class="row mb-2">
+            <div class="col-md-4">Questions</div>
+            <div class="col-md-8">
+              {{ count($section->questions)}}
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-4">Time</div>
+            <div class="col-md-8">
+              {{ $section->time}}min
+            </div>
+          </div>
           
           <div class="row mb-2">
             <div class="col-md-4">Instructions</div>
