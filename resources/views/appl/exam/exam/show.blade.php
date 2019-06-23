@@ -74,7 +74,7 @@
             <div class="col-md-4">Sections</div>
             <div class="col-md-8">
               @foreach($exam->sections as $section)
-                <a href="{{ route('sections.show',[$exam->slug,$section->id]) }}">{{ $section->name }} ({{ count($section->questions)}})</a> | {{ $section->time }}min | +{{$section->mark}} @if($section->negative) & -{{ $section->negative}} @endif
+                <a href="{{ route('sections.show',[$exam->slug,$section->id]) }}">{{ $section->name }} ({{ count($section->questions)}})</a> | {{ $section->time }}min | +{{$section->mark}} @if($section->negative) & -{{ $section->negative}} @endif <br>
               @endforeach
             </div>
           </div>
