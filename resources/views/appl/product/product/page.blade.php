@@ -96,7 +96,7 @@
               @if(!$entry)
               
               <a href="{{ route('checkout')}}?product={{$product->slug}}">
-                <button class="btn btn-outline-primary btn-lg ">
+                <button class="btn btn-success btn-lg ">
                 @if($product->price==0)
                 Access Now
                 @else
@@ -114,7 +114,7 @@
 
                @if(strtotime(\auth::user()->products->find($product->id)->pivot->valid_till) < strtotime(date('Y-m-d')))
                <a href="{{ route('checkout')}}?product={{$product->slug}}">
-                <button class="btn btn-outline-primary btn-lg ">
+                <button class="btn btn-success btn-lg ">
                 @if($product->price==0)
                 Access Now
                 @else
