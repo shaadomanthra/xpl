@@ -132,6 +132,7 @@
     
       </a>
 
+      @if(count($category->questions()->wherePivot('intest','!=',1)->get())!=0)
       <hr>
       <h4>Practice Questions</h4>
       <p>Practice makes you perfect. So, solve these questions to learn the concepts thoroughly. </p>
@@ -141,9 +142,11 @@
       Solve Questions
       </button>
       </a>
+      @endif
 
-      <hr>
+      
       @if($course->id ==20)
+      <hr>
   <a href="https://packetprep.com/productpage/tcs-nqt-mocktests">
   <div class="d-none d-md-block mb-3">
     <img src="{{ asset('img/tcs/mocktest.jpg') }}" class="w-100 border border-primary" />
@@ -218,7 +221,12 @@
 
   @else
   <div class="bg-white p-4 border ">
-    <h1><i class="fa fa-youtube-play"></i> {{ $category->name }} <span class="badge badge-warning">Practice {{ count($category->questions()->wherePivot('intest','!=',1)->get())}}Q</span></h1>
+    <h1><i class="fa fa-youtube-play"></i> {{ $category->name }}
+
+     @if(count($category->questions()->wherePivot('intest','!=',1)->get())!=0)
+     <span class="badge badge-warning">Practice {{ count($category->questions()->wherePivot('intest','!=',1)->get())}}Q</span>
+     @endif
+   </h1>
     <p>{!! $category->video_desc !!}</p>
 
 
