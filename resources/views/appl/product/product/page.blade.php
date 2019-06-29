@@ -89,7 +89,47 @@
           </div>
           <hr>
 
-          
+                   <div class="row mb-2">
+            <div class="col-12 col-md-4"></div>
+            <div class="col-12 col-md-8">
+
+              @if(!$entry)
+              
+              <a href="{{ route('checkout')}}?product={{$product->slug}}">
+                <button class="btn btn-outline-primary btn-lg ">
+                @if($product->price==0)
+                Access Now
+                @else
+                Buy Now
+                @endif
+                </button>
+              </a>
+              @else
+
+
+              <div class=" border p-3 rounded bg-light mb-3"><h1>Service is activated - validity upto<br>
+                 <span class="badge badge-primary">{{ date('d M Y', strtotime(\auth::user()->products->find($product->id)->pivot->valid_till)) }}</span>
+                 </h1>
+               </div>
+
+               @if(strtotime(\auth::user()->products->find($product->id)->pivot->valid_till) < strtotime(date('Y-m-d')))
+               <a href="{{ route('checkout')}}?product={{$product->slug}}">
+                <button class="btn btn-outline-primary btn-lg ">
+                @if($product->price==0)
+                Access Now
+                @else
+                Buy Now
+                @endif
+                </button>
+              </a>
+              @endif
+
+
+              @endif
+
+            </div>
+          </div>
+          <hr>  
 
           
 
@@ -148,46 +188,7 @@
           </div>
            @endif 
 
-           <div class="row mb-2">
-            <div class="col-12 col-md-4"></div>
-            <div class="col-12 col-md-8">
 
-              @if(!$entry)
-              
-              <a href="{{ route('checkout')}}?product={{$product->slug}}">
-                <button class="btn btn-outline-primary btn-lg ">
-                @if($product->price==0)
-                Access Now
-                @else
-                Buy Now
-                @endif
-                </button>
-              </a>
-              @else
-
-
-              <div class=" border p-3 rounded bg-light mb-3"><h1>Service is activated - validity upto<br>
-                 <span class="badge badge-primary">{{ date('d M Y', strtotime(\auth::user()->products->find($product->id)->pivot->valid_till)) }}</span>
-                 </h1>
-               </div>
-
-               @if(strtotime(\auth::user()->products->find($product->id)->pivot->valid_till) < strtotime(date('Y-m-d')))
-               <a href="{{ route('checkout')}}?product={{$product->slug}}">
-                <button class="btn btn-outline-primary btn-lg ">
-                @if($product->price==0)
-                Access Now
-                @else
-                Buy Now
-                @endif
-                </button>
-              </a>
-              @endif
-
-
-              @endif
-
-            </div>
-          </div>
           
         
          
