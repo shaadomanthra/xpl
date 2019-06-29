@@ -581,6 +581,7 @@ class QuestionController extends Controller
 
            
             $question = Question::where('id',$id)->first();
+            $question = $question->dynamic_variable_replacement();
 
            // $this->authorize('view', $question);
 
