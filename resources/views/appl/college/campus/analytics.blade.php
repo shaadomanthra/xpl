@@ -4,7 +4,7 @@
 	 	<div class="col-12 col-md-6" >
 	 		<div class="" style="background: rgba(229, 80, 57, 0.12);min-height: 340px" >
 	 			<div class="p-3 display-4 text-white" style="background: #e55039"> Practice 
-	 				<a href="{{ route('campus.students')}}?practice=true">
+	 				<a href="{{ route('campus.student_table')}}?practice=true&batch={{request()->get('batch')}}@if(request()->get('branch'))&branch={{request()->get('branch')}} @endif @if(request()->get('batch_code'))&batch_code={{request()->get('batch_code')}} @endif">
 	 				<span class="float-right text-white"><i class="fa fa-user"></i> {{$practice['item']['participants']}}</span>
 	 				</a>
 	 			</div>
@@ -21,7 +21,7 @@
 			 			<div class="p-4 " >
 			 				<div class="display-5 mb-3"> <i class="fa fa-user"></i> Participants </div>
 			 				<div class="display-4">
-			 				<a href="{{ route('campus.students')}}?practice=true" class="text-dark">{{$practice['item']['participants']}}
+			 				<a href="{{ route('campus.student_table')}}?practice=true&batch={{request()->get('batch')}}@if(request()->get('branch'))&branch={{request()->get('branch')}} @endif @if(request()->get('batch_code'))&batch_code={{request()->get('batch_code')}} @endif" class="text-dark">{{$practice['item']['participants']}}
 			 				</a></div>
 			 			</div>
 			 			<div class="p-2"></div>
@@ -51,7 +51,7 @@
 	 	<div class="col-12 col-md-6">
 	 		<div class="" style="background: rgba(56, 173, 169, 0.28);min-height: 340px">
 	 			<div class="p-3 display-4 text-white" style="background: #38ada9"> Tests
-	 				<a href="{{ route('campus.students')}}?test=true">
+	 				<a href="{{ route('campus.student_table')}}?test=true&batch={{request()->get('batch')}}@if(request()->get('branch'))&branch={{request()->get('branch')}} @endif @if(request()->get('batch_code'))&batch_code={{request()->get('batch_code')}} @endif">
 	 				<span class="float-right text-white"><i class="fa fa-user"></i> {{$test['item']['participants']}}</span>
 	 				</a>
 	 			</div>
@@ -103,10 +103,12 @@
 	  <tbody>
 
 	    @foreach($practice['items'] as $k=>$batch)
+	
 	    <tr>
 	      <th scope="row">{{++$k}}</th>
 	      <td><a href="{{$batch->url}}">{{$batch->name}}  </a></td>
-	      <td>{{$practice['item'][$batch->id]['participants']}}  </td>
+	      <td><a href="{{ $batch->url_participants}}">
+	      	{{$practice['item'][$batch->id]['participants']}} </a> </td>
 	      <td>
 	      	<div class="mb-3" style="font-weight: 100"> {{$practice['item'][$batch->id]['completion']}}%</div>
 	      	<div class="progress " style="height: 3px">

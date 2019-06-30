@@ -456,4 +456,83 @@ class Campus extends Model
         return $data_tests;
     }
 
+    public function userlist_batch($college,$b){
+        if($b==1){
+            $batch_ids = Batch::where('college_id',$college->id)->pluck('id');
+            return DB::table('batch_user')->whereIn('batch_id', $batch_ids)->pluck('user_id')->toArray();
+        }else{
+            $batch = Batch::where('slug',$b)->first();
+            
+            $users_batches = $batch->users()->pluck('id')->toArray();
+            return array_intersect($users_batches,$this->userlist_college($college)); 
+
+        }
+            
+    }
+
+    public function userlist_branch($college,$b){
+            $branch = Branch::where('name',$b)->first();
+            $users_branches = $branch->users()->pluck('id')->toArray();
+            return array_intersect($users_branches,$this->userlist_college($college)); 
+    }
+
+    public function userlist_college($college){
+            return $college->users()->pluck('id')->toArray();
+    }
+
+    public function userlist_course($course_id,$user_list){
+            return array_unique(Practices_Course::whereIn('course_id',$course_id)
+                        ->whereIn('user_id',$user_list)
+                        ->pluck('user_id')->toArray());
+    }
+
+    public function userlist_topic($topic_id,$user_list){
+            return array_unique(Practices_Topic::whereIn('category_id',$topic_id)
+                        ->whereIn('user_id',$user_list)
+                        ->pluck('user_id')->toArray());
+    }
+
+    public function userlist_pratice($userlist,$college,$topic=null){
+        $data=array();
+        $item_id = array();
+        if($topic){
+            
+            $nodes = Category::descendantsAndSelf($topic->id);
+            $ids = $nodes->pluck('id')->toArray();
+                foreach($ids as $id)
+                array_push($item_id,$id);
+        
+        }else{
+
+            
+            $courses = $college->courses;
+            foreach($courses as $c){
+                $project = Project::where('slug',$c->slug)->first();
+                $category = Category::where('slug',$project->slug)->first();
+                $nodes = Category::descendantsAndSelf($category->id);
+                $ids = $nodes->pluck('id')->toArray();
+
+                foreach($ids as $id)
+                array_push($item_id,$id);
+                
+            }
+
+        }
+
+        $practice_data = Practices_Topic::whereIn('category_id',$item_id)
+                        ->whereIn('user_id',$userlist)->get()->groupBy('user_id');
+        
+            
+            $total = DB::table('category_question')->whereIn('category_id', $item_id)->where('intest',0)->count();
+
+            foreach($practice_data as $user_id => $p){
+                $data[$user_id] = array("total"=>$total,"solved"=>0,"time"=>0,"correct"=>0,"participants"=>0,"avg_solved"=>0,"completion"=>0,"accuracy"=>0);
+                $data[$user_id] = $this->getData($data[$user_id],$p);
+            }
+            return $data;
+
+    }
+
+
+
 }

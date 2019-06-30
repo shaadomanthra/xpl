@@ -3,7 +3,11 @@
 	 <div class="row mt-4 no-gutters">
 	 	<div class="col-12 @if($test['item']['count']) col-md-7 @else col-md-12 @endif" >
 	 		<div class="" style="background: rgba(229, 80, 57, 0.12);min-height: 342px" >
-	 			<div class="p-3 display-4 text-white" style="background: #e55039"> Practice</div>
+	 			<div class="p-3 display-4 text-white" style="background: #e55039"> Practice
+				<a href="{{ route('campus.student_table')}}?practice=true&topic={{$category->slug}}&batch={{request()->get('batch')}}@if(request()->get('branch'))&branch={{request()->get('branch')}} @endif @if(request()->get('batch_code'))&batch_code={{request()->get('batch_code')}} @endif">
+	 				<span class="float-right text-white"><i class="fa fa-user"></i> {{$practice['item']['participants']}}</span>
+	 				</a>
+	 			</div>
 
 	 			<div class="row">
 	 				<div class="col-6">
@@ -21,7 +25,10 @@
 			 				<div class="display-4">{{$practice['item']['solved']}}/{{$practice['item']['total']}}</div>
 			 				@else
 			 				<div class="display-5 mb-3"> <i class="fa fa-user"></i> Participants </div>
-			 				<div class="display-4">{{$practice['item']['participants']}}</div>
+			 				<div class="display-4">
+			 				<a href="{{ route('campus.student_table')}}?practice=true&topic={{$category->slug}}&batch={{request()->get('batch')}}@if(request()->get('branch'))&branch={{request()->get('branch')}} @endif @if(request()->get('batch_code'))&batch_code={{request()->get('batch_code')}} @endif">{{$practice['item']['participants']}}
+			 				</a>
+			 				</div>
 			 				@endif
 			 				
 			 			</div>
@@ -52,7 +59,9 @@
 	 	@if($test['item']['count'])
 	 	<div class="col-12 col-md-5">
 	 		<div class="" style="background: rgba(56, 173, 169, 0.28);min-height: 340px">
-	 			<div class="p-3 display-4 text-white" style="background: #38ada9"> Tests</div>
+	 			<div class="p-3 display-4 text-white" style="background: #38ada9"> Tests <a href="{{ route('campus.student_table')}}?test=true&batch={{request()->get('batch')}}@if(request()->get('branch'))&branch={{request()->get('branch')}} @endif @if(request()->get('batch_code'))&batch_code={{request()->get('batch_code')}} @endif">
+	 				<span class="float-right text-white"><i class="fa fa-user"></i> {{$test['item']['participants']}}</span>
+	 				</a></div>
 	 			<div class="pt-4  pr-4 pl-4 pb-1" >
 	 				<div class="display-5 mb-3"> <img src="{{ asset('/img/medals/excellent.png')}}" style="width:20px;"  />&nbsp;<b>Excellent </b> <span style="color:#39aca9;" >{{$test['item']['excellent']}} / {{$test['item']['participants']}} </span><span class="float-right " style="color:#39aca9;">{{$test['item']['excellent_percent']}}%</span></div>
 	 				<div class="progress"  style="height: 8px;">
@@ -106,7 +115,7 @@
 	    <tr>
 	      <th scope="row">{{++$k}}</th>
 	      <td><a href="{{$batch->url}}">{{$batch->name}}  </a></td>
-	      <td>{{$practice['item'][$batch->id]['participants']}}  </td>
+	      <td><a href="{{ $batch->url_participants}}">{{$practice['item'][$batch->id]['participants']}}  </a></td>
 	      <td>
 	      	<div class="mb-3" style="font-weight: 100"> {{$practice['item'][$batch->id]['completion']}}%</div>
 	      	<div class="progress " style="height: 3px">

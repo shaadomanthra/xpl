@@ -72,6 +72,8 @@ class CampusController extends Controller
             foreach($practice['items'] as $k=> $item){
 
                 $practice['items'][$k]->url = route('campus.courses.show',$item->slug).'?branch='.$branch_item->name;
+                $practice['items'][$k]->url_participants = route('campus.student_table').'?practice=true&topic='.$item->slug.'&branch='.$branch_item->name;
+
                 if($college_id){
                     $practice['items'][$k]->url = $practice['items'][$k]->url.'&college_id='.$college_id;
                 }
@@ -95,6 +97,7 @@ class CampusController extends Controller
             foreach($practice['items'] as $k=> $item){
 
                 $practice['items'][$k]->url = route('campus.courses.show',$item->slug).'?batch=1&batch_code='.$batch_code;
+                $practice['items'][$k]->url_participants = route('campus.student_table').'?practice=true&topic='.$item->slug.'&batch=1&batch_code='.$batch_code;
                 if($college_id){
                     $practice['items'][$k]->url = $practice['items'][$k]->url.'&college_id='.$college_id;
                 }
@@ -103,6 +106,7 @@ class CampusController extends Controller
             }
         }
         
+
         
         if(!$batch_item && !$branch_item){
              // Practice Analytics
@@ -117,6 +121,7 @@ class CampusController extends Controller
                 $practice['item_name'] = 'Batches';
                 foreach($practice['items'] as $k=> $item){
                         $practice['items'][$k]->url = route('campus.admin').'?batch_code='.$item->slug;
+                        $practice['items'][$k]->url_participants = route('campus.student_table').'?practice=true&batch=1&batch_code='.$item->slug;
                         if($college_id){
                             $practice['items'][$k]->url = $practice['items'][$k]->url.'&college_id='.$college_id;
                         }
@@ -128,10 +133,12 @@ class CampusController extends Controller
                     $practice['item'][$branch->id] = $campus->getAnalytics($college,$branch,null,$r);
                 }
                 $practice['item_name'] = 'Branches';
+                $practice['item_tag'] = 'branch';
                 $practice['items'] = $college->branches()->orderBy('id')->get(); 
                 //dd($practice);
                 foreach($practice['items'] as $k=> $item){
                         $practice['items'][$k]->url = route('campus.admin').'?branch='.$item->name;
+                        $practice['items'][$k]->url_participants = route('campus.student_table').'?practice=true&branch='.$item->name;
                         if($college_id){
                             $practice['items'][$k]->url = $practice['items'][$k]->url.'&college_id='.$college_id;
                         }
@@ -340,7 +347,7 @@ class CampusController extends Controller
         if($batch_code){
             $batch_item = Batch::where('slug',$r->get('batch_code'))->first();
             $practice['batch_branch'] = $batch_item->name;
-            $url_parameters = $url_parameters.'&batch_code='.$batch_item->name;
+            $url_parameters = $url_parameters.'&batch_code='.$batch_item->slug;
         }else{
             $batch_item = null;
         }
@@ -358,6 +365,7 @@ class CampusController extends Controller
             foreach($practice['items'] as $k=> $item){
                 $practice['items'][$k]->url = 
                         route('campus.courses.show',$course->slug).'?topic='.$item->slug.$url_parameters;
+                $practice['items'][$k]->url_participants = route('campus.student_table').'?practice=true&topic='.$item->slug.$url_parameters;
                     
                 if($item->exam_id){
                     
@@ -389,6 +397,7 @@ class CampusController extends Controller
             foreach($practice['items'] as $k=> $item){
 
                 $practice['items'][$k]->url = route('campus.courses.show',$course->slug).'?topic='.$item->slug.$url_parameters;
+                 $practice['items'][$k]->url_participants = route('campus.student_table').'?practice=true&topic='.$item->slug.$url_parameters;
             }
         }
 
@@ -708,6 +717,105 @@ class CampusController extends Controller
             ->with('branches',$branches);
     }
 
+    public function student_table(Request $r){
+
+        $obj = new CampusController;
+        $campus = new Campus;
+
+        if(request()->session()->get('college')){
+            $col = request()->session()->get('college')['id'];
+            $college =  College::where('id',$col)->first();
+        }else
+            $college = \auth::user()->colleges()->first();
+                
+        $this->authorize('manage', $college);
+
+        $item = array();
+        $item['batch'] = null;
+        $item['branch']= null;
+        $item['course'] = null;
+        $item['topic'] = null;
+
+        if($r->get('branch')){
+            $item['branch'] = Branch::where('name',$r->get('branch'))->first();
+            $user_list = $campus->userlist_branch($college,$r->get('branch'));
+        }else if($r->get('batch_code')){
+            $item['batch'] = Batch::where('slug',$r->get('batch_code'))->first();
+            $user_list = $campus->userlist_batch($college,$r->get('batch_code'));
+        }else{
+            $user_list = $campus->userlist_college($college);
+        }
+
+
+        $user_list2 = null;
+        if($r->get('practice')){
+            if($r->get('topic')){
+                $item['topic'] = Category::where('slug',$r->get('topic'))->first();
+                $category = $item['topic'];
+                $topic_id = $category->descendantsAndSelf($category)->pluck('id')->toArray();
+                $user_list2 = $campus->userlist_topic($topic_id,$user_list);
+            }
+            else{
+                $course_id = $college->courses()->pluck('id')->toArray();
+                $user_list2 = $campus->userlist_course($course_id,$user_list);
+            }
+
+            
+            
+        }else if($r->get('test')){
+            if($r->get('course')){
+                $course = Course::where('slug',$r->get('course'))->first();
+                $item['course'] = $course;
+                $test_id = $course->exams()->pluck('id')->toArray();
+            }
+            else{
+                $test_id = array();
+                if($college->courses()->first())
+                foreach($college->courses as $course){
+                    if($course->exams()->first())
+                    foreach($course->exams as $e)
+                        array_push($test_id,$e->id);
+                }
+                $courses = $college->courses()->pluck('id')->toArray();
+            }
+
+
+            $user_list2 = array_unique(Tests_Overall::whereIn('test_id',$test_id)
+                        ->whereIn('user_id',$user_list)
+                        ->pluck('user_id')->toArray());
+        }
+        
+
+
+        if(count($user_list2)){
+            $user_list = array_intersect($user_list,$user_list2); 
+        }else{
+            // when no one participated
+            $user_list = $user_list2;
+        }
+
+        if(count($user_list)){
+            
+            $data = $campus->userlist_pratice($user_list,$college,$item['topic']);
+
+        }
+
+        $item_ = $r->item;
+        $search = $r->search;
+         
+        $view = $search ? 'student_table': 'student_table';
+
+        $users = User::whereIn('id',$user_list)->where('name','LIKE',"%{$item_}%")
+                ->orderBy('created_at','desc ')
+                ->paginate(config('global.no_of_records'));
+
+        return view('appl.college.campus.'.$view)
+            ->with('users',$users)
+            ->with('item',$item)
+            ->with('college',$college)
+            ->with('data',$data)
+            ->with('total',count($user_list));
+    }
     public function student_show(Request $r){
 
     	return view('appl.college.campus.student_show');
