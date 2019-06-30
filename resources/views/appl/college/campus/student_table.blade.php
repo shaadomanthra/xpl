@@ -38,8 +38,10 @@
                 <th scope="col">Name</th>
                 <th scope="col" class="" >Branch</th>
                 <th scope="col" class="" >Roll number</th>
+                @if(request()->get('practice'))
                 <th scope="col" class="" >Completion</th>
                 <th scope="col" class="" >Accuracy</th>
+                @endif
                 
               </tr>
             </thead>
@@ -50,6 +52,7 @@
           <td><a href="{{ route('campus.courses')}}?student={{$user->username}}">{{$user->name}}  </a></td>
           <td>{{ ($user->branches()->first())?$user->branches()->first()->name:'-'}} </td>
           <td>{{ ($user->details()->first())?$user->details()->first()->roll_number:'-'}}</td>
+          @if(request()->get('practice'))
           <td>
             <div class="mb-3" style="font-weight: 100"> {{$data[$user->id]['completion']}}%</div>
             <div class="progress " style="height: 3px">
@@ -64,6 +67,7 @@
               </div>
             </div>
           </td>
+          @endif
 
           </tr>
           @endforeach
