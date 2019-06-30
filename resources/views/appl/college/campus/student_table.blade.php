@@ -27,7 +27,7 @@
             @if(request()->get('course'))
             <div><b>Course : </b>{{ $item['course']->name }} </div>
             @endif
-            <div><b>Participants : </b>{{count($users) }} </div>
+            <div><b>Participants : </b>{{$user_count }} </div>
           </div>
           @if(count($users))
           <div class="rounded table-responsive">

@@ -811,6 +811,7 @@ class CampusController extends Controller
 
         return view('appl.college.campus.'.$view)
             ->with('users',$users)
+            ->with('user_count',count($user_list))
             ->with('item',$item)
             ->with('college',$college)
             ->with('data',$data)
