@@ -449,16 +449,17 @@ class ProductController extends Controller
 
      public function editor(Request $request)
     {
-        $code = $request->get('code');
+        $cpp = $request->get('code');
 
         $data = null;
-        if($code){
-          $data = $this->compile($code);
+        if($cpp){
+          $data = $this->compile($cpp);
         }
 
         return view('appl.product.pages.editor')
                 ->with('editor',true)
-                ->with('code',$code)
+                ->with('code',true)
+                ->with('cpp',$cpp)
                 ->with('data',$data);
 
     }

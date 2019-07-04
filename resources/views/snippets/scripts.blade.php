@@ -61,6 +61,7 @@ $(document).ready(function() {
           matchBrackets: true,
           autoRefresh:true,
           mode:  'javascript',
+          theme: "abcdef",
           indentUnit: 4
         });
 });
