@@ -8,6 +8,7 @@
 		  <form action="{{ route('editor') }}" method="post" class=" mb-3">
          <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
+@if(!$code)
 <textarea id="code" class="form-control code" name="code"  rows="5">
 #include <stdio.h>
 
@@ -16,6 +17,9 @@ int main (){
   
 }
 </textarea>
+@else
+<textarea id="code" class="form-control code" name="code"  rows="5">{{$code}}</textarea>
+@endif
 <button class="btn btn-primary mt-3" type="submit">Compile</button>
 </form>
 

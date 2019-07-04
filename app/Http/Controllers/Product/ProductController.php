@@ -458,7 +458,7 @@ class ProductController extends Controller
 
         return view('appl.product.pages.editor')
                 ->with('editor',true)
-                ->with('code',true)
+                ->with('code',$code)
                 ->with('data',$data);
 
     }
