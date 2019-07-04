@@ -51,8 +51,7 @@
 <script src="{{asset('js/codemirror/mode/javascript/javascript.js')}}"></script>  
 <script src="{{asset('js/codemirror/addon/display/autorefresh.js')}}"></script>  
 <script src="{{asset('js/codemirror/mode/markdown/markdown.js')}}"></script>  
-<script src="{{asset('js/highlight/highlight.pack.js')}}"></script>  
-<script>hljs.initHighlightingOnLoad();</script>
+
 <script type="text/javascript">
 $(document).ready(function() {
   if(document.getElementById("code"))

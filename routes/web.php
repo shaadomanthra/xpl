@@ -28,7 +28,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
 
-	
+	Route::get('/editor','Product\ProductController@editor')->name('editor');
+	Route::post('/editor','Product\ProductController@editor')->name('editor');
+
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
 	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');
@@ -41,18 +43,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/credit-rates',function(){ return view('appl.product.pages.credit_rates'); })->name('credit-rate')->middleware('auth');;
 
 
-	Route::get('/cprogram',function(){
-		echo "here";
-		if(request()->get('c')){
-
-			$output = shell_exec('./system');
-			echo "<pre>$output</pre>";
-			echo "outputted";
-		}
-		
-		//print_r($out);
-
-	});
+	
 	//campus
 	Route::get('/campus', 'College\CampusController@main')
 			->name('campus.main')->middleware('auth');

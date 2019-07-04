@@ -807,7 +807,7 @@ class CampusController extends Controller
 
         $users = User::whereIn('id',$user_list)->where('name','LIKE',"%{$item_}%")
                 ->orderBy('created_at','desc ')
-                ->paginate(config('global.no_of_records'));
+                ->paginate(20);
 
         return view('appl.college.campus.'.$view)
             ->with('users',$users)
