@@ -22,4 +22,8 @@ class CustomerController extends Controller
     	return view('appl.product.customer.firstacademy');
     }
 
+    public function gigacode(Request $request){
+    	return view('appl.product.customer.gigacode');
+    }
+
 }

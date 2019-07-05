@@ -43,6 +43,10 @@
                            <i class="fa fa-bullseye"></i>  Programs <span class="caret"></span>
                        </a>
                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item"  href="{{ url('gigacode')}}"
+                            >
+                            GigaCode 
+                             </a>
                             <a class="dropdown-item"  href="{{ url('bootcamp')}}"
                             >
                            Coding Bootcamp
