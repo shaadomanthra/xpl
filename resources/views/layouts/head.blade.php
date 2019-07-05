@@ -16,6 +16,9 @@
     <!-- Styles -->
     
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    @if(isset($carousel))
+    <link href="{{ asset('css/carousel.css') }}" rel="stylesheet">
+    @endif
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
   
     @if(isset($editor))

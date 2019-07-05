@@ -38,8 +38,13 @@
           <iframe src="//player.vimeo.com/video/327440260" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
 
-          <div class="bg-info p-3 mt-3 mb-3 rounded text-white"> Attend Free Session on<br>
-      <div class="display-4 mb-3">22nd or 29th May 2019</div><hr>
+          <div class="bg-info p-3 mt-3 mb-3 rounded text-white"> Take a FREE<br>
+      <div class="display-4 mb-3">GRE Mock Test</div><hr>
+      WhatsApp us to reserve your seat<br>
+      Mr. Syamson - Business Development Officer <br>
++91 95026 97428
+
+      <hr>
     <p><small>Location:</small> <br><b>First Academy</b>, 707 - 708, Pavani Prestige, Ameerpet,
 Hyderabad.<br>
 Phone :<i>+91 98666 88666</i><br>

@@ -16,7 +16,7 @@
 			
 			</h1>
       <div class="badge badge-info mb-3">To Crack Coding Interviews</div>
-      <p>GigaCode - It is a One day/8 hour Intensive classroom program to help students crack coding interviews. In the training, students a taught with basics of c programming, then 10 most important coding logics and a live implementation of 20 programming tasks. </p>
+      <p>GigaCode - It is a One day/8 hour Intensive classroom program to help students crack coding interviews. In the training, students are taught with basics of c programming, then 10 most important coding logics and a live implementation of 20 programming tasks. </p>
       <p> <b>Eligibility : </b> Btech All Branches, Final year.<br>
        <b> Batches :</b> 
        <ul>
@@ -50,8 +50,7 @@
 		<div class="col-12 col-md-6">
 
 		   <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/327689457" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-          </div>
+          <iframe  src="https://www.youtube.com/embed/4wXO8Bj3c6s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
   		</div>
 	</div>
