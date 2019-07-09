@@ -48,7 +48,8 @@
 <!-- Codemirror-->
 <script src="{{asset('js/codemirror/lib/codemirror.js')}}"></script>  
 <script src="{{asset('js/codemirror/mode/xml/xml.js')}}"></script>  
-<script src="{{asset('js/codemirror/mode/javascript/javascript.js')}}"></script>  
+<script src="{{asset('js/codemirror/mode/javascript/javascript.js')}}"></script> 
+<script src="{{asset('js/codemirror/mode/clike/clike.js')}}"></script>  
 <script src="{{asset('js/codemirror/addon/display/autorefresh.js')}}"></script>  
 <script src="{{asset('js/codemirror/mode/markdown/markdown.js')}}"></script>  
 
@@ -60,45 +61,81 @@ $(document).ready(function() {
           styleActiveLine: true,
           matchBrackets: true,
           autoRefresh:true,
-          mode:  'javascript',
+        mode: "text/x-c++src",
           theme: "abcdef",
           indentUnit: 4
         });
 
+  $('.loading').hide();
+  $('.codeerror').hide();
   $('.btn-run').on('click',function(){
-      $in1 = $(this).data('in1');
-      $in2 = $(this).data('in2');
-      $in3 = $(this).data('in3');
       $token = $(this).data('token');
+      $url= $(this).data('url');
       var code = editor.getValue();
-      console.log($in1+" - "+$in2+" - "+$in3);
-      console.log(code);
+      $('.loading').show();
+      $('.codeerror').hide();
       
         $.ajax({
           type : 'post',
-          url : 'https://packetprep.com/code/run',
-          data:{'input':$in1,'code':code,'_token':$token},
+          url : $url,
+          data:{'testcase':'1','code':code,'_token':$token},
           success:function(data){
-            $('#in1').html(data);
-            console.log(data);
+            data = JSON.parse(data);
+            
+            if(data.stderr){
+              $('.codeerror').show();
+              $('.codeerror').html("<pre><code>"+data.stderr+"</code></pre>");
+              $('.in1').html('-');
+              $('.in1-message').html('<span class="badge badge-danger">failure</span>');
+            }else{
+              if(data.success==1){
+                $('.in1').html(data.stdout);
+                $('.in1-message').html('<span class="badge badge-success">success</span>');
+              }else{
+                $('.in1').html(data.stdout);
+                $('.in1-message').html('<span class="badge badge-danger">failure</span>');
+              }
+              
+            }
+            
           }
         });
         $.ajax({
           type : 'post',
-          url : 'https://packetprep.com/code/run',
-          data:{'input':$in2,'code':code,'_token':$token},
+           url : $url,
+          data:{'testcase':'2','code':code,'_token':$token},
           success:function(data){
-            $('#in2').html(data);
-            console.log(data);
+            data = JSON.parse(data);
+            if(data.stderr){
+              $('.in2').html('-');
+              $('.in2-message').html('<span class="badge badge-danger">failure</span>');
+            }else{
+              if(data.success==1){
+                $('.in2-message').html('<span class="badge badge-success">success</span>');
+              }else{
+                $('.in2-message').html('<span class="badge badge-danger">failure</span>');
+              }
+            }
           }
         });
         $.ajax({
           type : 'post',
-          url : 'https://packetprep.com/code/run',
-          data:{'input':$in3,'code':code,'_token':$token},
+           url : $url,
+          data:{'testcase':3,'code':code,'_token':$token},
           success:function(data){
-            $('#in3').html(data);
-            console.log(data);
+            data = JSON.parse(data);
+            if(data.stderr){
+              $('.in3').html('-');
+              $('.in3-message').html('<span class="badge badge-danger">failure</span>');
+              $('.loading').hide();
+            }else{
+              if(data.success==1){
+                $('.in3-message').html('<span class="badge badge-success">success</span>');
+              }else{
+                $('.in3-message').html('<span class="badge badge-danger">failure</span>');
+              }
+              $('.loading').hide();
+            }
           }
         });
       
