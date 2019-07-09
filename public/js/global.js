@@ -383,7 +383,7 @@ $(".coupon-button").on('click', function () {
       $in2 = $(this).data('in2');
       $in3 = $(this).data('in3');
       $token = $(this).data('token');
-      var code = $.trim($("#code").val());
+      var code = editor.getValue();
       console.log($in1+" - "+$in2);
       for(var i=1;i<4;i++){
           $.ajax({
