@@ -79,7 +79,7 @@ $(document).ready(function() {
           url : 'https://packetprep.com/code/run',
           data:{'input':$in1,'code':code,'_token':$token},
           success:function(data){
-            $('#in'+i).html(data);
+            $('#in1').html(data);
             console.log(data);
           }
         });
@@ -88,7 +88,7 @@ $(document).ready(function() {
           url : 'https://packetprep.com/code/run',
           data:{'input':$in2,'code':code,'_token':$token},
           success:function(data){
-            $('#in'+i).html(data);
+            $('#in2').html(data);
             console.log(data);
           }
         });
@@ -97,7 +97,7 @@ $(document).ready(function() {
           url : 'https://packetprep.com/code/run',
           data:{'input':$in3,'code':code,'_token':$token},
           success:function(data){
-            $('#in'+i).html(data);
+            $('#in3').html(data);
             console.log(data);
           }
         });
