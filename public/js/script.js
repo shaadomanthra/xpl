@@ -14350,6 +14350,7 @@ $(document).ready(function () {
     $in3 = $(this).data('in3');
     $token = $(this).data('token');
     var code = $.trim($("#code").val());
+    console.log($in1 + " - " + $in2);
     for (var i = 1; i < 4; i++) {
       $.ajax({
         type: 'post',
