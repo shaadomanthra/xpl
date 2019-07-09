@@ -392,6 +392,7 @@ $(".coupon-button").on('click', function () {
           data:{'input':$in1,'code':code,'_token':$token},
           success:function(data){
             $('#in'+i).html(data);
+            console.log(data);
           }
         });
       }

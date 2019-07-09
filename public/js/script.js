@@ -14358,6 +14358,7 @@ $(document).ready(function () {
         data: { 'input': $in1, 'code': code, '_token': $token },
         success: function success(data) {
           $('#in' + i).html(data);
+          console.log(data);
         }
       });
     }
