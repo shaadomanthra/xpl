@@ -21,7 +21,7 @@ class Order extends Model
         // add all other fields
     ];
 
-     public function product(){
+    public function product(){
         return $this->belongsTo('PacketPrep\Models\Product\Product');
     }
 

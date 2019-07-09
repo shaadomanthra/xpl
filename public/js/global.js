@@ -377,6 +377,28 @@ $(".coupon-button").on('click', function () {
       $("#intro").attr("src",video);
     });
 
+
+    $('.btn-run').on('click',function(){
+      $in1 = $(this).data('in1');
+      $in2 = $(this).data('in2');
+      $in3 = $(this).data('in3');
+      $token = $(this).data('token');
+      var code = $.trim($("#code").val());
+      console.log($in1." - ".$in2);
+      for(var i=1;i<4;i++){
+          $.ajax({
+          type : 'post',
+          url : 'https://packetprep.com/code/run',
+          data:{'input':$in1,'code':code,'_token':$token},
+          success:function(data){
+            $('#in'+i).html(data);
+          }
+        });
+      }
+      
+
+    }); 
+
   });
 
 

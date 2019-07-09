@@ -18,7 +18,7 @@ use PacketPrep\Http\Middleware\RequestFilter;
 
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
-	Route::get('/', function(){ return view('welcome');/*->with('carousel',true); */})->name('root');
+	Route::get('/', function(){ return view('welcome'); })->name('root');
 	Route::post('/', 'Product\OrderController@callback');
 	Route::get('/instamojo', 'Product\OrderController@instamojo')->middleware('auth');
 	Route::get('/order_payment', 'Product\OrderController@instamojo_return');
@@ -30,6 +30,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/editor','Product\ProductController@editor')->name('editor');
 	Route::post('/editor','Product\ProductController@editor')->name('editor');
+
+	Route::get('/targettcs/code','Product\EditorController@tcscode')->name('tcscode');
+	Route::post('/code/run','Product\EditorController@run')->name('code.run');
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
