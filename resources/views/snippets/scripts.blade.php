@@ -71,10 +71,10 @@ $(document).ready(function() {
       $in3 = $(this).data('in3');
       $token = $(this).data('token');
       var code = editor.getValue();
-      console.log($in1+" - "+$in2);
+      console.log($in1+" - "+$in2+" - "+$in3);
       console.log(code);
-      for(var i=1;i<4;i++){
-          $.ajax({
+      
+        $.ajax({
           type : 'post',
           url : 'https://packetprep.com/code/run',
           data:{'input':$in1,'code':code,'_token':$token},
@@ -83,7 +83,24 @@ $(document).ready(function() {
             console.log(data);
           }
         });
-      }
+        $.ajax({
+          type : 'post',
+          url : 'https://packetprep.com/code/run',
+          data:{'input':$in2,'code':code,'_token':$token},
+          success:function(data){
+            $('#in'+i).html(data);
+            console.log(data);
+          }
+        });
+        $.ajax({
+          type : 'post',
+          url : 'https://packetprep.com/code/run',
+          data:{'input':$in3,'code':code,'_token':$token},
+          success:function(data){
+            $('#in'+i).html(data);
+            console.log(data);
+          }
+        });
       
 
     });  
