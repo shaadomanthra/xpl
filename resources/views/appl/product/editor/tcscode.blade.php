@@ -19,7 +19,7 @@ int main (){
 @else
 <textarea id="code" class="form-control code" name="code"  rows="5">{{$cpp}}</textarea>
 @endif
-<button class="btn btn-primary mt-3 btn-run" type="button" id="run" data-in1="5" data-in2="7" data-in3="10">Compile</button>
+<button class="btn btn-primary mt-3 btn-run" type="button" id="run" data-in1="5" data-in2="7" data-in3="10" data-token="{{ csrf_token() }}">Compile</button>
 
 
 
