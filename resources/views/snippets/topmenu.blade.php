@@ -20,13 +20,7 @@
                     @guest
                     @else
 
-                    @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
-                    <li class="mr-3"><a class="nav-link" href="{{ route('campus.admin') }}"><i class="fa fa-gg"></i> Campus Admin</a></li>
-                    @endif 
-
-                    @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-                    <li class="mr-3"><a class="nav-link" href="{{ route('admin.index') }}"><i class="fa fa-home"></i> Admin</a></li>
-                    @endif
+                    
                     <li class="mr-3"><a class="nav-link" href="{{ route('dashboard') }}"
                             ><i class="fa fa-dashboard"></i>
                            Dashboard
@@ -37,6 +31,8 @@
                     <!--
                     <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>   -->
                     <li class="mr-3 "><a class="nav-link " href="{{ url('targettcs') }}"><i class="fa fa-ravelry"></i> Target TCS</a></li>
+
+                    <li class="mr-3 "><a class="nav-link " href="{{ url('coordinator') }}"><span class="badge badge-warning p-1 pl-2 pr-2"> Internship</span></a></li>
                     
                     <li class="nav-item dropdown mr-2">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,10 +49,6 @@
                              </a>
                              
                              
-                            <a class="dropdown-item"  href="{{ url('fullstackdevelopment')}}"
-                            >
-                            Full Stack Development
-                             </a>
                            
                         </div>  
                      </li>
@@ -82,6 +74,14 @@
                            Campus Connect
                              </a>
                              @endif
+
+                             @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
+                            <a class="dropdown-item"  href="{{ route('campus.admin') }}"></i> Campus Admin</a>
+                            @endif 
+
+                            @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+                            <a class="dropdown-item"  href="{{ route('admin.index') }}"></i> Admin</a>
+                            @endif
 
                              @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','ambassador','coordinator','tpo']))
                              <a class="dropdown-item"  href="{{ route('referral')}}"

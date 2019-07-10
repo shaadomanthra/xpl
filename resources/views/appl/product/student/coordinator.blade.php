@@ -15,8 +15,10 @@
 			
 			</h1>
       <p>A great opportunity for students to showcase their leadership abilities </p>
-      <p> <b>Eligibility :</b> Btech 1st & 2nd year <br>
+      <p> <b>Eligibility :</b> Btech 2nd & 3rd year <br>
         <b> Stream :</b> All Branches<br>
+        <b> Duration :</b> 60 days<br>
+        <b> Location:</b> Hyderabad<br>
         <b> Prerequisite :</b> <ul>
             <li>Excellent Communication Skills</li>
             <li> Strong Network among students</li>
@@ -50,18 +52,37 @@
         <div class="col-12 col-md-6">
           <h1 class="mb-4"> Job Description</h1>
       <ul>
-          <li>Explain about PacketPrep Services on CRT program (<a href="https://youtu.be/yARzYyxDg_Y">Campus Recruitment Training</a>) to your class friends and create awareness </li>
-            <li>You are responsible to onboard students onto PacketPrep platform for 3 month free trail</li>
-
+          <li>To create brand awareness for PacketPrep </li>
+          <li>Promote <b>Placement Foundation</b> program</li>
+          <li>Explain about PacketPrep Products & Services
+              <ul>
+                  <li>GigaCode Prorgam</li>
+                  <li>Coding Bootcamp Prorgam</li>
+                  <li>Online Courses for Placements</li>
+              </ul>
+          </li>
+          <li>Explain about PacketPrep programs for Abroad
+              <ul>
+                  <li>Coaching for GRE, IELTS, TOEFL </li>
+                  <li>Consulting for MS in US/Canada/UK/Australia </li>
+              </ul>
+          </li>
           </ul>
         </div>
 
         <div class="col-12 col-md-6">
           <h1 class="mb-4"> Benefits</h1>
           <ul>
-            <li>Appreciation Letter </li>
+            <li>Rs. 5000 stipend </li>
             <li>Internship Certificate </li>
             <li> Top performers profile will be added to the official PacketPrep website under Student Interns page</li>
+          </ul>
+          <h1 class="mb-4"> Interview Process</h1>
+          <ul>
+            <li>Apply online <a href="{{ route('form.create',['job'=>'campus-coordinator'])}}">Link</a> </li>
+            <li>Shortlisted students have to send 1 min audio message on 'Why its important to learn coding?' or 'Why to do MS in Abroad?' </li>
+            <li> Selected candidates will be called for  personal interview at <br>
+              <b>PacketPrep Office</b>, Tarnaka, Hyderabad.</li>
            
 
           </ul>
