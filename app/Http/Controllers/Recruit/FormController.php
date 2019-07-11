@@ -68,7 +68,7 @@ class FormController extends Controller
                 ->with('job',$job)
                 ->with('jqueryui',true)
                 ->with('recaptcha',true)
-                
+
                 ->with('form',$form);
     }
 
@@ -126,6 +126,7 @@ class FormController extends Controller
 
 
                 Mail::to(config('mail.report'))->send(new Formalerts($applicant));
+                Mail::to('syamson439@gmail.com')->send(new Formalerts($applicant));
 
                 return view('appl.recruit.form.success');
             }

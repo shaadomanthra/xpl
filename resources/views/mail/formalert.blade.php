@@ -3,6 +3,7 @@
 
 <b>{{ $form['name'] }}</b> has applied for <b>{{ $form->job->title }}</b>.<br>
 Email : {{ $form['email'] }} <br>
+Phone : {{ $form['phone'] }} <br>
 Age : {{ \carbon\carbon::parse($form['dob'])->age }} years <br>
 
 @component('mail::button', ['url' => route('form.show',$form['id'])])
