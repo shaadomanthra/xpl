@@ -29,6 +29,6 @@ class Formalerts extends Mailable
      */
     public function build()
     {
-        return $this->subject('Job Applicant Alert - '.$form['name'])->markdown('mail.formalert');
+        return $this->subject('Job Applicant Alert - '.$this->form['name'])->markdown('mail.formalert');
     }
 }
