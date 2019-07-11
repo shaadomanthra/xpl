@@ -16,7 +16,7 @@
 		  <a class="text-secondary mr-2 mr-md-3" href="{{ url('proficiency-test') }}"> Proficiency Test</a>
 		   <a class="text-secondary mr-2 mr-md-3"  href="{{url('/firstacademy')}}">First Academy</a>
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/blog')}}">Blog</a>
-
+		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/job/parttime')}}">Parttime  job</a>
 		  <a class="text-secondary mr-2 mr-md-3"  href="{{url('/contact-corporate')}}">Contact</a>
 		  
 		</nav>
