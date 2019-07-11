@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('title', $job->title)
+@section('description', substr(strip_tags($job->content),0,200))
 @section('content')
 
 <nav aria-label="breadcrumb">
