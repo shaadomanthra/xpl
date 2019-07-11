@@ -1,6 +1,6 @@
 @extends('layouts.nowrap-product')
-@section('title', 'Coding Bootcamp - Summer Internship for Engineering Students  | PacketPrep')
-@section('description', 'Build your first commercial web application with us. A great opportunity to utilize your summer time to build a great realtime project')
+@section('title', 'Coding Bootcamp - Realtime Project | PacketPrep')
+@section('description', 'Build your first commercial web application with us. A great opportunity to utilize your leisure time to build a great realtime project')
 @section('keywords', 'summer internship, coding, bootcamp, engineering students, ')
 
 @section('content')
@@ -12,29 +12,15 @@
 	<div class="row">
 		<div class="col-12 col-md-6">
 			<h1 class="mt-2 mb-4 mb-md-2">
-			<i class="fa fa-code"></i> &nbsp;Coding Bootcamp - Summer Internship
+			<i class="fa fa-code"></i> &nbsp;Coding Bootcamp - Realtime Project
 			
 			</h1>
-      <p>Build your first commercial web application with us at packetprep.  A great opportunity to utilize your summer time to build a great realtime project, where you will learn to write code from scratch to the end. </p>
+      <p>Build your first commercial web application with us at packetprep.  A great opportunity to utilize your leisure time to build a great realtime project, where you will learn to write code from scratch to the end. </p>
       <p> <b>Eligibility : </b> Btech All Branches, 1st year to 4th year<br>
        <b> Batches :</b> 
        <ul>
-        <li>May 20th to May 31st  2019
-          <ul>
-           <li>Batch 1 - 9:00 am to 1:00 pm (Closed) </li>
-          </ul>
-        </li> 
-       <li>June 6th to June 17th  2019
-          <ul>
-           <li>Batch 2 - 9:00 am to 1:00 pm (Closed)</li>
-           <li>Batch 3 - 2:00 am to 6:00 pm (Closed)</li>
-          </ul>
-        </li> 
-        <li>June 18th to June 29th  2019
-          <ul>
-           <li>Batch 4 - 9:00 am to 1:00 pm <span class="badge badge-success">Open</span></li>
-          </ul>
-        </li> 
+        <li>Batch 1 - Aug 5th to Aug 16th  2019</li> 
+        <li>Batch 2 - Aug 12th to Aug 23rd  2019</li> 
         </ul>  
        
        <b> Location:</b> PacketPrep Office, Tarnaka, Hyderabad.<br>  
@@ -43,18 +29,16 @@
     </p>
      
       <div class="p-3 rounded mb-3" style="background: #f2f2f2">      
-        <h2 > <i class="fa fa-rupee"></i>  6,000 </h2>
+        <h2 > <i class="fa fa-rupee"></i>  3,500 </h2>
         
       </div>
       
       <div class="bg-light p-3 border rounded mb-3">
         <h3> Reserve your seat now</h3>
-      <a href="{{ url('productpage/cb') }}">
-      <button class="btn btn-lg btn-success mb-3"> Full Payment</button>
-      </a>
       <a href="{{ url('productpage/cbp') }}">
       <button class="btn btn-lg btn-primary mb-3"> Part Payment</button>
-      </a>
+      </a><br>
+      You can pay Rs.500 to reserve the seat, remaining amount to be paid on the first day of training
     </div>
 
 
@@ -81,8 +65,8 @@
     <div class="container pb-5" >  
 
       <div class="bg-light border rounded p-3 mb-3">
-        <h1>Batch 1 is Completed</h1>
-        <p>We have successfully trained the first cohort of Coding Bootcamp 2019. Through this program students have learnt the basics of web development which includes html, css, bootstrap, php and mysql.
+        <h1>First Cycle of Coding Bootcamp</h1>
+        <p>We have successfully trained the 60+ students through Coding Bootcamp 2019(Summer Camp). Through this program students have learnt the basics of web development which includes html, css, bootstrap, php and mysql.
 
 Together we have built three project namely Resume, Calculator App and Simple Blog.</p>
 <p class="mb-3">Here is the link to one of our student's projects<br>
@@ -104,6 +88,24 @@ Together we have built three project namely Resume, Calculator App and Simple Bl
             <div class="p-3"></div>
           </div>
         </div>
+        <hr>
+        <div class="row ">
+          <div class="col-12 col-md-6">
+            <h3 class="mb-4"> Testimonial by Sree Charan</h3>
+            <p>College : MVSR College(Matrusri)<br>Branch: MECH<br>Year : 3rd year</p>
+            <div class="embed-responsive embed-responsive-16by9 border mb-4" style="background: #eee;">
+            <iframe  src="https://www.youtube.com/embed/0E2Tvg7Ji34" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <h3 class="mb-4"> Feedback from Tanya Sri</h3>
+            <p>College : Mallareddy Engineering College<br>Branch: ECE<br>Year : 2nd year</p>
+            <div class="embed-responsive embed-responsive-16by9 border mb-4" style="background: #eee;">
+
+            <iframe  src="https://www.youtube.com/embed/OXlGioKAASk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
         
   <div>
       
@@ -119,8 +121,8 @@ Together we have built three project namely Resume, Calculator App and Simple Bl
       <div class="row mb-4">
         <div class="col-4 col-md-2"><i class="fa fa-4x fa-rocket"></i></div>
         <div class="col-8 col-md-10">
-          <h2> 2 weeks - 40 hour Classroom Training</h2>
-          <p> It is 4hour/day intensive training for 10 days. </p>
+          <h2> 10 days Program </h2>
+          <p> Its 5 days training and 5 days project work </p>
         </div>
       </div>
       <div class="row mb-4">
@@ -135,7 +137,7 @@ Together we have built three project namely Resume, Calculator App and Simple Bl
         <div class="col-4 col-md-2"><i class="fa fa-4x fa-trophy"></i></div>
         <div class="col-8 col-md-10">
           <h2> Internship Certificate</h2>
-          <p> On completion of training, you will recieve the summer internship certificate </p>
+          <p> On completion of project, you will recieve the internship certificate </p>
         </div>
       </div>
         </div>
@@ -143,9 +145,9 @@ Together we have built three project namely Resume, Calculator App and Simple Bl
         <div class="col-12 col-md-4">
           <h1 class="mb-4"> Training Highlights</h1>
           <ul>
-            <li>You will learn PHP, MySql, HTML, CSS and Bootstrap. </li>
+            <li>You will learn PHP, HTML, CSS and Bootstrap. </li>
             <li> You will learn how to book domain name, hosting and deploying the code on global server</li>
-            <li>The most critical aspect, how to integrate payment gateway for online transactions where money is directly sent to the bank account</li>
+            
             <li> Small batch size and Personal Guidance </li>
 
           </ul>
@@ -171,19 +173,19 @@ Together we have built three project namely Resume, Calculator App and Simple Bl
             <tbody>
               <tr>
                 <th scope="row">1</th>
-                <td> Drafting Project Requirements</td>
-                <td> Understanding the importance of doing project requirement analysis, drawing storyboards for layouts, choosing flatcolorui for color scheme, page designs on paper and in photoshop.</td>
+                <td> How websites work? and basics of html</td>
+                <td> You will learn how webpages are created, how to store them in server and how they load over the browser</td>
               </tr>  
 
               <tr>
                 <th scope="row">2</th>
-                <td> Creating the layout with HTML,CSS and JAVASCRIPT</td>
-                <td>Converting the project draft to implementation using html and css, baiscs animations using javascript, usage  of library code like jquery. </td>
+                <td> Core HTML tags and using CSS</td>
+                <td>We will build a sample resume page using core html and basic css </td>
               </tr>  
 
               <tr>
                 <th scope="row">3</th>
-                <td> Responsive Website coding with BOOTSTRAP </td>
+                <td> Usage of CSS and Bootstrap </td>
                 <td> Making the design adaptive for desktop, mobile and tablet devices. Bootstrap techonology baiscs and usage, foundation api basics and usage. </td>
               </tr>  
 
@@ -195,35 +197,35 @@ Together we have built three project namely Resume, Calculator App and Simple Bl
 
               <tr>
                 <th scope="row">5 </th>
-                <td> MySQL Basics </td>
-                <td> Understanding how to use sql to make queries, data normalization, primary and foreign key importance, data coherence. </td>
+                <td> Calculator Application </td>
+                <td> Real time implementation of php basics in designing a simple caluclator application </td>
               </tr>  
 
               <tr>
                 <th scope="row">6</th>
-                <td> MVC Architecture for Application</td>
-                <td> Model,View and Controller architecture for request processing and data display in browser.</td>
+                <td> Project Work</td>
+                <td> Drafting the requirements for a college website</td>
               </tr>  
 
               <tr>
                 <th scope="row">7</th>
-                <td> Login System with security </td>
-                <td>Form for registration, Form for login, security features like handling sql injection, cross site scripting and spam requests.</td>
+                <td> Project Work </td>
+                <td> Building the basics pages of the college website using html and css</td>
               </tr>   
               <tr>
                 <th scope="row">8</th>
-                <td> Ecommerce Module </td>
-                <td> Creaitng a gallery for products with checkout option, products and transactions table in sql, validation of payment receiving and delivering the service</td>
+                <td> Project Work </td>
+                <td> Integrating Bootstrap css and making website responsive</td>
               </tr> 
               <tr>
                 <th scope="row">9</th>
-                <td> Payment Gateway Integration</td>
-                <td> Working with Instamojo payment gateway api in php, connecting bank accounts for immediate withdrawl, trail transactions using API.</td>
+                <td>  Doubt Clarifications </td>
+                <td> Student can attend personal session and get the doubts clarified </td>
               </tr> 
               <tr>
                 <th scope="row">10</th>
-                <td> Deployment on Server</td>
-                <td>Registering a domian and hosting, Connecting domain to hosting with nameservers, usage of cpanel for server maintenance, uploading code using filezilla ftp, live website testing with console.</td>
+                <td> Project Submission</td>
+                <td>The final project to be submitted </td>
               </tr> 
             </tbody>
           </table>
