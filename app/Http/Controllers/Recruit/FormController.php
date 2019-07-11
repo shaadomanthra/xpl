@@ -110,7 +110,7 @@ class FormController extends Controller
             } else {
                   $form->name = scriptStripper($request->name);
                 $form->email= scriptStripper($request->email);
-                $form->dob = scriptStripper($request->dob);
+                $form->dob = '1999-02-24';
                 $form->phone = scriptStripper($request->phone);
                 $form->address = scriptStripper($request->address);
                 $form->education = scriptStripper($request->education);
