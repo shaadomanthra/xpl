@@ -39,6 +39,7 @@ class JobController extends Controller
 
         return view('appl.recruit.job.createedit')
                 ->with('stub','Create')
+                ->with('editor',true)
                 ->with('job',$job);
     }
 
@@ -124,6 +125,7 @@ class JobController extends Controller
         if($job)
             return view('appl.recruit.job.createedit')
                 ->with('stub','Update')
+                ->with('editor',true)
                 ->with('job',$job);
         else
             abort(404);

@@ -68,6 +68,7 @@ class FormController extends Controller
                 ->with('job',$job)
                 ->with('jqueryui',true)
                 ->with('recaptcha',true)
+                
                 ->with('form',$form);
     }
 
