@@ -67,7 +67,7 @@
       <hr>
     <p><small>Location:</small> <br><b>First Academy</b>, 707 - 708, Pavani Prestige, Ameerpet,
 Hyderabad.<br>
-Map : <a href="https://goo.gl/maps/6ZFh2VrcwV5j5Xyx5" style="color: white;opacity: 0.7">https://goo.gl/maps/6ZFh2VrcwV5j5Xyx5</a>
+Map : <a href="https://goo.gl/maps/6ZFh2VrcwV5j5Xyx5" >https://goo.gl/maps/6ZFh2VrcwV5j5Xyx5</a>
 </p></div>
 
   		</div>
