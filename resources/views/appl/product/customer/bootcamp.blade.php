@@ -19,11 +19,12 @@
       <p> <b>Eligibility : </b> Btech All Branches, 1st year to 4th year<br>
        <b> Batches :</b> 
        <ul>
-        <li>Batch 1 - Aug 5th to Aug 16th  2019</li> 
-        <li>Batch 2 - Aug 12th to Aug 23rd  2019</li> 
+        <li>Batch 1 - Aug 5th to Aug 16th  2019 </li> 
+        <li>Batch 2 - Aug 19th to Aug 30th  2019</li> 
         </ul>  
        
-       <b> Location:</b> PacketPrep Office, Tarnaka, Hyderabad.<br>  
+       <b> Timing :</b> 6:00pm to 8:00pm <br>  
+       <b> Location :</b> PacketPrep Office, Tarnaka, Hyderabad.<br>  
 
       
     </p>

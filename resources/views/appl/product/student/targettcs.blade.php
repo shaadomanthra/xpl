@@ -30,6 +30,10 @@
       <a href="{{ url('course\targettcs') }}">
       <button class="btn btn-lg btn-success p-3 pr-4 pl-4"><i class="fa fa-send"></i> &nbsp;Open Course Page</button>
       </a>
+
+      <a href="{{ url('targettcs\code') }}">
+      <button class="btn btn-lg btn-primary p-3 pr-4 pl-4"><i class="fa fa-code"></i> &nbsp;Code Editor Simulation</button>
+      </a>
     </div>
 
 		</div>
@@ -89,6 +93,21 @@
         </div>
       </div>
 
+       <div class="row mb-4">
+        <div class="col-4 col-md-2">
+          <div class="w-100">
+            <a href="https://www.youtube.com/playlist?list=PLPiOSvowot1IUqWaZ_TZyToIJAe00rVv6">
+            <img src="http://i3.ytimg.com/vi/uMDADABqUzI/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+
+        </div>
+        <div class="col-8 col-md-10">
+          <h2> <a href="https://www.youtube.com/playlist?list=PLPiOSvowot1IUqWaZ_TZyToIJAe00rVv6">General English for TCS NQT</a></h2>
+          <p> If you are preparing for TCS National Qualifier Test (TCS NQT) or TCS Ninja or TCS Digital then this playlist would help you go through all the General English concepts</p>
+        </div>
+      </div>
+
       <div class="row mb-4">
         <div class="col-4 col-md-2">
           
@@ -122,6 +141,59 @@
           <p> Prepare for TCS Programming Concept sections from this playlist. We have taken absolute care to build really good lectures to refresh your programming basics. </p>
         </div>
       </div>
+
+      <h1 class="mb-4"> General Videos</h1>
+        <div class="row mb-4">
+        <div class="col-4 col-md-2">
+          
+          <div class="w-100">
+            <a href="https://youtu.be/yoL5e5EomMc">
+            <img src="http://i3.ytimg.com/vi/yoL5e5EomMc/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+        </div>
+        <div class="col-8 col-md-10">
+          <h2> <a href="https://youtu.be/yoL5e5EomMc">
+          Preparation Strategy for TCS NQT 2020
+        </a></h2>
+          <p> We have designed a comprehensive course to help you crack TCS NQT - Ninja and Digital with ease. The course includes more than 100 free video lectures 700+ practice questions and 70+ topic tests all for free. </p>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-4 col-md-2">
+          
+          <div class="w-100">
+            <a href="https://youtu.be/hIAeEZjAu6Q">
+            <img src="http://i3.ytimg.com/vi/hIAeEZjAu6Q/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+        </div>
+        <div class="col-8 col-md-10">
+          <h2> <a href="https://youtu.be/hIAeEZjAu6Q">
+          How to Prepare for Quantitative Aptitude 
+        </a></h2>
+          <p> The best preparation strategy for Quantitative Aptitude TCS NQT. It includes the important topics to learn and how to crack quant part easily. </p>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col-4 col-md-2">
+          
+          <div class="w-100">
+            <a href="https://youtu.be/XnJMITED9ao">
+            <img src="http://i3.ytimg.com/vi/XnJMITED9ao/maxresdefault.jpg" class="w-100">
+          </a>
+          </div>
+        </div>
+        <div class="col-8 col-md-10">
+          <h2> <a href="https://youtu.be/XnJMITED9ao">
+          How to Prepare for Coding Round
+        </a></h2>
+          <p> A quick run through of how to prepare for coding for TCS NQT, where in we explained the usage of command line arguments in the program.</p>
+        </div>
+      </div>
+
         </div>
 
         <div class="col-12 col-md-5">

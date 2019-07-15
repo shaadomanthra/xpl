@@ -34,6 +34,12 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/targettcs/code','Product\EditorController@tcscode')->name('tcscode');
 	Route::post('/targettcs/code','Product\EditorController@tcstestcase')->name('tcs.testcase');
 
+	Route::get('/targettcs/code/one','Product\EditorController@tcscode_one')->name('tcscode.one');
+	Route::post('/targettcs/code/one','Product\EditorController@tcstestcase_one')->name('tcs.testcase.one');
+
+	Route::get('/targettcs/code/two','Product\EditorController@tcscode_two')->name('tcscode.two');
+	Route::post('/targettcs/code/two','Product\EditorController@tcstestcase_two')->name('tcs.testcase.two');
+
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
 	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');

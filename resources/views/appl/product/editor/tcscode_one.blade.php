@@ -4,22 +4,36 @@
 
 <div class="bg-white rounded">
   <div class="card-body p-4 ">
-    <h1 class="display-3 mt-3 mb-4">TCS NQT - Coding Simulation </h1>
+    <h1 class="display-3 mt-3 mb-4">Coding Simulation - Even/Odd</h1>
     <div class="row">
       <div class="col-12 col-md-4">
        <div class="bg-light mb-4 p-3 border">
         <p class="">
-          <b>Consider the below series:</b>
+          <b>Write a program to check if the given number is even or odd</b>
 
-<p>1, 2, 1, 3, 2, 5, 3, 7, 5, 11, 8, 13, 13, 17, …</p>
+<p>If the given input is 4, the STDOUT has to 1 else it has to be 0</p>
 
-<p>This series is a mixture of 2 series – all the odd terms in this series form a Fibonacci series and all the even terms are the prime numbers in ascending order.</p> 
+</p>
+  </div>
 
-<p>Write a program to find the Nth term in this series. </p>
+  <div class="bg-light mb-4 p-3 border">
+        <p class="">
+          <b>Notes</b>
 
-<p>The value N is a Positive integer that should be read from STDIN. The Nth term that is calculated by the program should be written to STDOUT. Other than the value of Nth term, no other characters/strings or message should be written to STDOUT. </p>
+<p><b class="text-primary">argc</b>(argument count) stores the number of the arguments passed to the main function</p>
+<p><b class="text-primary">argv</b>(argument vector) stores the array of the one-dimensional array of strings.</p>
+<p> argv[0] - the filename, argv[1] - first argument, argv[2] - second argument</p><hr>
+<p> For example <br><b>./excutablefile 23 45 </b><br> argv[0] - ./excutablefile <br> argv[1] - 23<br> argv[2] - 45</p><hr>
+<p><b class="text-primary">atoi(str) </b>converts the string argument str to an integer (type int)</p>
 
-<p>For example, when N = 14, the 14th term in the series is 17. So only the value 17 should be printed to STDOUT.</p></p>
+  </div>
+
+  <div class="bg-light mb-4 p-3 border">
+<p>For more details on command line programming watch the following video-<br>
+<a href="https://youtu.be/9tSVxqJyjBo"><p><i class="fa fa-youtube-play"></i> Command Line Arguments for TCS NQT</p></a>
+This video gives a run through of how to use command line arguments in programming to take input from terminal</p>
+
+</p>
   </div>
       </div>
 
@@ -30,64 +44,22 @@
 <textarea id="code" class="form-control code" name="code" mode="c-like" rows="10">
 #include <stdio.h>
 #include <stdlib.h>
-int prime(int position);
-int fibonacci(int position);
 
 int main (int argc, char *argv[]){
-  int n,number,position,i;
- 
-  if(argc>1)
-    n = atoi(argv[1]);
-  else
-    n = 1;
+  int n,output;
+  n = atoi(argv[1]);
 
   if(n % 2 == 0){
-    position = n/2;
-    number = prime(position);
+    output = 1;
   }else{
-    position = n/2+1;
-    number = fibonacci(position);
+    output = 0;
   }
-
-  printf("%d",number);
-  
+  printf("%d",output);
 }
 
-int prime(int position){
-    int i=2,count=0,j;
-    while(1){
-        int factors =0;
-
-        for(j=2;j<=i;j++){
-            if(i%j==0)
-                factors++;
-        }
-        if(factors==1)
-            count++;
-        if(count == position)
-            break;
-        i++;
-    }
-    return j-1;
-}
-
-int fibonacci(int position){
-    int i, first = 1 ,second = 1, third;
-
-    if(position == 1 || position ==2)
-        return 1;
-
-    // Fibonacci logic
-    for(i=3; i<= position;i++){
-        third = first + second;
-        first = second;
-        second = third;
-    } 
-    return third;
-}
 </textarea>
 
-<button class="btn btn-primary mt-3 btn-run" type="button"  data-token="{{ csrf_token() }}" data-url="{{ route('tcs.testcase') }}">Compile & Run</button><img class="loading" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
+<button class="btn btn-primary mt-3 btn-run" type="button"  data-token="{{ csrf_token() }}" data-url="{{ route('tcs.testcase.one') }}">Compile & Run</button><img class="loading" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
 
 
 
@@ -208,13 +180,5 @@ int fibonacci(int position){
 
   </div>
 </div>
-
-<div class="mt-4 p-5 bg-white border">
-  <h1>To learn the command line programming in the easiest way, you can try the following code </h1>
-  <p>Write a program to check if the given number is even or odd</p>
-  <a href="{{route('tcscode.one')}}">
-  <button class="btn btn-outline-primary btn-lg">Try Simple Code</button>
-</a>
-  </div>
 
 @endsection           

@@ -48,6 +48,88 @@ class EditorController extends Controller
 
     }
 
+    public function tcscode_one(Request $request)
+    {
+      $cpp =$data =null;
+        return view('appl.product.editor.tcscode_one')
+                ->with('editor',true)
+                ->with('code',true)
+                ->with('cpp',$cpp)
+                ->with('data',$data);
+    }
+
+    public function tcstestcase_one(Request $request)
+    {
+      $code = $request->get('code');
+      if($request->get('testcase')==1){
+        $input = 4;
+        $output = 1;
+      }
+      elseif($request->get('testcase')==2){
+        $input = 5;
+        $output = 0;
+      }else{
+        $input = 10;
+        $output = 1;
+
+      }
+      $data = $this->run_internal($code,$input);
+      $json = json_decode($data);
+      if($json->stderr)
+        print $data;
+      else{
+        if($json->stdout == $output)
+          $json->success = 1;
+        else
+          $json->success = 0;
+
+        print json_encode($json);
+
+      }
+
+    }
+
+    public function tcscode_two(Request $request)
+    {
+      $cpp =$data =null;
+        return view('appl.product.editor.tcscode_two')
+                ->with('editor',true)
+                ->with('code',true)
+                ->with('cpp',$cpp)
+                ->with('data',$data);
+    }
+
+    public function tcstestcase_two(Request $request)
+    {
+      $code = $request->get('code');
+      if($request->get('testcase')==1){
+        $input = 14;
+        $output = 17;
+      }
+      elseif($request->get('testcase')==2){
+        $input = 5;
+        $output = 2;
+      }else{
+        $input = 10;
+        $output = 11;
+
+      }
+      $data = $this->run_internal($code,$input);
+      $json = json_decode($data);
+      if($json->stderr)
+        print $data;
+      else{
+        if($json->stdout == $output)
+          $json->success = 1;
+        else
+          $json->success = 0;
+
+        print json_encode($json);
+
+      }
+
+    }
+
     public function run_internal($code,$input){
 
 
