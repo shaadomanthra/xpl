@@ -22,7 +22,7 @@
 			<i class="fa fa-ravelry"></i> &nbsp;Target TCS NQT
 			- FREE Online Course to Crack TCS NQT
 			</h1>
-      <p>This is a Free online course to help students prepare for TCS NQT  -  National Qualifier Test. The course includes 100 concept lectures, 700+ practice questions and 100+ online assessments covering quantitative aptitude, programming logic and coding.  </p>
+      <p>This is a Free online course to help students prepare for TCS NQT  -  National Qualifier Test. The course includes 100 concept lectures, 300+ practice questions and 50+ online assessments covering Quantitative aptitude, General English, programming logic and coding.  </p>
       <p> <b>Eligibility :</b> Btech 4th year ( 2020 passout batch)<br>
         <b> Stream :</b> All Branches<br>
 

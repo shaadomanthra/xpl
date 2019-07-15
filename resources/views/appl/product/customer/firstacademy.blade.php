@@ -8,7 +8,27 @@
 <div class=" p-4  mb-3 mb-md-4 border-bottom bg-white" >
 	<div class="wrapper ">  
 	<div class="container">
+    <div class="row mb-4">
+      <div class="col-12 col-md-6">
+        <div class="bg-success p-3 border text-light rounded">
+            <h1>Take a FREE GRE/IELTS Test</h1>
+            <p>All the packetprep users, can now attend take a free GRE or IELTS mock test and get it evaluated by the expert trainers.</p>
+            <a href="https://forms.gle/EcPCNfRGb6ytdLXj9">
+            <button class="btn btn-outline-light">Book Slot</button>
+            </a>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="bg-warning p-3 border rounded">
+            <h1> Free counselling </h1>
+            <p>Now you can get all your doubts clarified (regarding abroad study) from the experts. Book a free counselling session now.</p>
+            <a href="https://forms.gle/v22kV5cY34Wm3x6A7">
+            <button class="btn btn-outline-dark">Book Slot</button>
+            </a>
+        </div>
+      </div>
 
+    </div>
 	<div class="row">
 		<div class="col-12 col-md-6">
 			<h1 class="mt-2 mb-4 mb-md-2">
@@ -38,16 +58,15 @@
           <iframe src="//player.vimeo.com/video/327440260" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
 
-          <div class="bg-info p-3 mt-3 mb-3 rounded text-white"> Take a FREE<br>
-      <div class="display-4 mb-3">GRE Mock Test</div><hr>
-      WhatsApp us to reserve your seat<br>
-      Mr. Syamson - Business Development Officer <br>
+          <div class="p-3 mt-3 mb-3 rounded border"> 
+      <div class="display-4 mb-3">For more details</div><hr>
+      Reach us on WhatsApp <br>
+      <b>Mr. Syamson</b> <br> Business Development Officer <br>
 +91 95026 97428
 
       <hr>
     <p><small>Location:</small> <br><b>First Academy</b>, 707 - 708, Pavani Prestige, Ameerpet,
 Hyderabad.<br>
-Phone :<i>+91 98666 88666</i><br>
 Map : <a href="https://goo.gl/maps/6ZFh2VrcwV5j5Xyx5" style="color: white;opacity: 0.7">https://goo.gl/maps/6ZFh2VrcwV5j5Xyx5</a>
 </p></div>
 

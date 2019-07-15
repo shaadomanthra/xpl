@@ -28,6 +28,8 @@
                     
                     @endguest
                     <li class="mr-3 "><a class="nav-link " href="{{ url('course') }}"><i class="fa fas fa-youtube-play"></i> Courses</a></li>
+
+                    <li class="mr-3 "><a class="nav-link " href="{{ url('firstacademy') }}"><i class="fa fas fa-gg"></i> Abroad Studies</a></li>
                     <!--
                     <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>   -->
                     <li class="mr-3 "><a class="nav-link " href="{{ url('targettcs') }}"><i class="fa fa-ravelry"></i> Target TCS</a></li>
