@@ -15,7 +15,7 @@
 			
 			</h1>
       <p>A great opportunity for students to showcase their leadership abilities </p>
-      <p> <b>Eligibility :</b> Btech 3rd year ( 2020 passout batch)<br>
+      <p> <b>Eligibility :</b> Btech 2nd, 3rd & 4th year <br>
         <b> Stream :</b> All Branches<br>
         <b> Prerequisite :</b> <ul>
             <li>Excellent Communication Skills</li>
@@ -42,7 +42,7 @@
 </div>
 
 <div class="wrapper " >
-    <div class="container pb-5" >  
+    <div class="container pb-3" >  
    
 	   <div class="bg-white p-4 border mb-3">
       <div class="row">
@@ -50,11 +50,23 @@
         <div class="col-12 col-md-6">
           <h1 class="mb-4"> Job Description</h1>
       <ul>
-            <li>You are responsible to onboard students onto PacketPrep platform for TARGET TCS Program </li>
+            <li>You are responsible to onboard students onto PacketPrep platform for TARGET TCS & TARGET WIPRO Program </li>
             <li> Create authorized PacketPrep Learners Group in WhatsApp</li>
             <li>Share the daily video lecture in the WhatsApp group </li>
             <li>Inspire friends to take part in daily practice tests</li>
-            <li>At the end of program, collect feedback from the top participants</li>
+            <li>Explain about PacketPrep Products & Services
+              <ul>
+                  <li>GigaCode Prorgam</li>
+                  <li>Coding Bootcamp Prorgam</li>
+                  <li>Online Courses for Placements</li>
+              </ul>
+          </li>
+          <li>Explain about PacketPrep programs for Abroad
+              <ul>
+                  <li>Coaching for GRE, IELTS, TOEFL </li>
+                  <li>Consulting for MS in US/Canada/UK/Australia </li>
+              </ul>
+          </li>
 
           </ul>
         </div>
@@ -64,7 +76,15 @@
           <ul>
             <li>Internship Certificate </li>
             <li> Top performers profile will be added to the official PacketPrep website under Student Interns page</li>
-            <li> Complimentary discount coupons from featured partners (if all works good)</li>
+            <li> Premium Access to PacketPrep Content</li>
+
+          </ul>
+          <h1 class="mb-4"> Interview Process</h1>
+          <ul>
+            <li>Apply online <a href="{{ route('form.create',['job'=>'campus-coordinator'])}}">Link</a> </li>
+            <li> Selected candidates will be called for  personal interview at <br>
+              <b>PacketPrep Office</b>, Tarnaka, Hyderabad.</li>
+           
 
           </ul>
 
@@ -75,42 +95,21 @@
    </div>
 
  
-
+<div class="bg-info  text-white rounded p-3">
+    <h2> Part-time Job <span class="badge badge-warning">PAID</span></h2>
+    <p>If you are looking for a paid part time job then you can apply in the below link.</p>
+    <a href="{{url('/job/parttime')}}">
+    <button class="btn btn-outline-light btn-sm">Know more</button>
+  </a>
+     </div>
    
 
-   
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <div class="bg-white p-4 border mb-4 mb-md-0">
-          <h1> Apply Now</h1>
-          <p>Take your first step of leading the club </p>
-          <a href="{{ route('form.create',['job'=>'campus-ambassador'])}}">
-          <button class="btn btn-lg btn-success">Apply Now</button>
-          </a>
-        </div>
-
-        </div>
-        <div class="col-12 col-md-8">
-          <div class="bg-white p-4 border ">
-          <h1> Interview Process</h1>
-          <ul>
-          	<li>Only the deserved candidates will be shortlisted based on the given credentials</li>
-            <li>Shortlisted Candidates will have a telephonic interview </li>
-            <li>Followed by JAM session at our corporate office</li>
-            <li>Followed by Personal Interview</li>
-
-          </ul>
-        </div>
-
-        </div>
-        
-      </div>
- 
-      
    </div>
 
 
      </div>   
+
+     
 </div>
 
 @endsection           

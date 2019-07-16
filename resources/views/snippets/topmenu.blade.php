@@ -34,7 +34,7 @@
                     <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>   -->
                     <li class="mr-3 "><a class="nav-link " href="{{ url('targettcs') }}"><i class="fa fa-ravelry"></i> Target TCS</a></li>
 
-                    <li class="mr-3 "><a class="nav-link " href="{{ url('coordinator') }}"><span class="badge badge-warning p-1 pl-2 pr-2"> Internship</span></a></li>
+                    <li class="mr-3 "><a class="nav-link " href="{{ url('ambassador') }}"><span class="badge badge-warning p-1 pl-2 pr-2"> Internship</span></a></li>
                     
                     <li class="nav-item dropdown mr-2">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -44,7 +44,7 @@
 </div>
 
 <div class="wrapper " >
-    <div class="container pb-5" >  
+    <div class="container pb-2" >  
    
 	   <div class="bg-white p-4 border mb-3">
       <div class="row">
@@ -73,14 +73,12 @@
         <div class="col-12 col-md-6">
           <h1 class="mb-4"> Benefits</h1>
           <ul>
-            <li>Rs. 5000 stipend </li>
             <li>Internship Certificate </li>
             <li> Top performers profile will be added to the official PacketPrep website under Student Interns page</li>
           </ul>
           <h1 class="mb-4"> Interview Process</h1>
           <ul>
             <li>Apply online <a href="{{ route('form.create',['job'=>'campus-coordinator'])}}">Link</a> </li>
-            <li>Shortlisted students have to send 1 min audio message on 'Why its important to learn coding?' or 'Why to do MS in Abroad?' </li>
             <li> Selected candidates will be called for  personal interview at <br>
               <b>PacketPrep Office</b>, Tarnaka, Hyderabad.</li>
            

@@ -25,6 +25,7 @@
        
        <b> Timing :</b> 6:00pm to 8:00pm <br>  
        <b> Location :</b> PacketPrep Office, Tarnaka, Hyderabad.<br>  
+       <b> Contact :</b> Mr.Syamson, +91 95026 97428<br>  
 
       
     </p>
@@ -48,7 +49,7 @@
 		<div class="col-12 col-md-6">
 
 		   <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/327689457" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          <iframe src="//player.vimeo.com/video/348328050" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
 
   		</div>

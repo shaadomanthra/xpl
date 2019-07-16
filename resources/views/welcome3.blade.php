@@ -1,17 +1,68 @@
 @extends('layouts.app2')
 
-@section('title', 'PacketPrep - Prepare for Campus Placements, Bank Exams and Government Jobs')
+@section('title', 'PacketPrep - Best platform to prepare for Campus Placements')
 
 @section('description', 'PacketPrep is an online video learning preparation platform for quantitative aptitude, logical reasoning, mental ability, general english and interview skills.')
 
 @section('keywords', 'quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures, gate preparation, gate lectures')
 
 @section('content')
+<link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+<div class="bg-white p-3 p-md-5">
+<div class="container" style="">
+  <div class="row ">
+    <div class="col-12 col-md-8 ">
+      <div class="display-4 mt-4 mb-4">The best platform to prepare for</div>
+      <div class="display-1 mb-4" style="font-family: 'Anton', sans-serif;color:#236fb1">CAMPUS PLACEMENTS</div>
+      <div class="">
+        <a href="{{ route('course.show','quantitative-aptitude')}}">
+        <span class="btn btn-outline-success  mr-3 mb-3">Quantitative Aptitude</span></a>
+        <a href="{{ route('course.show','logical-reasoning')}}">
+        <span class="btn btn-outline-success mr-3 mb-3">Logical Reasoning</span></a> 
+        <a href="{{ route('course.show','mental-ability')}}">
+        <span class="btn btn-outline-success mr-3 mb-3">Mental Ability</span></a>    
+        <a href="{{ route('course.show','verbal-ability')}}">
+        <span class="btn btn-outline-success mr-3 mb-3">Verbal Ability</span></a>    
+        <a href="{{ route('course.show','interview-skills')}}">
+        <span class="btn btn-outline-success mr-3 mb-3">Interview Skills</span></a>  
+        <a href="{{ route('course.show','c-programming')}}">
+        <span class="btn btn-outline-success mr-3 mb-3">Programming Concepts</span></a>   
+        <a href="{{ route('course.show','interview-skills')}}">
+        <span class="btn btn-outline-success mr-3 mb-3">Coding</span></a> 
+
+  
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <img src="{{ asset('img/banner.png') }}" class="w-100 d-none d-md-block" >
+    </div>
+  </div>
+</div>
+</div>
 
 <main role="main" style="z-index:-100;">
 
-<div class=" p-5  mb-5" style="background: #e5f3ff;">
+<div class=" " style="background: #e5f3ff;">
   <div class="container">
+
+          <div class="mt-4">
+          <div class="row">
+              <div class="col-12 col-md-4">
+<div class="border p-4 rounded bg-white"> <b><i class="fa fa-ravelry"></i> TARGET TCS</b><hr>
+<p>A 100-day FREE online training to help students crack TCS NQT (National Qualifier Test) </p>
+<button class="btn btn-outline-primary">Explore</button>
+</div>
+              </div>
+              <div class="col-12 col-md-4">
+<div class="border p-4 rounded bg-white"> <b><i class="fa fa-code"></i> Coding Bootcamp</b><hr>
+<p>A great opportunity to utilize your leisure time to build a great realtime project, where you will learn to write code from scratch to the end. </p>
+<button class="btn btn-outline-primary">Explore</button>
+</div>
+              </div>
+          </div>
+          
+        </div>
+
     <div class="display-4 display-md-3 text-center mb-5">Best online platform to prepare for Campus Placements</div>
     <div class="row">
       <div class="col-12 col-md-3 mb-4">
