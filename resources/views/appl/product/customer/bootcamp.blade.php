@@ -41,7 +41,7 @@
       <a href="{{ url('productpage/cbp') }}">
       <button class="btn btn-lg btn-primary mb-3"> Part Payment</button>
       </a><br>
-      You can pay Rs.500 to reserve the seat, remaining amount to be paid on the first day of training
+      You can pay Rs.600 to reserve the seat, remaining amount to be paid on the first day of training
     </div>
 
 
