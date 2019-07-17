@@ -1,8 +1,4 @@
-
-
 <script src="{{ asset('js/script.js')}}"></script>
-
-
 @if(isset($editor))
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
@@ -40,10 +36,7 @@
 
         
 </script>
-
 @endif
-
-
 @if(isset($code))
 <!-- Codemirror-->
 <script src="{{asset('js/codemirror/lib/codemirror.js')}}"></script>  
@@ -339,7 +332,6 @@ var ctxOne = document.getElementById('chartOneContainer').getContext('2d');
 new Chart(ctxOne, optionsOne);
 
 </script>
-
 @if(isset($sections))
 @foreach($sections as $sec => $section)
 <script type="text/javascript">
@@ -389,16 +381,7 @@ new Chart(ctx_{{$section->id}},options_{{$section->id}});
 </script>
 @endforeach
 @endif
-
-  
-
-
 @endif
-
- 
- 
-
-
 @if(isset($question['dynamic']))
 
 <script>
@@ -440,9 +423,6 @@ $(document).ready(function() {
   });
  </script>
 @endif
-
-
-
 @if(isset($jqueryui))
  <script type="text/javascript"
          src="{{asset('jquery-ui/jquery-ui.min.js')}}">
@@ -453,9 +433,6 @@ $(document).ready(function() {
   } );
   </script>
 @endif
-
-
-
 @if(isset($timer))
 <script>
 // Set the date we're counting down to
@@ -519,3 +496,12 @@ function addMinutes(date, minutes) {
 }
 </script>
 @endif
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-43617911-7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-43617911-7');
+</script>

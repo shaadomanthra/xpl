@@ -4,10 +4,9 @@
 
 @section('description', 'Get the best material for campus placement preparation, our courses include aptitude, reasoning, programming and coding.')
 
-@section('keywords', 'campus placement preparation', 'prepare for campus placements','learn quantitative aptitude','learn reasoning', 'learn verbal','learn programming concepts','learn coding for interview')
+@section('keywords', 'campus placement preparation, prepare for campus placements,learn quantitative aptitude,learn reasoning, learn verbal,learn programming concepts,learn coding for interview')
 
 @section('content')
-<link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
 <div class="bg-white p-3 p-md-5">
 <div class="container" style="">
   <div class="row ">
@@ -34,7 +33,7 @@
       </div>
     </div>
     <div class="col-12 col-md-4">
-      <img src="{{ asset('img/banner.png') }}" class="w-100 d-none d-md-block" >
+      <img src="{{ asset('img/banner-sm.png') }}" class="w-100 d-none d-md-block" >
     </div>
   </div>
 </div>
@@ -93,18 +92,12 @@
 
   </div>
 </div>
-
-  <!-- Marketing messaging and featurettes
-  ================================================== -->
-  <!-- Wrap the rest of the page in another container to center all the content. -->
-
 <div class="" style="background: #fff;">
   <div class="container marketing  " >
 
     <div class="p-4 p-md-5"></div>
     <div class="display-3 mb-5 text-center">Why PacketPrep?</div>
     <div class="p-0 p-md-2"></div>
-    <!-- Three columns of text below the carousel -->
     <div class="row ">
       <div class="col-lg-4 mb-5 mb-md-0">
        <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
