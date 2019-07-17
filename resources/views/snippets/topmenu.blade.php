@@ -2,7 +2,7 @@
  <nav class="navbar navbar-expand-lg navbar-dark " >
             @guest
             <a class="navbar-brand abs" href="{{ url('/') }}" aria-label="Homepage">
-                <img src="{{ asset('img/packetprep-logo-small.png') }}" width="60px" class="logo-main ml-md-1" />
+                <img src="{{ asset('img/packetprep-logo-small.png') }}" width="60px" class="logo-main ml-md-1" alt="packetprep logo blue" />
             </a>
             @else
             <a class="navbar-brand abs" href="{{ url('/dashboard') }}" aria-label="Dashboard">
