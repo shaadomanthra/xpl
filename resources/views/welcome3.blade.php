@@ -57,7 +57,7 @@
   </div>
   <div class="col-12 col-md-8">
      <b><i class="fa fa-code"></i> Coding Bootcamp -  Realtime Project</b><hr>
-<p>Build your first commercial web application with us at PacketPrep. It's a 10-day intensive classroom training on web development with a real-time project and certificate. </p>
+<p>Build your first web application with PacketPrep's 10-day classroom training. Complement your skills with a real-time project and a completion certificate. </p>
 <a href="{{ url('bootcamp') }}">
 <button class="btn btn-outline-secondary">Reserve your seat</button>
 </a>
@@ -76,8 +76,8 @@
   </div>
   </div>
   <div class="col-12 col-md-8">
-      <b><i class="fa fa-ravelry"></i> Are you planning for MS in Abroad? </b><hr>
-<p>PacketPrep offers all its users an opportunity to attend a GRE or IELTS session, take a test, and get industry acclaimed expert counselling <br>- all for free! </p>
+      <b><i class="fa fa-ravelry"></i> Want to pursue Masters abroad? </b><hr>
+<p>Attend a free session of GRE or IELTS, or take a mock test, or talk to industry experts who can answer your questions in person! Did we tell you this is free?</p>
 <a href="{{ url('firstacademy')}}">
 <button class="btn btn-outline-primary">More details</button>
 </a>
@@ -110,24 +110,24 @@
        <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
           <iframe src="//player.vimeo.com/video/348516688" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
-        <h2 class="mb-3 mt-4 "><div class="mb-2">We made learning </div> Simple, Interesting and Effective</h2>
-        <p>So far learning has been a boring experience, now we have made it simple, interesting and effective using funny introductions, crisp concept lectures and effective strategies to solve tough questions.  </p>
+        <h2 class="mb-3 mt-4 "><div class="mb-2">Learning made </div> Simple, Interesting and Effective</h2>
+        <p>Learning is no longer boring! Amusing introductions, crisp lectures, and effective strategies all make solving the toughest of questions a breeze!  </p>
         
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4 mb-5 mb-md-0">
         <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
           <iframe src="//player.vimeo.com/video/348516712" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
-        <h2 class="mb-3 mt-4"><div class="mb-2">Best Question bank </div>for campus placements</h2>
-        <p>There is no point in soving a million questions, instead solve 1000 questions that matter. Each concept lecture is followed by the important practice questions, sufficient to clear campus placements.</p>
+        <h2 class="mb-3 mt-4"><div class="mb-2">Industry leading Question bank </div>for campus placements</h2>
+        <p>Why solve a million questions when you can get away with solving only a few that matter? Each of our concept lectures is followed by a small set of questions that will make you ace your placement tests.</p>
         
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4 ">
         <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
           <iframe src="//player.vimeo.com/video/348516729" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
-        <h2 class="mb-3 mt-4"><div class="mb-2">Proficiency Test</div> for better opportunities</h2>
-        <p>A verified certificate from PacketPrep can provide proof for an employer, company or other institution that you have successfully completed an online course and took the assessment. <a href="{{ url('proficiency-test')}}" class="btn btn-sm btn-outline-secondary">Try now</a></p>
+        <h2 class="mb-3 mt-4"><div class="mb-2">Get Proficienct at</div> grabbing opportunities</h2>
+        <p>PacketPrep's Certificate of Verification provides prospective employers (company or institutions) an iron-clad assurance that you have successfully completed an online course. <a href="{{ url('proficiency-test')}}" class="btn btn-sm btn-outline-secondary">Try now</a></p>
         
       </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
