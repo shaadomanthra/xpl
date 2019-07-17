@@ -53,6 +53,9 @@
 				@endif
 
 				@endif
+				<a href="{{route('assessment.access',$exam->slug)}}">
+				<button class="btn btn-lg btn-outline-success"> Access Code </button>
+				</a>
 		<br><br>
 			</div>
 
