@@ -21,7 +21,7 @@
         <span class="btn btn-outline-success mr-3 mb-3">Logical Reasoning</span></a> 
         <a href="{{ route('course.show','mental-ability')}}">
         <span class="btn btn-outline-success mr-3 mb-3">Mental Ability</span></a>    
-        <a href="{{ route('course.show','verbal-ability')}}">
+        <a href="{{ route('course.show','verbal-ability-1')}}">
         <span class="btn btn-outline-success mr-3 mb-3">Verbal Ability</span></a>    
         <a href="{{ route('course.show','interview-skills')}}">
         <span class="btn btn-outline-success mr-3 mb-3">Interview Skills</span></a>  
