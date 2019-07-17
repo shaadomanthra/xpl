@@ -1,18 +1,71 @@
+
+<div class="p-3"></div>
 <div class="row">
-	<div class="col-12 col-md-6">
-		<nav class="nav ml-md-0" >
-		  <a class="nav-link text-secondary " href="{{url('/about')}}">About</a>
-		  <a class="nav-link text-secondary" href="{{url('/terms')}}">Terms</a>
-		  <a class="nav-link text-secondary" href="{{url('/docs')}}">Docs</a>
-		  <a class="nav-link text-secondary" href="{{url('/contact')}}">Contact</a>
-		</nav>
+	<div class="col-6 col-md">
+		<div class="">
+		<img src="{{ asset('img/pp_logo_white.png') }}"  style="max-width:80px;"class=" w-100" />
+		</div>
 	</div>
-	<div class="col-12 col-md-6">
-		<nav class="nav float-md-right">
-		  <a class="nav-link text-secondary " href="#"><i class="fa fa-facebook-square"></i></a>
-		  <a class="nav-link text-secondary"  href="#"><i class="fa fa-twitter-square"></i></a>
-		  <a class="nav-link text-secondary"  href="#"><i class="fa fa-instagram"></i></a>
-		</nav>
-	</div>
+	<div class="col-6 col-md">
+        <h5>PacketPrep</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="{{url('/about-corporate')}}">About</a></li>
+          <li><a class="text-muted" href="{{url('/productpage')}}">Products</a></li>
+          <li><a class="text-muted" href="{{url('/blog')}}">Blog</a></li>
+          <li><a class="text-muted" href="{{url('/contact-corporate')}}">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Programs</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="{{url('/gigacode')}}">GigaCode</a></li>
+          <li><a class="text-muted" href="{{url('/bootcamp')}}">Coding Bootcamp</a></li>
+          <li><a class="text-muted" href="{{url('/firstacademy')}}">GRE & IELTS</a></li>
+          <li><a class="text-muted" href="{{url('/targettcs')}}">Target TCS</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Connect</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="{{url('/sreferral')}}">Referrals</a></li>
+          <li><a class="text-muted" href="{{url('/ambassador')}}">Ambassador</a></li>
+          <li><a class="text-muted" href="{{url('/job/parttime')}}">Parttime Job</a></li>
+          <li><a class="text-muted" href="#">Partner with us</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>Resources</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Courses</a></li>
+          <li><a class="text-muted" href="#">Tests</a></li>
+          <li><a class="text-muted" href="#">Tracks</a></li>
+          <li><a class="text-muted" href="#">Proficiency Test</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <h5>More</h5>
+        <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="{{url('/terms-corporate')}}">Terms</a></li>
+          <li><a class="text-muted" href="{{url('/privacy')}}">Privacy</a></li>
+          <li><a class="text-muted" href="{{url('/refund')}}">Refund and Cancellation</a></li>
+          <li><a class="text-muted" href="{{url('/disclaimer')}}">Disclaimer</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-md">
+        <div class="">
+        	<div class="mb-2">
+		  <a class=" text-secondary mr-2 mr-md-3" target="_blank" href="https://www.facebook.com/packetprep/"><i class="fa fa-facebook-square fa-2x"></i></a></div>
+		  <div class="mb-2">
+		  <a class=" text-secondary mr-2 mr-md-3" target="_blank" href="https://www.instagram.com/packetprep/"><i class="fa fa-instagram fa-2x"></i></a></div>
+		  <div class="mb-2">
+		  <a class=" text-secondary " target="_blank" href="http://youtube.com/packetprep"><i class="fa fa-youtube-square fa-2x"></i></a>
+		</div>
+		</div>
+      </div>
+
+	
 </div>
+<hr>
+<div class="text-secondary">Copyright &copy; Quedb Edtech Private Limited</div>
+<div class="p-4"></div>
 

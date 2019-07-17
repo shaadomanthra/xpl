@@ -73,7 +73,7 @@
  <div class="bg-dark">
     <footer class="wrapper text-light footer">
         <div class="container py-3">
-            @include('snippets.bottommenu')
+            @include('snippets.footer')
         </div>
     </footer>
 </div>

@@ -35,6 +35,22 @@ class Course extends Model
         return $this->belongsToMany('PacketPrep\Models\Product\Product');
     }
 
+    public function product(){
+        $p=null;
+        $products = $this->belongsToMany('PacketPrep\Models\Product\Product')->get();
+
+       
+        foreach($products as $product){
+ 
+            if($product->slug!='premium-access' && $product->slug!='pro-access')
+            {
+                $p = $product;
+                break;
+            }
+        }
+        return $p;
+    }
+
     public function colleges(){
         return $this->belongsToMany('PacketPrep\Models\College\College');
     }

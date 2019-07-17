@@ -30,8 +30,9 @@
       
     </p>
      
-      <div class="p-3 rounded mb-3" style="background: #f2f2f2">      
-        <h2 > <i class="fa fa-rupee"></i>  3,500 </h2>
+      <div class="p-3 rounded mb-3" style="background: #f2f2f2"> 
+      <h3><strike><i class="fa fa-rupee"></i>  4,000</strike> &nbsp;<span class="badge badge-warning">10% OFF</span></h3>     
+        <h1 > <i class="fa fa-rupee"></i>  3,600 </h1>
         
       </div>
       
@@ -107,6 +108,16 @@ Together we have built three project namely Resume, Calculator App and Simple Bl
             <iframe  src="https://www.youtube.com/embed/OXlGioKAASk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
           </div>
+        </div>
+        <hr>
+
+        <h3 class="mb-4">Students Review </h3>
+        <div class="row">
+            @for($i=1;$i<9;$i++)
+            <div class="col-12 col-md-6">
+              <a class="example-image-link" href="img/bootcamp/testimonials/{{$i}}.png" data-lightbox="example-1"><img class="example-image p-1" src="img/bootcamp/testimonials/{{$i}}.png" alt="image-1" width="100%" /></a>
+            </div>
+            @endfor
         </div>
         
   <div>
