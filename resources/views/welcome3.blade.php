@@ -1,10 +1,10 @@
 @extends('layouts.app2')
 
-@section('title', 'PacketPrep - Best platform to prepare for Campus Placements')
+@section('title', 'PacketPrep - The best platform to prepare for Campus Placements')
 
-@section('description', 'PacketPrep is an online video learning preparation platform for quantitative aptitude, logical reasoning, mental ability, general english and interview skills.')
+@section('description', 'Get the best material for campus placement preparation, our courses include aptitude, reasoning, programming and coding.')
 
-@section('keywords', 'quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures, gate preparation, gate lectures')
+@section('keywords', 'campus placement preparation', 'prepare for campus placements','learn quantitative aptitude','learn reasoning', 'learn verbal','learn programming concepts','learn coding for interview')
 
 @section('content')
 <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">

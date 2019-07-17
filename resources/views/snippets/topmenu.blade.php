@@ -58,6 +58,7 @@
                     <!-- Authentication Links -->
                     @guest
                     <li class="mr-2"><a class="nav-link " href="{{ route('login') }}"><i class="fa fa-sign-in"></i> Login</a></li>
+                    <li class="mr-2"><a class="nav-link " href="{{ route('register.type') }}"><i class="fa fa-user-plus"></i> Register</a></li>
                     
                     @else
                    
