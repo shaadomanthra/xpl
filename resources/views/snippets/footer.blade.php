@@ -54,11 +54,11 @@
       <div class="col-6 col-md">
         <div class="">
         	<div class="mb-2">
-		  <a class=" text-secondary mr-2 mr-md-3" target="_blank" href="https://www.facebook.com/packetprep/"><i class="fa fa-facebook-square fa-2x"></i></a></div>
+		  <a class=" text-secondary mr-2 mr-md-3" rel="noreferrer" target="_blank" href="https://www.facebook.com/packetprep/"><i class="fa fa-facebook-square fa-2x"></i></a></div>
 		  <div class="mb-2">
-		  <a class=" text-secondary mr-2 mr-md-3" target="_blank" href="https://www.instagram.com/packetprep/"><i class="fa fa-instagram fa-2x"></i></a></div>
+		  <a class=" text-secondary mr-2 mr-md-3" rel="noreferrer" target="_blank" href="https://www.instagram.com/packetprep/"><i class="fa fa-instagram fa-2x"></i></a></div>
 		  <div class="mb-2">
-		  <a class=" text-secondary " target="_blank" href="http://youtube.com/packetprep"><i class="fa fa-youtube-square fa-2x"></i></a>
+		  <a class=" text-secondary " rel="noreferrer" target="_blank" href="http://youtube.com/packetprep"><i class="fa fa-youtube-square fa-2x"></i></a>
 		</div>
 		</div>
       </div>

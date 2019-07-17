@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="col-12 col-md-4">
-      <img src="{{ asset('img/banner-sm.png') }}" class="w-100 d-none d-md-block" >
+      <img src="{{ asset('img/banner-sm.png') }}" class="w-100 d-none d-md-block" alt="packetprep banner">
     </div>
   </div>
 </div>
@@ -51,7 +51,7 @@
 <div class="row">
   <div class="col-12 col-md-4 ">
     <div class="col-6 col-md-12">
-    <img src="{{ asset('img/coding.png')}}" class="w-100 mt-3 mb-3" />
+    <img src="{{ asset('img/coding.png')}}" class="w-100 mt-3 mb-3" alt="coding bootcamp" />
   </div>
   </div>
   <div class="col-12 col-md-8">
@@ -71,7 +71,7 @@
 <div class="row">
   <div class="col-12 col-md-4">
     <div class="col-6 col-md-12">
-    <img src="{{ asset('img/world.png')}}" class="w-100 mt-3 mb-3" />
+    <img src="{{ asset('img/world.png')}}" class="w-100 mt-3 mb-3" alt="want to pursue masters abroad?"/>
   </div>
   </div>
   <div class="col-12 col-md-8">
@@ -101,7 +101,7 @@
     <div class="row ">
       <div class="col-lg-4 mb-5 mb-md-0">
        <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/348516688" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          <iframe src="//player.vimeo.com/video/348516688" title="Learning made Simple, Interesting and Effective" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
         <h2 class="mb-3 mt-4 "><div class="mb-2">Learning made </div> Simple, Interesting and Effective</h2>
         <p>Learning is no longer boring! Amusing introductions, crisp lectures, and effective strategies all make solving the toughest of questions a breeze!  </p>
@@ -109,7 +109,7 @@
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4 mb-5 mb-md-0">
         <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/348516712" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          <iframe src="//player.vimeo.com/video/348516712" title="Industry leading Question bank for campus placements" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
         <h2 class="mb-3 mt-4"><div class="mb-2">Industry leading Question bank </div>for campus placements</h2>
         <p>Why solve a million questions when you can get away with solving only a few that matter? Each of our concept lectures is followed by a small set of questions that will make you ace your placement tests.</p>
@@ -117,7 +117,7 @@
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4 ">
         <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/348516729" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          <iframe src="//player.vimeo.com/video/348516729" title="Get Proficienct at grabbing opportunities" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
           </div>
         <h2 class="mb-3 mt-4"><div class="mb-2">Get Proficienct at</div> grabbing opportunities</h2>
         <p>PacketPrep's Certificate of Verification provides prospective employers (company or institutions) an iron-clad assurance that you have successfully completed an online course. <a href="{{ url('proficiency-test')}}" class="btn btn-sm btn-outline-secondary">Try now</a></p>
@@ -140,7 +140,7 @@
     <div class="row">
             @for($i=1;$i<13;$i++)
             <div class="col-12 col-md-6">
-              <img class="example-image p-1" src="img/youtube/{{$i}}.png"  width="100%"  />
+              <img class="example-image p-1" src="img/youtube/{{$i}}.png"  width="100%" alt="student feedback {{$i}}" />
             </div>
             @endfor
         </div>

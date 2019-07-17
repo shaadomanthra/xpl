@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'guest' => \PacketPrep\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'corporate' => \PacketPrep\Http\Middleware\Corporate::class,
+        'cache' => \PacketPrep\Http\Middleware\cache::class,
     ];
 }

@@ -9,6 +9,8 @@
     <meta name="keywords" content="@yield('keywords')">
     <meta name="author" content="Krishna Teja G S">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="theme-color" content="#236fb1"/>
+    <link rel="manifest" href="/manifest.json">
     <title>@yield('title')</title>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     @if(isset($welcome3))
