@@ -172,11 +172,13 @@ class AssessmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function instructions($test)
+    public function instructions($test,Request $r)
     {
         $exam = Exam::where('slug',$test)->first();
+        $code = $r->get('code');
 
-        if($exam->status == 2){
+        if(!$code){
+           if($exam->status == 2){
             
             $user = \Auth::user();
             $entry=null;
@@ -195,7 +197,13 @@ class AssessmentController extends Controller
 
             if(!$entry)
                 return view('appl.course.course.access');
+            } 
+        }else{
+            $code = strtoupper($code);
+            if($exam->code != $code)
+                return view('appl.exam.assessment.wrongcode')->with('code',$code);
         }
+        
 
         return view('appl.exam.assessment.instructions')
                 ->with('exam',$exam);
@@ -211,7 +219,12 @@ class AssessmentController extends Controller
     {
         $exam = Exam::where('slug',$test)->first();
 
-        if($exam->status == 2){
+        $code = $request->get('code');
+        $ajax = $request->get('ajax');
+
+        if(!$ajax)
+        if(!$code){
+           if($exam->status == 2){
             
             $user = \Auth::user();
             $entry=null;
@@ -230,6 +243,11 @@ class AssessmentController extends Controller
 
             if(!$entry)
                 return view('appl.course.course.access');
+            } 
+        }else{
+            $code = strtoupper($code);
+            if($exam->code != $code)
+                return view('appl.exam.assessment.wrongcode')->with('code',$code);
         }
 
 
@@ -667,6 +685,18 @@ class AssessmentController extends Controller
         if($exam)
             return view('appl.exam.assessment.show')
                     ->with('exam',$exam)->with('entry',$entry);
+        else
+            abort(404);
+            
+    }
+
+    public function access($id)
+    {
+        $exam= Exam::where('slug',$id)->first();
+        
+        if($exam)
+            return view('appl.exam.assessment.access')
+                    ->with('exam',$exam);
         else
             abort(404);
             

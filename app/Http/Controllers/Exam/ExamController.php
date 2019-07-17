@@ -250,6 +250,7 @@ class ExamController extends Controller
             $exam->description = ($request->description) ? $request->description: null;
             $exam->instructions = ($request->instructions) ? $request->instructions : null;
             $exam->status = $request->status;
+            $exam->code = strtoupper($request->code);
             $exam->save(); 
 
             flash('A new exam('.$request->name.') is created!')->success();
@@ -334,6 +335,7 @@ class ExamController extends Controller
             $exam->description = ($request->description) ? $request->description: null;
             $exam->instructions = ($request->instructions) ? $request->instructions : null;
             $exam->status = $request->status;
+            $exam->code = strtoupper($request->code);
             $exam->save(); 
 
             flash('Exam (<b>'.$request->name.'</b>) Successfully updated!')->success();

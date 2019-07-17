@@ -47,6 +47,17 @@
       </div>
 
       <div class="form-group">
+        <label for="formGroupExampleInput ">Access Code</label>
+        <input type="text" class="form-control" name="code" id="formGroupExampleInput" placeholder="Enter the Access Code" 
+            @if($stub=='Create')
+            value="{{ (old('code')) ? old('code') : '' }}"
+            @else
+            value = "{{ $exam->code }}"
+            @endif
+          >
+       
+      </div>
+      <div class="form-group">
         <label for="formGroupExampleInput ">Examtype</label>
         <select class="form-control" name="examtype_id">
           @foreach($examtypes as $et)

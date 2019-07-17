@@ -14231,7 +14231,7 @@ $(document).ready(function () {
       console.log('saved');
     });
 
-    $.get(url + "/" + qno + "/", function (data) {
+    $.get(url + "/" + qno + "/?ajax=1", function (data) {
       console.log(data);
       $("div.question_block").replaceWith(data);
       MathJax.Hub.Queue(["Typeset", MathJax.Hub, "div.question_block"]);

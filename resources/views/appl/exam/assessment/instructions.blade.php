@@ -11,7 +11,7 @@
 		{!! $exam->instructions  !!}
 		
 		&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="{{route('assessment.try',$exam->slug)}}">
+		<a href="{{route('assessment.try',$exam->slug)}}@if(request()->get('code'))?code={{ request()->get('code') }}@endif">
 			<button class="btn btn-lg btn-primary"> Accept and Proceed</button>
 		</a>
 	</div>

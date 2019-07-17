@@ -59,7 +59,6 @@
      </h2>
     <div class=" bg-white " >
       <div class="card-body">
-        {{ dd($course->product)}}
         <p class="card-text mt-2">{!! $course->description !!}</p>
         <a href="{{ route('course.show',$course->slug) }} ">
           <button class="btn btn-outline-primary btn-sm " >View Course</button>

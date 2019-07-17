@@ -140,6 +140,7 @@ class CouponController extends Controller
                 ->with('app',$this);
     }
 
+    
 
     public function getamount($amount,$code,$product)
     {
@@ -158,7 +159,6 @@ class CouponController extends Controller
             
         }else{
             $amb = User::where('username',$code)->first();
-
 
             if($amb){
                 $true = $amb->checkRole(['ambassador']);

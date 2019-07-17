@@ -40,9 +40,28 @@
             @endif
           >
       </div>
+
+       <div class="form-group">
+        <label for="formGroupExampleInput2">Price</label>
+        <input type="text" class="form-control" name="price" id="formGroupExampleInput2" placeholder="Enter the discount price"
+            @if($stub=='Create')
+            value="{{ (old('price')) ? old('price') : '' }}"
+            @else
+            value = "{{ $obj->price }}"
+            @endif
+          >
+      </div>
       <div class="form-group">
         <label for="formGroupExampleInput ">Expiry</label>
       <input type="text" class="form-control" name="expiry"   value="{{isset($obj->expiry)? \carbon\carbon::parse($obj->expiry)->format('Y-m-d'):''}}" id="datepicker">
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Type</label>
+        <select class="form-control" name="type">
+          <option value="0" @if(isset($obj)) @if($obj->type==0) selected @endif @endif >Discount</option>
+          <option value="1" @if(isset($obj)) @if($obj->type==1) selected @endif @endif >Access</option>
+        </select>
       </div>
 
       <div class="form-group">

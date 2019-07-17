@@ -40,6 +40,13 @@
           </div>
 
           <div class="row mb-2">
+            <div class="col-md-4">Access Code</div>
+            <div class="col-md-8">
+              {{ $exam->code}}
+            </div>
+          </div>
+
+          <div class="row mb-2">
             <div class="col-md-4">Description</div>
             <div class="col-md-8">
               {!! $exam->description !!}

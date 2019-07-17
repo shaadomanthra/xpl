@@ -36,10 +36,10 @@
       <div class="col-6 col-md">
         <h5>Resources</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Courses</a></li>
-          <li><a class="text-muted" href="#">Tests</a></li>
-          <li><a class="text-muted" href="#">Tracks</a></li>
-          <li><a class="text-muted" href="#">Proficiency Test</a></li>
+          <li><a class="text-muted" href="{{url('/course')}}">Courses</a></li>
+          <li><a class="text-muted" href="{{url('/test')}}">Tests</a></li>
+          <li><a class="text-muted" href="{{url('/tracks')}}">Tracks</a></li>
+          <li><a class="text-muted" href="{{url('/proficiency-test')}}">Proficiency Test</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
