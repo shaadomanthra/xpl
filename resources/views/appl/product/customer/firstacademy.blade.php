@@ -5,12 +5,12 @@
 
 @section('content')
 
-<div class=" p-4   border-bottom " style="background: #e7f4ff;" >
+<div class=" p-0 pt-3  pt-md-4 pb-md-0 border-bottom " style="background: #e7f4ff;" >
   <div class="wrapper ">  
   <div class="container">
-    <div class="row mb-4">
+    <div class="row mb-3 mb-md-4">
       <div class="col-12 col-md-6">
-        <div class=" p-3  rounded" style="border:1px solid #bfddf7; background: #ecf6ff;">
+        <div class=" p-3  mb-3 rounded" style="border:1px solid #bfddf7; background: #ecf6ff;">
             <div class="col-3 mb-3 mt-3 ">
               <img src="{{ asset('img/evaluation.png')}}" class="w-100 " />
             </div>
@@ -44,7 +44,7 @@
     </div>
   </div>
 </div>
-<div class=" p-4  mb-3 mb-md-4 border-bottom bg-white" >
+<div class=" p-3 p-md-4  mb-3 mb-md-4 border-bottom bg-white" >
 	<div class="wrapper ">  
 	<div class="container">
 
