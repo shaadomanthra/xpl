@@ -53,8 +53,8 @@
                 <td>{{ $form->phone }}</td>
               </tr>  
               <tr>
-                <td>Date of Birth</td>
-                <td>{{ \carbon\carbon::parse($form->dob)->format('M d Y') }}</td>
+                <td>Year of Passing </td>
+                <td>{{ ($form->user->details()->first()) ? $form->user->details()->first()->year_of_passing : '-' }}</td>
               </tr> 
               <tr>
                 <td>Age</td>

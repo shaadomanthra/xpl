@@ -25,7 +25,17 @@
                   @endforeach
                   @endif
                 </td>
-                <td>{{ ($form->college)? ($form->college) : '-' }}</td>
+                <td>{{ ($form->college)? ($form->college) : '-' }}<br>
+                  @if($form->user->details()->first())
+                    @if($form->user->details()->first()->year_of_passing != '2020' )
+                      <span class="badge badge-info">{{ $form->user->details()->first()->year_of_passing }}</span>
+                    @else
+                      {{ $form->user->details()->first()->year_of_passing }}
+                    @endif
+                  @else
+
+                  @endif 
+                </td>
                  <td>{{ ($form->branch)? ($form->branch) : '-' }}</td>
                
                 <td>{{ $form->job->title }}</td>
