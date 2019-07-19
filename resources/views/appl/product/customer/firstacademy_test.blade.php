@@ -17,14 +17,14 @@
             <div class="p-3">
             <h1>Dear Student,</h1>
             <p> Greetings from PacketPrep !
-            <p class="" >We have scheduled your mock test on <b><span class="text-primary">21st July (Sunday), 10:00 Am</span></b> at FirstAcademy (Ameerpet Brnach). Kindly confirm your presence by filling the below form. </p>
+            <p class="" >Your mock test has been scheduled for <b><span class="text-primary">21st July (Sunday) at 10:00AM</span></b> at First Academy (Ameerpet Branch). </p>
+            
+
+            <p>Did you know the mock test comes with a Free counselling session for visas and applications to universities? </p>
             <a href="https://forms.gle/KwaPFX1hdRo5vgtb8">
             <button class="btn btn-success mb-4">I will attend</button>
             </a>
-
-            <p>As a packetprep user, you can also avail a free conselling for visa application, where in you can ask any doubt regarding schorlorships, funding, universities, backlogs etc. </p>
-
-            <p class="text-secondary"><i>Note: This FREE offer is only valid for this session.</i></p>
+            <p class="text-secondary"><i>Note: The offer is valid only for this session.</i></p>
 
             <p>regards,<br>PacketPrep Team
             </p>
