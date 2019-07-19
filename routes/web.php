@@ -151,6 +151,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/fullstackdevelopment','Product\CustomerController@development')->name('development');
 	Route::get('/bootcamp','Product\CustomerController@bootcamp')->name('bootcamp');
 	Route::get('/firstacademy','Product\CustomerController@firstacademy')->name('firstacademy');
+	Route::get('/firstacademy/test','Product\CustomerController@firstacademy_test')->name('firstacademy.test');
 	Route::get('/gigacode','Product\CustomerController@gigacode')->name('gigacode');
 
 	Route::get('/couponreferral','Product\CouponController@referral')->name('coupon.referral')->middleware('auth');
