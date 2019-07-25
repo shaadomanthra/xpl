@@ -7,6 +7,7 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\College\Zone as Obj;
 use PacketPrep\Models\College\Metric;
 use PacketPrep\Models\College\Branch;
+use PacketPrep\User;
 
 class ZoneController extends Controller
 {
@@ -130,54 +131,39 @@ class ZoneController extends Controller
            $obj = Obj::where('name',$id)->first(); 
 
         $branch = $request->get('branch');
-        $year_of_passing = $request->get('year_of_passing');
         $metric= $request->get('metric');
 
-       $users = $obj->users()->paginate(config('global.no_of_records'));
-       dd($users);
-        $total = count($obj->users);
-
-        if($branch){
-            if($year_of_passing){
-            $users = $obj->users()->whereHas('branches', function ($query) use ($branch) {
-                                $query->where('name', '=', $branch);
-                            })->whereHas('details', function ($query) use ($year_of_passing) {
-                                $query->where('year_of_passing', '=', $year_of_passing);
-                            })->get();
-            }else
-            $users = $obj->users()->whereHas('branches', function ($query) use ($branch) {
-                                $query->where('name', '=', $branch);
-                            })->get();
-        }else{
-
-            if($year_of_passing){
-            $users = $obj->users()->whereHas('details', function ($query) use ($year_of_passing) {
-                                $query->where('year_of_passing', '=', $year_of_passing);
-                            })->get();
-            }
-        }
-
+       
+        $b = Branch::where('name',$branch)->first();
+        $m = Metric::where('name',$metric)->first();
+        $obj->branches = Branch::all();
+        $obj_users = $obj->users()->pluck('id')->toArray();
+        
         if($metric){
-            if($year_of_passing){
-            $users = $obj->users()->whereHas('metrics', function ($query) use ($metric) {
-                                $query->where('name', '=', $metric);
-                            })->whereHas('details', function ($query) use ($year_of_passing) {
-                                $query->where('year_of_passing', '=', $year_of_passing);
-                            })->get();
-            }else
-            $users = $obj->users()->whereHas('metrics', function ($query) use ($metric) {
-                                $query->where('name', '=', $metric);
-                            })->get();
-
+            $metric_users = $m->users()->pluck('id')->toArray();
+            $u= array_intersect($obj_users,$metric_users);
+            $users = User::whereIn('id',$u)->paginate(config('global.no_of_records'));
+             $total = count($u);
+        }
+        if($branch){
+            $branch_users = $b->users()->pluck('id')->toArray();
+            $u= array_intersect($obj_users,$branch_users);
+            $users = User::whereIn('id',$u)->paginate(config('global.no_of_records'));
+             $total = count($u);
         }
 
+        if(!$metric && !$branch)
+        {
+            $total = count($obj_users);
+            $users = $obj->users()->paginate(config('global.no_of_records'));
+        }
 
 
         
         $this->authorize('view', $obj);
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.student')
-                    ->with('obj',$obj)->with('app',$this)->with('users',$users)->with('total',$total);
+                    ->with('obj',$obj)->with('app',$this)->with('users',$users)->with('total',$total)->with('branch',$b)->with('metric',$m);
         else
             abort(404);
     }
@@ -185,85 +171,37 @@ class ZoneController extends Controller
     public function show2($id,Request $request)
     {
         if(is_numeric($id))
-            $obj = Obj::where('id',$id)->first();
+         $obj = Obj::where('id',$id)->first();
         else
-           $obj = Obj::where('name',$id)->first(); 
-       
+         $obj = Obj::where('name',$id)->first();
+
         $this->authorize('view', $obj);
 
-        $year_of_passing = $request->get('year_of_passing');
         $metrics = Metric::all();
+        $branches = Branch::all();
         $obj->branches = Branch::all();
         $data = array();
 
-        if($year_of_passing)
-        {
+        $obj_users = $obj->users()->pluck('id')->toArray();
             
-
             foreach($obj->branches as $b){
-            $data['branches'][$b->name] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('branches', function ($query) use ($b) {
-                            $query->where('name', '=', $b->name);
-                        })->count(); 
+                $branch_users = $b->users()->pluck('id')->toArray();
+                $u= array_intersect($obj_users,$branch_users);
+                $data['branches'][$b->name] = count($u);
             }
 
             foreach($metrics as $m){
-                $data['metrics'][$m->name] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('metrics', function ($query) use ($m) {
-                                $query->where('name', '=', $m->name);
-                            })->count(); 
+
+                $metric_users = $m->users()->pluck('id')->toArray();
+                $u= array_intersect($obj_users,$metric_users);
+                $data['metrics'][$m->name] = count($u);
+
             }
 
-            $data['users']['all'] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->count();
-
-            $data['users']['pro'] =  $obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Pro Access');
-                            })->count();
-
-            $data['users']['premium'] = $obj->users()->whereHas('details',function($query) use($year_of_passing){
-                $query->where('year_of_passing',$year_of_passing);
-            })->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Premium Access');
-                            })->count();
-
+            $data['users']['all'] = count($obj_users);
             
-        }else{
+    
 
-            foreach($obj->branches as $b){
-            $data['branches'][$b->name] = $obj->users()->whereHas('branches', function ($query) use ($b) {
-                            $query->where('name', '=', $b->name);
-                        })->count(); 
-            }
-
-            foreach($metrics as $m){
-                $data['metrics'][$m->name] = $obj->users()->whereHas('metrics', function ($query) use ($m) {
-                                $query->where('name', '=', $m->name);
-                            })->count(); 
-            }
-
-            $data['users']['all'] = $obj->users()->count();
-            $data['users']['pro'] =  $obj->users()->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Pro Access');
-                            })->count();
-            $data['users']['premium'] = $obj->users()->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Premium Access');
-                            })->count();
-            
-        }
-
-        
-
-        
-
-
-        //dd($obj->users);
-        
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show2')
                     ->with('college',$obj)->with('app',$this)

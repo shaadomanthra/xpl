@@ -2,15 +2,23 @@
 @section('content')
 
 
-<div class="container bg-white">
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb border bg-light">
+    <li class="breadcrumb-item"><a href="{{ url('/')}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin')}}">Admin</a></li>
+    <li class="breadcrumb-item">Zone - {{ ucfirst($obj->name) }}</li>
+  </ol>
+</nav>
+
+<div class="container bg-white border">
 
   <div class="p-4">
-      <h1><a href="{{ route('college.view',$obj->id)}}">{{ $obj->name }}</a> - Student List (#{{$total}})</h1>
-      <p>@if(request()->get('branch')) Branch:  <b>{{request()->get('branch')}}</b> @endif
+      <h1><a href="{{ route('metric.view',$obj->id)}}">{{ $obj->name }}</a> - Student List (#{{$total}})</h1>
+      <p>@if($metric) Metric:  <b>{{$metric->name}}</b> @endif
 
-        @if(request()->get('year_of_passing')) <br>Year:  <b>{{request()->get('year_of_passing')}}</b> @endif
 
-        @if(request()->get('metric')) <br>Metric:  <b>{{request()->get('metric')}}</b> @endif
+        @if($branch) <br>Branch:  <b>{{$branch->name}}</b> @endif
       </p>
   </div>
 
@@ -47,7 +55,7 @@
                   @endif
                 </td>
                 <td>
-                 {{ ($user->details)?$user->details->year_of_passing:'-' }}
+                 {{ ($user->details)?$user->details->phone:'-' }}
                 </td>
               </tr>
               @endforeach      
@@ -60,13 +68,12 @@
         </div>
         @endif
         
-
-
-</div>
  <nav aria-label="Page navigation  " class="card-nav @if($users->total() > config('global.no_of_records'))mt-3 @endif">
         {{$users->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
       </nav>
+
 </div>
+
 </div>
 
 

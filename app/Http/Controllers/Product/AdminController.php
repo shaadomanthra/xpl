@@ -37,7 +37,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //$slug = subdomain();
         //$client = client::where('slug',$slug)->first();
@@ -48,9 +48,21 @@ class AdminController extends Controller
              abort(403,'Unauthorised Access');   
         }
 
-
+        $data = array();
         $users = new AdminController;
-        $users->total = User::count();
+        $extension = 'json';
+        $filename  = 'analytics'.'.' . $extension;
+
+        $services = Service::all();
+        $zones = Zone::all();
+        $branches = Branch::all();
+        $metrics = Metric::all();
+
+        if(file_exists($filename) && !$request->get('refresh')){
+            $data =   json_decode(file_get_contents($filename),true);
+
+        }else{
+            $data['users']['total'] = User::count();
 
         $last_year = (new \Carbon\Carbon('first day of last year'))->year;
         $this_year = (new \Carbon\Carbon('first day of this year'))->year;
@@ -58,32 +70,55 @@ class AdminController extends Controller
 
         $last_year_first_day = (new \Carbon\Carbon('first day of January '.$last_year))->startofMonth()->toDateTimeString();
         $this_year_first_day = (new \Carbon\Carbon('first day of January '.$this_year))->startofMonth()->toDateTimeString();
+
         $users->last_year  = User::where('created_at','>', $last_year_first_day)->where('created_at','<', $this_year_first_day)->count();
         $users->this_year  = User::where(DB::raw('YEAR(created_at)'), '=', $this_year)->count();
 
-        
+        $data['users']['last_year'] =$users->last_year;
+        $data['users']['this_year'] = $users->this_year;
 
 
         $last_month_first_day = (new \Carbon\Carbon('first day of last month'))->startofMonth()->toDateTimeString();
         $this_month_first_day = (new \Carbon\Carbon('first day of this month'))->startofMonth()->toDateTimeString();
         
         $users->last_month  = User::where('created_at','>', $last_month_first_day)->where('created_at','<', $this_month_first_day)->count();
-        
-
         $users->this_month  = User::where(DB::raw('MONTH(created_at)'), '=', date('n'))->count();
 
-        $metrics = Metric::all();
-        $branches = Branch::all();
-        $services = Service::all();
-        $zones = Zone::all();
+        $data['users']['last_month'] = $users->last_month;
+        $data['users']['this_month'] = $users->this_month;
+
         
+
+        foreach($metrics as $metric){
+            $data['metric'][$metric->name] = count($metric->users);
+        }
+        
+
+        foreach($branches as $branch){
+            $data['branch'][$branch->name] = count($branch->users);
+        }
+        
+
+        foreach($zones as $zone){
+            $data['zone'][$zone->name]['users'] = count($zone->users);
+            $data['zone'][$zone->name]['colleges'] = count($zone->colleges);
+        }
+
+        }
+           
+
+        if($request->get('refresh')){
+            
+            file_put_contents($filename, json_encode($data,JSON_PRETTY_PRINT));
+        }    
 
         return view('appl.product.admin.index')
                     ->with('users',$users)
                     ->with('metrics',$metrics)
                     ->with('branches',$branches)
                     ->with('services',$services)
-                    ->with('zones',$zones);
+                    ->with('zones',$zones)
+                    ->with('data',$data);
     }
 
 

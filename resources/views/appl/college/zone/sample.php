@@ -11,7 +11,7 @@
   <div class="row">
     <div class="col-4 col-md-2">
        <div class="float-left ">
-          <img src="{{ asset('/img/branch.jpg')}}" class="w-100 p-3 pt-0"/>   
+          <img src="{{ asset('/img/map.jpg')}}" class="w-100 p-3 pt-0"/>   
       </div>
     </div>
     <div class="col-12 col-md-10">
@@ -207,9 +207,9 @@
        
         
         <div class="list-group">
-          <h1 href="#" class="list-group-item list-group-item-action active">Zones</h1>
-           @foreach($obj->zones as $zone)
-         <a href="{{ route('zone.students',$zone->id) }}?branch={{$obj->name}}" class="list-group-item list-group-item-action">{{ $zone->name }} ({{ $zone->count_branch($obj->name)}})</a>
+          <h1 href="#" class="list-group-item list-group-item-action active">Branches</h1>
+           @foreach($obj->branches as $branch)
+         <a href="{{ route('branch.view',$branch->id) }}?zone={{$obj->name}}" class="list-group-item list-group-item-action">{{ $branch->name }} ({{ $branch->count_zone($obj->name)}})</a>
         @endforeach
         </div>
 
