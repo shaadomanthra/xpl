@@ -1,6 +1,6 @@
 @extends('layouts.nowrap-product')
 @section('title', 'First Academy - Discount Coupon for GRE & IELTS  | PacketPrep')
-@section('description', 'Build your first commercial web application with us. A great opportunity to utilize your summer time to build a great realtime project')
+@section('description', '')
 @section('keywords', 'summer internship, coding, bootcamp, engineering students, ')
 
 @section('content')

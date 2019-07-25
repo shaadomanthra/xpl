@@ -133,7 +133,9 @@ class ZoneController extends Controller
         $year_of_passing = $request->get('year_of_passing');
         $metric= $request->get('metric');
 
-        $users = $obj->users()->get();
+       $users = $obj->users()->paginate(config('global.no_of_records'));
+       dd($users);
+        $total = count($obj->users);
 
         if($branch){
             if($year_of_passing){
@@ -175,7 +177,7 @@ class ZoneController extends Controller
         $this->authorize('view', $obj);
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.student')
-                    ->with('obj',$obj)->with('app',$this)->with('users',$users);
+                    ->with('obj',$obj)->with('app',$this)->with('users',$users)->with('total',$total);
         else
             abort(404);
     }

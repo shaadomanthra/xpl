@@ -105,16 +105,17 @@ class MetricController extends Controller
     public function students($id,Request $request)
     {
         if(is_numeric($id))
-        $obj = Obj::where('id',$id)->first();
+         $obj = Obj::where('id',$id)->first();
         else
          $obj = Obj::where('name',$id)->first();
+
 
         $branch = $request->get('branch');
         $year_of_passing = $request->get('year_of_passing');
         $metric= $request->get('metric');
 
-        $users = $obj->users()->get();
-
+        $users = $obj->users()->paginate(config('global.no_of_records'));
+        $total = count($obj->users);
         if($branch){
             if($year_of_passing){
             $users = $obj->users()->whereHas('branches', function ($query) use ($branch) {
@@ -155,7 +156,7 @@ class MetricController extends Controller
         $this->authorize('view', $obj);
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.student')
-                    ->with('obj',$obj)->with('app',$this)->with('users',$users);
+                    ->with('obj',$obj)->with('app',$this)->with('users',$users)->with('total',$total);
         else
             abort(404);
     }

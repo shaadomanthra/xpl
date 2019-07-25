@@ -5,7 +5,7 @@
 <div class="container bg-white">
 
   <div class="p-4">
-      <h1><a href="{{ route('college.view',$obj->id)}}">{{ $obj->name }}</a> - Student List (#{{count($users)}})</h1>
+      <h1><a href="{{ route('college.view',$obj->id)}}">{{ $obj->name }}</a> - Student List (#{{$total}})</h1>
       <p>@if(request()->get('branch')) Branch:  <b>{{request()->get('branch')}}</b> @endif
 
         @if(request()->get('year_of_passing')) <br>Year:  <b>{{request()->get('year_of_passing')}}</b> @endif
@@ -20,17 +20,17 @@
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{count($users)}})</th>
+                <th scope="col">UserID</th>
                 <th scope="col">Roll Number </th>
                 <th scope="col">Name</th>
                 <th scope="col">Branch</th>
-                <th scope="col">Year of Passing</th>
+                <th scope="col">Phone</th>
               </tr>
             </thead>
             <tbody>
               @foreach($users as $key=>$user)  
               <tr>
-                <th scope="row">{{ $key+1 }}</th>
+                <th scope="row">{{ $user->id }}</th>
                 <td>
                   {{ ($user->details)?$user->details->roll_number:'-' }}
                  
@@ -62,6 +62,10 @@
         
 
 
+</div>
+ <nav aria-label="Page navigation  " class="card-nav @if($users->total() > config('global.no_of_records'))mt-3 @endif">
+        {{$users->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
+      </nav>
 </div>
 </div>
 
