@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\College\Branch as Obj;
 use PacketPrep\Models\College\Metric;
-use PacketPrep\Models\College\zone;
+use PacketPrep\Models\College\Zone;
 use PacketPrep\User;
 
 class BranchController extends Controller
