@@ -281,44 +281,33 @@ class CollegeController extends Controller
     {
         $obj = Obj::where('id',$id)->first();
         $branch = $request->get('branch');
-        $year_of_passing = $request->get('year_of_passing');
         $metric= $request->get('metric');
-
+        $m = Metric::where('name',$metric)->first();
+        $b = Branch::where('name',$branch)->first();
         $users = $obj->users()->get();
 
 
-        if($branch){
-            if($year_of_passing){
-            $users = $obj->users()->whereHas('branches', function ($query) use ($branch) {
-                                $query->where('name', '=', $branch);
-                            })->whereHas('details', function ($query) use ($year_of_passing) {
-                                $query->where('year_of_passing', '=', $year_of_passing);
-                            })->get();
-            }else
-            $users = $obj->users()->whereHas('branches', function ($query) use ($branch) {
-                                $query->where('name', '=', $branch);
-                            })->get();
-        }else{
 
-            if($year_of_passing){
-            $users = $obj->users()->whereHas('details', function ($query) use ($year_of_passing) {
-                                $query->where('year_of_passing', '=', $year_of_passing);
-                            })->get();
-            }
+        $obj_users = $obj->users()->pluck('id')->toArray();
+        
+        if($branch){
+            $branch_users = $b->users()->pluck('id')->toArray();
+            $u= array_intersect($obj_users,$branch_users);
+            $users = User::whereIn('id',$u)->paginate(config('global.no_of_records'));
+             $total = count($u);
         }
 
         if($metric){
-            if($year_of_passing){
-            $users = $obj->users()->whereHas('metrics', function ($query) use ($metric) {
-                                $query->where('name', '=', $metric);
-                            })->whereHas('details', function ($query) use ($year_of_passing) {
-                                $query->where('year_of_passing', '=', $year_of_passing);
-                            })->get();
-            }else
-            $users = $obj->users()->whereHas('metrics', function ($query) use ($metric) {
-                                $query->where('name', '=', $metric);
-                            })->get();
+            $metric_users = $m->users()->pluck('id')->toArray();
+            $u= array_intersect($obj_users,$metric_users);
+            $users = User::whereIn('id',$u)->paginate(config('global.no_of_records'));
+             $total = count($u);
+        }
 
+        if(!$metric && !$branch)
+        {
+            $total = count($obj_users);
+            $users = $obj->users()->paginate(config('global.no_of_records'));
         }
 
 
@@ -327,7 +316,7 @@ class CollegeController extends Controller
         $this->authorize('view', $obj);
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.student')
-                    ->with('obj',$obj)->with('app',$this)->with('users',$users);
+                    ->with('obj',$obj)->with('app',$this)->with('users',$users)->with('total',$total)->with('metric',$m)->with('branch',$b);
         else
             abort(404);
     }
