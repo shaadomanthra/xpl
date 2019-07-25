@@ -1,5 +1,5 @@
 <div class="form-group mt-3">
-  
+  @if(isset($exams))
   @if(count($exams)!=0)
   <div class="table-responsive">
     <table class="table table-bordered mb-0">
@@ -52,5 +52,6 @@
   <div class="card card-body bg-light">
     No Exams listed
   </div>
+  @endif
   @endif
 </div>

@@ -775,6 +775,8 @@ class QuestionController extends Controller
             }else
                 $id=null;
         }
+
+        $exams =  Exam::orderBy('name','desc ')->get();
         
 
 
@@ -817,6 +819,7 @@ class QuestionController extends Controller
                         ->with('passage',$passage)
                         ->with('details',$details)
                         ->with('tag',$tag)
+                        ->with('exams',$exams)
                         ->with('questions',$questions);
             }else
                 abort('404','Question not found');
