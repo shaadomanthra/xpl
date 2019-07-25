@@ -17,7 +17,7 @@
       <div>Location : {{ $college->location }}</div>
       <div>Zone : <a href="{{ route('zone.view',$college->zones->first()->id)}}">{{ $college->zones->first()->name }}</a></div>
       <div class="mb-3">Type  : {{ $college->type }}</div>
-      <div><a href="{{ route('ambassador.college.view',$college->id) }}"><button class="btn btn-outline-primary">Campus Connect</button></a></div>
+      <div></div>
       
       
 
@@ -29,21 +29,7 @@
           </div>
 
         </div>
-        
-        <div class="col-12 col-md-3">
-          <div class="border rounded mt-4 p-3">
-            <h2>PREMIUM</h2>
-            <div class="display-1">{{ $data['users']['premium']  }}</div>
-          </div>
-
-        </div>
-        <div class="col-12 col-md-3">
-          <div class="border rounded mt-4 p-3">
-            <h2>PRO</h2>
-            <div class="display-1">{{ $data['users']['pro']  }}</div>
-          </div>
-
-        </div>
+      
 
       </div>
       
@@ -77,50 +63,10 @@
     <div class="container pb-5" >  
 
 
-   
-	   <div class="bg-white p-4 border mb-3">
-
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <form method="get"  action="{{route('college.view',$college->id)}}" >
-      <div class="form-group">
-        <h1  class="border p-3 mb-3">Year of Passing</h1>
-        <select class="form-control year" name="year_of_passing">
-          <option value="0" >All</option>
-          @for($i=2019;$i < 2030;$i++)
-          <option value="{{$i}}" @if(request()->get('year_of_passing')) @if(request()->get('year_of_passing')==$i) selected @endif @endif >{{ $i }}</option>
-          @endfor         
-        </select>
-      </div>
-      <button type="submit"  class="btn btn-primary">view</button>
-    </form>
-        </div>
-
-        <div class="col-12 col-md-8">
-          <h1  class="border p-3 mb-3"> Branches</h1>
-          <table class="table table-bordered">
-            <tr>
-              <th>Branch</th>
-              <th>Number of students</th>
-            </tr>
-
-            @foreach($college->branches as $b)
-            <tr>
-              <td><a href="{{ route('branch.view', $b->id)}}">{{ $b->name }} </a></td>
-              <td><a href="{{ route('college.students',$college->id)}}?branch={{$b->name}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $data['branches'][$b->name] }}</a></td>
-            </tr> 
-            @endforeach
-
-          </table>
-      
-          
-        </div>
-      </div>
-      
-
-   </div>
 
 
+<div class="row">
+  <div class="col-12 col-md-8">
    <div class="bg-white p-4 border mb-3">
       <h1  class="border rounded p-3 mb-3"> Career Path </h1>
       <div class="row">
@@ -267,7 +213,32 @@
    </div>
 
 
-     </div>   
+     <div class="col-12 col-md-4">
+          <h1  class="border p-3 mb-3"> Branches</h1>
+          <table class="table table-bordered">
+            <tr>
+              <th>Branch</th>
+              <th>Number of students</th>
+            </tr>
+
+            @foreach($college->branches as $b)
+            <tr>
+              <td><a href="{{ route('branch.view', $b->id)}}">{{ $b->name }} </a></td>
+              <td><a href="{{ route('college.students',$college->id)}}?branch={{$b->name}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $data['branches'][$b->name] }}</a></td>
+            </tr> 
+            @endforeach
+
+          </table>
+      
+          
+</div> 
+
+     </div>  
+
+</div>
+
+</div>
+
 </div>
 
 @endsection           

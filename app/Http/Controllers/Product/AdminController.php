@@ -39,6 +39,7 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
+        ini_set('memory_limit', '-1');
         //$slug = subdomain();
         //$client = client::where('slug',$slug)->first();
         //$this->authorize('view', $client);
@@ -51,7 +52,9 @@ class AdminController extends Controller
         $data = array();
         $users = new AdminController;
         $extension = 'json';
-        $filename  = 'analytics'.'.' . $extension;
+
+        $filename  = 'analytics_'.substr (url('/'), 8,5).'.' . $extension;
+       
 
         $services = Service::all();
         $zones = Zone::all();
