@@ -503,6 +503,9 @@ class AdminController extends Controller
             }   
         }
 
+        /* programs */
+        $programs = ['aspire','elevate','accelerate','grandmaster'];
+
 
         //branches
         $branch_list =  Branch::orderBy('created_at','desc ')
@@ -531,6 +534,17 @@ class AdminController extends Controller
                 $product = Product::where('id',$pid)->first();
                 if($product->status!=0)
                     $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+            }
+        }
+
+        if(in_array($request->get('code'), $programs)){
+            $product = Product::where('slug',$request->get('code'))->first();
+            $month = $product->validity;
+
+            $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
+            if(!$user->products->contains($product->id)){
+                if($product->status!=0)
+                    $user->products()->attach($product->id,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
             }
         }
 
