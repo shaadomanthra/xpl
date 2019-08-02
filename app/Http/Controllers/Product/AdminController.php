@@ -63,6 +63,7 @@ class AdminController extends Controller
 
         if(file_exists($filename) && !$request->get('refresh')){
             $data =   json_decode(file_get_contents($filename),true);
+            $data['users']['total'] = User::count();
 
         }else{
             $data['users']['total'] = User::count();
@@ -522,14 +523,14 @@ class AdminController extends Controller
 
         if(!$coll){
         //pro access
-        $pid = 18;
-                        $month = 3;
+            $pid = 18;
+            $month = 3;
 
-                        $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
-                        if(!$user->products->contains($pid)){
-                            $product = Product::where('id',$pid)->first();
-                            if($product->status!=0)
-                            $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+            $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
+            if(!$user->products->contains($pid)){
+                $product = Product::where('id',$pid)->first();
+                if($product->status!=0)
+                    $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
             }
         }
 

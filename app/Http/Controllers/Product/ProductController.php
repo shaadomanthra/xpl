@@ -237,6 +237,9 @@ class ProductController extends Controller
             $request->slug  = $request->name;
             $request->slug = strtolower(str_replace(' ', '-', $request->slug));
 
+            if(!$request->discount)
+              $request->merge(['discount',0]);
+
             $exams = $request->get('exams');
             $courses = $request->get('courses');
 
@@ -383,6 +386,9 @@ class ProductController extends Controller
             $product = Product::where('slug',$slug)->first();
 
             $this->authorize('update', $product);
+
+            if(!$request->discount)
+              $request->merge(['discount',0]);
 
             $exams = $request->get('exams');
             $courses = $request->get('courses');
