@@ -11,6 +11,9 @@
 @if($category->video_desc )
 @section('description', strip_tags($category->video_desc) )
 @endif
+@if($category->video_keywords )
+@section('keywords', strip_tags($category->video_keywords).', packetprep, prepare for campus placements, prepare for offcampus jobs' )
+@endif
 
 @section('content')
 

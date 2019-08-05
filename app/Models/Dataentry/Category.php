@@ -16,7 +16,8 @@ class Category extends Model
         'slug',
         'parent_id',
         'video_link',
-        'video_desc',
+        'video_keywords',
+        'video_',
         'pdf_link',
         'category_id',
         // add all other fields

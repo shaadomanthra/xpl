@@ -81,12 +81,23 @@
       @endif
 
       <div class="form-group">
-        <label for="formGroupExampleInput ">Video Description</label>
+        <label for="formGroupExampleInput ">Description</label>
         <textarea class="form-control summernote" name="video_desc"  rows="5">
             @if($stub=='Create')
             {{ (old('video_desc')) ? old('video_desc') : '' }}
             @else
             {{ $category->video_desc }}
+            @endif
+        </textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Keywords</label>
+        <textarea class="form-control summernote" name="video_keywords"  rows="5">
+            @if($stub=='Create')
+            {{ (old('video_keywords')) ? old('video_keywords') : '' }}
+            @else
+            {{ $category->video_keywords }}
             @endif
         </textarea>
       </div>

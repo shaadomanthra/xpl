@@ -89,7 +89,7 @@ class CategoryController extends Controller
         $category->exam_id = null;
 
         $request->slug = strtolower(str_replace(' ', '-', $request->slug));
-        $child_attributes =['name'=>$request->name,'slug'=>$request->slug,'project_id'=>$this->project->id,'video_link'=>$request->video_link,'video_desc'=>$request->video_desc,'pdf_link'=>$request->pdf_link,'test_link'=>$request->test_link,'exam_id'=>$request->exam_id];
+        $child_attributes =['name'=>$request->name,'slug'=>$request->slug,'project_id'=>$this->project->id,'video_link'=>$request->video_link,'video_desc'=>$request->video_desc,'video_keywords'=>strip_tags($request->video_keywords),'pdf_link'=>$request->pdf_link,'test_link'=>$request->test_link,'exam_id'=>$request->exam_id];
         $parent = Category::where('id','=',$request->parent_id)->first();
         $child = new Category($child_attributes);
 
@@ -272,6 +272,7 @@ class CategoryController extends Controller
         $category->slug = str_replace(' ', '-', $request->slug);
         $category->project_id = $this->project->id;
         $category->video_link = $request->video_link;
+        $category->video_keywords = strip_tags($request->video_keywords);
         $category->pdf_link = $request->pdf_link;
         $category->test_link = $request->test_link;
         if($request->exam_id)
