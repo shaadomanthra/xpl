@@ -176,11 +176,12 @@ class ChapterController extends Controller
 
         }
         //dd(storage_path());
-        /*$apple = new Chapter;
-        $apple->name = 'Apple';
-        $pdf = PDF::loadView('appl.content.chapter.pdf',compact('apple'));
-        return $pdf->save('invoice.pdf'); */
+        //$apple = new Chapter;
+        $apple = 'Apple news';
+        //$pdf = PDF::loadView('appl.content.chapter.pdf',compact('apple'));
+        //$pdf->save('doc.pdf'); 
 
+        //dd('s');
 
         if($chapter)
             return view('appl.content.chapter.show')

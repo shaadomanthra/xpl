@@ -36,10 +36,13 @@ class Course extends Model
     }
 
     public function product(){
-        $p=null;
-        $products = $this->belongsToMany('PacketPrep\Models\Product\Product')->get();
+        $p=null;        
+        $p = $this->belongsToMany('PacketPrep\Models\Product\Product')->where('slug',$this->slug)->first();
 
-       
+        if(isset($p->name))
+            return $p;
+
+        $products = $this->belongsToMany('PacketPrep\Models\Product\Product')->get();
         foreach($products as $product){
  
             if($product->slug!='premium-access' && $product->slug!='pro-access')
