@@ -65,6 +65,13 @@ class AdminController extends Controller
             $data =   json_decode(file_get_contents($filename),true);
             $data['users']['total'] = User::count();
 
+            return view('appl.product.admin.index')
+                    ->with('users',$users)
+                    ->with('metrics',$metrics)
+                    ->with('branches',$branches)
+                    ->with('services',$services)
+                    ->with('zones',$zones)
+                    ->with('data',$data);
         }else{
             $data['users']['total'] = User::count();
 
