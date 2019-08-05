@@ -73,7 +73,8 @@ class AdminController extends Controller
                     ->with('zones',$zones)
                     ->with('data',$data);
         }else{
-            $data['users']['total'] = User::count();
+        
+        $data['users']['total'] = User::count();
 
         $last_year = (new \Carbon\Carbon('first day of last year'))->year;
         $this_year = (new \Carbon\Carbon('first day of this year'))->year;
@@ -114,6 +115,8 @@ class AdminController extends Controller
             $data['zone'][$zone->name]['users'] = count($zone->users);
             $data['zone'][$zone->name]['colleges'] = count($zone->colleges);
         }
+
+         file_put_contents($filename, json_encode($data,JSON_PRETTY_PRINT));
 
         }
            
