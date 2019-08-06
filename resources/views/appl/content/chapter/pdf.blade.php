@@ -26,7 +26,7 @@
                 height: 2cm;
 
                 /** Extra personal styles **/
-                background-color: #1f70ab;
+                background-color: #f8f8f8;
                 color: white;
                 line-height: 1cm;
             }
@@ -40,10 +40,27 @@
                 height: 2cm;
 
                 /** Extra personal styles **/
-                background-color: #c6e7ff;
+                background-color: #eee;
                 color: #1f70ab;
                 text-align: center;
                 line-height: 1.5cm;
+            }
+
+            hr{ 
+              height: 1px;
+              color: red;
+              background-color: #eee;
+              border: none;
+            }
+
+            h3{
+                color: #1f70ab;
+            }
+            .answer{
+                color: #16a085;
+            }
+            i{
+                color: #48dbfb;
             }
         </style>
     </head>
@@ -60,19 +77,17 @@
         <!-- Wrap the content of your PDF inside a main tag -->
         <main>
             
- <div style="float:right;color:green"><h2> New SAmple Questons</h2></div>
- <br>
- <hr>
-<h1> Sample PDF {{ $apple }}</h1>
-<p style="color:red; background:yellow; padding:10px;">Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace likeHere we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like,Here we are registering the PDF register provider for our application and also set an alias for it. So when we need to generate PDF, we just need to include it in our namespace like</p>
-<style>
-.page-break {
-    page-break-after: always;
-}
-</style>
-<h1>Page 1</h1>
-<div class="page-break"></div>
-<h1>Page 2</h1>
+            @foreach($questions as $k => $question)
+                <h3>{{$k+1}}. {!! $question->question!!}</h3>
+                <div>(A) {{ strip_tags($question->a)}}</div>
+                <div>(B) {{strip_tags($question->b)}}</div>
+                <div>(C) {{strip_tags($question->c)}}</div>
+                <div style="padding-bottom: 10px;">(D) {{strip_tags($question->d)}}</div>
+                <div class="answer" >ANSWER : <b class="answer">{{$question->answer}}</b></div>
+                <hr>
+            @endforeach
+
+
         </main>
     </body>
 </html>

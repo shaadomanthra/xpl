@@ -17,6 +17,7 @@ use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Course\Practices_Course;
 use PacketPrep\Models\Course\Practices_Topic;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 use DOMDocument;
 use DOMXpath;
@@ -1175,6 +1176,35 @@ class QuestionController extends Controller
         $question->save();
     }
 
+
+    public function pdf()
+    {
+        ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+        $topic  = 'antonyms';
+        $category = Category::where('slug',$topic)->first();
+
+        $questions = $category->questions()->get();
+        
+        foreach($questions as $k=>$question){
+            $questions[$k]->question = str_replace('In following question, choose the word opposite to the meaning to the given word.', '', $questions[$k]->question);
+            $questions[$k]->question = str_replace('In following question consists of a word or phase which is italicised bold in the sentence given. It is followed by certain words or phases. Select the work or phase which is closest to the opposite in meaning of the italicised word or phase.', '', $questions[$k]->question);
+            
+            $questions[$k]->question = str_replace('In each of the following sentences, choose the word opposite in meaning to the italicised word to fill in the blanks.', '', $questions[$k]->question);
+            $questions[$k]->question  = preg_replace( '/^<[^>]+>|<\/[^>]+>$/', '', $questions[$k]->question  );
+            $questions[$k]->question=str_ireplace('<p>','',$questions[$k]->question);
+            $questions[$k]->question=str_ireplace('</p>','',$questions[$k]->question);
+            $questions[$k]->question=str_ireplace('<span style="font-size: 1rem;">','<b>',$questions[$k]->question);
+             $questions[$k]->question=str_ireplace('</span>','</b>',$questions[$k]->question);
+
+        }
+
+
+        $pdf = PDF::loadView('appl.content.chapter.pdf',compact('questions'));
+        $pdf->save($topic.'.pdf'); 
+        
+
+        
+    }
 
 
     /**

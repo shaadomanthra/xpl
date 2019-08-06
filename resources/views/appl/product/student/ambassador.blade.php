@@ -50,19 +50,17 @@
         <div class="col-12 col-md-6">
           <h1 class="mb-4"> Job Description</h1>
       <ul>
-            <li>You are responsible to onboard students onto PacketPrep platform for TARGET TCS & TARGET WIPRO Program </li>
-            <li> Create authorized PacketPrep Learners Group in WhatsApp</li>
-            <li>Share the daily video lecture in the WhatsApp group </li>
-            <li>Inspire friends to take part in daily practice tests</li>
+            <li>You are responsible to onboard students onto PacketPrep platform for Placement Foundation Program </li>
             <li>Explain about PacketPrep Products & Services
               <ul>
                   <li>GigaCode Prorgam</li>
-                  <li>Coding Bootcamp Prorgam</li>
+                  <li>Coding Bootcamp Program</li>
                   <li>Online Courses for Placements</li>
               </ul>
           </li>
           <li>Explain about PacketPrep programs for Abroad
               <ul>
+                  <li>FREE Test for GRE/IELTS </li>
                   <li>Coaching for GRE, IELTS, TOEFL </li>
                   <li>Consulting for MS in US/Canada/UK/Australia </li>
               </ul>
@@ -82,6 +80,7 @@
           <h1 class="mb-4"> Interview Process</h1>
           <ul>
             <li>Apply online <a href="{{ route('form.create',['job'=>'campus-coordinator'])}}">Link</a> </li>
+            <li>Shortlisted students have to send 1 min audio clip on 'Why doing MS in Abroad is lucrative option?' </li>
             <li> Selected candidates will be called for  personal interview at <br>
               <b>PacketPrep Office</b>, Tarnaka, Hyderabad.</li>
            
@@ -95,13 +94,7 @@
    </div>
 
  
-<div class="bg-info  text-white rounded p-3">
-    <h2> Part-time Job <span class="badge badge-warning">PAID</span></h2>
-    <p>If you are looking for a paid part time job then you can apply in the below link.</p>
-    <a href="{{url('/job/parttime')}}">
-    <button class="btn btn-outline-light btn-sm">Know more</button>
-  </a>
-     </div>
+
    
 
    </div>

@@ -28,8 +28,7 @@
         <h5>Connect</h5>
         <ul class="list-unstyled text-small">
           <li><a class="text-muted" href="{{url('/sreferral')}}">Referrals</a></li>
-          <li><a class="text-muted" href="{{url('/ambassador')}}">Ambassador</a></li>
-          <li><a class="text-muted" href="{{url('/job/parttime')}}">Parttime Job</a></li>
+          <li><a class="text-muted" href="{{url('/ambassador')}}">Internship</a></li>
           <li><a class="text-muted" href="#">Partner with us</a></li>
         </ul>
       </div>
