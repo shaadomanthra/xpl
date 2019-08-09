@@ -528,6 +528,9 @@ class AdminController extends Controller
         $services = $request->get('services');
         $metrics = $request->get('metrics');
 
+
+
+
         if(isset($us)){
             $a = new Ambassador;
             $a->user_id = $us->id;
@@ -547,6 +550,7 @@ class AdminController extends Controller
         if($branches)
             foreach($branch_list as $branch){
                 if(in_array($branch, $branches)){
+                    $branch_id  = $branch;
                     if(!$user->branches->contains($branch))
                         $user->branches()->attach($branch);
                 }else{
@@ -557,6 +561,13 @@ class AdminController extends Controller
         }else{
                 $user->branches()->detach();
         } 
+
+        $user->college_id = $college_id;
+        $user->phone = $request->get('phone');
+        $user->roll_number = $request->get('roll_number');
+        $user->year_of_passing = $request->get('year_of_passing');
+        $user->branch_id = $branch;
+        $user->save();
 
         if(!$coll){
         //pro access
