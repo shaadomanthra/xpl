@@ -70,6 +70,29 @@ class UserController extends Controller
        
     }
 
+    public function update_user_tables()
+    {
+        $users = User::whereNull('college_id')->get();
+        $user_ids = $users->pluck('id')->toArray();
+
+        $user_details = User_Details::whereIn('user_id',$user_ids)->get()->groupBy('user_id');
+
+        foreach($users as $user){
+            //dd($user_details[$user->id][0]['phone']);
+            $user->roll_number = $user_details[$user->id][0]['roll_number'];
+            $user->year_of_passing = $user_details[$user->id][0]['year_of_passing'];
+            $user->phone = $user_details[$user->id][0]['phone'];
+            //dd($user->colleges->first());
+            if($user->colleges)
+            $user->college_id = $user->colleges->first()->id;
+            if($user->branches->first())
+            $user->branch_id = $user->branches->first()->id;
+
+            echo $user->id.' - '.$user->name.'<br>';
+            $user->save();
+        }
+    }
+
 
     /**
      * Show the form for editing the specified resource.

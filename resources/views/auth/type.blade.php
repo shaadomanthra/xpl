@@ -1,6 +1,7 @@
 @extends('layouts.nowrap')
 
 @section('title', 'Register Type | PacketPrep')
+@section('description', 'Different registration types for the packetprep users.')
 @section('content')
 
 <div class="card">

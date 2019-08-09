@@ -182,6 +182,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('team','User\TeamController@index')->name('team');
 	Route::get('user/export','User\TeamController@export')->name('export')->middleware('auth');
 
+	Route::get('user/update_tables','User\UserController@update_user_tables')->name('update_tables')->middleware('auth');
+
 	Route::get('user/bootcampmail','User\TeamController@bootcampmail')->name('bootcampmail')->middleware('auth');
 	
 	Route::get('/share', function () { 

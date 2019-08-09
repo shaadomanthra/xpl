@@ -321,22 +321,49 @@ class AdminController extends Controller
 
     public function estudentregister(Request $request)
     {
-        $colleges = College::orderby('name','asc')->get();
-        $metrics = Metric::all();
-        $services = Service::all();
-        $branches = Branch::all();
+        $filename = '../json/colleges.json';
+        if(file_exists($filename))
+        {
+            $colleges = json_decode(file_get_contents($filename));
+        }else{
+            $colleges = College::orderby('name','asc')->get();
+         
+            file_put_contents($filename,json_encode($colleges,JSON_PRETTY_PRINT));
+        }
 
-        if(!$request->code)
-            $user = User::where('username','krishnateja')->first();
-        else
-            $user = User::where('username',$request->code)->first();
-        
+
+        $filename = '../json/branches.json';
+        if(file_exists($filename))
+        {
+            $branches = json_decode(file_get_contents($filename));
+        }else{
+            $branches =  Branch::all();
+            file_put_contents($filename, json_encode($branches,JSON_PRETTY_PRINT));
+        }
+
+        $filename = '../json/krishnateja.json';
+        if(file_exists($filename))
+        {
+            $user = json_decode(file_get_contents($filename));
+        }else{
+            $user =  User::where('username','krishnateja')->first();
+            file_put_contents($filename, json_encode($user,JSON_PRETTY_PRINT));
+        }
+
+        if($request->code){
+            /* programs */
+            $programs = ['aspire','elevate','accelerate','grandmaster'];
+            if(!in_array(strtolower($request->code), $programs)){
+                $u = User::where('username',$request->code)->first();
+                if($u)
+                    $user = $u;
+            }
+        }
+
 
         return view('appl.product.admin.user.estudentproduct')
             ->with('stub','Create')
             ->with('colleges',$colleges)
-                ->with('services',$services)
-                ->with('metrics',$metrics)
                 ->with('user',$user)
                 ->with('branches',$branches);
     }
@@ -411,7 +438,9 @@ class AdminController extends Controller
 
     public function studentstore(Request $request)
     {
-        
+        /* programs */
+        $programs = ['aspire','elevate','accelerate','grandmaster'];
+
         //dd($request->all());
         $direct = $request->get('type');
         $coll = $request->get('coll');
@@ -437,16 +466,16 @@ class AdminController extends Controller
         }
 
         if($request->code != null){
-            $us = User::where('username',$request->code)->first();
-            if($us){
-                $request->user_id = $us->id;
-
+            if(!in_array(strtolower($request->code), $programs)){
+                $us = User::where('username',$request->code)->first();
+                if($us){
+                    $request->user_id = $us->id;
+                } 
             }
         }
         
 
         list($u, $domain) = explode('@', $request->email);
-
         if ($domain != 'gmail.com') {
             flash('Kindly use only gmail.com for email address.')->error();
                  return redirect()->back()->withInput();
@@ -455,7 +484,7 @@ class AdminController extends Controller
         $user = User::where('email',$request->email)->first();
 
         if($user){
-                flash('The user (<b>'.$request->email.'</b>) account exists. Kindly use a different email.')->error();
+            flash('The user (<b>'.$request->email.'</b>) account exists. Kindly use a different email.')->error();
                  return redirect()->back()->withInput();
         }
 
@@ -473,7 +502,6 @@ class AdminController extends Controller
                     break;
             }
         }
-
         
         $user = User::create([
             'name' => $request->name,
@@ -512,10 +540,6 @@ class AdminController extends Controller
                 $coll = null;
             }   
         }
-
-        /* programs */
-        $programs = ['aspire','elevate','accelerate','grandmaster'];
-
 
         //branches
         $branch_list =  Branch::orderBy('created_at','desc ')

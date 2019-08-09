@@ -1,0 +1,72 @@
+[
+    {
+        "id": 3,
+        "name": "Job Alerts via Email and SMS",
+        "product_id": null,
+        "created_at": "2019-01-24 14:40:35",
+        "updated_at": "2019-01-24 20:12:53"
+    },
+    {
+        "id": 4,
+        "name": "3 Practice Tests for Aptitude",
+        "product_id": 11,
+        "created_at": "2019-01-24 14:51:22",
+        "updated_at": "2019-01-24 14:51:22"
+    },
+    {
+        "id": 5,
+        "name": "10 Sample Video Lectures",
+        "product_id": 17,
+        "created_at": "2019-01-24 18:11:26",
+        "updated_at": "2019-01-24 18:11:26"
+    },
+    {
+        "id": 6,
+        "name": "Quantitative Aptitude",
+        "product_id": 2,
+        "created_at": "2019-01-24 18:11:39",
+        "updated_at": "2019-01-24 18:11:39"
+    },
+    {
+        "id": 7,
+        "name": "Logical Reasoning",
+        "product_id": 3,
+        "created_at": "2019-01-24 18:11:52",
+        "updated_at": "2019-01-24 18:11:52"
+    },
+    {
+        "id": 8,
+        "name": "Mental Ability",
+        "product_id": 4,
+        "created_at": "2019-01-24 18:12:01",
+        "updated_at": "2019-01-24 18:12:01"
+    },
+    {
+        "id": 9,
+        "name": "Interview Skills",
+        "product_id": 6,
+        "created_at": "2019-01-24 18:12:12",
+        "updated_at": "2019-01-24 18:12:12"
+    },
+    {
+        "id": 10,
+        "name": "Proficiency Test",
+        "product_id": 7,
+        "created_at": "2019-01-24 18:12:34",
+        "updated_at": "2019-01-24 18:12:34"
+    },
+    {
+        "id": 11,
+        "name": "Premium Access",
+        "product_id": 9,
+        "created_at": "2019-01-24 18:12:45",
+        "updated_at": "2019-01-24 18:12:45"
+    },
+    {
+        "id": 12,
+        "name": "Pro Access",
+        "product_id": 18,
+        "created_at": "2019-01-28 09:43:07",
+        "updated_at": "2019-01-28 09:43:07"
+    }
+]
