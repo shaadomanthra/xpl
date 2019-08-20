@@ -13,13 +13,7 @@
     <!-- Styles -->
    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-9550642194256443",
-    enable_page_level_ads: true
-  });
-</script>
+
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43617911-7"></script>

@@ -17,16 +17,16 @@ class UsersExport implements FromCollection
     public function collection()
     {
 
-        /*
-    	$year_of_passing = '2020';
+        
 
        
 
-        $college = College::where('name','Mahatma Gandhi Institute Of Technology')->first();
-        $userss = $college->users->pluck('id');
-        $entry = DB::table('metric_user')->where('metric_id', 15)->whereIn('user_id',$userss)->pluck('user_id'); 
+        //$college = College::where('name','Mahatma Gandhi Institute Of Technology')->first();
+        //$userss = $college->users->pluck('id');
+        $entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id'); 
+        $user_id = User_Details::whereIn('user_id',$entry)->where('year_of_passing','2022')->orderBy('user_id')->pluck('user_id');
         
-        $users =  User::whereIn('id',$entry)->get();
+        $users =  User::whereIn('id',$user_id)->paginate(300);
     
         foreach($users as $k=>$u){
                 unset($users[$k]->created_at);
@@ -73,8 +73,9 @@ class UsersExport implements FromCollection
                 }
 
   
-        } */
+        } 
 
+        /*
         $entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id'); 
 
         //$entry = DB::table('user_details')->where('year_of_passing', 2019)->pluck('user_id'); 
@@ -108,7 +109,7 @@ class UsersExport implements FromCollection
                
 
   
-        } 
+        } */
         //dd($users);
 
         //$entry = DB::table('branch_user')->whereIn('branch_id', [11,12,13,14,15,16,17,18])->pluck('user_id'); 

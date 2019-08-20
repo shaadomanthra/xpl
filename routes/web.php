@@ -273,6 +273,15 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('studentstore','Product\AdminController@studentstore')->name('admin.user.studentstore');
 
 
+	Route::resource('placement','Content\CompanyController',['names' => [
+        'index' => 'company.index',
+        'store' => 'company.store',
+        'create' => 'company.create',
+        'show' => 'company.show',
+        'edit'=> 'company.edit',
+        'update'=>'company.update',
+        'destroy'=>'company.destroy',
+    ]]);
 	Route::resource('role','User\RoleController')->middleware('auth');
 	Route::resource('tracks','Content\DocController',['names' => [
         'index' => 'docs.index',

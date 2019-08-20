@@ -75,6 +75,8 @@ class AuthServiceProvider extends ServiceProvider
         \PacketPrep\Models\Exam\Exam::class => \PacketPrep\Policies\Exam\ExamPolicy::class,
         \PacketPrep\Models\Exam\Examtype::class => \PacketPrep\Policies\Exam\ExamtypePolicy::class,
         \PacketPrep\Models\Exam\Section::class => \PacketPrep\Policies\Exam\SectionPolicy::class,
+
+        \PacketPrep\Models\Content\Company::class => \PacketPrep\Policies\Content\CompanyPolicy::class,
     ];
 
     /**
