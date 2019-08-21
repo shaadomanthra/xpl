@@ -6,7 +6,7 @@
             </a>
             @else
             <a class="navbar-brand abs" href="{{ url('/dashboard') }}" aria-label="Dashboard">
-                <img src="{{ asset('img/packetprep-logo-small.png') }}" width="60px" class="logo-main ml-md-1" />
+                <img src="{{ asset('img/packetprep-logo-small.png') }}" width="60px" class="logo-main ml-md-1"  alt="packetprep logo blue" />
             </a>   
             @endguest
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

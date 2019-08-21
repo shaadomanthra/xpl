@@ -9,6 +9,7 @@
   <div class="row">
 
     <div class="col-md-12">
+    
       
       <img src="{{ asset('storage/'.$obj->image)}}" class="w-100 " alt="{{  $obj->name }}"/>
       <div class="p-5 bg-white company">
