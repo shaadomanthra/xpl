@@ -1,5 +1,27 @@
 <?php
 
+
+if (! function_exists('image_resize')) {
+    function image_resize($image_path,$size)
+    {
+        $base_folder = '/app/public/';
+        $path = storage_path() . $base_folder . $image_path;
+
+        //resize
+        //dd($path);
+        $imgr = Image::make($path);
+        if($imgr->width()>1000){
+        
+            $imgr->resize($size, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+            });
+        }
+        $imgr->save($path);
+        return true;
+    }
+}
+
 if (! function_exists('summernote_imageupload')) {
     function summernote_imageupload($user,$editor_data)
     {

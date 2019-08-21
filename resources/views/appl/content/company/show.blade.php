@@ -10,7 +10,7 @@
 
     <div class="col-md-12">
       
-      <img src="{{ asset('storage/'.$obj->image)}}" class="w-100 "/>
+      <img src="{{ asset('storage/'.$obj->image)}}" class="w-100 " alt="{{  $obj->name }}"/>
       <div class="p-5 bg-white company">
         
           <h1 class=""> {{ $obj->name }} 
@@ -23,7 +23,15 @@
             @endcan
           </h1>
      
-          {!! $obj->description !!}
+          <div class="row">
+            <div class="col-12 col-md-8">
+              {!! $obj->description !!}
+            </div>
+            <div class="col-12 col-md-4">
+              @include('appl.content.company.googleads')
+            </div>
+          </div>
+          
 
           {!! $obj->details !!}
      

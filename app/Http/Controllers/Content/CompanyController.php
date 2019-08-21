@@ -136,6 +136,7 @@ class CompanyController extends Controller
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
                 $path = Storage::disk('public')->putFileAs('company', $request->file('file_'),$filename);
+
                 $request->merge(['image' => $path]);
             }
 
@@ -175,7 +176,20 @@ class CompanyController extends Controller
      */
     public function show($slug)
     {
-        $obj = Obj::where('slug',$slug)->first();
+        //cache file
+        $filename = $slug.'.json';
+        $filepath = $this->cache_path.$filename;
+
+        //dd($filepath);
+        if(file_exists($filepath))
+        {
+            $obj = json_decode(file_get_contents($filepath));
+           
+        }
+        else{
+            $obj = Obj::where('slug',$slug)->first();
+        }
+        
 
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
@@ -233,6 +247,7 @@ class CompanyController extends Controller
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
                 $path = Storage::disk('public')->putFileAs('company', $request->file('file_'),$filename);
+              
                 $request->merge(['image' => $path]);
             }
 

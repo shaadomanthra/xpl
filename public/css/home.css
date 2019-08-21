@@ -179,7 +179,8 @@ ul.list2-first{ margin: 5px; margin-left:5px; margin-top: -20px;}
 #app {
 }
 
-.company p{ font-size: 30px; }
+.company { font-size: 20px;line-height: 30px;}
+.company p{ font-size: 20px;line-height: 30px; }
 
 .sortable{ border:1px solid #bfe0d9; background: #f7fffd; padding: 10px; margin:0px; list-style: none;}
 ul.sortable li{ border:1px solid #bfe0d9; background: #daf3ee;
