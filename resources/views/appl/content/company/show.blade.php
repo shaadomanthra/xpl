@@ -4,22 +4,16 @@
 @section('keywords', $obj->keywords)
 @section('content')
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route($app->module.'.index') }}">{{ ucfirst($app->module) }}</a></li>
-    <li class="breadcrumb-item">{{ $obj->name }}</li>
-  </ol>
-</nav>
 
 @include('flash::message')
-
   <div class="row">
 
     <div class="col-md-12">
-      <div class="card bg-light mb-3">
-        <div class="card-body text-secondary">
-          <p class="h2 mb-0"><i class="fa fa-th "></i> {{ $obj->name }} 
+      
+      <img src="{{ asset('storage/'.$obj->image)}}" class="w-100 "/>
+      <div class="p-5 bg-white company">
+        
+          <h1 class=""> {{ $obj->name }} 
 
           @can('update',$obj)
             <span class="btn-group float-right" role="group" aria-label="Basic example">
@@ -27,20 +21,15 @@
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
             @endcan
-          </p>
-        </div>
-      </div>
-
+          </h1>
      
-      <div class="card mb-4">
-        <div class="card-body">
-          @foreach($obj->getAttributes() as $key=>$item)
-          <div class="row mb-2">
-            <div class="col-md-4">{{ $key }}</div>
-            <div class="col-md-8">{{ $item }}</div>
-          </div>
-          @endforeach
-        </div>
+          {!! $obj->description !!}
+
+          {!! $obj->details !!}
+     
+      
+  
+    </div>
       </div>
 
     </div>

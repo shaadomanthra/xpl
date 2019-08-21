@@ -272,7 +272,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('dregister','Product\AdminController@dstudentregister')->name('student.dregister');
 	Route::post('studentstore','Product\AdminController@studentstore')->name('admin.user.studentstore');
 
-
+	Route::get('/placement/template', function(){ return view('appl.content.company.template'); })->name('template');
 	Route::resource('placement','Content\CompanyController',['names' => [
         'index' => 'company.index',
         'store' => 'company.store',
@@ -282,6 +282,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         'update'=>'company.update',
         'destroy'=>'company.destroy',
     ]]);
+    
 	Route::resource('role','User\RoleController')->middleware('auth');
 	Route::resource('tracks','Content\DocController',['names' => [
         'index' => 'docs.index',

@@ -24,11 +24,8 @@ class CompanyController extends Controller
     public function index(Obj $obj,Request $request)
     {
 
-
      $search = $request->search;
      $item = $request->item;
-
-
      /* update in cache folder */
      if($request->refresh){
         $filename = 'index.'.$this->app.'.'.$this->module.'.json';
@@ -179,7 +176,7 @@ class CompanyController extends Controller
     public function show($slug)
     {
         $obj = Obj::where('slug',$slug)->first();
-        $this->authorize('view', $obj);
+
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
                     ->with('obj',$obj)->with('app',$this);
