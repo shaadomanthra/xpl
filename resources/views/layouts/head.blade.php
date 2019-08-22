@@ -11,13 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#236fb1"/>
     <link rel="manifest" href="/manifest.json">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9550642194256443",
-          enable_page_level_ads: true
-     });
-</script>
+
     <title>@yield('title')</title>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     @if(isset($welcome3))
