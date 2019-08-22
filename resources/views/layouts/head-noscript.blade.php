@@ -8,6 +8,7 @@
   <meta name="keywords" content="@yield('keywords')">
   <meta name="author" content="Krishna Teja G S">
   <!-- CSRF Token -->
+  
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title')</title>
   <!-- Styles -->

@@ -8,6 +8,13 @@
     <meta name="keywords" content="@yield('keywords')">
     <meta name="author" content="Krishna Teja G S">
     <!-- CSRF Token -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9550642194256443",
+          enable_page_level_ads: true
+     });
+</script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <!-- Styles -->
