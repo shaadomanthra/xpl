@@ -1,5 +1,5 @@
 <div class="sticky-top pt-3">
-<div class="card mb-3 text-white d-none d-md-block blogd " style="background:#ca2428">
+<div class="card mb-3 text-white d-none d-md-block blogd mb-3" style="background:#ca2428">
 	<div class="card-body">
 		<h4 class="mb-4"> Questions </h4>
 		<div class="qset" style="max-height: 180px;overflow-y: auto; ">
@@ -16,4 +16,6 @@
 		</div>
 	</div>
 </div>
+
+@include('appl.content.company.googleads')
 </div>

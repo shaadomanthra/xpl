@@ -204,8 +204,7 @@ class CompanyController extends Controller
                     ->with('obj',$obj)
                     ->with('questions',$questions)
                     ->with('app',$this)
-                    ->with('mathjax',true)
-                    ->with('autoads',true);
+                    ->with('mathjax',true);
         else
             abort(404);
     }
