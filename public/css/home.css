@@ -191,7 +191,9 @@ ul.sortable li.current{ border:1px solid #17a085; }
 .premium { color:white;background: #16A085; font-size:11px; border:1px solid transparent; padding:3px 7px; border-radius: 5px; }
 .premium:hover{ opacity: 0.9 }
 
+.kno{cursor: pointer}
 /*question*/
+
 
 .qyellow{
     background:#F8EFBA;border:1px solid #e4d998;

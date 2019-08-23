@@ -77,11 +77,13 @@
             </tr>
 
             @foreach($zones as $z)
+            @if(isset($data['zone'][$z->name]['colleges'] )) 
             <tr>
               <td><a href="{{ route('zone.view', $z->id)}}">{{ $z->name }} </a></td>
-              <td>{{ $data['zone'][$z->name]['colleges'] }}</td>
+              <td> {{ $data['zone'][$z->name]['colleges'] }} </td>
               <td><a href="{{ route('zone.students',$z->id)}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $data['zone'][$z->name]['users'] }}</a></td>
-            </tr> 
+            </tr>
+            @endif 
             @endforeach
 
           </table>

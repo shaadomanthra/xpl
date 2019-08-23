@@ -44,6 +44,8 @@
     <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     @endif
 
+
+
 </head>
     <body>
     <div id="app" >
@@ -60,5 +62,6 @@
 </div>
     <!-- Scripts -->
      @include('snippets.scripts')
+     <script type="text/javascript" src="{{asset('js/questions.js')}}"></script>
 </body>
 </html>

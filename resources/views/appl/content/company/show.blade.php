@@ -10,8 +10,9 @@
 
     <div class="col-md-12">
     
-      
+      @if(Storage::disk('public')->exists($obj->image))
       <img src="{{ asset('storage/'.$obj->image)}}" class="w-100 " alt="{{  $obj->name }}"/>
+      @endif
       <div class="p-5 bg-white company">
         
           <h1 class=""> {{ $obj->name }} 
@@ -33,8 +34,13 @@
             </div>
           </div>
           
-
           {!! $obj->details !!}
+
+          @if($questions)
+          <div class="">
+              @include('appl.content.company.questions')
+          </div>
+          @endif
      
       
   

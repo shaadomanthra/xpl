@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Content;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Content\Company as Obj;
+use PacketPrep\Models\Dataentry\Category;
 use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
@@ -14,6 +15,7 @@ class CompanyController extends Controller
         $this->app      =   'content';
         $this->module   =   'company';
         $this->cache_path =  '../storage/app/cache/company/';
+        $this->questions_path =  '../storage/app/cache/questions/';
     }
 
     /**
@@ -128,7 +130,7 @@ class CompanyController extends Controller
 
             // update slug with name if its empty
             if(!$request->get('slug')){
-                $request->merge(['slug' => strtolower(str_replace(' ','_',$request->get('name')))]);
+                $request->merge(['slug' => strtolower(str_replace(' ','-',$request->get('name')))]);
             }
 
             /* If image is given upload and store path */
@@ -180,20 +182,29 @@ class CompanyController extends Controller
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
 
-        //dd($filepath);
+        // load page data from cache
         if(file_exists($filepath))
-        {
             $obj = json_decode(file_get_contents($filepath));
-           
-        }
-        else{
+        else
             $obj = Obj::where('slug',$slug)->first();
-        }
         
+        $filepath = $this->questions_path.$filename;
+        //load questions if they exist
+        if(file_exists($filepath))
+            $questions = json_decode(file_get_contents($filepath));
+        else{
 
+            $category = Category::where('slug',$slug)->first();
+            ($category)? $questions = $category->questions: $questions = null;
+        }
+
+        
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
-                    ->with('obj',$obj)->with('app',$this);
+                    ->with('obj',$obj)
+                    ->with('questions',$questions)
+                    ->with('app',$this)
+                    ->with('mathjax',true);
         else
             abort(404);
     }

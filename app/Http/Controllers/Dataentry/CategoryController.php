@@ -23,6 +23,7 @@ class CategoryController extends Controller
 
     public function __construct(){
         $this->project='';
+        $this->cache_path =  '../storage/app/cache/questions/';
         if(request()->route('project')){
             $this->project = Project::get(request()->route('project'));
         } 
@@ -137,12 +138,17 @@ class CategoryController extends Controller
         if($request->get('store_session')){
             $request->session()->put('topic_id', $category->id);
             $request->session()->put('module_id', $parent->id); 
-            $request->session()->put('course_id', $parent->getParent($parent)->id); 
+            if($parent->getParent($parent)){
+                $request->session()->put('course_id', $parent->getParent($parent)->id); 
+                $request->session()->put('course_name', $parent->getParent($parent)->name); 
+            $request->session()->put('course_slug', $parent->getParent($parent)->slug);
+            }
+            
 
             $request->session()->put('topic_name', $category->name);
             $request->session()->put('module_name', $parent->name); 
-            $request->session()->put('course_name', $parent->getParent($parent)->name);  
-            $request->session()->put('course_slug', $parent->getParent($parent)->slug);  
+            
+              
         }
 
         
@@ -225,8 +231,11 @@ class CategoryController extends Controller
 
         $this->authorize('update', $node);
 
-        $course = Course::where('slug',$this->project->slug)->first();  
+        $course = Course::where('slug',$this->project->slug)->first(); 
+        if($course) 
         $exams = Exam::where('course_id',$course->id)->get();
+        else
+            $exams = null;
 
         $parent = Category::getParent($node);
         if(!$parent){
@@ -293,6 +302,26 @@ class CategoryController extends Controller
                     'project'=> $project_slug,
                 ]);
         
+    }
+
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cache($project_slug, $category_slug)
+    {
+        $category = Category::where('slug',$category_slug)->first();
+        $questions = $category->questions;
+
+        $filename = $category->slug.'.json';
+        $filepath = $this->cache_path.$filename;
+        file_put_contents($filepath, json_encode($questions,JSON_PRETTY_PRINT));
+
+        flash('Category ('.$category_slug.')Tree Successfully Cached')->success();
+        return redirect()->route('category.index',$project_slug);
     }
 
     /**
