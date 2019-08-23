@@ -13,7 +13,7 @@
       @if(Storage::disk('public')->exists($obj->image))
       <img src="{{ asset('storage/'.$obj->image)}}" class="w-100 " alt="{{  $obj->name }}"/>
       @endif
-      <div class="p-5 bg-white company">
+      <div class="p-3 p-md-4 p-lg-5 bg-white company">
         
           <h1 class=""> {{ $obj->name }} 
 
@@ -45,7 +45,7 @@
 
     </div>
 
-    @if($questions)
+    @if(count($questions)!=0)
     <div class="bg-white p-3 p-md-4 p-lg-5 mt-3">
       @include('appl.content.company.questions')
     </div>
