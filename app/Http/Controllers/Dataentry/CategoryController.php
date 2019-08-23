@@ -62,7 +62,8 @@ class CategoryController extends Controller
         $this->authorize('create', $category);
 
         $parent =  Category::where('slug',$this->project->slug)->first();
-
+ 
+ 
 
         $course = Course::where('slug',$this->project->slug)->first(); 
         if($course) 
