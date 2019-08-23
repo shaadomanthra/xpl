@@ -436,11 +436,19 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('job','Recruit\JobController');
 	Route::resource('form','Recruit\FormController')->middleware('auth');
 
-    Route::get('/{username}', 'User\UserController@index')->name('profile');
-	Route::get('/{username}/edit', 'User\UserController@edit')->name('profile.edit');
-	Route::get('/{username}/manage', 'User\UserController@manage')->name('profile.manage');
-	Route::put('/{username}', 'User\UserController@update')->name('profile.update');
-	Route::delete('/{username}', 'User\UserController@destroy')->name('profile.delete');
+	Route::get('/{page}',function($page){
+		if(strpos($page,'@')===0)
+        {
+        	return redirect()->route('profile',$page);
+        }else{
+        	return app('PacketPrep\Http\Controllers\Content\CompanyController')->show($page);
+        }
+	})->name('page');
+    Route::get('user/{username}', 'User\UserController@index')->name('profile');
+	Route::get('user/{username}/edit', 'User\UserController@edit')->name('profile.edit');
+	Route::get('user/{username}/manage', 'User\UserController@manage')->name('profile.manage');
+	Route::put('user/{username}', 'User\UserController@update')->name('profile.update');
+	Route::delete('user/{username}', 'User\UserController@destroy')->name('profile.delete');
 
 });
 

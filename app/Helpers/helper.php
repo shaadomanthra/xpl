@@ -42,10 +42,12 @@ if (! function_exists('summernote_imageupload')) {
                     list(, $data)      = explode(',', $data);
                     $data = base64_decode($data);
 
-                    $base_folder = "/img/upload/";
+                    $base_folder = '/app/public/summernote/';
+                    $web_path = env('APP_URL').'/storage/summernote/';
                     $image_name=  $user->username.'_'. time().'_'.$k.'_'.rand().'.png';
-                    $temp_path = public_path() . $base_folder . 'temp_' . $image_name;
-                    $path = public_path() . $base_folder . $image_name;
+
+                    $temp_path = storage_path() . $base_folder . 'temp_' . $image_name;
+                    $path = storage_path() . $base_folder . $image_name;
                     file_put_contents($temp_path, $data);
                     //resize
                     $imgr = Image::make($temp_path);
@@ -55,10 +57,17 @@ if (! function_exists('summernote_imageupload')) {
                     });
                     $imgr->save($path);
 
+                    $imgr = Image::make($temp_path);
+                    $imgr->resize(400, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+                    $imgr->save($path);
+
                     unlink(trim($temp_path));
 
                     $img->removeAttribute('src');
-                    $img->setAttribute('src', $base_folder.$image_name);
+                    $img->setAttribute('src', $web_path.$image_name);
                     $img->setAttribute('class', 'image');
                 }
                 

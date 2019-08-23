@@ -188,6 +188,10 @@ class QuestionController extends Controller
 
             // keep the reference in capitals
             $request->merge(['reference' => strtoupper($request->reference)]);
+
+            $explanation = summernote_imageupload(\auth::user(),$request->explanation);
+            $request->merge(['explanation'=>$explanation]);
+
             $question = Question::create($request->except(['category','tag','sections']));
 
             if($request->dynamic){
@@ -1013,7 +1017,7 @@ class QuestionController extends Controller
             $question->e = $request->e;
             $question->answer = $request->answer;
             $question->type = $request->type;
-            $question->explanation = $request->explanation;
+            $question->explanation = summernote_imageupload(\auth::user(),$request->explanation);
             $question->dynamic = $request->dynamic;
             $question->passage_id= ($request->passage_id)?$request->passage_id:null;
             $question->status = $request->status;

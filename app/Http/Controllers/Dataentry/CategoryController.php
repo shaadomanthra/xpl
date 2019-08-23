@@ -63,8 +63,12 @@ class CategoryController extends Controller
 
         $parent =  Category::where('slug',$this->project->slug)->first();
 
-        $course = Course::where('slug',$this->project->slug)->first();  
-        $exams = Exam::where('course_id',$course->id)->get();
+
+        $course = Course::where('slug',$this->project->slug)->first(); 
+        if($course) 
+            $exams = Exam::where('course_id',$course->id)->get();
+        else
+            $exams = null;
         $select_options = $category->displaySelectOption($parent->descendantsAndSelf($parent->id)->toTree());
         return view('appl.dataentry.category.createedit')
                 ->with('project',$this->project)
