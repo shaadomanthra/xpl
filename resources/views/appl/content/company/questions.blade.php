@@ -6,7 +6,9 @@
 		 @include('appl.content.company.blocks.question')
 		</div>
 		@if(($qno+1)%10==0)
-		@include('appl.content.company.googleads')
+		<div class="mt-4">
+		@include('snippets.adsense')
+		</div>
 		@endif
 		@endforeach
 	</div>
