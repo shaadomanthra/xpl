@@ -36,11 +36,7 @@
           
           {!! $obj->details !!}
 
-          @if($questions)
-          <div class="">
-              @include('appl.content.company.questions')
-          </div>
-          @endif
+
      
       
   
@@ -49,8 +45,13 @@
 
     </div>
 
-     
+    @if($questions)
+    <div class="bg-white p-3 p-md-4 p-lg-5 mt-3">
+      @include('appl.content.company.questions')
+    </div>
+    @endif
 
+    
   </div> 
 
 
