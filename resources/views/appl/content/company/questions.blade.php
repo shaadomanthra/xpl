@@ -5,7 +5,7 @@
 		<div class="mt-1">
 		 @include('appl.content.company.blocks.question')
 		</div>
-		@if($qno%10==0)
+		@if(($qno+1)%10==0)
 		@include('appl.content.company.googleads')
 		@endif
 		@endforeach

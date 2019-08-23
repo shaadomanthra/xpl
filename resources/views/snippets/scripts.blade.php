@@ -506,4 +506,5 @@ function addMinutes(date, minutes) {
   gtag('config', 'UA-43617911-7');
 </script>
 
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="application/javascript"></script>
 
