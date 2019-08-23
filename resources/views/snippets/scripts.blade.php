@@ -508,6 +508,9 @@ function addMinutes(date, minutes) {
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="application/javascript"></script>
 <script type="application/javascript">
-     (adsbygoogle = window.adsbygoogle || []).push({});
+     
+     [].forEach.call(document.querySelectorAll('.adsbygoogle'), function(){
+    (adsbygoogle = window.adsbygoogle || []).push({});
+});
 </script>
 
