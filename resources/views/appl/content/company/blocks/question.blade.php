@@ -4,7 +4,7 @@
 	<div class="col-3 col-lg-2">
 		<div class="pr-3 pb-2 " >
 			<div class="text-center p-1 rounded  w100 "  style="background:#F8EFBA;border:1px solid #e4d998;">
-				{{ $qno+1 }}
+				Q{{ $qno+1 }}
 			</div>
 		</div>
 	</div>
