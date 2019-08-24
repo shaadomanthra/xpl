@@ -8,6 +8,7 @@ if (! function_exists('image_resize')) {
         $path = storage_path() . $base_folder . $image_path;
 
         $explode= explode('.', $path);
+        dd($path);
         
         $imgr = Image::make($path)->encode('jpg', 100);
        
@@ -17,7 +18,7 @@ if (! function_exists('image_resize')) {
         });
               
         $imgr->save($explode[0].'_'.$size.'.jpg');  
-        dd($explode[0].'_'.$size.'.jpg');
+
         return true;
     }
 }
