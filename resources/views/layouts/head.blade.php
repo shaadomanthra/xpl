@@ -11,6 +11,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#236fb1"/>
     <link rel="manifest" href="/manifest.json">
+    <meta property="og:url"           content="{{ request()->url() }}" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="@yield('title')" />
+  <meta property="og:description"   content="@yield('description')" />
+  <meta property="og:image"         content="@yield('image')" />
 
     @if(isset($autoads))
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

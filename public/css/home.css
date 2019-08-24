@@ -194,6 +194,12 @@ ul.sortable li.current{ border:1px solid #17a085; }
 .kno{cursor: pointer}
 /*question*/
 
+.question_p, .question_p p{ font-size:18px;line-height: 30px; }
+.a_p, .a_p p{ font-size:18px;line-height: 30px; }
+.b_p, .b_p p{ font-size:18px;line-height: 30px; }
+.c_p, .c_p p{ font-size:18px;line-height: 30px; }
+.d_p, .d_p p{ font-size:18px; line-height: 30px;}
+.e_p, .e_p p{ font-size:18px;line-height: 30px; }
 
 .qyellow{
     background:#F8EFBA;border:1px solid #e4d998;

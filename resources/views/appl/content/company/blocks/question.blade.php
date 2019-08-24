@@ -8,7 +8,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-9 col-lg-9"><div class="pt-1 question">{!! $question->question!!}</div></div>
+	<div class="col-9 col-lg-9"><div class="pt-1 question question_p">{!! $question->question!!}</div></div>
 </div>
 
 @if($question->a)
@@ -20,7 +20,7 @@
 			A</div>
 		</div>
 	</div>
-	<div class="col-9 col-lg-10"><div class="pt-1 a">{!! $question->a!!}</div></div>
+	<div class="col-9 col-lg-10"><div class="pt-1 a a_p">{!! $question->a!!}</div></div>
 </div>
 @endif
 
@@ -69,10 +69,10 @@
 @endif
 
 <div class="accuracy accuracy_correct_{{$qno+1}} p-3 border mb-3" style="display: none">
-	<span class="text-success"><i class="fa fa-check-circle"></i> Your response correct</span>
+	<span class="text-success"><i class="fa fa-check-circle"></i> Your response is correct</span>
 </div>
 <div class="accuracy accuracy_incorrect_{{$qno+1}} p-3 border mb-3" style="display: none">
-	<span class="text-danger"><i class="fa fa-times-circle"></i> Your response incorrect</span>
+	<span class="text-danger"><i class="fa fa-times-circle"></i> Your response is incorrect</span>
 </div>
 @if($question->explanation || $question->answer)
 <div class="answer answer_{{$qno+1}} p-3 border mb-3 bg-light" style="display: none">
