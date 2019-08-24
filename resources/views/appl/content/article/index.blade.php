@@ -13,7 +13,7 @@
   <div class="container">
   <div class="row">
     <div class="col-12 col-md-8">
-      <h1 class="mt-1 mb-4 mb-md-0">
+      <h1 class="mt-1 mb-2 mb-md-0">
       <i class="fa fa-th"></i> &nbsp;Articles
       @can('create',$obj)
             <a href="{{route($app->module.'.create')}}">

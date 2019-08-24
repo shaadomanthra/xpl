@@ -2,8 +2,8 @@
 @if($objs->total()!=0)
 <div class="row ">
 @foreach($objs as $obj)
-<div class="col-4">
- <div class="card" >
+<div class="col-12 col-md-6 col-lg-4">
+ <div class="card mb-3" >
    @if(Storage::disk('public')->exists($obj->image))
      <a href="{{ route('page',$obj->slug) }}" >
       <img srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} 320w,
