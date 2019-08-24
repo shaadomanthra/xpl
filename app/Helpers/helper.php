@@ -17,7 +17,7 @@ if (! function_exists('image_resize')) {
         });
               
         $imgr->save($explode[0].'_'.$size.'.jpg');  
-
+        dd($explode[0].'_'.$size.'.jpg');
         return true;
     }
 }
