@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 @section('title', $obj->name.' | PacketPrep')
-@section('description', $obj->description)
+@section('description', strip_tags($obj->description))
 @section('keywords', $obj->keywords)
 @section('image', asset('/storage/company/'.$obj->slug.'_900.jpg'))
 @section('content')
@@ -31,12 +31,14 @@
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
             @endcan
-            
+
           </h1>
-     <div class="fb-share-button mr-3" 
-    data-href="https://www.your-domain.com/your-page.html" 
+    <div class="mb-3">
+     <div class="fb-share-button" 
+    data-href="{{ request()->url() }}" 
     data-layout="button_count">
   </div>
+</div>
         
           <div class="row">
             <div class="col-12 col-md-8">
