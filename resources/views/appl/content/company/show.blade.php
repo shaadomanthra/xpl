@@ -25,12 +25,14 @@
         
           <h1 class=""> {{ $obj->name }} 
 
-          @can('update',$obj)
+          @if(\auth::user())
+          @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter']))
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route($app->module.'.edit',$obj->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
-            @endcan
+            @endif
+          @endif
 
           </h1>
     <div class="mb-3">
