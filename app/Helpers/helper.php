@@ -7,7 +7,7 @@ if (! function_exists('image_resize')) {
         $base_folder = '/app/public/';
         $path = storage_path() . $base_folder . $image_path;
 
-        $explode= explode('.', $path);
+        $explode= explode('.', $image_path);
         dd($explode[0]);
 
         $imgr = Image::make($path)->encode('jpg', 100);
