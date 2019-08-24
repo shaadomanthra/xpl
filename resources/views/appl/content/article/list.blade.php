@@ -5,7 +5,7 @@
 <div class="col-4">
  <div class="card" >
    @if(Storage::disk('public')->exists($obj->image))
-     <a href="{{ route('article.show',$obj->slug) }}" >
+     <a href="{{ route('page',$obj->slug) }}" >
       <img srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} 320w,
              {{ asset('/storage/articles/'.$obj->slug.'_600.jpg') }}  480w,
              {{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }}  800w"
@@ -18,7 +18,7 @@
   <div class="card-body">
     <a href="{{ route('page',$obj->slug) }}" ><h2 class="card-title">{{ $obj->name }}</h2></a>
     <p class="card-text">{!! substr(strip_tags($obj->description),0,200) !!}</p>
-    <a href="{{ route('article.show',$obj->slug) }}" class="btn btn-success">read more</a>
+    <a href="{{ route('page',$obj->slug) }}" class="btn btn-success">read more</a>
   </div>
 </div>
 </div>
