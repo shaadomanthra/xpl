@@ -5,7 +5,7 @@
 		<div class="mt-1">
 		 @include('appl.content.company.blocks.question')
 		</div>
-		@if(($qno+1)%10==0)
+		@if(($qno+1)%5==0)
 		<div class="mt-4">
 		@include('snippets.adsense')
 		</div>

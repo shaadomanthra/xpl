@@ -43,13 +43,14 @@
           <div class="row">
             <div class="col-12 col-md-8">
               {!! $obj->description !!}
+              {!! $obj->details !!}
             </div>
             <div class="col-12 col-md-4">
               @include('snippets.adsense')
             </div>
           </div>
           
-          {!! $obj->details !!}
+          
 
 
      
