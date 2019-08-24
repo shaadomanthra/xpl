@@ -161,7 +161,7 @@ class ArticleController extends Controller
             file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
 
             flash('A new ('.$this->app.'/'.$this->module.') item is created!')->success();
-            return redirect()->route($this->module.'.index');
+            return redirect()->route('page',$request->get('slug'));
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
@@ -198,7 +198,7 @@ class ArticleController extends Controller
         	if(!\auth::user()->checkRole(['administrator']))
         		abort('404','Page Not Found');
         }
-        
+
         $filepath = $this->questions_path.$filename;
         //load questions if they exist
         if(file_exists($filepath))
@@ -260,7 +260,7 @@ class ArticleController extends Controller
                 if(Storage::disk('public')->exists($obj->image)){
                     Storage::disk('public')->delete($obj->image);
                 }
-                redirect()->route($this->module.'.show',[$slug]);
+                redirect()->route('page',$slug);
             }
 
             $this->authorize('update', $obj);
