@@ -17,5 +17,5 @@
 	</div>
 </div>
 
-@include('appl.content.company.googleads')
+@include('snippets.googleads')
 </div>
