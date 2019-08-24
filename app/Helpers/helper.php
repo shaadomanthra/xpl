@@ -7,17 +7,17 @@ if (! function_exists('image_resize')) {
         $base_folder = '/app/public/';
         $path = storage_path() . $base_folder . $image_path;
 
-        //resize
-        //dd($path);
-        $imgr = Image::make($path);
-        if($imgr->width()>1000){
+        $explode= explode('.', $path);
         
-            $imgr->resize($size, null, function ($constraint) {
+        $imgr = Image::make($path)->encode('jpg', 100);
+       
+        $imgr->resize($size, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
-            });
-        }
-        $imgr->save($path);
+        });
+              
+        $imgr->save($explode[0].'_'.$size.'.jpg');  
+
         return true;
     }
 }

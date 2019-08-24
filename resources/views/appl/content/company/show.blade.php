@@ -11,7 +11,14 @@
     <div class="col-md-12">
     
       @if(Storage::disk('public')->exists($obj->image))
-      <img src="{{ asset('storage/'.$obj->image)}}" class="w-100 " alt="{{  $obj->name }}"/>
+      
+      <img srcset="{{ Storage::url('company/'.$obj->name.'_300.jpg') }} 320w,
+             {{ Storage::url('company/'.$obj->name.'_600.jpg') }}  480w,
+             {{ Storage::url('company/'.$obj->name.'_900.jpg') }}  800w"
+      sizes="(max-width: 320px) 280px,
+            (max-width: 480px) 440px,
+            800px"
+      src="{{ Storage::url('company/'.$obj->name.'_900.jpg') }} " class="w-100" alt="{{  $obj->name }}">
       @endif
       <div class="p-3 p-md-4 p-lg-5 bg-white company">
         

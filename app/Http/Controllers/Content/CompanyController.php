@@ -145,6 +145,7 @@ class CompanyController extends Controller
             /* create a new entry */
             $obj->create($request->except(['file_']));
 
+            image_resize($path,500);
 
             /* update cache file of this product */
             $filename = $obj->slug.'.json';
@@ -258,6 +259,7 @@ class CompanyController extends Controller
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
                 $path = Storage::disk('public')->putFileAs('company', $request->file('file_'),$filename);
+                
               
                 $request->merge(['image' => $path]);
             }
@@ -266,6 +268,9 @@ class CompanyController extends Controller
 
             $obj->update($request->except(['file_'])); 
 
+            $sizes = [300,600,900];
+            foreach($sizes as $s)
+            image_resize($obj->image,$s);
 
             /* update cache file of this product */
             $filename = $obj->slug.'.json';
