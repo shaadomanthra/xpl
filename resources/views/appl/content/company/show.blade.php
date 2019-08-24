@@ -13,13 +13,13 @@
     
       @if(Storage::disk('public')->exists($obj->image))
       
-      <img srcset="{{ Storage::url('company/'.$obj->slug.'_300.jpg') }} 320w,
-             {{ Storage::url('company/'.$obj->slug.'_600.jpg') }}  480w,
-             {{ Storage::url('company/'.$obj->slug.'_900.jpg') }}  800w"
+      <img srcset="{{ asset('/storage/company/'.$obj->slug.'_300.jpg') }} 320w,
+             {{ asset('/storage/company/'.$obj->slug.'_600.jpg') }}  480w,
+             {{ asset('/storage/company/'.$obj->slug.'_900.jpg') }}  800w"
       sizes="(max-width: 320px) 280px,
             (max-width: 480px) 440px,
             800px"
-      src="{{ Storage::url('company/'.$obj->slug.'_900.jpg') }} " class="w-100" alt="{{  $obj->name }}">
+      src="{{ asset('/storage/company/'.$obj->slug.'_900.jpg') }} " class="w-100" alt="{{  $obj->name }}">
       @endif
       <div class="p-3 p-md-4 p-lg-5 bg-white company">
         
@@ -65,10 +65,12 @@
 
     </div>
 
+    @if($questions)
     @if(count($questions)!=0)
     <div class="bg-white p-3 p-md-4 p-lg-5 mt-3">
       @include('appl.content.company.questions')
     </div>
+    @endif
     @endif
 
     

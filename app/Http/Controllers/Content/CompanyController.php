@@ -145,7 +145,9 @@ class CompanyController extends Controller
             /* create a new entry */
             $obj->create($request->except(['file_']));
 
-            image_resize($path,500);
+            $sizes = [300,600,900];
+            foreach($sizes as $s)
+                image_resize($obj->image,$s);
 
             /* update cache file of this product */
             $filename = $obj->slug.'.json';
@@ -284,7 +286,7 @@ class CompanyController extends Controller
             
 
             flash('('.$this->app.'/'.$this->module.') item is updated!')->success();
-            return redirect()->route($this->module.'.show',$slug);
+            return redirect()->route('page',$slug);
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
