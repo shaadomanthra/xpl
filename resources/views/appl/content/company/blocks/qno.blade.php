@@ -17,5 +17,5 @@
 	</div>
 </div>
 
-@include('snippets.googleads')
+@include('snippets.adsense')
 </div>
