@@ -20,7 +20,7 @@
 			A</div>
 		</div>
 	</div>
-	<div class="col-9 col-lg-10"><div class="pt-1 a a_p">{!! $question->a!!}</div></div>
+	<div class="col-9 col-lg-10"><div class="pt-1 a question_p">{!! $question->a!!}</div></div>
 </div>
 @endif
 
@@ -31,7 +31,7 @@
 			<div class="text-center p-1 rounded bg-light w100 border" ><input class="form-check-input" type="radio" name="q{{ $qno+1 }}" data-qno="{{ $qno+1 }}" value="B"  > B</div>
 		</div>
 	</div>
-	<div class="col-9  col-lg-10"><div class="pt-1 b">{!! $question->b!!}</div></div>
+	<div class="col-9  col-lg-10"><div class="pt-1 b question_p">{!! $question->b!!}</div></div>
 </div>
 @endif
 
@@ -42,7 +42,7 @@
 			<div class="text-center p-1 rounded bg-light w100 border" ><input class="form-check-input" type="radio" name="q{{ $qno+1 }}" data-qno="{{ $qno+1 }}" value="C"  > C</div>
 		</div>
 	</div>
-	<div class="col-9 col-lg-10"><div class="pt-1 c">{!! $question->c!!}</div></div>
+	<div class="col-9 col-lg-10"><div class="pt-1 c question_p">{!! $question->c!!}</div></div>
 </div>
 @endif
 
@@ -53,7 +53,7 @@
 			<div class="text-center p-1 rounded bg-light w100 border" ><input class="form-check-input" type="radio" name="q{{ $qno+1 }}" data-qno="{{ $qno+1 }}" value="D"  > D</div>
 		</div>
 	</div>
-	<div class="col-9 col-lg-10"><div class="pt-1 d">{!! $question->d!!}</div></div>
+	<div class="col-9 col-lg-10"><div class="pt-1 d question_p">{!! $question->d!!}</div></div>
 </div>
 @endif
 
@@ -64,25 +64,25 @@
 			<div class="text-center p-1 rounded bg-light w100 border" ><input class="form-check-input" type="radio" name="q{{ $qno+1 }}" data-qno="{{ $qno+1 }}" value="E">E</div>
 		</div>
 	</div>
-	<div class="col-9 col-lg-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
+	<div class="col-9 col-lg-10"><div class="pt-1 e question_p">{!! $question->e!!}</div></div>
 </div>
 @endif
 
 <div class="accuracy accuracy_correct_{{$qno+1}} p-3 border mb-3" style="display: none">
-	<span class="text-success"><i class="fa fa-check-circle"></i> Your response is correct</span>
+	<span class="text-success question_p"><i class="fa fa-check-circle"></i> Your response is correct</span>
 </div>
 <div class="accuracy accuracy_incorrect_{{$qno+1}} p-3 border mb-3" style="display: none">
-	<span class="text-danger"><i class="fa fa-times-circle"></i> Your response is incorrect</span>
+	<span class="text-danger question_p"><i class="fa fa-times-circle"></i> Your response is incorrect</span>
 </div>
 @if($question->explanation || $question->answer)
-<div class="answer answer_{{$qno+1}} p-3 border mb-3 bg-light" style="display: none">
+<div class="answer answer_{{$qno+1}} p-3 border mb-3 bg-light question_p" style="display: none">
 	@if($question->answer)
 		<h3>Answer</h3>
-		<p>{{$question->answer}}</p>
+		<p class="question_p">{{$question->answer}}</p>
 	@endif
 	@if($question->explanation)
 		<h3>Solution</h3>
-		<p>{!!$question->explanation !!}</p>
+		<p class="question_p">{!!$question->explanation !!}</p>
 	@endif
 </div>
 @endif
