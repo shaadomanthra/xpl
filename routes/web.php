@@ -272,16 +272,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('dregister','Product\AdminController@dstudentregister')->name('student.dregister');
 	Route::post('studentstore','Product\AdminController@studentstore')->name('admin.user.studentstore');
 
-	Route::get('/placement/template', function(){ return view('appl.content.company.template'); })->name('template');
-	Route::resource('placement','Content\CompanyController',['names' => [
-        'index' => 'company.index',
-        'store' => 'company.store',
-        'create' => 'company.create',
-        'show' => 'company.show',
-        'edit'=> 'company.edit',
-        'update'=>'company.update',
-        'destroy'=>'company.destroy',
-    ]]);
+	Route::get('/article/template', function(){ return view('appl.content.article.template'); })->name('template');
+	Route::resource('article','Content\ArticleController');
     
 	Route::resource('role','User\RoleController')->middleware('auth');
 	Route::resource('tracks','Content\DocController',['names' => [
@@ -442,7 +434,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         {
         	return redirect()->route('profile',$page);
         }else{
-        	return app('PacketPrep\Http\Controllers\Content\CompanyController')->show($page);
+        	return app('PacketPrep\Http\Controllers\Content\ArticleController')->show($page);
         }
 	})->name('page');
     Route::get('user/{username}', 'User\UserController@index')->name('profile');

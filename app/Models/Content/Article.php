@@ -4,7 +4,7 @@ namespace PacketPrep\Models\Content;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Article extends Model
 {
     protected $fillable = [
         'name',
@@ -16,4 +16,3 @@ class Company extends Model
         'status'
     ];
 }
-
