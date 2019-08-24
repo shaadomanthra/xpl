@@ -35,12 +35,7 @@
           @endif
 
           </h1>
-    <div class="mb-3">
-     <div class="fb-share-button" 
-    data-href="{{ request()->url() }}" 
-    data-layout="button_count">
-  </div>
-</div>
+
         
           <div class="row">
             <div class="col-12 col-md-8">
@@ -50,12 +45,13 @@
               <div class="mb-4">
               {!! $obj->details !!}
             </div>
+
+            @include('appl.content.company.blocks.share')
             </div>
             <div class="col-12 col-md-4">
               @include('snippets.adsense')
             </div>
           </div>
-          
           
 
 
