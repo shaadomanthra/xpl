@@ -27,10 +27,11 @@ class ArticleController extends Controller
 
      $search = $request->search;
      $item = $request->item;
+     $filename = 'index.'.$this->app.'.'.$this->module.'.json';
+     $filepath = $this->cache_path.$filename;
+
      /* update in cache folder */
      if($request->refresh){
-        $filename = 'index.'.$this->app.'.'.$this->module.'.json';
-        $filepath = $this->cache_path.$filename;
 
         $objs = $obj->orderBy('created_at','desc')
         ->get();  
@@ -45,9 +46,14 @@ class ArticleController extends Controller
         flash('Article Pages Cache Updated')->success();
     }
 
-    $objs = $obj->where('name','LIKE',"%{$item}%")
-    ->orderBy('created_at','desc')
-    ->paginate(config('global.no_of_records'));  
+    if(file_exists($filepath) && !$search){
+    	$objs = json_decode(file_get_contents($filepath));
+    }else{
+    	$objs = $obj->where('name','LIKE',"%{$item}%")
+    	->orderBy('created_at','desc')
+    	->paginate(30);  
+    }
+    
 
     $view = $search ? 'list': 'index';
 

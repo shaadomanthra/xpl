@@ -1,5 +1,5 @@
 
-@if($objs->total()!=0)
+@if(count($objs)!=0)
 <div class="row ">
 @foreach($objs as $obj)
 <div class="col-12 col-md-6 col-lg-4">
@@ -30,6 +30,4 @@
   No {{ $app->module }} listed
 </div>
 @endif
-<nav aria-label="Page navigation  " class="card-nav @if($objs->total() > config('global.no_of_records'))mt-3 @endif">
-  {{$objs->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
-</nav>
+
