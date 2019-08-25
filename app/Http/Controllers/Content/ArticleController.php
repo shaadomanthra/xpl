@@ -163,7 +163,7 @@ class ArticleController extends Controller
             /* update in cache folder main file */
             $filename = 'index.'.$this->app.'.'.$this->module.'.json';
             $filepath = $this->cache_path.$filename;
-            $objs = $obj->orderBy('created_at','desc')
+            $objs = $obj->orderBy('created_at','desc')->where('status',1)
                         ->get(); 
             file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
 
@@ -295,7 +295,7 @@ class ArticleController extends Controller
             /* update in cache folder main file */
             $filename = 'index.'.$this->app.'.'.$this->module.'.json';
             $filepath = $this->cache_path.$filename;
-            $objs = $obj->orderBy('created_at','desc')
+            $objs = $obj->orderBy('created_at','desc')->where('status',1)
                         ->get(); 
             file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
             
