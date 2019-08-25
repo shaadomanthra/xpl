@@ -197,6 +197,8 @@ ul.sortable li.current{ border:1px solid #17a085; }
 .question_p, .question_p p
 { font-size:20px;line-height: 30px; }
 
+h2.article{ line-height: 1.5em; }
+p.article{line-height: 1.6em;}
 
 
 .qyellow{
