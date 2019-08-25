@@ -42,7 +42,7 @@
               <div class="mb-4">
               {!! $obj->description !!}
             </div>
-              <div class="mb-4">
+              <div class="">
               {!! $obj->details !!}
             </div>
 
