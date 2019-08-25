@@ -1,10 +1,7 @@
-
-
-
 @extends('layouts.nowrap-product')
-@section('title', 'Courses for Placement Preparation, Bank Exams and Government Jobs  | PacketPrep')
-@section('description', 'The courses list include quantiative aptitude, logical reasoning, mental ability, verbal ability and interview skills')
-@section('keywords', 'quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures, gate preparation, gate lectures')
+@section('title', 'Placement Preparation Material | PacketPrep')
+@section('description', 'This section has huge set of aptitude questions, recruitment process and placement papers for various companies, tips and tricks to prepare for it')
+@section('keywords', 'quantitative aptitude, mental ability, learning, simple, interesting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures')
 
 @section('content')
 <div class="line" style="padding:1px;background:#eee"></div>
