@@ -72,29 +72,15 @@ class ArticleController extends Controller
     public function public(Obj $obj,Request $request)
     {
 
+    	$this->authorize('update', $obj);
         $search = $request->search;
         $item = $request->item;
         
-        //cache file
-        $filename = 'index.'.$this->app.'.'.$this->module.'.json';
-        $filepath = $this->cache_path.$filename;
-
-        if(file_exists($filename) && !$search)
-        {
-            $objs = json_decode(file_get_contents($filename));
-        }elseif($search){
-            $objs = $obj->where('name','LIKE',"%{$item}%")
+        $objs = $obj->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc')
                     ->get(); 
-        }
-        else{
-            $objs = $obj->where('name','LIKE',"%{$item}%")
-                    ->orderBy('created_at','desc')
-                    ->get(); 
-            file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
-        }
 
-        $view = $search ? 'public_list': 'public';
+        $view = $search ? 'list': 'index';
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('objs',$objs)
