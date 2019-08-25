@@ -20,7 +20,7 @@
     <p class="card-text article">
       {!! 
       substr(strip_tags($obj->description),0,200) !!}@if(strlen(strip_tags($obj->description))>200) ... @endif</p>
-    <a href="{{ route('page',$obj->slug) }}" class="btn btn-success">read more</a>
+    <a href="{{ route('page',$obj->slug) }}" class="btn btn-success"><i class="fa fa-align-right"></i> read more</a>
   </div>
 </div>
 </div>
