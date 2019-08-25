@@ -1,5 +1,5 @@
-<div class="border bg-light p-3 mb-0 mt-4">
-          <p>If you find this information worthy then don't forget to share it on all the social media platforms. </p>
+<div class="border bg-light rounded p-3">
+          If you find this information worthy then don't forget to share it on all the social media platforms. <br>
 
         <p>Sharing is Caring 😀</p>
 

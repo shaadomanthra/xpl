@@ -46,17 +46,12 @@
               {!! $obj->details !!}
             </div>
 
-            @include('appl.content.company.blocks.share')
+            
             </div>
             <div class="col-12 col-md-4">
               @include('snippets.adsense')
             </div>
           </div>
-          
-
-
-     
-      
   
     </div>
       </div>
@@ -65,11 +60,25 @@
 
     @if($questions)
     @if(count($questions)!=0)
-    <div class="bg-white p-3 p-md-4 p-lg-5 mt-3">
-      @include('appl.content.company.questions')
+    <div class="bg-white p-3 p-md-4 p-lg-5 ">
+      @include('appl.content.article.questions')
     </div>
     @endif
     @endif
+
+    <div class="bg-white p-3 p-md-4 p-lg-5 ">
+    <div class="row">
+      <div class="col-12 col-md-8">
+        @include('appl.content.article.blocks.share')
+      </div>
+    </div>
+    
+
+    </div>
+
+    <div class="bg-light border p-3  ">
+      @include('appl.pages.disqus')
+    </div>
 
     
   </div> 
