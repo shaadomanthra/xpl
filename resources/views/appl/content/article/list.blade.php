@@ -19,7 +19,7 @@
     <a href="{{ route('page',$obj->slug) }}" ><h2 class="card-title">{{ $obj->name }}</h2></a>
     <p class="card-text">
       {!! 
-      substr(strip_tags($obj->description),0,200) !!}@if(count(strip_tags($obj->description))>200) ... @endif</p>
+      substr(strip_tags($obj->description),0,200) !!}@if(strlen(strip_tags($obj->description))>200) ... @endif</p>
     <a href="{{ route('page',$obj->slug) }}" class="btn btn-success">read more</a>
   </div>
 </div>
