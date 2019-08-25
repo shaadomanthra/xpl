@@ -33,7 +33,7 @@ class ArticleController extends Controller
      /* update in cache folder */
      if($request->refresh){
 
-        $objs = $obj->orderBy('created_at','desc')
+        $objs = $obj->orderBy('created_at','desc')->where('status',1)
         ->get();  
         file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
 
@@ -50,6 +50,7 @@ class ArticleController extends Controller
     	$objs = json_decode(file_get_contents($filepath));
     }else{
     	$objs = $obj->where('name','LIKE',"%{$item}%")
+    	->where('status',1)
     	->orderBy('created_at','desc')
     	->paginate(30);  
     }
