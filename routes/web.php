@@ -272,6 +272,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('dregister','Product\AdminController@dstudentregister')->name('student.dregister');
 	Route::post('studentstore','Product\AdminController@studentstore')->name('admin.user.studentstore');
 
+	Route::get('/companies', 'Content\ArticleController@companies')->name('companies');
 	Route::get('/article/listing', 'Content\ArticleController@public')->name('article.listing')->middleware('auth');
 	Route::get('/article/template', function(){ return view('appl.content.article.template'); })->name('template');
 	Route::resource('article','Content\ArticleController');

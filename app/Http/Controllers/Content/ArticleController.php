@@ -181,9 +181,14 @@ class ArticleController extends Controller
         // load page data from cache
         if(file_exists($filepath))
             $obj = json_decode(file_get_contents($filepath));
-        else
+        else{
             $obj = Obj::where('slug',$slug)->first();
+        }
         
+        if(!$obj)
+        {
+        	abort('404','Page Not Found');
+        }
         if(!$obj->status)
         {
         	if(!\auth::user())
@@ -212,6 +217,13 @@ class ArticleController extends Controller
                     ->with('mathjax',true);
         else
             abort(404);
+    }
+
+    public function companies()
+    {
+       $companies =['infosys','wipro','capgemini','tcs','dell'];
+       return view('appl.content.article.companies')->with('companies',$companies);
+
     }
 
     /**

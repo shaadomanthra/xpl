@@ -198,6 +198,10 @@ ul.sortable li.current{ border:1px solid #17a085; }
 { font-size:20px;line-height: 30px; }
 
 h2.article{ line-height: 1.5em; }
+h3.article{ line-height: 1.5em; }
+h4.article{ line-height: 1.5em; }
+h5.article{ line-height: 1.5em; }
+h6.article{ line-height: 1.5em; }
 p.article{line-height: 1.6em;}
 
 

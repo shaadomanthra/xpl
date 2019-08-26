@@ -52,19 +52,21 @@
               @include('snippets.adsense')
             </div>
           </div>
+
+          @if($questions)
+          @if(count($questions)!=0)
+          <div class="">
+            @include('appl.content.article.questions')
+          </div>
+          @endif
+          @endif
   
     </div>
       </div>
 
     </div>
 
-    @if($questions)
-    @if(count($questions)!=0)
-    <div class="bg-white p-3 p-md-4 p-lg-5 ">
-      @include('appl.content.article.questions')
-    </div>
-    @endif
-    @endif
+    
 
     <div class="bg-white p-3 p-md-4 p-lg-5 ">
     <div class="row">
