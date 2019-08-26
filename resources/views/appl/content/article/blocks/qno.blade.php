@@ -1,8 +1,8 @@
 <div class="sticky-top pt-3">
 <div class="card mb-3 text-white d-none d-md-block blogd mb-3" style="background:#ca2428">
 	<div class="card-body">
-		<h3 class="mb-4"><i class="fa fa-th"></i> Questions </h3>
-		<div class="qset" style="max-height: 200px;overflow-y: auto; ">
+		<h3 class="mb-3"><i class="fa fa-th"></i> Questions </h3>
+		<div class="qset" style="max-height: 220px;overflow-y: auto; ">
 		<div class="row no-gutters">
 		@foreach($questions  as $kno => $question)
 			<div class="col-3 mb-1">
