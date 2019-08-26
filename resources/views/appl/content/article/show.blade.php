@@ -49,7 +49,9 @@
             
             </div>
             <div class="col-12 col-md-4">
+              <div class="sticky-top pt-3">
               @include('snippets.adsense')
+              </div>
             </div>
           </div>
 
@@ -60,23 +62,18 @@
           </div>
           @endif
           @endif
+
+          <div class="row">
+      <div class="col-12 col-md-8">
+        @include('appl.content.article.blocks.share')
+      </div>
+    </div>
   
     </div>
       </div>
 
     </div>
 
-    
-
-    <div class="bg-white p-3 p-md-4 p-lg-5 ">
-    <div class="row">
-      <div class="col-12 col-md-8">
-        @include('appl.content.article.blocks.share')
-      </div>
-    </div>
-    
-
-    </div>
 
     <div class="bg-light border p-3  ">
       @include('appl.pages.disqus')
