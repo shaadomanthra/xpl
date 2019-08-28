@@ -19,7 +19,7 @@
       sizes="(max-width: 320px) 280px,
             (max-width: 480px) 440px,
             800px"
-      src="{{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }} " class="w-100" alt="{{  $obj->name }}">
+      src="{{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }} " class="w-100 d-print-none" alt="{{  $obj->name }}">
       @endif
       <div class="p-3 p-md-4 p-lg-5 bg-white company">
         
@@ -36,9 +36,9 @@
 
           </h1>
 
-        <div class="addthis_inline_share_toolbox mb-2"></div>
+        <div class="addthis_inline_share_toolbox mb-2 d-print-none"></div>
           <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md">
               <div class="mb-4">
               {!! $obj->description !!}
             </div>
@@ -48,7 +48,7 @@
 
             
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-4 d-print-none">
               <div class="sticky-top pt-3">
               @include('snippets.adsense')
               </div>
@@ -75,7 +75,7 @@
     </div>
 
 
-    <div class="bg-light border p-3  ">
+    <div class="bg-light border p-3  d-print-none">
       @include('appl.pages.disqus')
     </div>
 

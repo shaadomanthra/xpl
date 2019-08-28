@@ -1,6 +1,6 @@
 
 <div class="p-3"></div>
-<div class="row">
+<div class="row d-print-none">
 	<div class="col-6 col-md">
 		<div class="">
 		<img src="{{ asset('img/pp_logo_white.png') }}"  style="max-width:80px;"class=" w-100" alt="packetprep logo white"/>
@@ -65,6 +65,10 @@
 	
 </div>
 <hr>
-<div class="text-secondary">Copyright &copy; Quedb Edtech Private Limited</div>
+<div class="text-secondary d-print-none">Copyright &copy; Quedb Edtech Private Limited</div>
+<div class="text-secondary d-none d-print-block">Copyright &copy; PacketPrep
+<hr>
+PacketPrep is the best platform to prepare for campus placements - https://packetprep.com
+</div>
 <div class="p-4"></div>
 
