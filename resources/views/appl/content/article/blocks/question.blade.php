@@ -1,6 +1,6 @@
 
 <div class="p-3 " id="q{{$qno+1}}"></div>
-@if($question->passage)
+@if(isset($question->passage))
 <div class=" p-4 border  rounded mb-3">
 	<h4 class="mb-4"><i class="fa fa-th"></i> Passage</h4>
 	<hr>
@@ -17,6 +17,7 @@
 		</div>
 	</div>
 	<div class="col-9 col-lg-9"><div class="pt-1 question question_p">{!! $question->question!!}</div>
+	@if(isset($question->topic))
 	@if($question->level || $question->topic)
           <div class="mb-3">
           @if($question->level)
@@ -29,6 +30,7 @@
           @endif
           </div>
           @endif
+    @endif
 	</div>
 </div>
 
