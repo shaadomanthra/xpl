@@ -36,7 +36,7 @@
 
           </h1>
 
-        
+        <div class="addthis_inline_share_toolbox mb-2"></div>
           <div class="row">
             <div class="col-12 col-md-8">
               <div class="mb-4">
