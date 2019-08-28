@@ -1,5 +1,13 @@
 
 <div class="p-3 " id="q{{$qno+1}}"></div>
+@if($question->passage)
+<div class=" p-4 border  rounded mb-3">
+	<h4 class="mb-4"><i class="fa fa-th"></i> Passage</h4>
+	<hr>
+	{!! $question->passage->passage !!}
+</div>
+
+@endif
 <div class="row no-gutters">
 	<div class="col-3 col-lg-2">
 		<div class="pr-3 pb-2 " >
@@ -8,7 +16,20 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-9 col-lg-9"><div class="pt-1 question question_p">{!! $question->question!!}</div></div>
+	<div class="col-9 col-lg-9"><div class="pt-1 question question_p">{!! $question->question!!}</div>
+	@if($question->level || $question->topic)
+          <div class="mb-3">
+          @if($question->level)
+          <span class="badge badge-warning">Level {{$question->level}}</span>
+          @endif
+          @if($question->topic)
+          @foreach(explode(',',$question->topic) as $topic)
+          <span class="badge badge-success">{{$topic}}</span>
+          @endforeach
+          @endif
+          </div>
+          @endif
+	</div>
 </div>
 
 @if($question->a)

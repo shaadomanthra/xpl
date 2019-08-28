@@ -315,6 +315,12 @@ class CategoryController extends Controller
     {
         $category = Category::where('slug',$category_slug)->first();
         $questions = $category->questions;
+        foreach($questions as $k=>$q){
+            if($q->passage){
+                $questions[$k]['passage'] = $q->passage->passage;
+            }
+            
+        }
 
         $filename = $category->slug.'.json';
         $filepath = $this->cache_path.$filename;
