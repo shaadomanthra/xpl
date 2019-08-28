@@ -32,6 +32,7 @@ class Question extends Model
         'status',
         'level',
         'intest',
+        'topic',
         // add all other fields
     ];
 

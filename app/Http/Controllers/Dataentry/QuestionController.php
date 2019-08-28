@@ -282,7 +282,25 @@ class QuestionController extends Controller
             $question->user_id = \auth::user()->id;
             $question->status = $q->status;
             $question->level = $q->level;
+            if($q->topic){
+               $question->topic = $q->topic; 
+           }else{
+            if(count($q->categories)!=0){
+               foreach($q->categories as $m=>$cat)
+                {
+                    if($m==0)
+                    $c = $cat->name;
+                    else
+                        $c = $c.', '.$cat->name;
+                } 
+            } 
+            $question->topic = $c;
+           }
+
+
+            
             $question->intest = $q->intest;
+            
             $question->save(); 
 
             if(!$q->intest)
@@ -1023,6 +1041,7 @@ class QuestionController extends Controller
             $question->status = $request->status;
             $question->level = $request->level;
             $question->intest = $request->intest;
+            $question->topic = $request->topic;
             $question->save(); 
 
             if($request->dynamic){

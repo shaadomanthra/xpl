@@ -1,6 +1,7 @@
 
-<p class="">Here you can find the accurate test pattern for Wipro placement specifically for Wipro NLTH i.e. Wipro national level talent hunt, also the right syllabus for Wipro and important questions for Wipro placement.</p><p>Packetprep’s study material makes your Wipro placement preparation easy. We have thoroughly analyzed the previous year papers of Wipro and found that the level of difficulty is moderate to high. Our free study material for Wipro is designed by subject experts and it includes Wipro previous year questions, tips, and tricks for smooth and effective preparation.</p>
-<h2 class="mt-5 text-primary" id="test-details">Wipro Test Details&nbsp;</h2>
+<p class="">If you are in the final year of engineering then being prepared can give an edge over others in the Wipro recruitment drive. To be prepared what you have to do is first carefully understand the Wipro test pattern and make a proper schedule to learn all the topics in the Wipro syllabus then focus on practice.</p>
+<p>We have reviewed the past five year papers and consolidated all repeated questions in this section-wise practice questions, solve them with the utmost care.</p><p>Then move to the placement papers section, we have added 5 Wipro placement papers very much in sync with the latest test patterns. Solve at least 3 papers now, and the rest 2 you can do it one day before the exam.&nbsp;</p><p>Remember, its all about the preparation and practice. If you can put effort now, I'm sure success will be yours. Good Luck!</p>
+<h2 class="mt-5 text-primary" id="test-details"><i class="fa fa-align-right"></i> Wipro Test Details&nbsp;</h2>
 <dl class="row"> 
   <dt class="col-sm-4">Test Time</dt> 
   <dd class="col-sm-8">140 minutes</dd> 
@@ -23,7 +24,7 @@
 
 </dl>
 
-<h2 class="mt-5 text-primary" id="test-pattern">Wipro NLTH Test Pattern</h2>
+<h2 class="mt-5 text-primary" id="test-pattern"><i class="fa fa-align-right"></i> Wipro NLTH Test Pattern</h2>
 <p>Wipro national level talent hunt (Wipro nlth) exam consists of three sections aptitude, written communication, and online programming test.</p>
 <div class="table-responsive">
   <table class="table table-bordered table-striped"><tbody>
@@ -36,129 +37,105 @@
     <tr><td>Aptitude Test</td><td><p>Logical Ability</p><p>Quantitative Ability</p><p>Verbal Ability</p></td><td>60 minutes</td><td>Moderate</td></tr><tr><td>Written Communication Test</td><td>Essay Writing</td><td>20 minutes</td><td>Easy</td></tr><tr><td>Online Programming Test</td><td>Two programs for Coding (using JAVA, C, C++ or Python)</td><td>60 minutes</td><td><p>Hard</p></td></tr></tbody></table>
   </div>
 
-  <h2 class="mt-5 text-primary" id="test-syllabus">Wipro Placement Test Syllabus</h2>
+  <h2 class="mt-5 text-primary" id="test-syllabus"><i class="fa fa-align-right"></i> Wipro Placement Test Syllabus</h2>
   <p>We have included the comprehensive test syllabus for wipro nlth, make a proper schedule and start preparing for it.</p>
-  <div class="accordion" id="accordionExample">
-    <div class="card">
-      <div class="card-header" id="headingOne">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> Logical Ability</button>
-        </h2>
-      </div>
-
-      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
-        <div class="card-body">Reasoning section can sometimes be tricky, so with  practice more questions from Packetprep so that you can ace this section.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header" id="headingTwo">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> Quantitative Ability </button>
-        </h2>
-      </div>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample" style="">
-        <div class="card-body">Quantitative Aptitude can be a challenging task as most of the students are  unable to solve the questions within the time limit. So, by practising questions from our website students will be used to Time Management.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header" id="headingThree">
-        <h2 class="mb-0">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree"> Verbal Ability </button>
-        </h2>
-      </div>
-      <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample" style="">
-        <div class="card-body">Students who come from rural areas would find this section difficult. Keeping this in mind, we have designed the material so that students can find it easy to prepare.
-
-          <div class="pt-3">
-            <div class="row">
-              <div class="col-12 col-md-6">
-                <ul>
-                  <li>Synonyms</li>
-                  <li>Reading Comprehension </li>
-                  <li>Sentence Completion</li>
-                </ul>
-              </div>
-              <div class="col-12 col-md-6">
-                <div><a href="#">Antonyms</a></div>
-                <div><a href="#">Passage </a></div>
-                <div><a href="#">Error Identification</a></div>
-              </div>
-              <div class="col-12 col-md-4">
-
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header" id="headingThree">
-        <h2 class="mb-0">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree"  aria-controls="collapseThree"> Written Communication </button>
-        </h2>
-      </div>
-      <div id="collapseThree" class="collapse " aria-labelledby="headingThree" data-parent="#accordionExample" style="">
-        <div class="card-body">Students who come from rural areas would find this section difficult. Keeping this in mind, we have designed the material so that students can find it easy to prepare.
-
-          <div class="pt-3">
-            <div class="row">
-              <div class="col-12 col-md-6">
-                <ul>
-                  <li>Synonyms</li>
-                  <li>Reading Comprehension </li>
-                  <li>Sentence Completion</li>
-                </ul>
-              </div>
-              <div class="col-12 col-md-6">
-                <div><a href="#">Antonyms</a></div>
-                <div><a href="#">Passage </a></div>
-                <div><a href="#">Error Identification</a></div>
-              </div>
-              <div class="col-12 col-md-4">
-
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header" id="headingFive">
-        <h2 class="mb-0">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive"> Online Programming Test </button>
-        </h2>
-      </div>
-      <div id="collapseFive" class="collapse " aria-labelledby="headingFive" data-parent="#accordionExample" style="">
-        <div class="card-body">Students who come from rural areas would find this section difficult. Keeping this in mind, we have designed the material so that students can find it easy to prepare.
-
-          <div class="pt-3">
-            <div class="row">
-              <div class="col-12 col-md-6">
-                <ul>
-                  <li>Synonyms</li>
-                  <li>Reading Comprehension </li>
-                  <li>Sentence Completion</li>
-                </ul>
-              </div>
-              <div class="col-12 col-md-6">
-                <div><a href="#">Antonyms</a></div>
-                <div><a href="#">Passage </a></div>
-                <div><a href="#">Error Identification</a></div>
-              </div>
-              <div class="col-12 col-md-4">
-
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-    </div>
+  <div class="table-responsive">
+  <table class="table table-bordered "><tbody>
+    <tr class="bg-light">
+      <th class="" >Sections</th>
+      <th class="" >Topics</th>
+    </tr>
+    <tr>  
+      <td>Quantitative Ability</td>
+      <td>
+        <ol>
+          <li>Number System</li>
+          <li>LCM HCF</li>
+          <li>Decimal Fractions</li>
+          <li>Ratio Proportions</li>
+          <li>Simplifications</li>
+          <li>Square roots and Cube Roots</li>
+          <li>Averages</li>
+          <li>Problems on Ages</li>
+          <li>Percentages</li>
+          <li>Profit and Loss</li>
+          <li>Time and Work</li>
+          <li>Time and Distance</li>
+          <li>Problems on Trains, Boats</li>
+          <li>Simple and Compound Interest</li>
+          <li>2D and 3D Geometry</li>
+          <li>Calendar and Clocks</li>
+          <li>Permutation and Combinations</li>
+          <li>Data Interpretation</li>
+        </ol>
+      </td>
+    </tr>
+    <tr>  
+     <td>Logical Ability</td>
+      <td>
+        <ol>
+          <li>Series Completion</li>
+          <li>Analogy</li>
+          <li>Classification</li>
+          <li>Logical Venn Diagrams</li>
+          <li>Direction Sense Test</li>
+          <li>Missing Characters</li>
+          <li>Assertion and Reason</li>
+          <li>Statements and Conclusions</li>
+          <li>Coding and Decoding</li>
+          <li>Puzzle Test</li>
+          <li>Blood Relations</li>
+          <li>Data Sufficiency</li>
+        </ol>
+      </td>
+    </tr>
+    <tr>  
+     <td>Verbal Ability</td>
+      <td>
+        <ol>
+          <li>Synonyms </li>
+          <li>Antonyms</li>
+          <li>Spotting Errors</li>
+          <li>Correct and Incorrect Sentences</li>
+          <li>Sentence Completion</li>
+          <li>Sentence Improvement</li>
+          <li>Sentence Rearrangement</li>
+          <li>Reading Comprehension </li>
+        </ol>
+      </td>
+    </tr>
+    <tr>  
+     <td>Essay Writing</td>
+      <td><h4>Important Topics</h4>
+        <ol>
+          <li>Is Social Media Evil?</li>
+          <li>Impact of media on society</li>
+          <li>True qualities of a leader</li>
+          <li>Your first campus interview experience</li>
+          <li>My best friend</li>
+          <li>Digitization and its benefits</li>
+          <li>Three important lessons life has taught you</li>
+          <li>How can an IT employee help uneducated public?</li>
+          <li>Is group discussion necessary for recruitment?</li>
+          <li>Three things that i want to change in this world</li>
+        </ol>
+      </td>
+    </tr>
+    <tr>  
+     <td>Coding</td>
+      <td><h4>Important Programs</h4>
+        <ol>
+          <li>Finding Prime number</li>
+          <li>Palindrome Number</li>
+          <li>Finding Factorial</li>
+          <li>Print Fibonacci Series</li>
+          <li>Finding Leap year</li>
+          <li>LCM & GCD of two numbers</li>
+          <li>Removing Duplicates in Array</li>
+          <li>Bubble Sort</li>
+        </ol></td>
+    </tr>
+  </tbody></table>
   </div>
 
   <h2 class="mt-5 mb-3 text-primary" id="practice-questions"> <i class="fa fa-align-right"></i> Wipro Free Practice Questions </h2>
@@ -166,23 +143,23 @@
     <img src="https://i.imgur.com/X1kDaeY.png" class="mr-3 pr-3 pl-3 pt-2" alt="Quantitative Aptitude">
     <div class="media-body">
       <a href="#">
-      <h4 class="mt-0 text-dark"> Quantitative Aptitude Questions</h4>
+      <h4 class="mt-0 text-dark">Wipro Quantitative Aptitude Questions</h4>
       </a>
-      <p>Our free practice questions for Wipro from quantitative aptitude is sufficient to learn all the core concepts of quant. We have put special focus on important topics like profit loss, divisibility, ratio proportion and percentages. </p>
+      <p>Our free practice questions for Wipro from quantitative aptitude is sufficient to learn all the core concepts of quant. We have put special focus on important topics like profit loss, number system, ratio proportion and percentages. </p>
 
-      <p>Solving these questions can allow students to get a complete understanding of all the topics for wipro placement. </p>
+      <p>Solving these questions can you to get a complete understanding of all the topics for wipro placement. </p>
       <a href="#">
-      <button class="btn btn-success"><i class="fa fa-paper-plane"></i> Wipro Quant Practice Questions</button>
+      <button class="btn btn-success btn-lg"><i class="fa fa-paper-plane"></i> Wipro Quantitative Aptitude Questions</button>
       </a>
     </div>
   </div>
     <div class="media mt-4 mb-5">
     <img src="https://i.imgur.com/eyfDLA5.png" class="mr-3 pr-3 pl-3 pt-2" alt="Logical Reasoning">
     <div class="media-body">
-      <h4 class="">Logical Reasoning Questions </h4>
-      <p>We have prepared free practice questions for Wipro from Reasoning which is more than enough to understand the concepts related to Reasoning. Important topics in Reasoning include Blood Relations, Statements and Assumptions, Venn Diagrams etc. </p>
+      <h4 class="">Wipro Logical Ability Questions </h4>
+      <p>Brush your reasoning ability with these logical questions relavant to wipro recruitment. Important topics for wipro from reasoning include Blood Relations, Statements and Conclusions, and Venn Diagrams. </p>
       <a href="#">
-      <button class="btn btn-success"><i class="fa fa-paper-plane"></i> Wipro Reasoning Practice Questions</button>
+      <button class="btn btn-success btn-lg"><i class="fa fa-paper-plane"></i> Wipro Logical Ability Questions</button>
       </a>
 
     </div>
@@ -190,93 +167,72 @@
       <div class="media mt-4 mb-3">
     <img src="https://i.imgur.com/6tRWD19.png" class="mr-3 pr-3 pl-3 pt-2" alt="Logical Reasoning">
     <div class="media-body">
-      <h4 class="">Verbal Ability Questions </h4>
-      <p>Students who come from Rural areas would find difficulty with this section. Keeping this in mind, we have prepared  free practice questions which are sufficient to learn the entire Verbal. Important topics include Synonyms and  Antonyms, Rules of English Grammar ,Reading comprehension etc. </p>
+      <h4 class="">Wipro Verbal Ability Questions </h4>
+      <p>Students who come from rural background would this section difficult. Keeping this in mind, we have compiled practice questions that are sufficient to revise Verbal ability for wipro. Important topics from this section are Synonyms and  Antonyms, English Grammar based questions and Reading comprehension. </p>
       <a href="#">
-      <button class="btn btn-success"><i class="fa fa-paper-plane"></i> Wipro Verbal Practice Questions</button>
+      <button class="btn btn-success btn-lg"><i class="fa fa-paper-plane"></i> Wipro Verbal Ability Questions</button>
       </a>
 
     </div>
   </div>
 
-   <h2 class="mt-5 mb-4 text-primary" id="practice-questions"> <i class="fa fa-align-right"></i> Wipro FREE Study Material  </h2>
-   <p class="mb-4">The free study material for wipro covers each and every topic related to Wipro placement preparation and we have given a set of practice questions keeping in line with the difficulty level of the Question paper. Also, the questions have been solved by multiple approaches so that a student can have a complete and thorough understanding of the concepts. So students are hereby encouraged to make full use of the study material, and develop the speed of calculating problems in a fastest way. </p>
+<h2 class="mt-5 mb-4 text-primary" id="practice-questions"> <i class="fa fa-align-right"></i> Wipro Placement Papers </h2>
 
-   <div class="row">
-    <div class="col-12 col-md-6">
-     <div class="card" style="">
-      <div class="card-body">
-        <h5 class="card-title"><i class="fa fa-file-pdf-o"></i> Most Important Questions</h5>
-        <h6 class="card-subtitle mb-2 text-muted">PDF Document</h6>
-        <p class="card-text">If you are running short of time, or if your unable to prepare for the complete syllabus, then these most important questions for wipro can help you prepare in the fastest way.</p>
-        <a href="#" class="btn btn-outline-info">Download</a>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-md-6">
-    <div class="card" style="">
-      <div class="card-body">
-        <h5 class="card-title"><i class="fa fa-file-pdf-o"></i> Sample Mock Test Paper</h5>
-        <h6 class="card-subtitle mb-2 text-muted">PDF Document</h6>
-        <p class="card-text">Wipro placement mock test paper consisting of Quantitative Aptitude, Verbal Ability, Reasoning, Written Comprehension and Coding Question with answer key.
-</p>
-        <a href="#" class="btn btn-outline-info">Download</a>
-      </div>
-    </div>
-  </div>
-</div>
-<h2 class="mt-5 mb-4 text-primary" id="practice-questions"> <i class="fa fa-align-right"></i> Wipro Free Mock Test </h2>
+<p class="mb-4">To make your preparation very effective, we have carefully compiled 5 papers with variation on difficulty levels. Solve these papers with utmost integirty to understand where you stand and which concepts you have to focus on. </p>
 
-<p class="mb-4">Packetprep’s free mock test for Wipro  makes it easy for student to get a clear understanding of questions types, difficulty and topics asked. Also its gives an opportunity for student to learn the time management for the exam.  </p>
-<a href="#">
-      <button class="btn btn-success btn-lg"><i class="fa fa-external-link"></i> Attempt Wipro Mock Test</button>
-      </a>
+<div class="table-responsive">
+  <table class="table table-bordered "><tbody>
+    <tr class="bg-light">
+      <th class="" colspan="2">Practice Papers</th>
+    </tr>
+    <tr>  
+      <td class="w-50"><a href="https://packetprep.com/wipro-placement-paper-1"><i class="fa fa-hand-o-right" ></i> Wipro Placement Paper 1</a><br>
+        This paper has more of level 1, level 2 questions and few from level 3 as well.
+      </td>
+      <td><a href="https://packetprep.com/wipro-placement-paper-2"><i class="fa fa-hand-o-right" ></i> Wipro Placement Paper 2</a><br>
+        This paper has more of level 1, level 2 questions and few from level 3 as well.</td>
+    </tr>
+    <tr>  
+      <td><a href="https://packetprep.com/wipro-placement-paper-3"><i class="fa fa-hand-o-right" ></i> Wipro Placement Paper 3</a><br>
+        This paper has more of level 1, level 2 questions and few from level 3 as well.</td>
+      <td><a href="https://packetprep.com/wipro-placement-paper-4"><i class="fa fa-hand-o-right" ></i> Wipro Placement Paper 4</a><br>
+        This is a  mixed bag, you will find all models and all level questions.
+
+      </td>
+    </tr>
+    <tr>  
+      <td><a href="https://packetprep.com/wipro-placement-paper-5"><i class="fa fa-hand-o-right" ></i> Wipro Placement Paper 5</a><br>
+        This is a  mixed bag, you will find all models and all level questions.</td>
+      <td></td>
+    </tr>
+  </tbody></table>
+  </div>
+
 
 <h2 class="mt-5 mb-4 text-primary" id="practice-questions"> <i class="fa fa-align-right"></i> Frequently Asked Questions </h2>
-<div  class="border mb-4">
-<div class="bg-light p-3"><b>(Q) How to prepare for Wipro campus placement ?</b></div>
-<div class=" p-3">A job interview is one of the most drawn out and intimidating ways of making first impression. Here is how you can prepare for the interview :
-• Research the company’s profile ,background by looking into the company’s future goals and plans.
-• Go through the products and services of the Organisation and understand the competition of it.
-• Research the roles, responsibilities and the nature of the job.
-• Always practice a confident, strong speaking voice and friendly, open body language. 
-• Pay special attention to your smile, handshake and posture.
-Last but not the least always go with an optimistic mindset, make sure you reach the interview on time.
-</div>
-</div>
-<div  class="border mb-4">
-<div class="bg-light p-3"><b>(Q) Where can I find the free study material for wipro company placement?</b></div>
-<div class=" p-3">You can find the free study material for Wipro company placement in our website Packetprep. Our study material includes Wipro practice questions, Wipro free mock test, Wipro placement material , previous year question papers of Wipro campus placement. We have arranged the information in a more holistic way so that it becomes easier for the student to understand. 
-<br><br>
-Also, we have introduced several practice questions keeping in line with difficulty level of the actual question paper so that it makes a complete sense of preparation for the student. So, it is always recommended to make full  use of the study material.
 
+<div  class="border mb-4">
+<div class="bg-light p-3"><b>(Q) Where can I find the genuine study material for wipro recruitment?</b></div>
+<div class=" p-3">PacketPrep is the best platform to prepare for campus placements.  Keeping in view the requirements of the students, we have compiled section-wise practice questions and company specific placement papers. This material is more than sufficient to clear all aptitude based placement exams.<br><br>More than 25,000 students cleared the campus placements by using our study materials.The next success story could be yours.
 </div>
 </div>
 
 <div  class="border mb-4">
 <div class="bg-light p-3"><b>(Q) Are the questions in the website from previous wipro papers? </b></div>
-<div class=" p-3">We have collected all the wipro previous year questions from various internet sources and most of these are given by students who appreared in the wipro placement. So these are the most expected questions for wipro.
-<br><br>
-Also we have analysed all the question patterns and designed the wipro study material which is enough for wipro placement preparation.
-
-Our wipro free study material is designed
-In a systematic way so that a student can access the information in a much smoother and easier way.   The practice questions have been solved by multiple approaches  covering each and every required method. So, please make sure you go through each and every problem and understand it.
- 
-<br><br>
-Also, we have introduced several practice questions keeping in line with difficulty level of the actual question paper so that it makes a complete sense of preparation for the student. So, it is always recommended to make full  use of the study material.
+<div class=" p-3">We have collected all questions that are tagged under previous papers from various internet sources and students who appeared the exam. We cannot gaurentee  the authenticity of these sources but yes, these are the most expected questions. 
 
 </div>
 </div>
 
 
 <div  class="border mb-4">
-<div class="bg-light p-3"><b>(Q) Do these questions repeat? </b></div>
+<div class="bg-light p-3"><b>(Q) Do these questions repeat in exam? </b></div>
 <div class=" p-3">No the questions don’t repeat in the examination. But, you can expect the similar model questions with different numerical values.
 </div>
 </div>
 
 <div  class="border ">
 <div class="bg-light p-3"><b>(Q) Is Packet Prep’s Material sufficient to clear wipro company interview?</b></div>
-<div class=" p-3">Yes Packetprep’s  wipro placement material is absolutely sufficient to clear the Wipro company interview as we have included all the questions relevant to wirpo exam.
+<div class=" p-3">Yes Packetprep’s  wipro placement material is absolutely sufficient but keep in mind success doesnot depend on material, it is all about your practice, time management and luck.
 </div>
 </div>

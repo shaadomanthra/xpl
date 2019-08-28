@@ -54,6 +54,18 @@
             </div>
           </div>
           <div class="col-10 col-md-10"><div class="pt-1 question">{!! $question->question!!}</div></div>
+          @if($question->level || $question->topic)
+          <div class="mb-3">
+          @if($question->level)
+          <span class="badge badge-warning">Level {{$question->level}}</span>
+          @endif
+          @if($question->topic)
+          @foreach(explode(',',$question->topic) as $topic)
+          <span class="badge badge-success">{{$topic}}</span>
+          @endforeach
+          @endif
+          </div>
+          @endif
         </div>
 
         @if($question->a)

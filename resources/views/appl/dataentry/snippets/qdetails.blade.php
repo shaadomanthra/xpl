@@ -44,6 +44,16 @@
 			<div class="col-5">Level</div>
 			<div class="col-7 mb-2">@if($question->level)<span class="badge badge-secondary"> Level {{ $question->level }}</span>@else - NA - @endif</div>
 		</div>
+
+		<div class="row">
+			<div class="col-5">Topic</div>
+			<div class="col-7 mb-2">@if($question->topic)
+				@foreach(explode(',',$question->topic) as $topic)
+          <span class="badge badge-success">{{$topic}}</span>
+          @endforeach
+			@else - NA - @endif</div>
+		</div>
+
 		<div class="row">
 			<div class="col-5">In Test</div>
 			<div class="col-7 mb-2">@if($question->intest)<span class="badge badge-primary"> Yes</span>@else - NA - @endif</div>

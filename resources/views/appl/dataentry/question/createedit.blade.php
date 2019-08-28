@@ -239,7 +239,17 @@
             >
         </div>
 
-        
+        <div class="form-group mt-3">
+          <label for="formGroupExampleInput ">Topic</label>
+          <input type="text" class="form-control"  id="formGroupExampleInput"  name="topic"
+              @if($stub=='Create')
+              value="{{ (old('topic')) ? old('topic') : '' }}"
+              @else
+              value = "{{ $question->topic }}"
+              @endif
+            >
+           
+        </div>
 
         <div class="form-group mt-3">
           <label for="formGroupExampleInput ">Type</label>

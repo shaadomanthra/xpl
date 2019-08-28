@@ -16,7 +16,7 @@
 
     <div class="col-md-12">
       <div class="bg-white p-5 company" style="font-size: 20px;">
-      @include('appl.content.company.data')
+      @include('appl.content.article.data')
     </div>
       </div>
 
