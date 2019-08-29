@@ -135,7 +135,7 @@ class MetricController extends Controller
         if(!$branch && !$zone)
         {
             $total = count($obj_users);
-            $users = $obj->users()->paginate(config('global.no_of_records'));
+            $users = $obj->users()->orderBy('id','desc')->paginate(config('global.no_of_records'));
         }
 
 

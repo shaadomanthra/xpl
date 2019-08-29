@@ -32,7 +32,8 @@
                 <th scope="col">Roll Number </th>
                 <th scope="col">Name</th>
                 <th scope="col">Branch</th>
-                <th scope="col">Phone</th>
+                <th scope="col">Created at</th>
+
               </tr>
             </thead>
             <tbody>
@@ -55,7 +56,7 @@
                   @endif
                 </td>
                 <td>
-                 {{ ($user->details)?$user->details->phone:'-' }}
+                 {{ ($user->created_at->diffForHumans()) }}
                 </td>
               </tr>
               @endforeach      
