@@ -122,13 +122,13 @@ class MetricController extends Controller
         if($branch){
             $branch_users = $b->users()->pluck('id')->toArray();
             $u= array_intersect($obj_users,$branch_users);
-            $users = User::whereIn('id',$u)->paginate(config('global.no_of_records'));
+            $users = User::whereIn('id',$u)->orderBy('id','desc')->paginate(config('global.no_of_records'));
              $total = count($u);
         }
         if($zone){
             $zone_users = $z->users()->pluck('id')->toArray();
             $u= array_intersect($obj_users,$zone_users);
-            $users = User::whereIn('id',$u)->paginate(config('global.no_of_records'));
+            $users = User::whereIn('id',$u)->orderBy('id','desc')->paginate(config('global.no_of_records'));
             $total = count($u);
            
         }
