@@ -250,7 +250,6 @@ class Category extends Model
         $parent =  Category::where('slug',$project->slug)->first(); 
 
             
-
         if (request()->session()->has('exam') && session('exam') != 'all') 
         {
             $exam = session('exam');

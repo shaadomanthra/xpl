@@ -126,9 +126,12 @@ class Course extends Model
         $project = Project::where('slug',$id)->first();
         $parent =  Category::where('slug',$id)->first();
 
+
         //categories
         $categories_list = Category::defaultOrder()
                             ->descendantsOf($parent->id);
+        $ap = Category::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
+
 
         $categories_ =array();
         foreach($categories_list as $categ){
@@ -142,25 +145,34 @@ class Course extends Model
             $categories_[$cat]['incorrect_percent'] = 0;
         }
 
-        $qset = DB::table('category_question')->whereIn('category_id', $categories_list)->select('category_id', DB::raw('count(*) as count'))->where('intest','!=',1)->groupBy('category_id')->get();
+
+
+        $qset = DB::table('category_question')->whereIn('category_id', $ap)->select('category_id', DB::raw('count(*) as count'))->where('intest','!=',1)->groupBy('category_id')->get();
+
+
         $count =0;
         foreach($qset as $q){
             $categories_[$q->category_id]['total'] = $q->count;
             $count = $count + $q->count;
         }
+        
+       
+
         $data['ques_count'] = $count;
         
         $data['categories'] = $categories_;
 
+        $qcount = 0;
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
-
             foreach($node as $k=>$n){
                 $node[$k]['children'] = Category::defaultOrder()->descendantsOf($n->id)->toTree();
+                $qcount = $qcount + count($n->questions);
             }
                           
         } 
         $data['nodes'] = $node;
+        $data['ques_count'] = $qcount;
 
         $examtype = Examtype::where('slug',$id)->first();
         if($examtype)

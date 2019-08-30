@@ -143,6 +143,8 @@ class CourseController extends Controller
 
         }
 
+        
+
         if(!$course)
             abort('404','Course Not Found');
         
@@ -346,6 +348,7 @@ class CourseController extends Controller
         foreach($qset as $q){
             $categories_[$q->category_id]['total'] = $q->count;
         }
+
 
         
         

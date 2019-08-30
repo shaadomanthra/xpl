@@ -421,6 +421,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::resource('library/{repository}/document','Library\DocumentController')->middleware('auth');
 
 	Route::resource('course','Course\CourseController');
+	Route::get('course/{course}/list','Course\CourseController@show4')->name('course.list');
 	//Route::resource('course/{course}/index','Course\IndexController');
 	Route::get('course/{course}/{category}/view','Course\CourseController@video')->name('course.category.video');
 	Route::get('course/{project}/{category}/practice','Dataentry\QuestionController@categoryCourse')->name('course.question')->middleware('auth');
