@@ -50,6 +50,7 @@ class CourseController extends Controller
                 $obj->ques_count = $course_data['ques_count'];
                 $obj->nodes = $course_data['nodes'];
                 $obj->exams = $course_data['exams'];
+                $obj->tests = $course_data['tests'];
                 $filename = $obj->slug.'.json';
                 $filepath = $this->cache_path.$filename;
                 file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
@@ -140,28 +141,46 @@ class CourseController extends Controller
             $course->ques_count = $course_data['ques_count'];
             $course->nodes = $course_data['nodes'];
             $course->exams = $course_data['exams'];
+            $course->tests = $course_data['tests'];
 
         }
-
-        
 
         if(!$course)
             abort('404','Course Not Found');
         
         $product_ids = [];
+        if(isset($course->products))
         foreach($course->products as $product)
         {
             if($product->slug == $id)
                 $course->product = $product;
             array_push($product_ids, $product->id);
         }
+        $exam_ids = [];
 
-        if(!$course->product)
+
+        foreach($course->nodes as $n)
+        {
+            foreach($n->children as $c){
+                if($c->exam_id)
+                array_push($exam_ids, $c->exam_id); 
+            }
+            
+        }
+
+        foreach($course->exams as $e){
+                array_push($exam_ids, $e->id); 
+        }
+
+        if(!isset($course->product))
         foreach($course->products as $product)
         {
             if($product->slug != 'premium-access')
                 $course->product = $product;
         }
+
+        if(!isset($course->product))
+            $course->product = null;
 
         $user = \Auth::user();
         $entry=null;
@@ -187,7 +206,6 @@ class CourseController extends Controller
             $dat['attempted'] = count($practice);
             $dat['time'] = 0;
 
-
             if($count ){
                 $dat['accuracy'] = round(($sum*100)/$count,2);
 
@@ -197,9 +215,6 @@ class CourseController extends Controller
               $dat['accuracy'] = 0; 
               $data['time']=0;
             }
-
-            
-            
             
             foreach($practice as $pr){
                 $prid = $pr->category_id;
@@ -214,7 +229,6 @@ class CourseController extends Controller
             foreach($course->categories as $c=>$cat){
             if($cat->total!=0)
                 {
-                    
                     $course->categories->$c->correct_percent = $course->categories->$c->correct/$course->categories->$c->total*100;
                     
                     $course->categories->$c->incorrect_percent = $course->categories->$c->incorrect/$course->categories->$c->total*100;
@@ -222,35 +236,24 @@ class CourseController extends Controller
             }
 
             $course->user = $dat; 
+
+
+            //exams attempt
+            $attempt = DB::table('tests_overall')
+                    ->whereIn('test_id', $exam_ids)
+                    ->where('user_id',\auth()->user()->id)
+                    ->get()->groupBy('test_id');
+
+            $course->attempt = $attempt;
+
         }
 
-        //dd($course->user);
         $course->entry = $entry;
-
-
-
-        /*
-        $topics = Category::defaultOrder()->descendantsOf($parent->id);
-        $exam_ids =[];
-        foreach($topics as $t){
-            if($t->exam_id)
-                array_push($exam_ids, $t->exam_id);
-            
-        }
-        foreach($exams as $k=> $e){
-            if(in_array($e->id, $exam_ids))
-                unset($exams[$k]);
-        }*/
-
-     
-        
-
-        //check for tests
-
 
         $course->keywords = $course->name;
         $course->description = strip_tags($course->description);
-  
+    
+        
 
         if($course)
             return view('appl.course.course.show4')

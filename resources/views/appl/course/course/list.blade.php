@@ -5,7 +5,7 @@
 
   <div class="col-12 col-md-6 ">
   <div class="border mb-3 mb-md-4 mt-md-2">
-     <h2 class="  p-4  mb-0" style="background: #ecf2f6;  border-bottom:1px solid #eee;height:140px;">
+     <h2 class="  p-4  mb-0" style="background: #ecf2f6;  border-bottom:1px solid #eee;height:120px;">
       @if($course->image) 
       <img src="{{ $course->image }}" style="width:70px" class="float-right"/> 
       @endif 
@@ -29,7 +29,7 @@
   @if($course->status==1 ) 
   <div class="col-12 col-md-6 ">
   <div class="border mb-3 mb-md-4 mt-md-2">
-     <h2 class="  p-4  mb-0" style="background: #ecf2f6;  border-bottom:1px solid #eee;height:140px;">
+     <h2 class="  p-4  mb-0" style="background: #ecf2f6;  border-bottom:1px solid #eee;height:120px;">
       @if($course->image) 
       <img src="{{ $course->image }}" style="width:70px" class="float-right"/> 
       @endif 
@@ -57,7 +57,7 @@
   @if($course->status==1 ) 
   <div class="col-12 col-md-6 ">
   <div class="border mb-3 mb-md-4 mt-md-2">
-    <h2 class="  p-4  mb-0" style="background: #ecf2f6;  border-bottom:1px solid #eee;height:140px;">
+    <h2 class="  p-4  mb-0" style="background: #ecf2f6;  border-bottom:1px solid #eee;height:120px;">
       @if($course->image) 
       <img src="{{ $course->image }}" style="width:70px" class="float-right"/> 
       @endif 

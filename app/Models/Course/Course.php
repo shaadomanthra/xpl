@@ -168,7 +168,13 @@ class Course extends Model
             foreach($node as $k=>$n){
                 $node[$k]['children'] = Category::defaultOrder()->descendantsOf($n->id)->toTree();
                 $qcount = $qcount + count($n->questions);
+                foreach($node[$k]['children'] as $m => $c){
+                    $node[$k]['children'][$m]->try = 1;
+                    
+                }
             }
+
+
                           
         } 
         $data['nodes'] = $node;
@@ -181,14 +187,30 @@ class Course extends Model
             $exams = Exam::where('slug','LIKE',"%{$id}%")->get(); 
         }
 
+        $exam_ids =[];
+        foreach($categories_list as $t){
+            if($t->exam_id)
+                array_push($exam_ids, $t->exam_id);
+            
+        }
+
+        $tests =[];
         foreach($exams as $m=>$e){
             $exams[$m]->ques_count = $e->question_count();
             $exams[$m]->time = $e->time();
             $exams[$m]->try =0;
             unset($exams[$m]->sections);
+
+            if(in_array($e->id, $exam_ids))
+                unset($exams[$m]);
+            $tests[$e->id] = $e->slug;
+
         }
 
+        
+
         $data['exams'] = $exams;
+        $data['tests'] = $tests;
 
 
         return $data;

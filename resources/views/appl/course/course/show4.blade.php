@@ -149,12 +149,21 @@
                      	</a>
                      	@endif
                      	@if($c->exam_id)
-                     	@if($c->try)
-                     	<a href="{{ route('assessment.instructions',$c->exam->slug)}}">
-                     	<span class="badge badge-success"> <i class="fa fa-circle-o"></i> Try Test</span>
-                     	</a>
+                     	<span class="{{ $eid = $c->exam_id }}"></span>
+                     	@if(!isset($course->attempt[$eid]))
+                     	
+                     		@if(isset($course->tests->$eid))
+	                     	<a href="{{ route('assessment.show',$course->tests->$eid)}}">
+	                     	<span class="badge badge-success"> <i class="fa fa-circle-o"></i> Try Test</span>
+	                     	</a>
+	                     	@else
+							<a href="{{ route('assessment.show',$c->exam_id)}}">
+	                     	<span class="badge badge-success"> <i class="fa fa-circle-o"></i> Try Test</span>
+	                     	</a>
+
+	                     	@endif
                      	@else
-                     	<a href="{{ route('assessment.analysis',$c->exam->slug)}}">
+                     	<a href="{{ route('assessment.analysis',$course->tests->$eid)}}">
                      	<span class="badge badge-primary"> <i class="fa fa-bar-chart-o"></i> Test Analysis </span>
                      	</a>
                      	@endif
@@ -187,7 +196,7 @@
 		</ul>
 		</div>
 
-@if(count($exams)!=0) 
+@if($exams) 
 		<div class=" ">
 			<h1 class="mb-4 p-3 border rounded"> <i class="fa fas fa-gg"></i> Online Tests</h1>
 
@@ -212,13 +221,13 @@
                     {{ $exam->ques_count }} Questions | {{ $exam->time }} min<br>
 
                     <div class="pt-2">
-                   @if(!$exam->try)
+                  @if(!isset($course->attempt[$exam->id]))
                   <a href="{{ route('assessment.show',$exam->slug) }}">
                   <button class="btn btn-outline-primary btn-sm"> <i class="fa fa-paper-plane" ></i> Details</button>
                   </a>
                   @else
                   <a href="{{ route('assessment.analysis',$exam->slug) }}">
-                  <button class="btn btn-outline-primary btn-sm"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
+                  <button class="btn btn-outline-secondary btn-sm"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
                   </a>
                   @endif
                 </div>

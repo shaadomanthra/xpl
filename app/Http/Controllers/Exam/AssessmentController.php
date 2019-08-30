@@ -174,8 +174,16 @@ class AssessmentController extends Controller
      */
     public function instructions($test,Request $r)
     {
+        if(is_numeric($test))
+        $exam = Exam::where('id',$test)->first();
+        else
         $exam = Exam::where('slug',$test)->first();
         $code = $r->get('code');
+
+        $test_taken = Test::where('test_id',$exam->id)->where('user_id',\auth::user()->id)->first();
+
+        if($test_taken)
+            return redirect()->route('assessment.analysis',$exam->slug);
 
         if(!$code){
            if($exam->status == 2){

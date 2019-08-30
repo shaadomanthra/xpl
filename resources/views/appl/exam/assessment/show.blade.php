@@ -25,10 +25,9 @@
 					@endif</h1>
 				{!! $exam->description  !!}
 				@if($entry)
-				
 				  @if(!$exam->attempted())
                   <a href="{{route('assessment.instructions',$exam->slug)}}">
-				<button class="btn btn-lg btn-success"> View Instruction </button>
+				<button class="btn btn-lg btn-success"> Attempt Test </button>
 				</a>
                   @else
                   <a href="{{ route('assessment.analysis',$exam->slug) }}">
@@ -39,7 +38,7 @@
 				@if($exam->products->first())
 					@if($exam->status ==1)
 					<a href="{{route('productpage',$exam->products->first()->slug)}}">
-					<button class="btn btn-lg btn-success"> View </button>
+					<button class="btn btn-lg btn-success"> Attempt Test </button>
 					</a>
 					@else
 					<a href="{{route('productpage',$exam->products->first()->slug)}}">
@@ -48,14 +47,17 @@
 					@endif
 				@elseif($exam->status==1)
 				<a href="{{route('assessment.instructions',$exam->slug)}}">
-				<button class="btn btn-lg btn-success"> View Instruction </button>
+				<button class="btn btn-lg btn-success"> Attempt Test </button>
 				</a>
 				@endif
 
 				@endif
+
+				@if($exam->status!=1 && !$exam->attempted())
 				<a href="{{route('assessment.access',$exam->slug)}}">
 				<button class="btn btn-lg btn-outline-success"> Access Code </button>
 				</a>
+				@endif
 		<br><br>
 			</div>
 
