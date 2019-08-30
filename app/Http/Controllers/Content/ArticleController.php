@@ -71,8 +71,9 @@ class ArticleController extends Controller
      */
     public function public(Obj $obj,Request $request)
     {
-
-    	$this->authorize('update', $obj);
+        if(!\auth::user()->checkRole(['administrator','data-lead','data-manager']))
+                abort('404','Page Not Found');
+    	
         $search = $request->search;
         $item = $request->item;
         
