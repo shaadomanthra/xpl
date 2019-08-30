@@ -136,7 +136,7 @@ class CourseController extends Controller
         else{
             $course = Course::where('slug',$id)->first();
             $course_data = $course->category_list($course->slug);
-            $course->categories = $course_data['categories'];
+            $course->categories = json_decode(json_encode($course_data['categories']));
             $course->ques_count = $course_data['ques_count'];
             $course->nodes = $course_data['nodes'];
             $course->exams = $course_data['exams'];
@@ -183,8 +183,12 @@ class CourseController extends Controller
             }
             $dat['practice'] = $practice;
             $dat['attempted'] = count($practice);
-            if(!$count ){
+            $dat['time'] = 0;
+
+
+            if($count ){
                 $dat['accuracy'] = round(($sum*100)/$count,2);
+
                 $dat['time'] = round(($time)/$count,2);
             }
             else{
@@ -217,6 +221,8 @@ class CourseController extends Controller
 
             $course->user = $dat; 
         }
+
+        //dd($course->user);
         $course->entry = $entry;
 
 
