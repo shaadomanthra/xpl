@@ -5,6 +5,10 @@ namespace PacketPrep\Models\Course;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use PacketPrep\Models\Dataentry\Tag;
+use PacketPrep\Models\Dataentry\Category;
+use PacketPrep\Models\Dataentry\Project;
+use PacketPrep\Models\Exam\Examtype;
+use PacketPrep\Models\Exam\Exam;
 
 class Course extends Model
 {
@@ -117,6 +121,85 @@ class Course extends Model
         return (new Course)->where('slug',$slug)->first()->id;
     }
 
+    public function category_list($id){
+
+        $project = Project::where('slug',$id)->first();
+        $parent =  Category::where('slug',$id)->first();
+
+        //categories
+        $categories_list = Category::defaultOrder()
+                            ->descendantsOf($parent->id);
+
+        $categories_ =array();
+        foreach($categories_list as $categ){
+            $cat = $categ->id;
+            $categories_[$cat]['name'] = $categ->name;
+            $categories_[$cat]['slug'] = $categ->slug;
+            $categories_[$cat]['correct'] =0;
+            $categories_[$cat]['incorrect']  =0;
+            $categories_[$cat]['total'] = 0; 
+            $categories_[$cat]['correct_percent'] =0;        
+            $categories_[$cat]['incorrect_percent'] = 0;
+        }
+
+        $qset = DB::table('category_question')->whereIn('category_id', $categories_list)->select('category_id', DB::raw('count(*) as count'))->where('intest','!=',1)->groupBy('category_id')->get();
+        $count =0;
+        foreach($qset as $q){
+            $categories_[$q->category_id]['total'] = $q->count;
+            $count = $count + $q->count;
+        }
+        $data['ques_count'] = $count;
+        
+        $data['categories'] = $categories_;
+
+        if($parent){
+            $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
+
+            foreach($node as $k=>$n){
+                $node[$k]['children'] = Category::defaultOrder()->descendantsOf($n->id)->toTree();
+            }
+                          
+        } 
+        $data['nodes'] = $node;
+
+        $examtype = Examtype::where('slug',$id)->first();
+        if($examtype)
+            $exams = Exam::where('examtype_id',$examtype->id)->get();
+        else{
+            $exams = Exam::where('slug','LIKE',"%{$id}%")->get(); 
+        }
+
+        foreach($exams as $m=>$e){
+            $exams[$m]->ques_count = $e->question_count();
+            $exams[$m]->time = $e->time();
+            $exams[$m]->try =0;
+            unset($exams[$m]->sections);
+        }
+
+        $data['exams'] = $exams;
+
+
+        return $data;
+    }
+
+    public function attempt_data(){
+        $practice = DB::table('practices')
+                    ->where('course_id', $this->id)
+                    ->where('user_id',\auth()->user()->id)
+                    ->get();
+        $sum =0;$time = 0;
+        $count = count($practice);
+        foreach($practice as $p){
+            if($p->accuracy)
+                $sum++;
+            $time = $time + $p->time;
+        }
+        $data['practice'] = $practice;
+        $data['attempted'] = count($practice);
+        $data['accuracy'] = round(($sum*100)/$count,2);
+        $data['time'] = round(($time)/$count,2);
+        return $data;
+    }
 
     public static function attempted($course){
 
@@ -188,7 +271,6 @@ class Course extends Model
             $sum = DB::table('practices')->where('course_id', $course->id)->where('user_id',\auth()->user()->id)->sum('accuracy');
             $count = DB::table('practices')->where('course_id', $course->id)->where('user_id',\auth()->user()->id)->count();
                 
-
         }
 
          

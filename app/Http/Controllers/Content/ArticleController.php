@@ -194,7 +194,7 @@ class ArticleController extends Controller
         	if(!\auth::user())
         		abort('404','Page Not Found');
 
-        	if(!\auth::user()->checkRole(['administrator']))
+        	if(!\auth::user()->checkRole(['administrator','data-lead','data-manager']))
         		abort('404','Page Not Found');
         }
 

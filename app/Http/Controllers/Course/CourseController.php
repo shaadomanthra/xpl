@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
+    public function __construct(){
+        $this->cache_path =  '../storage/app/cache/courses/';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +34,30 @@ class CourseController extends Controller
 
         $search = $request->search;
         $item = $request->item;
+
+        $filename = 'index.courses.json';
+        $filepath = $this->cache_path.$filename;
+        /* update in cache folder */
+        if($request->refresh){
+
+            $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','asc')->paginate(config('global.no_of_records')); 
+            file_put_contents($filepath, json_encode($courses,JSON_PRETTY_PRINT));
+
+            foreach($courses as $obj){ 
+                $obj->products = $obj->products;
+                $course_data = $obj->category_list($obj->slug);
+                $obj->categories = $course_data['categories'];
+                $obj->ques_count = $course_data['ques_count'];
+                $obj->nodes = $course_data['nodes'];
+                $obj->exams = $course_data['exams'];
+                $filename = $obj->slug.'.json';
+                $filepath = $this->cache_path.$filename;
+                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            }
+
+            flash('Article Pages Cache Updated')->success();
+        }
+
         $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','asc')->paginate(config('global.no_of_records'));
         $view = $search ? 'list': 'index';
 
@@ -92,8 +120,6 @@ class CourseController extends Controller
         
     }
 
- 
-
     /**
      * Display the specified resource.
      *
@@ -102,10 +128,138 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-                $course = Course::where('slug',$id)->first();
+        //load course
+        $filename = $id.'.json';
+        $filepath = $this->cache_path.$filename;
+        if(file_exists($filepath))
+            $course = json_decode(file_get_contents($filepath));
+        else{
+            $course = Course::where('slug',$id)->first();
+            $course_data = $course->category_list($course->slug);
+            $course->categories = $course_data['categories'];
+            $course->ques_count = $course_data['ques_count'];
+            $course->nodes = $course_data['nodes'];
+            $course->exams = $course_data['exams'];
+
+        }
+
+        if(!$course)
+            abort('404','Course Not Found');
+        
+        $product_ids = [];
+        foreach($course->products as $product)
+        {
+            if($product->slug == $id)
+                $course->product = $product;
+            array_push($product_ids, $product->id);
+        }
+
+        if(!$course->product)
+        foreach($course->products as $product)
+        {
+            if($product->slug != 'premium-access')
+                $course->product = $product;
+        }
+
+        $user = \Auth::user();
+        $entry=null;
+        if($user){
+            $entry = DB::table('product_user')
+                    ->whereIn('product_id', $product_ids)
+                    ->where('user_id', $user->id)
+                    ->orderBy('valid_till','desc')
+                    ->first();
+            
+            $practice = DB::table('practices')
+                    ->where('course_id', $course->id)
+                    ->where('user_id',\auth()->user()->id)
+                    ->get();
+            $sum =0;$time = 0;
+            $count = count($practice);
+            foreach($practice as $p){
+                if($p->accuracy)
+                    $sum++;
+                $time = $time + $p->time;
+            }
+            $dat['practice'] = $practice;
+            $dat['attempted'] = count($practice);
+            $dat['accuracy'] = round(($sum*100)/$count,2);
+            $dat['time'] = round(($time)/$count,2);
+            
+            
+            foreach($practice as $pr){
+                $prid = $pr->category_id;
+                if($pr->category_id)
+                if($pr->accuracy==1)
+                $course->categories->$prid->correct++; 
+                else
+                $course->categories->$prid->incorrect++;
+            }
+            
+            /* correct percent */
+            foreach($course->categories as $c=>$cat){
+            if($cat->total!=0)
+                {
+                    
+                    $course->categories->$c->correct_percent = $course->categories->$c->correct/$course->categories->$c->total*100;
+                    
+                    $course->categories->$c->incorrect_percent = $course->categories->$c->incorrect/$course->categories->$c->total*100;
+                }
+            }
+
+            $course->user = $dat; 
+        }
+        $course->entry = $entry;
+
+
+
+        /*
+        $topics = Category::defaultOrder()->descendantsOf($parent->id);
+        $exam_ids =[];
+        foreach($topics as $t){
+            if($t->exam_id)
+                array_push($exam_ids, $t->exam_id);
+            
+        }
+        foreach($exams as $k=> $e){
+            if(in_array($e->id, $exam_ids))
+                unset($exams[$k]);
+        }*/
+
+     
         
 
+        //check for tests
 
+
+        $course->keywords = $course->name;
+        $course->description = strip_tags($course->description);
+  
+
+        if($course)
+            return view('appl.course.course.show4')
+                    ->with('course',$course)
+                    ->with('categories',$course->categories)
+                    ->with('product',$course->product)
+                    ->with('ques_count',$course->ques_count)
+                    ->with('exams',$course->exams)
+                    ->with('entry',$course->entry)
+                    ->with('nodes',$course->nodes);
+        else
+            abort(404);
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show4($id)
+    {
+        $course = Course::where('slug',$id)->first();
+        
         if(!$course)
             abort('404','Course Not Found');
         
@@ -122,7 +276,7 @@ class CourseController extends Controller
         $user = \Auth::user();
         $entry=null;
         if($user){
-                $entry = DB::table('product_user')
+            $entry = DB::table('product_user')
                     ->whereIn('product_id', $course->products()->pluck('id')->toArray())
                     ->where('user_id', $user->id)
                     ->orderBy('valid_till','desc')
@@ -133,8 +287,6 @@ class CourseController extends Controller
        // dd($user->courses()->find($course->id));
         $categories = Category::where('slug',$id)->first();
 
-        if(request()->get('exam'))
-            session(['exam' => request()->get('exam')]);
 
         $project = Project::where('slug',$id)->first();
         $parent =  Category::where('slug',$id)->first(); 
@@ -149,9 +301,9 @@ class CourseController extends Controller
         if($examtype)
             $exams = Exam::where('examtype_id',$examtype->id)->get();
         else{
-            $exams = Exam::where('slug','LIKE',"%{$course->slug}%")->get();
-            
+            $exams = Exam::where('slug','LIKE',"%{$course->slug}%")->get(); 
         }
+
         $topics = Category::defaultOrder()->descendantsOf($parent->id);
         $exam_ids =[];
         foreach($topics as $t){
@@ -222,8 +374,6 @@ class CourseController extends Controller
         $course->description = strip_tags($course->description);
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
-
-        
 
             foreach($node as $k=>$n){
                 $course->keywords = $course->keywords.', '.$n->name;
