@@ -183,8 +183,16 @@ class CourseController extends Controller
             }
             $dat['practice'] = $practice;
             $dat['attempted'] = count($practice);
-            $dat['accuracy'] = round(($sum*100)/$count,2);
-            $dat['time'] = round(($time)/$count,2);
+            if(!$count ){
+                $dat['accuracy'] = round(($sum*100)/$count,2);
+                $dat['time'] = round(($time)/$count,2);
+            }
+            else{
+              $dat['accuracy'] = 0; 
+              $data['time']=0;
+            }
+
+            
             
             
             foreach($practice as $pr){
