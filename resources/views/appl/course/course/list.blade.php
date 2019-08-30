@@ -10,17 +10,7 @@
       <img src="{{ $course->image }}" style="width:70px" class="float-right"/> 
       @endif 
       <div class="pt-4">{{ $course->name }}
-        @if($course->product())
-        @if($course->product()->price==0)
-        <div class="mt-2 h5">
-        <span class="badge badge-warning">FREE</span>
-      </div>
-      @else
-      <div class="mt-2 h5">
-        <span class="badge badge-info pl-2 pr-2"><i class="fa fa-rupee"></i> {{ $course->product()->price}}</span>
-      </div>
-      @endif
-      @endif
+        
     </div>
      </h2>
     <div class=" bg-white " >
