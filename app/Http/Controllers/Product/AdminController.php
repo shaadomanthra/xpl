@@ -32,6 +32,11 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
+
+    public function __construct(){
+        $this->cache_path =  '../storage/app/cache/';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +58,7 @@ class AdminController extends Controller
         $users = new AdminController;
         $extension = 'json';
 
-        $filename  = 'analytics_'.substr (url('/'), 8,5).'.' . $extension;
+        $filename  = $this->cache_path.'analytics_'.substr (url('/'), 8,5).'.' . $extension;
        
 
         $services = Service::all();
