@@ -48,7 +48,7 @@
 
             
             </div>
-            <div class="col-12 col-md-4 d-print-none">
+            <div class="col-12 col-md-4 ">
               <div class="sticky-top pt-3">
               @include('snippets.adsense')
               </div>

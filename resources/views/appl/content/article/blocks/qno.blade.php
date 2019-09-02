@@ -16,6 +16,5 @@
 		</div>
 	</div>
 </div>
-
 @include('snippets.adsense')
 </div>
