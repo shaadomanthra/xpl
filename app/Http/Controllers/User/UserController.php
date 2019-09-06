@@ -274,7 +274,29 @@ class UserController extends Controller
             abort(404,'User not found');
     }
 
+    public function certificate($user){
 
+        if($user=='sample'){
+            $user = User::where('username','demo123')->first();
+            
+            return view('appl.user.certificate')
+                    ->with('user',$user);
+        }else{
+            $user = User::where('username',$user)->first();
+            if($user){
+
+                if(count($user->referrals)>=50){
+                    return view('appl.user.certificate')
+                    ->with('user',$user);
+                }else{
+                    abort('403','referrals Credits are less than 50');
+                }
+
+            }else{
+                abort('404','page not found');
+            }
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

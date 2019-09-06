@@ -345,7 +345,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('exam/createexam','Exam\ExamController@storeExam')->middleware('auth')->name('exam.save');
 	Route::get('exam/{exam}/question/{id}','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.question');
 
+	Route::get('certificate/brandpromoter/{user}','User\UserController@certificate')->name('certificate.brandpromoter');
 	Route::get('certificate/{exam}/{user}','Exam\AssessmentController@certificate')->name('certificate');
+
 	Route::get('certificate/sample','Exam\AssessmentController@certificate_sample')->name('certificate.sample');
 	Route::get('report/{exam}/{user}','Exam\AssessmentController@report')->name('report');
 	Route::get('test','Exam\AssessmentController@index')->name('assessment.index');

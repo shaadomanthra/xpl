@@ -20,7 +20,7 @@
 			
 			</h1>
       <p>Help us reach more people ! </p>
-      <p>Refer 3 students and get 12 month pro-access to premium aptitude content. It includes 300+ video lectures, 10000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability, programming concepts, coding and interview skills.</p>
+      <p>Refer 3 students and get 12 month pro access to 'GRAND MASTER PACKAGE'. It includes 300+ video lectures, 10000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability, programming concepts, coding and interview skills.</p>
       <div class="mt-4 p-4 border rounded mb-4">
         <h2> Referral Link</h2>
         @guest
@@ -49,7 +49,7 @@
       <div class="mt-4 p-4 border rounded mb-4">
 
 
-        <h2 class="mb-3"> Referrals <a href="{{route('referral')}}" class="btn btn-sm btn-success float-right">view all</a></h2>
+        <h2 class="mb-3"> Referrals({{ count($user->referrals)}}) <a href="{{route('referral')}}" class="btn btn-sm btn-success float-right">view all</a></h2>
           <div class="row mb-4">
             <div class="col-12 col-md-4">
               <div class="border p-4">
@@ -75,18 +75,34 @@
 
           @if(count($user->referrals)>=3)
             @if(!$product)
-            <a href="{{ route('proaccess')}}"><button class="btn btn-lg btn-outline-primary"> Pro Access</button></a>
+            <a href="{{ route('grandmaster')}}"><button class="btn btn-lg btn-outline-primary"> Grand Master Program</button></a>
             @else
-              <h2 class="badge badge-warning">PRO ACCESS Granted</h2>
+              <h2 class="badge badge-warning">ACCESS Granted - Grand Master Pack</h2>
             @endif
           @else
           <h2 class="badge badge-danger">Status : 3 Refferals not reached</h2>
-            
           @endif
 
         
       </div>
       @endguest
+
+      <div class="mt-4 p-4 border rounded mb-4">
+        <h3><i class="fa fa-certificate"></i> Brand Promoter Certificate</h3>
+        <p>Reaching <span class="text-info"><i>50 referrals</i></span> can get you a valuable certificate from packetprep</p>
+        <p> A verified certificate from PacketPrep can provide proof for an employer, company or other institution that you have leadership ability to execute tasks with agility.</p>
+         @guest
+           <p><a href="{{ route('certificate.brandpromoter','sample')}}"><button class="btn btn-outline-primary">Sample Certificate</button></a></p>
+         @else
+          @if(count($user->referrals)>=50)
+            <a href="{{ route('certificate.brandpromoter',\auth::user()->username)}}"><button class="btn btn-outline-primary">My Certificate</button></a>
+          @else
+          <h2 class="badge badge-danger">Status : 50 Refferals not reached</h2>
+          <p><a href="{{ route('certificate.brandpromoter','sample')}}"><button class="btn btn-outline-primary">Sample Certificate</button></a></p>
+          @endif
+         @endguest
+        
+      </div>
 		</div>
 	</div>
 </div>
