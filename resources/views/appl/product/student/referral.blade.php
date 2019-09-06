@@ -20,7 +20,7 @@
 			
 			</h1>
       <p>Help us reach more people ! </p>
-      <p>Refer 3 students and get 3 month pro-access to premium aptitude content. It includes 200+ video lectures, 5000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability and interview skills.</p>
+      <p>Refer 3 students and get 12 month pro-access to premium aptitude content. It includes 200+ video lectures, 5000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability and interview skills.</p>
       <div class="mt-4 p-4 border rounded mb-4">
         <h2> Referral Link</h2>
         @guest
@@ -37,10 +37,11 @@
       @else
       <div class="mt-4 p-4 border rounded mb-4">
         <h2> Message to share on whatsup/facebook</h2>
-        <p> Hi, <br><br>PacketPrep - an education technology company is offering online coaching for campus placements, bank exams and government jobs.</p>
-        <p> Their premium service includes 200+ video lectures, 5000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability and interview skills.</p>
+        <p> Hi Guys, <br><br>A great opportunity!<br><br>PacketPrep - an ed-tech company specialized in training students to crack recruitment exams of MNCs like TCS, Infosys, Wipro, Capgemini, Delloite and many more.</p>
+        <p> Their premium service includes 300+ video lectures, 10000 practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability, programming concepts, coding and interview skills.</p>
        
-        <p> Here is the registration link <br><a href="{{ route('student.'.$type.'register') }}?code={{$user->username}}">{{ route('student.'.$type.'register') }}?code={{$user->username}}</a></p>
+        <p>Use the following registration link to get access to Rs.7000 worth of material for FREE.
+         <br><a href="{{ route('student.'.$type.'register') }}?code={{$user->username}}">{{ route('student.'.$type.'register') }}?code={{$user->username}}</a></p>
         <p> regards, <br>
           {{\auth::user()->name}}
         </p>
@@ -48,7 +49,7 @@
       <div class="mt-4 p-4 border rounded mb-4">
 
 
-        <h2> Referrals</h2>
+        <h2 class="mb-3"> Referrals <a href="{{route('referral')}}" class="btn btn-sm btn-success float-right">view all</a></h2>
           <div class="row mb-4">
             <div class="col-12 col-md-4">
               <div class="border p-4">

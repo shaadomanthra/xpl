@@ -576,8 +576,8 @@ class AdminController extends Controller
 
         if(!$coll){
         //pro access
-            $pid = 18;
-            $month = 3;
+            $pid = 31;
+            $month = 12;
 
             $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
             if(!$user->products->contains($pid)){
@@ -600,10 +600,6 @@ class AdminController extends Controller
             }
         }
 
-
-
-        
-
         //Services
         $service_list =  Service::orderBy('created_at','desc ')
                         ->get()->pluck('id')->toArray();
@@ -616,7 +612,7 @@ class AdminController extends Controller
 
                         if($request->user_id == 60 || $request->user_id == 55){
         //pro access
-        $pid = 18;
+        $pid = 31;
                         $month = 3;
 
                         $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
