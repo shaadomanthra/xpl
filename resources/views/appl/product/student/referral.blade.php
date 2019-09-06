@@ -20,7 +20,7 @@
 			
 			</h1>
       <p>Help us reach more people ! </p>
-      <p>Refer 3 students and get 12 month pro-access to premium aptitude content. It includes 200+ video lectures, 5000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability and interview skills.</p>
+      <p>Refer 3 students and get 12 month pro-access to premium aptitude content. It includes 300+ video lectures, 10000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability, programming concepts, coding and interview skills.</p>
       <div class="mt-4 p-4 border rounded mb-4">
         <h2> Referral Link</h2>
         @guest
