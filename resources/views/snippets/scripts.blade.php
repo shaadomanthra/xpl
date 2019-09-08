@@ -506,6 +506,8 @@ function addMinutes(date, minutes) {
   gtag('config', 'UA-43617911-7');
 </script>
 
+@if(!request()->is('/')) {
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="application/javascript"></script>
 
 <!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d6615864ab763ea"></script>
+@endif

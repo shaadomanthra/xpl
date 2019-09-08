@@ -2,6 +2,21 @@ $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 $('#flash-overlay-modal').modal();
 
 
+$(document).ready(function(){
+
+    $(document).on('click','.video_embed',function(){
+      $video = $(this).data('video');
+
+      if($video==3)
+      $('.video_body').html("<iframe src='//player.vimeo.com/video/348516729' title='Get Proficienct at grabbing opportunities' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>");
+      else if($video==2)
+      $('.video_body').html("<iframe src='//player.vimeo.com/video/348516712' title='Industry leading Question bank for campus placements' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>");
+      else
+      $('.video_body').html("<iframe src='//player.vimeo.com/video/348516688' title='Learning made Simple, Interesting and Effective' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>");
+        
+    });
+  });
+
 $(document).ready(function() {
 
 
@@ -44,14 +59,14 @@ $(document).ready(function() {
     	var loc = $(location).attr('href').split("/")[7];
       if(!$.isNumeric(loc))
         var loc = $(location).attr('href').split("/")[6];
-      console.log("Questions is :"+loc);
+    
     }
 
     if($.isNumeric(loc)){
-      console.log('location:'+loc);
+     
     	var b = $('.qset').offset().top;
 	    var a = $('#q'+loc).offset().top - b;
-      console.log('location:'+a+' '+b);
+      
 	  	$('.qset').scrollTop(a);
     }
     
@@ -105,7 +120,7 @@ $(".coupon-button").on('click', function () {
 		var course_id = $(".course_data option:selected").val();
 		var course_name = $(".course_data option:selected").text();
 		var credit = $(".course_"+course_id).val();
-		console.log(course_id+' '+course_name);
+		
     	$('.course_id').val(course_id);
     	$('.course_name').text(course_name);
     	$('.credit_count').text(credit);
@@ -115,7 +130,7 @@ $(".coupon-button").on('click', function () {
 
 		var validity = $(".validity_data option:selected").val();
 		var course_validity = $(".validity_data option:selected").text();
-		console.log(validity+' '+course_validity);
+		
     	$('.validity').val(validity);
     	$('.course_validity').text(course_validity);
   	});
@@ -130,11 +145,11 @@ $(".coupon-button").on('click', function () {
 
   		 if (this.checked) {
                 $.get( url + "/question/attach/" + ques + "/" + val + "/", function( data ) {
-				  console.log( "attached." );
+				  //console.log( "attached." );
 				});
             }else{
             	$.get( url + "/question/detach/" + ques + "/" + val + "/", function( data ) {
-				  console.log("detached." );
+				  //console.log("detached." );
 				});
             }
   
@@ -147,15 +162,15 @@ $(".coupon-button").on('click', function () {
        var ques = $(this).data('ques');
        var url = $(this).data('url');
 
-       console.log( val + " | " + ques + " | " + url );
+       //console.log( val + " | " + ques + " | " + url );
 
        if (this.checked) {
                 $.get( url + "/question/attachsection/" + ques + "/" + val + "/", function( data ) {
-          console.log( "attached." );
+          //console.log( "attached." );
         });
             }else{
               $.get( url + "/question/detachsection/" + ques + "/" + val + "/", function( data ) {
-          console.log("detached." );
+          //console.log("detached." );
         });
             }
   
@@ -167,16 +182,16 @@ $(".coupon-button").on('click', function () {
        var ques = $(this).data('ques');
        var url = $(this).data('url');
 
-       console.log( " | " + ques + " | " + url );
+      // console.log( " | " + ques + " | " + url );
 
        if (this.checked) {
 
                 $.get( url + "/question/addtest/" + ques + "/" , function( data ) {
-          console.log( "attached." );
+          //console.log( "attached." );
         });
             }else{
               $.get( url + "/question/removetest/" + ques + "/" , function( data ) {
-          console.log("detached." );
+          //console.log("detached." );
         });
             }
   
@@ -234,12 +249,12 @@ $(".coupon-button").on('click', function () {
       }
 
       $.get( url + "/" + qqno + "/save",{'question_id':qqno,'time':time,'user_id':user}, function( data ) {
-          console.log('saved');
+          //console.log('saved');
 
         });
 
       $.get( url + "/" + qno + "/?ajax=1", function( data ) {
-          console.log(data);
+          //console.log(data);
           $( "div.question_block" ).replaceWith( data );
           MathJax.Hub.Queue(["Typeset",MathJax.Hub, "div.question_block"]);
 
@@ -259,7 +274,7 @@ $(".coupon-button").on('click', function () {
         $('#q'+qno).addClass('qblue-border');
         $('.qno').addClass('qblue');
         $.get( url + "/" + qno + "/save",{'question_id':qno,'response':opt,'time':time,'user_id':user}, function( data ) {
-          console.log('saved');
+         // console.log('saved');
 
         });
       }
@@ -278,7 +293,7 @@ $(".coupon-button").on('click', function () {
       $('.qno').addClass('qyellow');
       var url = $('.qset').data('url');
       $('input[name="response"]').prop('checked', false);
-      console.log('cleared');
+      //console.log('cleared');
 
 
       var time = $('.qset').data('counter');
@@ -286,7 +301,7 @@ $(".coupon-button").on('click', function () {
       $('.qset').data('counter',0);
       
       $.get( url + "/" + qno + "/clear",{'question_id':qno,'time':time,'user_id':user}, function( data ) {
-          console.log('saved');
+          //console.log('saved');
         });
 
      
@@ -312,7 +327,7 @@ $(".coupon-button").on('click', function () {
         $('#q'+qno).addClass('qblue-border');
         $('.qno').addClass('qblue');
         $.get( url + "/" + qno + "/save",{'question_id':qno,'response':opt,'time':time,'user_id':user}, function( data ) {
-          console.log('saved : change');
+          //console.log('saved : change');
 
         });
       }

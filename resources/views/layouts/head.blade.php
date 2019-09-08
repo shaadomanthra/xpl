@@ -12,11 +12,10 @@
     <meta name="theme-color" content="#236fb1"/>
     <link rel="manifest" href="/manifest.json">
     <meta property="og:url"           content="{{ request()->url() }}" />
-  <meta property="og:type"          content="website" />
-  <meta property="og:title"         content="@yield('title')" />
-  <meta property="og:description"   content="@yield('description')" />
-  <meta property="og:image"         content="@yield('image')" />
-
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="@yield('title')" />
+    <meta property="og:description"   content="@yield('description')" />
+    <meta property="og:image"         content="@yield('image')" />
     @if(isset($autoads))
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
@@ -26,12 +25,8 @@
          });
     </script>
     @endif
-
     <title>@yield('title')</title>
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-    @if(isset($welcome3))
-    <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
-    @endif
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
     @if(isset($editor))
     <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
@@ -58,16 +53,11 @@
     @if(isset($jqueryui))
     <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     @endif
-
-
-
 </head>
     <body>
     <div id="app" >
     @yield('content-main')
     </div>
- 
-
  <div class="bg-dark">
     <footer class="wrapper text-light footer">
         <div class="container py-3">
@@ -77,6 +67,5 @@
 </div>
     <!-- Scripts -->
      @include('snippets.scripts')
-     <script type="text/javascript" src="{{asset('js/questions.js')}}"></script>
 </body>
 </html>

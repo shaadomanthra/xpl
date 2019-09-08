@@ -3,7 +3,14 @@
 <div class="row d-print-none">
 	<div class="col-6 col-md">
 		<div class="">
-		<img src="{{ asset('img/pp_logo_white.png') }}"  style="max-width:80px;"class=" w-100" alt="packetprep logo white"/>
+            <picture>
+  <source srcset="{{ asset('img/pp_logo_white_100.webp') }}"
+       class="w-100 " style="max-width:80px;" alt="packetprep logo white">
+  <source srcset="{{ asset('img/pp_logo_white_100.png') }}"
+       class="w-100 " style="max-width:80px;" alt="packetprep logo white"> 
+  <img srcset="{{ asset('img/pp_logo_white_100.png') }}"
+       class="w-100 " style="max-width:80px;" alt="packetprep logo white">
+</picture>
 		</div>
 	</div>
 	<div class="col-6 col-md">
@@ -53,11 +60,11 @@
       <div class="col-6 col-md">
         <div class="">
         	<div class="mb-2">
-		  <a class=" text-secondary mr-2 mr-md-3" rel="noreferrer" target="_blank" href="https://www.facebook.com/packetprep/"><i class="fa fa-facebook-square fa-2x" aria-label="packetprep facebook page"></i></a></div>
+		  <a class=" text-muted mr-2 mr-md-3" rel="noreferrer" target="_blank" href="https://www.facebook.com/packetprep/"><i class="fa fa-facebook-square fa-2x" aria-label="packetprep facebook page"></i></a></div>
 		  <div class="mb-2">
-		  <a class=" text-secondary mr-2 mr-md-3" rel="noreferrer" target="_blank" href="https://www.instagram.com/packetprep/" aria-label="packetprep instagram page"><i class="fa fa-instagram fa-2x"></i></a></div>
+		  <a class=" text-muted mr-2 mr-md-3" rel="noreferrer" target="_blank" href="https://www.instagram.com/packetprep/" aria-label="packetprep instagram page"><i class="fa fa-instagram fa-2x"></i></a></div>
 		  <div class="mb-2">
-		  <a class=" text-secondary " rel="noreferrer" target="_blank" href="http://youtube.com/packetprep" aria-label="packetprep youtube channel"  ><i class="fa fa-youtube-square fa-2x"></i></a>
+		  <a class=" text-muted " rel="noreferrer" target="_blank" href="http://youtube.com/packetprep" aria-label="packetprep youtube channel"  ><i class="fa fa-youtube-square fa-2x"></i></a>
 		</div>
 		</div>
       </div>
@@ -65,8 +72,8 @@
 	
 </div>
 <hr>
-<div class="text-secondary d-print-none">Copyright &copy; Quedb Edtech Private Limited</div>
-<div class="text-secondary d-none d-print-block">Copyright &copy; PacketPrep
+<div class="text-muted d-print-none">Copyright &copy; Quedb Edtech Private Limited</div>
+<div class="text-muted d-none d-print-block">Copyright &copy; PacketPrep
 <hr>
 PacketPrep is the best platform to prepare for campus placements - https://packetprep.com
 </div>

@@ -2,11 +2,25 @@
  <nav class="navbar navbar-expand-lg navbar-dark " >
             @guest
             <a class="navbar-brand abs" href="{{ url('/') }}" aria-label="Homepage">
-                <img src="{{ asset('img/packetprep-logo-small.png') }}" width="60px" class="logo-main ml-md-1" alt="packetprep logo blue" />
+                <picture>
+  <source srcset="{{ asset('img/packetprep_75.webp') }}"
+       width="60px" class="logo-main ml-md-1"  alt="packetprep logo ">
+  <source srcset="{{ asset('packetprep_75.png') }}"
+       width="60px" class="logo-main ml-md-1" alt="packetprep logo "> 
+  <img 
+      src="{{ asset('img/packetprep_75.png') }} " width="60px" class="logo-main ml-md-1"  alt="packetprep logo ">
+</picture>
             </a>
             @else
             <a class="navbar-brand abs" href="{{ url('/dashboard') }}" aria-label="Dashboard">
-                <img src="{{ asset('img/packetprep-logo-small.png') }}" width="60px" class="logo-main ml-md-1"  alt="packetprep logo blue" />
+            <picture>
+  <source srcset="{{ asset('img/packetprep_75.webp') }}"
+       width="60px" class="logo-main ml-md-1"  alt="packetprep logo ">
+  <source srcset="{{ asset('packetprep_75.png') }}"
+       width="60px" class="logo-main ml-md-1" alt="packetprep logo "> 
+  <img 
+      src="{{ asset('img/packetprep_75.png') }} " width="60px" class="logo-main ml-md-1"  alt="packetprep logo ">
+</picture>
             </a>   
             @endguest
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

@@ -1,6 +1,6 @@
 
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("https://fonts.googleapis.com/css?family=Anton");
 
 $fa-font-path: "../fonts" !default;
 @import "~font-awesome/scss/font-awesome.scss";
@@ -10,15 +10,13 @@ $fa-font-path: "../fonts" !default;
 
 
 $theme-colors: (
-  "primary": #2f82ca,
-  "danger": #C0392B,
-  "success":#16A085,
-  "info":#519ada,
-  "warning":#E9D460
+  "primary": #004677,
+  "danger": #A80D00,
+  "success":#0B6049,
+  "info":#0E5E7C,
+  "warning":#FF851B
 );
 
-// Bootstrap
-@import "~bootstrap/scss/bootstrap";
 
 
 

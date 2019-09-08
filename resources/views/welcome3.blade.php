@@ -33,7 +33,11 @@
       </div>
     </div>
     <div class="col-12 col-md-4">
-      <img src="{{ asset('img/banner-sm.png') }}" class="w-100 d-none d-md-block" alt="packetprep banner">
+      <picture>
+  <source srcset="{{ asset('img/banner_350.webp') }}" class="w-100 d-none d-md-block" alt="packetprep banner">
+  <source srcset="{{ asset('img/banner_350.png') }}" class="w-100 d-none d-md-block" alt="packetprep banner"> 
+  <img srcset="{{ asset('img/banner_350.png') }}" class="w-100 d-none d-md-block" alt="packetprep banner">
+</picture>
     </div>
   </div>
 </div>
@@ -100,25 +104,34 @@
     <div class="p-0 p-md-2"></div>
     <div class="row ">
       <div class="col-lg-4 mb-5 mb-md-0">
-       <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/348516688" title="Learning made Simple, Interesting and Effective" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-          </div>
+        <picture>
+  <source srcset="{{ asset('img/video_1.webp') }}"
+       class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective">
+  <source srcset="{{ asset('img/video_1.png')}}" class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective"> 
+  <img srcset="{{ asset('img/video_1.png') }}" class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective">
+</picture>
         <h2 class="mb-3 mt-4 "><div class="mb-2">Learning made </div> Simple, Interesting and Effective</h2>
         <p>Learning is no longer boring! Amusing introductions, crisp lectures, and effective strategies all make solving the toughest of questions a breeze!  </p>
         
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4 mb-5 mb-md-0">
-        <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/348516712" title="Industry leading Question bank for campus placements" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-          </div>
+        <picture>
+  <source srcset="{{ asset('img/video_2.webp') }}"
+       class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank">
+  <source srcset="{{ asset('img/video_2.png')}}" class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank"> 
+  <img srcset="{{ asset('img/video_2.png') }}" class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank">
+</picture>
         <h2 class="mb-3 mt-4"><div class="mb-2">Industry leading Question bank </div>for campus placements</h2>
         <p>Why solve a million questions when you can get away with solving only a few that matter? Each of our concept lectures is followed by a small set of questions that will make you ace your placement tests.</p>
         
       </div><!-- /.col-lg-4 -->
       <div class="col-lg-4 ">
-        <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
-          <iframe src="//player.vimeo.com/video/348516729" title="Get Proficienct at grabbing opportunities" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-          </div>
+        <picture>
+  <source srcset="{{ asset('img/video_3.webp') }}"
+       class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test">
+  <source srcset="{{ asset('img/video_3.png')}}" class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test"> 
+  <img srcset="{{ asset('img/video_3.png') }}" class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test">
+</picture>
         <h2 class="mb-3 mt-4"><div class="mb-2">Get Proficienct at</div> grabbing opportunities</h2>
         <p>PacketPrep's Certificate of Verification provides prospective employers (company or institutions) an iron-clad assurance that you have successfully completed an online course. <a href="{{ url('proficiency-test')}}" class="btn btn-sm btn-outline-secondary">Try now</a></p>
         
@@ -149,10 +162,24 @@
 </div>
 
 </main>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
+          <div class="video_body">
 
-
-
-
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection    
+
+
 
 

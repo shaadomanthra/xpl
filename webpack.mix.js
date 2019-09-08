@@ -12,13 +12,24 @@ let mix = require('laravel-mix');
  */
 mix.copy('node_modules/font-awesome/fonts', 'public/fonts');
 
-mix.styles(['public/css/app.css',
-    'public/css/home.css'
-], 'public/css/styles.css');
-
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
 
- mix.js(['public/js/app.js',
+mix.styles(['public/css/app.css','public/css/bootstrap.min.css',
+    'public/css/home.css'
+], 'public/css/styles.css');
+
+mix.js(['public/js/jquery.js',
     'public/js/global.js'
+], 'public/js/script_j.js');
+
+mix.js([
+	'public/js/bootstrap.min.js',
+    'public/js/global.js'
+], 'public/js/script_b.js');
+
+mix.js(['public/js/app.js',
+    'public/js/global.js','public/js/questions.js'
 ], 'public/js/script.js');
+
+
