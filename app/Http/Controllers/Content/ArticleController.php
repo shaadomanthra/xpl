@@ -138,7 +138,7 @@ class ArticleController extends Controller
             /* create a new entry */
             $obj->create($request->except(['file_']));
 
-            $sizes = [300,600,900];
+            $sizes = [300,600,900,1200];
             if($path)
             foreach($sizes as $s)
                 image_resize($path,$s);
@@ -283,7 +283,7 @@ class ArticleController extends Controller
 
             $obj->update($request->except(['file_'])); 
 
-            $sizes = [300,600,900];
+            $sizes = [300,600,900,1200];
             if($obj->image)
             foreach($sizes as $s)
                 image_resize($obj->image,$s);

@@ -11,14 +11,21 @@ if (! function_exists('image_resize')) {
         
         $new_path = storage_path() . $base_folder .$explode[0];
 
-        $imgr = Image::make($path)->encode('jpg', 100);
+        $imgr = Image::make($path)->encode('webp', 100);
        
         $imgr->resize($size, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
         });
-              
-        $imgr->save($new_path.'_'.$size.'.jpg');  
+        $imgr->save($new_path.'_'.$size.'.webp');  
+
+        $imgr2 = Image::make($path)->encode('jpg', 100);
+        $imgr2->resize($size, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+        });
+        $imgr2->save($new_path.'_'.$size.'.jpg');      
+        
 
         return true;
     }

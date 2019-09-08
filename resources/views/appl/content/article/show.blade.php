@@ -2,9 +2,8 @@
 @section('title', $obj->name.' | PacketPrep')
 @section('description', strip_tags($obj->description))
 @section('keywords', $obj->keywords)
-@section('image', asset('/storage/company/'.$obj->slug.'_900.jpg'))
+@section('image', asset('/storage/company/'.$obj->slug.'_900.webp'))
 @section('content')
-
 
 @include('flash::message')
   <div class="row">
@@ -13,13 +12,32 @@
     
       @if(Storage::disk('public')->exists($obj->image))
       
-      <img srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} 320w,
+      <picture>
+  <source srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.webp') }} 320w,
+             {{ asset('/storage/articles/'.$obj->slug.'_600.webp') }}  480w,
+             {{ asset('/storage/articles/'.$obj->slug.'_900.webp') }}  800w,
+             {{ asset('/storage/articles/'.$obj->slug.'_1200.webp') }}  1100w" type="image/webp" sizes="(max-width: 320px) 280px,
+            (max-width: 480px) 440px,
+            (max-width: 720px) 800px
+            1200px" alt="{{  $obj->name }}">
+  <source srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} 320w,
              {{ asset('/storage/articles/'.$obj->slug.'_600.jpg') }}  480w,
-             {{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }}  800w"
+             {{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }}  800w,
+             {{ asset('/storage/articles/'.$obj->slug.'_1200.jpg') }}  1100w," type="image/jpeg" sizes="(max-width: 320px) 280px,
+            (max-width: 480px) 440px,
+            (max-width: 720px) 800px
+            1200px" alt="{{  $obj->name }}"> 
+  <img srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} 320w,
+             {{ asset('/storage/articles/'.$obj->slug.'_600.jpg') }}  480w,
+             {{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }}  800w,
+             {{ asset('/storage/articles/'.$obj->slug.'_1200.jpg') }}  1100w,"
       sizes="(max-width: 320px) 280px,
             (max-width: 480px) 440px,
-            800px"
-      src="{{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }} " class="w-100 d-print-none" alt="{{  $obj->name }}">
+            (max-width: 720px) 800px
+            1200px"
+      src="{{ asset('/storage/articles/'.$obj->slug.'_1200.jpg') }} " class="w-100 d-print-none" alt="{{  $obj->name }}">
+</picture>
+
       @endif
       <div class="p-3 p-md-4 p-lg-5 bg-white company">
         
@@ -46,7 +64,6 @@
               {!! $obj->details !!}
             </div>
 
-            
             </div>
             <div class="col-12 col-md-4 ">
               <div class="sticky-top pt-3">
@@ -108,6 +125,5 @@
     </div>
   </div>
 </div>
-
 
 @endsection
