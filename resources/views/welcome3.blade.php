@@ -168,7 +168,6 @@
       <div class="modal-body">
         <div class="embed-responsive embed-responsive-16by9 border" style="background: #eee;">
           <div class="video_body">
-
           </div>
         </div>
       </div>
@@ -179,7 +178,3 @@
   </div>
 </div>
 @endsection    
-
-
-
-
