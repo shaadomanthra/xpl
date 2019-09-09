@@ -1,8 +1,8 @@
 @extends('layouts.app2')
 @section('title', $obj->name.' | PacketPrep')
-@section('description', strip_tags($obj->description))
+@section('description', substr(strip_tags($obj->description),0,200))
 @section('keywords', $obj->keywords)
-@section('image', asset('/storage/company/'.$obj->slug.'_900.webp'))
+@section('image', asset('/storage/company/'.$obj->slug.'_1200.jpg'))
 @section('content')
 
 @include('flash::message')

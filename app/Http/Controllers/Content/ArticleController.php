@@ -215,7 +215,8 @@ class ArticleController extends Controller
                     ->with('obj',$obj)
                     ->with('questions',$questions)
                     ->with('app',$this)
-                    ->with('mathjax',true);
+                    ->with('mathjax',true)
+                    ->with('share',true);
         else
             abort(404);
     }
