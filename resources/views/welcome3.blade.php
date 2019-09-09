@@ -1,11 +1,8 @@
 @extends('layouts.app2')
-
 @section('title', 'PacketPrep - The best platform to prepare for Campus Placements')
-
 @section('description', 'Get the best material for campus placement preparation, our courses include aptitude, reasoning, programming and coding.')
-
 @section('keywords', 'campus placement preparation, prepare for campus placements,learn quantitative aptitude,learn reasoning, learn verbal,learn programming concepts,learn coding for interview')
-
+@section('image', 'https://packetprep.com/img/placements.png')
 @section('content')
 <div class="bg-white p-3 p-md-5">
 <div class="container" style="">

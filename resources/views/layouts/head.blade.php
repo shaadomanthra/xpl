@@ -1,6 +1,6 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,53 +19,53 @@
     @if(isset($autoads))
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
-         (adsbygoogle = window.adsbygoogle || []).push({
-              google_ad_client: "ca-pub-9550642194256443",
-              enable_page_level_ads: true
-         });
-    </script>
-    @endif
-    <title>@yield('title')</title>
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
-    @if(isset($editor))
-    <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
-    @endif
-    @if(isset($code))
-    <link href="{{asset('js/codemirror/lib/codemirror.css')}}" rel="stylesheet">
-    <link href="{{asset('js/codemirror/theme/abcdef.css')}}" rel="stylesheet">
-    <link href="{{asset('js/highlight/styles/default.css')}}" rel="stylesheet">
-    <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
-    @endif
-    @if(isset($mathjax))
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX","output/HTML-CSS"],
-        tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+       (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9550642194256443",
+          enable_page_level_ads: true
       });
     </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     @endif
-    @if(isset($recaptcha))
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    @endif
-    @if(isset($jqueryui))
-    <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
-    @endif
+  <title>@yield('title')</title>
+  <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+  <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+  @if(isset($editor))
+  <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
+  @endif
+  @if(isset($code))
+  <link href="{{asset('js/codemirror/lib/codemirror.css')}}" rel="stylesheet">
+  <link href="{{asset('js/codemirror/theme/abcdef.css')}}" rel="stylesheet">
+  <link href="{{asset('js/highlight/styles/default.css')}}" rel="stylesheet">
+  <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
+  @endif
+  @if(isset($mathjax))
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+      extensions: ["tex2jax.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+@endif
+@if(isset($recaptcha))
+<script src='https://www.google.com/recaptcha/api.js'></script>
+@endif
+@if(isset($jqueryui))
+<link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
+@endif
 </head>
-    <body>
+<body>
     <div id="app" >
-    @yield('content-main')
+        @yield('content-main')
     </div>
- <div class="bg-dark">
-    <footer class="wrapper text-light footer">
-        <div class="container py-3">
-            @include('snippets.footer')
-        </div>
-    </footer>
-</div>
+    <div class="bg-dark">
+        <footer class="wrapper text-light footer">
+            <div class="container py-3">
+                @include('snippets.footer')
+            </div>
+        </footer>
+    </div>
     <!-- Scripts -->
-     @include('snippets.scripts')
+    @include('snippets.scripts')
 </body>
 </html>
