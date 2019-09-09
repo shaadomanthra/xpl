@@ -103,8 +103,8 @@
       <div class="col-lg-4 mb-5 mb-md-0">
         <picture>
   <source srcset="{{ asset('img/video_1.webp') }}"
-       class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective">
-  <source srcset="{{ asset('img/video_1.png')}}" class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective"> 
+       class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective" type="image/webp">
+  <source srcset="{{ asset('img/video_1.png')}}" class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective" type="image/png"> 
   <img srcset="{{ asset('img/video_1.png') }}" class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective">
 </picture>
         <h2 class="mb-3 mt-4 "><div class="mb-2">Learning made </div> Simple, Interesting and Effective</h2>
@@ -114,8 +114,8 @@
       <div class="col-lg-4 mb-5 mb-md-0">
         <picture>
   <source srcset="{{ asset('img/video_2.webp') }}"
-       class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank">
-  <source srcset="{{ asset('img/video_2.png')}}" class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank"> 
+       class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank" type="image/webp">
+  <source srcset="{{ asset('img/video_2.png')}}" class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank" type="image/png"> 
   <img srcset="{{ asset('img/video_2.png') }}" class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank">
 </picture>
         <h2 class="mb-3 mt-4"><div class="mb-2">Industry leading Question bank </div>for campus placements</h2>
@@ -125,8 +125,8 @@
       <div class="col-lg-4 ">
         <picture>
   <source srcset="{{ asset('img/video_3.webp') }}"
-       class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test">
-  <source srcset="{{ asset('img/video_3.png')}}" class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test"> 
+       class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test" type="image/webp">
+  <source srcset="{{ asset('img/video_3.png')}}" class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test" type="image/png"> 
   <img srcset="{{ asset('img/video_3.png') }}" class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test">
 </picture>
         <h2 class="mb-3 mt-4"><div class="mb-2">Get Proficienct at</div> grabbing opportunities</h2>
