@@ -31,8 +31,8 @@
     </div>
     <div class="col-12 col-md-4">
       <picture>
-  <source srcset="{{ asset('img/banner_350.webp') }}" class="w-100 d-none d-md-block" alt="packetprep banner">
-  <source srcset="{{ asset('img/banner_350.png') }}" class="w-100 d-none d-md-block" alt="packetprep banner"> 
+  <source srcset="{{ asset('img/banner_350.webp') }}" class="w-100 d-none d-md-block" alt="packetprep banner" type="image/webp">
+  <source srcset="{{ asset('img/banner_350.png') }}" class="w-100 d-none d-md-block" type="image/png" alt="packetprep banner"> 
   <img srcset="{{ asset('img/banner_350.png') }}" class="w-100 d-none d-md-block" alt="packetprep banner">
 </picture>
     </div>

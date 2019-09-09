@@ -5,9 +5,9 @@
 		<div class="">
             <picture>
   <source srcset="{{ asset('img/pp_logo_white_100.webp') }}"
-       class="w-100 " style="max-width:80px;" alt="packetprep logo white">
+       class="w-100 " style="max-width:80px;" alt="packetprep logo white" type="image/webp">
   <source srcset="{{ asset('img/pp_logo_white_100.png') }}"
-       class="w-100 " style="max-width:80px;" alt="packetprep logo white"> 
+       class="w-100 " style="max-width:80px;" alt="packetprep logo white" type="image/png"> 
   <img srcset="{{ asset('img/pp_logo_white_100.png') }}"
        class="w-100 " style="max-width:80px;" alt="packetprep logo white">
 </picture>
