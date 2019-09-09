@@ -1,7 +1,7 @@
 @extends('layouts.app2')
-@section('title', 'PacketPrep - The best platform to prepare for Campus Placements')
-@section('description', 'Get the best material for campus placement preparation, our courses include aptitude, reasoning, programming and coding.')
-@section('keywords', 'campus placement preparation, prepare for campus placements,learn quantitative aptitude,learn reasoning, learn verbal,learn programming concepts,learn coding for interview')
+@section('title', 'PacketPrep - Placement papers and Aptitude question for TCS Wipro and Infosys')
+@section('description', 'The best repository for placement papers and aptitude questions for infosys, tcs nqt,tcs ninja, tcs digital, amcat, cocubes, accenture, cognizant, wipro and many more ')
+@section('keywords', 'campus placement preparation, wipro placement papers, infosys placement papers, aptitude questions, amcat previous papers, amcat preparation,tcs nqt, tcs ninja, tcs digital')
 @section('image', 'https://packetprep.com/img/placements.png')
 @section('content')
 <div class="bg-white p-3 p-md-5">
