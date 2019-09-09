@@ -54,7 +54,7 @@
 
           </h1>
 
-        <div class="addthis_inline_share_toolbox mb-2 d-print-none"></div>
+        
           <div class="row">
             <div class="col-12 col-md">
               <div class="mb-4">
@@ -81,9 +81,7 @@
           @endif
 
           <div class="row">
-      <div class="col-12 col-md-8">
-        @include('appl.content.article.blocks.share')
-      </div>
+      
     </div>
   
     </div>
@@ -92,9 +90,7 @@
     </div>
 
 
-    <div class="bg-light border p-3  d-print-none">
-      @include('appl.pages.disqus')
-    </div>
+    
 
     
   </div> 

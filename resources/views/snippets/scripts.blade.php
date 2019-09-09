@@ -510,8 +510,5 @@ function addMinutes(date, minutes) {
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="application/javascript"></script>
 @endif
 
-@if(isset($share))
-<!-- Go to www.addthis.com/dashboard to customize your tools --> 
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d6615864ab763ea"></script>
-@endif
+
 @endif
