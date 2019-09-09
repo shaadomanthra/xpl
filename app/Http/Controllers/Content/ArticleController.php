@@ -225,7 +225,6 @@ class ArticleController extends Controller
     {
        $companies =['infosys','wipro','capgemini','tcs','dell'];
        return view('appl.content.article.companies')->with('companies',$companies);
-
     }
 
     /**
