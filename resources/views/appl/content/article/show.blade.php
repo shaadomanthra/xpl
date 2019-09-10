@@ -68,7 +68,9 @@
             </div>
             <div class="col-12 col-md-4 ">
               <div class="sticky-top pt-3">
+              @if(isset($obj->related)
               {!! $obj->related !!}
+              @endif
               @include('snippets.adsense')
               </div>
             </div>
