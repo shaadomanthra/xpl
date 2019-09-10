@@ -212,8 +212,15 @@ class ArticleController extends Controller
 
 
         if($obj)
-            if($obj->math)
-            return view('appl.'.$this->app.'.'.$this->module.'.show')
+            if(!isset($obj->math)){
+                return view('appl.'.$this->app.'.'.$this->module.'.show')
+                    ->with('obj',$obj)
+                    ->with('questions',$questions)
+                    ->with('app',$this)
+                    ->with('share',true); 
+            }
+            else if($obj->math)
+                return view('appl.'.$this->app.'.'.$this->module.'.show')
                     ->with('obj',$obj)
                     ->with('questions',$questions)
                     ->with('app',$this)
