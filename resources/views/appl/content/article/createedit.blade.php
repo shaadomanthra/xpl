@@ -54,11 +54,24 @@
         <label for="formGroupExampleInput2">Keywords</label>
          <textarea class="form-control " name="keywords"  rows="4">{{isset($obj)?$obj->keywords:''}}</textarea>
       </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Related</label>
+         <textarea class="form-control " name="related"  rows="4">{{isset($obj)?$obj->related:''}}</textarea>
+      </div>
       
       <div class="form-group">
         <label for="formGroupExampleInput ">Image</label>
         <input type="file" class="form-control" name="file_" id="formGroupExampleInput" 
           >
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Math Equations</label>
+        <select class="form-control" name="math">
+          <option value="0" @if(isset($obj)) @if($obj->math==0) selected @endif @endif >No</option>
+          <option value="1" @if(isset($obj)) @if($obj->math==1) selected @endif @endif >Yes</option>
+        </select>
       </div>
 
       <div class="form-group">

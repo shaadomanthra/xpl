@@ -13,6 +13,8 @@ class Article extends Model
         'description',
         'details',
         'keywords',
+        'related',
+        'math',
         'status'
     ];
 }

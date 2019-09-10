@@ -5,7 +5,7 @@
 @section('image', asset('/storage/company/'.$obj->slug.'_1200.jpg'))
 @section('content')
 
-@include('flash::message')
+
   <div class="row">
 
     <div class="col-md-12">
@@ -40,7 +40,8 @@
 
       @endif
       <div class="p-3 p-md-4 p-lg-5 bg-white company">
-        
+          
+          @include('flash::message')
           <h1 class=""> {{ $obj->name }} 
 
           @if(\auth::user())
@@ -67,6 +68,7 @@
             </div>
             <div class="col-12 col-md-4 ">
               <div class="sticky-top pt-3">
+              {!! $obj->related !!}
               @include('snippets.adsense')
               </div>
             </div>
