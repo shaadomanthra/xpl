@@ -339,6 +339,9 @@ class ArticleController extends Controller
         else{
             $obj = Obj::where('slug',$slug)->first();
 
+            if(!$obj)
+                abort('404');
+
             $label1 = $obj->labels()->first();
             $label2 = $obj->labels()->skip(1)->first();
             $obj->labels = $obj->labels;
@@ -492,7 +495,7 @@ class ArticleController extends Controller
             if($label2){
                 $obj->related2 = $label2->articles()->limit(4)->get(); 
             }
-            
+
             file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
 
             /* update in cache folder main file */
