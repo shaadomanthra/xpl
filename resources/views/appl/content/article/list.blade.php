@@ -50,4 +50,10 @@
   No {{ $app->module }} listed
 </div>
 @endif
+<div class="">
+<nav aria-label="Page navigation  " class="card-nav ">
+        {{$objs->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
+      </nav>
+      <div class="p-3"></div>
+    </div>
 

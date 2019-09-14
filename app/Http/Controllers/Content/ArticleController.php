@@ -7,6 +7,9 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Content\Article as Obj;
 use PacketPrep\Models\Dataentry\Category;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ArticleController extends Controller
 {
@@ -27,14 +30,14 @@ class ArticleController extends Controller
 
      $search = $request->search;
      $item = $request->item;
+     $page = $request->page;
      $filename = 'index.'.$this->app.'.'.$this->module.'.json';
      $filepath = $this->cache_path.$filename;
 
      /* update in cache folder */
      if($request->refresh){
 
-        $objs = $obj->orderBy('created_at','desc')->where('status',1)
-        ->get();  
+        $objs = $obj->orderBy('created_at','desc')->where('status',1)->get();  
         file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
 
         foreach($objs as $obj){ 
@@ -46,22 +49,39 @@ class ArticleController extends Controller
         flash('Article Pages Cache Updated')->success();
     }
 
-    if(file_exists($filepath) && !$search){
+    if(file_exists($filepath) && !$search && !$page){
     	$objs = json_decode(file_get_contents($filepath));
+        $objs = $this->paginateAnswers($objs,18);
     }else{
     	$objs = $obj->where('name','LIKE',"%{$item}%")
     	->where('status',1)
     	->orderBy('created_at','desc')
-    	->paginate(30);  
+    	->paginate(18);  
     }
     
-
     $view = $search ? 'list': 'index';
 
     return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
         ->with('objs',$objs)
         ->with('obj',$obj)
         ->with('app',$this);
+    }
+
+     protected function paginateAnswers(array $answers, $perPage = 10)
+    {
+        $page = Input::get('page', 1);
+
+        $offset = ($page * $perPage) - $perPage;
+
+        $paginator = new LengthAwarePaginator(
+            array_slice($answers, $offset, $perPage, true),
+            count($answers),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return $paginator;
     }
 
     /** PUBLIC LISTING
@@ -139,7 +159,7 @@ class ArticleController extends Controller
             $obj->create($request->except(['file_']));
 
             $sizes = [300,600,900,1200];
-            if($path)
+            if(isset($path))
             foreach($sizes as $s)
                 image_resize($path,$s);
 
