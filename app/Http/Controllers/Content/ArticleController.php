@@ -39,6 +39,7 @@ class ArticleController extends Controller
      /* update in cache folder */
      if($request->refresh){
 
+        // update articles
         $objs = $obj->orderBy('created_at','desc')->where('status',1)->get();  
         file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
 
@@ -50,18 +51,29 @@ class ArticleController extends Controller
             if($label1){
                 $obj->related1 = $label1->articles()->limit(4)->get(); 
             }
-
             if($label2){
                 $obj->related2 = $label2->articles()->limit(4)->get(); 
             }
-            
-
             $filepath = $this->cache_path.$filename;
             file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
         }
 
-        flash('Article Pages Cache Updated')->success();
+        //update labels
+        $labels = Label::where('status',1)->orderBy('created_at','desc')->get();
+        file_put_contents($filepath, json_encode($labels,JSON_PRETTY_PRINT));
+
+        foreach($labels as $label){ 
+            $filename = $label->slug.'.json';
+            $label->articles = $label->articles;
+            $filepath = $this->cache_label_path.$filename;
+            file_put_contents($filepath, json_encode($label,JSON_PRETTY_PRINT));
+        }
+
+        flash('Articles/Labels Cache Updated')->success();
     }
+
+    $filename = 'index.'.$this->app.'.'.$this->module.'.json';
+    $filepath = $this->cache_path.$filename;
 
     if(file_exists($filepath) && !$search && !$page){
     	$objs = json_decode(file_get_contents($filepath));
@@ -276,6 +288,17 @@ class ArticleController extends Controller
 
             /* update cache file of this product */
             $filename = $obj->slug.'.json';
+
+            $label1 = $obj->labels()->first();
+            $label2 = $obj->labels()->skip(1)->first();
+            $obj->labels = $obj->labels;
+            if($label1){
+                $obj->related1 = $label1->articles()->limit(4)->get(); 
+            }
+            if($label2){
+                $obj->related2 = $label2->articles()->limit(4)->get(); 
+            }
+
             $filepath = $this->cache_path.$filename;
             file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
 
@@ -459,6 +482,17 @@ class ArticleController extends Controller
             /* update cache file of this product */
             $filename = $obj->slug.'.json';
             $filepath = $this->cache_path.$filename;
+
+            $label1 = $obj->labels()->first();
+            $label2 = $obj->labels()->skip(1)->first();
+            $obj->labels = $obj->labels;
+            if($label1){
+                $obj->related1 = $label1->articles()->limit(4)->get(); 
+            }
+            if($label2){
+                $obj->related2 = $label2->articles()->limit(4)->get(); 
+            }
+            
             file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
 
             /* update in cache folder main file */

@@ -58,9 +58,11 @@
 
           </h1>
           @if(isset($obj->labels))
-          @foreach($obj->labels as $label)
-          <a href="{{ route('blog.label',$label->slug)}}"><span class="badge badge-info">{{$label->name }}</span></a>
+          <div class="mb-3" >
+          @foreach($obj->labels as $k=>$label)
+          <a href="{{ route('blog.label',$label->slug)}}"><span class="badge @if($k==0) badge-info @elseif($k==1) badge-warning @else badge-secondary @endif">{{$label->name }}</span></a>
           @endforeach
+          </div>
           @endif
         
           <div class="row">
@@ -79,7 +81,9 @@
               @if(isset($obj->related1))
               <h3 class="mb-3">Related Blogs</h3>
                 @foreach($obj->related1 as $item)
+                  @if($item->slug != $obj->slug)
                     @include('appl.content.article.blocks.related')
+                  @endif
                 @endforeach 
               @endif
               @include('snippets.adsense')
