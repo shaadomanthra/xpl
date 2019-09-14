@@ -76,7 +76,7 @@
           <h5 class="mb-0 p-3">{{strtoupper($l)}} </h5>
          <div class="list-group ">
         @foreach($item as $data)
-        <a href="{{ route('blog.label',$data->slug)}}" class="list-group-item list-group-item-action list-group-item-info @if(isset($label)) @if($label->slug==$data->slug) active @endif @endif">
+        <a href="{{ route('blog.label',$data->slug)}}" class="list-group-item list-group-item-action list-group-item-primary @if(isset($label)) @if($label->slug==$data->slug) active @endif @endif">
           {{ ucfirst($data->name) }}
         </a>
         @endforeach
