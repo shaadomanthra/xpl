@@ -4,6 +4,7 @@ namespace PacketPrep\Policies\Content;
 
 use PacketPrep\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use PacketPrep\Models\Content\Article;
 
 class ArticlePolicy
 {
@@ -40,9 +41,10 @@ class ArticlePolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function create(User $user)
+    public function create(User $user,Article $article)
     { 
-        return $user->checkRole(['administrator','editor','documenter']);
+        
+        return $user->checkRole(['administrator','editor','documenter','blog-writer']);
     }
 
 
@@ -53,9 +55,13 @@ class ArticlePolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function edit(User $user,Doc $doc)
+    public function edit(User $user,Article $article)
     { 
-        return $user->checkRole(['administrator','editor','documenter']);
+        if($article->user_id == $user->id)
+            return true;
+        else
+            return false;
+        
     }
 
     /**
@@ -65,9 +71,12 @@ class ArticlePolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function update(User $user,Doc $doc)
+    public function update(User $user,Article $article)
     { 
-        return $user->checkRole(['administrator','editor','documenter']);
+         if($article->user_id == $user->id)
+            return true;
+        else
+            return false;
     }
 
 

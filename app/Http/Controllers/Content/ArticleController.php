@@ -158,6 +158,9 @@ class ArticleController extends Controller
     	
         $search = $request->search;
         $item = $request->item;
+
+        $labels = Label::get();
+        
         
         $objs = $obj->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc')
@@ -167,6 +170,8 @@ class ArticleController extends Controller
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('objs',$objs)
+                ->with('labels',$labels)
+                ->with('listing',1)
                 ->with('obj',$obj)
                 ->with('app',$this);
     }

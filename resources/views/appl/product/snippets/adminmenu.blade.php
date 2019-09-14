@@ -15,7 +15,7 @@
 	<a href="{{ route('referral.list')}}" class="list-group-item list-group-item-action {{ request()->is('referral*') ? 'active' : ''}}"><i class="fa fa-list"></i> Referrals </a>
 		<a href="{{ route('service.index')}}" class="list-group-item list-group-item-action {{ request()->is('service') ? 'active' : ''}}"><i class="fa fa-bars"></i> Service</a>
 	<a href="{{ route('word')}}" class="list-group-item list-group-item-action {{ request()->is('word') ? 'active' : ''}}"><i class="fa fa-bars"></i> Words</a>
-	<a href="{{ route('blog.index')}}" class="list-group-item list-group-item-action {{ request()->is('blog') ? 'active' : ''}}"><i class="fa fa-bars"></i> Blog</a>
+	<a href="{{ route('article.index')}}" class="list-group-item list-group-item-action {{ request()->is('blog') ? 'active' : ''}}"><i class="fa fa-bars"></i> Blog</a>
 	@endif
 	<a href="{{ route('ambassador.list2')}}" class="list-group-item list-group-item-action {{ request()->is('admin/ambassador*') ? 'active' : ''}}"><i class="fa fa-bars"></i> Ambassadors</a>
 	<a href="{{ route('material')}}" class="list-group-item list-group-item-action {{ request()->is('material') ? 'active' : ''}}"><i class="fa fa-telegram"></i> Material</a>
