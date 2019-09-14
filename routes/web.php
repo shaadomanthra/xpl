@@ -275,7 +275,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/companies', 'Content\ArticleController@companies')->name('companies');
 	Route::get('/blog/listing', 'Content\ArticleController@public')->name('article.listing')->middleware('auth');
 	Route::get('/blog/template', function(){ return view('appl.content.article.template'); })->name('template');
-	Route::get('/blog/{label}','Content\ArticleController@label' )->name('blog.label');
+	Route::get('/blog/myblogs','Content\ArticleController@myblogs' )->name('myblogs')->middleware('auth');
 	Route::resource('blog','Content\ArticleController',['names' => [
         'index' => 'article.index',
         'store' => 'article.store',
@@ -284,6 +284,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         'update'=>'article.update',
         'destroy'=>'article.destroy',
     ]]);
+	Route::get('/blog/{label}','Content\ArticleController@label' )->name('blog.label');
+	
 
     Route::resource('label','Content\LabelController')->middleware('auth');
     

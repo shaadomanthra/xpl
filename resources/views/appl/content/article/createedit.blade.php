@@ -125,6 +125,7 @@
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="id" value="{{ $obj->id }}">
         @endif
+        <input type="hidden" name="user_id" value="{{ \auth::user()->id }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 

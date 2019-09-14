@@ -9,7 +9,7 @@
   <div class="row">
 
     <div class="col-md-12">
-    
+      @if(isset($obj->image))
       @if(Storage::disk('public')->exists($obj->image))
       
       <picture>
@@ -39,17 +39,20 @@
 </picture>
 
       @endif
+      @endif
       <div class="p-3 p-md-4 p-lg-5 bg-white company">
           
           @include('flash::message')
           <h1 class=""> {{ $obj->name }}  
 
           @if(\auth::user())
-          @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter']))
+          @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','blog-writer']))
+          @if(\auth::user()->id == $obj->user_id)
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route($app->module.'.edit',$obj->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
+            @endif
             @endif
           @endif
 

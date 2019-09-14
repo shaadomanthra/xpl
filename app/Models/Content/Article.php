@@ -15,7 +15,8 @@ class Article extends Model
         'keywords',
         'related',
         'math',
-        'status'
+        'status',
+        'user_id'
     ];
 
     public function labels()

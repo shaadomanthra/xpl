@@ -153,25 +153,57 @@ class ArticleController extends Controller
      */
     public function public(Obj $obj,Request $request)
     {
-        if(!\auth::user()->checkRole(['administrator','data-lead','data-manager']))
+        if(!\auth::user()->checkRole(['administrator','data-lead','data-manager','blog-writer']))
                 abort('404','Page Not Found');
     	
         $search = $request->search;
         $item = $request->item;
 
         $labels = Label::get();
-        
-        
-        $objs = $obj->where('name','LIKE',"%{$item}%")
+        if($request->get('user_id')){
+            $objs = $obj->where('user_id',$request->get('user_id'))
+                    ->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc')
                     ->paginate(18); 
+        }else{
+            $objs = $obj->where('name','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc')
+                    ->paginate(18);
+        }
 
         $view = $search ? 'list': 'index';
-
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('objs',$objs)
                 ->with('labels',$labels)
                 ->with('listing',1)
+                ->with('obj',$obj)
+                ->with('app',$this);
+    }
+
+
+    /** PUBLIC LISTING
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function myblogs(Obj $obj,Request $request)
+    {
+        
+        $search = $request->search;
+        $item = $request->item;
+
+        $labels = Label::get();
+        $objs = $obj->where('user_id',\auth::user()->id)
+                    ->where('name','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc')
+                    ->paginate(18); 
+        
+
+        $view = $search ? 'list': 'index';
+        return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
+                ->with('objs',$objs)
+                ->with('labels',$labels)
+                ->with('myblogs',1)
                 ->with('obj',$obj)
                 ->with('app',$this);
     }
@@ -222,10 +254,12 @@ class ArticleController extends Controller
                 $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
 
                 $request->merge(['image' => $path]);
+            }else{
+                $request->merge(['image' => '']);
             }
 
             /* create a new entry */
-            $obj->create($request->except(['file_']));
+            $obj = $obj->create($request->except(['file_']));
 
             $sizes = [300,600,900,1200];
             if(isset($path))
@@ -281,8 +315,17 @@ class ArticleController extends Controller
             $obj = json_decode(file_get_contents($filepath));
         else{
             $obj = Obj::where('slug',$slug)->first();
-            $label = $obj->labels()->first();
-            $obj->related1 = $label->articles()->limit(3)->get();
+
+            $label1 = $obj->labels()->first();
+            $label2 = $obj->labels()->skip(1)->first();
+            $obj->labels = $obj->labels;
+            if($label1){
+                $obj->related1 = $label1->articles()->limit(4)->get(); 
+            }
+
+            if($label2){
+                $obj->related2 = $label2->articles()->limit(4)->get(); 
+            }
         }
         
         if(!$obj)
@@ -350,7 +393,7 @@ class ArticleController extends Controller
     public function edit($slug)
     {
         $obj= Obj::where('slug',$slug)->first();
-        $this->authorize('update', $obj);
+        $this->authorize('edit', $obj);
         $labels = Label::where('status',1)->get();
 
 

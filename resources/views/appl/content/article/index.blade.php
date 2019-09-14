@@ -66,9 +66,17 @@
      <div class="col-12 col-md-3 col-lg-2">
         <div class=" border rounded  text-white mb-4">
          <div class="list-group ">
-        <a href="{{ route('article.index')}}" class="list-group-item list-group-item-action list-group-item-s @if(!isset($label))  active @endif ">
+        <a href="{{ route('article.index')}}" class="list-group-item list-group-item-action list-group-item-primary @if(!isset($label) && !isset($myblogs))  active @endif ">
           All Blogs
         </a>
+        @if(\Auth::user())
+        @if(\Auth::user()->checkRole(['administrator','manager','blog-writer','editor']))
+        <a href="{{ route('myblogs')}}" class="list-group-item list-group-item-action list-group-item-secondary @if(isset($myblogs))  active @endif ">
+          My Blogs
+        </a>
+        @endif
+        @endif
+
           </div>
         </div>
 
