@@ -99,7 +99,7 @@ class ArticleController extends Controller
         
         $objs = $obj->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc')
-                    ->get(); 
+                    ->paginate(18); 
 
         $view = $search ? 'list': 'index';
 
