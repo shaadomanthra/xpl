@@ -79,7 +79,7 @@
               <div class="sticky-top pt-3">
                 
               @if(isset($obj->related1))
-              
+              @if(count($obj->related1)!=0)
               <div class=" border rounded bg-secondary text-white mb-4">
                   <h4 class="mb-0 p-3">Related Blogs</h4>
                  <div class="list-group ">
@@ -93,7 +93,7 @@
               
                   </div>
                 </div>
-                
+              @endif
               @endif
               @include('snippets.adsense')
               </div>
