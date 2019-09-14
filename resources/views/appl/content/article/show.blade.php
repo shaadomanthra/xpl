@@ -47,7 +47,7 @@
 
           @if(\auth::user())
           @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','blog-writer']))
-          @if(\auth::user()->id == $obj->user_id)
+          @if((\auth::user()->id == $obj->user_id) || \Auth::user()->checkRole(['administrator']))
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route($app->module.'.edit',$obj->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
