@@ -337,8 +337,42 @@ class ArticleController extends Controller
      public function destroy($slug)
     {
         $obj = Obj::where('slug',$slug)->first();
+       
         $this->authorize('update', $obj);
+
+        $filename = $obj->slug.'.json';
+        $filepath = $this->cache_path.$filename;
+
+        if(file_exists($filepath)){
+            unlink($filepath);
+        }
+
+
+        $sizes = [300,600,900,1200];
+        foreach($sizes as $s){
+            $image3 = '/articles/'.$obj->slug.'.png';
+            $image1 = '/articles/'.$obj->slug.'_'.$s.'.jpg';
+            $image2 = '/articles/'.$obj->slug.'_'.$s.'.webp';
+            
+            if(Storage::disk('public')->exists($image1)){
+                Storage::disk('public')->delete($image1);
+            }
+            if(Storage::disk('public')->exists($image2)){
+                Storage::disk('public')->delete($image2);
+            }
+            if(Storage::disk('public')->exists($image3)){
+                Storage::disk('public')->delete($image3);
+            }
+        }
         $obj->delete();
+
+        /* update in cache folder main file */
+            $filename = 'index.'.$this->app.'.'.$this->module.'.json';
+            $filepath = $this->cache_path.$filename;
+            $objs = $obj->orderBy('created_at','desc')->where('status',1)
+                        ->get(); 
+            file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
+            
 
         flash('('.$this->app.'/'.$this->module.') item  Successfully deleted!')->success();
         return redirect()->route($this->module.'.index');
