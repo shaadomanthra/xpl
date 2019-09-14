@@ -54,9 +54,11 @@
           @endif
 
           </h1>
+          @if(isset($obj->labels))
           @foreach($obj->labels as $label)
           <a href="{{ route('blog.label',$label->slug)}}"><span class="badge badge-info">{{$label->name }}</span></a>
           @endforeach
+          @endif
         
           <div class="row">
             <div class="col-12 col-md-8">
