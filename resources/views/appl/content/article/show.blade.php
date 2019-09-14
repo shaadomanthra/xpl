@@ -79,12 +79,21 @@
               <div class="sticky-top pt-3">
                 
               @if(isset($obj->related1))
-              <h3 class="mb-3">Related Blogs</h3>
+              
+              <div class=" border rounded bg-secondary text-white mb-4">
+                  <h4 class="mb-0 p-3">Related Blogs</h4>
+                 <div class="list-group ">
                 @foreach($obj->related1 as $item)
                   @if($item->slug != $obj->slug)
-                    @include('appl.content.article.blocks.related')
+                    <a href="{{ route('page',$item->slug)}}" class="list-group-item list-group-item-action list-group-item-light ">
+                  {{ ucfirst($item->name) }}
+                  </a>
                   @endif
                 @endforeach 
+              
+                  </div>
+                </div>
+                
               @endif
               @include('snippets.adsense')
               </div>
