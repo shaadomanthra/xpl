@@ -70,8 +70,9 @@
             </div>
             <div class="col-12 col-md-4 ">
               <div class="sticky-top pt-3">
-                <h3 class="mb-3">Related Blogs</h3>
+                
               @if(isset($obj->related1))
+              <h3 class="mb-3">Related Blogs</h3>
                 @foreach($obj->related1 as $item)
                     @include('appl.content.article.blocks.related')
                 @endforeach 
