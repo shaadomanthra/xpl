@@ -273,9 +273,19 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('studentstore','Product\AdminController@studentstore')->name('admin.user.studentstore');
 
 	Route::get('/companies', 'Content\ArticleController@companies')->name('companies');
-	Route::get('/article/listing', 'Content\ArticleController@public')->name('article.listing')->middleware('auth');
-	Route::get('/article/template', function(){ return view('appl.content.article.template'); })->name('template');
-	Route::resource('article','Content\ArticleController');
+	Route::get('/blog/listing', 'Content\ArticleController@public')->name('article.listing')->middleware('auth');
+	Route::get('/blog/template', function(){ return view('appl.content.article.template'); })->name('template');
+	Route::get('/blog/{label}','Content\ArticleController@label' )->name('blog.label');
+	Route::resource('blog','Content\ArticleController',['names' => [
+        'index' => 'article.index',
+        'store' => 'article.store',
+        'create' => 'article.create',
+        'edit'=> 'article.edit',
+        'update'=>'article.update',
+        'destroy'=>'article.destroy',
+    ]]);
+
+    Route::resource('label','Content\LabelController')->middleware('auth');
     
 	Route::resource('role','User\RoleController')->middleware('auth');
 	Route::resource('tracks','Content\DocController',['names' => [
@@ -371,7 +381,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/social', 'Social\MediaController@social')->name('social')->middleware('auth');
 	Route::post('/social/imageupload', 'Social\BlogController@image_upload')->name('imageupload');
 	Route::get('/social/imageremove', 'Social\BlogController@image_remove')->name('imageremove');
-	Route::resource('blog','Social\BlogController');
+	//Route::resource('blog','Social\BlogController');
 	Route::resource('social/media','Social\MediaController')->middleware('auth');
 	Route::get('/social/word', 'Social\WordController@index')->name('word');
 

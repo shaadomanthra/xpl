@@ -4,22 +4,20 @@ namespace PacketPrep\Models\Content;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Article extends Model
+class Label extends Model
 {
-    protected $fillable = [
+     protected $fillable = [
+     	'label',
         'name',
         'slug',
         'image',
         'description',
-        'details',
         'keywords',
-        'related',
-        'math',
         'status'
     ];
 
-    public function labels()
+    public function articles()
     {
-        return $this->belongsToMany('PacketPrep\Models\Content\Label');
+        return $this->belongsToMany('PacketPrep\Models\Content\Article');
     }
 }

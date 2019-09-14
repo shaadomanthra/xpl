@@ -78,6 +78,7 @@ class AuthServiceProvider extends ServiceProvider
 
         \PacketPrep\Models\Content\Company::class => \PacketPrep\Policies\Content\CompanyPolicy::class,
         \PacketPrep\Models\Content\Article::class => \PacketPrep\Policies\Content\ArticlePolicy::class,
+        \PacketPrep\Models\Content\Label::class => \PacketPrep\Policies\Content\LabelPolicy::class,
     ];
 
     /**

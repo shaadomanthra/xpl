@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Content;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Content\Article as Obj;
+use PacketPrep\Models\Content\Label;
 use PacketPrep\Models\Dataentry\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
@@ -18,6 +19,7 @@ class ArticleController extends Controller
         $this->module   =   'article';
         $this->cache_path =  '../storage/app/cache/articles/';
         $this->questions_path =  '../storage/app/cache/questions/';
+        $this->cache_label_path =  '../storage/app/cache/label/';
     }
 
     /**
@@ -42,6 +44,18 @@ class ArticleController extends Controller
 
         foreach($objs as $obj){ 
             $filename = $obj->slug.'.json';
+            $label1 = $obj->labels()->first();
+            $label2 = $obj->labels()->skip(1)->first();
+            $obj->labels = $obj->labels;
+            if($label1){
+                $obj->related1 = $label1->articles()->limit(4)->get(); 
+            }
+
+            if($label2){
+                $obj->related2 = $label2->articles()->limit(4)->get(); 
+            }
+            
+
             $filepath = $this->cache_path.$filename;
             file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
         }
@@ -52,22 +66,30 @@ class ArticleController extends Controller
     if(file_exists($filepath) && !$search && !$page){
     	$objs = json_decode(file_get_contents($filepath));
         $objs = $this->paginateAnswers($objs,18);
+
+        $filename = 'index.'.$this->app.'.label.json';
+        $filepath = $this->cache_label_path.$filename;
+        $labels = collect(json_decode(file_get_contents($filepath)));
+
     }else{
     	$objs = $obj->where('name','LIKE',"%{$item}%")
     	->where('status',1)
     	->orderBy('created_at','desc')
     	->paginate(18);  
+
+        $labels = Label::get();
     }
     
     $view = $search ? 'list': 'index';
 
     return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
         ->with('objs',$objs)
+        ->with('labels',$labels)
         ->with('obj',$obj)
         ->with('app',$this);
     }
 
-     protected function paginateAnswers(array $answers, $perPage = 10)
+    protected function paginateAnswers(array $answers, $perPage = 10)
     {
         $page = Input::get('page', 1);
 
@@ -83,6 +105,46 @@ class ArticleController extends Controller
 
         return $paginator;
     }
+
+
+    public function label($slug,Obj $obj,Request $request)
+    {
+
+     $search = $request->search;
+     $item = $request->item;
+     $page = $request->page;
+     $filename = $slug.'.json';
+     $filepath = $this->cache_label_path.$filename;
+
+
+    if(file_exists($filepath) && !$search && !$page){
+        $label = json_decode(file_get_contents($filepath));
+        $objs = $this->paginateAnswers($label->articles,18);
+
+        $filename = 'index.'.$this->app.'.label.json';
+        $filepath = $this->cache_label_path.$filename;
+        $labels = collect(json_decode(file_get_contents($filepath)));
+
+    }else{
+        $label = Label::where('slug',$slug)->first();
+        $labels = Label::get();
+        if(!$search)
+        $objs = $label->articles()->paginate(18);  
+        else{
+           $objs=  $label->articles()->where('name','LIKE',"%{$item}%")->paginate(18);
+        }
+    }
+    
+    $view = $search ? 'list': 'index';
+
+    return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
+        ->with('objs',$objs)
+        ->with('label',$label)
+        ->with('labels',$labels)
+        ->with('obj',$obj)
+        ->with('app',$this);
+    }
+
 
     /** PUBLIC LISTING
      * Display a listing of the resource.
@@ -119,12 +181,14 @@ class ArticleController extends Controller
     {
         $obj = new Obj();
         $this->authorize('create', $obj);
+        $labels = Label::where('status',1)->get();
 
         return view('appl.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
                 ->with('jqueryui',true)
                 ->with('obj',$obj)
-                 ->with('editor','true')
+                ->with('labels',$labels)
+                ->with('editor','true')
                 ->with('app',$this);
     }
 
@@ -162,6 +226,14 @@ class ArticleController extends Controller
             if(isset($path))
             foreach($sizes as $s)
                 image_resize($path,$s);
+
+            // attach the tags
+            $labels = $request->get('labels');
+            if($labels)
+            foreach($labels as $label){
+                $obj->labels()->attach($label);
+            }
+
 
             /* update cache file of this product */
             $filename = $obj->slug.'.json';
@@ -204,6 +276,8 @@ class ArticleController extends Controller
             $obj = json_decode(file_get_contents($filepath));
         else{
             $obj = Obj::where('slug',$slug)->first();
+            $label = $obj->labels()->first();
+            $obj->related1 = $label->articles()->limit(3)->get();
         }
         
         if(!$obj)
@@ -272,6 +346,7 @@ class ArticleController extends Controller
     {
         $obj= Obj::where('slug',$slug)->first();
         $this->authorize('update', $obj);
+        $labels = Label::where('status',1)->get();
 
 
         if($obj)
@@ -279,6 +354,7 @@ class ArticleController extends Controller
                 ->with('stub','Update')
                 ->with('jqueryui',true)
                 ->with('editor','true')
+                ->with('labels',$labels)
                 ->with('obj',$obj)->with('app',$this);
         else
             abort(404);
@@ -314,7 +390,16 @@ class ArticleController extends Controller
                 $request->merge(['image' => $path]);
             }
 
-            
+            $labels = $request->get('labels');
+            if($labels){
+                $obj->labels()->detach();
+                foreach($labels as $label){
+                $obj->labels()->attach($label);
+                }
+            }else{
+                $obj->labels()->detach();
+            }
+
 
             $obj->update($request->except(['file_'])); 
 

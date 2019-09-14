@@ -42,7 +42,7 @@
       <div class="p-3 p-md-4 p-lg-5 bg-white company">
           
           @include('flash::message')
-          <h1 class=""> {{ $obj->name }} 
+          <h1 class=""> {{ $obj->name }}  
 
           @if(\auth::user())
           @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter']))
@@ -54,22 +54,27 @@
           @endif
 
           </h1>
-
+          @foreach($obj->labels as $label)
+          <a href="{{ route('blog.label',$label->slug)}}"><span class="badge badge-info">{{$label->name }}</span></a>
+          @endforeach
         
           <div class="row">
-            <div class="col-12 col-md">
-              <div class="mb-4">
+            <div class="col-12 col-md-8">
+              <div class="mb-4" style="word-wrap: break-word;">
               {!! $obj->description !!}
             </div>
-              <div class="">
+              <div class="" style="word-wrap: break-word;">
               {!! $obj->details !!}
             </div>
 
             </div>
             <div class="col-12 col-md-4 ">
               <div class="sticky-top pt-3">
-              @if(isset($obj->related))
-              {!! $obj->related !!}
+                <h3 class="mb-3">Related Blogs</h3>
+              @if(isset($obj->related1))
+                @foreach($obj->related1 as $item)
+                    @include('appl.content.article.blocks.related')
+                @endforeach 
               @endif
               @include('snippets.adsense')
               </div>
