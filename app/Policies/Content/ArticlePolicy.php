@@ -82,6 +82,8 @@ class ArticlePolicy
 
     public function before($user, $ability)
     {
+        if($user->checkRole(['administrator','editor']))
+            return true;
         if ($user->isAdmin()) {
             return true;
         }

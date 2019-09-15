@@ -46,8 +46,8 @@
           <h1 class=""> {{ $obj->name }}  
 
           @if(\auth::user())
-          @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','blog-writer']))
-          @if((\auth::user()->id == $obj->user_id) || \Auth::user()->checkRole(['administrator']))
+          @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','blog-writer','editor']))
+          @if((\auth::user()->id == $obj->user_id) || \Auth::user()->checkRole(['administrator','editor']))
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route($app->module.'.edit',$obj->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
@@ -59,6 +59,7 @@
           </h1>
           @if(isset($obj->labels))
           <div class="mb-3" >
+            <a href="{{ route('article.index')}}"><span class="badge badge-secondary">Blog</span></a>
           @foreach($obj->labels as $k=>$label)
           <a href="{{ route('blog.label',$label->slug)}}"><span class="badge @if($k==0) badge-info @elseif($k==1) badge-warning @else badge-secondary @endif">{{$label->name }}</span></a>
           @endforeach
