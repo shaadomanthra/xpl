@@ -45,7 +45,7 @@
         <li class="mr-3 "><a class="nav-link " href="{{ url('firstacademy') }}" aria-label="Abroad Study Preparation"><i class="fa fas fa-gg"></i> Abroad Studies</a></li>
                     <!--
                         <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>   -->
-                        <li class="mr-3 "><a class="nav-link " href="{{ url('targettcs') }}" aria-label="Target TCS program"><i class="fa fa-ravelry"></i> Target TCS</a></li>
+                        <li class="mr-3 "><a class="nav-link " href="{{ url('wipro-nlth-2020') }}" aria-label="Wipro NLTH 2020"><i class="fa fa-ravelry"></i> Wipro NLTH 2020</a></li>
 
                         <li class="mr-3 "><a class="nav-link " href="{{ url('ambassador') }}" aria-label="Internship at packetprep"><span class="badge badge-warning p-1 pl-2 pr-2"> Internship</span></a></li>
 
