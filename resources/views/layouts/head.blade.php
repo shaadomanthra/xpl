@@ -26,7 +26,7 @@
     </script>
     @endif
   <title>@yield('title')</title>
-  <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+  
   <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
   @if(isset($editor))
   <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
@@ -36,6 +36,11 @@
   <link href="{{asset('js/codemirror/theme/abcdef.css')}}" rel="stylesheet">
   <link href="{{asset('js/highlight/styles/default.css')}}" rel="stylesheet">
   <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
+  @endif
+  @if(isset($highlight))
+  <link href="{{ asset('css/styles2.css') }}" rel="stylesheet">
+  @else
+  <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
   @endif
   @if(isset($mathjax))
   <script type="text/x-mathjax-config">

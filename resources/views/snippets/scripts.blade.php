@@ -44,6 +44,11 @@
         
 </script>
 @endif
+
+@if(isset($highlight))
+<script src="{{asset('js/highlight.pack.js')}}"></script>  
+<script>hljs.initHighlightingOnLoad();</script>
+@endif
 @if(isset($code))
 <!-- Codemirror-->
 <script src="{{asset('js/codemirror/lib/codemirror.js')}}"></script>  

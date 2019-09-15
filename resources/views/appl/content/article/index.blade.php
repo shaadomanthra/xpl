@@ -26,9 +26,12 @@
 
       @can('create',$obj)
             <a href="{{route($app->module.'.create')}}">
-              <button type="button" class="btn btn-outline-success btn-sm my-2 my-sm-2 mr-sm-3">Create {{ ucfirst($app->module) }}</button>
+              <button type="button" class="btn btn-outline-success btn-sm my-2 my-sm-2 mr-sm-1">Create {{ ucfirst($app->module) }}</button>
             </a>
-            @endcan
+            <a href="{{route('article.index')}}?refresh=1">
+              <button type="button" class="btn btn-outline-primary btn-sm my-2 my-sm-2 mr-sm-3">Refresh Cache</button>
+            </a>
+      @endcan
       </h1>
 
       @if(isset($label))

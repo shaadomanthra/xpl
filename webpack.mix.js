@@ -19,6 +19,10 @@ mix.styles(['public/css/app.css','public/css/bootstrap.min.css',
     'public/css/home.css'
 ], 'public/css/styles.css');
 
+mix.styles(['public/css/app.css','public/css/bootstrap.min.css',
+    'public/css/home.css','public/css/highlight/an-old-hope.css'
+], 'public/css/styles2.css');
+
 mix.js(['public/js/jquery.js',
     'public/js/global.js'
 ], 'public/js/script_j.js');

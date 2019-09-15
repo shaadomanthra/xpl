@@ -97,10 +97,11 @@
       </div>
 
       <div class="form-group">
-        <label for="formGroupExampleInput ">Math Equations</label>
+        <label for="formGroupExampleInput ">Script</label>
         <select class="form-control" name="math">
-          <option value="0" @if(isset($obj)) @if($obj->math==0) selected @endif @endif >No</option>
-          <option value="1" @if(isset($obj)) @if($obj->math==1) selected @endif @endif >Yes</option>
+          <option value="0" @if(isset($obj)) @if($obj->math==0) selected @endif @endif >None</option>
+          <option value="1" @if(isset($obj)) @if($obj->math==1) selected @endif @endif >Math</option>
+          <option value="2" @if(isset($obj)) @if($obj->math==2) selected @endif @endif >Code</option>
         </select>
       </div>
         </div>

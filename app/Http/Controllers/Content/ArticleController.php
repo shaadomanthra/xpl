@@ -387,13 +387,20 @@ class ArticleController extends Controller
                     ->with('app',$this)
                     ->with('share',true); 
             }
-            else if($obj->math)
+            else if($obj->math==1){
                 return view('appl.'.$this->app.'.'.$this->module.'.show')
                     ->with('obj',$obj)
                     ->with('questions',$questions)
                     ->with('app',$this)
                     ->with('mathjax',true)
                     ->with('share',true);
+            }else if($obj->math==2){
+                return view('appl.'.$this->app.'.'.$this->module.'.show')
+                    ->with('obj',$obj)
+                    ->with('questions',$questions)
+                    ->with('app',$this)
+                    ->with('highlight',true);
+            }
             else
               return view('appl.'.$this->app.'.'.$this->module.'.show')
                     ->with('obj',$obj)
