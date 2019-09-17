@@ -391,7 +391,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
-
+	Route::get('/wipro-nlth-2020', function(){
+		return Redirect::to('/wipro-nth-2020', 301); 
+	})->name('material');
 	Route::get('/material', 'Dataentry\ProjectController@material')->name('material');
 	Route::get('dataentry/qdb','Dataentry\QdbController@index')->middleware('auth')->name('qdb.index');
 	Route::get('dataentry/pdf','Dataentry\QuestionController@pdf')->middleware('auth')->name('dataentry.pdf');

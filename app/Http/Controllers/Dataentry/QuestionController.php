@@ -1200,11 +1200,17 @@ class QuestionController extends Controller
     }
 
 
-    public function pdf()
+    public function pdf(Request $request)
     {
         ini_set('max_execution_time', 300); //300 seconds = 5 minutes
         $topic  = 'antonyms';
+        
+        if($request->get('topic'))
+            $topic = $request->get('topic');
+        else
+            abort('404');
         $category = Category::where('slug',$topic)->first();
+        $topicname = $category->name;
 
         $questions = $category->questions()->get();
         
@@ -1222,7 +1228,7 @@ class QuestionController extends Controller
         }
 
 
-        $pdf = PDF::loadView('appl.content.chapter.pdf',compact('questions'));
+        $pdf = PDF::loadView('appl.content.chapter.pdf',compact('questions','topicname'));
         $pdf->save($topic.'.pdf'); 
         
 

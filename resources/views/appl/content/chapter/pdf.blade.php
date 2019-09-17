@@ -11,10 +11,10 @@
 
             /** Define now the real margins of every page in the PDF **/
             body {
-                margin-top: 2cm;
-                margin-left: 2cm;
-                margin-right: 2cm;
-                margin-bottom: 2cm;
+                margin-top: 1cm;
+                margin-left: 1cm;
+                margin-right: 1cm;
+                margin-bottom: 1cm;
             }
 
             /** Define the header rules **/
@@ -40,7 +40,7 @@
                 height: 2cm;
 
                 /** Extra personal styles **/
-                background-color: #eee;
+                
                 color: #1f70ab;
                 text-align: center;
                 line-height: 1.5cm;
@@ -53,7 +53,7 @@
               border: none;
             }
 
-            h3{
+            .question{
                 color: #1f70ab;
             }
             .answer{
@@ -66,28 +66,44 @@
     </head>
     <body>
         <!-- Define header and footer blocks before your content -->
-        <header>
-           <img src="https://packetprep.com/img/packetprep-logo-small.png" width="75px" class="logo-main ml-md-1" />
-        </header>
+        
 
         <footer>
-            Copyright &copy; packetprep.com
+            Copyright &copy; packetprep.com - {{$topicname}}
         </footer>
 
         <!-- Wrap the content of your PDF inside a main tag -->
         <main>
             
             @foreach($questions as $k => $question)
-                <h3>{{$k+1}}. {!! $question->question!!}</h3>
-                <div>(A) {{ strip_tags($question->a)}}</div>
-                <div>(B) {{strip_tags($question->b)}}</div>
-                <div>(C) {{strip_tags($question->c)}}</div>
-                <div style="padding-bottom: 10px;">(D) {{strip_tags($question->d)}}</div>
-                <div class="answer" >ANSWER : <b class="answer">{{$question->answer}}</b></div>
+                <div class="question">{{$k+1}}. {!!  preg_replace('!^<p>(.*?)</p>$!i', '$1', $question->question) !!}</div>
+                <div>
+                    @if(strtoupper($question->answer)=='A')
+                     <i>(A)</i>
+                     @else
+                     (A)
+                    @endif 
+
+                     {{ strip_tags($question->a)}} &nbsp; &nbsp;&nbsp;
+                     @if(strtoupper($question->answer)=='B')
+                     <i>(B)</i>
+                     @else
+                     (B)
+                    @endif  {{strip_tags($question->b)}} &nbsp; &nbsp;&nbsp;
+                     @if(strtoupper($question->answer)=='C')
+                     <i>(C)</i>
+                     @else
+                     (C)
+                    @endif {{strip_tags($question->c)}} &nbsp; &nbsp;&nbsp;
+                     @if(strtoupper($question->answer)=='D')
+                     <i>(D)</i>
+                     @else
+                     (D)
+                    @endif 
+                     {{strip_tags($question->d)}} 
+                </div>
                 <hr>
             @endforeach
-
-
         </main>
     </body>
 </html>
