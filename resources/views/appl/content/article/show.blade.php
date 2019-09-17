@@ -151,4 +151,31 @@
   </div>
 </div>
 
+
+
+<div class="modal" tabindex="-1" id="myModal2"  role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Login Now</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Kindly Login to view the answer and complete solution for the question.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="{{ route('login')}}">
+        <button type="button" class="btn btn-primary">Login</button>
+        </a>
+        <a href="{{ route('register.type')}}">
+        <button type="button" class="btn btn-warning">Register</button>
+        </a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection

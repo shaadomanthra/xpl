@@ -111,7 +111,17 @@
 @endif
 
 <div class="bg-light border p-3 submit_{{$qno+1}} d-print-none">
+@auth
 <button class="btn btn-primary btn-lg submit" type="button" data-qno="{{ $qno+1 }}" data-answer="{{$question->answer}}"> Submit</button>
 </div>
+
+@else
+	<a href="#" data-toggle="modal" data-target="#myModal2">
+		<button class="btn btn-primary btn-lg " type="button" > Submit</button>
+	</a>
+</div>
+@endauth
+
+
 
 
