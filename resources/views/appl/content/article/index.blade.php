@@ -35,7 +35,9 @@
       </h1>
 
       @if(isset($label))
+      <div class="mb-3 mb-md-0">
       {{ $label->description }}
+      </div>
 
       @endif
 

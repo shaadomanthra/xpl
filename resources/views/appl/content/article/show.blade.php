@@ -81,7 +81,7 @@
                 
               @if(isset($obj->related1))
               @if(count($obj->related1)!=0)
-              <div class=" border rounded bg-secondary text-white mb-4">
+              <div class=" border rounded bg-secondary text-white mb-4 d-none d-md-block">
                   <h4 class="mb-0 p-3">Related Blogs</h4>
                  <div class="list-group ">
                 @foreach($obj->related1 as $item)
@@ -96,6 +96,7 @@
                 </div>
               @endif
               @endif
+
               @include('snippets.adsense')
               </div>
             </div>
@@ -110,6 +111,26 @@
           @endif
 
           <div class="row">
+
+            @if(isset($obj->related1))
+              @if(count($obj->related1)!=0)
+              <div class="col-12">
+              <div class=" border rounded bg-secondary text-white mb-4 d-block d-md-none">
+                  <h4 class="mb-0 p-3">Related Blogs</h4>
+                 <div class="list-group ">
+                @foreach($obj->related1 as $item)
+                  @if($item->slug != $obj->slug)
+                    <a href="{{ route('page',$item->slug)}}" class="list-group-item list-group-item-action list-group-item-light ">
+                  {{ ucfirst($item->name) }}
+                  </a>
+                  @endif
+                @endforeach 
+              
+                  </div>
+                </div>
+              </div>
+              @endif
+              @endif
       
     </div>
   
