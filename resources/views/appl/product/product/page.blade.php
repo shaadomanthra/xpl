@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 @section('content')
 
@@ -95,7 +96,12 @@
 
               @if(!$entry)
               
-              <a href="{{ route('checkout')}}?product={{$product->slug}}">
+              @auth
+        <a href="{{ route('checkout')}}?product={{$product->slug}}">
+       @else
+       <a href="#" data-toggle="modal" data-target="#myModal2">
+       @endauth
+             
                 <button class="btn btn-success btn-lg ">
                 @if($product->price==0)
                 Access Now
@@ -113,7 +119,13 @@
                </div>
 
                @if(strtotime(\auth::user()->products->find($product->id)->pivot->valid_till) < strtotime(date('Y-m-d')))
-               <a href="{{ route('checkout')}}?product={{$product->slug}}">
+
+               @auth
+       <a href="{{ route('checkout')}}?product={{$product->slug}}">
+       @else
+       <a href="#" data-toggle="modal" data-target="#myModal2">
+       @endauth
+               
                 <button class="btn btn-success btn-lg ">
                 @if($product->price==0)
                 Access Now
@@ -208,27 +220,19 @@
   </div> 
 
 
-  <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-lg" id="myModal2"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+     
       <div class="modal-body">
-        This following action is permanent and it cannot be reverted.
+       Kindly Login to view the content
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        
-        <form method="post" action="{{route('product.destroy',$product->id)}}">
-        <input type="hidden" name="_method" value="DELETE">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        	<button type="submit" class="btn btn-danger">Delete Permanently</button>
-        </form>
+        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
+        <a href="{{ route('login')}}">
+        <button type="button" class="btn btn-success">Login</button>
+      </a>
       </div>
     </div>
   </div>

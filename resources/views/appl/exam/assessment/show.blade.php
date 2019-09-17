@@ -13,7 +13,6 @@
 			</div>
 			<div class="col-12 col-md-8">
 				<h1 class="mt-3">
-					
 					{{ $exam->name }} @if($exam->status ==2)
 					<span class="badge badge-primary ">
 					<i class="fa fa-lock" aria-hidden="true"></i>  PREMIUM
@@ -23,7 +22,10 @@
 					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> FREE
 				</span>
 					@endif</h1>
+
+
 				{!! $exam->description  !!}
+
 				@if($entry)
 				  @if(!$exam->attempted())
                   <a href="{{route('assessment.instructions',$exam->slug)}}">
@@ -41,7 +43,10 @@
 					<button class="btn btn-lg btn-success"> Attempt Test </button>
 					</a>
 					@else
-					<a href="{{route('productpage',$exam->products->first()->slug)}}">
+
+			       <a href="{{route('productpage',$exam->products->first()->slug)}}">
+						
+
 					<button class="btn btn-lg btn-success"> Buy Now </button>
 					</a>
 					@endif
@@ -54,7 +59,13 @@
 				@endif
 
 				@if($exam->status!=1 && !$exam->attempted())
-				<a href="{{route('assessment.access',$exam->slug)}}">
+				
+				   @auth
+			       <a href="{{route('assessment.access',$exam->slug)}}">
+			       @else
+			       <a href="#" data-toggle="modal" data-target="#myModal2">
+			       @endauth
+
 				<button class="btn btn-lg btn-outline-success"> Access Code </button>
 				</a>
 				@endif
@@ -68,5 +79,23 @@
 		
 	</div>
 	</div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="myModal2"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+
+    <div class="modal-content">
+     
+      <div class="modal-body">
+       Kindly Login to view the content
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
+        <a href="{{ route('login')}}">
+        <button type="button" class="btn btn-success">Login</button>
+    	</a>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection           

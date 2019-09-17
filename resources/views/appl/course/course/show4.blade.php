@@ -127,59 +127,18 @@
 					@foreach($n->children as $c)
 					@if($c->video_link || $c->pdf_link || $c->exam_id)
 						<li class="item {{ $cid = $c->id }}" id="{{ $c->slug }}"> 
-						<a href="{{ route('course.category.video',[$course->slug,$c->slug]) }}">
-						@if($c->video_link)
-                    		@if(is_numeric($c->video_link))
-                        		<i class="fa fa-lock"></i>
-                    		@else
-                     		<i class="fa fa-circle-o" aria-hidden="true"></i>
-                     		@endif
-                     	@elseif($c->pdf_link)
-                     		<i class="fa fa-file-pdf-o"></i>
+						@include('appl.course.course.blocks.video_link')
 
-                     	@elseif($c->exam_id)	
-                     		<i class="fa fa-external-link"></i>
-                     	@endif
-
-                     	{{ $c->name }}
-                     	</a>
                      	@if($categories->$cid->total!=0)
-                     	<a href="{{ route('course.question',[$course->slug,$c->slug,''])}}">
-                     	<span class="badge badge-warning">Practice {{($categories->$cid->correct + $categories->$cid->incorrect) }} / {{$categories->$cid->total }}</span>
-                     	</a>
+                     		@include('appl.course.course.blocks.practice_link')
                      	@endif
+                     	
                      	@if($c->exam_id)
-                     	<span class="{{ $eid = $c->exam_id }}"></span>
-                     	@if(!isset($course->attempt[$eid]))
-                     	
-                     		@if(isset($course->tests->$eid))
-	                     	<a href="{{ route('assessment.show',$course->tests->$eid)}}">
-	                     	<span class="badge badge-success"> <i class="fa fa-circle-o"></i> Try Test</span>
-	                     	</a>
-	                     	@else
-							<a href="{{ route('assessment.show',$c->exam_id)}}">
-	                     	<span class="badge badge-success"> <i class="fa fa-circle-o"></i> Try Test</span>
-	                     	</a>
-
-	                     	@endif
-                     	@else
-                     	<a href="{{ route('assessment.analysis',$course->tests->$eid)}}">
-                     	<span class="badge badge-primary"> <i class="fa fa-bar-chart-o"></i> Test Analysis </span>
-                     	</a>
-                     	@endif
-                     	
+                     		@include('appl.course.course.blocks.exam_link')
                      	@endif
                      	
                      	@if($categories->$cid->total!=0)
-                     	<div class="row mt-3">
-                     		<div class="col-12">
-                     			                     	<div class="progress progress-sm" style="height:3px">
-  <div class="progress-bar bg-success" role="progressbar" style="width: {{ $categories->$cid->correct_percent}}%" aria-valuenow="{{ $categories->$cid->correct}}" aria-valuemin="0" aria-valuemax="100"></div>
-  <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $categories->$cid->incorrect_percent}}%" aria-valuenow="{{ $categories->$cid->incorrect}}" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-
-                     		</div>
-                     	</div>
+                     		@include('appl.course.course.blocks.progress')
                      	@endif
 
 						@if($c->video_desc)
@@ -271,6 +230,24 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="myModal2"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+
+    <div class="modal-content">
+     
+      <div class="modal-body">
+       Kindly Login to view the content
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
+        <a href="{{ route('login')}}">
+        <button type="button" class="btn btn-success">Login</button>
+    	</a>
       </div>
     </div>
   </div>
