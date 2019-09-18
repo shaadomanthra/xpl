@@ -358,13 +358,18 @@ class ArticleController extends Controller
         {
         	abort('404','Page Not Found');
         }
-        if(!$obj->status)
+        if(isset($obj->status))
         {
-        	if(!\auth::user())
-        		abort('404','Page Not Found');
+            if(!$obj->status){
+                if(!\auth::user())
+                abort('404','Page Not Found');
 
-        	if(!\auth::user()->checkRole(['administrator','data-lead','data-manager']))
-        		abort('404','Page Not Found');
+            if(!\auth::user()->checkRole(['administrator','data-lead','data-manager']))
+                abort('404','Page Not Found');
+            }
+        	
+        }else{
+            abort('404','Page Not Found');
         }
 
         $filepath = $this->questions_path.$filename;

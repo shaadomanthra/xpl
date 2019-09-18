@@ -24,7 +24,7 @@ class UsersExport implements FromCollection
         //$college = College::where('name','Mahatma Gandhi Institute Of Technology')->first();
         //$userss = $college->users->pluck('id');
         $entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id'); 
-        $user_id = User_Details::whereIn('user_id',$entry)->where('year_of_passing','2022')->orderBy('user_id')->pluck('user_id');
+        $user_id = User_Details::whereIn('user_id',$entry)->where('year_of_passing','2021')->orderBy('user_id')->pluck('user_id');
         
         $users =  User::whereIn('id',$user_id)->paginate(300);
     
