@@ -358,6 +358,7 @@ class ArticleController extends Controller
         {
         	abort('404','Page Not Found');
         }
+      
         if(isset($obj->status))
         {
             if(!$obj->status){

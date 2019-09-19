@@ -6,9 +6,7 @@
 @section('content')
 
 
-  <div class="row">
 
-    <div class="col-md-12">
       @if(isset($obj->image))
       @if(Storage::disk('public')->exists($obj->image))
       
@@ -137,13 +135,7 @@
     </div>
       </div>
 
-    </div>
 
-
-    
-
-    
-  </div> 
 
 
   <!-- Modal -->
