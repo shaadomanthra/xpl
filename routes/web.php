@@ -400,6 +400,11 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 		return Redirect::to('/course/set-theory-gate-cs', 301); 
 	});
 
+
+	Route::get('c-program-to-check-if-the-given-number-is-a-prime-number', function(){
+		return Redirect::to('c-program-to-check-prime-number', 301); 
+	});
+
 	Route::get('/course/quant', function(){
 		return Redirect::to('/course/quantitative-aptitude', 301); 
 	});
