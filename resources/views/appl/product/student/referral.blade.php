@@ -1,6 +1,6 @@
 @extends('layouts.nowrap-product')
 @section('title', 'Referral Program | PacketPrep')
-@section('description', 'Refer 3 students and get 3 months access to pracketprep premium services')
+@section('description', 'Refer 3 students and get 12 month pro access to GRAND MASTER PACKAGE)
 @section('keywords', 'quantitative aptitude, mental ability, learning, simple, interesting, logical reasoning, general english, interview skills, packetprep referral')
 
 @section('content')
