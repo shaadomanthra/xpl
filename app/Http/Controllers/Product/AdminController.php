@@ -548,6 +548,7 @@ class AdminController extends Controller
                 $coll = null;
             }   
 
+            if(!$us->products->contains($pid))
             if($us->referrals>=3){
                 $pid = 31;
                 $month = 12;
