@@ -17,7 +17,7 @@
             <div class="p-3">
             <h1>Take a FREE GRE or IELTS Test</h1>
             <p class="text-secondary" >All the packetprep users, can now take a free GRE or IELTS mock test and get it evaluated by the expert trainers.</p>
-            <a href="https://forms.gle/EcPCNfRGb6ytdLXj9">
+            <a href="https://prep.firstacademy.in/request-form?test=ielts">
             <button class="btn btn-outline-primary">Choose a Slot</button>
             </a>
           </div>
@@ -31,7 +31,7 @@
             <div class="p-3">
             <h1>Attend Free counselling</h1>
             <p class="text-secondary" >Now you can get all your doubts clarified (regarding abroad study) from the experts. Book a free counselling session now.</p>
-            <a href="https://forms.gle/v22kV5cY34Wm3x6A7">
+            <a href="https://prep.firstacademy.in/request-form?counselling=abroad">
             <button class="btn btn-outline-primary">Choose a Slot</button>
             </a>
           </div>
