@@ -27,11 +27,11 @@
         <b> Stream :</b> All Branches<br>
 
       <div class="mt-3 mb-3">
-      <a href="{{ url('course\targettcs') }}">
+      <a href="{{ url('course/targettcs') }}">
       <button class="btn btn-lg btn-success p-3 pr-4 pl-4"><i class="fa fa-send"></i> &nbsp;Open Course Page</button>
       </a>
 
-      <a href="{{ url('targettcs\code') }}">
+      <a href="{{ url('targettcs/code') }}">
       <button class="btn btn-lg btn-primary p-3 pr-4 pl-4"><i class="fa fa-code"></i> &nbsp;Code Editor Simulation</button>
       </a>
     </div>
