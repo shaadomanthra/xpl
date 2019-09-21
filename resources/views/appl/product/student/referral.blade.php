@@ -75,7 +75,7 @@
 
           @if(count($user->referrals)>=3)
             @if(!$product)
-            <a href="{{ route('grandmaster')}}"><button class="btn btn-lg btn-outline-primary"> Grand Master Program</button></a>
+            <a href="https://packetprep.com/productpage/grandmaster"><button class="btn btn-lg btn-outline-primary"> Grand Master Program</button></a>
             @else
               <h2 class="badge badge-warning">ACCESS Granted - Grand Master Pack</h2>
             @endif
