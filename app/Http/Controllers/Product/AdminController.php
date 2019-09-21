@@ -548,17 +548,7 @@ class AdminController extends Controller
                 $coll = null;
             }   
 
-            if(!$us->products->contains($pid))
-            if($us->referrals>=3){
-                $pid = 31;
-                $month = 12;
-                $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
-                if(!$us->products->contains($pid)){
-                    $product = Product::where('id',$pid)->first();
-                    if($product->status!=0)
-                        $us->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
-                }
-            }
+            
         }
 
         //branches

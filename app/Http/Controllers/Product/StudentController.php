@@ -109,8 +109,8 @@ class StudentController extends Controller
 
     		if(count($user->referrals)>=3){
 
-    			$pid = 18;
-                        $month = 3;
+    			$pid = 31;
+                        $month = 12;
 
                         $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
                         if(!$user->products->contains($pid)){
