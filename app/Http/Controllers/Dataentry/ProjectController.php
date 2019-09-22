@@ -244,8 +244,8 @@ class ProjectController extends Controller
             $parent =  Category::where('slug',$project->slug)->first();   
             $categories = Category::defaultOrder()->descendantsOf($parent->id)->toFlatTree();
             foreach ($categories as  $cat) {
-                $child_attributes =['name'=>$cat->name,'slug'=> $project_new->slug.'_'.$cat->slug,'project_id'=>$project_new->id];
-                $parent = Category::where('slug',$project_new->slug.'_'.Category::where('id','=',$cat->parent_id)->first()->slug)->first();
+                $child_attributes =['name'=>$cat->name,'slug'=> $project_new->slug.'-'.$cat->slug,'project_id'=>$project_new->id];
+                $parent = Category::where('slug',$project_new->slug.'-'.Category::where('id','=',$cat->parent_id)->first()->slug)->first();
                 $child = new Category($child_attributes);
                 if($parent)
                     $parent->appendNode($child); 
@@ -309,7 +309,7 @@ class ProjectController extends Controller
                 // update categories
                 if($categories)
                 foreach($categories as $category){
-                    $new_cat = Category::where('slug',$project_new->slug.'_'.$category->slug)->first();
+                    $new_cat = Category::where('slug',$project_new->slug.'-'.$category->slug)->first();
                     if($new_cat)
                     if(!$question->categories->contains($new_cat->id))
                             $question->categories()->attach($new_cat->id);
