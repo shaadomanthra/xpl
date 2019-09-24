@@ -79,6 +79,9 @@
         <a href="{{ route('myblogs')}}" class="list-group-item list-group-item-action list-group-item-secondary @if(isset($myblogs))  active @endif ">
           My Blogs
         </a>
+        <a href="{{ route('article.listing')}}" class="list-group-item list-group-item-action list-group-item-secondary ">
+          Blog Listing
+        </a>
         @endif
         @endif
 
