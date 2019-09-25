@@ -1,10 +1,15 @@
 
 <div class="p-3 " id="q{{$qno+1}}"></div>
 @if(isset($question->passage))
-<div class=" p-4 border  rounded mb-3">
-	<h4 class="mb-4"><i class="fa fa-th"></i> Passage</h4>
-	<hr>
+<div class=" p-4 border  rounded mb-3" >
+	<h4 class="mb-0"><i class="fa fa-th"></i> Passage 
+		<button class="btn btn-sm btn-info passage-btn" data-id="{{$qno}}">view</button>
+	</h4>
+	
+	<div class="passage-text passage-text-{{$qno}} mt-4" style="display: none;">
+		<hr>
 	{!! $question->passage->passage !!}
+	</div>
 </div>
 
 @endif

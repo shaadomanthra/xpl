@@ -1,6 +1,13 @@
+
 $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
 $('#flash-overlay-modal').modal();
 
+$(document).ready(function() {
+    $('.passage-btn').on('click',function(){
+      $id = $(this).data('id');
+      $('.passage-text-'+$id).slideToggle();
+    });
+  });
 
 $(document).ready(function(){
 
