@@ -270,6 +270,14 @@ class ArticleController extends Controller
                 $request->merge(['image' => '']);
             }
 
+            $user = \auth::user();
+            $details = summernote_imageupload($user,$request->get('details'));
+            $request->merge(['details'=>$details]);
+
+            $description = summernote_imageupload($user,$request->get('description'));
+            $request->merge(['description'=>$description]);
+
+
             /* create a new entry */
             $obj = $obj->create($request->except(['file_']));
 
@@ -487,6 +495,13 @@ class ArticleController extends Controller
                 $obj->labels()->detach();
             }
 
+            $user = \auth::user();
+            $details = summernote_imageupload($user,$request->get('details'));
+            $request->merge(['details'=>$details]);
+
+            $description = summernote_imageupload($user,$request->get('description'));
+            $request->merge(['description'=>$description]);
+            
 
             $obj->update($request->except(['file_'])); 
 
