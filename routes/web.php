@@ -391,9 +391,15 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
+	Route::get('/wipro-verbal-ability-questions', function(){
+		return Redirect::to('/wipro_verbal_ability_questions', 301); 
+	});
+
 	Route::get('/wipro-nlth-2020', function(){
 		return Redirect::to('/wipro-nth-2020', 301); 
 	})->name('material');
+
+	
 
 	
 	Route::get('/course/set-theory', function(){
