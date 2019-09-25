@@ -501,6 +501,7 @@ class ArticleController extends Controller
 
             $description = summernote_imageupload($user,$request->get('description'));
             $request->merge(['description'=>$description]);
+
             
 
             $obj->update($request->except(['file_'])); 
