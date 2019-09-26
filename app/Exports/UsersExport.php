@@ -23,6 +23,7 @@ class UsersExport implements FromCollection
 
         //$college = College::where('name','Mahatma Gandhi Institute Of Technology')->first();
         //$userss = $college->users->pluck('id');
+        /*
         $entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id'); 
         $user_id = User_Details::whereIn('user_id',$entry)->where('year_of_passing','2021')->orderBy('user_id')->pluck('user_id');
         
@@ -75,7 +76,7 @@ class UsersExport implements FromCollection
   
         } 
 
-        /*
+        */
         $entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id'); 
 
         //$entry = DB::table('user_details')->where('year_of_passing', 2019)->pluck('user_id'); 
@@ -103,13 +104,9 @@ class UsersExport implements FromCollection
                     $key = $users[$k]->id;
                     $users[$k]->phone = $details[$key]->phone;
                     $users[$k]->year_of_passing = $details[$key]->year_of_passing;
-                    
-                   
                 }
-               
-
   
-        } */
+        } 
         //dd($users);
 
         //$entry = DB::table('branch_user')->whereIn('branch_id', [11,12,13,14,15,16,17,18])->pluck('user_id'); 
