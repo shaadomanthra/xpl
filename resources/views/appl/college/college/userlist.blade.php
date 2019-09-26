@@ -23,7 +23,7 @@
                 <th scope="col">Name </th>
                 <th scope="col">Branch</th>
                 <th scope="col">Service</th>
-                <th scope="col">Amount</th>
+                <th scope="col">Phone</th>
                 <th scope="col">Signature</th>
               </tr>
             </thead>
@@ -39,13 +39,7 @@
                 <td>{{ ($obj->branches->first())?$obj->branches->first()->name :''}}</td>
                 <td>{{ ($obj->services->first())?$obj->services->first()->name :''}}</td>
                 <td>
-                  @if($obj->services->first())
-                    @if($obj->services->first()->name == 'Premium Access')
-                      Rs. 500
-                    @else
-                      Rs. 250
-                    @endif
-                  @endif
+                  {{($obj->details->first())?$obj->details->first()->phone :''}}
                 </td>
                 <td></td>
               </tr>
