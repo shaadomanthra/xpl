@@ -39,7 +39,7 @@
                 <td>{{ ($obj->branches->first())?$obj->branches->first()->name :''}}</td>
                 <td>{{ ($obj->services->first())?$obj->services->first()->name :''}}</td>
                 <td>
-                  {{($obj->details->first())?$obj->details->first()->phone :''}}
+                  {{($obj->details->first())?$obj->details->phone :''}}
                 </td>
                 <td></td>
               </tr>
