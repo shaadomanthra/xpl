@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Auth;
 use PacketPrep\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use PacketPrep\Models\User\user_details;
 
 class LoginController extends Controller
 {
@@ -54,6 +55,38 @@ class LoginController extends Controller
             $field => $request->get($this->username()),
             'password' => $request->password,
         ];
+    }
+
+    public function forgotPassword(){
+        return view('auth.forgot');
+
+    }
+
+    public function sendPassword(Request $request){
+        if(strlen($request->get('phone'))<10){
+            flash('Phone number invalid (less than 10 digits)')->success();
+            return redirect()->back()->withInput();
+        }
+
+        $user_details = User_Details::where('phone',$request->get('phone'))->first();
+        $user = $user_details->user;
+        
+        if($user){
+            if(strlen($user->activation_token)<7){
+                $password = $user->activation_token;
+                $user->send_sms($request->get('phone'),$password);
+                flash('Successfully sent sms to the given phone number.')->success();
+                return redirect()->back();
+            }else{
+                flash('This account doesnot have auto-generated password.Kindly reset password using email.')->success();
+                return redirect()->back()->withInput();
+            }
+            
+        }else{
+            flash('User not found with the given phone number')->success();
+            return redirect()->back()->withInput();
+        }
+        
     }
 
     public function hasSubdomain($url) {

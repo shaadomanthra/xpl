@@ -495,7 +495,7 @@ class AdminController extends Controller
 
         $parts = explode("@", $request->email);
         $username = $parts[0];
-        $password = str_random(5);
+        $password = strtoupper(str_random(5));
 
         $user = User::where('username',$username)->first();
 

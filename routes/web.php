@@ -391,6 +391,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
 
+	Route::get('/user/password/forgot', 'Auth\LoginController@forgotPassword')->name('password.forgot');
+	Route::post('/user/password/forgot', 'Auth\LoginController@sendPassword')->name('password.forgot.send');
+
 	Route::get('/wipro-verbal-ability-questions', function(){
 		return Redirect::to('/wipro_verbal_ability_questions', 301); 
 	});

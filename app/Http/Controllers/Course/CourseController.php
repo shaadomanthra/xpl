@@ -115,7 +115,7 @@ class CourseController extends Controller
            $error_code = $e->errorInfo[1];
             if($error_code == 1062){
                 flash('The slug(<b>'.$request->slug.'</b>) is already taken. Kindly use a different slug.')->error();
-                 return redirect()->back()->withInput();;
+                 return redirect()->back()->withInput();
             }
         }
         
