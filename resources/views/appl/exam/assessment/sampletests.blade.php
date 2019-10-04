@@ -1,7 +1,7 @@
 @extends('layouts.app2')
 @section('title', 'Sample Tests | PacketPrep')
-@section('description', 'Here the sample tests ')
-@section('keywords', 'sample assessments')
+@section('description', 'A right recruitment assessment tool makes the mundane tasks of recruitment easier by assessing job specific skills of candidates before interview. It helps you to gauge job applicant's knowledge, technical skills, cognitive ability, behavioral traits and language proficiency required for a particular job role.')
+@section('keywords', 'Sample assessments')
 @section('content')
 
 @include('flash::message')
