@@ -228,6 +228,8 @@ new Chart(ctxOne, optionsOne);
 
 </script>
 
+
+
 @if(isset($sections))
 @foreach($sections as $sec => $section)
 <script type="text/javascript">
@@ -279,6 +281,46 @@ new Chart(ctx_{{$section->section_id}},options_{{$section->section_id}});
 @endif
 
 
+
+@if(isset($secs))
+@foreach($secs as $sec => $section)
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+<script type="text/javascript">
+  var options_{{$section->section_id}} = {
+  type: 'horizontalBar',
+  data: {
+    labels: ["{{$section->labels[0]}}", "{{$section->labels[1]}}", "{{$section->labels[2]}}","{{$section->labels[3]}}"],
+    datasets: [{
+      label:'',
+      data: [{{$section->one}}, {{$section->two}}, {{$section->three}},{{$section->four}}],
+      backgroundColor: [
+                '{{$section->one_color}}',
+                '{{$section->two_color}}',
+                '{{$section->three_color}}',
+                '{{$section->four_color}}'
+            ]
+    }]
+  },
+  options: {
+    legend: {
+        display: false
+    },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+}
+
+var ctx_{{$section->section_id}} = document.getElementById({{$section->section_id}}+'Container').getContext('2d');
+new Chart(ctx_{{$section->section_id}},options_{{$section->section_id}});
+
+</script>
+@endforeach
+@endif
 
 @if(isset($test_analysis))
 

@@ -171,6 +171,10 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/onlinetest/{test}/solutions','Product\TestController@solutions')->name('onlinetest.solutions')->middleware('auth');
 	Route::get('/onlinetest/{test}/solutions/{question}','Product\TestController@solutions')->name('onlinetest.solutions.q')->middleware('auth');
 
+	Route::get('/sample-tests',function(){
+		return view('appl.exam.assessment.sampletests');
+	})->name('sampletests');
+
 
 	Auth::routes();
 
@@ -213,7 +217,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/ambassador/students/{college}','College\AmbassadorController@students2')->name('ambassador.students.view')->middleware('auth');
 	Route::get('/ambassador/onboard','College\AmbassadorController@onboard')->name('ambassador.onboard')->middleware('auth');
 
+	Route::get('/ambassador/onboard','College\AmbassadorController@onboard')->name('ambassador.onboard')->middleware('auth');
 
+	Route::get('/samplereport','Exam\ExamController@sample');
 
 	Route::get('/referral', function () { 
 
@@ -230,8 +236,6 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 		$username = \auth::user()->username;
 
 		$users = \auth::user()->where('user_id',\auth::user()->id)->orderBy('updated_at','desc')->paginate(150);
-
-
 
 		return view('appl.user.referral')
 				->with('type',$type)
@@ -366,6 +370,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('report/{exam}/{user}','Exam\AssessmentController@report')->name('report');
 	Route::get('test','Exam\AssessmentController@index')->name('assessment.index');
 	Route::get('test/{test}/submit','Exam\AssessmentController@submit')->name('assessment.submit');
+	Route::post('test/{test}/submission','Exam\AssessmentController@submission')->name('assessment.submission');
 	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis')->name('assessment.analysis')->middleware('auth');
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
 	Route::get('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q')->middleware('auth');

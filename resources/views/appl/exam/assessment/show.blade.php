@@ -27,7 +27,7 @@
 				{!! $exam->description  !!}
 
 				@if($entry)
-				  @if(!$exam->attempted())
+				  @if(!$attempt)
                   <a href="{{route('assessment.instructions',$exam->slug)}}">
 				<button class="btn btn-lg btn-success"> Attempt Test </button>
 				</a>
@@ -37,28 +37,32 @@
                   </a>
                   @endif
 				@else
-				@if($exam->products->first())
-					@if($exam->status ==1)
-					<a href="{{route('productpage',$exam->products->first()->slug)}}">
+					@if($product)
+						@if($exam->status ==1)
+						<a href="{{route('assessment.instructions',$exam->slug)}}">
+						<button class="btn btn-lg btn-success"> Attempt Test </button>
+						</a>
+						@else
+				       <a href="{{route('productpage',$product->slug)}}">
+						<button class="btn btn-lg btn-success"> Buy Now </button>
+						</a>
+						@endif
+					@elseif($exam->status==1) <!-- free Test -->
+					<a href="{{route('assessment.instructions',$exam->slug)}}">
 					<button class="btn btn-lg btn-success"> Attempt Test </button>
 					</a>
 					@else
-
-			       <a href="{{route('productpage',$exam->products->first()->slug)}}">
-						
-
-					<button class="btn btn-lg btn-success"> Buy Now </button>
+					@if($product)
+					<a href="{{route('productpage',$product->slug)}}">
+						<button class="btn btn-lg btn-success"> Buy Now </button>
 					</a>
 					@endif
-				@elseif($exam->status==1)
-				<a href="{{route('assessment.instructions',$exam->slug)}}">
-				<button class="btn btn-lg btn-success"> Attempt Test </button>
-				</a>
-				@endif
+
+					@endif
 
 				@endif
 
-				@if($exam->status!=1 && !$exam->attempted())
+				@if($exam->status!=1 && !$attempt)
 				
 				   @auth
 			       <a href="{{route('assessment.access',$exam->slug)}}">
@@ -66,7 +70,7 @@
 			       <a href="#" data-toggle="modal" data-target="#myModal2">
 			       @endauth
 
-				<button class="btn btn-lg btn-outline-success"> Access Code </button>
+				<button class="btn btn-lg btn-outline-warning"> Access Code </button>
 				</a>
 				@endif
 		<br><br>
