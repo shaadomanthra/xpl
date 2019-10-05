@@ -248,7 +248,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/referral/list','Product\StudentController@referrallist')->middleware('auth')->name('referral.list');
 	Route::get('/referral/{user}','Product\StudentController@userreferral')->middleware('auth')->name('user.referral');
 
-	
+	Route::get('/productpage/aptitude-assessments', function(){
+		return Redirect::to('/sample-tests', 301); 
+	});
 
 	Route::resource('product','Product\ProductController')->middleware('auth');
 	Route::get('productpage','Product\ProductController@products')->name('products');
@@ -399,9 +401,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/user/password/forgot', 'Auth\LoginController@forgotPassword')->name('password.forgot');
 	Route::post('/user/password/forgot', 'Auth\LoginController@sendPassword')->name('password.forgot.send');
 
-	Route::get('/productpage/aptitude-assessments', function(){
-		return Redirect::to('/sample-tests', 301); 
-	});
+	
 
 	Route::get('/wipro-verbal-ability-questions', function(){
 		return Redirect::to('/wipro_verbal_ability_questions', 301); 
