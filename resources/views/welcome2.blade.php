@@ -123,7 +123,9 @@
                 @foreach(auth::user()->products as $k=>$product)
                  <tr>
                   <th scope="row">{{ $k+1}}</th>
-                  <td><a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a></td>
+                  <td>
+                    <a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a>
+                  </td>
                   <td>
                     @if($product->price==0)
                       <span class="badge badge-warning">Free</span>

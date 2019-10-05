@@ -374,7 +374,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis')->name('assessment.analysis')->middleware('auth');
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
 	Route::get('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q')->middleware('auth');
-	Route::get('test/{test}','Exam\AssessmentController@try')->middleware('auth')->name('assessment.try');
+	Route::get('test/{test}','Exam\AssessmentController@try2')->middleware('auth')->name('assessment.try');
 	Route::get('test/{test}/details','Exam\AssessmentController@show')->name('assessment.show');
 	Route::get('test/{test}/access','Exam\AssessmentController@access')->name('assessment.access')->middleware('auth');
 	Route::get('test/{test}/instructions','Exam\AssessmentController@instructions')->middleware('auth')->name('assessment.instructions');
@@ -398,6 +398,10 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/user/password/forgot', 'Auth\LoginController@forgotPassword')->name('password.forgot');
 	Route::post('/user/password/forgot', 'Auth\LoginController@sendPassword')->name('password.forgot.send');
+
+	Route::get('/productpage/aptitude-assessments', function(){
+		return Redirect::to('/sample-tests', 301); 
+	});
 
 	Route::get('/wipro-verbal-ability-questions', function(){
 		return Redirect::to('/wipro_verbal_ability_questions', 301); 
