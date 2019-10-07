@@ -92,9 +92,9 @@ class ExamController extends Controller
         $section = new Exam;
         $section->section_id = 1;
         $section->one = 100;$section->one_color = $green;
-        $section->two = 20;$section->two_color = $red;
+        $section->two = 80;$section->two_color = $blue;
         $section->three = 60;$section->three_color = $yellow;
-        $section->four = 80;$section->four_color = $blue;
+        $section->four = 20;$section->four_color = $red;
         $section->labels = ["Listening","Speaking","Reading","Writing"];
         $section->average = 60;
         $section->suggestion = "- The Candidate is <b><span class='text-success'>Excellent</span></b> in Listening.<br> - The speaking skills are however <b><span class='text-danger'>not upto mark</span></b>.<br> - In reading <span class='text-info'>paraphrase</span> & <span class='text-info'>understanding details</span> are the areas that <b><span class='text-warning'>need attention</span></b>.<br> - Writing shows promise in <b><span class='text-success'>Grammatical accuracy</span></b> but is <b><span class='text-danger'>poor</span></b> in <span class='text-info'>spellings</span>, <span class='text-info'>parallel structures</span> and <span class='text-info'>referents</span>";
@@ -114,12 +114,12 @@ class ExamController extends Controller
 
         $section = new Exam;
         $section->section_id = 3;
-        $section->one = 30;$section->one_color = $red;
+        $section->one = 80;$section->one_color = $blue;
         $section->two = 95;$section->two_color = $green;
-        $section->three = 20;$section->three_color = $red;
-        $section->four = 20;$section->four_color = $red;
-        $section->average = 55;
-        $section->suggestion = "- The Candidate is <b><span class='text-success'>Excellent</span></b> in Tech Support.<br> - However  marketing, frontdesk and operations are <b><span class='text-danger'>not upto  mark</span></b>.";
+        $section->three = 75;$section->three_color = $blue;
+        $section->four = 85;$section->four_color = $blue;
+        $section->average = 65;
+        $section->suggestion = "- The Candidate is <b><span class='text-success'>Excellent</span></b> in Tech Support.<br> - However  marketing, frontdesk and operations are <b><span class='text-primary'>Good</span></b>.";
         $section->labels = ["Marketing","Tech Support","Frontdesk","Operations"];
         $secs['Domain Knowledge'] = $section;
 
@@ -129,12 +129,12 @@ class ExamController extends Controller
 
         $section = new Exam;
         $section->section_id = 4;
-        $section->one = 40;$section->one_color = $red;
+        $section->one = 90;$section->one_color = $green;
         $section->two = 85;$section->two_color = $blue;
-        $section->three = 50;$section->three_color = $yellow;
+        $section->three = 30;$section->three_color = $red;
         $section->four = 70;$section->four_color = $blue;
-        $section->average = 45;
-        $section->suggestion = "- The candidate shows great tendency towards <b><span class='text-info'>Commitment</span></b> and <b><span class='text-info'>Time Management</span></b> .<br> - However discipline is <b><span class='text-warning'>average</span></b> and integrity is <b><span class='text-danger'>not upto  mark</span></b>.";
+        $section->average = 65;
+        $section->suggestion = "- The candidate shows great tendency towards <b><span class='text-info'>Commitment</span></b> and <b><span class='text-info'>Time Management</span></b> .<br> - While integrity is <b><span class='text-success'>Great</span></b>, discipline  might <b><span class='text-danger'>need some attention </span></b>.";
         $section->labels = ["Integrity","Commitment","Discipline","Time Management"];
         $secs['Attitude'] = $section;
 
