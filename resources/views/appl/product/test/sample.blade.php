@@ -43,9 +43,9 @@
 						<div class="text-center p-3 pb-4 pt-4" style="height:264px">
 						<img src="" style="width:120px;"  class="mb-3"/>
 						
-							<img src="{{ asset('/img/medals/good.png')}}" style="width:120px;"  class="mb-3"/>
+							<img src="{{ asset('/img/medals/excellent.png')}}" style="width:120px;"  class="mb-3"/>
 						<div class="">Performance</div>
-						<h1> GOOD </h1>
+						<h1> Excellent</h1>
 						</div>
 
 					</div>
@@ -123,7 +123,7 @@
 		</div>
 		@endif
 
-		
+		<!--
 		<div class=" p-3" style="background:#eee;border:1px solid #e4e4e4;">
 			<h2 class="mb-3" >Future Aspirations</h2>
 
@@ -177,6 +177,7 @@
 
 			</div>
 		</div>
+	-->
 
 </div>
 @endsection           

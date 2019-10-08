@@ -91,16 +91,32 @@ class ExamController extends Controller
 
         $section = new Exam;
         $section->section_id = 1;
-        $section->one = 100;$section->one_color = $green;
-        $section->two = 80;$section->two_color = $blue;
+        $section->one = 95;$section->one_color = $green;
+        $section->two = 70;$section->two_color = $blue;
         $section->three = 60;$section->three_color = $yellow;
-        $section->four = 20;$section->four_color = $red;
-        $section->labels = ["Listening","Speaking","Reading","Writing"];
-        $section->average = 60;
+        $section->four = 90;$section->four_color = $green;
+        $section->five = 90;$section->five_color = $green;
+        $section->labels = ["Listening","Speaking","Reading","Writing","Grammar"];
+        $section->average = 79;
         $section->suggestion = "- The Candidate is <b><span class='text-success'>Excellent</span></b> in Listening.<br> - The speaking skills are however <b><span class='text-danger'>not upto mark</span></b>.<br> - In reading <span class='text-info'>paraphrase</span> & <span class='text-info'>understanding details</span> are the areas that <b><span class='text-warning'>need attention</span></b>.<br> - Writing shows promise in <b><span class='text-success'>Grammatical accuracy</span></b> but is <b><span class='text-danger'>poor</span></b> in <span class='text-info'>spellings</span>, <span class='text-info'>parallel structures</span> and <span class='text-info'>referents</span>";
-        $secs['English'] = $section;
+        $secs['Communication Skills'] = $section;
 
+         $section = new Exam;
+        $section->section_id = 5;
+        $section->one = 85;$section->one_color = $green;
+        $section->two = 90;$section->two_color = $green;
+        $section->three = 70;$section->three_color = $blue;
+        $section->four = 60;$section->four_color = $yellow;
+        $section->five = 80;$section->five_color = $green;
+        $section->labels = ["Spelling","Vocabulary","Use of English","Idiomatic Expression","Sentence Structure"];
+        $section->average = 65;
+        $section->suggestion = "- 
+        The candidate's communicative skills are by and large <b><span class='text-success'>Excellent</span></b>. <br>
+        - The <b><span class='text-warning'>average score</span></b> indicates that the candidate can communicate comfortably in a wide variety of situations in all forms of communication.<br>
+        - Advanced writing and communicating in detail about technical aspects of a particular domain might cause some <b><span class='text-danger'>difficulty</span></b>.";
+        $secs['Language Skills'] = $section;
 
+        /*
         $section = new Exam;
         $section->section_id = 2;
         $section->one = 30;$section->one_color = $red;
@@ -137,7 +153,7 @@ class ExamController extends Controller
         $section->suggestion = "- The candidate shows great tendency towards <b><span class='text-info'>Commitment</span></b> and <b><span class='text-info'>Time Management</span></b> .<br> - While integrity is <b><span class='text-success'>Great</span></b>, discipline  might <b><span class='text-danger'>need some attention </span></b>.";
         $section->labels = ["Integrity","Commitment","Discipline","Time Management"];
         $secs['Attitude'] = $section;
-
+        */
         
 
 

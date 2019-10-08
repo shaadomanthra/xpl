@@ -276,16 +276,16 @@ class AssessmentController extends Controller
         $completed = 0;
         $questions = array();
         $sections = array();
-        $i = 0;$time = 0;
+        $i = 0; $time = 0;
 
         foreach($exam->sections as $section){
             $qset = $section->questions;
             shuffle($qset);
+            $k=0;
             foreach( $qset as $q){
-
                 $q->dynamic = rand(1,4);
                 $q->answer = $this->new_answer(strtoupper($q->answer),$q->dynamic);
-                $q = $this->option_swap($q,$q->dynamic);
+                $q = $this->option_swap2($q,$q->dynamic);
 
                 if($i==0){
                     $id = $q->id;
@@ -293,7 +293,8 @@ class AssessmentController extends Controller
                 $questions[$i] = $q;
                 $passages[$i] = $q->passage;
                 $sections[$i] = $section;
-                $i++;
+                $section_questions[$section->id][$k]= $q;
+                $i++;$k++;
             }
 
         }
@@ -310,7 +311,8 @@ class AssessmentController extends Controller
                         ->with('time',$time)
                         ->with('sections',$sections)
                         ->with('passages',$passages)
-                        ->with('questions',$questions);
+                        ->with('questions',$questions)
+                        ->with('section_questions',$section_questions);
     }
 
     /**
@@ -512,35 +514,35 @@ class AssessmentController extends Controller
             }
 
             if($dynamic == 4){
-                $question['option_a'] = $question['d'];
-                $question['option_b'] = $question['a'];
-                $question['option_c'] = $question['b'];
-                $question['option_d'] = $question['c'];
-                $question['option_e'] = $question['e'];
+                $question->option_a = $question->d;
+                $question->option_b = $question->a;
+                $question->option_c = $question->b;
+                $question->option_d = $question->c;
+                $question->option_e = $question->e;
             }
 
             if($dynamic == 3){
-                $question['option_a'] = $question['c'];
-                $question['option_b'] = $question['d'];
-                $question['option_c'] = $question['a'];
-                $question['option_d'] = $question['b'];
-                $question['option_e'] = $question['e'];
+                $question->option_a = $question->c;
+                $question->option_b = $question->d;
+                $question->option_c = $question->a;
+                $question->option_d = $question->b;
+                $question->option_e = $question->e;
             }
 
             if($dynamic == 2){
-                $question['option_a'] = $question['b'];
-                $question['option_b'] = $question['c'];
-                $question['option_c'] = $question['d'];
-                $question['option_d'] = $question['a'];
-                $question['option_e'] = $question['e'];
+                $question->option_a = $question->b;
+                $question->option_b = $question->c;
+                $question->option_c = $question->d;
+                $question->option_d = $question->a;
+                $question->option_e = $question->e;
             }
 
             if($dynamic == 1){
-                $question['option_a'] = $question['a'];
-                $question['option_b'] = $question['b'];
-                $question['option_c'] = $question['c'];
-                $question['option_d'] = $question['d'];
-                $question['option_e'] = $question['e'];
+                $question->option_a = $question->a;
+                $question->option_b = $question->b;
+                $question->option_c = $question->c;
+                $question->option_d = $question->d;
+                $question->option_e = $question->e;
             }
 
             return $question;

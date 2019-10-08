@@ -400,7 +400,12 @@ $(".coupon-button").on('click', function () {
     });
 
 
-    
+    // new test
+    $(document).on('click','.test2qno', function() {
+        $sno = $(this).data('sno');
+        $('.question_block').hide();
+        $('.qblock_'+$sno).show();
+    });
 
   });
 

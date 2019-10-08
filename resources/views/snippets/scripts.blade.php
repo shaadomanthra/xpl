@@ -1,4 +1,5 @@
 <script src="{{ asset('js/script.js')}}"></script>
+<script src="{{ asset('js/global.js')}}"></script>
 @if(isset($editor))
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
@@ -289,15 +290,16 @@ new Chart(ctx_{{$section->section_id}},options_{{$section->section_id}});
   var options_{{$section->section_id}} = {
   type: 'horizontalBar',
   data: {
-    labels: ["{{$section->labels[0]}}", "{{$section->labels[1]}}", "{{$section->labels[2]}}","{{$section->labels[3]}}"],
+    labels: ["{{$section->labels[0]}}", "{{$section->labels[1]}}", "{{$section->labels[2]}}","{{$section->labels[3]}}" @if(isset($section->five)),"{{$section->labels[4]}}" @endif],
     datasets: [{
       label:'',
-      data: [{{$section->one}}, {{$section->two}}, {{$section->three}},{{$section->four}}],
+      data: [{{$section->one}}, {{$section->two}}, {{$section->three}},{{$section->four}}  @if(isset($section->five)), {{$section->five}}@endif],
       backgroundColor: [
                 '{{$section->one_color}}',
                 '{{$section->two_color}}',
                 '{{$section->three_color}}',
-                '{{$section->four_color}}'
+                '{{$section->four_color}}',
+                 @if(isset($section->five))'{{$section->five_color}}' @endif
             ]
     }]
   },

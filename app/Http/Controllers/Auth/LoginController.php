@@ -6,6 +6,9 @@ use PacketPrep\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use PacketPrep\Models\User\user_details;
+use PacketPrep\Models\Product\Test;
+use PacketPrep\Models\Exam\Tests_Overall;
+use PacketPrep\Models\Exam\Tests_Section;
 
 class LoginController extends Controller
 {
@@ -122,6 +125,13 @@ class LoginController extends Controller
             auth()->logout();
             return back()->with('warning', 'Your account is in frozen state. Kindly contact administrator for the access.');
         }
+
+        if($user->username == 'demo500'){
+           Test::where('user_id',$user->id)->delete();
+           Tests_Section::where('user_id',$user->id)->delete();
+           Tests_Overall::where('user_id',$user->id)->delete();
+        }
+        
         return redirect()->intended($this->redirectPath());
     }
 
