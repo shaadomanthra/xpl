@@ -1,17 +1,17 @@
 <div class="card mb-3 text-white d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
 		<h4><i class="fa fa-clock-o"></i> Timer</h4>
-		<h1 class="text-bold " id="timer"></h1>
+		<h1 class="text-bold mb-2" id="timer"></h1>
 		<h1 class="text-bold d-none" id="timer2"></h1>
-		<br>
+		
 		<div class=" p-2 mb-2 rounded" style="border:2px solid #bb061c">
 		<div class="row ">
 			<div class="col-3">
-				<div class="left test2qno w100 p-1 text-center pl-2 " data-qno=""><i class="fa fa-angle-double-left" ></i></div>
+				<div class="left-qno cursor w100 p-1 text-center pl-2 " data-qno=""><i class="fa fa-angle-double-left" ></i></div>
 			</div>
 			<div class="col-6"> <div class="mt-1 text-center">Q(<span class="qset_qno">1</span>/{{ count($questions) }})</div></div>
 			<div class="col-3"> 
-				<div class="right test2qno w100 p-1 text-center mr-3 " data-qno="2" ><i class="fa fa-angle-double-right" ></i></div>
+				<div class="right-qno cursor w100 p-1 text-center mr-3 " data-qno="2" ><i class="fa fa-angle-double-right" ></i></div>
 			</div>
 		</div>
 		</div>
@@ -24,7 +24,7 @@
 				@foreach($section_questions[$section->id] as $key=> $q)
 					<div class="col-3 mb-1">
 						<div class="pr-1">
-						<div class="w100 p-1 test2qno s{{ (++$i ) }} text-center rounded qborder @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" 
+						<div class="w100 p-1 test2qno s{{ (++$i ) }} text-center rounded qborder  @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" 
 						    >{{ ($i ) }}</div>
 						</div>
 					</div>

@@ -4,7 +4,7 @@
   @if($passages[$i])
   <div class="card mb-3" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
     <div class="card-body">
-      <b>Passage</b> <span class="btn view badge badge-warning" data-item="passage" data-pno="{{$i}}">view</span><br>
+      <b>Passage</b> <span class="btn view badge badge-warning cursor" data-item="passage" data-pno="{{$i}}">view</span><br>
       <div class="passage pt-2 passage_{{$i}}" style="display: none;">
         {!! $passages[$i]->passage !!}
       </div>
@@ -30,7 +30,7 @@
       <div class="col-3 col-md-2">
         <div class="pr-3 pb-2" >
           <div class="text-center p-1 rounded bg-light w100 border" >
-            <input class="form-check-input" type="radio" name="{{$i}}"  value="A"> A </div>
+            <input class="form-check-input input input_{{($i+1)}}" type="radio" name="{{($i+1)}}" data-sno="{{($i+1)}}" value="A"> A </div>
           </div>
         </div>
         <div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->option_a!!}</div></div>
@@ -42,7 +42,7 @@
         <div class="col-3 col-md-2">
           <div class="pr-3 pb-2" >
             <div class="text-center p-1 rounded bg-light w100 border" >
-              <input class="form-check-input" type="radio" name="{{$i}}"  value="B">  B</div>
+              <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="B">  B</div>
             </div>
           </div>
           <div class="col-9 col-md-10"><div class="pt-1 b">{!! $question->option_b!!}</div></div>
@@ -55,7 +55,7 @@
             <div class="pr-3 pb-2" >
               <div class="text-center p-1 rounded bg-light w100 border" >
 
-                <input class="form-check-input" type="radio" name="{{$i}}"  value="C" > C</div>
+                <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="C" > C</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 c">{!! $question->option_c!!}</div></div>
@@ -67,7 +67,7 @@
             <div class="col-3 col-md-2">
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" >
-                  <input class="form-check-input" type="radio" name="{{$i}}"  value="D"> D</div>
+                  <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="D"> D</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 d">{!! $question->option_d!!}</div></div>
@@ -80,7 +80,7 @@
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" > 
 
-                  <input class="form-check-input" type="radio" name="{{$i}}" value="E" >
+                  <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="E" >
                   E
                 </div>
               </div>
@@ -89,6 +89,10 @@
           </div>
           @endif
 
+          <input id="{{($i+1)}}_time" class="form-input {{($i+1)}}_time" type="hidden" name="{{($i+1)}}_time"  value="0">
+          <input  class="form-input " type="hidden" name="{{($i+1)}}_question_id"  value="{{$question->id}}">
+          <input  class="form-input " type="hidden" name="{{($i+1)}}_dynamic"  value="{{$dynamic[$i]}}">
+          <input  class="form-input " type="hidden" name="{{($i+1)}}_section_id"  value="{{$sections[$i]->id}}">
         </div>
       </div>
    </div>
@@ -96,18 +100,18 @@
 
    <div class="card mb-3">
      <div class="card-body">
-      <button type="button" class="btn  btn-outline-primary mb-2 testqno " data-qno="" data-testname="{{$exam->slug}}">
+      <button type="button" class="btn  btn-outline-primary mb-2 cursor left-qno" data-sno="" data-testname="{{$exam->slug}}">
         <i class="fa fa-angle-double-left"></i> Previous
       </button>
 
-      <button type="button" class="btn  btn-secondary qno-clear mb-2" data-qno="{{$i}}">
+      <button type="button" class="btn  btn-secondary clear-qno mb-2" data-sno="1">
         Clear Response
       </button>
       <a href="#" data-toggle="modal" data-target="#exampleModal">
-        <button type="button" class="btn  btn-success qno-submit mb-2" data-qno="{{$question->id}}" data-tooltip="tooltip" data-placement="top" title="Submit">
+        <button type="button" class="btn  btn-success qno-submit mb-2" data-sno="{{$question->id}}" data-tooltip="tooltip" data-placement="top" title="Submit">
           Submit Test
         </button></a>
-        <button type="button" class="btn  btn-outline-primary mb-2 testqno " data-qno="{{$i+1}}" data-testname="{{$exam->slug}}" >
+        <button type="button" class="btn  btn-outline-primary mb-2 cursor right-qno" data-sno="2" data-testname="{{$exam->slug}}" >
          Next <i class="fa fa-angle-double-right"></i>
        </button>
      </div>

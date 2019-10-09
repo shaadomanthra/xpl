@@ -1,7 +1,8 @@
 @extends('layouts.app')
+@section('title', $exam->name.' | PacketPrep')
 @section('content')
 
-<form method="post" action="{{ route('assessment.submission',$exam->slug)}}" >
+<form method="post" class="assessment" action="{{ route('assessment.submission',$exam->slug)}}" >
   <div class="row">
     <div class="col-md-9">
      @include('appl.exam.assessment.blocks.questions')
@@ -26,6 +27,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
+        <input type="hidden" name="test_id" value="{{ $exam->id }}">
         <button type="submit" class="btn  btn-success " >
             Submit Test
         </button>

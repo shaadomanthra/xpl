@@ -293,10 +293,10 @@ class AssessmentController extends Controller
                 $questions[$i] = $q;
                 $passages[$i] = $q->passage;
                 $sections[$i] = $section;
+                $dynamic[$i] = $q->dynamic;
                 $section_questions[$section->id][$k]= $q;
                 $i++;$k++;
             }
-
         }
 
         // time
@@ -307,11 +307,12 @@ class AssessmentController extends Controller
         return view('appl.exam.assessment.blocks.test')
                         ->with('mathjax',true)
                         ->with('exam',$exam)
-                        ->with('timer',true)
+                        ->with('timer2',true)
                         ->with('time',$time)
                         ->with('sections',$sections)
                         ->with('passages',$passages)
                         ->with('questions',$questions)
+                        ->with('dynamic',$dynamic)
                         ->with('section_questions',$section_questions);
     }
 
@@ -723,9 +724,6 @@ class AssessmentController extends Controller
             $t->accuracy=0;
 
         $t->save();
-
-        
-
     }
 
 
@@ -784,26 +782,131 @@ class AssessmentController extends Controller
 
     public function submission($slug,Request $request)
     {
+        $test = $slug;
+        //dd($request->all());
 
-        dd($request->all());
+        $filename = $test.'.json';
+        $filepath = $this->cache_path.$filename;
 
-        $exam = Exam::where('slug',$slug)->first();
-        
-        
-        $questions = array();
-        $i=0;
+        if(file_exists($filepath))
+        {
+            $exam = json_decode(file_get_contents($filepath));
+        }else{
+            $exam = Exam::where('slug',$test)->first();
+        }
+
+        $qcount =0;
         foreach($exam->sections as $section){
-            foreach($section->questions as $q){
-                $questions[$i] = $q;
-                    $i++;
+            $qset = $section->questions;
+
+            foreach( $qset as $q){
+                $questions[$q->id] = $q;
+                $secs[$section->id] = $section;
+                $answers[$q->id] = $q->answer;
+                if(!isset($sections_max[$section->id]))
+                    $sections_max[$section->id] = 0;
+                $sections_max[$section->id] = $sections_max[$section->id] + $section->mark;
+                $qcount++;
             }
         }
 
-        foreach($questions as $key=>$q){
-            $t = Test::where('question_id',$q->id)->where('user_id',\auth::user()->id)->first();
-            $t->status =1;
-            $t->save();
-        } 
+        $date_time = new \DateTime();
+        $data = array();
+        for($i=1;$i<=$qcount;$i++){
+            $item = array();
+            if($request->exists($i.'_time')){
+                $item['question_id'] = $request->get($i.'_question_id');
+                $item['user_id'] = $request->get('user_id');
+                $item['section_id'] = $request->get($i.'_section_id');
+                $item['time'] = $request->get($i.'_time');
+                $item['test_id'] = $request->get('test_id');
+                $item['response'] = $request->get($i);
+                $item['answer'] = $this->new_answer(strtoupper($answers[$request->get($i.'_question_id')]),$request->get($i.'_dynamic'));
+
+                if($item['response'] == $item['answer'])
+                    $item['accuracy'] =1;
+                else
+                    $item['accuracy'] =0;
+
+                $item['status'] = 1;
+                $item['dynamic'] = $request->get($i.'_dynamic');
+                $item['created_at'] = $date_time;
+                $item['updated_at'] = $date_time;
+                array_push($data,$item);
+            }
+            
+        }
+
+
+        $details = ['user_id'=>$request->get('user_id'),'test_id'=>$request->get('test_id')];
+
+        //update sections
+        $sections = array();
+        $sec = array();
+        foreach($data as $item){
+            if(!isset($sec[$item['section_id']]['unattempted'])){
+                $sec[$item['section_id']]['unattempted'] = 0;
+                $sec[$item['section_id']]['correct'] = 0;
+                $sec[$item['section_id']]['incorrect'] = 0;
+                $sec[$item['section_id']]['score'] =0;
+                $sec[$item['section_id']]['time'] = 0;
+                $sec[$item['section_id']]['max'] = 0;
+                $sec[$item['section_id']]['user_id'] = $details['user_id'];
+                $sec[$item['section_id']]['test_id'] = $details['test_id'];
+                $sec[$item['section_id']]['section_id'] = $item['section_id'];
+                $sec[$item['section_id']]['created_at'] = $date_time;
+                $sec[$item['section_id']]['updated_at'] = $date_time;
+
+            }
+          
+            if(!$item['response'])
+                $sec[$item['section_id']]['unattempted']++;
+
+            if($item['accuracy']){
+                $sec[$item['section_id']]['correct']++;
+                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] + $secs[$item['section_id']]->mark;
+            }
+            else if($item['response'] && $item['accuracy']==0){
+                $sec[$item['section_id']]['incorrect']++;
+                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] - $secs[$item['section_id']]->negative;
+            }
+                
+            $sec[$item['section_id']]['time'] = $sec[$item['section_id']]['time'] + $item['time'];
+
+            $sec[$item['section_id']]['max'] = $sections_max[$item['section_id']];
+
+        }
+
+
+        //update tests overall
+        $test_overall = array();
+        $test_overall['unattempted'] = 0;
+        $test_overall['correct'] = 0;
+        $test_overall['incorrect'] = 0;
+        $test_overall['score'] =0;
+        $test_overall['time'] = 0;
+        $test_overall['max'] = 0;
+        $test_overall['user_id'] = $details['user_id'];
+        $test_overall['test_id'] = $details['test_id'];
+        $test_overall['created_at'] = $date_time;
+        $test_overall['updated_at'] = $date_time;
+        foreach($sec as $s){
+            $test_overall['unattempted'] = $test_overall['unattempted'] + $s['unattempted'];
+            
+            $test_overall['correct'] = $test_overall['correct'] + $s['correct'];
+            $test_overall['incorrect'] = $test_overall['incorrect'] + $s['incorrect'];
+            $test_overall['score'] = $test_overall['score'] + $s['score'];
+            $test_overall['time'] = $test_overall['time'] + $s['time'];
+            $test_overall['max'] = $test_overall['max'] + $s['max'];
+        }
+
+    
+
+        
+        
+        Test::insert($data); 
+        Tests_Section::insert($sec);
+        Tests_Overall::insert($test_overall);
 
 
         return redirect()->route('assessment.analysis',$slug);
@@ -985,6 +1088,137 @@ class AssessmentController extends Controller
             foreach($section->questions as $q){
                 $questions[$i] = $q;
                 $sections[$section->name] = Tests_Section::where('section_id',$section->id)->where('user_id',$student->id)->first();
+                    $i++;
+            }
+        }
+
+        if(count($sections)==1)
+            $sections = null;
+
+        $details['correct_time'] =0;
+        $details['incorrect_time']=0;
+        $details['unattempted_time']=0;
+        foreach($tests as $key=>$t){
+
+            //dd($t->section->negative);
+            if(isset($t)){
+                $sum = $sum + $t->time;
+                $details['testdate'] = $t->created_at->diffForHumans();
+            }
+            
+            //$ques = Question::where('id',$q->id)->first();
+            if($t->response){
+                $details['attempted'] = $details['attempted'] + 1;  
+                if($t->accuracy==1){
+                    $details['c'][$c]['category'] = $t->question->categories->first();
+                    $details['c'][$c]['question'] = $t->question;
+                    $c++;
+                    $details['correct'] = $details['correct'] + 1;
+                    $details['correct_time'] = $details['correct_time'] + $t->time;
+                    $details['marks'] = $details['marks'] + $t->section->mark;
+                }
+                else{
+                    $details['i'][$i]['category'] = $t->question->categories->first();
+                    $details['i'][$i]['question'] = $t->question;
+                    $i++;
+                    $details['incorrect'] = $details['incorrect'] + 1; 
+                    $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
+                    $details['marks'] = $details['marks'] - $t->section->negative; 
+                }
+
+                
+            }else{
+                $details['u'][$u]['category'] = $t->question->categories->last();
+                $details['u'][$u]['question'] = $t->question;
+                    $u++;
+                $details['unattempted'] = $details['unattempted'] + 1;  
+                $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
+            }
+
+            $details['total'] = $details['total'] + $t->section->mark;
+
+        } 
+        $success_rate = $details['correct']/count($questions);
+        if($success_rate > 0.7)
+            $details['performance'] = 'Excellent';
+        elseif(0.3 < $success_rate && $success_rate <= 0.7)
+            $details['performance'] = 'Average';
+        else
+            $details['performance'] = 'Need to Improve';
+
+        $details['avgpace'] = round($sum / count($questions),2);
+        
+        if($details['correct_time'] && $details['correct_time']>59)
+            $details['correct_time'] =round($details['correct_time']/60,2).' min';
+        else
+            $details['correct_time'] = $details['correct_time'].' sec';
+            
+
+        if($details['incorrect_time'] && $details['incorrect_time'] > 59)
+            $details['incorrect_time'] =round($details['incorrect_time']/60,2).' min';
+        else
+            $details['incorrect_time'] = $details['incorrect_time'].' sec';
+
+
+        if($details['unattempted_time'] && $details['unattempted_time']>59)
+            $details['unattempted_time'] =round($details['unattempted_time']/60,2).' min';
+        else 
+            $details['unattempted_time'] = $details['unattempted_time'].' sec';   
+            
+        
+        //dd($sections);
+
+        return view('appl.exam.assessment.analysis')
+                        ->with('exam',$exam)
+                        ->with('sections',$sections)
+                        ->with('details',$details)
+                        ->with('chart',true);
+
+    }
+
+    public function analysis2($slug,Request $request)
+    {
+        $filename = $slug.'.json';
+        $filepath = $this->cache_path.$filename;
+
+        if(file_exists($filepath))
+        {
+            $exam = json_decode(file_get_contents($filepath));
+        }else{
+            $exam = Exam::where('slug',$test)->first();
+        }
+
+        $questions = array();
+        $i=0;
+
+        if($request->get('student'))
+            $student = User::where('username',$request->get('student'))->first();
+        else
+            $student = \auth::user();
+
+        if(!$student)
+            $student = \auth::user();
+
+        
+        $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0];
+        $details['course'] = $exam->name;
+        $sum = 0;
+        $c=0; $i=0; $u=0;
+
+        $tests = Test::where('test_id',$exam->id)
+                        ->where('user_id',$student->id)->get();
+
+        $tests_section = Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
+        $secs = $tests_section->groupBy('section_id');
+        //dd($tests);
+        if(!count($tests))
+            abort('404','Test not attempted');
+
+        $sections = array();
+        foreach($exam->sections as $section){
+            foreach($section->questions as $q){
+                $questions[$i] = $q;
+                $sections[$section->name] = $secs[$section->id][0];
                     $i++;
             }
         }

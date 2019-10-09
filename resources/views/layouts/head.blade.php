@@ -38,9 +38,9 @@
   <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
   @endif
   @if(isset($highlight))
-  <link href="{{ asset('css/styles2.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/styles2.css') }}?new=1" rel="stylesheet">
   @else
-  <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/styles.css') }}?new=1" rel="stylesheet">
   @endif
   @if(isset($mathjax))
   <script type="text/x-mathjax-config">
@@ -58,6 +58,7 @@
 @if(isset($jqueryui))
 <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
 @endif
+
 </head>
 <body>
     <div id="app" >

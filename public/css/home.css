@@ -239,7 +239,8 @@ p.article{line-height: 1.6em;}
 
 /*test*/
 .testqno{ cursor: pointer; }
-.testqno2{ cursor: pointer; }
+.test2qno{ cursor: pointer; }
+.cursor { cursor:pointer; }
 
  
 .heading1 {
