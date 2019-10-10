@@ -9,7 +9,7 @@
 			<div class="col-3">
 				<div class="left-qno cursor w100 p-1 text-center pl-2 " data-qno=""><i class="fa fa-angle-double-left" ></i></div>
 			</div>
-			<div class="col-6"> <div class="mt-1 text-center">Q(<span class="qset_qno">1</span>/{{ count($questions) }})</div></div>
+			<div class="col-6"> <div class="mt-1 text-center">Q({{ count($questions) }})</div></div>
 			<div class="col-3"> 
 				<div class="right-qno cursor w100 p-1 text-center mr-3 " data-qno="2" ><i class="fa fa-angle-double-right" ></i></div>
 			</div>
