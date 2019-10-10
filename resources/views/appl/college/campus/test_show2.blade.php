@@ -4,7 +4,7 @@
 
 
 
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb d-print-none">
 	  <ol class="breadcrumb border">
 	    
 	    <li class="breadcrumb-item"><a href="{{ url('test')}}">Tests</a></li>
@@ -23,12 +23,18 @@
 <div class="row mb-md-1">
 	<div class="col-12 col-md-12">
 
-		<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;"><h1 class="display-3 ">{{ ucfirst($exam->name) }} - Analysis</h1>
+		<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;"><h1 class="display-3 ">
+			{{ ucfirst($exam->name) }} - Analysis</h1>
 			@if(isset($data['item_name']))
 				<div class="display-5 ">{{ $data['item_name'] }} : <b>{{ $data['item']->name }}</b></div>
 
 			@else
 				
+			@endif
+
+			@if($college)
+				<i class="fa fa-building"></i> {{ $college->name }}
+
 			@endif
 			
 		</div>
@@ -40,7 +46,7 @@
 			<div class="col-12 col-md-4 mb-3">
 				<div class="card p-3" style="background: #fff;border: 2px solid #eee;color: #5B8568;">
 					<div class="p-1">
-						<canvas id="myChart" width="295" height="228"></canvas>
+						<canvas id="myChart" width="295" height="248"></canvas>
 
 					</div>
 				</div>
@@ -49,6 +55,7 @@
 				<div class="card p-3" style="background: #E8FFEF;border: 2px solid #BBDBC5;color: #5B8568;">
 					<div class="">
 						<h2 class="display-5"> Details</h2>
+						<hr>
 						<dl class="row">
 
 						  <dt class="col-sm-6">Participants </dt>
@@ -61,11 +68,11 @@
 						   <dt class="col-sm-6">Avg Pace</dt>
 						   <dd class="col-sm-6">{{ $details['avg_pace']}} </dd>
 
-						   <dt class="col-sm-6">Excellent</dt>
+						   <dt class="col-sm-6">Excellent <img src="{{ asset('/img/medals/excellent.png')}}" style="width:15px;"  /> </dt>
 						   <dd class="col-sm-6">{{ $details['excellent']}} </dd>
-						   <dt class="col-sm-6">Good</dt>
+						   <dt class="col-sm-6">Good <img src="{{ asset('/img/medals/good.png')}}" style="width:15px;"  /></dt>
 						   <dd class="col-sm-6">{{ $details['good']}} </dd>
-						   <dt class="col-sm-6">Need to Improve</dt>
+						   <dt class="col-sm-6">Need to Improve <img src="{{ asset('/img/medals/needtoimprove.png')}}" style="width:15px;"  /></dt>
 						   <dd class="col-sm-6">{{ $details['need_to_improve']}} </dd>
 						</dl>
 
@@ -123,7 +130,7 @@
 		      	
 		      	<div class="mb-3">
 		      		<div class="display-5 mb-3"><img src="{{ asset('/img/medals/excellent.png')}}" style="width:20px;"  />&nbsp;{{$batch['excellent']}}&nbsp;&nbsp;<img src="{{ asset('/img/medals/good.png')}}" style="width:20px;"  />&nbsp;{{$batch['good']}} &nbsp;&nbsp;<img src="{{ asset('/img/medals/needtoimprove.png')}}" style="width:20px;"  />&nbsp;{{$batch['need_to_improve']}}</div>
-		 			<div class="progress" style="height:3px;">
+		 			<div class="progress d-print-none" style="height:3px;">
 					  <div class="progress-bar bg-warning" role="progressbar" style="width: {{$batch['excellent_percent']}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
 					  <div class="progress-bar bg-info" role="progressbar" style="width: {{$batch['good_percent']}}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
 					  <div class="progress-bar bg-danger" role="progressbar" style="width: {{$batch['need_to_improve_percent']}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>

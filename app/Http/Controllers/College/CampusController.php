@@ -727,6 +727,7 @@ class CampusController extends Controller
             ->with('details',$details)
             ->with('data',$data)
             ->with('test_analysis',1)
+            ->with('college',$college)
             ->with('sections',$sections);
     }
 
