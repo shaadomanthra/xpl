@@ -34,10 +34,6 @@
                   <a href="{{route('assessment.instructions',$exam->slug)}}">
 				<button class="btn btn-lg btn-success"> Attempt Test </button>
 				</a>
-                  @else
-                  <a href="{{ route('assessment.analysis',$exam->slug) }}">
-                  <button class="btn btn-lg btn-success"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
-                  </a>
                   @endif
 				@else
 					@if($product)
@@ -75,6 +71,12 @@
 
 				<button class="btn btn-lg btn-outline-warning"> Access Code </button>
 				</a>
+				@endif
+
+				@if($attempt)
+				<a href="{{ route('assessment.analysis',$exam->slug) }}">
+                  <button class="btn btn-lg btn-success"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
+                  </a>
 				@endif
 		<br><br>
 			</div>

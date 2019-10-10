@@ -250,6 +250,11 @@ class AssessmentController extends Controller
         $products = $exam->product_ids;
         $code = $request->get('code');
 
+        $test_taken = Test::where('test_id',$exam->id)
+                        ->where('user_id',$user->id)->first();
+        if($test_taken)
+            return redirect()->route('assessment.analysis',$exam->slug);
+
         if(!$code){
            if($exam->status == 2){
             $entry=null;
