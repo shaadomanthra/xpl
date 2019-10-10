@@ -82,15 +82,27 @@
 				@endif
 
 				@if(\auth::user())
+				@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
+				<hr>
+				<span class="badge badge-secondary"><i class="fa fa-user"></i> Placement Officer </span><br>
+				<p class="lead mt-2">
+
+				“For the things we have to learn before we can do them, we learn by doing them.”<br>
+				- Aristotle
+			</p>
+				@endif
+				@endif
+
+				@if(\auth::user())
 					@if(\auth::user()->isAdmin())
 						<a href="{{ route('test.analytics',$exam->slug) }}?all=1">
-	                  <button class="btn btn-lg btn-outline-secondary"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
+	                  <button class="btn btn-lg btn-outline-secondary mb-3"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
 	                  </a>
 					@endif
 
 					@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
 						<a href="{{ route('test.analytics',$exam->slug) }}">
-	                  <button class="btn btn-lg btn-outline-info"> <i class="fa fas fa-bar-chart" ></i> College Analytics</button>
+	                  <button class="btn btn-lg btn-outline-info mb-3"> <i class="fa fas fa-bar-chart" ></i> College Analytics</button>
 	                  </a>
 					@endif
 				@endif
