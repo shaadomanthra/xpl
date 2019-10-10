@@ -250,7 +250,10 @@ class Campus extends Model
     public static function analytics_test($college,$branch,$batch,$r,$course_id=null,$category_id=null,$exam_id =null,$student_username=null){
 
 
+        if($college)
     	$courses = $college->courses;
+        else
+        $courses = null;
 
     	$test_id = array();
     	$data = array();

@@ -80,6 +80,20 @@
                   <button class="btn btn-lg btn-success"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
                   </a>
 				@endif
+
+				@if(\auth::user())
+					@if(\auth::user()->isAdmin())
+						<a href="{{ route('test.analytics',$exam->slug) }}?all=1">
+	                  <button class="btn btn-lg btn-outline-secondary"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
+	                  </a>
+					@endif
+
+					@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
+						<a href="{{ route('test.analytics',$exam->slug) }}">
+	                  <button class="btn btn-lg btn-outline-info"> <i class="fa fas fa-bar-chart" ></i> College Analytics</button>
+	                  </a>
+					@endif
+				@endif
 		<br><br>
 			</div>
 

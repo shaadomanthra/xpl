@@ -26,6 +26,12 @@ use PacketPrep\Models\Exam\Tests_Overall;
 class CampusController extends Controller
 {
 
+    public function __construct(){
+        $this->app      =   'exam';
+        $this->module   =   'exam';
+        $this->cache_path =  '../storage/app/cache/exams/';
+    }
+
     public function main(Request $r){
 
     	return view('appl.college.campus.main');
@@ -575,7 +581,7 @@ class CampusController extends Controller
         if(request()->session()->get('college')){
                 $col = request()->session()->get('college')['id'];
                 $college =  College::where('id',$col)->first();
-            }else
+        }else
                 $college = \auth::user()->colleges()->first();
 
         $sections = $data = null;
@@ -630,6 +636,93 @@ class CampusController extends Controller
         
 
     	return view('appl.college.campus.test_show')
+            ->with('exam',$exam)
+            ->with('details',$details)
+            ->with('data',$data)
+            ->with('test_analysis',1)
+            ->with('sections',$sections);
+    }
+
+
+    public function test_analytics($exam_slug,Request $r){
+
+        $filename = $exam_slug.'.json';
+        $filepath = $this->cache_path.$filename;
+
+        if(file_exists($filepath))
+        {
+            $exam = json_decode(file_get_contents($filepath));
+        }else{
+            $exam = Exam::where('slug',$exam_slug)->first();
+        }
+
+        
+        if(request()->session()->get('college')){
+            $col = request()->session()->get('college')['id'];
+            $college =  College::where('id',$col)->first();
+        }else{
+
+            if(request()->get('all'))
+                $college = null;
+            else
+                $college = \auth::user()->colleges()->first();
+        }
+
+        $sections = $data = null;
+        $campus = new Campus();
+        $batch_code = $r->get('batch_code');
+        $branch_item = $r->get('branch');
+
+        if($branch_item){
+            $branch_item = Branch::where('name',$branch_item)->first();
+            $data['item_name'] = 'Branch';
+            $data['item'] = $branch_item;
+        }
+
+        if($batch_code){
+            $batch_code = Batch::where('slug',$batch_code)->first();
+            $data['item_name'] = 'Batch';
+            $data['item'] = $batch_code;
+        }
+
+
+        $details = $campus->analytics_test($college,$branch_item,$batch_code,$r,null,null,$exam->id);
+        if(count($exam->sections)>1){
+            $details['section'] = $campus->analytics_test_detail($college,$branch_item,$batch_code,$r,$exam->id);
+            $sections = $exam->sections;
+        }
+
+
+        if($r->get('batch')&& !$r->get('batch_code')){
+
+               $batches = $college->batches()->orderBy('id')->get();
+                foreach($batches as $batch){
+                $details['items'][$batch->id] = $campus->analytics_test($college,null,$batch,$r,null,null,$exam->id);
+                $details['items'][$batch->id]['name'] = $batch->name; 
+                $details['items'][$batch->id]['url'] = route('test.analytics',$exam->slug).'?batch=1&batch_code='.$batch->slug;
+                }
+                $details['item_name'] = 'Batch'; 
+            
+        }else if(!$r->get('batch')&& !$r->get('batch_code') && !$r->get('branch')){
+            if($college)
+                $branches = $college->branches()->orderBy('id')->get();
+            else
+                $branches = Branch::whereIn('name',['CSE','ECE','EEE','IT','CIVIL','MECH','OTHER'])->get();
+
+            foreach($branches as $branch){
+            $details['items'][$branch->id] = $campus->analytics_test($college,$branch,null,$r,null,null,$exam->id);
+
+            $details['items'][$branch->id]['name'] = $branch->name; 
+            $details['items'][$branch->id]['url'] = route('test.analytics',$exam->slug).'?branch='.$branch->name;
+                
+            }
+
+            $details['item_name'] = 'Branch';
+        }
+        
+        
+
+        return view('appl.college.campus.test_show2')
             ->with('exam',$exam)
             ->with('details',$details)
             ->with('data',$data)
