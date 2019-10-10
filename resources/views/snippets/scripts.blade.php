@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=1"></script>
+<script src="{{ asset('js/script.js')}}?new=3"></script>
 @if(isset($editor))
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
@@ -554,6 +554,11 @@ function addMinutes(date, minutes) {
 
 @if(isset($timer2))
 <script>
+
+window.onbeforeunload = function() {
+      return "Data will be lost if you leave the page, are you sure?";
+    };
+
 // Set the date we're counting down to
 @if(!isset($time))
 var countDownDate = addMinutes(new Date(),{{ count($questions) }});

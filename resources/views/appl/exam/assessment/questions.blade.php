@@ -15,7 +15,7 @@
     <div class="row ">
       <div class="col-3">
         
-        <div class="left testqno w100 p-1 text-center pl-2 @if(!$details['prev']) d-none @endif" data-qno="{{$details['prev']}}" data-testname="{{$exam->slug}}"><i class="fa fa-angle-double-left" ></i></div>
+        <div class="left-qno cursor w100 p-1 text-center pl-2 " data-qno=""><i class="fa fa-angle-double-left" ></i></div>
         
       </div>
       <div class="col-6"> <div class="mt-1 text-center">Q(<span class="qset_qno">1</span>/{{ count($questions) }})</div></div>

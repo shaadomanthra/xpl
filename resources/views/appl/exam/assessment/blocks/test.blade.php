@@ -1,10 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.none')
 @section('title', $exam->name.' | PacketPrep')
 @section('content')
 
+<div class="p-2 p-md-3 ">
 <form method="post" class="assessment" action="{{ route('assessment.submission',$exam->slug)}}" >
+
   <div class="row">
     <div class="col-md-9">
+
+      <div class=" rounded p-3 mb-3 h4 d-none d-md-block" style="border:#dad6b5;background:#f8efba;"><i class="fa fa-gg"></i> {{$exam->name}}</div>
+          <div class=" mb-3 d-block d-md-none ">
+  <div class="blogd text-white pl-3 pr-3 pb-2 pt-3 pb-2 rounded" style="background:#ca2428">
+    <div class="mb-2 text-center"> Timer : <span class="text-bold " id="timer2"></span></div>
+    
+
+    <div class="p-2 mb-2 rounded" style="border:2px solid #bb061c">
+    <div class="row ">
+      <div class="col-3">
+        <div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""><i class="fa fa-angle-double-left" ></i></div>
+      </div>
+      <div class="col-6"> <div class="mt-1 text-center">Q({{ count($questions) }})</div></div>
+      <div class="col-3"> 
+        <div class="right-qno cursor w100 p-1 text-center mr-3 " data-sno="2" ><i class="fa fa-angle-double-right" ></i></div>
+      </div>
+    </div>
+    </div>
+    
+  </div>
+</div>
+
      @include('appl.exam.assessment.blocks.questions')
     </div>
      <div class="col-md-3 pl-md-0">
@@ -39,5 +63,6 @@
 </div>
 
 </form>
+</div>
 
 @endsection

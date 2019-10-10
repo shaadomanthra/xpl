@@ -98,20 +98,20 @@
    </div>
 @endforeach
 
-   <div class="card mb-3">
+   <div class="card mb-0">
      <div class="card-body">
-      <button type="button" class="btn  btn-outline-primary mb-2 cursor left-qno" data-sno="" data-testname="{{$exam->slug}}">
-        <i class="fa fa-angle-double-left"></i> Previous
+      <button type="button" class="btn  btn-outline-primary  cursor left-qno" data-sno="" data-testname="{{$exam->slug}}">
+        <i class="fa fa-angle-double-left"></i> Prev<span class="d-none d-md-inline">ious</span>
       </button>
 
-      <button type="button" class="btn  btn-secondary clear-qno mb-2" data-sno="1">
-        Clear Response
+      <button type="button" class="btn  btn-secondary clear-qno cursor" data-sno="1">
+        Clear <span class="d-none d-md-inline">Response</span>
       </button>
       <a href="#" data-toggle="modal" data-target="#exampleModal">
-        <button type="button" class="btn  btn-success qno-submit mb-2" data-sno="{{$question->id}}" data-tooltip="tooltip" data-placement="top" title="Submit">
-          Submit Test
+        <button type="button" class="btn  btn-success qno-submit cursor" data-sno="{{$question->id}}" data-tooltip="tooltip" data-placement="top" title="Submit">
+          Submit <span class="d-none d-md-inline">Test</span>
         </button></a>
-        <button type="button" class="btn  btn-outline-primary mb-2 cursor right-qno" data-sno="2" data-testname="{{$exam->slug}}" >
+        <button type="button" class="btn  btn-outline-primary  cursor right-qno" data-sno="2" data-testname="{{$exam->slug}}" >
          Next <i class="fa fa-angle-double-right"></i>
        </button>
      </div>
