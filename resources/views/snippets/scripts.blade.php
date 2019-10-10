@@ -555,9 +555,21 @@ function addMinutes(date, minutes) {
 @if(isset($timer2))
 <script>
 
-window.onbeforeunload = function() {
-      return "Data will be lost if you leave the page, are you sure?";
-    };
+var btn = document.getElementById('submit'),
+    clicked = false;
+
+btn.addEventListener('click', function () {
+  clicked = true;
+});
+
+window.onbeforeunload = function () {
+  if(!clicked) {
+    return 'If you resubmit this page, progress will be lost.';
+  }
+};
+
+
+
 
 // Set the date we're counting down to
 @if(!isset($time))

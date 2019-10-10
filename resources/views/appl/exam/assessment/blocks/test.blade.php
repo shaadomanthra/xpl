@@ -54,7 +54,7 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="test_id" value="{{ $exam->id }}">
-        <button type="submit" class="btn  btn-success " >
+        <button type="submit" class="btn  btn-success " data-submit="1">
             Submit Test
         </button>
       </div>
