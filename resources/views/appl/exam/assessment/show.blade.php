@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="mb-md-5 mb-2 mt-3">
-	<div class="container">
+
 
 		@if(file_exists('img/'.$exam->slug.'.jpg'))
 	<img src="{{'/img/'.$exam->slug.'.jpg'}}" class="w-100"/>
@@ -86,7 +86,7 @@
 		
 		
 		
-	</div>
+
 	</div>
 </div>
 
