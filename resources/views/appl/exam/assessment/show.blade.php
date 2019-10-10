@@ -11,11 +11,13 @@
 	@endif
 	<div class=" border p-3 bg-white rounded">
 		<div class="row">
-			<div class="col-12 col-md-2">
-				<i class="fa fa-newspaper-o fa-5x p-3" aria-hidden="true"></i>
+			<div class="col-12 col-md-2 ">
+				<i class="fa fa-newspaper-o fa-5x p-3 d-none d-md-block" aria-hidden="true"></i>
+				<i class="fa fa-newspaper-o  fa-2x d-inline d-md-none" aria-hidden="true"></i>
 			</div>
 			<div class="col-12 col-md-8">
 				<h1 class="mt-3">
+					
 					{{ $exam->name }} @if($exam->status ==2)
 					<span class="badge badge-primary ">
 					<i class="fa fa-lock" aria-hidden="true"></i>  PREMIUM

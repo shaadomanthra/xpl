@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-md-9">
 
-      <div class=" rounded p-3 mb-3 h4 d-none d-md-block" style="border:#dad6b5;background:#f8efba;"><i class="fa fa-gg"></i> {{$exam->name}}</div>
+      <div class=" rounded p-3 mb-3 h4 d-none d-md-block" style="border:#dad6b5;background:#f8efba;"><i class="fa fa-newspaper-o"></i> {{$exam->name}}</div>
           <div class=" mb-3 d-block d-md-none ">
   <div class="blogd text-white pl-3 pr-3 pb-2 pt-3 pb-2 rounded" style="background:#ca2428">
     <div class="mb-2 text-center"> Timer : <span class="text-bold " id="timer2"></span></div>
