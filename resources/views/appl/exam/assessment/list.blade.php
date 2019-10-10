@@ -17,7 +17,6 @@
                     {{ $exam->question_count() }} Questions | {{ $exam->time() }} min<br>
 
                     <div class="pt-2">
-                   @if(!$exam->attempted())
                   
                   <a href="{{ route('assessment.show',$exam->slug) }}">
                   <button class="btn btn-outline-primary btn-sm">
@@ -25,11 +24,7 @@
                   </button>
                   </a>
                   
-                  @else
-                  <a href="{{ route('assessment.analysis',$exam->slug) }}">
-                  <button class="btn btn-outline-primary btn-sm"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
-                  </a>
-                  @endif
+                 
                 </div>
               </div>
           </div>
