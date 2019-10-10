@@ -5,7 +5,9 @@
 <div class="mb-md-5 mb-2 mt-3">
 	<div class="container">
 
-
+		@if(file_exists('img/'.$exam->slug.'.jpg'))
+	<img src="/img/{{'img/'.$exam->slug.'.jpg'}}" class="w-100"/>
+	@endif
 	<div class=" border p-3 bg-white rounded">
 		<div class="row">
 			<div class="col-12 col-md-2">
