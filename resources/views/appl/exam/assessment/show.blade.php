@@ -1,5 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Test Details - '.$exam->name.' | PacketPrep')
+@section('title', $exam->name.' | PacketPrep')
+@section('description', substr(strip_tags($exam->description),0,200))
 @section('content')
 
 <div class="mb-md-5 mb-2 mt-3">
