@@ -6,7 +6,7 @@
 	<div class="container">
 
 		@if(file_exists('img/'.$exam->slug.'.jpg'))
-	<img src="/img/{{'img/'.$exam->slug.'.jpg'}}" class="w-100"/>
+	<img src="{{'img/'.$exam->slug.'.jpg'}}" class="w-100"/>
 	@endif
 	<div class=" border p-3 bg-white rounded">
 		<div class="row">
