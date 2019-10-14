@@ -108,9 +108,10 @@
         Clear <span class="d-none d-md-inline">Response</span>
       </button>
       <a href="#" data-toggle="modal" data-target="#exampleModal">
-        <button type="button" id="submit" class="btn  btn-success qno-submit cursor" data-sno="{{$question->id}}" data-tooltip="tooltip"  data-placement="top" title="Submit">
-          Submit <span class="d-none d-md-inline">Test</span>
-        </button></a>
+        <button type="button" id="submit" class="btn  btn-success qno-submit cursor float-right" data-sno="{{$question->id}}" data-tooltip="tooltip"  data-placement="top" title="Submit">
+          End <span class="d-none d-md-inline">Test</span>
+        </button>
+      </a>
         <button type="button" class="btn  btn-outline-primary  cursor right-qno" data-sno="2" data-testname="{{$exam->slug}}" >
          Next <i class="fa fa-angle-double-right"></i>
        </button>

@@ -47,15 +47,15 @@
         </button>
       </div>
       <div class="modal-body">
-        Kindly confirm your submission of the test.
+        The following test will be submitted. Kindly confirm your submission.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="test_id" value="{{ $exam->id }}">
-        <button type="submit" class="btn  btn-success " data-submit="1">
-            Submit Test
+        <button type="submit" class="btn  btn-warning " data-submit="1">
+           End Test
         </button>
       </div>
     </div>

@@ -405,7 +405,7 @@ $(".coupon-button").on('click', function () {
   });
 
   /* new test */
-  $(document).ready(function(){
+$(document).ready(function(){
   // new test
     $(document).on('click','.test2qno', function() {
         $sno = $(this).data('sno');
@@ -443,12 +443,28 @@ $(".coupon-button").on('click', function () {
       
     }
 
+    function scroll($sno){
+        /* scroll to */
+        $('.qset').scrollTop(0); 
+        var start = $('.start').offset().top;
+        var qset = $('.qset').offset().top;
+        var s = $('.s'+$sno).offset().top;
+        var offset =  $('.s'+$sno).offset().top - qset;
+        var scrollto = offset+start;
+        if(offset!=0){
+            if(start==qset)
+                $('.qset').scrollTop(offset); 
+            
+        }
+    }
+
     function make_visible($sno){
       $('.active').removeClass('active');
         $('.s'+$sno).addClass('active');
         $('.question_block').hide();
         $('.qblock_'+$sno).show();
         update_sno($sno);
+        scroll($sno);
     }
     function update_sno($sno){
       
@@ -483,7 +499,6 @@ $(".coupon-button").on('click', function () {
       }
     }
 
-
     $(document).keydown(function(e) {
       if(e.keyCode == 37) { // left
 
@@ -498,8 +513,9 @@ $(".coupon-button").on('click', function () {
       }
     });
 
-
+    
 });
+
 
 
 

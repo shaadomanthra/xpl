@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=3"></script>
+<script src="{{ asset('js/script.js')}}?new=5"></script>
 @if(isset($editor))
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
@@ -554,6 +554,24 @@ function addMinutes(date, minutes) {
 
 @if(isset($timer2))
 <script>
+
+
+
+$('body').bind('copy paste',function(e) {
+    e.preventDefault(); return false; 
+});
+
+  $(document).ready(function () {
+    //Disable full page
+    $("body").on("contextmenu",function(e){
+        return false;
+    });
+    
+    //Disable part of page
+    $("#id").on("contextmenu",function(e){
+        return false;
+    });
+});
 
 var btn = document.getElementById('submit'),
     clicked = false;

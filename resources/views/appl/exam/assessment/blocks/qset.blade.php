@@ -16,6 +16,7 @@
 		</div>
 		</div>
 		<div class="qset" style="max-height: 170px;overflow-y: auto;" data-url="{{ URL::current() }}" data-lastsno="{{ count($questions)  }}" data-counter="0" data-user="{{ \auth::user()->id }}" data-sno="{{ $i=0 }}">
+			<div class="start"></div> 
 			@foreach($exam->sections as $section)
 				@if(count($exam->sections)!=1)
 				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
