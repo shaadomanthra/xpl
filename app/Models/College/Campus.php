@@ -8,6 +8,7 @@ use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\College\Campus;
 use PacketPrep\Models\College\Batch;
+use PacketPrep\Models\User\User_Details;
 use PacketPrep\User;
 use Illuminate\Support\Facades\DB;
 use PacketPrep\Models\Dataentry\Question;
@@ -251,9 +252,9 @@ class Campus extends Model
 
 
         if($college)
-    	$courses = $college->courses;
+    	   $courses = $college->courses;
         else
-        $courses = null;
+            $courses = null;
 
     	$test_id = array();
     	$data = array();
@@ -337,28 +338,43 @@ class Campus extends Model
                 $users = User::all()->pluck('id');
 
 
-            $tests = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->get()->groupBy('user_id');
+            $tests = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->orderBy('score','desc')->get()->groupBy('user_id');
+
+            $u = array_keys($tests->toArray());
+            
 
             $data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,'participants'=>0,
                             "excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0,"count"=>count($test_id),"pace"=>0,"accuracy"=>0,"avg_pace"=>0,"avg_accuracy"=>0);
-            $data_tests = self::getData_Test($tests,$data_tests);
+            
+            $data_tests = self::getData_Test($tests,$data_tests,User::whereIn('id',$u)->get()->groupBy('id'));
 
         }
-    	
 
     	return $data_tests;
 
     }
 
 
-    public static function getData_Test($tests,$data){
+
+    public static function getData_Test($tests,$data,$users=null){
 
         $data['correct'] = $data['max'] =0;
+
     	foreach($tests as $k=>$t)
     	{
+            if(isset($users[$k])){
+                $data['users'][$k]['name'] = $users[$k][0]['name'];
+                $data['users'][$k]['username'] = $users[$k][0]['username']; 
+                $data['users'][$k]['branch'] = $users[$k][0]['branch'];  
+            }else{
+                $data['users'][$k]['name'] = '';
+                $data['users'][$k]['username'] = ''; 
+                $data['users'][$k]['branch'] = ''; 
+            }
+            
     		$data['users'][$k]['score']=$t->sum('score');
     		$data['users'][$k]['max']=$t->sum('max');
-            $data['users'][$k]['pace']=$t->sum('time');
+            $data['users'][$k]['pace']=$t->sum('time')/$data['users'][$k]['max'];
             $data['users'][$k]['correct']=$t->sum('correct');
 
     		if($data['users'][$k]['score'])

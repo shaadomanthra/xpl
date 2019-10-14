@@ -633,7 +633,7 @@ class CampusController extends Controller
             $details['item_name'] = 'Branch';
         }
         
-        
+      
 
     	return view('appl.college.campus.test_show')
             ->with('exam',$exam)
@@ -692,7 +692,6 @@ class CampusController extends Controller
             $sections = $exam->sections;
         }
 
-
         if($r->get('batch')&& !$r->get('batch_code')){
 
                $batches = $college->batches()->orderBy('id')->get();
@@ -720,7 +719,7 @@ class CampusController extends Controller
             $details['item_name'] = 'Branch';
         }
         
-        
+              
 
         return view('appl.college.campus.test_show2')
             ->with('exam',$exam)

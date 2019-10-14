@@ -148,11 +148,14 @@
 		@endif
 		
 
+		 @include('appl.college.campus.blocks.students')
+
 		@else
 	<div class="p-3 border bg-white"> No Participants</div>
 
 @endif
 
+	
 
 
 
