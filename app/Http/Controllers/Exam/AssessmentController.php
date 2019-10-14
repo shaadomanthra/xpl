@@ -788,6 +788,11 @@ class AssessmentController extends Controller
     public function submission($slug,Request $request)
     {
         $test = $slug;
+        $user_id = $request->get('user_id');
+        $test_id = $request->get('test_id');
+
+        if(Test::where('user_id',$user_id)->where('test_id',$test_id)->first())
+            return redirect()->route('assessment.analysis',$slug);
         //dd($request->all());
 
         $filename = $test.'.json';
