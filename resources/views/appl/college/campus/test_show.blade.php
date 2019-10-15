@@ -24,10 +24,16 @@
 <div class="row mb-md-1">
 	<div class="col-12 col-md-12">
 
-		<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;"><h1 class="display-3 ">{{ ucfirst($exam->name) }} - Analysis</h1>
+		<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;">
+			<h1 class="display-3 ">{{ ucfirst($exam->name) }} - Analysis
+				@if(auth::user()->isAdmin())
+				<a href="{{ route('remove.duplicates',$exam->id)}}">
+				<button class="btn btn-outline-warning">remove duplicates</button>
+				</a>
+				@endif
+		</h1>
 			@if(isset($data['item_name']))
 				<div class="display-5 ">{{ $data['item_name'] }} : <b>{{ $data['item']->name }}</b></div>
-
 			@else
 				<div class="custom-control custom-switch ">
 				  <input type="checkbox" class="custom-control-input batch" id="customSwitch1" name="batch" @if(request()->get('batch')) checked @endif>
@@ -144,20 +150,11 @@
 		</div>
 		@endif
 		
+		@include('appl.college.campus.blocks.students')
 
 		@else
-	<div class="p-3 border bg-white"> No Participants</div>
-
-@endif
-
-
-
-
-
+		<div class="p-3 border bg-white"> No Participants</div>
+		@endif
 	</div>
 </div>
-
-
-
-
 @endsection           

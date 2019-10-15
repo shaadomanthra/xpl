@@ -779,7 +779,6 @@ class AssessmentController extends Controller
             $t->save();
         } 
 
-
         return redirect()->route('assessment.analysis',$slug);
 
     }

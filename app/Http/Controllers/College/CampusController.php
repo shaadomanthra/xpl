@@ -810,6 +810,48 @@ class CampusController extends Controller
             ->with('branches',$branches);
     }
 
+    public function remove_duplicates($id){
+        
+        $tests = Test::where('test_id',$id)->get();
+        $users = $tests->unique('user_id')->pluck('user_id');
+        $i=0;
+        $us=array();
+        foreach($users as $user){
+            $entry = Test::where('test_id',$id)->where('user_id',$user)->get()->groupBy('question_id');
+            $sections = Tests_Section::where('test_id',$id)->where('user_id',$user)->get()->groupBy('section_id');
+            $tests = Tests_Overall::where('test_id',$id)->where('user_id',$user)->get();
+            
+            foreach($entry as $k=>$g){
+                if(count($g)>1){
+                    echo count($g).' '.$k.'<br>';
+                    if(!in_array($user, $us))
+                    $us[$i++]=$user;
+                    foreach($g as $m=>$item){
+                        if($m!=0)
+                            $item->delete();
+                    }
+                }
+            }
+
+            foreach($sections as $sec){
+                if(count($sec)>1){
+                    foreach($sec as $m=>$item){
+                        if($m!=0)
+                            $item->delete();
+                    }
+                }
+            }
+
+            foreach($tests as $m=>$item){
+                if($m!=0)
+                    $item->delete();
+            }
+            
+        }
+        dd($us);
+        
+    }
+
     public function student_table(Request $r){
 
         $obj = new CampusController;

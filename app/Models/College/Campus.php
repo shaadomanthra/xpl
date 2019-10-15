@@ -350,6 +350,8 @@ class Campus extends Model
 
         }
 
+
+
     	return $data_tests;
 
     }
@@ -374,6 +376,7 @@ class Campus extends Model
             
     		$data['users'][$k]['score']=$t->sum('score');
     		$data['users'][$k]['max']=$t->sum('max');
+
             $data['users'][$k]['pace']=$t->sum('time')/$data['users'][$k]['max'];
             $data['users'][$k]['correct']=$t->sum('correct');
 
