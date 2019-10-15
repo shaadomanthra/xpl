@@ -573,7 +573,10 @@ class AdminController extends Controller
         $user->phone = $request->get('phone');
         $user->roll_number = $request->get('roll_number');
         $user->year_of_passing = $request->get('year_of_passing');
-        $user->branch_id = $branch;
+        if(isset($branch_id))
+            $user->branch_id = $branch_id;
+        else
+            $user->branch_id = null;
         $user->save();
 
         if(!$coll){

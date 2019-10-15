@@ -179,7 +179,10 @@ var myChart = new Chart(ctx, {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero:true
+                    beginAtZero:true,
+                    steps: 10,
+                    stepValue: 5,
+                    max: {{ ($details['correct'] +$details['incorrect'] + $details['unattempted']) }}
                 }
             }]
         }
@@ -216,7 +219,10 @@ var myChart = new Chart(ctx, {
         scales: {
             xAxes: [{
                 ticks: {
-                    beginAtZero:true
+                    beginAtZero:true,
+                    steps: 10,
+                    stepValue: 5,
+                    max: 100
                 }
             }]
         }
@@ -236,7 +242,7 @@ new Chart(ctxOne, optionsOne);
   var options_{{$section->section_id}} = {
   type: 'horizontalBar',
   data: {
-    labels: ["Correct", "Incorrect", "Unattempted"],
+    labels: ["Correct ({{$section->correct}})", "Incorrect ({{$section->incorrect}})", "Unattempted ({{$section->unattempted}})"],
     datasets: [{
       label:'',
       data: [{{$section->correct}}, {{$section->incorrect}}, {{$section->unattempted}}],
@@ -264,7 +270,10 @@ new Chart(ctxOne, optionsOne);
         scales: {
             xAxes: [{
                 ticks: {
-                    beginAtZero:true
+                    beginAtZero:true,
+                    steps: 10,
+                    stepValue: 5,
+                    max: {{ ($section->correct +$section->incorrect +$section->unattempted) }}
                 }
             }]
         }
@@ -351,6 +360,9 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
+
+
+      
         
     }
 });
@@ -393,7 +405,7 @@ new Chart(ctxOne, optionsOne);
   var options_{{$section->id}} = {
   type: 'horizontalBar',
   data: {
-    labels: ["Excellent", "Good", "Need to Improve"],
+    labels: ["Excellent ({{$details['section'][$section->id]['excellent']}})", "Good ({{$details['section'][$section->id]['good']}})", "Need to Improve ({{$details['section'][$section->id]['need_to_improve']}})"],
     datasets: [{
       label:'',
       data: [{{$details['section'][$section->id]['excellent']}}, {{$details['section'][$section->id]['good']}}, {{$details['section'][$section->id]['need_to_improve']}}],
@@ -423,7 +435,10 @@ new Chart(ctxOne, optionsOne);
         scales: {
             xAxes: [{
                 ticks: {
-                    beginAtZero:true
+                    beginAtZero:true,
+                    steps: 10,
+                    stepValue: 5,
+                    max: {{ ($details['section'][$section->id]['excellent'] +$details['section'][$section->id]['good'] +$details['section'][$section->id]['need_to_improve']) }}
                 }
             }]
         }

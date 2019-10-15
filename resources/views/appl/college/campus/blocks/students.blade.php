@@ -12,8 +12,8 @@
 		      <th scope="col" >{{$s->name }}</th>
 		      @endforeach
 		      @endif
-		      <th scope="col"  >Score</th>
-		      <th scope="col" class=" {{$m=0}} " colspan="1">Performance</th>
+		      <th scope="col" style="width:10%"  >Score</th>
+		      <th scope="col" class=" {{$m=0}} " style="width:20%" >Performance</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -23,7 +23,7 @@
 		    <tr>
 		      <th scope="row">{{++$m}}</th>
 		      <td>{{$user['name']}}  </td>
-		      <td>{{$user['branch']}}  </td>
+		      <td>@if($user['branch']){{  $branches[$user['branch']] }}@endif</td>
 		      @if(isset($sections))
 		      	@foreach($sections as $s)
 		      		<td>{{ $details['section'][$s->id]['users'][$k]['score'] }}</td>

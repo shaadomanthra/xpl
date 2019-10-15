@@ -633,14 +633,16 @@ class CampusController extends Controller
             $details['item_name'] = 'Branch';
         }
         
-      
+      $branches = array(1=>"BCOM",2=>"",3=>"",4=>"",5=>"",6=>"",7=>"",8=>"",9=>"CSE",10=>"IT",11=>"ECE",12=>"EEE",13=>"MECH",14=>"CIVIL",15=>"OTHER");
+
 
     	return view('appl.college.campus.test_show')
             ->with('exam',$exam)
             ->with('details',$details)
             ->with('data',$data)
             ->with('test_analysis',1)
-            ->with('sections',$sections);
+            ->with('sections',$sections)
+            ->with('branches',$branches);
     }
 
 
@@ -719,7 +721,8 @@ class CampusController extends Controller
             $details['item_name'] = 'Branch';
         }
         
-              
+        $branches = array(1=>"BCOM",2=>"",3=>"",4=>"",5=>"",6=>"",7=>"",8=>"",9=>"CSE",10=>"IT",11=>"ECE",12=>"EEE",13=>"MECH",14=>"CIVIL",15=>"OTHER");
+
 
         return view('appl.college.campus.test_show2')
             ->with('exam',$exam)
@@ -727,7 +730,8 @@ class CampusController extends Controller
             ->with('data',$data)
             ->with('test_analysis',1)
             ->with('college',$college)
-            ->with('sections',$sections);
+            ->with('sections',$sections)
+            ->with('branches',$branches);
     }
 
     public function students(Request $r){
@@ -816,6 +820,8 @@ class CampusController extends Controller
         $users = $tests->unique('user_id')->pluck('user_id');
         $i=0;
         $us=array();
+
+        $usr = User::whereIn('id',$users)->get();
         foreach($users as $user){
             $entry = Test::where('test_id',$id)->where('user_id',$user)->get()->groupBy('question_id');
             $sections = Tests_Section::where('test_id',$id)->where('user_id',$user)->get()->groupBy('section_id');
@@ -846,9 +852,20 @@ class CampusController extends Controller
                 if($m!=0)
                     $item->delete();
             }
+
+
             
         }
-        dd($us);
+
+        foreach($usr as $uk){
+            if($uk && $uk->branch_id!=1)
+            if($uk->branches()->first()){
+              $uk->branch_id = $uk->branches()->first()->id;
+              $uk->save();  
+            }
+            
+        }
+        
         
     }
 

@@ -52,7 +52,7 @@
 				</div>
 			</div>
 			<div class="col-12 col-md-8 mb-3">
-				<div class="card p-3" style="background: #E8FFEF;border: 2px solid #BBDBC5;color: #5B8568;">
+				<div class="card p-3" style="background: #E8FFEF;border: 2px solid #BBDBC5;">
 					<div class="">
 						<h2 class="display-5"> Details</h2>
 						<hr>
@@ -110,9 +110,9 @@
 		    <tr>
 		      <th scope="col">#</th>
 		      <th scope="col">{{$details['item_name']}}</th>
-		      <th scope="col" class="text-center" >Participants</th>
-		      <th scope="col" class="text-center" >Accuracy</th>
-		      <th scope="col" class="text-center" >Pace</th>
+		      <th scope="col" class="" >Participants</th>
+		      <th scope="col" class="" >Accuracy</th>
+		      <th scope="col" class="" >Pace</th>
 		      <th scope="col" class="text-center {{$m=0}} " colspan="1">Performance</th>
 		    </tr>
 		  </thead>

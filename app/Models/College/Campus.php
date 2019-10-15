@@ -367,7 +367,8 @@ class Campus extends Model
             if(isset($users[$k])){
                 $data['users'][$k]['name'] = $users[$k][0]['name'];
                 $data['users'][$k]['username'] = $users[$k][0]['username']; 
-                $data['users'][$k]['branch'] = $users[$k][0]['branch'];  
+                $data['users'][$k]['branch'] = $users[$k][0]['branch_id']; 
+                $data['users'][$k]['college'] = $users[$k][0]['college_id'];  
             }else{
                 $data['users'][$k]['name'] = '';
                 $data['users'][$k]['username'] = ''; 
@@ -388,7 +389,7 @@ class Campus extends Model
     		if($data['users'][$k]['percent']>0.70){
     			$data['users'][$k]['performance'] = 'excellent';
     			$data['excellent']++;
-    		}elseif( $data['users'][$k]['percent']> 0.3 && $data['users'][$k]['percent'] <=0.70){
+    		}elseif( $data['users'][$k]['percent']> 0.4 && $data['users'][$k]['percent'] <=0.70){
     			$data['users'][$k]['performance'] = 'good';
     			$data['good']++;
     		}else{
