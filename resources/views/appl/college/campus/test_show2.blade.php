@@ -119,6 +119,7 @@
 		  <tbody>
 
 		    @foreach($details['items'] as $k=>$batch)
+		    @if($batch['participants']!=0)
 		    <tr>
 		      <th scope="row">{{++$m}}</th>
 		      <td><a href="{{ $batch['url']}}@if(request()->get('all')) &all=1 @endif">{{$batch['name']}}  </a></td>
@@ -138,6 +139,7 @@
 				</div>	
 		      </td>
 		      </tr>
+		      @endif
 		     @endforeach
 		  </tbody>
 		</table>
