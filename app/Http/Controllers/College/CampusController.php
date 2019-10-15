@@ -868,6 +868,39 @@ class CampusController extends Controller
         
     }
 
+    public function user_details_update(){
+
+        
+        $data = file_get_contents('update.txt');
+        
+        $id = $data;
+        $users = User::whereNull('branch_id')->where('id','>',$id)->where('id','<',$id+500)->get();
+        
+
+        foreach($users as $k=>$user){
+            
+            if(count($user->colleges)){
+               $user->college_id = $user->colleges->first()->id; 
+            }
+            
+            if(count($user->branches))
+            $user->branch_id = $user->branches->first()->id;
+
+            if($user->details){
+                $details = $user->details;
+                $user->roll_number = $details->roll_number;
+                $user->phone = $details->phone;
+                $user->year_of_passing = $details->year_of_passing;
+            }
+            $user->save();
+            $d = $user->id;
+        }
+
+
+        file_put_contents('update.txt', $d);
+        dd($id);
+    }
+
     public function student_table(Request $r){
 
         $obj = new CampusController;

@@ -71,7 +71,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 			->name('campus.tests.show')->middleware('auth');
 	Route::get('/campus/duplicates/{test}', 'College\CampusController@remove_duplicates')
 			->name('remove.duplicates')->middleware('auth');
-					
+	Route::get('/user_details_update', 'College\CampusController@user_details_update')
+			->name('user.details.update');
+
 	Route::get('/test/{test}/analytics', 'College\CampusController@test_analytics')
 			->name('test.analytics')->middleware('auth');
 	Route::get('/campus/tests/{test}/{student}', 'College\CampusController@test_student')
