@@ -858,12 +858,11 @@ class CampusController extends Controller
         }
 
         foreach($usr as $uk){
-            if($uk && $uk->branch_id!=1)
+            if(!$uk->branch_id || $uk->branch_id==1)
             if($uk->branches()->first()){
               $uk->branch_id = $uk->branches()->first()->id;
               $uk->save();  
-            }
-            
+            }    
         }
         
         
