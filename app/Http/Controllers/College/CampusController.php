@@ -666,6 +666,8 @@ class CampusController extends Controller
 
             if(request()->get('all'))
                 $college = null;
+            else if(request()->get('college_id'))
+                $college =  College::where('id',request()->get('college_id'))->first();
             else
                 $college = \auth::user()->colleges()->first();
         }
@@ -722,7 +724,10 @@ class CampusController extends Controller
         }
         
         $branches = array(1=>"BCOM",2=>"",3=>"",4=>"",5=>"",6=>"",7=>"",8=>"",9=>"CSE",10=>"IT",11=>"ECE",12=>"EEE",13=>"MECH",14=>"CIVIL",15=>"OTHER");
-
+        if(!$college)
+        $colleges = College::all()->groupBy('id');
+        else
+        $colleges = null;
 
         return view('appl.college.campus.test_show2')
             ->with('exam',$exam)
@@ -730,6 +735,7 @@ class CampusController extends Controller
             ->with('data',$data)
             ->with('test_analysis',1)
             ->with('college',$college)
+            ->with('colleges',$colleges)
             ->with('sections',$sections)
             ->with('branches',$branches);
     }
@@ -874,7 +880,7 @@ class CampusController extends Controller
         $data = file_get_contents('update.txt');
         
         $id = $data;
-        $users = User::where('branch_id',1)->where('id','>',$id)->where('id','<',$id+500)->get();
+        $users = User::whereNull('branch_id')->where('id','>',$id)->where('id','<',$id+500)->get();
         
 
         foreach($users as $k=>$user){

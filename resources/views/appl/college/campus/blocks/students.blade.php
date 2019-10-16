@@ -7,6 +7,9 @@
 		      <th scope="col">#</th>
 		      <th scope="col">Name</th>
 		      <th scope="col" >Branch</th>
+		      @if($colleges)
+		      <th scope="col" >College</th>
+		      @endif
 		      @if(isset($sections))
 		      @foreach($sections as $s)
 		      <th scope="col" >{{$s->name }}</th>
@@ -24,6 +27,11 @@
 		      <th scope="row">{{++$m}}</th>
 		      <td>{{$user['name']}}  </td>
 		      <td>@if($user['branch']){{  $branches[$user['branch']] }}@endif</td>
+
+		      @if($colleges)
+		      <td><a href="{{ route('test.analytics',$exam->slug)}}?college_id={{$user['college']}}">@if($user['college']){{  $colleges[$user['college']][0]->name }}@endif</a></td>
+		      @endif
+
 		      @if(isset($sections))
 		      	@foreach($sections as $s)
 		      		<td>{{ $details['section'][$s->id]['users'][$k]['score'] }}</td>
