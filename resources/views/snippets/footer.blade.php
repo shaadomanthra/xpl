@@ -71,11 +71,19 @@
 
 	
 </div>
+
+<div class="text-muted d-print-none">
 <hr>
-<div class="text-muted d-print-none">Copyright &copy; Quedb Edtech Private Limited</div>
-<div class="text-muted d-none d-print-block">Copyright &copy; PacketPrep
+Copyright &copy; Quedb Edtech Private Limited</div>
+<div class="text-muted d-none d-print-block">
+<img src="https://packetprep.com/img/packetprep_75.png"
+       class="w-100 mb-4" style="max-width:80px;" alt="packetprep logo white">
+<p>At PacketPrep, we make learning simple, interesting and effective. Our Industry-leading Campus Recruitment Module includes granular, and comprehensive courses in quantitative aptitude, verbal ability, logical reasoning, interview skills, programming concepts, and coding.</p>
+<p>Our resource pool of over 10,000 questions is custom-designed and curated to help you crack national recruitment tests conducted by TCS, Wipro, Infosys, Capgemini and more.</p>
+<p><a href="https://packetprep.com">packetprep.com</a></p>
 <hr>
-PacketPrep is the best platform to prepare for campus placements - https://packetprep.com
+Copyright &copy; PacketPrep
+<hr>
 </div>
 <div class="p-4"></div>
 

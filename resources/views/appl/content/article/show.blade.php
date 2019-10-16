@@ -73,6 +73,18 @@
               {!! $obj->details !!}
             </div>
 
+            <div class="mb-3 mt-3">
+              <a href="https://bit.ly/wipro-mock">
+              <img src="img/wipromocktest.jpg" class="w-100" alt="wipro free mock test" />
+            </a>
+              <div class="border p-3 " style="background:#eee">
+                Wipro National Qualifier Test is just a few days away. To help you crack the exam we are sharing a mock test specially designed for Wipro based on all the previous papers.<br>
+                <a href="https://bit.ly/wipro-mock">
+                <button class="btn btn-primary btn-lg mt-3" >Mock Test</button>
+              </a>
+              </div>
+            </div>
+
             </div>
             <div class="col-12 col-md-4 ">
               <div class="sticky-top pt-3">

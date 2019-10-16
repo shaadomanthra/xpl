@@ -874,7 +874,7 @@ class CampusController extends Controller
         $data = file_get_contents('update.txt');
         
         $id = $data;
-        $users = User::whereNull('branch_id')->where('id','>',$id)->where('id','<',$id+500)->get();
+        $users = User::where('branch_id',1)->where('id','>',$id)->where('id','<',$id+500)->get();
         
 
         foreach($users as $k=>$user){

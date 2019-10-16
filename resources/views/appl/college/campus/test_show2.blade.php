@@ -3,28 +3,11 @@
 @section('content')
 
 
-
-    <nav aria-label="breadcrumb d-print-none">
-	  <ol class="breadcrumb border">
-	    
-	    <li class="breadcrumb-item"><a href="{{ url('test')}}">Tests</a></li>
-	    @if(isset($data['item_name']))
-	    	<li class="breadcrumb-item"><a href="{{ route('test.analytics',$exam->slug)}}">{{ $exam->name }}</a></li>
-	    	<li class="breadcrumb-item">{{ $data['item']->name }}</li>
-	    @else
-	    	<li class="breadcrumb-item">{{ $exam->name }}</li>
-	    @endif
-	    
-	  </ol>
-	</nav>
-
-
-
 <div class="row mb-md-1">
 	<div class="col-12 col-md-12">
 
 		<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;"><h1 class="display-3 ">
-			{{ ucfirst($exam->name) }} - Analysis</h1>
+			{{ ucfirst($exam->name) }} - Report</h1>
 			@if(isset($data['item_name']))
 				<div class="display-5 ">{{ $data['item_name'] }} : <b>{{ $data['item']->name }}</b></div>
 
