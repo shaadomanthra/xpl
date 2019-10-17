@@ -338,15 +338,31 @@ class Campus extends Model
                 $users = User::all()->pluck('id');
 
 
-            $tests = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->orderBy('score','desc')->get()->groupBy('user_id');
+            $Tests_Overall = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->orderBy('score','desc')->get();
+            $tests =$Tests_Overall->groupBy('user_id');
+
+            
+            $c_users = null;
+            if(request()->get('all')){
+                $c_users =User::whereIn('id',$Tests_Overall->pluck('user_id'))->get()->groupBy('college_id');
+                
+
+            }
 
             $u = array_keys($tests->toArray());
             
 
-            $data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,'participants'=>0,
+            $data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,
+                            'participants'=>0,
                             "excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0,"count"=>count($test_id),"pace"=>0,"accuracy"=>0,"avg_pace"=>0,"avg_accuracy"=>0);
             
             $data_tests = self::getData_Test($tests,$data_tests,User::whereIn('id',$u)->get()->groupBy('id'));
+
+            $data_tests['college_users'] = $c_users;
+
+            
+
+            
 
         }
 

@@ -729,6 +729,7 @@ class CampusController extends Controller
         else
         $colleges = null;
 
+
         return view('appl.college.campus.test_show2')
             ->with('exam',$exam)
             ->with('details',$details)

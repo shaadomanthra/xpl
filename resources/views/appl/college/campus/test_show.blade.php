@@ -105,6 +105,8 @@
 		</div>
 		@endif
 
+		
+
 		@if(isset($details['items']))
 		 <div class="rounded table-responsive">
 		 @if(count($details['items']))

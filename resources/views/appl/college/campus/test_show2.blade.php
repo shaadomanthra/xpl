@@ -85,6 +85,40 @@
 		</div>
 		@endif
 
+
+		@if($details['college_users'])
+		 <div class="rounded table-responsive">
+		 <table class="table mt-4  table-bordered bg-white" >
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">College</th>
+		      <th scope="col" class="text-center {{$w=0}}" >Participants</th>
+		 
+		    </tr>
+		  </thead>
+		  <tbody>
+
+		    @foreach($details['college_users'] as $coll=>$counter)
+		    <tr>
+		      <th scope="row">{{++$w}}</th>
+		      <td>
+		      	@if($coll)
+		      	<a href="{{ route('test.analytics',$exam->slug)}}?college_id={{$coll}}">
+		      	{{ $colleges[$coll][0]->name }}</a>
+		      	@else
+		      	 - unknown -
+		      	@endif
+		      </td>
+		      <td>{{ count($counter) }}  </td>
+		      
+		      </tr>
+		     @endforeach
+		  </tbody>
+		</table>
+		</div>
+		@endif
+
 		@if(isset($details['items']))
 		 <div class="rounded table-responsive">
 		 @if(count($details['items']))
