@@ -94,7 +94,7 @@
 				@endif
 
 				@if(\auth::user())
-					@if(\auth::user()->isAdmin())
+					@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
 						<a href="{{ route('test.analytics',$exam->slug) }}?all=1">
 	                  <button class="btn btn-lg btn-outline-secondary mb-3"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
 	                  </a>
