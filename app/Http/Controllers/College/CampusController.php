@@ -729,6 +729,15 @@ class CampusController extends Controller
         else
         $colleges = null;
 
+        if($details['college_users']){
+            foreach($details['college_users'] as $coll => $counter){
+                if(!$coll)
+                    $coll =0;
+                $coll_list[$coll]= count($counter);
+            }
+            arsort($coll_list);
+        }
+        $details['coll_list'] =$coll_list;
 
         return view('appl.college.campus.test_show2')
             ->with('exam',$exam)

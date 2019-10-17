@@ -99,7 +99,7 @@
 		  </thead>
 		  <tbody>
 
-		    @foreach($details['college_users'] as $coll=>$counter)
+		    @foreach($details['coll_list'] as $coll=>$counter)
 		    <tr>
 		      <th scope="row">{{++$w}}</th>
 		      <td>
@@ -110,7 +110,7 @@
 		      	 - unknown -
 		      	@endif
 		      </td>
-		      <td>{{ count($counter) }}  </td>
+		      <td>{{ $counter }}  </td>
 		      
 		      </tr>
 		     @endforeach
