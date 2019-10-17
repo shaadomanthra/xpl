@@ -736,8 +736,9 @@ class CampusController extends Controller
                 $coll_list[$coll]= count($counter);
             }
             arsort($coll_list);
+            $details['coll_list'] =$coll_list;
         }
-        $details['coll_list'] =$coll_list;
+        
 
         return view('appl.college.campus.test_show2')
             ->with('exam',$exam)
