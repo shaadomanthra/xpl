@@ -326,15 +326,10 @@ class AdminController extends Controller
 
     public function estudentregister(Request $request)
     {
-        $filename = '../json/colleges.json';
-        if(file_exists($filename))
-        {
-            $colleges = json_decode(file_get_contents($filename));
-        }else{
-            $colleges = College::orderby('name','asc')->get();
+       
+        $colleges = College::orderby('name','asc')->get();
          
-            file_put_contents($filename,json_encode($colleges,JSON_PRETTY_PRINT));
-        }
+          
 
 
         $filename = '../json/branches.json';
