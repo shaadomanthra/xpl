@@ -12,7 +12,7 @@
 		      @endif
 		      @if(isset($sections))
 		      @foreach($sections as $s)
-		      <th scope="col" >{{$s->name }}</th>
+		      <th scope="col" >{{$s->name }}</th> 
 		      @endforeach
 		      @endif
 		      <th scope="col" style="width:10%"  >Score</th>

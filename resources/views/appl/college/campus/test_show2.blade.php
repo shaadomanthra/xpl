@@ -7,7 +7,9 @@
 	<div class="col-12 col-md-12">
 
 		<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;"><h1 class="display-3 ">
+			<a href="{{ request()->fullUrl() }}&export=1" class="btn btn-outline-primary float-right">Download Excel</a>
 			{{ ucfirst($exam->name) }} - Report</h1>
+
 			@if(isset($data['item_name']))
 				<div class="display-5 ">{{ $data['item_name'] }} : <b>{{ $data['item']->name }}</b></div>
 

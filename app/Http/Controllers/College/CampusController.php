@@ -22,6 +22,9 @@ use PacketPrep\Models\Course\Practices_Topic;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Exam\Tests_Overall;
 
+use PacketPrep\Exports\ExamExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class CampusController extends Controller
 {
@@ -738,7 +741,36 @@ class CampusController extends Controller
             arsort($coll_list);
             $details['coll_list'] =$coll_list;
         }
+        //edd($details['users']);
         
+        if(request()->get('export')){
+            foreach($details['users'] as $w=>$u){
+                if($u['college']){
+                    if($colleges[$u['college']][0])
+                        $college_name = $colleges[$u['college']][0]->name;
+                    else if($college)
+                        $college_name = $college->name;
+                    $details['users'][$w]['college'] = $college_name;
+                }
+
+                if($u['branch']){
+                    $details['users'][$w]['branch'] = $branches[$u['branch']];
+                }
+
+                if($sections)
+                foreach($sections as $s){
+                    $details['users'][$w][$s->name] = $details['section'][$s->id]['users'][$w]['score'];
+                }
+            }
+
+            $d = $details['users'];
+            $users = array_keys($d);
+            request()->session()->put('d',$d);
+            request()->session()->put('sections',$sections);
+            request()->session()->put('users',$users);
+            $name = "Report_".$exam->name.".xlsx";
+            return Excel::download(new ExamExport, $name);
+        }
 
         return view('appl.college.campus.test_show2')
             ->with('exam',$exam)
