@@ -157,9 +157,7 @@
   </div>
 
   <div class="col-12 col-md-3">
-    <a href="{{ route('firstacademy')}}">
-      <img src="{{ asset('/img/firstacademy_banner.jpg')}}" class="w-100 mb-3"/> 
-    </a> 
+    
 
     <!--
     <div class="bg-warning border border-warning p-3 rounded mb-4">

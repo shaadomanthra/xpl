@@ -1,25 +1,13 @@
-<nav class="navbar navbar-expand-lg navbar-dark " >
+<nav class="navbar navbar-expand-lg navbar-light " >
     @guest
     <a class="navbar-brand abs" href="{{ url('/') }}" aria-label="Homepage">
-        <picture>
-          <source srcset="{{ asset('img/packetprep_75.webp') }}"
-          width="60px" class="logo-main ml-md-1"  alt="packetprep logo " type="image/webp">
-          <source srcset="{{ asset('img/packetprep_75.png') }}"
-          width="60px" class="logo-main ml-md-1" alt="packetprep logo " type="image/png"> 
-          <img 
-          src="{{ asset('img/packetprep_75.png') }} " width="60px" class="logo-main ml-md-1"  alt="packetprep logo " type="image/png">
-      </picture>
+        <img 
+          src="{{ asset('img/xplore.png') }} " width="100px" class="ml-md-1"  alt="Xplore logo " type="image/png">
   </a>
   @else
   <a class="navbar-brand abs" href="{{ url('/dashboard') }}" aria-label="Dashboard">
-    <picture>
-      <source srcset="{{ asset('img/packetprep_75.webp') }}"
-      width="60px" class="logo-main ml-md-1"  alt="packetprep logo " type="image/webp">
-      <source srcset="{{ asset('img/packetprep_75.png') }}"
-      width="60px" class="logo-main ml-md-1" alt="packetprep logo " type="image/png"> 
-      <img 
-      src="{{ asset('img/packetprep_75.png') }} " width="60px" class="logo-main ml-md-1"  alt="packetprep logo " type="image/png">
-  </picture>
+    <img 
+          src="{{ asset('img/xplore.png') }} " width="100px" class="ml-md-1"  alt="Xplore logo " type="image/png">
 </a>   
 @endguest
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,35 +30,13 @@
         @endguest
         <li class="mr-3 "><a class="nav-link " href="{{ url('course') }}" aria-label="PacketPrep Courses"><i class="fa fas fa-youtube-play"></i> Courses</a></li>
 
-        <li class="mr-3 "><a class="nav-link " href="{{ url('firstacademy') }}" aria-label="Abroad Study Preparation"><i class="fa fas fa-gg"></i> Abroad Studies</a></li>
+        
                     <!--
                         <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>   -->
                         <li class="mr-3 "><a class="nav-link " href="{{ url('wipro-nth-2020') }}" aria-label="Wipro NTH 2020"><i class="fa fa-ravelry"></i> Wipro NTH 2020</a></li>
 
-                        <li class="mr-3 "><a class="nav-link " href="{{ url('ambassador') }}" aria-label="Internship at packetprep"><span class="badge badge-warning p-1 pl-2 pr-2"> Internship</span></a></li>
+                        
 
-                        <li class="nav-item dropdown mr-2">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="dropdown menu">
-                             <i class="fa fa-bullseye"></i>  Programs <span class="caret"></span>
-                         </a>
-                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item"  href="{{ url('gigacode')}}" aria-label="Gigacode program"
-                            >
-                            GigaCode 
-                        </a>
-                        <a class="dropdown-item"  href="{{ url('bootcamp')}}" aria-label="Coding Bootcamp program"
-                        >
-                        Coding Bootcamp
-                    </a>
-                    <a class="dropdown-item"  href="{{ url('targettcs')}}" aria-label="Target TCS NQT"
-                        >
-                        Target TCS NQT
-                    </a>
-
-
-
-                </div>  
-            </li>
 
             <!-- Authentication Links -->
             @guest

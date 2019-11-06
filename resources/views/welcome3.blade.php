@@ -1,15 +1,14 @@
 @extends('layouts.app2')
-@section('title', 'PacketPrep - Placement papers and Aptitude question for TCS Wipro and Infosys')
+@section('title', 'Xplore - The Best Assessment Platform')
 @section('description', 'The best repository for placement papers and aptitude questions for infosys, tcs nqt,tcs ninja, tcs digital, amcat, cocubes, accenture, cognizant, wipro and many more ')
 @section('keywords', 'campus placement preparation, wipro placement papers, infosys placement papers, aptitude questions, amcat previous papers, amcat preparation,tcs nqt, tcs ninja, tcs digital')
-@section('image', 'https://packetprep.com/img/placements.png')
 @section('content')
 <div class="bg-white p-3 p-md-5">
 <div class="container" style="">
   <div class="row ">
     <div class="col-12 col-md-8 ">
       <div class="display-4 mt-4 mb-4">The best platform to prepare for</div>
-      <div class="display-1 mb-4" style="font-family: 'Anton', sans-serif;color:#236fb1">CAMPUS PLACEMENTS</div>
+      <div class="display-1 mb-4" style="font-family: 'Anton', sans-serif;color:#c52329">CAMPUS PLACEMENTS</div>
       <div class="">
         <a href="{{ route('course.show','quantitative-aptitude')}}">
         <span class="btn btn-outline-success  mr-3 mb-3">Quantitative Aptitude</span></a>
@@ -40,125 +39,7 @@
 </div>
 </div>
 
-<main role="main" style="z-index:-100;" >
 
-<div class=" " style="background: #e5f3ff;">
-  <div class="container">
-
-          <div class="pt-4 pb-4 pt-md-5 pb-md-5">
-          <div class="row">
-              <div class="col-12 col-md-6">
-<div class=" p-4 rounded  mb-4 mb-md-0" style="background:white;border:1px solid #b7d0e6;">
-<div class="row">
-  <div class="col-12 col-md-4 ">
-    <div class="col-6 col-md-12">
-    <img src="{{ asset('img/coding.png')}}" class="w-100 mt-3 mb-3" alt="coding bootcamp" />
-  </div>
-  </div>
-  <div class="col-12 col-md-8">
-     <b><i class="fa fa-code"></i> Coding Bootcamp -  Realtime Project</b><hr>
-<p>Build your first web application with PacketPrep's 10-day classroom training. Complement your skills with a real-time project and a completion certificate. </p>
-<a href="{{ url('bootcamp') }}">
-<button class="btn btn-outline-secondary">Reserve your seat</button>
-</a>
-  </div>
-
-</div> 
-</div>
-              </div>
-
-              <div class="col-12 col-md-6">
-<div class=" p-4 rounded " style="background:white;border:1px solid #b7d0e6;">
-<div class="row">
-  <div class="col-12 col-md-4">
-    <div class="col-6 col-md-12">
-    <img src="{{ asset('img/world.png')}}" class="w-100 mt-3 mb-3" alt="want to pursue masters abroad?"/>
-  </div>
-  </div>
-  <div class="col-12 col-md-8">
-      <b><i class="fa fa-ravelry"></i> Want to pursue Masters abroad? </b><hr>
-<p>Attend a free session of GRE or IELTS, or take a mock test, or talk to industry experts who can answer your questions in person! Did we tell you this is free?</p>
-<a href="{{ url('firstacademy')}}">
-<button class="btn btn-outline-primary">More details</button>
-</a>
-  </div>
-
-</div> 
-</div>
-              </div>
-          </div>
-          
-        </div>
-
-
-  </div>
-</div>
-<div class="" style="background: #fff;">
-  <div class="container marketing  " >
-
-    <div class="p-4 p-md-5"></div>
-    <div class="display-3 mb-5 text-center">Why PacketPrep?</div>
-    <div class="p-0 p-md-2"></div>
-    <div class="row ">
-      <div class="col-lg-4 mb-5 mb-md-0">
-        <picture>
-  <source srcset="{{ asset('img/video_1.webp') }}"
-       class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective" type="image/webp">
-  <source srcset="{{ asset('img/video_1.png')}}" class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective" type="image/png"> 
-  <img srcset="{{ asset('img/video_1.png') }}" class="video_embed" data-video="1" data-toggle="modal" data-target="#exampleModal" alt="Learning made Simple, Interesting and Effective">
-</picture>
-        <h2 class="mb-3 mt-4 "><div class="mb-2">Learning made </div> Simple, Interesting and Effective</h2>
-        <p>Learning is no longer boring! Amusing introductions, crisp lectures, and effective strategies all make solving the toughest of questions a breeze!  </p>
-        
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4 mb-5 mb-md-0">
-        <picture>
-  <source srcset="{{ asset('img/video_2.webp') }}"
-       class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank" type="image/webp">
-  <source srcset="{{ asset('img/video_2.png')}}" class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank" type="image/png"> 
-  <img srcset="{{ asset('img/video_2.png') }}" class="video_embed" data-video="2" data-toggle="modal" data-target="#exampleModal" alt="Industry leading Question bank">
-</picture>
-        <h2 class="mb-3 mt-4"><div class="mb-2">Industry leading Question bank </div>for campus placements</h2>
-        <p>Why solve a million questions when you can get away with solving only a few that matter? Each of our concept lectures is followed by a small set of questions that will make you ace your placement tests.</p>
-        
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4 ">
-        <picture>
-  <source srcset="{{ asset('img/video_3.webp') }}"
-       class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test" type="image/webp">
-  <source srcset="{{ asset('img/video_3.png')}}" class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test" type="image/png"> 
-  <img srcset="{{ asset('img/video_3.png') }}" class="video_embed" data-video="3" data-toggle="modal" data-target="#exampleModal" alt="Proficienty Test">
-</picture>
-        <h2 class="mb-3 mt-4"><div class="mb-2">Get Proficienct at</div> grabbing opportunities</h2>
-        <p>PacketPrep's Certificate of Verification provides prospective employers (company or institutions) an iron-clad assurance that you have successfully completed an online course. <a href="{{ url('proficiency-test')}}" class="btn btn-sm btn-outline-secondary">Try now</a></p>
-        
-      </div><!-- /.col-lg-4 -->
-    </div><!-- /.row -->
-
-    <div class="p-4 p-md-5"></div>
-    
-
-
-  </div><!-- /.container -->
-</div>
-<div class=" " style="">
-  <div class="container">
-        <div class="p-4 p-md-5"></div>
-    <div class="display-3 mb-5 text-center">Students Feedback</div>
-    <div class="p-0 p-md-2"></div>
-
-    <div class="row">
-            @for($i=1;$i<13;$i++)
-            <div class="col-12 col-md-6">
-              <img class="example-image p-1" src="img/youtube/{{$i}}.png"  width="100%" alt="student feedback {{$i}}" />
-            </div>
-            @endfor
-        </div>
-        <div class="p-4 p-md-5"></div>
-  </div>
-</div>
-
-</main>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

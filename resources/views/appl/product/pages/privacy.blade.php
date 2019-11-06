@@ -1,6 +1,6 @@
 
 @extends('layouts.app')
-@section('title', 'Privacy Policy | PacketPrep')
+@section('title', 'Privacy Policy | Xplore')
 @section('content')
 
 
@@ -9,11 +9,11 @@
 <div class="display-2">Privacy Policy</div><br>
 
 <p>
-The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to Quedb Edtech Private Limited and the terms "You" /"Your" / "Yourself" refer to the users. </p>
+The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to Pathway Human Resource Private Limited and the terms "You" /"Your" / "Yourself" refer to the users. </p>
 
 <p>This Privacy Policy is an electronic record in the form of an electronic contract formed under the information Technology Act, 2000 and the rules made thereunder and the amended provisions pertaining to electronic documents / records in various statutes as amended by the information Technology Act, 2000. This Privacy Policy does not require any physical, electronic or digital signature.</p>
 
-<p>This Privacy Policy is a legally binding document between you and Quedb Edtech Private Limited  (both terms defined below). The terms of this Privacy Policy will be effective upon your acceptance of the same (directly or indirectly in electronic form, by clicking on the I accept tab or by use of the website or by other means) and will govern the relationship between you and Quedb Edtech Private Limited  for your use of the website "Website" (defined below).</p>
+<p>This Privacy Policy is a legally binding document between you and Pathway Human Resource Private Limited  (both terms defined below). The terms of this Privacy Policy will be effective upon your acceptance of the same (directly or indirectly in electronic form, by clicking on the I accept tab or by use of the website or by other means) and will govern the relationship between you and Pathway Human Resource Private Limited  for your use of the website "Website" (defined below).</p>
 
 <p>This document is published and shall be construed in accordance with the provisions of the Information Technology (reasonable security practices and procedures and sensitive personal data of information) rules, 2011 under Information Technology Act, 2000; that require publishing of the Privacy Policy for collection, use, storage and transfer of sensitive personal data or information.</p>
 
@@ -60,21 +60,19 @@ The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to Q
 <p>However the internet is an ever evolving medium. We may change our Privacy Policy from time to time to incorporate necessary future changes. Of course, our use of any information we gather will always be consistent with the policy under which the information was collected, regardless of what the new policy may be. </p>
 
 <h3>Grievance Redressal</h3>
-<p>Redressal Mechanism: Any complaints, abuse or concerns with regards to content and or comment or breach of these terms shall be immediately informed to the designated Grievance Officer as mentioned below via in writing or through email signed with the electronic signature to ……Quedb Edtech Private Limited  ("Grievance Officer"). </p>
+<p>Redressal Mechanism: Any complaints, abuse or concerns with regards to content and or comment or breach of these terms shall be immediately informed to the designated Grievance Officer as mentioned below via in writing or through email signed with the electronic signature to ……Pathway Human Resource Private Limited  ("Grievance Officer"). </p>
 
-<b>Mr. Krishna Teja </b> (Grievance Officer)<br>
-www.packetprep.com<br><br>
+<b>Mr. Prashanth </b> (Grievance Officer)<br>
+www.Xplore.com<br><br>
 
 <h4>Company Name & Address    </h4>
-Quedb Edtech Private Limited<bR>
-12-5-29/1, first floor<br>
-Beside Innova Childrens Hospital<br>
-Tarnaka - Moula Ali Road<br>
-South Lalaguda, Hyderabad <br>
-Telangana - 500017<br><br>
+<h3>Pathway Human Resource Private Limited</h3>
+#6-3-672,Flat No:301,<bR>Khursheed Mansion, Opp Police station,<br>Beside Hyderabad Central, Panjagutta,<br>Hyderabad, Telangana ,India 500082<br><bR>
+Email: hr@phrpl.com<br>
 
-Phone: +91 95151 25110<br>
-Email: founder@packetprep.com<br>
+Call: +91 7287878747<br>
+
+Phone No: 040-42222253<br>
 
 
 

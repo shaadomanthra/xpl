@@ -89,7 +89,7 @@ h6 {
 .navbar{ border-width: 0 1px 4px 1px; border-color:transparent; }
 
 
-.wrapper-bg{background-color: #f5f8fa; min-height:100%;flex: 1; position:relative; height: stretch;background-repeat: no-repeat;
+.wrapper-bg{background-color: #f3f3f3; min-height:100%;flex: 1; position:relative; height: stretch;background-repeat: no-repeat;
     background-size: auto;
 -webkit-background-size: cover;
   -moz-background-size: cover;

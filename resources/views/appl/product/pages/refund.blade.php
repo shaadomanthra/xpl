@@ -1,6 +1,6 @@
 
 @extends('layouts.app')
-@section('title', 'Refund and Cancellation Policy | PacketPrep')
+@section('title', 'Refund and Cancellation Policy | Xplore')
 
 @section('content')
 
