@@ -270,9 +270,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('admin/settings','Product\AdminController@settings')->name('admin.settings')->middleware('auth');
 	Route::post('admin/settings','Product\AdminController@settings_store')->name('admin.settings')->middleware('auth');
 
-	Route::get('register',function () { 
-			return redirect()->route('student.eregister');
-			})->name('register');
+	
 
 	Route::get('eregister','Product\AdminController@estudentregister')->name('student.eregister');
 	Route::get('sregister','Product\AdminController@sstudentregister')->name('student.sregister');

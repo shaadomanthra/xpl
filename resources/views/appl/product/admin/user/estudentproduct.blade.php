@@ -1,7 +1,7 @@
 @extends('layouts.app-border')
-@section('title', 'Engineering Student Registration  | PacketPrep')
-@section('description', 'Form for engineering students to register to packetprep platform')
-@section('keywords', 'packetprep registration, pacektprep register, engineering registration packetprep')
+@section('title', 'Engineering Student Registration  | Xplore')
+@section('description', 'Form for engineering students to register to xplore platform')
+@section('keywords', 'xplore registration, xplore register, engineering registration xplore')
 @section('content')
 @include('flash::message')
 <div class="card">
