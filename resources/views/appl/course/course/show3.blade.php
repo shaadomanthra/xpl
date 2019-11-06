@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $course->name.' | PacketPrep')
+@section('title', $course->name.' | Xplore')
 @section('keywords', $course->keywords)
 @section('description', $course->description)
 @section('content')

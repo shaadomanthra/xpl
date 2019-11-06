@@ -1,5 +1,5 @@
 @extends('layouts.nowrap-product')
-@section('title', $course->name.' | PacketPrep')
+@section('title', $course->name.' | xplore')
 @section('content')
 
 @include('flash::message')  

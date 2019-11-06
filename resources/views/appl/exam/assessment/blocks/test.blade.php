@@ -1,5 +1,5 @@
 @extends('layouts.none')
-@section('title', $exam->name.' | PacketPrep')
+@section('title', $exam->name.' | Xplore')
 @section('content')
 
 <div class="p-2 p-md-3 ">

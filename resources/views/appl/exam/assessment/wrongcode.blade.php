@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Restricted Access to Content | PacketPrep')
+@section('title', 'Restricted Access to Content | Xplore')
 @section('content')
 
 

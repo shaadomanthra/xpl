@@ -64,12 +64,7 @@
             <a class="dropdown-item"  href="{{ route('admin.index') }}"></i> Admin</a>
             @endif
 
-            @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','ambassador','coordinator','tpo']))
-            <a class="dropdown-item"  href="{{ route('referral')}}"
-            >
-            Referrals
-        </a>
-        @endif
+            
 
 
 

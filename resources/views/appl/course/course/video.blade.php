@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
 @if($category->pdf_link)
-@section('title', 'Download '.$category->name.' | PacketPrep')
+@section('title', 'Download '.$category->name.' | Xplore')
 @elseif($category->test_link)
-@section('title', 'Attempt '.$category->name.' | PacketPrep')
+@section('title', 'Attempt '.$category->name.' | Xplore')
 @else
-@section('title', $category->name.' | PacketPrep')
+@section('title', $category->name.' | Xplore')
 @endif
 
 @if($category->video_desc )
 @section('description', strip_tags($category->video_desc) )
 @endif
 @if($category->video_keywords )
-@section('keywords', strip_tags($category->video_keywords).', packetprep, prepare for campus placements, prepare for offcampus jobs' )
+@section('keywords', strip_tags($category->video_keywords).', Xplore, prepare for campus placements, prepare for offcampus jobs' )
 @endif
 
 @section('content')
@@ -150,13 +150,13 @@
       
       @if($course->id ==20)
       <hr>
-  <a href="https://packetprep.com/productpage/tcs-nqt-mocktests">
+  <a href="https://Xplore.com/productpage/tcs-nqt-mocktests">
   <div class="d-none d-md-block mb-3">
     <img src="{{ asset('img/tcs/mocktest.jpg') }}" class="w-100 border border-primary" />
   </div>
   </a>
 
-  <a href="https://packetprep.com/productpage/tcs-nqt-mocktests">
+  <a href="https://Xplore.com/productpage/tcs-nqt-mocktests">
   <div class="d-block d-md-none">
     <img src="{{ asset('img/tcs/mocktest_md.jpg') }}" class="w-100 border border-primary" />
   </div>
