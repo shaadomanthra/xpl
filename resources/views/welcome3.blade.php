@@ -7,8 +7,8 @@
 <div class="container" style="">
   <div class="row ">
     <div class="col-12 col-md-8 ">
-      <div class="display-4 mt-4 mb-4">The best platform to prepare for</div>
-      <div class="display-1 mb-4" style="font-family: 'Anton', sans-serif;color:#c52329">CAMPUS PLACEMENTS</div>
+      <div class="display-4 mt-4 mb-4">The best assessment platform for</div>
+      <div class="display-1 mb-4" style="font-family: 'Anton', sans-serif;color:#bf5658">Colleges & Companies</div>
       <div class="">
         <a href="{{ route('course.show','quantitative-aptitude')}}">
         <span class="btn btn-outline-success  mr-3 mb-3">Quantitative Aptitude</span></a>

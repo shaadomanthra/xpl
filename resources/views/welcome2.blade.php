@@ -1,8 +1,8 @@
 @extends('layouts.nowrap-product')
 
-@section('title', 'Dashboard | PacketPrep')
+@section('title', 'Dashboard | Xplore')
 
-@section('description', 'Know you packetprep products and services here.')
+@section('description', 'Know you xplore products and services here.')
 
 @section('keywords', 'quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures, gate preparation, gate lectures')
 
@@ -49,12 +49,12 @@
  @endif
 
 <div class="row">
-  <div class="col-12 col-md-9">
+  <div class="col-12 ">
 
 <div class="mb-4  p-3 pt-5 bg-white" style="border:1px solid #cae1ec;">
 
   <div class="row">
-    <div class="col-md-8 ">
+    <div class="col-md-9 ">
       @if(auth::user())
       <div class="row mt-0 mt-mb-4">
         <div class="col-12 col-md-3">
@@ -97,7 +97,7 @@
 
     </div>
     
-    <div class="col-12 col-md-4  ">
+    <div class="col-12 col-md-3  ">
       <div class="float-right ">
                 <img src="{{ asset('/img/student_front.png')}}" class="w-100 p-3 pt-0"/>
                 
@@ -156,31 +156,7 @@
 
   </div>
 
-  <div class="col-12 col-md-3">
-    
-
-    <!--
-    <div class="bg-warning border border-warning p-3 rounded mb-4">
-      <h2> Follows us</h2>
-      <p> Get the latest offers and coupons on our social media channels</p>
-      <a class=" text-primary mr-2 mr-md-3" target="_blank" href="https://www.facebook.com/packetprep/"><i class="fa fa-3x fa-facebook-square"></i></a>
-      
-      <a class=" text-success mr-2 mr-md-3" target="_blank" href="https://www.instagram.com/packetprep/"><i class="fa fa-3x fa-instagram"></i></a>
-      <a class=" text-danger " target="_blank" href="http://youtube.com/packetprep"><i class="fa  fa-3x fa-youtube-square"></i></a>
-    
-    </div>
-  -->
-
-    
-     <div class="bg-light text-secondary border border-secondary p-3 rounded mb-4">
-      <h2><i class="fa fa-handshake-o"></i> Referral</h2>
-      <p>Refer 3 friends and get 3 months pro access to our premium content on aptitude.</p>
-      <a href="{{ route('sreferral') }}">
-      <button class="btn btn-lg btn-outline-dark">Know more</button>
-      </a>
-    </div>
-
-  </div>
+  
 </div>
 
 </div>

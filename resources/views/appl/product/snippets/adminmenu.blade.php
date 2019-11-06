@@ -11,6 +11,7 @@
 	<a href="{{ route('admin.analytics')}}" class="list-group-item list-group-item-action {{ request()->is('admin/analytics*') ? 'active' : ''}}"><i class="fa fa-bar-chart"></i> Analytics</a>
 	
 	
+	
 	<a href="{{ route('coupon.index')}}" class="list-group-item list-group-item-action {{ request()->is('coupon') ? 'active' : ''}}"><i class="fa fa-bars"></i> Coupons</a>
 	<a href="{{ route('referral.list')}}" class="list-group-item list-group-item-action {{ request()->is('referral*') ? 'active' : ''}}"><i class="fa fa-list"></i> Referrals </a>
 		<a href="{{ route('service.index')}}" class="list-group-item list-group-item-action {{ request()->is('service') ? 'active' : ''}}"><i class="fa fa-bars"></i> Service</a>
