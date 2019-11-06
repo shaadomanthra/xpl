@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Admin | PacketPrep')
-@section('description', 'Packetprep Admin page data')
-@section('keywords', 'packetprep, admin page')
+@section('title', 'Admin | Xplore')
+@section('description', 'Xplore Admin page data')
+@section('keywords', 'xplore, admin page')
 @section('content')
 
 
@@ -21,7 +21,7 @@
         <nav class="navbar navbar-light bg-white justify-content-between border rounded p-3 mb-3">
           <a class="navbar-brand"><i class="fa fa-dashboard"></i> Admin </a>
 
-          <a href="{{ route('admin.analysis')}}"><button class="btn btn-sm btn-outline-primary"><i class="fa fa-print"></i> Analsyis </button></a>
+          
           <a href="{{ route('college.top30')}}"><button class="btn btn-sm btn-outline-primary"><i class="fa fa-print"></i> Top Colleges </button></a>
         </nav>
 

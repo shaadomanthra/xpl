@@ -1,7 +1,7 @@
 @extends('layouts.nowrap')
 
-@section('title', 'Forgot Password | PacketPrep')
-@section('description', 'Forgot password reset via sms for packetprep')
+@section('title', 'Forgot Password | Xplore')
+@section('description', 'Forgot password reset via sms for xplore')
 @section('content')
 @include('flash::message') 
 <div class="card">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Campus | PacketPrep')
+@section('title', 'Campus | Xplore')
 @section('description', 'Packetprep Campus Page')
 @section('keywords', 'packetprep, campus page')
 

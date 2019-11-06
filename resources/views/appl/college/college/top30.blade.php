@@ -4,7 +4,7 @@
 
 
 @include('flash::message')
-<h1 class="border p-3 text-center display-3"> PacketPrep Network - Top Colleges </h1>
+<h1 class="border p-3 text-center display-3"> Xplore Network - Top Colleges </h1>
 <div  class="row ">
 
   <div class="col-md-12">
