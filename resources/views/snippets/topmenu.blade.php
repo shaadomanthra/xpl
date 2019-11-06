@@ -33,11 +33,9 @@
         
                     <!--
                         <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>   -->
-                        <li class="mr-3 "><a class="nav-link " href="{{ url('wipro-nth-2020') }}" aria-label="Wipro NTH 2020"><i class="fa fa-ravelry"></i> Wipro NTH 2020</a></li>
+                        <li class="mr-3 "><a class="nav-link " href="{{ url('test') }}" aria-label="Wipro NTH 2020"><i class="fa fa-ravelry"></i> Tests</a></li>
 
                         
-
-
             <!-- Authentication Links -->
             @guest
             <li class="mr-2"><a class="nav-link " href="{{ route('login') }}" aria-label="Login page"><i class="fa fa-sign-in"></i> Login</a></li>
