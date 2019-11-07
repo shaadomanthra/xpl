@@ -1,5 +1,5 @@
 @component('mail::message')
-The following message has been sent to packetprep team.
+The following message has been sent to xplore team.
 # {{ $contact['name']}}'s message 
 
 <b>Email :</b> {{ $contact['email'] }}<br>

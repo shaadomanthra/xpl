@@ -14,5 +14,5 @@ Referral  : <b>{{$customer['referral']}}</b><br>
 
 <br>
 regards,<br>
-PacketPrep
+Xplore
 @endcomponent

@@ -1,15 +1,15 @@
 
 @component('mail::message')
-# Hi {{$user['name']}}!, Welcome to PacketPrep.
+# Hi {{$user['name']}}!, Welcome to Xplore.
 
 Your registered email-id is {{$user['email']}} <br>
 
 @component('mail::panel')
 Username : <b>{{$user['username']}}</b><br>
 Password : <b>{{$user['password']}}</b><br>
-Url : <a href="https://packetprep.com">packetprep.com</a>
+Url : <a href="https://xplore.co.in/login">xplore.co.in/login</a>
 @endcomponent
 
 Thanks,<br>
-PacketPrep
+Xplore
 @endcomponent
