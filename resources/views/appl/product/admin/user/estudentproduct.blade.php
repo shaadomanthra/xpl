@@ -51,7 +51,51 @@
           </div>
         </div>
       </div>
+
+       <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Gender </label>
+             <select class="form-control" name="gender">
+              <option value="male" >Male</option>
+              <option value="female" >Female</option>
+              <option value="transgender" >Transgender</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Date of Birth(DD-MM-YYYY) </label>
+            <input type="text" minlength="1" class="form-control" name="dob" id="formGroupExampleInput" placeholder="Example : 24-06-1999" 
+            @if($stub=='Create')
+            value="{{ (old('dob')) ? old('dob') : '' }}"
+            @endif>
+          </div>
+        </div>
+      </div>
       
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Hometown </label>
+            <input type="text" class="form-control" name="hometown" id="formGroupExampleInput" placeholder="Enter your Hometown" 
+            @if($stub=='Create')
+            value="{{ (old('hometown')) ? old('hometown') : '' }}"
+            @endif
+            >
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Current City </label>
+            <input type="text" minlength="1" class="form-control" name="current_city" id="formGroupExampleInput" placeholder="Enter your Current City" 
+            @if($stub=='Create')
+            value="{{ (old('current_city')) ? old('current_city') : '' }}"
+            @endif>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-12 col-md-4">
           @if(isset($colleges))
@@ -100,58 +144,78 @@
         </div>
       </div>
       
+      
+
+
       <div class="form-group border p-3">
-        <label for="formGroupExampleInput "><h3>Interested Career Path (You can select multiple options)</h3></label><br>
-        <div class="row">
-          <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="15"> MS in US or Aborad  <br>
+            <label for="formGroupExampleInput "><h3>Academics (CGPA or Percentage)</h3></label><br>
+          <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+            <label for="formGroupExampleInput ">Class 10th </label>
+            <input type="text" minlength="1" class="form-control" name="tenth" id="formGroupExampleInput" placeholder="Enter CGPA or Percentage" 
+            @if($stub=='Create')
+            value="{{ (old('tenth')) ? old('tenth') : '' }}"
+            @endif>
           </div>
-          <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="5"> MBA  <br>
           </div>
-          <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="6"> MTECH  <br>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+            <label for="formGroupExampleInput ">Class 12th </label>
+            <input type="text" minlength="1" class="form-control" name="twelveth" id="formGroupExampleInput" placeholder="Enter CGPA or Percentage" 
+            @if($stub=='Create')
+            value="{{ (old('twelveth')) ? old('twelveth') : '' }}"
+            @endif>
           </div>
-          <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="8"> Government JOB  <br>
           </div>
-          <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="9"> Software / IT JOB  <br>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+            <label for="formGroupExampleInput ">Btech/Degree </label>
+            <input type="text" minlength="1" class="form-control" name="bachelors" id="formGroupExampleInput" placeholder="Enter CGPA or Percentage" 
+            @if($stub=='Create')
+            value="{{ (old('bachelors')) ? old('bachelors') : '' }}"
+            @endif>
           </div>
-          <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="3"> Business <br>
           </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+            <label for="formGroupExampleInput ">Masters(Optional) </label>
+            <input type="text" minlength="1" class="form-control" name="masters" id="formGroupExampleInput" placeholder="Enter CGPA or Percentage" 
+            @if($stub=='Create')
+            value="{{ (old('masters')) ? old('masters') : '' }}"
+            @endif>
+          </div>
+          </div>
+          
         </div>
+
       </div>
 
-
       <div class="form-group border p-3">
-        <label for="formGroupExampleInput "><h3>Skills to Improve (You can select multiple options)</h3></label><br>
+        <label for="formGroupExampleInput "><h3>Trained in</h3></label><br>
         <div class="row">
           <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="12"> Communication  <br>
+            <input  type="checkbox" name="metrics[]" value="18"> C   <br>
           </div>
           <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="10"> Computer Programming (C/JAVA/OTHER) <br>
+            <input  type="checkbox" name="metrics[]" value="19"> C++  <br>
           </div>
           <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="16"> MATLAB <br>
+            <input  type="checkbox" name="metrics[]" value="20"> JAVA  <br>
           </div>
           <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="17"> AutoCAD <br>
+            <input  type="checkbox" name="metrics[]" value="21"> DotNET  <br>
           </div>
           <div class="col-12 col-md-4">
-            <input  type="checkbox" name="metrics[]" value="11"> Animation/Design <br>
+            <input  type="checkbox" name="metrics[]" value="22"> Python  <br>
+          </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="23"> SQL <br>
           </div>
         </div>
       </div>
   
-      <div class="form-group border bg-light p-3">
-        <div class="form-group">
-          <label for="formGroupExampleInput ">Referral Code (Optional)</label>
-          <input type="text" class="form-control" name="code" id="formGroupExampleInput" placeholder="Enter Referral Code"  value="{{ (\request()->code)? \request()->code : ''}}">
-        </div>
-      </div>
+      
       @if($stub=='Update')
       <input type="hidden" name="_method" value="PUT">
       @endif

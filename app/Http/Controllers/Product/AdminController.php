@@ -568,6 +568,15 @@ class AdminController extends Controller
         $user->phone = $request->get('phone');
         $user->roll_number = $request->get('roll_number');
         $user->year_of_passing = $request->get('year_of_passing');
+        $user->tenth = $request->get('tenth');
+        $user->twelveth= $request->get('twelveth');
+        $user->bachelors = $request->get('bachelors');
+        $user->masters = $request->get('masters');
+        $user->hometown = $request->get('hometown');
+        $user->current_city = $request->get('current_city');
+        $user->gender = $request->get('gender');
+        $user->dob = $request->get('dob');
+
         if(isset($branch_id))
             $user->branch_id = $branch_id;
         else
