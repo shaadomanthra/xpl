@@ -212,6 +212,33 @@
           <div class="col-12 col-md-4">
             <input  type="checkbox" name="metrics[]" value="23"> SQL <br>
           </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="24"> PHP <br>
+          </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="25"> Networking <br>
+          </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="26"> AutoCAD <br>
+          </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="27"> Catia <br>
+          </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="28"> Ansys <br>
+          </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="29"> Solidworks <br>
+          </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="30"> Matlab <br>
+          </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="31"> Arduino <br>
+          </div>
+          <div class="col-12 col-md-4">
+            <input  type="checkbox" name="metrics[]" value="32"> Raspberry Pi <br>
+          </div>
         </div>
       </div>
   
