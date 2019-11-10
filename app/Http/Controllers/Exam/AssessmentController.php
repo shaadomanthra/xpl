@@ -157,7 +157,7 @@ class AssessmentController extends Controller
 
         if($filter){
             $examtype = Examtype::where('slug',$filter)->first();
-            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->whereIn('status',[1,2])->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
         }
         else
             $exams = $exam->where('name','LIKE',"%{$item}%")->paginate(config('global.no_of_records'));
