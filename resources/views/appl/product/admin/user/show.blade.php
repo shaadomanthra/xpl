@@ -226,20 +226,7 @@
           </div>
 
           <div class="col-12 col-md-9">
-            <dl class="row">
-          @if($user->services())
-          <dt class="col-sm-3">Services</dt>
-          <dd class="col-sm-9">
-          @if($user->services()->count() )
-          @foreach($user->services()->get() as $service)
-            <a href="{{ route('service.view',$service->name ) }}">{{ $service->name}}</a> <br>
-          @endforeach
-          @else
-            -
-          @endif
-          </dd>
-          @endif
-        </dl>
+            
 
         <dl class="row">
           @if($user->metrics())
