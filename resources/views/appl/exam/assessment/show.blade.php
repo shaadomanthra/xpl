@@ -92,54 +92,45 @@
 
 
 
+	@if(\auth::user())
+	@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
 
 	<div class="card mt-3 p-4 ">
-@if(\auth::user())
-				@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
-				<div>
-				<span class="badge badge-info"><i class="fa fa-user"></i> Placement Officer </span><br>
-			</div>
-				<p class="lead mt-2">
+		<div>
+			<span class="badge badge-info"><i class="fa fa-user"></i> Placement Officer </span><br>
+		</div>
+		<p class="lead mt-2">
 
-				“For the things we have to learn before we can do them, we learn by doing them.”<br>
-				- Aristotle
-			</p>
-				@endif
-				@endif
+			“For the things we have to learn before we can do them, we learn by doing them.”<br>
+			- Aristotle
+		</p>
 
-				@if(\auth::user())
-					
-
-					@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
-						<a href="{{ route('test.analytics',$exam->slug) }}">
-	                  <button class="btn btn-lg btn-outline-info mb-3"> <i class="fa fas fa-bar-chart" ></i> College Analytics</button>
-	                  </a>
-					@endif
-				@endif
-				<div class="text-secondary"><small><b>NOTE:</b> This block is visible only to placement officer</small></div>
+		<a href="{{ route('test.analytics',$exam->slug) }}">
+			<button class="btn btn-lg btn-outline-info mb-3"> <i class="fa fas fa-bar-chart" ></i> College Analytics</button>
+		</a>
+		<div class="text-secondary"><small><b>NOTE:</b> This block is visible only to placement officer</small></div>
 	</div>
+	@endif
+	@endif
 
-	<div class="card bg-light mt-3 p-4 ">
 @if(\auth::user())
-				@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
-				<div class="mb-3">
-				<span class="badge badge-secondary"><i class="fa fa-user"></i> Super Admin </span><br>
-			</div>
-				
-				@endif
-				@endif
-
-				@if(\auth::user())
-					
 @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-						<a href="{{ route('test.analytics',$exam->slug) }}?all=1">
-	                  <button class="btn btn-lg btn-outline-secondary mb-3"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
-	                  </a>
-	                  <div class="text-secondary"><small><b>NOTE:</b> This block is visible only to Super Administrator</small></div>
-					@endif
-				@endif
+	<div class="card bg-light mt-3 p-4 ">
+		<div class="mb-3">
+			<span class="badge badge-secondary"><i class="fa fa-user"></i> Super Admin </span><br>
+		</div>
+
+
+
+		<a href="{{ route('test.analytics',$exam->slug) }}?all=1">
+			<button class="btn btn-lg btn-outline-secondary mb-3"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
+		</a>
+		<div class="text-secondary"><small><b>NOTE:</b> This block is visible only to Super Administrator</small></div>
+
 	</div>
 </div>
+@endif
+@endif
 
 <div class="modal fade bd-example-modal-lg" id="myModal2"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
   <div class="modal-dialog modal-lg">
