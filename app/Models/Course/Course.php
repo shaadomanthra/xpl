@@ -178,7 +178,7 @@ class Course extends Model
                           
         } 
         $data['nodes'] = $node;
-        $data['ques_count'] = $qcount;
+        //$data['ques_count'] = $qcount;
 
         $examtype = Examtype::where('slug',$id)->first();
         if($examtype)
