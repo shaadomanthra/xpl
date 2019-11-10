@@ -6,7 +6,7 @@
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
                 <th scope="col">Details</th>
-                <th scope="col">Referral</th>
+                <th scope="col">Created at</th>
               </tr>
             </thead>
             <tbody>
@@ -20,17 +20,17 @@
                   {{ $user->email }}
                 </td>
                  <td>
-                  @if($user->colleges()->first())
-                    {{ $user->colleges()->first()->name }} 
-                    @if($user->branches()->first())
-                     - {{ $user->branches()->first()->name }} 
+                  @if($user->college)
+                    {{ $user->college->name }} 
+                    @if($user->branch)
+                     - {{ $user->branch->name }} 
                     @endif
                   @endif 
-                  - {{ ($user->updated_at) ? $user->updated_at->diffForHumans() : '' }}
+                  
                 </td>
                 
                 <td>
-                 {{ ($user->user_id)?$user->where('id',$user->user_id)->first()->name:'' }}
+                 {{ ($user->updated_at) ? $user->updated_at->diffForHumans() : '' }}
                 </td>
               </tr>
               @endforeach      

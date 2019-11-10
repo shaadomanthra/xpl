@@ -19,10 +19,8 @@
     <div class="row mt-md-3" >
 	<div class="col-12 col-md-4 col-lg-4 mt-1">
 		<div class="border mb-3">
-		<h2 class="  p-4  mb-0" style="background: #ecf2f6;  border-bottom:1px solid #eee;height:120px;"> 
-			@if($course->image) 
-		      <img src="{{ $course->image }}" style="width:70px" class="float-right"/> 
-		      @endif 
+		<h2 class="  p-4  mb-0" style="background: #eee;  border-bottom:1px solid #eee;height:120px;"> 
+			
 		      <div class="pt-4">{{ $course->name }}</div>
 		</h2>
 		<div class=" p-4 mb-3  bg-white " style="">
@@ -57,7 +55,7 @@
 				
 				<div class="col-12 mb-3 mb-md-0 col-md-4"> 
 					<div class="mr-3">
-					<div class="row border  rounded p-2 pt-3 pb-3" style="background: rgba(204, 232, 255, 0.3);border:1px solid #8db8dc4d;">
+					<div class="row border  rounded p-2 pt-3 pb-3" style=";border:1px solid #8db8dc4d;">
 						<div class="col-4"><div class="mt-2"><i class="fa fa-font-awesome fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
 						<div class="col-8">
 						<div class="  " style="color: rgba(127, 166, 198, 0.93)">
@@ -71,7 +69,7 @@
 
 				<div class="col-12 mb-3 mb-md-0 col-md-4 "> 
 					<div class="mr-3 mr-md-2 ml-0 ml-md-1">
-					<div class="row  rounded p-2 pt-3 pb-3" style="background: rgba(204, 232, 255, 0.3);border:1px solid #8db8dc4d;">
+					<div class="row  rounded p-2 pt-3 pb-3" style="border:1px solid #8db8dc4d;">
 						<div class="col-4"><div class="mt-2"><i class="fa fa-area-chart fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
 						<div class="col-8">
 						<div class="  " style="color: rgba(127, 166, 198, 0.93)">
@@ -89,7 +87,7 @@
 
 				<div class="col-12 mb-3 mb-md-0 col-md-4 "> 
 					<div class="mr-3 ml-0 ml-md-2">
-					<div class="row border  rounded p-2 pt-3 pb-3" style="background: rgba(204, 232, 255, 0.3);border:1px solid #8db8dc4d;">
+					<div class="row border  rounded p-2 pt-3 pb-3" style="border:1px solid #8db8dc4d;">
 						<div class="col-4"><div class="mt-2"><i class="fa fa-clock-o fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
 						<div class="col-8">
 						<div class="  " style="color: rgba(127, 166, 198, 0.93)">
@@ -157,7 +155,7 @@
 
 @if($exams) 
 		<div class=" ">
-			<h1 class="mb-4 p-3 border rounded"> <i class="fa fas fa-gg"></i> Online Tests</h1>
+			<h1 class="mb-4 mt-4 p-3 border rounded"> <i class="fa fas fa-gg"></i> Online Tests</h1>
 
 
 			     
@@ -168,7 +166,7 @@
 <div class="col-12 col-md-6 mb-4"> 
   
           <div class="bg-white border">
-            <div  style="background: #ebf3f7">&nbsp;</div>
+            <div  style="background: #eee">&nbsp;</div>
               <div class="card-body">
               	@if($exam->status==1)
                 <span class="badge badge-warning">FREE</span>

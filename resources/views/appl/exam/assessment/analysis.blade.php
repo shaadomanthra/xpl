@@ -111,6 +111,7 @@
 
 		
 
+		@if($details['correct_time'])
 			<div class="card mb-3 "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
 			<div class="card-body">
 				<h1> Concept Breakup</h1>
@@ -186,6 +187,7 @@
 			</div>
 
 		</div>
+		@endif
 
 
 

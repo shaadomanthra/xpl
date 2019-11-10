@@ -78,10 +78,27 @@
                   </a>
 				@endif
 
-				@if(\auth::user())
+				<br><br>
+			</div>
+
+		</div>
+		
+		
+		
+		
+
+	</div>
+
+
+
+
+
+	<div class="card mt-3 p-4 ">
+@if(\auth::user())
 				@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
-				<hr>
-				<span class="badge badge-secondary"><i class="fa fa-user"></i> Placement Officer </span><br>
+				<div>
+				<span class="badge badge-info"><i class="fa fa-user"></i> Placement Officer </span><br>
+			</div>
 				<p class="lead mt-2">
 
 				“For the things we have to learn before we can do them, we learn by doing them.”<br>
@@ -91,11 +108,7 @@
 				@endif
 
 				@if(\auth::user())
-					@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-						<a href="{{ route('test.analytics',$exam->slug) }}?all=1">
-	                  <button class="btn btn-lg btn-outline-secondary mb-3"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
-	                  </a>
-					@endif
+					
 
 					@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
 						<a href="{{ route('test.analytics',$exam->slug) }}">
@@ -103,15 +116,28 @@
 	                  </a>
 					@endif
 				@endif
-		<br><br>
+				<div class="text-secondary"><small><b>NOTE:</b> This block is visible only to placement officer</small></div>
+	</div>
+
+	<div class="card bg-light mt-3 p-4 ">
+@if(\auth::user())
+				@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
+				<div class="mb-3">
+				<span class="badge badge-secondary"><i class="fa fa-user"></i> Super Admin </span><br>
 			</div>
+				
+				@endif
+				@endif
 
-		</div>
-		
-		
-		
-		
-
+				@if(\auth::user())
+					
+@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+						<a href="{{ route('test.analytics',$exam->slug) }}?all=1">
+	                  <button class="btn btn-lg btn-outline-secondary mb-3"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
+	                  </a>
+	                  <div class="text-secondary"><small><b>NOTE:</b> This block is visible only to Super Administrator</small></div>
+					@endif
+				@endif
 	</div>
 </div>
 

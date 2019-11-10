@@ -11,7 +11,6 @@
 
 	<a href="{{ route('coupon.index')}}" class="list-group-item list-group-item-action {{ request()->is('coupon') ? 'active' : ''}}"><i class="fa fa-bars"></i> Coupons</a>
 	
-	<a href="{{ route('article.index')}}" class="list-group-item list-group-item-action {{ request()->is('blog') ? 'active' : ''}}"><i class="fa fa-bars"></i> Blog</a>
 	@endif
 	
 	<a href="{{ route('material')}}" class="list-group-item list-group-item-action {{ request()->is('material') ? 'active' : ''}}"><i class="fa fa-telegram"></i> Material</a>

@@ -78,10 +78,11 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Reset password via email
                                 </a>
-
+                                <!--
                                 <a class="btn btn-link" href="{{ route('password.forgot') }}">
                                     Recieve password via sms
                                 </a>
+                            -->
                             </div>
                         </div>
                     </form>

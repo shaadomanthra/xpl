@@ -71,16 +71,7 @@
           >
       </div>
 
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Phone 2</label>
-        <input type="text" class="form-control" name="phone_2" id="formGroupExampleInput" placeholder="Enter your Second Phone Number" 
-            @if($stub=='Create')
-            value="{{ (old('phone_2')) ? old('phone_2') : '' }}"
-            @else
-            value = "{{ ($user_details)?$user_details->phone_2:'' }}"
-            @endif
-          >
-      </div>
+      
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Roll Number </label>
@@ -131,20 +122,7 @@
         </select>
       </div>
 
-      @if(isset($services))
-      <div class="form-group border p-3">
-        <label for="formGroupExampleInput ">Services</label><br>
-        @foreach($services as $service)
-        <input  type="checkbox" name="services[]" value="{{$service->id}}" 
-              @if($stub!='Create')
-                  @if(in_array($service->id, $user->services()->pluck('id')->toArray()))
-                  checked
-                  @endif
-              @endif
-            > {{ $service->name }} <br>
-        @endforeach
-      </div>
-      @endif
+      
 
       @if(isset($metrics))
       <div class="form-group border p-3">
@@ -169,24 +147,7 @@
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Campus Ambassador</label>
-        <select class="form-control" name="ambassador">
-           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(37)) selected @endif @endif @endif>No</option>
-          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(37)) selected @endif @endif @endif>Yes</option>
-         
-        </select>
-      </div>
-
-
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Campus Coordinator</label>
-        <select class="form-control" name="coordinator">
-           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(40)) selected @endif @endif @endif>No</option>
-          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(40)) selected @endif @endif @endif>Yes</option>
-         
-        </select>
-      </div>
+     
 
         <div class="form-group">
         <label for="formGroupExampleInput ">Training and Placement Officer</label>

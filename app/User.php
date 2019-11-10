@@ -80,6 +80,11 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\College\Branch');
     }
 
+    public function branch()
+    {
+        return $this->belongsTo('PacketPrep\Models\College\Branch');
+    }
+
      public function batches()
     {
         return $this->belongsToMany('PacketPrep\Models\College\Batch');
@@ -89,6 +94,12 @@ class User extends Authenticatable
     {
         
         return $this->belongsToMany('PacketPrep\Models\College\College');
+    }
+
+    public function college()
+    {
+        
+        return $this->belongsTo('PacketPrep\Models\College\College');
     }
 
     public function services()

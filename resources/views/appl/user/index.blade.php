@@ -6,7 +6,7 @@
     @include('flash::message')  
 
     <div class="card mb-3">
-      <div style="height:120px;background: linear-gradient(70deg,#2f82ca, #019875);"></div>
+      <div style="height:120px;background: linear-gradient(70deg,#F44336, #3f51b5);"></div>
       <div class="card-body " style="margin-top: -110px;">
         <div class="row">
           <div class="col-md-4">
@@ -52,8 +52,27 @@
              @endif
 
               @if($user->colleges()->first())
-             <p>@if($user->colleges()->first()) {{ $user->colleges()->first()->name }} @endif - 
+             <p>@if($user->colleges()->first()) <b>{{ $user->colleges()->first()->name }}</b> @endif - 
              @if($user->branches()->first()) {{  $user->branches()->first()->name  }} @endif </p>
+             @endif
+
+             @if($user->year_of_passing)
+             <div> Year of Passing - {{$user->year_of_passing}}</div>
+             @endif
+
+             @if($user->gender)
+             <div> Gender - {{$user->gender}}</div>
+             @endif
+
+             @if($user->dob)
+             <div> Date of Birth - {{$user->dob}}</div>
+             @endif
+
+             @if($user->current_city)
+             <div> Current City - {{$user->current_city}}</div>
+             @endif
+             @if($user->hometown)
+             <div> Hometown - {{$user->hometown}}</div>
              @endif
 
             </div>
@@ -65,22 +84,93 @@
      </div>
    </div>
 
-   <div class="card">
+@auth
+<div class="row">
+<div class="col-12 col-md-8">
+   <div class="card mb-3">
     <div class="card-body bg-light">
       <div class="row">
-        <div class="col-6"><h1 class="mb-0"> Position</h1></div>
-        <div class="col-6 mt-2">
-          @if(count($user->roles))
-            @foreach($user->roles as $roles)
-              {{ $roles->name }} <br>
-            @endforeach
-          @else
-            - Not Assigned -
-          @endif
+        <div class="col-12 col-md-4"><h1 class="mb-0"> Academics</h1></div>
+        <div class="col-12 col-md-8 mt-2">
+          
+          <div class="table-responsive">
+            <table class="table table-bordered">
+  <thead>
+    <tr class="">
+      <th scope="col">Board</th>
+      <th scope="col">CGPA / Percentage </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Class 10</td>
+      <td>
+        @if($user->tenth)
+        {{$user->tenth}}
+        @else
+          - 
+        @endif
+      </td>
+    </tr>
+    <tr>
+      <td>Class 12</td>
+      <td>
+        @if($user->twelveth)
+        {{$user->twelveth}}
+        @else
+          - 
+        @endif
+      </td>
+    </tr>
+    <tr>
+      <td>Graduation</td>
+      <td>
+        @if($user->bachelors)
+        {{$user->bachelors}}
+        @else
+          - 
+        @endif
+      </td>
+    </tr>
+    <tr>
+      <td>Masters</td>
+      <td>
+        @if($user->masters)
+        {{$user->masters}}
+        @else
+          - 
+        @endif
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+          </div>
         </div>
       </div>
     </div>
    </div>
+</div>
+
+<div class="col-12 col-md-4">
+
+<div class="card">
+    <div class="card-body bg-white">
+      <div class="row">
+        <div class="col-12 col-md-4"><h1 class="mb-0"> Skills</h1></div>
+        <div class="col-12 col-md-8 mt-2">
+          @foreach($user->metrics as $m)
+
+            <span class="badge badge-success">{{$m->name}}</span><br>
+          @endforeach
+         
+        </div>
+      </div>
+    </div>
+   </div>
+ </div>
+</div>
+@endauth
 
  </div>
 </div>

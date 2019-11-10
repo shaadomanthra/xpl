@@ -11,7 +11,7 @@
 @include('flash::message')
 <div  class="row ">
 
-  <div class="col-md-12">
+  <div class="col-12 col-md-9">
  
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
@@ -43,6 +43,13 @@
 
      </div>
    </div>
+ </div>
+ <div class="col-12 col-md-3">
+  <ul class="list-group">
+  <a href="#" class="list-group-item list-group-item-action active">Latest</a>
+  <a href="#" class="list-group-item list-group-item-action ">Open</a>
+  <a href="#" class="list-group-item list-group-item-action ">Closed</a>
+</ul>
  </div>
 </div>
 

@@ -2,11 +2,11 @@
 @extends('layouts.app')
 @section('content')
 
-@section('title',  $product->name .' Product Page | PacketPrep')
+@section('title',  $product->name .' Product Page | Xplore')
 
 @section('description', 'The following page lists the product '.$product->name.', '.$product->description)
 
-@section('keywords', 'packetprep products')
+@section('keywords', ' products')
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">

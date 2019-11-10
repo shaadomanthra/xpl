@@ -242,7 +242,6 @@
         </div>
       </div>
   
-      
       @if($stub=='Update')
       <input type="hidden" name="_method" value="PUT">
       @endif

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-@section('title', 'Products | PacketPrep')
+@section('title', 'Products | Xplore')
 
 @section('description', 'This page lists the products and services sold by packetprep')
 

@@ -62,7 +62,7 @@
         </div>
         <div class="col-12 col-md-9">
 
-          <h2>Hi, {{ auth::user()->name}}</h2>
+          <h2>Hi, {{  \auth::user()->name}}</h2>
       <p> Welcome aboard</p>
 
       <p class="lead">Develop a passion for learning. If you do, you will never cease to grow - 
@@ -70,8 +70,8 @@
 
 
 
-  
-      <a class="btn border border-success text-success mt-2" href="{{ route('logout') }}" onclick="event.preventDefault();
+    <a href="{{ route('profile','@'.\auth::user()->username)}}" class="btn btn-primary">Profile</a>
+      <a class="btn border border-success text-success " href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();" role="button">Logout</a>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
@@ -108,7 +108,7 @@
 
 
   @if(count(auth::user()->products)!=0)
-  <div class="rounded table-responsive">
+  <div class="rounded table-responsive bg-white">
             <table class="table table-bordered ">
               <thead>
                 <tr>

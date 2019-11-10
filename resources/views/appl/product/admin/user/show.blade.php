@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', $user->name.' - User ')
 @section('content')
 
 <nav aria-label="breadcrumb">
@@ -22,10 +23,7 @@
           @if(!$user->checkUserRole(['administrator','manager']))
           <a href="{{ route('admin.user.edit',$user->username) }}"><i class="fa fa-edit"></i> edit </a>
           @endif
-          @if(!$user->checkUserRole(['administrator','manager']))
-          <a href="{{ route('admin.user.print',$user->username) }}"><i class="fa fa-print"></i> print </a>
-           <a href="{{ route('user.referral',$user->username) }}"><i class="fa fa-users"></i> Referrals </a>
-          @endif
+          
         </nav>
 
         <div class="card mb-3">
@@ -41,19 +39,13 @@
   <dd class="col-sm-7">{{ $user->id}}</dd>
   <dt class="col-sm-5">Name</dt>
   <dd class="col-sm-7">{{ $user->name}}</dd>
-  @if($user->user_id)
-  <dt class="col-sm-5">Reference</dt>
-  <dd class="col-sm-7">
-    <a href="{{ route('admin.user.view', \auth::user()->where('id',$user->user_id)->first()->username) }}">
-      {{ \auth::user()->where('id',$user->user_id)->first()->name}}
-    </a>
-  </dd>
-  @endif
+  
 
   <dt class="col-sm-5">Username</dt>
-  <dd class="col-sm-7">{{ $user->username}}</dd>
-  <dt class="col-sm-5">Referral Link</dt>
-  <dd class="col-sm-7">https://packetprep.com/eregister?code={{ $user->username}}</dd>
+  <dd class="col-sm-7">
+    <a href="{{ route('profile','@'.$user->username)}}">{{ $user->username}}
+    </a>
+  </dd>
   <dt class="col-sm-5">Email</dt>
   <dd class="col-sm-7">
     {{ $user->email }}
@@ -65,17 +57,9 @@
     {{ ($user->details)?$user->details->phone:'' }}
   </dd>
 
-  @if($user->details)
-  <dt class="col-sm-5">Phone 2</dt>
-  <dd class="col-sm-7">
-    {{ ($user->details)?$user->details->phone_2:'' }}
-  </dd>
-  @endif
+ 
 
-  @if($user->zones()->first())        
-  <dt class="col-sm-5">Zone</dt>
-  <dd class="col-sm-7"><a href="{{ route('zone.view',$user->zones()->first()->name) }}">{{ $user->zones()->first()->name}}</a></dd>
-  @endif
+ 
 
   @if($user->roles()->first())        
   <dt class="col-sm-5">Role</dt>
@@ -117,6 +101,68 @@
         </div>
 
 
+         
+  
+        </div>
+      </div>
+
+
+            <div class="card mb-3">
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-12 col-md-2">
+          <img src="{{ asset('/img/solar-system.png')}}" class="w-100 p-3 pt-0"/>    
+          </div>
+
+          <div class="col-12 col-md-9">
+            <dl class="row">
+              <dt class="col-sm-3">Gender</dt>
+              <dd class="col-sm-9">
+                @if($user->gender)
+                {{ $user->gender}}
+                @else -
+                @endif
+              </dd>
+              
+              <dt class="col-sm-3">Date of Birth</dt>
+              <dd class="col-sm-9">
+                @if($user->dob)
+                {{ $user->dob}}
+                @else -
+                @endif
+              </dd>
+              
+
+              <dt class="col-sm-3">Current City</dt>
+              <dd class="col-sm-9">
+                @if($user->current_city)
+                {{ $user->current_city}}
+                @else -
+                @endif
+              </dd>
+ 
+
+             
+              <dt class="col-sm-3">Hometown</dt>
+              <dd class="col-sm-9">
+                 @if($user->hometown)
+                 {{ $user->hometown}}
+                 @else
+                 -
+                 @endif
+               </dd>
+              
+
+              @if($user->zones()->first())        
+              <dt class="col-sm-3">Zone</dt>
+              <dd class="col-sm-9"><a href="{{ route('zone.view',$user->zones()->first()->name) }}">{{ $user->zones()->first()->name}}</a></dd>
+              @endif
+            </dl>
+          </div>
+        </div>
+        
+        
          
   
         </div>

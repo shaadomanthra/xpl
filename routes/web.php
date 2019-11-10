@@ -284,6 +284,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('studentstore','Product\AdminController@studentstore')->name('admin.user.studentstore');
 
 	Route::get('/companies', 'Content\ArticleController@companies')->name('companies');
+	/*
 	Route::get('/blog/listing', 'Content\ArticleController@public')->name('article.listing')->middleware('auth');
 	Route::get('/blog/template', function(){ return view('appl.content.article.template'); })->name('template');
 	Route::get('/blog/myblogs','Content\ArticleController@myblogs' )->name('myblogs')->middleware('auth');
@@ -298,7 +299,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         'update'=>'article.update',
         'destroy'=>'article.destroy',
     ]]);
-	
+	*/
 
     Route::resource('label','Content\LabelController')->middleware('auth');
     
@@ -484,6 +485,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourseSave')->name('course.question')->middleware('auth');
 
 	Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');
+	Route::get('/jobs', function(){
+		return Redirect::to('/job', 301); 
+	});
 	Route::resource('job','Recruit\JobController');
 	Route::resource('form','Recruit\FormController')->middleware('auth');
 

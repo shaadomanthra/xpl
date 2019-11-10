@@ -311,12 +311,12 @@ class AdminController extends Controller
             $m = Metric::where('name',$metric)->first();
         $users = $m->users()->orderBy('created_at','desc')->paginate(config('global.no_of_records'));
 
-        }else
-        $users = $user->where(function ($query) use ($item) {
-                                $query->where('name','LIKE',"%{$item}%")
-                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%");
+        }else{
+            $users = $user->where('name','LIKE',"%{$item}%")
+                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->orderBy('created_at','desc')->paginate(config('global.no_of_records'));
                                       
-                            })->orderBy('created_at','desc')->paginate(config('global.no_of_records'));
+        }
+        
         
         $view = $search ? 'list': 'index';
 
