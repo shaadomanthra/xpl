@@ -100,6 +100,15 @@ class UsersExport implements FromCollection
                 unset($users[$k]->role);
                 unset($users[$k]->client_slug);
                 unset($users[$k]->user_id);
+                unset($users[$k]->tenth);
+                unset($users[$k]->twelveth);
+                unset($users[$k]->bachelors);
+                unset($users[$k]->masters);
+                unset($users[$k]->hometown);
+                unset($users[$k]->current_city);
+                unset($users[$k]->gender);
+                unset($users[$k]->dob);
+
                 if(isset($details[$users[$k]->id])){
                     $key = $users[$k]->id;
                     $users[$k]->phone = $details[$key]->phone;
@@ -111,6 +120,8 @@ class UsersExport implements FromCollection
 
         //$entry = DB::table('branch_user')->whereIn('branch_id', [11,12,13,14,15,16,17,18])->pluck('user_id'); 
         //$users =  User_Details::whereIn('user_id',$entry)->get();
+
+      
     
       
 
