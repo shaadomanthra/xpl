@@ -61,6 +61,14 @@ class ExamExport implements FromCollection
     	$ux->roll_number = "Roll number";
     	$ux->phone = "Phone";
     	$ux->year_of_passing = "Year of Passing";
+        $ux->tenth = "Tenth";
+        $ux->twelveth = "Twelveth";
+        $ux->bachelors = "Bachelors";
+        $ux->masters = "Masters";
+        $ux->hometown = "Hometown";
+        $ux->current_city = "Current City";
+        $ux->gender = "Gender";
+        $ux->dob = "Date of Birth";
     	
     	
     	$ux->college = "College";
