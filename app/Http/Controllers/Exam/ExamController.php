@@ -50,7 +50,7 @@ class ExamController extends Controller
                 file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
             }
            
-            flash('Product Pages Cache Updated')->success();
+            flash('Exam Cache Updated')->success();
         }
 
         $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));   

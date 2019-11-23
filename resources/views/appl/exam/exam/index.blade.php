@@ -21,15 +21,15 @@
 
           
           <form class="form-inline" method="GET" action="{{ route('exam.index') }}">
-            <a href="{{route('exam.create')}}">
-              <button type="button" class="btn btn-outline-secondary my-2 my-sm-2 mr-sm-3">Create Loop</button>
+            <a href="{{route('exam.index')}}?refresh=1">
+              <button type="button" class="btn btn-secondary my-2 my-sm-2 mr-sm-3">Refresh Cache</button>
             </a>
             <a href="{{route('examtype.index')}}">
               <button type="button" class="btn btn-outline-primary my-2 my-sm-2 mr-sm-3">Examtpyes</button>
             </a>
             @can('create',$exam)
             <a href="{{route('exam.create')}}">
-              <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Create Exam</button>
+              <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Create </button>
             </a>
             @endcan
             <div class="input-group ">
