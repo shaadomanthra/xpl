@@ -21,8 +21,8 @@
       <form method="post" action="{{route($app->module.'.update',$obj->id)}}" enctype="multipart/form-data">
       @endif  
       <div class="form-group">
-        <label for="formGroupExampleInput ">{{ ucfirst($app->module)}} </label>
-        <input type="text" class="form-control" name="label" id="formGroupExampleInput" placeholder="Enter the Label" 
+        <label for="formGroupExampleInput ">Category </label>
+        <input type="text" class="form-control" name="label" id="formGroupExampleInput" placeholder="Enter the category name" 
             @if($stub=='Create')
             value="{{ (old('label')) ? old('label') : '' }}"
             @else
@@ -43,7 +43,7 @@
       </div>
       
       <div class="form-group">
-        <label for="formGroupExampleInput ">Slug</label>
+        <label for="formGroupExampleInput ">Slug (URL)</label>
         <input type="text" class="form-control" name="slug" id="formGroupExampleInput" placeholder="Enter the unique identifier" 
             @if($stub=='Create')
             value="{{ (old('slug')) ? old('slug') : '' }}"
@@ -53,7 +53,7 @@
           >
       </div>
 
-      <div class="form-group">
+      <div class="form-group" style="display:none">
         <label for="formGroupExampleInput ">Image</label>
         <input type="file" class="form-control" name="file" id="formGroupExampleInput" placeholder="Enter the image path" 
           >
@@ -71,7 +71,7 @@
       </div>
 
       <div class="form-group">
-        <label for="formGroupExampleInput ">Keywords</label>
+        <label for="formGroupExampleInput ">Keywords (Seperated by commas) (SEO)</label>
         <textarea class="form-control " name="keywords"  rows="5">
             @if($stub=='Create')
             {{ (old('keywords')) ? old('keywords') : '' }}

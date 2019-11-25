@@ -6,6 +6,7 @@
               <tr>
                 <th scope="col" style="width: 5%">#({{$objs->total()}})</th>
                 <th scope="col" style="width: 60%">Name </th>
+                <th scope="col" style="width: 10%">Category</th>
                 <th scope="col" style="width: 10%">Status</th>
                 <th scope="col" style="width: 20%">Created at</th>
               </tr>
@@ -20,6 +21,9 @@
                   <h4 class="mb-0">{{ $obj->name }}</h3>
                   </a>
                   {!! $obj->description !!}
+                </td>
+                <td>
+                  {!! $obj->label !!}
                 </td>
                 <td>
                   @if($obj->status==0)

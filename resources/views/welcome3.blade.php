@@ -34,8 +34,26 @@
     </div>
   </div>
 </div>
+
+
 </div>
 
+<div class=" " style="">
+  <div class="container">
+        <div class="p-4 p-md-5"></div>
+    <div class="display-3 mb-5 text-center">Students Feedback</div>
+    <div class="p-0 p-md-2"></div>
+
+    <div class="row">
+            @for($i=1;$i<13;$i++)
+            <div class="col-12 col-md-6">
+              <img class="example-image p-1" src="img/youtube/{{$i}}.png"  width="100%" alt="student feedback {{$i}}" />
+            </div>
+            @endfor
+        </div>
+        <div class="p-4 p-md-5"></div>
+  </div>
+</div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

@@ -62,8 +62,17 @@ The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to P
 <h3>Grievance Redressal</h3>
 <p>Redressal Mechanism: Any complaints, abuse or concerns with regards to content and or comment or breach of these terms shall be immediately informed to the designated Grievance Officer as mentioned below via in writing or through email signed with the electronic signature to ……Pathway Human Resource Private Limited  ("Grievance Officer"). </p>
 
-<b>Mr. Prashanth </b> (Grievance Officer)<br>
-www.Xplore.com<br><br>
+<b>Mr. Prashanth </b> (Cofounder)<br>
+email : prashanth@phrpl.com<br>
+contact : +91 7287878747<br><br>
+
+Mr. Akhil (Cofounder)<br>
+email : akhil@phrpl.com<bR>
+contact : 9849485501<br><br>
+
+Mr. Abhinav (Cofounder)<br>
+email : abhinav@phrpl.com<br>
+contact : 8801358568<br><Br>
 
 <h4>Company Name & Address    </h4>
 <h3>Pathway Human Resource Private Limited</h3>

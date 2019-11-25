@@ -15,6 +15,7 @@ class Article extends Model
         'keywords',
         'related',
         'math',
+        'link',
         'status',
         'user_id'
     ];

@@ -21,6 +21,8 @@
 	<a href="{{ route('branch.index')}}" class="list-group-item list-group-item-action {{ request()->is('branch') ? 'active' : ''}}"><i class="fa fa-bars"></i> Branch</a>
 	<a href="{{ route('zone.index')}}" class="list-group-item list-group-item-action {{ request()->is('zone') ? 'active' : ''}}"><i class="fa fa-bars"></i> Zone</a>
 	<a href="{{ route('metric.index')}}" class="list-group-item list-group-item-action {{ request()->is('metric') ? 'active' : ''}}"><i class="fa fa-bars"></i> Metric</a>
+	<a href="{{ url('job')}}" class="list-group-item list-group-item-action {{ request()->is('job') ? 'active' : ''}}"><i class="fa fa-bars"></i> Jobs</a>
+	<a href="{{ route('label.index')}}" class="list-group-item list-group-item-action {{ request()->is('label') ? 'active' : ''}}"><i class="fa fa-bars"></i> Label</a>
 
 
 </div>

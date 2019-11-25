@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.app')
 @section('title', $obj->name.' | PacketPrep')
 @section('description', substr(strip_tags($obj->description),0,200))
 @section('keywords', $obj->keywords)
@@ -57,7 +57,7 @@
           </h1>
           @if(isset($obj->labels))
           <div class="mb-3" >
-            <a href="{{ route('article.index')}}"><span class="badge badge-secondary">Blog</span></a>
+            <a href="{{ route('article.index')}}"><span class="badge badge-secondary">jobs</span></a>
           @foreach($obj->labels as $k=>$label)
           <a href="{{ route('blog.label',$label->slug)}}"><span class="badge @if($k==0) badge-info @elseif($k==1) badge-warning @else badge-secondary @endif">{{$label->name }}</span></a>
           @endforeach
@@ -73,17 +73,8 @@
               {!! $obj->details !!}
             </div>
 
-            <div class="mb-3 mt-3">
-              <a href="https://bit.ly/wipro-mock">
-              <img src="img/wipromocktest.jpg" class="w-100" alt="wipro free mock test" />
-            </a>
-              <div class="border p-3 " style="background:#eee">
-                Wipro National Qualifier Test is just a few days away. To help you crack the exam we are sharing a mock test specially designed for Wipro based on all the previous papers.<br>
-                <a href="https://bit.ly/wipro-mock">
-                <button class="btn btn-primary btn-lg mt-3" >Mock Test</button>
-              </a>
-              </div>
-            </div>
+             @include('appl.content.article.blocks.link')
+            
 
             </div>
             <div class="col-12 col-md-4 ">
@@ -92,7 +83,7 @@
               @if(isset($obj->related1))
               @if(count($obj->related1)!=0)
               <div class=" border rounded bg-secondary text-white mb-4 d-none d-md-block">
-                  <h4 class="mb-0 p-3">Related Blogs</h4>
+                  <h4 class="mb-0 p-3">Related Jobs</h4>
                  <div class="list-group ">
                 @foreach($obj->related1 as $item)
                   @if($item->slug != $obj->slug)
@@ -188,7 +179,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Kindly Login to view the answer and complete solution for the question.</p>
+        <p>Kindly Login to proceed further.</p>
       </div>
       <div class="modal-footer">
         <a href="{{ route('login')}}">

@@ -2,15 +2,15 @@
 
 @if(!isset($label))
 
-@section('title', 'Placement Preparation Blog | PacketPrep')
-@section('description', 'This section has huge set of aptitude questions, recruitment process and placement papers for various companies, tips and tricks to prepare for it')
-@section('keywords', 'quantitative aptitude, mental ability, learning, simple, interesting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures')
+@section('title', 'Jobs | Xplore')
+@section('description', 'This section is for latest jobs in the market for freshers')
+@section('keywords', '')
 
 @else
 
-@section('title', $label->name.' Blog | PacketPrep')
+@section('title', $label->name.' Job | Xplore')
 @section('description', substr(strip_tags($label->description),0,200) )
-@section('keywords', $label->name.', quantitative aptitude, mental ability, learning, simple, interesting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures')
+@section('keywords', $label->name)
 
 @endif
 
@@ -22,11 +22,11 @@
   <div class="row">
     <div class="col-12 col-md-8">
       <h1 class="mt-1 mb-2 mb-md-0">
-      <i class="fa fa-th"></i> &nbsp; @if(isset($label)) {{ ucfirst($label->name)}} Blogs @elseif(isset($listing)) Blog Listing (Adminview) @else Blog @endif
+      <i class="fa fa-th"></i> &nbsp; @if(isset($label)) {{ ucfirst($label->name)}} Blogs @elseif(isset($listing)) Job Listing (Adminview) @else Latest Jobs @endif
 
       @can('create',$obj)
             <a href="{{route($app->module.'.create')}}">
-              <button type="button" class="btn btn-outline-success btn-sm my-2 my-sm-2 mr-sm-1">Create {{ ucfirst($app->module) }}</button>
+              <button type="button" class="btn btn-outline-success btn-sm my-2 my-sm-2 mr-sm-1">Create Job </button>
             </a>
             <a href="{{route('article.index')}}?refresh=1">
               <button type="button" class="btn btn-outline-primary btn-sm my-2 my-sm-2 mr-sm-3">Refresh Cache</button>
@@ -72,15 +72,18 @@
         <div class=" border rounded  text-white mb-4">
          <div class="list-group ">
         <a href="{{ route('article.index')}}" class="list-group-item list-group-item-action list-group-item-primary @if(!isset($label) && !isset($myblogs))  active @endif ">
-          All Blogs
+          All Jobs
         </a>
         @if(\Auth::user())
         @if(\Auth::user()->checkRole(['administrator','manager','blog-writer','editor']))
+        <a href="{{ route('label.index')}}" class="list-group-item list-group-item-action  ">
+          Labels
+        </a>
         <a href="{{ route('myblogs')}}" class="list-group-item list-group-item-action list-group-item-secondary @if(isset($myblogs))  active @endif ">
-          My Blogs
+          My Jobs
         </a>
         <a href="{{ route('article.listing')}}" class="list-group-item list-group-item-action list-group-item-secondary ">
-          Blog Listing
+          Job Listing
         </a>
         @endif
         @endif

@@ -35,6 +35,10 @@
       <div class="card mb-4">
         <div class="card-body">
           <div class="row mb-2">
+            <div class="col-md-4"><b>Category</b></div>
+            <div class="col-md-8"><span class="badge badge-secondary">{{ $obj->label }}</span></div>
+          </div>
+          <div class="row mb-2">
             <div class="col-md-4"><b>Name</b></div>
             <div class="col-md-8">{{ $obj->name }}</div>
           </div>

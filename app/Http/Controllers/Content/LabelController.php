@@ -43,7 +43,7 @@ class LabelController extends Controller
             file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
         }
 
-        flash('Blog Pages Cache Updated')->success();
+        flash('Labels Cache Updated')->success();
         }
 
         $objs = $obj->where('name','LIKE',"%{$item}%")

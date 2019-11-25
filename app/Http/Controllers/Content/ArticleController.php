@@ -317,7 +317,7 @@ class ArticleController extends Controller
                         ->get(); 
             file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
 
-            flash('A new ('.$this->app.'/'.$this->module.') item is created!')->success();
+            flash('A new job item is created!')->success();
             return redirect()->route('page',$request->get('slug'));
         }
         catch (QueryException $e){
@@ -507,7 +507,9 @@ class ArticleController extends Controller
             $obj->update($request->except(['file_'])); 
 
             $sizes = [300,600,900,1200];
+
             if($obj->image)
+            if(Storage::disk('public')->exists($obj->image))
             foreach($sizes as $s)
                 image_resize($obj->image,$s);
 
@@ -535,7 +537,7 @@ class ArticleController extends Controller
             file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
             
 
-            flash('('.$this->app.'/'.$this->module.') item is updated!')->success();
+            flash('job item is updated!')->success();
             return redirect()->route('page',$slug);
         }
         catch (QueryException $e){
