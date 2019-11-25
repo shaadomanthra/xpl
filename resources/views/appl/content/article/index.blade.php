@@ -22,7 +22,7 @@
   <div class="row">
     <div class="col-12 col-md-8">
       <h1 class="mt-1 mb-2 mb-md-0">
-      <i class="fa fa-th"></i> &nbsp; @if(isset($label)) {{ ucfirst($label->name)}} Blogs @elseif(isset($listing)) Job Listing (Adminview) @else Latest Jobs @endif
+      <i class="fa fa-th"></i> &nbsp; @if(isset($label)) {{ ucfirst($label->name)}} Jobs @elseif(isset($listing)) Job Listing (Adminview) @else Latest Jobs @endif
 
       @can('create',$obj)
             <a href="{{route($app->module.'.create')}}">
