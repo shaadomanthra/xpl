@@ -47,7 +47,7 @@
 <div class="p-2"></div>
 @else
 <div class="card card-body bg-light">
-  No Blogs listed
+  No Jobs listed
 </div>
 @endif
 <div class="">
