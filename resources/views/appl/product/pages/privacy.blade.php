@@ -66,11 +66,11 @@ The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to P
 email : prashanth@phrpl.com<br>
 contact : +91 7287878747<br><br>
 
-Mr. Akhil (Cofounder)<br>
+<b>Mr. Akhil </b>(Cofounder)<br>
 email : akhil@phrpl.com<bR>
 contact : 9849485501<br><br>
 
-Mr. Abhinav (Cofounder)<br>
+<b>Mr. Abhinav</b> (Cofounder)<br>
 email : abhinav@phrpl.com<br>
 contact : 8801358568<br><Br>
 
