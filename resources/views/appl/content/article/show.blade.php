@@ -31,7 +31,7 @@
           <div class="mb-3" >
             <a href="{{ route('article.index')}}"><span class="badge badge-secondary">jobs</span></a>
           @foreach($obj->labels as $k=>$label)
-          <a href="{{ route('blog.label',$label->slug)}}"><span class="badge @if($k==0) badge-info @elseif($k==1) badge-warning @else badge-secondary @endif">{{$label->name }}</span></a>
+          <a href="{{ route('blog.label',$label->slug)}}"><span class="badge  badge-warning  ">{{$label->name }}</span></a>
           @endforeach
           </div>
           @endif
@@ -39,7 +39,7 @@
           <div class="row">
             <div class="col-12 col-md-8">
               <div class="mb-4" style="word-wrap: break-word;">
-                <div class="float-left pr-3 pb-3" style="max-width:200px">
+                <div class="float-left pr-4 pb-4 pt-2" style="max-width:200px">
                               @if(isset($obj->image))
       @if(Storage::disk('public')->exists($obj->image))
       

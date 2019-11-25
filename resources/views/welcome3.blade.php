@@ -3,7 +3,7 @@
 @section('description', 'The best repository for placement papers and aptitude questions for infosys, tcs nqt,tcs ninja, tcs digital, amcat, cocubes, accenture, cognizant, wipro and many more ')
 @section('keywords', 'campus placement preparation, wipro placement papers, infosys placement papers, aptitude questions, amcat previous papers, amcat preparation,tcs nqt, tcs ninja, tcs digital')
 @section('content')
-<div class="bg-white p-3 p-md-5">
+<div class=" p-3 p-md-5" style="background:#f8f8f8">
 <div class="container" style="">
   <div class="row ">
     <div class="col-12 col-md-7 ">
@@ -30,7 +30,7 @@
     </div>
     <div class="col-12 col-md-5">
       
-  <img srcset="{{ asset('img/banner_xpl2.jpg') }}" class="w-100 d-none d-md-block" alt="xplore banner">
+  <img srcset="{{ asset('img/header.png') }}" class="w-100 d-none d-md-block" alt="xplore banner">
     </div>
   </div>
 </div>
@@ -38,9 +38,26 @@
 
 </div>
 
+<div class="" style="background:#fff">
+  <div class="container">
+        <div class="p-3 p-md-4"></div>
+    <div class="display-3 mb-5 text-center">Our Clients</div>
+    <div class="p-0 p-md-2"></div>
+
+    <div class="row">
+            @for($i=1;$i<10;$i++)
+            <div class="col-12 col-md-2">
+              <img class="example-image p-1 mb-3" src="img/companies/{{$i}}.jpg"  width="100%" alt="Companies{{$i}}" />
+            </div>
+            @endfor
+        </div>
+        <div class="p-4 p-md-4"></div>
+  </div>
+</div>
+
 <div class=" " style="">
   <div class="container">
-        <div class="p-4 p-md-5"></div>
+        <div class="p-4 p-md-4"></div>
     <div class="display-3 mb-5 text-center">Students Feedback</div>
     <div class="p-0 p-md-2"></div>
 
@@ -51,7 +68,7 @@
             </div>
             @endfor
         </div>
-        <div class="p-4 p-md-5"></div>
+        <div class="p-4 p-md-4"></div>
   </div>
 </div>
 

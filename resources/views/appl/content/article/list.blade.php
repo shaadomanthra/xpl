@@ -15,14 +15,14 @@
              {{ asset('/storage/articles/'.$obj->slug.'_1200.webp') }}  1100w" type="image/webp" sizes="(max-width: 320px) 280px,
             (max-width: 480px) 440px,
             (max-width: 720px) 800px
-            1200px" alt="{{  $obj->name }}" style="max-height:120px;">
+            1200px" alt="{{  $obj->name }}" style="max-height:120px;width:auto;">
   <source srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} 320w,
              {{ asset('/storage/articles/'.$obj->slug.'_600.jpg') }}  480w,
              {{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }}  800w,
              {{ asset('/storage/articles/'.$obj->slug.'_1200.jpg') }}  1100w," type="image/jpeg" sizes="(max-width: 320px) 280px,
             (max-width: 480px) 440px,
             (max-width: 720px) 800px
-            1200px" alt="{{  $obj->name }}" style="max-height:120px;"> 
+            1200px" alt="{{  $obj->name }}" style="max-height:120px;width:auto;"> 
   <img srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} 320w,
              {{ asset('/storage/articles/'.$obj->slug.'_600.jpg') }}  480w,
              {{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }}  800w,
@@ -31,7 +31,7 @@
             (max-width: 480px) 440px,
             (max-width: 720px) 800px
             1200px"
-      src="{{ asset('/storage/articles/'.$obj->slug.'_1200.jpg') }} " class="w-100 card-img-top" alt="{{  $obj->name }}" style="max-height:120px;">
+      src="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} " class=" card-img-top" alt="{{  $obj->name }}" style="max-height:120px;width:auto;">
 </picture>
 
     </a>
