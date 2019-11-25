@@ -341,10 +341,7 @@ class ArticleController extends Controller
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
 
-        // load page data from cache
-        if(file_exists($filepath))
-            $obj = json_decode(file_get_contents($filepath));
-        else{
+        
             $obj = Obj::where('slug',$slug)->first();
 
             if(!$obj)
@@ -360,12 +357,7 @@ class ArticleController extends Controller
             if($label2){
                 $obj->related2 = $label2->articles()->limit(4)->get(); 
             }
-        }
         
-        if(!$obj)
-        {
-        	abort('404','Page Not Found');
-        }
       
         if(isset($obj->status))
         {
