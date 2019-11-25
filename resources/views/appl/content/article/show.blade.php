@@ -7,7 +7,40 @@
 
 
 
-      @if(isset($obj->image))
+      
+      <div class="p-3 p-md-4 p-lg-5 bg-white company">
+          
+          @include('flash::message')
+
+
+          <h1 class=""> {{ $obj->name }}  
+
+          @if(\auth::user())
+          @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','blog-writer','editor']))
+          @if((\auth::user()->id == $obj->user_id) || \Auth::user()->checkRole(['administrator','editor']))
+            <span class="btn-group float-right" role="group" aria-label="Basic example">
+              <a href="{{ route($app->module.'.edit',$obj->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+              <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
+            </span>
+            @endif
+            @endif
+          @endif
+
+          </h1>
+          @if(isset($obj->labels))
+          <div class="mb-3" >
+            <a href="{{ route('article.index')}}"><span class="badge badge-secondary">jobs</span></a>
+          @foreach($obj->labels as $k=>$label)
+          <a href="{{ route('blog.label',$label->slug)}}"><span class="badge @if($k==0) badge-info @elseif($k==1) badge-warning @else badge-secondary @endif">{{$label->name }}</span></a>
+          @endforeach
+          </div>
+          @endif
+        
+          <div class="row">
+            <div class="col-12 col-md-8">
+              <div class="mb-4" style="word-wrap: break-word;">
+                <div class="float-left pr-3 pb-3" style="max-width:200px">
+                              @if(isset($obj->image))
       @if(Storage::disk('public')->exists($obj->image))
       
       <picture>
@@ -38,35 +71,7 @@
 
       @endif
       @endif
-      <div class="p-3 p-md-4 p-lg-5 bg-white company">
-          
-          @include('flash::message')
-          <h1 class=""> {{ $obj->name }}  
-
-          @if(\auth::user())
-          @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','blog-writer','editor']))
-          @if((\auth::user()->id == $obj->user_id) || \Auth::user()->checkRole(['administrator','editor']))
-            <span class="btn-group float-right" role="group" aria-label="Basic example">
-              <a href="{{ route($app->module.'.edit',$obj->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-              <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
-            </span>
-            @endif
-            @endif
-          @endif
-
-          </h1>
-          @if(isset($obj->labels))
-          <div class="mb-3" >
-            <a href="{{ route('article.index')}}"><span class="badge badge-secondary">jobs</span></a>
-          @foreach($obj->labels as $k=>$label)
-          <a href="{{ route('blog.label',$label->slug)}}"><span class="badge @if($k==0) badge-info @elseif($k==1) badge-warning @else badge-secondary @endif">{{$label->name }}</span></a>
-          @endforeach
-          </div>
-          @endif
-        
-          <div class="row">
-            <div class="col-12 col-md-8">
-              <div class="mb-4" style="word-wrap: break-word;">
+                </div>
               {!! $obj->description !!}
             </div>
               <div class="" style="word-wrap: break-word;">

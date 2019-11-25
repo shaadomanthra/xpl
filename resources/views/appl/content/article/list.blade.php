@@ -5,22 +5,24 @@
 <div class="col-12 col-md-6 col-lg-4">
  <div class="card mb-3" >
    @if(Storage::disk('public')->exists($obj->image))
+   <div class="card-header" >
      <a href="{{ route('page',$obj->slug) }}" >
-           <picture>
+      
+           <picture >
   <source srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.webp') }} 320w,
              {{ asset('/storage/articles/'.$obj->slug.'_600.webp') }}  480w,
              {{ asset('/storage/articles/'.$obj->slug.'_900.webp') }}  800w,
              {{ asset('/storage/articles/'.$obj->slug.'_1200.webp') }}  1100w" type="image/webp" sizes="(max-width: 320px) 280px,
             (max-width: 480px) 440px,
             (max-width: 720px) 800px
-            1200px" alt="{{  $obj->name }}">
+            1200px" alt="{{  $obj->name }}" style="max-height:120px;">
   <source srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} 320w,
              {{ asset('/storage/articles/'.$obj->slug.'_600.jpg') }}  480w,
              {{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }}  800w,
              {{ asset('/storage/articles/'.$obj->slug.'_1200.jpg') }}  1100w," type="image/jpeg" sizes="(max-width: 320px) 280px,
             (max-width: 480px) 440px,
             (max-width: 720px) 800px
-            1200px" alt="{{  $obj->name }}"> 
+            1200px" alt="{{  $obj->name }}" style="max-height:120px;"> 
   <img srcset="{{ asset('/storage/articles/'.$obj->slug.'_300.jpg') }} 320w,
              {{ asset('/storage/articles/'.$obj->slug.'_600.jpg') }}  480w,
              {{ asset('/storage/articles/'.$obj->slug.'_900.jpg') }}  800w,
@@ -29,9 +31,11 @@
             (max-width: 480px) 440px,
             (max-width: 720px) 800px
             1200px"
-      src="{{ asset('/storage/articles/'.$obj->slug.'_1200.jpg') }} " class="w-100 card-img-top" alt="{{  $obj->name }}">
+      src="{{ asset('/storage/articles/'.$obj->slug.'_1200.jpg') }} " class="w-100 card-img-top" alt="{{  $obj->name }}" style="max-height:120px;">
 </picture>
+
     </a>
+    </div>
       @endif
   <div class="card-body">
     <a href="{{ route('page',$obj->slug) }}" ><h2 class="card-title article">{{ $obj->name }}</h2></a>

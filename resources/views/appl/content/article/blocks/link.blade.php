@@ -1,5 +1,5 @@
 
-@if($obj->link)
+@if(isset($obj->link))
 @auth
 <a href="{{ $obj->link}}" target="_blank">
     <button class="btn btn-lg btn-success">Click Here</button>
