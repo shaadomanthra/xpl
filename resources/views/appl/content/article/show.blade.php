@@ -119,7 +119,7 @@
           <div class="row">
 
             @if(isset($obj->related1))
-              @if(count($obj->related1)!=0)
+              @if(count($obj->related1)!=0 && count($obj->related1)!=1)
               <div class="col-12">
               <div class=" border rounded bg-secondary text-white mb-4 d-block d-md-none">
                   <h4 class="mb-0 p-3">Related Blogs</h4>
