@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $obj->name.' | PacketPrep')
+@section('title', $obj->name.' | Xplore')
 @section('description', substr(strip_tags($obj->description),0,200))
 @section('keywords', $obj->keywords)
 @section('image', asset('/storage/company/'.$obj->slug.'_1200.jpg'))

@@ -45,7 +45,7 @@
     <div class="p-0 p-md-2"></div>
 
     <div class="row">
-            @for($i=1;$i<10;$i++)
+            @for($i=1;$i<19;$i++)
             <div class="col-12 col-md-2">
               <img class="example-image p-1 mb-3" src="img/companies/{{$i}}.jpg"  width="100%" alt="Companies{{$i}}" />
             </div>
