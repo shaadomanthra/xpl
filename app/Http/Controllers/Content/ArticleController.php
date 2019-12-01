@@ -101,6 +101,7 @@ class ArticleController extends Controller
         ->with('app',$this);
     }
 
+
     protected function paginateAnswers(array $answers, $perPage = 10)
     {
         $page = Input::get('page', 1);
