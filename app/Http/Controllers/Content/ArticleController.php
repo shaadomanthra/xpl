@@ -49,10 +49,10 @@ class ArticleController extends Controller
             $label2 = $obj->labels()->skip(1)->first();
             $obj->labels = $obj->labels;
             if($label1){
-                $obj->related1 = $label1->articles()->limit(4)->get(); 
+                $obj->related1 = $label1->articles()->where('status',1)->limit(4)->get(); 
             }
             if($label2){
-                $obj->related2 = $label2->articles()->limit(4)->get(); 
+                $obj->related2 = $label2->articles()->where('status',1)->limit(4)->get(); 
             }
             $filepath = $this->cache_path.$filename;
             file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));

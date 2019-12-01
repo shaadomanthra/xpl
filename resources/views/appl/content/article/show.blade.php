@@ -126,9 +126,11 @@
                  <div class="list-group ">
                 @foreach($obj->related1 as $item)
                   @if($item->slug != $obj->slug)
+                  @if($item->status==1)
                     <a href="{{ route('page',$item->slug)}}" class="list-group-item list-group-item-action list-group-item-light ">
                   {{ ucfirst($item->name) }}
                   </a>
+                  @endif
                   @endif
                 @endforeach 
               
