@@ -2,6 +2,7 @@
 @if(count($objs)!=0)
 <div class="row ">
 @foreach($objs as $obj)
+@if($obj->status==1)
 <div class="col-12 col-md-6 col-lg-4">
  <div class="card mb-3" >
    @if(Storage::disk('public')->exists($obj->image))
@@ -46,6 +47,7 @@
   </div>
 </div>
 </div>
+@endif
 @endforeach
 </div>
 <div class="p-2"></div>
