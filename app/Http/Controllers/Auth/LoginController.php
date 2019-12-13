@@ -142,8 +142,9 @@ class LoginController extends Controller
         
         if(session()->has('redirect.url')) {
              return redirect( session()->get( 'redirect.url' ) );
-        }else
-            return redirect()->intended($this->redirectPath());
+        }
+        
+        return redirect()->intended($this->redirectPath());
     }
 
 

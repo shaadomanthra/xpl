@@ -185,6 +185,9 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <?php
+          session()->put( 'redirect.url',request()->url());
+      ?>
       <div class="modal-body">
         <p>Kindly Login to proceed further.</p>
       </div>
