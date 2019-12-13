@@ -37,10 +37,17 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+    
+
+    public function __construct() {
+        
+        if ( \request()->get( 'redirect_to' ) ) {
+            session()->put( 'redirect.url', \request()->get( 'redirect_to' ) );
+        }
+        $this->middleware( 'guest' )->except( 'logout' );
     }
+
+
 
      /**
      * Get the needed authorization credentials from the request.
@@ -132,7 +139,13 @@ class LoginController extends Controller
            Tests_Overall::where('user_id',$user->id)->delete();
         }
         
-        return redirect()->intended($this->redirectPath());
+        
+        if(session()->has('redirect.url')) {
+             return redirect( session()->get( 'redirect.url' ) );
+        }else
+            return redirect()->intended($this->redirectPath());
     }
+
+
 
 }

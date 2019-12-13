@@ -46,7 +46,12 @@
 						</a>
 						@endif
 					@elseif($exam->status==1) <!-- free Test -->
-					<a href="{{route('assessment.instructions',$exam->slug)}}">
+					
+						@auth
+			       <a href="{{route('assessment.instructions',$exam->slug)}}">
+			       @else
+			       <a href="#" data-toggle="modal" data-target="#myModal2">
+			       @endauth
 					<button class="btn btn-lg btn-success"> Attempt Test </button>
 					</a>
 					@else
@@ -142,7 +147,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
-        <a href="{{ route('login')}}">
+        <a href="{{ url('login?redirect_to=' . urlencode(request()->url())) }}">
         <button type="button" class="btn btn-success">Login</button>
     	</a>
       </div>
