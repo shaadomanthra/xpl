@@ -67,8 +67,10 @@
 				Multi Answer Question
 				@elseif($question->type=='naq')
 				Numerical Answer Question
-				@else
+				@elseif($question->type=='naq')
 				Explanation Question
+				@else
+				Code Question
 				@endif
 			</div>
 		</div>
