@@ -83,7 +83,6 @@
 		</div>
 
 		@if($exam->slug != 'proficiency-test')
-		@if(!$exam->solutions)
 		<div class="card mb-3 "  style="background: #E6F5FF;border: 2px solid #B1D2E7;">
 			<div class="card-body">
 				<p>
@@ -94,7 +93,6 @@
 			</div>
 
 		</div>
-		@endif
 		@endif
 
 	
