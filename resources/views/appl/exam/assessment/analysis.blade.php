@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' | Xplore')
+@section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' | PacketPrep')
 @section('content')
 
 @if($exam->slug != 'proficiency-test')
@@ -23,9 +23,15 @@
 @endif
 
 
-<div class="mb-md-5">
+<div class="mb-md-2">
 	<div class="">
-		<div class="p-3  display-3 border rounded bg-light mb-4">{{ ucfirst($exam->name) }} - Analysis</div>
+		<div class="p-3 border rounded bg-light mb-4">
+		<div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Report</b></div>
+		<p>Name : <span class="text-primary">{{\auth::user()->name}}</span><br>
+			College : <span class="text-primary">{{\auth::user()->colleges()->first()->name}}</span><br>
+			Branch : <span class="text-primary">{{\auth::user()->branches()->first()->name}}</span><br>
+		</p>
+	</div>
 
 		<div class="row">
 			<div class="col-12 col-md-4 mb-3">
@@ -54,7 +60,7 @@
 						<h2> Test Performance</h2>
 						<dl class="row">
 
-						  <dt class="col-sm-6">Marks </dt>
+						  <dt class="col-sm-6">Score </dt>
 						  <dd class="col-sm-6">{{ $details['marks']}} / {{ $details['total'] }} </dd>
 
 						  <dt class="col-sm-6">Attempted</dt>
@@ -77,6 +83,7 @@
 		</div>
 
 		@if($exam->slug != 'proficiency-test')
+		@if(!$exam->solutions)
 		<div class="card mb-3 "  style="background: #E6F5FF;border: 2px solid #B1D2E7;">
 			<div class="card-body">
 				<p>
@@ -87,6 +94,7 @@
 			</div>
 
 		</div>
+		@endif
 		@endif
 
 	
@@ -111,8 +119,7 @@
 
 		
 
-		@if($details['correct_time'])
-			<div class="card mb-3 "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
+			<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
 			<div class="card-body">
 				<h1> Concept Breakup</h1>
 				<p>
@@ -187,7 +194,6 @@
 			</div>
 
 		</div>
-		@endif
 
 
 

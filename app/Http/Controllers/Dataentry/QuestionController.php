@@ -127,7 +127,7 @@ class QuestionController extends Controller
         $exams =  Exam::orderBy('name','desc ')->get();
 
         // Question Types
-        $allowed_types = ['mcq','naq','maq','eq'];
+        $allowed_types = ['mcq','naq','maq','eq','code'];
         if(in_array(request()->get('type'), $allowed_types)){
             $type = request()->get('type');
         }
@@ -853,6 +853,81 @@ class QuestionController extends Controller
 
     }   
 
+
+    public function qlist($exam_slug,$id=null){
+        $exam = Exam::where('slug',$exam_slug)->first();
+        $exams =  Exam::orderBy('name','desc ')->get();
+
+        if($id == null)
+        if(count($exam->sections)!=0)
+        foreach($exam->sections as $section){
+            if(count($section->questions)!=0)
+            foreach($section->questions as $question)
+            {
+                $id = $question->id;
+                break; 
+            }else
+                $id = null;
+            break;
+        }else
+            $id = null;
+        
+
+        if($id){
+            $question = Question::where('id',$id)->first();
+            $this->authorize('view', $question);
+
+            if($question){
+
+                 if(request()->get('publish'))
+                {
+                    $question->status = 2;
+                    $question->save();
+                }
+            
+                $passage = Passage::where('id',$question->passage_id)->first();
+                //$questions = $tag->questions;
+                $questions = array();
+                $i=0;
+                foreach($exam->sections as $section){
+                    foreach($section->questions as $q){
+                        $questions[$i] = $q;
+                        $i++;
+                    }
+                }
+                
+
+                $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'tag']; 
+            
+                $details['curr'] = route('exam.question',[$exam_slug,$question->id]);
+                foreach($questions as $key=>$q){
+
+                    if($q->id == $question->id){
+
+                        if($key!=0)
+                            $details['prev'] = route('exam.question',[$exam_slug,$questions[$key-1]->id]);
+
+                        if(count($questions) != $key+1)
+                            $details['next'] = route('exam.question',[$exam_slug,$questions[$key+1]->id]);
+
+                        $details['qno'] = $key + 1 ;
+                    }
+                } 
+
+                return view('appl.dataentry.question.show_qlist')
+                        ->with('mathjax',true)
+                        ->with('passage',$passage)
+                        ->with('details',$details)
+                        ->with('exam',$exam)
+                        ->with('exams',$exams)
+                        ->with('questions',$questions);
+            }else
+                abort('404','Question not found');
+            
+        }
+        else
+            abort(403);
+    }
 
             /**
      * Display the specified resource.

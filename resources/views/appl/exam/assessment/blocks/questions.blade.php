@@ -25,6 +25,7 @@
         </div>
       </div>
 
+  @if($question->type!='code')
     @if($question->a)
     <div class="row no-gutters">
       <div class="col-3 col-md-2">
@@ -88,6 +89,15 @@
             <div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->option_e!!}</div></div>
           </div>
           @endif
+        @endif
+          @if($question->type=='code')
+            @include('appl.exam.assessment.blocks.code')
+          @endif
+
+          @if($question->type=='eq')
+          <h5>Enter your answer</h5>
+          <input class="form-control w-50 input input_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" >
+          @endif
 
           <input id="{{($i+1)}}_time" class="form-input {{($i+1)}}_time" type="hidden" name="{{($i+1)}}_time"  value="0">
           <input  class="form-input " type="hidden" name="{{($i+1)}}_question_id"  value="{{$question->id}}">
@@ -100,13 +110,14 @@
 
    <div class="card mb-0">
      <div class="card-body">
-      <button type="button" class="btn  btn-outline-primary  cursor left-qno" data-sno="" data-testname="{{$exam->slug}}">
+      <button type="button" class="btn  btn-outline-primary  cursor left-qno" data-sno="" data-testname="{{$exam->slug}}" style="display:none">
         <i class="fa fa-angle-double-left"></i> Prev<span class="d-none d-md-inline">ious</span>
       </button>
 
-      <button type="button" class="btn  btn-secondary clear-qno cursor" data-sno="1">
-        Clear <span class="d-none d-md-inline">Response</span>
+      @if($question->type!='code')
+      <button type="button" class="btn  btn-secondary clear-qno cursor" data-sno="1">Clear <span class="d-none d-md-inline">Response</span>
       </button>
+      @endif
       <a href="#" data-toggle="modal" data-target="#exampleModal">
         <button type="button" id="submit" class="btn  btn-success qno-submit cursor float-right" data-sno="{{$question->id}}" data-tooltip="tooltip"  data-placement="top" title="Submit">
           End <span class="d-none d-md-inline">Test</span>

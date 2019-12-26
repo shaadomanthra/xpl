@@ -1,5 +1,5 @@
 @extends('layouts.nowrap-product')
-@section('title', 'Online Practice Tests for Placements, Bank Exams and Government jobs | Xplore')
+@section('title', 'Online Practice Tests for Placements, Bank Exams and Government jobs | PacketPrep')
 @section('content')
 <div class=" p-4  bg-white mb-4 border-bottom">
   <div class="wrapper ">  

@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=5"></script>
+<script src="{{ asset('js/script.js')}}?new=10"></script>
 @if(isset($editor))
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
@@ -60,19 +60,84 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-  if(document.getElementById("code"))
-        var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+  var options = {
           lineNumbers: true,
           styleActiveLine: true,
           matchBrackets: true,
           autoRefresh:true,
-        mode: "text/x-c++src",
-          theme: "abcdef",
+          mode: "text/x-c++src",
+          theme: "monokai",
           indentUnit: 4
+        };
+  if(document.getElementById("code"))
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), options);
+
+  var editor_array =[];
+  @if(isset($code_ques))
+  @foreach($code_ques as $c=>$d)
+    editor_array['code_{{$c}}'] = CodeMirror.fromTextArea(document.getElementById("code_{{$c}}"), options);
+  @endforeach
+  @endif
+
+  $('.runcode').on('click',function(){
+      $qno = $(this).data('qno');
+      $lang = $(this).data('lang');
+      $name = $(this).data('name');
+      $c = ($(this).data('c'))?$(this).data('c'):null;
+      $input = $(this).data('input');
+      $url= $(this).data('url');
+
+      var editor_ = editor_array[$name];
+
+      var code = editor_.getValue();
+      
+      $('.loading').show();
+
+        $.ajax({
+          type : 'get',
+          url : $url,
+          data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input},
+          success:function(data){
+            console.log(data);
+            data = JSON.parse(data);
+   
+            if(data.stderr){
+              $('.output_'+$qno).html(data.stderr);
+            }else{
+              $('.output_'+$qno).html(data.stdout);
+              $('.input_'+$qno).attr('value',data.stdout);
+            }
+            $('.loading').hide();
+          }
         });
+
+    }); 
+
+
+  function editorValue( ed){
+      return ed.getValue(); 
+  }
 
   $('.loading').hide();
   $('.codeerror').hide();
+
+  $('select').on('change', function() {
+    $qno = $(this).data('qno');
+    if(this.value=='c'){
+      $('.runcode_'+$qno).data('lang','clang');
+      $('.runcode_'+$qno).data('c',1);
+
+    }else if(this.value=='cpp'){
+      $('.runcode_'+$qno).data('lang','clang');
+       $('.runcode_'+$qno).data('c',0);
+    }else{
+      $('.runcode_'+$qno).data('lang',this.value);
+    }
+  });
+
+  
+
+
   $('.btn-run').on('click',function(){
       $token = $(this).data('token');
       $url= $(this).data('url');

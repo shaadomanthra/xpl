@@ -48,6 +48,20 @@ class EditorController extends Controller
 
     }
 
+    public function runcode(Request $request)
+    {
+      $code = $request->get('code');
+      
+      $input = $request->get('input');
+      $lang = $request->get('lang');
+      $c = $request->get('c');
+      $data = $this->run_internal_p24($code,$input,$lang,$c);
+      //$data = $this->run_internal($code,$input);
+      $json = json_encode(json_decode($data));
+      print $json;
+
+    }
+
     public function tcscode_one(Request $request)
     {
       $cpp =$data =null;
@@ -73,7 +87,7 @@ class EditorController extends Controller
         $output = 1;
 
       }
-      $data = $this->run_internal($code,$input);
+      $data = $this->run_internal_p24($code,$input);
       $json = json_decode($data);
       if($json->stderr)
         print $data;
@@ -151,10 +165,42 @@ class EditorController extends Controller
           CURLOPT_POST => 1,
       ]);
 
+     // $data ='{"command": "clang main.c && ./a.out '.$input.'","files": [{"name": "main.c", "content": '.$code.'}]}';
+
       $data ='{"command": "clang main.c && ./a.out '.$input.'","files": [{"name": "main.c", "content": '.$code.'}]}';
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
       //echo $data;
       curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+      // Send the request & save response to $resp
+      $data = curl_exec($curl);
+      
+      // Close request to clear up some resources
+      curl_close($curl);
+
+      return $data;
+
+    }
+
+    public function run_internal_p24($code,$input,$lang,$c){
+
+
+      // Get cURL resource
+      $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => 'http://krishnateja.in',
+          CURLOPT_POST => 1,
+      ]);
+
+      $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'0','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input);
+    
+    
+      //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
+      //echo $data;
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $form);
 
       // Send the request & save response to $resp
       $data = curl_exec($curl);

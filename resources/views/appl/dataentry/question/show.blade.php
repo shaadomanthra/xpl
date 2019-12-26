@@ -71,8 +71,10 @@
         @if($question->a)
          <div class="row no-gutters">
           <div class="col-2 col-md-2">
+
             <div class="pr-3 pb-2" >
-              <div class="text-center p-1 rounded bg-light w100 border" >A</div>
+              <div class="text-center p-1 rounded bg-light w100 border" >
+                @if($question->type=='code') Input @else A @endif</div>
             </div>
           </div>
           <div class="col-10 col-md-10"><div class="pt-1 a">{!! $question->a!!}</div></div>
@@ -129,7 +131,7 @@
       @if($question->answer)
       <div class="card mb-3 ">
         <div class="card-body">
-          <h3>Answer</h3>
+          <h3>@if($question->type=='code') Output @else Answer @endif</h3>
           <div class="answer">{!! $question->answer !!}</div>
         </div>
       </div>

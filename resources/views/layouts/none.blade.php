@@ -19,7 +19,7 @@
   @endif
   @if(isset($code))
   <link href="{{asset('js/codemirror/lib/codemirror.css')}}" rel="stylesheet">
-  <link href="{{asset('js/codemirror/theme/abcdef.css')}}" rel="stylesheet">
+  <link href="{{asset('js/codemirror/theme/monokai.css')}}" rel="stylesheet">
   <link href="{{asset('js/highlight/styles/default.css')}}" rel="stylesheet">
   <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
   @endif

@@ -1,10 +1,24 @@
 @extends('layouts.app')
-@section('title', $exam->name.' | Xplore')
+@section('title', $exam->name.' | PacketPrep')
 @section('description', substr(strip_tags($exam->description),0,200))
 @section('content')
 
-<div class=" mb-2 mt-3">
+<div class="mb-md-5 mb-2 mt-3">
 
+
+		@if(file_exists('img/'.$exam->slug.'.jpg'))
+	<img src="{{'/img/'.$exam->slug.'.jpg'}}" class="w-100"/>
+	@else
+
+	 @if(isset($exam->image))
+      @if(Storage::disk('public')->exists($exam->image))
+      <picture>
+		  <img 
+		      src="{{ asset('/storage/articles/'.$exam->slug.'.png') }} " class="w-100 d-print-none" alt="{{  $exam->name }}">
+		</picture>
+      @endif
+      @endif
+	@endif
 
 	<div class=" border p-3 bg-white rounded">
 		<div class="row">
@@ -25,9 +39,9 @@
 				</span>
 					@endif</h1>
 
-
+				<p class="mb-3">
 				{!! $exam->description  !!}
-
+				</p>
 				@if($entry)
 				  @if(!$attempt)
                   <a href="{{route('assessment.instructions',$exam->slug)}}">
@@ -46,12 +60,7 @@
 						</a>
 						@endif
 					@elseif($exam->status==1) <!-- free Test -->
-					
-						@auth
-			       <a href="{{route('assessment.instructions',$exam->slug)}}">
-			       @else
-			       <a href="#" data-toggle="modal" data-target="#myModal2">
-			       @endauth
+					<a href="{{route('assessment.instructions',$exam->slug)}}">
 					<button class="btn btn-lg btn-success"> Attempt Test </button>
 					</a>
 					@else
@@ -64,6 +73,7 @@
 					@endif
 
 				@endif
+
 
 				@if($exam->status!=1 && !$attempt)
 				
@@ -83,7 +93,43 @@
                   </a>
 				@endif
 
-				<br><br>
+				@if(\auth::user())
+				@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
+				<hr>
+				<span class="badge badge-secondary"><i class="fa fa-user"></i> Placement Officer </span><br>
+				<p class="lead mt-2">
+
+				“For the things we have to learn before we can do them, we learn by doing them.”<br>
+				- Aristotle
+			</p>
+				@endif
+				@endif
+
+				@if(\auth::user())
+					
+
+					@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
+						<a href="{{ route('test.analytics',$exam->slug) }}">
+	                  <button class="btn btn-lg btn-outline-info mb-3"> <i class="fa fas fa-bar-chart" ></i> College Analytics</button>
+	                  </a>
+					@endif
+
+					@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+						<a href="{{ route('test.analytics',$exam->slug) }}?all=1">
+	                  <button class="btn btn-lg btn-outline-secondary mb-3"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
+	                  </a>
+
+	                  <hr>
+	                  <h5>Access Codes</h5>
+	                  @foreach( explode(',',$exam->code) as $c)
+	                  	<a href="{{ route('test.analytics',$exam->slug) }}?all=1&code={{$c}}">
+	                  <button class="btn btn-sm btn-outline-warning mb-3"> <i class="fa fas fa-bar-chart" ></i> {{$c}} </button>
+	                  </a>
+	                  @endforeach
+					@endif
+
+				@endif
+		<br><br>
 			</div>
 
 		</div>
@@ -93,49 +139,7 @@
 		
 
 	</div>
-
-
-
-
-	@if(\auth::user())
-	@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
-
-	<div class="card mt-3 p-4 ">
-		<div>
-			<span class="badge badge-info"><i class="fa fa-user"></i> Placement Officer </span><br>
-		</div>
-		<p class="lead mt-2">
-
-			“For the things we have to learn before we can do them, we learn by doing them.”<br>
-			- Aristotle
-		</p>
-
-		<a href="{{ route('test.analytics',$exam->slug) }}">
-			<button class="btn btn-lg btn-outline-info mb-3"> <i class="fa fas fa-bar-chart" ></i> College Analytics</button>
-		</a>
-		<div class="text-secondary"><small><b>NOTE:</b> This block is visible only to placement officer</small></div>
-	</div>
-	@endif
-	@endif
-
-@if(\auth::user())
-@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-	<div class="card bg-light mt-3 p-4 ">
-		<div class="mb-3">
-			<span class="badge badge-secondary"><i class="fa fa-user"></i> Super Admin </span><br>
-		</div>
-
-
-
-		<a href="{{ route('test.analytics',$exam->slug) }}?all=1">
-			<button class="btn btn-lg btn-outline-secondary mb-3"> <i class="fa fas fa-bar-chart" ></i> Overall Analysis</button>
-		</a>
-		<div class="text-secondary"><small><b>NOTE:</b> This block is visible only to Super Administrator</small></div>
-
-	</div>
 </div>
-@endif
-@endif
 
 <div class="modal fade bd-example-modal-lg" id="myModal2"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -147,7 +151,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
-        <a href="{{ url('login?redirect_to=' . urlencode(request()->url())) }}">
+        <a href="{{ route('login')}}">
         <button type="button" class="btn btn-success">Login</button>
     	</a>
       </div>

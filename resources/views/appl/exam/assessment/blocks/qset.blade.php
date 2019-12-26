@@ -7,7 +7,7 @@
 		<div class=" p-2 mb-2 rounded" style="border:2px solid #bb061c">
 		<div class="row ">
 			<div class="col-3">
-				<div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""><i class="fa fa-angle-double-left" ></i></div>
+				<div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""  style="display:none"><i class="fa fa-angle-double-left" ></i></div>
 			</div>
 			<div class="col-6"> <div class="mt-1 text-center">Q({{ count($questions) }})</div></div>
 			<div class="col-3"> 

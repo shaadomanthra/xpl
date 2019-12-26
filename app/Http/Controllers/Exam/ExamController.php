@@ -10,6 +10,7 @@ use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Question;
+use Illuminate\Support\Facades\Storage;
 
 class ExamController extends Controller
 {
@@ -50,7 +51,7 @@ class ExamController extends Controller
                 file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
             }
            
-            flash('Exam Cache Updated')->success();
+            flash('Exams Cache Updated')->success();
         }
 
         $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));   
@@ -346,6 +347,10 @@ class ExamController extends Controller
             $request->slug  = $request->name;
             $request->slug = strtolower(str_replace(' ', '-', $request->slug));
 
+            
+
+
+
             $exam->name = $request->name;
             $exam->slug = $request->slug;
             $exam->user_id = $request->user_id;
@@ -357,6 +362,27 @@ class ExamController extends Controller
             $exam->status = $request->status;
             $exam->code = strtoupper($request->code);
             $exam->save(); 
+
+
+            //update cache
+            $obj = $exam;
+                $filename = $obj->slug.'.json';
+                $filepath = $this->cache_path.$filename;
+                $obj->sections = $obj->sections;
+                $obj->products = $obj->products;
+                $obj->product_ids = $obj->products->pluck('id')->toArray();
+                foreach($obj->sections as $m=>$section){
+                    $obj->sections->questions = $section->questions;
+                    foreach($obj->sections->questions as $k=>$question){
+                       $obj->sections->questions[$k]->passage = $question->passage; 
+                    }
+                }
+                
+                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            
+           
+            flash('Exams Cache Updated')->success();
+      
 
             flash('A new exam('.$request->name.') is created!')->success();
             return redirect()->route('exam.index');
@@ -431,6 +457,8 @@ class ExamController extends Controller
 
             $this->authorize('update', $exam);
 
+           
+
             $exam->name = $request->name;
             $exam->slug = $request->slug;
             $exam->user_id = $request->user_id;
@@ -440,8 +468,28 @@ class ExamController extends Controller
             $exam->description = ($request->description) ? $request->description: null;
             $exam->instructions = ($request->instructions) ? $request->instructions : null;
             $exam->status = $request->status;
+            if($request->image)
+            $exam->image = $request->image;
             $exam->code = strtoupper($request->code);
             $exam->save(); 
+
+             //update cache
+                $obj = $exam;
+                $filename = $obj->slug.'.json';
+                $filepath = $this->cache_path.$filename;
+                $obj->sections = $obj->sections;
+                $obj->products = $obj->products;
+                $obj->product_ids = $obj->products->pluck('id')->toArray();
+                foreach($obj->sections as $m=>$section){
+                    $obj->sections->questions = $section->questions;
+                    foreach($obj->sections->questions as $k=>$question){
+                       $obj->sections->questions[$k]->passage = $question->passage; 
+                    }
+                }
+                
+                
+                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            
 
             flash('Exam (<b>'.$request->name.'</b>) Successfully updated!')->success();
             return redirect()->route('exam.show',$request->slug);

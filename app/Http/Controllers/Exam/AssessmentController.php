@@ -157,7 +157,7 @@ class AssessmentController extends Controller
 
         if($filter){
             $examtype = Examtype::where('slug',$filter)->first();
-            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->whereIn('status',[1,2])->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
         }
         else
             $exams = $exam->where('name','LIKE',"%{$item}%")->paginate(config('global.no_of_records'));
@@ -222,8 +222,23 @@ class AssessmentController extends Controller
             } 
         }else{
             $code = strtoupper($code);
-            if($exam->code != $code)
-                return view('appl.exam.assessment.wrongcode')->with('code',$code);
+            $exam->code = strtoupper($exam->code);
+            if (strpos($exam->code, ',') !== false) {
+                    $examcodes = explode(',',$exam->code);
+                    $exists = false;
+                    foreach($examcodes as $c){
+                        if($c==$code)
+                            $exists=true;
+                    }
+                    if(!$exists){
+                        return view('appl.exam.assessment.wrongcode')->with('code',$code); 
+                    }
+            }else{
+               if($exam->code != $code)
+                return view('appl.exam.assessment.wrongcode')->with('code',$code); 
+            }
+
+            
         }
         
 
@@ -272,17 +287,34 @@ class AssessmentController extends Controller
             } 
         }else{
             $code = strtoupper($code);
-            if($exam->code != $code)
-                return view('appl.exam.assessment.wrongcode')
-                        ->with('code',$code);
+            $exam->code = strtoupper($exam->code);
+            if (strpos($exam->code, ',') !== false) {
+                    $examcodes = explode(',',$exam->code);
+                    $exists = false;
+                    foreach($examcodes as $c){
+                        if($c==$code)
+                            $exists=true;
+                    }
+                    if(!$exists){
+                        return view('appl.exam.assessment.wrongcode')->with('code',$code); 
+                    }
+            }else{
+               if($exam->code != $code)
+                return view('appl.exam.assessment.wrongcode')->with('code',$code); 
+            }
+           
         }
 
         $user = \auth::user();
         $completed = 0;
         $questions = array();
+        $ques = [];
         $sections = array();
         $i = 0; $time = 0;
 
+        $question = new Question();
+
+        $code_ques =[];
         foreach($exam->sections as $section){
             $qset = $section->questions;
             shuffle($qset);
@@ -290,19 +322,31 @@ class AssessmentController extends Controller
             foreach( $qset as $q){
                 $q->dynamic = rand(1,4);
                 $q->answer = $this->new_answer(strtoupper($q->answer),$q->dynamic);
+                //$q = $question->dynamic_variable_replacement($q->dynamic,$q);
                 $q = $this->option_swap2($q,$q->dynamic);
+
+                
+                
 
                 if($i==0){
                     $id = $q->id;
                 }
                 $questions[$i] = $q;
+                $ques[$i] = $ques;
+                if(isset($q->passage))
                 $passages[$i] = $q->passage;
+                else
+                $passages[$i] =null;
                 $sections[$i] = $section;
                 $dynamic[$i] = $q->dynamic;
                 $section_questions[$section->id][$k]= $q;
                 $i++;$k++;
+                if($q->type=='code'){
+                    $code_ques[$i]=1;
+                }
             }
         }
+
 
         // time
         foreach($exam->sections as $section){
@@ -312,6 +356,8 @@ class AssessmentController extends Controller
         return view('appl.exam.assessment.blocks.test')
                         ->with('mathjax',true)
                         ->with('exam',$exam)
+                        ->with('code',true)
+                        ->with('code_ques',$code_ques)
                         ->with('timer2',true)
                         ->with('time',$time)
                         ->with('sections',$sections)
@@ -592,6 +638,9 @@ class AssessmentController extends Controller
             return $answer;
         }  
 
+        if(!isset($new_answer))
+            return $answer;
+
         return $new_ans;
     }
 
@@ -789,6 +838,7 @@ class AssessmentController extends Controller
         $test = $slug;
         $user_id = $request->get('user_id');
         $test_id = $request->get('test_id');
+        $code = $request->get('code');
 
         if(Test::where('user_id',$user_id)->where('test_id',$test_id)->first())
             return redirect()->route('assessment.analysis',$slug);
@@ -899,6 +949,7 @@ class AssessmentController extends Controller
         $test_overall['test_id'] = $details['test_id'];
         $test_overall['created_at'] = $date_time;
         $test_overall['updated_at'] = $date_time;
+        $test_overall['code'] = $code;
         foreach($sec as $s){
             $test_overall['unattempted'] = $test_overall['unattempted'] + $s['unattempted'];
             
@@ -1363,6 +1414,24 @@ class AssessmentController extends Controller
 
             return view('appl.product.test.onlinetest')->with('tests',$tests);
         }
+
+    }
+
+
+    public function delete($slug,Request $request){
+
+        if($request->get('user_id') && $request->get('test_id')){
+            $user_id = $request->get('user_id');
+            $test_id = $request->get('test_id');
+            Test::where('test_id',$test_id)->where('user_id',$user_id)->delete();
+            Tests_Section::where('test_id',$test_id)->where('user_id',$user_id)->delete();
+            Tests_Overall::where('test_id',$test_id)->where('user_id',$user_id)->delete(); 
+            flash('Test attempt delete')->success();
+            return redirect()->route('assessment.show',$slug);
+        }
+        flash('Test attempt NOT DELETED')->success();
+        return redirect()->route('assessment.show',$slug);
+        
 
     }
 }

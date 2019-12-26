@@ -39,6 +39,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/targettcs/code/two','Product\EditorController@tcscode_two')->name('tcscode.two');
 	Route::post('/targettcs/code/two','Product\EditorController@tcstestcase_two')->name('tcs.testcase.two');
+	Route::get('/runcode','Product\EditorController@runcode')->name('runcode');
+
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');

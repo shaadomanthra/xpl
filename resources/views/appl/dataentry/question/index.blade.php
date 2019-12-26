@@ -28,6 +28,7 @@
                 <a class="dropdown-item" href="{{ route('question.create',['project_id'=>$project->slug,'type'=>'naq'])}}">Numerical Answer Question</a>
                 <a class="dropdown-item" href="{{ route('question.create',['project_id'=>$project->slug,'type'=>'maq'])}}">Multi Answer Question</a>
                 <a class="dropdown-item" href="{{ route('question.create',['project_id'=>$project->slug,'type'=>'eq'])}}">Explanation Question</a>
+                <a class="dropdown-item" href="{{ route('question.create',['project_id'=>$project->slug,'type'=>'code'])}}">Code Question</a>
               </div>
             </div>
           @endcan

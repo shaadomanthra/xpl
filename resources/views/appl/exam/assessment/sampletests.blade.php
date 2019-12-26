@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Sample Tests | Xplore')
+@section('title', 'Sample Tests | PacketPrep')
 @section('description', 'A right recruitment assessment tool makes the mundane tasks of recruitment easier by assessing..')
 @section('keywords', 'Sample assessments')
 @section('content')
@@ -24,7 +24,7 @@
       <h4 class="card-title article">Mini Aptitude Test</h4>
       <p>The following test has 20 questions from quantitative aptitude, reasoning and programming.</p>
       @if(file_exists('img/companies/wipro.jpg'))
-      <small><a href="https://xplore.co.in/test/targettcs-mid1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
+      <small><a href="https://packetprep.com/test/targettcs-mid1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
       @endif
     </div>
   </div>
@@ -39,7 +39,7 @@
       <h4 class="card-title article">Quantitative Aptitude Test</h4>
       <p>The following test has 15 questions from arithmetic, algebra, geometry and data interpretation.</p>
       @if(file_exists('img/companies/tcs.jpg'))
-      <small><a href="https://xplore.co.in/test/quant1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
+      <small><a href="https://packetprep.com/test/quant1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
       @endif
     </div>
   </div>
@@ -55,7 +55,7 @@
       <h4 class="card-title article">Mental Ability Test</h4>
       <p>The following test has 15 questions from deductive logic, word sequence, conclusions and more.</p>
       @if(file_exists('img/companies/tcs.jpg'))
-      <small><a href="https://xplore.co.in/test/mental-ability-1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
+      <small><a href="https://packetprep.com/test/mental-ability-1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
       @endif
     </div>
   </div>
@@ -71,7 +71,7 @@
       <h4 class="card-title article">Logical Reasoning Test</h4>
       <p>The following test has 12 questions from assumptions, arguments and syllogisms.</p>
       @if(file_exists('img/companies/tcs.jpg'))
-      <small><a href="https://xplore.co.in/test/logical-reasoning-1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
+      <small><a href="https://packetprep.com/test/logical-reasoning-1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
       @endif
     </div>
   </div>
@@ -87,7 +87,7 @@
       <h4 class="card-title article">Verbal Ability Test</h4>
       <p>The following test has 20 questions from Vocabulary, Grammar and Comprehension.</p>
       @if(file_exists('img/companies/tcs.jpg'))
-      <small><a href="https://xplore.co.in/test/amcat-sectiontest-s2.1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
+      <small><a href="https://packetprep.com/test/amcat-sectiontest-s2.1/details" class="btn btn-lg btn-primary"> Try Now <i class="fa fa-angle-right"></i></a></small>
       @endif
     </div>
   </div>

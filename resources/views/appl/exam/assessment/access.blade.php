@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Access Code - '.$exam->name.' | Xplore')
+@section('title', 'Access Code - '.$exam->name.' | PacketPrep')
 @section('content')
 
 <div class="mb-md-5 mb-2 mt-3">

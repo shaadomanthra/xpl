@@ -1,12 +1,23 @@
  @if($exams->total()!=0)     
  <div class="row ">
+<div class="col-12 col-md-6 mb-4"> 
+  
+          
     
+</div>
+
+<div class="col-12 col-md-6 mb-4"> 
+  
+          
+    
+</div>
+
   @foreach($exams as $key=>$exam)  
   @if($exam->status !=0)
 <div class="col-12 col-md-4 mb-4"> 
   
           <div class="bg-white border">
-            <div  style="background: #eee">&nbsp;</div>
+            <div  style="background: #ebf3f7">&nbsp;</div>
               <div class="card-body">
                 @if($exam->status==1)
                 <span class="badge badge-warning">FREE</span>

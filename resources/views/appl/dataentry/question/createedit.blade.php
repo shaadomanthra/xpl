@@ -63,6 +63,17 @@
         <a class="nav-link" id="e-tab" data-toggle="tab" href="#e" role="tab" aria-controls="e" aria-selected="false">E</a>
       </li>
       @endif
+      @if($type=='code')
+      <li class="nav-item">
+        <a class="nav-link" id="a-tab" data-toggle="tab" href="#a" role="tab" aria-controls="a" aria-selected="false">input</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="b-tab" data-toggle="tab" href="#b" role="tab" aria-controls="b" aria-selected="false">lang</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="c-tab" data-toggle="tab" href="#c" role="tab" aria-controls="c" aria-selected="false">error code</a>
+      </li>
+      @endif
        <li class="nav-item">
         <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Ans</a>
       </li>
@@ -93,7 +104,7 @@
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="question" role="tabpanel" aria-labelledby="question-tab">
         <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Question</label>
+        <label for="formGroupExampleInput2">Question </label>
          <textarea class="form-control summernote" name="question"  rows="5">
             @if($stub=='Create')
             {{ (old('question')) ? old('question') : '' }}
@@ -104,6 +115,37 @@
       </div>
       </div>
 
+      @if($type=='code')
+       <div class="tab-pane fade" id="a" role="tabpanel" aria-labelledby="a-tab">
+        <div class="form-group mt-3">
+        <label for="formGroupExampleInput2">Code Input</label><br>
+         <input class="form-control " type="text" name="a" value="@if($stub=='Create'){{ (old('a')) ? old('a') : '' }}@else{{ $question->a }}@endif" id="defaultCheck1" >
+      </div>
+      </div>
+      <div class="tab-pane fade" id="b" role="tabpanel" aria-labelledby="b-tab">
+        <div class="form-group mt-3">
+        <label for="formGroupExampleInput2">language </label><br>
+  <select class="form-control"  name="b">
+   <option value="" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='') selected @endif @endif >-NA-</option>
+    <option value="c" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='C') selected @endif @endif >c</option>
+    <option value="cpp" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='CPP') selected @endif @endif >cpp</option>
+    <option value="java" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='JAVA') selected @endif @endif >java</option>
+    <option value="python" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='PYTHON') selected @endif @endif >python</option>
+    <option value="perl" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='PERL') selected @endif @endif >perl</option>
+     
+  </select>
+      </div>
+      </div>
+
+       <div class="tab-pane fade" id="c" role="tabpanel" aria-labelledby="c-tab">
+        <div class="form-group mt-3">
+        <label for="formGroupExampleInput2">Error Code</label><br>
+        <textarea class="form-control " name="c"  rows="5">@if($stub=='Create'){{ (old('c')) ? old('c') : '' }}@else{{ $question->c }}@endif
+        </textarea>
+      </div>
+      </div>
+
+      @endif
       @if($type=='mcq' || $type=='maq')
       <div class="tab-pane fade" id="a" role="tabpanel" aria-labelledby="a-tab">
         <div class="form-group mt-3">
@@ -259,6 +301,7 @@
             <option value="naq" @if(isset($question)) @if($question->type=='naq') selected @endif @endif >Numerical Answer Question</option>
             <option value="maq" @if(isset($question)) @if($question->type=='maq') selected @endif @endif >Multi Answer Question</option>
             <option value="eq" @if(isset($question)) @if($question->type=='eq') selected @endif @endif >Explanation Question</option>
+            <option value="code" @if(isset($question)) @if($question->type=='code') selected @endif @endif >Code Question</option>
           </select>
           @else
           <select class="form-control" name="type" >
@@ -266,6 +309,7 @@
             <option value="naq" @if($type =='naq') selected @endif  >Numerical Answer Question</option>
             <option value="maq" @if($type =='maq') selected @endif  >Multi Answer Question</option>
             <option value="eq" @if($type =='eq') selected @endif  >Explanation Question</option>
+            <option value="code" @if($type =='code') selected @endif  >Code Question</option>
           </select>
           @endif
             
