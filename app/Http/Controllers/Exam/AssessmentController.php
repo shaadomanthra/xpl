@@ -638,7 +638,7 @@ class AssessmentController extends Controller
             return $answer;
         }  
 
-        if(!isset($new_answer))
+        if(!isset($new_ans))
             return $answer;
 
         return $new_ans;
