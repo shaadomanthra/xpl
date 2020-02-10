@@ -13,9 +13,9 @@
        </h1>
       
       @if($stub=='Create')
-      <form method="post" action="{{route('exam.store')}}" >
+      <form method="post" action="{{route('exam.store')}}" enctype="multipart/form-data">
       @else
-      <form method="post" action="{{route('exam.update',$exam->slug)}}" >
+      <form method="post" action="{{route('exam.update',$exam->slug)}}" enctype="multipart/form-data">
       @endif  
       <div class="form-group">
         <label for="formGroupExampleInput ">Exam Name</label>
@@ -98,6 +98,19 @@
         </textarea>
       </div>
       
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Image</label>
+        <input type="file" class="form-control" name="file_" id="formGroupExampleInput" placeholder="Enter the image path" 
+          >
+      </div>
+      
+       <div class="form-group">
+        <label for="formGroupExampleInput ">Solutions</label>
+        <select class="form-control" name="solutions">
+          <option value="0" @if(isset($exam)) @if($exam->solutions==0) selected @endif @endif >Yes</option>
+          <option value="1" @if(isset($exam)) @if($exam->solutions==1) selected @endif @endif >No</option>
+        </select>
+      </div>
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>

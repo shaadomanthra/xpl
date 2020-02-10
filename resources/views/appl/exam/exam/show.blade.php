@@ -29,6 +29,17 @@
         </div>
       </div>
 
+       @if(isset($exam->image))
+      @if(Storage::disk('public')->exists($exam->image))
+      
+      <picture>
+  
+  <img 
+      src="{{ asset('/storage/articles/'.$exam->slug.'.png') }} " class="w-100 d-print-none" alt="{{  $exam->name }}">
+</picture>
+
+      @endif
+      @endif
      
       <div class="card mb-4">
         <div class="card-body">
@@ -85,6 +96,18 @@
               @endforeach
             </div>
           </div>
+
+          <div class="row mb-0">
+            <div class="col-md-4">Solutions</div>
+            <div class="col-md-8">
+              @if($exam->solutions)
+                <span class="badge badge-warning">No</span>
+              @else
+                <span class="badge badge-primary">Yes</span>
+              @endif
+            </div>
+          </div>
+
 
           
 

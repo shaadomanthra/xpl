@@ -348,6 +348,16 @@ class ExamController extends Controller
             $request->slug = strtolower(str_replace(' ', '-', $request->slug));
 
             
+             /* If image is given upload and store path */
+            if(isset($request->all()['file_'])){
+                $file      = $request->all()['file_'];
+                $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
+                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+
+                $request->merge(['image' => $path]);
+            }else{
+                $request->merge(['image' => '']);
+            }
 
 
 
@@ -457,6 +467,14 @@ class ExamController extends Controller
 
             $this->authorize('update', $exam);
 
+            /* If image is given upload and store path */
+            if(isset($request->all()['file_'])){
+                $file      = $request->all()['file_'];
+                $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
+                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+
+                $request->merge(['image' => $path]);
+            }
            
 
             $exam->name = $request->name;
@@ -470,6 +488,7 @@ class ExamController extends Controller
             $exam->status = $request->status;
             if($request->image)
             $exam->image = $request->image;
+            $exam->solutions = $request->solutions;
             $exam->code = strtoupper($request->code);
             $exam->save(); 
 

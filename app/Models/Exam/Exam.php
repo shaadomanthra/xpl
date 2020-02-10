@@ -17,7 +17,9 @@ class Exam extends Model
         'status',
         'examtype_id',
         'code',
-        'course_id'
+        'course_id',
+        'solutions',
+        'image',
         // add all other fields
     ];
     
