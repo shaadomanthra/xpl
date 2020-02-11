@@ -9,6 +9,8 @@ use PacketPrep\Models\User\user_details;
 use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class LoginController extends Controller
 {
@@ -39,14 +41,17 @@ class LoginController extends Controller
      */
     
 
-    public function __construct() {
-        
-        if ( \request()->get( 'redirect_to' ) ) {
-            session()->put( 'redirect.url', \request()->get( 'redirect_to' ) );
-        }
-        $this->middleware( 'guest' )->except( 'logout' );
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => 'logout']);
+        Session::put('preUrl', URL::previous());
     }
 
+
+    public function redirectTo()
+    {
+        return Session::get('preUrl') ? Session::get('preUrl') :   $this->redirectTo;
+    }
 
 
      /**
