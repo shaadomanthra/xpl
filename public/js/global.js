@@ -482,7 +482,7 @@ $(document).ready(function(){
         $('.right-qno').show();
       }
     }
-
+    /*
     $(document).keydown(function(e) {
       if(e.keyCode == 37) { // left
 
@@ -495,7 +495,7 @@ $(document).ready(function(){
         if($('.qblock_'+$sno).length)
         make_visible($sno);
       }
-    });
+    });*/
 
     
 });

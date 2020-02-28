@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=11"></script>
+<script src="{{ asset('js/script.js')}}?new=12"></script>
 
 @if(isset($question))
 @if($question->type!='code')
@@ -20,6 +20,8 @@
          
         }
     });
+
+
   </script>
 @endif
 @endif
