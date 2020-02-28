@@ -29,23 +29,7 @@ $(document).ready(function() {
 
     // move questions left and right
 
-    $(document).keypress(function(){
-
-      var key = (event.keyCode ? event.keyCode : event.which); 
-        if (key == 108) {
-          if( $('.prev').length ) {
-            var url = $('.prev').data('prev');
-            window.location= url;
-          }
-        }
-        else if(key == 114){
-          if( $('.next').length ) {
-             var url = $('.next').data('next');
-            window.location= url;
-          }
-         
-        }
-    });
+   
 
     $('.exam').on('change', function() {
     	window.location=window.location.pathname+'?exam='+this.value;

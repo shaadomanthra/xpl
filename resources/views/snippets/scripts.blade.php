@@ -1,4 +1,28 @@
-<script src="{{ asset('js/script.js')}}?new=10"></script>
+<script src="{{ asset('js/script.js')}}?new=11"></script>
+
+@if(isset($question))
+@if($question->type!='code')
+<script>
+ $(document).keypress(function(){
+
+      var key = (event.keyCode ? event.keyCode : event.which); 
+        if (key == 108) {
+          if( $('.prev').length ) {
+            var url = $('.prev').data('prev');
+            window.location= url;
+          }
+        }
+        else if(key == 114){
+          if( $('.next').length ) {
+             var url = $('.next').data('next');
+            window.location= url;
+          }
+         
+        }
+    });
+  </script>
+@endif
+@endif
 @if(isset($editor))
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    

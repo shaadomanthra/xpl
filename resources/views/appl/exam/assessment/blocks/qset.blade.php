@@ -36,6 +36,8 @@
 	</div>
 </div>
 
+@if($question->type!='code')
 <div class="d-none d-md-block border rounded p-3 mb-3 mt-3">
 	Use the arrow keys for navigation<br> <i class="fa fa-arrow-left"></i> prev and <i class="fa fa-arrow-right"></i> next
 	</div>
+@endif
