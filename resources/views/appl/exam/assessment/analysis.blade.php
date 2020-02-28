@@ -118,7 +118,7 @@
 		@endif
 
 		
-
+		@if(!$exam->solutions)
 			<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
 			<div class="card-body">
 				<h1> Concept Breakup</h1>
@@ -194,6 +194,7 @@
 			</div>
 
 		</div>
+		@endif
 
 
 
