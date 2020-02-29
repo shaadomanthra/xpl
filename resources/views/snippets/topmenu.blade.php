@@ -41,7 +41,7 @@
             <!-- Authentication Links -->
             @guest
             <li class="mr-2"><a class="nav-link " href="{{ route('login') }}" aria-label="Login page"><i class="fa fa-sign-in"></i> Login</a></li>
-            <li class="mr-2"><a class="nav-link " href="{{ route('register.type') }}" aria-label="Registration page"><i class="fa fa-user-plus"></i> Register</a></li>
+            <li class="mr-2"><a class="nav-link " href="{{ route('student.eregister') }}" aria-label="Registration page"><i class="fa fa-user-plus"></i> Register</a></li>
 
             @else
 

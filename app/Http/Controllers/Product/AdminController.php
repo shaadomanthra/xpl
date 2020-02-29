@@ -490,7 +490,7 @@ class AdminController extends Controller
 
         $parts = explode("@", $request->email);
         $username = $parts[0];
-        $password = strtoupper(str_random(5));
+        $password = substr($request->phone,0,4);
 
         $user = User::where('username',$username)->first();
 
@@ -527,8 +527,6 @@ class AdminController extends Controller
         $branches = $request->get('branches');
         $services = $request->get('services');
         $metrics = $request->get('metrics');
-
-
 
 
         if(isset($us)){
@@ -582,6 +580,8 @@ class AdminController extends Controller
         else
             $user->branch_id = null;
         $user->save();
+
+        Auth::login($user);
 
         if(!$coll){
         //pro access
@@ -700,9 +700,13 @@ class AdminController extends Controller
 
         flash('A new user('.$request->name.') is created!')->success();
         if(!$direct)
-        return redirect()->route('admin.user.view',$user->username);
-        else
-        return view('appl.product.admin.user.successstudent');   
+            return redirect()->route('admin.user.view',$user->username);
+        else{
+            if ($request->session()->has('return')) {
+                return redirect()->to($request->session()->get('return')); 
+            }else
+             return redirect()->route('dashboard');   
+        }
 
     }
 

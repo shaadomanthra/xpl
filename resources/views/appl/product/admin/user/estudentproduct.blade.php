@@ -1,5 +1,5 @@
 @extends('layouts.app-border')
-@section('title', 'Engineering Student Registration  | Xplore')
+@section('title', 'Student Registration  | Xplore')
 @section('description', 'Form for engineering students to register to xplore platform')
 @section('keywords', 'xplore registration, xplore register, engineering registration xplore')
 @section('content')
@@ -7,7 +7,7 @@
 <div class="card">
   <div class="card-body">
     <div class="bg-light border p-3 mb-3">
-      <h1 class="">Engineering Student Registration  </h1>
+      <h1 class="">Student Registration  </h1>
     </div>
     <form method="post" action="{{route('admin.user.studentstore')}}" >
         <div class="row">

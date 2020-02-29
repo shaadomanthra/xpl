@@ -149,10 +149,17 @@
       <div class="modal-body">
        Kindly Login to view the content
       </div>
-      <div class="modal-footer">
+      {{
+      		request()->session()->put('return',url()->current())
+      }}
+      
+      <div class="modal-footer ">
         <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
         <a href="{{ route('login')}}">
         <button type="button" class="btn btn-success">Login</button>
+    	</a>
+    	<a href="{{ route('student.eregister')}}">
+        <button type="button" class="btn btn-primary">Register</button>
     	</a>
       </div>
     </div>

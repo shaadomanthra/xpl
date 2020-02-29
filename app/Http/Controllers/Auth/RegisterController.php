@@ -80,14 +80,14 @@ class RegisterController extends Controller
         }else
             $subdomain = null;
 
-
+        $password = substr($data['phone'],0,4);
         $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
             'client_slug' => $subdomain,
             'status'=> 1,
-            'password' => bcrypt($data['password']),
+            'password' => bcrypt($password),
             'activation_token' => str_random(20),
         ]);
 
