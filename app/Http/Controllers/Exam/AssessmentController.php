@@ -879,7 +879,7 @@ class AssessmentController extends Controller
                 $item['section_id'] = $request->get($i.'_section_id');
                 $item['time'] = $request->get($i.'_time');
                 $item['test_id'] = $request->get('test_id');
-                $item['response'] = $request->get($i);
+                $item['response'] = strtoupper($request->get($i));
                 $item['answer'] = $this->new_answer(strtoupper($answers[$request->get($i.'_question_id')]),$request->get($i.'_dynamic'));
 
                 if($item['response'] == $item['answer'])
