@@ -191,11 +191,11 @@ class EditorController extends Controller
 
       curl_setopt_array($curl, [
           CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => 'http://krishnateja.in',
+          CURLOPT_URL => 'https://p24.in',
           CURLOPT_POST => 1,
       ]);
 
-      $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'0','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input);
+      $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'1','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input);
     
     
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
