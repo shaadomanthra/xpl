@@ -132,6 +132,7 @@
     <option value="java" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='JAVA') selected @endif @endif >java</option>
     <option value="python" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='PYTHON') selected @endif @endif >python</option>
     <option value="perl" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='PERL') selected @endif @endif >perl</option>
+    <option value="csharp" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='CSHARP') selected @endif @endif >c#</option>
      
   </select>
       </div>
