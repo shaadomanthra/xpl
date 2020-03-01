@@ -114,7 +114,11 @@ $(document).ready(function() {
       $url= $(this).data('url');
       $url_stop= $(this).data('url_stop');
       $url_remove= $(this).data('url_remove');
-      $random = Math.random().toString(36).substring(7);
+      @if(\auth::user())
+      $random = {{\auth::user()->name}}+Math.random().toString(36).substring(7);
+      @else
+      $random = Math.random().toString(36).substring(7)
+      @endif
 
       var editor_ = editor_array[$name];
 
