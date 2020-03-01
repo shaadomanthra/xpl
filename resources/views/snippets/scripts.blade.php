@@ -112,12 +112,21 @@ $(document).ready(function() {
       $c = ($(this).data('c'))?$(this).data('c'):null;
       $input = $(this).data('input');
       $url= $(this).data('url');
+      $url_stop= $(this).data('url_stop');
+      $url_remove= $(this).data('url_remove');
 
       var editor_ = editor_array[$name];
 
       var code = editor_.getValue();
       
       $('.loading').show();
+
+        $.ajax({
+          type : 'get',
+          url : $url_remove,
+          success:function(data){
+          }
+        });
 
         $.ajax({
           type : 'get',
@@ -134,6 +143,13 @@ $(document).ready(function() {
               $('.input_'+$qno).attr('value',data.stdout);
             }
             $('.loading').hide();
+          }
+        });
+
+        $.ajax({
+          type : 'get',
+          url : $url_stop,
+          success:function(data){
           }
         });
 
