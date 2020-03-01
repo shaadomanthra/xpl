@@ -105,7 +105,15 @@
   
         </div>
       </div>
-
+@if($user->video)
+      <div class="card mb-3">
+      <div class="card-body">
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $user->video}}?rel=0" allowfullscreen></iframe>
+</div>
+      </div>
+    </div>
+@endif
 
             <div class="card mb-3">
       <div class="card-body">

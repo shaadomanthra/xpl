@@ -16,6 +16,9 @@
                 <td>
                   <a href=" {{ route('admin.user.view',$user->username) }} ">
                   {{ $user->name }}
+                  @if($user->video)
+                  <i class="fa fa-check-circle text-success"></i>
+                  @endif
                   </a><br>
                   {{ $user->email }}
                 </td>
