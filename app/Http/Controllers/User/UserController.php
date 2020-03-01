@@ -208,8 +208,7 @@ class UserController extends Controller
                 $request->merge(['image' => '']);
             }
 
-        if($request->get('video'))
-            $user->video = $request->get('video');
+        $user->video = $request->get('video');
         
        
         
