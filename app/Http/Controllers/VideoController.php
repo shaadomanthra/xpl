@@ -35,15 +35,17 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
+        $user = \auth::user();
+        $title = $user->name.' - Introduction'
         $video = Youtube::upload($request->file('video')->getPathName(), [
-            'title'       => 'My Video',
-            'description' => 'This video is uploaded through API.',
+            'title'       => $title,
+            'description' => 'This is a self introduction video of the xplore student',
             'tags'        => ['api', 'youtube'],
 
         ],'unlisted');
          
         $id = $video->getVideoId();
-        $user = \auth::user();
+        
         $user->video =$id;
         $user->save();
 
