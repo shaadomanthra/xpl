@@ -124,12 +124,12 @@ $(document).ready(function() {
       
       $('.loading').show();
 
-        /*$.ajax({
+        $.ajax({
           type : 'get',
           url : $url_remove,
           success:function(data){
           }
-        });*/
+        });
 
         $.ajax({
           type : 'get',
@@ -154,6 +154,7 @@ $(document).ready(function() {
           }
         });
 
+        setTimeout( function(){ 
         $.ajax({
           type : 'get',
           url : $url_stop,
@@ -161,6 +162,8 @@ $(document).ready(function() {
           success:function(data){
           }
         });
+        }  , 3000 );
+        
 
     }); 
 
