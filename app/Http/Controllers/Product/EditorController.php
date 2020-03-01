@@ -51,11 +51,12 @@ class EditorController extends Controller
     public function runcode(Request $request)
     {
       $code = $request->get('code');
+      $name = $request->get('name');
       
       $input = $request->get('input');
       $lang = $request->get('lang');
       $c = $request->get('c');
-      $data = $this->run_internal_p24($code,$input,$lang,$c);
+      $data = $this->run_internal_p24($code,$input,$lang,$c,$name);
       //$data = $this->run_internal($code,$input);
       $json = json_encode(json_decode($data));
       print $json;
@@ -182,10 +183,7 @@ class EditorController extends Controller
 
     }
 
-    public function run_internal_p24($code,$input,$lang,$c){
-
-      $counter = (request()->session()->get('counter'))?request()->session()->get('counter'):1;
-      $name = \auth::user()->username.'_'.$counter;
+    public function run_internal_p24($code,$input,$lang,$c,$name){
 
      
 
@@ -201,8 +199,6 @@ class EditorController extends Controller
 
       $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'1','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input,'name'=>$name);
 
-      
-    
     
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
       //echo $data;
@@ -220,9 +216,7 @@ class EditorController extends Controller
     }
 
     public function stop(){
-      $counter = (request()->session()->get('counter'))?request()->session()->get('counter'):1;
-      $name = \auth::user()->username.'_'.$counter;
-      request()->session()->put('counter',$counter+1);
+      $name = request()->get('name');
 
       $curl = curl_init();
       // Set some options - we are passing in a useragent too here

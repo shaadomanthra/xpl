@@ -114,6 +114,7 @@ $(document).ready(function() {
       $url= $(this).data('url');
       $url_stop= $(this).data('url_stop');
       $url_remove= $(this).data('url_remove');
+      $random = Math.random().toString(36).substring(7);
 
       var editor_ = editor_array[$name];
 
@@ -131,7 +132,7 @@ $(document).ready(function() {
         $.ajax({
           type : 'get',
           url : $url,
-          data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input},
+          data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input,'name':$random},
           success:function(data){
             console.log(data);
             data = JSON.parse(data);
@@ -149,6 +150,7 @@ $(document).ready(function() {
         $.ajax({
           type : 'get',
           url : $url_stop,
+          data:{'name':$random},
           success:function(data){
           }
         });
