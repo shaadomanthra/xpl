@@ -124,12 +124,12 @@ $(document).ready(function() {
       
       $('.loading').show();
 
-        $.ajax({
+        /*$.ajax({
           type : 'get',
           url : $url_remove,
           success:function(data){
           }
-        });
+        });*/
 
         $.ajax({
           type : 'get',
@@ -139,12 +139,17 @@ $(document).ready(function() {
             console.log(data);
             data = JSON.parse(data);
    
-            if(data.stderr){
-              $('.output_'+$qno).html(data.stderr);
+            if(data){
+              if(data.stderr){
+                $('.output_'+$qno).html(data.stderr);
+              }else{
+                $('.output_'+$qno).html(data.stdout);
+                $('.input_'+$qno).attr('value',data.stdout);
+              }
             }else{
-              $('.output_'+$qno).html(data.stdout);
-              $('.input_'+$qno).attr('value',data.stdout);
+               $('.output_'+$qno).html("Data not compiled");
             }
+            
             $('.loading').hide();
           }
         });
