@@ -108,9 +108,15 @@
 @if($user->video)
       <div class="card mb-3">
       <div class="card-body">
+@if(!is_numeric($user->video))
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $user->video}}?rel=0" allowfullscreen></iframe>
 </div>
+@else
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe src="//player.vimeo.com/video/{{ $user->video }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+@endif
       </div>
     </div>
 @endif
