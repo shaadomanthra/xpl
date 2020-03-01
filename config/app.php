@@ -215,6 +215,7 @@ return [
         PacketPrep\Providers\RouteServiceProvider::class,
         Anand\LaravelPaytmWallet\PaytmWalletServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+         Dawson\Youtube\YoutubeServiceProvider::class,
 
     ],
 
@@ -269,6 +270,7 @@ return [
         'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
         'PaytmWallet' => Anand\LaravelPaytmWallet\Facades\PaytmWallet::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Youtube' => Dawson\Youtube\Facades\Youtube::class,
 
     ],
 

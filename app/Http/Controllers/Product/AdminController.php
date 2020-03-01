@@ -990,6 +990,9 @@ class AdminController extends Controller
 
         $user->name = $request->get('name');
         $user->status = $request->get('status');
+
+
+
         $user->save();
 
         $user_details = User_Details::where('user_id',$user->id)->first();

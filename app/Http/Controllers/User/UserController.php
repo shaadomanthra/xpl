@@ -12,6 +12,9 @@ use PacketPrep\Models\User\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+
 class UserController extends Controller
 {
     /**
@@ -55,6 +58,20 @@ class UserController extends Controller
                         else
                             $view = 'private';
                         
+                }
+
+                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpg'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.jpg');
+                }
+                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.png'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.png');
+                }
+
+                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpeg'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.jpeg');
                 }
 
                 return view('appl.user.'.$view)
@@ -164,6 +181,62 @@ class UserController extends Controller
                  return redirect()->back()->withInput();
             }
         }
+
+        /* If image is given upload and store path */
+            if(isset($request->all()['file_'])){
+
+                $image = '/articles/profile_'.$username;
+            
+                if(Storage::disk('public')->exists($image.'.jpg')){
+                    Storage::disk('public')->delete($image.'.jpg');
+                }
+
+                 if(Storage::disk('public')->exists($image.'.png')){
+                    Storage::disk('public')->delete($image.'.png');
+                }
+
+                 if(Storage::disk('public')->exists($image.'.jpeg')){
+                    Storage::disk('public')->delete($image.'.jpeg');
+                }
+
+                $file      = $request->all()['file_'];
+                $filename = 'profile_'.$username.'.'.$file->getClientOriginalExtension();
+                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+                $request->merge(['image' => $path]);
+
+            }else{
+                $request->merge(['image' => '']);
+            }
+
+        if($request->get('video'))
+            $user->video = $request->get('video');
+        
+       
+        
+        if($request->get('confidence')){
+            $user->confidence = $request->get('confidence');
+        }
+        
+        if($request->get('fluency')){
+            $user->fluency = $request->get('fluency');
+        }
+        
+        if($request->get('language')){
+            $user->language = $request->get('language');
+
+            $user->personality = round(($user->confidence+$user->fluency+$user->language)/3,1);
+        }
+
+        $user->hometown = $request->hometown;
+        $user->current_city = ($request->city)?$request->city:' ';
+        $user->gender = $request->gender;
+        $user->dob = $request->dob;
+        $user->tenth = $request->tenth;
+        $user->twelveth = $request->twelveth;
+        $user->bachelors = $request->graduation;
+        $user->masters = $request->masters;
+        
+
         $user->save();
 
 
@@ -178,6 +251,9 @@ class UserController extends Controller
         $user_details->twitter_link = $request->twitter_link;
         $user_details->privacy = $request->privacy;
         $user_details->phone = $request->phone;
+
+        
+    
         $user_details->save();
 
 

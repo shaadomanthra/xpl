@@ -9,6 +9,7 @@
         "anandsiddharth/laravel-paytm-wallet": "^1.0",
         "barryvdh/laravel-dompdf": "^0.8.3",
         "benjamincrozat/laravel-dropbox-driver": "^2.0",
+        "dawson/youtube": "^4.3",
         "facebook/graph-sdk": "^5.6",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "^6.2",

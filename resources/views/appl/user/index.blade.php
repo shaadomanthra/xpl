@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col-md-4">
               <div class="text-center" style="height:180px">
-                <img class="img-thumbnail rounded-circle mb-3"src="{{ Gravatar::src($user->email, 150) }}">
+                <img class="img-thumbnail rounded-circle mb-3"src="@if($user->image) {{ ($user->image)}}@else {{ Gravatar::src($user->email, 150) }}@endif" style="width:180px;height:180px">
               </div>
           </div>
           <div class="col-md-8">
