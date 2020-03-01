@@ -191,7 +191,7 @@ class EditorController extends Controller
 
       curl_setopt_array($curl, [
           CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => 'https://p24.in',
+          CURLOPT_URL => 'http://krishnateja.in',
           CURLOPT_POST => 1,
       ]);
 
