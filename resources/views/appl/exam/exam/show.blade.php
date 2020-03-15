@@ -97,13 +97,15 @@
             </div>
           </div>
 
-          <div class="row mb-0">
-            <div class="col-md-4">Solutions</div>
+          <div class="row mb-2">
+            <div class="col-md-4">Report</div>
             <div class="col-md-8">
-              @if($exam->solutions)
-                <span class="badge badge-warning">No</span>
+              @if($exam->solutions==1)
+                <span class="badge badge-warning">No solutions</span>
+              @elseif($exam->solutions==2)
+              <span class="badge badge-warning">No report</span>
               @else
-                <span class="badge badge-primary">Yes</span>
+                <span class="badge badge-primary">Report with solutions</span>
               @endif
             </div>
           </div>

@@ -50,7 +50,7 @@
         </button>
       </div>
       <div class="modal-body">
-        The following test will be submitted. Kindly confirm your submission.
+        Your responses will be submitted and the test will end. Kindly confirm your submission.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

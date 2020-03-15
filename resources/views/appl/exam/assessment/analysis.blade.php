@@ -32,6 +32,7 @@
 			Branch : <span class="text-primary">{{\auth::user()->branches()->first()->name}}</span><br>
 		</p>
 	</div>
+	@if($exam->solutions!=2)
 
 		<div class="row">
 			<div class="col-12 col-md-4 mb-3">
@@ -196,7 +197,16 @@
 		</div>
 		@endif
 
+	@else
+	<div class="card">
+		<div class="card-body">
+			Your responses are recorded for internal evaluation.
+		</div>
 
+
+	</div>
+
+	@endif
 
 	</div>
 </div>

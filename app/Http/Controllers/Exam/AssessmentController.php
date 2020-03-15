@@ -889,6 +889,7 @@ class AssessmentController extends Controller
 
                 $item['status'] = 1;
                 $item['dynamic'] = $request->get($i.'_dynamic');
+                $item['code'] = $request->get('dynamic_'.$i);
                 $item['created_at'] = $date_time;
                 $item['updated_at'] = $date_time;
                 array_push($data,$item);

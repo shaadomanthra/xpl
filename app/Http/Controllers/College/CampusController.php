@@ -651,6 +651,7 @@ class CampusController extends Controller
 
     public function test_analytics($exam_slug,Request $r){
 
+        $code  = $r->get('code');
         $filename = $exam_slug.'.json';
         $filepath = $this->cache_path.$filename;
 
@@ -738,8 +739,10 @@ class CampusController extends Controller
                     $coll =0;
                 $coll_list[$coll]= count($counter);
             }
+            if(isset($coll_list)){
             arsort($coll_list);
             $details['coll_list'] =$coll_list;
+            }
         }
         //edd($details['users']);
         

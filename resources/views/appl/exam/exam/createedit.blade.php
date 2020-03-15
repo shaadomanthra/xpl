@@ -105,10 +105,11 @@
       </div>
       
        <div class="form-group">
-        <label for="formGroupExampleInput ">Solutions</label>
+        <label for="formGroupExampleInput ">Report</label>
         <select class="form-control" name="solutions">
-          <option value="0" @if(isset($exam)) @if($exam->solutions==0) selected @endif @endif >Yes</option>
-          <option value="1" @if(isset($exam)) @if($exam->solutions==1) selected @endif @endif >No</option>
+          <option value="0" @if(isset($exam)) @if($exam->solutions==0) selected @endif @endif >Yes with solutions</option>
+          <option value="1" @if(isset($exam)) @if($exam->solutions==1) selected @endif @endif >Yes without solutions</option>
+          <option value="2" @if(isset($exam)) @if($exam->solutions==2) selected @endif @endif >No report</option>
         </select>
       </div>
 

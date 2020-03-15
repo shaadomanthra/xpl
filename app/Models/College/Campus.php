@@ -338,6 +338,11 @@ class Campus extends Model
                 $users = User::all()->pluck('id');
 
 
+            if($r->get('code')){
+                $users_code = DB::table('tests_overall')->whereIn('test_id', $test_id)->where('code',$r->get('code'))->pluck('user_id')->toArray();
+                $users = array_intersect($users->toArray(),$users_code);   
+            }
+            
             $Tests_Overall = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->orderBy('score','desc')->get();
             $tests =$Tests_Overall->groupBy('user_id');
 
