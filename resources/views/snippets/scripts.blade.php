@@ -689,7 +689,8 @@ function addMinutes(date, minutes) {
 @if(isset($timer2))
 <script>
 
-
+@if(isset($question))
+@if($question->type!='code')
 
 $('body').bind('copy paste',function(e) {
     e.preventDefault(); return false; 
@@ -721,7 +722,8 @@ window.onbeforeunload = function () {
 };
 
 
-
+@endif
+@endif
 
 // Set the date we're counting down to
 @if(!isset($time))
