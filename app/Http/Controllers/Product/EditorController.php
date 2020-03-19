@@ -8,6 +8,7 @@ use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Exam\Section;
+use PacketPrep\Models\Exam\Exam;
 
 class EditorController extends Controller
 {
