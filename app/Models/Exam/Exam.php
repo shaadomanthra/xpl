@@ -161,4 +161,37 @@ class Exam extends Model
         return 1;
     }
 
+    public function run_internal_p24($code,$input,$lang,$c,$name){
+
+
+      // Get cURL resource
+      $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => 'http://krishnateja.in',
+          CURLOPT_POST => 1,
+          CURLOPT_TIMEOUT => 30,
+      ]);
+
+      $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'1','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input,'name'=>$name);
+
+    
+      //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
+      //echo $data;
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $form);
+
+      // Send the request & save response to $resp
+      $data = curl_exec($curl);
+      
+      // Close request to clear up some resources
+      curl_close($curl);
+
+
+      return $data;
+
+    }
+
+
 }
