@@ -67,7 +67,27 @@
         			</div>
         		</div>
         	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 question">{!! $question->question!!}</div>
+        	<div class="col-10 col-md-10">
+            <div class="pt-1 question">{!! $question->question!!}</div>
+            <span class='badge badge-warning'>version 1</span>
+            @if(strip_tags(trim($question->question_b)))
+            <hr>
+            <div class="pt-1 ">{!! $question->question_b!!}</div>
+            <span class='badge badge-warning'>version 2</span>
+            @endif
+
+            @if(strip_tags(trim($question->question_c)))
+            <hr>
+            <div class="pt-1 ">{!! $question->question_c!!}</div>
+            <span class='badge badge-warning'>version 3</span>
+            @endif
+
+            @if(strip_tags(trim($question->question_d)))
+            <hr>
+            <div class="pt-1 ">{!! $question->question_d!!}</div>
+            <span class='badge badge-warning mb-3'>version 4</span>
+           
+            @endif
 
           @if(count($question->tags)!=0)
       @foreach($question->tags as $k => $tag)
@@ -160,7 +180,6 @@
       	</div>
       </div>
 
-      @include('appl.dataentry.snippets.exam')
      
 
     </div>

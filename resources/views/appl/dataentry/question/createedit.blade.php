@@ -113,6 +113,40 @@
             @endif
         </textarea>
       </div>
+
+      <div class="form-group mt-3">
+        <label for="formGroupExampleInput2">Question B</label>
+         <textarea class="form-control summernote" name="question_b"  rows="3">
+            @if($stub=='Create')
+            {{ (old('question_b')) ? old('question_b') : '' }}
+            @else
+            {{ $question->question_b }}
+            @endif
+        </textarea>
+      </div>
+
+      <div class="form-group mt-3">
+        <label for="formGroupExampleInput2">Question C</label>
+         <textarea class="form-control summernote" name="question_c"  rows="3">
+            @if($stub=='Create')
+            {{ (old('question_c')) ? old('question_c') : '' }}
+            @else
+            {{ $question->question_c }}
+            @endif
+        </textarea>
+      </div>
+
+      <div class="form-group mt-3">
+        <label for="formGroupExampleInput2">Question D</label>
+         <textarea class="form-control summernote" name="question_d"  rows="3">
+            @if($stub=='Create')
+            {{ (old('question_d')) ? old('question_d') : '' }}
+            @else
+            {{ $question->question_d }}
+            @endif
+        </textarea>
+      </div>
+
       </div>
 
       @if($type=='code')

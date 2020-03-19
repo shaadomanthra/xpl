@@ -53,7 +53,16 @@
               </div>
             </div>
           </div>
-          <div class="col-10 col-md-10"><div class="pt-1 question">{!! $question->question!!}</div></div>
+          <div class="col-10 col-md-10">
+            <div class="pt-1 question">{!! $question->question!!}</div>
+            <hr>
+            <div class="pt-1 ">{!! $question->question_b!!}</div>
+            <hr>
+            <div class="pt-1 ">{!! $question->question_c!!}</div>
+            <hr>
+            <div class="pt-1 ">{!! $question->question_d!!}</div>
+            <hr>
+          </div>
           @if($question->level || $question->topic)
           <div class="mb-3">
           @if($question->level)

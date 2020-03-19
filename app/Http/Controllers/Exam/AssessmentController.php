@@ -557,7 +557,9 @@ class AssessmentController extends Controller
 
     public function option_swap2($question,$dynamic){
 
+
             if(!$dynamic){
+
                 $question->option_a = $question->a;
                 $question->option_b = $question->b;
                 $question->option_c = $question->c;
@@ -566,6 +568,10 @@ class AssessmentController extends Controller
             }
 
             if($dynamic == 4){
+
+                if(strip_tags(trim($question->question_d)))
+                    $question->question = $question->question_d;
+
                 $question->option_a = $question->d;
                 $question->option_b = $question->a;
                 $question->option_c = $question->b;
@@ -574,6 +580,8 @@ class AssessmentController extends Controller
             }
 
             if($dynamic == 3){
+                if(strip_tags(trim($question->question_c)))
+                    $question->question = $question->question_c;
                 $question->option_a = $question->c;
                 $question->option_b = $question->d;
                 $question->option_c = $question->a;
@@ -582,6 +590,9 @@ class AssessmentController extends Controller
             }
 
             if($dynamic == 2){
+
+                if(strip_tags(trim($question->question_b)))
+                    $question->question = $question->question_b;
                 $question->option_a = $question->b;
                 $question->option_b = $question->c;
                 $question->option_c = $question->d;
@@ -890,6 +901,10 @@ class AssessmentController extends Controller
                 $item['status'] = 1;
                 $item['dynamic'] = $request->get($i.'_dynamic');
                 $item['code'] = $request->get('dynamic_'.$i);
+
+                if(strip_tags(trim($item['code'])))
+                    $item['status'] = 2;
+
                 $item['created_at'] = $date_time;
                 $item['updated_at'] = $date_time;
                 array_push($data,$item);
@@ -960,10 +975,6 @@ class AssessmentController extends Controller
             $test_overall['time'] = $test_overall['time'] + $s['time'];
             $test_overall['max'] = $test_overall['max'] + $s['max'];
         }
-
-    
-
-        
         
         Test::insert($data); 
         Tests_Section::insert($sec);

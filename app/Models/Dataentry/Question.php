@@ -33,6 +33,9 @@ class Question extends Model
         'level',
         'intest',
         'topic',
+        'question_b',
+        'question_c',
+        'question_d'
         // add all other fields
     ];
 
@@ -100,6 +103,18 @@ class Question extends Model
 
         if($number == null )
             $number = 1;
+
+        if($number==2 && strip_tags(trim($ques->question_b))){
+            $ques->question = $ques->question_b;
+        }
+
+        if($number==3 && strip_tags(trim($ques->question_c))){
+            $ques->question = $ques->question_c;
+        }
+
+        if($number==4 && strip_tags(trim($ques->question_d))){
+            $ques->question = $ques->question_d;
+        }
 
         if(file_exists($file) && $ques->dynamic){
             

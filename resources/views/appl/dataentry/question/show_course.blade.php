@@ -69,7 +69,15 @@
         			</div>
         		</div>
         	</div>
-        	<div class="col-10 col-md-10"><div class="pt-1 question">{!! $question->question!!}</div>
+        	<div class="col-10 col-md-10">
+            <div class="pt-1 question">{!! $question->question!!}</div>
+
+            <div class="pt-1 ">{!! $question->question_b!!}</div>
+
+            <div class="pt-1 ">{!! $question->question_c!!}</div>
+
+            <div class="pt-1 ">{!! $question->question_d!!}</div>
+
           @if($question->level)
           <span class="badge badge-warning mb-3"> 
             @if($question->level==1) <small><i  class="fa fa-circle-o " ></i></small> Level 1

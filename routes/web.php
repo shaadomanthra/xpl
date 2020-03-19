@@ -40,6 +40,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/targettcs/code/two','Product\EditorController@tcscode_two')->name('tcscode.two');
 	Route::post('/targettcs/code/two','Product\EditorController@tcstestcase_two')->name('tcs.testcase.two');
 	Route::get('/runcode','Product\EditorController@runcode')->name('runcode');
+	Route::get('/autoruncode','Product\EditorController@autoruncode')->name('autoruncode');
 	Route::get('/stopdocker','Product\EditorController@stop')->name('stop');
 	Route::get('/removedocker','Product\EditorController@remove')->name('remove');
 

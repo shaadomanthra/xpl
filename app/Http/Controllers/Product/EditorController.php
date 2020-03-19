@@ -4,6 +4,10 @@ namespace PacketPrep\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
+use PacketPrep\Models\Product\Test;
+use PacketPrep\Models\Exam\Tests_Overall;
+use PacketPrep\Models\Exam\Tests_Section;
+use PacketPrep\Models\Exam\Section;
 
 class EditorController extends Controller
 {
@@ -62,6 +66,63 @@ class EditorController extends Controller
       print $json;
 
     }
+
+
+    public function autoruncode(Request $request)
+    {
+
+      $entry = Test::where('status',2)->orderBy('id','desc')->first();
+      $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
+      $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
+      $section = Section::where('id',$entry->section_id)->first();
+
+      $q = $entry->question;
+
+      $code = $entry->code;
+      $name = str_random();
+      $input = $entry->a;
+      if($q->b=='cpp')
+        $lang = 'clang';
+      else
+        $lang = $q->b;
+      if($q->b=='c')
+        $c = 1;
+      else
+        $c =0;
+
+      $data = $this->run_internal_p24($code,$input,$lang,$c,$name);
+      //$data = $this->run_internal($code,$input);
+      $json = json_decode($data);
+
+      if(isset($json->stdout)){
+        $entry->response = $json->stdout;
+        if($entry->response == $entry->answer){
+
+          $entry->accuracy=1;
+          $e_section->correct++;
+          $e_section->incorrect--;
+          $e_section->score = $e_section->score + $section->mark;
+
+          $e_overall->correct++;
+          $e_overall->incorrect--;
+          $e_overall->score = $e_overall->score + $section->mark;
+        }
+        else
+          $entry->accuracy=0;
+      }
+      
+
+      
+        $entry->status =1;
+
+        $entry->save();
+        $e_section->save();
+        $e_overall->save();
+
+      //print $json;
+
+    }
+
 
     public function tcscode_one(Request $request)
     {
@@ -185,7 +246,6 @@ class EditorController extends Controller
 
     public function run_internal_p24($code,$input,$lang,$c,$name){
 
-     
 
       // Get cURL resource
       $curl = curl_init();
@@ -195,6 +255,7 @@ class EditorController extends Controller
           CURLOPT_RETURNTRANSFER => 1,
           CURLOPT_URL => 'http://krishnateja.in',
           CURLOPT_POST => 1,
+          CURLOPT_TIMEOUT => 30,
       ]);
 
       $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'1','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input,'name'=>$name);

@@ -21,7 +21,8 @@
             </div>
           </div>
         </div>
-        <div class="col-10 col-md-10"><div class="pt-1 question">{!! $question->question!!}</div>
+        <div class="col-10 col-md-10">
+          <div class="pt-1 question">{!! $question->question!!}</div>
         </div>
       </div>
 
