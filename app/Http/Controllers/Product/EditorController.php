@@ -72,7 +72,7 @@ class EditorController extends Controller
     {
 
       
-      return Exam::runCode();
+      return (new Exam)->runCode();
       //print $json;
 
     }

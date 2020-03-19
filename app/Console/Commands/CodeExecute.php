@@ -38,6 +38,6 @@ class CodeExecute extends Command
      */
     public function handle()
     {
-        return Exam::runCode();
+        return (new Exam)->runCode();
     }
 }
