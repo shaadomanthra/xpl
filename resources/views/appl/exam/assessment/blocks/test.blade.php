@@ -50,16 +50,21 @@
         </button>
       </div>
       <div class="modal-body">
-        Your responses will be submitted and the test will end. Kindly confirm your submission.
+        
+
+        <div class="alert alert-warning alert-important mb-3">
+          If you click end test, you will not be able to edit your responses for all the given questions.
+        </div>
+        Your responses will be submitted and the test will end.  Kindly confirm your submission.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, I will solve more questions</button>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="test_id" value="{{ $exam->id }}">
         <input type="hidden" name="code" value="{{ request()->get('code') }}">
         <button type="submit" class="btn  btn-warning " data-submit="1">
-           End Test
+           I confirm, End Test
         </button>
       </div>
     </div>
