@@ -193,5 +193,55 @@ class Exam extends Model
 
     }
 
+    public function dockerStop(){
+      $name = request()->get('name');
+
+      $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => 'http://krishnateja.in/stopdocker.php',
+          CURLOPT_POST => 1,
+      ]);
+
+      $form = array('name'=>$name);
+    
+    
+      //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
+      //echo $data;
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $form);
+
+      // Send the request & save response to $resp
+      $data = curl_exec($curl);
+      
+      // Close request to clear up some resources
+      curl_close($curl);
+    }
+
+    public function dockerRemove(){
+      $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => 'http://krishnateja.in/removedocker.php',
+          CURLOPT_POST => 1,
+      ]);
+
+      $form = array('name'=>'');
+    
+    
+      //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
+      //echo $data;
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $form);
+
+      // Send the request & save response to $resp
+      $data = curl_exec($curl);
+      
+      // Close request to clear up some resources
+      curl_close($curl);
+    }
+
 
 }
