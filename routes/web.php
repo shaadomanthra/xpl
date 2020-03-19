@@ -399,6 +399,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('test/{test}/{id}/save','Exam\AssessmentController@save')->name('assessment.save');
 	Route::get('test/{test}/{id}/clear','Exam\AssessmentController@clear')->name('assessment.clear');
 	
+	Route::post('test/{test}/delete','Exam\AssessmentController@delete')->name('assessment.delete');
 	
 	Route::resource('/coupon', 'Product\CouponController')->middleware('auth');
 	Route::get('/coupon/getamount/{amount}/{code}/{product}', 'Product\CouponController@getamount');

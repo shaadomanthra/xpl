@@ -17,6 +17,9 @@
 		      @endif
 		      <th scope="col" style="width:10%"  >Score</th>
 		      <th scope="col" class=" {{$m=0}} " style="width:20%" >Performance</th>
+		      @if(\auth::user()->isAdmin())
+		    	<th scope="col" style="width:8%"  >Delete</th>
+		    	@endif
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -51,6 +54,18 @@
 		      	@endif
 		      	
 		      </td>
+		      @if(\auth::user()->isAdmin())
+		      <td>
+		      		<form method="post" action="{{ route('assessment.delete',$exam->slug)}}" >
+		      			<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		      			<input type="hidden" name="user_id" value="{{ $k }}">
+		      			<input type="hidden" name="test_id" value="{{ $exam->id }}">
+		      			<button class="btn btn-sm btn-primary" type="submit">delete</button>
+
+		      		</form>
+		      		
+		      	</td>
+		      	@endif
 		      </tr>
 		     @endforeach
 		  </tbody>
