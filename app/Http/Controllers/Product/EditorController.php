@@ -74,7 +74,7 @@ class EditorController extends Controller
       $entry = Test::where('status',2)->orderBy('id','desc')->first();
       if(!$entry)
          return null;
-       
+
       $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
       $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
       $section = Section::where('id',$entry->section_id)->first();
@@ -83,7 +83,7 @@ class EditorController extends Controller
 
       $code = $entry->code;
       $name = str_random();
-      $input = $entry->a;
+      $input = $q->a;
       if($q->b=='cpp')
         $lang = 'clang';
       else
