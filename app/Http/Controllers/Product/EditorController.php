@@ -98,8 +98,8 @@ class EditorController extends Controller
       $json = json_decode($data);
 
       if(isset($json->stdout)){
-        $entry->response = $json->stdout;
-        if($entry->response == $entry->answer){
+        $entry->response = strip_tags(trim($json->stdout));
+        if(strtolower($entry->response) == strtolower($entry->answer)){
 
           $entry->accuracy=1;
           $e_section->correct++;
