@@ -388,6 +388,7 @@ class Campus extends Model
             if(isset($users[$k])){
                 $data['users'][$k]['name'] = $users[$k][0]['name'];
                 $data['users'][$k]['username'] = $users[$k][0]['username']; 
+                $data['users'][$k]['video'] = $users[$k][0]['video']; 
                 $data['users'][$k]['branch'] = $users[$k][0]['branch_id']; 
                 $data['users'][$k]['college'] = $users[$k][0]['college_id'];  
             }else{

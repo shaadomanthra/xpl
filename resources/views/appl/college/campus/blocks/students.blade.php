@@ -28,7 +28,12 @@
 
 		    <tr>
 		      <th scope="row">{{++$m}}</th>
-		      <td>{{$user['name']}}  </td>
+		      <td><a href="{{ route('profile','@'.$user['username'])}}">{{$user['name']}}  
+		      	@if($user['video'])
+		      	<i class="fa fa-check-circle text-success"></i>
+		      	@endif
+		      	</a> 
+		      </td>
 		      <td>@if($user['branch']){{  $branches[$user['branch']] }}@endif</td>
 
 		      @if($colleges)

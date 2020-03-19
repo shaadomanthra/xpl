@@ -185,13 +185,7 @@
       @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
       <div class="bg-light p-2 border">
       <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group ">
-            <label for="formGroupExampleInput ">Video</label><br>
-            <input type="text" minlength="1" class="form-control" name="video" id="formGroupExampleInput" value="{{ $user->video }}">
-          </div>
-          
-        </div>
+        
         <div class="col-12 col-md-6">
             <div class="form-group ">
             <label for="formGroupExampleInput ">language</label><br>
@@ -220,7 +214,7 @@
     </div>
       @endif
 
-      <div class="row">
+      <div class="row mt-3">
         <div class="col-12 col-md-6">
             <div class="form-group">
         <label for="formGroupExampleInput ">Facebook URL (optional)</label>
@@ -228,11 +222,11 @@
       </div>
         </div>
          <div class="col-12 col-md-6">
-            <div class="form-group">
-        <label for="formGroupExampleInput ">Twitter URL (optional)</label>
-        <input type="text" class="form-control" name="twitter_link"  placeholder="Enter your Twitter profile url" value="{{ $user_details->twitter_link }}">
-      </div>
-         </div>
+          <div class="form-group ">
+            <label for="formGroupExampleInput "> Profile Video</label><br>
+            <input type="text" minlength="1" class="form-control" name="video" id="formGroupExampleInput" value="{{ $user->video }}">
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
