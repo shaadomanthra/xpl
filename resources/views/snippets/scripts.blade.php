@@ -22,21 +22,6 @@
         }
     });
 
- $(document).keydown(function(e) {
-      if(e.keyCode == 37) { // left
-        
-        $sno = parseInt($('.active').data('sno'))-1;
-        if($('.qblock_'+$sno).length)
-        make_visible($sno);
-      }
-      else if(e.keyCode == 39) { // right
-        $sno = parseInt($('.active').data('sno'))+1;
-        if($('.qblock_'+$sno).length)
-        make_visible($sno);
-      }
-    });
-
-
   </script>
 @endif
 @endif
