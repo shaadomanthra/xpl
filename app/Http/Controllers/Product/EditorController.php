@@ -72,6 +72,9 @@ class EditorController extends Controller
     {
 
       $entry = Test::where('status',2)->orderBy('id','desc')->first();
+      if(!$entry)
+         return null;
+       
       $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
       $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
       $section = Section::where('id',$entry->section_id)->first();
@@ -100,15 +103,26 @@ class EditorController extends Controller
 
           $entry->accuracy=1;
           $e_section->correct++;
-          $e_section->incorrect--;
+          $e_section->unattempted--;
           $e_section->score = $e_section->score + $section->mark;
 
           $e_overall->correct++;
-          $e_overall->incorrect--;
+          $e_overall->unattempted--;
           $e_overall->score = $e_overall->score + $section->mark;
         }
-        else
+        else{
+          $e_section->incorrect++;
+          $e_section->unattempted--;
+          if($section->negative)
+          $e_section->score = $e_section->score - $section->negative;
+
+          $e_overall->incorrect++;
+          $e_overall->unattempted--;
+          if($section->negative)
+          $e_overall->score = $e_overall->score - $section->negative;
+
           $entry->accuracy=0;
+        }
       }
       
 
