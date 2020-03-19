@@ -71,68 +71,8 @@ class EditorController extends Controller
     public function autoruncode(Request $request)
     {
 
-      $entry = Test::where('status',2)->orderBy('id','desc')->first();
-      if(!$entry)
-         return null;
-
-      $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
-      $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
-      $section = Section::where('id',$entry->section_id)->first();
-
-      $q = $entry->question;
-
-      $code = $entry->code;
-      $name = str_random();
-      $input = $q->a;
-      if($q->b=='cpp')
-        $lang = 'clang';
-      else
-        $lang = $q->b;
-      if($q->b=='c')
-        $c = 1;
-      else
-        $c =0;
-
-      $data = $this->run_internal_p24($code,$input,$lang,$c,$name);
-      //$data = $this->run_internal($code,$input);
-      $json = json_decode($data);
-
-      if(isset($json->stdout)){
-        $entry->response = strip_tags(trim($json->stdout));
-        if(strtolower($entry->response) == strtolower($entry->answer)){
-
-          $entry->accuracy=1;
-          $e_section->correct++;
-          $e_section->unattempted--;
-          $e_section->score = $e_section->score + $section->mark;
-
-          $e_overall->correct++;
-          $e_overall->unattempted--;
-          $e_overall->score = $e_overall->score + $section->mark;
-        }
-        else{
-          $e_section->incorrect++;
-          $e_section->unattempted--;
-          if($section->negative)
-          $e_section->score = $e_section->score - $section->negative;
-
-          $e_overall->incorrect++;
-          $e_overall->unattempted--;
-          if($section->negative)
-          $e_overall->score = $e_overall->score - $section->negative;
-
-          $entry->accuracy=0;
-        }
-      }
       
-
-      
-        $entry->status =1;
-
-        $entry->save();
-        $e_section->save();
-        $e_overall->save();
-
+      return Exam::runCode();
       //print $json;
 
     }
