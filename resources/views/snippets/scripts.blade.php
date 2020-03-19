@@ -1,7 +1,7 @@
 <script src="{{ asset('js/script.js')}}?new=12"></script>
 
-@if(isset($question))
-@if($question->type!='code')
+@if(isset($questions))
+@if($questions[0]->type!='code')
 <script>
  $(document).keypress(function(){
 

@@ -53,7 +53,7 @@
         
 
         <div class="alert alert-warning alert-important mb-3">
-          If you click end test, you will not be able to edit your responses for all the given questions.
+          If you click end test, you will not be able to edit your responses for any of the given questions.
         </div>
         Your responses will be submitted and the test will end.  Kindly confirm your submission.
       </div>
