@@ -7,6 +7,7 @@
 
       var key = (event.keyCode ? event.keyCode : event.which); 
         if (key == 108) {
+          
           if( $('.prev').length ) {
             var url = $('.prev').data('prev');
             window.location= url;
@@ -19,6 +20,20 @@
           }
          
         }
+    });
+
+ $(document).keydown(function(e) {
+      if(e.keyCode == 37) { // left
+        
+        $sno = parseInt($('.active').data('sno'))-1;
+        if($('.qblock_'+$sno).length)
+        make_visible($sno);
+      }
+      else if(e.keyCode == 39) { // right
+        $sno = parseInt($('.active').data('sno'))+1;
+        if($('.qblock_'+$sno).length)
+        make_visible($sno);
+      }
     });
 
 
