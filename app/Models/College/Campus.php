@@ -419,6 +419,10 @@ class Campus extends Model
     			$data['need_to_improve']++;
 
     		}
+
+            if($t->status==0)
+                $data['users'][$k]['performance'] = '..processing';
+            
     		$data['participants']++;
             $data['correct'] =  $data['correct']  + $data['users'][$k]['correct'];
             $data['max'] = $data['max'] + $data['users'][$k]['max'];

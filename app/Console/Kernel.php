@@ -27,9 +27,9 @@ class Kernel extends ConsoleKernel
        $schedule->command('code:execute')->everyMinute();
        $schedule->command('docker:stop')->everyFiveMinutes();
        $schedule->command('docker:remove')->daily();
-       $schedule->command('backup:clean')->daily()->at('09:00');
-       $schedule->command('backup:run')->daily()->at('10:00');
-       $schedule->command('backup:monitor')->daily()->at('11:00');
+       //$schedule->command('backup:clean')->daily()->at('09:00');
+       //$schedule->command('backup:run')->daily()->at('10:00');
+       //$schedule->command('backup:monitor')->daily()->at('11:00');
     }
 
     /**

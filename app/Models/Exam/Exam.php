@@ -148,6 +148,9 @@ class Exam extends Model
 
           $entry->accuracy=0;
         }
+
+        if($e_overall->unattempted<1)
+            $e_overall->status = 1;
       }
       
 

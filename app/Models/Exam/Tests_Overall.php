@@ -16,6 +16,7 @@ class Tests_Overall extends Model
         'incorrect',
         'score',
         'time',
-        'code'
+        'code',
+        'status'
     ];
 }

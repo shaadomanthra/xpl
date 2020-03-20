@@ -846,6 +846,7 @@ class AssessmentController extends Controller
 
     public function submission($slug,Request $request)
     {
+        $code_ques_flag =0;
         $test = $slug;
         $user_id = $request->get('user_id');
         $test_id = $request->get('test_id');
@@ -902,8 +903,10 @@ class AssessmentController extends Controller
                 $item['dynamic'] = $request->get($i.'_dynamic');
                 $item['code'] = $request->get('dynamic_'.$i);
 
-                if(strip_tags(trim($item['code'])))
+                if(strip_tags(trim($item['code']))){
+                    $code_ques_flag =1;
                     $item['status'] = 2;
+                }
 
                 $item['created_at'] = $date_time;
                 $item['updated_at'] = $date_time;
@@ -966,6 +969,9 @@ class AssessmentController extends Controller
         $test_overall['created_at'] = $date_time;
         $test_overall['updated_at'] = $date_time;
         $test_overall['code'] = $code;
+        $test_overall['status'] =1;
+        if($code_ques_flag)
+            $test_overall['status'] = 0;
         foreach($sec as $s){
             $test_overall['unattempted'] = $test_overall['unattempted'] + $s['unattempted'];
             
