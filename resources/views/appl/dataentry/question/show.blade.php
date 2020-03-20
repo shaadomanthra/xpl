@@ -74,17 +74,17 @@
 
       <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="q_1" role="tabpanel" aria-labelledby="q_1">
-        <div class="pt-1 question mt-2">{!! $question->question!!}</div>
+        <div class="pt-1 border p-3 mt-2">{!! $question->question!!}</div>
       </div>
       <div class="tab-pane" id="q_2" role="tabpanel" aria-labelledby="q_2">
-        <div class="pt-1 mt-2">{!! $question->question_b!!}</div>
+        <div class="pt-1 mt-2 border p-3">@if($question->question_b) {!! $question->question_b!!} @else - @endif</div>
       </div>
 
       <div class="tab-pane" id="q_3" role="tabpanel" aria-labelledby="q_3">
-        <div class="pt-1 mt-2">{!! $question->question_c!!}</div>
+        <div class="pt-1 mt-2 border p-3">@if($question->question_c) {!! $question->question_c!!} @else - @endif</div>
       </div>
       <div class="tab-pane" id="q_4" role="tabpanel" aria-labelledby="q_4">
-        <div class="pt-1 mt-2">{!! $question->question_d!!}</div>
+        <div class="pt-1 mt-2 border p-3">@if($question->question_d) {!! $question->question_d!!} @else - @endif</div>
       </div>
       </div>
             
@@ -140,7 +140,7 @@
           </div>
           <div class="col-10 col-md-10"><div class="pt-1 c">
             @if($question->type=='code')
-            <pre class="p-3"><code class="text-light ">{!! $question->c!!}
+            <pre class="p-3"><code class="text-light ">{!! htmlentities($question->c) !!}
           </code></pre>
             @else
             {!! $question->c!!}
