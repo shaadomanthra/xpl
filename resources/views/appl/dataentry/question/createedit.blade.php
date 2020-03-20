@@ -62,21 +62,25 @@
       <li class="nav-item">
         <a class="nav-link" id="e-tab" data-toggle="tab" href="#e" role="tab" aria-controls="e" aria-selected="false">E</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Ans</a>
+      </li>
       @endif
       @if($type=='code')
       <li class="nav-item">
-        <a class="nav-link" id="a-tab" data-toggle="tab" href="#a" role="tab" aria-controls="a" aria-selected="false">input</a>
+        <a class="nav-link" id="a-tab" data-toggle="tab" href="#a" role="tab" aria-controls="a" aria-selected="false">Input</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="b-tab" data-toggle="tab" href="#b" role="tab" aria-controls="b" aria-selected="false">lang</a>
+        <a class="nav-link" id="b-tab" data-toggle="tab" href="#b" role="tab" aria-controls="b" aria-selected="false">Lang</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="c-tab" data-toggle="tab" href="#c" role="tab" aria-controls="c" aria-selected="false">error code</a>
+        <a class="nav-link" id="c-tab" data-toggle="tab" href="#c" role="tab" aria-controls="c" aria-selected="false">Preset code</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Output</a>
       </li>
       @endif
-       <li class="nav-item">
-        <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Ans</a>
-      </li>
+       
        <li class="nav-item">
         <a class="nav-link" id="explanation-tab" data-toggle="tab" href="#explanation" role="tab" aria-controls="explanation" aria-selected="false">Expl</a>
       </li>
@@ -103,49 +107,8 @@
 
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="question" role="tabpanel" aria-labelledby="question-tab">
-        <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Question </label>
-         <textarea class="form-control summernote" name="question"  rows="5">
-            @if($stub=='Create')
-            {{ (old('question')) ? old('question') : '' }}
-            @else
-            {{ $question->question }}
-            @endif
-        </textarea>
-      </div>
-
-      <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Question B</label>
-         <textarea class="form-control summernote" name="question_b"  rows="3">
-            @if($stub=='Create')
-            {{ (old('question_b')) ? old('question_b') : '' }}
-            @else
-            {{ $question->question_b }}
-            @endif
-        </textarea>
-      </div>
-
-      <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Question C</label>
-         <textarea class="form-control summernote" name="question_c"  rows="3">
-            @if($stub=='Create')
-            {{ (old('question_c')) ? old('question_c') : '' }}
-            @else
-            {{ $question->question_c }}
-            @endif
-        </textarea>
-      </div>
-
-      <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Question D</label>
-         <textarea class="form-control summernote" name="question_d"  rows="3">
-            @if($stub=='Create')
-            {{ (old('question_d')) ? old('question_d') : '' }}
-            @else
-            {{ $question->question_d }}
-            @endif
-        </textarea>
-      </div>
+        @include('appl.dataentry.question.ques')
+        
 
       </div>
 
@@ -158,7 +121,7 @@
       </div>
       <div class="tab-pane fade" id="b" role="tabpanel" aria-labelledby="b-tab">
         <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">language </label><br>
+        <label for="formGroupExampleInput2">Language </label><br>
   <select class="form-control"  name="b">
    <option value="" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='') selected @endif @endif >-NA-</option>
     <option value="c" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='C') selected @endif @endif >c</option>
@@ -174,7 +137,7 @@
 
        <div class="tab-pane fade" id="c" role="tabpanel" aria-labelledby="c-tab">
         <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Error Code</label><br>
+        <label for="formGroupExampleInput2">Preset Code</label><br>
         <textarea class="form-control " name="c"  rows="5">@if($stub=='Create'){{ (old('c')) ? old('c') : '' }}@else{{ $question->c }}@endif
         </textarea>
       </div>

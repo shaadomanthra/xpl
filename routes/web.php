@@ -328,8 +328,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         'destroy'=>'chapter.destroy',
     ]]);
 
-	//Route::get('video', 'VideoController@index')->name('video.upload');
-	//Route::post('video', 'VideoController@store')->name('video.upload');
+	Route::get('video', 'VideoController@get')->name('video.upload');
+	Route::post('video', 'VideoController@save')->name('video.upload');
 
 	Route::get('/proficiency-test', 'Product\TestController@proficiency_test')->name('proficiency_test');
 	Route::get('/updates', 'System\UpdateController@public_updates')->name('updates');

@@ -81,7 +81,7 @@
       
       
       <div class="form-group">
-        <label for="formGroupExampleInput2">Biodata</label>
+        <label for="formGroupExampleInput2">About Me</label>
          <textarea class="form-control summernote" name="bio"  rows="10">{{isset($user_details)?$user_details->bio:''}}</textarea>
       </div>
 
@@ -212,9 +212,8 @@
       </div>
      
     </div>
-      @endif
 
-      <div class="row mt-3">
+    <div class="row mt-3">
         <div class="col-12 col-md-6">
             <div class="form-group">
         <label for="formGroupExampleInput ">Facebook URL (optional)</label>
@@ -228,6 +227,9 @@
           </div>
         </div>
       </div>
+      @endif
+
+      
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Profile Visibility</label>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' | PacketPrep')
+@section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' | Xplore')
 @section('content')
 
 @if($exam->slug != 'proficiency-test')

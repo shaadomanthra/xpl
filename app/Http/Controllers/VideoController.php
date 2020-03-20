@@ -22,9 +22,9 @@ class VideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function get()
     {
-        //
+        return view('appl.video.video');
     }
 
     /**
@@ -45,6 +45,20 @@ class VideoController extends Controller
         ],'unlisted');
          
         $id = $video->getVideoId();
+        
+        $user->video =$id;
+        $user->save();
+
+        return redirect()->route('video.upload');
+    }
+
+
+    public function save(Request $request)
+    {
+        $user = \auth::user();
+        $url = $request->get('url');
+        parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
+        $id = $my_array_of_vars['v'];
         
         $user->video =$id;
         $user->save();

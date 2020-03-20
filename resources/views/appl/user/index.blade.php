@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', $user->name.' | Xplore')
 @section('content')
 
 <div  class="row ">
@@ -86,7 +87,7 @@
 
 @auth
 <div class="row">
-<div class="col-12 col-md-8">
+<div class="col-12 col-md-7">
    <div class="card mb-3">
     <div class="card-body bg-light">
       <div class="row">
@@ -152,30 +153,13 @@
    </div>
 </div>
 
-<div class="col-12 col-md-4">
+<div class="col-12 col-md-5">
 
 <div class="card">
     <div class="card-body bg-white">
       <div class="row">
-        <div class="col-12 col-md-4"><h1 class="mb-0"> Skills</h1></div>
-        <div class="col-12 col-md-8 mt-2">
-          @foreach($user->metrics as $m)
-
-            <span class="badge badge-success">{{$m->name}}</span><br>
-          @endforeach
-         
-        </div>
-      </div>
-    </div>
-   </div>
- </div>
-</div>
-@endauth
-
-@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-@if($user->video)
-      <div class="card mb-3">
-      <div class="card-body">
+        <div class="col-12 "><h3 class="mb-3">Profile Video</h3>
+          @if($user->video)
 @if(!is_numeric($user->video))
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $user->video}}?rel=0" allowfullscreen></iframe>
@@ -185,13 +169,97 @@
   <iframe src="//player.vimeo.com/video/{{ $user->video }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 </div>
 @endif
+
+@else
+<a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
+@endif
+         
       </div>
     </div>
-@endif
-@endif
+   </div>
+</div>
+@endauth
+
 
  </div>
 </div>
+
+
+@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+
+<div class="row mb-3">
+
+  <div class="col-12 col-md-3">
+    <div class="card">
+      <div class="card-header">
+    <h3>Personality</h3>
+  </div>
+      <div class="card-body">
+        <div class="display-3">
+          @if($user->personality)
+            {{$user->personality}}
+          @else
+            -
+          @endif
+        </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-3">
+    <div class="card">
+      <div class="card-header">
+    <h3>Language</h3>
+  </div>
+      <div class="card-body">
+        <div class="display-3">
+          @if($user->language)
+            {{$user->language}}
+          @else
+            -
+          @endif
+        </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-3">
+    <div class="card">
+      <div class="card-header">
+    <h3>Confidence</h3>
+  </div>
+      <div class="card-body">
+        <div class="display-3">
+          @if($user->confidence)
+            {{$user->confidence}}
+          @else
+            -
+          @endif
+        </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-3">
+    <div class="card">
+      <div class="card-header">
+    <h3>Fluency</h3>
+  </div>
+      <div class="card-body">
+        <div class="display-3">
+          @if($user->fluency)
+            {{$user->fluency}}
+          @else
+            -
+          @endif
+        </div>
+    </div>
+    </div>
+  </div>
+
+
+</div>
+@endif
 
 @endsection
 

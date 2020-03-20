@@ -54,14 +54,44 @@
             </div>
           </div>
           <div class="col-10 col-md-10">
-            <div class="pt-1 question">{!! $question->question!!}</div>
-            <hr>
-            <div class="pt-1 ">{!! $question->question_b!!}</div>
-            <hr>
-            <div class="pt-1 ">{!! $question->question_c!!}</div>
-            <hr>
-            <div class="pt-1 ">{!! $question->question_d!!}</div>
-            <hr>
+
+
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="qu_1" data-toggle="tab" href="#q_1" role="tab" aria-controls="question" aria-selected="true">Question</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="qu_2" data-toggle="tab" href="#q_2" role="tab" aria-controls="exams" aria-selected="false">Version 2</a>
+        
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="qu_3" data-toggle="tab" href="#q_3" role="tab" aria-controls="a" aria-selected="false">Version 3</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="qu_4" data-toggle="tab" href="#q_4" role="tab" aria-controls="a" aria-selected="false">Version 4</a>
+      </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="q_1" role="tabpanel" aria-labelledby="q_1">
+        <div class="pt-1 question mt-2">{!! $question->question!!}</div>
+      </div>
+      <div class="tab-pane" id="q_2" role="tabpanel" aria-labelledby="q_2">
+        <div class="pt-1 mt-2">{!! $question->question_b!!}</div>
+      </div>
+
+      <div class="tab-pane" id="q_3" role="tabpanel" aria-labelledby="q_3">
+        <div class="pt-1 mt-2">{!! $question->question_c!!}</div>
+      </div>
+      <div class="tab-pane" id="q_4" role="tabpanel" aria-labelledby="q_4">
+        <div class="pt-1 mt-2">{!! $question->question_d!!}</div>
+      </div>
+      </div>
+            
+            
+            
+            <br>
+           
           </div>
           @if($question->level || $question->topic)
           <div class="mb-3">
@@ -94,7 +124,7 @@
          <div class="row no-gutters">
           <div class="col-2 col-md-2">
             <div class="pr-3 pb-2" >
-              <div class="text-center p-1 rounded bg-light w100 border" >B</div>
+              <div class="text-center p-1 rounded bg-light w100 border" >@if($question->type=='code') Language @else B @endif</div>
             </div>
           </div>
           <div class="col-10 col-md-10"><div class="pt-1 b">{!! $question->b!!}</div></div>
@@ -105,10 +135,17 @@
          <div class="row no-gutters">
           <div class="col-2 col-md-2">
             <div class="pr-3 pb-2" >
-              <div class="text-center p-1 rounded bg-light w100 border" >C</div>
+              <div class="text-center p-1 rounded bg-light w100 border" >@if($question->type=='code') Preset Code @else C @endif</div>
             </div>
           </div>
-          <div class="col-10 col-md-10"><div class="pt-1 c">{!! $question->c!!}</div></div>
+          <div class="col-10 col-md-10"><div class="pt-1 c">
+            @if($question->type=='code')
+            <pre class="p-3"><code class="text-light ">{!! $question->c!!}
+          </code></pre>
+            @else
+            {!! $question->c!!}
+            @endif
+          </div></div>
         </div>
         @endif
         

@@ -182,6 +182,46 @@
         </div>
       </div>
 
+
+          <div class="card mb-3">
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col-12 col-md-2">
+          <img src="{{ asset('/img/education.png')}}" class="w-100 p-3 pt-0"/>    
+          </div>
+
+          <div class="col-12 col-md-9">
+            <dl class="row">     
+  <dt class="col-sm-3">Personality</dt>
+  <dd class="col-sm-9 h3">@if($user->personality) {{ $user->personality}} @else - @endif</dd>
+
+  <dt class="col-sm-3">Language</dt>
+  <dd class="col-sm-9">@if($user->language) {{ $user->language}} @else - @endif</dd>
+  
+ <dt class="col-sm-3">Fluency</dt>
+  <dd class="col-sm-9">@if($user->fluency) {{ $user->fluency}} @else - @endif</dd>
+  
+   <dt class="col-sm-3">Confidence</dt>
+  <dd class="col-sm-9">@if($user->confidence) {{ $user->confidence}} @else - @endif</dd>
+  
+  
+
+  
+</dl>
+
+
+          </div>
+
+        </div>
+        
+        
+         
+  
+        </div>
+      </div>
+
+
               <div class="card mb-3">
       <div class="card-body">
 

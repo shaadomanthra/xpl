@@ -64,7 +64,7 @@
 
  <div >
        <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Answer</label>
+        <label for="formGroupExampleInput2">Output</label>
          <input class="form-control " type="text" name="answer" value="@if($stub=='Create'){{ (old('answer')) ? old('answer') : '' }}@else{{ $question->answer }}@endif"  >
       </div>
       </div>

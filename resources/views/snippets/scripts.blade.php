@@ -1,7 +1,6 @@
 <script src="{{ asset('js/script.js')}}?new=12"></script>
 
-@if(isset($questions))
-@if($questions[0]->type!='code')
+
 <script>
  $(document).keypress(function(){
 
@@ -23,8 +22,7 @@
     });
 
   </script>
-@endif
-@endif
+
 @if(isset($editor))
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    

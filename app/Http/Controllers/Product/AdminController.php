@@ -990,7 +990,23 @@ class AdminController extends Controller
 
         $user->name = $request->get('name');
         $user->status = $request->get('status');
+        $user->phone = $request->get('phone');
+        $user->year_of_passing = $request->get('year_of_passing');
+        $user->roll_number = $request->get('roll_number');
 
+        if($request->get('confidence')){
+            $user->confidence = $request->get('confidence');
+        }
+        
+        if($request->get('fluency')){
+            $user->fluency = $request->get('fluency');
+        }
+        
+        if($request->get('language')){
+            $user->language = $request->get('language');
+
+            $user->personality = round(($user->confidence+$user->fluency+$user->language)/3,1);
+        }
 
 
         $user->save();
