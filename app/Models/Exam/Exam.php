@@ -150,7 +150,7 @@ class Exam extends Model
         }
 
         if($e_overall->unattempted<1)
-            $e_overall->status = 1;
+            $e_overall->status = 0;
       }
       
 

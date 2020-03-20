@@ -420,14 +420,19 @@ class Campus extends Model
 
     		}
 
-            if($t->status==0)
-                $data['users'][$k]['performance'] = '..processing';
-            
+
+
     		$data['participants']++;
             $data['correct'] =  $data['correct']  + $data['users'][$k]['correct'];
             $data['max'] = $data['max'] + $data['users'][$k]['max'];
             $data['users'][$k]['accuracy'] = round($data['users'][$k]['correct']/$data['users'][$k]['max']*100,2);
             $data['pace'] = $data['pace'] + $data['users'][$k]['pace'];
+
+            if($t[0]->status==1){
+                $data['users'][$k]['score'] = '-';
+                $data['users'][$k]['max'] = '-';
+                $data['users'][$k]['performance'] = 'processing';
+            }
 
     	}
 

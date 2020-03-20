@@ -969,9 +969,9 @@ class AssessmentController extends Controller
         $test_overall['created_at'] = $date_time;
         $test_overall['updated_at'] = $date_time;
         $test_overall['code'] = $code;
-        $test_overall['status'] =1;
+        $test_overall['status'] =0;
         if($code_ques_flag)
-            $test_overall['status'] = 0;
+            $test_overall['status'] = 1;
         foreach($sec as $s){
             $test_overall['unattempted'] = $test_overall['unattempted'] + $s['unattempted'];
             
