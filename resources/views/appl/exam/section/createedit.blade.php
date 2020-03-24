@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create/Edit section - '.$exam->name)
 @section('content')
 
 @include('flash::message')
@@ -35,24 +36,14 @@
         @endif
 
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
+        <input type="hidden" name="instructions" value="">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       </div>
 
 
-
-      <div class="form-group">
-        <label for="formGroupsectionspleInput ">Instructions</label>
-        <textarea class="form-control summernote" name="instructions"  rows="5">
-            @if($stub=='Create')
-            {{ (old('instructions')) ? old('instructions') : '' }}
-            @else
-            {{ $section->instructions }}
-            @endif
-        </textarea>
-      </div>
-      
-
-      <div class="form-group">
+      <div class="row mb-3">
+        <div class="col-12 col-md-4">
+          <div class="form-group">
         <label for="formGroupsectionspleInput ">Correct Mark</label>
         <input type="text" class="form-control" name="mark" id="formGroupsectionspleInput" placeholder="Enter the Mark per question" 
             @if($stub=='Create')
@@ -62,8 +53,9 @@
             @endif
           >
       </div>
-
-      <div class="form-group">
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="form-group">
         <label for="formGroupsectionspleInput ">Negative Marks</label>
         <input type="text" class="form-control" name="negative" id="formGroupsectionspleInput" placeholder="Enter the negative mark per question" 
             @if($stub=='Create')
@@ -73,8 +65,9 @@
             @endif
           >
       </div>
-
-       <div class="form-group">
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="form-group">
         <label for="formGroupsectionspleInput ">Time in minutes</label>
         <input type="text" class="form-control" name="time" id="formGroupsectionspleInput" placeholder="Enter the time in minutes" 
             @if($stub=='Create')
@@ -84,6 +77,14 @@
             @endif
           >
       </div>
+        </div>
+      </div>
+
+      
+
+      
+
+       
 
       <button type="submit" class="btn btn-info">Save</button>
     </form>

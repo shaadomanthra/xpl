@@ -124,6 +124,9 @@ class QuestionController extends Controller
                         });
 
         // exams
+        if(request()->get('exam'))
+            $exams =  Exam::where('id',request()->get('exam'))->orderBy('name','desc ')->get();
+        else
         $exams =  Exam::orderBy('name','desc ')->get();
 
         // Question Types
@@ -169,6 +172,10 @@ class QuestionController extends Controller
         $categories = $request->get('category');
         $tags = $request->get('tag');
         $sections = $request->get('sections');
+
+        if($request->get('exam')){
+            $exam = Exam::where('id',$request->get('exam'))->first();
+        }
 
          try{
 
@@ -220,7 +227,12 @@ class QuestionController extends Controller
             }
 
             flash('A new question is created!')->success();
-            return redirect()->route('question.index',$this->project->slug);
+            
+
+            if(!request()->get('url'))
+                return redirect()->route('question.index',$this->project->slug);
+            else
+                return redirect()->route('exam.question',[$exam->slug,$question->id]);
         }
         catch (QueryException $e){
            flash('There is some error in storing the data...kindly retry.')->error();
@@ -1009,8 +1021,10 @@ class QuestionController extends Controller
                 abort('404','Question not found');
             
         }
-        else
-            abort(403);
+        else{
+            return view('appl.dataentry.question.create_ques')->with('exam',$exam);
+            
+        }
 
     } 
 
@@ -1057,6 +1071,9 @@ class QuestionController extends Controller
                           return $item->name;
                         });
 
+         if(request()->get('exam'))
+            $exams =  Exam::where('id',request()->get('exam'))->orderBy('name','desc ')->get();
+        else
         $exams =  Exam::orderBy('name','desc ')->get();
 
         $question->tags = $question->tags->pluck('id')->toArray();         
@@ -1103,6 +1120,10 @@ class QuestionController extends Controller
             $question = Question::where('id',$id)->first();
             $question->reference = strtoupper($request->reference);
             $question->question = $request->question;
+            $question->question_b = $request->question_b;
+            $question->question_c = $request->question_c;
+            $question->question_d = $request->question_d;
+            $question->passage = $request->passage;
             $question->a = $request->a;
             $question->b = $request->b;
             $question->c = $request->c;
@@ -1321,8 +1342,20 @@ class QuestionController extends Controller
     {
         $question = Question::where('id',$id)->first();
         $this->authorize('view', $question);
+        $question->tags();
+        $question->categories();
+        $question->sections();
         $question->delete();
         flash('Question Successfully deleted!')->success();
-        return redirect()->route('question.index',$project_slug);
+
+        if(request()->get('exam')){
+            $exam = Exam::where('id',request()->get('exam'))->first();
+        }
+
+        if(!request()->get('url'))
+            return redirect()->route('question.index',$project_slug);
+        else
+            return redirect()->route('exam.questions',[$exam->slug]);
+        
     }
 }

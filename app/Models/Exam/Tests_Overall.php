@@ -19,4 +19,8 @@ class Tests_Overall extends Model
         'code',
         'status'
     ];
+
+    public function user(){
+        return $this->belongsTo('PacketPrep\User');
+    }
 }

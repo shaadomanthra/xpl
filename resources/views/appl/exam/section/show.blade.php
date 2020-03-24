@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Section - '.$exam->name)
 @section('content')
 
 <nav aria-label="breadcrumb">

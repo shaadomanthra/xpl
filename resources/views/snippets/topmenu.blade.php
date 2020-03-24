@@ -56,10 +56,7 @@
                 </a>
                 
 
-            @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
-            <a class="dropdown-item"  href="{{ route('campus.admin') }}"></i> Campus Admin</a>
-            @endif 
-
+           
             @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
             <a class="dropdown-item"  href="{{ route('admin.index') }}"></i> Admin</a>
             @endif

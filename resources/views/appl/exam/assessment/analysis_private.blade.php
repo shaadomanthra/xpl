@@ -1,26 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.app-border')
 @section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' | Xplore')
 @section('content')
 
-@if($exam->slug != 'proficiency-test')
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('assessment.index') }}">Online Tests</a></li>
-    <li class="breadcrumb-item">{{ ucfirst($exam->name) }} </li>
-    <li class="breadcrumb-item">Analysis </li>
-  </ol>
-</nav>
-@else
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('proficiency_test') }}">Proficiency Test</a></li>
-    <li class="breadcrumb-item">Analysis </li>
-  </ol>
-</nav>
 
-@endif
+
 
 
 <div class="mb-md-2">
@@ -120,8 +103,9 @@
 		</div>
 		@endif
 
+		
 		@if(!$exam->solutions)
-		@if(isset($details['c']))
+		@if(isset($details['c'][0]['category']))
 			<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
 			<div class="card-body">
 				<h1> Concept Breakup</h1>

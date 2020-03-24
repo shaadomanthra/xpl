@@ -176,9 +176,7 @@ class AssessmentController extends Controller
      */
     public function instructions($test,Request $r)
     {
-        if(is_numeric($test))
-            $exam = Exam::where('id',$test)->first();
-        else{
+        
             $filename = $test.'.json';
             $filepath = $this->cache_path.$filename;
             
@@ -189,11 +187,14 @@ class AssessmentController extends Controller
             }else{
                 $exam = Exam::where('slug',$test)->first();
             }
-        }
+        
 
         $code = $r->get('code');
         $user = \auth::user();
+        if(isset($exam->product_ids))
         $products = $exam->product_ids;
+        else
+            $products = null;
         $product = null;
 
         $test_taken = Test::where('test_id',$exam->id)
@@ -262,7 +263,10 @@ class AssessmentController extends Controller
             abort('404','Test not found');
 
         $user = \auth::user();
+        if(isset($exam->product_ids))
         $products = $exam->product_ids;
+        else
+            $products = null;
         $code = $request->get('code');
 
         $test_taken = Test::where('test_id',$exam->id)
@@ -315,6 +319,9 @@ class AssessmentController extends Controller
         $question = new Question();
 
         $code_ques =[];
+        $passages = array();
+        $dynamic =array();
+        $section_questions = array();
         foreach($exam->sections as $section){
             $qset = $section->questions;
             shuffle($qset);
@@ -338,7 +345,10 @@ class AssessmentController extends Controller
                 else
                 $passages[$i] =null;
                 $sections[$i] = $section;
+                if($q->dynamic)
                 $dynamic[$i] = $q->dynamic;
+                else
+                    $dynamic[$i] =1;
                 $section_questions[$section->id][$k]= $q;
                 $i++;$k++;
                 if($q->type=='code'){
@@ -352,6 +362,9 @@ class AssessmentController extends Controller
         foreach($exam->sections as $section){
             $time = $time + $section->time;
         }
+
+        if(!count($questions))
+            abort(403,'No questions found');
 
         return view('appl.exam.assessment.blocks.test')
                         ->with('mathjax',true)
@@ -706,10 +719,12 @@ class AssessmentController extends Controller
                             ->first();
 
                 if($test){
+                    $details['code'] = $test->code;
                     $details['response'] = $test->response;
                     $details['accuracy'] = $test->accuracy;
                     $details['time'] = $test->time;
                 }else{
+                    $details['code'] = null;
                     $details['response'] = null;
                     $details['accuracy'] = null;
                     $details['time'] = null;
@@ -736,11 +751,14 @@ class AssessmentController extends Controller
 
                     $details['q'.$q->id] = null;
 
-                   
-
                 } 
 
-                return view('appl.exam.assessment.solutions')
+
+                if($exam->status==2)
+                    $view = 'solutions_private';
+                else
+                    $view = 'solutions';
+                return view('appl.exam.assessment.'.$view)
                         ->with('mathjax',true)
                         ->with('question',$question)
                         ->with('passage',$passage)
@@ -1032,6 +1050,8 @@ class AssessmentController extends Controller
             }
             
             $attempt = Test::where('test_id',$exam->id)->where('user_id',$user->id)->first();
+            if($attempt)
+            $entry = 1;
         }
 
         //dd($exam->product_ids);
@@ -1244,7 +1264,7 @@ class AssessmentController extends Controller
             $details['unattempted_time'] = $details['unattempted_time'].' sec';   
             
         
-        //dd($sections);
+       
 
         return view('appl.exam.assessment.analysis')
                         ->with('exam',$exam)
@@ -1278,13 +1298,18 @@ class AssessmentController extends Controller
             $student = \auth::user();
 
         
-        $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0];
+        $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0,'evaluation'=>1];
         $details['course'] = $exam->name;
         $sum = 0;
         $c=0; $i=0; $u=0;
 
         $tests = Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
+
+        $evaluation = Test::where('test_id',$exam->id)
+                        ->where('user_id',$student->id)->where('status',2)->get();
+        if(count($evaluation))
+            $details['evaluation'] = 0;
 
         $tests_section = Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
         $secs = $tests_section->groupBy('section_id');
@@ -1374,10 +1399,15 @@ class AssessmentController extends Controller
         else 
             $details['unattempted_time'] = $details['unattempted_time'].' sec';   
             
-        
+
         //dd($sections);
 
-        return view('appl.exam.assessment.analysis')
+        if($exam->status==2)
+            $view = "analysis_private";
+        else
+            $view = "analysis";
+
+        return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
                         ->with('sections',$sections)
                         ->with('details',$details)

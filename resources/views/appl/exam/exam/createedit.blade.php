@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Create/Edit - '.$exam->name)
 @section('content')
 
 @include('flash::message')
@@ -17,9 +18,12 @@
       @else
       <form method="post" action="{{route('exam.update',$exam->slug)}}" enctype="multipart/form-data">
       @endif  
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Exam Name</label>
-        <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the Exam Name" 
+
+      <div class='row'>
+        <div class="col-12 col-md-8">
+          <div class="form-group">
+        <label for="formGroupExampleInput ">Test Name</label>
+        <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the Test Name" 
             @if($stub=='Create')
             value="{{ (old('name')) ? old('name') : '' }}"
             @else
@@ -28,53 +32,69 @@
           >
        
       </div>
-      <div class="form-group">
-        <label for="formGroupExampleInput2">Exam Slug</label>
-        <input type="text" class="form-control" name="slug" id="formGroupExampleInput2" placeholder="Unique Identifier"
-            @if($stub=='Create')
-            value="{{ (old('slug')) ? old('slug') : '' }}"
-            @else
-            value = "{{ $exam->slug }}"
-            @endif
-          >
+        </div>
+        
+        <div class="col-12 col-md-4">
 
-        @if($stub=='Update')
+          <div class="form-group">
+        <label for="formGroupExampleInput ">Testtype</label>
+        <select class="form-control" name="examtype_id">
+          @foreach($examtypes as $et)
+          <option value="{{ $et->id }}"  @if($exam->examtype_id== $et->id) selected @else @if($stub!='Update' && $et->slug=='general') selected @endif @endif  >{{ $et->name }}</option>
+          @endforeach
+        </select>
+      </div>
+
+      @if($stub=='Update')
         <input type="hidden" name="_method" value="PUT">
         @endif
 
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
+        <input type="hidden" name="course_id" value="">
+         <input type="hidden" class="form-control" name="slug" id="formGroupExampleInput2" placeholder="Unique Identifier"
+            @if($stub=='Create')
+            value="{{ (old('slug')) ? old('slug') : $slug }}"
+            @else
+            value = "{{ $exam->slug }}"
+            @endif
+          >
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+        </div>
       </div>
+
+      <div class='row'>
+        <div class="col-12 col-md-4">
+
+        </div>
+        <div class="col-12 col-md-4">
+
+        </div>
+        <div class="col-12 col-md-4">
+
+        </div>
+      </div>
+
+      
+      
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Access Code</label>
-        <input type="text" class="form-control" name="code" id="formGroupExampleInput" placeholder="Enter the Access Code" 
+        
+        <input type="text" class="form-control" name="code" id="formGroupExampleInput" placeholder="" 
             @if($stub=='Create')
             value="{{ (old('code')) ? old('code') : '' }}"
             @else
             value = "{{ $exam->code }}"
             @endif
           >
+          <small class="text-secondary">User has to enter the following code to write the exam. You can add multiple access code seperated by commas.</small>
        
       </div>
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Examtype</label>
-        <select class="form-control" name="examtype_id">
-          @foreach($examtypes as $et)
-          <option value="{{ $et->id }}"  @if($exam->examtype_id== $et->id) selected @endif  >{{ $et->name }}</option>
-          @endforeach
-        </select>
-      </div>
+      
 
-      <div class="form-group">
-        <label for="formGroupExampleInput ">Course</label>
-        <select class="form-control" name="course_id">
-          <option value="">None</option>
-          @foreach($courses as $c)
-          <option value="{{ $c->id }}"  @if($exam->course_id== $c->id) selected @endif  >{{ $c->name }}</option>
-          @endforeach
-        </select>
-      </div>
+      
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Description</label>
@@ -99,7 +119,7 @@
       </div>
       
       <div class="form-group">
-        <label for="formGroupExampleInput ">Image</label>
+        <label for="formGroupExampleInput ">Logo</label>
         <input type="file" class="form-control" name="file_" id="formGroupExampleInput" placeholder="Enter the image path" 
           >
       </div>
@@ -117,8 +137,8 @@
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
           <option value="0" @if(isset($exam)) @if($exam->status==0) selected @endif @endif >Draft</option>
-          <option value="1" @if(isset($exam)) @if($exam->status==1) selected @endif @endif >Published</option>
-          <option value="2" @if(isset($exam)) @if($exam->status==2) selected @endif @endif >Premium</option>
+          <option value="1" @if(isset($exam)) @if($exam->status==1) selected @endif @endif >Free Access</option>
+          <option value="2" @if(isset($exam)) @if($exam->status==2) selected @endif @endif >Private</option>
         </select>
       </div>
 

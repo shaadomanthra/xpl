@@ -1,4 +1,4 @@
-@extends('layouts.headscript')
+@extends('layouts.headnew')
 @section('content-main')
 <div class="wrapper-bg">
     <div class="nav-bg p-1 bg1" ></div>    

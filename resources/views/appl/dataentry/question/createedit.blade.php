@@ -2,7 +2,7 @@
 @section('title', 'Create/Edit Questions | PacketPrep')
 @section('content')
 
-@include('appl.dataentry.snippets.breadcrumbs')
+
 @include('flash::message')
   <div class="card">
     <div class="card-body">
@@ -29,10 +29,16 @@
           @endif
       </button>
 
+      @if($stub!='Create')
+        <a href="#" data-toggle="modal" data-target="#exampleModal" class='btn btn-sm btn-outline-danger float-right mr-3'>
+      <i class="fa fa-trash" data-tooltip="tooltip" data-placement="top" title="Delete"></i> Delete
+      </a>
+      @endif
+
        </h1>
 
       <div class="form-group mt-3">
-          <label for="formGroupExampleInput ">Reference</label>
+          <label for="formGroupExampleInput ">Reference </label>
           <input type="text" class="form-control" name="reference" id="formGroupExampleInput" placeholder="Enter the Reference" 
               @if($stub=='Create')
               value="{{ (old('reference')) ? old('reference') : '' }}"
@@ -85,24 +91,29 @@
         <a class="nav-link" id="explanation-tab" data-toggle="tab" href="#explanation" role="tab" aria-controls="explanation" aria-selected="false">Expl</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="dynamic-tab" data-toggle="tab" href="#dynamic" role="tab" aria-controls="dynamic" aria-selected="false">Dyn</a>
-      </li>
-       <li class="nav-item">
         <a class="nav-link" id="passage-tab" data-toggle="tab" href="#passage" role="tab" aria-controls="passage" aria-selected="false">Passage</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" id="tag-tab" data-toggle="tab" href="#exam" role="tab" aria-controls="exam" aria-selected="false">Exam</a>
+      </li>
+      @if(!request()->get('default'))
+
+      <li class="nav-item">
+        <a class="nav-link" id="dynamic-tab" data-toggle="tab" href="#dynamic" role="tab" aria-controls="dynamic" aria-selected="false">Dyn</a>
+      </li>
+       
        <li class="nav-item">
         <a class="nav-link" id="category-tab" data-toggle="tab" href="#category" role="tab" aria-controls="category" aria-selected="false">Category</a>
       </li>
        <li class="nav-item">
         <a class="nav-link" id="tag-tab" data-toggle="tab" href="#tag" role="tab" aria-controls="tag" aria-selected="false">Tag</a>
       </li>
+      
       <li class="nav-item">
-        <a class="nav-link" id="tag-tab" data-toggle="tab" href="#exam" role="tab" aria-controls="exam" aria-selected="false">Exam</a>
-      </li>
-
-       <li class="nav-item">
         <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">Details</a>
       </li>
+      @endif
+       
     </ul>
 
     <div class="tab-content" id="myTabContent">
@@ -232,7 +243,16 @@
 
       <div class="tab-pane fade" id="passage" role="tabpanel" aria-labelledby="passage-tab">
 
-        @include('appl.dataentry.snippets.passage_attach')
+       <div class="form-group mt-3">
+        <label for="formGroupExampleInput2">Passage</label>
+         <textarea class="form-control summernote" name="passage"  rows="5">
+            @if($stub=='Create')
+            {{ (old('passage')) ? old('passage') : '' }}
+            @else
+            {{ $question->passage }}
+            @endif
+        </textarea>
+      </div>
        
       </div>
       <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">
@@ -240,6 +260,7 @@
           <div class="card mb-3 bg-light border">
             <div class="card-body">Category</div>
           </div>
+        @if(request()->get('default'))
          @if($categories)
           <div class="dd">
           {!! $categories !!}
@@ -249,6 +270,9 @@
           No Categories listed
         </div>
           @endif
+        @else
+          <input type="hidden" name="categories[]" value="@if($_SERVER['SERVER_NAME']=='xp.test') 1118 @else 1215 @endif">
+        @endif
         </div>
       </div>
       <div class="tab-pane fade" id="tag" role="tabpanel" aria-labelledby="tag-tab">
@@ -358,6 +382,10 @@
         <input type="hidden" name="_method" value="PUT">
         @endif
 
+        @if(request()->get('exam'))
+        <input type="hidden" name="exam" value="{{ request()->get('exam') }}">
+        @endif
+
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="project_id" value="{{ $project->id }}">
         <input type="hidden" name="url" value=" {{ request()->get('url') }}">
@@ -372,4 +400,32 @@
     </form>
     </div>
   </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3 ><span class="badge badge-danger">Serious Warning !</span></h3>
+        
+        This following action will delete the question data and this is permanent action and this cannot be reversed.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <form method="post" action="{{route('question.destroy',['project'=>$project->slug,'question'=>$question->id,'url'=>request()->get('url')])}}">
+        <input type="hidden" name="exam" value="{{request()->get('exam')}}">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-danger">Delete Permanently</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection

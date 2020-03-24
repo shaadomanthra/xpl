@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-border')
 @section('title', $exam->name.' | Xplore')
 @section('description', substr(strip_tags($exam->description),0,200))
 @section('content')
@@ -6,32 +6,35 @@
 <div class="mb-md-5 mb-2 mt-3">
 
 
-		@if(file_exists('img/'.$exam->slug.'.jpg'))
-	<img src="{{'/img/'.$exam->slug.'.jpg'}}" class="w-100"/>
-	@else
+		
+
+	<div class=" border p-3 bg-white rounded" style="min-height:300px;">
+		<div class="row">
+			<div class="col-12 col-md-2 mt-3 ml-3">
+
 
 	 @if(isset($exam->image))
-      @if(Storage::disk('public')->exists($exam->image))
-      <picture>
-		  <img 
-		      src="{{ asset('/storage/articles/'.$exam->slug.'.png') }} " class="w-100 d-print-none" alt="{{  $exam->name }}">
-		</picture>
-      @endif
-      @endif
-	@endif
-
-	<div class=" border p-3 bg-white rounded">
-		<div class="row">
-			<div class="col-12 col-md-2 ">
-				<i class="fa fa-newspaper-o fa-5x p-3 d-none d-md-block" aria-hidden="true"></i>
+	      @if(Storage::disk('public')->exists($exam->image))
+	      <picture>
+			  <img 
+      src="{{ asset('/storage/'.$exam->image) }} " class="w-100 d-print-none" alt="{{  $exam->name }}" style='max-width:200px;'>
+			</picture>
+	      @endif
+	  @else
+	  <i class="fa fa-newspaper-o fa-5x p-3 d-none d-md-block" aria-hidden="true"></i>
 				<i class="fa fa-newspaper-o  fa-2x d-inline d-md-none" aria-hidden="true"></i>
+
+      @endif
+
+
+				
 			</div>
 			<div class="col-12 col-md-8">
 				<h1 class="mt-3">
 					
 					{{ $exam->name }} @if($exam->status ==2)
-					<span class="badge badge-primary ">
-					<i class="fa fa-lock" aria-hidden="true"></i>  PREMIUM
+					<span class="badge badge-warning ">
+					<i class="fa fa-lock" aria-hidden="true"></i>  PRIVATE
 				</span>
 					@else
 					<span class="badge badge-warning ">
@@ -64,6 +67,7 @@
 					<button class="btn btn-lg btn-success"> Attempt Test </button>
 					</a>
 					@else
+
 					@if($product)
 					<a href="{{route('productpage',$product->slug)}}">
 						<button class="btn btn-lg btn-success"> Buy Now </button>
@@ -83,7 +87,7 @@
 			       <a href="#" data-toggle="modal" data-target="#myModal2">
 			       @endauth
 
-				<button class="btn btn-lg btn-outline-warning"> Access Code </button>
+				<button class="btn btn-lg btn-outline-primary"> Access Code </button>
 				</a>
 				@endif
 
@@ -92,7 +96,7 @@
                   <button class="btn btn-lg btn-success"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
                   </a>
 				@endif
-
+<!--
 				@if(\auth::user())
 				@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','tpo']))
 				<hr>
@@ -133,7 +137,7 @@
 			</div>
 
 		</div>
-		
+		-->
 		
 		
 		

@@ -4,8 +4,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin')}}">Admin</a></li>
-    <li class="breadcrumb-item">Exams</li>
+    <li class="breadcrumb-item">Tests</li>
   </ol>
 </nav>
 
@@ -17,7 +16,7 @@
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-inbox"></i> Exams </a>
+          <a class="navbar-brand"><i class="fa fa-inbox"></i> Tests </a>
 
           
           <form class="form-inline" method="GET" action="{{ route('exam.index') }}">
@@ -25,7 +24,7 @@
               <button type="button" class="btn btn-secondary my-2 my-sm-2 mr-sm-3">Refresh Cache</button>
             </a>
             <a href="{{route('examtype.index')}}">
-              <button type="button" class="btn btn-outline-primary my-2 my-sm-2 mr-sm-3">Examtpyes</button>
+              <button type="button" class="btn btn-outline-primary my-2 my-sm-2 mr-sm-3">Testtypes</button>
             </a>
             @can('create',$exam)
             <a href="{{route('exam.create')}}">

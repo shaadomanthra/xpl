@@ -1,11 +1,11 @@
 @extends('layouts.app')
+@section('title', 'Test - '.$exam->name)
 @section('content')
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-     <li class="breadcrumb-item"><a href="{{ url('/admin')}}">Admin</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Exams</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
     <li class="breadcrumb-item">{{ $exam->name}}</li>
   </ol>
 </nav>
@@ -26,34 +26,37 @@
             </span>
             @endcan
           </p>
+          <div>URL : <a href="{{route('assessment.show',$exam->slug)}}">{{route('assessment.show',$exam->slug)}}</a></div>
         </div>
       </div>
 
-       @if(isset($exam->image))
+       
+     
+      <div class="card mb-4" style="margin-top: -5px">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-md-4">Logo</div>
+            <div class="col-md-8">
+              @if(isset($exam->image))
       @if(Storage::disk('public')->exists($exam->image))
-      
-      <picture>
-  
+      <div class="mb-3">
+      <picture class="">
   <img 
-      src="{{ asset('/storage/articles/'.$exam->slug.'.png') }} " class="w-100 d-print-none" alt="{{  $exam->name }}">
+      src="{{ asset('/storage/'.$exam->image) }} " class="d-print-none" alt="{{  $exam->name }}" style='max-width:200px;'>
 </picture>
+</div>
 
       @endif
       @endif
-     
-      <div class="card mb-4">
-        <div class="card-body">
-          <div class="row mb-2">
-            <div class="col-md-4">Exam slug</div>
-            <div class="col-md-8">
-              {{ $exam->slug}}
             </div>
           </div>
 
           <div class="row mb-2">
             <div class="col-md-4">Access Code</div>
             <div class="col-md-8">
-              {{ $exam->code}}
+              @foreach(explode(',',$exam->code) as $code)
+              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}">{{ $code}}</a> &nbsp;
+              @endforeach
             </div>
           </div>
 
@@ -66,9 +69,9 @@
 
           @if(isset($exam->examtype->name))
           <div class="row mb-2">
-            <div class="col-md-4">Examtype</div>
+            <div class="col-md-4">Testtype</div>
             <div class="col-md-8">
-              {{ $exam->examtype->name }}
+              <span class="badge badge-secondary">{{ $exam->examtype->name }}</span>
             </div>
           </div>
             @endif
@@ -120,9 +123,9 @@
               @if($exam->status==0)
                 <span class="badge badge-warning">Draft</span>
               @elseif($exam->status==1)
-                <span class="badge badge-success">Published</span>
+                <span class="badge badge-success">Free Access</span>
               @else
-                <span class="badge badge-primary">Premium</span>
+                <span class="badge badge-primary">Private</span>
               @endif
             </div>
           </div>

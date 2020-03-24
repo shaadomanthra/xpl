@@ -81,6 +81,11 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/test/{test}/analytics', 'College\CampusController@test_analytics')
 			->name('test.analytics')->middleware('auth');
+	Route::get('/test/{test}/report', 'Exam\ExamController@analytics')
+			->name('test.report')->middleware('auth');
+	Route::get('/test/{test}/accesscode', 'Exam\ExamController@accesscode')
+			->name('test.accesscode')->middleware('auth');
+
 	Route::get('/campus/tests/{test}/{student}', 'College\CampusController@test_student')
 			->name('campus.tests.student.show')->middleware('auth');
 
@@ -379,6 +384,11 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::post('exam/createexam','Exam\ExamController@storeExam')->middleware('auth')->name('exam.save');
 	Route::get('exam/{exam}/question/{id}','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.question');
 
+	Route::get('exam/{exam}/passage','Dataentry\PassageController@exam')->middleware('auth')->name('exam.passages');
+	Route::get('exam/{exam}/passage/{id}','Dataentry\PassageController@exam')->middleware('auth')->name('exam.passage');
+
+
+
 	Route::get('certificate/brandpromoter/{user}','User\UserController@certificate')->name('certificate.brandpromoter');
 	Route::get('certificate/{exam}/{user}','Exam\AssessmentController@certificate')->name('certificate');
 
@@ -390,8 +400,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis2')->name('assessment.analysis')->middleware('auth');
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
 	Route::get('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q')->middleware('auth');
-	Route::get('test/{test}','Exam\AssessmentController@try2')->middleware('auth')->name('assessment.try');
-	Route::get('test/{test}/details','Exam\AssessmentController@show')->name('assessment.show');
+	Route::get('test/{test}/try','Exam\AssessmentController@try2')->middleware('auth')->name('assessment.try');
+	Route::get('test/{test}','Exam\AssessmentController@show')->name('assessment.show');
+	Route::get('test/{test}/details','Exam\AssessmentController@show')->name('assessment.details');
 	Route::get('test/{test}/access','Exam\AssessmentController@access')->name('assessment.access')->middleware('auth');
 	Route::get('test/{test}/instructions','Exam\AssessmentController@instructions')->middleware('auth')->name('assessment.instructions');
 

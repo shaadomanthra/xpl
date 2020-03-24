@@ -5,7 +5,7 @@
             <thead>
               <tr>
                 <th scope="col">#({{$exams->total()}})</th>
-                <th scope="col">Exam </th>
+                <th scope="col">Test </th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
               </tr>
@@ -23,9 +23,9 @@
                   @if($exam->status==0)
                 <span class="badge badge-warning">Draft</span>
                 @elseif($exam->status==1)
-                  <span class="badge badge-success">Published</span>
+                  <span class="badge badge-success">Free Access</span>
                 @else
-                  <span class="badge badge-primary">Premium</span>
+                  <span class="badge badge-primary">Private</span>
                 @endif
                 </td>
                 <td>{{ ($exam->created_at) ? $exam->created_at->diffForHumans() : '' }}</td>

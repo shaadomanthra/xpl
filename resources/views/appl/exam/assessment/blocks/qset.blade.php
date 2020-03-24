@@ -22,6 +22,7 @@
 				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
 				@endif
 				<div class="row no-gutters ">
+				@if(isset($section_questions[$section->id]))
 				@foreach($section_questions[$section->id] as $key=> $q)
 					<div class="col-3 mb-1">
 						<div class="pr-1">
@@ -30,6 +31,7 @@
 						</div>
 					</div>
 				@endforeach
+				@endif
 				</div>
 			@endforeach
 		</div>

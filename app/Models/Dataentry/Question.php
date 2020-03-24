@@ -35,7 +35,8 @@ class Question extends Model
         'topic',
         'question_b',
         'question_c',
-        'question_d'
+        'question_d',
+        'passage'
         // add all other fields
     ];
 

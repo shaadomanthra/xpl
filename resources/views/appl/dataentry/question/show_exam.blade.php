@@ -55,6 +55,15 @@
           </div>
         </div>
       </div>
+      @elseif($question->passage)
+      <div class="card mb-3">
+        <div class="card-body">
+          <b>Passage</b> <span class="btn view badge badge-warning" data-item="passage">view</span><br>
+          <div class="passage" style="display: none;">
+          {!! $question->passage !!}
+          </div>
+        </div>
+      </div>
       @endif
       <div class="card  mb-3">
         <div class="card-body ">
@@ -63,31 +72,42 @@
         	<div class="col-2 col-md-2">
         		<div class="pr-3 pb-2 " >
         			<div class="text-center p-1 rounded  w100 qyellow"  style="">
-        				{{ $details['qno'] }}
+        				{{ $details['qno'] }} <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-edit"></i></a>
         			</div>
         		</div>
         	</div>
         	<div class="col-10 col-md-10">
-            <div class="pt-1 question">{!! $question->question!!}</div>
-            <span class='badge badge-warning'>version 1</span>
-            @if(strip_tags(trim($question->question_b)))
-            <hr>
-            <div class="pt-1 ">{!! $question->question_b!!}</div>
-            <span class='badge badge-warning'>version 2</span>
-            @endif
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="qu_1" data-toggle="tab" href="#q_1" role="tab" aria-controls="question" aria-selected="true">Question</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="qu_2" data-toggle="tab" href="#q_2" role="tab" aria-controls="exams" aria-selected="false">Version 2</a>
+        
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="qu_3" data-toggle="tab" href="#q_3" role="tab" aria-controls="a" aria-selected="false">Version 3</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="qu_4" data-toggle="tab" href="#q_4" role="tab" aria-controls="a" aria-selected="false">Version 4</a>
+      </li>
+      </ul>
 
-            @if(strip_tags(trim($question->question_c)))
-            <hr>
-            <div class="pt-1 ">{!! $question->question_c!!}</div>
-            <span class='badge badge-warning'>version 3</span>
-            @endif
+      <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="q_1" role="tabpanel" aria-labelledby="q_1">
+        <div class="pt-1 border p-3 mt-2">{!! $question->question!!}</div>
+      </div>
+      <div class="tab-pane" id="q_2" role="tabpanel" aria-labelledby="q_2">
+        <div class="pt-1 mt-2 border p-3">@if($question->question_b) {!! $question->question_b!!} @else - @endif</div>
+      </div>
 
-            @if(strip_tags(trim($question->question_d)))
-            <hr>
-            <div class="pt-1 ">{!! $question->question_d!!}</div>
-            <span class='badge badge-warning mb-3'>version 4</span>
-           
-            @endif
+      <div class="tab-pane" id="q_3" role="tabpanel" aria-labelledby="q_3">
+        <div class="pt-1 mt-2 border p-3">@if($question->question_c) {!! $question->question_c!!} @else - @endif</div>
+      </div>
+      <div class="tab-pane" id="q_4" role="tabpanel" aria-labelledby="q_4">
+        <div class="pt-1 mt-2 border p-3">@if($question->question_d) {!! $question->question_d!!} @else - @endif</div>
+      </div>
+      </div>
 
           @if(count($question->tags)!=0)
       @foreach($question->tags as $k => $tag)
@@ -103,7 +123,7 @@
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 border rounded bg-light w100  " >
-                 A </div>
+                @if($question->type=='code') Input @else A @endif</div>
         		</div>
         	</div>
         	<div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->a!!}</div></div>
@@ -115,7 +135,7 @@
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 border rounded bg-light w100 " >
-                 B</div>
+                 @if($question->type=='code') Language @else B @endif</div>
         		</div>
         	</div>
         	<div class="col-9 col-md-10"><div class="pt-1 b">{!! $question->b!!}</div></div>
@@ -127,10 +147,17 @@
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 border rounded bg-light w100 " >
-               C</div>
+               @if($question->type=='code') Preset Code @else C @endif</div>
         		</div>
         	</div>
-        	<div class="col-9 col-md-10"><div class="pt-1 c">{!! $question->c!!}</div></div>
+        	<div class="col-9 col-md-10"><div class="pt-1 c">
+           @if($question->type=='code')
+            <pre class="p-3"><code class="text-light ">{!! htmlentities($question->c) !!}
+          </code></pre>
+            @else
+            {!! $question->c!!}
+            @endif 
+          </div></div>
         </div>
         @endif
         
@@ -167,7 +194,7 @@
 
       <div class="card mb-3 ">
       	<div class="card-body">
-      		<h3>Answer</h3>
+      		<h3>@if($question->type=='code') Output @else Answer @endif</h3>
       		<div class="answer">{!! $question->answer !!}</div>
       	</div>
       </div>

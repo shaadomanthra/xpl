@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Dataentry\Project;
+use PacketPrep\Models\Dataentry\Question;
+use PacketPrep\Models\Exam\Exam;
 
 class PassageController extends Controller
 {
@@ -24,6 +26,10 @@ class PassageController extends Controller
         if(request()->route('project')){
             $this->project = Project::get(request()->route('project'));
         } 
+
+        if(request()->get('default')){
+            $this->project = Project::where('slug','default')->first();
+        }
 
     }
 
@@ -79,6 +85,8 @@ class PassageController extends Controller
     public function create(Passage $passage)
     {
         $this->authorize('create', $passage);
+
+
         return view('appl.dataentry.passage.createedit')
                 ->with('editor',true)
                 ->with('project',$this->project)->with('stub','Create');
@@ -94,6 +102,9 @@ class PassageController extends Controller
     {
         try{
 
+
+            if($request->get('exam'))
+            $exam = Exam::where('slug',$request->get('exam'))->first();
             $passage_exists = Passage::where('name',$request->name)
                             ->where('passage',$request->passage)
                             ->where('project_id',$request->project_id)
@@ -108,7 +119,13 @@ class PassageController extends Controller
             $request->merge(['passage'=>$passage_content]);
             $passage = Passage::create($request->all());
             flash('A new passage ('.$request->name.') is created!')->success();
-            return redirect()->route('passage.index',$this->project->slug);
+            
+
+            if(!request()->get('url'))
+                return redirect()->route('passage.index',$this->project->slug);
+            else
+                return redirect()->route('exam.passage',[$exam->slug,$passage->id]);
+
         }
         catch (QueryException $e){
            flash('There is some error in storing the data...kindly retry.')->error();
@@ -134,6 +151,8 @@ class PassageController extends Controller
         else
             abort(404);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

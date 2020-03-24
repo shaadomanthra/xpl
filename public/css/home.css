@@ -268,7 +268,7 @@ p.article{line-height: 1.6em;}
 
 
 .bg1{
-    background: rgb(35, 111, 177);
+    background: #e8e8e8;
 }  
 
 .bg3{background:linear-gradient(to top, rgba(22, 160, 133,0.0), rgb(35, 111, 177)); height:100%}

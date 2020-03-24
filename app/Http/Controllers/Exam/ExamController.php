@@ -5,12 +5,17 @@ namespace PacketPrep\Http\Controllers\Exam;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\User;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Examtype;
+use PacketPrep\Models\Exam\Tests_Overall;
+use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Question;
 use Illuminate\Support\Facades\Storage;
+use PacketPrep\Exports\TestReport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ExamController extends Controller
 {
@@ -72,6 +77,13 @@ class ExamController extends Controller
         $examtypes = Examtype::all();
         $courses = Course::all();
         $this->authorize('create', $exam);
+        $slug = rand(10000,100000);
+
+        $e = Exam::where('slug',$slug)->first();
+
+        if($e){
+            $slug = rand(10000,100000);
+        }
 
 
         return view('appl.exam.exam.createedit')
@@ -79,6 +91,7 @@ class ExamController extends Controller
                 ->with('jqueryui',true)
                 ->with('editor',true)
                 ->with('exam',$exam)
+                ->with('slug',$slug)
                 ->with('courses',$courses)
                 ->with('examtypes',$examtypes);
     }
@@ -421,6 +434,66 @@ class ExamController extends Controller
 
         if($exam)
             return view('appl.exam.exam.show')
+                    ->with('exam',$exam);
+        else
+            abort(404);
+    }
+
+    public function accesscode($id,Request $r){
+        $exam= Exam::where('slug',$id)->first();
+        
+        $codes = explode(',',$exam->code);
+        $user=array();
+        foreach($codes as $k=>$code){
+            $users[$k] = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->count();
+        }
+        
+
+
+        if($exam)
+            return view('appl.exam.exam.reports')
+                    ->with('codes',$codes)
+                    ->with('user',$users)
+                    ->with('exam',$exam);
+        else
+            abort(404);
+    }
+
+    public function analytics($id,Request $r)
+    {
+        $exam= Exam::where('slug',$id)->first();
+        $code = $r->get('code');
+        if($code){
+            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->orderby('score','desc')->get();
+            $users = $result->pluck('user_id');
+            $exam_sections = Section::where('exam_id',$exam->id)->get();
+            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+
+        }else{
+            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+            $users = $result->pluck('user_id');
+            $exam_sections = Section::where('exam_id',$exam->id)->get();
+            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+        }
+
+        
+
+        if(request()->get('export')){
+            $u = User::whereIn('id',$users)->get();
+            request()->session()->put('result',$result);
+            request()->session()->put('sections',$sections);
+            request()->session()->put('exam_sections',$exam_sections);
+            request()->session()->put('users',$u);
+            $name = "Report_".$exam->name.".xlsx";
+            return Excel::download(new TestReport, $name);
+        }
+
+
+        if($exam)
+            return view('appl.exam.exam.analytics')
+                    ->with('report',$result)
+                    ->with('exam_sections',$exam_sections)
+                    ->with('sections',$sections)
                     ->with('exam',$exam);
         else
             abort(404);

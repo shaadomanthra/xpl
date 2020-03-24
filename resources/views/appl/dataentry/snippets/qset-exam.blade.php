@@ -32,7 +32,19 @@
 
 			
 			@foreach($exam->sections as $section)
-				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
+				<div class="mb-1 pb-2 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}  &nbsp;&nbsp;
+<div class="btn-group float-right " role="group" aria-label="Button group with nested dropdown float-right">
+
+  <div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-danger float-right dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Add
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+      <a class="dropdown-item" href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">MCQ Question</a>
+      <a class="dropdown-item" href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Code Question</a>
+    </div>
+  </div>
+</div></div></div>
 				<div class="row no-gutters">
 
 				@foreach($section->questions as $k=> $q)
@@ -52,3 +64,4 @@
 		</div>
 	</div>
 </div>
+

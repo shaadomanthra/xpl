@@ -1,3 +1,4 @@
+
 <div class="form-group mt-3">
   @if(isset($exams))
   @if(count($exams)!=0)
@@ -25,6 +26,10 @@
                   checked
                   @endif
                 @endif
+
+                @if(request()->get('section')==$section->id)
+                  checked
+                @endif
               
             > 
             {{ $section->name}}
@@ -38,6 +43,9 @@
                   @endif
                 @endif
               
+                @if(request()->get('section')==$section->id)
+                  checked
+                @endif
             > 
             {{$section->name }}
             @endif

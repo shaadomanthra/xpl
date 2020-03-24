@@ -14,12 +14,12 @@
       <form method="post" action="{{route('exam.save')}}" >
       @endif  
       <div class="form-group">
-        <label for="formGroupExampleInput ">Exam Name</label>
-        <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the Exam Name" value="{{ (old('name')) ? old('name') : 'Cocubes Aptitude Practice Test #' }}" >
+        <label for="formGroupExampleInput ">Test Name</label>
+        <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the Test Name" value="{{ (old('name')) ? old('name') : 'Cocubes Aptitude Practice Test #' }}" >
        
       </div>
       <div class="form-group">
-        <label for="formGroupExampleInput2">Exam Slug</label>
+        <label for="formGroupExampleInput2">Test Slug</label>
         <input type="text" class="form-control" name="slug" id="formGroupExampleInput2" placeholder="Unique Identifier" value="{{ (old('slug')) ? old('slug') : 'cocubes-aptitude-' }}" >
 
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
