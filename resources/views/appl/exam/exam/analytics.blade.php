@@ -51,7 +51,7 @@
               <tr>
                 <th scope="row">{{$key+1 }}</th>
                 <td>
-                  {{ $r->user->name }}
+                  <a href="{{route('profile','@'.$r->user->username)}}">{{ $r->user->name }}</a>
                   
                 </td>
                 @foreach($sections[$r->user->id] as $s)
