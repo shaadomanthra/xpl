@@ -6,7 +6,7 @@
   <nav aria-label="breadcrumb ">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('exam.index')}}">Exam</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('exam.index')}}">Tests</a></li>
       <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug)}}">{{ $exam->name }}</a></li>
       <li class="breadcrumb-item"> Questions</li>
       <li class="breadcrumb-item">Create</li>

@@ -5,8 +5,8 @@
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
     
-    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Exams</a></li>
-    <li class="breadcrumb-item">Examtypes</li>
+    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
+    <li class="breadcrumb-item">Testtypes</li>
   </ol>
 </nav>
 

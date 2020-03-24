@@ -30,7 +30,7 @@
         </div>
         @else
         <div class="card card-body bg-light">
-          No Exams listed
+          No Tests listed
         </div>
         @endif
         <nav aria-label="Page navigation  " class="card-nav @if($examtypes->total() > config('global.no_of_records'))mt-3 @endif">

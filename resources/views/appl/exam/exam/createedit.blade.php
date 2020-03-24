@@ -7,9 +7,9 @@
     <div class="card-body">
       <h1 class="p-3 border bg-light mb-3">
         @if($stub=='Create')
-          Create Exam
+          Create Test
         @else
-          Update Exam
+          Update Test
         @endif  
        </h1>
       

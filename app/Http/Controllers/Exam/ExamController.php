@@ -59,7 +59,11 @@ class ExamController extends Controller
             flash('Exams Cache Updated')->success();
         }
 
-        $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));   
+        if(\auth::user()->isAdmin())
+        $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+        else  
+        $exams = $exam->where('user_id',\auth::user()->id)->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records')); 
+
         $view = $search ? 'list': 'index';
 
         return view('appl.exam.exam.'.$view)

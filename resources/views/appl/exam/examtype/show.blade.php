@@ -4,8 +4,8 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Exams</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('examtype.index') }}">Examtypes</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('examtype.index') }}">Testtypes</a></li>
     <li class="breadcrumb-item">{{ $examtype->name}}</li>
   </ol>
 </nav>

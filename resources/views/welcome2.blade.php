@@ -106,6 +106,12 @@
   </div>
 </div>
 
+@if(\auth::user()->checkRole(['administrator','hr-manager']))
+<div class="rounded table-responsive bg-white mb-3 p-3 border">
+<h3 class="mb-3">Create Custom tests </h3>
+<a href="{{ route('exam.index')}}" class="btn btn-sm btn-primary">Tests Dashboard</a>
+</div>
+@endif
 
   @if(count(auth::user()->products)!=0)
   <div class="rounded table-responsive bg-white">
