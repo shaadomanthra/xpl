@@ -45,7 +45,10 @@
                 <th scope="col">{{$sec->name}}</th>
                 @endforeach
                 <th scope="col">Score</th>
-                <th scope="col">Report</th>
+                <th scope="col">View</th>
+                @if(\auth::user()->isAdmin())
+                <th scope="col">Delete</th>
+                @endif
               </tr>
             </thead>
             <tbody>
@@ -53,7 +56,7 @@
               <tr>
                 <th scope="row">{{$key+1 }}</th>
                 <td>
-                  <a href="{{route('profile','@'.$r->user->username)}}">{{ $r->user->name }}</a>
+                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}">{{ $r->user->name }}</a>
                   
                 </td>
                 @foreach($sections[$r->user->id] as $s)
@@ -70,10 +73,28 @@
                 </td>
                 <td>
                   @if(!$r->status)
-                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}" class="btn btn-sm btn-success"> Report</a>
-                  <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" class="btn btn-sm btn-primary"> responses</a>
+                  <a href="{{route('profile','@'.$r->user->username)}}"  class="btn btn-sm btn-success mb-1">
+                    Profile
+                  </a>
+                  <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" class="btn btn-sm btn-primary mb-1"> responses</a>
+
+                  
+                  
+                  @else
+                  -
                   @endif
                 </td>
+                @if(\auth::user()->isAdmin())
+                <td>
+              <form method="post" action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="user_id" value="{{ $r->user->id }}">
+                <input type="hidden" name="test_id" value="{{ $exam->id }}">
+                <button class="btn btn-sm btn-danger mb-1" type="submit">delete</button>
+
+              </form>
+            </td>
+            @endif
               </tr>
               @endforeach      
             </tbody>

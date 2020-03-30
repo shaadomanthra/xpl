@@ -156,6 +156,7 @@
         </div>
       </div>
 
+@if($exam->getUserCount())
     <h3 class='mb-4'>Latest Participants ({{$exam->getUserCount()}}) <a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-secondary btn-sm float-right">View all</a></h3>
      <div class="table-responsive">
               <table class="table table-bordered">
@@ -183,7 +184,7 @@
   </tbody>
 </table>
 </div>
-
+@endif
       
 
     </div>

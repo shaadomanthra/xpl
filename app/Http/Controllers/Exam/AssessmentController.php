@@ -1499,7 +1499,10 @@ class AssessmentController extends Controller
             Tests_Section::where('test_id',$test_id)->where('user_id',$user_id)->delete();
             Tests_Overall::where('test_id',$test_id)->where('user_id',$user_id)->delete(); 
             flash('Test attempt delete')->success();
-            return redirect()->route('assessment.show',$slug);
+            if($request->get('url'))
+                return redirect($request->get('url'));
+            else
+                return redirect()->route('assessment.show',$slug);
         }
         flash('Test attempt NOT DELETED')->success();
         return redirect()->route('assessment.show',$slug);
