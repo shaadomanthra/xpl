@@ -778,6 +778,7 @@ class AssessmentController extends Controller
                         ->with('details',$details)
                         ->with('exam',$exam)
                         ->with('student',$student)
+                        ->with('highlight',true)
                         ->with('section_questions',$test_responses->groupBy('section_id'))
                         ->with('questions',$test_responses);
             }else

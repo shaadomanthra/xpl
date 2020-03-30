@@ -1016,6 +1016,7 @@ class QuestionController extends Controller
                         ->with('details',$details)
                         ->with('exam',$exam)
                         ->with('exams',$exams)
+                        ->with('highlight',true)
                         ->with('questions',$questions);
             }else
                 abort('404','Question not found');

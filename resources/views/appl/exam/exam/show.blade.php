@@ -174,7 +174,7 @@
       <th scope="row">{{($u+1)}}</th>
       <td><a href="{{ route('assessment.analysis',[$exam->slug]) }}?student={{$t->user->username}}">{{$t->user->name}}</a></td>
 
-      <td>{{ $t->score }} / {{ $t->max }}</td>
+      <td>@if($t) - @else{{ $t->score }} / {{ $t->max }} @endif</td>
       <td>{{$t->created_at->diffforHumans()}}</td>
       
     </tr>
