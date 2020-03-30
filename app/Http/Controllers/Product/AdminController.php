@@ -488,6 +488,21 @@ class AdminController extends Controller
                  return redirect()->back()->withInput();
         }
 
+        $captcha = $_POST['g-recaptcha-response'];
+            if(!$captcha){
+              flash('Please verify using recaptcha !')->error();
+              return redirect()->back()->withInput();
+            }
+            $secretKey = "6Lc9yFAUAAAAACg-A58P_L7IlpHjTB69xkA2Xt65";
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+
+            $responseKeys = json_decode($response,true);
+            if(intval($responseKeys["success"]) !== 1) {
+              flash('Recaptcha error kindly retry')->error();
+              return redirect()->back()->withInput();
+            } 
+
         $parts = explode("@", $request->email);
         $username = $parts[0];
         $password = substr($request->phone,0,4);

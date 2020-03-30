@@ -241,6 +241,10 @@
           </div>
         </div>
       </div>
+
+      <div class="form-group border p-3">
+      <div class="g-recaptcha mb-3" data-sitekey="6Lc9yFAUAAAAALZlJ3hsqVZQKjOGNIrXezGmawtf"></div>
+      </div>
   
       @if($stub=='Update')
       <input type="hidden" name="_method" value="PUT">
