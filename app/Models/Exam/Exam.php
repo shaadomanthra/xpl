@@ -61,7 +61,7 @@ class Exam extends Model
 
     public function getUserCount($code)
     {
-        return Tests_Overall::where('code',$code)->count();
+        return Tests_Overall::where('code',$code)->where('test_id',$this->id)->count();
         
 
     }
