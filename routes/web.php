@@ -511,6 +511,16 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	//Route::resource('job','Recruit\JobController');
 	Route::resource('form','Recruit\FormController')->middleware('auth');
 
+	
+	Route::get('profile', function(){
+		$user = \auth::user();
+		return redirect()->route('profile','@'.$user->username);
+	})->name('p')->middleware('auth');
+
+	Route::get('profile/edit', function(){
+		$user = \auth::user();
+		return redirect()->route('profile.edit','@'.$user->username);
+	})->name('p.edit')->middleware('auth');
 	Route::get('/{page}',function($page){
 		if(strpos($page,'@')===0)
         {
@@ -519,7 +529,11 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         	return app('PacketPrep\Http\Controllers\Content\ArticleController')->show($page);
         }
 	})->name('page');
+
     Route::get('user/{username}', 'User\UserController@index')->name('profile');
+
+    
+
 	Route::get('user/{username}/edit', 'User\UserController@edit')->name('profile.edit');
 	Route::get('user/{username}/manage', 'User\UserController@manage')->name('profile.manage');
 	Route::put('user/{username}', 'User\UserController@update')->name('profile.update');
