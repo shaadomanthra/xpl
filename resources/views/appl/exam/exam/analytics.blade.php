@@ -44,6 +44,7 @@
                 <th scope="col">{{$sec->name}}</th>
                 @endforeach
                 <th scope="col">Score</th>
+                <th scope="col">Report</th>
               </tr>
             </thead>
             <tbody>
@@ -61,6 +62,10 @@
                 @endforeach
                 <td>
                   {{ $r->score }}
+                </td>
+                <td>
+                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}" class="btn btn-sm btn-success"> Report</a>
+                  <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" class="btn btn-sm btn-primary"> responses</a>
                 </td>
               </tr>
               @endforeach      

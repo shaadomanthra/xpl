@@ -731,6 +731,13 @@ class AssessmentController extends Controller
                 }
 
 
+                if($request->get('student'))
+            $student = User::where('username',$request->get('student'))->first();
+        else
+            $student = \auth::user();
+
+        if(!$student)
+            $student = \auth::user();
                 
             
                 $details['curr'] = route('assessment.solutions.q',[$exam->slug,$question->id]);
@@ -741,10 +748,10 @@ class AssessmentController extends Controller
                     if($q->question_id == $question->id){
 
                         if($key!=0)
-                            $details['prev'] = route('assessment.solutions.q',[$exam->slug,$test_responses[$key-1]->question_id]);
+                            $details['prev'] = route('assessment.solutions.q',[$exam->slug,$test_responses[$key-1]->question_id]).'?student='.$student->username;
 
                         if(count($test_responses) != $key+1)
-                            $details['next'] = route('assessment.solutions.q',[$exam->slug,$test_responses[$key+1]->question_id]);
+                            $details['next'] = route('assessment.solutions.q',[$exam->slug,$test_responses[$key+1]->question_id]).'?student='.$student->username;
 
                         $details['qno'] = $key + 1 ;
                     }
@@ -758,12 +765,16 @@ class AssessmentController extends Controller
                     $view = 'solutions_private';
                 else
                     $view = 'solutions';
+
+                
+
                 return view('appl.exam.assessment.'.$view)
                         ->with('mathjax',true)
                         ->with('question',$question)
                         ->with('passage',$passage)
                         ->with('details',$details)
                         ->with('exam',$exam)
+                        ->with('student',$student)
                         ->with('section_questions',$test_responses->groupBy('section_id'))
                         ->with('questions',$test_responses);
             }else
@@ -1411,6 +1422,7 @@ class AssessmentController extends Controller
                         ->with('exam',$exam)
                         ->with('sections',$sections)
                         ->with('details',$details)
+                        ->with('student',$student)
                         ->with('chart',true);
 
     }

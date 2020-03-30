@@ -10,9 +10,9 @@
 	<div class="">
 		<div class="p-3 border rounded bg-light mb-4">
 		<div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Report</b></div>
-		<p>Name : <span class="text-primary">{{\auth::user()->name}}</span><br>
-			College : <span class="text-primary">{{\auth::user()->colleges()->first()->name}}</span><br>
-			Branch : <span class="text-primary">{{\auth::user()->branches()->first()->name}}</span><br>
+		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
+			College : <span class="text-primary">{{$student->colleges()->first()->name}}</span><br>
+			Branch : <span class="text-primary">{{$student->branches()->first()->name}}</span><br>
 		</p>
 	</div>
 	@if($exam->solutions!=2)
@@ -74,7 +74,7 @@
 			<div class="card-body">
 				<p>
 				Test analysis highlights your performance, timespent and accuracy. To improve your performance it is a very important to focus on your mistakes, so do invest some time in analysing your errors. </p>
-				<a href="{{route('assessment.solutions',$exam->slug)}}">
+				<a href="{{route('assessment.solutions',$exam->slug)}}?student={{$student->username}}">
 				<button class="btn btn-primary">View Solutions</button>
 			</a>
 			</div>

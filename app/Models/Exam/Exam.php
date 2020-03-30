@@ -59,6 +59,13 @@ class Exam extends Model
 
     }
 
+    public function getUserCount($code)
+    {
+        return Tests_Overall::where('code',$code)->count();
+        
+
+    }
+
     public function getProductSlug(){
 
         $p = $this->products->first();

@@ -55,7 +55,7 @@
             <div class="col-md-4">Access Code</div>
             <div class="col-md-8">
               @foreach(explode(',',$exam->code) as $code)
-              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}">{{ $code}}</a> &nbsp;
+              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}">{{ $code}} ({{ $exam->getUserCount($code)}})</a> &nbsp;&nbsp;
               @endforeach
             </div>
           </div>
@@ -94,9 +94,32 @@
           <div class="row mb-2">
             <div class="col-md-4">Sections</div>
             <div class="col-md-8">
-              @foreach($exam->sections as $section)
-                <a href="{{ route('sections.show',[$exam->slug,$section->id]) }}">{{ $section->name }} ({{ count($section->questions)}})</a> | {{ $section->time }}min | +{{$section->mark}} @if($section->negative) & -{{ $section->negative}} @endif <br>
+              <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Section</th>
+      <th scope="col">Time</th>
+      <th scope="col">Mark per ques</th>
+      <th scope="col">Negative</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($exam->sections as $w=>$section)
+    <tr>
+      <th scope="row">{{($w+1)}}</th>
+      <td><a href="{{ route('sections.show',[$exam->slug,$section->id]) }}">{{$section->name}}({{ count($section->questions)}})</a></td>
+
+      <td>{{ $section->time }} min</td>
+      <td>{{$section->mark}}</td>
+      <td>@if($section->negative)  -{{ $section->negative}} @else NA @endif</td>
+    </tr>
               @endforeach
+    
+    
+  </tbody>
+</table>
+              
             </div>
           </div>
 
