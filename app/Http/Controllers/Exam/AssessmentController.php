@@ -673,21 +673,30 @@ class AssessmentController extends Controller
 
         $exam = Exam::where('slug',$slug)->first();
 
-                
+        if($request->get('student'))
+            $student = User::where('username',$request->get('student'))->first();
+        else
+            $student = \auth::user();
+
+        if(!$student)
+            $student = \auth::user();
+
 
         if($id==null){
             $view ='questions';
             $response = Test::where('test_id',$exam->id)
-                    ->where('user_id',\auth::user()->id)
+                    ->where('user_id',$student->id)
                     ->first();
             $id = $response->question_id;
         }else{
             $response = Test::where('test_id',$exam->id)
-                    ->where('user_id',\auth::user()->id)
+                    ->where('user_id',$student->id)
                     ->where('question_id',$id)
                     ->first();
             $view = 'q';
         }
+        
+
         
 
 
@@ -708,14 +717,14 @@ class AssessmentController extends Controller
                 $i=0;
 
                 $test_responses = Test::where('test_id',$exam->id)
-                                    ->where('user_id',\auth::user()->id)
+                                    ->where('user_id',$student->id)
                                     ->get();
 
                 $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'tag']; 
 
                 $test = Test::where('test_id',$exam->id)
                             ->where('question_id',$id)
-                            ->where('user_id',\auth::user()->id)
+                            ->where('user_id',$student->id)
                             ->first();
 
                 if($test){
@@ -731,13 +740,7 @@ class AssessmentController extends Controller
                 }
 
 
-                if($request->get('student'))
-            $student = User::where('username',$request->get('student'))->first();
-        else
-            $student = \auth::user();
-
-        if(!$student)
-            $student = \auth::user();
+                
                 
             
                 $details['curr'] = route('assessment.solutions.q',[$exam->slug,$question->id]);
@@ -1372,7 +1375,16 @@ class AssessmentController extends Controller
                 }
 
                 
-            }else{
+            }else if($t->code){
+                $details['attempted'] = $details['attempted'] + 1; 
+                $details['i'][$i]['category'] = $t->question->categories->first();
+                    $details['i'][$i]['question'] = $t->question;
+                    $i++;
+                    $details['incorrect'] = $details['incorrect'] + 1; 
+                    $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
+                    $details['marks'] = $details['marks'] - $t->section->negative; 
+            }
+            else{
                 $details['u'][$u]['category'] = $t->question->categories->last();
                 $details['u'][$u]['question'] = $t->question;
                     $u++;

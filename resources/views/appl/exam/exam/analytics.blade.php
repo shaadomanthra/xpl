@@ -61,11 +61,17 @@
                 </td>
                 @endforeach
                 <td>
+                  @if(!$r->status)
                   {{ $r->score }}
+                  @else
+                  -
+                  @endif
                 </td>
                 <td>
+                  @if(!$r->status)
                   <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}" class="btn btn-sm btn-success"> Report</a>
                   <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" class="btn btn-sm btn-primary"> responses</a>
+                  @endif
                 </td>
               </tr>
               @endforeach      
