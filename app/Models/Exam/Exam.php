@@ -151,9 +151,6 @@ class Exam extends Model
 
       if(isset($json->stdout)){
         $entry->response = strip_tags(trim($json->stdout));
-        if(!$entry->response){
-          $entry->response = $json->stderr;
-        }
         if(strtolower($entry->response) == strtolower($entry->answer)){
 
           $entry->accuracy=1;
