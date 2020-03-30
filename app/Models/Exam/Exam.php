@@ -59,9 +59,29 @@ class Exam extends Model
 
     }
 
-    public function getUserCount($code)
+    public function questionCount()
     {
+        $count = 0;
+        foreach($this->sections as $s){
+          $count = $count + count($s->questions);
+
+        }
+        return $count;
+
+    }
+    public function getUserCount($code=null)
+    {
+        if($code)
         return Tests_Overall::where('code',$code)->where('test_id',$this->id)->count();
+        else
+          return Tests_Overall::where('test_id',$this->id)->count();
+        
+
+    }
+
+    public function latestUsers()
+    {
+        return Tests_Overall::where('test_id',$this->id)->where('status',0)->orderBy('id','desc')->get();
         
 
     }

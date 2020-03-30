@@ -35,8 +35,8 @@
       <div class="card mb-4" style="margin-top: -5px">
         <div class="card-body">
           <div class="row mb-2">
-            <div class="col-md-4">Logo</div>
-            <div class="col-md-8">
+            <div class="col-md-3">Logo</div>
+            <div class="col-md-9">
               @if(isset($exam->image))
       @if(Storage::disk('public')->exists($exam->image))
       <div class="mb-3">
@@ -52,48 +52,43 @@
           </div>
 
           <div class="row mb-2">
-            <div class="col-md-4">Access Code</div>
-            <div class="col-md-8">
+            <div class="col-md-3">Access Code</div>
+            <div class="col-md-9">
               @foreach(explode(',',$exam->code) as $code)
-              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}">{{ $code}} ({{ $exam->getUserCount($code)}})</a> &nbsp;&nbsp;
+              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}">{{ $code}}({{ $exam->getUserCount($code)}})</a> &nbsp;&nbsp;
               @endforeach
             </div>
           </div>
 
           <div class="row mb-2">
-            <div class="col-md-4">Description</div>
-            <div class="col-md-8">
+            <div class="col-md-3">Description</div>
+            <div class="col-md-9">
               {!! $exam->description !!}
             </div>
           </div>
 
           @if(isset($exam->examtype->name))
           <div class="row mb-2">
-            <div class="col-md-4">Testtype</div>
-            <div class="col-md-8">
+            <div class="col-md-3">Testtype</div>
+            <div class="col-md-9">
               <span class="badge badge-secondary">{{ $exam->examtype->name }}</span>
             </div>
           </div>
             @endif
 
-           @if(isset($exam->course->name))
+         
+
           <div class="row mb-2">
-            <div class="col-md-4">Course</div>
-            <div class="col-md-8">
-              <i class="fa fa-link"></i> {{ $exam->course->name }}
-            </div>
-          </div>
-            @endif
-          <div class="row mb-2">
-            <div class="col-md-4">Instructions</div>
-            <div class="col-md-8">
+            <div class="col-md-3">Instructions</div>
+            <div class="col-md-9">
               {!! $exam->instructions !!}
             </div>
           </div>
 
           <div class="row mb-2">
-            <div class="col-md-4">Sections</div>
-            <div class="col-md-8">
+            <div class="col-md-3">Sections</div>
+            <div class="col-md-9">
+              <div class="table-responsive">
               <table class="table table-bordered">
   <thead>
     <tr>
@@ -119,13 +114,14 @@
     
   </tbody>
 </table>
+</div>
               
             </div>
           </div>
 
           <div class="row mb-2">
-            <div class="col-md-4">Report</div>
-            <div class="col-md-8">
+            <div class="col-md-3">Report</div>
+            <div class="col-md-9">
               @if($exam->solutions==1)
                 <span class="badge badge-warning">No solutions</span>
               @elseif($exam->solutions==2)
@@ -141,8 +137,8 @@
 
 
           <div class="row mb-0">
-            <div class="col-md-4">Exam Status</div>
-            <div class="col-md-8">
+            <div class="col-md-3">Exam Status</div>
+            <div class="col-md-9">
               @if($exam->status==0)
                 <span class="badge badge-warning">Draft</span>
               @elseif($exam->status==1)
@@ -160,12 +156,39 @@
         </div>
       </div>
 
- 
+    <h3 class='mb-4'>Latest Participants</h3>
+     <div class="table-responsive">
+              <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Score</th>
+      <th scope="col">Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($exam->latestUsers() as $u =>$t)
+    <tr>
+      <th scope="row">{{($u+1)}}</th>
+      <td><a href="{{ route('assessment.analysis',[$exam->slug]) }}?student={{$t->user->username}}">{{$t->user->name}}</a></td>
 
+      <td>{{ $t->score }} / {{ $t->max }}</td>
+      <td>{{$t->created_at->diffforHumans()}}</td>
+      
+    </tr>
+              @endforeach
+    
+    
+  </tbody>
+</table>
+</div>
 
       
 
     </div>
+
+
 
      <div class="col-md-3 pl-md-0">
       @include('appl.exam.snippets.menu')

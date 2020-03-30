@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Report - '.$exam->name)
 @section('content')
 
 <nav aria-label="breadcrumb">
@@ -62,7 +63,7 @@
                 @endforeach
                 <td>
                   @if(!$r->status)
-                  {{ $r->score }}
+                  {{ $r->score }} / {{ $r->max }}
                   @else
                   -
                   @endif

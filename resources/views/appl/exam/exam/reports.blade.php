@@ -22,7 +22,7 @@
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-inbox"></i> Reports - Access Code </a>
+          <a class="navbar-brand"><i class="fa fa-inbox"></i> Reports - Access Code ({{$exam->getUserCount()}}) </a>
 
           <a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm">View all</a>
 
