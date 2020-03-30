@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-border')
 @section('title', 'Test Instructions - '.$exam->name.' | Xplore')
 @section('content')
 

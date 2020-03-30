@@ -9,7 +9,18 @@
 	<div class=" border p-3 bg-white rounded">
 		<div class="row">
 			<div class="col-12 col-md-2">
-				<i class="fa fa-newspaper-o fa-5x p-3" aria-hidden="true"></i>
+				@if(isset($exam->image))
+	      @if(Storage::disk('public')->exists($exam->image))
+	      <picture>
+			  <img 
+      src="{{ asset('/storage/'.$exam->image) }} " class="w-100 d-print-none" alt="{{  $exam->name }}" style='max-width:200px;'>
+			</picture>
+	      @endif
+	  @else
+	  <i class="fa fa-newspaper-o fa-5x p-3 d-none d-md-block" aria-hidden="true"></i>
+				<i class="fa fa-newspaper-o  fa-2x d-inline d-md-none" aria-hidden="true"></i>
+
+      @endif
 			</div>
 			<div class="col-12 col-md-8">
 				<h1 class="mt-3">
