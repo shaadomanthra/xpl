@@ -25,6 +25,15 @@ class TestReport implements FromCollection
 
     		$result[$k]->Sno = $k+1;
     		$result[$k]->Name = $res->user->name;
+            if(isset($res->user->college->name))
+                $result[$k]->College = $res->user->college->name;
+            else
+                $result[$k]->College = '-';
+            if(isset($res->user->branch->name))
+                $result[$k]->Branch = $res->user->branch->name;
+            else
+                $result[$k]->Branch = '-';
+
     		$result[$k]->Email = $res->user->email;
     		$result[$k]->Phone= $res->user->phone;
     		foreach($sections[$res->user->id] as $m=>$sec){
@@ -53,6 +62,8 @@ class TestReport implements FromCollection
         $ux->created = "Timestamp";
     	$ux->sno = "Sno";
     	$ux->name = "Name";
+        $ux->college = "College";
+        $ux->branch = "Branch";
     	$ux->email = "Email";
     	$ux->phone = "Phone";
     	foreach($exam_sections as $m=>$sec){
