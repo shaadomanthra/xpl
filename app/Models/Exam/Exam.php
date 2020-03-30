@@ -81,7 +81,7 @@ class Exam extends Model
 
     public function latestUsers()
     {
-        return Tests_Overall::where('test_id',$this->id)->where('status',0)->orderBy('id','desc')->get();
+        return Tests_Overall::where('test_id',$this->id)->where('status',0)->orderBy('id','desc')->limit(10)->get();
         
 
     }
