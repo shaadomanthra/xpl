@@ -20,7 +20,7 @@
       @endif  
 
       <div class='row'>
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-md-4">
           <div class="form-group">
         <label for="formGroupExampleInput ">Test Name</label>
         <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the Test Name" 
@@ -33,6 +33,19 @@
        
       </div>
         </div>
+        <div class="col-12 col-md-4">
+
+          <div class="form-group">
+        <label for="formGroupExampleInput ">Test Slug</label>
+        <input type="text" class="form-control" name="slug" id="formGroupExampleInput" placeholder="Enter unique identifier" 
+            @if($stub=='Create')
+            value="{{ (old('slug')) ? old('slug') : $slug }}"
+            @else
+            value = "{{ $exam->slug }}"
+            @endif
+          >
+      </div>
+    </div>
         
         <div class="col-12 col-md-4">
 
@@ -51,13 +64,7 @@
 
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="course_id" value="">
-         <input type="hidden" class="form-control" name="slug" id="formGroupExampleInput2" placeholder="Unique Identifier"
-            @if($stub=='Create')
-            value="{{ (old('slug')) ? old('slug') : $slug }}"
-            @else
-            value = "{{ $exam->slug }}"
-            @endif
-          >
+         
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 

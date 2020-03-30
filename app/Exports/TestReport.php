@@ -45,12 +45,12 @@ class TestReport implements FromCollection
     		unset($result[$k]->max);
     		unset($result[$k]->code);
     		unset($result[$k]->status);
-    		unset($result[$k]->created_at);
     		unset($result[$k]->updated_at);
     	}
     		
 
     	$ux = new Tests_Overall();
+        $ux->created = "Timestamp";
     	$ux->sno = "Sno";
     	$ux->name = "Name";
     	$ux->email = "Email";
