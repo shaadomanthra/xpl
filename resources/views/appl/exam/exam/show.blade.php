@@ -55,7 +55,11 @@
             <div class="col-md-3">Access Code</div>
             <div class="col-md-9">
               @foreach(explode(',',$exam->code) as $code)
-              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}">{{ $code}}({{ $exam->getUserCount($code)}})</a> &nbsp;&nbsp;
+              @if($code)
+              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}">{{ $code}}({{ $exam->getUserCount($code)}})</a>
+              @else
+              <a href="{{ route('test.report',$exam->slug)}}">Default({{ $exam->getUserCount($code)}})</a>
+              @endif &nbsp;&nbsp;
               @endforeach
             </div>
           </div>

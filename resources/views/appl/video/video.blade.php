@@ -18,6 +18,7 @@
 				</ul>
 			</li>
 			<li>Upload the selfie video to youtube</li>
+			<li>If you want to hide the video from public then mark the privacy for the video as 'unlisted' or you can leave the privacy as public. Dont make it private as it cannot be embedded into xplore platform.</li>
 			<li>Copy the url of the uploaded video</li>
 			<li>Enter the copied url in the below form and submit.</li>
 			<li>Note: You can add the video only once, so kindly verify the final video before adding it.</li>

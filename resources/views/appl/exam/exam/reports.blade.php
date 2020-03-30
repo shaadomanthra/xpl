@@ -47,11 +47,19 @@
               <tr>
                 <th scope="row">{{$key+1 }}</th>
                 <td>
+                  @if($code)
                   <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}">{{ $code }}</a>
+                  @else
+                  <a href="{{ route('test.report',$exam->slug)}}">Default</a>
+                  @endif
                   
                 </td>
                 <td>
+                  @if($code)
                   {{ $user[$key] }}
+                  @else
+                  {{$exam->getUserCount()}}
+                  @endif
                 </td>
               </tr>
               @endforeach      
