@@ -180,7 +180,7 @@ class Exam extends Model
             $e_overall->status = 0;
 
         if(!strip_tags(trim($json->stdout))){
-          $entry->response = $json->stdout;
+          $entry->response = $json->stderr;
         }
       }
       
