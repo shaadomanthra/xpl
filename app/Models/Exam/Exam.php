@@ -179,7 +179,7 @@ class Exam extends Model
         if($e_overall->unattempted<1)
             $e_overall->status = 0;
 
-        if(!strip_tags(trim($json->stdout))){
+        if(!$entry->response && $entry->response!=0){
           $entry->response = $json->stderr;
         }
       }
