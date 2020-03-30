@@ -261,7 +261,7 @@
               <div class="bg-light p-3 border rounded mb-3 mb-md-0" >
 
                 <h3><i class="fa fa-flash"></i> Complilation Report / Output</h3>
-                <div class="p-1">{{ ($details['response'])?$details['response']:'-' }}</div>
+                <div class="p-1">{{ (!$details['response'] && $details['response']!=0)?'-':$details['response'] }}</div>
               </div>
             </div>
           </div>
