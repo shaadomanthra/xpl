@@ -242,7 +242,7 @@
         </div>
       </div>
 
-      <div class="form-group border p-3">
+      <div class="pt-3 pb-3">
       <div class="g-recaptcha mb-3" data-sitekey="6Lc9yFAUAAAAALZlJ3hsqVZQKjOGNIrXezGmawtf"></div>
       </div>
   

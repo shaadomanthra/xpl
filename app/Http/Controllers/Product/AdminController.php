@@ -364,6 +364,7 @@ class AdminController extends Controller
         return view('appl.product.admin.user.estudentproduct')
             ->with('stub','Create')
             ->with('colleges',$colleges)
+            ->with('recaptcha',1)
                 ->with('user',$user)
                 ->with('branches',$branches);
     }
