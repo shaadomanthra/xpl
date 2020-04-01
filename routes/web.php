@@ -287,7 +287,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('register/type',function () { 
 
-		return view('auth.type'); 
+		return Redirect::to('/eregister'); 
 			})->name('register.type');
 
 	Route::get('dregister','Product\AdminController@dstudentregister')->name('student.dregister');
