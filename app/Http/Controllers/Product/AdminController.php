@@ -718,8 +718,8 @@ class AdminController extends Controller
         if(!$direct)
             return redirect()->route('admin.user.view',$user->username);
         else{
-            if ($request->session()->has('return')) {
-                return redirect()->to($request->session()->get('return')); 
+            if ($request->session()->has('redirect.url')) {
+                return redirect()->to($request->session()->get('redirect.url')); 
             }else
              return redirect()->route('dashboard');   
         }
