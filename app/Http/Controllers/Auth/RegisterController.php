@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class RegisterController extends Controller
 {
@@ -33,15 +35,24 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/';
 
+    public function __construct()
+    {
+        $this->middleware('guest', ['except' => 'logout']);
+        Session::put('preUrl', Session::get('redirect.url'));
+    }
+
+
+    public function redirectTo()
+    {
+        return Session::get('preUrl') ? Session::get('preUrl') :   $this->redirectTo;
+    }
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
+    
 
     /**
      * Get a validator for an incoming registration request.
@@ -80,7 +91,7 @@ class RegisterController extends Controller
         }else
             $subdomain = null;
 
-        $password = substr($data['phone'],0,4);
+        $password = $data['password'];
         $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
@@ -106,7 +117,8 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         //$this->guard()->logout();
-        return redirect('/');//->with('status', 'Your account is successfully created. You can login now.');
+        $url = Session::get('preUrl') ? Session::get('preUrl') :   $this->redirectTo;
+        return redirect($url);//->with('status', 'Your account is successfully created. You can login now.');
     }
 
     public function activateUser($token)
