@@ -24,9 +24,9 @@
   <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
   @endif
   @if(isset($highlight))
-  <link href="{{ asset('css/styles2.css') }}?new=1" rel="stylesheet">
+  <link href="{{ asset('css/styles2.css') }}?new=2" rel="stylesheet">
   @else
-  <link href="{{ asset('css/styles.css') }}?new=1" rel="stylesheet">
+  <link href="{{ asset('css/styles.css') }}?new=2" rel="stylesheet">
   @endif
   @if(isset($mathjax))
   <script type="text/x-mathjax-config">

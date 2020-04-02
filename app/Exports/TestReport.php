@@ -34,6 +34,11 @@ class TestReport implements FromCollection
             else
                 $result[$k]->Branch = '-';
 
+            if(isset($res->user->year_of_passing))
+                $result[$k]->YOP = $res->user->year_of_passing;
+            else
+                $result[$k]->YOP = '-';
+
     		$result[$k]->Email = $res->user->email;
     		$result[$k]->Phone= $res->user->phone;
     		foreach($sections[$res->user->id] as $m=>$sec){
@@ -63,7 +68,9 @@ class TestReport implements FromCollection
     	$ux->sno = "Sno";
     	$ux->name = "Name";
         $ux->college = "College";
+
         $ux->branch = "Branch";
+        $ux->yop = "Year of Passing";
     	$ux->email = "Email";
     	$ux->phone = "Phone";
     	foreach($exam_sections as $m=>$sec){

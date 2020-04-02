@@ -11,7 +11,7 @@
       <meta name="keywords" content="@yield('keywords')">
       <title>@yield('title')</title>
       <!-- Styles -->
-      <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+      <link href="{{ asset('css/styles.css') }}?new=2" rel="stylesheet">
       <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
     </head>
     <body>
