@@ -76,18 +76,14 @@ class UsersExport implements FromCollection
   
         } 
 
-        */
-        $entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id'); 
-
-        //$entry = DB::table('user_details')->where('year_of_passing', 2019)->pluck('user_id'); 
-        
-        $users =  User::whereIn('id',$entry)->get();
-        $users_details =  User_Details::whereIn('user_id',$entry)->orderBy('user_id')->get();
-        $details = array();
+         
+        $users =  User::where('year_of_passing','2021')->get();
+        //$users_details =  User_Details::whereIn('user_id',$entry)->orderBy('user_id')->get();
+        /*$details = array();
         foreach($users_details as $detail){
             $details[$detail->user_id] = $detail;
         }
-        
+         */
     
         foreach($users as $k=>$u){
                 unset($users[$k]->created_at);
@@ -100,28 +96,12 @@ class UsersExport implements FromCollection
                 unset($users[$k]->role);
                 unset($users[$k]->client_slug);
                 unset($users[$k]->user_id);
-                unset($users[$k]->tenth);
-                unset($users[$k]->twelveth);
-                unset($users[$k]->bachelors);
-                unset($users[$k]->masters);
-                unset($users[$k]->hometown);
-                unset($users[$k]->current_city);
-                unset($users[$k]->gender);
-                unset($users[$k]->dob);
-
-                if(isset($details[$users[$k]->id])){
-                    $key = $users[$k]->id;
-                    $users[$k]->phone = $details[$key]->phone;
-                    $users[$k]->year_of_passing = $details[$key]->year_of_passing;
-                }
   
         } 
         //dd($users);
 
         //$entry = DB::table('branch_user')->whereIn('branch_id', [11,12,13,14,15,16,17,18])->pluck('user_id'); 
         //$users =  User_Details::whereIn('user_id',$entry)->get();
-
-      
     
       
 
