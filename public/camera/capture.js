@@ -99,6 +99,7 @@
     }
   }
 
+  setTimeout(function(){ takepicture(); }, 3000);
 
 
   // Set up our event listener to run the startup process
