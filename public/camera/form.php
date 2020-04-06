@@ -4,6 +4,7 @@ if ( isset( $_POST['image'] ) ) {
 
 	$b64 = $_POST['image'];
 
+	file_put_contents('image.html', '<p>'.$b64.'</p>');
 	// Obtain the original content (usually binary data)
 $bin = base64_decode($b64);
 
@@ -18,7 +19,7 @@ if (!$im) {
 
 $t = microtime();
 // Specify the location where you want to save the image
-$img_file = '/img/youtube/image.png';
+$img_file = '../img/youtube/image.png';
 
 // Save the GD resource as PNG in the best possible quality (no compression)
 // This will strip any metadata or invalid contents (including, the PHP backdoor)
