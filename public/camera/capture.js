@@ -23,6 +23,7 @@
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
     photo = document.getElementById('photo');
+    text = document.getElementById('text');
     startbutton = document.getElementById('startbutton');
 
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
@@ -88,6 +89,7 @@
     
       var data = canvas.toDataURL('image/png');
       photo.setAttribute('src', data);
+      text.innerHTML = data;
 
       xhttp.open("POST", "https://xplore.co.in/camera/form.php", true);
       xhttp.send("image="+data);
