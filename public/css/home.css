@@ -1,6 +1,18 @@
  * {
     margin: 0;
 }
+@font-face {
+  font-family: 'FontAwesome';
+  font-display: swap;
+  src: url(/fonts/vendor/font-awesome/fontawesome-webfont.woff2) format('woff2'),
+       url(/fonts/vendor/font-awesome/fontawesome-webfont.eot) format('eot'),
+       url(/fonts/vendor/font-awesome/fontawesome-webfont.ttf) format('ttf'),
+       url(/fonts/vendor/font-awesome/fontawesome-webfont.svg) format('svg'),
+       url(/fonts/vendor/font-awesome/fontawesome-webfont.woff) format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
  html, body {
                 background-color: #fff;
                 font-weight: 400;
@@ -84,6 +96,8 @@ h6 {
 .display-4 {
     font-size: 2em;
 }
+
+
 
 
 .navbar{ border-width: 0 1px 4px 1px; border-color:transparent; }
@@ -297,6 +311,18 @@ p.article{line-height: 1.6em;}
     .heading3 {
         font-size: 1.466em;
     }
+
+        .heading_one{
+    font-weight: 900;
+    line-height: 1.2;
+    font-size:40px;
+}
+
+
+.heading_two{
+    font-size:25px;
+    font-weight: 500;
+}
 
 }  
 

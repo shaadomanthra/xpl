@@ -18,7 +18,13 @@ use PacketPrep\Http\Middleware\RequestFilter;
 
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
-	Route::get('/', function(){ return view('welcome3')->with('welcome3',1); })->middleware('cache')->name('root');
+	Route::get('/', function(){ 
+		if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+			return view('welcome')->with('welcome',1);
+		else
+			return view('welcome3')->with('welcome3',1);
+
+	})->middleware('cache')->name('root');
 	Route::post('/', 'Product\OrderController@callback');
 	Route::get('/instamojo', 'Product\OrderController@instamojo')->middleware('auth');
 	Route::get('/order_payment', 'Product\OrderController@instamojo_return');
@@ -55,6 +61,8 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/checkout','Product\OrderController@checkout')->name('checkout')->middleware('auth');
 	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success')->middleware('auth');
 	Route::get('/credit-rates',function(){ return view('appl.product.pages.credit_rates'); })->name('credit-rate')->middleware('auth');;
+
+	Route::get('/cam',function(){ return view('layouts.cam'); });
 
 
 	

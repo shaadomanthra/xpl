@@ -27,7 +27,11 @@
     @endif
   <title>@yield('title')</title>
   
+  @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+  <link rel="shortcut icon" href="{{asset('/faviconpp.ico')}}" />
+  @else
   <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+  @endif
   @if(isset($editor))
   <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
   @endif
@@ -62,12 +66,17 @@
 </head>
 <body>
     <div id="app" >
+
         @yield('content-main')
     </div>
     <div class="bg-dark">
         <footer class="wrapper text-light footer">
             <div class="container py-3">
+              @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+                @include('snippets.bottommenu')
+              @else
                 @include('snippets.footer')
+              @endif
             </div>
         </footer>
     </div>

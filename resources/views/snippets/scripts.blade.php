@@ -785,8 +785,24 @@ function addMinutes(date, minutes) {
 
   gtag('config', 'UA-43617911-9');
 </script>
+@endif
+
+@if(isset($welcome))
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+<script type="text/javascript">
 
 
+var options = {
+  strings: ["<a href='../#'>35,000 graded profiles</a>",
+               "<a href='../#'>6,000 programmers</a>", 
+              "<a href='../#'>80+ colleges</a>"],
+          typeSpeed: 100, // typing speed
+            backDelay: 2500, // pause before backspacing
+            loop: true, // loop on or off (true or false)
+            loopCount: false, 
+};
 
-
+if($('.element').length)
+var typed = new Typed('.element', options);
+</script>
 @endif
