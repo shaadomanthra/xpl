@@ -29,9 +29,13 @@ class HomeController extends Controller
     }
 
     public function imageupload(Request $request){
+        if($request->all()['image']){
         $file      = $request->all()['image'];
         $filename = 'image.'.$file->getClientOriginalExtension();
         $path = Storage::disk('public')->putFileAs('articles', $request->file('image'),$filename);
         echo $path;
+        }else
+        echo "input image file missing";
+        
     }
 }

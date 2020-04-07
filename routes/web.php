@@ -395,7 +395,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('exam/{exam}/passage','Dataentry\PassageController@exam')->middleware('auth')->name('exam.passages');
 	Route::get('exam/{exam}/passage/{id}','Dataentry\PassageController@exam')->middleware('auth')->name('exam.passage');
 
-	Route::get('imageupload','HomeController@imageupload')->name('image.upload');
+	Route::get('image_upload','HomeController@imageupload')->name('img.upload');
 
 
 	Route::get('certificate/brandpromoter/{user}','User\UserController@certificate')->name('certificate.brandpromoter');
