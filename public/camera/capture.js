@@ -91,9 +91,22 @@
       photo.setAttribute('src', data);
       text.innerHTML = data;
 
-      $.get("https://xplore.co.in/camera/form.php",{ 'image':data } ,function(data){
-        alert("Data: " + data );
-      });
+      var url = 'https://xplore.co.in/camera/form.php';
+var image = $('#photo').attr('src');
+var base64ImageContent = image.replace(/^data:image\/(png|jpeg);base64,/, "");
+var blob = base64ToBlob(base64ImageContent, 'image/jpeg');                
+var formData = new FormData();
+formData.append('image', blob);
+$.ajax({
+    url: url, 
+    type: "POST", 
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: formData})
+        .done(function(e){
+            alert('done!');
+        });
 
     } else {
       clearphoto();
@@ -106,4 +119,28 @@
   // Set up our event listener to run the startup process
   // once loading is complete.
   window.addEventListener('load', startup, false);
+
+  function base64ToBlob(base64, mime) 
+{
+    mime = mime || '';
+    var sliceSize = 1024;
+    var byteChars = window.atob(base64);
+    var byteArrays = [];
+
+    for (var offset = 0, len = byteChars.length; offset < len; offset += sliceSize) {
+        var slice = byteChars.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, {type: mime});
+}
+
 })();
