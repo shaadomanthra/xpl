@@ -91,7 +91,7 @@
       photo.setAttribute('src', data);
       text.innerHTML = data;
 
-      var url = 'https://xplore.co.in/imageupload';
+      var url = 'https://xplore.co.in/img/upload/file';
 var image = $('#photo').attr('src');
 var base64ImageContent = image.replace(/^data:image\/(png|jpeg);base64,/, "");
 var blob = base64ToBlob(base64ImageContent, 'image/jpeg');                
