@@ -3,6 +3,7 @@
 namespace PacketPrep\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -25,5 +26,12 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function imageupload(Request $request){
+        $file      = $request->all()['image'];
+        $filename = 'image.'.$file->getClientOriginalExtension();
+        $path = Storage::disk('public')->putFileAs('articles', $request->file('image'),$filename);
+        echo $path;
     }
 }

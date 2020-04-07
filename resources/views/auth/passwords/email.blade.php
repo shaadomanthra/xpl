@@ -1,6 +1,6 @@
 @extends('layouts.nowrap')
 
-@section('title', 'Forgot Password | PacketPrep')
+@section('title', 'Forgot Password ')
 @section('content')
 
 <div class="card">

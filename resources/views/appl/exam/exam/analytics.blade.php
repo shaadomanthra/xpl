@@ -41,6 +41,7 @@
               <tr>
                 <th scope="col">#({{count($report)}})</th>
                 <th scope="col">Name</th>
+                <th scope="col">Window Swap</th>
                 @foreach($exam_sections as $sec)
                 <th scope="col">{{$sec->name}}</th>
                 @endforeach
@@ -58,6 +59,9 @@
                 <td>
                   <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}">{{ $r->user->name }}</a>
                   
+                </td>
+                <td>
+                  {{ $r->window_change }}
                 </td>
                 @foreach($sections[$r->user->id] as $s)
                 <td>

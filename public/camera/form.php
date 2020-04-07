@@ -1,8 +1,10 @@
 <?php
 
 if ( isset( $_POST['image'] ) ) {
-
+	echo "open";
 	$b64 = $_POST['image'];
+
+	echo $b64;
 
 	file_put_contents('image.html', '<p>'.$b64.'</p>');
 	// Obtain the original content (usually binary data)
