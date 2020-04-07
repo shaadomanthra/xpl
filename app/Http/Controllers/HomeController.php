@@ -31,10 +31,19 @@ class HomeController extends Controller
     public function imageupload(Request $request){
         //dd($request->all());
         if(count($request->all())){
+            $image = $request->image;  // your base64 encoded
+        $image = str_replace('data:image/jpeg;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+
+        $file      = $request->all()['image'];
+        $filename = 'image.'.$file->getClientOriginalExtension();
+        $path = Storage::disk('public')->putFileAs('articles', base64_decode($image),$filename);
+        echo $path;
+            /*
         $file      = $request->all()['image'];
         $filename = 'image.'.$file->getClientOriginalExtension();
         $path = Storage::disk('public')->putFileAs('articles', $request->file('image'),$filename);
-        echo $path;
+        echo $path;*/
         }else
         echo "input image file missing";
 

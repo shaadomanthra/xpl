@@ -92,6 +92,22 @@
       text.innerHTML = data;
 
       var url = 'https://xplore.co.in/img/upload/file';
+      var image = $('#photo').attr('src');
+      var formData = new FormData();
+    formData.append('image', image);
+      $.ajax({
+    url: url, 
+    type: "GET", 
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: formData})
+        .done(function(e){
+            alert('done!');
+        }); 
+
+/*
+      var url = 'https://xplore.co.in/img/upload/file';
 var image = $('#photo').attr('src');
 var base64ImageContent = image.replace(/^data:image\/(png|jpeg);base64,/, "");
 var blob = base64ToBlob(base64ImageContent, 'image/jpeg');                
@@ -106,7 +122,7 @@ $.ajax({
     data: formData})
         .done(function(e){
             alert('done!');
-        });
+        }); */
 
     } else {
       clearphoto();
