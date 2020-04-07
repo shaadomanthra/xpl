@@ -81,14 +81,34 @@
 
 				@if($exam->status!=1 && !$attempt)
 				
+				@if(trim(strip_tags($exam->emails)))
+
+				   @auth
+				   @if(strpos($exam->emails,\auth::user()->email)!==false)
+			       <a href="{{route('assessment.access',$exam->slug)}}">
+			       	<button class="btn btn-lg btn-outline-primary"> Access Code </button>
+					</a>
+					@else
+					<div class="bg-light border rounded p-3">You are not authorised to attempt this test.</div>
+					@endif
+			       @else
+			       <a href="#" data-toggle="modal" data-target="#myModal2">
+			       		<button class="btn btn-lg btn-outline-primary"> Access Code </button>
+					</a>
+			       @endauth
+
+				
+				@else
 				   @auth
 			       <a href="{{route('assessment.access',$exam->slug)}}">
 			       @else
 			       <a href="#" data-toggle="modal" data-target="#myModal2">
 			       @endauth
 
-				<button class="btn btn-lg btn-outline-primary"> Access Code </button>
-				</a>
+					<button class="btn btn-lg btn-outline-primary"> Access Code </button>
+					</a>
+
+				@endif
 				@endif
 
 				@if($attempt)

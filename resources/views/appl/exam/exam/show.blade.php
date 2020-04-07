@@ -27,9 +27,9 @@
             @endcan
           </p>
           <div>URL : <a href="{{route('assessment.show',$exam->slug)}}">{{route('assessment.show',$exam->slug)}}</a> @if($exam->active==1)
-                <span class="badge badge-success">Active</span>
-              @else
                 <span class="badge badge-secondary">Inactive</span>
+              @else
+                <span class="badge badge-success">Active</span>
               @endif</div>
         </div>
       </div>

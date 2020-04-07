@@ -179,8 +179,8 @@
            <div class="form-group">
         <label for="formGroupExampleInput ">Link</label>
         <select class="form-control" name="active">
-          <option value="0" @if(isset($exam)) @if($exam->active==0) selected @endif @endif >Inactive</option>
-          <option value="1" @if(isset($exam)) @if($exam->active==1) selected @endif @endif >Active</option>
+          <option value="0" @if(isset($exam)) @if($exam->active==0) selected @endif @endif >Active</option>
+          <option value="1" @if(isset($exam)) @if($exam->active==1) selected @endif @endif >Inactive</option>
         </select>
       </div>
         </div>

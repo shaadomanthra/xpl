@@ -39,8 +39,10 @@ class TestReport implements FromCollection
             else
                 $result[$k]->YOP = '-';
 
+            
     		$result[$k]->Email = $res->user->email;
     		$result[$k]->Phone= $res->user->phone;
+            $result[$k]->Window_change = $res->window_change;
     		foreach($sections[$res->user->id] as $m=>$sec){
     			$name = $exam_sections[$m]['name'];
     			$result[$k]->$name = $sec->score;
@@ -55,6 +57,7 @@ class TestReport implements FromCollection
     		unset($result[$k]->correct);
     		unset($result[$k]->incorrect);
     		unset($result[$k]->score);
+            unset($result[$k]->window_change);
     		unset($result[$k]->time);
     		unset($result[$k]->max);
     		unset($result[$k]->code);
@@ -73,6 +76,7 @@ class TestReport implements FromCollection
         $ux->yop = "Year of Passing";
     	$ux->email = "Email";
     	$ux->phone = "Phone";
+        $ux->window = "Window Swap";
     	foreach($exam_sections as $m=>$sec){
     			$name = $exam_sections[$m]['name'];
     			$ux->$name = $name;

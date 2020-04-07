@@ -188,6 +188,9 @@ class AssessmentController extends Controller
                 $exam = Exam::where('slug',$test)->first();
             }
         
+        if($exam->active){
+            return view('appl.exam.assessment.inactive')->with('exam',$exam); 
+        }
 
         $code = $r->get('code');
         $user = \auth::user();
@@ -262,7 +265,20 @@ class AssessmentController extends Controller
         if(!$exam)
             abort('404','Test not found');
 
+        if($exam->active){
+            return view('appl.exam.assessment.inactive')->with('exam',$exam); 
+        }
+
         $user = \auth::user();
+
+        if(trim(strip_tags($exam->emails))){
+            if(strpos($exam->emails,$user->email)!==false)
+            {
+                
+            }else{
+                abort('403','You are not authorized to perform this action.');
+            }
+        }
         if(isset($exam->product_ids))
         $products = $exam->product_ids;
         else
@@ -1051,6 +1067,10 @@ class AssessmentController extends Controller
         $user = \Auth::user();
         $products = $exam->product_ids;
         $product = null;
+
+        if($exam->active){
+            return view('appl.exam.assessment.inactive')->with('exam',$exam); 
+        }
         
         if($products){
             $product = $exam->products[0];

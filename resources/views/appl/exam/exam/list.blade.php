@@ -8,6 +8,7 @@
                 <th scope="col">Test </th>
                 <th scope="col">Participants </th>
                 <th scope="col">Status</th>
+                <th scope="col">Link</th>
                 <th scope="col">Created </th>
               </tr>
             </thead>
@@ -23,13 +24,19 @@
                 <td>{{ $exam->getUserCount() }}</td>
                 <td>
                   @if($exam->status==0)
-                <span class="badge badge-warning">Draft</span>
+                <span class="badge badge-secondary">Draft</span>
                 @elseif($exam->status==1)
-                  <span class="badge badge-success">Free Access</span>
+                  <span class="badge badge-info">Free Access</span>
                 @else
-                  <span class="badge badge-primary">Private</span>
+                  <span class="badge badge-warning">Private</span>
                 @endif
                 </td>
+                <td>
+                  @if($exam->active==1)
+                <span class="badge badge-secondary">Inactive</span>
+                @else
+                  <span class="badge badge-success">Active</span>
+                @endif
                 <td>{{ ($exam->created_at) ? $exam->created_at->diffForHumans() : '' }}</td>
               </tr>
               @endforeach      
