@@ -1,5 +1,5 @@
 @extends('layouts.plain')
-@section('title', 'Digital Certificate - '.$user->name.' | Xplore')
+@section('title', 'Digital Certificate - '.$user->name.' ')
 @section('content')
 <div style="background: #f8f8f8; height:100%">
 	<div class="p-3">

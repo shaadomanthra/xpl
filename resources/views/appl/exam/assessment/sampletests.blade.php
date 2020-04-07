@@ -1,5 +1,5 @@
 @extends('layouts.app2')
-@section('title', 'Sample Tests | Xplore')
+@section('title', 'Sample Tests ')
 @section('description', 'A right recruitment assessment tool makes the mundane tasks of recruitment easier by assessing..')
 @section('keywords', 'Sample assessments')
 @section('content')

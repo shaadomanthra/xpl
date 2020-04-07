@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Solutions - '.$exam->name.' - '.\auth::user()->name.' | Xplore')
+@section('title', 'Solutions - '.$exam->name.' - '.\auth::user()->name.' ')
 @section('content')
 
 <nav aria-label="breadcrumb">

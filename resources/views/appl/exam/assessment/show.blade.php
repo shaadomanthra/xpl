@@ -1,5 +1,5 @@
 @extends('layouts.app-border')
-@section('title', $exam->name.' | Xplore')
+@section('title', $exam->name.' ')
 @section('description', substr(strip_tags($exam->description),0,200))
 @section('content')
 

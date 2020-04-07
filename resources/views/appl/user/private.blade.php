@@ -1,4 +1,5 @@
 @extends('layouts.nowrap')
+@section('title', $user->name.' - Private Profile')
 @section('content')
 
 <div  class="row ">

@@ -1,6 +1,6 @@
 @extends('layouts.nowrap')
 
-@section('title', 'Forgot Password | Xplore')
+@section('title', 'Forgot Password ')
 @section('description', 'Forgot password reset via sms for xplore')
 @section('content')
 @include('flash::message') 

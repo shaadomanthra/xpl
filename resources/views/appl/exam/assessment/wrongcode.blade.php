@@ -1,6 +1,6 @@
 @extends('layouts.app-border')
 
-@section('title', 'Restricted Access to Content | Xplore')
+@section('title', 'Restricted Access to Content ')
 @section('content')
 
 

@@ -70,7 +70,7 @@
     context.fillStyle = "#AAA";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    var data = canvas.toDataURL('image/png');
+    var data = canvas.toDataURL('image/jpeg',0.5);
     photo.setAttribute('src', data);
   }
   

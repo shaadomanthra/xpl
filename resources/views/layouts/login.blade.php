@@ -12,7 +12,13 @@
       <title>@yield('title')</title>
       <!-- Styles -->
       <link href="{{ asset('css/styles.css') }}?new=2" rel="stylesheet">
-      <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+      
+      @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+  <link rel="shortcut icon" href="{{asset('/faviconpp.ico')}}" />
+  @else
+  <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+  @endif
+  
     </head>
     <body>
       <div  style="max-width:400px;margin:0px auto;">

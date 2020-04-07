@@ -6,8 +6,9 @@
               <tr>
                 <th scope="col">#({{$exams->total()}})</th>
                 <th scope="col">Test </th>
+                <th scope="col">Participants </th>
                 <th scope="col">Status</th>
-                <th scope="col">Created at</th>
+                <th scope="col">Created </th>
               </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                   {{ $exam->name }}
                   </a>
                 </td>
+                <td>{{ $exam->getUserCount() }}</td>
                 <td>
                   @if($exam->status==0)
                 <span class="badge badge-warning">Draft</span>

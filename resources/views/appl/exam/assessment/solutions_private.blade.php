@@ -1,5 +1,5 @@
 @extends('layouts.app-border')
-@section('title', 'Solutions - '.$exam->name.' - '.\auth::user()->name.' | Xplore')
+@section('title', 'Solutions - '.$exam->name.' - '.\auth::user()->name.' ')
 @section('content')
 
 

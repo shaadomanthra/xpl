@@ -1,6 +1,6 @@
 @extends('layouts.nowrap')
 
-@section('title', 'Register Type | Xplore')
+@section('title', 'Register Type ')
 @section('description', 'Different registration types for the xplore users.')
 @section('content')
 

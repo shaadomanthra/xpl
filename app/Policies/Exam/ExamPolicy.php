@@ -50,7 +50,7 @@ class ExamPolicy
      */
     public function edit(User $user,Exam $exam)
     { 
-        if($user->checkRole(['administrator','data-manager'])){
+        if($user->checkRole(['administrator','data-manager','hr-manager'])){
             if($exam->user_id==$user->id )
                 return true;
             else
@@ -67,9 +67,16 @@ class ExamPolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function update(User $user)
+    public function update(User $user,Exam $exam)
     { 
-        return $user->checkRole(['administrator','data-manager']);
+        if($user->checkRole(['administrator','data-manager','hr-manager'])){
+            if($exam->user_id==$user->id )
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
     }
 
 
