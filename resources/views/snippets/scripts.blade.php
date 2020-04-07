@@ -681,6 +681,9 @@ var x = setInterval(function() {
 function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
+
+
+
 </script>
 @endif
 
@@ -766,6 +769,21 @@ var x = setInterval(function() {
 function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
+
+ 
+
+ // Inactive
+ window.addEventListener('blur', stopTimer);
+
+
+
+ // Stop timer
+ function stopTimer() {
+  var count = parseInt(document.getElementById("window_change").value) +1;
+  alert('We have noticed a window swap ('+count+'). Kindly note that multiple swaps will lead to cancellation of the test.');
+  document.getElementById("window_change").value = count;
+ }
+
 </script>
 
 @endif

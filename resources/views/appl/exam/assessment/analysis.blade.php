@@ -6,7 +6,6 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('assessment.index') }}">Online Tests</a></li>
     <li class="breadcrumb-item">{{ ucfirst($exam->name) }} </li>
     <li class="breadcrumb-item">Analysis </li>
   </ol>

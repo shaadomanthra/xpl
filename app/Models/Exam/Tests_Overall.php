@@ -17,7 +17,8 @@ class Tests_Overall extends Model
         'score',
         'time',
         'code',
-        'status'
+        'status',
+        'window_change'
     ];
 
     public function user(){

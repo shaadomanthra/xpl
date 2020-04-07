@@ -63,6 +63,7 @@
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="test_id" value="{{ $exam->id }}">
         <input type="hidden" name="code" value="{{ request()->get('code') }}">
+        <input type="hidden" name="window_change" value="0" id="window_change">
         <button type="submit" class="btn  btn-warning " data-submit="1">
            I confirm, End Test
         </button>

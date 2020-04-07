@@ -386,7 +386,13 @@ class ExamController extends Controller
             $exam->examtype_id = $request->examtype_id;
             $exam->description = ($request->description) ? $request->description: null;
             $exam->instructions = ($request->instructions) ? $request->instructions : null;
+
+            $exam->emails = ($request->emails) ? $request->emails : null;
+            $exam->active = $request->active;
+            $exam->camera = $request->camera;
             $exam->status = $request->status;
+            $exam->solutions = $request->solutions;
+
             $exam->code = strtoupper($request->code);
             $exam->save(); 
 
@@ -554,6 +560,7 @@ class ExamController extends Controller
             }
            
 
+            //dd($request->all());
             $exam->name = $request->name;
             $exam->slug = $request->slug;
             $exam->user_id = $request->user_id;
@@ -566,6 +573,9 @@ class ExamController extends Controller
             if($request->image)
             $exam->image = $request->image;
             $exam->solutions = $request->solutions;
+            $exam->emails = ($request->emails) ? $request->emails : null;
+            $exam->active = $request->active;
+            $exam->camera = $request->camera;
             $exam->code = strtoupper($request->code);
             $exam->save(); 
 

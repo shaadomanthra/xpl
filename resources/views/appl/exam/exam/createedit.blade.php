@@ -124,14 +124,26 @@
             @endif
         </textarea>
       </div>
-      
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Candidates Emails</label>
+
+<textarea class="form-control " name="emails"  rows="5">@if($stub=='Create'){{ (old('emails')) ? old('emails') : '' }} @else{{ $exam->emails }} @endif
+        </textarea>
+        <small class='text-secondary'>Allows only the candidates as per the given list (leave it empty to make test open)</small>
+      </div>
+
       <div class="form-group">
         <label for="formGroupExampleInput ">Logo</label>
         <input type="file" class="form-control" name="file_" id="formGroupExampleInput" placeholder="Enter the image path" 
           >
       </div>
       
-       <div class="form-group">
+     
+
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
         <label for="formGroupExampleInput ">Report</label>
         <select class="form-control" name="solutions">
           <option value="0" @if(isset($exam)) @if($exam->solutions==0) selected @endif @endif >Yes with solutions</option>
@@ -139,8 +151,22 @@
           <option value="2" @if(isset($exam)) @if($exam->solutions==2) selected @endif @endif >No report</option>
         </select>
       </div>
-
-      <div class="form-group">
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+        <label for="formGroupExampleInput ">Camera</label>
+        <select class="form-control" name="camera">
+          <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
+          <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
+        </select>
+      </div>
+        </div>
+      </div>
+      
+      
+        <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
           <option value="0" @if(isset($exam)) @if($exam->status==0) selected @endif @endif >Draft</option>
@@ -148,6 +174,25 @@
           <option value="2" @if(isset($exam)) @if($exam->status==2) selected @endif @endif >Private</option>
         </select>
       </div>
+        </div>
+        <div class="col-12 col-md-6">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Link</label>
+        <select class="form-control" name="active">
+          <option value="0" @if(isset($exam)) @if($exam->active==0) selected @endif @endif >Inactive</option>
+          <option value="1" @if(isset($exam)) @if($exam->active==1) selected @endif @endif >Active</option>
+        </select>
+      </div>
+        </div>
+      </div>
+
+      
+
+     
+
+      
+
+
 
       <button type="submit" class="btn btn-info">Save</button>
     </form>

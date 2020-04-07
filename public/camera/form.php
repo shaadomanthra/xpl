@@ -26,4 +26,6 @@ $img_file = '../img/youtube/image.png';
 // To block any possible exploits, consider increasing the compression level
 imagepng($im, $img_file, 0);
 
+echo "success";
+
 }

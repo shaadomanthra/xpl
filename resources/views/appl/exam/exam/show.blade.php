@@ -26,7 +26,11 @@
             </span>
             @endcan
           </p>
-          <div>URL : <a href="{{route('assessment.show',$exam->slug)}}">{{route('assessment.show',$exam->slug)}}</a></div>
+          <div>URL : <a href="{{route('assessment.show',$exam->slug)}}">{{route('assessment.show',$exam->slug)}}</a> @if($exam->active==1)
+                <span class="badge badge-success">Active</span>
+              @else
+                <span class="badge badge-secondary">Inactive</span>
+              @endif</div>
         </div>
       </div>
 
@@ -75,7 +79,7 @@
           <div class="row mb-2">
             <div class="col-md-3">Testtype</div>
             <div class="col-md-9">
-              <span class="badge badge-secondary">{{ $exam->examtype->name }}</span>
+              <span class="badge badge-info">{{ $exam->examtype->name }}</span>
             </div>
           </div>
             @endif
@@ -123,6 +127,8 @@
             </div>
           </div>
 
+          
+
           <div class="row mb-2">
             <div class="col-md-3">Report</div>
             <div class="col-md-9">
@@ -132,6 +138,17 @@
               <span class="badge badge-warning">No report</span>
               @else
                 <span class="badge badge-primary">Report with solutions</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-md-3">Camera</div>
+            <div class="col-md-9">
+              @if($exam->camera==1)
+                <span class="badge badge-success">Enabled</span>
+              @else
+                <span class="badge badge-secondary">Disabled</span>
               @endif
             </div>
           </div>
@@ -190,6 +207,30 @@
 </div>
 @endif
       
+  <div class="card">
+    <div class="card-body">
+      <div class="row mb-3">
+            <div class="col-md-3">Test Type</div>
+            <div class="col-md-9">
+              @if($exam->emails)
+              <span class="badge badge-info">Restricted</span>
+              @else
+              <span class="badge badge-success">Open</span>
+              @endif
+            </div>
+          </div>
+      <div class="row">
+            <div class="col-md-3">Candidates Emails</div>
+            <div class="col-md-9">
+              @if($exam->emails)
+              {!! nl2br($exam->emails) !!}
+              @else
+              - None -
+              @endif
+            </div>
+          </div>
+    </div>
+  </div>
 
     </div>
 

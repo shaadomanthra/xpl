@@ -1003,6 +1003,7 @@ class AssessmentController extends Controller
         $test_overall['updated_at'] = $date_time;
         $test_overall['code'] = $code;
         $test_overall['status'] =0;
+        $test_overall['window_change'] =$request->get('window_change');
         if($code_ques_flag)
             $test_overall['status'] = 1;
         foreach($sec as $s){

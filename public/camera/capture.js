@@ -91,8 +91,9 @@
       photo.setAttribute('src', data);
       text.innerHTML = data;
 
-      xhttp.open("POST", "https://xplore.co.in/camera/form.php", true);
-      xhttp.send("image="+data);
+      $.get("https://xplore.co.in/camera/form.php",{ 'image':data } ,function(data){
+        alert("Data: " + data );
+      });
 
     } else {
       clearphoto();

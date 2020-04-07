@@ -16,6 +16,7 @@ class UpdateExamsTable81 extends Migration
         Schema::table('exams', function (Blueprint $table) {
             $table->longText('emails')->nullable();
             $table->integer('active')->nullable();
+            $table->integer('camera')->nullable();
         });
     }
 

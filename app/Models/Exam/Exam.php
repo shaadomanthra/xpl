@@ -23,6 +23,9 @@ class Exam extends Model
         'course_id',
         'solutions',
         'image',
+        'emails',
+        'active',
+        'camera',
         // add all other fields
     ];
     
