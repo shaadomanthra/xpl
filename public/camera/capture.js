@@ -99,7 +99,7 @@ var formData = new FormData();
 formData.append('image', blob);
 $.ajax({
     url: url, 
-    type: "POST", 
+    type: "GET", 
     cache: false,
     contentType: false,
     processData: false,
