@@ -95,6 +95,10 @@
       var image = $('#photo').attr('src');
       var formData = new FormData();
     formData.append('image', image);
+    $.get( url, {'image':image},function( data ) {
+  alert( "Load was performed."+data );
+});
+    /*
       $.ajax({
     url: url, 
     type: "GET", 
@@ -104,7 +108,7 @@
     data: formData})
         .done(function(e){
             alert('done!');
-        }); 
+        });  */
 
 /*
       var url = 'https://xplore.co.in/img/upload/file';
