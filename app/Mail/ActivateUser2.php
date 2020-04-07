@@ -29,6 +29,6 @@ class ActivateUser2 extends Mailable
      */
     public function build()
     {
-        return $this->subject('Xplore - Account Details')->markdown('mail.activateuser2');
+        return $this->subject('Account Details')->markdown('mail.activateuser2');
     }
 }

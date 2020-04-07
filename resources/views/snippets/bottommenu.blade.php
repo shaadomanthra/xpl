@@ -16,46 +16,46 @@
 	<div class="col-6 col-md">
         <h5>PacketPrep</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="{{url('/about-corporate')}}">About</a></li>
-          <li><a class="text-muted" href="{{url('/productpage')}}">Products</a></li>
-          <li><a class="text-muted" href="{{url('/blog')}}">Blog</a></li>
-          <li><a class="text-muted" href="{{url('/contact-corporate')}}">Contact</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/about-corporate')}}">About</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/productpage')}}">Products</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/blog')}}">Blog</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/contact-corporate')}}">Contact</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
         <h5>Programs</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="{{url('/gigacode')}}">GigaCode</a></li>
-          <li><a class="text-muted" href="{{url('/bootcamp')}}">Coding Bootcamp</a></li>
-          <li><a class="text-muted" href="{{url('/firstacademy')}}">GRE & IELTS</a></li>
-          <li><a class="text-muted" href="{{url('/targettcs')}}">Target TCS</a></li>
-          <li><a class="text-muted" href="{{url('/projects')}}"> Btech Projects</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/gigacode')}}">GigaCode</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/bootcamp')}}">Coding Bootcamp</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/firstacademy')}}">GRE & IELTS</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/targettcs')}}">Target TCS</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/projects')}}"> Btech Projects</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
         <h5>Connect</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="{{url('/sreferral')}}">Referrals</a></li>
-          <li><a class="text-muted" href="{{url('/ambassador')}}">Internship</a></li>
-          <li><a class="text-muted" href="{{url('/job/parttime')}}">Parttime Job</a></li>
-          <li><a class="text-muted" href="{{url('/group')}}">WhatsApp Group</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/sreferral')}}">Referrals</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/ambassador')}}">Internship</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/job/parttime')}}">Parttime Job</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/group')}}">WhatsApp Group</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
         <h5>Resources</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="{{url('/course')}}">Courses</a></li>
-          <li><a class="text-muted" href="{{url('/test')}}">Tests</a></li>
-          <li><a class="text-muted" href="{{url('/proficiency-test')}}">Proficiency Test</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/course')}}">Courses</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/test')}}">Tests</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/proficiency-test')}}">Proficiency Test</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
         <h5>More</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="{{url('/terms-corporate')}}">Terms</a></li>
-          <li><a class="text-muted" href="{{url('/privacy')}}">Privacy</a></li>
-          <li><a class="text-muted" href="{{url('/refund')}}">Refund and Cancellation</a></li>
-          <li><a class="text-muted" href="{{url('/disclaimer')}}">Disclaimer</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/terms-corporate')}}">Terms</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/privacy')}}">Privacy</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/refund')}}">Refund and Cancellation</a></li>
+          <li><a class="text-muted" href="{{url('https://packetprep.com/disclaimer')}}">Disclaimer</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">

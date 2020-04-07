@@ -113,6 +113,54 @@
 </div>
 @endif
 
+@if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+
+
+@if(count(\auth::user()->tests())!=0)
+  <div class="rounded table-responsive ">
+            <table class="table table-bordered bg-white">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">My Tests</th>
+                  <th scope="col">Score</th>
+                  <th scope="col">Attempted</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach(\auth::user()->tests() as $k=>$test)
+                 <tr>
+                  <th scope="row">{{ $k+1}}</th>
+                  <td>
+                    <a href="{{ route('assessment.details',$test->slug) }}">{{$test->name}}</a>
+                  </td>
+                  <td>
+                    @if(!$test->attempt_status)
+                    {{$test->score}} / {{$test->max}}
+                    @else
+                     -
+                    @endif
+                  </td>
+                  <td>{{date('d M Y', strtotime($test->attempt_at))}}</td>
+                  <td> 
+                      @if(!$test->attempt_status)
+                      <span class="badge badge-success">Active</span>
+                      @else
+                      <span class="badge badge-warning">Processing</span>
+                      @endif
+                    
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+            </div>
+  <br><br>
+        @endif
+
+
+@else
   @if(count(auth::user()->products)!=0)
   <div class="rounded table-responsive bg-white">
             <table class="table table-bordered ">
@@ -158,7 +206,7 @@
             </div>
   <br><br>
         @endif
-
+@endif
 
   </div>
 

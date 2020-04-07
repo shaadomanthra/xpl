@@ -294,7 +294,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('sregister','Product\AdminController@sstudentregister')->name('student.sregister');
 
 	Route::get('register/type',function () { 
-
+		if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+			return Redirect::to('/register');
+		else
 		return Redirect::to('/eregister'); 
 			})->name('register.type');
 

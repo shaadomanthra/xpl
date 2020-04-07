@@ -1,6 +1,6 @@
 
 @component('mail::message')
-# Hi {{$user['name']}}!, Welcome to Xplore.
+# Hi {{$user['name']}}!,
 
 Your registered email-id is {{$user['email']}} <br>
 

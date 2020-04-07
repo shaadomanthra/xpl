@@ -125,6 +125,26 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\Product\Product')->withPivot('status','validity','created_at','valid_till');
     }
 
+    public function tests(){
+        $attempts = DB::table('tests_overall')
+                ->where('user_id', \auth::user()->id)
+                ->orderBy('id','desc')
+                ->get();
+        $test_idgroup = $attempts->groupby('test_id');
+        $test_ids = $attempts->pluck('test_id');
+        $tests = DB::table('exams')
+                ->whereIn('id', $test_ids)
+                ->orderBy('id','desc')
+                ->get();
+        foreach($tests as $k=>$t){
+            $tests[$k]->attempt_at = $test_idgroup[$t->id][0]->created_at;
+            $tests[$k]->score = $test_idgroup[$t->id][0]->score;
+            $tests[$k]->max = $test_idgroup[$t->id][0]->max;
+            $tests[$k]->attempt_status = $test_idgroup[$t->id][0]->status;
+        }
+        return $tests;
+    }
+
     public function productvalid($slug){
         $product_id = Product::where('slug',$slug)->first()->id;
         $user_id = \auth::user()->id;

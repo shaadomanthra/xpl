@@ -1,14 +1,14 @@
 
 @component('mail::message')
-# Hi {{$user['name']}}!, Welcome to Xplore.
+# Hi {{$user['name']}}!, 
 
 Your registered email-id is {{$user['email']}} <br>
 
 @component('mail::panel')
 Username : <b>{{$user['username']}}</b><br>
-Url : <a href="https://xplore.co.in">xplore.co.in/login</a>
+Url : <a href="{{$_SERVER['HTTP_HOST']}}">{{$_SERVER['HTTP_HOST']}}</a>
 @endcomponent
 
 Thanks,<br>
-Xplore
+Web Admin
 @endcomponent

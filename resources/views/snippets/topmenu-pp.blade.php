@@ -19,9 +19,6 @@
     </ul>
     <ul class="navbar-nav ml-auto mt-4 mt-lg-0">
         @guest
-        <li class="mr-3 "><a class="nav-link " href="{{ url('test') }}" aria-label="Wipro NTH 2020"><i class="fa fa-ravelry"></i> Tour</a></li>
-
-                        <li class="mr-3 "><a class="nav-link " href="{{ url('job') }}" aria-label="Wipro NTH 2020"><i class="fa fa-rupee"></i> Pricing</a></li>
         @else
 
 
@@ -29,7 +26,12 @@
             ><i class="fa fa-dashboard"></i>
             Dashboard
         </a></li>
+        @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
         <li class="mr-3 "><a class="nav-link " href="{{ url('exam') }}" aria-label="Tests"><i class="fa fa-inbox"></i> Tests</a></li>
+        @else
+        @endif
+
+        
 
         @endguest
        
@@ -65,10 +67,7 @@
 
 
 
-        <a class="dropdown-item"  href="{{ route('order.transactions') }}"
-        >
-        Transactions
-    </a>
+       
     <a class="dropdown-item"  href="{{ route('logout') }}"
     onclick="event.preventDefault();
     document.getElementById('logout-form').submit();">
