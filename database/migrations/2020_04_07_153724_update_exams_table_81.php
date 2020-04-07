@@ -13,7 +13,10 @@ class UpdateExamsTable81 extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('exams', function (Blueprint $table) {
+            $table->longText('emails')->nullable();
+            $table->integer('active')->nullable();
+        });
     }
 
     /**

@@ -13,7 +13,9 @@ class UpdateTestsOverall81 extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('tests_overall', function (Blueprint $table) {
+            $table->integer('window_change')->nullable();
+        });
     }
 
     /**
