@@ -4,6 +4,7 @@ namespace PacketPrep\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Youtube;
+use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
 {
@@ -72,9 +73,18 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function imageupload(Request $request)
     {
-        //
+        $request = request();
+        echo request()->get('testcase'); 
+         $image = $request->image;  // your base64 encoded
+        $image = str_replace('data:image/jpeg;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+        echo substr($image,0,10);
+        $file      = $request->all()['image'];
+        $filename = 'image.jpg';
+        $path = Storage::disk('public')->putFileAs('articles', base64_decode($image),$filename);
+        echo $path;
     }
 
     /**
