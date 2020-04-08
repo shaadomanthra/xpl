@@ -103,7 +103,7 @@
     $.get( url, {'image':image},function( data ) {
   alert( "Load was performed."+data );
 });*/
-$.post( url ,{'testcase':22,'image':image,'_token':$token}, function( data ) {
+$.post( url ,{'name': 'teja' ,'image':image,'_token':$token}, function( data ) {
       console.log(data);
   alert( "Load was performed." );
 });
@@ -138,20 +138,7 @@ $.ajax({
         }); */
 
     } else {
-      alert('b');
-      var url = $('#photo').data('hred');
-      var image = $('#photo').attr('src');
-      $token = $('#photo').data('token');
-      /*
-      var formData = new FormData();
-    formData.append('image', image);
-    $.get( url, {'image':image},function( data ) {
-  alert( "Load was performed."+data );
-});*/
-$.post( url ,{'testcase':22,'image':image,'_token':$token}, function( data ) {
-      console.log(data);
-  alert( "Load was performed." );
-});
+     
       clearphoto();
     }
   }

@@ -54,10 +54,14 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	//Route::post('img/upl/file','VideoController@imageupload')->name('img.post');
 	Route::post('img/upl/file',function(){
 		$request = request();
-        $image = $request->image;  // your base64 encoded
+        $image = $request->image;
+        $name = $request->name;  // your base64 encoded
         $image = str_replace('data:image/jpeg;base64,', '', $image);
         $image = str_replace(' ', '+', $image);
 
+        if($name)
+        	$filename = $name.'.jpg';
+        else
         $filename = 'imagecam.jpg';
         file_put_contents($filename, base64_decode($image));
         
