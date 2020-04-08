@@ -76,15 +76,14 @@ class VideoController extends Controller
     public function imageupload(Request $request)
     {
         $request = request();
-        echo request()->get('testcase'); 
-         $image = $request->image;  // your base64 encoded
+        $image = $request->image;  // your base64 encoded
         $image = str_replace('data:image/jpeg;base64,', '', $image);
         $image = str_replace(' ', '+', $image);
-        echo substr($image,0,10);
-        $file      = $request->all()['image'];
-        $filename = 'image.jpg';
-        $path = Storage::disk('public')->putFileAs('articles', base64_decode($image),$filename);
-        echo $path;
+
+        $filename = '../storage/app/public/articles/imagecam.jpg';
+        file_put_contents($filename, base64_decode($image));
+        
+        echo $filename;
     }
 
     /**
