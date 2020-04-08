@@ -50,6 +50,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/stopdocker','Product\EditorController@stop')->name('stop');
 	Route::get('/removedocker','Product\EditorController@remove')->name('remove');
 
+	Route::get('img/upl','HomeController@imageupload')->name('img.upl');
+	Route::get('img/upl/file','HomeController@iupload')->name('img.post');
+	
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
@@ -397,8 +400,6 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('exam/{exam}/passage','Dataentry\PassageController@exam')->middleware('auth')->name('exam.passages');
 	Route::get('exam/{exam}/passage/{id}','Dataentry\PassageController@exam')->middleware('auth')->name('exam.passage');
 
-	Route::get('img/upl','HomeController@imageupload')->name('img.upl');
-	Route::get('img/upl/file','HomeController@imageupload')->name('img.post');
 	
 
 	Route::get('certificate/brandpromoter/{user}','User\UserController@certificate')->name('certificate.brandpromoter');

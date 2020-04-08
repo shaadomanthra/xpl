@@ -805,6 +805,11 @@ function addMinutes(date, minutes) {
 </script>
 @endif
 
+@if(isset($camera))
+<script src="{{ asset('js/capture.js') }}">
+  </script>
+@endif
+
 @if(isset($welcome))
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
 <script type="text/javascript">

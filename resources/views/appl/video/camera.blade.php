@@ -2,8 +2,7 @@
 @section('title', 'Upload Video | Xplore')
 @section('content')
 
-	<script src="{{ asset('js/capture.js') }}">
-	</script>
+	
 <div class="bg-white p-3 border rounded">
 	
 <div class="contentarea">

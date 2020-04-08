@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function __construct()
     {
         // this is a sample comment
-        $this->middleware('auth');
+        
     }
 
     /**
@@ -24,11 +24,14 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
+        $this->middleware('auth');
         return view('home');
     }
 
     public function imageupload(Request $request){
+
         //dd($request->all());
         if(count($request->all())){
             echo 'one';dd();
@@ -47,7 +50,33 @@ class HomeController extends Controller
         echo $path;*/
         }else
         {
-            return view('appl.video.camera');
+            return view('appl.video.camera')->with('camera',1);
+        }
+
+    }
+
+     public function iupload(Request $request){
+        echo 'apple';
+        dd();
+        //dd($request->all());
+        if(count($request->all())){
+            echo 'one';dd();
+            $image = $request->image;  // your base64 encoded
+        $image = str_replace('data:image/jpeg;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+
+        $file      = $request->all()['image'];
+        $filename = 'image.'.$file->getClientOriginalExtension();
+        $path = Storage::disk('public')->putFileAs('articles', base64_decode($image),$filename);
+        echo $path;
+            /*
+        $file      = $request->all()['image'];
+        $filename = 'image.'.$file->getClientOriginalExtension();
+        $path = Storage::disk('public')->putFileAs('articles', $request->file('image'),$filename);
+        echo $path;*/
+        }else
+        {
+            return view('appl.video.camera')->with('camera',1);
         }
 
     }
