@@ -59,7 +59,7 @@ $.ajax({
           url : url,
           data:{'testcase':'1'},
           success:function(data){
-            data = JSON.parse(data);
+            alert(data);
             }
           });
     }
