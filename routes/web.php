@@ -57,7 +57,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         $image = str_replace('data:image/jpeg;base64,', '', $image);
         $image = str_replace(' ', '+', $image);
 
-        $filename = 'imagecam.jpg';
+        $filename = '../storage/app/public/articles/imagecam.jpg';
         file_put_contents($filename, base64_decode($image));
         
         echo $filename;
