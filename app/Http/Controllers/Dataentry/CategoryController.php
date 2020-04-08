@@ -1,6 +1,6 @@
 <?php
 
-namespace PacketPrep\Http\Controllers\dataentry;
+namespace PacketPrep\Http\Controllers\Dataentry;
 
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
