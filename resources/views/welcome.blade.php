@@ -5,38 +5,7 @@
 @section('content')
 <style>
 
-.bg-p {
-  background-position: bottom;
-  animation: 20s linear 0s infinite bp;
-  align-items: center;
-  justify-content: center;
-}
 
-@keyframes bp {
-  from {
-    background-position:  198px 0;
-  }
-  
-  to {
-    background-position:  0 198px;
-  }
-}
-
-.heading_one{
-	color:#3155b8;
-	font-family: 'Montserrat', sans-serif;
-	font-weight: 900;
-	line-height: 1.2;
-	font-size:60px;
-}
-
-
-.heading_two{
-	color:#3155b8;
-	font-family: 'Montserrat';
-	font-size:40px;
-	font-weight: 500;
-}
 
 </style>
 <div class="p-3 bg-p text-center" style="color:#fff;background-color:#f6f9ff;background-image: url({{asset('img/colors/star2.png')}});">

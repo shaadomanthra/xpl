@@ -13,6 +13,39 @@
   font-style: normal;
 }
 
+.bg-p {
+  background-position: bottom;
+  animation: 20s linear 0s infinite bp;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes bp {
+  from {
+    background-position:  198px 0;
+  }
+  
+  to {
+    background-position:  0 198px;
+  }
+}
+
+.heading_one{
+    color:#3155b8;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    line-height: 1.2;
+    font-size:60px;
+}
+
+
+.heading_two{
+    color:#3155b8;
+    font-family: 'Montserrat';
+    font-size:40px;
+    font-weight: 500;
+}
+
  html, body {
                 background-color: #fff;
                 font-weight: 400;
