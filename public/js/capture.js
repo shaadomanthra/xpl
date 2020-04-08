@@ -25,41 +25,23 @@ $(document).ready(function() {
   function takepicture1() {
 
     if (width && height) {
-      alert('a');
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(video, 0, 0, width, height);
-    
-      var data = canvas.toDataURL('image/jpeg',0.5);
-      photo.setAttribute('src', data);
-      text.innerHTML = data;
-
-      var url = $('#photo').data('url');
-      var image = $('#photo').attr('src');
-      $token = $('#photo').data('token');
-
-$.ajax({
-          type : 'get',
-          url : url,
-          data:{'testcase':'1','_token':$token},
-          success:function(data){
-            data = JSON.parse(data);
-            }
-          });
+      
 
 
     } else {
       alert('b');
-      var url = 'https://hire.packetprep.com/course';
+      var url = $('#photo').data('hred');
       var image = $('#photo').attr('src');
       $token = $('#photo').data('token');
+      console.log(url);
 
     $.ajax({
           type : 'get',
           url : url,
           data:{'testcase':'1'},
           success:function(data){
-            alert(data);
+            console.log(data);
+            alert('a');
             }
           });
     }

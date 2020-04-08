@@ -19,7 +19,7 @@
   <canvas id="canvas">
   </canvas>
   <div class="output">
-    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-url="{{ route('img.post') }}"> 
+    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}"> 
   </div>
   <div id="text"></div>
 	<p>
