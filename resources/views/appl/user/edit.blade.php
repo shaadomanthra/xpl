@@ -243,6 +243,9 @@
       <div class="form-group">
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+        <input type="hidden" minlength="1" class="form-control" name="video"  value="{{ $user->video }}">
+        @endif
       </div>
       <button type="submit" class="btn btn-info">Update</button>
     </form>

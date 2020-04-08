@@ -58,6 +58,10 @@
                 <th scope="row">{{$key+1 }}</th>
                 <td>
                   <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}">{{ $r->user->name }}</a>
+
+                  @if($r->user->personality)
+                    <i class="fa fa-check-circle text-success"></i>
+                  @endif
                   
                 </td>
                 <td>

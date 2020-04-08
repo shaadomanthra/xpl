@@ -185,7 +185,7 @@
 </div>
 
 @if(\Auth::user())
-@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
 <div class="row mb-3">
 
