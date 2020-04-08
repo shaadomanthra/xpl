@@ -51,7 +51,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/removedocker','Product\EditorController@remove')->name('remove');
 
 	Route::get('img/upl','HomeController@imageupload')->name('img.upl');
-	Route::post('img/upl/file','VideoController@imageupload')->name('img.post');*/
+	Route::post('img/upl/file','VideoController@imageupload')->name('img.post');
 	/*Route::post('img/upl/file',function(){
 		$request = request();
         $image = $request->image;  // your base64 encoded
