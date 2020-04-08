@@ -8,7 +8,7 @@
 
 
 </style>
-<div class="p-3 bg-p text-center" style="color:#fff;background-color:#f6f9ff;background-image: url({{asset('img/colors/star2.png')}});">
+<div class="p-3 bg-p text-center" style="background-color:#f6f9ff;background-image: url({{asset('img/colors/star2.png')}});">
 <div class="container" style="">
 <div class="p-3 p-md-5"></div>
     <div class="heading_one  text-center" >

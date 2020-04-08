@@ -11,7 +11,7 @@
       <meta name="keywords" content="@yield('keywords')">
       <title>@yield('title')</title>
       <!-- Styles -->
-      <link href="{{ asset('css/styles.css') }}?new=2" rel="stylesheet">
+      <link href="{{ asset('css/styles.css') }}?new=11" rel="stylesheet">
       
       @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
   <link rel="shortcut icon" href="{{asset('/faviconpp.ico')}}" />
