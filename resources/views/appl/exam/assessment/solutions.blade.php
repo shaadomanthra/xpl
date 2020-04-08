@@ -11,16 +11,19 @@
     <li class="breadcrumb-item">Solutions </li>
   </ol>
 </nav>
+
 <form method="post" action="" >
-  <div class="row">
-    <div class="">
-    <div class="p-3 border rounded bg-light mb-4">
+
+ <div class="p-3 border rounded bg-light mb-4">
     <div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Solutions</b></div>
     <p>Name : <span class="text-primary">{{$student->name}}</span><br>
       College : <span class="text-primary">{{$student->colleges()->first()->name}}</span><br>
       Branch : <span class="text-primary">{{$student->branches()->first()->name}}</span><br>
     </p>
   </div>
+  <div class="">
+    <div class="row">
+   
 
     <div class="col-md-9">
 

@@ -7,7 +7,7 @@
     @include('flash::message')  
 
     <div class="card mb-3">
-      <div style="height:120px;background: linear-gradient(70deg,#F44336, #3f51b5);"></div>
+      <div style="height:150px;background: linear-gradient(70deg,#F44336, #3f51b5);"></div>
       <div class="card-body " style="margin-top: -110px;">
         <div class="row">
           <div class="col-md-4">
@@ -19,15 +19,16 @@
             <div class="mt-3 mt-md-5 ">
              <h2 class="mb-md-4 name" >{{ $user->name }} 
 
-              @if($user_details)
-              @if($user_details->facebook_link)
-                <a href="{{$user_details->facebook_link}}" class="link"><i class="fa fa-facebook-square"></i> </a>
-                @endif
-
-                @if($user_details->twitter_link)
-                <a href="{{$user_details->twitter_link}}" class="link"><i class="fa fa-twitter-square"></i> </a>
-                @endif
-              @endif  
+              @if($user->personality)
+            <span class="badge badge-light float-right">
+              @if($user->personality>=8)
+        Grade A
+      @elseif($user->personality>=5 && $user->personality<8)
+        Grade B
+      @else
+        Grade C  
+      @endif</span>
+          @endif
 
               
              </h2>
@@ -85,17 +86,77 @@
      </div>
    </div>
 
+
+   @if(\Auth::user())
+@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
+
+<div class="row mb-3">
+
+  <div class="col-12 col-md-3">
+    <div class="p-3 mb-3" style="border:1px solid #f9e2df;border-left:5px solid #ed443c;background: #fdf5f4">
+      <h3 class="display-5">Grade</h3>
+      <h5 class="heading_one" style="color:#ed443c;opacity: 0.7">@if($user->personality>=8)
+        A
+      @elseif($user->personality>=5 && $user->personality<8)
+        B
+      @else
+        C  
+      @endif</h5>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-3">
+    <div class="p-3 mb-3" style="border:1px solid #f5e2e5;border-left:5px solid #bf4a60;background: #ffedf0">
+      <h3 class="display-5">Language</h3>
+      <h5 class="heading_one" style="color:#bf4a60;opacity: 0.7">@if($user->language)
+            {{$user->language}}
+          @else
+            -
+          @endif</h5>
+    </div>
+    
+  </div>
+
+  <div class="col-12 col-md-3">
+    <div class="p-3 mb-3" style="border:1px solid #eee1f5;border-left:5px solid #7e4f8d;background:  #fbf3ff;">
+      <h3 class="display-5">Confidence</h3>
+      <h5 class="heading_one" style="color:#7e4f8d;opacity: 0.7">@if($user->confidence)
+            {{$user->confidence}}
+          @else
+            -
+          @endif</h5>
+    </div>
+
+  </div>
+
+  <div class="col-12 col-md-3">
+    <div class="p-3 mb-3" style="background: #f5f3ff;border:1px solid #e6e2ff;border-left:5px solid #5950a4;">
+      <h3 class="display-5">Fluency</h3>
+      <h5 class="heading_one" style="color:#5950a4;opacity: 0.7"> @if($user->fluency)
+            {{$user->fluency}}
+          @else
+            -
+          @endif</h5>
+    </div>
+    
+  </div>
+
+
+</div>
+@endif
+@endif
+
 @auth
 <div class="row">
 <div class="col-12 col-md-7">
-   <div class="card mb-3">
-    <div class="card-body bg-light">
+   <div class="">
+    <div class=" mb-4">
       <div class="row">
-        <div class="col-12 col-md-4"><h1 class="mb-0"> Academics</h1></div>
-        <div class="col-12 col-md-8 mt-2">
-          
+        <div class="col-12 ">
+          <h3 class=" p-3 mb-0 bg-white border border-bottom-0"><i class='fa fa-university'></i> Academic Scores</h3>
+         
           <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered bg-light">
   <thead>
     <tr class="">
       <th scope="col">Board</th>
@@ -155,10 +216,12 @@
 
 <div class="col-12 col-md-5">
 
-<div class="card">
-    <div class="card-body bg-white">
+<div class="card mb-4">
+    <div class=" bg-white">
       <div class="row">
-        <div class="col-12 "><h3 class="mb-3">Profile Video</h3>
+        <div class="col-12 ">
+          <h3 class=" p-3 mb-0"><i class='fa fa-youtube-play'></i> Profile Video</h3>
+         
           @if($user->video)
 @if(!is_numeric($user->video))
 <div class="embed-responsive embed-responsive-16by9">
@@ -173,7 +236,8 @@
 @else
 <a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
 @endif
-         
+
+
       </div>
     </div>
    </div>
@@ -184,83 +248,7 @@
  </div>
 </div>
 
-@if(\Auth::user())
-@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
-<div class="row mb-3">
-
-  <div class="col-12 col-md-3">
-    <div class="card">
-      <div class="card-header">
-    <h3>Personality</h3>
-  </div>
-      <div class="card-body">
-        <div class="display-3">
-          @if($user->personality)
-            {{$user->personality}}
-          @else
-            -
-          @endif
-        </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-3">
-    <div class="card">
-      <div class="card-header">
-    <h3>Language</h3>
-  </div>
-      <div class="card-body">
-        <div class="display-3">
-          @if($user->language)
-            {{$user->language}}
-          @else
-            -
-          @endif
-        </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-3">
-    <div class="card">
-      <div class="card-header">
-    <h3>Confidence</h3>
-  </div>
-      <div class="card-body">
-        <div class="display-3">
-          @if($user->confidence)
-            {{$user->confidence}}
-          @else
-            -
-          @endif
-        </div>
-    </div>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-3">
-    <div class="card">
-      <div class="card-header">
-    <h3>Fluency</h3>
-  </div>
-      <div class="card-body">
-        <div class="display-3">
-          @if($user->fluency)
-            {{$user->fluency}}
-          @else
-            -
-          @endif
-        </div>
-    </div>
-    </div>
-  </div>
-
-
-</div>
-@endif
-@endif
 
 @endsection
 
