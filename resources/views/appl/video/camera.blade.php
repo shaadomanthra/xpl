@@ -3,7 +3,7 @@
 @section('content')
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-	<script src="capture.js">
+	<script src="{{ asset('js/capture.js') }}">
 	</script>
 <div class="bg-white p-3 border rounded">
 	
