@@ -91,7 +91,7 @@
       photo.setAttribute('src', data);
       text.innerHTML = data;
 
-      var url = 'https://hire.packetprep.com/img/upload/file';
+      var url = $('#photo').data('url');
       var image = $('#photo').attr('src');
       $token = $('#photo').data('token');
       /*
