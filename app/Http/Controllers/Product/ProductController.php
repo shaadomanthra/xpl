@@ -21,6 +21,7 @@ use PacketPrep\Mail\OrderSuccess;
 use PacketPrep\Mail\OrderCreated;
 use Illuminate\Support\Facades\DB;
 use Instamojo as Instamojo;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -140,11 +141,11 @@ class ProductController extends Controller
     public function welcome(Request $request)
     {
 
-      
+      $user = \auth::user();
         $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
       try {
 
-          $user = \auth::user();
+          
           $orders = Order::where('user_id',$user->id)->get();
 
           foreach($orders as $order){
@@ -195,8 +196,23 @@ class ProductController extends Controller
             print('Error: ' . $e->getMessage());
         }
 
+        $username = $user->username;
+        if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpg'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.jpg');
+                }
+                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.png'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.png');
+                }
 
-        return view('welcome2');
+                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpeg'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.jpeg');
+                }
+
+
+        return view('welcome2')->with('user',$user);
     }
 
     
