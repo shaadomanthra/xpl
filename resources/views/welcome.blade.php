@@ -12,7 +12,7 @@
 <div class="container" style="">
 <div class="p-3 p-md-5"></div>
     <div class="heading_one  text-center" >
-    Now its the time to <br>hire the best
+    Now is the time to <br>hire the best
     </div>
     <div class="heading_two  mb-4 mt-3 text-center" >
    Choose from <span class="element" ></span> 

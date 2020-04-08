@@ -91,13 +91,23 @@
       photo.setAttribute('src', data);
       text.innerHTML = data;
 
-      var url = 'https://xplore.co.in/img/upload/file';
+      var url = 'https://hire.packetprep.com/img/upload/file';
       var image = $('#photo').attr('src');
+      $token = $('#photo').data('token');
+      /*
       var formData = new FormData();
     formData.append('image', image);
     $.get( url, {'image':image},function( data ) {
   alert( "Load was performed."+data );
-});
+});*/
+$.ajax({
+          type : 'post',
+          url : url,
+          data:{'testcase':'1','image':image,'_token':$token},
+          success:function(data){
+            data = JSON.parse(data);
+            }
+          });
     /*
       $.ajax({
     url: url, 

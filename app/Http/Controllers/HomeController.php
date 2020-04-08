@@ -45,7 +45,9 @@ class HomeController extends Controller
         $path = Storage::disk('public')->putFileAs('articles', $request->file('image'),$filename);
         echo $path;*/
         }else
-        echo "input image file missing";
+        {
+            return view('appl.video.camera');
+        }
 
     }
 }
