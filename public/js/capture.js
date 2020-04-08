@@ -103,7 +103,7 @@
 $.ajax({
           type : 'post',
           url : url,
-          data:{'testcase':'1','image':image,'_token':$token},
+          data:{'testcase':'1','_token':$token},
           success:function(data){
             data = JSON.parse(data);
             }
