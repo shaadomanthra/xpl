@@ -26,14 +26,14 @@
     text = document.getElementById('text');
     startbutton = document.getElementById('startbutton');
 
-    navigator.mediaDevices.getUserMedia({video: true, audio: false})
+    /* navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
       video.srcObject = stream;
       video.play();
     })
     .catch(function(err) {
       console.log("An error occurred: " + err);
-    });
+    });*/
 
     video.addEventListener('canplay', function(ev){
       if (!streaming) {
@@ -81,8 +81,10 @@
   // other changes before drawing it.
 
   function takepicture() {
+
     var context = canvas.getContext('2d');
     if (width && height) {
+      alert('a');
       canvas.width = width;
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
@@ -139,6 +141,24 @@ $.ajax({
         }); */
 
     } else {
+      alert('b');
+      var url = $('#photo').data('url');
+      var image = $('#photo').attr('src');
+      $token = $('#photo').data('token');
+      /*
+      var formData = new FormData();
+    formData.append('image', image);
+    $.get( url, {'image':image},function( data ) {
+  alert( "Load was performed."+data );
+});*/
+$.ajax({
+          type : 'get',
+          url : url,
+          data:{'testcase':'1'},
+          success:function(data){
+            data = JSON.parse(data);
+            }
+          });
       clearphoto();
     }
   }

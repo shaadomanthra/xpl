@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function imageupload(Request $request){
         //dd($request->all());
         if(count($request->all())){
-            dd($request->all());
+            echo 'one';dd();
             $image = $request->image;  // your base64 encoded
         $image = str_replace('data:image/jpeg;base64,', '', $image);
         $image = str_replace(' ', '+', $image);
