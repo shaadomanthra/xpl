@@ -80,7 +80,7 @@ class VideoController extends Controller
         $image = str_replace('data:image/jpeg;base64,', '', $image);
         $image = str_replace(' ', '+', $image);
 
-        $filename = '../storage/app/public/articles/imagecam.jpg';
+        $filename = 'imagecam.jpg';
         file_put_contents($filename, base64_decode($image));
         
         echo $filename;
