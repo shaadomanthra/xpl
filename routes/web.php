@@ -51,7 +51,17 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/removedocker','Product\EditorController@remove')->name('remove');
 
 	Route::get('img/upl','HomeController@imageupload')->name('img.upl');
-	Route::post('img/upl/file','VideoController@imageupload')->name('img.post');
+	Route::post('img/upl/file',function(){
+		$request = request();
+        $image = $request->image;  // your base64 encoded
+        $image = str_replace('data:image/jpeg;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+
+        $filename = 'imagecam.jpg';
+        file_put_contents($filename, base64_decode($image))
+        
+        echo $filename;
+	})->name('img.post');
 	
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
