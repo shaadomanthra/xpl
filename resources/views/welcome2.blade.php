@@ -58,7 +58,7 @@
       @if(auth::user())
       <div class="row mt-0 mt-mb-4">
         <div class="col-12 col-md-3">
-          <img class="img-thumbnail rounded-circle mb-3" src="@if($user->image) {{ ($user->image)}}@else {{ Gravatar::src($user->email, 150) }}@endif">
+          <img class="img-thumbnail rounded-circle mb-3" src="@if(\auth::user()->image) {{ (\auth::user()->image)}}@else {{ Gravatar::src($user->email, 150) }}@endif">
         </div>
         <div class="col-12 col-md-9">
 
