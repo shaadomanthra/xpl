@@ -19,6 +19,8 @@
             <div class="mt-3 mt-md-5 ">
              <h2 class="mb-md-4 name" >{{ $user->name }} 
 
+@if(\Auth::user())
+@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
               @if($user->personality)
             <span class="badge badge-light float-right">
               @if($user->personality>=8)
@@ -29,7 +31,8 @@
         Grade C  
       @endif</span>
           @endif
-
+@endif
+@endif
               
              </h2>
              @if($user_details)
@@ -90,6 +93,7 @@
    @if(\Auth::user())
 @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
+@if($user->personality)
 <div class="row mb-3">
 
   <div class="col-12 col-md-3">
@@ -99,8 +103,11 @@
         A
       @elseif($user->personality>=5 && $user->personality<8)
         B
+      @elseif($user->personality>=2 && $user->personality<5)
+        C 
       @else
-        C  
+        -
+
       @endif</h5>
     </div>
   </div>
@@ -143,6 +150,7 @@
 
 
 </div>
+@endif
 @endif
 @endif
 
@@ -234,7 +242,9 @@
 @endif
 
 @else
+<div class='p-3 bg-light'>
 <a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
+</div>
 @endif
 
 

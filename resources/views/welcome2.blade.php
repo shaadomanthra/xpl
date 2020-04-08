@@ -1,10 +1,10 @@
 @extends('layouts.nowrap-product')
 
-@section('title', 'Dashboard | Xplore')
+@section('title', 'Dashboard ')
 
-@section('description', 'Know you xplore products and services here.')
+@section('description', 'Know you tests')
 
-@section('keywords', 'quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills, bankpo, sbi po, ibps po, sbi clerk, ibps clerk, government job preparation, bank job preparation, campus recruitment training, crt, online lectures, gate preparation, gate lectures')
+@section('keywords', 'quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills')
 
 @section('content')
 

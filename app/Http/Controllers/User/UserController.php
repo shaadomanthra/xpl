@@ -238,7 +238,6 @@ class UserController extends Controller
 
         $user->save();
 
-
         //update user details
         $user_details->user_id = $user->id;
 
