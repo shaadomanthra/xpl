@@ -1,55 +1,4 @@
-$(document).ready(function() {
 
-  // Capture a photo by fetching the current contents of the video
-  // and drawing it into a canvas, then converting that to a PNG
-  // format data URL. By drawing it on an offscreen canvas and then
-  // drawing that to the screen, we can change its size and/or apply
-  // other changes before drawing it.
-
-  var width = 0;    // We will scale the photo width to this
-  var height = 0;     // This will be computed based on the input stream
-
-  // |streaming| indicates whether or not we're currently streaming
-  // video from the camera. Obviously, we start at false.
-
-  var streaming = false;
-
-  // The various HTML elements we need to configure or control. These
-  // will be set by the startup() function.
-
-  var video = null;
-  var canvas = null;
-  var photo = null;
-  var startbutton = null;
-
-  function takepicture1() {
-
-    if (width && height) {
-      
-
-
-    } else {
-      alert('b');
-      var url = $('#photo').data('hred');
-      var image = $('#photo').attr('src');
-      $token = $('#photo').data('token');
-      console.log(url);
-
-    $.ajax({
-          type : 'get',
-          url : url,
-          data:{'testcase':'1'},
-          success:function(data){
-            console.log(data);
-            alert('a');
-            }
-          });
-    }
-  }
-
-  setTimeout(function(){ takepicture1(); }, 3000);
-
-});
 (function() {
   // The width and height of the captured photo. We will set the
   // width to the value defined here, but the height will be
@@ -78,14 +27,14 @@ $(document).ready(function() {
     text = document.getElementById('text');
     startbutton = document.getElementById('startbutton');
 
-    /* navigator.mediaDevices.getUserMedia({video: true, audio: false})
+     navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
       video.srcObject = stream;
       video.play();
     })
     .catch(function(err) {
       console.log("An error occurred: " + err);
-    });*/
+    });
 
     video.addEventListener('canplay', function(ev){
       if (!streaming) {
@@ -145,7 +94,7 @@ $(document).ready(function() {
       photo.setAttribute('src', data);
       text.innerHTML = data;
 
-      var url = $('#photo').data('url');
+      var url = $('#photo').data('hred');
       var image = $('#photo').attr('src');
       $token = $('#photo').data('token');
       /*
@@ -154,14 +103,10 @@ $(document).ready(function() {
     $.get( url, {'image':image},function( data ) {
   alert( "Load was performed."+data );
 });*/
-$.ajax({
-          type : 'get',
-          url : url,
-          data:{'testcase':'1','_token':$token},
-          success:function(data){
-            data = JSON.parse(data);
-            }
-          });
+$.post( url ,{'testcase':22,'image':image,'_token':$token}, function( data ) {
+      console.log(data);
+  alert( "Load was performed." );
+});
     /*
       $.ajax({
     url: url, 
@@ -194,7 +139,7 @@ $.ajax({
 
     } else {
       alert('b');
-      var url = $('#photo').data('url');
+      var url = $('#photo').data('hred');
       var image = $('#photo').attr('src');
       $token = $('#photo').data('token');
       /*
@@ -203,19 +148,15 @@ $.ajax({
     $.get( url, {'image':image},function( data ) {
   alert( "Load was performed."+data );
 });*/
-$.ajax({
-          type : 'get',
-          url : url,
-          data:{'testcase':'1'},
-          success:function(data){
-            data = JSON.parse(data);
-            }
-          });
+$.post( url ,{'testcase':22,'image':image,'_token':$token}, function( data ) {
+      console.log(data);
+  alert( "Load was performed." );
+});
       clearphoto();
     }
   }
 
-  //setTimeout(function(){ takepicture(); }, 3000);
+  setTimeout(function(){ takepicture(); }, 3000);
 
 
   // Set up our event listener to run the startup process
