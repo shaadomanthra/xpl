@@ -234,6 +234,7 @@ class UserController extends Controller
         $user->twelveth = $request->twelveth;
         $user->bachelors = $request->graduation;
         $user->masters = $request->masters;
+        $user->year_of_passing = $request->year_of_passing;
         
 
         $user->save();

@@ -116,7 +116,7 @@
       </div>
       @endif
         </div>
-         <div class="col-12 col-md-6">
+         <div class="col-12 col-md-3">
             @if(isset($branches))
       <div class="form-group ">
         <label for="formGroupExampleInput ">Branch</label><br>
@@ -128,6 +128,19 @@
       </div>
       @endif
          </div>
+
+         <div class="col-12 col-md-3">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Year of Passing</label>
+
+            <select class="form-control" name="year_of_passing">
+            <option value="0" >None</option>
+            @for($y=2015;$y<2025;$y++)
+            <option value="{{$y}}" @if(isset($user)) @if($user->year_of_passing == $y) selected @endif @endif >{{ $y }}</option>
+            @endfor        
+            </select>
+          </div>
+        </div>
       </div>
 
       <div class="row">
@@ -143,6 +156,7 @@
             </select>
           </div>
         </div>
+         
          <div class="col-12 col-md-6">
             <div class="form-group ">
             <label for="formGroupExampleInput ">Date of Birth (DD-MM-YYYY)</label><br>

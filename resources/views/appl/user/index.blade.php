@@ -43,12 +43,7 @@
                @endif
              @endif  
               <div>
-              @can('update',$user)
-              <a href="{{route('profile.edit','@'.$user->username)}}"><i class="fa fa-edit"></i></a>
-              @endcan
-              @can('manage',$user)
-              <a href="{{route('profile.manage','@'.$user->username)}}"><i class="fa fa-gear"></i></a>
-              @endcan
+              
               </div>
               
 
@@ -56,29 +51,66 @@
              <p>{!! $user_details->bio !!}</p>
              @endif
 
-              @if($user->colleges()->first())
-             <p>@if($user->colleges()->first()) <b>{{ $user->colleges()->first()->name }}</b> @endif - 
-             @if($user->branches()->first()) {{  $user->branches()->first()->name  }} @endif </p>
+              
+             <p class="pt-1"></p>
+
+
+             @if($user->colleges()->first())
+             <dl class="row mb-0">
+                <dt class="col-sm-3"><i class='fa fa-building'></i> &nbsp; College</dt>
+                <dd class="col-sm-9">@if($user->colleges()->first()){{ $user->colleges()->first()->name }}@endif</dd>
+              </dl>
+             @endif
+
+             @if($user->branches()->first())
+             <dl class="row mb-0">
+                <dt class="col-sm-3"><i class='fa fa-bookmark-o'></i> &nbsp; Branch</dt>
+                <dd class="col-sm-9">@if($user->branches()->first()) {{  $user->branches()->first()->name  }} @endif</dd>
+              </dl>
              @endif
 
              @if($user->year_of_passing)
-             <div> Year of Passing - {{$user->year_of_passing}}</div>
+             <dl class="row mb-0">
+                <dt class="col-sm-3"><i class='fa fa-tint'></i> &nbsp; Year of Passing</dt>
+                <dd class="col-sm-9">{{$user->year_of_passing}}</dd>
+              </dl>
              @endif
 
              @if($user->gender)
-             <div> Gender - {{$user->gender}}</div>
+             <dl class="row mb-0">
+                <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; Gender</dt>
+                <dd class="col-sm-9">{{$user->gender}}</dd>
+              </dl>
              @endif
 
              @if($user->dob)
-             <div> Date of Birth - {{$user->dob}}</div>
+             <dl class="row mb-0">
+                <dt class="col-sm-3"><i class='fa fa-calendar'></i> &nbsp; Date of Birth</dt>
+                <dd class="col-sm-9">{{$user->dob}}</dd>
+              </dl>
              @endif
 
              @if($user->current_city)
-             <div> Current City - {{$user->current_city}}</div>
+             <dl class="row mb-0">
+                <dt class="col-sm-3"><i class='fa fa-address-card-o'></i> &nbsp; Current City</dt>
+                <dd class="col-sm-9">{{$user->current_city}}</dd>
+              </dl>
              @endif
+
              @if($user->hometown)
-             <div> Hometown - {{$user->hometown}}</div>
+             <dl class="row mb-0">
+                <dt class="col-sm-3"><i class='fa fa-home'></i> &nbsp; Hometown</dt>
+                <dd class="col-sm-9">{{$user->hometown}}</dd>
+              </dl>
              @endif
+             
+             @can('update',$user)
+              <a href="{{route('profile.edit','@'.$user->username)}}" class="btn btn-success mt-3"><i class="fa fa-edit"></i> Edit</a>
+              @endcan
+              @can('manage',$user)
+              <a href="{{route('profile.manage','@'.$user->username)}}" class="btn btn-primary mt-3"><i class="fa fa-gear"></i></a>
+              @endcan
+
 
             </div>
 
