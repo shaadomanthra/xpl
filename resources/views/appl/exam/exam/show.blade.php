@@ -3,6 +3,8 @@
 @section('content')
 <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
 
+
+
 <style>
 .cardbox
 {
@@ -73,7 +75,7 @@
       <div class="card mb-4 ">
         <div class="card-body">
             <div class="row mb-2">
-            <div class="col-md-3">
+            <div class="col-md-3 pt-1">
               @if(isset($exam->image))
                 @if(Storage::disk('public')->exists($exam->image))
                 <div class="mb-3">
@@ -185,10 +187,27 @@
               </div>
         </div>
       </div>
+
+      <div class="card mb-4 ">
+        <div class="card-body">
+      <h4 class="mb-3"><i class="fa fa-angle-right"></i> Access Codes <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Employer can uniquely name the access codes to categorise the participants based on job opening."></i></h4>
+      
+      <div class="">
+      @foreach(explode(',',$exam->code) as $code)
+              @if($code)
+              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-2 ">{{ $code}}({{ $exam->getUserCount($code)}})</a>
+              @else
+              <a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary">Default({{ $exam->getUserCount($code)}})</a>
+              @endif &nbsp;&nbsp;
+              @endforeach
+       </div>
+     </div>
+   </div>
       
       <div class="card mb-4 ">
         <div class="card-body">
-            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails</h4>
+            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i></h4>
+            <hr>
             @if($exam->emails)
               {!! nl2br($exam->emails) !!}
               @else
@@ -280,17 +299,7 @@
       
       @endif
 
-      <div class="h4 mt-4 mb-4" ><i class="fa fa-angle-right"></i> Access Codes</div>
-
-      <div class="mb-4">
-      @foreach(explode(',',$exam->code) as $code)
-              @if($code)
-              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-3 mr-3">{{ $code}}({{ $exam->getUserCount($code)}})</a>
-              @else
-              <a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary">Default({{ $exam->getUserCount($code)}})</a>
-              @endif &nbsp;&nbsp;
-              @endforeach
-       </div>
+      
 
 
       

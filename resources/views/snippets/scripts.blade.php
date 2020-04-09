@@ -21,6 +21,10 @@
         }
     });
 
+ $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
   </script>
 
 @if(isset($editor))
