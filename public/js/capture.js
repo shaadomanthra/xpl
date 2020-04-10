@@ -54,7 +54,6 @@
 
    
     
-    clearphoto();
   }
 
   // Fill the photo with an indication that none has been
