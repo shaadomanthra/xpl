@@ -6,7 +6,7 @@
         <div class="col-12 col-md-6">
         <div class="mb-4 cardbox">
         	<div class="lblue " style="border-radius:5px;">
-          <div class=" bg-white p-3  " style='border-radius: 5px;'>
+          <div class=" bg-white p-4  " style='border-radius: 5px;'>
           <div class="row">
             <div class='col-2 col-md-3'>
               @if(isset($e->image))
@@ -55,7 +55,7 @@
           </div>
         </div>
         <div class="line" style="padding:1px;background:#ebf1fb"></div>  
-        	<div class="p-3">
+        	<div class="p-4">
         	@foreach($e->latestUsers() as $t)
         		<div class="mb-2"><img src="@if($t->user->image) {{ ($t->user->image)}}@else {{ Gravatar::src($t->user->email, 20) }}@endif" class="img-cirlce" style="width:20px" /> &nbsp; &nbsp;
         			<a href="{{ route('assessment.analysis',[$e->slug]) }}?student={{$t->user->username}}">{{$t->user->name}} </a>

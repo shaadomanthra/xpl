@@ -17,7 +17,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-area-chart "></i> Participants - @if(request()->get('code')) {{request()->get('code')}} @else All @endif 
+          <p class="heading_two mb-2 f30" ><i class="fa fa-area-chart "></i> Attempts (@if(request()->get('code'))  {{request()->get('code')}} @else All @endif) - {{count($report)}}
 
           </p>
         </div>
@@ -49,7 +49,7 @@
           <table class="table table-bordered mb-0">
             <thead class="thead-light">
               <tr>
-                <th scope="col">#({{count($report)}})</th>
+                <th scope="col">Sno</th>
                 <th scope="col">Name</th>
                 <th scope="col">Window Swap</th>
                 @foreach($exam_sections as $sec)

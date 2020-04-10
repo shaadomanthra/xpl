@@ -143,6 +143,21 @@ class ProductController extends Controller
 
       $user = \auth::user();
 
+      $username = $user->username;
+        if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpg'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.jpg');
+                }
+                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.png'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.png');
+                }
+
+                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpeg'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.jpeg');
+                }
+
       if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com'){
 
         if($user->checkRole(['hr-manager'])){
@@ -214,20 +229,7 @@ class ProductController extends Controller
             print('Error: ' . $e->getMessage());
         }
 
-        $username = $user->username;
-        if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpg'))
-                {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.jpg');
-                }
-                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.png'))
-                {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.png');
-                }
-
-                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpeg'))
-                {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.jpeg');
-                }
+        
 
 
         return view('welcome2')->with('user',$user);
