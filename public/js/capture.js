@@ -4,7 +4,7 @@
   // width to the value defined here, but the height will be
   // calculated based on the aspect ratio of the input stream.
 
-  var width = 320;    // We will scale the photo width to this
+  var width = 250;    // We will scale the photo width to this
   var height = 0;     // This will be computed based on the input stream
 
   // |streaming| indicates whether or not we're currently streaming
@@ -25,9 +25,8 @@
     canvas = document.getElementById('canvas');
     photo = document.getElementById('photo');
     text = document.getElementById('text');
-    startbutton = document.getElementById('startbutton');
 
-     navigator.mediaDevices.getUserMedia({video: true, audio: false})
+    navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
       video.srcObject = stream;
       video.play();
@@ -85,92 +84,36 @@
 
     var context = canvas.getContext('2d');
     if (width && height) {
-      alert('a');
+ 
       canvas.width = width;
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
     
-      var data = canvas.toDataURL('image/jpeg',0.5);
-      photo.setAttribute('src', data);
-      text.innerHTML = data;
+      var image = canvas.toDataURL('image/jpeg',0.5);
 
-      var url = $('#photo').data('hred');
-      var image = $('#photo').attr('src');
-      $token = $('#photo').data('token');
-      /*
-      var formData = new FormData();
-    formData.append('image', image);
-    $.get( url, {'image':image},function( data ) {
-  alert( "Load was performed."+data );
-});*/
-$.post( url ,{'name': 'teja' ,'image':image,'_token':$token}, function( data ) {
-      console.log(data);
-  alert( "Load was performed." );
-});
-    /*
-      $.ajax({
-    url: url, 
-    type: "GET", 
-    cache: false,
-    contentType: false,
-    processData: false,
-    data: formData})
-        .done(function(e){
-            alert('done!');
-        });  */
+      var url = $('#video').data('hred');
+      $token = $('#video').data('token');
+      $c = parseInt($('#video').data('c'))+1;
+      $username = $('#video').data('username');
+      $name = $username+'_'+$c;
 
-/*
-      var url = 'https://xplore.co.in/img/upload/file';
-var image = $('#photo').attr('src');
-var base64ImageContent = image.replace(/^data:image\/(png|jpeg);base64,/, "");
-var blob = base64ToBlob(base64ImageContent, 'image/jpeg');                
-var formData = new FormData();
-formData.append('image', blob);
-$.ajax({
-    url: url, 
-    type: "GET", 
-    cache: false,
-    contentType: false,
-    processData: false,
-    data: formData})
-        .done(function(e){
-            alert('done!');
-        }); */
+      $.post( url ,{'name': $name ,'image':image,'_token':$token}, function( data ) {
+            console.log(data);
 
-    } else {
-     
-      clearphoto();
-    }
+      });
+
+      $('#video').data('c',($c));
+
+    } 
   }
 
-  setTimeout(function(){ takepicture(); }, 3000);
+  $time = $('#video').data('count');
+  setTimeout(function(){ takepicture(); }, $time);
 
 
   // Set up our event listener to run the startup process
   // once loading is complete.
   window.addEventListener('load', startup, false);
 
-  function base64ToBlob(base64, mime) 
-{
-    mime = mime || '';
-    var sliceSize = 1024;
-    var byteChars = window.atob(base64);
-    var byteArrays = [];
-
-    for (var offset = 0, len = byteChars.length; offset < len; offset += sliceSize) {
-        var slice = byteChars.slice(offset, offset + sliceSize);
-
-        var byteNumbers = new Array(slice.length);
-        for (var i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
-
-        var byteArray = new Uint8Array(byteNumbers);
-
-        byteArrays.push(byteArray);
-    }
-
-    return new Blob(byteArrays, {type: mime});
-}
 
 })();

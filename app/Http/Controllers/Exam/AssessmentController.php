@@ -388,6 +388,7 @@ class AssessmentController extends Controller
                         ->with('code',true)
                         ->with('code_ques',$code_ques)
                         ->with('timer2',true)
+                        ->with('camera',$exam->camera)
                         ->with('time',$time)
                         ->with('sections',$sections)
                         ->with('passages',$passages)
