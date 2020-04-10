@@ -88,7 +88,6 @@
       var data = canvas.toDataURL('image/jpeg',0.5);
 
       photo.setAttribute('src', data);
-      text.innerHTML = data;
 
       var url = $('#photo').data('url');
       var image = $('#photo').attr('src');
