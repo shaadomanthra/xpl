@@ -54,10 +54,6 @@
       }
     }, false);
 
-    startbutton.addEventListener('click', function(ev){
-      takepicture();
-      ev.preventDefault();
-    }, false);
     
     clearphoto();
   }
@@ -89,7 +85,7 @@
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
     
-      var photo = canvas.toDataURL('image/jpeg',0.5);
+      var data = canvas.toDataURL('image/jpeg',0.5);
 
       photo.setAttribute('src', data);
       text.innerHTML = data;
