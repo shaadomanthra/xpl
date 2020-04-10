@@ -1,7 +1,7 @@
 
 @if($user->exams)
 
-@foreach($user->exams()->limit(10)->get() as $key=>$e)  
+@foreach($user->exams()->orderBy('id','desc')->limit(10)->get() as $key=>$e)  
 
         <div class="col-12 col-md-6">
         <div class="mb-4 cardbox">
