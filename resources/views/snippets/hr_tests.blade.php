@@ -49,7 +49,11 @@
               
             </div>
             <div class='col-2 col-md-2'>
-              <div class="heading_one float-right f30">@if(isset($e)){{ $e->getUserCount() }}@endif</div>
+              <div class="heading_one float-right f30">
+              	<a href="{{ route('test.report',$e->slug)}}">
+              	@if(isset($e)){{ $e->getUserCount() }}@endif
+              	</a>
+              </div>
             </div>
 
           </div>
@@ -63,8 +67,8 @@
         		@if($t->status)
               has attempted the test
               @else
-               has scored <b class="text-success">
-                @if($t->score){{ $t->score }}@else 0 @endif</b> / {{ $t->max }}
+               has scored <a href="{{ route('assessment.analysis',$e->slug)}}?student={{$t->user->username}}"><b class="text-success">
+                @if($t->score){{ $t->score }}@else 0 @endif</b></a> / {{ $t->max }}
               @endif
 
         		<span class="float-right text-secondary"><small>{{$t->created_at->diffForHumans()}}</small></span></div>
