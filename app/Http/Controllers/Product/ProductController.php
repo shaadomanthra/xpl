@@ -142,6 +142,24 @@ class ProductController extends Controller
     {
 
       $user = \auth::user();
+
+      if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com'){
+
+        if($user->checkRole(['hr-manager'])){
+            $count = 0;
+            foreach($user->exams as $exam){
+              $count = $count + $exam->getUserCount();
+            }
+            $user->attempts = $count;
+            return view('hr_welcome')->with('user',$user);
+        }
+        
+        else
+        return view('welcome2')->with('user',$user);
+
+      }
+      
+
         $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
       try {
 

@@ -1,21 +1,24 @@
-@extends('layouts.app')
+@extends('layouts.nowrap-white')
 @section('title', 'Sections - '.$exam->name)
 @section('content')
 
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug) }}">{{ $exam->name }}</a></li>
+<div class="container">
+  <div class=' mb-4'>
+    <nav class="mb-0">
+          <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
+            <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug) }}">{{ $exam->name }}</a></li>
     <li class="breadcrumb-item">Sections</li>
-  </ol>
-</nav>
+          </ol>
+        </nav>
+
 
 @include('flash::message')
 <div  class="row ">
 
-  <div class="col-md-9">
+  <div class="col-md-12">
  
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
@@ -48,11 +51,9 @@
    </div>
  </div>
 
- <div class="col-md-3 pl-md-0">
-      @include('appl.exam.snippets.menu')
-    </div>
 </div>
-
+</div>
+</div>
 @endsection
 
 

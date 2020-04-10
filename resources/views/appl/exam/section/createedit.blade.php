@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.nowrap-white')
 @section('title', 'Create/Edit section - '.$exam->name)
 @section('content')
 
 @include('flash::message')
-  <div class="card">
+<div class="container">
+  <div class="card mt-4 mb-4">
     <div class="card-body">
       <h1 class="p-3 border bg-light mb-3">
         @if($stub=='Create')
@@ -56,7 +57,7 @@
         </div>
         <div class="col-12 col-md-4">
           <div class="form-group">
-        <label for="formGroupsectionspleInput ">Negative Marks</label>
+        <label for="formGroupsectionspleInput ">Negative Marks <i class="fa fa-question-circle" data-toggle="tooltip" title="Do not include negative sign, enter only the value. Enter 0 for no negative marking."></i></label>
         <input type="text" class="form-control" name="negative" id="formGroupsectionspleInput" placeholder="Enter the negative mark per question" 
             @if($stub=='Create')
             value="{{ (old('negative')) ? old('negative') : '' }}"
@@ -90,4 +91,5 @@
     </form>
     </div>
   </div>
+</div>
 @endsection

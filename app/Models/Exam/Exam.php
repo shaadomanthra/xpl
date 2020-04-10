@@ -78,8 +78,6 @@ class Exam extends Model
         return Tests_Overall::where('code',$code)->where('test_id',$this->id)->count();
         else
           return Tests_Overall::where('test_id',$this->id)->count();
-        
-
     }
 
     public function latestUsers()

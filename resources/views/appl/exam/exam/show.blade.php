@@ -20,7 +20,7 @@
       </div>
       <div class="col-12 col-md-4 col-lg-2">
         <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
-          <div class="h6">Participants</div>
+          <div class="h6">Attempts</div>
           <div class="h2" >{{$exam->getUserCount()}}</div>
         </div>
       </div>
@@ -166,13 +166,14 @@
       <div class="card mb-4 ">
         <div class="card-body">
       <h4 class="mb-3"><i class="fa fa-angle-right"></i> Access Codes <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Employer can uniquely name the access codes to categorise the participants based on job opening."></i></h4>
+      <hr>
       
       <div class="">
       @foreach(explode(',',$exam->code) as $code)
               @if($code)
               <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-2 ">{{ $code}}({{ $exam->getUserCount($code)}})</a>
               @else
-              <a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary">Default({{ $exam->getUserCount($code)}})</a>
+              <span class="text-secondary"> - No access codes defined</span>
               @endif &nbsp;&nbsp;
               @endforeach
        </div>
@@ -186,7 +187,7 @@
             @if($exam->emails)
               {!! nl2br($exam->emails) !!}
               @else
-              - None -
+              <span class="text-secondary"> - No emails listed</span>
               @endif
         </div>
       </div>
@@ -262,7 +263,7 @@
               <a href="{{ route('assessment.analysis',[$exam->slug]) }}?student={{$t->user->username}}" ><i class="fa fa-bar-chart"></i> Report</a></small>
 
               <small class="mr-2">
-              <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$t->user->username}}" ><i class="fa fa-check-circle"></i> Responses</a></small>
+              <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$t->user->username}}" ><i class="fa fa-commenting-o"></i> Responses</a></small>
 
               <small class="mr-2 float-lg-right @if($t->window_change>5) text-danger @else text-secondary @endif"><i class="fa fa-desktop"></i> Window Swap @if($t->window_change) [{{$t->window_change}}] @else [0] @endif </small>
 

@@ -1,88 +1,65 @@
-@extends('layouts.app')
+@extends('layouts.nowrap-white')
 @section('title', 'Reports - '.$exam->name)
-
 @section('content')
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug) }}">{{ $exam->name}}</a></li>
-    <li class="breadcrumb-item">Reports</li>
-  </ol>
-</nav>
+<div class="dblue" >
+  <div class="container">
+
+    <nav class="mb-0">
+          <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
+            <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug) }}">{{$exam->name}}</a></li>
+            <li class="breadcrumb-item">Reports</li>
+          </ol>
+        </nav>
+    <div class="row">
+      <div class="col-12 col-md-8">
+        
+        <div class=' pb-1'>
+          <p class="heading_two mb-2 f30" ><i class="fa fa-area-chart"></i> Reports
+
+          </p>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="mt-2">
+         <a href='' class="float-right btn btn-success">View All</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='p-1  ddblue' ></div>
 
 @include('flash::message')
 
-
-<div  class="row ">
-
-  <div class="col-12 col-md-9">
- 
+<div class="container ">
+<div class='mt-4 mb-4'>
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
-        <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-inbox"></i> Reports - Access Code ({{$exam->getUserCount()}}) </a>
-
-          <a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm">View all</a>
-
-          
-          
-        </nav>
-
         <div id="search-items">
-         
- @if(count($codes)!=0)
-        <div class="table-responsive">
-          <table class="table table-bordered mb-0">
-            <thead>
-              <tr>
-                <th scope="col">#({{count($codes)}})</th>
-                <th scope="col">Code</th>
-                <th scope="col">Participant</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($codes as $key=>$code)  
-              <tr>
-                <th scope="row">{{$key+1 }}</th>
-                <td>
-                  @if($code)
-                  <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}">{{ $code }}</a>
-                  @else
-                  <a href="{{ route('test.report',$exam->slug)}}">Default</a>
-                  @endif
-                  
-                </td>
-                <td>
-                  @if($code)
-                  {{ $user[$key] }}
-                  @else
-                  {{$exam->getUserCount()}}
-                  @endif
-                </td>
-              </tr>
-              @endforeach      
-            </tbody>
-          </table>
-        </div>
-        @else
-        <div class="card card-body bg-light">
-          No Reports listed
-        </div>
-        @endif
-        
+          <h4 class="mb-3"><i class="fa fa-angle-right"></i> All participant reports </h4>
+          <a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-success mb-2 "> view all</a>
 
+          <h4 class="mb-3 mt-4"><i class="fa fa-angle-right"></i> Categorised by Access Codes <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Employer can uniquely name the access codes to categorise the participants based on job opening."></i></h4>
+      
+      <div class="">
+      @foreach($codes as $key=>$code)  
+              @if($code)
+              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-2 ">{{ $code}}({{ $exam->getUserCount($code)}})</a>
+              @else
+              <span class="text-secondary"> - No access codes defined</span>
+              @endif &nbsp;&nbsp;
+      @endforeach
        </div>
 
+       </div>
      </div>
-   </div>
- </div>
+</div>
 
- <div class="col-md-3 pl-md-0">
-      @include('appl.exam.snippets.menu')
-    </div>
- 
+</div>
+
 </div>
 
 @endsection

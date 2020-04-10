@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.nowrap-white')
 @section('content')
 
 @include('flash::message')

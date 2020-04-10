@@ -44,7 +44,7 @@
 
   <div class="row">
 
-    <div class="col-md-9">
+    <div class="col-md-8">
 
       @if($passage)
       <div class="card mb-3">
@@ -211,7 +211,7 @@
 
     </div>
 
-     <div class="col-md-3 pl-md-0">
+     <div class="col-md-4 pl-md-0">
       @include('appl.dataentry.snippets.qset-exam')
     </div>
 

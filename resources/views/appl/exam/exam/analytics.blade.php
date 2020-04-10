@@ -1,43 +1,53 @@
-@extends('layouts.app')
-@section('title', 'Report - '.$exam->name)
+@extends('layouts.nowrap-white')
+@section('title', 'Participants - '.$exam->name)
 @section('content')
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug) }}">{{ $exam->name}}</a></li>
-    <li class="breadcrumb-item">Report - @if(request()->get('code')) {{request()->get('code')}} @else All @endif</li>
-  </ol>
-</nav>
+<div class="dblue" >
+  <div class="container">
+
+    <nav class="mb-0">
+          <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
+            <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug) }}">{{$exam->name}}</a></li>
+            <li class="breadcrumb-item">Reports </li>
+          </ol>
+        </nav>
+    <div class="row">
+      <div class="col-12 col-md-8">
+        
+        <div class=' pb-1'>
+          <p class="heading_two mb-2 f30" ><i class="fa fa-area-chart "></i> Participants - @if(request()->get('code')) {{request()->get('code')}} @else All @endif 
+
+          </p>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="mt-2">
+         <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right">Download Excel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='p-1  ddblue' ></div>
+
 
 @include('flash::message')
 
-<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;">
-  <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn btn-sm btn-outline-primary float-right">Download Excel</a>
-      <h1 class="display-5 "><i class="fa fa-bar-chart"></i> {{ ucfirst($exam->name) }} - Report
-    </h1>
-    @if(request()->get('code'))
-      Access Code: <span class="badge badge-warning"> {{ strtoupper(request()->get('code')) }}</span>
-    @endif
+<div class="container">
 
-
-    </div>
-
-<div  class="row ">
+<div  class="row  mb-4 mt-4">
 
   <div class="col-12 ">
  
-    <div class="card mb-3 mb-md-0">
-      <div class="card-body mb-0">
         
 
-        <div id="search-items">
          
- @if(count($report)!=0)
+      @if(count($report)!=0)
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
-            <thead>
+            <thead class="thead-light">
               <tr>
                 <th scope="col">#({{count($report)}})</th>
                 <th scope="col">Name</th>
@@ -46,10 +56,7 @@
                 <th scope="col">{{$sec->name}}</th>
                 @endforeach
                 <th scope="col">Score</th>
-                <th scope="col">View</th>
-                @if(\auth::user()->isAdmin())
-                <th scope="col">Delete</th>
-                @endif
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -57,7 +64,8 @@
               <tr>
                 <th scope="row">{{$key+1 }}</th>
                 <td>
-                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}">{{ $r->user->name }}</a>
+                  <a href="{{route('profile','@'.$r->user->username)}}"  >
+                  {{ $r->user->name }}</a>
 
                   @if($r->user->personality)
                     <i class="fa fa-check-circle text-success"></i>
@@ -80,29 +88,26 @@
                   @endif
                 </td>
                 <td>
+                <form method="post" class='form-inline' action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
                   @if(!$r->status)
-                  <a href="{{route('profile','@'.$r->user->username)}}"  class="btn btn-sm btn-success mb-1">
-                    Profile
-                  </a>
-                  <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" class="btn btn-sm btn-primary mb-1"> responses</a>
+                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}">
+                    <i class='fa fa-bar-chart'></i> Result
+                  </a>&nbsp;&nbsp;&nbsp;
+                  <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
 
-                  
+                  @if(\auth::user()->isAdmin())
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="user_id" value="{{ $r->user->id }}">
+                    <input type="hidden" name="test_id" value="{{ $exam->id }}">
+                    <button class="btn btn-link  p-0" type="submit"><i class='fa fa-trash'></i> delete</button>
+                @endif
+                </form>
                   
                   @else
                   -
                   @endif
                 </td>
-                @if(\auth::user()->isAdmin())
-                <td>
-              <form method="post" action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="user_id" value="{{ $r->user->id }}">
-                <input type="hidden" name="test_id" value="{{ $exam->id }}">
-                <button class="btn btn-sm btn-danger mb-1" type="submit">delete</button>
-
-              </form>
-            </td>
-            @endif
+                
               </tr>
               @endforeach      
             </tbody>
@@ -112,13 +117,13 @@
         <div class="card card-body bg-light">
           No Reports listed
         </div>
-        @endif
-        
+        @endif  
+      </div>
+
 
        </div>
 
-     </div>
-   </div>
+
  </div>
  
 </div>
