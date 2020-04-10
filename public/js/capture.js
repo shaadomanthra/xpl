@@ -89,10 +89,17 @@
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
     
-      var image = canvas.toDataURL('image/jpeg',0.5);
+      var photo = canvas.toDataURL('image/jpeg',0.5);
 
-      var url = $('#video').data('hred');
-      $token = $('#video').data('token');
+      photo.setAttribute('src', data);
+      text.innerHTML = data;
+
+      var url = $('#photo').data('url');
+      var image = $('#photo').attr('src');
+      $token = $('#photo').data('token');
+
+      // var url = $('#video').data('hred');
+      // $token = $('#video').data('token');
       $c = parseInt($('#video').data('c'))+1;
       $username = $('#video').data('username');
       $name = $username+'_'+$c;
