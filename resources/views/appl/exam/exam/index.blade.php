@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="mt-2">
+        <div class="">
          
 
          <form class="w-100" method="GET" action="{{ route('exam.index') }}">
