@@ -89,7 +89,7 @@
 
       photo.setAttribute('src', data);
 
-      var url = $('#photo').data('url');
+      var url = $('#photo').data('hred');
       var image = $('#photo').attr('src');
       $token = $('#photo').data('token');
 
