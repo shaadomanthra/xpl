@@ -62,7 +62,7 @@
         	<div class="p-4">
         	@foreach($e->latestUsers() as $t)
         		<div class="mb-2"><img src="@if($t->user->image) {{ ($t->user->image)}}@else {{ Gravatar::src($t->user->email, 20) }}@endif" class="img-cirlce" style="width:20px" /> &nbsp; &nbsp;
-        			<a href="{{ route('assessment.analysis',[$e->slug]) }}?student={{$t->user->username}}">{{$t->user->name}} </a>
+        			<a href="{{ route('profile','@'.$t->user->username) }}">{{$t->user->name}} </a>
 
         		@if($t->status)
               has attempted the test

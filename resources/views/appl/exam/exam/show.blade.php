@@ -235,7 +235,7 @@
           </div>
           <div class='col-9 col-md-9 col-lg-10'>
             <div class="f18 mb-0">
-              <a href="{{ route('assessment.analysis',[$exam->slug]) }}?student={{$t->user->username}}"><b>{{$t->user->name}}</b></a>
+              <a href="{{ route('profile','@'.$t->user->username) }}"><b>{{$t->user->name}}</b></a>
 
               @if($t->status)
               has attempted the test
