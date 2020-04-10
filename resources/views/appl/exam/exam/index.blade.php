@@ -1,30 +1,25 @@
-@extends('layouts.app')
+@extends('layouts.nowrap-white')
+@section('title', 'Tests')
 @section('content')
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item">Tests</li>
-  </ol>
-</nav>
+<div class="dblue" >
+  <div class="container">
 
-@include('flash::message')
-<div  class="row ">
+    <nav class="mb-0">
+          <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
+            <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+            <li class="breadcrumb-item">Tests</li>
+          </ol>
+        </nav>
+    <div class="row">
+      <div class="col-12 col-md-8">
+        
+        <div class=' pb-1'>
+          <p class="heading_two mb-2 f30" ><i class="fa fa-inbox "></i> Tests
 
-  <div class="col-12 col-md">
- 
-    <div class="card mb-3 mb-md-0">
-      <div class="card-body mb-0">
-        <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-inbox"></i> Tests </a>
-
-          
-          <form class="form-inline" method="GET" action="{{ route('exam.index') }}">
-            
-            
             @can('create',$exam)
             <a href="{{route('exam.create')}}">
-              <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Create </button>
+              <button type="button" class="btn btn-success float-right my-2 my-sm-2 ">Create </button>
             </a>
             @endcan
 
@@ -33,9 +28,18 @@
               <button type="button" class="btn btn-outline-primary my-2 my-sm-2 mr-sm-3">Testtypes</button>
             </a>
             <a href="{{route('exam.index')}}?refresh=1">
-              <button type="button" class="btn btn-secondary my-2 my-sm-2 mr-sm-3">Refresh Cache</button>
+              <button type="button" class="btn btn-secondary my-2 my-sm-2 ">Refresh Cache</button>
             </a>
             @endif
+          </p>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="mt-2">
+         
+
+         <form class="w-100" method="GET" action="{{ route('exam.index') }}">
+            
             <div class="input-group ">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fa fa-search"></i></div>
@@ -45,20 +49,29 @@
             </div>
             
           </form>
-        </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='p-1  ddblue' >
+</div>
 
+@include('flash::message')
+
+  <div class="container">
+ 
+    <div class="pt-4 pb-4 mb-3 mb-md-0">
+      <div class=" mb-0">
+
+       
         <div id="search-items">
          @include('appl.exam.exam.list')
        </div>
 
      </div>
    </div>
- </div>
- @if(\auth::user()->isAdmin())
- <div class="col-md-3 pl-md-0">
-      @include('appl.product.snippets.adminmenu')
-    </div>
- @endif
+
 </div>
 
 @endsection

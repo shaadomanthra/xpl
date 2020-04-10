@@ -1,87 +1,63 @@
 @extends('layouts.nowrap-white')
 @section('title', $exam->name)
 @section('content')
-<link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
 
 
 
-<style>
-.cardbox
-{
-
-  border-radius:5px;
-  border:1px solid #e4edf5;
-  box-shadow:  2px 3px #e4edf5;
-}
-.lblue{  background: #fcfdff;}
-.dblue{background: #e9f4ff}
-.img-cirlce{ border-radius: 50px;max-height: 60px;max-width: 60px;  }
-.f18{ font-size: 18px; }
-.lborder{ border-left:3px solid #28a745;padding-left:10px; margin-bottom: 10px; border-radius:5px;}
-
-</style>
-<div class="line" style="padding:1px;background:#ebf1fb"></div>
-@include('flash::message')
-<div class="" style="background: #e9f4ff">
+<div class="dblue" >
   <div class="container">
-
-<div class="row">
-  <div class="col-12 col-md-10">
-    <nav class="mb-0">
-  <ol class="breadcrumb  pt-3" style="background: transparent;padding:0" >
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
-    
-  </ol>
-</nav>
-    <div class=' pb-3'>
-  <p class="heading_two mb-2" style="font-size:30px;"><i class="fa fa-inbox "></i> {{ $exam->name }}</p>
+    <div class="row">
+      <div class="col-12 col-md-8 col-lg-10">
+        <nav class="mb-0">
+          <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
+            <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
+          </ol>
+        </nav>
+        <div class=' pb-3'>
+          <p class="heading_two mb-2 f30" ><i class="fa fa-inbox "></i> {{ $exam->name }}</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-2">
+        <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
+          <div class="h6">Participants</div>
+          <div class="h2" >{{$exam->getUserCount()}}</div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="col-12 col-md-2">
-    <div class=" p-3 mt-2 text-center" style='background: #fcfdff;box-shadow: 2px 3px  #e4edf5;border-radius: 5px;'>
-      <div class="h6">Participants</div>
-      <div class="h2" style="font-family: 'Raleway', sans-serif;font-weight: 800;color:#3155b8;">{{$exam->getUserCount()}}</div>
-    </div>
-  </div>
-</div>
 
-</div>
-
-<div class='p-3 mb-3'  style="background: #4262be">
+<div class='p-3 mb-3 ddblue' >
   <div class='container'>
-    <a href="{{route('assessment.show',$exam->slug)}}" class="" style="font-size:20px;color:white;font-family: 'Raleway', sans-serif;"> <i class="fa fa-external-link" style="color:#657ec8"></i> {{route('assessment.show',$exam->slug)}}</a>&nbsp; @if($exam->active==1)
+    <a href="{{route('assessment.show',$exam->slug)}}" class="f20 text-white" > <i class="fa fa-external-link" ></i> {{route('assessment.show',$exam->slug)}}</a>&nbsp; @if($exam->active==1)
                 <span class="badge badge-secondary">Inactive</span>
               @else
                 <span class="badge badge-success">Active</span>
               @endif
-    @can('update',$exam)
-            <span class="btn-group float-right btn-group-sm" role="group" aria-label="Basic example">
+          @can('update',$exam)
+            <span class="btn-group float-md-right btn-group-sm mt-2 mt-md-0" role="group" aria-label="Basic example">
               <a href="{{ route('exam.edit',$exam->slug) }}" class="btn btn-outline-light" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i> edit</a>
               <a href="#" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i> delete</a>
             </span>
             @endcan
     </div>
   </div>
-
-  </div>
-
+</div>
+@include('flash::message')
 
 <div class="container ">
   <div class="row mt-4">
-
-    <div class="col-md-7">
-
+    <div class="col-12 col-md-6 col-lg-7">
       <div class="card mb-4 ">
         <div class="card-body">
             <div class="row mb-2">
-            <div class="col-md-3 pt-1">
+            <div class="col-5  col-md-4 col-lg-3 pt-1">
               @if(isset($exam->image))
                 @if(Storage::disk('public')->exists($exam->image))
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/'.$exam->image) }} " class="d-print-none" alt="{{  $exam->name }}" style='max-width:200px;'>
+                    src="{{ asset('/storage/'.$exam->image) }} " class="d-print-none w-100" alt="{{  $exam->name }}" style='max-width:200px;'>
                   </picture>
                 </div>
                 @endif
@@ -92,16 +68,16 @@
               </div>
               @endif
             </div>
-            <div class="col-md-9">
-              <div class="pt-2 f18 mb-4" style="line-height: 1.5">
+            <div class="col-12 col-md-12 col-lg-9">
+              <div class="pt-2 f18 mb-4 lh15" >
               <h4 class="mb-3"><i class="fa fa-angle-right"></i> Description</h4>
               {!! $exam->description !!}
               </div>
 
 
               <div class="row mb-2">
-            <div class="col-md-4"><i class="fa fa-th"></i>&nbsp; Report</div>
-            <div class="col-md-8">
+            <div class="col-6"><i class="fa fa-th"></i>&nbsp; Report</div>
+            <div class="col-6">
               @if($exam->solutions==1)
                 <span class="badge badge-warning">No solutions</span>
               @elseif($exam->solutions==2)
@@ -113,8 +89,8 @@
           </div>
 
           <div class="row mb-2">
-            <div class="col-md-4"><i class="fa fa-camera"></i>&nbsp; Camera</div>
-            <div class="col-md-8">
+            <div class="col-6"><i class="fa fa-camera"></i>&nbsp; Camera</div>
+            <div class="col-6">
               @if($exam->camera==1)
                 <span class="badge badge-success">Enabled</span>
               @else
@@ -123,13 +99,9 @@
             </div>
           </div>
 
-
-          
-
-
           <div class="row mb-0">
-            <div class="col-md-4"> <i class="fa fa-check-square"></i>&nbsp;Exam Status</div>
-            <div class="col-md-8">
+            <div class="col-6"> <i class="fa fa-check-square"></i>&nbsp;Exam Status</div>
+            <div class="col-6">
               @if($exam->status==0)
                 <span class="badge badge-warning">Draft</span>
               @elseif($exam->status==1)
@@ -156,10 +128,11 @@
         </div>
       </div>
 
+      @if(count($exam->sections))
       <div class=" mb-4 ">
         <div class="">
-              <div class="table-responsive">
-              <table class="table table-bordered rounded">
+              <div class="table-responsive mb-0">
+              <table class="table table-bordered rounded mb-0">
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">#</th>
@@ -187,6 +160,7 @@
               </div>
         </div>
       </div>
+      @endif
 
       <div class="card mb-4 ">
         <div class="card-body">
@@ -220,28 +194,28 @@
 
     </div>
 
-    <div class="col-md-5">
+    <div class="col-12 col-md-6 col-lg-5">
 
       <div class="row mb-4">
-        <div class="col-12 col-md-4">
+        <div class="col-6 col-md-4">
           <a href="{{ route('sections.index',$exam->slug)}}">
-          <div class="cardbox p-4 text-center">
+          <div class="cardbox p-4 p-md-1 p-lg-4 text-center mb-4 ">
             <img src="{{ asset('img/icons/category.png')}}" class="w-100 p-2 mb-2" />
             <h4  class="mb-0">Sections</h4>
             </div>
           </a>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-6 col-md-4">
           <a href="{{ route('exam.questions',$exam->slug)}}">
-          <div class="cardbox p-4 text-center">
+          <div class="cardbox p-4 p-md-1 p-lg-4 text-center mb-4">
             <img src="{{ asset('img/icons/tag.png')}}" class="w-100 p-2 mb-2" />
             <h4  class="mb-0">Questions</h4>
             </div>
           </a>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-6 col-md-4">
           <a href="{{ route('test.accesscode',$exam->slug)}}">
-          <div class="cardbox p-4 text-center">
+          <div class="cardbox p-4 p-md-1 p-lg-4 text-center mb-0">
             <img src="{{ asset('img/icons/analytics.png')}}" class="w-100 p-2 mb-2" />
             <h4  class="mb-0">Reports</h4>
             </div>
@@ -249,15 +223,15 @@
         </div>
       </div>
       @if($exam->getUserCount())
-      <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest participants <small><span class="text-secondary">({{$exam->getUserCount()}})</span></small><a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm float-right">View all</a></div>
+      <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest participants <small><span class="text-secondary">({{$exam->getUserCount()}})</span></small><a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm float-lg-right mt-3 mt-lg-0">View all</a></div>
 
       @foreach($exam->latestUsers() as $u =>$t)
       <div class='cardbox lblue p-3 mb-3'>
         <div class="row">
-          <div class='col-4 col-md-2 '>
+          <div class='col-3 col-md-3 col-lg-2'>
             <img src="@if($t->user->image) {{ ($t->user->image)}}@else {{ Gravatar::src($t->user->email, 150) }}@endif" class="img-cirlce " />
           </div>
-          <div class='col-8 col-md-10'>
+          <div class='col-9 col-md-9 col-lg-10'>
             <div class="f18 mb-0">
               <a href="{{ route('assessment.analysis',[$exam->slug]) }}?student={{$t->user->username}}"><b>{{$t->user->name}}</b></a>
 
@@ -289,25 +263,15 @@
               <small class="mr-2">
               <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$t->user->username}}" ><i class="fa fa-check-circle"></i> Responses</a></small>
 
-              <small class="mr-2 float-right @if($t->window_change>5) text-danger @else text-secondary @endif"><i class="fa fa-desktop"></i> Window Swap @if($t->window_change) [{{$t->window_change}}] @else [0] @endif </small>
+              <small class="mr-2 float-lg-right @if($t->window_change>5) text-danger @else text-secondary @endif"><i class="fa fa-desktop"></i> Window Swap @if($t->window_change) [{{$t->window_change}}] @else [0] @endif </small>
 
             </div>
           </div>
         </div>
       </div>
       @endforeach
-      
       @endif
-
-      
-
-
-      
-
-
     </div>
-
-
 
   </div> 
 </div>

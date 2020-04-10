@@ -1,48 +1,59 @@
 
  @if($exams->total()!=0)
-        <div class="table-responsive">
-          <table class="table table-bordered mb-0">
-            <thead>
-              <tr>
-                <th scope="col">#({{$exams->total()}})</th>
-                <th scope="col">Test </th>
-                <th scope="col">Participants </th>
-                <th scope="col">Status</th>
-                <th scope="col">Link</th>
-                <th scope="col">Created </th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($exams as $key=>$exam)  
-              <tr>
-                <th scope="row">{{ $exams->currentpage() ? ($exams->currentpage()-1) * $exams->perpage() + ( $key + 1) : $key+1 }}</th>
-                <td>
-                  <a href=" {{ route('exam.show',$exam->slug) }} ">
-                  {{ $exam->name }}
-                  </a>
-                </td>
-                <td>{{ $exam->getUserCount() }}</td>
-                <td>
-                  @if($exam->status==0)
-                <span class="badge badge-secondary">Draft</span>
+
+ <div class="row no-gutters">
+        @foreach($exams as $key=>$exam)  
+        <div class="col-12 col-md-6">
+          <div class="cardbox p-3 mb-3 mr-2 ml-2" >
+          <div class="row">
+            <div class='col-2 col-md-3'>
+              @if(isset($exam->image))
+                @if(Storage::disk('public')->exists($exam->image))
+                <div class="mb-3 text-center">
+                  <picture class="">
+                    <img 
+                    src="{{ asset('/storage/'.$exam->image) }} " class="d-print-none w-100" alt="{{  $exam->name }}" style='max-width:80px;'>
+                  </picture>
+                </div>
+                @endif
+              @else
+              <div class="text-center text-secondary">
+                <i class="fa fa-newspaper-o fa-4x p-1 d-none d-md-block" aria-hidden="true"></i>
+                <i class="fa fa-newspaper-o  fa-2x d-inline d-md-none" aria-hidden="true"></i>
+              </div>
+              @endif
+            </div>
+            <div class='col-8 col-md-7'>
+              <h4 class="mb-1 mt-2 lh15">
+                <a href=" {{ route('exam.show',$exam->slug) }} ">
+                @if($exam->status==0)
+                <i class="fa fa-square-o"></i> 
                 @elseif($exam->status==1)
-                  <span class="badge badge-info">Free Access</span>
+                  <i class="fa fa-globe"></i> 
                 @else
-                  <span class="badge badge-warning">Private</span>
-                @endif
-                </td>
-                <td>
+                  <i class="fa fa-lock"></i> 
+                @endif  
+                  {{ $exam->name }}
+                </a>
+
+              </h4>
+              <div>
                   @if($exam->active==1)
-                <span class="badge badge-secondary">Inactive</span>
+                <span class=" badge badge-secondary">Inactive</span>
                 @else
-                  <span class="badge badge-success">Active</span>
+                  <span class=" badge badge-success">Active</span>
                 @endif
-                <td>{{ ($exam->created_at) ? $exam->created_at->diffForHumans() : '' }}</td>
-              </tr>
-              @endforeach      
-            </tbody>
-          </table>
+              </div>
+              
+            </div>
+            <div class='col-2 col-md-2'>
+              <div class="heading_one float-right f30">{{ $exam->getUserCount() }}</div>
+            </div>
+          </div>
         </div>
+              </div>
+              @endforeach      
+          </div>
         @else
         <div class="card card-body bg-light">
           No Exams listed
