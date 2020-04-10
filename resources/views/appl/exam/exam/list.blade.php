@@ -9,7 +9,7 @@
             <div class='col-2 col-md-3'>
               @if(isset($exam->image))
                 @if(Storage::disk('public')->exists($exam->image))
-                <div class="mb-3 text-center">
+                <div class=" text-center">
                   <picture class="">
                     <img 
                     src="{{ asset('/storage/'.$exam->image) }} " class="d-print-none w-100" alt="{{  $exam->name }}" style='max-width:80px;'>

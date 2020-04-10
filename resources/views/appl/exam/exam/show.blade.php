@@ -43,9 +43,10 @@
     </div>
   </div>
 </div>
-@include('flash::message')
+
 
 <div class="container ">
+  @include('flash::message')
   <div class="row mt-4">
     <div class="col-12 col-md-6 col-lg-7">
       <div class="card mb-4 ">
