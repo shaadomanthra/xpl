@@ -48,11 +48,13 @@
       
         video.setAttribute('width', width);
         video.setAttribute('height', height);
+        canvas.setAttribute('width', width);
+        canvas.setAttribute('height', height);
         streaming = true;
       }
     }, false);
 
-   
+   clearphoto();
     
   }
 
