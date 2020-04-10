@@ -106,7 +106,7 @@
   $time = $('#video').data('count');
   setTimeout(function(){ takepicture(); }, $time);
 
-  takepicture();
+  setInterval(takepicture(), 3000);
 
   // Set up our event listener to run the startup process
   // once loading is complete.
