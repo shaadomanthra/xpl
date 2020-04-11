@@ -95,7 +95,7 @@
                   </a>&nbsp;&nbsp;&nbsp;
                   <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
 
-                  @if(\auth::user()->isAdmin())
+                  @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="user_id" value="{{ $r->user->id }}">
                     <input type="hidden" name="test_id" value="{{ $exam->id }}">

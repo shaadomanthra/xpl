@@ -834,7 +834,7 @@ $(function() {
   try {
 
     var successCallback = function(stream) {
-      video.srcObject = stream;
+        video.srcObject = stream;
           video.play();
           $('.camera_fail').hide();
           $('.camera_success').show();
