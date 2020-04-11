@@ -1,4 +1,4 @@
 <?php
 
-$cmd = 'python3 faceapp/facedetect2_completed.py face1.jpg';
+$cmd = 'python3 faceapp/facedetect2_start.py';
 echo shell_exec($cmd);
