@@ -44,7 +44,7 @@
     <canvas id="canvas" style='display: none'>
   	</canvas>
   	<div class="output">
-    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" style='display: none'> 
+    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style='display: none'> 
   </div>
     <small><i class="fa fa-dot-circle-o text-danger" aria-hidden="true"></i> Continuous monitering is enabled</small>
 </div>

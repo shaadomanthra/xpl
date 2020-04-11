@@ -97,7 +97,8 @@
       // $token = $('#video').data('token');
       $c = parseInt($('#video').data('c'))+1;
       $username = $('#video').data('username');
-      $name = $username+'_'+$c;
+      $test = $('#video').data('test');
+      $name = $username+'_'+$test+'_'+$c;
 
       $.post( url ,{'name': $name ,'image':image,'_token':$token}, function( data ) {
             console.log(data);
