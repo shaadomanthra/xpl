@@ -1,7 +1,5 @@
 <?php
 
-exec ("sudo python p.py 2>&1");
-  
-// Display the list of all file 
-// and directory 
-echo "<pre>hello</pre>";
+$command = escapeshellcmd('python3 /camera/p.py');
+    $output = shell_exec($command);
+    echo $output;
