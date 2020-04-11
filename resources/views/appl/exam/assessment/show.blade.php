@@ -85,18 +85,7 @@
 
 				   @auth
 				   @if(strpos($exam->emails,\auth::user()->email)!==false)
-				   	@if($cameratest)
-				   		<div class="bg-light border rounded p-3 camera_fail" style="display:none">
-				   			
-				   			<p>This test requires access to the webcamera. Kindly activate camera before proceeding. Incase of any query kindly reach out to the administration.</p>
-				   		</div>
-
-				   	<div class="bg-light border rounded p-3 camera_success" style="display:none">
-				   			<video id="video" class="mb-3 bg-light " width="300px" >Video stream not available.</video>
-						    <canvas id="canvas" style='display: none'>
-						  	</canvas>
-				   			<p>Camera test is successful</p></div>
-				   	@endif
+				   	@include('appl.exam.assessment.blocks.camera')
 			       <a href="{{route('assessment.access',$exam->slug)}}">
 			       	<button class="btn btn-lg btn-outline-primary accesscode_btn"> Access Code </button>
 					</a>
@@ -104,18 +93,7 @@
 					<div class="bg-light border rounded p-3">You are not authorised to attempt this test.</div>
 					@endif
 			       @else
-			       	@if($cameratest)
-				   		<div class="bg-light border rounded p-3 camera_fail" style="display:none">
-				   			
-				   			<p>This test requires access to the webcamera. Kindly activate camera before proceeding. Incase of any query kindly reach out to the administration.</p>
-				   		</div>
-
-				   	<div class="bg-light border rounded p-3 camera_success" style="display:none">
-				   			<video id="video" class="mb-3 bg-light " width="300px" >Video stream not available.</video>
-						    <canvas id="canvas" style='display: none'>
-						  	</canvas>
-				   			<p>Camera test is successful</p></div>
-				   	@endif
+			       	@include('appl.exam.assessment.blocks.camera')
 			       <a href="{{route('assessment.access',$exam->slug)}}">
 			       	<button class="btn btn-lg btn-outline-primary accesscode_btn"> Access Code </button>
 					</a>
@@ -123,20 +101,9 @@
 
 				
 				@else
+				
 				   @auth
-				   	@if($cameratest)
-				   		<div class="bg-light border rounded p-3 camera_fail" style="display:none">
-				   			
-				   			<p>This test requires access to the webcamera. Kindly activate camera before proceeding. Incase of any query kindly reach out to the administration.</p>
-				   		</div>
-
-				   	<div class="bg-light border rounded p-3 camera_success" style="display:none">
-				   			<video id="video" class="mb-3 bg-light " width="300px" >Video stream not available.</video>
-						    <canvas id="canvas" style='display: none'>
-						  	</canvas>
-				   			<p>Camera test is successful</p></div>
-				   	@endif
-			       
+				   	@include('appl.exam.assessment.blocks.camera')
 			       <a href="{{route('assessment.access',$exam->slug)}}">
 			       @else
 			       <a href="#" data-toggle="modal" data-target="#myModal2">
