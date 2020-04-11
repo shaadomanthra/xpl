@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.nowrap-white')
 @section('title', $user->name.' ')
 @section('content')
 
@@ -6,9 +6,9 @@
   <div class="col">
     @include('flash::message')  
 
-    <div class="card mb-3">
+    <div class=" mb-3">
       <div style="height:150px;background: linear-gradient(70deg,#F44336, #3f51b5);"></div>
-      <div class="card-body " style="margin-top: -110px;">
+      <div class=" " style="margin-top: -110px;">
         <div class="row">
           <div class="col-md-4">
               <div class="text-center" style="height:180px">
@@ -17,12 +17,12 @@
           </div>
           <div class="col-md-8">
             <div class="mt-3 mt-md-5 ">
-             <h2 class="mb-md-4 name" >{{ $user->name }} 
+             <h2 class="mb-md-4 name mr-4 ml-4" >{{ $user->name }} 
 
 @if(\Auth::user())
 @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
               @if($user->personality)
-            <span class="badge badge-light float-right">
+            <span class="badge badge-light float-md-right mr-5 mt-2">
               @if($user->personality>=8)
         Grade A
       @elseif($user->personality>=5 && $user->personality<8)
@@ -37,7 +37,7 @@
              </h2>
              @if($user_details)
                @if($user_details->designation)
-               <div class="mt-2">
+               <div class="mt-5 mr-4 ml-4">
                <h4 class="text-secondary ">{{ $user_details->designation }}</h4>
              </div>
                @endif
@@ -46,9 +46,9 @@
               
               </div>
               
-
+            <div class="mr-4 ml-4">
              @if($user_details)
-             <p>{!! $user_details->bio !!}</p>
+             <p class='mr-3'>{!! $user_details->bio !!}</p>
              @endif
 
               
@@ -111,22 +111,13 @@
               <a href="{{route('profile.manage','@'.$user->username)}}" class="btn btn-primary mt-3"><i class="fa fa-gear"></i> Manage</a>
               @endcan
 
-
             </div>
 
-          </div>
-        </div>
-        
-      
-     </div>
-   </div>
-
-
-   @if(\Auth::user())
+                 @if(\Auth::user())
 @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
 @if($user->personality)
-<div class="row mb-3">
+<div class="row mb-3 mr-2 ml-2 mt-4">
 
   <div class="col-12 col-md-3">
     <div class="p-3 mb-3" style="border:1px solid #f9e2df;border-left:5px solid #ed443c;background: #fdf5f4">
@@ -187,11 +178,32 @@
 @endif
 
 @auth
-<div class="row">
-<div class="col-12 col-md-7">
-   <div class="">
-    <div class=" mb-4">
-      <div class="row">
+      <div class="row mr-2 mb-4 ml-2">
+        <div class="col-12 ">
+          <h3 class="bg-light p-3 mb-0"><i class='fa fa-youtube-play'></i> Profile Video</h3>
+         
+          @if($user->video)
+@if(!is_numeric($user->video))
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $user->video}}?rel=0" allowfullscreen></iframe>
+</div>
+@else
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe src="//player.vimeo.com/video/{{ $user->video }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+@endif
+
+@else
+<div class='p-3 bg-light'>
+<a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
+</div>
+@endif
+
+
+      </div>
+    </div>
+
+      <div class="row mr-2 ml-2">
         <div class="col-12 ">
           <h3 class=" p-3 mb-0 bg-white border border-bottom-0"><i class='fa fa-university'></i> Academic Scores</h3>
          
@@ -250,45 +262,21 @@
           </div>
         </div>
       </div>
-    </div>
-   </div>
-</div>
-
-<div class="col-12 col-md-5">
-
-<div class="card mb-4">
-    <div class=" bg-white">
-      <div class="row">
-        <div class="col-12 ">
-          <h3 class=" p-3 mb-0"><i class='fa fa-youtube-play'></i> Profile Video</h3>
-         
-          @if($user->video)
-@if(!is_numeric($user->video))
-<div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $user->video}}?rel=0" allowfullscreen></iframe>
-</div>
-@else
-<div class="embed-responsive embed-responsive-16by9">
-  <iframe src="//player.vimeo.com/video/{{ $user->video }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-</div>
-@endif
-
-@else
-<div class='p-3 bg-light'>
-<a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
-</div>
-@endif
-
-
-      </div>
-    </div>
-   </div>
-</div>
 @endauth
 
+            </div>
 
- </div>
-</div>
+          </div>
+        </div>
+        
+      
+     </div>
+   </div>
+
+
+
+
+
 
 
 

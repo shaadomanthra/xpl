@@ -64,6 +64,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         else
         $filename = 'imagecam.jpg';
         file_put_contents($filename, base64_decode($image));
+        \File::move($filename, '../storage/app/public/tests/'.$filename);
         
         echo $filename;
 	})->name('img.post');
