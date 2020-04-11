@@ -6,7 +6,6 @@ import sys
 
 # path for image and cascade
 imagePath = sys.argv[1]
-print(imagePath)
 
 cascPath = "haarcascade_frontalface_default.xml"
 
@@ -32,6 +31,7 @@ for (x, y, w, h) in faces:
 
 # Saving the image 
 cv2.imwrite(imagePath, image)
+print(imagePath)
 
 
 
