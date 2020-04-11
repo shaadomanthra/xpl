@@ -40,7 +40,7 @@
 
 @if($camera)
 <div class="camera border p-3">
-    <video id="video" class="mb-3 bg-light w-100" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}">Video stream not available.</video>
+    <video id="video" class="mb-3 bg-light w-100" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}">Video stream not available.</video>
     <canvas id="canvas" style='display: none'>
   	</canvas>
   	<div class="output">

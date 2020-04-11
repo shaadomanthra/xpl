@@ -1097,6 +1097,7 @@ class AssessmentController extends Controller
             return view('appl.exam.assessment.show')
                     ->with('exam',$exam)
                     ->with('entry',$entry)
+                    ->with('cameratest',$exam->camera)
                     ->with('product',$product)
                     ->with('attempt',$attempt);
         else

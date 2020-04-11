@@ -810,8 +810,44 @@ function addMinutes(date, minutes) {
 @endif
 
 @if(isset($camera))
+@if($camera)
 <script src="{{ asset('js/capture.js') }}">
   </script>
+@endif
+@endif
+
+@if(isset($cameratest))
+<script>
+$(function() {
+
+  var width = 320;    // We will scale the photo width to this
+  var height = 0;     // This will be computed based on the input stream
+
+  var streaming = false;
+
+  var video = null;
+  var canvas = null;
+
+  video = document.getElementById('video');
+    canvas = document.getElementById('canvas');
+  try {
+    navigator.mediaDevices.getUserMedia({video: true, audio: false})
+    .then(function(stream) {
+      video.srcObject = stream;
+      video.play();
+      $('.camera_fail').hide();
+      $('.camera_success').show();
+      $('.accesscode_btn').show();
+    });
+    }
+    catch(err) {
+      console.log("An error occurred: " + err);
+      $('.camera_fail').show();
+      $('.camera_success').hide();
+      $('.accesscode_btn').hide();
+    }
+});
+</script>
 @endif
 
 @if(isset($welcome))
