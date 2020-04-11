@@ -1,5 +1,7 @@
 <?php
 
-$command = escapeshellcmd('python3 /camera/p.py');
+exec('ls');
+
+$command = escapeshellcmd('python3 p.py');
     $output = shell_exec($command);
     echo $output;
