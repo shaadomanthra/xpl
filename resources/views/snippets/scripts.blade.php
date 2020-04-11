@@ -832,7 +832,13 @@ $(function() {
   video = document.getElementById('video');
     canvas = document.getElementById('canvas');
   try {
-    navigator.mediaDevices.getUserMedia({video: true, audio: false})
+    navigator.mediaDevices.getUserMedia({video: true, audio: false},
+      function(err) {
+    if(err === PERMISSION_DENIED) {
+      console.log('PERMISSION_DENIED');
+    }
+   }
+      )
     .then(function(stream) {
       video.srcObject = stream;
       video.play();
