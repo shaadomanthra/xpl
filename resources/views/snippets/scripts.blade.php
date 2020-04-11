@@ -832,20 +832,28 @@ $(function() {
   video = document.getElementById('video');
     canvas = document.getElementById('canvas');
   try {
-    navigator.mediaDevices.getUserMedia({video: true, audio: false},
-      function(err) {
-    if(err === PERMISSION_DENIED) {
-      console.log('PERMISSION_DENIED');
-    }
-   }
-      )
-    .then(function(stream) {
+
+    var successCallback = function(error) {
       video.srcObject = stream;
-      video.play();
-      $('.camera_fail').hide();
-      $('.camera_success').show();
-      $('.accesscode_btn').show();
-    });
+          video.play();
+          $('.camera_fail').hide();
+          $('.camera_success').show();
+          $('.accesscode_btn').show();
+    };
+    var errorCallback = function(error) {
+      if ((error.name == 'NotAllowedError') ||
+        (error.name == 'PermissionDismissedError')) {
+         $('.camera_fail').show();
+      $('.camera_success').hide();
+      $('.accesscode_btn').hide();
+        console.log('PermissionDismissedError');
+      }
+    };
+
+    navigator.mediaDevices.getUserMedia({video: true, audio: false})
+    .then(successCallback, errorCallback);
+
+   
     }
     catch(err) {
       console.log("An error occurred: " + err);
