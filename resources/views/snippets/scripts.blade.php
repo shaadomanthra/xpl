@@ -833,7 +833,7 @@ $(function() {
     canvas = document.getElementById('canvas');
   try {
 
-    var successCallback = function(error) {
+    var successCallback = function(stream) {
       video.srcObject = stream;
           video.play();
           $('.camera_fail').hide();
