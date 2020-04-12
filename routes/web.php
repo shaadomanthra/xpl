@@ -66,7 +66,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         file_put_contents($filename, base64_decode($image));
         \File::move($filename, '../storage/app/public/tests/'.$filename);
 
-        $path = storage_path('app/public');
+        $path = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
         $path = $path.'/tests/'.$filename;
         
         $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml';
