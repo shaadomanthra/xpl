@@ -66,11 +66,11 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         file_put_contents($filename, base64_decode($image));
         \File::move($filename, '../storage/app/public/tests/'.$filename);
 
-        $path = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
-        $path = $path.'public/tests/'.$filename;
+        $pat = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+        $path = $pat.'public/tests/'.$filename;
 
         $p = explode('_', $name);
-        $fpath = $path.'public/tests/'.$p[0].'_'.$p[1].'.json';
+        $fpath = $pat.'public/tests/'.$p[0].'_'.$p[1].'.json';
         echo $fpath;
         
         $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml '.$fpath.' '.$p[2];
