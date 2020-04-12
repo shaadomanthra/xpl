@@ -14,10 +14,12 @@ rel_path = sys.argv[1]
 c_path = sys.argv[2]
 
 imagePath =os.path.join(p, rel_path)
+print(imagePath)
 
 #cascPath = "haarcascade_frontalface_default.xml"
 
 cascPath = os.path.join(p, c_path)
+print(cascPath)
 
 # Create the haar cascade
 faceCascade = cv2.CascadeClassifier(cascPath)
