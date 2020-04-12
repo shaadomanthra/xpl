@@ -36,7 +36,7 @@ faces = faceCascade.detectMultiScale(
 count = 0
 # Draw a rectangle around the faces
 for (x, y, w, h) in faces:
-	count = count + 1
+	count=count+1
     cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
 
