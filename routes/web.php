@@ -53,6 +53,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('img/upl','HomeController@imageupload')->name('img.upl');
 	//Route::post('img/upl/file','VideoController@imageupload')->name('img.post');
 	Route::post('img/upl/file',function(){
+		$start_time = microtime(true); 
 		$request = request();
         $image = $request->image;
         $name = $request->name;  // your base64 encoded
@@ -71,11 +72,14 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         
         
         $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml';
+        $end_time = microtime(true); 
+		  
+		// Calculate script execution time 
+		$execution_time = ($end_time - $start_time); 
 		echo shell_exec($cmd);
 		echo ' ';
-		echo $cmd;
+		echo $execution_time;
 		echo ' ';
-
         echo $filename;
 	})->name('img.post');
 	
