@@ -6,16 +6,17 @@ import sys
 import os
 
 import pathlib
-p = pathlib.Path().absolute()
+p = os.path.dirname(os.path.abspath(__file__))
 
 
 # Get user supplied values
 rel_path = sys.argv[1]
 c_path = sys.argv[2]
 
-imagePath = os.path.join(p, rel_path)
+imagePath =os.path.join(p, rel_path)
 
 #cascPath = "haarcascade_frontalface_default.xml"
+
 cascPath = os.path.join(p, c_path)
 
 # Create the haar cascade
