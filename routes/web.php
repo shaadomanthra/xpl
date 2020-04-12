@@ -62,12 +62,12 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         if($name)
         	$filename = $name.'.jpg';
         else
-        $filename = 'imagecam.jpg';
+        	$filename = 'imagecam.jpg';
         file_put_contents($filename, base64_decode($image));
         \File::move($filename, '../storage/app/public/tests/'.$filename);
 
-        $path = getCwd();
-        $path = str_replace('public', '', $path).$filename;
+        $path = storage_path('app/public');
+        $path = $path.'/tests/'.$filename;
         
         $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml';
 		echo shell_exec($cmd);
@@ -75,8 +75,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         echo $filename;
 	})->name('img.post');
 	
-	Route::get('/t',function(){ $path = getCwd();
-        $path = str_replace('public', '', $path); echo $path; dd(); return view('appl.pages.terms'); })->name('terms');
+	Route::get('/t',function(){ echo storage_path('app/public'); dd(); return view('appl.pages.terms'); })->name('terms');
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
