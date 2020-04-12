@@ -44,6 +44,11 @@ for (x, y, w, h) in faces:
 	count = count + 1
     cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
+
+
+# Saving the image 
+cv2.imwrite(imagePath, image)
+
 data = {name:0}
 if(path.exists(filename)):
 	with open(filename, "r") as read_file:
@@ -55,9 +60,7 @@ data[name] = count
 
 with open(filename, "w") as write_file:
     json.dump(data, write_file)
-
-# Saving the image 
-cv2.imwrite(imagePath, image)
+    
 print(imagePath)
 
 
