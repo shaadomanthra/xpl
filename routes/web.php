@@ -68,9 +68,12 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
         $path = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
         $path = $path.'public/tests/'.$filename;
-        echo $path;
+
+        $p = explode('_', $name);
+        $fpath = $path.'public/tests/'.$p[0].'_'.$p[1].'.json';
+        echo $fpath;
         
-        $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml';
+        $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml '.$fpath.' '.$p[2];
 		echo shell_exec($cmd);
 
         echo $filename;
