@@ -10,11 +10,9 @@ p = os.path.dirname(os.path.abspath(__file__))
 
 
 # Get user supplied values
-rel_path = sys.argv[1]
+imagePath = sys.argv[1]
 c_path = sys.argv[2]
 
-imagePath =os.path.join(p, rel_path)
-print(imagePath)
 
 #cascPath = "haarcascade_frontalface_default.xml"
 

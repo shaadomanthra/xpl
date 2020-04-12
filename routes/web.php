@@ -69,7 +69,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         $path = getCwd();
         $path = str_replace('public', '', $path).$filename;
         
-        $cmd = 'python3 faceapp/fc1.py '.$path.' h.xml';
+        $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml';
 		echo shell_exec($cmd);
 
         echo $filename;
