@@ -75,7 +75,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
         echo $filename;
 	})->name('img.post');
 	
-	Route::get('/t',function(){ echo storage_path('app/public'); dd(); return view('appl.pages.terms'); })->name('terms');
+	Route::get('/t',function(){ echo $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix(); dd(); return view('appl.pages.terms'); })->name('terms');
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
