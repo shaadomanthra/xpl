@@ -1046,6 +1046,7 @@ class AssessmentController extends Controller
             $json = json_decode(file_get_contents($json_file));
             $zero =$one = $two =$three = $total = $snaps = 0;
             foreach($json as $i => $j){
+                $j = intval($j);
                 if($j==0)
                     $zero++;
                 if($j==1)
