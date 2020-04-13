@@ -18,11 +18,13 @@
 </div>
     </div>
   <div class="col-12 col-md-6">
+    <div class="text-center text-md-left mb-5 mb-md-0">
     <div class="mb-3"><i class="fa fa-check-circle"></i> Fixed pricing no subscription</div>
     <div class="mb-3"><i class="fa fa-check-circle"></i> Pay as you go</div>
 
     <div class="mb-3"><i class="fa fa-check-circle"></i> All features included in the package</div>
      <div class="mb-3"><i class="fa fa-check-circle"></i> Dedicated resource manager</div>
+   </div>
 
   </div>
 
@@ -31,7 +33,7 @@
 </div>		
 </div>
 
-<div class="" style="background:#3a5294;color:white">
+<div class="text-center text-md-left" style="background:#3a5294;color:white">
   <div class="p-2 p-md-4"></div>
   <div class="container">
     <div class="row">
@@ -42,7 +44,7 @@ fixed <br>and transparent pricing
               </div>
             </div>
             <div class="col-12 col-md-2">
-              <div class='item '>
+              <div class='item mt-4 mt-md-0'>
                 <div class="icon mb-3">
                   <a href="{{ route('contact')}}" class="btn btn-light w-100"> Contact Us</a>
               </div>

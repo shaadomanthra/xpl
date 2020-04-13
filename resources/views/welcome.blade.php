@@ -27,9 +27,9 @@
 
 
 </div>
-<div class="" style="background:#fff">
+<div class="text-center text-md-left" style="background:#fff">
   <div class="container">
-        <div class="p-3 p-md-4"></div>
+        <div class="p-2 p-md-4"></div>
     
     <div class="p-0 p-md-2"></div>
 
@@ -45,37 +45,37 @@
               <img src='{{ asset("img/front/img_a.png")}}' class="w-100"/>
             </div>
         </div>
-        <div class="p-4 p-md-5"></div>
+        <div class="p-5 p-md-5"></div>
   </div>
 </div>
 
-<div class="" style="background:#519d54;color:white">
+<div class="text-center text-md-left" style="background:#519d54;color:white">
   <div class="p-2 p-md-4"></div>
   <div class="container">
     <div class="row">
             <div class="col-12 col-md-3">
-              <div class='item '>
+              <div class='item mb-5 mb-md-0 mt-5 mt-md-0'>
                 <div class="icon mb-3"><i class="fa fa-shield fa-3x"></i></div>
                 <div class="icon heading_two mb-2" style='font-size: 20px;color:white'><b>Data Security</b></div>
                 <p>All the content is secured via unique data security protocol which is impossible to break.</p>
               </div>
             </div>
             <div class="col-12 col-md-3">
-              <div class='item '>
+              <div class='item mb-5 mb-md-0'>
                 <div class="icon mb-3"><i class="fa fa-envelope-open-o fa-3x" aria-hidden="true"></i></div>
                 <div class="icon heading_two mb-2" style='font-size: 20px;color:white'>OTP Login</div>
                 <p>Enabling the OTP based login will restrict the access to the platform for authentic users.</p>
               </div>
             </div>
             <div class="col-12 col-md-3">
-              <div class='item '>
+              <div class='item mb-5 mb-md-0'>
                 <div class="icon mb-3"><i class="fa fa-expeditedssl fa-3x" aria-hidden="true"></i></div>
                 <div class="icon heading_two mb-2" style='font-size: 20px;color:white'>SSL encripted</div>
                 <p>SSL level secruity provides data encription across network, and limits the access to secure resources. </p>
               </div>
             </div>
             <div class="col-12 col-md-3">
-              <div class='item '>
+              <div class='item mb-5 mb-md-0'>
                 <div class="icon mb-3"><i class="fa fa-user-circle-o fa-3x" aria-hidden="true"></i></div>
                 <div class="icon heading_two mb-2" style='font-size: 20px;color:white'>Candidate Authorization</div>
                 <p>Only the assigned users can take the premium test in <br>secure environment.</p>
@@ -87,7 +87,7 @@
     <div class="p-2 p-md-4"></div>
 </div>
 
-<div class="" style="background:#fff">
+<div class="text-center text-md-left" style="background:#fff">
   <div class="container">
         <div class="p-3 p-md-4"></div>
     
@@ -110,33 +110,33 @@
   </div>
 </div>
 
-<div class="" style="background:#3a5294;color:white">
+<div class="text-center text-md-left" style="background:#3a5294;color:white">
   <div class="p-2 p-md-4"></div>
   <div class="container">
     <div class="row">
             <div class="col-12 col-md-3">
-              <div class='item '>
+              <div class='item mb-5 mb-md-0 mt-5 mt-md-0'>
                 <div class="icon mb-3"><i class="fa fa-gg fa-3x"></i></div>
                 <div class="icon heading_two mb-2" style='font-size: 20px;color:white'><b>Custom Tests</b></div>
                 <p>Create your own tests from scratch or choose from our database of 10,000 questions.</p>
               </div>
             </div>
             <div class="col-12 col-md-3">
-              <div class='item '>
+              <div class='item mb-5 mb-md-0'>
                 <div class="icon mb-3"><i class="fa fa-yoast fa-3x" aria-hidden="true"></i></div>
                 <div class="icon heading_two mb-2" style='font-size: 20px;color:white'>Your Branding</div>
                 <p>Upload your logo and candidates will be able to see your logo on test window.</p>
               </div>
             </div>
             <div class="col-12 col-md-3">
-              <div class='item '>
+              <div class='item mb-5 mb-md-0'>
                 <div class="icon mb-3"><i class="fa fa-area-chart fa-3x" aria-hidden="true"></i></div>
                 <div class="icon heading_two mb-2" style='font-size: 20px;color:white'>Advanced Analytics</div>
                 <p>Our detailed candidate analytics will make your selection process a cake walk.</p>
               </div>
             </div>
             <div class="col-12 col-md-3">
-              <div class='item '>
+              <div class='item mb-5 mb-md-0'>
                 <div class="icon mb-3"><i class="fa fa-table fa-3x" aria-hidden="true"></i></div>
                 <div class="icon heading_two mb-2" style='font-size: 20px;color:white'>Excel Reports</div>
                 <p>We all love Excel, export the test reports to excel which can be easily shareable.</p>
@@ -165,7 +165,7 @@
   </div>
 </div>
 
-<div class="" style="background:#3a5294;color:white">
+<div class="text-center text-md-left" style="background:#3a5294;color:white">
   <div class="p-2 p-md-4"></div>
   <div class="container">
     <div class="row">
@@ -176,7 +176,7 @@
             </div>
             <div class="col-12 col-md-2">
               <div class='item '>
-                <div class="icon mb-3">
+                <div class="icon mb-3 mt-4 mt-md-0">
                   <a href="{{ route('contact')}}" class="btn btn-light w-100"> Contact Us</a>
               </div>
             </div>
@@ -184,7 +184,7 @@
       </div>
   </div>
 
-    <div class="p-2 p-md-4"></div>
+    <div class="p-2 p-md-3"></div>
 </div>
 </div>
 
