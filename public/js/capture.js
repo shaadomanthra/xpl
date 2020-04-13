@@ -107,17 +107,17 @@
 
       });
 
-      $('#video').data('c',($c));
+      $('#video').data('c',$c);
 
     } 
   }
 
   $time = $('#video').data('count');
-  // setTimeout(function(){ takepicture(); }, $time);
+  setTimeout(function(){ takepicture(); }, $time);
 
-  // setInterval(takepicture(), 3000);
+  setInterval(takepicture(), 3000);
 
-  setTimeout(function(){ takepicture(); }, 3000);
+  //setTimeout(function(){ takepicture(); }, 3000);
 
 
   // Set up our event listener to run the startup process
