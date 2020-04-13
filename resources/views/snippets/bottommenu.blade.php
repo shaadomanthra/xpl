@@ -19,7 +19,7 @@
           <li><a class="text-muted" href="{{url('https://packetprep.com/about-corporate')}}">About</a></li>
           <li><a class="text-muted" href="{{url('https://packetprep.com/productpage')}}">Products</a></li>
           <li><a class="text-muted" href="{{url('https://packetprep.com/blog')}}">Blog</a></li>
-          <li><a class="text-muted" href="{{url('https://packetprep.com/contact-corporate')}}">Contact</a></li>
+          <li><a class="text-muted" href="{{ route('contact')}}">Contact</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">

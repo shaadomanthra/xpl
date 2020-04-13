@@ -1,137 +1,58 @@
-@extends('layouts.nowrap-corporate')
-
+@extends('layouts.nowrap-white')
+@section('title', 'Pricing ')
 @section('content')
 
 <div class="p-5 text-center">
-	<div class="titlea">Pricing</div>
+	<div class="heading_one" style="font-size:40px">Start screening candidates in less than 5 minutes</div>
+  <div class="heading_two mt-3" style="font-size:30px;color:silver">with simple and competitive pricing</div>
 </div>
 
 <div class="container mb-md-5">
+  
 <div class=" ">
 <div class="row">
+  <div class="col-12 col-md-6">
+    <div class="mb-5">
+  <div class="heading_one display-1 text-center"><i class="fa fa-rupee"></i>300</div>
+  <div class="text-center">per candidate</div>
+</div>
+    </div>
+  <div class="col-12 col-md-6">
+    <div class="mb-3"><i class="fa fa-check-circle"></i> Fixed pricing no subscription</div>
+    <div class="mb-3"><i class="fa fa-check-circle"></i> Pay as you go</div>
 
-@if(\Auth::user())
-@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-<div class="col-12 col-md-3">
-        <div class="card text-white  mb-3"  style="background: #ee5253">
-  <div class="card-header"><span class="subtitleb">Test</span></div>
-  
-  <div class="card-body">
-      <h5 class="card-title">Number of Accounts</h5>
-    <h2 style="opacity: 0.6;font-weight: 800"> 10</h2><br>
-    <h5 class="card-title">Account Charges </h5>
-    <h2 style="opacity: 0.6;font-weight: 300" >You will be charged at Rs.2 per account</h2>
-    <hr>
-    <h3> Service Offered</h3>
-    <hr>
-    <p ><b class="text-white">250 Accounts</b> <span style="opacity: 0.5">: Create upto 250 student accounts</span></p>
-    
-    <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">: Watch the videos any number of times without restrictions</span></p>
-    <p> <b>Validity  </b><span style="opacity: 0.6">: 1 year </span></p>
-    <p> <b>Free Maintenance </b><span style="opacity: 0.6">: We take the responsibility to maintain your website with zero downtime</span></p>
-    <a href="{{ route('checkout')}}?package=test"><button class="btn btn-outline-light">Add </button></a>
+    <div class="mb-3"><i class="fa fa-check-circle"></i> All features included in the package</div>
+     <div class="mb-3"><i class="fa fa-check-circle"></i> Dedicated resource manager</div>
 
   </div>
-</div>
-</div>
-@endif
-@endif
 
-  <div class="col-12 col-md-3">
-        <div class="card text-white  mb-3"  style="background: #ee5253">
-  <div class="card-header"><span class="subtitleb">Flex</span></div>
-  
-  <div class="card-body">
-      <h5 class="card-title">Number of Accounts</h5>
-    <h2 style="opacity: 0.6;font-weight: 800"> - Custom -</h2><br>
-    <h5 class="card-title">Account Charges </h5>
-    <h2 style="opacity: 0.6;font-weight: 300" >You will be charged at Rs.500 per account</h2>
-    <hr>
-    <h3> Service Offered</h3>
-    <hr>
-    <p ><b class="text-white">250 Accounts</b> <span style="opacity: 0.5">: Create upto 250 student accounts</span></p>
-    
-    <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">: Watch the videos any number of times without restrictions</span></p>
-    <p> <b>Validity  </b><span style="opacity: 0.6">: 1 year </span></p>
-    <p> <b>Free Maintenance </b><span style="opacity: 0.6">: We take the responsibility to maintain your website with zero downtime</span></p>
-    <a href="{{ route('checkout')}}?package=flex"><button class="btn btn-outline-light">Add </button></a>
-
-  </div>
-</div>
-</div>
-
-  <div class="col-12 col-md-3">
-        <div class="card text-white  mb-3"  style="background: #01a3a4">
-  <div class="card-header"><span class="subtitleb">Basic</span> <span class="subtitleb float-right"><i class="fa fa-rupee"></i> 1,00,000 </span></div>
-  
-  <div class="card-body">
-      <h5 class="card-title">Number of Accounts</h5>
-    <h2 style="opacity: 0.6;font-weight: 800">250</h2><br>
-    <h5 class="card-title">Account Charges </h5>
-    <h2 style="opacity: 0.6;font-weight: 300" >Rs.400 per account</h2>
-    <hr>
-    <h3> Service Offered</h3>
-    <hr>
-    <p ><b class="text-white">250 Accounts</b> <span style="opacity: 0.5">: Create upto 250 student accounts </span></p>
-    <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">- Watch the videos any number of times without restrictions</span></p>
-    <p> <b>Validity  </b><span style="opacity: 0.6">: 1 year </span></p>
-    <p> <b>Free Maintenance </b><span style="opacity: 0.6">- We take the responsibility to maintain your website with zero downtime</span></p>
-    <a href="{{ route('checkout')}}?package=basic"><button class="btn btn-outline-light">Buy Now</button></a>
-
-  </div>
-</div>
-</div>
-
-
-
-    <div class="col-12 col-md-3">
-    <div class="card text-white  mb-3" style="background: #2e86de">
-  <div class="card-header"><span class="subtitleb">Pro</span> <span class="subtitleb float-right"><i class="fa fa-rupee"></i> 1,50,000 </span></div>
-  <div class="card-body">
-    <h5 class="card-title">Number of Accounts</h5>
-    <h2 style="opacity: 0.6;font-weight: 800">500</h2><br>
-    <h5 class="card-title">Account Charges </h5>
-    <h2 style="opacity: 0.6;font-weight: 300" >Rs.300 per account</h2>
-    <hr>
-    <h3> Service Offered</h3>
-    <hr>
-    <p ><b class="text-white">500 Accounts</b> <span style="opacity: 0.5">: Create upto 500 student accounts </span></p>
-    <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">- Watch the videos any number of times without restrictions</span></p>
-    <p> <b>Validity  </b><span style="opacity: 0.6">: 1 year </span></p>
-    <p> <b>Free Maintenance </b><span style="opacity: 0.6">- We take the responsibility to maintain your website with zero downtime</span></p>
-    <a href="{{ route('checkout')}}?package=pro"><button class="btn btn-outline-light">Buy Now</button></a>
-
-  </div>
-</div>
-  </div>
-
-
-
-	<div class="col-12 col-md-3">
-				<div class="card text-white  mb-3" style="background: #3c6382">
-  <div class="card-header"><span class="subtitleb">Ultimate</span> <span class="subtitleb float-right"><i class="fa fa-rupee"></i> 2,00,000 </span></div>
-  
-  <div class="card-body">
-    <h5 class="card-title">Number of Accounts</h5>
-    <h2 style="opacity: 0.6;font-weight: 800">1000</h2><br>
-    <h5 class="card-title">Account Charges </h5>
-    <h2 style="opacity: 0.6;font-weight: 300" >Rs.200 per account</h2>
-    <hr>
-    <h3> Service Offered</h3>
-    <hr>
-    <p ><b class="text-white">1000 Accounts</b> <span style="opacity: 0.5">: Create upto 1000 student accounts</span></p>
-    <p> <b>Unlimited Bandwidth </b><span style="opacity: 0.6">- Watch the videos any number of times without restrictions</span></p>
-    <p> <b>Validity  </b><span style="opacity: 0.6">: 1 year </span></p>
-    <p> <b>Free Maintenance </b><span style="opacity: 0.6">- We take the responsibility to maintain your website with zero downtime</span></p>
-    <a href="{{ route('checkout')}}?package=ultimate"><button class="btn btn-outline-light">Buy Now</button></a>
-
-  </div>
-</div>
-</div>
-	</div>
 </div>
 
 </div>		
+</div>
+
+<div class="" style="background:#3a5294;color:white">
+  <div class="p-2 p-md-4"></div>
+  <div class="container">
+    <div class="row">
+            <div class="col-12 col-md-10">
+              <div class='item heading_two' style='color: white;font-size:25px'>
+               Screen candidates with easy,
+fixed <br>and transparent pricing
+              </div>
+            </div>
+            <div class="col-12 col-md-2">
+              <div class='item '>
+                <div class="icon mb-3">
+                  <a href="{{ route('contact')}}" class="btn btn-light w-100"> Contact Us</a>
+              </div>
+            </div>
+           
+      </div>
+  </div>
+
+    <div class="p-2 p-md-4"></div>
+</div>
 </div>
 
 @endsection           

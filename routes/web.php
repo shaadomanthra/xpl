@@ -69,18 +69,26 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
         $pat = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
         $path = $pat.'public/tests/'.$filename;
+
         
         
         $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml';
+        $count = shell_exec($cmd);
         $end_time = microtime(true); 
 		  
 		// Calculate script execution time 
 		$execution_time = ($end_time - $start_time); 
-		echo shell_exec($cmd);
-		echo ' ';
-		echo $execution_time;
-		echo ' ';
-        echo $filename;
+		
+		$p = explode('_', $name);
+		$json_file = $pat.'public/tests/json/'.$p[0].'_'.$p[1].'.json';
+		$f_name = $p[2];
+
+		$app = app();
+	    $json = $app->make('stdClass');
+	    $json->$f_name = $count;
+	    file_put_contents($json_file, json_encode($json));
+
+
 	})->name('img.post');
 	
 	Route::get('/t',function(){ echo $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix(); dd(); return view('appl.pages.terms'); })->name('terms');
@@ -203,6 +211,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('/terms-corporate',function(){ return view('appl.product.pages.terms'); })->name('terms-corporate');
 
 	Route::get('/contact-corporate',function(){ return view('appl.product.pages.contact'); })->name('contact-corporate');
+	Route::get('/contact',function(){ return view('appl.product.pages.contact_pp'); })->name('contact');
 
 	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads');
 
