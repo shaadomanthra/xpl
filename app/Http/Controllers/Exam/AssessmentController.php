@@ -1509,7 +1509,7 @@ class AssessmentController extends Controller
                         ->with('sections',$sections)
                         ->with('details',$details)
                         ->with('student',$student)
-                        ->with('user',$user)
+                        ->with('user',$student)
                         ->with('test_overall',$tests_overall)
                         ->with('chart',true);
 
