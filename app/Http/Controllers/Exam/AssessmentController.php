@@ -1092,6 +1092,7 @@ class AssessmentController extends Controller
         }
 
         //dd($exam->product_ids);
+  
 
         if($exam)
             return view('appl.exam.assessment.show')

@@ -818,6 +818,7 @@ function addMinutes(date, minutes) {
 @endif
 
 @if(isset($cameratest))
+@if($cameratest)
 <script>
 $(function() {
 
@@ -863,6 +864,13 @@ $(function() {
     }
 });
 </script>
+@else
+<script>
+$(function() {
+  $('.accesscode_btn').show();
+  });
+</script>
+@endif
 @endif
 @endauth
 
