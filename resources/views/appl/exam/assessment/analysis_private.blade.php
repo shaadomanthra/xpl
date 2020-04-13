@@ -111,21 +111,26 @@
 			<div class="card-body">
 			<div class="row mb-4">
 				<div class="col-12 col-md-4">
-					<div class="p-2 border rounded" height="">
+					<div class="p-3 border rounded" height="">
 						<h5>Window Swap</h5>
 						<div class="display-4">{{$test_overall->window_change}}</div>
 					</div>
 				</div>
 				<div class="col-12 col-md-4">
-					<div class="p-2 border rounded" height="">
+					<div class="p-3 border rounded" height="">
 						<h5>Detected Faces</h5>
-						<div class="display-4">{{$test_overall->face_detect}}</div>
+						<div class="display-4">
+						@if($test_overall->face_detect)
+							{{$test_overall->face_detect}}
+						@else
+							-
+						@endif</div>
 					</div>
 				</div>
 				<div class="col-12 col-md-4">
-					<div class="p-2 border rounded" height="">
+					<div class="p-3 border rounded" height="">
 						<h5>Cheating</h5>
-						<div class="display-5">
+						<div class="display-4">
 							@if($test_overall->cheat_detect==2)
 							Not Clear
 							@elseif($test_overall->cheat_detect==1)
@@ -141,7 +146,7 @@
 				@for($i=1;$i<21;$i++)
 					@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
 					<div class='col-6 col-md-2'>
-						<img src="{{ asset('/storage/tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100" />
+						<img src="{{ asset('/storage/tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
 					</div>
 					@endif
 				@endfor
