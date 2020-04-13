@@ -1494,6 +1494,7 @@ class AssessmentController extends Controller
         else 
             $details['unattempted_time'] = $details['unattempted_time'].' sec';   
             
+        $tests_overall = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
 
         //dd($sections);
 
@@ -1507,6 +1508,8 @@ class AssessmentController extends Controller
                         ->with('sections',$sections)
                         ->with('details',$details)
                         ->with('student',$student)
+                        ->with('user',$user)
+                        ->with('test_overall',$tests_overall)
                         ->with('chart',true);
 
     }
