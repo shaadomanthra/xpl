@@ -83,8 +83,13 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 		$json_file = $pat.'public/tests/json/'.$p[0].'_'.$p[1].'.json';
 		$f_name = $p[2];
 
-		$app = app();
-	    $json = $app->make('stdClass');
+		if(file_exists($json_file)){
+			$json = json_decode(file_get_contents($json_file));
+		}else{
+			$app = app();
+	    	$json = $app->make('stdClass');
+		}
+		
 	    $json->$f_name = $count;
 	    file_put_contents($json_file, json_encode($json));
 

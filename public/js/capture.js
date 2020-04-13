@@ -81,6 +81,9 @@
   function takepicture() {
 
     var context = canvas.getContext('2d');
+    var $counter = parseInt($('#video').data('c'));
+
+    if($counter<20)
     if (width && height) {
  
       canvas.width = width;
@@ -109,6 +112,8 @@
 
       $('#video').data('c',$c);
       console.log($name);
+      console.log($c);
+
 
     } 
   }
@@ -116,7 +121,7 @@
   $time = $('#video').data('count');
   setTimeout(function(){ takepicture(); }, 3000);
 
-  setInterval(function(){ takepicture(); }, $time);
+  setInterval(function(){ takepicture(); console.log($time); }, $time);
 
   //setTimeout(function(){ takepicture(); }, 3000);
 
