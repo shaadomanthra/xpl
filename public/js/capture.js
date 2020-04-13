@@ -108,6 +108,7 @@
       });
 
       $('#video').data('c',$c);
+      console.log($name);
 
     } 
   }
