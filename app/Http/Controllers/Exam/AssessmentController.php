@@ -1352,7 +1352,7 @@ class AssessmentController extends Controller
 
         return view('appl.exam.assessment.analysis')
                         ->with('exam',$exam)
-                        ->with('test_overall',$test_overall)
+                        ->with('test_overall',$tests_overall)
                         ->with('sections',$sections)
                         ->with('details',$details)
                         ->with('user',$student)
