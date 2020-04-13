@@ -1,4 +1,4 @@
-@extends('layouts.app-border')
+@extends('layouts.app-plain')
 @section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' ')
 @section('content')
 
@@ -113,7 +113,12 @@
 				<div class="col-12 col-md-4">
 					<div class="p-3 border rounded" height="">
 						<h5>Window Swap</h5>
-						<div class="display-4">{{$test_overall->window_change}}</div>
+						<div class="display-4">
+							@if($test_overall->window_change)
+							{{$test_overall->window_change}}
+							@else
+							-
+						@endif</div>
 					</div>
 				</div>
 				<div class="col-12 col-md-4">
@@ -142,6 +147,7 @@
 					</div>
 				</div>
 			</div>
+			@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_1.jpg'))
 			<div class="row mb-4">
 				@for($i=1;$i<21;$i++)
 					@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
@@ -151,6 +157,7 @@
 					@endif
 				@endfor
 			</div>
+			@endif
 		</div>
 		</div>
 		@endif
