@@ -131,7 +131,7 @@
       </button>
       @endif
       <a href="#" data-toggle="modal" data-target="#exampleModal">
-        <button type="button" id="submit" class="btn  btn-success qno-submit cursor float-right" data-sno="{{$question->id}}" data-tooltip="tooltip"  data-placement="top" title="Submit">
+        <button type="button" id="submit_button" class="btn  btn-success qno-submit cursor float-right" data-sno="{{$question->id}}" data-tooltip="tooltip"  data-placement="top" title="Submit">
           End <span class="d-none d-md-inline">Test</span>
         </button>
       </a>

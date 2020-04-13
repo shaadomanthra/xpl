@@ -9,6 +9,10 @@ use PacketPrep\Models\Exam\Section;
 
 class SectionController extends Controller
 {
+     public function __construct(){
+        $this->cache_path =  '../storage/app/cache/exams/';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -66,6 +70,25 @@ class SectionController extends Controller
             $section->negative = $request->negative;
             $section->time = $request->time;
             $section->save(); 
+
+            //update cache
+            $obj = $exam;
+                $filename = $obj->slug.'.json';
+                $filepath = $this->cache_path.$filename;
+                $obj->sections = $obj->sections;
+                $obj->products = $obj->products;
+                $obj->product_ids = $obj->products->pluck('id')->toArray();
+                foreach($obj->sections as $m=>$section){
+                    $obj->sections->questions = $section->questions;
+                    foreach($obj->sections->questions as $k=>$question){
+                       $obj->sections->questions[$k]->passage = $question->passage; 
+                    }
+                }
+                
+                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            
+           
+
 
             flash('A new section('.$request->name.') is created!')->success();
             return redirect()->route('sections.index',$exam->slug);
@@ -144,6 +167,24 @@ class SectionController extends Controller
             $section->negative = $request->negative;
             $section->time = $request->time;
             $section->save(); 
+
+            //update cache
+            $obj = $exam;
+                $filename = $obj->slug.'.json';
+                $filepath = $this->cache_path.$filename;
+                $obj->sections = $obj->sections;
+                $obj->products = $obj->products;
+                $obj->product_ids = $obj->products->pluck('id')->toArray();
+                foreach($obj->sections as $m=>$section){
+                    $obj->sections->questions = $section->questions;
+                    foreach($obj->sections->questions as $k=>$question){
+                       $obj->sections->questions[$k]->passage = $question->passage; 
+                    }
+                }
+                
+                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            
+           
 
             flash('Section (<b>'.$request->name.'</b>) Successfully updated!')->success();
             return redirect()->route('sections.show',[$exam->slug,$id]);

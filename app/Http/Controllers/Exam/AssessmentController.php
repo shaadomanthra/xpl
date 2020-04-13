@@ -1021,6 +1021,8 @@ class AssessmentController extends Controller
         $test_overall['code'] = $code;
         $test_overall['status'] =0;
         $test_overall['window_change'] =$request->get('window_change');
+        $test_overall['face_detect'] = 0;
+        $test_overall['cheat_detect'] = 0;
         if($code_ques_flag)
             $test_overall['status'] = 1;
         foreach($sec as $s){
@@ -1031,6 +1033,47 @@ class AssessmentController extends Controller
             $test_overall['score'] = $test_overall['score'] + $s['score'];
             $test_overall['time'] = $test_overall['time'] + $s['time'];
             $test_overall['max'] = $test_overall['max'] + $s['max'];
+        }
+
+        if($test_overall['window_change']>5)
+            $test_overall['cheat_detect'] = 1;
+
+        $pat = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+        $json_file =  $pat.'public/tests/json/'.\auth::user()->username.'_'.$exam->id.'.json';
+        if(file_exists($json_file)){
+            $json = json_decode(file_get_contents($json_file));
+            $zero =$one = $two =$three = $total = $snaps = 0;
+            foreach($json as $i => $j){
+                if($j==0)
+                    $zero++;
+                if($j==1)
+                    $one++;
+                if($j==2)
+                    $two++;
+                if($j>2)
+                    $three++;
+                $snaps++;
+                $total = $total + $j;
+            }
+
+            if($three){
+                    $test_overall['face_detect'] = 3;
+                }else if($two)
+                    $test_overall['face_detect'] = 2;
+                else if($one)
+                    $test_overall['face_detect'] = 1;
+                else
+                    $test_overall['face_detect'] = 0;
+
+            if($total==$snaps){
+                $test_overall['cheat_detect'] = 0;
+            }else if( $total < $snaps)
+            {
+                $test_overall['cheat_detect'] = 2;
+            }else{
+                $test_overall['cheat_detect'] = 1;
+            }
+
         }
         
         Test::insert($data); 
@@ -1092,7 +1135,7 @@ class AssessmentController extends Controller
         }
 
         //dd($exam->product_ids);
-  
+
 
         if($exam)
             return view('appl.exam.assessment.show')
@@ -1302,13 +1345,15 @@ class AssessmentController extends Controller
         else 
             $details['unattempted_time'] = $details['unattempted_time'].' sec';   
             
-        
+        $tests_overall = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
        
 
         return view('appl.exam.assessment.analysis')
                         ->with('exam',$exam)
+                        ->with('test_overall',$test_overall)
                         ->with('sections',$sections)
                         ->with('details',$details)
+                        ->with('user',$student)
                         ->with('chart',true);
 
     }

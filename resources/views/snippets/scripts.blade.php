@@ -713,7 +713,7 @@ $('body').bind('copy paste',function(e) {
     });
 });
 
-var btn = document.getElementById('submit'),
+var btn = document.getElementById('submit_button'),
     clicked = false;
 
 btn.addEventListener('click', function () {
@@ -765,7 +765,10 @@ var x = setInterval(function() {
 
     @if(isset($exam))
       alert('The Test time has expired. ');
-      $('.assessment').submit();
+      //document.getElementById("assessment").submit();
+      $('.assessment').submit(function(){
+        console.log('done');
+      });
     @endif
   }
 }, 1000);

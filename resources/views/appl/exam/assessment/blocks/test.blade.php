@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="p-2 p-md-3 ">
-<form method="post" class="assessment" action="{{ route('assessment.submission',$exam->slug)}}" >
+<form method="post" class="assessment" id="assessment" action="{{ route('assessment.submission',$exam->slug)}}" >
 
   <div class="row">
     <div class="col-md-9">

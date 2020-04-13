@@ -103,6 +103,52 @@
 		</div>
 		@endif
 
+		@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
+		<div class="card mb-3 bg-light"  style="background: #FFF;border: 2px solid #EEE;">
+			<div class="card-header">
+				Cheating Detection
+			</div>
+			<div class="card-body">
+			<div class="row mb-4">
+				<div class="col-12 col-md-4">
+					<div class="p-2 border rounded" height="">
+						<h5>Window Swap</h5>
+						<div class="display-4">{{$test_overall->window_change}}</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="p-2 border rounded" height="">
+						<h5>Detected Faces</h5>
+						<div class="display-4">{{$test_overall->face_detect}}</div>
+					</div>
+				</div>
+				<div class="col-12 col-md-4">
+					<div class="p-2 border rounded" height="">
+						<h5>Cheating</h5>
+						<div class="display-5">
+							@if($test_overall->cheat_detect==2)
+							Not Clear
+							@elseif($test_overall->cheat_detect==1)
+							Potentially Yes
+							@else
+							Potentially No
+							@endif
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-4">
+				@for($i=1;$i<21;$i++)
+					@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
+					<div class='col-6 col-md-2'>
+						<img src="{{ asset('/storage/tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100" />
+					</div>
+					@endif
+				@endfor
+			</div>
+		</div>
+		</div>
+		@endif
 		
 		@if(!$exam->solutions)
 		@if(isset($details['c'][0]['category']))

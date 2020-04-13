@@ -18,7 +18,9 @@ class Tests_Overall extends Model
         'time',
         'code',
         'status',
-        'window_change'
+        'window_change',
+        'face_detect',
+        'cheat_detect'
     ];
 
     public function user(){

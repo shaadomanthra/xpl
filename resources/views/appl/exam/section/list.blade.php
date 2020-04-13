@@ -6,6 +6,9 @@
                 <th scope="col">#({{$sections->total()}})</th>
                 <th scope="col">Sections </th>
                 <th scope="col">Questions</th>
+                <th scope="col">Marks</th>
+                <th scope="col">Negative</th>
+                <th scope="col">Time</th>
                 <th scope="col">Created at</th>
               </tr>
             </thead>
@@ -21,6 +24,10 @@
                 <td>
                   {{ count($section->questions) }}
                 </td>
+                <td>{{ ($section->mark) }}</td>
+                <td>{{ ($section->negative) }}</td>
+                <td>{{ ($section->time) }} min</td>
+
                 <td>{{ ($section->created_at) ? $section->created_at->diffForHumans() : '' }}</td>
               </tr>
               @endforeach      
