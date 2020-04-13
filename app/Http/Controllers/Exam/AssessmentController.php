@@ -19,6 +19,8 @@ use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
 use PacketPrep\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
 
 class AssessmentController extends Controller
 {
