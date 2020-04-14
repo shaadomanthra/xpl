@@ -1077,7 +1077,12 @@ class AssessmentController extends Controller
                 $test_overall['cheat_detect'] = 1;
             }
 
+
+
         }
+
+        if($test_overall['window_change']>5)
+            $test_overall['cheat_detect'] = 1;
         
         Test::insert($data); 
         Tests_Section::insert($sec);
