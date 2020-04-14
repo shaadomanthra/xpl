@@ -187,6 +187,18 @@
      <div class="row">
         <div class="col-12 col-md-4">
           <div class="form-group">
+        <label for="formGroupExampleInput ">Hr Manager</label>
+        <select class="form-control" name="hrmanager">
+           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(28)) selected @endif @endif @endif>No</option>
+          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(28)) selected @endif @endif @endif>Yes</option>
+         
+        </select>
+      </div>
+
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="form-group">
         <label for="formGroupExampleInput ">Training and Placement Officer</label>
         <select class="form-control" name="tpo">
            <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(41)) selected @endif @endif @endif>No</option>

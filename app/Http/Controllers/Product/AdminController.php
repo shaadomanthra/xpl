@@ -847,6 +847,16 @@ class AdminController extends Controller
                 $user->roles()->detach(41);
         }
 
+        if($request->get('hrmanager')==1){
+            if(!$user->roles->contains(28))
+                $user->roles()->attach(28);
+        }
+
+        if($request->get('hrmanager')==2){
+            if($user->roles->contains(28))
+                $user->roles()->detach(28);
+        }
+
         //Services
         $service_list =  Service::orderBy('created_at','desc ')
                         ->get()->pluck('id')->toArray();
@@ -1105,6 +1115,16 @@ class AdminController extends Controller
         if($request->get('tpo')==2){
             if($user->roles->contains(41))
                 $user->roles()->detach(41);
+        }
+
+        if($request->get('hrmanager')==1){
+            if(!$user->roles->contains(28))
+                $user->roles()->attach(28);
+        }
+
+        if($request->get('hrmanager')==2){
+            if($user->roles->contains(28))
+                $user->roles()->detach(28);
         }
 
         //Services
