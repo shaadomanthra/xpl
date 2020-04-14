@@ -72,7 +72,10 @@
         	<div class="col-2 col-md-2">
         		<div class="pr-3 pb-2 " >
         			<div class="text-center p-1 rounded  w100 qyellow"  style="">
-        				{{ $details['qno'] }} <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-edit"></i></a>
+        				{{ $details['qno'] }} 
+                @can('update',$question)
+                <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-edit"></i></a>
+                @endcan
         			</div>
         		</div>
         	</div>

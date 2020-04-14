@@ -194,6 +194,13 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\Library\Respository');
     }
     
+
+    public function getRole($role){
+
+        $r = Role::where('slug',$role)->first();
+
+        return $r->users;
+    }
     
 
     public function checkRole($roles){

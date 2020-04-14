@@ -101,6 +101,7 @@ class QuestionController extends Controller
     {
 
         $question->project_id = $this->project->id;
+        if($this->project->slug!='default')
         $this->authorize('create', $question);
 
         $passages = Passage::where('project_id',$this->project->id)->orderBy('created_at','desc ')
@@ -1041,6 +1042,9 @@ class QuestionController extends Controller
         $question = Question::where('id',$id)->first();
         $this->authorize('update', $question);
 
+        $question = Question::where('id',$id)->first();
+
+        
 
         // merge answer for maq question
         if($question->type=='maq'){
@@ -1110,6 +1114,8 @@ class QuestionController extends Controller
             $answer = implode(",",$request->answer);
             $request->merge(['answer' => $answer]);
         }
+
+
 
         $categories = $request->get('category');
         $tags = $request->get('tag');

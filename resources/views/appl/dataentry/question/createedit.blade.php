@@ -38,10 +38,10 @@
        </h1>
 
       <div class="form-group mt-3">
-          <label for="formGroupExampleInput ">Reference </label>
+          <label for="formGroupExampleInput ">Reference (optional) </label>
           <input type="text" class="form-control" name="reference" id="formGroupExampleInput" placeholder="Enter the Reference" 
               @if($stub=='Create')
-              value="{{ (old('reference')) ? old('reference') : '' }}"
+              value="{{ (old('reference')) ? old('reference') : substr(md5(time()),0,6) }}"
               @else
               value = "{{ $question->reference }}"
               @endif

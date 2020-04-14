@@ -43,6 +43,14 @@
                 @else
                   <span class=" badge badge-success">Active</span>
                 @endif
+
+               
+              </div>
+              <div class='mt-1'>
+                 @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee',]))
+                <span class=" border p-0 rounded pr-2 pl-2 pb-1 "><small>{{$exam->user->name}}</small></span>
+
+                @endif
               </div>
               
             </div>

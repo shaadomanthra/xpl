@@ -272,6 +272,73 @@ class ExamController extends Controller
        return $ques;
     }
 
+
+    public function copy(Request $r){
+        $exam_id = $r->exam_id;
+        $exam_name = $r->exam_name;
+        $exam = Exam::where('id',$exam_id)->first();
+        $user_id = $r->user_id;
+
+        $eslug = substr(time(),4);
+        
+        while(1){
+            $eslug = substr(time(),4);
+            $e_exists = Exam::where('slug',$eslug)->first();
+            if(!$e_exists){
+               break; 
+            }
+        }
+        // create exam
+        $enew = $exam->replicate();
+        $enew->slug = $eslug;
+        if($exam_name)
+        $enew->name = $exam_name;
+        $enew->user_id = $user_id;
+        $enew->save();
+
+        // create sections
+        foreach($exam->sections as $s)
+        {
+            $snew = $s->replicate();
+            $snew->user_id = $user_id;
+            $snew->exam_id = $enew->id;
+            $snew->save();
+
+            //attach questions
+            foreach($s->questions as $q){
+                if(!$snew->questions->contains($q->id))
+                    $snew->questions()->attach($q->id);
+            }
+
+        }
+
+        //update cache
+            $obj = $exam;
+                $filename = $obj->slug.'.json';
+                $filepath = $this->cache_path.$filename;
+                $obj->sections = $obj->sections;
+                $obj->products = $obj->products;
+                $obj->product_ids = $obj->products->pluck('id')->toArray();
+                foreach($obj->sections as $m=>$section){
+                    $obj->sections->questions = $section->questions;
+                    foreach($obj->sections->questions as $k=>$question){
+                       $obj->sections->questions[$k]->passage = $question->passage; 
+                    }
+                }
+                
+                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            
+           
+            flash('Exams Successfully Replicated')->success();
+      
+            return redirect()->route('exam.show',$enew->slug);
+
+
+        
+          
+
+    }
+
     public function createExamLoop($request,$n)
     {
         //create exam

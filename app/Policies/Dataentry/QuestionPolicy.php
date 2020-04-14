@@ -49,7 +49,8 @@ class QuestionPolicy
                 return true;
             else
                 return false;
-        }
+        }elseif($user->checkRole(['hr-manager']))
+            return true;
         else
             return false;
     }
@@ -89,7 +90,14 @@ class QuestionPolicy
     { 
         $project = (new Project())->where('id',$question->project_id)->first();
         
-         if($user->checkRole(['administrator','data-manager','data-lead','feeder'])){
+        if($project->slug=='default'){
+            if($user->checkRole(['administrator'])){
+                return true;
+            }
+            if($user->id == $question->user_id)
+                return true;
+        }else{
+            if($user->checkRole(['administrator','data-manager','data-lead','feeder'])){
             if($user->id == $project->user_id_data_manager || $user->id == $project->user_id_data_lead || $user->id == $project->user_id_feeder)
                 return true;
             else
@@ -97,6 +105,8 @@ class QuestionPolicy
         }
         else
             return false;
+        }
+       
     }
 
 

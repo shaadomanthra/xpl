@@ -28,6 +28,10 @@ class Exam extends Model
         'camera',
         // add all other fields
     ];
+
+    public function user(){
+      return $this->belongsTo('PacketPrep\User');
+    }
     
     public function sections()
     {
