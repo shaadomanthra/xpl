@@ -158,7 +158,7 @@ class ProductController extends Controller
                     $user->image = asset('/storage/articles/profile_'.$username.'.jpeg');
                 }
 
-      if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com'){
+      
 
         if($user->checkRole(['hr-manager'])){
             $count = 0;
@@ -172,7 +172,7 @@ class ProductController extends Controller
         else
         return view('welcome2')->with('user',$user);
 
-      }
+   
       
 
         $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');

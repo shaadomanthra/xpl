@@ -15,8 +15,15 @@
 			Branch : <span class="text-primary">{{$student->branches()->first()->name}}</span><br>
 		</p>
 	</div>
-	@if($exam->solutions!=2)
+	@if($exam->solutions ==2 && !\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
+
+	<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
+			<div class="card-body">
+			Your responses are recorded for internal evaluation.
+		</div>
+	</div>
+	@else
 
 		@if($details['evaluation'])
 		<div class="row">
@@ -251,12 +258,7 @@
 
 	  @endif
 
-	@else
-	<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
-			<div class="card-body">
-			Your responses are recorded for internal evaluation.
-		</div>
-	</div>
+	
 
 	@endif
 

@@ -2,6 +2,7 @@
 @section('title', $exam->name)
 @section('content')
 
+@include('appl.exam.exam.xp_css')
 
 
 <div class="dblue" >
@@ -265,7 +266,14 @@
               <small class="mr-2">
               <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$t->user->username}}" ><i class="fa fa-commenting-o"></i> Responses</a></small>
 
-              <small class="mr-2 float-lg-right @if($t->window_change>5) text-danger @else text-secondary @endif"><i class="fa fa-desktop"></i> Window Swap @if($t->window_change) [{{$t->window_change}}] @else [0] @endif </small>
+              <small class="mr-2 float-lg-right @if($t->cheat_detech==1) text-danger @elseif($t->cheat_detech==2) text-warning @else text-success @endif">
+                @if($t->cheat_detect==1)
+                  <i class="fa fa-ban"></i> Potential Cheating  
+                @elseif($t->cheat_detect==2)
+                  <i class="fa fa-ban"></i> Cheating - Not Clear 
+                @else
+                  <i class="fa fa-check-circle"></i> No Cheating  
+                @endif </small>
 
             </div>
           </div>

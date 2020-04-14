@@ -2,6 +2,8 @@
 @section('title', 'Participants - '.$exam->name)
 @section('content')
 
+@include('appl.exam.exam.xp_css')
+
 <div class="dblue" >
   <div class="container">
 
@@ -51,7 +53,7 @@
               <tr>
                 <th scope="col">Sno</th>
                 <th scope="col">Name</th>
-                <th scope="col">Window Swap</th>
+                <th scope="col">Cheating</th>
                 @foreach($exam_sections as $sec)
                 <th scope="col">{{$sec->name}}</th>
                 @endforeach
@@ -61,19 +63,37 @@
             </thead>
             <tbody>
               @foreach($report as $key=>$r)  
-              <tr>
+              <tr @if($r->cheat_detect==1)
+                  style='background: #fff3f3' 
+                @elseif($r->cheat_detect==2)
+                  style='background: #ffffed' 
+                @else
+                  
+                @endif >
                 <th scope="row">{{$key+1 }}</th>
                 <td>
                   <a href="{{route('profile','@'.$r->user->username)}}"  >
                   {{ $r->user->name }}</a>
 
                   @if($r->user->personality)
-                    <i class="fa fa-check-circle text-success"></i>
-                  @endif
+                @if($r->user->personality>=8)
+                 <span class="badge badge-success"> Grade A</span>
+                @elseif($r->user->personality>=5 && $t->user->personality<8)
+                  <span class="badge badge-warning">Grade B</span>
+                @else
+                  <span class="badge badge-secondary">Grade C  </span>
+                @endif
+              @endif
                   
                 </td>
                 <td>
-                  {{ $r->window_change }}
+                @if($r->cheat_detect==1)
+                  <span class="text-danger"><i class="fa fa-ban "></i> Potential Cheating  </span>
+                @elseif($r->cheat_detect==2)
+                  <span class="text-warning"><i class="fa fa-ban"></i> Cheating - Not Clear </span>
+                @else
+                  <span class="text-success"><i class="fa fa-check-circle"></i> No Cheating  </span>
+                @endif
                 </td>
                 @foreach($sections[$r->user->id] as $s)
                 <td>
@@ -91,10 +111,12 @@
                 <form method="post" class='form-inline' action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
                   @if(!$r->status)
                   <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}">
-                    <i class='fa fa-bar-chart'></i> Result
+                    <i class='fa fa-bar-chart'></i> Report
                   </a>&nbsp;&nbsp;&nbsp;
                   <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
-
+                  @else
+                  - &nbsp;&nbsp;&nbsp;
+                  @endif
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="user_id" value="{{ $r->user->id }}">
@@ -103,9 +125,6 @@
                 @endif
                 </form>
                   
-                  @else
-                  -
-                  @endif
                 </td>
                 
               </tr>

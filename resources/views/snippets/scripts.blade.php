@@ -779,10 +779,11 @@ function addMinutes(date, minutes) {
 
  
 
+@if(isset($questions))
+@if(isset($questions[0]))
+@if($questions[0]->type!='code')
  // Inactive
  window.addEventListener('blur', stopTimer);
-
-
 
  // Stop timer
  function stopTimer() {
@@ -790,6 +791,9 @@ function addMinutes(date, minutes) {
   alert('We have noticed a window swap ('+count+'). Kindly note that multiple swaps will lead to cancellation of the test.');
   document.getElementById("window_change").value = count;
  }
+ @endif
+ @endif
+ @endif
 
 </script>
 
@@ -801,6 +805,8 @@ function addMinutes(date, minutes) {
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="application/javascript"></script>
 @endif
 
+@if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+@else
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43617911-9"></script>
 <script>
@@ -810,6 +816,7 @@ function addMinutes(date, minutes) {
 
   gtag('config', 'UA-43617911-9');
 </script>
+@endif
 @endif
 
 @auth

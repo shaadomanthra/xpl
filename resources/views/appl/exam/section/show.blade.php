@@ -2,6 +2,7 @@
 @section('title', 'Section - '.$exam->name)
 @section('content')
 
+
 <div class="container">
   <div class=' mb-4'>
     <nav class="mb-0">

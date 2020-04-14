@@ -110,7 +110,7 @@
 
 
 
-@if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+
 
 @if(count(\auth::user()->tests())!=0)
   <div class="rounded table-responsive ">
@@ -156,7 +156,7 @@
         @endif
 
 
-@else
+
   @if(count(auth::user()->products)!=0)
   <div class="rounded table-responsive bg-white">
             <table class="table table-bordered ">
@@ -202,7 +202,7 @@
             </div>
   <br><br>
         @endif
-@endif
+
 
   </div>
 

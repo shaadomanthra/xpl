@@ -2,6 +2,8 @@
 @section('title', 'Tests')
 @section('content')
 
+@include('appl.exam.exam.xp_css')
+
 <div class="dblue" >
   <div class="container">
 

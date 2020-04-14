@@ -100,6 +100,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
+	Route::get('/hire',function(){ return view('xp_welcome')->with('welcome',1); })->name('xp');
 	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');
 	Route::get('/refund',function(){ return view('appl.product.pages.refund'); })->name('refund');
 	Route::get('/disclaimer',function(){ return view('appl.product.pages.disclaimer'); })->name('disclaimer');

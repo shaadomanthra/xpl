@@ -9,7 +9,12 @@
     <meta name="keywords" content="@yield('keywords')">
     <meta name="author" content="Krishna Teja G S">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
     <meta name="theme-color" content="#236fb1"/>
+    @else
+    <meta name="theme-color" content="#c25054"/>
+   
+    @endif
     <link rel="manifest" href="/manifest.json">
     <meta property="og:url"           content="{{ request()->url() }}" />
     <meta property="og:type"          content="website" />

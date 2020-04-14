@@ -42,7 +42,13 @@ class TestReport implements FromCollection
             
     		$result[$k]->Email = $res->user->email;
     		$result[$k]->Phone= $res->user->phone;
-            $result[$k]->Window_change = $res->window_change;
+
+            if($res->cheat_detect==2)
+            $result[$k]->cheating = 'Cheating - Not Clear';
+            elseif($res->cheat_detect==1)
+            $result[$k]->cheating = 'Potential Cheating';
+            else
+              $result[$k]->cheating = 'No Cheating';  
     		foreach($sections[$res->user->id] as $m=>$sec){
     			$name = $exam_sections[$m]['name'];
     			$result[$k]->$name = $sec->score;
@@ -58,12 +64,15 @@ class TestReport implements FromCollection
     		unset($result[$k]->incorrect);
     		unset($result[$k]->score);
             unset($result[$k]->window_change);
+            unset($result[$k]->face_detect);
+            unset($result[$k]->cheat_detect);
     		unset($result[$k]->time);
     		unset($result[$k]->max);
     		unset($result[$k]->code);
     		unset($result[$k]->status);
     		unset($result[$k]->updated_at);
     	}
+
     		
 
     	$ux = new Tests_Overall();
@@ -76,7 +85,7 @@ class TestReport implements FromCollection
         $ux->yop = "Year of Passing";
     	$ux->email = "Email";
     	$ux->phone = "Phone";
-        $ux->window = "Window Swap";
+        $ux->window = "Cheating";
     	foreach($exam_sections as $m=>$sec){
     			$name = $exam_sections[$m]['name'];
     			$ux->$name = $name;
@@ -92,6 +101,9 @@ class TestReport implements FromCollection
     		unset($ux->score);
     		unset($ux->time);
     		unset($ux->max);
+            unset($ux->window_change);
+            unset($ux->face_detect);
+            unset($ux->cheat_detect);
     		unset($ux->code);
     		unset($ux->status);
     		unset($ux->created_at);
