@@ -78,7 +78,7 @@
                   @if($r->user->personality)
                 @if($r->user->personality>=8)
                  <span class="badge badge-success"> Grade A</span>
-                @elseif($r->user->personality>=5 && $t->user->personality<8)
+                @elseif($r->user->personality>=5 && $r->user->personality<8)
                   <span class="badge badge-warning">Grade B</span>
                 @else
                   <span class="badge badge-secondary">Grade C  </span>
