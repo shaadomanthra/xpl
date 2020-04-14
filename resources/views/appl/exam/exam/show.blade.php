@@ -269,7 +269,7 @@
               <small class="mr-2">
               <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$t->user->username}}" ><i class="fa fa-commenting-o"></i> Responses</a></small>
 
-              <small class="mr-2 float-lg-right @if($t->cheat_detech==1) text-danger @elseif($t->cheat_detech==2) text-warning @else text-success @endif">
+              <small class="mr-2 float-lg-right @if($t->cheat_detect==1) text-danger @elseif($t->cheat_detect==2) text-warning @else text-success @endif">
                 @if($t->cheat_detect==1)
                   <i class="fa fa-ban"></i> Potential Cheating  
                 @elseif($t->cheat_detect==2)
