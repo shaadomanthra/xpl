@@ -19,10 +19,7 @@
     </ul>
     <ul class="navbar-nav ml-auto mt-4 mt-lg-0">
         @guest
-        <li class="mr-3"><a class="nav-link" href="{{ route('pricing') }}" aria-label="Pricing page"
-            ><i class="fa fa-rupee"></i>
-            Pricing
-        </a></li>
+        
         @else
 
 
