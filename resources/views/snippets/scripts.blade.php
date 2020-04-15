@@ -730,6 +730,7 @@ window.onbeforeunload = function () {
 @endif
 @endif
 
+
 // Set the date we're counting down to
 @if(!isset($time))
 var countDownDate = addMinutes(new Date(),{{ count($questions) }});
@@ -779,11 +780,21 @@ function addMinutes(date, minutes) {
 
  
 
+
+
+
+</script>
+
+@endif
+
+<script src="{{ asset('js/jquery.winFocus.js')}}"></script>
+
+<script>
 @if(isset($questions))
 @if(isset($questions[0]))
 @if($questions[0]->type!='code')
  // Inactive
- window.addEventListener('blur', stopTimer);
+ // window.addEventListener('blur', stopTimer);
 
  // Stop timer
  function stopTimer() {
@@ -791,14 +802,19 @@ function addMinutes(date, minutes) {
   alert('We have noticed a window swap ('+count+'). Kindly note that multiple swaps will lead to cancellation of the test.');
   document.getElementById("window_change").value = count;
  }
- @endif
- @endif
- @endif
 
-</script>
+ $.winFocus(function(event) {
+  stopTimer();
+  console.log("Blur\t\t", event);
+},
+function(event) {
+  console.log("Focus\t\t", event);
+});
 
+ @endif
+ @endif
 @endif
-
+</script>
 
 @if(!request()->is('/')) 
 @if(isset($ads))
