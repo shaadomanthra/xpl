@@ -105,10 +105,10 @@
              @endif
              
              @can('update',$user)
-              <a href="{{route('profile.edit','@'.$user->username)}}" class="btn btn-success mt-3"><i class="fa fa-edit"></i> Edit</a>
+              <a href="{{route('profile.edit','@'.$user->username)}}" class="btn btn-success mt-3 mb-4"><i class="fa fa-edit"></i> Edit</a>
               @endcan
               @can('manage',$user)
-              <a href="{{route('profile.manage','@'.$user->username)}}" class="btn btn-primary mt-3"><i class="fa fa-gear"></i> Manage</a>
+              <a href="{{route('profile.manage','@'.$user->username)}}" class="btn btn-primary mt-3 mb-4"><i class="fa fa-gear"></i> Manage</a>
               @endcan
 
             </div>
