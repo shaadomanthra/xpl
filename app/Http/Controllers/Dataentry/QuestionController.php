@@ -254,22 +254,35 @@ class QuestionController extends Controller
 
     public function import($id,Request $r){
         $topic = $r->get('topic');
+        $section_id = $r->get('section_id');
         $category = Category::where('slug',$topic)->first();
+
+        $section = Section::where('id',$section_id)->first();
         $url = $r->get('url');
 
         if(!$category)
             abort('403','No category');
 
         $json_ques = json_decode(file_get_contents($url));
-        dd($json_ques);
-        $ques = new Question();
+        
+        
         foreach($json_ques as $q){
+            $ques = new Question();
             foreach($q as $a=>$b){
+                if($a!='pivot' && $a!='id')
                 $ques->$a = $b;
             }
-            $ques->id = null;
             $ques->project_id = $this->project->id;
+            
             $ques->save();
+
+            if(!$ques->categories->contains($category->id))
+                $ques->categories()->attach($category->id);
+
+            if($section){
+                if(!$ques->sections->contains($section->id))
+                    $ques->sections()->attach($section->id);
+            }
         }
     }
 
