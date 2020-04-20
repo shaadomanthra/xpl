@@ -527,7 +527,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('dataentry/fork','Dataentry\ProjectController@fork')->middleware('auth')->name('dataentry.fork');
 	Route::get('d/{project}/c/export','Dataentry\QuestionController@export')->name('category.export');
 
-	Route::get('d/{project}/c/import','Dataentry\QuestionController@import')->name('category.import');
+	Route::get('dd/{project}/cc/import','Dataentry\QuestionController@import')->name('category.import');
 
 	Route::resource('dataentry','Dataentry\ProjectController')->middleware('auth');
 	Route::resource('dataentry/{project}/category','Dataentry\CategoryController')->middleware('auth');
