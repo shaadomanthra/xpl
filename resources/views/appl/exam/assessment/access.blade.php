@@ -27,11 +27,11 @@
 					
 					{{ $exam->name }} @if($exam->status ==2)
 					<span class="badge badge-primary ">
-					<i class="fa fa-lock" aria-hidden="true"></i>  PREMIUM
+					<i class="fa fa-lock" aria-hidden="true"></i>  PRIVATE
 				</span>
 					@else
 					<span class="badge badge-warning ">
-					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> FREE
+					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> FREE ACCESS
 				</span>
 					@endif</h1>
 				

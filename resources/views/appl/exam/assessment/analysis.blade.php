@@ -31,6 +31,9 @@
 			Branch : <span class="text-primary">{{$student->branches()->first()->name}}</span><br>
 		</p>
 	</div>
+
+	
+
 	@if($exam->solutions ==2 && !\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
 
@@ -39,6 +42,149 @@
 			Your responses are recorded for internal evaluation.
 		</div>
 	</div>
+	@else
+
+	@if($exam->slug =='psychometric-test')
+
+	<div class="card"  style="background: #FFF;border: 0px solid #EEE;">
+		<div class="card-body">
+			<div class="mt-2 mb-3">
+				@foreach($d as $i=>$j)
+				<div class="c c_{{$i}}">
+					<div class="p p_{{$i}}" style="width:{{($j*2.5)}}%;"></div>
+					<div class="content text-left">
+						<h3>@if($i=='neuroicism') Emotional Stability @else {{ ucfirst($i)}}@endif <i class="fa fa-question-circle-o" data-toggle="tooltip" title="{{ $m[$i] }}"></i>
+							<p class="float-right text-secondary f18">{{($j*2.5)}}%</p>
+						</h3>
+						<p>@if($j<16){{ $c[$i]['low']}} @elseif($j>15 && $j<27) {{ $c[$i]['mid']}} @else {{ $c[$i]['high']}} @endif</p>
+
+					</div>
+				</div>
+				@endforeach
+			</div>
+		</div>
+	</div>
+	<style>
+
+.f18{font-size: 18px;}
+.c {
+  background-color:#eee;
+  box-sizing:border-box;
+  float:left;
+  height:14em;
+  margin:.5em;
+  padding:1em;
+  position:relative;
+  width:21em;
+  border-radius: 10px;
+}
+
+.p {
+  bottom:0;
+  left:0;
+  position:absolute;
+  top:0;
+  border-radius: 10px;
+}
+
+.p:before {
+  animation:slideIn 2s ease-out;
+  background-color:#ff7c7c;
+  bottom:0;
+  left:0;
+  content:"";
+  position:absolute;
+  top:0;
+  width:100%;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.content {
+  position:relative;
+}
+
+.percentage {
+  text-align:right;
+}
+
+@keyframes slideIn {
+  0% {
+    background-color:#eee;
+    width:0;
+  }
+  100% {
+    background-color:#ff7c7c;
+    width:100%;
+  }
+}
+
+@keyframes slideIn2 {
+  0% {
+    background-color:#eee;
+    width:0;
+  }
+  100% {
+    background-color:#6fc4ff;
+    width:100%;
+  }
+}
+
+.p_agreeableness:before{
+	animation:slideIn2 2s ease-out;
+	background-color:#6fc4ff;
+}
+
+@keyframes slideIn3 {
+  0% {
+    background-color:#eee;
+    width:0;
+  }
+  100% {
+    background-color:#96f18b;
+    width:100%;
+  }
+}
+
+.p_conscientiousness:before{
+	animation:slideIn3 2s ease-out;
+	background-color:#96f18b;
+}
+
+
+@keyframes slideIn4 {
+  0% {
+    background-color:#eee;
+    width:0;
+  }
+  100% {
+    background-color:#dfc3ff;
+    width:100%;
+  }
+}
+
+.p_neuroicism:before{
+	animation:slideIn4 2s ease-out;
+	background-color:#dfc3ff;
+}
+
+@keyframes slideIn5 {
+  0% {
+    background-color:#eee;
+    width:0;
+  }
+  100% {
+    background-color:#ffcb7c;
+    width:100%;
+  }
+}
+
+.p_openness:before{
+	animation:slideIn5 2s ease-out;
+	background-color:#ffcb7c;
+}
+
+</style>
+
 	@else
 
 		@if($details['evaluation'])
@@ -215,6 +361,7 @@
 
 	  @endif
 
+	@endif
 	
 
 	@endif

@@ -241,6 +241,38 @@ class QuestionController extends Controller
         }
     }
 
+    public function export($id,Request $r){
+        $topic = $r->get('topic');
+        $category = Category::where('slug',$topic)->first();
+
+        if(!$category)
+            abort('403','No category');
+
+        $json_ques = json_encode($category->questions);
+        print($json_ques);
+    }
+
+    public function import($id,Request $r){
+        $topic = $r->get('topic');
+        $category = Category::where('slug',$topic)->first();
+        $url = $r->get('url');
+
+        if(!$category)
+            abort('403','No category');
+
+        $json_ques = json_decode(file_get_contents($url));
+        dd($json_ques);
+        $ques = new Question();
+        foreach($json_ques as $q){
+            foreach($q as $a=>$b){
+                $ques->$a = $b;
+            }
+            $ques->id = null;
+            $ques->project_id = $this->project->id;
+            $ques->save();
+        }
+    }
+
     public function copy($id,Request $r){
 
         $topic_id = $r->session()->get('topic_id');

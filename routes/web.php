@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -514,13 +515,18 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 		return Redirect::to('/course/quantitative-aptitude', 301); 
 	});
 	Route::get('/material', 'Dataentry\ProjectController@material')->name('material');
+
 	Route::get('dataentry/qdb','Dataentry\QdbController@index')->middleware('auth')->name('qdb.index');
 	Route::get('dataentry/pdf','Dataentry\QuestionController@pdf')->middleware('auth')->name('dataentry.pdf');
 	Route::get('dataentry/qdb/export','Dataentry\QdbController@exportQuestion')->middleware('auth')->name('qdb.export');
 	Route::get('dataentry/qdb/import','Dataentry\QdbController@importQuestion')->middleware('auth')->name('qdb.import');
 	Route::get('dataentry/qdb/replace','Dataentry\QdbController@replacement')->middleware('auth')->name('qdb.replace');
 
+
 	Route::get('dataentry/fork','Dataentry\ProjectController@fork')->middleware('auth')->name('dataentry.fork');
+	Route::get('dataentry/{project}/category/export','Dataentry\QuestionController@export')->name('category.export')->middleware('auth');
+
+	Route::get('dataentry/{project}/category/import','Dataentry\QuestionController@import')->name('category.import')->middleware('auth'); 
 	Route::resource('dataentry','Dataentry\ProjectController')->middleware('auth');
 	Route::resource('dataentry/{project}/category','Dataentry\CategoryController')->middleware('auth');
 	Route::get('dataentry/{project}/category/{category}/question','Dataentry\QuestionController@category')->middleware('auth')->name('category.question');

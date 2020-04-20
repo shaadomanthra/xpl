@@ -31,6 +31,16 @@ if (! function_exists('image_resize')) {
     }
 }
 
+if (! function_exists('random_color')) {
+
+function random_color() {
+    $a = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+    $b = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+    $c = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+    return $a . $b . $c;
+}
+}
+
 if (! function_exists('summernote_imageupload')) {
     function summernote_imageupload($user,$editor_data)
     {
