@@ -253,6 +253,7 @@ class QuestionController extends Controller
     }
 
     public function import($id,Request $r){
+        
         $topic = $r->get('topic');
         $section_id = $r->get('section_id');
         $category = Category::where('slug',$topic)->first();
