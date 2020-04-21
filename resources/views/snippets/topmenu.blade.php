@@ -28,6 +28,11 @@
         </a></li>
 
         @endguest
+
+        @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
+        <li class="mr-3 "><a class="nav-link " href="{{ url('exam') }}" aria-label="Tests"><i class="fa fa-inbox"></i> Tests</a></li>
+        @else
+
         <li class="mr-3 "><a class="nav-link " href="{{ url('course') }}" aria-label="PacketPrep Courses"><i class="fa fas fa-youtube-play"></i> Courses</a></li>
 
         
@@ -36,6 +41,10 @@
                         <li class="mr-3 "><a class="nav-link " href="{{ url('test') }}" aria-label="Wipro NTH 2020"><i class="fa fa-ravelry"></i> Tests</a></li>
 
                         <li class="mr-3 "><a class="nav-link " href="{{ url('job') }}" aria-label="Wipro NTH 2020"><i class="fa fa-bars"></i> Jobs</a></li>
+
+        @endif
+
+        
 
                         
             <!-- Authentication Links -->
@@ -64,11 +73,12 @@
             
 
 
-
+@if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
         <a class="dropdown-item"  href="{{ route('order.transactions') }}"
         >
         Transactions
     </a>
+    @endif
     <a class="dropdown-item"  href="{{ route('logout') }}"
     onclick="event.preventDefault();
     document.getElementById('logout-form').submit();">

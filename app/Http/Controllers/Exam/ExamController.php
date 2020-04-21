@@ -540,6 +540,7 @@ class ExamController extends Controller
     {
         $exam= Exam::where('slug',$id)->first();
         $code = $r->get('code');
+        $item = $r->get('item');
         if($code){
             $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->orderby('score','desc')->get();
             $users = $result->pluck('user_id');
@@ -553,6 +554,21 @@ class ExamController extends Controller
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
         }
 
+        $search = $r->search;
+        if($item){
+            $users = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')
+                    ->pluck('id');  
+
+            $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$users)->orderby('score','desc')->get();
+            $exam_sections = Section::where('exam_id',$exam->id)->get();
+            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+
+            
+           
+        }
+         
+        $view = $search ? 'analytics_list': 'analytics';
         
 
         if(request()->get('export')){
@@ -563,11 +579,12 @@ class ExamController extends Controller
             request()->session()->put('users',$u);
             $name = "Report_".$exam->name.".xlsx";
             return Excel::download(new TestReport, $name);
+
         }
 
 
         if($exam)
-            return view('appl.exam.exam.analytics')
+            return view('appl.exam.exam.'.$view)
                     ->with('report',$result)
                     ->with('exam_sections',$exam_sections)
                     ->with('sections',$sections)
