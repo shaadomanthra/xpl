@@ -206,6 +206,6 @@
   </div>
 </div>
  <?php
-          session()->put( 'redirect.url',request()->url().'/dashboard');
-      ?>
+    session()->put( 'redirect.url',request()->url().'/dashboard');
+  ?>
 @endsection    

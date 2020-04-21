@@ -20,10 +20,16 @@ use PacketPrep\Http\Middleware\RequestFilter;
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	Route::get('/', function(){ 
-		if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+		if(\auth::user())
+		{
+			return redirect('/dashboard');
+		}else{
+			if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
 			return view('welcome')->with('welcome',1);
-		else
+			else
 			return view('welcome3')->with('welcome3',1);
+		}
+		
 
 	})->middleware('cache')->name('root');
 	Route::post('/', 'Product\OrderController@callback');
