@@ -87,4 +87,7 @@
     </div>
   </div>
 </div>
+<?php
+          session()->put( 'redirect.url',request()->url().'/dashboard');
+      ?>
 @endsection    
