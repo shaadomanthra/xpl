@@ -235,7 +235,7 @@
       <div class='cardbox lblue p-3 mb-3'>
         <div class="row">
           <div class='col-3 col-md-3 col-lg-2'>
-            <img src="@if($t->user->image) {{ ($t->user->image)}}@else {{ Gravatar::src($t->user->email, 150) }}@endif" class="img-cirlce " />
+            <img src="@if($t->user->getImage()) {{ ($t->user->getImage())}}@else {{ Gravatar::src($t->user->email, 150) }}@endif" class="img-cirlce " />
           </div>
           <div class='col-9 col-md-9 col-lg-10'>
             <div class="f18 mb-0">

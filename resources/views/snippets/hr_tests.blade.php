@@ -61,7 +61,7 @@
         <div class="line" style="padding:1px;background:#ebf1fb"></div>  
         	<div class="p-4">
         	@foreach($e->latestUsers() as $t)
-        		<div class="mb-2"><img src="@if($t->user->image) {{ ($t->user->image)}}@else {{ Gravatar::src($t->user->email, 20) }}@endif" class="img-cirlce" style="width:20px" /> &nbsp; &nbsp;
+        		<div class="mb-2"><img src="@if($t->user->getImage()) {{ ($t->user->getImage())}}@else {{ Gravatar::src($t->user->email, 20) }}@endif" class="img-cirlce" style="width:20px" /> &nbsp; &nbsp;
         			<a href="{{ route('profile','@'.$t->user->username) }}">{{$t->user->name}} </a>
 
         		  @if($t->status || $e->slug=='psychometric-test')

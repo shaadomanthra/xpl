@@ -12,6 +12,7 @@ use PacketPrep\Models\User\User_Details;
 use PacketPrep\Notifications\MailResetPasswordToken;
 use Illuminate\Support\Facades\DB;
 use PacketPrep\Models\College\College;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -128,6 +129,25 @@ class User extends Authenticatable
 
     public function products(){
         return $this->belongsToMany('PacketPrep\Models\Product\Product')->withPivot('status','validity','created_at','valid_till');
+    }
+
+    public function getImage(){
+        $user = $this;
+        $username = $this->username;
+        if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpg'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.jpg');
+                }
+                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.png'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.png');
+                }
+
+                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpeg'))
+                {
+                    $user->image = asset('/storage/articles/profile_'.$username.'.jpeg');
+                }
+        return $user->image;
     }
 
     public function attempted($id){
