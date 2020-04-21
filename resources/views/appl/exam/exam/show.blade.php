@@ -241,7 +241,7 @@
             <div class="f18 mb-0">
               <a href="{{ route('profile','@'.$t->user->username) }}"><b>{{$t->user->name}}</b></a>
 
-              @if($t->status)
+              @if($t->status || $exam->slug=='psychometric-test')
               has attempted the test
               @else
                has scored <b class="text-primary">

@@ -64,7 +64,7 @@
         		<div class="mb-2"><img src="@if($t->user->image) {{ ($t->user->image)}}@else {{ Gravatar::src($t->user->email, 20) }}@endif" class="img-cirlce" style="width:20px" /> &nbsp; &nbsp;
         			<a href="{{ route('profile','@'.$t->user->username) }}">{{$t->user->name}} </a>
 
-        		@if($t->status)
+        		  @if($t->status || $exam->slug=='psychometric-test')
               has attempted the test
               @else
                has scored <a href="{{ route('assessment.analysis',$e->slug)}}?student={{$t->user->username}}"><b class="text-success">
