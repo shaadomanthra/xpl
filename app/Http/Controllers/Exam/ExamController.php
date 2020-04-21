@@ -630,7 +630,6 @@ class ExamController extends Controller
             //dd($request->all());
             $exam->name = $request->name;
             $exam->slug = $request->slug;
-            $exam->user_id = $request->user_id;
             if($request->course_id)
             $exam->course_id = $request->course_id;
             $exam->examtype_id = $request->examtype_id;
