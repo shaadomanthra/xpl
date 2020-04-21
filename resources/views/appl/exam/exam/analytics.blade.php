@@ -25,12 +25,11 @@
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="mt-2">
+        <div class="mt-2 ">
           @if($exam->slug!='psychometric-test')
-         <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right ml-3">Download Excel</a>
+         <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
          @endif
-
-         <form class="form-inline mr-3" method="GET" action="{{ route('test.report',$exam->slug) }}">
+          <form class="form-inline mr-3 " method="GET" action="{{ route('test.report',$exam->slug) }}">
             
             <div class="input-group ">
               <div class="input-group-prepend">
@@ -39,8 +38,10 @@
               <input class="form-control " id="search" name="item" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
               value="{{Request::get('item')?Request::get('item'):'' }}">
             </div>
-            
           </form>
+          
+
+         
         </div>
       </div>
     </div>
