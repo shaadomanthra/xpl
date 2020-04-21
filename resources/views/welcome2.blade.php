@@ -108,13 +108,82 @@
   </div>
 </div>
 
+@if(count(\auth::user()->newtests())!=0)
+  <div class="row ">
+            
+                @foreach(\auth::user()->newtests() as $k=>$e)
+                @if(!\auth::user()->attempted($e->id))
+                       <div class="col-12 col-md-6">
+        <div class="mb-4 cardbox">
+          <div class="lblue " style="border-radius:5px;">
+          <div class=" bg-white p-4  " style='border-radius: 5px;'>
+          <div class="row">
+            <div class='col-2 col-md-3'>
+              @if(isset($e->image))
+                @if(Storage::disk('public')->exists($e->image))
+                <div class=" text-center">
+                  <picture class="">
+                    <img 
+                    src="{{ asset('/storage/'.$e->image) }} " class="d-print-none w-100" alt="{{  $e->name }}" style='max-width:80px;'>
+                  </picture>
+                </div>
+                @endif
+              @else
+              <div class="text-center text-secondary">
+                <i class="fa fa-newspaper-o fa-4x p-1 d-none d-md-block" aria-hidden="true"></i>
+                <i class="fa fa-newspaper-o  fa-2x d-inline d-md-none" aria-hidden="true"></i>
+              </div>
+              @endif
+            </div>
+            <div class='col-8 col-md-6'>
+              <h4 class="mb-1 mt-2 lh15">
+                <a href=" {{ route('exam.show',$e->slug) }} ">
+                @if($e->status==0)
+                <i class="fa fa-square-o"></i> 
+                @elseif($e->status==1)
+                  <i class="fa fa-globe"></i> 
+                @else
+                  <i class="fa fa-lock"></i> 
+                @endif  
+                  {{ $e->name }}
+                </a>
+
+              </h4>
+              <div>
+                  @if($e->active==1)
+                <span class=" badge badge-secondary">Inactive</span>
+                @else
+                  <span class=" badge badge-success">Active</span>
+                @endif
+              </div>
+              
+            </div>
+            <div class='col-2 col-md-3'>
+              <div class="heading_one float-right f30">
+                <a href="{{ route('assessment.details',$e->slug)}}" class='btn btn-outline-primary btn-sm'>
+                  <i class="fa fa-paper-plane"></i>
+                  Try Now
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        
+        </div>
+    </div>
+              </div>
+                @endif
+                @endforeach
+            </div>
 
 
+@endif
 
 
 @if(count(\auth::user()->tests())!=0)
   <div class="rounded table-responsive ">
-            <table class="table table-bordered bg-white">
+            <table class="table table-bordered ">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -152,7 +221,7 @@
               </tbody>
             </table>
             </div>
-  <br><br>
+  
         @endif
 
 
@@ -200,7 +269,7 @@
               </tbody>
             </table>
             </div>
-  <br><br>
+
         @endif
 
 

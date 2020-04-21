@@ -44,7 +44,9 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+        
         Session::put('preUrl', URL::previous());
+
     }
 
 
@@ -146,8 +148,11 @@ class LoginController extends Controller
         
         
         if(session()->has('redirect.url')) {
+
              return redirect( session()->get( 'redirect.url' ) );
         }
+
+
         
         return redirect()->intended($this->redirectPath());
     }

@@ -2,7 +2,12 @@
 @section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' ')
 @section('content')
 
-
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb border">
+    <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
+    <li class="breadcrumb-item">{{ ucfirst($exam->name) }} - Analysis  </li>
+  </ol>
+</nav>
 
 
 

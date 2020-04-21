@@ -130,6 +130,22 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\Product\Product')->withPivot('status','validity','created_at','valid_till');
     }
 
+    public function attempted($id){
+        $test = DB::table('tests_overall')
+                    ->where('user_id', \auth::user()->id)
+                    ->where('test_id', $id)
+                    ->first();
+        return $test;
+    }
+
+    public function newtests(){
+        $email = $this->email;
+        $tests = DB::table('exams')->where('emails','LIKE',"%{$email}%")
+                ->get();
+
+        return $tests;
+    }
+
     public function tests(){
         $attempts = DB::table('tests_overall')
                 ->where('user_id', \auth::user()->id)
