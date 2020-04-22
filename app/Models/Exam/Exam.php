@@ -155,6 +155,10 @@ class Exam extends Model
       $json = json_decode($data);
 
       if(isset($json->stdout)){
+
+        vardump($json);
+        echo " in stdout";
+
         $entry->response = strip_tags(trim($json->stdout));
         if(strtolower($entry->response) == strtolower($entry->answer)){
 
@@ -190,6 +194,9 @@ class Exam extends Model
 
       }elseif($json->stderr){
 
+          vardump($json);
+        echo " in stderr";
+
           $entry->response = $json->stderr;
           $e_section->incorrect++;
           $e_section->unattempted--;
@@ -205,6 +212,8 @@ class Exam extends Model
       }
       
 
+      vardump($json);
+        echo " in stoutside ";
       
         $entry->status =1;
 
@@ -212,7 +221,8 @@ class Exam extends Model
         $e_section->save();
         $e_overall->save();
 
-        dd($entry);
+        dd($json);
+
         return 1;
     }
 
