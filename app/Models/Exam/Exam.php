@@ -187,6 +187,8 @@ class Exam extends Model
         if(!$entry->response && $entry->response!=0){
           $entry->response = $json->stderr;
         }
+      }elseif(!$entry->response && $entry->response!=0){
+          $entry->response = $json->stderr;
       }
       
 
