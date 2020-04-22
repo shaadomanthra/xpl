@@ -24,7 +24,7 @@ class ExamPolicy
      */
     public function view(User $user)
     {
-        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator']);
+        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator','hr-manager']);
     }
 
 

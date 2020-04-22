@@ -24,7 +24,7 @@ class SectionPolicy
      */
     public function view(User $user)
     {
-        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator']);
+        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator','hr-manager']);
     }
 
 
@@ -37,7 +37,7 @@ class SectionPolicy
      */
     public function create(User $user)
     { 
-        return $user->checkRole(['administrator','data-manager']);
+        return $user->checkRole(['administrator','data-manager','hr-manager']);
     }
 
 
@@ -50,7 +50,7 @@ class SectionPolicy
      */
     public function edit(User $user,Section $section)
     { 
-        if($user->checkRole(['administrator','data-manager'])){
+        if($user->checkRole(['administrator','data-manager','hr-manager'])){
             if($section->user_id==$user->id )
                 return true;
             else
@@ -69,7 +69,7 @@ class SectionPolicy
      */
     public function update(User $user)
     { 
-        return $user->checkRole(['administrator','data-manager']);
+        return $user->checkRole(['administrator','data-manager','hr-manager']);
     }
 
 
