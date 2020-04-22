@@ -187,8 +187,19 @@ class Exam extends Model
         if(!$entry->response && $entry->response!=0){
           $entry->response = $json->stderr;
         }
-      }elseif(!$entry->response && $entry->response!=0){
+      }elseif($json->stderr){
           $entry->response = $json->stderr;
+          $e_section->incorrect++;
+          $e_section->unattempted--;
+          if($section->negative)
+          $e_section->score = $e_section->score - $section->negative;
+
+          $e_overall->incorrect++;
+          $e_overall->unattempted--;
+          if($section->negative)
+          $e_overall->score = $e_overall->score - $section->negative;
+
+          $entry->accuracy=0;
       }
       
 
