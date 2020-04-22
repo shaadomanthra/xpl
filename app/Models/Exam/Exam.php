@@ -187,7 +187,9 @@ class Exam extends Model
         if(!$entry->response && $entry->response!=0){
           $entry->response = $json->stderr;
         }
+
       }elseif($json->stderr){
+
           $entry->response = $json->stderr;
           $e_section->incorrect++;
           $e_section->unattempted--;
@@ -210,6 +212,7 @@ class Exam extends Model
         $e_section->save();
         $e_overall->save();
 
+        dd($entry);
         return 1;
     }
 
