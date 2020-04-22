@@ -74,7 +74,7 @@ class EditorController extends Controller
     {
 
       
-      return (new Exam)->runCode();
+      return (new Exam)->runCode($request);
       //print $json;
 
     }

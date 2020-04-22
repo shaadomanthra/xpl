@@ -127,10 +127,16 @@ class Exam extends Model
 
     }
 
-    public function runCode(){
+    public function runCode($r=null){
+
+
       $entry = Test::where('status',2)->orderBy('id','desc')->first();
       if(!$entry)
          return null;
+
+      if($r && !$$entry)
+      if($r->get('qno'))
+          $entry = Test::whereNotNull('code')->orderBy('id','desc')->first();
 
       $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
       $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
