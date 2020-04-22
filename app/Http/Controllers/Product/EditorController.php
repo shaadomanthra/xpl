@@ -1,6 +1,4 @@
-
 <?php
-
 namespace PacketPrep\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
