@@ -128,15 +128,22 @@ class Exam extends Model
     }
 
     public function runCode($r=null){
-
+     
 
       $entry = Test::where('status',2)->orderBy('id','desc')->first();
-      if(!$entry)
-         return null;
-
-      if($r && !$$entry)
-      if($r->get('qno'))
+      if(!$entry){
+        if($r && !$entry)
+        if($r->get('qno')){
+          
           $entry = Test::whereNotNull('code')->orderBy('id','desc')->first();
+        }else{
+          return null;
+        }
+      }
+      
+       
+      
+          
 
       $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
       $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
@@ -162,8 +169,6 @@ class Exam extends Model
 
       if(isset($json->stdout)){
 
-        vardump($json);
-        echo " in stdout";
 
         $entry->response = strip_tags(trim($json->stdout));
         if(strtolower($entry->response) == strtolower($entry->answer)){
@@ -194,40 +199,20 @@ class Exam extends Model
         if($e_overall->unattempted<1)
             $e_overall->status = 0;
 
-        if(!$entry->response && $entry->response!=0){
+          
+        if(!$entry->response && $entry->response!==0){
+         
           $entry->response = $json->stderr;
         }
 
-      }elseif($json->stderr){
-
-          vardump($json);
-        echo " in stderr";
-
-          $entry->response = $json->stderr;
-          $e_section->incorrect++;
-          $e_section->unattempted--;
-          if($section->negative)
-          $e_section->score = $e_section->score - $section->negative;
-
-          $e_overall->incorrect++;
-          $e_overall->unattempted--;
-          if($section->negative)
-          $e_overall->score = $e_overall->score - $section->negative;
-
-          $entry->accuracy=0;
       }
       
-
-      vardump($json);
-        echo " in stoutside ";
       
         $entry->status =1;
 
         $entry->save();
         $e_section->save();
         $e_overall->save();
-
-        dd($json);
 
         return 1;
     }
