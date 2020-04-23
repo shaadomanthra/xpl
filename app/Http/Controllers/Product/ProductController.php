@@ -144,33 +144,18 @@ class ProductController extends Controller
       $user = \auth::user();
 
       $username = $user->username;
-        if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpg'))
-                {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.jpg');
-                }
-                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.png'))
-                {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.png');
-                }
+      $user->image = $user->getImage();
 
-                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpeg'))
-                {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.jpeg');
-                }
-
-      
-
-        if($user->checkRole(['hr-manager'])){
-            $count = 0;
-            foreach($user->exams as $exam){
-              $count = $count + $exam->getUserCount();
-            }
-            $user->attempts = $count;
-            return view('hr_welcome')->with('user',$user);
-        }
+      if($user->checkRole(['hr-manager'])){
+          $count = 0;
+          foreach($user->exams as $exam){
+            $count = $count + $exam->getUserCount();
+          }
+          $user->attempts = $count;
+          return view('hr_welcome')->with('user',$user);
+      }
         
-
-        return view('welcome2')->with('user',$user);
+      return view('welcome2')->with('user',$user);
 
     }
 
