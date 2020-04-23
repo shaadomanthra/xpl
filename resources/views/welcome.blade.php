@@ -18,7 +18,7 @@
    Choose from <span class="element" ></span> 
     </div>
     <div>
-    	<a href="{{ route('login')}}" class="btn btn-lg btn-success">Try for Free</a>
+    	<a href="{{ route('login')}}" class="btn btn-lg btn-success">Try for free</a>
     </div>
 
    

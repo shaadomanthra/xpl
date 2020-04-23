@@ -17,7 +17,13 @@
     @if(isset($editor))
     <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
     @endif
-    <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+    
+    @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+      <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
+    @else
+     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+     @endif
+     
     <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43617911-7"></script>
 <script>

@@ -4,16 +4,15 @@
     <div class="nav-bg p-2 " style="background: #fff;">
         <div class="wrapper ">
             <div id="app" >
-            @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+            @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
                 @include('snippets.topmenu-pp')
-
             @else
                 @include('snippets.topmenu')
             @endif
             </div>
         </div>
     </div>  
-    @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+    @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
     <div class="line" style="padding:1px;background:#ebf1fb"></div>  
     @else
     <div class="line" style="padding:1px;background:#eee"></div> 

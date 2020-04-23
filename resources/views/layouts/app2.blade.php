@@ -4,7 +4,7 @@
     <div class="nav-bg pt-2 pb-2" style="background: #fff;">
         <div class="wrapper ">
             <div id="app " >
-            @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+            @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
                 @include('snippets.topmenu-pp')
             @else
                 @include('snippets.topmenu')

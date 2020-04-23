@@ -2,12 +2,12 @@
     @guest
     <a class="navbar-brand abs" href="{{ url('/') }}" aria-label="Homepage">
         <img 
-          src="{{ asset('img/pphire.png') }} " width="60px" class="ml-md-1"  alt="PacketPrep logo " type="image/png">
+          src="{{ asset('img/pphire.png') }} " width="150px" class="ml-md-1"  alt="PacketPrep logo " type="image/png">
   </a>
   @else
   <a class="navbar-brand abs" href="{{ url('/dashboard') }}" aria-label="Dashboard">
     <img 
-          src="{{ asset('img/pphire.png') }} " width="60px" class="ml-md-1"  alt="PacketPrep logo " type="image/png">
+          src="{{ asset('img/pphire.png') }} " width="150px" class="ml-md-1"  alt="PacketPrep logo " type="image/png">
 </a>   
 @endguest
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +43,8 @@
                         
             <!-- Authentication Links -->
             @guest
+            <!--<li class="mr-2"><a class="nav-link active" href="{{ route('login') }}" aria-label="Login page"><i class="fa fa-gg-circle"></i> for companies</a></li>
+            <li class="mr-2"><a class="nav-link " href="{{ route('login') }}" aria-label="Login page"><i class="fa fa-black-tie"></i> for students</a></li>-->
             <li class="mr-2"><a class="nav-link " href="{{ route('login') }}" aria-label="Login page"><i class="fa fa-sign-in"></i> Login</a></li>
             <li class="mr-2"><a class="nav-link " href="{{ route('register.type') }}" aria-label="Registration page"><i class="fa fa-user-plus"></i> Register</a></li>
 

@@ -1,11 +1,7 @@
 @extends('layouts.nowrap-product')
-
 @section('title', 'Dashboard ')
-
 @section('description', 'Know you tests')
-
 @section('keywords', 'quantitative aptitude, mental ability, learning, simple, interresting, logical reasoning, general english, interview skills')
-
 @section('content')
 
 

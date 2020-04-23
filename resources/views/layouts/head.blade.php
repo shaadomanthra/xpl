@@ -9,7 +9,7 @@
     <meta name="keywords" content="@yield('keywords')">
     <meta name="author" content="Krishna Teja G S">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+    @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
     <meta name="theme-color" content="#236fb1"/>
     @else
     <meta name="theme-color" content="#c25054"/>
@@ -32,8 +32,8 @@
     @endif
   <title>@yield('title')</title>
   
-  @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
-  <link rel="shortcut icon" href="{{asset('/faviconpp.ico')}}" />
+  @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+  <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
   @else
   <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
   @endif
@@ -77,7 +77,7 @@
     <div class="bg-dark">
         <footer class="wrapper text-light footer">
             <div class="container py-3">
-              @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+              @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
                 @include('snippets.bottommenu')
               @else
                 @include('snippets.footer')

@@ -24,7 +24,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 		{
 			return redirect('/dashboard');
 		}else{
-			if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+			if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
 			return view('welcome')->with('welcome',1);
 			else
 			return view('welcome3')->with('welcome3',1);
@@ -350,7 +350,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('sregister','Product\AdminController@sstudentregister')->name('student.sregister');
 
 	Route::get('register/type',function () { 
-		if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+		if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
 			return Redirect::to('/register');
 		else
 		return Redirect::to('/eregister'); 
