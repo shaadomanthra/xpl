@@ -37,7 +37,7 @@
             Dashboard
         </a></li>
 
-        @if(\Auth::user()->checkRole(['hr-manager']))
+        @if(\Auth::user()->checkRole(['hr-manager']) && !\Auth::user()->isAdmin())
             <li class="mr-3 "><a class="nav-link " href="{{ url('exam') }}" aria-label="Tests"><i class="fa fa-inbox"></i> Tests</a></li>
         @else
              <li class="mr-3 "><a class="nav-link " href="{{ url('course') }}" aria-label="PacketPrep Courses"><i class="fa fas fa-youtube-play"></i> Courses</a></li>

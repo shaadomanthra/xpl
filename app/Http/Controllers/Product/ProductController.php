@@ -152,6 +152,7 @@ class ProductController extends Controller
             $count = $count + $exam->getUserCount();
           }
           $user->attempts = $count;
+          if(!$user->isAdmin())
           return view('hr_welcome')->with('user',$user);
       }
         

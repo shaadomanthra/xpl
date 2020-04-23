@@ -227,7 +227,7 @@
 
 
   @if(count(auth::user()->products)!=0)
-  <div class="rounded table-responsive bg-white">
+  <div class="rounded table-responsive ">
             <table class="table table-bordered ">
               <thead>
                 <tr>
