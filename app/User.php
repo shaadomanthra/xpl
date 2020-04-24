@@ -12,6 +12,7 @@ use PacketPrep\Models\User\User_Details;
 use PacketPrep\Notifications\MailResetPasswordToken;
 use Illuminate\Support\Facades\DB;
 use PacketPrep\Models\College\College;
+use PacketPrep\Models\Exam\Exam;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
@@ -190,6 +191,11 @@ class User extends Authenticatable
             $tests[$k]->attempt_status = $test_idgroup[$t->id][0]->status;
         }
         return $tests;
+    }
+
+    public function getPsy(){
+        $e = Exam::where('slug','psychometric-test')->first();
+        return $e->psychometric_test($this);
     }
 
     public function productvalid($slug){

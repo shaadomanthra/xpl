@@ -134,6 +134,107 @@ class Exam extends Model
 
     }
 
+    public function psychometric_report($student){
+      $exam = $this;
+      $sections = array();
+        foreach($exam->sections as $section){
+            foreach($section->questions as $q){
+                $questions[$i] = $q;
+                $sections[$section->name] = $secs[$section->id][0];
+                    $i++;
+            }
+        }
+      $tests = Test::where('test_id',$exam->id)
+                        ->where('user_id',$student->id)->get();
+
+      if($tests)
+      if($exam->slug=='psychometric-test')
+        {
+            $d['extroversion'] = 20;
+            $d['agreeableness'] = 14;
+            $d['conscientiousness'] = 14;
+            $d['neuroicism'] = 38;
+            $d['openness'] = 8;
+
+            $mc['extroversion'] = "Extroversion (E) is the personality trait of seeking fulfillment from sources outside the self or
+                in community. High scorers tend to be very social while low scorers prefer to work on their
+                projects alone.";
+            $mc['agreeableness'] = "Agreeableness (A) reflects much individuals adjust their behavior to suit others. High scorers
+                are typically polite and like people. Low scorers tend to 'tell it like it is'.";
+            $mc['conscientiousness'] = "Conscientiousness (C) is the personality trait of being honest and hardworking. High scorers
+                tend to follow rules and prefer clean homes. Low scorers may be messy and cheat others.";
+            $mc['neuroicism'] = "Neuroticism (N) is the personality trait of being emotional.";
+            $mc['openness'] = "Openness to Experience (O) is the personality trait of seeking new experience and intellectual
+                pursuits. High scores may day dream a lot. Low scorers may be very down to earth.";
+
+            $cc['extroversion']['high'] = "High Extroverts are characterized by excitability, sociability, talkativeness, assertiveness, and expressiveness. They are outgoing and work well in social situations. Working in a team helps them feel energized and excited.";
+            $cc['extroversion']['mid'] = "This range of extroversion indicates more detailed assessment of the candidate in this area.";
+            $cc['extroversion']['low'] = "Low Extroverts or introverts are reserved and prefer not to socialise, unless absolutely necessary. Social events can be draining often requiring a period of quiet in order to 'recharge.'";
+
+            $cc['conscientiousness']['high'] = "Conscientious people are thoughtful, prepared, and self-motivated. They are also concerned about the well-being of those around them. They are good at meeting deadlines.";
+            $cc['conscientiousness']['mid'] = "This range of conscientiousness indicates more detailed assessment of the candidate in this area.";
+            $cc['conscientiousness']['low'] = "Low conscientious people have difficulty in following schedules and are prone  to procrastinate. They might also be disorganised and avoid responsibility.";
+
+            $cc['agreeableness']['high'] = "Agreeable people are prosocial, kind, and altruistic. They might not always flourish in highly competitive environments. They are empathetic and enjoy helping people.";
+            $cc['agreeableness']['mid'] = "This range of agreeableness indicates more detailed assessment of the candidate in this area.";
+            $cc['agreeableness']['low'] = "People with low agreeability are focused on their tasks and completing them despite the social cost. They could be competitive, manipulative, and condescending of others.";
+
+            $cc['neuroicism']['high'] = "Emotionally Stable people are often good at dealing with stress, and can work well in a variety of areas. They are emotionally resilient and bounce back  fast from failures.
+                ";
+            $cc['neuroicism']['mid'] = "This range of emotional stability indicates more detailed assessment of the candidate in this area.";
+            $cc['neuroicism']['low'] = "Those scoring low on emotional stability find it hard to deal with failure and rejection. They experience anxiety and dramatic shifts in mood.";
+
+             $cc['openness']['high'] = "Highly open people are usually creative and can tackle change and new environments with ease. Tackling abstract concepts and new challenges is their forte.";
+            $cc['openness']['mid'] = "This range of openness indicates more detailed assessment of the candidate in this area.";
+            $cc['openness']['low'] = "Low open people prefer the comfort or established routines, and traditional values. They are good at following rules but may lack imagination and the ability to handle sudden change.";
+
+            $calc['extroversion'] = [1=>'1',6=>'-6',11=>'11',16=>'-16',21=>'21',26=>'-26',31=>'31',36=>'-36',41=>'41',46=>'-46'];
+            $calc['agreeableness'] = [2=>'-2',7=>'7',12=>'-12',17=>'17',22=>'-22',27=>'27',32=>'-32',37=>'37',42=>'-42',47=>'47'];
+            $calc['conscientiousness'] = [3=>'3',8=>'-8',13=>'13',18=>'-18',23=>'23',28=>'-28',33=>'33',38=>'-38',43=>'43',48=>'48'];
+            $calc['neuroicism'] = [4=>'-4',9=>'9',14=>'-14',19=>'19',24=>'-24',29=>'29',34=>'-34',39=>'-39',44=>'-44',49=>'-49'];
+            $calc['openness'] = [5=>'5',10=>'-10',15=>'15',20=>'-20',25=>'25',30=>'-30',35=>'35',40=>'40',45=>'45',50=>'50'];
+
+            $resp =array(); $ques=array();
+            foreach($tests as $t){
+                $resp[$t->question_id]= $t->response;
+            }
+
+            foreach($questions as $m=>$q){
+                $num = ["A"=>1,"B"=>2,"C"=>3,"D"=>4,"E"=>5];
+                if($resp[$q->id])
+                $questions[$m]->response = $num[$resp[$q->id]];
+                else
+                $questions[$m]->response = 0;
+                 
+                $questions[$m]->qno = substr($q->reference,1,3);
+                if($resp[$q->id])
+                $ques[$questions[$m]->qno] = $num[$resp[$q->id]];
+                else
+                $ques[$questions[$m]->qno] = 0;  
+            }
+            foreach($calc as $a=>$b){
+                foreach($b as $i=>$k)
+                if($k<0)
+                    $d[$a] = $d[$a]-$ques[$i];
+                else
+                    $d[$a] = $d[$a]+$ques[$i];
+
+                if($a=='neuroicism')
+                    $d[$a] = 40 - $d[$a];
+            }
+
+            $data['m'] = $mc;
+            $data['c'] = $cc;
+            $data['d'] = $d;
+
+            return $data;
+        }else{
+          return null;
+        }
+        else
+          return null;
+    }
+
     public function getProductSlug(){
 
         $p = $this->products->first();

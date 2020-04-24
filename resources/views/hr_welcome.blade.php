@@ -141,11 +141,11 @@
                 @endif
                 <br>
 
-                <div class="text-muted mt-3">This test is included for free in all packages</div>
+                <div class="text-muted mt-1">This test is included for free in all packages</div>
               </div>
               
             </div>
-            
+
             
 
           </div>

@@ -536,6 +536,7 @@ class ExamController extends Controller
             abort(404);
     }
 
+    
 
     public function psyreport(Request $r)
     {

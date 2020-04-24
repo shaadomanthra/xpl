@@ -8,7 +8,7 @@
 
     <div class=" mb-3">
       <div style="height:150px;background: linear-gradient(70deg,#F44336, #3f51b5);"></div>
-      <div class=" " style="margin-top: -110px;">
+      <div class=" " style="margin-top: -90px;">
         <div class="row">
           <div class="col-md-4">
               <div class="text-center" style="height:180px">
@@ -174,6 +174,8 @@
 
 </div>
 @endif
+
+{{ dd($user->getPsy()) }}
 @endif
 @endif
 
@@ -194,7 +196,7 @@
 @endif
 
 @else
-<div class='p-3 bg-light'>
+<div class='p-3 bg-light mt-3'>
 <a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
 </div>
 @endif
