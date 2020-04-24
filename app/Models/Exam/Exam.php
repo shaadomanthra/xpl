@@ -134,20 +134,21 @@ class Exam extends Model
 
     }
 
-    public function psychometric_report($student){
+    public function psychometric_test($student){
       $exam = $this;
       $sections = array();
+      $i=0;
         foreach($exam->sections as $section){
             foreach($section->questions as $q){
                 $questions[$i] = $q;
-                $sections[$section->name] = $secs[$section->id][0];
                     $i++;
             }
         }
       $tests = Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
 
-      if($tests)
+
+      if(count($tests))
       if($exam->slug=='psychometric-test')
         {
             $d['extroversion'] = 20;

@@ -8,17 +8,16 @@
 
     <div class=" mb-3">
       <div style="height:150px;background: linear-gradient(70deg,#F44336, #3f51b5);"></div>
-
-      <div class="container text-right" style="height:180px;margin-top: -100px;">
-                <img class="img-thumbnail rounded-circle mb-3 mr-5"src="@if($user->image) {{ ($user->image)}}@else {{ Gravatar::src($user->email, 150) }}@endif" style="width:180px;height:180px">
-              </div>
-
-      <div class="container  rounded bg-light" style="margin-top: -100px;">
+      <div class=" " style="margin-top: -90px;">
         <div class="row">
-         
-          <div class="col-md-12">
+          <div class="col-md-4">
+              <div class="text-center" style="height:180px">
+                <img class="img-thumbnail rounded-circle mb-3"src="@if($user->image) {{ ($user->image)}}@else {{ Gravatar::src($user->email, 150) }}@endif" style="width:180px;height:180px">
+              </div>
+          </div>
+          <div class="col-md-8">
             <div class="mt-3 mt-md-5 ">
-             <h2 class="mb-md-2  heading_two mr-4 ml-4" >{{ $user->name }} 
+             <h2 class="mb-md-4 name mr-4 ml-4" >{{ $user->name }} 
 
 @if(\Auth::user())
 @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
@@ -80,7 +79,7 @@
              @if($user->gender)
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; Gender</dt>
-                <dd class="col-sm-9">{{ucfirst($user->gender)}}</dd>
+                <dd class="col-sm-9">{{$user->gender}}</dd>
               </dl>
              @endif
 
@@ -94,7 +93,7 @@
              @if($user->current_city)
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-address-card-o'></i> &nbsp; Current City</dt>
-                <dd class="col-sm-9">@if(strip_tags(trim($user->current_city))) {{$user->current_city}} @else - @endif</dd>
+                <dd class="col-sm-9">{{$user->current_city}}</dd>
               </dl>
              @endif
 
@@ -183,11 +182,32 @@
 
 @auth
       <div class="row mr-2 mb-4 ml-2">
-        
+        <div class="col-12 ">
+          <h3 class="bg-light p-3 mb-0"><i class='fa fa-youtube-play'></i> Profile Video</h3>
+         
+          @if($user->video)
+@if(!is_numeric($user->video))
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $user->video}}?rel=0" allowfullscreen></iframe>
+</div>
+@else
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe src="//player.vimeo.com/video/{{ $user->video }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+@endif
+
+@else
+<div class='p-3 bg-light mt-3'>
+<a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
+</div>
+@endif
+
+
+      </div>
     </div>
 
       <div class="row mr-2 ml-2">
-        <div class="col-7 ">
+        <div class="col-12 ">
           <h3 class=" p-3 mb-0 bg-white border border-bottom-0"><i class='fa fa-university'></i> Academic Scores</h3>
          
           <div class="table-responsive">
@@ -244,29 +264,6 @@
 </table>
           </div>
         </div>
-
-        <div class="col-5 ">
-          <h3 class="bg-white border p-3 mb-0"><i class='fa fa-youtube-play'></i> Profile Video</h3>
-         
-          @if($user->video)
-@if(!is_numeric($user->video))
-<div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $user->video}}?rel=0" allowfullscreen></iframe>
-</div>
-@else
-<div class="embed-responsive embed-responsive-16by9">
-  <iframe src="//player.vimeo.com/video/{{ $user->video }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-</div>
-@endif
-
-@else
-<div class='p-3 bg-light border '>
-<a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
-</div>
-@endif
-
-
-      </div>
       </div>
 @endauth
 
