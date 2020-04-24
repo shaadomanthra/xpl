@@ -96,6 +96,7 @@
   </div>
 </div>
 
+@if($e)
 <div class="dyellow" style="background:#f7f6cf">
   <div class="container">
     <div class="p-3 py-4">
@@ -153,7 +154,7 @@
     </div>
   </div>
   </div>
-
+@endif
   
 </div>
 

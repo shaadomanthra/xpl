@@ -196,6 +196,7 @@ class ProductController extends Controller
           $view = $search ? 'snippets.hr_tests': 'hr_welcome';
 
           $e = Exam::where('slug','psychometric-test')->first();
+
           if(!$user->isAdmin())
           return view($view)
               ->with('user',$user)
