@@ -133,12 +133,14 @@
 
               </h4>
               <div>
+                <a href="{{route('assessment.show',$e->slug)}}" class="f20"><i class="fa fa-external-link" ></i> {{ route('assessment.show',$e->slug) }}</a>
                   @if($e->active==1)
                 <span class=" badge badge-secondary">Inactive</span>
                 @else
                   <span class=" badge badge-success">Active</span>
                 @endif
                 <br>
+
                 <div class="text-muted mt-3">This test is included for free in all packages</div>
               </div>
               
