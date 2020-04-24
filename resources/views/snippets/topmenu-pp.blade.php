@@ -27,10 +27,7 @@
             ><i class="fa fa-dashboard"></i>
             Dashboard
         </a></li>
-        @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
-        <li class="mr-3 "><a class="nav-link " href="{{ url('exam') }}" aria-label="Tests"><i class="fa fa-inbox"></i> Tests</a></li>
-        @else
-        @endif
+       
 
         
 

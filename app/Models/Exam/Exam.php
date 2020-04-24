@@ -7,7 +7,7 @@ use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Exam\Section;
-
+use Carbon\Carbon;
 
 class Exam extends Model
 {
@@ -76,12 +76,55 @@ class Exam extends Model
         return $count;
 
     }
-    public function getUserCount($code=null)
+    public function getAttemptCount($code=null,$month=null)
     {
         if($code)
         return Tests_Overall::where('code',$code)->where('test_id',$this->id)->count();
-        else
-          return Tests_Overall::where('test_id',$this->id)->count();
+        else{
+          
+          if($month=='thismonth')
+            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', Carbon::now()->month)->count();
+          elseif($month=='lastmonth')
+            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
+          elseif($month=='lastbeforemonth')
+            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', '=', Carbon::now()->subMonth(2)->month)->count();
+          else
+            return Tests_Overall::where('test_id',$this->id)->count();
+        }
+    }
+
+    public function getAttempts($exams,$month=null)
+    {
+        if(!$month)
+        return Tests_Overall::whereIn('test_id',$exams)->orderBy('id','desc')->paginate(30);
+        else{
+          
+          if($month=='thismonth')
+            return Tests_Overall::whereIn('test_id',$exams)->whereMonth('created_at', Carbon::now()->month)->orderBy('id','desc')->paginate(30);
+          elseif($month=='lastmonth')
+            return Tests_Overall::whereIn('test_id',$exams)->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->orderBy('id','desc')->paginate(30);
+          elseif($month=='lastbeforemonth')
+            return Tests_Overall::whereIn('test_id',$exams)->whereMonth('created_at', '=', Carbon::now()->subMonth(2)->month)->orderBy('id','desc')->paginate(30);
+          else
+            return Tests_Overall::whereIn('test_id',$exams)->orderBy('id','desc')->paginate(30);
+        }
+    }
+
+    public function getUserIds($code=null,$month=null)
+    {
+        if($code)
+        return Tests_Overall::where('code',$code)->where('test_id',$this->id)->pluck('user_id');
+        else{
+          
+          if($month=='thismonth')
+            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', Carbon::now()->month)->pluck('user_id');
+          elseif($month=='lastmonth')
+            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->pluck('user_id');
+          elseif($month=='lastbeforemonth')
+            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', '=', Carbon::now()->subMonth(2)->month)->pluck('user_id');
+          else
+            return Tests_Overall::where('test_id',$this->id)->pluck('user_id');
+        }
     }
 
     public function latestUsers()

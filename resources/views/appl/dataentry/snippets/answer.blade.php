@@ -10,15 +10,9 @@
 		<option value="E" @if(isset($question)) @if(strtoupper(strip_tags($question->answer))=='E') selected @endif @endif >E</option>
 	</select>
 </div>
-@elseif($type=='naq' || $type=='eq')
+@elseif($type=='naq' || $type=='eq' || $type=='fillup')
 <div class="form-group mt-3">
-	<label for="formGroupExampleInput2">Answer</label>
-	<textarea class="form-control summernote" name="answer"  rows="5">
-		@if($stub=='Create')
-		{{ (old('answer')) ? old('answer') : '' }}
-		@else
-		{{ $question->answer }}
-		@endif
+<label for="formGroupExampleInput2">Answer</label><textarea class="form-control " name="answer"  rows="5">@if($stub=='Create'){{ (old('answer')) ? old('answer') : '' }} @else {{ $question->answer }}@endif
 	</textarea>
 </div>
 @elseif($type=='maq')

@@ -466,6 +466,8 @@ $(document).ready(function(){
     function unanswered($sno){
       $('.s'+$sno).removeClass('qblue-border');
       $('.input_'+$sno).prop('checked',false);
+      if($('.input_fillup_'+$sno).length)
+      $('.input_fillup_'+$sno).val('');
     }
 
     function hide_buttons($sno){

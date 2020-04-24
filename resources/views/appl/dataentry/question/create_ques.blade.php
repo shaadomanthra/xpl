@@ -20,11 +20,14 @@
       <p>Kindly create a (default) section before adding questions.</p>
       <a href="{{ route('sections.create',$exam->slug)}}" class="btn btn-primary"> Create Section </a>
     @else
+      <h3 class="mb-3"><u>Sections - Create Question</u></h3>
       @foreach($exam->sections as $sec)
-      <h4 class="mb-4">{{$sec->name}}</h4>
-      <div class="btn-group" role="group" aria-label="Basic example">
-  <a href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-primary"> MCQ Question </a>
-  <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-secondary"> Code Question </a>
+      <h4 class="mb-2">{{$sec->name}}</h4>
+      <div class="btn-group mb-4" role="group" aria-label="Basic example">
+  <a href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-primary"> Multi Choice Question (MCQ)</a>
+  <a href="{{ route('question.create','default')}}?type=maq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-warning"> Multi Answer Question (MAQ) </a>
+  <a href="{{ route('question.create','default')}}?type=fillup&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-success"> Fillup Question (FQ)</a>
+  <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-secondary"> Code Question (CQ)</a>
 
 </div>
     @endforeach

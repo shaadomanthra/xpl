@@ -86,6 +86,11 @@
         <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Output</a>
       </li>
       @endif
+      @if($type=='fillup')
+      <li class="nav-item">
+        <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Ans</a>
+      </li>
+      @endif
        
        <li class="nav-item">
         <a class="nav-link" id="explanation-tab" data-toggle="tab" href="#explanation" role="tab" aria-controls="explanation" aria-selected="false">Expl</a>
@@ -316,7 +321,7 @@
         </div>
 
         <div class="form-group mt-3">
-          <label for="formGroupExampleInput ">Type</label>
+          <label for="formGroupExampleInput ">Type {{$type}}</label>
           @if($stub=='Update')
           <select class="form-control" name="type" >
             <option value="mcq" @if(isset($question)) @if($question->type=='mcq') selected @endif @endif >Multiple Choice Question</option>
@@ -324,6 +329,7 @@
             <option value="maq" @if(isset($question)) @if($question->type=='maq') selected @endif @endif >Multi Answer Question</option>
             <option value="eq" @if(isset($question)) @if($question->type=='eq') selected @endif @endif >Explanation Question</option>
             <option value="code" @if(isset($question)) @if($question->type=='code') selected @endif @endif >Code Question</option>
+            <option value="fillup" @if(isset($question)) @if($question->type=='fillup') selected @endif @endif >Fillup Question</option>
           </select>
           @else
           <select class="form-control" name="type" >
@@ -332,6 +338,7 @@
             <option value="maq" @if($type =='maq') selected @endif  >Multi Answer Question</option>
             <option value="eq" @if($type =='eq') selected @endif  >Explanation Question</option>
             <option value="code" @if($type =='code') selected @endif  >Code Question</option>
+            <option value="fillup" @if($type =='fillup')  selected  @endif >Fillup Question</option>
           </select>
           @endif
             

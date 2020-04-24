@@ -1,7 +1,7 @@
 
-@if($user->exams)
-
-@foreach($user->exams()->orderBy('id','desc')->limit(10)->get() as $key=>$e)  
+@if($exams)
+<div class="row ">
+@foreach($exams as $key=>$e)  
 
         <div class="col-12 col-md-6">
         <div class="mb-4 cardbox">
@@ -27,7 +27,7 @@
             </div>
             <div class='col-8 col-md-7'>
               <h4 class="mb-1 mt-2 lh15">
-                <a href=" {{ route('exam.show',$e->slug) }} ">
+                <a href=" {{ route('exam.show',$e->slug) }} " data-toggle="tooltip" title="View Test">
                 @if($e->status==0)
                 <i class="fa fa-square-o"></i> 
                 @elseif($e->status==1)
@@ -50,8 +50,8 @@
             </div>
             <div class='col-2 col-md-2'>
               <div class="heading_one float-right f30">
-              	<a href="{{ route('test.report',$e->slug)}}">
-              	@if(isset($e)){{ $e->getUserCount() }}@endif
+              	<a href="{{ route('test.report',$e->slug)}}" data-toggle="tooltip" title="Attempts">
+              	@if(isset($e)){{ $e->getAttemptCount() }}@endif
               	</a>
               </div>
             </div>
@@ -60,22 +60,28 @@
         </div>
         <div class="line" style="padding:1px;background:#ebf1fb"></div>  
         	<div class="p-4">
+
+          @if(count($e->latestUsers()))
         	@foreach($e->latestUsers() as $t)
         		<div class="mb-2"><img src="@if($t->user->getImage()) {{ ($t->user->getImage())}}@else {{ Gravatar::src($t->user->email, 20) }}@endif" class="img-cirlce" style="width:20px" /> &nbsp; &nbsp;
-        			<a href="{{ route('profile','@'.$t->user->username) }}">{{$t->user->name}} </a>
+        			<a href="{{ route('profile','@'.$t->user->username) }}" data-toggle="tooltip" title="View  Profile">{{$t->user->name}} </a>
 
         		  @if($t->status || $e->slug=='psychometric-test')
               has attempted the test
               @else
-               has scored <a href="{{ route('assessment.analysis',$e->slug)}}?student={{$t->user->username}}"><b class="text-success">
+               has scored <a href="{{ route('assessment.analysis',$e->slug)}}?student={{$t->user->username}}" data-toggle="tooltip" title="View  Report"><b class="">
                 @if($t->score){{ $t->score }}@else 0 @endif</b></a> / {{ $t->max }}
               @endif
 
         		<span class="float-right text-secondary"><small>{{$t->created_at->diffForHumans()}}</small></span></div>
         	@endforeach
+          @else
+          <span class="text-muted">No Participants</span>
+          @endif
         </div>
         </div>
     </div>
               </div>
               @endforeach  
+            </div>
 @endif

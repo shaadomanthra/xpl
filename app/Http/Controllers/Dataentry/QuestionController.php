@@ -131,7 +131,7 @@ class QuestionController extends Controller
         $exams =  Exam::orderBy('name','desc ')->get();
 
         // Question Types
-        $allowed_types = ['mcq','naq','maq','eq','code'];
+        $allowed_types = ['mcq','naq','maq','eq','code','fillup'];
         if(in_array(request()->get('type'), $allowed_types)){
             $type = request()->get('type');
         }

@@ -787,12 +787,12 @@ function addMinutes(date, minutes) {
 
 @endif
 
+
+@if(isset($window_change))
+@if($window_change)
 <script src="{{ asset('js/jquery.winFocus.js')}}"></script>
 
 <script>
-@if(isset($questions))
-@if(isset($questions[0]))
-@if($questions[0]->type!='code')
  // Inactive
  // window.addEventListener('blur', stopTimer);
 
@@ -810,11 +810,10 @@ function addMinutes(date, minutes) {
 function(event) {
   console.log("Focus\t\t", event);
 });
-
- @endif
- @endif
-@endif
 </script>
+@endif
+@endif
+
 
 @if(!request()->is('/')) 
 @if(isset($ads))
@@ -899,6 +898,16 @@ $(function() {
 @endif
 @endif
 @endauth
+
+ <script>
+$(function(){
+  if($(".pactive").length)
+  $('html, body').animate({
+        scrollTop: $(".pactive").offset().top
+    }, 2000);
+  
+});
+  </script>
 
 @if(isset($welcome))
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>

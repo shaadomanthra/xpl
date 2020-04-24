@@ -40,7 +40,9 @@
       Add
     </button>
     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-      <a class="dropdown-item" href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">MCQ Question</a>
+      <a class="dropdown-item" href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Multi Choice Question</a>
+      <a class="dropdown-item" href="{{ route('question.create','default')}}?type=maq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Multi Answer Question</a>
+      <a class="dropdown-item" href="{{ route('question.create','default')}}?type=fillup&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Fillup Question</a>
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Code Question</a>
     </div>
   </div>
@@ -52,7 +54,7 @@
 				<a class="white-link" href="{{ route('exam.question',[$exam->slug,$q->id]) }}">
 				<div class="pr-1">
 				<div class="w100 p-1 text-center rounded @if($q->id==$question->id) active @endif 
-					@if($q->practice($q->id)) @if($q->practice($q->id)->accuracy == 0) qred-border @else qgreen-border @endif @else qborder  @endif" id="q{{ ($q->id )}}"
+					 qborder  " id="q{{ ($q->id )}}"
 				    >{{ ($i++ ) }}</div>
 				</div>
 				</a>

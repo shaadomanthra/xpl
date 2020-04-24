@@ -14,7 +14,7 @@
   <div class="container">
 
     <div class="row">
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-10">
         
         <div class=' pb-1'>
           <p class="heading_two mb-1 f30 mt-3" >
@@ -37,41 +37,121 @@
           </p>
         </div>
       </div>
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-2">
         <div class="row mt-4">
-          <div class="col-12 col-md-6">
+         
+          <div class="col-12 ">
             <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
-          <div class="h6">Attempts</div>
-          <div class="h2" >{{$user->attempts}}</div>
+          <div class="h6">Total Attempts</div>
+          <div class="h2" ><a href="{{ route('attempts')}}" data-toggle="tooltip" title="View Participants">{{$user->attempts}}</a></div>
         </div>
           </div>
-          <div class="col-12 col-md-6">
-            <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
-          <div class="h6">Tests</div>
-          <div class="h2" >{{ count($user->exams)}}</div>
-        </div>
-
-          </div>
+          
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class='p-1  ddblue' >
+<div class='p-2 pt-3 ddblue' >
+<div class="container">
+    <div class="row">
+      <div class="col-12 col-md-8">
+        
+        <div class=' pb-1'>
+          <p class="heading_two mb-2 f30 text-white" ><i class="fa fa-inbox "></i> My Tests
+
+            @can('create',$exam)
+            <a href="{{route('exam.create')}}">
+              <button type="button" class="btn btn-success float-right my-2 my-sm-2 ">Create Test</button>
+            </a>
+            @endcan
+
+          </p>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="mt-2">
+         
+
+         <form class="w-100" method="GET" action="{{ route('exam.index') }}">
+            
+            <div class="input-group ">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-search"></i></div>
+              </div>
+              <input class="form-control " id="search" name="item" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
+              value="{{Request::get('item')?Request::get('item'):'' }}">
+            </div>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
 </div>
 
 <div class="container mt-4">
-
-
-
-
-
-
-<div class="row ">
+  <div id="search-items">
   @include('snippets.hr_tests')
+  </div>
 </div>
 
+<div class="dyellow" style="background:#f7f6cf">
+  <div class="container">
+    <div class="p-3 py-4">
+       <div class="row">
+            <div class='col-2 col-md-1'>
+              @if(isset($e->image))
+                @if(Storage::disk('public')->exists($e->image))
+                <div class=" text-center">
+                  <picture class="">
+                    <img 
+                    src="{{ asset('/storage/'.$e->image) }} " class="d-print-none w-100 mt-2" alt="{{  $e->name }}" style='max-width:80px;'>
+                  </picture>
+                </div>
+                @endif
+              @else
+              <div class="text-center text-secondary">
+                <i class="fa fa-newspaper-o fa-4x p-1 d-none d-md-block" aria-hidden="true"></i>
+                <i class="fa fa-newspaper-o  fa-2x d-inline d-md-none" aria-hidden="true"></i>
+              </div>
+              @endif
+            </div>
+            <div class='col-8 col-md-9'>
+              <h4 class="mb-1 mt-2 lh15">
+                <a href=" {{ route('exam.show',$e->slug) }} " data-toggle="tooltip" title="View Test Reports">
+                @if($e->status==0)
+                <i class="fa fa-square-o"></i> 
+                @elseif($e->status==1)
+                  <i class="fa fa-globe"></i> 
+                @else
+                  <i class="fa fa-lock"></i> 
+                @endif  
+                  {{ $e->name }}
+                </a>
 
+              </h4>
+              <div>
+                  @if($e->active==1)
+                <span class=" badge badge-secondary">Inactive</span>
+                @else
+                  <span class=" badge badge-success">Active</span>
+                @endif
+                <br>
+                <div class="text-muted mt-3">This test is included for free in all packages</div>
+              </div>
+              
+            </div>
+            <div class='col-2 col-md-2'>
+              <div class="heading_one float-right f30">
+                <div class="d-inline h5">Access Code</div>
+                P S Y 1 2 3
+              </div>
+            </div>
+
+          </div>
+    </div>
+  </div>
   </div>
 
   

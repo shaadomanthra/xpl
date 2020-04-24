@@ -168,14 +168,15 @@ class User extends Authenticatable
 
     public function tests(){
         $attempts = DB::table('tests_overall')
-                ->where('user_id', \auth::user()->id)
+                ->where('user_id', $this->id)
                 ->orderBy('id','desc')
                 ->get();
         $test_idgroup = $attempts->groupby('test_id');
-        $test_ids = $attempts->pluck('test_id');
+        $test_ids = $attempts->pluck('test_id')->toArray();
+        $ids_ordered = implode(',', $test_ids);
         $tests = DB::table('exams')
                 ->whereIn('id', $test_ids)
-                ->orderBy('id','desc')
+                ->orderByRaw("FIELD(id, $ids_ordered)")
                 ->get();
         foreach($tests as $k=>$t){
             $tests[$k]->attempt_at = $test_idgroup[$t->id][0]->created_at;

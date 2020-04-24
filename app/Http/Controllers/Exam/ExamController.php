@@ -485,7 +485,7 @@ class ExamController extends Controller
       
 
             flash('A new exam('.$request->name.') is created!')->success();
-            return redirect()->route('exam.index');
+            return redirect()->route('exam.show',$obj->slug);
         }
         catch (QueryException $e){
            $error_code = $e->errorInfo[1];
@@ -536,19 +536,82 @@ class ExamController extends Controller
             abort(404);
     }
 
+
+    public function psyreport(Request $r)
+    {
+        $exam= Exam::where('slug','psychometric-test')->first();
+
+        $userids =[];
+        $user = \auth::user();
+        foreach($user->exams as $ex){
+            $ids = $ex->getUserIds()->toArray();
+            foreach($ids as $i){
+                array_push($userids, $i);
+            }
+        }
+        $userids = array_unique($userids);
+
+        $elist = $user->exams()->pluck('id')->toArray();
+
+        $item = $r->get('item');
+        $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userids)->orderby('id','desc')->get();
+              
+        $users = $result->pluck('user_id');
+        $exam_sections = Section::where('exam_id',$exam->id)->get();
+        
+        $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+        
+
+        $search = $r->search;
+        if($item){
+            $users = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')
+                    ->pluck('id');  
+
+            $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$users)->orderby('score','desc')->get();
+            $exam_sections = Section::where('exam_id',$exam->id)->get();
+            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+
+            
+           
+        }
+         
+        $view = $search ? 'analytics_list': 'analytics_psy';
+        
+
+
+        if($exam)
+            return view('appl.exam.exam.'.$view)
+                    ->with('report',$result)
+                    ->with('exam_sections',$exam_sections)
+                    ->with('sections',$sections)
+                    ->with('exam',$exam);
+        else
+            abort(404);
+    }
+
     public function analytics($id,Request $r)
     {
         $exam= Exam::where('slug',$id)->first();
         $code = $r->get('code');
         $item = $r->get('item');
+        $data = $r->get('score');
         if($code){
+            if($data)
             $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->orderby('score','desc')->get();
+            else
+            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->orderby('id','desc')->get();
+              
             $users = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
 
         }else{
+            if($data)
             $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+            else
+            $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->get();
+              
             $users = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');

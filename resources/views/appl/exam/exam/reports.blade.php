@@ -10,7 +10,6 @@
     <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
             <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
             <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug) }}">{{$exam->name}}</a></li>
             <li class="breadcrumb-item">Reports</li>
           </ol>

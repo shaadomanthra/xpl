@@ -7,49 +7,15 @@
 
 <div class="container mt-4">
 
-@if(\auth::user()->services->first())
-@if(\auth::user()->services->first()->pivot->status==0)
-  <div class="border p-4 mb-4">
-    <div class="row">
-      <div class="col-12 col-md-6">
-        <h1>Activate your Paid Services</h1>
-    <form method="post" action="{{route('product.activate')}}" >
-      <p>Collect your Product Activation code from your college administrative office / Placement Office</p>
-      <div class="form-group">
-        <input type="text" class="form-control" name="code" id="formGroupExampleInput" placeholder="Enter Activation Code" >
-      </div>
-      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-      <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
-
-      <button type="submit" class="btn btn-primary">Submit</button>
-      
-    </form>
-        
-      </div>
-      <div class="col-12 col-md-6">
-        <div class="ml-3">
-        <h1>For Queries Contact</h1>
-        <dl class="row">
-  <dt class="col-sm-3">Email</dt>
-  <dd class="col-sm-9"> founder@packetprep.com</dd>
-  <dt class="col-sm-3">Phone</dt>
-  <dd class="col-sm-9"> +91 95151 25110</dd>
-</dl>
-      </div>
-        
-      </div>
-    </div>
-    
-  </div>
- @endif 
- @endif
 
 <div class="row">
   <div class="col-12 ">
+<div class="p-0 mb-4" style="border:1px solid #eee;box-shadow: 2px 2px 2px 1px #e7e7e7">
+  <div class="p-2 bg-light"> </div>
+<div class="  p-3 pt-5 bg-white" >
 
-<div class="mb-4  p-3 pt-5 bg-white" style="border:1px solid #cae1ec;">
 
-  <div class="row">
+  <div class="row ">
     <div class="col-md-9 ">
       @if(auth::user())
       <div class="row mt-0 mt-mb-4">
@@ -102,6 +68,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 
 @if(count(\auth::user()->newtests())!=0)

@@ -194,6 +194,16 @@ class AssessmentController extends Controller
             return view('appl.exam.assessment.inactive')->with('exam',$exam); 
         }
 
+
+        if(!trim(strip_tags($exam->instructions)))
+        {
+            $url = route('assessment.try',$test);
+            if($r->get('code')){
+                $url=$url.'?code='.$r->get('code');
+            }
+            return redirect($url);
+        }
+
         $code = $r->get('code');
         $user = \auth::user();
         if(isset($exam->product_ids))
@@ -272,6 +282,7 @@ class AssessmentController extends Controller
         }
 
         $user = \auth::user();
+        $window_change = true;
 
         if(trim(strip_tags($exam->emails))){
             if(strpos($exam->emails,$user->email)!==false)
@@ -371,6 +382,7 @@ class AssessmentController extends Controller
                 $i++;$k++;
                 if($q->type=='code'){
                     $code_ques[$i]=1;
+                    $window_change = false;
                 }
             }
         }
@@ -391,6 +403,7 @@ class AssessmentController extends Controller
                         ->with('code_ques',$code_ques)
                         ->with('timer2',true)
                         ->with('camera',$exam->camera)
+                        ->with('window_change',$window_change)
                         ->with('time',$time)
                         ->with('sections',$sections)
                         ->with('passages',$passages)
@@ -649,6 +662,25 @@ class AssessmentController extends Controller
         if(!$dynamic)
             return $answer;
 
+        
+
+        if(strpos($answer,',')!== false){
+            $ans =explode(',', $answer);
+            foreach($ans as $k=>$a){
+                $ans[$k]=$this->new_ans_str($a,$dynamic);
+            }
+            $new_ans = implode(',', $ans);
+        }else if(strlen($answer)==1){
+            $new_ans = $this->new_ans_str($answer,$dynamic);
+        }
+
+        if(!isset($new_ans))
+            return $answer;
+
+        return $new_ans;
+    }
+
+    public function new_ans_str($answer,$dynamic){
         if($answer == 'A'){
             if($dynamic == 1) $new_ans = 'A';
             if($dynamic == 2) $new_ans = 'D';
@@ -679,10 +711,7 @@ class AssessmentController extends Controller
 
         if($answer == 'E'){
             return $answer;
-        }  
-
-        if(!isset($new_ans))
-            return $answer;
+        } 
 
         return $new_ans;
     }
@@ -943,13 +972,49 @@ class AssessmentController extends Controller
                 $item['section_id'] = $request->get($i.'_section_id');
                 $item['time'] = $request->get($i.'_time');
                 $item['test_id'] = $request->get('test_id');
-                $item['response'] = strtoupper($request->get($i));
+
+                if(is_array($request->get($i))){
+                    $item['response'] = strtoupper(implode(',',$request->get($i)));
+                }else{
+                    $item['response'] = strtoupper($request->get($i)); 
+                }
+                
                 $item['answer'] = $this->new_answer(strtoupper($answers[$request->get($i.'_question_id')]),$request->get($i.'_dynamic'));
 
-                if($item['response'] == $item['answer'])
+                if(strlen($item['answer'])==1){
+                   if($item['response'] == $item['answer'])
                     $item['accuracy'] =1;
-                else
-                    $item['accuracy'] =0;
+                    else
+                    $item['accuracy'] =0; 
+                }elseif(strpos($item['answer'],',')!==false){
+                    $ans = explode(',',$item['response']);
+                    $flag = false;
+                    foreach($ans as $an)
+                    if(strpos($item['answer'],$an)!==false){
+
+                    }else{
+                        $flag = true;
+                        break;
+                    }
+
+                    if(!$flag){
+                        if(strlen($item['response']) != strlen($item['answer']))
+                            $flag = true;
+                    }
+
+                    if($flag)
+                        $item['accuracy'] =0;
+                    else
+                        $item['accuracy'] =1;
+                }else{
+
+                    if(trim($item['response']) == $item['answer'])
+                    $item['accuracy'] =1;
+                    else
+                    $item['accuracy'] =0; 
+
+                }
+                
 
                 $item['status'] = 1;
                 $item['dynamic'] = $request->get($i.'_dynamic');
@@ -966,6 +1031,8 @@ class AssessmentController extends Controller
             }
             
         }
+
+        
 
 
         $details = ['user_id'=>$request->get('user_id'),'test_id'=>$request->get('test_id')];
@@ -1122,6 +1189,8 @@ class AssessmentController extends Controller
 
         if($exam->active){
             return view('appl.exam.assessment.inactive')->with('exam',$exam); 
+        }else if($exam->status==0){
+            abort(403,'Test is in draft state');
         }
         
         if($products){

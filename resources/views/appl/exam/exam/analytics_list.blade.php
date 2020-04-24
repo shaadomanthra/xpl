@@ -4,19 +4,23 @@
          
       @if(count($report)!=0)
         <div class="table-responsive">
+          @if($exam->slug!='psychometric-test')
+          <div class="bg-light p-3 border"> Sorted by : <span class="badge badge-warning">@if(request()->get('score')) Score @else Date @endif</span></div>
+          @endif
           <table class="table table-bordered mb-0">
             <thead class="thead-light">
               <tr>
                 <th scope="col">Sno</th>
-                <th scope="col">Name</th>
+                <th scope="col" style="width:10%">Name</th>
                 <th scope="col">Cheating</th>
                 @if($exam->slug!='psychometric-test')
                 @foreach($exam_sections as $sec)
-                <th scope="col">{{$sec->name}}</th>
+                <th scope="col"><a href="" data-toggle="tooltip" title="{{$sec->name}}">{{first_letters($sec->name)}}</a></th>
                 @endforeach
                 
                 <th scope="col">Score</th>
                 @endif
+                <th scope="col">Date</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
@@ -69,6 +73,9 @@
                   @endif
                 </td>
                 @endif
+                <td>
+                  {{$r->created_at->format('d-m-Y')}}
+                </td>
                 <td>
                 <form method="post" class='form-inline' action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
                   @if(!$r->status)

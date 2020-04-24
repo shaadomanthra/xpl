@@ -1,5 +1,5 @@
 @extends('layouts.none')
-@section('title', $exam->name.' | PacketPrep')
+@section('title', $exam->name.' ')
 @section('content')
 
 <div class="p-2 p-md-3 ">
@@ -8,7 +8,18 @@
   <div class="row">
     <div class="col-md-9">
 
-      <div class=" rounded p-3 mb-3 h4 d-none d-md-block" style="border:#dad6b5;background:#f8efba;"><i class="fa fa-newspaper-o"></i> {{$exam->name}}</div>
+      <div class=" rounded p-3 mb-3 h4 d-none d-md-block" style="border:#dad6b5;background:#f8efba;">
+        @if(isset($exam->image))
+        @if(Storage::disk('public')->exists($exam->image))
+        <picture>
+        <img 
+      src="{{ asset('/storage/'.$exam->image) }} " class=" d-print-none mr-2" alt="{{  $exam->name }}" style='max-width:40px;'>
+      </picture>
+        @endif
+    @else
+        <i class="fa fa-newspaper-o"></i> 
+        @endif
+        {{$exam->name}}</div>
           <div class=" mb-3 d-block d-md-none ">
   <div class="blogd text-white pl-3 pr-3 pb-2 pt-3 pb-2 rounded" style="background:#ca2428">
     <div class="mb-2 text-center"> Timer : <span class="text-bold " id="timer2"></span></div>

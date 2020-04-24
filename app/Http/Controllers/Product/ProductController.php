@@ -22,6 +22,7 @@ use PacketPrep\Mail\OrderCreated;
 use Illuminate\Support\Facades\DB;
 use Instamojo as Instamojo;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -138,6 +139,37 @@ class ProductController extends Controller
         return view('appl.product.pages.productactivation');
     }
 
+    public function attempts(Request $request){
+
+      $user = \auth::user();
+
+      $username = $user->username;
+      $user->image = $user->getImage();
+      $attempts_all = $attempts_lastmonth = $attempts_thismonth =$attempts_lastbeforemonth=0;
+      if($user->checkRole(['hr-manager'])){
+          $count = 0;
+          foreach($user->exams as $exam){
+            $attempts_all = $attempts_all + $exam->getAttemptCount();
+            $attempts_lastmonth = $attempts_lastmonth + $exam->getAttemptCount(null,'lastmonth');
+            $attempts_thismonth = $attempts_thismonth + $exam->getAttemptCount(null,'thismonth');
+            $attempts_lastbeforemonth = $attempts_lastbeforemonth + $exam->getAttemptCount(null,'lastbeforemonth');
+          }
+          $data['attempts_all'] = $attempts_all;
+          $data['attempts_lastmonth'] = $attempts_lastmonth;
+          $data['attempts_thismonth'] = $attempts_thismonth;
+          $data['attempts_lastbeforemonth'] = $attempts_lastbeforemonth;
+
+          $e = $user->exams->pluck('id')->toArray();
+          $attempts = $exam->getAttempts($e,$request->get('month'));
+          
+      }
+        
+      return view('appl.product.product.attempts')
+                ->with('user',$user)->with('attempts',$attempts)
+                ->with('data',$data);
+
+    }
+
     public function welcome(Request $request)
     {
 
@@ -145,15 +177,31 @@ class ProductController extends Controller
 
       $username = $user->username;
       $user->image = $user->getImage();
-
+      $users = [];
       if($user->checkRole(['hr-manager'])){
+
+          $search = $request->search;
+          $item = $request->item;
+
           $count = 0;
           foreach($user->exams as $exam){
-            $count = $count + $exam->getUserCount();
+            $count = $count + $exam->getAttemptCount();           
           }
+
+          if($search)
+            $exams = $user->exams()->where('name','LIKE',"%{$item}%")->orderBy('id','desc')->limit(10)->get();
+          else
+            $exams = $user->exams()->orderBy('id','desc')->limit(10)->get();
           $user->attempts = $count;
+          $view = $search ? 'snippets.hr_tests': 'hr_welcome';
+
+          $e = Exam::where('slug','psychometric-test')->first();
           if(!$user->isAdmin())
-          return view('hr_welcome')->with('user',$user);
+          return view($view)
+              ->with('user',$user)
+              ->with('exam',$exam)
+              ->with('e',$e)
+              ->with('exams',$exams);
       }
         
       return view('welcome2')->with('user',$user);

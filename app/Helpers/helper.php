@@ -31,6 +31,17 @@ if (! function_exists('image_resize')) {
     }
 }
 
+if (! function_exists('first_letters')) {
+
+function first_letters($string) {
+$temp = explode(' ', $string);
+$result = '';
+foreach($temp as $t)
+    $result .= $t[0];
+return $result;
+}
+}
+
 if (! function_exists('random_color')) {
 
 function random_color() {

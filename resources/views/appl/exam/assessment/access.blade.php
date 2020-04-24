@@ -26,7 +26,7 @@
 				<h1 class="mt-3">
 					
 					{{ $exam->name }} @if($exam->status ==2)
-					<span class="badge badge-primary ">
+					<span class="badge badge-warning ">
 					<i class="fa fa-lock" aria-hidden="true"></i>  PRIVATE
 				</span>
 					@else

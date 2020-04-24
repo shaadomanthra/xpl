@@ -37,7 +37,72 @@
         </div>
       </div>
 
-  @if($question->type!='code')
+  @if($question->type=='maq')
+    @if($question->a)
+    <div class="row no-gutters">
+      <div class="col-3 col-md-2">
+        <div class="pr-3 pb-2" >
+          <div class="text-center p-1 rounded bg-light w100 border" >
+            <input class="form-check-input input input_{{($i+1)}}" type="checkbox" name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="A"> A </div>
+          </div>
+        </div>
+        <div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->option_a!!}</div></div>
+      </div>
+      @endif
+
+      @if($question->b)
+      <div class="row no-gutters">
+        <div class="col-3 col-md-2">
+          <div class="pr-3 pb-2" >
+            <div class="text-center p-1 rounded bg-light w100 border" >
+              <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="B">  B</div>
+            </div>
+          </div>
+          <div class="col-9 col-md-10"><div class="pt-1 b">{!! $question->option_b!!}</div></div>
+        </div>
+        @endif
+
+        @if($question->c)
+        <div class="row no-gutters">
+          <div class="col-3 col-md-2">
+            <div class="pr-3 pb-2" >
+              <div class="text-center p-1 rounded bg-light w100 border" >
+
+                <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="C" > C</div>
+              </div>
+            </div>
+            <div class="col-9 col-md-10"><div class="pt-1 c">{!! $question->option_c!!}</div></div>
+          </div>
+          @endif
+
+          @if($question->d)
+          <div class="row no-gutters">
+            <div class="col-3 col-md-2">
+              <div class="pr-3 pb-2" >
+                <div class="text-center p-1 rounded bg-light w100 border" >
+                  <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="D"> D</div>
+              </div>
+            </div>
+            <div class="col-9 col-md-10"><div class="pt-1 d">{!! $question->option_d!!}</div></div>
+          </div>
+          @endif
+
+          @if($question->e)
+          <div class="row no-gutters">
+            <div class="col-3 col-md-2">
+              <div class="pr-3 pb-2" >
+                <div class="text-center p-1 rounded bg-light w100 border" > 
+
+                  <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="E" >
+                  E
+                </div>
+              </div>
+            </div>
+            <div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->option_e!!}</div></div>
+          </div>
+          @endif
+
+  @elseif($question->type=='mcq')
     @if($question->a)
     <div class="row no-gutters">
       <div class="col-3 col-md-2">
@@ -106,9 +171,11 @@
             @include('appl.exam.assessment.blocks.code')
           @endif
 
-          @if($question->type=='eq')
+          @if($question->type=='fillup')
+          <div class="bg-light border p-3 rounded mt-3">
           <h5>Enter your answer</h5>
-          <input class="form-control w-50 input input_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" >
+          <input class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" >
+        </div>
           @endif
 
           <input id="{{($i+1)}}_time" class="form-input {{($i+1)}}_time" type="hidden" name="{{($i+1)}}_time"  value="0">
@@ -126,10 +193,9 @@
         <i class="fa fa-angle-double-left"></i> Prev<span class="d-none d-md-inline">ious</span>
       </button>
 
-      @if($question->type!='code')
       <button type="button" class="btn  btn-secondary clear-qno cursor" data-sno="1">Clear <span class="d-none d-md-inline">Response</span>
       </button>
-      @endif
+     
       <a href="#" data-toggle="modal" data-target="#exampleModal">
         <button type="button" id="submit_button" class="btn  btn-success qno-submit cursor float-right" data-sno="{{$question->id}}" data-tooltip="tooltip"  data-placement="top" title="Submit">
           End <span class="d-none d-md-inline">Test</span>

@@ -20,6 +20,7 @@ use PacketPrep\Http\Middleware\RequestFilter;
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	Route::get('/', function(){ 
+		
 		if(\auth::user())
 		{
 			return redirect('/dashboard');
@@ -32,6 +33,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 		
 
 	})->middleware('cache')->name('root');
+
 	Route::post('/', 'Product\OrderController@callback');
 	Route::get('/instamojo', 'Product\OrderController@instamojo')->middleware('auth');
 	Route::get('/order_payment', 'Product\OrderController@instamojo_return');
@@ -40,6 +42,9 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
+
+	Route::get('/participants','Product\ProductController@participants')->name('participants')->middleware('auth');
+	Route::get('/attempts','Product\ProductController@attempts')->name('attempts')->middleware('auth');
 
 	Route::get('/editor','Product\ProductController@editor')->name('editor');
 	Route::post('/editor','Product\ProductController@editor')->name('editor');
@@ -442,6 +447,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 	Route::get('admin/analysis','College\CollegeController@analysis')->middleware('auth')->name('admin.analysis');
 	
 
+	Route::get('exam/psyreport','Exam\ExamController@psyreport')->middleware('auth')->name('exam.psyreport');
 	Route::post('exam/copy','Exam\ExamController@copy')->middleware('auth')->name('e.exam.copy');
 	Route::resource('exam','Exam\ExamController')->middleware('auth');
 	Route::resource('examtype','Exam\ExamtypeController')->middleware('auth');

@@ -3,6 +3,7 @@
 namespace PacketPrep\Models\Exam;
 
 use Illuminate\Database\Eloquent\Model;
+use PacketPrep\Models\Exam\Exam;
 
 class Tests_Overall extends Model
 {
@@ -25,5 +26,10 @@ class Tests_Overall extends Model
 
     public function user(){
         return $this->belongsTo('PacketPrep\User');
+    }
+
+    public function exam(){
+         $exam = Exam::where('id',$this->test_id)->first();
+         return $exam;
     }
 }

@@ -12,7 +12,7 @@
         <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
             <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
+            <li class="breadcrumb-item">Test</li>
           </ol>
         </nav>
         <div class=' pb-3'>
@@ -22,7 +22,7 @@
       <div class="col-12 col-md-4 col-lg-2">
         <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
           <div class="h6">Attempts</div>
-          <div class="h2" >{{$exam->getUserCount()}}</div>
+          <div class="h2" ><a href="{{ route('test.report',$exam->slug)}}" >{{$exam->getAttemptCount()}}</a></div>
         </div>
       </div>
     </div>
@@ -75,12 +75,14 @@
             </div>
             <div class="col-12 col-md-12 col-lg-9">
               <div class="pt-2 f18 mb-4 lh15" >
-              <h4 class="mb-3"><i class="fa fa-angle-right"></i> Description</h4>
+              <h4 class="mb-3"><i class="fa fa-angle-right"></i> Description <a href="{{ route('exam.edit',$exam->slug)}}?id=description" class="float-right"><i class="fa fa-edit"></i> edit</a></h4>
               {!! $exam->description !!}
               </div>
 
 
+              <h4 class="mb-3"><i class="fa fa-angle-right"></i> Settings <a href="{{ route('exam.edit',$exam->slug)}}?id=settings" class="float-right"><i class="fa fa-edit"></i> edit</a></h4>
               <div class="row mb-2">
+
             <div class="col-6"><i class="fa fa-th"></i>&nbsp; Report</div>
             <div class="col-6">
               @if($exam->solutions==1)
@@ -124,7 +126,7 @@
 
       <div class="card mb-4 ">
         <div class="card-body">
-            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Instructions</h4>
+            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Instructions <a href="{{ route('exam.edit',$exam->slug)}}?id=instructions" class="float-right"><i class="fa fa-edit"></i> edit</a></h4>
             @if($exam->instructions)
               {!! $exam->instructions !!}
             @else
@@ -169,13 +171,13 @@
 
       <div class="card mb-4 ">
         <div class="card-body">
-      <h4 class="mb-3"><i class="fa fa-angle-right"></i> Access Codes <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Employer can uniquely name the access codes to categorise the participants based on job opening."></i></h4>
+      <h4 class="mb-3"><i class="fa fa-angle-right"></i> Access Codes <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Employer can uniquely name the access codes to categorise the participants based on job opening."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=accesscode" class="float-right"><i class="fa fa-edit"></i> edit</a></h4>
       <hr>
       
       <div class="">
       @foreach(explode(',',$exam->code) as $code)
               @if($code)
-              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-2 ">{{ $code}}({{ $exam->getUserCount($code)}})</a>
+              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-2 ">{{ $code}}({{ $exam->getAttemptCount($code)}})</a>
               @else
               <span class="text-secondary"> - No access codes defined</span>
               @endif &nbsp;&nbsp;
@@ -186,7 +188,7 @@
       
       <div class="card mb-4 ">
         <div class="card-body">
-            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i></h4>
+            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=emails" class="float-right"><i class="fa fa-edit"></i> edit</a> </h4>
             <hr>
             @if($exam->emails)
               {!! nl2br($exam->emails) !!}
@@ -228,8 +230,8 @@
           </a>
         </div>
       </div>
-      @if($exam->getUserCount())
-      <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest participants <small><span class="text-secondary">({{$exam->getUserCount()}})</span></small><a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm float-lg-right mt-3 mt-lg-0">View all</a></div>
+      @if($exam->getAttemptCount())
+      <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest participants <small><span class="text-secondary">({{$exam->getAttemptCount()}})</span></small><a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm float-lg-right mt-3 mt-lg-0">View all</a></div>
 
       @foreach($exam->latestUsers() as $u =>$t)
       <div class='cardbox lblue p-3 mb-3'>

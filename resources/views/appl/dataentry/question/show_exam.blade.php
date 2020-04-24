@@ -66,6 +66,19 @@
       </div>
       @endif
       <div class="card  mb-3">
+        <div class="card-header ">
+          @can('update',$question)
+                <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-edit"></i> edit</a> &nbsp;&nbsp;&nbsp;
+          @endcan
+
+          @can('create',$question)
+                <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-retweet"></i> copy</a>&nbsp;&nbsp;&nbsp;
+
+                <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-unlink"></i> remove</a>
+          @endcan
+
+          <span class="badge   badge-warning float-right mt-1">{{ strtoupper($question->type) }}</span>
+        </div>
         <div class="card-body ">
           
         <div class="row no-gutters">
@@ -73,9 +86,7 @@
         		<div class="pr-3 pb-2 " >
         			<div class="text-center p-1 rounded  w100 qyellow"  style="">
         				{{ $details['qno'] }} 
-                @can('update',$question)
-                <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-edit"></i></a>
-                @endcan
+                
         			</div>
         		</div>
         	</div>
@@ -112,11 +123,11 @@
       </div>
       </div>
 
-          @if(count($question->tags)!=0)
-      @foreach($question->tags as $k => $tag)
-      <span class="badge @if($k==0) badge-danger @else  badge-warning @endif mb-3">{{ strtoupper($tag->value) }}</span>
-      @endforeach
-    @endif
+  
+      
+      
+
+
 
         </div>
         </div>
@@ -206,7 +217,7 @@
       <div class="card mb-3 mb-md-0">
       	<div class="card-body">
       		<h3>Explanation</h3>
-      		<div class="explanation">{!! $question->explanation !!}</div>
+      		<div class="explanation">@if($question->explanation) {!! $question->explanation !!} @else - @endif</div>
       	</div>
       </div>
 
