@@ -119,7 +119,7 @@
               @endif
             </div>
             <div class='col-8 col-md-9'>
-              <h4 class="mb-1 mt-2 lh15">
+              <h2 class="mb-1 mt-2 lh15">
                 <a href=" {{ url('/exam/psyreport') }} " data-toggle="tooltip" title="View Test Reports">
                 @if($e->status==0)
                 <i class="fa fa-square-o"></i> 
@@ -131,9 +131,9 @@
                   {{ $e->name }}
                 </a>
 
-              </h4>
+              </h2>
               <div>
-                <a href="{{route('assessment.show',$e->slug)}}" class="f20"><i class="fa fa-external-link" ></i> {{ route('assessment.show',$e->slug) }}</a>
+                <a href="{{route('assessment.show',$e->slug)}}" class=""><i class="fa fa-external-link" ></i> {{ route('assessment.show',$e->slug) }}</a>
                   @if($e->active==1)
                 <span class=" badge badge-secondary">Inactive</span>
                 @else
@@ -145,12 +145,7 @@
               </div>
               
             </div>
-            <div class='col-2 col-md-2'>
-              <div class="heading_one float-right f30">
-                <div class="d-inline h5">Access Code</div>
-                P S Y 1 2 3
-              </div>
-            </div>
+            
 
           </div>
     </div>
