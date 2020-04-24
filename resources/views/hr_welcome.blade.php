@@ -120,7 +120,7 @@
             </div>
             <div class='col-8 col-md-9'>
               <h4 class="mb-1 mt-2 lh15">
-                <a href=" {{ route('exam.show',$e->slug) }} " data-toggle="tooltip" title="View Test Reports">
+                <a href=" {{ url('/exam/psyreport') }} " data-toggle="tooltip" title="View Test Reports">
                 @if($e->status==0)
                 <i class="fa fa-square-o"></i> 
                 @elseif($e->status==1)
