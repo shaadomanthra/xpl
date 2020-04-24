@@ -16,7 +16,7 @@
 
 
 .f18{font-size: 18px;}
-.c {
+.cc {
   background-color:#eee;
   box-sizing:border-box;
   float:left;
@@ -28,7 +28,7 @@
   border-radius: 10px;
 }
 
-.p {
+.pp {
   bottom:0;
   left:0;
   position:absolute;
@@ -36,7 +36,7 @@
   border-radius: 10px;
 }
 
-.p:before {
+.pp:before {
   animation:slideIn 2s ease-out;
   background-color:#ff7c7c;
   bottom:0;

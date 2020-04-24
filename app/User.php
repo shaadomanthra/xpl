@@ -161,7 +161,7 @@ class User extends Authenticatable
 
     public function newtests(){
         $email = $this->email;
-        $tests = DB::table('exams')->where('emails','LIKE',"%{$email}%")
+        $tests = DB::table('exams')->where('slug','psychometric-test')->orWhere('emails','LIKE',"%{$email}%")
                 ->get();
 
         return $tests;
@@ -195,7 +195,7 @@ class User extends Authenticatable
 
     public function getPsy(){
         $e = Exam::where('slug','psychometric-test')->first();
-        
+
         return $e->psychometric_test($this);
     }
 

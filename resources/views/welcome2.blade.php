@@ -165,7 +165,11 @@
                   </td>
                   <td>
                     @if(!$test->attempt_status)
+                    @if($test->slug!='psychometric-test')
                     {{$test->score}} / {{$test->max}}
+                    @else
+                    -
+                    @endif
                     @else
                      -
                     @endif

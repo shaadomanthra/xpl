@@ -99,7 +99,7 @@
 @if($e)
 <div class="dyellow" style="background:#f7f6cf">
   <div class="container">
-    <div class="p-3 py-4">
+    <div class="p-3 py-4 pb-5">
        <div class="row">
             <div class='col-2 col-md-1'>
               @if(isset($e->image))

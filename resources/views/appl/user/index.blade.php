@@ -9,8 +9,11 @@
     <div class=" mb-3">
       <div style="height:150px;background: linear-gradient(70deg,#F44336, #3f51b5);"></div>
 
-      <div class="container text-right" style="height:180px;margin-top: -100px;">
+      <div class="container text-right d-none d-md-block" style="height:180px;margin-top: -100px;">
                 <img class="img-thumbnail rounded-circle mb-3 mr-5"src="@if($user->image) {{ ($user->image)}}@else {{ Gravatar::src($user->email, 150) }}@endif" style="width:180px;height:180px">
+              </div>
+      <div class="container text-right d-block d-md-none" style="height:100px;margin-top: -120px;">
+                <img class="img-thumbnail rounded-circle mb-3 mr-5"src="@if($user->image) {{ ($user->image)}}@else {{ Gravatar::src($user->email, 150) }}@endif" style="width:80px;height:80px">
               </div>
 
       <div class="container  rounded bg-light" style="margin-top: -100px;">
@@ -18,19 +21,21 @@
          
           <div class="col-md-12">
             <div class="mt-3 mt-md-5 ">
-             <h2 class="mb-md-2  heading_two mr-4 ml-4" >{{ $user->name }} 
+             <h2 class="mb-md-2  heading_two mr-md-4 ml-4" >{{ $user->name }} 
 
 @if(\Auth::user())
 @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
               @if($user->personality)
-            <span class="badge badge-light float-md-right mr-5 mt-2">
+              <div>
+            <div class="badge badge-success  mr-5 mt-2">
               @if($user->personality>=8)
         Grade A
       @elseif($user->personality>=5 && $user->personality<8)
         Grade B
       @else
         Grade C  
-      @endif</span>
+      @endif</div>
+    </div>
           @endif
 @endif
 @endif
@@ -118,6 +123,7 @@
 @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
 @if($user->personality)
+<h2 class="ml-4 mt-4"><i class="fa fa-gg"></i> Personality Grading</h2>
 <div class="row mb-3 mr-2 ml-2 mt-4">
 
   <div class="col-12 col-md-3">
@@ -187,7 +193,7 @@
     </div>
 
       <div class="row mr-2 ml-2">
-        <div class="col-7 ">
+        <div class="col-12 col-md-7 ">
           <h3 class=" p-3 mb-0 bg-white border border-bottom-0"><i class='fa fa-university'></i> Academic Scores</h3>
          
           <div class="table-responsive">
@@ -245,7 +251,7 @@
           </div>
         </div>
 
-        <div class="col-5 ">
+        <div class="col-12 col-md-5 ">
           <h3 class="bg-white border p-3 mb-0"><i class='fa fa-youtube-play'></i> Profile Video</h3>
          
           @if($user->video)
@@ -260,7 +266,7 @@
 @endif
 
 @else
-<div class='p-3 bg-light border '>
+<div class='p-3 bg-light border'>
 <a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
 </div>
 @endif

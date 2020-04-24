@@ -49,8 +49,8 @@
 		<div class="card-body">
 			<div class="mt-2 mb-3">
 				@foreach($d as $i=>$j)
-				<div class="c c_{{$i}}">
-					<div class="p p_{{$i}}" style="width:{{($j*2.5)}}%;"></div>
+				<div class="cc c_{{$i}}">
+					<div class="pp p_{{$i}}" style="width:{{($j*2.5)}}%;"></div>
 					<div class="content text-left">
 						<h3>@if($i=='neuroicism') Emotional Stability @else {{ ucfirst($i)}}@endif <i class="fa fa-question-circle-o" data-toggle="tooltip" title="{{ $m[$i] }}"></i>
 							<p class="float-right text-secondary f18">{{($j*2.5)}}%</p>
