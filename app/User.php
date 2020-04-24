@@ -174,10 +174,15 @@ class User extends Authenticatable
         $test_idgroup = $attempts->groupby('test_id');
         $test_ids = $attempts->pluck('test_id')->toArray();
         $ids_ordered = implode(',', $test_ids);
+        if($ids_ordered)
         $tests = DB::table('exams')
                 ->whereIn('id', $test_ids)
                 ->orderByRaw("FIELD(id, $ids_ordered)")
                 ->get();
+        else
+        $tests = DB::table('exams')
+                ->whereIn('id', $test_ids)
+                ->get(); 
         foreach($tests as $k=>$t){
             $tests[$k]->attempt_at = $test_idgroup[$t->id][0]->created_at;
             $tests[$k]->score = $test_idgroup[$t->id][0]->score;
