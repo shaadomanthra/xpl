@@ -681,6 +681,7 @@ class AssessmentController extends Controller
     }
 
     public function new_ans_str($answer,$dynamic){
+        $new_ans = $answer;
         if($answer == 'A'){
             if($dynamic == 1) $new_ans = 'A';
             if($dynamic == 2) $new_ans = 'D';
