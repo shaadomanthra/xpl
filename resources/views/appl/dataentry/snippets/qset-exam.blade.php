@@ -43,7 +43,14 @@
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Multi Choice Question</a>
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=maq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Multi Answer Question</a>
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=fillup&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Fillup Question</a>
-      <a class="dropdown-item" href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Code Question</a>
+      @if(\auth::user()->checkRole(['administrator']))
+       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Code Question</a>
+        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
+       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Code Question</a>
+        @else
+        @endif
+        
+      
     </div>
   </div>
 </div></div></div>

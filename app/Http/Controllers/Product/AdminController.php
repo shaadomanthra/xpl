@@ -1117,14 +1117,18 @@ class AdminController extends Controller
                 $user->roles()->detach(41);
         }
 
-        if($request->get('hrmanager')==1){
+        if(in_array($request->get('hrmanager'),[10,11,12])){
             if(!$user->roles->contains(28))
                 $user->roles()->attach(28);
+            $user->role = $request->get('hrmanager');
+            $user->save();
         }
 
-        if($request->get('hrmanager')==2){
+        if($request->get('hrmanager')==1){
             if($user->roles->contains(28))
                 $user->roles()->detach(28);
+            $user->role = $request->get('hrmanager');
+            $user->save();
         }
 
         //Services

@@ -110,6 +110,32 @@ class UserController extends Controller
         }
     }
 
+    public function hrmanagers()
+    {
+
+        $hr = Role::where('slug','hr-manager')->first();
+        $users = $hr->users;
+        
+
+        foreach($users as $k=>$user){
+
+            $users[$k]->attempts_all  =0;
+            $users[$k]->attempts_lastmonth =0;
+            $users[$k]->attempts_thismonth =0;
+        foreach($user->exams as $exam){
+            $users[$k]->attempts_all = $users[$k]->attempts_all + $exam->getAttemptCount();
+            $users[$k]->attempts_lastmonth = $users[$k]->attempts_lastmonth + $exam->getAttemptCount(null,'lastmonth');
+            $users[$k]->attempts_thismonth = $users[$k]->attempts_thismonth + $exam->getAttemptCount(null,'thismonth');
+          }
+        }
+            
+        if($users)
+        {
+            return view('appl.user.hrmanagers')
+                    ->with('users',$users);
+        }else
+            abort(404,'User not found');
+    }
 
     /**
      * Show the form for editing the specified resource.

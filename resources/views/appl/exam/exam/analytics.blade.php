@@ -35,7 +35,14 @@
       <div class="col-12 col-md-4">
         <div class="mt-2 ">
           @if($exam->slug!='psychometric-test')
-         <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
+          @if(\auth::user()->checkRole(['administrator']))
+        <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
+        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
+        <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
+        @else
+        @endif
+
+         
          @endif
           <form class="form-inline mr-3 " method="GET" action="{{ route('test.report',$exam->slug) }}">
             

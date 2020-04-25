@@ -66,7 +66,19 @@
 
   <dd class="col-sm-7">
     @foreach($user->roles()->get() as $k=> $r)
-    <span class="badge badge-warning">{{ $r->name }}</span><br>
+    <span class="badge badge-warning">{{ $r->name }}</span>
+    @if($r->slug=='hr-manager')
+    <span class="badge badge-info">
+      @if($user->role==10)
+        Basic
+      @elseif($user->role==11)
+        Pro
+      @elseif($user->role==12)
+        Advanced
+      @endif 
+    </span>
+    @endif
+    <br>
     @endforeach
   </dd>
   @endif

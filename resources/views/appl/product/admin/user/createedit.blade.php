@@ -189,9 +189,10 @@
           <div class="form-group">
         <label for="formGroupExampleInput ">Hr Manager</label>
         <select class="form-control" name="hrmanager">
-           <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(28)) selected @endif @endif @endif>No</option>
-          <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(28)) selected @endif @endif @endif>Yes</option>
-         
+           <option value="1"  @if(isset($user))@if($user->roles()->first()) @if(!$user->roles()->find(28)) selected @endif @endif @endif>No</option>
+          <option value="10" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(28) && $user->role==10) selected @endif @endif @endif>Basic</option>
+          <option value="11" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(28) && $user->role==11) selected @endif @endif @endif>Pro</option>
+          <option value="12" @if(isset($user) )@if($user->roles()->first()) @if($user->roles()->find(28) && $user->role==12) selected @endif @endif @endif>Advanced</option>
         </select>
       </div>
 

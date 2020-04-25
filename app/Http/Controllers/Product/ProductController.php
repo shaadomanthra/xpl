@@ -141,6 +141,9 @@ class ProductController extends Controller
 
     public function attempts(Request $request){
 
+      if($request->get('user'))
+        $user = User::where('username',$request->get('user'))->first();
+      else
       $user = \auth::user();
 
       $username = $user->username;
@@ -197,10 +200,12 @@ class ProductController extends Controller
 
           $e = Exam::where('slug','psychometric-test')->first();
 
+          
+
           if(!$user->isAdmin())
           return view($view)
               ->with('user',$user)
-              ->with('exam',$exam)
+              ->with('exam',$user->exams()->first())
               ->with('e',$e)
               ->with('exams',$exams);
       }

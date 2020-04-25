@@ -26,25 +26,25 @@
       <div class="col-12 col-md-3">
         <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox @if(!request()->get('month')) dblue border-secondary @else bg-white @endif" style=''>
           <div class="h6">All attempts</div>
-          <div class="h2" ><a href="{{ route('attempts')}}">{{ $data['attempts_all']}}</a></div>
+          <div class="h2" ><a href="{{ route('attempts')}}?user={{$user->username}}">{{ $data['attempts_all']}}</a></div>
         </div>
       </div>
       <div class="col-12 col-md-3">
         <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox @if(request()->get('month')=='thismonth') dblue border-secondary @else bg-white @endif" >
           <div class="h6">{{\carbon\carbon::now()->format('M Y')}}</div>
-          <div class="h2" ><a href="{{ route('attempts')}}?month=thismonth">{{ $data['attempts_thismonth']}}</a></div>
+          <div class="h2" ><a href="{{ route('attempts')}}?month=thismonth&user={{$user->username}}">{{ $data['attempts_thismonth']}}</a></div>
         </div>
       </div> 
       <div class="col-12 col-md-3">
         <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox @if(request()->get('month')=='lastmonth') dblue border-secondary @else bg-white @endif" style=''>
           <div class="h6">{{\carbon\carbon::now()->submonth()->format('M Y')}}</div>
-          <div class="h2" ><a href="{{ route('attempts')}}?month=lastmonth">{{ $data['attempts_lastmonth']}}</a></div>
+          <div class="h2" ><a href="{{ route('attempts')}}?month=lastmonth&user={{$user->username}}">{{ $data['attempts_lastmonth']}}</a></div>
         </div>
       </div>
       <div class="col-12 col-md-3">
          <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox @if(request()->get('month')=='lastbeforemonth') dblue border-secondary @else bg-white @endif" style=''>
           <div class="h6">{{\carbon\carbon::now()->submonth(2)->format('M Y')}}</div>
-          <div class="h2" ><a href="{{ route('attempts')}}?month=lastbeforemonth">{{ $data['attempts_lastbeforemonth']}}</a></div>
+          <div class="h2" ><a href="{{ route('attempts')}}?month=lastbeforemonth&user={{$user->username}}">{{ $data['attempts_lastbeforemonth']}}</a></div>
         </div>
       </div>
   </div>
@@ -62,7 +62,10 @@
     @if($attempts->total()!=0)
         <div class="table-responsive">
           <div class="bg-light p-3 border-top border-left border-right " >Filter : <span class="badge badge-warning"> 
-            @if(request()->get('month')) {{request()->get('month')}} @else All Attempts @endif</span></div>
+            @if(request()->get('month')) {{request()->get('month')}} @else All Attempts @endif</span>
+            <span class="badge badge-info float-right"> 
+            {{$user->name}}</span>
+          </div>
           <table class="table table-bordered mb-0">
             <thead>
               <tr>

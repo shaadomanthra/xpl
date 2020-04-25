@@ -20,7 +20,7 @@ use PacketPrep\Http\Middleware\RequestFilter;
 Route::group(['middleware' => [RequestFilter::class]], function () {
 	
 	Route::get('/', function(){ 
-		
+
 		if(\auth::user())
 		{
 			return redirect('/dashboard');
@@ -188,6 +188,7 @@ Route::group(['middleware' => [RequestFilter::class]], function () {
 
 	//analytics
 	Route::get('/admin/analytics/course', 'Product\AnalyticsController@analytics_course')->name('admin.analytics.course')->middleware('auth');
+	Route::get('/admin/hrmanagers', 'User\UserController@hrmanagers')->name('hrmanagers')->middleware('auth');
 	Route::get('/admin/analytics/practice_remove_duplicates', 'Product\AnalyticsController@remove_duplicates_practice')->name('admin.analytics.practice.remove');
 	Route::get('/admin/analytics/practice_filldata', 'Product\AnalyticsController@practice_filldata')->name('admin.analytics.practice.filldata');
 	Route::get('/admin/analytics/test_filldata', 'Product\AnalyticsController@test_filldata')->name('admin.analytics.test.filldata');

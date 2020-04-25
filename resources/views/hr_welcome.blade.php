@@ -24,7 +24,17 @@
           </div>
           <div class="col-12 col-md-10">
             <p class='mt-3'>
-           <h2>Hi, {{  \auth::user()->name}}</h2>
+           <h2>Hi, {{  \auth::user()->name}}
+            <span class="badge badge-info">
+      @if(\auth::user()->role==10)
+        Basic Account
+      @elseif(\auth::user()->role==11)
+        Pro Account
+      @elseif(\auth::user()->role==12)
+        Advanced Account
+      @endif 
+    </span>
+           </h2>
       <p> Welcome aboard</p>
       <a class="btn btn-warning " href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();" role="button">Logout</a>

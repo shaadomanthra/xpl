@@ -160,11 +160,26 @@
         </div>
         <div class="col-12 col-md-6">
           <div class="form-group">
+
         <label for="formGroupExampleInput ">Camera</label>
+        @if(\auth::user()->checkRole(['administrator']))
         <select class="form-control" name="camera">
           <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
           <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
         </select>
+        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
+        <select class="form-control" name="camera">
+          <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
+          <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
+        </select>
+        @else
+        <select class="form-control" name="camera" disabled>
+          <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
+          <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
+        </select>
+        <input type="hidden" name="camera" value="0">
+        @endif
+        <small class='text-secondary'>Camera option is available for pro and advanced accounts only</small>
       </div>
         </div>
       </div>
