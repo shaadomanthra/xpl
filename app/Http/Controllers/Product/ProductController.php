@@ -200,8 +200,6 @@ class ProductController extends Controller
 
           $e = Exam::where('slug','psychometric-test')->first();
 
-          
-
           if(!$user->isAdmin())
           return view($view)
               ->with('user',$user)
