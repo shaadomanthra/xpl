@@ -70,11 +70,11 @@
         <div class=' pb-1'>
           <p class="heading_two mb-2 f30 text-white" ><i class="fa fa-inbox "></i> My Tests
 
-            @can('create',$exam)
+            @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
             <a href="{{route('exam.create')}}">
               <button type="button" class="btn btn-success float-right my-2 my-sm-2 ">Create Test</button>
             </a>
-            @endcan
+            @endif
 
           </p>
         </div>
