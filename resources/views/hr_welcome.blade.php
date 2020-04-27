@@ -25,13 +25,13 @@
           <div class="col-12 col-md-10">
             <p class='mt-3'>
            <h2>Hi, {{  \auth::user()->name}}
-            <span class="badge badge-info">
+            <span class="badge badge-info" data-toggle="tooltip" title="Account Type">
       @if(\auth::user()->role==10)
-        Basic Account
+        Basic 
       @elseif(\auth::user()->role==11)
-        Pro Account
+        Pro 
       @elseif(\auth::user()->role==12)
-        Advanced Account
+        Advanced 
       @endif 
     </span>
            </h2>
