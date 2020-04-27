@@ -2,12 +2,12 @@
     @guest
     <a class="navbar-brand abs" href="{{ url('/') }}" aria-label="Homepage">
         <img 
-          src="{{ asset('img/pphire.png') }} " width="150px" class="ml-md-1"  alt="PacketPrep logo " type="image/png">
+          src="{{ asset('img/pphire.png') }} " height="25px" class="ml-md-0"  alt="PacketPrep logo " type="image/png">
   </a>
   @else
   <a class="navbar-brand abs" href="{{ url('/dashboard') }}" aria-label="Dashboard">
     <img 
-          src="{{ asset('img/pphire.png') }} " width="150px" class="ml-md-1"  alt="PacketPrep logo " type="image/png">
+          src="{{ asset('img/pphire.png') }} " height="25px" class="ml-md-0"  alt="PacketPrep logo " type="image/png">
 </a>   
 @endguest
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

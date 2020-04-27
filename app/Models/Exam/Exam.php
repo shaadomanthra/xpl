@@ -371,7 +371,7 @@ class Exam extends Model
 
       curl_setopt_array($curl, [
           CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => 'http://krishnateja.in',
+          CURLOPT_URL => 'http://code.p24.in',
           CURLOPT_POST => 1,
           CURLOPT_TIMEOUT => 30,
       ]);
@@ -402,7 +402,7 @@ class Exam extends Model
 
       curl_setopt_array($curl, [
           CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => 'http://krishnateja.in/stopdocker.php',
+          CURLOPT_URL => 'http://code.p24.in/stopdocker.php',
           CURLOPT_POST => 1,
       ]);
 
@@ -426,7 +426,7 @@ class Exam extends Model
 
       curl_setopt_array($curl, [
           CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => 'http://krishnateja.in/removedocker.php',
+          CURLOPT_URL => 'http://code.p24.in/removedocker.php',
           CURLOPT_POST => 1,
       ]);
 
