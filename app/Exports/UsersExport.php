@@ -76,7 +76,7 @@ class UsersExport implements FromCollection
   
         } 
     */
-         $year = "2021";
+         $year = "2020";
         if(request()->get('year'))
             $year = request()->get('year');
         $users =  User::where('year_of_passing',$year)->get();
