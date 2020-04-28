@@ -68,7 +68,7 @@ The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to X
 #501,Jana Arcade,Dharam Karan Rd,<br> Ameerpet , Hyderabad, Telangana 500081<br><bR>
 Email: info@xplore.co.in<br>
 
-Call: +91 6305331787<br>
+Call: +91 7997444461<br>
 
 
 
