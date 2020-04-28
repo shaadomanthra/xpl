@@ -1,5 +1,4 @@
 <?php
-
 namespace PacketPrep\Exports;
 
 use PacketPrep\User;

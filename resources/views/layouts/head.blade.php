@@ -13,7 +13,6 @@
     <meta name="theme-color" content="#236fb1"/>
     @else
     <meta name="theme-color" content="#c25054"/>
-   
     @endif
     <link rel="manifest" href="/manifest.json">
     <meta property="og:url"           content="{{ request()->url() }}" />

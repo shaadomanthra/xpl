@@ -4,11 +4,7 @@
 @section('keywords', $obj->keywords)
 @section('image', asset('/storage/company/'.$obj->slug.'_1200.jpg'))
 @section('content')
-
-
-
-      
-      <div class="p-3 p-md-4 p-lg-5 bg-white company">
+<div class="p-3 p-md-4 p-lg-5 bg-white company">
           
           @include('flash::message')
 

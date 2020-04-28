@@ -4,7 +4,6 @@
 @section('keywords', 'campus placement preparation, wipro placement papers, infosys placement papers, aptitude questions, amcat previous papers, amcat preparation,tcs nqt, tcs ninja, tcs digital')
 @section('content')
 @include('appl.exam.exam.xp_css')
-
 <div class="p-3 bg-p text-center" style="background-color:#fffafb;background-image: url({{asset('img/colors/star2.png')}});">
 <div class="container" style="">
 <div class="p-3 p-md-5"></div>

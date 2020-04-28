@@ -3,11 +3,6 @@
 @section('description', 'The best repository for placement papers and aptitude questions for infosys, tcs nqt,tcs ninja, tcs digital, amcat, cocubes, accenture, cognizant, wipro and many more ')
 @section('keywords', 'campus placement preparation, wipro placement papers, infosys placement papers, aptitude questions, amcat previous papers, amcat preparation,tcs nqt, tcs ninja, tcs digital')
 @section('content')
-<style>
-
-
-
-</style>
 <div class="p-3 bg-p text-center" style="background-color:#f6f9ff;background-image: url({{asset('img/colors/star2.png')}});">
 <div class="container" style="">
 <div class="p-3 p-md-5"></div>

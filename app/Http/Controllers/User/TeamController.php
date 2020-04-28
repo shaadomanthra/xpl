@@ -63,7 +63,8 @@ class TeamController extends Controller
 
     public function export() 
     {
-        
+        ob_end_clean(); // this
+            ob_start(); 
 
         return Excel::download(new UsersExport, 'users.xlsx');
     }

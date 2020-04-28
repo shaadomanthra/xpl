@@ -642,6 +642,8 @@ class ExamController extends Controller
             request()->session()->put('exam_sections',$exam_sections);
             request()->session()->put('users',$u);
             $name = "Report_".$exam->name.".xlsx";
+            ob_end_clean(); // this
+            ob_start(); 
             return Excel::download(new TestReport, $name);
 
         }
