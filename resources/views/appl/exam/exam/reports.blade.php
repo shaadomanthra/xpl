@@ -48,7 +48,7 @@
       <div class="">
       @foreach($codes as $key=>$code)  
               @if($code)
-              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-2 ">{{ $code}}({{ $exam->getUserCount($code)}})</a>
+              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-2 ">{{ $code}}({{ $exam->getAttemptCount($code)}})</a>
               @else
               <span class="text-secondary"> - No access codes defined</span>
               @endif &nbsp;&nbsp;
