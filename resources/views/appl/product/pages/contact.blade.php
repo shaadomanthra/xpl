@@ -12,13 +12,12 @@
 
 	<div class="col-12 col-md-6">
 		<h1>Contact Us</h1><br>
-		<h3>Pathway Human Resource Private Limited</h3>
-#6-3-672,Flat No:301,<bR>Khursheed Mansion, Opp Police station,<br>Beside Hyderabad Central, Panjagutta,<br>Hyderabad, Telangana ,India 500082<br><bR>
-Email: hr@phrpl.com<br>
+		<h3>Xplore</h3>
+#501,Jana Arcade,Dharam Karan Rd,<br> Ameerpet , Hyderabad, Telangana 500081<br><bR>
+Email: info@xplore.co.in<br>
 
-Call: +91 7287878747<br>
+Call: +91 6305331787<br>
 
-Phone No: 040-42222253<br>
 	</div>
 
 	

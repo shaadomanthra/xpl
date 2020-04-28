@@ -79,7 +79,8 @@ class UsersExport implements FromCollection
          $year = "2020";
         
 
-        $users =  User::where('year_of_passing','2020')->get();
+        $users =  User::where('year_of_passing','2020')->where('id','>=',25000)->where('id','<',45000)->get();
+
         //$users_details =  User_Details::whereIn('user_id',$entry)->orderBy('user_id')->get();
         /*$details = array();
         foreach($users_details as $detail){
@@ -87,7 +88,7 @@ class UsersExport implements FromCollection
         }
          */
     
-        foreach($users as $k=>$u){
+        /*foreach($users as $k=>$u){
                 unset($users[$k]->created_at);
                 unset($users[$k]->updated_at);
                 unset($users[$k]->password);
@@ -99,7 +100,7 @@ class UsersExport implements FromCollection
                 unset($users[$k]->client_slug);
                 unset($users[$k]->user_id);
   
-        } 
+        } */
         //dd($users);
 
         //$entry = DB::table('branch_user')->whereIn('branch_id', [11,12,13,14,15,16,17,18])->pluck('user_id'); 

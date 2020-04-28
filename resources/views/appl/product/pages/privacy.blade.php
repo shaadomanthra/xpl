@@ -62,26 +62,13 @@ The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to P
 <h3>Grievance Redressal</h3>
 <p>Redressal Mechanism: Any complaints, abuse or concerns with regards to content and or comment or breach of these terms shall be immediately informed to the designated Grievance Officer as mentioned below via in writing or through email signed with the electronic signature to ……Pathway Human Resource Private Limited  ("Grievance Officer"). </p>
 
-<b>Mr. Prashanth </b> (Cofounder)<br>
-email : prashanth@phrpl.com<br>
-contact : +91 7287878747<br><br>
-
-<b>Mr. Akhil </b>(Cofounder)<br>
-email : akhil@phrpl.com<bR>
-contact : 9849485501<br><br>
-
-<b>Mr. Abhinav</b> (Cofounder)<br>
-email : abhinav@phrpl.com<br>
-contact : 8801358568<br><Br>
 
 <h4>Company Name & Address    </h4>
-<h3>Pathway Human Resource Private Limited</h3>
-#6-3-672,Flat No:301,<bR>Khursheed Mansion, Opp Police station,<br>Beside Hyderabad Central, Panjagutta,<br>Hyderabad, Telangana ,India 500082<br><bR>
-Email: hr@phrpl.com<br>
+<h3>Xplore</h3>
+#501,Jana Arcade,Dharam Karan Rd,<br> Ameerpet , Hyderabad, Telangana 500081<br><bR>
+Email: info@xplore.co.in<br>
 
-Call: +91 7287878747<br>
-
-Phone No: 040-42222253<br>
+Call: +91 6305331787<br>
 
 
 
