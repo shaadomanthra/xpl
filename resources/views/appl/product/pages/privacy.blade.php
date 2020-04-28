@@ -9,11 +9,11 @@
 <div class="display-2">Privacy Policy</div><br>
 
 <p>
-The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to Pathway Human Resource Private Limited and the terms "You" /"Your" / "Yourself" refer to the users. </p>
+The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to Xplore and the terms "You" /"Your" / "Yourself" refer to the users. </p>
 
 <p>This Privacy Policy is an electronic record in the form of an electronic contract formed under the information Technology Act, 2000 and the rules made thereunder and the amended provisions pertaining to electronic documents / records in various statutes as amended by the information Technology Act, 2000. This Privacy Policy does not require any physical, electronic or digital signature.</p>
 
-<p>This Privacy Policy is a legally binding document between you and Pathway Human Resource Private Limited  (both terms defined below). The terms of this Privacy Policy will be effective upon your acceptance of the same (directly or indirectly in electronic form, by clicking on the I accept tab or by use of the website or by other means) and will govern the relationship between you and Pathway Human Resource Private Limited  for your use of the website "Website" (defined below).</p>
+<p>This Privacy Policy is a legally binding document between you and Xplore  (both terms defined below). The terms of this Privacy Policy will be effective upon your acceptance of the same (directly or indirectly in electronic form, by clicking on the I accept tab or by use of the website or by other means) and will govern the relationship between you and Xplore  for your use of the website "Website" (defined below).</p>
 
 <p>This document is published and shall be construed in accordance with the provisions of the Information Technology (reasonable security practices and procedures and sensitive personal data of information) rules, 2011 under Information Technology Act, 2000; that require publishing of the Privacy Policy for collection, use, storage and transfer of sensitive personal data or information.</p>
 
@@ -60,7 +60,7 @@ The terms "We" / "Us" / "Our"/"Company" individually and collectively refer to P
 <p>However the internet is an ever evolving medium. We may change our Privacy Policy from time to time to incorporate necessary future changes. Of course, our use of any information we gather will always be consistent with the policy under which the information was collected, regardless of what the new policy may be. </p>
 
 <h3>Grievance Redressal</h3>
-<p>Redressal Mechanism: Any complaints, abuse or concerns with regards to content and or comment or breach of these terms shall be immediately informed to the designated Grievance Officer as mentioned below via in writing or through email signed with the electronic signature to ……Pathway Human Resource Private Limited  ("Grievance Officer"). </p>
+<p>Redressal Mechanism: Any complaints, abuse or concerns with regards to content and or comment or breach of these terms shall be immediately informed to the designated Grievance Officer as mentioned below via in writing or through email signed with the electronic signature to ……Xplore  ("Grievance Officer"). </p>
 
 
 <h4>Company Name & Address    </h4>

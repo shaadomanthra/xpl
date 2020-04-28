@@ -50,7 +50,7 @@
 
 <div class="text-muted d-print-none">
 <hr>
-Copyright &copy; Pathway Human Resource Private Limited</div>
+Copyright &copy; Xplore</div>
 <div class="text-muted d-none d-print-block">
 <img src="https://packetprep.com/img/xplore.png"
        class="w-100 mb-4" style="max-width:80px;" alt="xplore logo white">
