@@ -1,6 +1,6 @@
 
-@extends('layouts.app')
-@section('title', 'Contact Us | PacketPrep')
+@extends('layouts.none')
+@section('title', 'Contact Us ')
 @section('content')
 
 
