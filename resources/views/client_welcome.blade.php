@@ -8,7 +8,7 @@
   <div class="row ">
     <div class="col-12 col-md-7 ">
       <div class="display-4 mt-4 mb-4">Online assessments platform</div>
-      <div class="display-1 mb-4" style="font-family: 'Anton', sans-serif;color:#56a">{{ request()->session()->get('client')->name}} Institute of science and technology</div>
+      <div class="display-1 mb-4" style="font-family: 'Anton', sans-serif;color:#56a">{{ request()->session()->get('client')->name}} </div>
       <div class="">
         <a href="{{ route('login')}}">
         <span class="btn btn-success  mr-3 mb-3">Login Now</span></a>
