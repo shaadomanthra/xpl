@@ -53,6 +53,12 @@ class Corporate
             
         }
         else{
+            $filename = 'corporate.json';
+            $client = json_decode(file_get_contents($filename));
+            $client->logo = url('/').'/img/p24.png';
+
+            $request->session()->put('client',$client);
+
             return $next($request);
         }    
         
