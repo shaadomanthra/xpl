@@ -74,7 +74,7 @@
            <div class="row mb-2">
             <div class="col-md-4">Website URL</div>
             <div class="col-md-8">
-              <a href="https://{{$client->slug}}.onlinelibrary.co"><span class="badge badge-warning">{{$client->slug}}.onlinelibrary.co</span></a>
+              <a href="http://{{$client->slug}}.p24.in"><span class="badge badge-warning">{{$client->slug}}.p24.in</span></a>
             </div>
           </div>
 
@@ -111,14 +111,12 @@
           <div class="row mb-0">
             <div class="col-md-4">Package</div>
             <div class="col-md-8">
-              {{ ($client->getPackageName())?$client->getPackageName():'-' }}
               
             </div>
           </div>
           <div class="row mb-0">
             <div class="col-md-4">Credits Usage</div>
             <div class="col-md-8">
-              {{ $client->getCreditsUsedCount() }} / {{ $client->getCreditPoints() }}
               
             </div>
           </div>

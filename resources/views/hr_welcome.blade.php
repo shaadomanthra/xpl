@@ -106,6 +106,7 @@
   </div>
 </div>
 
+@if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
 @if($e)
 <div class="dyellow" style="background:#f7f6cf">
   <div class="container">
@@ -162,6 +163,7 @@
     </div>
   </div>
   </div>
+@endif
 @endif
   
 </div>

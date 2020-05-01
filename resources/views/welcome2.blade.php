@@ -100,7 +100,7 @@
             </div>
             <div class='col-8 col-md-6'>
               <h4 class="mb-1 mt-2 lh15">
-                <a href=" {{ route('exam.show',$e->slug) }} ">
+                <a href=" {{ route('assessment.details',$e->slug) }} ">
                 @if($e->status==0)
                 <i class="fa fa-square-o"></i> 
                 @elseif($e->status==1)
@@ -177,7 +177,7 @@
                   <td>{{date('d M Y', strtotime($test->attempt_at))}}</td>
                   <td> 
                       @if(!$test->attempt_status)
-                      <span class="badge badge-success">Active</span>
+                      <span class="badge badge-success">Completed</span>
                       @else
                       <span class="badge badge-warning">Processing</span>
                       @endif

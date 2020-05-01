@@ -32,10 +32,13 @@
   <title>@yield('title')</title>
   
   @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
-  <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
+      <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+    <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
   @else
-  <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+     <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
   @endif
+
   @if(isset($editor))
   <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
   @endif
@@ -76,11 +79,16 @@
     <div class="bg-dark">
         <footer class="wrapper text-light footer">
             <div class="container py-3">
+             
+
               @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+                  @include('snippets.bottommenu')
+              @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
                 @include('snippets.bottommenu')
               @else
-                @include('snippets.footer')
+                 @include('snippets.bottommenu-client')
               @endif
+
             </div>
         </footer>
     </div>

@@ -9,10 +9,17 @@ use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\User\Role;
 use PacketPrep\User;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
 
 
 class ClientController extends Controller
 {
+    public function __construct(){
+        $this->app      =   'product';
+        $this->module   =   'client';
+        $this->cache_path =  '../storage/app/cache/company/';
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -117,7 +124,8 @@ class ClientController extends Controller
             foreach($client->toArray() as $key=>$value){
                     $param = $param.$key."=".$value."&";
             }
-            $data =  file_get_contents('http://json.onlinelibrary.co/json.php'.$param);
+            $filename = $this->cache_path.$client->slug.'.json';
+            file_put_contents($filename, json_encode($client));
 
 
             flash('A new client('.$request->name.') is created!')->success();
@@ -155,6 +163,16 @@ class ClientController extends Controller
             $img->resize(300, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
+
+
+            /* If image is given upload and store path */
+            if(isset($request->all()['input_img'])){
+
+                $file      = $request->all()['input_img'];
+                $filename = $request->client_slug.'.'.$file->getClientOriginalExtension();
+
+                $path = Storage::disk('public')->putFileAs('companies', $file,$filename);
+            }
 
             // save image
             $img->save('img/clients/'.$request->client_slug.'.png');
@@ -270,7 +288,9 @@ class ClientController extends Controller
             foreach($client->toArray() as $key=>$value){
                     $param = $param.$key."=".$value."&";
             }
-            $data =  file_get_contents('http://json.onlinelibrary.co/json.php'.$param);
+            
+            $filename = $this->cache_path.$client->slug.'.json';
+            file_put_contents($filename, json_encode($client));
 
             flash('client (<b>'.$request->name.'</b>) Successfully updated!')->success();
             return redirect()->route('client.show',$request->slug);

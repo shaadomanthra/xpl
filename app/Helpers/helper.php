@@ -146,6 +146,23 @@ function url_exists($url) {
 }
 }
 
+if (! function_exists('urlexists')) {
+function urlexists($url) {
+    $array = get_headers($url);
+$string = $array[0];
+if(strpos($string,"200"))
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+}
+
+
+
 if (! function_exists('youtube_video_exists')) {
 function youtube_video_exists($url) {
     $videoUrl = "http://www.youtube.com/watch?v=".$url;

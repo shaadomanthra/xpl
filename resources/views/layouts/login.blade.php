@@ -14,9 +14,11 @@
       <link href="{{ asset('css/styles.css') }}?new=11" rel="stylesheet">
       
       @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
-  <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
+      <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+    <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
   @else
-  <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+     <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
   @endif
   
     </head>

@@ -6,8 +6,11 @@
             <div id="app " >
             @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
                 @include('snippets.topmenu-pp')
-            @else
+
+            @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
                 @include('snippets.topmenu')
+            @else
+                @include('snippets.topmenu_client')
             @endif
             </div>
         </div>

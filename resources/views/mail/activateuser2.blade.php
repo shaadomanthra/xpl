@@ -6,7 +6,7 @@ Your registered email-id is {{$user['email']}} <br>
 
 @component('mail::panel')
 Username : <b>{{$user['username']}}</b><br>
-Url : <a href="{{$_SERVER['HTTP_HOST']}}">{{$_SERVER['HTTP_HOST']}}</a>
+Activation Link : <a href="{{ route('activateuser',$user->activation_token)}}">{{ route('activateuser',$user->activation_token)}}</a>
 @endcomponent
 
 Thanks,<br>

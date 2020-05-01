@@ -10,9 +10,12 @@
 		@else
 		<h2 class="mb-5">Page Not Found</h2>
 		@endif
+
+		@if(!subdomain())
 		<a href="{{ route('home') }}">
 		<button type="button" class="btn btn-outline-dark">Go to Homepage</button>
 	</a>
+	@endif
 	</div>
 </div>
 @endsection           

@@ -193,7 +193,7 @@
     </div>
 
       <div class="row mr-2 ml-2">
-        <div class="col-12 col-md-7 ">
+        <div class="col-12 col-md ">
           <h3 class=" p-3 mb-0 bg-white border border-bottom-0"><i class='fa fa-university'></i> Academic Scores</h3>
          
           <div class="table-responsive">
@@ -251,28 +251,18 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-5 ">
-          <h3 class="bg-white border p-3 mb-0"><i class='fa fa-youtube-play'></i> Profile Video</h3>
-         
-          @if($user->video)
-@if(!is_numeric($user->video))
-<div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $user->video}}?rel=0" allowfullscreen></iframe>
-</div>
-@else
-<div class="embed-responsive embed-responsive-16by9">
-  <iframe src="//player.vimeo.com/video/{{ $user->video }}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-</div>
-@endif
+        @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+          <div class="col-12 col-md-5 ">
+          @include('appl.user.video')
+          </div>
+        @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+          <div class="col-12 col-md-5 ">
+          @include('appl.user.video')
+          </div>
+        @else
+        @endif
 
-@else
-<div class='p-3 bg-light border'>
-<a href="{{ route('video.upload') }}" class="btn btn-primary">Add Profile Video</a>
-</div>
-@endif
-
-
-      </div>
+        
       </div>
 @endauth
 

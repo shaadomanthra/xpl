@@ -1,4 +1,3 @@
-
 <?php
 
 /*
@@ -13,22 +12,33 @@
 */
 
 use PacketPrep\Http\Middleware\RequestFilter;
+use PacketPrep\Http\Middleware\Corporate;
 
 
 
 
-Route::group(['middleware' => [RequestFilter::class]], function () {
+Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function () {
 	
 	Route::get('/', function(){ 
+
+		
 
 		if(\auth::user())
 		{
 			return redirect('/dashboard');
 		}else{
-			if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
-			return view('welcome')->with('welcome',1);
-			else
-			return view('welcome3')->with('welcome3',1);
+
+
+			if( $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+		      return view('welcome')->with('welcome',1);
+		 elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+		    return view('welcome3')->with('welcome3',1);
+		 elseif($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'p24.in')
+		 	return view('p24_welcome')->with('welcome3',1);
+		 else
+		     return view('client_welcome')->with('welcome3',1);
+		  
+
 		}
 		
 

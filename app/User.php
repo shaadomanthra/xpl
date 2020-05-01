@@ -161,8 +161,22 @@ class User extends Authenticatable
 
     public function newtests(){
         $email = $this->email;
-        $tests = DB::table('exams')->where('slug','psychometric-test')->orWhere('emails','LIKE',"%{$email}%")
+
+        if(!subdomain())
+            $tests = DB::table('exams')->where('slug','psychometric-test')->orWhere('emails','LIKE',"%{$email}%")
                 ->get();
+        else{
+            if(subdomain()=='hire'){
+                $tests = DB::table('exams')->where('slug','psychometric-test')->orWhere('emails','LIKE',"%{$email}%")
+                ->get();
+            }else{
+                $users = $this->where('client_slug',subdomain())->pluck('id')->toArray();
+                $tests = DB::table('exams')->whereIn('user_id',$users)->where('status',1)
+                ->get();
+
+            }
+        }
+
 
         return $tests;
     }

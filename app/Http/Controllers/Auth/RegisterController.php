@@ -62,9 +62,6 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
-        
-
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:20|unique:users',
@@ -97,7 +94,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'client_slug' => $subdomain,
-            'status'=> 1,
+            'status'=> 0,
             'password' => bcrypt($password),
             'activation_token' => str_random(20),
         ]);

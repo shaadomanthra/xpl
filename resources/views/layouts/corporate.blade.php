@@ -20,9 +20,11 @@
     
     @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
       <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
-    @else
-     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
-     @endif
+  @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+    <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+  @else
+     <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
+  @endif
      
     <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43617911-7"></script>
