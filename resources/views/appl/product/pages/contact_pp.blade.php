@@ -1,9 +1,10 @@
 
-@extends('layouts.none')
+@extends('layouts.plain')
 @section('title', 'Contact Us ')
 @section('content')
 
 
+<div class="container">
 <div class="bg-white">
 <div class="card-body p-4 ">
 
@@ -21,6 +22,7 @@ Call: +91 9515125110<br>
 	</div>
 
 	
+</div>
 </div>
 
 
