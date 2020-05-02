@@ -92,6 +92,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'username' => $data['username'],
+            'phone' => $data['phone'],
             'email' => $data['email'],
             'client_slug' => $subdomain,
             'status'=> 0,
@@ -113,9 +114,15 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
-        //$this->guard()->logout();
-        $url = Session::get('preUrl') ? Session::get('preUrl') :   $this->redirectTo;
-        return redirect($url);//->with('status', 'Your account is successfully created. You can login now.');
+        if(subdomain()){
+            $this->guard()->logout();
+            return redirect()->route('login')->with('warning', 'Account activation required - We have sent activation link to your email. It may take 2 to 5mins for the message to reach your inbox. Kindly check the SPAM FOLDER also. ');
+        }else{
+            $url = Session::get('preUrl') ? Session::get('preUrl') :   $this->redirectTo;
+            return redirect($url);
+        }
+        
+        //->with('status', 'Your account is successfully created. You can login now.');
     }
 
     public function activateUser($token)

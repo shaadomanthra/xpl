@@ -68,8 +68,8 @@
                                 <button type="submit" class="btn btn-primary">
                                     Login
                                 </button>
-                                @if(subdomain() != 'corporate')
-                                <a class="btn btn-success" href="{{ route('register.type') }}">
+                                @if(subdomain())
+                                <a class="btn btn-success" href="{{ route('register') }}">
                                     Sign up
                                 </a>
                                 <br>
