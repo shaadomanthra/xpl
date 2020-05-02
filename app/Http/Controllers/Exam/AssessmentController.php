@@ -398,6 +398,7 @@ class AssessmentController extends Controller
 
         return view('appl.exam.assessment.blocks.test')
                         ->with('mathjax',true)
+                        ->with('highlight',true)
                         ->with('exam',$exam)
                         ->with('code',true)
                         ->with('code_ques',$code_ques)
