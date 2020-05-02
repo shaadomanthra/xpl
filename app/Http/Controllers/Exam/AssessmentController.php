@@ -989,9 +989,11 @@ class AssessmentController extends Controller
                     else
                     $item['accuracy'] =0; 
                 }elseif(strpos($item['answer'],',')!==false){
+                    
                     $ans = explode(',',$item['response']);
                     $flag = false;
                     foreach($ans as $an)
+                    if($an)
                     if(strpos($item['answer'],$an)!==false){
 
                     }else{
