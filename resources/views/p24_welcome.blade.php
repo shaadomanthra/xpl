@@ -8,7 +8,7 @@
   <div class="row ">
     <div class="col-12  ">
       <img src="{{ asset('img/p24.png')}}" width="100px"/>
-      <div class="display-4 mt-4 mb-2">Virtual Programming Lab for colleges</div>
+      <div class="display-4 mt-4 mb-2">Virtual Programming Lab for institutions</div>
       <p>powered by <a href="https://packetprep.com">PacketPrep</a></p>
       
     </div>
