@@ -84,7 +84,7 @@
               @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
                   @include('snippets.bottommenu')
               @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
-                @include('snippets.bottommenu')
+                @include('snippets.footer')
               @else
                  @include('snippets.bottommenu-client')
               @endif
