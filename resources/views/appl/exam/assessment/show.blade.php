@@ -122,11 +122,11 @@
 				@endif
 
 				@auth
-				@if(\auth::user()->username='demo500')
+				@if(\auth::user()->username=='demo500')
 				@if($exam->status!=1)
 				<div class="mt-4 alert alert-warning alert-important">
 					<h3><i class="fa fa-gg"></i> Trial Account</h3> You can use the access code <b>'DEMO'</b> to attempt the test. The data is temporary, and the result will be erased after logout.</div>
-					
+
 				@endif
 				@endif
 				@endauth
