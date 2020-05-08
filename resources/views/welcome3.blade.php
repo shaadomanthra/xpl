@@ -56,7 +56,7 @@
   </div>
 </div> -->
 
-<div class=" " style="">
+<div class="bg-white " style="">
   <div class="container">
         <div class="p-4 p-md-4"></div>
     <div class="display-3 mb-5 text-center">Students Feedback</div>
