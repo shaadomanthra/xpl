@@ -166,7 +166,7 @@ class User extends Authenticatable
             $tests = DB::table('exams')->where('slug','psychometric-test')->orWhere('emails','LIKE',"%{$email}%")
                 ->get();
         else if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
-            $tests = DB::table('exams')->orWhere('emails','LIKE',"%{$email}%")
+            $tests = DB::table('exams')->where('emails','LIKE',"%{$email}%")
                 ->get();
         else
         {
