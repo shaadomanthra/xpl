@@ -276,26 +276,21 @@ class Exam extends Model
      
 
       $entry = Test::where('status',2)->orderBy('id','desc')->first();
+
       if(!$entry){
-        echo "has entry";
-         
+
         if($r && !$entry)
         if($r->get('qno')){
           
           $entry = Test::whereNotNull('code')->orderBy('id','desc')->first();
         }else{
-          echo "no ques no";
-           dd();
           return null;
         }
-      }else{
-        echo "no entry";
-         dd();
+      }
+      else if($entry->status!=2){
+
         return null;
       }
-
-      echo "cleared ifs";
-       dd();
       
        
       $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
@@ -367,8 +362,7 @@ class Exam extends Model
         $e_section->save();
         $e_overall->save();
 
-         echo "came to end";
-         dd();
+        
 
         return 1;
     }

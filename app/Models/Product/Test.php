@@ -17,7 +17,7 @@ class Test extends Model
         'time','status',
         'section_id',
         'dynamic',
-        'code'
+        'code',
 
         // add all other fields
     ];
