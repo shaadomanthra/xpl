@@ -284,12 +284,11 @@ class Exam extends Model
         }else{
           return null;
         }
+      }else{
+        return null;
       }
       
        
-      
-          
-
       $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
       $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
       $section = Section::where('id',$entry->section_id)->first();
