@@ -284,8 +284,6 @@ class Exam extends Model
         }else{
           return null;
         }
-      }else{
-        return null;
       }
       
        
