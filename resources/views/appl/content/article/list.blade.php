@@ -3,10 +3,12 @@
 <div class="row ">
 @foreach($objs as $obj)
 @if($obj->status==1)
-<div class="col-12 col-md-6 col-lg-4">
- <div class="card mb-3" >
+<div class="col-12 col-md-6 ">
+ <div class="p-2 bg-white mb-3" style="box-shadow: 2px 2px 2px 2px #eee">
+  <div class="row no-gutters">
    @if(Storage::disk('public')->exists($obj->image))
-   <div class="p-2" >
+   <div class="col-5" >
+    <div class="p-3">
      <a href="{{ route('page',$obj->slug) }}" >
       
            <picture >
@@ -37,12 +39,16 @@
 
     </a>
     </div>
+  </div>
       @endif
-  <div class="card-body">
+  <div class="col">
+  <div class="p-3">
     <a href="{{ route('page',$obj->slug) }}" ><h4 class="card-title article">{{ $obj->name }}</h4></a>
     
     <a href="{{ route('page',$obj->slug) }}" class="btn btn-success"><i class="fa fa-align-right"></i> read more</a>
   </div>
+</div>
+</div>
 </div>
 </div>
 @endif
