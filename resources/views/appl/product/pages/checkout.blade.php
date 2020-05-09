@@ -82,25 +82,21 @@
 -->
 <div class="p-4 bg-white">
 <h4>Reach us out at </h4>
-<b>Mr. Prashanth </b> (Cofounder)<br>
-email : prashanth@phrpl.com<br>
-contact : +91 7287878747<br><br>
 
-<b>Mr. Akhil </b>(Cofounder)<br>
-email : akhil@phrpl.com<bR>
-contact : 9849485501<br><br>
+<h4>Reach us out at </h4>
+<b>Mr. Abhinav Goud Thippani</b> (Co-founder)<br>
+email : abhinav@xplore.co.in<br><br>
+<b>Mr. Akhil M</b> (Co-founder)<br>
+email : akhil@xplore.co.in<br>
 
-<b>Mr. Abhinav</b> (Cofounder)<br>
-email : abhinav@phrpl.com<br>
-contact : 8801358568<br><Br>
 
 <hr>
-<p><b>Pathway Human Resource Private Limited</b> </p>
-<p>Address:<br>
-#6-3-672,Flat No:301,<bR>Khursheed Mansion, Opp Police station,<br>Beside Hyderabad Central, Panjagutta,<br>Hyderabad, Telangana ,India 500082<br><bR>
-Email: hr@phrpl.com<br>
-Call: +91 7287878747<br>
-Phone No: 040-42222253<br>
+<h3>Xplore<h3>
+#501,Jana Arcade,Dharam Karan Rd, <br>Ameerpet , Hyderabad, Telangana 500081<br><bR>
+Email: info@xplore.co.in<br>
+
+Call: +91 7997444461<br>
+
 
 </div>
 </div>
