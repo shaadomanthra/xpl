@@ -38,6 +38,7 @@
       </div>
 
   @if($question->type=='maq')
+    <div class="alert alert-info alert-important">Select one or more choices from the given options.</div>
     @if($question->a)
     <div class="row no-gutters">
       <div class="col-3 col-md-2">
