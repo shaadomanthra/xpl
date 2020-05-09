@@ -189,7 +189,7 @@
        Kindly Login to view the content
       </div>
       {{
-      		request()->session()->put('return',url()->current())
+      		request()->session()->put('redirect.url',url()->current())
       }}
       
       <div class="modal-footer ">

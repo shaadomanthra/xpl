@@ -155,6 +155,7 @@ class LoginController extends Controller
         
         
         if(session()->has('redirect.url')) {
+            
              return redirect( session()->get( 'redirect.url' ) );
         }
 
