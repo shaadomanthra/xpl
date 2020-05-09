@@ -144,6 +144,7 @@
     <div class="p-2 p-md-4"></div>
 </div>
 
+<!--
 <div class="" style="background:#fff">
   <div class="container">
         <div class="p-3 p-md-5"></div>
@@ -159,9 +160,9 @@
         </div>
         <div class="p-4 p-md-5"></div>
   </div>
-</div>
+</div>-->
 
-<div class="text-center text-md-left" style="background:#c25054;color:white">
+<div class="text-center text-md-left" style="background:#888;color:white">
   <div class="p-2 p-md-4"></div>
   <div class="container">
     <div class="row">

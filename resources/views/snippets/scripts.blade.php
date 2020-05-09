@@ -915,9 +915,9 @@ $(function(){
 
 
 var options = {
-  strings: ["<a href='../#'>35,000 graded profiles</a>",
-               "<a href='../#'>6,000 programmers</a>", 
-              "<a href='../#'>80+ colleges</a>"],
+  strings: ["<a href='../#'>10,00,000 graded profiles</a>",
+               "<a href='../#'>60,000 programmers</a>", 
+              "<a href='../#'>600+ colleges</a>"],
           typeSpeed: 100, // typing speed
             backDelay: 2500, // pause before backspacing
             loop: true, // loop on or off (true or false)

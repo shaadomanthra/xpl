@@ -20,14 +20,38 @@
     <ul class="navbar-nav ml-auto mt-4 mt-lg-0">
         @guest
 
-         <li class="mr-3 "><a class="nav-link " href="{{ url('course') }}" aria-label="PacketPrep Courses"><i class="fa fas fa-youtube-play"></i> Courses</a></li>
+        <li class="mr-3 "><a class="nav-link @if(request()->route('/')) active @endif" href="{{ url('/') }}" aria-label="Hir"><i class="fa efas fa-angle-right"></i> For student</a></li>
+
+        <li class="mr-3 "><a class="nav-link " href="{{ url('hire') }}" aria-label="Hir"><i class="fa efas fa-angle-right"></i> For companies</a></li>
+
+        <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 Services <span class="caret"></span>
+             </a>
+             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item"  href="{{ url('course') }}"
+                    >
+                    <i class="fa fas fa-youtube-play"></i> Courses
+                </a>
+                <a class="dropdown-item"  href="{{ url('test') }}"
+                    >
+                    <i class="fa fa-ravelry"></i> Tests
+                </a>
+                <a class="dropdown-item"  href="{{ url('job') }}"
+                    >
+                   <i class="fa fa-bars"></i> Jobs</a>
+                </a>
+
+
+            </div>
+
 
         
                     <!--
                         <li class="mr-3 "><a class="nav-link " href="{{ url('tracks') }}"><i class="fa fa fa-spotify"></i> Tracks</a></li>   -->
-                        <li class="mr-3 "><a class="nav-link " href="{{ url('test') }}" aria-label="Wipro NTH 2020"><i class="fa fa-ravelry"></i> Tests</a></li>
+                        
 
-                        <li class="mr-3 "><a class="nav-link " href="{{ url('job') }}" aria-label="Wipro NTH 2020"><i class="fa fa-bars"></i> Jobs</a></li>
+                        
                         
         @else
 
