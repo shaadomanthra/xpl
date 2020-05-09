@@ -19,7 +19,7 @@
 <b>Mr. Abhinav Goud Thippani</b> (Co-founder)<br>
 email : abhinav@xplore.co.in<br><br>
 <b>Mr. Akhil M</b> (Co-founder)<br>
-email : akhil@xplore.co.in<br>
+email : akhil@xplore.co.in<br><br>
 
 <p><b>Xplore </b> is located at –</p>
 <p>Address:<br>
