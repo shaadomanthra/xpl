@@ -94,7 +94,7 @@
 					@endif
 			       @else
 			       	@include('appl.exam.assessment.blocks.camera')
-			       <a href="{{route('assessment.access',$exam->slug)}}">
+			       <a href="#" data-toggle="modal" data-target="#myModal2">
 			       	<button class="btn btn-lg btn-outline-primary accesscode_btn"> Access Code </button>
 					</a>
 			       @endauth
