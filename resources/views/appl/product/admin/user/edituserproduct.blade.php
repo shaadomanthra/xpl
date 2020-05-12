@@ -45,7 +45,7 @@
           @for($i=2;$i < 24;$i++)
           <option value="{{$i}}">{{$i}} months</option>
           @endfor
-           <option value="24" selected>24 months</option>
+           <option value="24" >24 months</option>
         </select>
         
     

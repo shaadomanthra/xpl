@@ -154,6 +154,7 @@
 		</div>
 
 @if($exams) 
+@if(count($exams)!=0)
 		<div class=" ">
 			<h1 class="mb-4 mt-4 p-3 border rounded"> <i class="fa fas fa-gg"></i> Online Tests</h1>
 
@@ -199,7 +200,7 @@
 		</div>
 		@endif
 
-		
+		@endif
 
       
 	</div>

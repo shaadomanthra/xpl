@@ -587,7 +587,8 @@ class QuestionController extends Controller
 
                         
                         return view('appl.course.course.access');
-                    }
+                    }else if($entry->status===0)
+                        return view('appl.course.course.access');
                 }
                 else{
 

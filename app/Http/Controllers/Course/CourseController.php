@@ -484,6 +484,8 @@ class CourseController extends Controller
                     ->first();
         }
 
+
+
         $category = Category::where('slug',$category)->first();
         //dd($category);
 
@@ -493,10 +495,14 @@ class CourseController extends Controller
         $access = true;
 
         if(!youtube_video_exists($videos[0])){
+
+
             if($entry)
             {
                 if(strtotime($entry->valid_till) < strtotime(date('Y-m-d')))
                 $access = false;
+                else if($entry->status===0)
+                    $access =false;
             }else
                 $access = false;
         }

@@ -11,6 +11,8 @@ use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Tag;
 use PacketPrep\Models\Dataentry\Passage;
 use PacketPrep\Models\Dataentry\Question;
+use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\User\Role;
 use Illuminate\Support\Facades\DB;
 
@@ -96,6 +98,33 @@ class ProjectController extends Controller
             $child_attributes =['name'=>$request->name,'slug'=>$request->slug];
             $child = new Category($child_attributes);
             $child->save();
+
+            
+            echo "here";
+            //create course and make it inactive
+            $c = Course::orderBy('id','desc')->first();
+            $course = $c->replicate();
+            $course->name = $project->name;
+            $course->slug = $project->slug;
+            
+            $course->save();
+
+            echo "here";
+
+            //make product and make it inactive
+            $p = Product::orderBy('id','desc')->first();
+            $product = $p->replicate();
+            $product->name = $project->name;
+            $product->slug = $project->slug;
+            $product->description = 'product page of course '.$project->name;
+            $product->price = 500;
+            $product->status = 0;
+            $product->discount =0;
+            $product->validity = 12;
+            $product->save();
+            $product->courses()->attach($course->id);
+
+            echo "here";
 
             flash('A new project('.$request->name.') is created!')->success();
             return redirect()->route('dataentry.index');

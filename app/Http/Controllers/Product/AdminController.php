@@ -1203,7 +1203,7 @@ class AdminController extends Controller
 
     public function userproduct($id)
     {
-        $products = Product::where('status',1)->get();
+        $products = Product::get();
         $user = User::where('username',$id)->first();
         return view('appl.product.admin.user.adduserproduct')->with('products',$products)->with('user',$user);
     } 
@@ -1218,7 +1218,7 @@ class AdminController extends Controller
         if($request->get('product_id')!=-1){
             if(!$user->products->contains($request->get('product_id'))){
                 $product = Product::where('id',$request->get('product_id'))->first();
-                if($product->status!=0)
+                
                 $user->products()->attach($request->get('product_id'),['validity'=>$request->get('validity'),'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>$request->get('status')]);
             }
         }else{
