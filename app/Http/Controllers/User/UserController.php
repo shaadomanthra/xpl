@@ -228,10 +228,6 @@ class UserController extends Controller
             $client = 'xplore';
         $test = "0";
 
-        
-        // Config variables. Consult http://api.textlocal.in/docs for more info.
-        
-
         // Data for text message. This is the text message data.
         $sender = "PKTPRP"; // This is who the message appears to be from.
         
@@ -243,19 +239,23 @@ class UserController extends Controller
         $message = urlencode($message);
         $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
         
-        echo "http://api.textlocal.in/send/?".$data;
-        echo " ";
+        echo "https://api.textlocal.in/send?".$data;
+        $d = file_get_contents("http://api.textlocal.in/send?".$data);
+        echo $d;
 
-        $ch = curl_init('https://api.textlocal.in/send/?');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $result = curl_exec($ch); // This is the result from the API
-
-        curl_close($ch);
         
-        echo $result;
+
+
+        // $ch = curl_init('https://api.textlocal.in/send/?');
+        // curl_setopt($ch, CURLOPT_POST, true);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // $result = curl_exec($ch); // This is the result from the API
+
+        // curl_close($ch);
+        
+        // echo $result;
         // $apiKey = urlencode('fOfeGhOcYp8-C8I50qrKCEZ6cYbxE6PVeLJVbeAtrs');
     
         // // Message details
