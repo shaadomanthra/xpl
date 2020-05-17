@@ -18,7 +18,7 @@
         <div class="col-sm-6 login-section-wrapper">
           <div class="brand-wrapper">
             <img 
-        src="{{ request()->session()->get('client')->logo }} " width="200px" class="ml-md-0"  alt="PacketPrep logo " type="image/png">
+        src="{{ (request()->session()->get('client'))?request()->session()->get('client')->logo:'https://xplore.co.in/img/xplore.png' }} " width="200px" class="ml-md-0"  alt="PacketPrep logo " type="image/png">
           </div>
           <div class="login-wrapper my-auto">
              @yield('content')
