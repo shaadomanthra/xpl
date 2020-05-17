@@ -122,7 +122,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	Route::get('/terms',function(){ 
 		$url = "https://api.textlocal.in/send?username=packetcode@gmail.com&hash=27dab9315e3c25e8605a154ec84d448bd796b4aeedb215f55d815eede689d00b&message=Thank+you+for+registering+with+vemu.+Your+verification+code+is+1940&sender=PKTPRP&numbers=9515125110&test=0";
-		$r = file_get_contents($url);
+		echo $url;
+		echo "<br><br>";
+		$r = json_decode(file_get_contents($url));
 		dd($r);
 		return 1;
 
