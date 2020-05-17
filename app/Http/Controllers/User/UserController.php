@@ -226,10 +226,11 @@ class UserController extends Controller
             $client = substr(subdomain(),0,12);
         else
             $client = 'xplore';
-
-        /*
-        // Config variables. Consult http://api.textlocal.in/docs for more info.
         $test = "0";
+
+        
+        // Config variables. Consult http://api.textlocal.in/docs for more info.
+        
 
         // Data for text message. This is the text message data.
         $sender = "PKTPRP"; // This is who the message appears to be from.
@@ -242,12 +243,10 @@ class UserController extends Controller
         $message = urlencode($message);
         $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
         
-
-       
         echo "http://api.textlocal.in/send/?".$data;
         echo " ";
 
-        $ch = curl_init('http://api.textlocal.in/send/?');
+        $ch = curl_init('https://api.textlocal.in/send/?');
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -255,35 +254,40 @@ class UserController extends Controller
         $result = curl_exec($ch); // This is the result from the API
 
         curl_close($ch);
-        */
-
-        $apiKey = urlencode('fOfeGhOcYp8-C8I50qrKCEZ6cYbxE6PVeLJVbeAtrs');
+        
+        echo $result;
+        // $apiKey = urlencode('fOfeGhOcYp8-C8I50qrKCEZ6cYbxE6PVeLJVbeAtrs');
     
-        // Message details
-        $numbers = array('91'.$numbers);
-        $sender = urlencode('PKTPRP');
+        // // Message details
+        // $numbers = array('91'.$numbers);
+        // $sender = urlencode('PKTPRP');
        
      
-        $numbers = implode(',', $numbers);
+        // $numbers = implode(',', $numbers);
      
-        $message = "Thank you for registering with ".$client.". Your verification code is ".$code;
-        $message = rawurlencode($message);
-        
-        // Prepare data for POST request
-        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
-     
-        // Send the POST request with cURL
-        $ch = curl_init('https://api.textlocal.in/send/');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        
-        // Process your response here
-        echo $response;
+        // $message = "Thank you for registering with ".$client.". Your verification code is ".$code;
+        // $message = rawurlencode($message);
+        // $da = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
 
-        //echo $result;
+        // echo "http://api.textlocal.in/send/?".$da;
+        // echo " ";
+        // return 1;
+        
+        // // Prepare data for POST request
+        // $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+     
+        // // Send the POST request with cURL
+        // $ch = curl_init('https://api.textlocal.in/send/');
+        // curl_setopt($ch, CURLOPT_POST, true);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // $response = curl_exec($ch);
+        // curl_close($ch);
+        
+        // // Process your response here
+        // echo $response;
+
+        //c
 
     }
 
