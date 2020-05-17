@@ -240,11 +240,12 @@ class UserController extends Controller
         $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
         
         echo "https://api.textlocal.in/send?".$data;
-        $d = file_get_contents("http://api.textlocal.in/send?".$data);
+        $url = "https://2factor.in/API/V1/b2122bd6-9856-11ea-9fa5-0200cd936042/SMS/+91".$r->get('number')."/".$code;
+        $d = file_get_contents($url);
         echo $d;
 
         
-        
+
 
 
         // $ch = curl_init('https://api.textlocal.in/send/?');
