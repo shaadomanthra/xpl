@@ -227,6 +227,7 @@ class UserController extends Controller
         else
             $client = 'xplore';
 
+        /*
         // Config variables. Consult http://api.textlocal.in/docs for more info.
         $test = "0";
 
@@ -254,8 +255,35 @@ class UserController extends Controller
         $result = curl_exec($ch); // This is the result from the API
 
         curl_close($ch);
+        */
 
-        echo $result;
+        $apiKey = urlencode('fOfeGhOcYp8-C8I50qrKCEZ6cYbxE6PVeLJVbeAtrs');
+    
+        // Message details
+        $numbers = array($numbers);
+        $sender = urlencode('PKTPRP');
+       
+     
+        $numbers = implode(',', $numbers);
+     
+        $message = "Thank you for registering with ".$client.". Your verification code is ".$code;
+        $message = rawurlencode($message);
+        
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+     
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.textlocal.in/send/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        // Process your response here
+        echo $response;
+
+        //echo $result;
 
     }
 
