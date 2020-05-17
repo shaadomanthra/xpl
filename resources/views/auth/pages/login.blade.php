@@ -62,13 +62,13 @@
 
                                 @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
                   <a class="btn btn-success" href="{{ route('register') }}">
-                                    Sign up
+                                    Register
                                 </a>
                                 <br>
               @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
               @else
                  <a class="btn btn-success" href="{{ route('register') }}">
-                                    Sign up
+                                    Register
                                 </a>
                                 <br>
               @endif
