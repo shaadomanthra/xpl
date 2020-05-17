@@ -121,20 +121,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('/t',function(){ echo $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix(); dd(); return view('appl.pages.terms'); })->name('terms');
 
 	Route::get('/terms',function(){ 
-		$url = "https://xplore.co.in/terms2?name=teja";
-		echo $url;
-		echo "<br><br>";
-		$r = file_get_contents($url);
 		
-		return $r;
 
 		return view('appl.pages.terms'); })->name('terms');
 
-	Route::get('/terms2',function(){ 
-		$r = request()->get('name');
-		return $r;
-
-		return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
 	Route::get('/hire',function(){ return view('xp_welcome')->with('welcome',1); })->name('xp');
 	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');
