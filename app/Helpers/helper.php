@@ -41,6 +41,16 @@ foreach($temp as $t)
 return $result;
 }
 }
+if (! function_exists('get_tld')) {
+function get_tld($domain) {
+    $domain=str_replace("http://","",$domain); //remove http://
+    $domain=str_replace("www","",$domain); //remowe www
+    $nd=explode(".",$domain);
+    $domain_name=$nd[0];
+    $tld=str_replace($domain_name.".","",$domain);
+    return $tld;
+}
+}
 
 if (! function_exists('random_color')) {
 

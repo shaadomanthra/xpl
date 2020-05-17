@@ -24,7 +24,7 @@ class ExamPolicy
      */
     public function view(User $user)
     {
-        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator','hr-manager']);
+        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator','hr-manager','tpo']);
     }
 
 
@@ -37,7 +37,7 @@ class ExamPolicy
      */
     public function create(User $user)
     { 
-        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator','hr-manger']);
+        return $user->checkRole(['administrator','investor','patron','promoter','employee','data-manager','data-lead','feeder','proof-reader','renovator','validator','hr-manager']);
     }
 
 

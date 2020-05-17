@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
+use PacketPrep\Exports\UExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -137,6 +140,46 @@ class UserController extends Controller
             abort(404,'User not found');
     }
 
+
+    public function userlist(Request $r){
+
+    $month = $r->get('month');
+
+    if($month=='thismonth')
+        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->month)->paginate(30);
+    elseif($month=='lastmonth')
+        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth()->month)->paginate(30);
+    elseif($month=='lastbeforemonth')
+        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->paginate(30);
+    else
+        $users = User::where('client_slug',subdomain())->paginate(30);
+          
+    $data['users_all'] =  User::where('client_slug',subdomain())->count();
+    $data['users_lastmonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
+    $data['users_thismonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->month)->count();
+    $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
+
+    if($r->get('username'))
+        $user = User::where('username',$r->get('username'))->first();
+    else    
+        $user = \auth::user();
+
+    if(request()->get('export')){
+            
+        request()->session()->put('users',$users);
+        $name = "Userlist_".$user->client_slug.".xlsx";
+        ob_end_clean(); // this
+        ob_start(); 
+        return Excel::download(new UExport, $name);
+
+    }
+
+    
+      return view('appl.user.userlist')
+                    ->with('users',$users)->with('data',$data)->with('user',$user);
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -169,6 +212,129 @@ class UserController extends Controller
                     ->with('user_details',$user_details);
         }else
             abort(404,'User not found');
+    }
+
+
+    public function sendOTP(Request $r){
+                // Authorisation details.
+        $numbers = $r->get('number');
+        $code = $r->get('code');
+
+        $username = "packetcode@gmail.com";
+        $hash = "27dab9315e3c25e8605a154ec84d448bd796b4aeedb215f55d815eede689d00b";
+        if(subdomain())
+            $client = substr(subdomain(),0,12);
+        else
+            $client = 'xplore';
+
+        // Config variables. Consult http://api.textlocal.in/docs for more info.
+        $test = "0";
+
+        // Data for text message. This is the text message data.
+        $sender = "PKTPRP"; // This is who the message appears to be from.
+        
+        $message = "Thank you for registering with ".$client.". Your verification code is ".$code;
+
+
+        // 612 chars or less
+        // A single number or a comma-seperated list of numbers
+        $message = urlencode($message);
+        $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
+
+        $ch = curl_init('http://api.textlocal.in/send/?');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch); // This is the result from the API
+        curl_close($ch);
+    }
+
+    public function saveregister(Request $request)
+    {
+        $code = intval(request()->session()->get('code'));
+        $code_verify = intval($request->otp);
+
+        if($code_verify != $code){
+            flash('Sms verification code did not match.')->error();
+                 return redirect()->back()->withInput();
+        }
+
+        if($request->name==null){
+            flash('Name cannot be empty')->error();
+                 return redirect()->back()->withInput();
+        }
+
+        if($request->email==null){
+            flash('Email cannot be empty')->error();
+                 return redirect()->back()->withInput();
+        }
+
+        if($request->fathername==null){
+            flash('Fathers name cannot be empty')->error();
+                 return redirect()->back()->withInput();
+        }
+
+        if($request->phone==null){
+            flash('Phone number cannot be empty')->error();
+                 return redirect()->back()->withInput();
+        }
+
+
+        if($request->password){
+            if($request->password != $request->password_confirmation){
+                flash('Password and Confirm-password mismatch...kindly re-enter password')->error();
+                 return redirect()->back()->withInput();
+            }
+        }
+        $user = User::where('email',$request->email)->first();
+     
+
+        if($user){
+            flash('The user (<b>'.$request->email.'</b>) account exists. Kindly use a different email.')->error();
+            return redirect()->back()->withInput();
+        }
+
+        $url = url()->full();
+        if($this->hasSubdomain($url)){
+            $parsed = parse_url($url);
+            $exploded = explode('.', $parsed["host"]);
+            $subdomain = $exploded[0];
+            
+        }else
+            $subdomain = null;
+
+
+        $parts = explode("@", $request->email);
+        $username = $parts[0];
+
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $username,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'activation_token' => str_random(20),
+            'client_slug' => $subdomain,
+            'user_id' =>1,
+            'status'=>1,
+        ]);
+
+        $user->phone = $request->get('phone');
+        $user->roll_number = $request->get('fathername');
+        $user->hometown = $request->get('hometown');
+        $user->current_city = $request->get('current_city');
+        $user->dob = $request->get('dob');
+        $user->save();
+        
+
+        flash('Successfully created your account.')->success();
+        return redirect()->route('login');
+
+    }
+
+     public function hasSubdomain($url) {
+        $parsed = parse_url($url);
+        $exploded = explode('.', $parsed["host"]);
+        return (count($exploded) > 2);
     }
 
     /**

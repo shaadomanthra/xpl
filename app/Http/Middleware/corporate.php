@@ -55,7 +55,8 @@ class Corporate
         else{
             $filename = 'corporate.json';
             $client = json_decode(file_get_contents($filename));
-            $client->logo = url('/').'/img/p24.png';
+            $client->name = 'Xplore';
+            $client->logo = url('/').'/img/xplore.png';
 
             $request->session()->put('client',$client);
 

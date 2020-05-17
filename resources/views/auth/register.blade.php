@@ -1,16 +1,16 @@
-@extends('layouts.nowrap')
+@extends('layouts.app-plain')
 
 @section('title', 'Register ')
 @section('content')
 
-<div class="card">
-  <div class="card-header">
-    Register
-  </div>
-  <div class="card-body">
-    <p class="card-text">
+@if(file_exists(base_path().'/resources/views/auth/pages/'.subdomain().'.blade.php'))
+@include('auth.pages.'.subdomain())
+@else
+
+@include('flash::message')
+
           <div class="row">
-        <div class="col-md-12 col-md-offset-2">
+        <div class="col-md-6 ">
             <div class="panel panel-default">
 
                 <div class="panel-body">
@@ -31,17 +31,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label for="username" class="col-md-8 control-label">Username</label>
-                            <div class="col-md-12">
-                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required>
-                                @if ($errors->has('username'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                      
 
                         <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                             <label for="phone" class="col-md-8 control-label">Phone</label>
@@ -56,7 +46,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-12 control-label">E-Mail Address (Gmail preffered)</label>
+                            <label for="email" class="col-md-12 control-label">E-Mail Address </label>
 
                             <div class="col-md-12">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
@@ -113,8 +103,7 @@
             </div>
         </div>
     </div>
-    </p>
-  </div>
-</div>
+@endif
+
 
 @endsection

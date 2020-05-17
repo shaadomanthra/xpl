@@ -54,7 +54,7 @@
 
   <dt class="col-sm-5">Phone</dt>
   <dd class="col-sm-7">
-    {{ ($user->details)?$user->details->phone:'' }}
+    {{ $user->phone }}
   </dd>
 
  
@@ -143,16 +143,16 @@
 
           <div class="col-12 col-md-9">
             <dl class="row">
-              <dt class="col-sm-3">Gender</dt>
-              <dd class="col-sm-9">
+              <dt class="col-sm-5">Gender</dt>
+              <dd class="col-sm-7">
                 @if($user->gender)
                 {{ $user->gender}}
                 @else -
                 @endif
               </dd>
               
-              <dt class="col-sm-3">Date of Birth</dt>
-              <dd class="col-sm-9">
+              <dt class="col-sm-5">Date of Birth</dt>
+              <dd class="col-sm-7">
                 @if($user->dob)
                 {{ $user->dob}}
                 @else -
@@ -160,8 +160,8 @@
               </dd>
               
 
-              <dt class="col-sm-3">Current City</dt>
-              <dd class="col-sm-9">
+              <dt class="col-sm-5">Current City (or Address)</dt>
+              <dd class="col-sm-7">
                 @if($user->current_city)
                 {{ $user->current_city}}
                 @else -
@@ -170,8 +170,8 @@
  
 
              
-              <dt class="col-sm-3">Hometown</dt>
-              <dd class="col-sm-9">
+              <dt class="col-sm-5">Hometown (or District)</dt>
+              <dd class="col-sm-7">
                  @if($user->hometown)
                  {{ $user->hometown}}
                  @else
@@ -181,8 +181,8 @@
               
 
               @if($user->zones()->first())        
-              <dt class="col-sm-3">Zone</dt>
-              <dd class="col-sm-9"><a href="{{ route('zone.view',$user->zones()->first()->name) }}">{{ $user->zones()->first()->name}}</a></dd>
+              <dt class="col-sm-5">Zone</dt>
+              <dd class="col-sm-7"><a href="{{ route('zone.view',$user->zones()->first()->name) }}">{{ $user->zones()->first()->name}}</a></dd>
               @endif
             </dl>
           </div>
@@ -245,25 +245,25 @@
           <div class="col-12 col-md-9">
             <dl class="row">
   @if($user->colleges()->first())        
-  <dt class="col-sm-3">College Name</dt>
-  <dd class="col-sm-9"><a href="{{ route('college.view',$user->colleges()->first()->id ) }}">{{ $user->colleges()->first()->name}}</a></dd>
+  <dt class="col-sm-6">College Name</dt>
+  <dd class="col-sm-6"><a href="{{ route('college.view',$user->colleges()->first()->id ) }}">{{ $user->colleges()->first()->name}}</a></dd>
   @endif
 
   @if($user->branches())
-  <dt class="col-sm-3">Branch</dt>
-  <dd class="col-sm-9">
+  <dt class="col-sm-6">Branch</dt>
+  <dd class="col-sm-6">
   @foreach($user->branches()->get() as $branch)
     <a href="{{ route('branch.view',$branch->name ) }}">{{ $branch->name}}</a> &nbsp;
   @endforeach
   </dd>
   @endif
 
-  <dt class="col-sm-3">Roll Number</dt>
-  <dd class="col-sm-9">
-    {{ ($user->details)?$user->details->roll_number:'' }}
+  <dt class="col-sm-6">Roll Number (or Fathers Name)</dt>
+  <dd class="col-sm-6">
+    {{ $user->roll_number }}
   </dd>
 
-  <dt class="col-sm-3">Year of Passing</dt>
+  <dt class="col-sm-6">Year of Passing</dt>
   <dd class="col-sm-9">
     {{ ($user->details)?$user->details->year_of_passing:'' }}
   </dd>

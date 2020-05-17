@@ -383,4 +383,6 @@ class User extends Authenticatable
         curl_close($ch);
     }
 
+    
+
 }

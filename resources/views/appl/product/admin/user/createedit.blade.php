@@ -83,7 +83,7 @@
       <div class="row">
         <div class="col-12 col-md-4">
 <div class="form-group">
-        <label for="formGroupExampleInput ">Roll Number </label>
+        <label for="formGroupExampleInput ">Roll Number (or Fathers Name)</label>
         <input type="text" class="form-control" name="roll_number" id="formGroupExampleInput" placeholder="Enter your Roll Number" 
             @if($stub=='Create')
             value="{{ (old('roll_number')) ? old('roll_number') : '' }}"
@@ -121,17 +121,7 @@
 
       </div>
       
-      
 
-      
-
-      
-
-      
-
-      
-
-     
 
       @if(isset($branches))
       <div class="form-group border p-3">
@@ -185,6 +175,8 @@
       
      
      <div class="row">
+        
+
         <div class="col-12 col-md-4">
           <div class="form-group">
         <label for="formGroupExampleInput ">Hr Manager</label>

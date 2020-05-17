@@ -34,7 +34,9 @@
 
 
 
+    @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test')
     <a href="{{ route('profile','@'.\auth::user()->username)}}" class="btn btn-primary">Profile</a>
+    @endif
       <a class="btn border border-success text-success " href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();" role="button">Logout</a>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -20,7 +20,12 @@
                   <i class="fa fa-check-circle text-success"></i>
                   @endif
                   </a><br>
-                  {{ $user->email }}
+                   {{ $user->email }}<br>
+                  @if($user->client_slug)
+                  <span class="badge badge-info">{{$user->client_slug}}</span>
+                  @else
+                  <span class="badge badge-warning">xplore</span>
+                  @endif
                 </td>
                  <td>
                   @if($user->college)

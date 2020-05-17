@@ -5,7 +5,7 @@
 @if($exam->slug != 'proficiency-test')
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
     <li class="breadcrumb-item">{{ ucfirst($exam->name) }} </li>
     <li class="breadcrumb-item">Analysis </li>
   </ol>
@@ -13,7 +13,7 @@
 @else
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
     <li class="breadcrumb-item"><a href="{{ route('proficiency_test') }}">Proficiency Test</a></li>
     <li class="breadcrumb-item">Analysis  </li>
   </ol>
@@ -26,10 +26,7 @@
 		<div class="p-3 border rounded bg-light mb-4">
 		<div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Report</b></div>
 		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
-			College : <span class="text-primary">
-				@if($student->colleges()->first()){{$student->colleges()->first()->name}} @endif</span><br>
-			Branch : <span class="text-primary">
-				@if($student->branches()->first()){{$student->branches()->first()->name}} @endif</span><br>
+			
 		</p>
 	</div>
 

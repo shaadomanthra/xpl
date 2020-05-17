@@ -41,6 +41,19 @@ class RegisterController extends Controller
         Session::put('preUrl', Session::get('redirect.url'));
     }
 
+    public function showRegistrationForm()
+    {
+        $register=true;
+        
+        if(!request()->session()->get('code')){
+            $code = mt_rand(1000, 9999);
+            request()->session()->put('code',$code);
+        }else{
+            $code = request()->session()->get('code');
+        }
+        return view('auth.register')->with('register',$register)->with('code',$code);
+    }
+
 
     public function redirectTo()
     {

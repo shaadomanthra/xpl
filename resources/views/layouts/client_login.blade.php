@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,13 +20,8 @@
             <img 
         src="{{ request()->session()->get('client')->logo }} " width="200px" class="ml-md-0"  alt="PacketPrep logo " type="image/png">
           </div>
-          <div class=" my-auto">
-             @include('auth.pages.login')
-             <div class="mt-5">
-              <div class="p-2"></div>
-             <hr >
-             Incase of any query you can reach out to our resource person, details in the <a href="{{ route('contact')}}">contact page</a>
-           </div>
+          <div class="login-wrapper my-auto">
+             @yield('content')
           </div>
         </div>
         <div class="col-sm-6 px-0 d-none d-sm-block">
@@ -44,10 +37,4 @@
 </html>
 
 
-
-
-
- <?php
-    session()->put( 'redirect.url',request()->url().'/dashboard');
-  ?>
  

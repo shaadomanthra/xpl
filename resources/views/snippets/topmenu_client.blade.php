@@ -2,12 +2,12 @@
     @guest
     <a class="navbar-brand abs" href="{{ url('/') }}" aria-label="Homepage">
         <img 
-        src="{{ request()->session()->get('client')->logo }} " height="25px" class="ml-md-0"  alt="PacketPrep logo " type="image/png">
+        src="{{ request()->session()->get('client')->logo }} " width="200px" class="ml-md-0"  alt="logo " type="image/png">
     </a>
     @else
     <a class="navbar-brand abs" href="{{ url('/dashboard') }}" aria-label="Dashboard">
         <img 
-        src="{{ request()->session()->get('client')->logo }} " height="25px" class="ml-md-0"  alt="PacketPrep logo " type="image/png">
+        src="{{ request()->session()->get('client')->logo }} " width="200px" class="ml-md-0"  alt="logo " type="image/png">
     </a>   
     @endguest
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,6 +27,26 @@
             ><i class="fa fa-dashboard"></i>
             Dashboard
         </a></li>
+        @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
+
+        
+        <li class="mr-3"><a class="nav-link" href="{{ route('user.list') }}" aria-label="exams page"
+            ><i class="fa fa-user"></i>
+            Users
+        </a></li>
+
+        @endif
+
+        <li class="mr-3"><a class="nav-link" href="{{ route('logout') }}" aria-label="Logout page" onclick="event.preventDefault();
+    document.getElementById('logout-form').submit();"
+            ><i class="fa fa-sign-out"></i>
+            Logout
+        </a></li>
+
+        
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    {{ csrf_field() }}
+</form>
        
 
         
@@ -47,37 +67,7 @@
 
             @else
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 {{ Auth::user()->name }} <span class="caret"></span>
-             </a>
-             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item"  href="{{ route('profile','@'.\auth::user()->username)}}"
-                    >
-                    Profile
-                </a>
-                
-
-           
-            @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-            <a class="dropdown-item"  href="{{ route('admin.index') }}"></i> Admin</a>
-            @endif
-
             
-
-
-
-       
-    <a class="dropdown-item"  href="{{ route('logout') }}"
-    onclick="event.preventDefault();
-    document.getElementById('logout-form').submit();">
-    Logout
-</a>
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-    {{ csrf_field() }}
-</form>
-</div>  
-</li>
 @endguest
 </ul>
 

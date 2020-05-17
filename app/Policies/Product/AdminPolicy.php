@@ -26,7 +26,7 @@ class AdminPolicy
      */
     public function view(User $user)
     {
-        if($user->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        if($user->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager','hr-manager']))
         {
                 return true;
         }

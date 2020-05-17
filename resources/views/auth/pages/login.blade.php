@@ -1,9 +1,3 @@
-@extends('layouts.client_login')
-
-@section('title', 'Login ')
-
-@section('content')
-
 @include('flash::message')
     <p class="card-text">
 
@@ -94,6 +88,3 @@
                         </div>
                     </form>
     </p>
-  
-
-@endsection

@@ -198,7 +198,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	//analytics
 	Route::get('/admin/analytics/course', 'Product\AnalyticsController@analytics_course')->name('admin.analytics.course')->middleware('auth');
-	Route::get('/admin/hrmanagers', 'User\UserController@hrmanagers')->name('hrmanagers')->middleware('auth');
+	Route::get('/admin/managers', 'User\UserController@hrmanagers')->name('hrmanagers')->middleware('auth');
 	Route::get('/admin/analytics/practice_remove_duplicates', 'Product\AnalyticsController@remove_duplicates_practice')->name('admin.analytics.practice.remove');
 	Route::get('/admin/analytics/practice_filldata', 'Product\AnalyticsController@practice_filldata')->name('admin.analytics.practice.filldata');
 	Route::get('/admin/analytics/test_filldata', 'Product\AnalyticsController@test_filldata')->name('admin.analytics.test.filldata');
@@ -240,7 +240,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('/terms-corporate',function(){ return view('appl.product.pages.terms'); })->name('terms-corporate');
 
 	Route::get('/contact-corporate',function(){ return view('appl.product.pages.contact'); })->name('contact-corporate');
-	Route::get('/contact',function(){ return view('appl.product.pages.contact_pp'); })->name('contact');
+	Route::get('/contact',function(){ return view('appl.pages.contact'); })->name('contact');
 
 	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads');
 
@@ -353,8 +353,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('productpage','Product\ProductController@products')->name('products');
 	Route::get('stats','Product\ProductController@statistics')->name('statistics');
 	Route::get('productpage/{product}','Product\ProductController@page')->name('productpage');
+	Route::get('users','User\UserController@userlist')->name('user.list');
 	Route::resource('client','Product\ClientController')->middleware('auth');
 	Route::resource('client/{client}/clientuser','Product\ClientuserController')->middleware('auth');
+
 	Route::post('client/image','Product\ClientController@imageupload')->name('client.image')->middleware('auth');
 	Route::get('admin','Product\AdminController@index')->name('admin.index')->middleware('auth');
 	Route::get('admin/settings','Product\AdminController@settings')->name('admin.settings')->middleware('auth');
@@ -365,6 +367,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('eregister','Product\AdminController@estudentregister')->name('student.eregister');
 	Route::get('sregister','Product\AdminController@sstudentregister')->name('student.sregister');
 
+
 	Route::get('register/type',function () { 
 		if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
 			return Redirect::to('/register');
@@ -374,6 +377,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	Route::get('dregister','Product\AdminController@dstudentregister')->name('student.dregister');
 	Route::post('studentstore','Product\AdminController@studentstore')->name('admin.user.studentstore');
+	Route::post('register/client','User\UserController@saveregister')->name('register.client');
+	Route::post('register/sendotp','User\UserController@sendOTP')->name('register.sendotp');
 
 	Route::get('/companies', 'Content\ArticleController@companies')->name('companies');
 	

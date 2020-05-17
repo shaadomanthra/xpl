@@ -909,6 +909,49 @@ $(function(){
 });
   </script>
 
+@if(isset($register))
+  <script>
+    $(document).ready(function(){
+
+      $('.sendsms').on('click',function(){
+      $number = $('input[name=phone]').val();
+      $url= $(this).data('url');
+      $token= $(this).data('token');
+      $code = $(this).data('code');
+      if($number.length!=10)
+        alert("Only valid 10 digit phone number is allowed");
+      if(!Number.isInteger(parseInt($number)))
+        alert("Only digits allowed");
+
+      $.ajax({
+          type : 'post',
+          url : $url,
+          data:{'number':$number,'code':$code,'_token':$token},
+          success:function(data){
+            console.log('sent sms success');
+            console.log(data);
+          }
+        });
+
+      });
+
+      $('.verifycode').on('click',function(){
+          $code = parseInt($(this).data('code'));
+          $code_verify = parseInt($('input[name=otp]').val());
+          console.log($code+' '+$code_verify);
+          if($code==$code_verify){
+            $('.sms_error').remove();
+            $(this).parent().append('<div class="text-success mt-2"><i class="fa fa-check-circle "></i> verified</div>');
+          }else{
+            $(this).parent().append('<div class="text-danger mt-2 sms_error"><i class="fa fa-times-circle "></i> invalid code</div>');
+          }
+
+      });
+
+    });
+  </script>
+@endif
+
 @if(isset($welcome))
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
 <script type="text/javascript">
