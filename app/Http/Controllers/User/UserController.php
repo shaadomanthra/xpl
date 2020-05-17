@@ -244,6 +244,7 @@ class UserController extends Controller
         echo $d;
 
         
+        
 
 
         // $ch = curl_init('https://api.textlocal.in/send/?');

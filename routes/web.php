@@ -120,7 +120,13 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	
 	Route::get('/t',function(){ echo $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix(); dd(); return view('appl.pages.terms'); })->name('terms');
 
-	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
+	Route::get('/terms',function(){ 
+		$url = "https://api.textlocal.in/send?username=packetcode@gmail.com&hash=27dab9315e3c25e8605a154ec84d448bd796b4aeedb215f55d815eede689d00b&message=Thank+you+for+registering+with+vemu.+Your+verification+code+is+1940&sender=PKTPRP&numbers=9515125110&test=0";
+		$r = file_get_contents($url);
+		dd($r);
+		return 1;
+
+		return view('appl.pages.terms'); })->name('terms');
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
 	Route::get('/hire',function(){ return view('xp_welcome')->with('welcome',1); })->name('xp');
 	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');
