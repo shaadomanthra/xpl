@@ -114,15 +114,15 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-
-        if($user->client_slug){
-            if($user->role!=2)
+        if(subdomain()){
+           if($user->role!=2)
             if($user->client_slug!=subdomain())
             {
                 auth()->logout();
                 return back()->with('warning', 'You are not authorized to login to this website.');
-            }
+            } 
         }
+        
 
         $user->updated_at = date('Y-m-d H:i:s');
         $user->save();
