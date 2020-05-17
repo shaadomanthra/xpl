@@ -243,11 +243,14 @@ class UserController extends Controller
         echo  $data;
         echo "  ";
 
-
+        $r = file_get_contents("http://api.textlocal.in/send/?".$data);
+        echo $r;
+        
         $ch = curl_init('http://api.textlocal.in/send/?');
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
         $result = curl_exec($ch); // This is the result from the API
 
         curl_close($ch);
