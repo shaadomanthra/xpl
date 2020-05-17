@@ -264,7 +264,7 @@ class UserController extends Controller
         $sender = urlencode('PKTPRP');
        
      
-        $numbers = implode(',', $numbers);
+        $numbers = implode(',', '91'.$numbers);
      
         $message = "Thank you for registering with ".$client.". Your verification code is ".$code;
         $message = rawurlencode($message);
