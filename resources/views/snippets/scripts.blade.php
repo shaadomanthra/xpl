@@ -930,6 +930,7 @@ $(function(){
           success:function(data){
             console.log('sent sms success');
             console.log(data);
+            alert('OTP successfully sent to '+$number+'. Kindly wait for few minutes before you retry.')
           }
         });
 
