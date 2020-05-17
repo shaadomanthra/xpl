@@ -918,12 +918,15 @@ $(function(){
       $url= $(this).data('url');
       $token= $(this).data('token');
       $code = $(this).data('code');
-      if($number.length!=10)
-        alert("Only valid 10 digit phone number is allowed");
-      if(!Number.isInteger(parseInt($number)))
-        alert("Only digits allowed");
+      if($number.length!=10){
 
-      $.ajax({
+        alert("Only valid 10 digit phone number is allowed");
+      }
+      else if(!Number.isInteger(parseInt($number))){
+        alert("Only digits allowed");
+      }else{
+
+        $.ajax({
           type : 'post',
           url : $url,
           data:{'number':$number,'code':$code,'_token':$token},
@@ -933,6 +936,10 @@ $(function(){
             alert('OTP successfully sent to '+$number+'. Kindly wait for few minutes before you retry.')
           }
         });
+
+      }
+
+      
 
       });
 
