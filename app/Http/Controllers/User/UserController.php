@@ -240,7 +240,8 @@ class UserController extends Controller
         // A single number or a comma-seperated list of numbers
         $message = urlencode($message);
         $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
-
+        echo  $data;
+        echo "  ";
 
 
         $ch = curl_init('http://api.textlocal.in/send/?');
