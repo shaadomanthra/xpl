@@ -260,11 +260,11 @@ class UserController extends Controller
         $apiKey = urlencode('fOfeGhOcYp8-C8I50qrKCEZ6cYbxE6PVeLJVbeAtrs');
     
         // Message details
-        $numbers = array($numbers);
+        $numbers = array('91'.$numbers);
         $sender = urlencode('PKTPRP');
        
      
-        $numbers = implode(',', '91'.$numbers);
+        $numbers = implode(',', $numbers);
      
         $message = "Thank you for registering with ".$client.". Your verification code is ".$code;
         $message = rawurlencode($message);
