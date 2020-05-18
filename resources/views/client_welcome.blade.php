@@ -27,7 +27,7 @@
              <div class="mt-5">
               <div class="p-2"></div>
              <hr >
-             Incase of any query you can reach out to our resource person, details in the <a href="{{ route('contact')}}">contact page</a>
+             Incase of any query you can reach out to our resource person, details in the <a href="{{ route('contactpage')}}">contact page</a>
            </div>
           </div>
         </div>

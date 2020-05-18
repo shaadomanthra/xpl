@@ -11,7 +11,7 @@
         <ul class="list-unstyled text-small">
           <li><a class="text-muted" href="{{url('/about-corporate')}}">About</a></li>
           <li><a class="text-muted" href="{{url('/productpage')}}">Products</a></li>
-          <li><a class="text-muted" href="{{url('/contact-corporate')}}">Contact</a></li>
+          <li><a class="text-muted" href="{{url('/contact')}}">Contact</a></li>
         </ul>
       </div>
       

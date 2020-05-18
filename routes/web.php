@@ -243,8 +243,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	Route::get('/terms-corporate',function(){ return view('appl.product.pages.terms'); })->name('terms-corporate');
 
-	Route::get('/contact-corporate',function(){ return view('appl.product.pages.contact'); })->name('contact-corporate');
-	Route::get('/contact',function(){ return view('appl.pages.contact'); })->name('contact');
+	Route::get('/contact',function(){ return view('appl.product.pages.contact'); })->name('contact');
+	Route::get('/contactpage',function(){ return view('appl.pages.contact'); })->name('contactpage');
 
 	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads');
 
