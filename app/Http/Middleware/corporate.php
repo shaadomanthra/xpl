@@ -20,7 +20,7 @@ class Corporate
                $filename = '../storage/app/cache/company/'.subdomain().'.json';
                $logo_1 = url('/').'/storage/companies/'.subdomain().'.png';
                $logo_2 = url('/').'/storage/companies/'.subdomain().'.jpg';
-               $logo_3 = url('/').'/img/logo-onlinelibrary.png';
+               $logo_3 = url('/').'/img/xplore.png';
 
                 if(file_exists($filename)){
 
