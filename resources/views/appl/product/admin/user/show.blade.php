@@ -143,7 +143,7 @@
 
           <div class="col-12 col-md-9">
             <dl class="row">
-              <dt class="col-sm-5">Gender</dt>
+              <dt class="col-sm-5">Gender (or Father Phone)</dt>
               <dd class="col-sm-7">
                 @if($user->gender)
                 {{ $user->gender}}

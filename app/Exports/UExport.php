@@ -4,6 +4,7 @@ namespace PacketPrep\Exports;
 
 use PacketPrep\Models\User\User_Details;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use PacketPrep\User;
 
 class UExport implements FromCollection
 {
@@ -14,7 +15,6 @@ class UExport implements FromCollection
     {
     	$users = request()->session()->get('users');
     	foreach($users as $k=>$u){
-    			$users[$k]->idno = $k+1;
     			unset($users[$k]->id);
                 unset($users[$k]->created_at);
                 unset($users[$k]->updated_at);
@@ -33,15 +33,29 @@ class UExport implements FromCollection
                 unset($users[$k]->twelveth);
                 unset($users[$k]->bachelors);
                 unset($users[$k]->masters);
-                unset($users[$k]->gender);
                 unset($users[$k]->video);
                 unset($users[$k]->personality);
                 unset($users[$k]->language);
                 unset($users[$k]->fluency);
                 unset($users[$k]->confidence);
-
-
     	}
+
+        $ux = new User();
+        foreach($ux as $k=>$v){
+           
+            unset($ux->$k);
+        }
+        $ux->name = "Name";
+        $ux->email = "Email";
+        $ux->roll_number = "Father Name";
+        $ux->phone = "Phone";
+        $ux->yop = "District";
+        $ux->addr = "Address ";
+        
+        $ux->window = "Fathers Phone Number";
+        $ux->dob = "Date of Birth";
+
+        $users->prepend($ux);
         return $users;
     }
 }

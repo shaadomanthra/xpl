@@ -367,6 +367,7 @@ class UserController extends Controller
         $user->hometown = $request->get('hometown');
         $user->current_city = $request->get('current_city');
         $user->dob = $request->get('dob');
+        $user->gender = $request->get('gender');
         $user->save();
         
 

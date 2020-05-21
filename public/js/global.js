@@ -461,6 +461,8 @@ $(document).ready(function(){
     function answered($sno){
       if(!$('.s'+$sno).hasClass('qblue-border'))
         $('.s'+$sno).addClass('qblue-border');
+      if(!$('.s'+$sno).hasClass('active'))
+            $('.s'+$sno).removeClass('active')
     }
 
     function unanswered($sno){
@@ -468,6 +470,7 @@ $(document).ready(function(){
       $('.input_'+$sno).prop('checked',false);
       if($('.input_fillup_'+$sno).length)
       $('.input_fillup_'+$sno).val('');
+      $('.s'+$sno).addClass('active')
     }
 
     function hide_buttons($sno){

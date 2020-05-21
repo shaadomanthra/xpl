@@ -316,7 +316,7 @@ pre{ padding:10px; border:1px solid #1C1D21; background:#1C1D21; }
 .fa-dark{ color:#f9be50; }
 .CodeMirror{border:1px solid silver;}
 .card-nav ul{ margin-bottom: 0px; }
-.qset .active{ background: #b70016;  }
+.qset .active{  border:2px solid #efecec; }
 .qset .level1{opacity: 1;font-size: 4px;float: right;color:#8F1D21}
 .qset .level2{opacity: 1;font-size: 4px;float: right;color:#D24D57}
 .qset .level3{opacity: 1;font-size: 4px;float: right;color:#FFA400}
@@ -417,7 +417,8 @@ p.article{line-height: 1.6em;}
 
 .bactive{ background: #b70016; }
 .qblue-border{
-    border:2px solid #2c4356;
+    border:2px solid #4caf50;
+    background:#459648;
 }
 .blogd a.white-link{ color:white; }
 .blogd a.orange-link{ color:#88604c; }

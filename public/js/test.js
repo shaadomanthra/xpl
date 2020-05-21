@@ -70,11 +70,14 @@ $(document).ready(function(){
     function answered($sno){
     	if(!$('.s'+$sno).hasClass('qblue-border'))
     		$('.s'+$sno).addClass('qblue-border');
+        if(!$('.s'+$sno).hasClass('active'))
+            $('.s'+$sno).removeClass('active')
     }
 
     function unanswered($sno){
     	$('.s'+$sno).removeClass('qblue-border');
     	$('.input_'+$sno).prop('checked',false);
+        $('.s'+$sno).addClass('active')
     }
 
     function hide_buttons($sno){
