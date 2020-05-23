@@ -14,9 +14,9 @@
        </h1>
       
       @if($stub=='Create')
-      <form method="post" action="{{route('client.store')}}" >
+      <form method="post" action="{{route('client.store')}}" enctype="multipart/form-data">
       @else
-      <form method="post" action="{{route('client.update',$client->id)}}" >
+      <form method="post" action="{{route('client.update',$client->id)}}" enctype="multipart/form-data">
       @endif  
       <div class="form-group">
         <label for="formGroupExampleInput ">Client Name</label>
@@ -68,6 +68,12 @@
             {{ $client->contact }}
             @endif
         </textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Client Header Image</label>
+        <input type="file" class="form-control" name="file_" id="formGroupExampleInput" placeholder="Enter the image path" 
+          >
       </div>
 
       <div class="form-group">

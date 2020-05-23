@@ -104,6 +104,14 @@ class ClientController extends Controller
 
             $client->save(); 
 
+             /* If image is given upload and store path */
+            if(isset($request->all()['file_'])){
+                $file      = $request->all()['file_'];
+                $filename = $request->get('slug').'_header.'.$file->getClientOriginalExtension();
+                $path = Storage::disk('public')->putFileAs('companies', $request->file('file_'),$filename);
+
+            }
+
             $course_list =  Course::all()->pluck('id')->toArray();
             //update tags
             if($courses)
@@ -264,6 +272,15 @@ class ClientController extends Controller
             $client->status = $request->status;
             $client->contact = htmlentities($request->contact);
             $client->save(); 
+
+             /* If image is given upload and store path */
+            if(isset($request->all()['file_'])){
+                $file      = $request->all()['file_'];
+                $filename = $request->get('slug').'_header.'.$file->getClientOriginalExtension();
+                $path = Storage::disk('public')->putFileAs('companies', $request->file('file_'),$filename);
+
+            }
+
 
             $course_list =  Course::all()->pluck('id')->toArray();
             //update tags

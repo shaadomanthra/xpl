@@ -138,7 +138,7 @@
           <div class="card-title"><h1 class="mb-4">Logo Upload</h1></div>
           <div class="row">
 
-            <div class="col-6">
+            <div class="col-4">
               <form method="post" action="{{route('client.image')}}" enctype="multipart/form-data">
             <input type="hidden" name="client_slug" value="{{ $client->slug}}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -148,7 +148,7 @@
            <button type="submit" class="btn btn-info">Save</button>
          </form>
             </div>
-            <div class="col-6">
+            <div class="col-4">
               @if(file_exists(public_path().'/img/clients/'.$client->slug.'.png'))
               <img src="{{ asset('/img/clients/'.$client->slug.'.png')}}" class="float-right" />
               @else
@@ -160,6 +160,19 @@
           
         </div>
       </div>
+
+      <div class="card mb-4">
+        <div class="card-header">Header Image</div>
+        <div class="card-body">
+      @if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.png'))
+              <img src="{{ asset('/storage/companies/'.$client->slug.'_header.png')}}" class=" w-50" />
+              @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_header.jpg'))
+              <img src="{{ asset('/storage/companies/'.$client->slug.'_header.jpg')}}" class=" w-50" />
+              @else
+              <img src="{{ asset('/img/clients/logo_notfound.png')}}" class="float-right" />
+              @endif
+            </div>
+          </div>
 
 
       
