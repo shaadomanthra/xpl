@@ -5,11 +5,11 @@
         <div class="col-12 col-md-4 text-center text-md-left">
     <a class="navbar-brand abs text-center float-md-left" href="{{ url('/dashboard') }}" aria-label="Dashboard">
         <img 
-        src="{{ request()->session()->get('client')->logo }} " width="200px" class="ml-md-0"  alt="logo " type="image/png">
+        src="{{ request()->session()->get('client')->logo }} " width="250px" class="ml-md-0"  alt="logo " type="image/png">
     </a>  
     </div>
     <div class="col-12 col-md-4 text-center text-md-center">
-        <div class="text-center text-md-center float-md-center mt-3"><h1>Registration Page</h1></div>
+        <div class="text-center text-md-center float-md-center mt-3"><h1 class="mb-3">Registration Page</h1></div>
     </div>
     <div class="col-12 col-md-4 text-center text-md-left">
         <img 
