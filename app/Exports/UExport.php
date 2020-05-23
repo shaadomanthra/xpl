@@ -33,11 +33,7 @@ class UExport implements FromCollection
                 unset($users[$k]->twelveth);
                 unset($users[$k]->bachelors);
                 unset($users[$k]->masters);
-                unset($users[$k]->video);
-                unset($users[$k]->personality);
-                unset($users[$k]->language);
-                unset($users[$k]->fluency);
-                unset($users[$k]->confidence);
+                
     	}
 
         $ux = new User();
@@ -54,6 +50,12 @@ class UExport implements FromCollection
         
         $ux->window = "Fathers Phone Number";
         $ux->dob = "Date of Birth";
+        $ux->c1 = "Custom Field 1";
+        $ux->c2 = "Custom Field 2";
+        $ux->c3 = "Custom Field 3";
+        $ux->c4 = "Custom Field 4";
+        $ux->c5 = "Custom Field 5";
+
 
         $users->prepend($ux);
         return $users;

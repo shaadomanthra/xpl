@@ -215,82 +215,25 @@ class UserController extends Controller
     }
 
 
+
     public function sendOTP(Request $r){
-                // Authorisation details.
-        $numbers = $r->get('number');
         $code = $r->get('code');
-
-        $username = "packetcode@gmail.com";
-        $hash = "27dab9315e3c25e8605a154ec84d448bd796b4aeedb215f55d815eede689d00b";
-        if(subdomain())
-            $client = substr(subdomain(),0,12);
-        else
-            $client = 'xplore';
-        $test = "0";
-
-        // Data for text message. This is the text message data.
-        $sender = "PKTPRP"; // This is who the message appears to be from.
-        
-        $message = "Thank you for registering with ".$client.". Your verification code is ".$code;
-
-
-        // 612 chars or less
-        // A single number or a comma-seperated list of numbers
-        $message = urlencode($message);
-        $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
-        
-        echo "https://api.textlocal.in/send?".$data;
         $url = "https://2factor.in/API/V1/b2122bd6-9856-11ea-9fa5-0200cd936042/SMS/+91".$r->get('number')."/".$code;
-        $d = file_get_contents($url);
+        $d = $this->curl_get_contents($url);
         echo $d;
-
         
+    }
 
-
-
-        // $ch = curl_init('https://api.textlocal.in/send/?');
-        // curl_setopt($ch, CURLOPT_POST, true);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // $result = curl_exec($ch); // This is the result from the API
-
-        // curl_close($ch);
-        
-        // echo $result;
-        // $apiKey = urlencode('fOfeGhOcYp8-C8I50qrKCEZ6cYbxE6PVeLJVbeAtrs');
-    
-        // // Message details
-        // $numbers = array('91'.$numbers);
-        // $sender = urlencode('PKTPRP');
-       
-     
-        // $numbers = implode(',', $numbers);
-     
-        // $message = "Thank you for registering with ".$client.". Your verification code is ".$code;
-        // $message = rawurlencode($message);
-        // $da = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
-
-        // echo "http://api.textlocal.in/send/?".$da;
-        // echo " ";
-        // return 1;
-        
-        // // Prepare data for POST request
-        // $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
-     
-        // // Send the POST request with cURL
-        // $ch = curl_init('https://api.textlocal.in/send/');
-        // curl_setopt($ch, CURLOPT_POST, true);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // $response = curl_exec($ch);
-        // curl_close($ch);
-        
-        // // Process your response here
-        // echo $response;
-
-        //c
-
+    function curl_get_contents($url)
+    {
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+      $data = curl_exec($ch);
+      curl_close($ch);
+      return $data;
     }
 
     public function saveregister(Request $request)
@@ -368,6 +311,11 @@ class UserController extends Controller
         $user->current_city = $request->get('current_city');
         $user->dob = $request->get('dob');
         $user->gender = $request->get('gender');
+        $user->video = $request->get('video');
+        $user->personality = $request->get('personality');
+        $user->confidence = $request->get('confidence');
+        $user->fluency = $request->get('fluency');
+        $user->language = $request->get('language');
         $user->save();
         
 
