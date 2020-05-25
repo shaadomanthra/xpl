@@ -197,6 +197,19 @@ class QuestionController extends Controller
             // keep the reference in capitals
             $request->merge(['reference' => strtoupper($request->reference)]);
 
+            $quest = summernote_imageupload(\auth::user(),$request->question);
+            $request->merge(['question'=>$quest]);
+            $a = summernote_imageupload(\auth::user(),$request->a);
+            $request->merge(['a'=>$a]);
+            $b = summernote_imageupload(\auth::user(),$request->b);
+            $request->merge(['b'=>$b]);
+            $c = summernote_imageupload(\auth::user(),$request->c);
+            $request->merge(['c'=>$c]);
+            $d = summernote_imageupload(\auth::user(),$request->d);
+            $request->merge(['d'=>$d]);
+            $e = summernote_imageupload(\auth::user(),$request->e);
+            $request->merge(['e'=>$e]);
+
             $explanation = summernote_imageupload(\auth::user(),$request->explanation);
             $request->merge(['explanation'=>$explanation]);
 
@@ -1173,16 +1186,16 @@ class QuestionController extends Controller
 
             $question = Question::where('id',$id)->first();
             $question->reference = strtoupper($request->reference);
-            $question->question = $request->question;
+            $question->question = summernote_imageupload(\auth::user(),$request->question);
             $question->question_b = $request->question_b;
             $question->question_c = $request->question_c;
             $question->question_d = $request->question_d;
             $question->passage = $request->passage;
-            $question->a = $request->a;
-            $question->b = $request->b;
-            $question->c = $request->c;
-            $question->d = $request->d;
-            $question->e = $request->e;
+            $question->a = summernote_imageupload(\auth::user(),$request->a);
+            $question->b = summernote_imageupload(\auth::user(),$request->b);
+            $question->c = summernote_imageupload(\auth::user(),$request->c);
+            $question->d = summernote_imageupload(\auth::user(),$request->d);
+            $question->e = summernote_imageupload(\auth::user(),$request->e);
             $question->answer = $request->answer;
             $question->type = $request->type;
             $question->explanation = summernote_imageupload(\auth::user(),$request->explanation);
