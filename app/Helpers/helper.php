@@ -98,7 +98,7 @@ if (! function_exists('summernote_imageupload')) {
                     $imgr->save($path);
 
                     $imgr = Image::make($temp_path);
-                    $imgr->resize(400, null, function ($constraint) {
+                    $imgr->resize(800, null, function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     });
