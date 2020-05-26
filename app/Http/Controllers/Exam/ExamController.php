@@ -767,6 +767,11 @@ class ExamController extends Controller
     public function destroy($id)
     {
         $exam = Exam::where('id',$id)->first();
+        foreach($exam->sections as $section){
+            $section->questions()->detach();
+            $section->delete();
+        }
+
         $this->authorize('update', $exam);
 
         

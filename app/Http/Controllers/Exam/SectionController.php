@@ -208,6 +208,7 @@ class SectionController extends Controller
     {
         $exam= Exam::where('slug',$exam)->first();
         $section= Section::where('id',$id)->first();
+        $section->questions()->detach();
         $this->authorize('update', $section);
 
         $section->delete();

@@ -114,18 +114,18 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' ){
+        // if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' ){
 
-        }else{
-            if(subdomain()){
-               if($user->role!=2)
-                if($user->client_slug!=subdomain())
-                {
-                    auth()->logout();
-                    return back()->with('warning', 'You are not authorized to login to this website.');
-                } 
-            }
-        }
+        // }else{
+        //     if(subdomain()){
+        //        if($user->role!=2)
+        //         if($user->client_slug!=subdomain())
+        //         {
+        //             auth()->logout();
+        //             return back()->with('warning', 'You are not authorized to login to this website.');
+        //         } 
+        //     }
+        // }
         
         
 
