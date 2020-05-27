@@ -61,7 +61,7 @@
     
     @endforeach
 
-    <div><i class="fa fa-angle-right"></i> {{$obj->client_slug}}</div>
+    <div><i class="fa fa-angle-right"></i>@if($obj->client_slug) {{$obj->client_slug}} @else Xplore @endif</div>
                 </td>
                 <td>
                   {{$obj->attempts_all}}
