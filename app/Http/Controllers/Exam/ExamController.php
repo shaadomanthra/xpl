@@ -431,6 +431,7 @@ class ExamController extends Controller
             $request->slug  = $request->name;
             $request->slug = strtolower(str_replace(' ', '-', $request->slug));
 
+
             
              /* If image is given upload and store path */
             if(isset($request->all()['file_'])){
@@ -443,6 +444,13 @@ class ExamController extends Controller
                 $request->merge(['image' => '']);
             }
 
+
+            if(isset($request->all()['file2_'])){
+                $file      = $request->all()['file2_'];
+
+                $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
+                $path = Storage::disk('public')->putFileAs('articles', $request->file('file2_'),$filename);
+            }
 
 
             $exam->name = $request->name;
@@ -508,6 +516,14 @@ class ExamController extends Controller
 
         
         $this->authorize('view', $exam);
+
+        if(request()->get('delete')=='banner'){
+            if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg')){
+                Storage::disk('public')->delete('articles/'.$exam->slug.'_banner.jpg');
+             flash('Banner is deleted.')->error();
+            }
+
+        }
 
         if($exam)
             return view('appl.exam.exam.show')
@@ -709,6 +725,14 @@ class ExamController extends Controller
                 $request->merge(['image' => $path]);
             }
            
+           if(isset($request->all()['file2_'])){
+                Storage::disk('public')->delete('articles/'.$exam->slug.'_banner.jpg');
+                Storage::disk('public')->delete('articles/'.$exam->slug.'_banner.png');
+                $file      = $request->all()['file2_'];
+                $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
+                $path = Storage::disk('public')->putFileAs('articles', $request->file('file2_'),$filename);
+            }
+
 
             //dd($request->all());
             $exam->name = $request->name;

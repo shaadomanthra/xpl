@@ -112,6 +112,14 @@ class ClientController extends Controller
 
             }
 
+            /* If image is given upload and store path */
+            if(isset($request->all()['file2_'])){
+                $file      = $request->all()['file2_'];
+                $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
+                $path = Storage::disk('public')->putFileAs('companies', $request->file('file2_'),$filename);
+
+            }
+
             $course_list =  Course::all()->pluck('id')->toArray();
             //update tags
             if($courses)
@@ -211,6 +219,22 @@ class ClientController extends Controller
 
         $this->authorize('edit', $client);
 
+        if(request()->get('delete')=='banner'){
+            if(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.jpg')){
+                Storage::disk('public')->delete('companies/'.$client->slug.'_banner.jpg');
+             flash('Dashboard banner is deleted.')->error();
+            }
+
+        }
+
+        if(request()->get('delete')=='header'){
+            if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.jpg')){
+                Storage::disk('public')->delete('companies/'.$client->slug.'_header.jpg');
+             flash('Login page banner image is deleted.')->error();
+            }
+
+        }
+
         if($client)
             return view('appl.product.client.show')
                     ->with('client',$client)
@@ -281,6 +305,14 @@ class ClientController extends Controller
 
             }
 
+            /* If image is given upload and store path */
+            if(isset($request->all()['file2_'])){
+                $file      = $request->all()['file2_'];
+                $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
+                $path = Storage::disk('public')->putFileAs('companies', $request->file('file2_'),$filename);
+
+            }
+
 
             $course_list =  Course::all()->pluck('id')->toArray();
             //update tags
@@ -331,8 +363,7 @@ class ClientController extends Controller
     {
         $client = client::where('id',$id)->first();
         $this->authorize('update', $client);
-        $file = base_path('json/'.strtolower($client->slug).'.json');
-        unlink($file);
+        
         $client->delete();
         flash('client Successfully deleted!')->success();
         return redirect()->route('client.index');

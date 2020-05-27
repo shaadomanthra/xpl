@@ -14,7 +14,7 @@
           @can('update',$client)
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route('client.edit',$client->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-              <a href="{{ route('clientuser.index',$client->slug) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Users"><i class="fa fa-user"></i></a>
+              
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
             @endcan
@@ -25,49 +25,27 @@
      
       <div class="card mb-4">
         <div class="card-body">
-          @if($client->user_id_creator)
-          <div class="row mb-2">
-            <div class="col-md-4">
-              <h1>Creator</h1>
-            </div>
-            <div class="col-md-8">
-              <h1>
-              <a href="{{ route('profile','@'.auth::user()->getUserName($client->user_id_creator)) }}">
-              {{ auth::user()->getName($client->user_id_creator) }}
-              </a>
-            </h1>
-            </div>
-          </div>
-          @endif
-          @if($client->user_id_owner)
-          <div class="row mb-2">
-            <div class="col-md-4">
-              <h3>Owner</h3>
-            </div>
-            <div class="col-md-8">
-              <h3>
-              <a href="{{ route('profile','@'.auth::user()->getUserName($client->user_id_owner)) }}">
-              {{ auth::user()->getName($client->user_id_owner) }}
-              </a>
-            </h3>
-            </div>
-          </div>
-          @endif
+          
+          
 
-          @if($client->user_id_manager)
+          
           <div class="row mb-2">
             <div class="col-md-4">
-              <h3>Manager</h3>
+              <h3>Site Admin</h3>
             </div>
             <div class="col-md-8">
               <h3>
-              <a href="{{ route('profile','@'.auth::user()->getUserName($client->user_id_manager)) }}">
-              {{ auth::user()->getName($client->user_id_manager) }}
+              @if($client->site_admin())
+              <a href="{{ route('admin.user.view',$client->site_admin()->username) }}">
+              {{ $client->site_admin()->name }}
               </a>
+              @else
+                - Not Assigned -
+              @endif
             </h3>
             </div>
           </div>
-          @endif
+         
 
          
 
@@ -93,7 +71,7 @@
               @endif
             </div>
           </div>
-
+          <!--
           <div class="row mb-0">
             <div class="col-md-4">Courses </div>
             <div class="col-md-8">
@@ -120,6 +98,7 @@
               
             </div>
           </div>
+        -->
 
           
 
@@ -162,20 +141,35 @@
       </div>
 
       <div class="card mb-4">
-        <div class="card-header">Header Image</div>
+        <div class="card-header">Login Page Image</div>
         <div class="card-body">
       @if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.png'))
-              <img src="{{ asset('/storage/companies/'.$client->slug.'_header.png')}}" class=" w-50" />
+              <img src="{{ asset('/storage/companies/'.$client->slug.'_header.png')}}" class=" w-50 mb-3" />
+              <div><a href="{{ route('client.show',$client->slug)}}?delete=header" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_header.jpg'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'_header.jpg')}}" class=" w-50" />
+              <div><a href="{{ route('client.show',$client->slug)}}?delete=header" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @else
               <img src="{{ asset('/img/clients/logo_notfound.png')}}" class="float-right" />
               @endif
             </div>
-          </div>
+        </div>
 
-
-      
+        <div class="card mb-4">
+        <div class="card-header">Dashboard Banner Image</div>
+        <div class="card-body">
+      @if(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.png'))
+              <img src="{{ asset('/storage/companies/'.$client->slug.'_banner.png')}}" class=" w-50" />
+              <div>
+              <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
+              @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.jpg'))
+              <img src="{{ asset('/storage/companies/'.$client->slug.'_banner.jpg')}}" class=" w-50" />
+              <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a>
+              @else
+              <img src="{{ asset('/img/clients/logo_notfound.png')}}" class="float-right" />
+              @endif
+            </div>
+        </div>
 
     </div>
 

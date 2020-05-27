@@ -327,7 +327,7 @@ class AdminController extends Controller
     public function estudentregister(Request $request)
     {
        
-        $colleges = College::orderby('name','asc')->get();
+        $colleges = College::orderBy('name','asc')->get();
          
           
 
@@ -372,7 +372,7 @@ class AdminController extends Controller
 
     public function sstudentregister(Request $request)
     {
-        $colleges = College::orderby('name','asc')->get();
+        $colleges = College::orderBy('name','asc')->get();
         $metrics = Metric::all();
         $services = Service::all();
         $branches = Branch::all();
@@ -394,7 +394,7 @@ class AdminController extends Controller
 
     public function dstudentregister(Request $request)
     {
-        $colleges = College::orderby('created_at','desc')->get();
+        $colleges = College::orderBy('created_at','desc')->get();
         $metrics = Metric::all();
 
         $services = Service::all();
@@ -419,10 +419,12 @@ class AdminController extends Controller
 
     public function adduser(Request $request)
     {
-        $colleges = College::orderby('created_at','desc')->get();
+        $colleges = College::orderBy('name','asc')->get();
         $metrics = Metric::all();
         $services = Service::all();
         $branches = Branch::all();
+        $clients = Client::orderBy('name','asc')->get();
+
 
         if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
         {
@@ -434,6 +436,7 @@ class AdminController extends Controller
             ->with('colleges',$colleges)
                 ->with('services',$services)
                 ->with('metrics',$metrics)
+                ->with('clients',$clients)
                 ->with('branches',$branches);
     }
 
@@ -748,6 +751,9 @@ class AdminController extends Controller
 
         $parts = explode("@", $request->email);
         $username = $parts[0];
+        if($request->get('phone'))
+        $password = $request->get('phone');
+        else
         $password = str_random(5);
 
         $user = User::where('username',$username)->first();
@@ -760,12 +766,15 @@ class AdminController extends Controller
                     break;
             }
         }
+
         
         $user = User::create([
             'name' => $request->name,
             'username' => $username,
             'email' => $request->email,
             'password' => bcrypt($password),
+            'client_slug' => $request->client_slug,
+            'phone' =>$request->get('phone'),
             'activation_token' => $password,
             'user_id' => $request->user_id,
             'status'=>1,
@@ -786,12 +795,15 @@ class AdminController extends Controller
         $services = $request->get('services');
         $metrics = $request->get('metrics');
 
+        $user->college_id = $college_id;
+
         //branches
         $branch_list =  Branch::orderBy('created_at','desc ')
                         ->get()->pluck('id')->toArray();
         if($branches)
             foreach($branch_list as $branch){
                 if(in_array($branch, $branches)){
+                    $user->branch_id = $branch;
                     if(!$user->branches->contains($branch))
                         $user->branches()->attach($branch);
                 }else{
@@ -802,6 +814,8 @@ class AdminController extends Controller
         }else{
                 $user->branches()->detach();
         } 
+
+        $user->save();
 
 
         if($user->user_id == 60 || $request->user_id == 55){
@@ -847,14 +861,18 @@ class AdminController extends Controller
                 $user->roles()->detach(41);
         }
 
-        if($request->get('hrmanager')==1){
+        if(in_array($request->get('hrmanager'),[10,11,12])){
             if(!$user->roles->contains(28))
                 $user->roles()->attach(28);
+            $user->role = $request->get('hrmanager');
+            $user->save();
         }
 
-        if($request->get('hrmanager')==2){
+        if($request->get('hrmanager')==1){
             if($user->roles->contains(28))
                 $user->roles()->detach(28);
+            $user->role = $request->get('hrmanager');
+            $user->save();
         }
 
         //Services
@@ -927,7 +945,7 @@ class AdminController extends Controller
 
         $user->password = $password;
 
-        Mail::to($user->email)->send(new ActivateUser($user));
+        //Mail::to($user->email)->send(new ActivateUser($user));
 
         flash('A new user('.$request->name.') is created!')->success();
         if(!$direct)
@@ -992,10 +1010,11 @@ class AdminController extends Controller
 
         $user = User::where('username',$id)->first();
         $user_details = $user->details;
-        $colleges = College::orderby('name','asc')->get();
+        $colleges = College::orderBy('name','asc')->get();
         $metrics = Metric::all();
         $services = Service::all();
         $branches = Branch::all();
+        $clients = Client::all();
         
 
         return view('appl.product.admin.user.createedit')
@@ -1005,6 +1024,7 @@ class AdminController extends Controller
                 ->with('services',$services)
                 ->with('metrics',$metrics)
                 ->with('branches',$branches)
+                ->with('clients',$clients)
                 ->with('stub','Update');
     } 
 
@@ -1017,6 +1037,7 @@ class AdminController extends Controller
         $user->name = $request->get('name');
         $user->status = $request->get('status');
         $user->phone = $request->get('phone');
+        $user->client_slug = $request->get('client_slug');
         $user->year_of_passing = $request->get('year_of_passing');
         $user->roll_number = $request->get('roll_number');
 

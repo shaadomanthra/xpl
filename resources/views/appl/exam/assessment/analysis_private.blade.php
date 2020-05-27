@@ -94,6 +94,25 @@
 		@endif
 		@endif
 
+
+		@if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg'))
+                <div class="my-3">
+                  <picture class="">
+                    <img 
+                    src="{{ asset('/storage/articles/'.$exam->slug.'_banner.jpg') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
+                  </picture>
+                </div>
+            @elseif(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.png'))
+                <div class="my-3">
+                  <picture class="">
+                    <img 
+                    src="{{ asset('/storage/articles/'.$exam->slug.'_banner.png') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
+                  </picture>
+                </div>
+            @else
+            @endif
+       
+        
 	
 		@if(isset($sections))
 		<div class="card mb-3 bg-light"  style="background: #FFF;border: 2px solid #EEE;">
@@ -173,6 +192,7 @@
 		</div>
 		@endif
 		
+
 		@if(!$exam->solutions)
 		@if(isset($details['c'][0]['category']))
 			<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">

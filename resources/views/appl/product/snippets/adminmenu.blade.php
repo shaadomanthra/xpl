@@ -15,9 +15,9 @@
 	
 	<a href="{{ route('material')}}" class="list-group-item list-group-item-action {{ request()->is('material') ? 'active' : ''}}"><i class="fa fa-telegram"></i> Material</a>
 	
-	<a href="{{ route('hrmanagers')}}" class="list-group-item list-group-item-action {{ request()->is('material') ? 'active' : ''}}"><i class="fa fa-telegram"></i> Managers</a>
+	<a href="{{ route('hrmanagers')}}" class="list-group-item list-group-item-action {{ request()->is('material') ? 'active' : ''}}"><i class="fa fa-gg"></i> Site Managers</a>
 	
-	<a href="{{ route('client.index')}}" class="list-group-item list-group-item-action {{ request()->is('client') ? 'active' : ''}}"><i class="fa fa-telegram"></i> Clients</a>
+	<a href="{{ route('client.index')}}" class="list-group-item list-group-item-action {{ request()->is('client') ? 'active' : ''}}"><i class="fa fa-copyright"></i> Clients</a>
 	
 	<a href="{{ route('exam.index')}}" class="list-group-item list-group-item-action {{ request()->is('exam') ? 'active' : ''}}"><i class="fa fa-th"></i> Tests</a>
 	

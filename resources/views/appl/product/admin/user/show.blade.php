@@ -56,6 +56,14 @@
   <dd class="col-sm-7">
     {{ $user->phone }}
   </dd>
+  <dt class="col-sm-5">Client</dt>
+  <dd class="col-sm-7">
+    @if($user->client_slug)
+    {{ $user->client_slug}}
+    @else
+    Xplore
+    @endif
+  </dd>
 
  
 

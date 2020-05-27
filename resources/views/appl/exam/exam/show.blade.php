@@ -197,6 +197,33 @@
               @endif
         </div>
       </div>
+
+      <div class="card mb-4 ">
+        <div class="card-body">
+            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Banner in report page <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=image" class="float-right"><i class="fa fa-edit"></i> edit</a> </h4>
+            <hr>
+            @if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg'))
+                <div class="mb-3">
+                  <picture class="">
+                    <img 
+                    src="{{ asset('/storage/articles/'.$exam->slug.'_banner.jpg') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
+                  </picture>
+                </div>
+                <a href="{{ route('exam.show',$exam->slug)}}?delete=banner" class="btn btn-danger btn-sm"> delete banner</a>
+            @elseif(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.png'))
+                <div class="mb-3">
+                  <picture class="">
+                    <img 
+                    src="{{ asset('/storage/articles/'.$exam->slug.'_banner.png') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
+                  </picture>
+                </div>
+                <a href="{{ route('exam.show',$exam->slug)}}?delete=banner" class="btn btn-danger btn-sm"> delete banner</a>
+            @else
+             - No Banner -
+            @endif
+        </div>
+      </div>
+     
      
 
 

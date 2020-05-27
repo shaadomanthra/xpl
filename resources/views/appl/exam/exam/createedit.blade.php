@@ -121,12 +121,6 @@
       </div>
       
 
-      
-
-      
-
-     
-
       <div class="form-group @if(request()->get('id')=='emails') p-3  pactive rounded bg-success text-white @endif">
         <label for="formGroupExampleInput ">Candidates Emails</label>
 
@@ -139,12 +133,25 @@
                           </ul></small>
       </div>
 
-      <div class="form-group">
+      <div class="row" id="image">
+        <div class="col-12 col-md-6">
+           <div class="form-group">
         <label for="formGroupExampleInput ">Logo</label>
         <input type="file" class="form-control" name="file_" id="formGroupExampleInput" placeholder="Enter the image path" 
           >
       </div>
       
+        </div>
+        <div class="col-12 col-md-6">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Banner in report page</label>
+        <input type="file" class="form-control" name="file2_" id="formGroupExampleInput" placeholder="Enter the image path" 
+          >
+      </div>
+      
+        </div>
+      </div>
+     
      
       <div class="@if(request()->get('id')=='settings') p-3  pactive rounded bg-success text-white mb-3 @endif">
       <div class="row">

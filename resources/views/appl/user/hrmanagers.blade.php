@@ -5,7 +5,7 @@
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
     <li class="breadcrumb-item"><a href="{{ url('/admin')}}">Admin</a></li>
-    <li class="breadcrumb-item">Hr managers</li>
+    <li class="breadcrumb-item">Site managers</li>
   </ol>
 </nav>
 
@@ -17,7 +17,7 @@
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-bars"></i> Hr Managers </a>
+          <a class="navbar-brand"><i class="fa fa-bars"></i> Site Managers </a>
 
          
         </nav>
@@ -60,6 +60,8 @@
     @endif
     
     @endforeach
+
+    <div><i class="fa fa-angle-right"></i> {{$obj->client_slug}}</div>
                 </td>
                 <td>
                   {{$obj->attempts_all}}

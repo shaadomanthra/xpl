@@ -76,6 +76,13 @@
           >
       </div>
 
+       <div class="form-group">
+        <label for="formGroupExampleInput ">Dashboard Image</label>
+        <input type="file" class="form-control" name="file2_" id="formGroupExampleInput" placeholder="Enter the image path" 
+          >
+      </div>
+
+      <!--
       <div class="form-group">
         <label for="formGroupExampleInput">Courses</label>
          <div class=" card p-3">
@@ -90,7 +97,7 @@
           @endif
           @endforeach
          </div>
-      </div>
+      </div>-->
 
 
 

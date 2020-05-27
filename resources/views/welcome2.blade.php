@@ -73,6 +73,14 @@
 </div>
 </div>
 
+@if(Storage::disk('public')->exists('companies/'.request()->session()->get('client')->slug.'_banner.png'))
+              <img src="{{ asset('/storage/companies/'.request()->session()->get('client')->slug.'_banner.png')}}" class=" w-50 mb-3" />
+              @elseif(Storage::disk('public')->exists('companies/'.request()->session()->get('client')->slug.'_banner.jpg'))
+              <img src="{{ asset('/storage/companies/'.request()->session()->get('client')->slug.'_banner.jpg')}}" class=" w-50 mb-3" />
+             
+              @endif
+
+
 @if(count(\auth::user()->newtests())!=0)
   <div class="row ">
             

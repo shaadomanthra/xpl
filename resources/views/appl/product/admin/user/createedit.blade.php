@@ -82,16 +82,18 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-4">
-<div class="form-group">
-        <label for="formGroupExampleInput ">Roll Number (or Fathers Name)</label>
-        <input type="text" class="form-control" name="roll_number" id="formGroupExampleInput" placeholder="Enter your Roll Number" 
-            @if($stub=='Create')
-            value="{{ (old('roll_number')) ? old('roll_number') : '' }}"
-            @else
-            value = "{{ ($user)?$user->roll_number :''}}"
-            @endif
-          >
+         
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Client</label>
+          
+        <select class="form-control" name="client_slug">
+          <option value=""> Xplore </option>
+          @foreach($clients as $c)
+          <option value="{{$c->slug}}" @if(isset($user)) @if($user->client_slug) @if($c->slug == $user->client_slug ) selected @endif @endif @endif >{{ $c->name }}</option>
+          @endforeach         
+        </select>
       </div>
+      
         </div>
         <div class="col-12 col-md-4">
            @if(isset($colleges))
@@ -145,7 +147,7 @@
 
       
 
-      
+      <!--
 
       @if(isset($metrics))
       <div class="form-group border p-3">
@@ -163,7 +165,7 @@
         @endforeach
       </div>
       </div>
-      @endif
+      @endif -->
 
 
         @if($stub=='Update')
@@ -179,7 +181,7 @@
 
         <div class="col-12 col-md-4">
           <div class="form-group">
-        <label for="formGroupExampleInput ">Hr Manager</label>
+        <label for="formGroupExampleInput ">Site Manager</label>
         <select class="form-control" name="hrmanager">
            <option value="1"  @if(isset($user))@if($user->roles()->first()) @if(!$user->roles()->find(28)) selected @endif @endif @endif>No</option>
           <option value="10" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(28) && $user->role==10) selected @endif @endif @endif>Basic</option>

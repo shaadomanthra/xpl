@@ -4,6 +4,8 @@ namespace PacketPrep\Models\Product;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use PacketPrep\User;
+use PacketPrep\Models\User\Role;
 
 class Client extends Model
 {
@@ -61,6 +63,17 @@ class Client extends Model
 
                 return $records;
 
+    }
+
+
+    public function site_admin(){
+        $role = Role::where('slug','hr-manager')->first();
+        foreach($role->users as $u){
+            if($u->client_slug==$this->slug)
+                return $u;
+        }
+
+        return null;
     }
 
 
