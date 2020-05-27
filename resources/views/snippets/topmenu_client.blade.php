@@ -2,12 +2,12 @@
     @guest
     <a class="navbar-brand abs" href="{{ url('/') }}" aria-label="Homepage">
         <img 
-        src="{{ request()->session()->get('client')->logo }} " width="200px" class="ml-md-0"  alt="logo " type="image/png">
+        src="{{ request()->session()->get('client')->logo }} " height="80px" class="ml-md-0"  alt="logo " type="image/png">
     </a>
     @else
     <a class="navbar-brand abs" href="{{ url('/dashboard') }}" aria-label="Dashboard">
         <img 
-        src="{{ request()->session()->get('client')->logo }} " width="200px" class="ml-md-0"  alt="logo " type="image/png">
+        src="{{ request()->session()->get('client')->logo }} " height="80px" class="ml-md-0"  alt="logo " type="image/png">
     </a>   
     @endguest
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
