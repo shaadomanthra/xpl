@@ -219,9 +219,27 @@ class ClientController extends Controller
 
         $this->authorize('edit', $client);
 
+        if(request()->get('delete')=='logo'){
+            if(Storage::disk('public')->exists('companies/'.$client->slug.'.jpg')){
+                Storage::disk('public')->delete('companies/'.$client->slug.'.jpg');
+             flash('Logo is deleted.')->error();
+            }
+
+            if(Storage::disk('public')->exists('companies/'.$client->slug.'.png')){
+                Storage::disk('public')->delete('companies/'.$client->slug.'.png');
+             flash('Logo is deleted.')->error();
+            }
+
+        }
+
         if(request()->get('delete')=='banner'){
             if(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.jpg')){
                 Storage::disk('public')->delete('companies/'.$client->slug.'_banner.jpg');
+             flash('Dashboard banner is deleted.')->error();
+            }
+
+            if(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.png')){
+                Storage::disk('public')->delete('companies/'.$client->slug.'_banner.png');
              flash('Dashboard banner is deleted.')->error();
             }
 
@@ -230,6 +248,11 @@ class ClientController extends Controller
         if(request()->get('delete')=='header'){
             if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.jpg')){
                 Storage::disk('public')->delete('companies/'.$client->slug.'_header.jpg');
+             flash('Login page banner image is deleted.')->error();
+            }
+
+            if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.png')){
+                Storage::disk('public')->delete('companies/'.$client->slug.'_header.png');
              flash('Login page banner image is deleted.')->error();
             }
 

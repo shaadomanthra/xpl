@@ -128,11 +128,16 @@
          </form>
             </div>
             <div class="col-4">
-              @if(file_exists(public_path().'/img/clients/'.$client->slug.'.png'))
-              <img src="{{ asset('/img/clients/'.$client->slug.'.png')}}" class="float-right" />
+              @if(Storage::disk('public')->exists('companies/'.$client->slug.'.png'))
+              <img src="{{ asset('/storage/companies/'.$client->slug.'.png')}}" class=" w-50" />
+              <div>
+              <a href="{{ route('client.show',$client->slug)}}?delete=logo" class="btn btn-danger btn-sm mt-3"> delete logo</a></div>
+              @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'.jpg'))
+              <img src="{{ asset('/storage/companies/'.$client->slug.'.jpg')}}" class=" w-50" />
+              <div>
+              <a href="{{ route('client.show',$client->slug)}}?delete=logo" class="btn btn-danger btn-sm mt-3"> delete logo</a></div>
               @else
               <img src="{{ asset('/img/clients/logo_notfound.png')}}" class="float-right" />
-              
               @endif
             </div>
           </div>
@@ -164,7 +169,8 @@
               <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.jpg'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'_banner.jpg')}}" class=" w-50" />
-              <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a>
+              <div>
+              <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @else
               <img src="{{ asset('/img/clients/logo_notfound.png')}}" class="float-right" />
               @endif
