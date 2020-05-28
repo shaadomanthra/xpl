@@ -10,6 +10,7 @@ use PacketPrep\Models\User\Role;
 use PacketPrep\User;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 
 class ClientController extends Controller
@@ -258,10 +259,43 @@ class ClientController extends Controller
 
         }
 
+        $hr = Role::where('slug','hr-manager')->first();
+        $users = $hr->users;
+        
+        $u =['attempts_all'=>0,'attempts_thismonth'=>0,'attempts_lastmonth'=>0];
+        foreach($users as $k=>$user){
+            $users[$k]->attempts_all  =0;
+            $users[$k]->attempts_lastmonth =0;
+            $users[$k]->attempts_thismonth =0;
+
+            foreach($user->exams as $exam){
+                $users[$k]->attempts_all = $users[$k]->attempts_all + $exam->getAttemptCount();
+                $users[$k]->attempts_lastmonth = $users[$k]->attempts_lastmonth + $exam->getAttemptCount(null,'lastmonth');
+                $users[$k]->attempts_thismonth = $users[$k]->attempts_thismonth + $exam->getAttemptCount(null,'thismonth');
+
+            }
+            if($user->client_slug == $client->slug)
+            {
+                $u['attempts_all'] =  $users[$k]->attempts_all;
+                $u['attempts_lastmonth'] = $users[$k]->attempts_lastmonth;
+                $u['attempts_thismonth'] = $users[$k]->attempts_thismonth ;
+            }
+
+        }
+
+        $ucount = [];
+        $ucount['users_all'] = User::where('client_slug',$client->slug)->count();
+        $ucount['users_lastmonth'] = User::where('client_slug',$client->slug)->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
+        $ucount['users_thismonth'] =User::where('client_slug',$client->slug)->whereMonth('created_at', '=', Carbon::now()->month)->count();
+
+
+
         if($client)
             return view('appl.product.client.show')
                     ->with('client',$client)
-                    ->with('stub',$client->name);
+                    ->with('stub',$client->name)
+                    ->with('attempts',$u)
+                    ->with('users',$ucount);
         else
             abort(404);
     }

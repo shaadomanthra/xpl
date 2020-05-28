@@ -109,27 +109,49 @@
         </div>
       </div>
 
+      <div class="row mb-3">
+        <div class="col-12 col-md-6">
+          <div class="card">
+            <div class='card-header'>Users</div>
+             <div class='card-body '>
+              <div class="row">
+                <div class="col-12 col-md-4"><h5>Total</h5><div class="display-3">{{$users['users_all']}}</div></div>
+                <div class="col-12 col-md-4"><h5>This month</h5><div class="display-3">{{$users['users_thismonth']}}</div></div>
+                <div class="col-12 col-md-4"><h5>Last month</h5><div class="display-3">{{$users['users_lastmonth']}}</div></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+         <div class="col ">
+          <div class="card">
+            <div class='card-header'>Tests Attempted</div>
+             <div class='card-body '>
+               <div class="row">
+                <div class="col-12 col-md-4"><h5>Total</h5><div class="display-3">{{$attempts['attempts_all']}}</div></div>
+                <div class="col-12 col-md-4"><h5>This month</h5><div class="display-3">{{$attempts['attempts_thismonth']}}</div></div>
+                <div class="col-12 col-md-4"><h5>Last month</h5><div class="display-3">{{$attempts['attempts_lastmonth']}}</div></div>
+              </div>
+             </div>
+          </div>
+        </div>
+       
+      </div>
       
 
-      <div class="card mb-4">
+<div class="row">
 
+  <div class="col-12 col-md-4">
+      <div class="card mb-4">
+        <div class="card-header">Logo Upload</div>
         <div class="card-body">
-          <div class="card-title"><h1 class="mb-4">Logo Upload</h1></div>
+          
           <div class="row">
 
-            <div class="col-4">
-              <form method="post" action="{{route('client.image')}}" enctype="multipart/form-data">
-            <input type="hidden" name="client_slug" value="{{ $client->slug}}">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <input class="mb-3" type="file"
-               id="avatar" name="input_img"
-               accept="image/png, image/jpeg" /><br>
-           <button type="submit" class="btn btn-info">Save</button>
-         </form>
-            </div>
-            <div class="col-4">
+            
+            <div class="col-12">
               @if(Storage::disk('public')->exists('companies/'.$client->slug.'.png'))
-              <img src="{{ asset('/storage/companies/'.$client->slug.'.png')}}" class=" w-50" />
+              <img src="{{ asset('/storage/companies/'.$client->slug.'.png')}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=logo" class="btn btn-danger btn-sm mt-3"> delete logo</a></div>
               @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'.jpg'))
@@ -140,13 +162,26 @@
               <img src="{{ asset('/img/clients/logo_notfound.png')}}" class="float-right" />
               @endif
             </div>
+            <div class="col-12">
+              <div class="bg-light p-3 rounded border mt-3">
+              <form method="post" action="{{route('client.image')}}" enctype="multipart/form-data">
+            <input type="hidden" name="client_slug" value="{{ $client->slug}}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <input class="mb-3" type="file"
+               id="avatar" name="input_img"
+               accept="image/png, image/jpeg" /><br>
+           <button type="submit" class="btn btn-outline-info btn-sm ">Save</button>
+         </form>
+       </div>
+            </div>
           </div>
           
         </div>
       </div>
-
+</div>
+<div class="col-12 col-md-4">
       <div class="card mb-4">
-        <div class="card-header">Login Page Image</div>
+        <div class="card-header">Login Page Banner</div>
         <div class="card-body">
       @if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.png'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'_header.png')}}" class=" w-50 mb-3" />
@@ -159,7 +194,8 @@
               @endif
             </div>
         </div>
-
+</div>
+<div class="Col-12 col-md-4">
         <div class="card mb-4">
         <div class="card-header">Dashboard Banner Image</div>
         <div class="card-body">
@@ -178,7 +214,8 @@
         </div>
 
     </div>
-
+</div>
+</div>
     
 
   </div> 
