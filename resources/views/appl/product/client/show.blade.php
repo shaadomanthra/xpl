@@ -185,7 +185,7 @@
         <div class="card-header">Login Page Banner</div>
         <div class="card-body">
       @if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.png'))
-              <img src="{{ asset('/storage/companies/'.$client->slug.'_header.png')}}" class=" w-50 mb-3" />
+              <img src="{{ asset('/storage/companies/'.$client->slug.'_header.png')}}" class=" w-100 mb-3" />
               <div><a href="{{ route('client.show',$client->slug)}}?delete=header" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_header.jpg'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'_header.jpg')}}" class=" w-50" />
@@ -201,7 +201,7 @@
         <div class="card-header">Dashboard Banner Image</div>
         <div class="card-body">
       @if(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.png'))
-              <img src="{{ asset('/storage/companies/'.$client->slug.'_banner.png')}}" class=" w-50" />
+              <img src="{{ asset('/storage/companies/'.$client->slug.'_banner.png')}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.jpg'))

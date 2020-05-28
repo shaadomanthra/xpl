@@ -1,16 +1,19 @@
 
+
 <div class="py-4">
     <div class="row">
         <div class="col-12 col-md-6 text-center text-md-left">
     <a class="navbar-brand abs text-center float-md-left" href="{{ url('/dashboard') }}" aria-label="Dashboard">
         <img 
-        src="{{ request()->session()->get('client')->logo }} " width="200px" class="ml-md-0"  alt="logo " type="image/png">
+        src="{{ request()->session()->get('client')->logo }} " width="300px" class="ml-md-0"  alt="logo " type="image/png">
     </a>  
     </div>
-    <div class="col-12 col-md-6 text-center text-md-left">
-        <div class="text-center text-md-left float-md-right mt-3"><h1>Registration Page</h1></div>
+    <div class="col-12 col-md-6 text-right text-md-right">
+        <div class="text-center text-md-right float-md-right mt-3"><h1 class="mb-3">Registration Page</h1></div>
     </div>
-</div>
+    
+
+    </div>
 </div>
 
 @include('flash::message')
@@ -110,6 +113,54 @@
 
     </div>
     
+     <div class="row">
+        <div class="col-12 col-md-4">
+            <div class="form-group{{ $errors->has('video') ? ' has-error' : '' }}">
+                <label for="video" class="col-md-8 control-label">Inter College Name</label>
+
+                <div class="col-md-12">
+                    <input id="video" type="text" class="form-control" name="video" value="{{ old('video') }}" required autofocus placeholder="">
+
+                    @if ($errors->has('video'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('video') }}</strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="form-group{{ $errors->has('personality') ? ' has-error' : '' }}">
+                <label for="personality" class="col-md-8 control-label">Course</label>
+
+                <div class="col-md-12">
+                    <select class="form-control" name="personality">
+                      <option value="MPC"  >M.P.C</option>
+                      <option value="BiPC"  > Bi.P.C</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+         <div class="col-12 col-md-4">
+            <div class="form-group{{ $errors->has('confidence') ? ' has-error' : '' }}">
+                <label for="confidence" class="col-md-8 control-label">Secured Marks in First Year</label>
+
+                <div class="col-md-12">
+                    <input id="confidence" type="text" class="form-control" name="confidence" value="{{ old('confidence') }}" required autofocus>
+
+                    @if ($errors->has('confidence'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('confidence') }}</strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
     
 
