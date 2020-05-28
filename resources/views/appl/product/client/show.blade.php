@@ -156,7 +156,7 @@
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=logo" class="btn btn-danger btn-sm mt-3"> delete logo</a></div>
               @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'.jpg'))
-              <img src="{{ asset('/storage/companies/'.$client->slug.'.jpg')}}" class=" w-50" />
+              <img src="{{ asset('/storage/companies/'.$client->slug.'.jpg')}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=logo" class="btn btn-danger btn-sm mt-3"> delete logo</a></div>
               @else
@@ -188,7 +188,7 @@
               <img src="{{ asset('/storage/companies/'.$client->slug.'_header.png')}}" class=" w-100 mb-3" />
               <div><a href="{{ route('client.show',$client->slug)}}?delete=header" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_header.jpg'))
-              <img src="{{ asset('/storage/companies/'.$client->slug.'_header.jpg')}}" class=" w-50" />
+              <img src="{{ asset('/storage/companies/'.$client->slug.'_header.jpg')}}" class=" w-100" />
               <div><a href="{{ route('client.show',$client->slug)}}?delete=header" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @else
               <img src="{{ asset('/img/clients/logo_notfound.png')}}" class="float-right" />
@@ -205,7 +205,7 @@
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.jpg'))
-              <img src="{{ asset('/storage/companies/'.$client->slug.'_banner.jpg')}}" class=" w-50" />
+              <img src="{{ asset('/storage/companies/'.$client->slug.'_banner.jpg')}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @else
