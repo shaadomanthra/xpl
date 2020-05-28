@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Clients')
 @section('content')
 
 @include('appl.product.snippets.breadcrumbs')

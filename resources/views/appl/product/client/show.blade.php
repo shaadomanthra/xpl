@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', $client->name)
 @section('content')
 
 @include('appl.product.snippets.breadcrumbs')
