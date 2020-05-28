@@ -52,7 +52,7 @@
            <div class="row mb-2">
             <div class="col-md-4">Website URL</div>
             <div class="col-md-8">
-              <a href="http://{{$client->slug}}.p24.in"><span class="badge badge-warning">{{$client->slug}}.p24.in</span></a>
+              <a href="http://{{$client->slug}}.xplore.co.in"><span class="badge badge-warning">{{$client->slug}}.xplore.co.in</span></a>
             </div>
           </div>
 
