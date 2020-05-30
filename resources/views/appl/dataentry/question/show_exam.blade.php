@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Test '.$exam->name.' | PacketPrep')
+@section('title', 'Test '.$exam->name.' | Xplore')
 @section('content')
 
 <div class="d-none d-md-block">
@@ -72,9 +72,9 @@
           @endcan
 
           @can('create',$question)
-                <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-retweet"></i> copy</a>&nbsp;&nbsp;&nbsp;
-
-                <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-unlink"></i> remove</a>
+            <a href="#"  data-toggle="modal" data-target="#exampleModal3">
+         <i class="fa fa-unlink"></i> remove</a>
+                
           @endcan
 
           <span class="badge   badge-warning float-right mt-1">{{ strtoupper($question->type) }}</span>
@@ -233,6 +233,29 @@
 
 
 
-
+  <!-- Modal 3-->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remove Question</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action will remove the question from this test. It will be available in the database. To permanently delete question, use edit button.  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <a href="{{ route('exam.question',[$exam->slug,$question->id]) }}?remove=1">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-danger">Remove </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection

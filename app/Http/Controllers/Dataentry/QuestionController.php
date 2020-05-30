@@ -1031,6 +1031,26 @@ class QuestionController extends Controller
 
         if($id){
             $question = Question::where('id',$id)->first();
+
+            if(request()->get('remove'))
+            {
+                if(count($exam->sections)!=0)
+                foreach($exam->sections as $section){
+                    if(count($section->questions)!=0)
+                    foreach($section->questions as $ques)
+                    {
+                        if($id == $ques->id)
+                            $sec = $section;
+                            break; 
+                    }
+                }
+
+                if(isset($sec)){
+                    $sec->questions()->detach($id);
+                    return redirect()->route('exam.questions',$exam_slug);
+                }
+            }
+
             $this->authorize('view', $question);
 
             if($question){
