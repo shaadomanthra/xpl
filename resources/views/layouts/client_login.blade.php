@@ -25,13 +25,15 @@
           </div>
         </div>
         <div class="col-sm-6 px-0 d-none d-sm-block">
+          @if(isset(request()->session()->get('client')->slug))
             @if(Storage::disk('public')->exists('companies/'.request()->session()->get('client')->slug.'_header.png'))
               <img src="{{ asset('/storage/companies/'.request()->session()->get('client')->slug.'_header.png')}}?time={{ microtime()}}" alt="login image" class="login-img" />
               @elseif(Storage::disk('public')->exists('companies/'.request()->session()->get('client')->slug.'_header.jpg'))
               <img src="{{ asset('/storage/companies/'.request()->session()->get('client')->slug.'_header.jpg')}}?time={{ microtime()}}" alt="login image" class="login-img" />
-              @else
-              <img src="{{ asset('img/bg_login.jpg') }}" alt="login image" class="login-img">
               @endif
+          @else
+              <img src="{{ asset('img/bg_login.jpg') }}" alt="login image" class="login-img">
+          @endif
         </div>
       </div>
     </div>
