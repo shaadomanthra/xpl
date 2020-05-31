@@ -125,7 +125,7 @@
   
         </div>
       </div>
-@if($user->video)
+@if($user->video && $user->client_slug)
       <div class="card mb-3">
       <div class="card-body">
 @if(!is_numeric($user->video))
