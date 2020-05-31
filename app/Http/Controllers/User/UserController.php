@@ -146,13 +146,13 @@ class UserController extends Controller
     $month = $r->get('month');
 
     if($month=='thismonth')
-        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->month)->paginate(30);
+        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->month)->orderBy('id','desc')->paginate(30);
     elseif($month=='lastmonth')
-        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth()->month)->paginate(30);
+        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth()->month)->orderBy('id','desc')->paginate(30);
     elseif($month=='lastbeforemonth')
-        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->paginate(30);
+        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->orderBy('id','desc')->paginate(30);
     else
-        $users = User::where('client_slug',subdomain())->paginate(30);
+        $users = User::where('client_slug',subdomain())->orderBy('id','desc')->paginate(30);
           
     $data['users_all'] =  User::where('client_slug',subdomain())->count();
     $data['users_lastmonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
