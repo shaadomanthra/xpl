@@ -949,7 +949,8 @@ $(function(){
           console.log($code+' '+$code_verify);
           if($code==$code_verify){
             $('.sms_error').remove();
-            $(this).parent().append('<div class="text-success mt-2"><i class="fa fa-check-circle "></i> verified</div>');
+            if(!$('.verified').length)
+            $(this).parent().append('<div class="verified"><div class="text-success mt-2"><i class="fa fa-check-circle "></i> verified</div></div>');
           }else{
             $(this).parent().append('<div class="text-danger mt-2 sms_error"><i class="fa fa-times-circle "></i> invalid code</div>');
           }

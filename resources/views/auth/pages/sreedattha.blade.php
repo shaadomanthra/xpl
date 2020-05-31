@@ -116,7 +116,7 @@
      <div class="row">
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('video') ? ' has-error' : '' }}">
-                <label for="video" class="col-md-8 control-label">Inter College Name</label>
+                <label for="video" class="col-md-8 control-label">Inter/Diploma College Name</label>
 
                 <div class="col-md-12">
                     <input id="video" type="text" class="form-control" name="video" value="{{ old('video') }}" required autofocus placeholder="">
@@ -137,6 +137,13 @@
                     <select class="form-control" name="personality">
                       <option value="MPC"  >M.P.C</option>
                       <option value="BiPC"  > Bi.P.C</option>
+                      <option value="CSE"  > CSE</option>
+                      <option value="ECE"  > ECE</option>
+                      <option value="EEE"  > EEE</option>
+                      <option value="IT"  > IT</option>
+                      <option value="MECH"  > MECH</option>
+                      <option value="CIVIL"  > CIVIL</option>
+                      <option value="OTHER"  > OTHER</option>
                     </select>
                 </div>
             </div>
