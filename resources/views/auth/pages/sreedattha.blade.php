@@ -21,7 +21,6 @@
 <form class="form-horizontal" method="POST" action="{{ route('register.client') }}">
 
 
-<form class="form-horizontal" method="POST" action="{{ route('register') }}">
     {{ csrf_field() }}
 
     <div class="row">
