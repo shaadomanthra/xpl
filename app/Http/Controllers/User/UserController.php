@@ -165,7 +165,7 @@ class UserController extends Controller
         $user = \auth::user();
 
     if(request()->get('export')){
-            
+        $users = User::where('client_slug',subdomain())->get();
         request()->session()->put('users',$users);
         $name = "Userlist_".$user->client_slug.".xlsx";
         ob_end_clean(); // this
