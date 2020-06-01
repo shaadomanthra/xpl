@@ -97,13 +97,25 @@
       <div class="col-6 col-md-3 ">
         <div class=" p-3 rounded " style="background: #fff6f6;border:1px solid #efd7d7">
           <h5 class="text-danger"><i class="fa fa-times-circle"></i> Potential Cheating</h5>
-          <div class="display-3">{{count($report->groupBy('cheat_detect')[1])}}</div>
+          <div class="display-3">
+            @if(isset($report->groupBy('cheat_detect')[1]))
+            {{count($report->groupBy('cheat_detect')[1])}}
+            @else
+              -
+            @endif
+          </div>
         </div>
       </div>
       <div class="col-6 col-md-3 ">
         <div class=" p-3 rounded" style="background: #fffdf6;border:1px solid #ece8d5">
           <h5 class="text-warning"><i class="fa fa-ban"></i> Cheating - Not Clear</h5>
-          <div class="display-3">{{count($report->groupBy('cheat_detect')[2])}}</div>
+          <div class="display-3">
+            @if(isset($report->groupBy('cheat_detect')[2]))
+            {{count($report->groupBy('cheat_detect')[2])}}
+            @else
+              -
+            @endif
+          </div>
         </div>
       </div>
   </div>
