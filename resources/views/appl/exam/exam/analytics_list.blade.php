@@ -37,17 +37,6 @@
                 <td>
                   <a href="{{route('profile','@'.$r->user->username)}}"  >
                   {{ $r->user->name }}</a>
-
-                  @if($r->user->personality)
-                @if($r->user->personality>=8)
-                 <span class="badge badge-success"> Grade A</span>
-                @elseif($r->user->personality>=5 && $r->user->personality<8)
-                  <span class="badge badge-warning">Grade B</span>
-                @else
-                  <span class="badge badge-secondary">Grade C  </span>
-                @endif
-              @endif
-                  
                 </td>
                 <td>
                 @if($r->cheat_detect==1)

@@ -276,18 +276,7 @@
                has scored <b class="text-primary">
                 @if($t->score){{ $t->score }}@else 0 @endif</b> out of {{ $t->max }}
               @endif
-              <div class="float-right">
-              @if($t->user->personality)
-                @if($t->user->personality>=8)
-                 <span class="badge badge-success"> Grade A</span>
-                @elseif($t->user->personality>=5 && $t->user->personality<8)
-                  <span class="badge badge-warning">Grade B</span>
-                @else
-                  <span class="badge badge-secondary">Grade C  </span>
-                @endif
-              @endif
-              
-              </div>
+             
             </div>
             <small>{{$t->created_at->diffforHumans()}} </small>
 
