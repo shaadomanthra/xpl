@@ -174,7 +174,7 @@
             <div class="col-12 col-md-2">
               <div class='item '>
                 <div class="icon mb-3 mt-4 mt-md-0">
-                  <a href="{{ route('contact-corporate')}}" class="btn btn-light w-100"> Contact Us</a>
+                  <a href="{{ route('contact')}}" class="btn btn-light w-100"> Contact Us</a>
               </div>
             </div>
            
