@@ -73,7 +73,7 @@
 
   <div class="row mb-3">
       <div class="col-6 col-md-3 mb-3 mb-md-0">
-        <div class=" p-3 rounded" style="background: #f6fbff;border:1px solid #c9e0f3">
+        <div class=" p-3 rounded" style="background: #f9f6ff;border:1px solid #d7d1e8">
           <h5>Total Attempts</h5>
           <div class="display-3">{{count($report)}}</div>
         </div>
