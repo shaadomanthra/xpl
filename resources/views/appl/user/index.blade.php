@@ -78,7 +78,7 @@
              @if($user->gender)
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; 
-                  @if(!is_int($user->gender)) Gender @else Fathers Phone @endif</dt>
+                  @if(strlen($user->gender)<9) Gender @else Fathers Phone @endif</dt>
                 <dd class="col-sm-9">
 
                   {{ucfirst($user->gender)}}</dd>
