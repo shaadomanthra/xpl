@@ -225,6 +225,9 @@ class User extends Authenticatable
     public function getPsy(){
         $e = Exam::where('slug','psychometric-test')->first();
 
+        if(!$e)
+            return null;
+
         return $e->psychometric_test($this);
     }
 

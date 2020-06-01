@@ -23,22 +23,6 @@
             <div class="mt-3 mt-md-5 ">
              <h2 class="mb-md-2  heading_two mr-md-4 ml-4" >{{ $user->name }} 
 
-@if(\Auth::user())
-@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
-              @if($user->personality)
-              <div>
-            <div class="badge badge-success  mr-5 mt-2">
-              @if($user->personality>=8)
-        Grade A
-      @elseif($user->personality>=5 && $user->personality<8)
-        Grade B
-      @else
-        Grade C  
-      @endif</div>
-    </div>
-          @endif
-@endif
-@endif
               
              </h2>
              @if($user_details)
@@ -82,10 +66,22 @@
               </dl>
              @endif
 
+             @if($user->Phone)
+             <dl class="row mb-0">
+                <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; Candidate Phone</dt>
+                <dd class="col-sm-9">
+
+                  {{$user->phone}}</dd>
+              </dl>
+             @endif
+
              @if($user->gender)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; Gender</dt>
-                <dd class="col-sm-9">{{ucfirst($user->gender)}}</dd>
+                <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; 
+                  @if(!is_int($user->gender)) Gender @else Fathers Phone @endif</dt>
+                <dd class="col-sm-9">
+
+                  {{ucfirst($user->gender)}}</dd>
               </dl>
              @endif
 
@@ -98,14 +94,14 @@
 
              @if($user->current_city)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-address-card-o'></i> &nbsp; Current City</dt>
+                <dt class="col-sm-3"><i class='fa fa-address-card-o'></i> &nbsp; Current City (or) Address</dt>
                 <dd class="col-sm-9">@if(strip_tags(trim($user->current_city))) {{$user->current_city}} @else - @endif</dd>
               </dl>
              @endif
 
              @if($user->hometown)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-home'></i> &nbsp; Hometown</dt>
+                <dt class="col-sm-3"><i class='fa fa-home'></i> &nbsp; Hometown (or) District</dt>
                 <dd class="col-sm-9">{{$user->hometown}}</dd>
               </dl>
              @endif
@@ -158,7 +154,11 @@
     <div class="p-3 mb-3" style="border:1px solid #eee1f5;border-left:5px solid #7e4f8d;background:  #fbf3ff;">
       <h3 class="display-5">Confidence</h3>
       <h5 class="heading_one" style="color:#7e4f8d;opacity: 0.7">@if($user->confidence)
+            @if($user->confidence<10)
             {{$user->confidence}}
+            @else
+              -
+            @endif
           @else
             -
           @endif</h5>

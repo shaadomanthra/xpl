@@ -19,20 +19,7 @@
             <div class="mt-3 mt-md-5 ">
              <h2 class="mb-md-4 name mr-4 ml-4" >{{ $user->name }} 
 
-@if(\Auth::user())
-@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
-              @if($user->personality)
-            <span class="badge badge-light float-md-right mr-5 mt-2">
-              @if($user->personality>=8)
-        Grade A
-      @elseif($user->personality>=5 && $user->personality<8)
-        Grade B
-      @else
-        Grade C  
-      @endif</span>
-          @endif
-@endif
-@endif
+
               
              </h2>
              @if($user_details)
