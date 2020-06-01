@@ -634,6 +634,8 @@ class ExamController extends Controller
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
         }
 
+
+
         $search = $r->search;
         if($item){
             $users = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")

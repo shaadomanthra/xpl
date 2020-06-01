@@ -19,7 +19,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-area-chart "></i> Attempts (@if(request()->get('code'))  {{request()->get('code')}} @else All @endif) - {{count($report)}}
+          <p class="heading_two mb-2 f30" ><i class="fa fa-area-chart "></i> Attempts (@if(request()->get('code'))  {{request()->get('code')}} @else All @endif) 
 
            @if($exam->slug!='psychometric-test')
            @if(!request()->get('score'))
@@ -70,6 +70,43 @@
 <div class="container">
 
 <div  class="  mb-4 mt-4">
+
+  <div class="row mb-3">
+      <div class="col-6 col-md-3 mb-3 mb-md-0">
+        <div class=" p-3 rounded" style="background: #f6fbff;border:1px solid #c9e0f3">
+          <h5>Total Attempts</h5>
+          <div class="display-3">{{count($report)}}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 mb-3 mb-md-0">
+        <div class="p-3 rounded" style="background: #f6fff7;border:1px solid #c9e2cc">
+          <h5 class="text-success"><i class="fa fa-check-circle"></i> No Cheating</h5>
+          <div class="display-3">
+            @if(isset($report->groupBy('cheat_detect')[0]) && isset($report->groupBy('cheat_detect')['']))
+              {{(count($report->groupBy('cheat_detect')[0]) + count($report->groupBy('cheat_detect')['']))}}
+            @elseif(isset($report->groupBy('cheat_detect')[0]))
+            {{ count($report->groupBy('cheat_detect')[0]) }}
+            @elseif(isset($report->groupBy('cheat_detect')['']))
+            {{ count($report->groupBy('cheat_detect')['']) }}
+            @else
+              -
+            @endif
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 ">
+        <div class=" p-3 rounded " style="background: #fff6f6;border:1px solid #efd7d7">
+          <h5 class="text-danger"><i class="fa fa-times-circle"></i> Potential Cheating</h5>
+          <div class="display-3">{{count($report->groupBy('cheat_detect')[1])}}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 ">
+        <div class=" p-3 rounded" style="background: #fffdf6;border:1px solid #ece8d5">
+          <h5 class="text-warning"><i class="fa fa-ban"></i> Cheating - Not Clear</h5>
+          <div class="display-3">{{count($report->groupBy('cheat_detect')[2])}}</div>
+        </div>
+      </div>
+  </div>
 
   <div id="search-items">
    @include('appl.exam.exam.analytics_list')
