@@ -198,7 +198,7 @@ $(document).ready(function() {
       $token = $(this).data('token');
       $url= $(this).data('url');
       var code = editor.getValue();
-      $random1 = Math.random().toString(36).substring(7);
+      var random = Math.random().toString(36).substring(7);
       $('.loading').show();
       $('.codeerror').hide();
       
