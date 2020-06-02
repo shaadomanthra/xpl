@@ -120,9 +120,18 @@ class EditorController extends Controller
       }
       $data = $this->run_internal_p24($code,$input);
       $json = json_decode($data);
-      if($json->stderr)
-        print $data;
-      else{
+      $json->name = $name;
+      if(isset($json->stderr)){
+        $json->input = $input;
+
+        if($json->stdout == $output)
+          $json->success = 1;
+        else
+          $json->success = 0;
+        print json_encode($json);
+      }
+      else if(isset($json->stdout)){
+        $json->input = $input;
         if($json->stdout == $output)
           $json->success = 1;
         else
@@ -130,6 +139,10 @@ class EditorController extends Controller
 
         print json_encode($json);
 
+      }else{
+        $json->success= 2;
+        $json->input = $input;
+        print json_encode($json);
       }
 
     }
