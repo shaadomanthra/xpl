@@ -232,6 +232,7 @@ $(document).ready(function() {
            url : $url,
           data:{'testcase':'2','code':code,'_token':$token},
           success:function(data){
+            console.log(data);
             data = JSON.parse(data);
             if(data.stderr){
               $('.in2').html('-');
@@ -250,6 +251,7 @@ $(document).ready(function() {
            url : $url,
           data:{'testcase':3,'code':code,'_token':$token},
           success:function(data){
+            console.log(data);
             data = JSON.parse(data);
             if(data.stderr){
               $('.in3').html('-');
