@@ -26,14 +26,14 @@ class EditorController extends Controller
     	$code = $request->get('code');
     	if($request->get('testcase')==1){
     		$input = 14;
-    		$output = 17;
+    		$output = "17";
     	}
     	elseif($request->get('testcase')==2){
     		$input = 5;
-    		$output = 2;
+    		$output = "2";
     	}else{
     		$input = 10;
-    		$output = 11;
+    		$output = "11";
 
     	}
     	$data = $this->run_internal_p24($code,$input,'clang',1,strtotime("now"));
