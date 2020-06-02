@@ -24,6 +24,7 @@ class EditorController extends Controller
     public function tcstestcase(Request $request)
     {
     	$code = $request->get('code');
+      $name = $request->get('name');
     	if($request->get('testcase')==1){
     		$input = 14;
     		$output = "17";
@@ -36,11 +37,10 @@ class EditorController extends Controller
     		$output = "11";
 
     	}
-      $now = strtotime("now");
-    	$data = $this->run_internal_p24($code,$input,'clang',1,$now);
+    	$data = $this->run_internal_p24($code,$input,'clang',1,$name);
 
     	$json = json_decode($data);
-      $json->now = $now;
+      $json->name = $name;
       if(isset($json->stderr)){
     		$json->input = $input;
 
