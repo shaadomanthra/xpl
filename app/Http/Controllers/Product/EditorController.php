@@ -118,7 +118,8 @@ class EditorController extends Controller
         $output = 1;
 
       }
-      $data = $this->run_internal_p24($code,$input);
+      $name = $request->get('name');
+      $data = $this->run_internal_p24($code,$input,'clang',1,$name);
       $json = json_decode($data);
       $json->name = $name;
       if(isset($json->stderr)){
@@ -172,11 +173,21 @@ class EditorController extends Controller
         $output = 11;
 
       }
-      $data = $this->run_internal($code,$input);
+      $name = $request->get('name');
+      $data = $this->run_internal_p24($code,$input,'clang',1,$name);
       $json = json_decode($data);
-      if($json->stderr)
-        print $data;
-      else{
+      $json->name = $name;
+      if(isset($json->stderr)){
+        $json->input = $input;
+
+        if($json->stdout == $output)
+          $json->success = 1;
+        else
+          $json->success = 0;
+        print json_encode($json);
+      }
+      else if(isset($json->stdout)){
+        $json->input = $input;
         if($json->stdout == $output)
           $json->success = 1;
         else
@@ -184,7 +195,12 @@ class EditorController extends Controller
 
         print json_encode($json);
 
+      }else{
+        $json->success= 2;
+        $json->input = $input;
+        print json_encode($json);
       }
+
 
     }
 
