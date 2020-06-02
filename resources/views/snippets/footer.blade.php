@@ -52,7 +52,7 @@
 <hr>
 Copyright &copy; Xplore</div>
 <div class="text-muted d-none d-print-block">
-<img src="https://packetprep.com/img/xplore.png"
+<img src="https://xplore.co.in/img/xplore.png"
        class="w-100 mb-4" style="max-width:80px;" alt="xplore logo white">
 <p>At Xplore, we make learning simple, interesting and effective. Our Industry-leading Campus Recruitment Module includes granular, and comprehensive courses in quantitative aptitude, verbal ability, logical reasoning, interview skills, programming concepts, and coding.</p>
 <p>Our resource pool of over 10,000 questions is custom-designed and curated to help you crack national recruitment tests conducted by TCS, Wipro, Infosys, Capgemini and more.</p>
