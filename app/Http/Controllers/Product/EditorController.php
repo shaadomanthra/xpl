@@ -39,8 +39,14 @@ class EditorController extends Controller
     	$data = $this->run_internal_p24($code,$input,'clang',1,strtotime("now"));
 
     	$json = json_decode($data);
-      if(isset($json->stderr))
-    		print $data;
+      if(isset($json->stderr)){
+    		$json->input = $input;
+        if($json->stdout == $output)
+          $json->success = 1;
+        else
+          $json->success = 0;
+        print json_encode($json);
+      }
     	else if(isset($json->stdout)){
         $json->input = $input;
     		if($json->stdout == $output)
