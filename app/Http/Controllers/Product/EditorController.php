@@ -36,11 +36,14 @@ class EditorController extends Controller
     		$output = "11";
 
     	}
-    	$data = $this->run_internal_p24($code,$input,'clang',1,strtotime("now"));
+      $now = strtotime("now")
+    	$data = $this->run_internal_p24($code,$input,'clang',1,$now);
 
     	$json = json_decode($data);
+      $json->now = $now;
       if(isset($json->stderr)){
     		$json->input = $input;
+
         if($json->stdout == $output)
           $json->success = 1;
         else
