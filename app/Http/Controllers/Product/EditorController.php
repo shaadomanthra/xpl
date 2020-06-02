@@ -36,7 +36,7 @@ class EditorController extends Controller
     		$output = "11";
 
     	}
-      $now = strtotime("now")
+      $now = strtotime("now");
     	$data = $this->run_internal_p24($code,$input,'clang',1,$now);
 
     	$json = json_decode($data);
