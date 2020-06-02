@@ -42,6 +42,7 @@ class EditorController extends Controller
       if(isset($json->stderr))
     		print $data;
     	else if(isset($json->stdout)){
+        $json->input = $input;
     		if($json->stdout == $output)
     			$json->success = 1;
     		else
@@ -50,6 +51,8 @@ class EditorController extends Controller
     		print json_encode($json);
 
     	}else{
+        $json->success= 2;
+        $json->input = $input;
         print json_encode($json);
       }
 
