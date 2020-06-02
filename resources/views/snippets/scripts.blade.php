@@ -198,13 +198,14 @@ $(document).ready(function() {
       $token = $(this).data('token');
       $url= $(this).data('url');
       var code = editor.getValue();
+      $random1 = Math.random().toString(36).substring(7);
       $('.loading').show();
       $('.codeerror').hide();
       
         $.ajax({
           type : 'post',
           url : $url,
-          data:{'testcase':'1','code':code,'_token':$token},
+          data:{'testcase':'1','code':code,'_token':$token,'name':random+'_1'},
           success:function(data){
             console.log(data);
             data = JSON.parse(data);
@@ -230,7 +231,7 @@ $(document).ready(function() {
         $.ajax({
           type : 'post',
            url : $url,
-          data:{'testcase':'2','code':code,'_token':$token},
+          data:{'testcase':'2','code':code,'_token':$token,'name':random+'_2'},
           success:function(data){
             console.log(data);
             data = JSON.parse(data);
@@ -249,7 +250,7 @@ $(document).ready(function() {
         $.ajax({
           type : 'post',
            url : $url,
-          data:{'testcase':3,'code':code,'_token':$token},
+          data:{'testcase':3,'code':code,'_token':$token,'name':random+'_3'},
           success:function(data){
             console.log(data);
             data = JSON.parse(data);
