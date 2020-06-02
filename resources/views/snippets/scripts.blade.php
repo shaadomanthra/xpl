@@ -211,7 +211,7 @@ $(document).ready(function() {
             
             if(data.stderr){
               $('.codeerror').show();
-              $('.codeerror').html("<pre><code>"+data.stderr+"</code></pre>");
+              $('.codeerror').html("<pre><code class='text-light' ">"+data.stderr+"</code></pre>");
               $('.in1').html('-');
               $('.in1-message').html('<span class="badge badge-danger">failure</span>');
             }else{

@@ -97,7 +97,7 @@ int fibonacci(int position){
   </div>
   <div class="card-body">
 
-    <div class="bg-light border p-3 mb-3 codeerror">
+    <div class="bg-light border p-3 mb-3 codeerror text-light">
     </div>
 
     <div class="d-none d-md-block">
