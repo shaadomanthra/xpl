@@ -207,7 +207,7 @@ $(document).ready(function() {
           data:{'testcase':'1','code':code,'_token':$token},
           success:function(data){
             data = JSON.parse(data);
-            
+            console.log(data);
             if(data.stderr){
               $('.codeerror').show();
               $('.codeerror').html("<pre><code>"+data.stderr+"</code></pre>");

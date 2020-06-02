@@ -36,11 +36,12 @@ class EditorController extends Controller
     		$output = 11;
 
     	}
-    	$data = $this->run_internal($code,$input);
+    	$data = $this->run_internal_p24($code,$input,'java',1,'sample_newonw');
+
     	$json = json_decode($data);
-    	if($json->stderr)
+      if(isset($json->stderr))
     		print $data;
-    	else{
+    	else if(isset($json->stdout)){
     		if($json->stdout == $output)
     			$json->success = 1;
     		else
@@ -48,7 +49,9 @@ class EditorController extends Controller
 
     		print json_encode($json);
 
-    	}
+    	}else{
+        print json_encode($json);
+      }
 
     }
 
@@ -207,14 +210,14 @@ class EditorController extends Controller
 
       curl_setopt_array($curl, [
           CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => 'http://krishnateja.in',
+          CURLOPT_URL => 'http://code.p24.in',
           CURLOPT_POST => 1,
           CURLOPT_TIMEOUT => 30,
       ]);
 
       $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'1','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input,'name'=>$name);
 
-    
+      
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
       //echo $data;
       curl_setopt($curl, CURLOPT_POSTFIELDS, $form);

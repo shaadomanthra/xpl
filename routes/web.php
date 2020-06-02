@@ -62,6 +62,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('/targettcs/code','Product\EditorController@tcscode')->name('tcscode');
 	Route::post('/targettcs/code','Product\EditorController@tcstestcase')->name('tcs.testcase');
 
+	
+
 	Route::get('/targettcs/code/one','Product\EditorController@tcscode_one')->name('tcscode.one');
 	Route::post('/targettcs/code/one','Product\EditorController@tcstestcase_one')->name('tcs.testcase.one');
 
