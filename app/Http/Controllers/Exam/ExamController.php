@@ -279,6 +279,8 @@ class ExamController extends Controller
         $exam = Exam::where('id',$exam_id)->first();
         $user_id = $r->user_id;
 
+        $this->authorize('create', $exam);
+
         $eslug = substr(time(),4);
         
         while(1){
@@ -535,6 +537,8 @@ class ExamController extends Controller
     public function accesscode($id,Request $r){
         $exam= Exam::where('slug',$id)->first();
         
+        $this->authorize('create', $exam);
+
         $codes = explode(',',$exam->code);
         $user=array();
         foreach($codes as $k=>$code){
@@ -557,6 +561,8 @@ class ExamController extends Controller
     public function psyreport(Request $r)
     {
         $exam= Exam::where('slug','psychometric-test')->first();
+
+        $this->authorize('create', $exam);
 
         $userids =[];
         $user = \auth::user();
@@ -610,6 +616,8 @@ class ExamController extends Controller
     public function analytics($id,Request $r)
     {
         $exam= Exam::where('slug',$id)->first();
+        $this->authorize('create', $exam);
+        
         $code = $r->get('code');
         $item = $r->get('item');
         $data = $r->get('score');
