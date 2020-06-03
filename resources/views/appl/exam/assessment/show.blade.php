@@ -38,24 +38,25 @@
 				</span>
 					@else
 					<span class="badge badge-warning ">
-					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> FREE
+					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> OPEN
 				</span>
 					@endif</h1>
 
 				<p class="mb-3">
 				{!! $exam->description  !!}
 				</p>
+				@include('appl.exam.assessment.blocks.camera')
 				@if($entry)
 				  @if(!$attempt)
                   <a href="{{route('assessment.instructions',$exam->slug)}}">
-				<button class="btn btn-lg btn-success"> Attempt Test </button>
+				<button class="btn btn-lg btn-success accesscode_btn"> Attempt Test </button>
 				</a>
                   @endif
 				@else
 					@if($product)
 						@if($exam->status ==1)
 						<a href="{{route('assessment.instructions',$exam->slug)}}">
-						<button class="btn btn-lg btn-success"> Attempt Test </button>
+						<button class="btn btn-lg btn-success accesscode_btn"> Attempt Test </button>
 						</a>
 						@else
 				       <a href="{{route('productpage',$product->slug)}}">
@@ -64,7 +65,7 @@
 						@endif
 					@elseif($exam->status==1) <!-- free Test -->
 					<a href="{{route('assessment.instructions',$exam->slug)}}">
-					<button class="btn btn-lg btn-success"> Attempt Test </button>
+					<button class="btn btn-lg btn-success accesscode_btn"> Attempt Test </button>
 					</a>
 					@else
 
