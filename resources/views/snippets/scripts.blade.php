@@ -208,6 +208,10 @@ $(document).ready(function() {
           data:{'testcase':'1','code':code,'_token':$token,'name':random+'_1'},
           success:function(data){
             console.log(data);
+            if($('.output').length){
+              $('.output').append('<p>'+data+'</p>');
+            }
+
             data = JSON.parse(data);
             
             if(data.stderr){
@@ -225,6 +229,8 @@ $(document).ready(function() {
               }
               
             }
+
+
             
           }
         });
@@ -234,6 +240,10 @@ $(document).ready(function() {
           data:{'testcase':'2','code':code,'_token':$token,'name':random+'_2'},
           success:function(data){
             console.log(data);
+
+            if($('.output').length){
+              $('.output').append('<p>'+data+'</p>');
+            }
             data = JSON.parse(data);
             if(data.stderr){
               $('.in2').html('-');
@@ -253,6 +263,9 @@ $(document).ready(function() {
           data:{'testcase':3,'code':code,'_token':$token,'name':random+'_3'},
           success:function(data){
             console.log(data);
+            if($('.output').length){
+              $('.output').append('<p>'+data+'</p>');
+            }
             data = JSON.parse(data);
             if(data.stderr){
               $('.in3').html('-');
