@@ -118,7 +118,8 @@
     } 
   }
 
-  $time = $('#video').data('count');
+  // $time = $('#video').data('count');
+  $time = 500;
   setTimeout(function(){ takepicture(); }, 3000);
 
   setInterval(function(){ takepicture(); console.log($time); }, $time);
