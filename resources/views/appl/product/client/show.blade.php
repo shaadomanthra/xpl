@@ -152,11 +152,11 @@
             
             <div class="col-12">
               @if(Storage::disk('public')->exists('companies/'.$client->slug.'.png'))
-              <img src="{{ asset('/storage/companies/'.$client->slug.'.png')}}" class=" w-100" />
+              <img src="{{ asset('/storage/companies/'.$client->slug.'.png')}}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=logo" class="btn btn-danger btn-sm mt-3"> delete logo</a></div>
               @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'.jpg'))
-              <img src="{{ asset('/storage/companies/'.$client->slug.'.jpg')}}" class=" w-100" />
+              <img src="{{ asset('/storage/companies/'.$client->slug.'.jpg')}}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=logo" class="btn btn-danger btn-sm mt-3"> delete logo</a></div>
               @else
