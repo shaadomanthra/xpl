@@ -14,7 +14,7 @@
   <div class="container">
 
     <div class="row">
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md">
         
         <div class=' pb-1'>
           <p class="heading_two mb-1 f30 mt-3" >
