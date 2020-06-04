@@ -86,7 +86,7 @@
 
 				   @auth
 				   @if(strpos($exam->emails,\auth::user()->email)!==false)
-				   	@include('appl.exam.assessment.blocks.camera')
+				   	
 			       <a href="{{route('assessment.access',$exam->slug)}}">
 			       	<button class="btn btn-lg btn-outline-primary accesscode_btn"> Access Code </button>
 					</a>
@@ -94,7 +94,7 @@
 					<div class="bg-light border rounded p-3">You are not authorised to attempt this test.</div>
 					@endif
 			       @else
-			       	@include('appl.exam.assessment.blocks.camera')
+			       
 			       <a href="#" data-toggle="modal" data-target="#myModal2">
 			       	<button class="btn btn-lg btn-outline-primary accesscode_btn"> Access Code </button>
 					</a>
@@ -104,7 +104,7 @@
 				@else
 				
 				   @auth
-				   	@include('appl.exam.assessment.blocks.camera')
+				   	
 			       <a href="{{route('assessment.access',$exam->slug)}}">
 			       @else
 			       <a href="#" data-toggle="modal" data-target="#myModal2">

@@ -47,18 +47,19 @@
           </p>
         </div>
       </div>
+      @if( $_SERVER['HTTP_HOST'] != 'xplore.co.in')
       <div class="col-12 col-md-2">
         <div class="row mt-4">
-         
           <div class="col-12 ">
             <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
           <div class="h6">Total Users</div>
           <div class="h2" ><a href="{{ route('user.list')}}" data-toggle="tooltip" title="View Users">{{$user->where('client_slug',subdomain())->count()}}</a></div>
         </div>
           </div>
-          
         </div>
       </div>
+      @endif
+
       <div class="col-12 col-md-2">
         <div class="row mt-4">
          
