@@ -37,8 +37,12 @@ function first_letters($string) {
 $temp = explode(' ', $string);
 $result = '';
 foreach($temp as $t)
-    $result .= $t[0];
-return $result;
+    if(isset($t[0]))
+        $result .= $t[0];
+if($result)
+    return $result;
+else
+    return $string;
 }
 }
 if (! function_exists('get_tld')) {
