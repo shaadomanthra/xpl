@@ -1108,7 +1108,7 @@ class AssessmentController extends Controller
             $test_overall['max'] = $test_overall['max'] + $s['max'];
         }
 
-        if($test_overall['window_change']>5)
+        if($test_overall['window_change']>3)
             $test_overall['cheat_detect'] = 1;
 
         $pat = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
@@ -1152,7 +1152,7 @@ class AssessmentController extends Controller
 
         }
 
-        if($test_overall['window_change']>5)
+        if($test_overall['window_change']>3)
             $test_overall['cheat_detect'] = 1;
         
         Test::insert($data); 
