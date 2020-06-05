@@ -488,7 +488,7 @@ class AdminController extends Controller
         $user = User::where('email',$request->email)->first();
 
         if($user){
-            flash('The user (<b>'.$request->email.'</b>) account exists. Kindly use a different email.')->error();
+            flash('The user (<b>'.$request->email.'</b>) account exists. Kindly use the following link to <a href="https://xplore.co.in/password/reset">reset your password</a> or use different email id to create an new account.')->error();
                  return redirect()->back()->withInput();
         }
 
