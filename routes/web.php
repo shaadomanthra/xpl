@@ -13,6 +13,7 @@
 
 use PacketPrep\Http\Middleware\RequestFilter;
 use PacketPrep\Http\Middleware\Corporate;
+use PacketPrep\User;
 
 
 
@@ -238,6 +239,23 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::post('admin/user/{user}/product','Product\AdminController@storeuserproduct')->name('admin.user.product')->middleware('auth');
 	Route::get('admin/user/{user}/product/{id}','Product\AdminController@edit_userproduct')->name('admin.user.product.edit')->middleware('auth');
 	Route::post('admin/user/{user}/product/{id}','Product\AdminController@update_userproduct')->name('admin.user.product.update')->middleware('auth');
+
+
+	Route::get('loadtest', function(){
+		$user = User::where('id',6)->first();
+		echo $user->name."<br>";
+	
+		if(!$user->roll_number && $user->roll_number!=0)
+		$user->roll_number = 0;
+		else
+			$user->roll_number = $user->roll_number +1;
+
+		$user->save();
+		echo "user saved <br>";
+
+		$user = User::where('id',6)->first();
+		echo $user->roll_number."<br>";
+	})->name('loadtest');
 
 	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->name('pricing');
 
