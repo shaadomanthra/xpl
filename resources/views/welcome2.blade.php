@@ -175,13 +175,17 @@
                   <td>
                     <a href="{{ route('assessment.details',$test->slug) }}">{{$test->name}}</a>
                   </td>
+
                   <td>
+
                     @if(!$test->attempt_status)
-                    @if($test->slug!='psychometric-test')
-                    {{$test->score}} / {{$test->max}}
-                    @else
-                    -
-                    @endif
+                      @if($test->solutions==2)
+                      <span class="badge badge-secondary">private</span>
+                      @elseif($test->slug!='psychometric-test')
+                      {{$test->score}} / {{$test->max}}
+                      @else
+                      -
+                      @endif
                     @else
                      -
                     @endif
