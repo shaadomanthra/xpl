@@ -11,7 +11,12 @@
     </div>
 
     <div class="alert alert-warning alert-important" role="alert">
-  You will recieve your password on email. Kindly ensure that you enter the correct email address.<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <h4>Note:</h4>
+      <ul>
+        <li>You will recieve your password on email. Kindly ensure that you enter the correct email address.</li>
+        <li>If you see a message that 'User account exists'. Kindly use the following link to <a href="https://xplore.co.in/password/reset">reset your password</a>.</li>
+      </ul>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
