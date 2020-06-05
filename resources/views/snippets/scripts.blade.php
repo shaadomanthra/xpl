@@ -836,14 +836,25 @@ function addMinutes(date, minutes) {
 
  }
 
- $.winFocus(function(event) {
-  stopTimer();
-  console.log("Blur\t\t", event);
-},
-function(event) {
+//  $.winFocus(function(event) {
+//   //stopTimer();
+//   console.log("Blur\t\t", event);
+// },
+// function(event) {
 
-  console.log("Focus\t\t", event);
-});
+//   console.log("Focus\t\t", event);
+// });
+
+ var window_focus;
+
+$(window).focus(function() {
+    window_focus = true;
+    console.log("Focus\t\t");
+})
+    .blur(function() {
+        stopTimer();
+        console.log("Blur\t\t");
+    });
 </script>
 @endif
 @endif
