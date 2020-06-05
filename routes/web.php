@@ -471,6 +471,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	Route::get('exam/psyreport','Exam\ExamController@psyreport')->middleware('auth')->name('exam.psyreport');
 	Route::post('exam/copy','Exam\ExamController@copy')->middleware('auth')->name('e.exam.copy');
+	Route::post('exam/owner','Exam\ExamController@owner')->middleware('auth')->name('e.exam.owner');
 	Route::resource('exam','Exam\ExamController')->middleware('auth');
 	Route::resource('examtype','Exam\ExamtypeController')->middleware('auth');
 	Route::resource('exam/{exam}/sections','Exam\SectionController')->middleware('auth');

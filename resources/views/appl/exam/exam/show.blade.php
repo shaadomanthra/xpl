@@ -40,6 +40,7 @@
               <a href="{{ route('exam.edit',$exam->slug) }}" class="btn btn-outline-light" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i> edit</a>
               @if(\Auth::user()->checkRole(['administrator','editor']))
               <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal2" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-retweet"></i> copy</a>
+              <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal3" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-user"></i> change owner</a>
               @endif
               <a href="#" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i> delete</a>
             </span>
@@ -106,7 +107,7 @@
             </div>
           </div>
 
-          <div class="row mb-0">
+          <div class="row mb-2">
             <div class="col-6"> <i class="fa fa-check-square"></i>&nbsp;Exam Status</div>
             <div class="col-6">
               @if($exam->status==0)
@@ -116,6 +117,13 @@
               @else
                 <span class="badge badge-primary">Private</span>
               @endif
+            </div>
+          </div>
+
+          <div class="row mb-0">
+            <div class="col-6"> <i class="fa fa-user"></i>&nbsp;Ownership</div>
+            <div class="col-6">
+              {{$exam->user->name}}
             </div>
           </div>
 
@@ -309,6 +317,49 @@
   </div> 
 </div>
 
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form method="post" action="{{route('e.exam.owner')}}">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Test Ownership</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <div class="form-group">
+        <label for="formGroupExampleInput ">Current Owner</label>
+        <div class="h3 text-primary">{{$exam->user->name}}</div>
+       
+      </div>
+        <div class="form-group">
+        <label for="formGroupExampleInput "> Select the HR Manager to assign for</label>
+        <select class="form-control" name="user_id">
+          <option value=""  >-None-</option>
+          <option value="{{\auth::user()->id}}"  >{{ \auth::user()->username }}</option>
+          @foreach(\auth::user()->getRole('hr-manager') as $u)
+
+          <option value="{{$u->id}}"  >{{ $u->username }}</option>
+          @endforeach
+        </select>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        
+        <input type="hidden" name="exam_id" value="{{$exam->id}}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-success">Change</button>
+        
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
 
   <!-- Modal -->
 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

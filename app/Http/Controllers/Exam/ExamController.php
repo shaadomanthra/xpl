@@ -273,6 +273,23 @@ class ExamController extends Controller
     }
 
 
+    public function owner(Request $r){
+
+       
+        $exam_id = $r->exam_id;
+        $exam = Exam::where('id',$exam_id)->first();
+         $this->authorize('create', $exam);
+        if($r->user_id){
+            $exam->user_id = $r->user_id; 
+            $exam->save();
+            flash('Test Ownership changed')->success();
+        }
+      
+        return redirect()->route('exam.show',$exam->slug);
+ 
+
+    }
+
     public function copy(Request $r){
         $exam_id = $r->exam_id;
         $exam_name = $r->exam_name;
