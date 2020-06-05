@@ -1,5 +1,5 @@
 
-$('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+$('div.alert').not('.alert-important').delay(8000).fadeOut(350);
 $('#flash-overlay-modal').modal();
 
 $(document).ready(function() {
