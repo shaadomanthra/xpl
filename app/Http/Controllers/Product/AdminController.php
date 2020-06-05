@@ -479,11 +479,11 @@ class AdminController extends Controller
         }
         
 
-        list($u, $domain) = explode('@', $request->email);
-        if ($domain != 'gmail.com') {
-            flash('Kindly use only gmail.com for email address.')->error();
-                 return redirect()->back()->withInput();
-        }
+        // list($u, $domain) = explode('@', $request->email);
+        // if ($domain != 'gmail.com') {
+        //     flash('Kindly use only gmail.com for email address.')->error();
+        //          return redirect()->back()->withInput();
+        // }
 
         $user = User::where('email',$request->email)->first();
 
@@ -735,10 +735,10 @@ class AdminController extends Controller
         $direct = $request->get('type');
         list($u, $domain) = explode('@', $request->email);
 
-        if ($domain != 'gmail.com') {
-            flash('Kindly use only gmail.com for email address.')->error();
-                 return redirect()->back()->withInput();
-        }
+        // if ($domain != 'gmail.com') {
+        //     flash('Kindly use only gmail.com for email address.')->error();
+        //          return redirect()->back()->withInput();
+        // }
 
         $user = User::where('email',$request->email)->first();
 

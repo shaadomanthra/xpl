@@ -22,7 +22,7 @@
         </div>
         <div class="col-12 col-md-6">
           <div class="form-group ">
-            <label for="formGroupExampleInput2">Email (Only Gmail ID Accepted)</label>
+            <label for="formGroupExampleInput2">Email</label>
             <input type="text" class="form-control" name="email" id="formGroupExampleInput2" placeholder="Email address"
             @if($stub=='Create')
             value="{{ (old('email')) ? old('email') : '' }}"
