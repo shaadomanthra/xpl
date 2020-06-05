@@ -9,6 +9,12 @@
     <div class="bg-light border p-3 mb-3">
       <h1 class="">Student Registration  </h1>
     </div>
+
+    <div class="alert alert-warning alert-important" role="alert">
+  You will recieve your password on email. Kindly ensure that you enter the correct email address.<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
     <form method="post" action="{{route('admin.user.studentstore')}}" >
         <div class="row">
           <div class="col-12 col-md-6">
