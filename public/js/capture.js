@@ -83,7 +83,7 @@
     var context = canvas.getContext('2d');
     var $counter = parseInt($('#video').data('c'));
 
-    if($counter<20)
+ 
     if (width && height) {
  
       canvas.width = width;

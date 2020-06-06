@@ -216,12 +216,14 @@
 			</div>
 			@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_1.jpg'))
 			<div class="row mb-4">
-				@for($i=1;$i<200;$i++)
+				@for($j=1;$i<6;$j++)
+				@for($i=1;$i<21;$i++)
 					@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
 					<div class='col-6 col-md-2'>
 						<img src="{{ asset('/storage/tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
 					</div>
 					@endif
+				@endfor
 				@endfor
 			</div>
 			@endif
