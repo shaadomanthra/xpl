@@ -710,9 +710,12 @@ class ExamController extends Controller
         $code = $r->get('code');
         $item = $r->get('item');
         $data = $r->get('score');
+        $cheat = $r->get('cheat_detect');
         if($code){
             if($data)
             $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->orderby('score','desc')->get();
+            else if($cheat)
+             $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->where('cheat_detect',$cheat)->get();   
             else
             $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->orderby('id','desc')->get();
               
@@ -723,6 +726,8 @@ class ExamController extends Controller
         }else{
             if($data)
             $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+            else if($cheat)
+            $result = Tests_Overall::where('test_id',$exam->id)->where('cheat_detect',$cheat)->get();
             else
             $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->get();
               
