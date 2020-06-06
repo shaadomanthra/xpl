@@ -189,8 +189,35 @@
 
 			</div>
 			@endif
+
+
 		</div>
 		</div>
+		@endif
+
+		@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-12 col-md-3">
+							<h4>Cheating</h4>
+						</div>
+						<div class="col-12 col-md-9">
+							<form action="{{ request()->fullUrl()}}" method="get">
+							<div class="form-group w-100">
+							    <select class="form-control w-100" name="cheat_detect">
+							      <option value ="3" @if($test_overall->cheat_detect==0) selected @endif>Potentially No</option>
+							      <option value ="1" @if($test_overall->cheat_detect==1) selected @endif>Potentially YES</option>
+							      <option value ="2" @if($test_overall->cheat_detect==2) selected @endif>Not clear</option>
+							    </select>
+							    <input type="hidden" name="student" value="{{request()->get('student')}}" />
+							 </div>
+							 <button class="btn btn-primary" type="submit">save</button>
+							 </form>
+						</div>
+					</div>
+				</div>
+			</div>
 		@endif
 		
 

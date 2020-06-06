@@ -48,23 +48,30 @@
                   {{$r->window_change}}
                 </td>
                 <td>
-                  @if(Storage::disk('public')->exists('tests/'.$r->user->username.'_'.$exam->id.'_1.jpg'))
-                  <div class="row mb-4">
-                    @for($i=1;$i<21;$i++)
-                      @if(Storage::disk('public')->exists('tests/'.$r->user->username.'_'.$exam->id.'_'.$i.'.jpg'))
-                      <div class='col-6 col-md-2'>
-                        <img src="{{ asset('/storage/tests/'.$r->user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
-                      </div>
-                      @endif
-                    @endfor
-                  </div>
-                  @endif
+                 -
                 </td>
                 <td>
                   {{$r->face_detect}}
                 </td>
                 <td>
-                -
+                <form method="post" class='form-inline' action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
+                  @if(!$r->status)
+                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}">
+                    <i class='fa fa-bar-chart'></i> Report
+                  </a>&nbsp;&nbsp;&nbsp;
+                  @if($exam->slug!='psychometric-test')
+                  <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
+                  @endif
+                  @else
+                  - &nbsp;&nbsp;&nbsp;
+                  @endif
+                  @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="user_id" value="{{ $r->user->id }}">
+                    <input type="hidden" name="test_id" value="{{ $exam->id }}">
+                    <button class="btn btn-link  p-0" type="submit"><i class='fa fa-trash'></i> delete</button>
+                @endif
+                </form>
                   
                 </td>
                 

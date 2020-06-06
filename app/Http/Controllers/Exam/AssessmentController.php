@@ -1462,6 +1462,8 @@ class AssessmentController extends Controller
         if(!$student)
             $student = \auth::user();
 
+
+
         
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0,'evaluation'=>1];
         $details['course'] = $exam->name;
@@ -1478,6 +1480,8 @@ class AssessmentController extends Controller
 
         $tests_section = Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
         $secs = $tests_section->groupBy('section_id');
+
+
         //dd($tests);
         if(!count($tests))
             abort('404','Test not attempted');
@@ -1660,6 +1664,14 @@ class AssessmentController extends Controller
             $details['unattempted_time'] = $details['unattempted_time'].' sec';   
             
         $tests_overall = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
+
+        if($request->get('cheat_detect')){
+            if($request->get('cheat_detect')==3)
+                $tests_overall->cheat_detect = 0;
+            else
+                $tests_overall->cheat_detect = $request->get('cheat_detect');
+            $tests_overall->save();
+        }
 
         //dd($sections);
 
