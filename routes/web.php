@@ -168,6 +168,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 			->name('test.analytics')->middleware('auth');
 	Route::get('/test/{test}/report', 'Exam\ExamController@analytics')
 			->name('test.report')->middleware('auth');
+	Route::get('/test/{test}/reportdeep', 'Exam\ExamController@analyticsdeep')
+			->name('test.reportdeep')->middleware('auth');
 	Route::get('/test/{test}/accesscode', 'Exam\ExamController@accesscode')
 			->name('test.accesscode')->middleware('auth');
 
