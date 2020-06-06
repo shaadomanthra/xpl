@@ -119,8 +119,8 @@
   }
 
   // $time = $('#video').data('count');
-  $time = 30000;
-  setTimeout(function(){ takepicture(); }, 3000);
+  $time = 120000;
+  setTimeout(function(){ takepicture(); }, 5000);
 
   setInterval(function(){ takepicture(); console.log($time); }, $time);
 
