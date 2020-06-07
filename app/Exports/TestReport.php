@@ -41,7 +41,7 @@ class TestReport implements FromCollection
             
     		$result[$k]->Email = $res->user->email;
     		$result[$k]->Phone= $res->user->phone;
-
+            $result[$k]->cheat_d = $res->cheat_detect;
             if($res->cheat_detect==2)
             $result[$k]->cheating = 'Cheating - Not Clear';
             elseif($res->cheat_detect==1)
@@ -84,6 +84,7 @@ class TestReport implements FromCollection
         $ux->yop = "Year of Passing";
     	$ux->email = "Email";
     	$ux->phone = "Phone";
+        $ux->cheat_d = "Window Swap";
         $ux->window = "Cheating";
     	foreach($exam_sections as $m=>$sec){
     			$name = $exam_sections[$m]['name'];

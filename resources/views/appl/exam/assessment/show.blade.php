@@ -85,7 +85,7 @@
 				@if(trim(strip_tags($exam->emails)))
 
 				   @auth
-				   @if(strpos($exam->emails,\auth::user()->email)!==false)
+				   @if(strpos(strtolower($exam->emails),strtolower(\auth::user()->email))!==false)
 				   	
 			       <a href="{{route('assessment.access',$exam->slug)}}">
 			       	<button class="btn btn-lg btn-outline-primary accesscode_btn"> Access Code </button>

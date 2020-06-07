@@ -285,7 +285,7 @@ class AssessmentController extends Controller
         $window_change = true;
 
         if(trim(strip_tags($exam->emails))){
-            if(strpos($exam->emails,$user->email)!==false)
+            if(strpos(strtolower($exam->emails),strtolower($user->email))!==false)
             {
                 
             }else{
