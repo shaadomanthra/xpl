@@ -41,7 +41,7 @@ class TestReport implements FromCollection
             
     		$result[$k]->Email = $res->user->email;
     		$result[$k]->Phone= $res->user->phone;
-            $result[$k]->cheat_d = $res->cheat_detect;
+            $result[$k]->cheat_d = $res->window_change;
             if($res->cheat_detect==2)
             $result[$k]->cheating = 'Cheating - Not Clear';
             elseif($res->cheat_detect==1)
