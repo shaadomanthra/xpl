@@ -12,9 +12,9 @@
         <div class="text-center text-md-center float-md-center mt-3"><h1 class="mb-3">Registration Page</h1></div>
     </div>
     <div class="col-12 col-md-4 text-right text-md-right">
-        <div class="text-right text-md-right float-md-right mt-3">
+        <div class="text-right text-md-right float-md-right ">
             <img 
-        src="{{ asset('img/alphores.jpg') }} " width="100px" class="ml-md-0"  alt="logo " type="image/png">
+        src="{{ asset('img/alphores.jpg') }} " width="100px" class="ml-md-0"  alt="logo " type="image/png" style="margin-top: -10px;">
         </div>
     </div>
 
