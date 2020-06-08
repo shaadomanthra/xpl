@@ -222,7 +222,7 @@
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">Admission Number</label>
                 <div class="col-md-12">
-                    <input id="address" type="text" class="form-control" name="tenth" value="{{ old('tenth') }}" required>
+                    <input id="address" type="text" class="form-control" name="confidence" value="{{ old('confidence') }}" required>
                     
                 </div>
             </div>
