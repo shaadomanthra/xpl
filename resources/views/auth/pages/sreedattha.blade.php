@@ -14,7 +14,7 @@
     <div class="col-12 col-md-4 text-right text-md-right">
         <div class="text-right text-md-right float-md-right ">
             <img 
-        src="{{ asset('img/alphores.jpg') }} " width="100px" class="ml-md-0"  alt="logo " type="image/png" style="margin-top: -25px;">
+        src="{{ asset('img/alphores_iit.jpg') }} " height="100px" class="ml-md-0"  alt="logo " type="image/png" style="margin-top: -25px;">
         </div>
     </div>
 
