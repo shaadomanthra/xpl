@@ -2,16 +2,21 @@
 
 <div class="py-4">
     <div class="row">
-        <div class="col-12 col-md-6 text-center text-md-left">
+        <div class="col-12 col-md-4 text-center text-md-left">
     <a class="navbar-brand abs text-center float-md-left" href="{{ url('/dashboard') }}" aria-label="Dashboard">
         <img 
         src="{{ request()->session()->get('client')->logo }} " width="300px" class="ml-md-0"  alt="logo " type="image/png">
     </a>  
     </div>
-    <div class="col-12 col-md-6 text-right text-md-right">
-        <div class="text-right text-md-right float-md-right mt-3"><h1 class="mb-3">Registration Page</h1></div>
+    <div class="col-12 col-md-4 text-center text-md-center">
+        <div class="text-center text-md-center float-md-center mt-3"><h1 class="mb-3">Registration Page</h1></div>
     </div>
-    
+    <div class="col-12 col-md-4 text-right text-md-right">
+        <div class="text-right text-md-right float-md-right mt-3">
+            <img 
+        src="{{ asset('img/alphores.jpg') }} " width="100px" class="ml-md-0"  alt="logo " type="image/png">
+        </div>
+    </div>
 
     </div>
 </div>
@@ -136,6 +141,7 @@
     
 
     <div class="row">
+
         <div class="col-12 col-md-4">
              <div class="form-group">
         <label for="dob" class="col-md-12 control-label">Date of birth (eg: 25-08-2005) </label>
@@ -212,7 +218,16 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
+            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                <label for="phone" class="col-md-8 control-label">Admission Number</label>
+                <div class="col-md-12">
+                    <input id="address" type="text" class="form-control" name="tenth" value="{{ old('tenth') }}" required>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">District</label>
                 <div class="col-md-12">
@@ -221,7 +236,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">Address</label>
                 <div class="col-md-12">
