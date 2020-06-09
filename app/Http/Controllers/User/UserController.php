@@ -273,6 +273,7 @@ class UserController extends Controller
                  return redirect()->back()->withInput();
             }
         }
+
         $user = User::where('email',$request->email)->first();
      
 
@@ -293,6 +294,12 @@ class UserController extends Controller
 
         $parts = explode("@", $request->email);
         $username = $parts[0];
+
+        $u = User::where('username',$username)->first();
+
+        if($u){
+            $username = $username.'_'.rand(10,100);
+        }
 
         $user = User::create([
             'name' => $request->name,
