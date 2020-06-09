@@ -2,16 +2,21 @@
 
 <div class="py-4">
     <div class="row">
-        <div class="col-12 col-md-6 text-center text-md-left">
+        <div class="col-12 col-md-4 text-center text-md-left">
     <a class="navbar-brand abs text-center float-md-left" href="{{ url('/dashboard') }}" aria-label="Dashboard">
         <img 
         src="{{ request()->session()->get('client')->logo }} " width="300px" class="ml-md-0"  alt="logo " type="image/png">
     </a>  
     </div>
-    <div class="col-12 col-md-6 text-right text-md-right">
-        <div class="text-center text-md-right float-md-right mt-3"><h1 class="mb-3">Registration Page</h1></div>
+    <div class="col-12 col-md-4 text-center text-md-center">
+        <div class="text-center text-md-center float-md-center mt-3"><h1 class="mb-3">Registration Page</h1></div>
     </div>
-    
+    <div class="col-12 col-md-4 text-right text-md-right">
+        <div class="text-right text-md-right float-md-right ">
+            <img 
+        src="{{ asset('img/alphores_iit.jpg') }} " height="100px" class="ml-md-0"  alt="logo " type="image/png" style="margin-top: -25px;">
+        </div>
+    </div>
 
     </div>
 </div>
@@ -19,46 +24,8 @@
 @include('flash::message')
 
 <form class="form-horizontal" method="POST" action="{{ route('register.client') }}">
-<div class="alert alert-primary alert-important py-4">
-    <p class="px-3">Verification of phone number is mandatory. Kindly enter the correct 10 digit phone number to complete the registration.</p>
-    <div class="row">
-        <div class="col-12 col-md-6">
-            <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-                <label for="phone" class="col-md-8 control-label">Phone</label>
-                <div class="col-md-12">
-                    <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required placeholder="Enter your 10 digit phone number">
-                    @if ($errors->has('phone'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('phone') }}</strong>
-                    </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-md-12">
-            <button type="button" class="btn btn-outline-primary sendsms" data-url="{{ route('register.sendotp')}}" data-code="{{$code}}" data-token="{{ csrf_token() }}">
-                Send OTP
-            </button>
-            </div>
-             
-        </div>
-        <div class="col-12 col-md-6">
-            <div class="form-group{{ $errors->has('otp') ? ' has-error' : '' }}">
-                <label for="otp" class="col-md-8 control-label">OTP</label>
-                <div class="col-md-12">
-                    <input id="phone" type="text" class="form-control" name="otp" value="{{ old('otp') }}" required placeholder="Enter otp sent to your phone number">
-                </div>
-            </div>
-            <div class="col-md-12">
-            <button type="button" class="btn btn-success verifycode" data-code="{{$code}}" >
-                Verify 
-            </button>
-            </div>
 
-        </div>
-    </div>
-</div>
 
-<form class="form-horizontal" method="POST" action="{{ route('register') }}">
     {{ csrf_field() }}
 
     <div class="row">
@@ -101,6 +68,8 @@
                 <div class="col-md-12">
                     <input id="gender" type="text" class="form-control" name="gender" value="{{ old('gender') }}" required autofocus>
 
+
+
                     @if ($errors->has('gender'))
                     <span class="help-block">
                         <strong>{{ $errors->first('gender') }}</strong>
@@ -116,7 +85,7 @@
      <div class="row">
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('video') ? ' has-error' : '' }}">
-                <label for="video" class="col-md-8 control-label">Inter College Name</label>
+                <label for="video" class="col-md-8 control-label">Inter/Diploma College Name</label>
 
                 <div class="col-md-12">
                     <input id="video" type="text" class="form-control" name="video" value="{{ old('video') }}" required autofocus placeholder="">
@@ -137,6 +106,13 @@
                     <select class="form-control" name="personality">
                       <option value="MPC"  >M.P.C</option>
                       <option value="BiPC"  > Bi.P.C</option>
+                      <option value="CSE"  > CSE</option>
+                      <option value="ECE"  > ECE</option>
+                      <option value="EEE"  > EEE</option>
+                      <option value="IT"  > IT</option>
+                      <option value="MECH"  > MECH</option>
+                      <option value="CIVIL"  > CIVIL</option>
+                      <option value="OTHER"  > OTHER</option>
                     </select>
                 </div>
             </div>
@@ -165,7 +141,8 @@
     
 
     <div class="row">
-        <div class="col-12 col-md-6">
+
+        <div class="col-12 col-md-4">
              <div class="form-group">
         <label for="dob" class="col-md-12 control-label">Date of birth (eg: 25-08-2005) </label>
 
@@ -174,7 +151,7 @@
         </div>
     </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
         <label for="email" class="col-md-12 control-label">E-Mail Address </label>
 
@@ -184,6 +161,24 @@
             @if ($errors->has('email'))
             <span class="help-block">
                 <strong>{{ $errors->first('email') }}</strong>
+            </span>
+            @endif
+        </div>
+    </div>
+
+        </div>
+
+        <div class="col-12 col-md-4">
+             <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+        <label for="email" class="col-md-12 control-label">Student Phone Number </label>
+
+        <div class="col-md-12">
+            <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
+            <input id="otp" type="hidden" class="form-control" name="otp" value="{{$code}}" >
+
+            @if ($errors->has('phone'))
+            <span class="help-block">
+                <strong>{{ $errors->first('phone') }}</strong>
             </span>
             @endif
         </div>
@@ -223,7 +218,16 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
+            <div class="form-group{{ $errors->has('fluency') ? ' has-error' : '' }}">
+                <label for="phone" class="col-md-8 control-label">Admission Number</label>
+                <div class="col-md-12">
+                    <input id="address" type="text" class="form-control" name="fluency" value="{{ old('fluency') }}" required>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">District</label>
                 <div class="col-md-12">
@@ -232,7 +236,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">Address</label>
                 <div class="col-md-12">

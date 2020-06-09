@@ -219,10 +219,10 @@
 
     <div class="row">
         <div class="col-12 col-md-4">
-            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+            <div class="form-group{{ $errors->has('fluency') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">Admission Number</label>
                 <div class="col-md-12">
-                    <input id="address" type="text" class="form-control" name="confidence" value="{{ old('confidence') }}" required>
+                    <input id="fluency" type="text" class="form-control" name="fluency" value="{{ old('fluency') }}" required>
                     
                 </div>
             </div>

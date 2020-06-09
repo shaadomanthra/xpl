@@ -241,6 +241,8 @@ class UserController extends Controller
         $code = intval(request()->session()->get('code'));
         $code_verify = intval($request->otp);
 
+        dd($request->all());
+
         if($code_verify != $code){
             flash('Sms verification code did not match.')->error();
                  return redirect()->back()->withInput();
@@ -301,6 +303,7 @@ class UserController extends Controller
             $username = $username.'_'.rand(10,100);
         }
 
+
         $user = User::create([
             'name' => $request->name,
             'username' => $username,
@@ -323,6 +326,8 @@ class UserController extends Controller
         $user->confidence = $request->get('confidence');
         $user->fluency = $request->get('fluency');
         $user->language = $request->get('language');
+        
+        
         $user->save();
         
 
