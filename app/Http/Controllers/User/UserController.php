@@ -241,7 +241,7 @@ class UserController extends Controller
         $code = intval(request()->session()->get('code'));
         $code_verify = intval($request->otp);
 
-        dd($request->all());
+        
 
         if($code_verify != $code){
             flash('Sms verification code did not match.')->error();
