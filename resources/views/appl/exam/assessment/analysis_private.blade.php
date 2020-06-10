@@ -190,7 +190,7 @@
 			</div>
 			@endif
 
-			<a href="{{ request()->fullUrl()}}&images=all" class="mt-3 btn-primary btn-lg">view all</a>
+			<a href="{{ request()->fullUrl()}}&images=all" class="mt-3 btn-outline-success btn-lg">view all</a>
 
 
 		</div>
