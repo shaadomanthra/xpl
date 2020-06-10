@@ -178,7 +178,7 @@
 				</div>
 			</div>
 			@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_1.jpg'))
-			<div class="row mb-4">
+			<div class="row mb-4 {{$c=0}}">
 				@for($i=1;$i<19;$i++)
 					@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
 					<div class='col-6 col-md-2'>
@@ -186,6 +186,14 @@
 					</div>
 					@endif
 				@endfor
+
+				@for($i=1;$i<360;$i++)
+					@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
+					<span class="{{$c++}}"></span>
+					@endif
+				@endfor
+
+				<div class="mt-3">Captured: {{$c}} images</div>
 
 			</div>
 			@endif
