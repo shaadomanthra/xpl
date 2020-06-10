@@ -953,6 +953,8 @@ function camera_test(){
       $('.accesscode_btn').hide();
     }
 }
+
+detect_mobile();
   
 });
 </script>
