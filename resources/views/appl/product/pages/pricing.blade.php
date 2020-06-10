@@ -57,4 +57,7 @@ fixed <br>and transparent pricing
 </div>
 </div>
 
+<script>
+
+  </script>
 @endsection           
