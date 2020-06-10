@@ -1,7 +1,7 @@
 
 @if($cameratest)
 <div class="bg-light border rounded p-3 camera_fail mb-3" style="display:none">
-	<p><i class="fa fa-times-circle text-danger camera_message"></i> This test requires access to the webcamera. Kindly activate camera before proceeding. Incase of any query kindly reach out to the administration.</p>
+	<p><i class="fa fa-times-circle text-danger "></i> <span class="camera_message">This test requires access to the webcamera. Kindly activate camera before proceeding. Incase of any query kindly reach out to the administration.</span></p>
 </div>
 
 <div class="bg-light border rounded p-3 camera_success mb-3" style="display:none">
