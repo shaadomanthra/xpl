@@ -816,45 +816,54 @@ function addMinutes(date, minutes) {
  // Stop timer
  function stopTimer() {
   var count = parseInt(document.getElementById("window_change").value) +1;
+
+  
   if(count ==3)
   var message = 'We have noticed 3 window swaps. Next swap will lead to termination of the test.';
-  else if(count==4)
+  else if(count>3)
   var message = 'You have reached the 3 swap limit. The test will be terminated here.';
   else 
   var message = 'We have noticed a window swap ('+count+'). Kindly note that 3 swaps will lead to cancellation of the test.';
+
+  @if(isset($exam))
+  @if($exam->status==1)
+  var message = 'We have noticed a window swap ('+count+'). Kindly note that too many swaps will lead to cancellation of the test.';
+  @endif
+  @endif
 
   $('.swap-message').html(message);
   $('#exampleModalCenter').modal();
   document.getElementById("window_change").value = count;
 
+  @if(isset($exam))
+  @if($exam->status!=1)
   if(count==4){
     setTimeout(function(){ 
       $('#exampleModalCenter').modal('toggle');
       $("form")[0].submit();
     }, 3000);
   }
-
+  @endif
+  @endif
+  console.log("Blur");
  }
 
-//  $.winFocus(function(event) {
-//   //stopTimer();
-//   console.log("Blur\t\t", event);
-// },
-// function(event) {
 
-//   console.log("Focus\t\t", event);
-// });
+function win_focus(){
+  console.log('started focus events');
+  var window_focus;
 
- var window_focus;
-
-$(window).focus(function() {
+  $(window).focus(function() {
     window_focus = true;
-    console.log("Focus\t\t");
-})
-    .blur(function() {
+    console.log("Focus");
+  }).blur(function() {
         stopTimer();
-        console.log("Blur\t\t");
+        
     });
+}
+
+setTimeout(win_focus,5000);
+ 
 </script>
 @endif
 @endif
