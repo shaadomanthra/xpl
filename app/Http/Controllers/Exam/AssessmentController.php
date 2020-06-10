@@ -1680,6 +1680,9 @@ class AssessmentController extends Controller
         else
             $view = "analysis";
 
+        if(request()->get('images'))
+            $view = 'images';
+
         return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
                         ->with('sections',$sections)

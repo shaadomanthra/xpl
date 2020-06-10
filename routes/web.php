@@ -120,6 +120,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 
 	})->name('img.post');
+
+	
 	
 	Route::get('/t',function(){ echo $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix(); dd(); return view('appl.pages.terms'); })->name('terms');
 
