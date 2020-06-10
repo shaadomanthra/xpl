@@ -901,8 +901,18 @@ setTimeout(win_focus,5000);
 <script>
 $(function() {
 
- 
+ function detect_mobile(){
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      $('.camera_message').html("This test can be attempted from desktop devices only. Kindly contact administrator incase of any query.");
+      $('.camera_fail').show();
+      $('.camera_success').hide();
+      $('.accesscode_btn').hide();
+    }else{
+      camera_test();
+    }
+  }
 
+function camera_test(){
   var width = 320;    // We will scale the photo width to this
   var height = 0;     // This will be computed based on the input stream
 
@@ -925,9 +935,9 @@ $(function() {
     var errorCallback = function(error) {
       if ((error.name == 'NotAllowedError') ||
         (error.name == 'PermissionDismissedError')) {
-         $('.camera_fail').show();
-      $('.camera_success').hide();
-      $('.accesscode_btn').hide();
+          $('.camera_fail').show();
+          $('.camera_success').hide();
+          $('.accesscode_btn').hide();
         console.log('PermissionDismissedError');
       }
     };
@@ -935,7 +945,6 @@ $(function() {
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(successCallback, errorCallback);
 
-   
     }
     catch(err) {
       console.log("An error occurred: " + err);
@@ -943,6 +952,8 @@ $(function() {
       $('.camera_success').hide();
       $('.accesscode_btn').hide();
     }
+}
+  
 });
 </script>
 @else
