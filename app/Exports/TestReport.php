@@ -98,7 +98,7 @@ class TestReport implements FromCollection
     			$ux->$name = $name;
     		}
     	$ux->Sc = "Score";
-        $ux->Sc = "Admission Number";
+        $ux->adm = "Admission Number";
     	
     	unset($ux->id);
     		unset($ux->user_id);
