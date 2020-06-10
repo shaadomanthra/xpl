@@ -55,6 +55,13 @@ class TestReport implements FromCollection
     		
     		$result[$k]->Score = $res->score;
 
+            if($res->user->fluency)
+                $result[$k]->f= $res->user->fluency;
+            else if(intval($res->user->confidence)>1000)
+                $result[$k]->f = $res->user->confidence;
+            else
+                $result[$k]->f = '';
+
     		unset($result[$k]->id);
     		unset($result[$k]->user_id);
     		unset($result[$k]->test_id);
@@ -91,6 +98,7 @@ class TestReport implements FromCollection
     			$ux->$name = $name;
     		}
     	$ux->Sc = "Score";
+        $ux->Sc = "Admission Number";
     	
     	unset($ux->id);
     		unset($ux->user_id);
