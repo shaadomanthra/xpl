@@ -1448,10 +1448,10 @@ class AssessmentController extends Controller
         {
             $exam = json_decode(file_get_contents($filepath));
         }else{
-            if(is_int($test))
-                $exam = Exam::where('id',$test)->first();
+            if(is_int($slug))
+                $exam = Exam::where('id',$slug)->first();
             else  
-                $exam = Exam::where('slug',$test)->first();
+                $exam = Exam::where('slug',$slug)->first();
         }
 
         $questions = array();
