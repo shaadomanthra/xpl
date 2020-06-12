@@ -23,7 +23,10 @@
        </a>
        @endif
 @else
+
+@if(isset($eid))
 <a href="{{ route('assessment.analysis',$course->tests->$eid)}}">
  <span class="badge badge-primary"> <i class="fa fa-bar-chart-o"></i> Test Analysis </span>
 </a>
+@endif
 @endif
