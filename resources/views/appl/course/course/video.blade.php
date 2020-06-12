@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @if($category->pdf_link)
-@section('title', 'Download '.$category->name.' | Xplore')
+@section('title', $category->name.' | Xplore')
 @elseif($category->test_link)
 @section('title', 'Attempt '.$category->name.' | Xplore')
 @else
@@ -55,7 +55,11 @@
     @if($access)
     <h1 class="mb-4"> <div class="">
       @if($category->pdf_link)
-      <i class="fa fa-file-pdf-o"></i> &nbsp;
+        @if(strpos($category->pdf_link, '.mp3') !== false)
+        <i class="fa fa-file-sound-o"></i> &nbsp;
+        @else
+        <i class="fa fa-file-pdf-o"></i> &nbsp;
+        @endif
       @elseif($category->test_link)
       <i class="fa fa-external-link"></i> &nbsp;
       @else
@@ -101,10 +105,21 @@
 @if($category->pdf_link)
 <div class="p-4 bg-white">
   <div class="row">
+
     
     <div class="col-12 ">@if(strip_tags($category->video_desc)){!! $category->video_desc !!}<br>@endif
 
-      <div class="pdfobject-container">
+      @if(strpos($category->pdf_link, '.mp3') !== false)
+    <figure class="m-3">
+    <audio
+        controls
+        src="{{ $category->pdf_link }}" style="width:100%">
+            Your browser does not support the
+            <code>audio</code> element.
+    </audio>
+</figure>
+ @else
+     <div class="pdfobject-container">
 <div id="example1"></div>
 </div>
 
@@ -114,6 +129,9 @@
 <style>
 .pdfobject-container { height: 30rem; border: 1px solid rgba(0,0,0,.2); }
 </style>
+@endif
+
+    
 
     </div>
 
