@@ -24,8 +24,8 @@
        @endif
 @else
 
-@if(isset($eid))
-<a href="{{ route('assessment.analysis',$c->exam_id)}}">
+@if(isset($course->tests->$eid))
+<a href="{{ route('assessment.analysis',$course->tests->$eid)}}">
  <span class="badge badge-primary"> <i class="fa fa-bar-chart-o"></i> Test Analysis </span>
 </a>
 @endif
