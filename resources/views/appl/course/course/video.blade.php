@@ -99,13 +99,22 @@
       @endif
 
 @if($category->pdf_link)
-<div class="p-5 bg-white">
+<div class="p-4 bg-white">
   <div class="row">
-    <div class="col-12 col-md-2"><i class="fa fa-file-pdf-o fa-5x"></i></div>
-    <div class="col-12 col-md-10">{!! $category->video_desc !!}<br>
-      <a href="{{ $category->pdf_link }}">
-      <button class="btn btn-primary mt-3 btn-lg">Download PDF</button>
-      </a>
+    
+    <div class="col-12 ">@if(strip_tags($category->video_desc)){!! $category->video_desc !!}<br>@endif
+
+      <div class="pdfobject-container">
+<div id="example1"></div>
+</div>
+
+<script src="{{ asset('js/pdf.js')}}"></script>
+<script>PDFObject.embed("{{ $category->pdf_link }}", "#example1");</script>
+
+<style>
+.pdfobject-container { height: 30rem; border: 1px solid rgba(0,0,0,.2); }
+</style>
+
     </div>
 
   </div>
