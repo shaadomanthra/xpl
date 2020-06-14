@@ -49,7 +49,6 @@ class PostController extends Controller
     public function public_index(Obj $obj,Request $request)
     {
 
-        $this->authorize('view', $obj);
 
         $search = $request->search;
         $item = $request->item;
