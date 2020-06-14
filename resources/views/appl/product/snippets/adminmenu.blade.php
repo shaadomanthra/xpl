@@ -18,6 +18,9 @@
 	
 	<a href="{{ route('client.index')}}" class="list-group-item list-group-item-action {{ request()->is('client') ? 'active' : ''}}"><i class="fa fa-copyright"></i> Clients</a>
 	
+	<a href="{{ route('post.index')}}" class="list-group-item list-group-item-action {{ request()->is('post') ? 'active' : ''}}"><i class="fa fa-ravelry"></i> Job Posts</a>
+	
+
 	<a href="{{ route('exam.index')}}" class="list-group-item list-group-item-action {{ request()->is('exam') ? 'active' : ''}}"><i class="fa fa-th"></i> Tests</a>
 	
 	<a href="{{ route('college.index')}}" class="list-group-item list-group-item-action {{ request()->is('college') ? 'active' : ''}}"><i class="fa fa-bars"></i> Colleges</a>

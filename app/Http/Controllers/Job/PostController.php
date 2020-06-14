@@ -29,10 +29,15 @@ class PostController extends Controller
 
         $search = $request->search;
         $item = $request->item;
-        
-        $objs = $obj->where('title','LIKE',"%{$item}%")
+        $user =\auth::user();
+        if($user->isAdmin())
+            $objs = $obj->where('title','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
-                    ->paginate(config('global.no_of_records'));   
+                    ->paginate(config('global.no_of_records')); 
+        else
+            $objs = $obj->where('user_id',$user->id)->where('title','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')
+                    ->paginate(config('global.no_of_records')); 
         $view = $search ? 'list': 'index';
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
