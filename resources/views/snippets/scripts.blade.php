@@ -25,6 +25,11 @@
   $('[data-toggle="tooltip"]').tooltip()
 });
 
+ $(".check").click(function () {
+    var c = $(this).data('name');
+    $("."+c).prop('checked', $(this).prop('checked'));
+});
+
   </script>
 
 @if(isset($editor))

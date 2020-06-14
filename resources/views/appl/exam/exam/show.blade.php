@@ -196,7 +196,7 @@
       
       <div class="card mb-4 ">
         <div class="card-body">
-            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=emails" class="float-right"><i class="fa fa-edit"></i> edit</a> </h4>
+            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails({{substr_count($exam->emails, "@")}}) <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=emails" class="float-right"><i class="fa fa-edit"></i> edit</a> </h4>
             <hr>
             @if($exam->emails)
               {!! nl2br($exam->emails) !!}

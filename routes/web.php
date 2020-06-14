@@ -377,6 +377,15 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 		return Redirect::to('/sample-tests', 301); 
 	});
 
+	Route::get('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');
+	Route::resource('post','Job\PostController')->middleware('auth');
+
+	Route::get('/job', function(){
+		return Redirect::to('/jobs', 301); 
+	});
+	Route::get('jobs','Job\PostController@public_index')->name('jobs');
+	Route::get('job/{slug}','Job\PostController@public_show')->name('job.show');
+
 	Route::resource('product','Product\ProductController')->middleware('auth');
 	Route::get('productpage','Product\ProductController@products')->name('products');
 	Route::get('stats','Product\ProductController@statistics')->name('statistics');
@@ -410,12 +419,12 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	Route::get('/companies', 'Content\ArticleController@companies')->name('companies');
 	
-	Route::get('/job/listing', 'Content\ArticleController@public')->name('article.listing')->middleware('auth');
-	Route::get('/job/template', function(){ return view('appl.content.article.template'); })->name('template');
-	Route::get('/job/myblogs','Content\ArticleController@myblogs' )->name('myblogs')->middleware('auth');
+	Route::get('/j/listing', 'Content\ArticleController@public')->name('article.listing')->middleware('auth');
+	Route::get('/j/template', function(){ return view('appl.content.article.template'); })->name('template');
+	Route::get('/j/myblogs','Content\ArticleController@myblogs' )->name('myblogs')->middleware('auth');
 
-	Route::get('job/','Content\ArticleController@index' )->name('article.index');
-	Route::get('job/{label}','Content\ArticleController@label' )->name('blog.label');
+	Route::get('joblist','Content\ArticleController@index' )->name('article.index');
+	Route::get('j/{label}','Content\ArticleController@label' )->name('blog.label');
 	Route::resource('article','Content\ArticleController',['names' => [
         'index' => 'blog.index',
         'store' => 'article.store',
@@ -631,9 +640,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::post('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourseSave')->name('course.question')->middleware('auth');
 
 	Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');
-	Route::get('/jobs', function(){
-		return Redirect::to('/job', 301); 
-	});
+	
 	//Route::resource('job','Recruit\JobController');
 	Route::resource('form','Recruit\FormController')->middleware('auth');
 

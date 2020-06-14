@@ -21,7 +21,7 @@
         <ul class="list-unstyled text-small">
           <li><a class="text-muted" href="{{url('/course')}}">Courses</a></li>
           <li><a class="text-muted" href="{{url('/test')}}">Tests</a></li>
-          <li><a class="text-muted" href="{{url('/job')}}">Jobs</a></li>
+          <li><a class="text-muted" href="{{url('/joblist')}}">Jobs</a></li>
           
         </ul>
       </div>

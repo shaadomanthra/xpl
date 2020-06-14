@@ -62,7 +62,7 @@
         </a></li>
 
         @if(\Auth::user()->checkRole(['hr-manager']) && !\Auth::user()->isAdmin())
-            
+            <li class="mr-3 "><a class="nav-link " href="{{ url('post') }}" aria-label=""><i class="fa fa-ravelry"></i> Job Post</a></li>
         @else
              <li class="mr-3 "><a class="nav-link " href="{{ url('course') }}" aria-label="PacketPrep Courses"><i class="fa fas fa-youtube-play"></i> Courses</a></li>
             <li class="mr-3 "><a class="nav-link " href="{{ url('test') }}" aria-label=""><i class="fa fa-ravelry"></i> Tests</a></li>

@@ -18,7 +18,7 @@
     @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
     <div class="line" style="padding:1px;background:#ebf1fb"></div>  
     @else
-    <div class="line" style="padding:1px;background:#eee"></div> 
+    <div class="line" style="padding:1px;background:#f8f8f8"></div> 
     @endif
     <div> 
     @yield('content')

@@ -16,20 +16,9 @@ class UsersExport implements FromCollection
     */
     public function collection()
     {
-
-        
-
-       
-
-        //$college = College::where('name','Mahatma Gandhi Institute Of Technology')->first();
-        //$userss = $college->users->pluck('id');
-        /*
-        $entry = DB::table('metric_user')->where('metric_id', 15)->pluck('user_id'); 
-        $user_id = User_Details::whereIn('user_id',$entry)->where('year_of_passing','2021')->orderBy('user_id')->pluck('user_id');
-        
-        $users =  User::whereIn('id',$user_id)->paginate(300);
-    
+       $users = request()->session()->get('users');
         foreach($users as $k=>$u){
+            unset($users[$k]->id);
                 unset($users[$k]->created_at);
                 unset($users[$k]->updated_at);
                 unset($users[$k]->password);
@@ -39,72 +28,38 @@ class UsersExport implements FromCollection
                 unset($users[$k]->activation_token);
                 unset($users[$k]->role);
                 unset($users[$k]->client_slug);
+                unset($users[$k]->video);
+                unset($users[$k]->personality);
+                unset($users[$k]->language);
+                unset($users[$k]->fluency);
+                unset($users[$k]->confidence);
                 unset($users[$k]->user_id);
-                $detail = User_Details::where('user_id',$u->id)->first();
-                if($detail){
-                     if($u->metrics->contains(15))
-                        $users[$k]->ms_abroad = 'MS in Aborad';
-                     else 
-                        $users[$k]->ms_abroad = '';
-
-                    if($u->metrics->contains(6))
-                        $users[$k]->mtech = 'Mtech';
-                     else 
-                        $users[$k]->mtech = '';
-
-                    if($u->metrics->contains(5))
-                        $users[$k]->mba = 'MBA';
-                     else 
-                        $users[$k]->mba = '';
-
-                    if($u->metrics->contains(9))
-                        $users[$k]->job = 'Software JOB';
-                     else 
-                        $users[$k]->job = '';
-
-                    if($u->metrics->contains(8))
-                        $users[$k]->gjob = 'Government JOB';
-                     else 
-                        $users[$k]->gjob = '';
-
-                    $users[$k]->phone = $detail->phone;
-                    $users[$k]->year_of_passing = $detail->year_of_passing;
-                    $users[$k]->college = $u->colleges()->first()->name;
-                    $users[$k]->branch = $u->branches()->first()->name;
-                }
-
+                unset($users[$k]->college_id);
+                unset($users[$k]->branch_id);
   
         } 
-    */
-         $year = "2020";
-        
-
-        $users =  User::where('year_of_passing','2020')->where('id','>=',25000)->where('id','<',45000)->get();
-
-        //$users_details =  User_Details::whereIn('user_id',$entry)->orderBy('user_id')->get();
-        /*$details = array();
-        foreach($users_details as $detail){
-            $details[$detail->user_id] = $detail;
+        $ux = new User();
+        foreach($ux as $k=>$v){
+           
+            unset($ux->$k);
         }
-         */
-    
-        /*foreach($users as $k=>$u){
-                unset($users[$k]->created_at);
-                unset($users[$k]->updated_at);
-                unset($users[$k]->password);
-                unset($users[$k]->remember_token);
-                unset($users[$k]->username);
-                unset($users[$k]->status);
-                unset($users[$k]->activation_token);
-                unset($users[$k]->role);
-                unset($users[$k]->client_slug);
-                unset($users[$k]->user_id);
-  
-        } */
-        //dd($users);
+        $ux->name = "Name";
+        $ux->email = "Email";
+        $ux->roll_number = "roll_number";
+        $ux->phone = "Phone";
+        $ux->yop = "year_of_passing";
+        $ux->addr = "Tenth ";
+        
+        $ux->window = "Twelveth";
+        $ux->dob = "Bachelors";
+        $ux->c1 = "Masters";
+        $ux->c2 = "Hometown";
+        $ux->c3 = "Current City";
+        $ux->c4 = "Gender";
+        $ux->c5 = "Date of Birth";
 
-        //$entry = DB::table('branch_user')->whereIn('branch_id', [11,12,13,14,15,16,17,18])->pluck('user_id'); 
-        //$users =  User_Details::whereIn('user_id',$entry)->get();
+
+        $users->prepend($ux);
     
       
 
