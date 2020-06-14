@@ -29,7 +29,7 @@
                 </td>
                 <td>
                   @if($obj->status==0)
-                    <span class="badge badge-warning">Inactive</span>
+                    <span class="badge badge-warning">Draft</span>
                   @elseif($obj->status==1)
                     <span class="badge badge-success">Active</span>
                   @endif
