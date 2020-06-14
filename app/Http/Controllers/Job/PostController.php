@@ -230,6 +230,7 @@ class PostController extends Controller
                 }
                 
             }
+            $obj = Obj::where('slug',$id)->first();
         }
 
         if($obj)
