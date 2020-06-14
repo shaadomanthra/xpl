@@ -12,7 +12,7 @@
         <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
             <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-            <li class="breadcrumb-item">Job posts</li>
+            <li class="breadcrumb-item"><a href="{{route('post.index')}}">Job posts</a></li>
           </ol>
         </nav>
         <div class=' pb-3'>
