@@ -30,8 +30,8 @@
 
 <div class='p-3 mb-3 ddblue' >
   <div class='container'>
-    <a href="{{route('job.show',$obj->slug)}}" class="f20 text-white" > <i class="fa fa-external-link" ></i> {{route('job.show',$obj->slug)}}</a>&nbsp; @if($obj->active==1)
-                <span class="badge badge-secondary">Inactive</span>
+    <a href="{{route('job.show',$obj->slug)}}" class="f20 text-white" > <i class="fa fa-external-link" ></i> {{route('job.show',$obj->slug)}}</a>&nbsp; @if($obj->status!=1)
+                <span class="badge badge-secondary">Draft</span>
               @else
                 <span class="badge badge-success">Active</span>
               @endif
