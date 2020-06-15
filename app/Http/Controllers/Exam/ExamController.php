@@ -684,7 +684,10 @@ class ExamController extends Controller
             request()->session()->put('sections',$sections);
             request()->session()->put('exam_sections',$exam_sections);
             request()->session()->put('users',$u);
-            $name = "Report_".$exam->name.".xlsx";
+            $ename = str_replace('/', '-', $exam->name);
+            $ename = str_replace(' ', '_', $ename);
+            $ename = str_replace('\\', '-', $ename);
+            $name = "Report_".$ename.".xlsx";
             ob_end_clean(); // this
             ob_start(); 
             return Excel::download(new TestReport, $name);
