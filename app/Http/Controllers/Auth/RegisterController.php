@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Auth;
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
 use PacketPrep\Mail\ActivateUser2;
+use PacketPrep\Rules\Otp;
 use PacketPrep\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -75,9 +76,9 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:20|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -100,15 +101,26 @@ class RegisterController extends Controller
             
         }else
             $subdomain = null;
+        
+       $this->validate(request(), ['otp' => new Otp]);
+
+       $parts = explode("@", $data['email']);
+        $username = $parts[0];
+
+        $u = User::where('username',$username)->first();
+
+        if($u){
+            $username = $username.'_'.rand(10,100);
+        }
 
         $password = $data['password'];
         $user = User::create([
             'name' => $data['name'],
-            'username' => $data['username'],
+            'username' => $username,
             'phone' => $data['phone'],
             'email' => $data['email'],
             'client_slug' => $subdomain,
-            'status'=> 0,
+            'status'=> 5,
             'password' => bcrypt($password),
             'activation_token' => str_random(20),
         ]);
@@ -127,13 +139,9 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
-        if(subdomain()){
-            $this->guard()->logout();
-            return redirect()->route('login')->with('warning', 'Account activation required - We have sent activation link to your email. It may take 2 to 5mins for the message to reach your inbox. Kindly check the SPAM FOLDER also. ');
-        }else{
-            $url = Session::get('preUrl') ? Session::get('preUrl') :   $this->redirectTo;
-            return redirect($url);
-        }
+        
+        $url = Session::get('preUrl') ? Session::get('preUrl') :   $this->redirectTo;
+        return redirect($url);
         
         //->with('status', 'Your account is successfully created. You can login now.');
     }
@@ -141,9 +149,10 @@ class RegisterController extends Controller
     public function activateUser($token)
     {
         $user = User::where('activation_token', $token)->first();
-        if(isset($user) ){;
-            if(!$user->status) {
-                $user->status = 1;
+        
+        if(isset($user) ){
+            if($user->status==5) {
+                $user->status = 0;
                 $user->save();
                 //update user details
                 $user_details = new User_Details;
@@ -157,6 +166,7 @@ class RegisterController extends Controller
             }else{
                 $status = "Your e-mail is already verified. You can now login.";
             }
+
         }else{
             return redirect('/login')->with('warning', "Sorry your account cannot be identified. Kindly contact administrator");
         }

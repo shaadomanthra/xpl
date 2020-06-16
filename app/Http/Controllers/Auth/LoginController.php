@@ -128,17 +128,16 @@ class LoginController extends Controller
         // }
         
         
-
         $user->updated_at = date('Y-m-d H:i:s');
         $user->save();
         
         if($user->role==2)
             return redirect()->intended($this->redirectPath());
         
-        if (!$user->status) {
-            auth()->logout();
-            return back()->with('warning', 'Account activation required - We have sent activation link to your email. It may take 2 to 5mins for the mail to reach your inbox. Kindly check the SPAM FOLDER also. ');
-        }
+        // if (!$user->status) {
+        //     auth()->logout();
+        //     return back()->with('warning', 'Account activation required - We have sent activation link to your email. It may take 2 to 5mins for the mail to reach your inbox. Kindly check the SPAM FOLDER also. ');
+        // }
 
 
         

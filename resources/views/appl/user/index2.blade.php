@@ -17,7 +17,7 @@
           </div>
           <div class="col-md-8">
             <div class="mt-3 mt-md-5 ">
-             <h2 class="mb-md-4 name mr-4 ml-4" >{{ $user->name }} 
+             <h2 class="mb-md-4 name mr-4 ml-4" >{{ $user->name }}  @if(auth::user()->profile_complete()==100)<i class="fa fa-check-circle text-success"></i>@endif
 
 
               

@@ -113,6 +113,11 @@ class UserController extends Controller
         }
     }
 
+    public function validation(Request $request){
+        $user = \auth::user();
+        return view('appl.user.validate.index')->with('user',$user);
+    }
+
     public function hrmanagers()
     {
 
@@ -423,6 +428,9 @@ class UserController extends Controller
             $user->personality = round(($user->confidence+$user->fluency+$user->language)/3,1);
         }
 
+        $user->roll_number = $request->roll_number;
+        $user->college_id = $request->college_id;
+        $user->branch_id = $request->branch_id;
         $user->hometown = $request->hometown;
         $user->current_city = ($request->city)?$request->city:' ';
         $user->gender = $request->gender;
@@ -453,28 +461,8 @@ class UserController extends Controller
         $user_details->save();
 
 
-        $college_id = $request->get('college_id');
-        $branches = $request->get('branches');
+        
 
-        $branch_list =  Branch::orderBy('created_at','desc ')
-                        ->get()->pluck('id')->toArray();
-        if($branches)
-            foreach($branch_list as $branch){
-                if(in_array($branch, $branches)){
-                    if(!$user->branches->contains($branch))
-                        $user->branches()->attach($branch);
-                }else{
-                    if($user->branches->contains($branch))
-                        $user->branches()->detach($branch);
-                }
-                
-        }else{
-                $user->branches()->detach();
-        } 
-        if($college_id){
-            $user->colleges()->detach();
-            $user->colleges()->attach($college_id);
-        }
 
         flash('User data updated!')->success();
         return redirect()->route('profile','@'.$username);

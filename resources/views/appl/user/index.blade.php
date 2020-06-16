@@ -21,7 +21,7 @@
          
           <div class="col-md-12">
             <div class="mt-3 mt-md-5 ">
-             <h2 class="mb-md-2  heading_two mr-md-4 ml-4" >{{ $user->name }} 
+             <h2 class="mb-md-2  heading_two mr-md-4 ml-4" >{{ $user->name }} @if(auth::user()->profile_complete($user->username)==100)<i class="fa fa-check-circle text-success"></i>@endif
 
               
              </h2>
@@ -45,17 +45,24 @@
              <p class="pt-1"></p>
 
 
-             @if($user->colleges()->first())
+             @if($user->college)
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-building'></i> &nbsp; College</dt>
-                <dd class="col-sm-9">@if($user->colleges()->first()){{ $user->colleges()->first()->name }}@endif</dd>
+                <dd class="col-sm-9">@if($user->college){{ $user->college->name }}@endif</dd>
               </dl>
              @endif
 
-             @if($user->branches()->first())
+             @if($user->branch)
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-bookmark-o'></i> &nbsp; Branch</dt>
-                <dd class="col-sm-9">@if($user->branches()->first()) {{  $user->branches()->first()->name  }} @endif</dd>
+                <dd class="col-sm-9">@if($user->branch) {{  $user->branch->name  }} @endif</dd>
+              </dl>
+             @endif
+
+             @if($user->roll_number)
+             <dl class="row mb-0">
+                <dt class="col-sm-3"><i class='fa fa-address-book-o'></i> &nbsp; Roll Number</dt>
+                <dd class="col-sm-9">{{$user->roll_number}}</dd>
               </dl>
              @endif
 
@@ -69,9 +76,7 @@
              @if($user->Phone)
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; Candidate Phone</dt>
-                <dd class="col-sm-9">
-
-                  {{$user->phone}}</dd>
+                <dd class="col-sm-9">{{$user->phone}}</dd>
               </dl>
              @endif
 
@@ -79,9 +84,7 @@
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; 
                   @if(strlen($user->gender)<9) Gender @else Fathers Phone @endif</dt>
-                <dd class="col-sm-9">
-
-                  {{ucfirst($user->gender)}}</dd>
+                <dd class="col-sm-9">{{ucfirst($user->gender)}}</dd>
               </dl>
              @endif
 

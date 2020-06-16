@@ -1037,6 +1037,8 @@ class AdminController extends Controller
         $user->name = $request->get('name');
         $user->status = $request->get('status');
         $user->phone = $request->get('phone');
+        $user->college_id = $request->get('college_id');
+        $user->branch_id = $request->get('branch_id');
         $user->client_slug = $request->get('client_slug');
         $user->year_of_passing = $request->get('year_of_passing');
         $user->roll_number = $request->get('roll_number');
@@ -1055,7 +1057,7 @@ class AdminController extends Controller
             $user->personality = round(($user->confidence+$user->fluency+$user->language)/3,1);
         }
 
-
+        
         $user->save();
 
         $user_details = User_Details::where('user_id',$user->id)->first();

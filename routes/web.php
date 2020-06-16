@@ -311,9 +311,18 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('team','User\TeamController@index')->name('team');
 	Route::get('user/export','User\TeamController@export')->name('export')->middleware('auth');
 
-	Route::get('user/update_tables','User\UserController@update_user_tables')->name('update_tables')->middleware('auth');
 
-	Route::get('user/bootcampmail','User\TeamController@bootcampmail')->name('bootcampmail')->middleware('auth');
+	/* user verify routes */
+	Route::get('/activation', 'User\VerifyController@activation')->name('activation')->middleware('auth');
+	Route::post('/activation', 'User\VerifyController@activation')->name('activation');
+	Route::get('/activation/mail/{token}', 'User\VerifyController@email')->name('email.verify');
+
+	Route::post('/activation/phone', 'User\VerifyController@sms')->name('sms.verify');
+
+
+	// Route::get('user/update_tables','User\UserController@update_user_tables')->name('update_tables')->middleware('auth');
+
+	// Route::get('user/bootcampmail','User\TeamController@bootcampmail')->name('bootcampmail')->middleware('auth');
 	
 	Route::get('/share', function () { 
 
@@ -550,7 +559,25 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::resource('social/media','Social\MediaController')->middleware('auth');
 	Route::get('/social/word', 'Social\WordController@index')->name('word');
 
-	Route::get('/user/activate/{token_name}', 'Auth\RegisterController@activateUser')->name('activateuser');
+	Route::get('/user/activate/{token_name}', function($token_name){
+		$user = User::where('activation_token', $token_name)->first();
+        
+        if(isset($user) ){
+            if($user->status==5) {
+                $user->status = 0;
+                $user->save();
+
+                $status = "Your e-mail is verified. You can now login.";
+            }else{
+                $status = "Your e-mail is already verified. You can now login.";
+            }
+
+        }else{
+            return redirect('/login')->with('warning', "Sorry your account cannot be identified. Kindly contact administrator");
+        }
+ 
+        return redirect('/activation')->with('status', $status);
+	})->name('activateuser');
 
 	Route::get('/user/password/forgot', 'Auth\LoginController@forgotPassword')->name('password.forgot');
 	Route::post('/user/password/forgot', 'Auth\LoginController@sendPassword')->name('password.forgot.send');

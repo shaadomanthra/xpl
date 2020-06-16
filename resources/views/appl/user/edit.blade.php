@@ -21,9 +21,9 @@
         </div>
          <div class="col-12 col-md-6">
           <div class="form-group">
-            <label for="formGroupExampleInput ">Designation</label>
-            <input type="text" class="form-control" name="designation"  value="{{ ($user_details->designation)?$user_details->designation:'Not Assigned' }}" disabled>
-          </div>
+          <label for="formGroupExampleInput ">Roll Number</label>
+          <input type="text" class="form-control" name="roll_number"  value="@if($user->roll_number){{  $user->roll_number }} @endif" >
+        </div>
          </div>
 
       </div>
@@ -32,7 +32,7 @@
         <div class="col-12 col-md-6">
           <div class="form-group">
           <label for="formGroupExampleInput ">Phone</label>
-          <input type="text" class="form-control" name="phone"  value="@if($user->details){{  $user->details->phone }} @endif" >
+          <input type="text" class="form-control" name="phone"  value="@if($user->phone){{  $user->phone }} @endif" >
         </div>
         </div>
          <div class="col-12 col-md-6">
@@ -73,17 +73,7 @@
          </div>
       </div>
       
-      
-      
-      
-      
-      
-      
-      
-      <div class="form-group">
-        <label for="formGroupExampleInput2">About Me</label>
-         <textarea class="form-control summernote" name="bio"  rows="10">{{isset($user_details)?$user_details->bio:''}}</textarea>
-      </div>
+    
 
       <div class="row">
         <div class="col-12 col-md-6">
@@ -120,7 +110,7 @@
             @if(isset($branches))
       <div class="form-group ">
         <label for="formGroupExampleInput ">Branch</label><br>
-        <select class="form-control" name="branches[]">
+        <select class="form-control" name="branch_id">
           @foreach($branches as $b)
           <option value="{{$b->id}}" @if(isset($user)) @if($user->branches->first()) @if($b->id == $user->branches->first()->id ) selected @endif @endif @endif >{{ $b->name }}</option>
           @endforeach         

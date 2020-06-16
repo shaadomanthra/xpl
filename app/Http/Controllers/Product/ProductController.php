@@ -207,8 +207,13 @@ class ProductController extends Controller
               ->with('e',$e)
               ->with('exams',$exams);
       }
+
+      if(subdomain())
+        $view = 'client_dashboard';
+      else
+        $view = 'xplore_dashboard';
         
-      return view('welcome2')->with('user',$user);
+      return view($view)->with('user',$user);
 
     }
 

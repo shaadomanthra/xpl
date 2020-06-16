@@ -361,29 +361,49 @@ class User extends Authenticatable
         return false;
     }
 
-    public function send_sms($numbers,$password){
+    public function send_sms($number,$code){
                 // Authorisation details.
-        $username = "packetcode@gmail.com";
-        $hash = "c1120d3477ff90880eb3327e1526a4f76114d87812ad7d9da247eac6fdb74f13";
-
-
-        // Config variables. Consult http://api.textlocal.in/docs for more info.
-        $test = "0";
-
-        // Data for text message. This is the text message data.
-        $sender = "PKTPRP"; // This is who the message appears to be from.
+        $url = "https://2factor.in/API/V1/b2122bd6-9856-11ea-9fa5-0200cd936042/SMS/+91".$number."/".$code;
+        $d = $this->curl_get_contents($url);
         
-        $message = "Your login password for packetprep.com is ".$password;
-        // 612 chars or less
-        // A single number or a comma-seperated list of numbers
-        $message = urlencode($message);
-        $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
-        $ch = curl_init('http://api.textlocal.in/send/?');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch); // This is the result from the API
-        curl_close($ch);
+    }
+
+    function curl_get_contents($url)
+    {
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+      $data = curl_exec($ch);
+      curl_close($ch);
+      return $data;
+    }
+
+    public function profile_complete($username=null){
+        if($username)
+            $u = $this->where('username',$username)->first();
+        else
+            $u =$this;
+
+        $fields = ["name",'email','phone','username','current_city','hometown','college_id','branch_id','year_of_passing','roll_number','gender','dob','tenth','twelveth','bachelors','pic'];
+
+        $count =0;
+        foreach($fields as $f){
+            if(!$u->$f){
+                $count++;
+            }else{
+            }
+        }
+
+        if($u->getImage()){
+            $count--;
+        }
+
+        $percent = round((1-($count/count($fields)))*100,2);
+
+        return $percent;
+
     }
 
     

@@ -1021,6 +1021,7 @@ $(function(){
 
       $('.verifycode').on('click',function(){
           $code = parseInt($(this).data('code'));
+          $c = $('input[name=otp]').val();
           $code_verify = parseInt($('input[name=otp]').val());
           console.log($code+' '+$code_verify);
           if($code==$code_verify){
@@ -1028,8 +1029,14 @@ $(function(){
             if(!$('.verified').length)
             $(this).parent().append('<div class="verified"><div class="text-success mt-2"><i class="fa fa-check-circle "></i> verified</div></div>');
           }else{
-            $(this).parent().append('<div class="text-danger mt-2 sms_error"><i class="fa fa-times-circle "></i> invalid code</div>');
-          }
+            $('.verified').remove();
+            if(!$('.sms_error').length)
+            $(this).parent().append('<div class="sms_error"><div class="text-danger mt-2 sms_error"><i class="fa fa-times-circle "></i> invalid code - '+$c+'</div></div>');
+            else{
+              $('.sms_error').remove();
+              $(this).parent().append('<div class="sms_error"><div class="text-danger mt-2 sms_error"><i class="fa fa-times-circle "></i> invalid code - '+$c+'</div></div>');
+            }
+            }
 
       });
 
