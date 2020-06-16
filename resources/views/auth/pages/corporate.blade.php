@@ -23,6 +23,45 @@
 
     {{ csrf_field() }}
 
+    <div class="alert alert-primary alert-important py-4">
+    <p class="px-3">Verification of phone number is mandatory. Kindly enter the correct 10 digit phone number to complete the registration.</p>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                <label for="phone" class="col-md-8 control-label">Phone</label>
+                <div class="col-md-12">
+                    <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required placeholder="Enter your 10 digit phone number">
+                    @if ($errors->has('phone'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('phone') }}</strong>
+                    </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-md-12">
+            <button type="button" class="btn btn-outline-primary sendsms" data-url="{{ route('register.sendotp')}}" data-code="{{$code}}" data-token="{{ csrf_token() }}">
+                Send OTP
+            </button>
+            </div>
+             
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group{{ $errors->has('otp') ? ' has-error' : '' }}">
+                <label for="otp" class="col-md-8 control-label">OTP</label>
+                <div class="col-md-12">
+                    <input id="phone" type="text" class="form-control" name="otp" value="{{ old('otp') }}" required placeholder="Enter otp sent to your phone number">
+                </div>
+            </div>
+            <div class="col-md-12">
+            <button type="button" class="btn btn-success verifycode" data-code="{{$code}}" >
+                Verify 
+            </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
     <div class="row">
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
