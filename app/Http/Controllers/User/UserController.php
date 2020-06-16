@@ -209,11 +209,19 @@ class UserController extends Controller
             
         if($user)
         {
-            return view('appl.user.edit')
+            $editor = false;
+            if(request()->get('complete_profile')){
+                $view = 'complete_profile';
+            }
+            else{
+                $view = 'edit';
+                $editor  = true;
+            }
+            return view('appl.user.'.$view)
                     ->with('user',$user)
                     ->with('colleges',$colleges)
                     ->with('branches',$branches)
-                    ->with('editor',true)
+                    ->with('editor',$editor)
                     ->with('user_details',$user_details);
         }else
             abort(404,'User not found');
@@ -347,6 +355,12 @@ class UserController extends Controller
         return (count($exploded) > 2);
     }
 
+    public function update_self(){
+        $user = \auth::user();
+        request()->request->add(['complete_profile' => '1']);
+        return $this->edit('@'.$user->username);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -354,7 +368,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $username)
+    public function update($username,Request $request)
     {
         
         $username = substr($username, 1);
@@ -432,7 +446,7 @@ class UserController extends Controller
         $user->college_id = $request->college_id;
         $user->branch_id = $request->branch_id;
         $user->hometown = $request->hometown;
-        $user->current_city = ($request->city)?$request->city:' ';
+        $user->current_city = ($request->current_city)?$request->current_city:' ';
         $user->gender = $request->gender;
         $user->dob = $request->dob;
         $user->tenth = $request->tenth;
@@ -440,6 +454,8 @@ class UserController extends Controller
         $user->bachelors = $request->graduation;
         $user->masters = $request->masters;
         $user->year_of_passing = $request->year_of_passing;
+        $user->aadhar = $request->aadhar;
+        $user->info = $request->info;
         
 
         $user->save();
@@ -448,13 +464,13 @@ class UserController extends Controller
         $user_details->user_id = $user->id;
 
         $user_details->bio = scriptStripper(summernote_imageupload($user,$request->bio));
-        //dd($user_details->bio);
-        $user_details->country = $request->country;
-        $user_details->city = ($request->city)?$request->city:' ';
-        $user_details->facebook_link = $request->facebook_link;
-        $user_details->twitter_link = $request->twitter_link;
-        $user_details->privacy = $request->privacy;
-        $user_details->phone = $request->phone;
+        // //dd($user_details->bio);
+        // $user_details->country = $request->country;
+        // $user_details->city = ($request->city)?$request->city:' ';
+        // $user_details->facebook_link = $request->facebook_link;
+        // $user_details->twitter_link = $request->twitter_link;
+        // $user_details->privacy = $request->privacy;
+        // $user_details->phone = $request->phone;
 
         
     

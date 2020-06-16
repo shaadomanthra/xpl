@@ -573,9 +573,11 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
             }
 
         }else{
-            return redirect('/login')->with('warning', "Sorry your account cannot be identified. Kindly contact administrator");
+        	$status = "Sorry your account cannot be identified. Kindly contact administrator";
+        	flash($status)->warning();
+            return redirect('/login')->with('warning', $status);
         }
- 
+        flash($status)->warning();
         return redirect('/activation')->with('status', $status);
 	})->name('activateuser');
 
@@ -667,6 +669,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::post('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourseSave')->name('course.question')->middleware('auth');
 
 	Route::get('/recruit', 'Recruit\JobController@recruit')->name('recruit');
+
+	Route::get('/complete_profile', 'User\UserController@update_self')->name('profile.complete');
 	
 	//Route::resource('job','Recruit\JobController');
 	Route::resource('form','Recruit\FormController')->middleware('auth');

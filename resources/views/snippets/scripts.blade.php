@@ -1,6 +1,51 @@
 <script src="{{ asset('js/script.js')}}?new=12"></script>
 
 
+  <script>
+$(function(){
+
+  /* profile completion page */
+  if($('.screen').length){
+    $('.screen').hide();
+    $('.screen_1').show();
+
+    $('.screen_next').on('click',function(){
+        $next = $(this).data('next');
+        screen($next);
+    });
+    $('.screen_back').on('click',function(){
+        $next = $(this).data('back');
+        screen($next);
+    });
+
+    $("form :input").change(function() {
+      $name = $(this).attr('name');
+      ele = $('.'+$name);
+      if(ele.length){
+        ele.removeClass('text-silver');
+        ele.addClass('text-success');
+        percent();
+      }
+    });
+  }
+
+  function screen($next){
+      $('.screen').hide();
+      $('.'+$next).show();
+  }
+
+  function percent(){
+      $step = $('.progress-bar').data('step');
+      $percent = $('.progress-bar').data('percent');
+      $new = parseInt($step)+parseInt($percent);
+      $('.progress-bar').css('width',$new+"%");
+      $('.progress-bar').data('percent',$new);
+
+  }
+
+});
+</script>
+
 <script>
  $(document).keypress(function(){
 
@@ -1042,6 +1087,8 @@ $(function(){
 
     });
   </script>
+
+
 @endif
 
 @if(isset($welcome))

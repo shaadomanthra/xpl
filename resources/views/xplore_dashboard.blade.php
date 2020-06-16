@@ -283,9 +283,9 @@
   <div class="progress-bar" role="progressbar" style="width: {{auth::user()->profile_complete()}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{auth::user()->profile_complete()}}%</div>
 </div>
   </div>
-  <p>Fill all the details to make your profile <i class="fa fa-check-circle text-success"></i> active. {{auth::user()->profile_complete()}}</p>
+  <p>Fill all the details to make your profile <i class="fa fa-check-circle text-success"></i> active. </p>
   <p class="mb-0 text-blue">
-    <a href="{{route('profile.edit','@'.$user->username)}}"><b><i class="fa fa-angle-right"></i> edit profile</b></a></p>
+    <a href="{{route('profile.edit','@'.$user->username)}}?complete_profile=1"><b><i class="fa fa-angle-right"></i> edit profile</b></a></p>
     
 </div>
 @endif

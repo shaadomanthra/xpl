@@ -34,11 +34,11 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/complete_profile';
 
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest', ['except' => 'logout']);          
         Session::put('preUrl', Session::get('redirect.url'));
     }
 
@@ -149,7 +149,7 @@ class RegisterController extends Controller
     public function activateUser($token)
     {
         $user = User::where('activation_token', $token)->first();
-        
+
         if(isset($user) ){
             if($user->status==5) {
                 $user->status = 0;

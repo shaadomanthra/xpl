@@ -380,13 +380,17 @@ class User extends Authenticatable
       return $data;
     }
 
+     public function profile_complete_step(){
+        $fields = ["name",'email','phone','username','current_city','hometown','college_id','branch_id','year_of_passing','roll_number','gender','dob','tenth','twelveth','bachelors','pic','aadhar'];
+        return round(100/count($fields),2);
+     }
     public function profile_complete($username=null){
         if($username)
             $u = $this->where('username',$username)->first();
         else
             $u =$this;
 
-        $fields = ["name",'email','phone','username','current_city','hometown','college_id','branch_id','year_of_passing','roll_number','gender','dob','tenth','twelveth','bachelors','pic'];
+        $fields = ["name",'email','phone','username','current_city','hometown','college_id','branch_id','year_of_passing','roll_number','gender','dob','tenth','twelveth','bachelors','pic','aadhar'];
 
         $count =0;
         foreach($fields as $f){
