@@ -10,10 +10,6 @@
 			<img 
           src="{{ asset('img/xplore.png') }} " width="100px" class=" float-right"  alt="Xplore logo " type="image/png">
 		<h1>Register</h1>
-
-		
-  
-
 		<div class="alert alert-primary alert-important py-4 mt-3">
 		    <p class="px-3">Verification of phone number is mandatory. Kindly enter the correct 10 digit phone number to complete the registration.</p>
 		    <div class="row">
