@@ -208,10 +208,10 @@ class ProductController extends Controller
               ->with('exams',$exams);
       }
 
-      if(subdomain())
-        $view = 'client_dashboard';
-      else
+      if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
         $view = 'xplore_dashboard';
+      else
+        $view = 'client_dashboard';
         
       return view($view)->with('user',$user);
 
