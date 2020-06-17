@@ -107,18 +107,18 @@ class AdminController extends Controller
         
 
         foreach($metrics as $metric){
-            $data['metric'][$metric->name] = count($metric->users);
+            $data['metric'][$metric->name] = 0;//count($metric->users);
         }
         
 
         foreach($branches as $branch){
-            $data['branch'][$branch->name] = count($branch->users);
+            $data['branch'][$branch->name] = 0;//count($branch->users);
         }
         
 
         foreach($zones as $zone){
-            $data['zone'][$zone->name]['users'] = count($zone->users);
-            $data['zone'][$zone->name]['colleges'] = count($zone->colleges);
+            $data['zone'][$zone->name]['users'] = 0;//count($zone->users);
+            $data['zone'][$zone->name]['colleges'] = 0;//count($zone->colleges);
         }
 
          file_put_contents($filename, json_encode($data,JSON_PRETTY_PRINT));
