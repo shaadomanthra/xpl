@@ -17,7 +17,7 @@
                   <a href=" {{ route('admin.user.view',$user->username) }} ">
                   {{ $user->name }}
 
-                  @if(!$user->client_slug && $user->video)
+                  @if($user->profile_complete()==100)
                   <i class="fa fa-check-circle text-success"></i>
                   @endif
                   </a><br>

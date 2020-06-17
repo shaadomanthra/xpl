@@ -124,7 +124,7 @@
               </div>
               @endif
             </div>
-            <div class='col-8 col-md-6'>
+            <div class='col-8 col-md-9'>
               <h4 class="mb-1 mt-2 lh15">
                 <a href=" {{ route('assessment.details',$e->slug) }} ">
                 @if($e->status==0)
@@ -145,16 +145,16 @@
                   <span class=" badge badge-success">Active</span>
                 @endif
               </div>
-              
-            </div>
-            <div class='col-2 col-md-3'>
-              <div class="heading_one float-right f30">
-                <a href="{{ route('assessment.details',$e->slug)}}" class='btn btn-outline-primary btn-sm'>
+
+              <div>
+                <a href="{{ route('assessment.details',$e->slug)}}" class='btn btn-outline-primary btn-sm mt-3'>
                   <i class="fa fa-paper-plane"></i>
                   Try Now
                 </a>
               </div>
+              
             </div>
+           
 
           </div>
         </div>
