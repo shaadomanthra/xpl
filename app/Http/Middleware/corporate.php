@@ -17,7 +17,8 @@ class Corporate
     {
         if(subdomain()){
 
-            if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' ){
+
+            if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' ){
                 $filename = 'corporate.json';
                 $client = json_decode(file_get_contents($filename));
                 $client->name = 'Xplore';
