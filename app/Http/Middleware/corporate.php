@@ -16,7 +16,16 @@ class Corporate
     public function handle($request, Closure $next)
     {
         if(subdomain()){
-            if(subdomain()!='hire' && subdomain()!='xplore' && subdomain()!='bfs'){
+
+            if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' ){
+                $filename = 'corporate.json';
+                $client = json_decode(file_get_contents($filename));
+                $client->name = 'Xplore';
+                $client->logo = url('/').'/img/xplore.png';
+
+                $request->session()->put('client',$client);
+            }
+            elseif(subdomain()!='hire' && subdomain()!='xplore' && subdomain()!='bfs'){
                $filename = '../storage/app/cache/company/'.subdomain().'.json';
                $logo_1 = url('/').'/storage/companies/'.subdomain().'.png';
                $logo_2 = url('/').'/storage/companies/'.subdomain().'.jpg';
