@@ -147,7 +147,7 @@
     <div class="col-12 col-md-6 col-lg-4">
          <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest applicants <small><span class="text-secondary">({{$obj->users->count()}})</span></small><a href="{{ route('job.applicants',$obj->slug)}}" class="btn btn-outline-primary btn-sm float-md-right mt-3 mt-md-0">View all</a></div>
 
-      @foreach($obj->users as $u )
+      @foreach($obj->users as $k=>$u )
       <div class='cardbox lblue p-3 mb-3'>
         <div class="row">
           <div class='col-3 col-md-3 col-lg-3'>
@@ -165,6 +165,9 @@
           </div>
         </div>
       </div>
+      @if($k==5)
+        @break
+      @endif
       @endforeach
     </div>
 

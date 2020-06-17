@@ -66,7 +66,7 @@
         @else
              <li class="mr-3 "><a class="nav-link " href="{{ url('course') }}" aria-label="PacketPrep Courses"><i class="fa fas fa-youtube-play"></i> Courses</a></li>
             <li class="mr-3 "><a class="nav-link " href="{{ url('test') }}" aria-label=""><i class="fa fa-ravelry"></i> Tests</a></li>
-            <li class="mr-3 "><a class="nav-link " href="{{ url('job') }}" aria-label="Wipro NTH 2020"><i class="fa fa-bars"></i> Jobs</a></li>
+            <li class="mr-3 "><a class="nav-link " href="{{ url('joblist') }}" aria-label="Wipro NTH 2020"><i class="fa fa-bars"></i> Jobs</a></li>
 
         @endif
 
