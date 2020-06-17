@@ -21,8 +21,8 @@ class Corporate
             if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' ){
                 $filename = 'corporate.json';
                 $client = json_decode(file_get_contents($filename));
-                $client->name = 'Xplore';
-                $client->logo = url('/').'/img/xplore.png';
+                $client->name = 'Bajaj Finserv';
+                $client->logo = url('/').'/img/bfs.jpg';
 
                 $request->session()->put('client',$client);
             }
