@@ -191,6 +191,27 @@ function youtube_video_exists($url) {
 }
 }
 
+if (! function_exists('youtube_id')) {
+function youtube_id($link) {
+    $video=$link;
+    $video_id = explode("?v=", $link); // For videos like http://www.youtube.com/watch?v=...
+    if (empty($video_id[1]))
+        $video_id = explode("/v/", $link); // For videos like http://www.youtube.com/watch/v/..
+
+    if(isset($video_id[1])){
+        $video_id = explode("&", $video_id[1]);
+    }
+    
+    $video = $video_id[0];
+    
+    return $video;
+
+}
+}
+
+
+
+
 
 if (! function_exists('subdomain')) {
 function subdomain() {

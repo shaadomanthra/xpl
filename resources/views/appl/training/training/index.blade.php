@@ -1,5 +1,5 @@
 @extends('layouts.nowrap-white')
-@section('title', 'Job Posts')
+@section('title', 'Trainings')
 @section('content')
 
 @include('appl.exam.exam.xp_css')
@@ -10,17 +10,17 @@
     <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
             <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-            <li class="breadcrumb-item">Job Posts</li>
+            <li class="breadcrumb-item">Trainings</li>
           </ol>
         </nav>
     <div class="row">
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-th "></i> Job Post
+          <p class="heading_two mb-2 f30" ><i class="fa fa-th "></i> Trainings
 
             @can('create',$obj)
-            <a href="{{route('post.create')}}">
+            <a href="{{route($app->module.'.create')}}">
               <button type="button" class="btn btn-success float-right my-2 my-sm-2 ">Create </button>
             </a>
             @endcan
@@ -33,7 +33,7 @@
         <div class="mt-2">
          
 
-         <form class="w-100" method="GET" action="{{ route('job.index') }}">
+         <form class="w-100" method="GET" action="{{ route('training.index') }}">
             
             <div class="input-group ">
               <div class="input-group-prepend">

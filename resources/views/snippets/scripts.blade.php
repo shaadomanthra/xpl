@@ -47,6 +47,51 @@ $(function(){
 </script>
 
 <script>
+$(function(){
+
+   $('.rdelete').on('click',function(e){
+    e.preventDefault();
+    url = $(this).attr('href');
+    name = $(this).data('name');
+
+    $('.rdelete_form').attr('action',url);
+    $('.rname').show().html(' - '+ name);
+
+    $('#rdelete').modal();
+  });
+
+  $('.ddelete').on('click',function(e){
+    e.preventDefault();
+    url = $(this).attr('href');
+    name = $(this).data('name');
+
+    $('.ddelete_form').attr('action',url);
+    $('.dname').show().html(' - '+ name);
+
+    $('#ddelete').modal();
+  });
+
+  $('.dresource').on('click',function(e){
+    e.preventDefault();
+    url = $(this).attr('href');
+    name = $(this).data('name');
+    schedule_id = $(this).data('id');
+
+    $('.dresource_form').attr('action',url);
+    $('.dschedule_id').attr('value',schedule_id);
+    $('.drname').show().html(' - '+ name);
+    $('#dresource').modal();
+  });
+
+  $('.block').hide();
+  $('.block_item').on('click',function(){
+      id = $(this).data('id');
+      $('.block_'+id).slideToggle();
+  });
+});
+  </script>
+
+<script>
  $(document).keypress(function(){
 
       var key = (event.keyCode ? event.keyCode : event.which); 

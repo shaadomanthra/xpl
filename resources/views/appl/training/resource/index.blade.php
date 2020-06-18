@@ -33,7 +33,7 @@
         <div class="mt-2">
          
 
-         <form class="w-100" method="GET" action="{{ route('job.index') }}">
+         <form class="w-100" method="GET" action="{{ route('exam.index') }}">
             
             <div class="input-group ">
               <div class="input-group-prepend">

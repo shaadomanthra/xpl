@@ -80,6 +80,10 @@ class AuthServiceProvider extends ServiceProvider
         \PacketPrep\Models\Content\Company::class => \PacketPrep\Policies\Content\CompanyPolicy::class,
         \PacketPrep\Models\Content\Article::class => \PacketPrep\Policies\Content\ArticlePolicy::class,
         \PacketPrep\Models\Content\Label::class => \PacketPrep\Policies\Content\LabelPolicy::class,
+
+        \PacketPrep\Models\Training\Training::class => \PacketPrep\Policies\Training\TrainingPolicy::class,
+        \PacketPrep\Models\Training\Schedule::class => \PacketPrep\Policies\Training\SchedulePolicy::class,
+        \PacketPrep\Models\Training\Resource::class => \PacketPrep\Policies\Training\ResourcePolicy::class,
     ];
 
     /**
