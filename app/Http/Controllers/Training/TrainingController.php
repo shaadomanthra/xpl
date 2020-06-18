@@ -179,8 +179,8 @@ class TrainingController extends Controller
 
             $u = User::where('email',$row[1])->first();
             $branch = ['CSE'=>9,'IT'=>10,'ECE'=>11,'EEE'=>12,'MECH'=>13,'CIVIL'=>14,'OTHER'=>15];
-            if(isset($branch[strtoupper($row[4]))]))
-                $b=$branch[strtoupper($row[4]));
+            if(isset($branch[strtoupper($row[4])]))
+                $b=$branch[strtoupper($row[4])];
             else
                 $b = 15;
             if(!$u){
@@ -194,6 +194,7 @@ class TrainingController extends Controller
                'branch_id' => $b,
                'status'   => 1,
                 ]);
+                
                 $u->save();
             }
 
