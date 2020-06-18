@@ -181,6 +181,20 @@ class ProductController extends Controller
       $username = $user->username;
       $user->image = $user->getImage();
       $users = [];
+
+      if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com'){
+          if($user->checkRole(['hr-manager'])){
+            $view = 'appl.pages.bfs.trainer';
+          }elseif($user->checkRole(['administrator']){
+            $view = 'appl.pages.bfs.superadmin';
+          }elseif($user->checkRole(['tpo'])){
+            $view = 'appl.pages.bfs.college';
+          }else{
+            $view = 'appl.pages.bfs.student';
+          }
+          return view($view)
+              ->with('user',$user);
+      }
       if($user->checkRole(['hr-manager'])){
 
           $search = $request->search;
