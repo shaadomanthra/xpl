@@ -187,14 +187,14 @@ class TrainingController extends Controller
                 $u = new User([
                'name'     => $row[0],
                'email'    => $row[1], 
-               'username'    => $this->username($row[1]), 
+               'username'    => $obj->username($row[1]), 
                'phone'    => $row[2], 
                'password' => bcrypt($row[2]),
                'year_of_passing' => $row[3],
                'branch_id' => $b,
                'status'   => 1,
                 ]);
-                
+
                 $u->save();
             }
 

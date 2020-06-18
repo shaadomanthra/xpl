@@ -33,4 +33,10 @@ class Training extends Model
     {
         return $this->hasMany('PacketPrep\Models\Training\Schedule');
     }
+
+    public function username($email){
+        $parts = explode("@", $email);
+        $username = $parts[0];
+        return $username;
+    }
 }

@@ -57,7 +57,7 @@ $(function(){
     $('.rdelete_form').attr('action',url);
     $('.rname').show().html(' - '+ name);
 
-    $('#rdelete').modal();
+    $('#r\delete').modal();
   });
 
   $('.ddelete').on('click',function(e){
