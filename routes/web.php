@@ -44,7 +44,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 		}
 		
 
-	})->middleware('cache')->name('root');
+	})->name('root');
 
 	Route::post('/', 'Product\OrderController@callback');
 	Route::get('/instamojo', 'Product\OrderController@instamojo')->middleware('auth');
