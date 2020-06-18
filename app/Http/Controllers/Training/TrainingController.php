@@ -198,6 +198,12 @@ class TrainingController extends Controller
         return redirect()->route($this->module.'.show',$slug);
     }
 
+    public function username($email){
+        $parts = explode("@", $email);
+        $username = $parts[0];
+        return $username;
+    }
+
     /**
      * Display the specified resource.
      *
