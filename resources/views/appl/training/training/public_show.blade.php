@@ -96,7 +96,7 @@
     </div>
     <div class="col-12 col-md-3">
       <div class="mt-4">
-      <div class="alert alert-warning alert-important" role="alert">
+      <div class="alert alert-success alert-important" role="alert">
         <h5>Trainer </h5>
         <div class="display-5 h3">{{$obj->trainer->name}}</div>
       </div>
@@ -110,9 +110,9 @@
 
     <div class="mt-4 mb-5" style="word-wrap: break-word;">
       <h3 class="mb-3">Participants({{$obj->users->count()}})</h3>
-      <div class="row mb-2">
+      <div class="row mb-2 no-gutters">
         @foreach($obj->users as $k=>$u)
-            <div class="col-3"><img src="@if($u->getImage()) {{ ($u->getImage())}}@else {{ Gravatar::src($u->email, 150) }}@endif" class="img-cirlce border" data-toggle="tooltip" title="{{$u->name}}"/></div>
+            <div class="col-3"><img src="@if($u->getImage()) {{ ($u->getImage())}}@else {{ Gravatar::src($u->email, 150) }}@endif" class="img-cirlce border w-100 mb-2" data-toggle="tooltip" title="{{$u->name}}"/></div>
         @if($k>18)
           @break
         @endif

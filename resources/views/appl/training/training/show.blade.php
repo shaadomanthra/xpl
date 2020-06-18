@@ -146,9 +146,9 @@
             <div class="f18 mb-0">
               <a href="{{ route('profile','@'.$u->username) }}"><b>{{$u->name}}</b></a>
             </div>
-            <div class="d-inline pill" ><i class="fa fa-calendar"></i>  {{$u->year_of_passing}}</div>
+            <div class="d-inline pill pr-2" ><i class="fa fa-calendar"></i>  {{$u->year_of_passing}}</div>
             @if($u->branch)
-            <div class="d-inline pill" ><i class="fa fa-tablet"></i> {{$u->branch->name}}</div>@endif
+            <div class="d-inline pill pr-2" ><i class="fa fa-tablet"></i> {{$u->branch->name}}</div>@endif
            
           </div>
         </div>

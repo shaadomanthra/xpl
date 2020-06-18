@@ -21,7 +21,7 @@
       <div class='row'>
       <div class="col-12 col-md-6">
       <div class="form-group">
-        <label for="formGroupExampleInput ">name</label>
+        <label for="formGroupExampleInput ">Name</label>
         <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the name" 
             @if($stub=='Create')
             value="{{ (old('name')) ? old('name') : '' }}"
