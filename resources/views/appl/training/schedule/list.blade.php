@@ -6,9 +6,9 @@
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">Sno</th>
-                <th scope="col">Day</th>
-                <th scope="col" style="max-width:60%">Name </th>
+                <th scope="col" style="width:5%">Sno</th>
+                <th scope="col" style="width:12%">Day</th>
+                <th scope="col" style="width:60%">Name </th>
                 <th scope="col">Status</th>
                 <th scope="col">actions </th>
               </tr>
