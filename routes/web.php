@@ -29,7 +29,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 			return redirect('/dashboard');
 		}else{
 
-			if( $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'bfs.piofx.com')
+			if( $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com')
 				return view('client_bfs')->with('welcome',1);
 			if( $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
 		      return view('welcome')->with('welcome',1);
