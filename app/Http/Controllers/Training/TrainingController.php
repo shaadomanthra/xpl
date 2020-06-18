@@ -188,6 +188,7 @@ class TrainingController extends Controller
                'name'     => $row[0],
                'email'    => $row[1], 
                'username'    => $obj->username($row[1]), 
+               'client_slug' =>'bfs',
                'phone'    => $row[2], 
                'password' => bcrypt($row[2]),
                'year_of_passing' => $row[3],
