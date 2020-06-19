@@ -16,6 +16,7 @@ class TrainingController extends Controller
     public function __construct(){
         $this->app      =   'training';
         $this->module   =   'training';
+        
     }
 
 

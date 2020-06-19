@@ -33,6 +33,7 @@
 	<script>PDFObject.embed("{{ $r->link }}", "#example1");</script>
 
 @endif
+@if(isset($app->training->slug))
 @if(\auth::user()->checkRole(['administrator','hr-manager']))
 <div class=" mt-3 mb-3">
 <span class="">
@@ -43,6 +44,7 @@
     "{{route('resource.destroy',[$app->training->slug,$r->id])}}" class="rdelete" data-name="{{$r->name}}"><i class="fa fa-trash"></i> delete</a>
   </span>
 </div>
+@endif
 @endif
 </div>
 </div>
