@@ -76,6 +76,8 @@
     <i class="fa fa-file-audio-o"></i> 
   @elseif($r->type=='test_link')
     <i class="fa fa-file-code-o"></i> 
+  @elseif($r->type=='external_link')
+    <i class="fa fa-file-excel-o"></i> 
   @else
     <i class="fa fa-file-pdf-o"></i> 
   @endif

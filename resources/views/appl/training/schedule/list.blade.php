@@ -1,34 +1,65 @@
-
 <script src="{{ asset('js/pdf.js')}}"></script>
 
- @if($objs->total()!=0)
-        <div class="table-responsive">
-          <table class="table table-bordered mb-0">
-            <thead>
-              <tr>
-                <th scope="col" style="width:5%">Sno</th>
-                <th scope="col" style="width:12%">Day</th>
-                <th scope="col" style="width:60%">Name </th>
-                <th scope="col">Status</th>
-                <th scope="col">actions </th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($objs as $key=>$obj)  
-              <tr>
-                <td scope="row">{{$obj->sno}}</td>
-                <td>
-                  {{\carbon\carbon::parse($obj->day)->format('M d, Y')}}
-                </td>
-                <td>
-                  <h3>{{ $obj->name }}</h3>
-                  @if(trim(strip_tags($obj->details)))
-                  {!! $obj->details!!}
-                  @endif
-                  @if(count($obj->resources))
-                  <div class="p-3 border my-3 rounded">
-                    @foreach($obj->resources as $r)
-                        <span class="block_item mb-0 h5" data-id="{{$r->id}}" style="cursor: pointer">
+      @foreach($objs as $s)
+      <div class="row mb-4">
+        <div class="col-2">
+          <div class="alert alert-warning alert-important text-center " role="alert"><span class="h5">{{\carbon\carbon::parse($s->day)->format('M')}}</span><br>
+            <div class="display-3 d-inline">{{\carbon\carbon::parse($s->day)->format('d')}}</div></div>
+
+        @if($s->users->count())
+          <div class="row no-gutters">
+            <div class="col-6 ">
+              <div class="card mr-1">
+                <div class="p-2 text-center">
+                  <small class="present present_{{$s->id}}" data-id="{{$s->present_ids()}}">Present</small>
+                  <div class="display-4">
+                    @if($s->users->count())
+                    {{$s->users->count()}}
+                    @else
+                    -
+                    @endif
+                  </div>
+                </div>
+              </div>
+            </div>
+             <div class="col-6">
+              <div class="card ml-1">
+                <div class="p-2 text-center">
+                  <small>Absent</small>
+                  <div class="display-4">
+                    @if($s->users->count())
+                    {{($app->training->users->count() - $s->users->count())}}
+                    @else
+                    -
+                    @endif
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        @endif
+        </div>
+        <div class="col-7">
+          <div class="bg-white rounded" style="box-shadow: 1px 1px 1px 1px #eee;border:1px solid #eee">
+            <div class="card-body pt-4">
+              
+              <h4 class="mb-3">{{$s->name}}</h4>
+              <div class="progress" style="height:5px;">
+                <div class="progress-bar bg-success present_{{$s->id}}" role="progressbar" style="width: {{$s->present($app->training,1)}}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-danger absent_{{$s->id}}" role="progressbar" style="width: {{$s->absent($app->training,1)}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              @if(strip_tags(str_replace('&nbsp;','',$s->details)))
+              <p>{!! $s->details !!}</p>
+              @endif
+
+              <p>@foreach($s->users as $u)
+                {{$u->name}}<br>
+              @endforeach</p>
+              
+            </div>
+            <div class="p-3" style="background: #f8f8f8;border-radius:0px 5px 5px 0px;">
+            @foreach($s->resources as $r)
+                      <span class="block_item mb-0 " data-id="{{$r->id}}" style="cursor: pointer">
   @if($r->type=='youtube_video_link')
     <i class="fa fa-file-video-o"></i> 
   @elseif($r->type=='ppt_link')
@@ -37,50 +68,48 @@
     <i class="fa fa-file-audio-o"></i> 
   @elseif($r->type=='test_link')
     <i class="fa fa-file-code-o"></i> 
+    @elseif($r->type=='external_link')
+    <i class="fa fa-file-excel-o"></i> 
   @else
     <i class="fa fa-file-pdf-o"></i> 
   @endif
 
   {{$r->name}}</span>
-  <span class="float-right">
-    <a href=
-    "{{route('resource.edit',[$app->training->slug,$r->id])}}"><i class="fa fa-edit" ></i> </a>
-
-    <a href=
-    "{{route('resource.destroy',[$app->training->slug,$r->id])}}" class="rdelete" data-name="{{$r->name}}"><i class="fa fa-trash"></i> </a>
-  </span>
+  
                       @include('appl.training.schedule.embed')
                     @endforeach
-                  </div>
-                  @endif
-                  <a href="{{route('resource.store',[$app->training->slug])}}" class="btn btn-sm btn-outline-info dresource" data-name="{{$obj->name}}" data-id="{{$obj->id}}">Add Resource</a>
-                </td>
-                
-                
-                <td>
-                  @if($obj->status==0)
+
+          </div>
+          </div>
+          
+        </div>
+
+        <div class="col-12 col-md-3">
+          <div class="bg-light border p-3 rounded mb-3">
+            <span class="float-right">
+            @if($s->status==0)
                     <span class="badge badge-warning">Draft</span>
-                  @elseif($obj->status==1)
+                  @elseif($s->status==1)
                     <span class="badge badge-success">Active</span>
                   @endif
-                </td>
-                <td>
-                  <a href="{{route('schedule.edit',[$app->training->slug,$obj->id])}}" class="btn btn-sm btn-outline-primary">edit</a>
-                  <a href="{{route('schedule.destroy',[$app->training->slug,$obj->id])}}" class="btn btn-sm btn-outline-danger ddelete" data-name="{{$obj->name}}">delete</a>
-                </td>
-              </tr>
-              @endforeach      
-            </tbody>
-          </table>
+                </span>
+            <h4>Tools</h4>
+            
+                
+             <a href="{{route('schedule.edit',[$app->training->slug,$s->id])}}" class="btn btn-sm btn-outline-primary mb-1 "><i class="fa fa-edit"></i> Edit</a>
+                  <a href="{{route('schedule.destroy',[$app->training->slug,$s->id])}}" class="btn btn-sm btn-outline-danger ddelete mb-1" data-name="{{$s->name}}"><i class="fa fa-trash"></i> Delete</a>
+                  <a href="{{route('resource.store',[$app->training->slug])}}" class="btn btn-sm btn-outline-info dresource mb-1" data-name="{{$s->name}}" data-id="{{$s->id}}"><i class="fa fa-file-o"></i> Add Resource</a>
+                  <a href="{{route('schedule.attendance',[$app->training->slug,$s->id])}}" class="btn btn-sm btn-outline-success dattendance" data-name="{{$s->name}}"><i class="fa fa-user-plus"></i> Attendance</a>
+          </div>
+
+
         </div>
-        @else
-        <div class="card card-body bg-light">
-          No {{ $app->module }} listed
-        </div>
-        @endif
-        <nav aria-label="Page navigation  " class="card-nav @if($objs->total() > config('global.no_of_records'))mt-3 @endif">
-        {{$objs->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
-      </nav>
+
+      </div>
+      @endforeach
+
+
+
 
 <div class="modal fade" id="ddelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -155,6 +184,7 @@
             <option value="ppt_link">PPT Link</option>
             <option value="audio_link">Audio Link</option>
             <option value="test_link">Test Link</option>
+            <option value="external_link">External Link</option>
           </select>
         </div>
          <div class="form-group">
@@ -177,6 +207,44 @@
   </div>
 </div>
 
+<div class="modal fade bd-example-modal-lg" id="dattendance" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <form method="post" action="" class="dattendance_form">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Attendance <span class="daname" style="display: none">sample</span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        @foreach($app->training->users as $u)
+          <div class="col-12 col-md-3">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input_{{$u->id}}" id="exampleCheck1_{{$u->id}}" name="attendance[]" value="{{$u->id}}" >
+              <label class="form-check-label_{{$u->id}}" for="exampleCheck1_{{$u->id}}">{{$u->name}}</label>
+            </div>
+          </div>
+        @endforeach
+        </div>
+       
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="user_id" value="{{ \auth::user()->id }}">
+        <input type="hidden" name="status" value="1">
+        <input type="hidden" class="daschedule_id"name="schedule_id" value="">
+          <button type="submit" class="btn btn-success">Save</button>
+        
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 <style>

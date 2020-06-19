@@ -83,6 +83,18 @@ $(function(){
     $('#dresource').modal();
   });
 
+  $('.dattendance').on('click',function(e){
+    e.preventDefault();
+    url = $(this).attr('href');
+    name = $(this).data('name');
+    schedule_id = $(this).data('id');
+
+    $('.dattendance_form').attr('action',url);
+    $('.daschedule_id').attr('value',schedule_id);
+    $('.daname').show().html(' - '+ name);
+    $('#dattendance').modal();
+  });
+
   $('.block').hide();
   $('.block_item').on('click',function(){
       id = $(this).data('id');

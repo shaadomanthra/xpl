@@ -49,6 +49,21 @@ class ScheduleController extends Controller
                 ->with('app',$this);
     }
 
+    public function attendance(Obj $obj,Request $request,$training,$id)
+    {
+        $user_ids = $request->get('attendance');
+        $obj = Obj::where('id',$id)->first();
+
+        $obj->users()->detach();
+        foreach($user_ids as $id){
+            $obj->users()->attach($id);
+        }
+        
+
+        flash('Attendance updated!')->success();
+        return redirect()->route('schedule.index',$training);
+    }
+
     public function public_index(Obj $obj,Request $request)
     {
         $search = $request->search;
