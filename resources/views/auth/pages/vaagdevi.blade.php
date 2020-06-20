@@ -246,7 +246,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">District</label>
                 <div class="col-md-12">
@@ -289,12 +289,23 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">Address (optional)</label>
                 <div class="col-md-12">
 
-                    <input id="address" type="text" class="form-control" name="current_city" value="{{ old('current_city') }}" required>
+                    <input id="address" type="text" class="form-control" name="current_city" value="{{ old('current_city') }}" >
+                    
+                </div>
+            </div>
+
+        </div>
+         <div class="col-12 col-md-4">
+            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                <label for="phone" class="col-md-8 control-label">Referral Code (optional)</label>
+                <div class="col-md-12">
+
+                    <input id="fluency" type="text" class="form-control" name="fluency" value="{{ old('fluency') }}" >
                     
                 </div>
             </div>
