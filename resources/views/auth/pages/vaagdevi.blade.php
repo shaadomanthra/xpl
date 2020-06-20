@@ -280,11 +280,9 @@
                         <option value="Vikarabad">Vikarabad</option>
                         <option value="Wanaparthy">Wanaparthy</option>
                         <option value="Warangal (urban)">Warangal (urban)</option>
-                         <option value="Warangal (rural)">Warangal (rural)</option>
-                          <option value="Yadadri Bhuvanagiri">Yadadri Bhuvanagiri</option>
-
-
-
+                        <option value="Warangal (rural)">Warangal (rural)</option>
+                        <option value="Yadadri Bhuvanagiri">Yadadri Bhuvanagiri</option>
+                        <option value="OTHER">Other</option>
                     </select>
    
                     
