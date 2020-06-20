@@ -94,11 +94,17 @@ class StudentController extends Controller
              abort(403,'Unauthorised Access');   
         }
         
-        $users = User::has('referrals')->get();
-
-
+        $users = User::has('referrals')->get()->groupBy('id');
+        $usergroup = User::get()->groupBy('user_id');
+        $ulist = null;
+        foreach($usergroup as $k=>$u){
+            $ulist[$k] = count($u);
+        }
+        arsort($ulist);
+        
+        
         return view('appl.user.referrallist')
-        ->with('users',$users);
+        ->with('users',$users)->with('usergroup',$usergroup)->with('ulist',$ulist);
     }
 
     public function proaccess(Request $request)

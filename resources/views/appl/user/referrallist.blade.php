@@ -35,49 +35,31 @@
                 <div> </div>
                 <div class="">
                   <div class="table-responsive">
-                  <table class="table  mb-0">
+                  <table class="table  table-bordered mb-0">
                     <thead>
                       <tr>
                         <th scope="col">Sno </th>
                         <th scope="col">Name </th>
-                        <th scope="col">College </th>
-                        <th scope="col">Branch </th>
-                        <th scope="col">Score </th>
+                        <th scope="col">Number of Referrals </th>
                       </tr>
                     </thead>
-                    <tbody class="{{ $j = 0}} {{ $l=0 }} {{$m=0}} {{ $a=0}} {{ $g=0}}">
-                      @foreach($users as $user )
+                    <tbody class="{{$i=1}}">
+                      @foreach($ulist as $id => $count )
                       <tr>
                         <td class="">{{ $i++ }}
                         </td>
                         <td class="">
-
-                        <a href="{{ route('admin.user.view',$user->username) }}">
-                          {{ $user->name }}<br>
-                          @foreach($user->roles()->get() as $k=> $r)
-                          <span class="badge badge-warning">{{ $r->name }}</span><br>
-                          
-                          <div class="d-none">
-                          @if($r->name == 'Campus Ambassador')
-                            {{ ($m = $m +$user->referrals->count()) }}
-                          @endif
-                        </div>
-                          
-                          @endforeach
+                        @if(isset($users[$id]))
+                        <a href="{{ route('admin.user.view',$users[$id][0]->username) }}">
+                          {{ $users[$id][0]->name }}<br>
+                         
                         </a>
+                        @endif
                         </td>
-                        <td> {{ ($user->colleges()->first())?$user->colleges()->first()->name:'' }}</td>
-                        <td> {{ ($user->branches()->first())?$user->branches()->first()->name:'' }}</td>
-                        <td class="{{ $j=$j+$user->referrals->count() }}"> {{ $user->referrals->count() }}
+                       
+                        <td class=""> {{ $count }}
 
-                          <div class="d-none">
-                        @if(!$user->roles->where('name','Campus Ambassador')->first())
-                            <span>{{ $l=$l+$user->referrals->count()  }}</span> <span>{{ $g =$g+1}}</span>
-                        @else
-
-                          {{ $a++ }}
-                        @endif  
-                      </div>
+                          
 
                         </td>
                         
@@ -93,26 +75,7 @@
                 
               </div>
             </div>
-            @if(\auth::user()->checkRole(['administrator']))
-                    <div class="row">
-                        <div class="col-12 col-md-4">
-                            <div class="p-3 border">Total Referrals   
-                              <div class="display-2">{{ $j }}</div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="p-3 border">Ambassador @ {{$a}}   
-                              <div class="display-2">{{ $m }}</div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <div class="p-3 border">General @ {{$g}}  
-                              <div class="display-2">{{ $l }}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                  @endif
+          
         </div>
       </div>
      </div>   
