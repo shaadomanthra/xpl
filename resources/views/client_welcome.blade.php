@@ -17,10 +17,27 @@
   <main>
     <div class="container-fluid">
       <div class="row">
+
+        @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
+        <div class="col-sm-6 ">
+          <div class="brand-wrapper">
+            <img 
+        src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
+          </div>
+          <div class="login-section-wrapper my-auto">
+             @include('auth.pages.login')
+             <div class="mt-5">
+              <div class="p-2"></div>
+             <hr >
+             Incase of any query you can reach out to our resource person, details in the <a href="{{ route('contactpage')}}">contact page</a>
+           </div>
+          </div>
+        </div>
+        @else
         <div class="col-sm-6 login-section-wrapper">
           <div class="brand-wrapper">
             <img 
-        src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt="PacketPrep logo " type="image/png" style="">
+        src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
           </div>
           <div class=" my-auto">
              @include('auth.pages.login')
@@ -31,6 +48,7 @@
            </div>
           </div>
         </div>
+        @endif
         <div class="col-sm-6 px-0 d-none d-sm-block">
           @if(Storage::disk('public')->exists('companies/'.request()->session()->get('client')->slug.'_header.png'))
               <img src="{{ asset('/storage/companies/'.request()->session()->get('client')->slug.'_header.png')}}?time={{ microtime()}}" alt="login image" class="login-img" />
