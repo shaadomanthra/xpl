@@ -65,7 +65,7 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                <label for="name" class="col-md-8 control-label">Name</label>
+                <label for="name" class="col-md-8 control-label">Student Name</label>
 
                 <div class="col-md-12">
                     <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus placeholder="Enter your full name">
@@ -134,7 +134,7 @@
         </div>
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('personality') ? ' has-error' : '' }}">
-                <label for="personality" class="col-md-8 control-label">Course</label>
+                <label for="personality" class="col-md-8 control-label">Inter Course</label>
 
                 <div class="col-md-12">
                     <select class="form-control" name="personality">
@@ -172,7 +172,7 @@
 
         <div class="col-12 col-md-4">
              <div class="form-group">
-        <label for="dob" class="col-md-12 control-label">Date of birth (eg: 25-08-2005) </label>
+        <label for="dob" class="col-md-12 control-label">Date of Birth (eg: 25-08-2005) </label>
 
         <div class="col-md-12">
             <input id="dob" type="text" class="form-control" name="dob" value="{{ old('dob') }}" required>
