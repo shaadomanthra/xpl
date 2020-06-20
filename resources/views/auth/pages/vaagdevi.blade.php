@@ -246,11 +246,11 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">District</label>
                 <div class="col-md-12">
-                    <select name="hometown">
+                    <select name="hometown" class="form-control">
                         <option value="Adilabad">Adilabad</option>
                         <option value="Komaram Bheem Asifabad">Komaram Bheem Asifabad</option>
                         <option value="Bhadradri Kothagudem">Bhadradri Kothagudem</option>
@@ -291,7 +291,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">Address (optional)</label>
                 <div class="col-md-12">
