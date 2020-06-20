@@ -23,7 +23,37 @@ $(function(){
     $("form :input").change(function() {
       $name = $(this).attr('name');
       ele = $('.'+$name);
-      if(ele.length){
+
+      $error = 0;
+      // string length condition
+      if(parseInt($(this).data('vcount'))){
+        if($(this).val().length!= parseInt($(this).data('vcount'))){
+          $('.help_'+$name).show();
+            $('.help_'+$name).html($(this).data('vcount')+' digit number are required');
+            $error = 1;
+        }else{
+            $('.help_'+$name).hide();
+        }
+      }
+
+      // min and max condition
+      if($(this).attr('min')){
+
+        if(parseInt($(this).val()) < parseInt($(this).attr('min'))){
+          $('.help_'+$name).show();
+          $('.help_'+$name).html('The number cannot be less than 30');
+            $error = 1;
+        }else if(parseInt($(this).val()) > parseInt($(this).attr('max'))){
+          $('.help_'+$name).show();
+          $('.help_'+$name).html('The number cannot be greater than 100');
+            $error = 1;
+        }else{
+            $('.help_'+$name).hide();
+        }
+
+      }
+
+      if(ele.length && !$error){
         ele.removeClass('text-silver');
         ele.addClass('text-success');
         percent();
@@ -44,6 +74,8 @@ $(function(){
       $('.progress-bar').data('percent',$new);
 
   }
+
+
 
 });
 </script>

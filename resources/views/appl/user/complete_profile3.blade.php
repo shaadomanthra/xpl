@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@section('title', 'Complete Profile')
 @section('content')
 <style>
 .text-silver{ color:#eee; }
@@ -12,11 +11,11 @@
   <div class="progress-bar" role="progressbar" style="width: {{$user->profile_complete()}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-step="{{$user->profile_complete_step()}}" data-percent="{{$user->profile_complete()}}"></div>
 </div>
        <form method="post" action="{{route('profile.update','@'.$user->username)}}" enctype="multipart/form-data">
-    <div class="screen screen_1">
-
-      <div class="row">
-
+    <div class="mb-3">
+      <h3 class=>Personal Details</h3>
     
+      <div class="row">
+        
 
         <div class="col-12 col-md-6">
           <div class="form-group">
@@ -29,10 +28,7 @@
          <div class="col-12 col-md-6">
           <div class="form-group">
           <label for="formGroupExampleInput ">Aadhar Number <i class="fa fa-check-circle aadhar @if($user->aadhar) text-success @else text-silver @endif"></i> </label>
-          <input type="text" class="form-control" name="aadhar"  value="@if($user->aadhar){{  $user->aadhar }} @endif" data-vcount="12" >
-          <span class="cp-help-block text-danger help_aadhar" style="display: none">
-            Error Message
-          </span>
+          <input type="text" class="form-control" name="aadhar"  value="@if($user->aadhar){{  $user->aadhar }} @endif" >
         </div>
          </div>
 
@@ -85,11 +81,35 @@
          </div>
       </div>
 
-      <button type="button" class="btn btn-info screen_next" data-next="screen_2">Next</button>
+       <div class="row">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Gender <i class="fa fa-check-circle gender @if($user->gender) text-success @else text-silver @endif"></i></label>
+            <select class="form-control" name="gender">
+             
+              <option value="male"  @if(isset($user_details)) @if($user->gender=='male')  selected @endif  @endif>Male</option>
+              <option value="female"  @if(isset($user_details)) @if($user->gender=='female')  selected @endif  @endif>Female</option>
+              <option value="transgender"  @if(isset($user_details)) @if($user->gender=='transgender')  selected @endif  @endif>Transgender</option>
+                     
+            </select>
+          </div>
+        </div>
+         
+         <div class="col-12 col-md-6">
+            <div class="form-group ">
+            <label for="formGroupExampleInput ">Date of Birth (DD-MM-YYYY) <i class="fa fa-check-circle dob @if($user->dob) text-success @else text-silver @endif"></i></label><br>
+            <input type="text" minlength="1" class="form-control" name="dob" id="formGroupExampleInput" placeholder="Enter your date of birth (eg: 25-09-2001)" 
+            value="{{ $user->dob }}">
+          </div>
+         </div>
+      </div>
+
+      
     </div>
 
       
-    <div class="screen screen_2">
+    <div class="mb-3">
+      <h3 class="border p-3 bg-light rounded mt-2">Education Details</h3>
 
      
 
@@ -145,34 +165,12 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <label for="formGroupExampleInput ">Gender <i class="fa fa-check-circle gender @if($user->gender) text-success @else text-silver @endif"></i></label>
-            <select class="form-control" name="gender">
-             
-              <option value="male"  @if(isset($user_details)) @if($user->gender=='male')  selected @endif  @endif>Male</option>
-              <option value="female"  @if(isset($user_details)) @if($user->gender=='female')  selected @endif  @endif>Female</option>
-              <option value="transgender"  @if(isset($user_details)) @if($user->gender=='transgender')  selected @endif  @endif>Transgender</option>
-                     
-            </select>
-          </div>
-        </div>
-         
-         <div class="col-12 col-md-6">
-            <div class="form-group ">
-            <label for="formGroupExampleInput ">Date of Birth (DD-MM-YYYY) <i class="fa fa-check-circle dob @if($user->dob) text-success @else text-silver @endif"></i></label><br>
-            <input type="text" minlength="1" class="form-control" name="dob" id="formGroupExampleInput" placeholder="Enter your date of birth (eg: 25-09-2001)" 
-            value="{{ $user->dob }}">
-          </div>
-         </div>
-      </div>
+     
 
-      <button type="button" class="btn btn-outline-info screen_back" data-back="screen_1">Back</button>
-      <button type="button" class="btn btn-info screen_next" data-next="screen_3">Next</button>
+     
     </div>
 
-    <div class="screen screen_3">
+    <div class="mb-3">
 
       <div class="alert alert-warning alert-important">The academic percentage has to be between 30 to 100. If your university awards CPGA, then convert it to percentage and then enter. <br><b>Eg:</b> For 7.2 CGPA, you can enter 72.</div>
 
@@ -181,18 +179,12 @@
           <div class="form-group ">
             <label for="formGroupExampleInput ">Class 10th Percentage <i class="fa fa-check-circle tenth @if($user->tenth) text-success @else text-silver @endif"></i></label><br>
             <input type="number" minlength="1" class="form-control" name="tenth" id="formGroupExampleInput" value="{{ $user->tenth }}" min="30" max="100">
-            <span class="cp-help-block text-danger help_tenth" style="display:none">
-            Error Message
-          </span>
           </div>
         </div>
          <div class="col-12 col-md-6">
           <div class="form-group ">
             <label for="formGroupExampleInput ">Class 12th Percentage  <i class="fa fa-check-circle twelveth @if($user->twelveth) text-success @else text-silver @endif"></i></label><br>
             <input type="number" minlength="1" class="form-control" name="twelveth" id="formGroupExampleInput" value="{{ $user->twelveth }}" min="30" max="100">
-            <span class="cp-help-block text-danger help_twelveth" style="display: none">
-            Error Message
-          </span>
           </div>
          </div>
       </div>
@@ -202,26 +194,19 @@
             <div class="form-group ">
             <label for="formGroupExampleInput ">BTech Percentage  <i class="fa fa-check-circle bachelors @if($user->bachelors) text-success @else text-silver @endif"></i></label><br>
             <input type="number" minlength="1" class="form-control" name="graduation" id="formGroupExampleInput" value="{{ $user->bachelors }}" min="30" max="100">
-            <span class="cp-help-block text-danger help_graduation" style="display: none">
-            Error Message
-          </span>
           </div>
         </div>
          <div class="col-12 col-md-6">
           <div class="form-group ">
             <label for="formGroupExampleInput ">Masters Percentage (optional)</label><br>
             <input type="number" minlength="1" class="form-control" name="masters" id="formGroupExampleInput" value="{{ $user->masters }}" min="30" max="100">
-            <span class="cp-help-block text-danger help_masters" style="display: none">
-            Error Message
-          </span>
           </div>
          </div>
       </div>
-      <button type="button" class="btn btn-outline-info screen_back" data-back="screen_2">Back</button>
-      <button type="button" class="btn btn-info screen_next" data-next="screen_4">Next</button>
+     
     </div>
 
-     <div class="screen screen_4">
+     <div class="">
 
       
 
@@ -275,7 +260,7 @@
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-outline-info screen_back" data-back="screen_3">Back</button>
+      
       <button type="submit" class="btn btn-primary btn-profile-save">Save</button>
     </div>
 
@@ -289,4 +274,6 @@
     </form>
     </div>
   </div>
+
+
 @endsection

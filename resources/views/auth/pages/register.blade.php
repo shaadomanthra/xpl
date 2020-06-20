@@ -56,7 +56,7 @@
 
 			<div class="alert alert-warning alert-important" role="alert">
       
-      <p class="mb-0"><b>Note:</b>If you see a message that 'The email has already been taken.'. Kindly use the following link to <a href="https://xplore.co.in/password/reset">reset your password</a></p>
+      <p class="mb-0"><b>Note:</b>If you see a message that 'The email has already been taken'. Kindly use the following link to <a href="https://xplore.co.in/password/reset">reset your password</a></p>
 </div>
 		</div>
 	</div>

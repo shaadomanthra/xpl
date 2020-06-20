@@ -75,7 +75,6 @@
                                     Register
                                 </a>
                                 <br>
-              @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
               @else
                  <a class="btn btn-success" href="{{ route('register') }}">
                                     Register

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use PacketPrep\Exports\UExport;
 use Maatwebsite\Excel\Facades\Excel;
+use PacketPrep\Models\College\Metric;
 
 class UserController extends Controller
 {
@@ -475,6 +476,20 @@ class UserController extends Controller
         
     
         $user_details->save();
+
+        $metrics = $request->get('metrics');
+
+        
+
+        if($metrics){
+            $user->metrics()->detach();
+            foreach($metrics as $metric){
+
+                    $user->metrics()->attach($metric);
+            } 
+        }
+        
+       
 
 
         
