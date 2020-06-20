@@ -1,6 +1,6 @@
 <div class="card mb-3 text-white d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
-		<h4><i class="fa fa-clock-o"></i> Timer</h4>
+		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer <span class="float-md-right" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> Calculator</span></h4>
 		<h1 class="text-bold mb-2" id="timer"></h1>
 		
 		
@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		</div>
-		<div class="qset" style="max-height: 170px;overflow-y: auto;" data-url="{{ URL::current() }}" data-lastsno="{{ count($questions)  }}" data-counter="0" data-user="{{ \auth::user()->id }}" data-sno="{{ $i=0 }}">
+		<div class="qset" style="max-height: 170px;overflow-y: auto;" data-url="{{ URL::current() }}" data-lastsno="{{ count($questions)  }}" data-counter="0" data-user="{{ \auth::user()->id }}" data-sno="{{ $i=0 }}" >
 			<div class="start"></div> 
 			@foreach($exam->sections as $section)
 				@if(count($exam->sections)!=1)

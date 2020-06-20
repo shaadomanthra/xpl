@@ -52,7 +52,7 @@
 
   <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title" id="exampleModalLabel">Confirm Submission</h1>
@@ -64,9 +64,40 @@
         
 
         <div class="alert alert-warning alert-important mb-3">
-          If you click end test, you will not be able to edit your responses for any of the given questions.
+          The following action will save the responses and ends the test.
         </div>
-        Your responses will be submitted and the test will end.  Kindly confirm your submission.
+        
+
+        <div class="row mb-3">
+          <div class="col-12 col-lg-2">
+            <div class="row">
+              <div class="col-6 col-md-12">
+                <div class="bg-light p-3 border rounded mb-3">
+              <h5>Attempted</h5>
+              <div class="display-3 attempt_count">234</div>
+            </div>
+              </div>
+              <div class="col-6 col-md-12">
+                <div class="bg-light p-3 border rounded mb-3">
+              <h5>Not Attempted</h5>
+              <div class="display-3 notattempt_count">24</div>
+            </div>
+              </div>
+            </div>
+            
+            
+          </div>
+          <div class="col-12 col-lg-10">
+            <div class="p-1 p-md-4 rounded attempted">
+              <div class="row">
+          @for($i=1;$i<= count($questions);$i++)
+          <div class="col-6 col-md-6 col-lg-3"><div class="mb-2"><div class=" px-2 py-1 rounded notattempt_color_{{$i}} d-inline ">{{$i}}. <span class="notattempt_message_{{$i}}">Attempted</span></div></div></div>
+          @endfor
+        </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No, I will solve more questions</button>
@@ -82,6 +113,22 @@
     </div>
   </div>
 </div>
+<style>
+div.attempted {
+  background-color: #f4fbff;
+  border:1px solid #e1eef5;
+  height: 230px;
+  overflow: auto;
+}
+.notattempted{
+  background: #ec6868;
+  color:white;
+}
+.nattempted{
+  background: #4caf50;
+  color:white;
+}
+ </style>
 
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -102,6 +149,26 @@
   </div>
 </div>
 
+<div class="modal fade" id="timer_alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-primary" id="exampleModalLongTitle"><i class="fa fa-clock-o"></i> Timer Alert</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        Last few minutes are left. Kindly review your answers before submitting.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@include('appl.exam.assessment.blocks.calculator')
 </form>
 </div>
 

@@ -387,6 +387,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 		return Redirect::to('/sample-tests', 301); 
 	});
 
+	Route::get('/srecieee', function(){
+		return Redirect::to('/test/srecieee', 301); 
+	});
+
 	Route::get('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');
 	Route::resource('post','Job\PostController')->middleware('auth');
 

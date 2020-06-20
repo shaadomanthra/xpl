@@ -1,4 +1,6 @@
 <script src="{{ asset('js/script.js')}}?new=12"></script>
+<script src="{{ asset('js/jquery.ui.min.js')}}?new=12"></script>
+<script src="{{ asset('js/osc.js')}}?new=12"></script>
 
 
   <script>
@@ -777,6 +779,8 @@ var x = setInterval(function() {
   document.getElementById("timer2").innerHTML =  hours + "h "
   + minutes + "m " + seconds + "s ";
 
+  
+
   // If the count down is finished, write some text 
   if (distance < 0) {
     clearInterval(x);
@@ -815,7 +819,80 @@ function addMinutes(date, minutes) {
 </script>
 @endif
 
+
+<script type="text/javascript">
+        $(function() {
+            <!--  $("#keyPad").draggable({ -->
+            <!--    start: function() { -->
+            <!--   $(this).css({ height: "auto", width: "463px" }); -->
+            <!--  }, -->
+            <!-- stop: function() { -->
+            <!--  $(this).css({ height: "auto", width: "463px" }); -->
+            <!--  } -->
+            <!--   }); -->
+
+            $(".calc_min").on('click', function() {
+                $('#mainContentArea').toggle();
+                <!-- $('#keyPad_Help').hide(); -->
+                <!--  $('#keyPad_Helpback').hide();  -->
+                $(".help_back").hide();
+                $('#keyPad').addClass("reduceWidth");
+                $('#helptopDiv span').addClass("reduceHeader");
+                //    $('#calc_min').toggleClass("reduceHeader");
+                $(this).removeClass("calc_min").addClass('calc_max');
+            });
+            $(".calc_max").on('click', function() {
+                $(this).removeClass("calc_max").addClass('calc_min');
+                $('#mainContentArea').toggle();
+                if ($("#helpContent").css('display') == 'none') {
+                    $('#keyPad_Help').show();
+                } else {
+                    $('#keyPad_Helpback').show();
+                }
+                <!-- $('#keyPad_Help').show(); -->
+                $('#keyPad').removeClass("reduceWidth");
+                $('#helptopDiv span').removeClass("reduceHeader");
+            });
+        });
+        $('#closeButton').click(function() {
+            $('#loadCalc').hide();
+        });
+        /** new help changes **/
+        
+
+       
+
+        /** new help changes **/
+    </script>
+
+
+
 @if(isset($timer2))
+<script type="text/javascript">
+$(function(){
+  $(document).on('click','.qno-sub',function(){
+    $qcount = $('.qset').data('lastsno');
+    $notattempt = 0;
+    for($i=1;$i<=$qcount;$i++){
+      if(!$('.s'+$i).hasClass('qblue-border')){
+        $notattempt++;
+        $('.notattempt_color_'+$i).addClass('notattempted');
+        $('.notattempt_message_'+$i).html('Not Attempted');
+      }else{
+        $('.notattempt_message_'+$i).html('Attempted');
+        $('.notattempt_color_'+$i).removeClass('notattempted');
+        $('.notattempt_color_'+$i).addClass('nattempted');
+
+      }
+    }
+    $('.notattempt_count').html($notattempt);
+    $('.attempt_count').html(($qcount-$notattempt));
+
+  });
+  
+});
+</script>
+
 <script>
 
 @if(isset($question))
@@ -882,6 +959,14 @@ var x = setInterval(function() {
   document.getElementById("timer2").innerHTML =  hours + "h "
   + minutes + "m " + seconds + "s ";
 
+  if(hours==0 && minutes==5 && seconds==1)
+    $('#timer_alert').modal();
+
+  $tcount = parseInt($('.timer_count').data('value'))-1;
+  $('.timer_count').data('value',$tcount);
+  // if(seconds==56)
+  //   $('#timer_alert').modal();
+
   // If the count down is finished, write some text 
   if (distance < 0) {
     clearInterval(x);
@@ -890,10 +975,8 @@ var x = setInterval(function() {
 
     @if(isset($exam))
       alert('The Test time has expired. ');
-      //document.getElementById("assessment").submit();
-      $('.assessment').submit(function(){
-        console.log('done');
-      });
+      document.getElementById("assessment").submit();
+      
     @endif
   }
 }, 1000);
@@ -910,6 +993,7 @@ function addMinutes(date, minutes) {
 </script>
 
 @endif
+
 
 
 @if(isset($window_change))
@@ -964,6 +1048,7 @@ function win_focus(){
     window_focus = true;
     console.log("Focus");
   }).blur(function() {
+    if(parseInt($('.timer_count').data('value'))>5)
         stopTimer();
         
     });
