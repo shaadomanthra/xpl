@@ -20,7 +20,7 @@
         <div class="col-sm-6 login-section-wrapper">
           <div class="brand-wrapper">
             <img 
-        src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt="PacketPrep logo " type="image/png" style="max-width: 400px;">
+        src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt="PacketPrep logo " type="image/png" style="">
           </div>
           <div class=" my-auto">
              @include('auth.pages.login')
