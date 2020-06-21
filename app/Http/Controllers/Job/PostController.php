@@ -177,6 +177,8 @@ class PostController extends Controller
                 $request->merge(['last_date' => $last_date]);
             }
 
+            $details = summernote_imageupload(\auth::user(),$request->details);
+            $request->merge(['details' => $details]);
 
             $obj = $obj->create($request->all());
 
@@ -333,6 +335,8 @@ class PostController extends Controller
                 $last_date = \carbon\carbon::now()->addDays(3);
                 $request->merge(['last_date' => $last_date]);
             }
+            $details = summernote_imageupload(\auth::user(),$request->details);
+            $request->merge(['details' => $details]);
 
             $this->authorize('update', $obj);
             $obj->update($request->all()); 
