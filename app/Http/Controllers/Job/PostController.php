@@ -110,7 +110,7 @@ class PostController extends Controller
             $slug = rand(10000,100000);
         }
 
-        $this->education = ['BTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','MECH','BCOM','BSC','BBA','MBA'];
+        $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL',,'BCOM','BSC','BBA','MBA','BPHARM','MPHARM'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA'];
         $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI'];
         $this->yop = ['2016','2017','2018','2019','2020','2021'];
@@ -252,7 +252,7 @@ class PostController extends Controller
         $obj= Obj::where('slug',$id)->first();
         $this->authorize('update', $obj);
 
-        $this->education = ['BTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','MECH','BCOM','BSC','BBA','MBA'];
+        $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL',,'BCOM','BSC','BBA','MBA','BPHARM','MPHARM'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA'];
         $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI'];
         $this->yop = ['2016','2017','2018','2019','2020','2021'];
