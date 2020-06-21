@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -299,28 +300,31 @@ class AdminController extends Controller
         $user = new User();
         $search = $request->search;
         $item = $request->item;
-        $recent = $request->get('recent');
-        $metric = $request->get('metric');
 
-        if($recent){
-        $users = $user->where(function ($query) use ($item) {
-                                $query->where('name','LIKE',"%{$item}%")
-                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%");
-                            })->orderBy('updated_at','desc')->paginate(config('global.no_of_records'));
-        }elseif($metric){
-            $m = Metric::where('name',$metric)->first();
-        $users = $m->users()->orderBy('created_at','desc')->paginate(config('global.no_of_records'));
 
-        }else{
-            $users = $user->where('name','LIKE',"%{$item}%")
-                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->orderBy('created_at','desc')->paginate(config('global.no_of_records'));
-                                      
-        }
+        $month = $request->get('month');
+
+        if($month=='thismonth')
+            $users = User::whereMonth('created_at', Carbon::now()->month)->orderBy('id','desc')->paginate(30);
+        elseif($month=='lastmonth')
+            $users = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->orderBy('id','desc')->paginate(30);
+        elseif($month=='lastbeforemonth')
+            $users = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->orderBy('id','desc')->paginate(30);
+        else
+            $users = User::where('name','LIKE',"%{$item}%")
+                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->orderBy('created_at','desc')->paginate(30);
+              
+        $data['users_all'] =  User::count();
+        $data['users_lastmonth'] = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
+        $data['users_thismonth'] = User::whereMonth('created_at', Carbon::now()->month)->count();
+        $data['users_lastbeforemonth'] = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
+
         
         
         $view = $search ? 'list': 'index';
 
-        return view('appl.product.admin.user.'.$view)->with('users',$users)->with('metric',$metric);
+        return view('appl.product.admin.user.'.$view)
+        ->with('users',$users)->with('data',$data);
     }
 
 

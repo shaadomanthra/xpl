@@ -3,10 +3,10 @@
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{$users->total()}})</th>
+                <th scope="col">#</th>
                 <th scope="col">Name </th>
                 <th scope="col">Details</th>
-                <th scope="col">Created at</th>
+                <th scope="col">Created</th>
               </tr>
             </thead>
             <tbody>
@@ -20,8 +20,7 @@
                   @if($user->profile_complete()==100)
                   <i class="fa fa-check-circle text-success"></i>
                   @endif
-                  </a><br>
-                   {{ $user->email }}<br>
+                  </a>
                   @if($user->client_slug)
                   <span class="badge badge-info">{{$user->client_slug}}</span>
                   @else
@@ -29,6 +28,7 @@
                   @endif
                 </td>
                  <td>
+                  {{ $user->email }}<br>
                   @if($user->college)
                     {{ $user->college->name }} 
                     @if($user->branch)
