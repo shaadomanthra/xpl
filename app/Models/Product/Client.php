@@ -140,6 +140,12 @@ class Client extends Model
             return null;
     }
 
+    public function usercount(){
+        return User::where('client_slug',$this->slug)->count();
+    }
+    
+
+
 
 
 

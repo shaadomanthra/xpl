@@ -4,8 +4,9 @@
             <thead>
               <tr>
                 <th scope="col">#({{$clients->total()}})</th>
-                <th scope="col">Project </th>
+                <th scope="col">Clients</th>
                 <th scope="col">Slug</th>
+                <th scope="col">Users</th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
                 @if(\auth::user()->isAdmin())
@@ -23,6 +24,7 @@
                   </a>
                 </td>
                 <td>{{ $client->slug }}</td>
+                <td>{{ $client->usercount() }}</td>
                 <td>
                    @if($client->status==0)
                       <span class="badge badge-secondary">Unpublished</span>
