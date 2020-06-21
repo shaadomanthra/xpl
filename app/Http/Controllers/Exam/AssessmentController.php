@@ -1233,8 +1233,9 @@ class AssessmentController extends Controller
 
     public function precheck_auto_activation($exam){
 
-        if(!isset($exam->auto_activation))
+      if(!$exam->auto_activation && !$exam->auto_deactivation)
         return $exam;
+    
       $auto_activation  = \carbon\carbon::parse($exam->auto_activation);
       $auto_deactivation  = \carbon\carbon::parse($exam->auto_deactivation);
    
