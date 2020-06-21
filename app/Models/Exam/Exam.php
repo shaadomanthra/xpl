@@ -69,14 +69,30 @@ class Exam extends Model
           if($this->active){
             $this->active = 0;
             $this->save();
+            $this->cache();
           }
       }else{
           
           if(!$this->active){
             $this->active = 1;
             $this->save();
+            $this->cache();
           }
       }
+    }
+
+    public function cache(){
+      $exam = $this;
+      $cache_path =  '../storage/app/cache/exams/';
+      $filename = $exam->slug.'.json';
+      $filepath = $cache_path.$filename;
+      $exam->sections = $exam->sections;
+      $exam->products = $exam->products;
+      $exam->product_ids = $exam->products->pluck('id')->toArray();
+      foreach($exam->sections as $m=>$section){
+        $exam->sections->questions = $section->questions;
+      }
+      file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
     }
 
     public function question_count()

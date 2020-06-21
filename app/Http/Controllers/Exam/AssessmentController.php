@@ -1235,7 +1235,7 @@ class AssessmentController extends Controller
 
       if(!$exam->auto_activation && !$exam->auto_deactivation)
         return $exam;
-    
+
       $auto_activation  = \carbon\carbon::parse($exam->auto_activation);
       $auto_deactivation  = \carbon\carbon::parse($exam->auto_deactivation);
    
@@ -1251,6 +1251,7 @@ class AssessmentController extends Controller
             $e = Exam::where('id',$exam->id)->first();
             $e->active = 0;
             $e->save();
+            $e->cache();
           }
       }else{
         
@@ -1259,6 +1260,7 @@ class AssessmentController extends Controller
             $e = Exam::where('id',$exam->id)->first();
             $e->active = 1;
             $e->save();
+            $e->cache();
           }
       }
       return $e;
