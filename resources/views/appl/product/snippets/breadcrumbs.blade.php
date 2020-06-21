@@ -1,6 +1,6 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin')}}">Admin</a></li>
     @if(request()->is('client'))
     <li class="breadcrumb-item " >Clients</li>
     @elseif(request()->is('client*'))

@@ -68,6 +68,7 @@
 @endif
 @if(isset($jqueryui))
 <link href="{{ asset('jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/datetime/jquery-ui-timepicker-addon.min.css')}}">
 @endif
 
 </head>

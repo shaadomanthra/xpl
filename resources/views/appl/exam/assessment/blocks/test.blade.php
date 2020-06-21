@@ -168,7 +168,11 @@ div.attempted {
   </div>
 </div>
 
-@include('appl.exam.assessment.blocks.calculator')
+@if(isset($exam->calculator))
+  @if($exam->calculator)
+    @include('appl.exam.assessment.blocks.calculator')
+  @endif
+@endif
 </form>
 </div>
 

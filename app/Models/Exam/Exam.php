@@ -26,6 +26,12 @@ class Exam extends Model
         'emails',
         'active',
         'camera',
+        'calculator',
+        'auto_activation',
+        'auto_deactivation',
+        'window_swap',
+        'auto_termination',
+        'capture_frequency'
         // add all other fields
     ];
 
@@ -51,6 +57,26 @@ class Exam extends Model
     public function course()
     {
         return $this->belongsTo('PacketPrep\Models\Course\Course');
+    }
+
+    public function precheck_auto_activation(){
+      $auto_activation  = \carbon\carbon::parse($this->auto_activation);
+      $auto_deactivation  = \carbon\carbon::parse($this->auto_deactivation);
+   
+      if(!$this->auto_activation && !$this->auto_deactivation)
+        return 1;
+      if($auto_activation->lt(\carbon\carbon::now()) && $auto_deactivation->gt(\carbon\carbon::now())){
+          if($this->active){
+            $this->active = 0;
+            $this->save();
+          }
+      }else{
+          
+          if(!$this->active){
+            $this->active = 1;
+            $this->save();
+          }
+      }
     }
 
     public function question_count()

@@ -2,6 +2,7 @@
 @section('title', 'Create/Edit - '.$exam->name)
 @section('content')
 
+
 @include('flash::message')
   <div class="card">
     <div class="card-body">
@@ -154,44 +155,7 @@
      
      
       <div class="@if(request()->get('id')=='settings') p-3  pactive rounded bg-success text-white mb-3 @endif">
-      <div class="row">
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-        <label for="formGroupExampleInput ">Report</label>
-        <select class="form-control" name="solutions">
-          <option value="0" @if(isset($exam)) @if($exam->solutions==0) selected @endif @endif >Yes with solutions</option>
-          <option value="1" @if(isset($exam)) @if($exam->solutions==1) selected @endif @endif >Yes without solutions</option>
-          <option value="2" @if(isset($exam)) @if($exam->solutions==2) selected @endif @endif >No report</option>
-        </select>
-      </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="form-group">
 
-        <label for="formGroupExampleInput ">Camera</label>
-        @if(\auth::user()->checkRole(['administrator']))
-        <select class="form-control" name="camera">
-          <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
-          <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
-        </select>
-        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
-        <select class="form-control" name="camera">
-          <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
-          <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
-        </select>
-        @else
-        <select class="form-control" name="camera" disabled>
-          <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
-          <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
-        </select>
-        <input type="hidden" name="camera" value="0">
-        @endif
-        <small class='text-secondary'>Camera option is available for pro and advanced accounts only</small>
-      </div>
-        </div>
-      </div>
-      
-      
         <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">
@@ -213,6 +177,130 @@
       </div>
         </div>
       </div>
+
+      <div class="border p-3 my-3">
+        <h4><i class="fa fa-gear"></i> Additional Settings</h4>
+        <hr>
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Report</label>
+            <select class="form-control" name="solutions">
+              <option value="1" @if(isset($exam)) @if($exam->solutions==1) selected @endif @endif >Yes without solutions</option>
+              <option value="0" @if(isset($exam)) @if($exam->solutions==0) selected @endif @endif >Yes with solutions</option>
+              <option value="2" @if(isset($exam)) @if($exam->solutions==2) selected @endif @endif >No report</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Calculator</label>
+            <select class="form-control" name="calculator">
+              <option value="0" @if(isset($exam)) @if($exam->calculator==0) selected @endif @endif >Disable</option>
+              <option value="1" @if(isset($exam)) @if($exam->calculator==1) selected @endif @endif >Enable</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Link Auto Activation</label>
+    <input id="datetimepicker" class="form-control" type="text" value="{{isset($exam->auto_activation)? $exam->auto_activation:''}}"  name="auto_activation"></input>
+    
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Link Auto Deactivation</label>
+            <input id="datetimepicker2" class="form-control" type="text" value="{{isset($exam->auto_deactivation)? $exam->auto_deactivation:''}}"  name="auto_deactivation"></input>
+    
+          </div>
+        </div>
+      </div>
+      
+      
+        
+
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Camera</label>
+            @if(\auth::user()->checkRole(['administrator']))
+            <select class="form-control" name="camera">
+              <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
+              <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
+            </select>
+            @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
+            <select class="form-control" name="camera">
+              <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
+              <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
+            </select>
+            @else
+            <select class="form-control" name="camera" disabled>
+              <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
+              <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
+            </select>
+            <input type="hidden" name="camera" value="0">
+            @endif
+            <small class='text-secondary'>Camera option is available for pro and advanced accounts only</small>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Photo Capture Frequency</label>
+            @if(\auth::user()->checkRole(['administrator']))
+            <select class="form-control" name="capture_frequency">
+              <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
+              <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
+              <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
+              <option value="300" @if(isset($exam)) @if($exam->capture_frequency==300) selected @endif @endif >Every 5 mins</option>
+              <option value="600" @if(isset($exam)) @if($exam->capture_frequency==600) selected @endif @endif >Every 10 mins</option>
+            </select>
+            @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
+            <select class="form-control" name="capture_frequency">
+              <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
+              <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
+              <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
+              <option value="300" @if(isset($exam)) @if($exam->capture_frequency==300) selected @endif @endif >Every 5 mins</option>
+              <option value="600" @if(isset($exam)) @if($exam->capture_frequency==600) selected @endif @endif >Every 10 mins</option>
+            </select>
+            @else
+            <select class="form-control" name="capture_frequency" disabled>
+              <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
+              <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
+              <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
+              <option value="300" @if(isset($exam)) @if($exam->capture_frequency==300) selected @endif @endif >Every 5 mins</option>
+              <option value="600" @if(isset($exam)) @if($exam->capture_frequency==600) selected @endif @endif >Every 10 mins</option>
+            </select>
+            <input type="hidden" name="capture_frequency" value="0">
+            @endif
+
+            
+          </div>
+        </div>
+         <div class="col-12 col-md-3">
+           <div class="form-group">
+            <label for="formGroupExampleInput ">Window Swap Alert </label>
+            <select class="form-control" name="window_swap">
+              <option value="1" @if(isset($exam)) @if($exam->window_swap==1) selected @endif @endif >Enable</option>
+              <option value="0" @if(isset($exam)) @if($exam->window_swap==0) selected @endif @endif >Disable</option>
+              
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-md-3">
+           <div class="form-group">
+            <label for="formGroupExampleInput ">Auto Terminate </label>
+            <select class="form-control" name="auto_terminate">
+              <option value="0" @if(isset($exam)) @if($exam->auto_terminate==0) selected @endif @endif >None</option>
+              <option value="3" @if(isset($exam)) @if($exam->auto_terminate==3) selected @endif @endif >after 3 window swaps</option>
+              <option value="6" @if(isset($exam)) @if($exam->auto_terminate==6) selected @endif @endif >after 6 window swaps</option>
+              <option value="10" @if(isset($exam)) @if($exam->auto_terminate==10) selected @endif @endif >after 10 window swaps</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
 
       

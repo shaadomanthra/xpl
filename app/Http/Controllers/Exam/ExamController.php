@@ -486,8 +486,16 @@ class ExamController extends Controller
             $exam->camera = $request->camera;
             $exam->status = $request->status;
             $exam->solutions = $request->solutions;
+            $exam->calculator = $request->calculator;
+            $exam->capture_frequency = $request->capture_frequency;
+            $exam->window_swap = $request->window_swap;
+            $exam->auto_terminate = $request->auto_terminate;
+            $exam->auto_activation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
+            $exam->auto_deactivation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
 
             $exam->code = strtoupper($request->code);
+
+
             $exam->save(); 
 
 
@@ -532,7 +540,7 @@ class ExamController extends Controller
     public function show($id)
     {
         $exam= Exam::where('slug',$id)->first();
-
+        $exam->precheck_auto_activation();
         
         $this->authorize('view', $exam);
 
@@ -858,6 +866,25 @@ class ExamController extends Controller
             $exam->emails = ($request->emails) ? $request->emails : null;
             $exam->active = $request->active;
             $exam->camera = $request->camera;
+            $exam->calculator = $request->calculator;
+            if(!$request->camera)
+                $exam->capture_frequency = 0;
+            else
+                $exam->capture_frequency = $request->capture_frequency;
+            $exam->window_swap = $request->window_swap;
+            if(!$request->window_swap)
+                $exam->auto_terminate = 0;
+            else
+                $exam->auto_terminate = $request->auto_terminate;
+            
+            if($request->auto_activation)
+                $exam->auto_activation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
+            else
+                $exam->auto_activation = null;
+            if($request->auto_deactivation)
+                $exam->auto_deactivation = \carbon\carbon::parse($request->auto_deactivation)->format('Y-m-d H:i:s');
+            else
+                $exam->auto_deactivation = null;
             $exam->code = strtoupper($request->code);
             $exam->save(); 
 

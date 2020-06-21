@@ -776,9 +776,19 @@ $(document).ready(function() {
  <script type="text/javascript"
          src="{{asset('jquery-ui/jquery-ui.min.js')}}">
   </script>
+<script src="{{ asset('js/datetime/jquery-ui-timepicker-addon.min.js')}}"></script>
+<script src="{{ asset('js/datetime/jquery-ui-sliderAccess.js')}}"></script>
   <script>
   $( function() {
     $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+    $('#datetimepicker').datetimepicker({
+      dateFormat:'yy-mm-dd',
+      timeFormat: 'HH:mm:ss',
+    });
+    $('#datetimepicker2').datetimepicker({
+      dateFormat:'yy-mm-dd',
+      timeFormat: 'HH:mm:ss',
+    });
   } );
   </script>
 @endif
@@ -1033,42 +1043,39 @@ function addMinutes(date, minutes) {
 <script src="{{ asset('js/jquery.winFocus.js')}}"></script>
 
 <script>
- // Inactive
- // window.addEventListener('blur', stopTimer);
+ // window change events
 
- // Stop timer
  function stopTimer() {
   var count = parseInt(document.getElementById("window_change").value) +1;
-
+  var message = '';
+  @if(isset($exam->window_swap))
+    @if($exam->window_swap)
+      if(count =={{$exam->auto_terminate}})
+      var message = 'We have noticed {{$exam->auto_terminate}} window swaps. Next swap will lead to termination of the test.';
+      else if(count>{{$exam->auto_terminate}})
+      var message = 'You have reached the {{$exam->auto_terminate}} swap limit. The test will be terminated here.';
+      else 
+      var message = 'We have noticed a window swap ('+count+'). Kindly note that {{$exam->auto_terminate}} swaps will lead to cancellation of the test.';
+    @endif
+  @endif
   
-  if(count ==3)
-  var message = 'We have noticed 3 window swaps. Next swap will lead to termination of the test.';
-  else if(count>3)
-  var message = 'You have reached the 3 swap limit. The test will be terminated here.';
-  else 
-  var message = 'We have noticed a window swap ('+count+'). Kindly note that 3 swaps will lead to cancellation of the test.';
-
-  @if(isset($exam))
-  @if($exam->status==1)
-  var message = 'We have noticed a window swap ('+count+'). Kindly note that too many swaps will lead to cancellation of the test.';
-  @endif
-  @endif
 
   $('.swap-message').html(message);
   $('#exampleModalCenter').modal();
   document.getElementById("window_change").value = count;
 
-  @if(isset($exam))
-  @if($exam->status!=1)
-  if(count==4){
-    setTimeout(function(){ 
-      $('#exampleModalCenter').modal('toggle');
-      $("form")[0].submit();
-    }, 3000);
-  }
+  @if(isset($exam->window_swap))
+    @if($exam->window_swap)
+      if(count=={{$exam->auto_terminate}}){
+        setTimeout(function(){ 
+          $('#exampleModalCenter').modal('toggle');
+          $("form")[0].submit();
+        }, 3000);
+      }
+    @endif
   @endif
-  @endif
-  console.log("Blur");
+  
+  console.log("Blured");
  }
 
 
@@ -1076,14 +1083,17 @@ function win_focus(){
   console.log('started focus events');
   var window_focus;
 
-  $(window).focus(function() {
-    window_focus = true;
-    console.log("Focus");
-  }).blur(function() {
-    if(parseInt($('.timer_count').data('value'))>5)
-        stopTimer();
-        
+  @if(isset($exam->window_swap))
+    @if($exam->window_swap)
+    $(window).focus(function() {
+      window_focus = true;
+      console.log("Focused");
+      }).blur(function() {
+        if(parseInt($('.timer_count').data('value'))>5)
+          stopTimer();
     });
+    @endif
+  @endif
 }
 
 setTimeout(win_focus,5000);
@@ -1115,8 +1125,128 @@ setTimeout(win_focus,5000);
 @auth
 @if(isset($camera))
 @if($camera)
-<script src="{{ asset('js/capture.js') }}">
-  </script>
+<script>
+$(function(){
+
+  var width = 320;    // We will scale the photo width to this
+  var height = 0;     // This will be computed based on the input stream
+
+  // |streaming| indicates whether or not we're currently streaming
+  // video from the camera. Obviously, we start at false.
+
+  var streaming = false;
+
+  // The various HTML elements we need to configure or control. These
+  // will be set by the startup() function.
+
+  var video = null;
+  var canvas = null;
+  var photo = null;
+  var startbutton = null;
+
+  function startup() {
+    video = document.getElementById('video');
+    canvas = document.getElementById('canvas');
+    photo = document.getElementById('photo');
+    text = document.getElementById('text');
+    startbutton = document.getElementById('startbutton');
+
+    try {
+    navigator.mediaDevices.getUserMedia({video: true, audio: false})
+    .then(function(stream) {
+      video.srcObject = stream;
+      video.play();
+    });
+    }
+    catch(err) {
+      console.log("An error occurred: " + err);
+    }
+
+    video.addEventListener('canplay', function(ev){
+      if (!streaming) {
+        height = video.videoHeight / (video.videoWidth/width);
+      
+        // Firefox currently has a bug where the height can't be read from
+        // the video, so we will make assumptions if this happens.
+      
+        if (isNaN(height)) {
+          height = width / (4/3);
+        }
+      
+        video.setAttribute('width', width);
+        video.setAttribute('height', height);
+        canvas.setAttribute('width', width);
+        canvas.setAttribute('height', height);
+        streaming = true;
+      }
+    }, false);
+
+    
+    clearphoto();
+  }
+
+  // Fill the photo with an indication that none has been
+  // captured.
+
+  function clearphoto() {
+    var context = canvas.getContext('2d');
+    context.fillStyle = "#AAA";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    var data = canvas.toDataURL('image/jpeg',0.5);
+    photo.setAttribute('src', data);
+  }
+  
+  // Capture a photo by fetching the current contents of the video
+  // and drawing it into a canvas, then converting that to a PNG
+  // format data URL. By drawing it on an offscreen canvas and then
+  // drawing that to the screen, we can change its size and/or apply
+  // other changes before drawing it.
+
+  function takepicture() {
+
+    var context = canvas.getContext('2d');
+    var $counter = parseInt($('#video').data('c'));
+
+    if (width && height) {
+ 
+      canvas.width = width;
+      canvas.height = height;
+      context.drawImage(video, 0, 0, width, height);
+    
+      var data = canvas.toDataURL('image/jpeg',0.5);
+
+      photo.setAttribute('src', data);
+
+      var url = $('#photo').data('hred');
+      var image = $('#photo').attr('src');
+      $token = $('#photo').data('token');
+
+      // var url = $('#video').data('hred');
+      // $token = $('#video').data('token');
+      $c = parseInt($('#video').data('c'))+1;
+      $username = $('#video').data('username');
+      $test = $('#video').data('test');
+      $name = $username+'_'+$test+'_'+$c;
+
+      $.post( url ,{'name': $name ,'image':image,'_token':$token}, function( data ) {
+            console.log(data);
+
+      });
+
+      $('#video').data('c',$c);
+      console.log($name);
+      console.log($c);
+    } 
+  }
+  // Set up our event listener to run the startup process
+  // once loading is complete.
+  window.addEventListener('load', startup, false);
+  $time = @if(isset($exam->capture_frequency))@if($exam->capture_frequency){{($exam->capture_frequency*1000)}} @else 300000 @endif @else 300000 @endif;
+  setTimeout(function(){ takepicture(); }, 5000);
+  setInterval(function(){ takepicture(); console.log($time); }, $time);
+});
+</script>
 @endif
 @endif
 

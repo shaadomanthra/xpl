@@ -1,6 +1,12 @@
 <div class="card mb-3 text-white d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
-		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer <span class="float-md-right" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> Calculator</span></h4>
+		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer 
+		@if(isset($exam->calculator))
+		@if($exam->calculator)
+		<span class="float-md-right" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> Calculator</span>
+		@endif
+		@endif
+	</h4>
 		<h1 class="text-bold mb-2" id="timer"></h1>
 		
 		

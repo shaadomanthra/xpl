@@ -1183,7 +1183,8 @@ class AssessmentController extends Controller
             }
             file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
         }
-
+        //precheck for auto activation
+        $exam = $this->precheck_auto_activation($exam);
         //dd($exam);
         $entry=null;
         $attempt = null;
@@ -1228,6 +1229,38 @@ class AssessmentController extends Controller
         else
             abort(404);
             
+    }
+
+    public function precheck_auto_activation($exam){
+
+        if(!isset($exam->auto_activation))
+        return $exam;
+      $auto_activation  = \carbon\carbon::parse($exam->auto_activation);
+      $auto_deactivation  = \carbon\carbon::parse($exam->auto_deactivation);
+   
+      $e = $exam;
+
+
+      if(!$exam->auto_activation && !$exam->auto_deactivation)
+        return $exam;
+      if($auto_activation->lt(\carbon\carbon::now()) && $auto_deactivation->gt(\carbon\carbon::now())){
+        
+          if($exam->active){
+            $exam->active = 0;
+            $e = Exam::where('id',$exam->id)->first();
+            $e->active = 0;
+            $e->save();
+          }
+      }else{
+        
+          if(!$exam->active){
+            $exam->active = 1;
+            $e = Exam::where('id',$exam->id)->first();
+            $e->active = 1;
+            $e->save();
+          }
+      }
+      return $e;
     }
 
     public function access($id)

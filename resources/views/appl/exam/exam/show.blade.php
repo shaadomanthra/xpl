@@ -97,6 +97,17 @@
           </div>
 
           <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-calculator"></i>&nbsp; Calculator</div>
+            <div class="col-6">
+              @if($exam->calculator==1)
+                <span class="badge badge-success">Enabled</span>
+              @else
+                <span class="badge badge-secondary">Disabled</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-2">
             <div class="col-6"><i class="fa fa-camera"></i>&nbsp; Camera</div>
             <div class="col-6">
               @if($exam->camera==1)
@@ -106,6 +117,41 @@
               @endif
             </div>
           </div>
+
+          <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-image"></i>&nbsp; Capture Frequency</div>
+            <div class="col-6">
+              @if($exam->capture_frequency==0)
+                <span class="badge badge-warning">None</span>
+              @else
+                Every {{$exam->capture_frequency}} secs
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-laptop"></i>&nbsp; Window Swap</div>
+            <div class="col-6">
+              @if($exam->window_swap==1)
+                <span class="badge badge-success">Enabled</span>
+              @else
+                <span class="badge badge-secondary">Disabled</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-minus-square-o"></i>&nbsp; Auto Terminate</div>
+            <div class="col-6">
+              @if($exam->auto_terminate==0)
+                <span class="badge badge-warning">None</span>
+              @else
+                After {{$exam->auto_terminate }} swaps
+              @endif
+            </div>
+          </div>
+
+         
 
           <div class="row mb-2">
             <div class="col-6"> <i class="fa fa-check-square"></i>&nbsp;Exam Status</div>
@@ -127,8 +173,45 @@
             </div>
           </div>
 
+
+
             </div>
             </div>
+
+        <div class="alert alert-warning alert-important mt-4">
+          <h4>Link Status:
+            @if($exam->active==1)
+                <span class="badge badge-secondary">Inactive</span>
+              @else
+                <span class="badge badge-success">Active</span>
+              @endif
+
+              <span class="float-right"></span>
+          </h4>
+             <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-calendar"></i>&nbsp; Link Auto Activation</div>
+            <div class="col-6">
+              @if(!$exam->auto_activation)
+                -
+              @else
+                {{\carbon\carbon::parse($exam->auto_activation)->toDayDateTimeString()}}
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-calendar"></i>&nbsp; Link Auto Deactivation</div>
+            <div class="col-6">
+              @if(!$exam->auto_deactivation)
+                -
+              @else
+                {{\carbon\carbon::parse($exam->auto_deactivation)->toDayDateTimeString()}}
+              @endif
+            </div>
+          </div>
+          <div ><small class="text-secondary"><i class="fa fa-clock-o"></i>&nbsp; Current Server Time : &nbsp; {{\carbon\carbon::now()->toDayDateTimeString()}}</small></div>
+          
+          </div>
         </div>
       </div>
 
