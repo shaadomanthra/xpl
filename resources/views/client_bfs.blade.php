@@ -71,17 +71,18 @@ License: You must have a valid license purchased only from themeforest(the above
 								<!--begin::Title-->
 								<!--begin::Form group-->
 								<div class="form-group">
-									<label class="font-size-h6 font-weight-bolder text-dark">Your Email</label>
+									<label class="font-size-h6 font-weight-bolder text-dark">Email</label>
 									<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="text" name="email" autocomplete="off" />
 								</div>
 								<!--end::Form group-->
 								<!--begin::Form group-->
 								<div class="form-group">
 									<div class="d-flex justify-content-between mt-n5">
-										<label class="font-size-h6 font-weight-bolder text-dark pt-5">Your Name</label>
-										<a href="{{ route('password.request') }}" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">Forgot Password ?</a>
+										<label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+										
 									</div>
 									<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="password" name="password" autocomplete="off" />
+									<a href="{{ route('password.request') }}" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5 float-right">Forgot Password ?</a>
 								</div>
 								<!--end::Form group-->
 								<!--begin::Action-->

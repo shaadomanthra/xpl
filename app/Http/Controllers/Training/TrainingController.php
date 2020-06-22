@@ -38,7 +38,7 @@ class TrainingController extends Controller
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records')); 
         else
-            $objs = $obj->where('user_id',$user->id)->where('title','LIKE',"%{$item}%")
+            $objs = $obj->where('user_id',$user->id)->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records')); 
         $view = $search ? 'list': 'index';

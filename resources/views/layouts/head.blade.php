@@ -51,6 +51,7 @@
   @if(isset($highlight))
   <link href="{{ asset('css/styles2.css') }}?new=12" rel="stylesheet">
   @elseif($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test')
+  @if(request()->segment(1)=='dashboard')
   <link href="{{ asset('css/styles.css') }}?new=12" rel="stylesheet">
   <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
@@ -69,8 +70,9 @@
     <link href="{{asset('assets/css/themes/layout/header/menu/light.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/themes/layout/brand/light.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/themes/layout/aside/light.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
-    <!--end::Layout Themes-->
-    
+  @else
+    <link href="{{ asset('css/styles.css') }}?new=12" rel="stylesheet">
+  @endif
   @else
   <link href="{{ asset('css/styles.css') }}?new=12" rel="stylesheet">
   @endif
