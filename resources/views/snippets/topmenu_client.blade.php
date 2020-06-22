@@ -24,7 +24,7 @@
 
 
         <li class="mr-3"><a class="nav-link" href="{{ route('dashboard') }}" aria-label="Dashboard page"
-            ><i class="fa fa-dashboard"></i>
+            ><i class="fa fas fa-home fa-dashboard"></i>
             Dashboard
         </a></li>
         @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
@@ -39,7 +39,7 @@
 
         <li class="mr-3"><a class="nav-link" href="{{ route('logout') }}" aria-label="Logout page" onclick="event.preventDefault();
     document.getElementById('logout-form').submit();"
-            ><i class="fa fa-sign-out"></i>
+            ><i class="fa fas fa-sign-out-alt fa-sign-out"></i>
             Logout
         </a></li>
 
