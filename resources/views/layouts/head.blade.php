@@ -51,7 +51,7 @@
   @if(isset($highlight))
   <link href="{{ asset('css/styles2.css') }}?new=12" rel="stylesheet">
   @elseif($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test')
-  @if(request()->segment(1)=='dashboard')
+  @if(request()->segment(1)=='dashboard' || request()->segment(1)=='training')
   <link href="{{ asset('css/styles.css') }}?new=12" rel="stylesheet">
   <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />

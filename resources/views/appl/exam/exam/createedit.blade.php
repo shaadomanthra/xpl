@@ -204,15 +204,13 @@
         <div class="col-12 col-md-3">
           <div class="form-group">
             <label for="formGroupExampleInput ">Link Auto Activation</label>
-    <input id="datetimepicker" class="form-control" type="text" value="{{isset($exam->auto_activation)? $exam->auto_activation:''}}"  name="auto_activation"></input>
-    
+            <input id="datetimepicker" class="form-control" type="text" value="{{isset($exam->auto_activation)? $exam->auto_activation:''}}"  name="auto_activation"></input>
           </div>
         </div>
         <div class="col-12 col-md-3">
           <div class="form-group">
             <label for="formGroupExampleInput ">Link Auto Deactivation</label>
             <input id="datetimepicker2" class="form-control" type="text" value="{{isset($exam->auto_deactivation)? $exam->auto_deactivation:''}}"  name="auto_deactivation"></input>
-    
           </div>
         </div>
       </div>

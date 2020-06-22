@@ -66,19 +66,49 @@
           <small class="text-secondary">Kindly use only .jpg or .png</small>
       </div>
 
-
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Start Date</label>
+            <input id="datetimepicker" class="form-control" type="text" value="{{isset($obj->start_date)? $obj->start_date:''}}"  name="start_date"></input>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Due Date</label>
+            <input id="datetimepicker2" class="form-control" type="text" value="{{isset($obj->due_date)? $obj->due_date:''}}"  name="due_date"></input>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Number of Sessions</label>
+            <input  class="form-control" type="number" value="{{isset($obj->sessions)? $obj->sessions:''}}"  name="sessions"></input>
+          </div>
+        </div>
+      </div>
 
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
           <div class="form-group">
             <label for="formGroupExampleInput ">Trainer</label>
             <select class="form-control" name="trainer_id">
-              <option value="10" @if(isset($obj)) @if($obj->trainer_id==10) selected @endif @endif >Poojitha</option>
-              <option value="8" @if(isset($obj)) @if($obj->trainer_id==8) selected @endif @endif >Ramana</option>
+              @foreach($hr_manager as $t)
+              <option value="{{$t->id}}" @if(isset($obj)) @if($obj->tpo_id==$t->id) selected @endif @endif >{{$t->name}}</option>
+              @endforeach
             </select>
           </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">College TPO</label>
+            <select class="form-control" name="tpo_id">
+              @foreach($tpo as $t)
+              <option value="{{$t->id}}" @if(isset($obj)) @if($obj->tpo_id==$t->id) selected @endif @endif >{{$t->name}}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
           <div class="form-group">
             <label for="formGroupExampleInput ">Status</label>
             <select class="form-control" name="status">

@@ -217,8 +217,11 @@ if (! function_exists('subdomain')) {
 function subdomain() {
     $url = url()->full();
 
+    if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test')
+            return 'bfs';
+
     $parsed = parse_url($url);
-        $exploded = explode('.', $parsed["host"]);
+    $exploded = explode('.', $parsed["host"]);
      if(count($exploded) > 2){
         $parsed = parse_url($url);
             $exploded = explode('.', $parsed["host"]);

@@ -15,7 +15,7 @@ table, td, th, tr {
             </h3>
             <div class="card-toolbar">
                 <div class="card-toolbar">
-                    <a href="#" class="btn btn-primary btn-sm font-size-sm font-weight-bolder  " >View all</a>
+                    <a href="{{ route('training.index')}}" class="btn btn-primary btn-sm font-size-sm font-weight-bolder  " >View all</a>
                     </div>
             </div>
         </div>
@@ -225,7 +225,7 @@ table, td, th, tr {
                 </h3>
                 <div class="card-toolbar">
                     <div class="card-toolbar">
-                    <a href="#" class="btn btn-light btn-sm font-size-sm font-weight-bolder  text-dark-75" >View all</a>
+                    <a href="{{ route('exam.index')}}" class="btn btn-light btn-sm font-size-sm font-weight-bolder  text-dark-75" >View all</a>
                     </div>
                 </div>
             </div>
@@ -383,7 +383,7 @@ table, td, th, tr {
                     <span class="text-muted mt-3 font-weight-bold font-size-sm">35 attempts</span>
                 </h3>
                 <div class="card-toolbar">
-                    <a href="#" class="btn btn-light btn-sm font-size-sm font-weight-bolder  text-dark-75" >View all</a>
+                    <a href="{{ route('exam.index')}}" class="btn btn-light btn-sm font-size-sm font-weight-bolder  text-dark-75" >View all</a>
                 </div>
             </div>
             <!--end::Header-->

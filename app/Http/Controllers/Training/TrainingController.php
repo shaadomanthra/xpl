@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\User;
 use PacketPrep\Models\Training\Training as Obj;
+use PacketPrep\Models\User\Role;
 use Illuminate\Support\Facades\Storage;
 use PacketPrep\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -122,10 +123,27 @@ class TrainingController extends Controller
             $slug = rand(10000,100000);
         }
 
+
+        $user = \auth::user();
+        $tpos = Role::where('slug','tpo')->first();
+        $all_tpos = $tpos->pluck('id')->toArray();
+
+        $client_slug = subdomain();
+
+        $tpo = User::where('client_slug',$client_slug)->whereIn('id',$all_tpos)->get();
+
+        $hr_managers = Role::where('slug','hr-manager')->first()->users;
+        $all_hrs = $hr_managers->pluck('id')->toArray();
+
+        $hr_manager = User::where('client_slug',$client_slug)->whereIn('id',$all_hrs)->get();
+
         return view('appl.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
                 ->with('editor',1)
+                ->with('jqueryui',1)
                 ->with('obj',$obj)
+                ->with('tpo',$tpo)
+                ->with('hr_manager',$hr_manager)
                 ->with('slug',$slug)
                 ->with('app',$this);
     }
@@ -149,6 +167,11 @@ class TrainingController extends Controller
 
                 $request->merge(['image' => $path]);
             }
+
+            if($request->start_date)
+                $request->merge(['start_date' => \carbon\carbon::parse($request->start_date)->format('Y-m-d H:i:s')]);
+            if($request->due_date)
+                $request->merge(['due_date' => \carbon\carbon::parse($request->due_date)->format('Y-m-d H:i:s')]);
 
             $obj = $obj->create($request->all());
 
@@ -184,12 +207,15 @@ class TrainingController extends Controller
                 $b=$branch[strtoupper($row[4])];
             else
                 $b = 15;
+
+            $client_slug = subdomain();
+
             if(!$u){
                 $u = new User([
                'name'     => $row[0],
                'email'    => $row[1], 
                'username'    => $obj->username($row[1]), 
-               'client_slug' =>'bfs',
+               'client_slug' =>$client_slug,
                'phone'    => $row[2], 
                'password' => bcrypt($row[2]),
                'year_of_passing' => $row[3],
@@ -279,13 +305,28 @@ class TrainingController extends Controller
         $obj= Obj::where('slug',$id)->first();
         $this->authorize('update', $obj);
 
+        $user = \auth::user();
+        $tpos = Role::where('slug','tpo')->first()->users;
+        $all_tpos = $tpos->pluck('id')->toArray();
+
+        $client_slug = subdomain();
+
+        $tpo = User::where('client_slug',$client_slug)->whereIn('id',$all_tpos)->get();
+
         
+        $hr_managers = Role::where('slug','hr-manager')->first()->users;
+        $all_hrs = $hr_managers->pluck('id')->toArray();
+
+        $hr_manager = User::where('client_slug',$client_slug)->whereIn('id',$all_hrs)->get();
 
 
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Update')
+                ->with('tpo',$tpo)
+                ->with('hr_manager',$hr_manager)
                 ->with('editor',1)
+                 ->with('jqueryui',1)
                 ->with('obj',$obj)->with('app',$this);
         else
             abort(404);
@@ -302,8 +343,6 @@ class TrainingController extends Controller
     {
         try{
             $obj = Obj::where('slug',$id)->first();
-
-            
 
              /* If image is given upload and store path */
             
@@ -325,6 +364,10 @@ class TrainingController extends Controller
                 $request->merge(['image' => $path]);
             }
 
+            if($request->start_date)
+                $request->merge(['start_date' => \carbon\carbon::parse($request->start_date)->format('Y-m-d H:i:s')]);
+            if($request->due_date)
+                $request->merge(['due_date' => \carbon\carbon::parse($request->due_date)->format('Y-m-d H:i:s')]);
             
 
             $this->authorize('update', $obj);

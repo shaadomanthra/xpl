@@ -2876,13 +2876,17 @@ var KTWidgets = function() {
     var _initMixedWidget14 = function() {
         var element = document.getElementById("kt_mixed_widget_14_chart");
         var height = parseInt(KTUtil.css(element, 'height'));
+        var series = parseInt(element.dataset.series);
+
+        if(!series)
+            series = 74;
 
         if (!element) {
             return;
         }
 
         var options = {
-            series: [74],
+            series: [series],
             chart: {
                 height: height,
                 type: 'radialBar',

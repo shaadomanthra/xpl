@@ -151,6 +151,8 @@ class UserController extends Controller
 
     $month = $r->get('month');
 
+    
+
     if($month=='thismonth')
         $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->month)->orderBy('id','desc')->paginate(30);
     elseif($month=='lastmonth')

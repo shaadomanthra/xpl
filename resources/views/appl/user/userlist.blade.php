@@ -68,6 +68,7 @@
               <tr>
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
+                <th scope="col">Role </th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Created</th>
@@ -78,9 +79,20 @@
               <tr>
                 <th scope="row">{{ $users->currentpage() ? ($users->currentpage()-1) * $users->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
+                  <a href="{{ route('profile','@'.$u->username)}}">
                   {{ $u->name }}
+                </a>
                  
                
+                </td>
+                <td>
+                @if(count($u->roles))
+                  @foreach($u->roles as $r)
+                    {{$r->name}}
+                  @endforeach
+                @else
+                  student
+                @endif
                 </td>
                 <td>
                  {{$u->email}}

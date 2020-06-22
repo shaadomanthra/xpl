@@ -1,15 +1,17 @@
 <script src="{{ asset('js/pdf.js')}}"></script>
 
       @foreach($objs as $s)
-      <div class="row mb-4">
-        <div class="col-2">
+      <div class="row mb-4 no-gutters">
+        <div class="col-4 col-md-2">
+          <div class="mr-1 mr-md-2">
           <div class="alert alert-warning alert-important text-center " role="alert"><span class="h5">{{\carbon\carbon::parse($s->day)->format('M')}}</span><br>
-            <div class="display-3 d-inline">{{\carbon\carbon::parse($s->day)->format('d')}}</div></div>
+            <div class="display-3 d-inline">{{\carbon\carbon::parse($s->day)->format('d')}}</div>
+          </div>
 
         @if($s->users->count())
           <div class="row no-gutters">
-            <div class="col-6 ">
-              <div class="card mr-1">
+            <div class="col-12 col-md-6 ">
+              <div class="card mr-md-1 mb-2 mb-md-0">
                 <div class="p-2 text-center">
                   <small class="present present_{{$s->id}}" data-id="{{$s->present_ids()}}">Present</small>
                   <div class="display-4">
@@ -22,8 +24,8 @@
                 </div>
               </div>
             </div>
-             <div class="col-6">
-              <div class="card ml-1">
+             <div class="col-12 col-md-6">
+              <div class="card ml-md-1">
                 <div class="p-2 text-center">
                   <small>Absent</small>
                   <div class="display-4">
@@ -38,9 +40,10 @@
             </div>
           </div>
         @endif
+      </div>
         </div>
-        <div class="col-7">
-          <div class="bg-white rounded" style="box-shadow: 1px 1px 1px 1px #eee;border:1px solid #eee">
+        <div class="col-8 col-md-7">
+          <div class="bg-white rounded ml-1 ml-md-2 mb-3" style="box-shadow: 1px 1px 1px 1px #eee;border:1px solid #eee">
             <div class="card-body pt-4">
               
               <h4 class="mb-3">{{$s->name}}</h4>
@@ -49,12 +52,10 @@
                 <div class="progress-bar bg-danger absent_{{$s->id}}" role="progressbar" style="width: {{$s->absent($app->training,1)}}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               @if(strip_tags(str_replace('&nbsp;','',$s->details)))
-              <p>{!! $s->details !!}</p>
+              <div class="mt-4">{!! $s->details !!}</div>
               @endif
 
-              <p>@foreach($s->users as $u)
-                {{$u->name}}<br>
-              @endforeach</p>
+             
               
             </div>
             <div class="p-3" style="background: #f8f8f8;border-radius:0px 5px 5px 0px;">
@@ -85,7 +86,7 @@
         </div>
 
         <div class="col-12 col-md-3">
-          <div class="bg-light border p-3 rounded mb-3">
+          <div class="bg-light border p-3 rounded mb-3  ml-md-3">
             <span class="float-right">
             @if($s->status==0)
                     <span class="badge badge-warning">Draft</span>
