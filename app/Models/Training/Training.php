@@ -75,7 +75,7 @@ class Training extends Model
         }elseif($start_date->lt(\carbon\carbon::now()) && $due_date->gt(\carbon\carbon::now())){
             $message = 'In Progress';
         }else{
-            if($this->progress_percent>100){
+            if($this->progress_percent()>100){
                 $message = 'Completed';
             }else{
                 $message = 'Delayed';
@@ -94,7 +94,7 @@ class Training extends Model
         }elseif($start_date->lt(\carbon\carbon::now()) && $due_date->gt(\carbon\carbon::now())){
             $color = 'success';
         }else{
-            if($this->progress_percent>100){
+            if($this->progress_percent()>100){
                 $color = 'primary';
             }else{
                 $color = 'danger';
