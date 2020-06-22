@@ -15,12 +15,14 @@
           <p class="heading_two mb-1 f30 mt-3" >
             <div class="row mt-0 mt-mb-4">
         <div class="col-12 col-md-2">
+          <div class="text-center text-md-left">
             <img class="img-thumbnail rounded-circle mb-3 mt-2" src="@if(\auth::user()->image) {{ (\auth::user()->image)}} @else {{ Gravatar::src(\auth::user()->email, 150) }}@endif" style="width:120px;height:120px;">
           </div>
+          </div>
           <div class="col-12 col-md-10">
-            <p class='mt-3'>
+            <div class='mt-3 text-center text-md-left'>
            <h2>Hi, {{  \auth::user()->name}}
-            <div class="badge badge-info d-inline h5" data-toggle="tooltip" title="Account Type">
+            <div class="badge badge-info d-md-inline h5 mt-3 mt-md-0" data-toggle="tooltip" title="Account Type">
       Administrator
     </div>
            </h2>
@@ -30,7 +32,7 @@
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
       </form>
-    </p>
+    </div>
           </div>
         </div>
           </p>
@@ -123,7 +125,7 @@
                     </div>
                     <!--end::Mixed Widget 1-->
     </div>
-    <div class="col-8">
+    <div class="col-12 col-md-8">
       @include('appl.pages.bfs.icons.superadmin')
     </div>
   </div>

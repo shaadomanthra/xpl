@@ -1,15 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-light " >
     @guest
     <a class="navbar-brand abs" href="{{ url('/') }}" aria-label="Homepage">
-        <img 
-        src="{{ request()->session()->get('client')->logo }} " height="80px" class="ml-md-0"  alt="logo " type="image/png">
-    </a>
     @else
     <a class="navbar-brand abs" href="{{ url('/dashboard') }}" aria-label="Dashboard">
+    @endguest
+        @if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test')
+        <img 
+        src="{{ request()->session()->get('client')->logo }} " height="50px" class="ml-md-0"  alt="logo " type="image/png">
+        @else
         <img 
         src="{{ request()->session()->get('client')->logo }} " height="80px" class="ml-md-0"  alt="logo " type="image/png">
-    </a>   
-    @endguest
+        @endif
+    </a>
+    
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
 </button>

@@ -99,7 +99,7 @@
         @yield('content-main')
     </div>
     <div class="bg-dark">
-        <footer class="wrapper text-light footer">
+        <footer class="text-light footer">
             <div class="container py-3">
              
 
