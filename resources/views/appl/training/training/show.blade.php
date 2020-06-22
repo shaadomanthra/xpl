@@ -33,15 +33,9 @@
   </div>
 
 <div class='p-3 mb-5 ddblue' >
-  <div class='container'>
-    <a href="{{route('trainingpage.show',$obj->slug)}}" class="f20 text-white" > <i class="fa fas fa-share-square text-white fa-external-link" ></i> {{route('trainingpage.show',$obj->slug)}}</a>&nbsp; @if($obj->status!=1)
-                <span class="badge badge-secondary">Draft</span>
-              @else
-                <span class="badge badge-success">Active</span>
-              @endif
-
-                @can('update',$obj)
-              <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm float-right text-white">
+  <div class='container '>
+    @can('update',$obj)
+              <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0   my-2 float-right text-white">
                       <li class="breadcrumb-item">
                         <a href="{{ route('training.edit',$obj->slug) }}" class="text-white"> Edit</a>
                       </li>
@@ -53,6 +47,13 @@
                       </li>
                     </ul>
                 @endcan
+    <a href="{{route('trainingpage.show',$obj->slug)}}" class=" text-white f20" > <i class="fa fas fa-share-square text-white fa-external-link" ></i> {{route('trainingpage.show',$obj->slug)}}</a>&nbsp; @if($obj->status!=1)
+                <span class="badge badge-secondary">Draft</span>
+              @else
+                <span class="badge badge-success">Active</span>
+              @endif
+
+                
         
             
     </div>

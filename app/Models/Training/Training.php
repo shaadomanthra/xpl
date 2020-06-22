@@ -60,6 +60,8 @@ class Training extends Model
                 $count++;
         }
         $sessions = $this->sessions;
+        if(!$sessions)
+            return 0;
         $percent = round((($count/$sessions) * 100),1);
         return $percent;
     }
