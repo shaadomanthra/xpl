@@ -318,7 +318,7 @@
         <div class="col-md-6 col-md-offset-6">
                 <div class="form-group form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
-    <label class="form-check-label" for="exampleCheck1"><a href="{{url('/').'files/terms_and_conditions_for_EAMCET_mock_test.pdf'}}" target="_blank">Terms and Conditions </a></label>
+    <label class="form-check-label" for="exampleCheck1"><a href="{{url('/').'/files/terms_and_conditions_for_EAMCET_mock_test.pdf'}}" target="_blank">Terms and Conditions </a></label>
   </div>
             
         </div>
