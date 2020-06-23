@@ -11,6 +11,8 @@ use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\College\Service;
 use PacketPrep\User;
 
+use PacketPrep\Models\Training\Training;
+
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\College\Zone;
 use PacketPrep\Models\College\Metric;
@@ -183,7 +185,16 @@ class ProductController extends Controller
       $users = [];
 
       if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test'){
+        $trainings = null;
+        $exams = null;
           if($user->checkRole(['administrator'])){
+            $trainings = Training::get();
+            $exams = $user->exams()->orderBy('id','desc')->limit(5)->get();
+            $count = 0;
+            foreach($user->exams as $exam){
+              $count = $count + $exam->getAttemptCount();           
+            }
+            $user->attempts = $count;
             $view = 'appl.pages.bfs.superadmin';
           }elseif($user->checkRole(['hr-manager'])){
             $view = 'appl.pages.bfs.trainer';
@@ -193,7 +204,9 @@ class ProductController extends Controller
             $view = 'appl.pages.bfs.student';
           }
           return view($view)
-              ->with('user',$user);
+              ->with('user',$user)
+              ->with('trainings',$trainings)
+              ->with('exams',$exams);
       }
       if($user->checkRole(['hr-manager'])){
 

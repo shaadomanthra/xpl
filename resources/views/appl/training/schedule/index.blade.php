@@ -4,8 +4,9 @@
 
 @include('appl.exam.exam.xp_css')
 
+<div class="bg">
 <div class="dblue" >
-  <div class="container">
+  <div class="container p-5">
 
     <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
@@ -19,7 +20,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-calendar "></i> Schedule
+          <p class="heading_two mb-2 f30" ><i class="fa fa-calendar text-primary"></i> Schedule
 
             @can('create',$obj)
             <a href="{{route('schedule.create',$app->training->slug)}}">
@@ -56,13 +57,14 @@
 
 @include('flash::message')
 <div  class="container">
+  <div class="p-1"></div>
   <div  class="  mb-4 mt-4">
         <div id="search-items">
          @include('appl.'.$app->app.'.'.$app->module.'.list')
        </div>
   </div>
 </div>
-
+</div>
 @endsection
 
 

@@ -17,8 +17,7 @@ class Corporate
     {
         if(subdomain()){
 
-
-            if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' ){
+            if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'bfs' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test'){
                 $filename = 'corporate.json';
                 $client = json_decode(file_get_contents($filename));
                 $client->name = 'Bajaj Finserv';
@@ -31,6 +30,7 @@ class Corporate
                $logo_1 = url('/').'/storage/companies/'.subdomain().'.png';
                $logo_2 = url('/').'/storage/companies/'.subdomain().'.jpg';
                $logo_3 = url('/').'/img/xplore.png';
+
 
                 if(file_exists($filename)){
 

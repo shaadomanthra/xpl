@@ -5,7 +5,7 @@
 @include('appl.exam.exam.xp_css')
 
 <div class="dblue" >
-  <div class="container">
+  <div class="container p-5">
 
     <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
@@ -19,7 +19,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Participants
+          <p class="heading_two mb-2 f30" ><i class="fa fa-user text-primary"></i> Participants
            ({{$obj->users->count()}})
           </p>
         </div>
@@ -27,7 +27,7 @@
       <div class="col-12 col-md-4">
         <div class="mt-2 ">
           
-        <a href="{{ route('job.applicants',$obj->slug)}}?export=1}}" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
+        <a href="{{ route('job.applicants',$obj->slug)}}?export=1" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
         
 
           <form class="form-inline mr-3 " method="GET" action="{{ route('job.applicants',$obj->slug) }}">

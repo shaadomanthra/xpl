@@ -35,11 +35,12 @@ table, td, th, tr {
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach($trainings as $obj)
                         <tr>
                             <td class="pl-0 py-4">
-                                <div class="symbol symbol-50 symbol-light-primary mr-1">
+                                <div class="symbol symbol-50 symbol-light-{{$obj->progress_color()}} mr-1">
                                     <span class="symbol-label">
-                                        <span class="svg-icon svg-icon-primary svg-icon-2x">
+                                        <span class="svg-icon svg-icon-{{$obj->progress_color()}} svg-icon-2x">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                 <rect x="0" y="0" width="24" height="24"/>
@@ -51,156 +52,26 @@ table, td, th, tr {
                                 </div>
                             </td>
                             <td class="pl-0">
-                                <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">VJIT Finance - B2</a>
+                                <a href="{{route('training.show',$obj->slugs)}}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$obj->name}}</a>
                                 <div>
                                     
-                                    <a class="text-muted font-weight-bold text-hover-primary" href="#">5 participants</a>
+                                    <a class="text-muted font-weight-bold text-hover-primary" href="#">{{$obj->users->count()}} participants</a>
                                 </div>
                             </td>
                             <td class="text-right">
-                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Ramesh Kumar</span>
+                                <a href="{{route('profile','@'.$obj->trainer->username)}}"><span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{$obj->trainer->name}}</span></a>
                                 <span class="text-muted font-weight-bold">Trainer</span>
                             </td>
                             <td class="text-right">
-                                <span class="text-muted font-weight-500">15 days</span>
+                                <span class="text-muted font-weight-500">{{$obj->sessions}} sessions</span>
                             </td>
                             <td class="text-right">
-                                <span class="label label-lg label-light-primary label-inline">Completed</span>
+                                <span class="label label-lg label-light-{{$obj->progress_color()}} label-inline">{{$obj->progress_message()}}</span>
                             </td>
                            
                         </tr>
-                        <tr>
-                            <td class="pl-0 py-4">
-                                <div class="symbol symbol-50 symbol-light-warning">
-                                    <span class="symbol-label">
-                                          <span class="svg-icon svg-icon-warning svg-icon-2x">
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"/>
-                                                <path d="M6,9 L6,15 C6,16.6568542 7.34314575,18 9,18 L15,18 L15,18.8181818 C15,20.2324881 14.2324881,21 12.8181818,21 L5.18181818,21 C3.76751186,21 3,20.2324881 3,18.8181818 L3,11.1818182 C3,9.76751186 3.76751186,9 5.18181818,9 L6,9 Z" fill="#000000" fill-rule="nonzero"/>
-                                                <path d="M10.1818182,4 L17.8181818,4 C19.2324881,4 20,4.76751186 20,6.18181818 L20,13.8181818 C20,15.2324881 19.2324881,16 17.8181818,16 L10.1818182,16 C8.76751186,16 8,15.2324881 8,13.8181818 L8,6.18181818 C8,4.76751186 8.76751186,4 10.1818182,4 Z" fill="#000000" opacity="0.3"/>
-                                            </g>
-                                        </svg></span>
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="pl-0">
-                                <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">VJIT BFS - V2</a>
-                                <div>
-                                    <a class="text-muted font-weight-bold text-hover-primary" href="#">12 participants</a>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Ramesh Kumar</span>
-                                <span class="text-muted font-weight-bold">Trainer</span>
-                            </td>
-                            <td class="text-right">
-                                <span class="text-muted font-weight-500">5 days</span>
-                            </td>
-                            <td class="text-right">
-                                <span class="label label-lg label-light-warning label-inline">Upcoming</span>
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <td class="pl-0 py-4">
-                                <div class="symbol symbol-50 symbol-light-success">
-                                    <span class="symbol-label">
-                                          <span class="svg-icon svg-icon-success svg-icon-2x">
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"/>
-                                                <path d="M6,9 L6,15 C6,16.6568542 7.34314575,18 9,18 L15,18 L15,18.8181818 C15,20.2324881 14.2324881,21 12.8181818,21 L5.18181818,21 C3.76751186,21 3,20.2324881 3,18.8181818 L3,11.1818182 C3,9.76751186 3.76751186,9 5.18181818,9 L6,9 Z" fill="#000000" fill-rule="nonzero"/>
-                                                <path d="M10.1818182,4 L17.8181818,4 C19.2324881,4 20,4.76751186 20,6.18181818 L20,13.8181818 C20,15.2324881 19.2324881,16 17.8181818,16 L10.1818182,16 C8.76751186,16 8,15.2324881 8,13.8181818 L8,6.18181818 C8,4.76751186 8.76751186,4 10.1818182,4 Z" fill="#000000" opacity="0.3"/>
-                                            </g>
-                                        </svg></span>
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="pl-0">
-                                <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Finance Basics - CBIT</a>
-                                <div>
-                                    <a class="text-muted font-weight-bold text-hover-primary" href="#">15 participants</a>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Rajesh Kumar</span>
-                                <span class="text-muted font-weight-bold">Trainer</span>
-                            </td>
-                            <td class="text-right">
-                                <span class="text-muted font-weight-500">30 days</span>
-                            </td>
-                            <td class="text-right">
-                                <span class="label label-lg label-light-success label-inline">In Progress</span>
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <td class="pl-0 py-4">
-                                <div class="symbol symbol-50 symbol-light-danger">
-                                    <span class="symbol-label">
-                                          <span class="svg-icon svg-icon-danger svg-icon-2x">
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"/>
-                                                <path d="M6,9 L6,15 C6,16.6568542 7.34314575,18 9,18 L15,18 L15,18.8181818 C15,20.2324881 14.2324881,21 12.8181818,21 L5.18181818,21 C3.76751186,21 3,20.2324881 3,18.8181818 L3,11.1818182 C3,9.76751186 3.76751186,9 5.18181818,9 L6,9 Z" fill="#000000" fill-rule="nonzero"/>
-                                                <path d="M10.1818182,4 L17.8181818,4 C19.2324881,4 20,4.76751186 20,6.18181818 L20,13.8181818 C20,15.2324881 19.2324881,16 17.8181818,16 L10.1818182,16 C8.76751186,16 8,15.2324881 8,13.8181818 L8,6.18181818 C8,4.76751186 8.76751186,4 10.1818182,4 Z" fill="#000000" opacity="0.3"/>
-                                            </g>
-                                        </svg></span>
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="pl-0">
-                                <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">HR Management System</a>
-                                <div>
-                                    <a class="text-muted font-weight-bold text-hover-primary" href="#">20 participants</a>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Naveen</span>
-                                <span class="text-muted font-weight-bold">Trainer</span>
-                            </td>
-                            <td class="text-right">
-                                <span class="text-muted font-weight-bold">20 days</span>
-                            </td>
-                            <td class="text-right">
-                                <span class="label label-lg label-light-danger label-inline">Delayed</span>
-                            </td>
-                           
-                        </tr>
-                        <tr>
-                            <td class="pl-0 py-4">
-                                <div class="symbol symbol-50 symbol-light-warning">
-                                    <span class="symbol-label">
-                                          <span class="svg-icon svg-icon-warning svg-icon-2x">
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"/>
-                                                <path d="M6,9 L6,15 C6,16.6568542 7.34314575,18 9,18 L15,18 L15,18.8181818 C15,20.2324881 14.2324881,21 12.8181818,21 L5.18181818,21 C3.76751186,21 3,20.2324881 3,18.8181818 L3,11.1818182 C3,9.76751186 3.76751186,9 5.18181818,9 L6,9 Z" fill="#000000" fill-rule="nonzero"/>
-                                                <path d="M10.1818182,4 L17.8181818,4 C19.2324881,4 20,4.76751186 20,6.18181818 L20,13.8181818 C20,15.2324881 19.2324881,16 17.8181818,16 L10.1818182,16 C8.76751186,16 8,15.2324881 8,13.8181818 L8,6.18181818 C8,4.76751186 8.76751186,4 10.1818182,4 Z" fill="#000000" opacity="0.3"/>
-                                            </g>
-                                        </svg></span>
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="pl-0">
-                                <a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">Business Ethics</a>
-                                <div>
-                                    <a class="text-muted font-weight-bold text-hover-primary" href="#">20 participants</a>
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                <span class="text-dark-75 font-weight-bolder d-block font-size-lg">Naveen</span>
-                                <span class="text-muted font-weight-bold">Trainer</span>
-                            </td>
-                            <td class="text-right">
-                                <span class="text-muted font-weight-500">20 days</span>
-                            </td>
-                            <td class="text-right">
-                                <span class="label label-lg label-light-warning label-inline">Upcoming</span>
-                            </td>
-                           
-                        </tr>
+                        @endforeach
+                        
                     </tbody>
                 </table>
             </div>
@@ -375,12 +246,12 @@ table, td, th, tr {
 	</div>
 	<div class="col-12 col-md-6">
 		<!--begin::List Widget 4-->
-        <div class="card card-custom card-stretch gutter-b">
+        <div class="card card-custom  gutter-b">
             <!--begin::Header-->
             <div class="card-header border-0  pt-5 pb-5">
                 <h3 class="card-title align-items-start flex-column">
                     <span class="card-label font-weight-bolder text-dark">Tests</span>
-                    <span class="text-muted mt-3 font-weight-bold font-size-sm">35 attempts</span>
+                    <span class="text-muted mt-3 font-weight-bold font-size-sm">{{\auth::user()->attempts}} attempts</span>
                 </h3>
                 <div class="card-toolbar">
                     <a href="{{ route('exam.index')}}" class="btn btn-light btn-sm font-size-sm font-weight-bolder  text-dark-75" >View all</a>
@@ -389,409 +260,31 @@ table, td, th, tr {
             <!--end::Header-->
             <!--begin::Body-->
             <div class="card-body pt-2">
+                 @foreach($exams as $e)
                 <!--begin::Item-->
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center mb-10">
                     <!--begin::Bullet-->
-                    <span class="bullet bullet-bar bg-success align-self-stretch"></span>
+                    <span class="bullet bullet-bar bg-{{$e->getColor()}} align-self-stretch"></span>
                     <!--end::Bullet-->
                     <!--begin::Checkbox-->
-                    <label class="checkbox checkbox-lg checkbox-light-success checkbox-single flex-shrink-0 m-0 mx-4">
+                    <label class="checkbox checkbox-lg checkbox-light-{{$e->getColor()}} checkbox-single flex-shrink-0 m-0 mx-4">
                         <input type="checkbox" name="select" value="1" />
                         <span></span>
                     </label>
                     <!--end::Checkbox-->
                     <!--begin::Text-->
+                   
                     <div class="d-flex flex-column flex-grow-1">
-                        <a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Fundamentals of Insurance</a>
-                        <span class="text-muted font-weight-bold">3 attempts</span>
+                        <a href="{{ route('exam.show',$e->slug) }}" class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">{{ substr($e->name,0,30)}}</a>
+                        <span class="text-muted font-weight-bold">{{$e->getAttemptCount()}} attempts</span>
                     </div>
+                    
                     <!--end::Text-->
-                    <!--begin::Dropdown-->
-                    <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="Quick actions" data-placement="left">
-                        <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="ki ki-bold-more-hor"></i>
-                        </a>
-                        <div class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right">
-                            <!--begin::Navigation-->
-                            <ul class="navi navi-hover">
-                                <li class="navi-header font-weight-bold py-4">
-                                    <span class="font-size-lg">Choose Label:</span>
-                                    <i class="flaticon2-information icon-md text-muted" data-toggle="tooltip" data-placement="right" title="Click to learn more..."></i>
-                                </li>
-                                <li class="navi-separator mb-3 opacity-70"></li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-text">
-                                            <span class="label label-xl label-inline label-light-success">Customer</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-text">
-                                            <span class="label label-xl label-inline label-light-danger">Partner</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-text">
-                                            <span class="label label-xl label-inline label-light-warning">Suplier</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-text">
-                                            <span class="label label-xl label-inline label-light-primary">Member</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                        <span class="navi-text">
-                                            <span class="label label-xl label-inline label-light-dark">Staff</span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-separator mt-3 opacity-70"></li>
-                                <li class="navi-footer py-4">
-                                    <a class="btn btn-clean font-weight-bold btn-sm" href="#">
-                                        <i class="ki ki-plus icon-sm"></i>Add new</a>
-                                    </li>
-                                </ul>
-                                <!--end::Navigation-->
-                            </div>
-                        </div>
-                        <!--end::Dropdown-->
+                   
                     </div>
                     <!--end:Item-->
-                    <!--begin::Item-->
-                    <div class="d-flex align-items-center mt-10">
-                        <!--begin::Bullet-->
-                        <span class="bullet bullet-bar bg-primary align-self-stretch"></span>
-                        <!--end::Bullet-->
-                        <!--begin::Checkbox-->
-                        <label class="checkbox checkbox-lg checkbox-light-primary checkbox-single flex-shrink-0 m-0 mx-4">
-                            <input type="checkbox" value="1" />
-                            <span></span>
-                        </label>
-                        <!--end::Checkbox-->
-                        <!--begin::Text-->
-                        <div class="d-flex flex-column flex-grow-1">
-                            <a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Stakeholder Meeting</a>
-                            <span class="text-muted font-weight-bold">Due in 3 Days</span>
-                        </div>
-                        <!--end::Text-->
-                        <!--begin::Dropdown-->
-                        <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="Quick actions" data-placement="left">
-                            <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="ki ki-bold-more-hor"></i>
-                            </a>
-                            <div class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right">
-                                <!--begin::Navigation-->
-                                <ul class="navi navi-hover">
-                                    <li class="navi-header font-weight-bold py-4">
-                                        <span class="font-size-lg">Choose Label:</span>
-                                        <i class="flaticon2-information icon-md text-muted" data-toggle="tooltip" data-placement="right" title="Click to learn more..."></i>
-                                    </li>
-                                    <li class="navi-separator mb-3 opacity-70"></li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-text">
-                                                <span class="label label-xl label-inline label-light-success">Customer</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-text">
-                                                <span class="label label-xl label-inline label-light-danger">Partner</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-text">
-                                                <span class="label label-xl label-inline label-light-warning">Suplier</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-text">
-                                                <span class="label label-xl label-inline label-light-primary">Member</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-item">
-                                        <a href="#" class="navi-link">
-                                            <span class="navi-text">
-                                                <span class="label label-xl label-inline label-light-dark">Staff</span>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="navi-separator mt-3 opacity-70"></li>
-                                    <li class="navi-footer py-4">
-                                        <a class="btn btn-clean font-weight-bold btn-sm" href="#">
-                                            <i class="ki ki-plus icon-sm"></i>Add new</a>
-                                        </li>
-                                    </ul>
-                                    <!--end::Navigation-->
-                                </div>
-                            </div>
-                            <!--end::Dropdown-->
-                        </div>
-                        <!--end::Item-->
-                        <!--begin::Item-->
-                        <div class="d-flex align-items-center mt-10">
-                            <!--begin::Bullet-->
-                            <span class="bullet bullet-bar bg-warning align-self-stretch"></span>
-                            <!--end::Bullet-->
-                            <!--begin::Checkbox-->
-                            <label class="checkbox checkbox-lg checkbox-light-warning checkbox-single flex-shrink-0 m-0 mx-4">
-                                <input type="checkbox" value="1" />
-                                <span></span>
-                            </label>
-                            <!--end::Checkbox-->
-                            <!--begin::Text-->
-                            <div class="d-flex flex-column flex-grow-1">
-                                <a href="#" class="text-dark-75 text-hover-primary font-size-sm font-weight-bold font-size-lg mb-1">Scoping &amp; Estimations</a>
-                                <span class="text-muted font-weight-bold">Due in 5 Days</span>
-                            </div>
-                            <!--end::Text-->
-                            <!--begin: Dropdown-->
-                            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="Quick actions" data-placement="left">
-                                <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="ki ki-bold-more-hor"></i>
-                                </a>
-                                <div class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right">
-                                    <!--begin::Navigation-->
-                                    <ul class="navi navi-hover">
-                                        <li class="navi-header font-weight-bold py-4">
-                                            <span class="font-size-lg">Choose Label:</span>
-                                            <i class="flaticon2-information icon-md text-muted" data-toggle="tooltip" data-placement="right" title="Click to learn more..."></i>
-                                        </li>
-                                        <li class="navi-separator mb-3 opacity-70"></li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-text">
-                                                    <span class="label label-xl label-inline label-light-success">Customer</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-text">
-                                                    <span class="label label-xl label-inline label-light-danger">Partner</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-text">
-                                                    <span class="label label-xl label-inline label-light-warning">Suplier</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-text">
-                                                    <span class="label label-xl label-inline label-light-primary">Member</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-text">
-                                                    <span class="label label-xl label-inline label-light-dark">Staff</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-separator mt-3 opacity-70"></li>
-                                        <li class="navi-footer py-4">
-                                            <a class="btn btn-clean font-weight-bold btn-sm" href="#">
-                                                <i class="ki ki-plus icon-sm"></i>Add new</a>
-                                            </li>
-                                        </ul>
-                                        <!--end::Navigation-->
-                                    </div>
-                                </div>
-                                <!--end::Dropdown-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="d-flex align-items-center mt-10">
-                                <!--begin::Bullet-->
-                                <span class="bullet bullet-bar bg-info align-self-stretch"></span>
-                                <!--end::Bullet-->
-                                <!--begin::Checkbox-->
-                                <label class="checkbox checkbox-lg checkbox-light-info checkbox-single flex-shrink-0 m-0 mx-4">
-                                    <input type="checkbox" value="1" />
-                                    <span></span>
-                                </label>
-                                <!--end::Checkbox-->
-                                <!--begin::Text-->
-                                <div class="d-flex flex-column flex-grow-1">
-                                    <a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Sprint Showcase</a>
-                                    <span class="text-muted font-weight-bold">Due in 1 Day</span>
-                                </div>
-                                <!--end::Text-->
-                                <!--begin::Dropdown-->
-                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="Quick actions" data-placement="left">
-                                    <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="ki ki-bold-more-hor"></i>
-                                    </a>
-                                    <div class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right">
-                                        <!--begin::Navigation-->
-                                        <ul class="navi navi-hover py-5">
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-drop"></i>
-                                                    </span>
-                                                    <span class="navi-text">New Group</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-list-3"></i>
-                                                    </span>
-                                                    <span class="navi-text">Contacts</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-rocket-1"></i>
-                                                    </span>
-                                                    <span class="navi-text">Groups</span>
-                                                    <span class="navi-link-badge">
-                                                        <span class="label label-light-primary label-inline font-weight-bold">new</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-bell-2"></i>
-                                                    </span>
-                                                    <span class="navi-text">Calls</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-gear"></i>
-                                                    </span>
-                                                    <span class="navi-text">Settings</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-separator my-3"></li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-magnifier-tool"></i>
-                                                    </span>
-                                                    <span class="navi-text">Help</span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-icon">
-                                                        <i class="flaticon2-bell-2"></i>
-                                                    </span>
-                                                    <span class="navi-text">Privacy</span>
-                                                    <span class="navi-link-badge">
-                                                        <span class="label label-light-danger label-rounded font-weight-bold">5</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                        <!--end::Navigation-->
-                                    </div>
-                                </div>
-                                <!--end::Dropdown-->
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="d-flex align-items-center mt-10">
-                                <!--begin::Bullet-->
-                                <span class="bullet bullet-bar bg-danger align-self-stretch"></span>
-                                <!--end::Bullet-->
-                                <!--begin::Checkbox-->
-                                <label class="checkbox checkbox-lg checkbox-light-danger checkbox-single flex-shrink-0 m-0 mx-4">
-                                    <input type="checkbox" value="1" />
-                                    <span></span>
-                                </label>
-                                <!--end::Checkbox:-->
-                                <!--begin::Title-->
-                                <div class="d-flex flex-column flex-grow-1">
-                                    <a href="#" class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Project Retro</a>
-                                    <span class="text-muted font-weight-bold">Due in 12 Days</span>
-                                </div>
-                                <!--end::Text-->
-                                <!--begin: Dropdown-->
-                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="Quick actions" data-placement="left">
-                                    <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="ki ki-bold-more-hor"></i>
-                                    </a>
-                                    <div class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right">
-                                        <!--begin::Navigation-->
-                                        <ul class="navi navi-hover">
-                                            <li class="navi-header font-weight-bold py-4">
-                                                <span class="font-size-lg">Choose Label:</span>
-                                                <i class="flaticon2-information icon-md text-muted" data-toggle="tooltip" data-placement="right" title="Click to learn more..."></i>
-                                            </li>
-                                            <li class="navi-separator mb-3 opacity-70"></li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-text">
-                                                        <span class="label label-xl label-inline label-light-success">Customer</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-text">
-                                                        <span class="label label-xl label-inline label-light-danger">Partner</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-text">
-                                                        <span class="label label-xl label-inline label-light-warning">Suplier</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-text">
-                                                        <span class="label label-xl label-inline label-light-primary">Member</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-item">
-                                                <a href="#" class="navi-link">
-                                                    <span class="navi-text">
-                                                        <span class="label label-xl label-inline label-light-dark">Staff</span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li class="navi-separator mt-3 opacity-70"></li>
-                                            <li class="navi-footer py-4">
-                                                <a class="btn btn-clean font-weight-bold btn-sm" href="#">
-                                                    <i class="ki ki-plus icon-sm"></i>Add new</a>
-                                                </li>
-                                            </ul>
-                                            <!--end::Navigation-->
-                                        </div>
-                                    </div>
-                                    <!--end::Dropdown-->
-                                </div>
-                                <!--end::Item-->
+                    @endforeach
+                   
                             </div>
                             <!--end::Body-->
                         </div>

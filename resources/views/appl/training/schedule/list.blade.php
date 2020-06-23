@@ -4,7 +4,7 @@
       <div class="row mb-4 no-gutters">
         <div class="col-4 col-md-2">
           <div class="mr-1 mr-md-2">
-          <div class="alert alert-warning alert-important text-center " role="alert"><span class="h5">{{\carbon\carbon::parse($s->day)->format('M')}}</span><br>
+          <div class="bg-warning text-white rounded p-3 mb-3 text-center " ><span class="h5">{{\carbon\carbon::parse($s->day)->format('M')}}</span><br>
             <div class="display-3 d-inline">{{\carbon\carbon::parse($s->day)->format('d')}}</div>
           </div>
 
@@ -44,7 +44,7 @@
         </div>
         <div class="col-8 col-md-7">
           <div class="bg-white rounded ml-1 ml-md-2 mb-3" style="box-shadow: 1px 1px 1px 1px #eee;border:1px solid #eee">
-            <div class="card-body pt-4">
+            <div class="card-body pt-5">
               
               <h4 class="mb-3">{{$s->name}}</h4>
               <div class="progress" style="height:5px;">
@@ -58,7 +58,7 @@
              
               
             </div>
-            <div class="p-3" style="background: #f8f8f8;border-radius:0px 5px 5px 0px;">
+            <div class="p-5" style="background: #f8f8f8;border-radius:0px 5px 5px 0px;">
             @foreach($s->resources as $r)
                       <span class="block_item mb-0 " data-id="{{$r->id}}" style="cursor: pointer">
   @if($r->type=='youtube_video_link')

@@ -151,22 +151,57 @@ class UserController extends Controller
 
     $month = $r->get('month');
 
-    
-
     if($month=='thismonth')
-        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->month)->orderBy('id','desc')->paginate(30);
+        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->month);
     elseif($month=='lastmonth')
-        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth()->month)->orderBy('id','desc')->paginate(30);
+        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth()->month);
     elseif($month=='lastbeforemonth')
-        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->orderBy('id','desc')->paginate(30);
+        $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month);
     else
-        $users = User::where('client_slug',subdomain())->orderBy('id','desc')->paginate(30);
-          
-    $data['users_all'] =  User::where('client_slug',subdomain())->count();
+        $users = User::where('client_slug',subdomain());
+
+     if($r->get('role')){
+        $rol = $r->get('role');
+        $role = Role::where('slug',$rol)->first();
+        if($rol=='student' || !$rol)
+            $uids = User::pluck('id')->toArray();  
+        elseif($role)
+            $uids = $role->users->pluck('id')->toArray();
+        else
+            $uids = null;  
+        
+    }else{
+        $uids = null;
+    }
+    
+    if($uids){
+        $users = $users->whereIn('id',$uids);
+    }
+
+    $users = $users->orderBy('id','desc')->paginate(30);
+
+
+    if($uids){
+$data['users_all'] =  User::where('client_slug',subdomain())->whereIn('id',$uids)->count();
+    $data['users_lastmonth'] = User::where('client_slug',subdomain())->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
+    $data['users_thismonth'] = User::where('client_slug',subdomain())->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->month)->count();
+    $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
+
+    }else{
+        $data['users_all'] =  User::where('client_slug',subdomain())->count();
     $data['users_lastmonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
     $data['users_thismonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->month)->count();
     $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
 
+    }
+    
+    $count=0;
+    if($r->get('role')=='student')
+    foreach($users as $u){
+        if($u->roles()->first())
+            $count++;
+    }
+    
     if($r->get('username'))
         $user = User::where('username',$r->get('username'))->first();
     else    
@@ -184,6 +219,7 @@ class UserController extends Controller
 
     
       return view('appl.user.userlist')
+                    ->with('count',$count)
                     ->with('users',$users)->with('data',$data)->with('user',$user);
 
     }

@@ -27,7 +27,8 @@
                   {{$ob->phone}}
                 </td>
                 <td>
-                  <a href="{{ route('training.students',$obj->slug)}}?remove={{$ob->id}}" class="btn btn-danger btn-sm">Remove</a>
+
+                  <a href="{{ route('training.students',$obj->slug)}}?remove={{$ob->id}}" class="text-danger"><i class="fa fa-trash text-danger"></i> Remove</a>
                 </td>
                 
               </tr>

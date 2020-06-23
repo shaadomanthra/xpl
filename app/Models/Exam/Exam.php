@@ -59,6 +59,15 @@ class Exam extends Model
         return $this->belongsTo('PacketPrep\Models\Course\Course');
     }
 
+    public function getColor(){
+      if($this->status==0)
+        return 'warning';
+      else if($this->status==1)
+        return 'success';
+      else
+        return 'primary';
+    }
+
     public function precheck_auto_activation(){
       $auto_activation  = \carbon\carbon::parse($this->auto_activation);
       $auto_deactivation  = \carbon\carbon::parse($this->auto_deactivation);

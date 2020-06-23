@@ -91,14 +91,14 @@
                               <span class="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
                                 <i class="fas fa-address-card fa-3x text-warning"></i>
                               </span>
-                              <a href="#" class="text-warning font-weight-bold font-size-h6">Students</a>
+                              <a href="{{route('user.list')}}?role=student" class="text-warning font-weight-bold font-size-h6">Students</a>
                             </div>
                             <div class="col bg-light-primary px-6 py-8 rounded-xl mb-7">
                               <span class="svg-icon svg-icon-3x svg-icon-primary d-block my-2">
                                 <i class="fas fa-chalkboard-teacher fa-3x text-primary"></i>
                               
                               </span>
-                              <a href="#" class="text-primary font-weight-bold font-size-h6 mt-2">Trainers</a>
+                              <a href="{{route('user.list')}}?role=hr-manager" class="text-primary font-weight-bold font-size-h6 mt-2">Trainers</a>
                             </div>
                           </div>
                           <!--end::Row-->
@@ -108,13 +108,13 @@
                               <span class="svg-icon svg-icon-3x svg-icon-danger d-block my-2">
                                <i class="fas fa-university fa-3x text-danger"></i>
                               </span>
-                              <a href="#" class="text-danger font-weight-bold font-size-h6 mt-2">Colleges</a>
+                              <a href="{{route('user.list')}}?role=tpo" class="text-danger font-weight-bold font-size-h6 mt-2">Colleges</a>
                             </div>
                             <div class="col bg-light-success px-6 py-8 rounded-xl">
                               <span class="svg-icon svg-icon-3x svg-icon-success d-block my-2">
                                 <i class="fas fa-user-tie fa-3x text-success"></i>
                               </span>
-                              <a href="#" class="text-success font-weight-bold font-size-h6 mt-2">Recruiters</a>
+                              <a href="{{route('user.list')}}?role=recruiter" class="text-success font-weight-bold font-size-h6 mt-2">Recruiters</a>
                             </div>
                           </div>
                           <!--end::Row-->
