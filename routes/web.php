@@ -415,11 +415,14 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	
 
-	Route::get('eregister','Product\AdminController@estudentregister')->name('student.eregister');
+	Route::get('eregister',/*'Product\AdminController@estudentregister'*/ function(){
+		return Redirect::to('/register');
+	})->name('student.eregister');
 	Route::get('sregister','Product\AdminController@sstudentregister')->name('student.sregister');
 
 
 	Route::get('register/type',function () { 
+		return Redirect::to('/register');
 		if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
 			return Redirect::to('/register');
 		else
