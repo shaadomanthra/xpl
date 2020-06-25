@@ -223,7 +223,7 @@ class TrainingController extends Controller
                'status'   => 1,
                 ]);
 
-                $u->rollnumber = $row[5];
+                $u->roll_number = $row[5];
                 $u->gender = $row[6];
                 $u->hometown = $row[7];
                 $u->current_city = $row[8];
@@ -250,7 +250,7 @@ class TrainingController extends Controller
                'status'   => 1,
                 ]);
 
-                $u->rollnumber = $row[5];
+                $u->roll_number = $row[5];
                 $u->gender = $row[6];
                 $u->hometown = $row[7];
                 $u->current_city = $row[8];
