@@ -131,6 +131,11 @@ class User extends Authenticatable
     public function schedules(){
         return $this->belongsToMany('PacketPrep\Models\Training\Schedule');
     }
+     public function trainings(){
+        return $this->belongsToMany('PacketPrep\Models\Training\Training');
+    }
+
+    
 
     public function products(){
         return $this->belongsToMany('PacketPrep\Models\Product\Product')->withPivot('status','validity','created_at','valid_till');

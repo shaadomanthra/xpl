@@ -94,6 +94,7 @@
 
         <div class="col-12 col-md-3">
           <div class="bg-light border p-3 rounded mb-3  ml-md-3">
+          @can('edit',$obj)
             <span class="float-right">
             @if($s->status==0)
                     <span class="badge badge-warning">Draft</span>
@@ -108,6 +109,7 @@
                   <a href="{{route('schedule.destroy',[$app->training->slug,$s->id])}}" class="btn btn-sm btn-outline-danger ddelete mb-1" data-name="{{$s->name}}"><i class="fa fa-trash"></i> Delete</a>
                   <a href="{{route('resource.store',[$app->training->slug])}}" class="btn btn-sm btn-outline-info dresource mb-1" data-name="{{$s->name}}" data-id="{{$s->id}}"><i class="fa fa-file-o"></i> Add Resource</a>
                   <a href="{{route('schedule.attendance',[$app->training->slug,$s->id])}}" class="btn btn-sm btn-outline-success dattendance" data-name="{{$s->name}}"><i class="fa fa-user-plus"></i> Attendance</a>
+          @endcan
           </div>
 
 

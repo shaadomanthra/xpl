@@ -38,7 +38,7 @@ class ScheduleController extends Controller
                     ->orderBy('sno','asc')
                     ->paginate(config('global.no_of_records')); 
         else
-            $objs = $obj->where('user_id',$user->id)->where('title','LIKE',"%{$item}%")
+            $objs = $obj->where('name','LIKE',"%{$item}%")
                     ->orderBy('sno','asc')
                     ->paginate(config('global.no_of_records')); 
         $view = $search ? 'list': 'index';

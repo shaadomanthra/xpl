@@ -3,6 +3,7 @@
 namespace PacketPrep\Policies\Training;
 
 use PacketPrep\User;
+use PacketPrep\Models\Training\Training;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class TrainingPolicy
@@ -47,7 +48,7 @@ class TrainingPolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function edit(User $user,Exam $exam)
+    public function edit(User $user,Training $exam)
     { 
         if($user->checkRole(['administrator','data-manager','hr-manager'])){
             if($exam->user_id==$user->id )
@@ -66,7 +67,7 @@ class TrainingPolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function update(User $user,Exam $exam)
+    public function update(User $user,Training $exam)
     { 
         if($user->checkRole(['administrator','data-manager','hr-manager'])){
             if($exam->user_id==$user->id )

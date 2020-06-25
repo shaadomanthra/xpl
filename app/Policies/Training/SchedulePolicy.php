@@ -3,6 +3,7 @@
 namespace PacketPrep\Policies\Training;
 
 use PacketPrep\User;
+use PacketPrep\Models\Training\Schedule;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SchedulePolicy
@@ -47,10 +48,12 @@ class SchedulePolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function edit(User $user,Exam $exam)
+    public function edit(User $user,Schedule $exam)
     { 
+
+        return true;
         if($user->checkRole(['administrator','data-manager','hr-manager'])){
-            if($exam->user_id==$user->id )
+            if($exam->user_id==$user->id)
                 return true;
             else
                 return false;
@@ -66,8 +69,10 @@ class SchedulePolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function update(User $user,Exam $exam)
+    public function update(User $user,Schedule $exam)
     { 
+
+        return true;
         if($user->checkRole(['administrator','data-manager','hr-manager'])){
             if($exam->user_id==$user->id )
                 return true;

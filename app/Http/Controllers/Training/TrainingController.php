@@ -38,11 +38,17 @@ class TrainingController extends Controller
             $objs = $obj->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records')); 
+        else if($user->checkRole(['hr-manager']))
+            $objs = $obj->where('trainer_id',$user->id)->where('name','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')
+                    ->paginate(config('global.no_of_records')); 
         else
             $objs = $obj->where('user_id',$user->id)->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records')); 
         $view = $search ? 'list': 'index';
+
+        
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('objs',$objs)
@@ -292,8 +298,7 @@ class TrainingController extends Controller
         $this->authorize('view', $obj);
 
 
-        
-
+    
         if(request()->get('delete')){
             if(Storage::disk('public')->exists('articles/training_b_'.$obj->slug.'.jpg'))
                     Storage::disk('public')->delete('articles/training_b_'.$obj->slug.'.jpg');
