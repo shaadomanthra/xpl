@@ -54,10 +54,20 @@ class ScheduleController extends Controller
         $user_ids = $request->get('attendance');
         $obj = Obj::where('id',$id)->first();
 
-        $obj->users()->detach();
-        foreach($user_ids as $id){
-            $obj->users()->attach($id);
+        if(request()->get('user')){
+            if(!$obj->users->contains(request()->get('user')))
+                {
+                    $obj->users()->attach(request()->get('user'));
+                    return redirect()->away($obj->meeting_link);
+                }
+        }else{
+            $obj->users()->detach();
+            foreach($user_ids as $id){
+                $obj->users()->attach($id);
+            }
         }
+
+        
         
 
         flash('Attendance updated!')->success();

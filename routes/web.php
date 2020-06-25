@@ -456,6 +456,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::post('training/{slug}/participant_import','Training\TrainingController@participantImport')->name('participant_import');
 	Route::get('training/{slug}/students','Training\TrainingController@applicant_index')->name('training.students');
 	Route::post('training/{slug}/{id}/attendance','Training\ScheduleController@attendance')->name('schedule.attendance');
+	Route::get('training/{slug}/{id}/attendance','Training\ScheduleController@attendance')->name('schedule.attendance');
 	Route::get('page/{slug}','Training\TrainingController@public_show')->name('trainingpage.show');
 	Route::resource('training','Training\TrainingController')->middleware('auth');
 	Route::resource('training/{training}/schedule','Training\ScheduleController')->middleware('auth');

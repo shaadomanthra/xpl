@@ -101,7 +101,7 @@
           
         </div>
         <!--end::Card-->
- </div>
+</div>
  @endforeach
        
  @else

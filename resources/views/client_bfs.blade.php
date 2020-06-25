@@ -76,19 +76,36 @@ License: You must have a valid license purchased only from themeforest(the above
 								</div>
 								<!--end::Form group-->
 								<!--begin::Form group-->
-								<div class="form-group">
-									<div class="d-flex justify-content-between mt-n5">
+								<div class="form-group mb-4">
+									<div class="d-flex justify-content-between mt-n5 mb-4">
 										<label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
 										
 									</div>
 									<input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0" type="password" name="password" autocomplete="off" />
-									<a href="{{ route('password.request') }}" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5 float-right">Forgot Password ?</a>
+									<div class="mt-5">
+									<a href="{{ route('password.request') }}" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5 mt-4">Forgot Password ?</a>
+								</div>
 								</div>
 								<!--end::Form group-->
 								<!--begin::Action-->
 								<div class="pb-lg-0 pb-5">
 									<button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Sign In</button>
-									
+									<button type="button" class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">
+									<span class="svg-icon svg-icon-md">
+										<!--begin::Svg Icon | path:assets/media/svg/social-icons/google.svg-->
+										<i class="fa flaticon-letter-g"></i>
+										<!--end::Svg Icon-->
+									</span></button>
+									<button type="button" class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">
+									<span class="svg-icon svg-icon-md">
+										
+										<i class="fa flaticon-facebook-letter-logo"></i>
+									</span></button>
+									<button type="button" class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">
+									<span class="svg-icon svg-icon-md">
+										
+										<i class="fa flaticon-linkedin-logo"></i>
+									</span></button>
 								</div>
 								<!--end::Action-->
 							</form>

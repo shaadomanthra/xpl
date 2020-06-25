@@ -128,6 +128,10 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('credits','validity','created_at','valid_till');
     }
 
+    public function schedules(){
+        return $this->belongsToMany('PacketPrep\Models\Training\Schedule');
+    }
+
     public function products(){
         return $this->belongsToMany('PacketPrep\Models\Product\Product')->withPivot('status','validity','created_at','valid_till');
     }

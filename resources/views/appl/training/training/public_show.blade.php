@@ -63,6 +63,17 @@
               
               <h4 class="mb-0">{{$s->name}}</h4>
               <p>{!! $s->details !!}</p>
+
+
+        @auth
+        @if(!$s->users->contains(\auth::user()->id))
+         @if($s->meeting_link)
+              <div class="py-3">
+              <a href="{{ route('schedule.attendance',['training'=>$obj->slug,'id'=>$s->id])}}?user={{\auth::user()->id}}" class="btn btn-outline-primary" target="_blank">Join Session</a>
+              </div>
+         @endif
+        @endif
+        @endauth
               
             </div>
             <div class="p-3" style="background: #f8f8f8;border-radius:0px 5px 5px 0px;">

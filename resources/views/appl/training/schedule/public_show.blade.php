@@ -43,6 +43,8 @@
           
         {!!$obj->details !!}
 
+
+
         </div>
       </div>
     </div>

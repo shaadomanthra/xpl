@@ -65,13 +65,13 @@
 
 <div  class="container">
   <div  class="py-5">
-    <div id="row search-items">
+    <div id="search-items" class="row">
          @include('appl.'.$app->app.'.'.$app->module.'.list')
     </div>
   </div>
 </div>
-</div>
 
+</div>
 @endsection
 
 

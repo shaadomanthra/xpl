@@ -58,6 +58,10 @@
       </div>
 
 
+      <div class="form-group ">
+        <label for="formGroupExampleInput ">Meeting Link (Unique for Trainer)</label>
+        <input type="text" class="form-control" name="meeting_link"   value="{{isset($obj->meeting_link)? $obj->meeting_link:'https://blue.p24.in/b/kri-hw2-e5g'}}" id="meeting_link">
+      </div>
      
     
 

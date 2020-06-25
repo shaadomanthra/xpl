@@ -13,6 +13,7 @@ class Schedule extends Model
         'details',
         'user_id',
         'training_id',
+        'meeting_link',
         'status',
         // add all other fields
     ];

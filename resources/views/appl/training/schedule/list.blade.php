@@ -55,6 +55,13 @@
               <div class="mt-4">{!! $s->details !!}</div>
               @endif
 
+
+              @if($s->meeting_link)
+              <div class="py-3">
+              <a href="{{$s->meeting_link}}" class="btn btn-outline-primary" target="_blank">Join Session</a>
+              </div>
+              @endif
+
              
               
             </div>
