@@ -223,7 +223,46 @@ class TrainingController extends Controller
                'status'   => 1,
                 ]);
 
+                $u->rollnumber = $row[5];
+                $u->gender = $row[6];
+                $u->hometown = $row[7];
+                $u->current_city = $row[8];
+                $u->dob = $row[9];
+                $u->video = $row[10];
+                $u->personality = $row[11];
+                $u->confidence = $row[12];
+
+
+
                 $u->save();
+            }else{
+
+                $row[1] = str_replace('@', 'n@', $row[1]);
+                $u = new User([
+               'name'     => $row[0],
+               'email'    => $row[1], 
+               'username'    => $obj->username($row[1]), 
+               'client_slug' =>$client_slug,
+               'phone'    => $row[2], 
+               'password' => bcrypt($row[2]),
+               'year_of_passing' => $row[3],
+               'branch_id' => $b,
+               'status'   => 1,
+                ]);
+
+                $u->rollnumber = $row[5];
+                $u->gender = $row[6];
+                $u->hometown = $row[7];
+                $u->current_city = $row[8];
+                $u->dob = $row[9];
+                $u->video = $row[10];
+                $u->personality = $row[11];
+                $u->confidence = $row[12];
+
+
+
+                $u->save();
+
             }
 
             if(!$obj->users->contains($u->id)){
