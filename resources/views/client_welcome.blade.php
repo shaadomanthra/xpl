@@ -39,6 +39,11 @@
             <img 
         src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
           </div>
+          @if($_SERVER['HTTP_HOST'] == 'vaagdevi.xplore.co.in'  || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
+          <div class="alert alert-warning alert-important">
+          <div class="blink h4 ">First Eamcet Mock Test is scheduled for <span class="text-danger">26th June, 9:00 AM</span></div>
+        </div>
+          @endif
           <div class=" my-auto">
              @include('auth.pages.login')
              <div class="mt-5">
@@ -63,6 +68,16 @@
     </div>
   </main>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script>
+    function blink_text() {
+      if($('.blink').length){
+        $('.blink').fadeOut(500);
+    $('.blink').fadeIn(500);
+      }
+    
+}
+setInterval(blink_text, 1000);
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>

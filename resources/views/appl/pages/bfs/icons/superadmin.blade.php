@@ -52,7 +52,7 @@ table, td, th, tr {
                                 </div>
                             </td>
                             <td class="pl-0">
-                                <a href="{{route('training.show',$obj->slugs)}}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$obj->name}}</a>
+                                <a href="{{route('training.show',$obj->slug)}}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$obj->name}}</a>
                                 <div>
                                     
                                     <a class="text-muted font-weight-bold text-hover-primary" href="#">{{$obj->users->count()}} participants</a>

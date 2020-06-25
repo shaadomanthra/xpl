@@ -22,8 +22,8 @@
           <div class="col-12 col-md-10">
             <div class='mt-3 text-center text-md-left'>
            <h2>Hi, {{  \auth::user()->name}}
-            <div class="badge badge-primary d-md-inline h5 mt-3 mt-md-0" data-toggle="tooltip" title="Account Type">
-      Trainer
+            <div class="badge badge-success d-md-inline h5 mt-3 mt-md-0" data-toggle="tooltip" title="Account Type">
+      Student
     </div>
            </h2>
       <p> Welcome aboard</p>
