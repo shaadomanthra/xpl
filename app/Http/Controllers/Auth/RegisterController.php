@@ -94,13 +94,7 @@ class RegisterController extends Controller
     {
 
         $url = url()->full();
-        if($this->hasSubdomain($url)){
-            $parsed = parse_url($url);
-            $exploded = explode('.', $parsed["host"]);
-            $subdomain = $exploded[0];
-            
-        }else
-            $subdomain = null;
+        $subdomain = subdomain();
         
        $this->validate(request(), ['otp' => new Otp]);
 

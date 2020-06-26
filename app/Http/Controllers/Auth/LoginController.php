@@ -68,18 +68,24 @@ class LoginController extends Controller
             ? $this->username()
             : 'username';
 
-        if($request->client_slug){
-                return [
+        return [
                 $field => $request->get($this->username()),
                 'password' => $request->password,
                 'client_slug' =>$request->client_slug
             ];
-        }else{
-            return [
-            $field => $request->get($this->username()),
-            'password' => $request->password
-            ];
-        }
+            
+        // if($request->client_slug){
+        //         return [
+        //         $field => $request->get($this->username()),
+        //         'password' => $request->password,
+        //         'client_slug' =>$request->client_slug
+        //     ];
+        // }else{
+        //     return [
+        //     $field => $request->get($this->username()),
+        //     'password' => $request->password
+        //     ];
+        // }
 
         
     }

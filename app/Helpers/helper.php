@@ -220,7 +220,7 @@ function subdomain() {
     if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test')
             return 'bfs';
     if($_SERVER['HTTP_HOST'] == 'xplore.co.in' )
-            return null;
+            return 'xplore';
 
     $parsed = parse_url($url);
     $exploded = explode('.', $parsed["host"]);
