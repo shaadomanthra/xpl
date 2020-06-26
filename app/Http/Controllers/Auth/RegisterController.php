@@ -105,7 +105,7 @@ class RegisterController extends Controller
        $this->validate(request(), ['otp' => new Otp]);
 
        $parts = explode("@", $data['email']);
-        $username = $parts[0];
+       $username = $parts[0];
 
         $u = User::where('username',$username)->first();
 

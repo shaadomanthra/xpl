@@ -182,7 +182,7 @@ class UserController extends Controller
 
 
     if($uids){
-$data['users_all'] =  User::where('client_slug',subdomain())->whereIn('id',$uids)->count();
+    $data['users_all'] =  User::where('client_slug',subdomain())->whereIn('id',$uids)->count();
     $data['users_lastmonth'] = User::where('client_slug',subdomain())->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
     $data['users_thismonth'] = User::where('client_slug',subdomain())->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->month)->count();
     $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
@@ -328,7 +328,7 @@ $data['users_all'] =  User::where('client_slug',subdomain())->whereIn('id',$uids
             }
         }
 
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email',$request->email)->where('client_slug',subdomain())->first();
      
 
         if($user){

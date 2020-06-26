@@ -65,7 +65,7 @@
 
                         <div class="form-group">
                             <div class="col-md-12 col-md-offset-4">
-                                
+                                <input id="client_slug" type="hidden" class="form-control" name="client_slug" value="{{subdomain()}}">
                                 <button type="submit" class="btn btn-primary">
                                     Login
                                 </button>
