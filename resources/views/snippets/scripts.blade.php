@@ -1065,6 +1065,8 @@ function addMinutes(date, minutes) {
     @if($exam->window_swap)
       if(count =={{$exam->auto_terminate}})
       var message = 'We have noticed {{$exam->auto_terminate}} window swaps. Next swap will lead to termination of the test.';
+      else if ($exam->auto_terminate==0)
+      var message = 'We have noticed a window swap ('+count+'). Kindly note that numerous swaps will lead to cancellation of the test.';
       else if(count>{{$exam->auto_terminate}})
       var message = 'You have reached the {{$exam->auto_terminate}} swap limit. The test will be terminated here.';
       else 
