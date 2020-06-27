@@ -228,7 +228,7 @@ class TrainingController extends Controller
                 // $u->video = $row[10];
                 // $u->personality = $row[11];
                 // $u->confidence = $row[12];
-
+                // new save
                 $u->save();
             }
             // else{
