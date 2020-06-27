@@ -303,8 +303,13 @@ class AdminController extends Controller
 
 
         $month = $request->get('month');
+        $recent = $request->get('recent');
 
-        if($month=='thismonth')
+        if($recent){
+            $users = User::where('name','LIKE',"%{$item}%")
+                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->orderBy('updated_at','desc')->paginate(30);
+        }
+        elseif($month=='thismonth')
             $users = User::whereMonth('created_at', Carbon::now()->month)->orderBy('id','desc')->paginate(30);
         elseif($month=='lastmonth')
             $users = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->orderBy('id','desc')->paginate(30);

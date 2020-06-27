@@ -270,6 +270,12 @@
 
       <button type="submit" class="btn btn-info">Save</button>
     </form>
+    @if($stub!='Create')
+    <form method="post" action="{{route('admin.user.delete',[$user->username])}}" class="float-right">
+    <button type="submit" class="btn btn-danger">delete</button>
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    </form>
+    @endif
     </div>
   </div>
 @endsection

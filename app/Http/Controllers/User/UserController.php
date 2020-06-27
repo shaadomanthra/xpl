@@ -407,7 +407,10 @@ class UserController extends Controller
         $username = substr($username, 1);
         $user = User::where('username',$username)->first();
         $user_details = User_Details::where('user_id',$user->id)->first();
+
+
         $this->authorize($user);
+
         /* create user details if not defined */
         if(!$user_details)
         {
@@ -628,6 +631,21 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $obj = User::where('username',$id)->first();
+        $this->authorize('update', $obj);
+        if($obj->details)
+            $obj->details->delete();
+        $obj->roles()->detach();
+        $obj->colleges()->detach();
+        $obj->branches()->detach();
+        $obj->zones()->detach();
+        if($obj->exams)
+            $obj->exams()->delete();
+        if($obj->products)
+            $obj->products()->detach();
+        $obj->delete();
+
+        flash('User is  Successfully deleted!')->success();
+        return redirect()->route('admin.user');
     }
 }

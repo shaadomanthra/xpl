@@ -6,7 +6,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Name </th>
                 <th scope="col">Details</th>
-                <th scope="col">Created</th>
+                <th scope="col">@if(request()->get('recent')) last login @else Created @endif</th>
               </tr>
             </thead>
             <tbody>

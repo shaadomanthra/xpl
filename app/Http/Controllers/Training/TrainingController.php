@@ -206,11 +206,8 @@ class TrainingController extends Controller
         $rows = $collection[0];
         foreach($rows as $key =>$row){
            
-
-            $u = User::where('email',$row[1])->first();
-            
-
             $client_slug = subdomain();
+            $u = User::where('email',$row[1])->where('client_slug',$client_slug)->first();
 
             if(!$u){
                 $u = new User([
@@ -231,8 +228,6 @@ class TrainingController extends Controller
                 // $u->video = $row[10];
                 // $u->personality = $row[11];
                 // $u->confidence = $row[12];
-
-
 
                 $u->save();
             }
