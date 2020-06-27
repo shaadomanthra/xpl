@@ -23,9 +23,16 @@
 
 
 	<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
-			<div class="card-body">
-			Your responses are recorded for internal evaluation. 
+		@if($_SERVER['HTTP_HOST'] == 'smec.xplore.co.in' )
+		<div class="card-body">
+			Thank you.You have completed your test and your responses are recorded for internal evaluation.
+			Results will be announced on 8th July 2020. Kindly visit <a href="http://www.smec.ac.in">www.smec.ac.in</a>
 		</div>
+		@else
+			<div class="card-body">
+			Your responses are recorded for internal evaluation.
+		</div>
+		@endif
 	</div>
 
 	@if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg'))
