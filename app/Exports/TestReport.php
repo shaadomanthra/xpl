@@ -49,8 +49,11 @@ class TestReport implements FromCollection
             else
               $result[$k]->cheating = 'No Cheating';  
     		foreach($sections[$res->user->id] as $m=>$sec){
-    			$name = $exam_sections[$m]['name'];
-    			$result[$k]->$name = $sec->score;
+                if(isset($exam_sections[$m]['name'])){
+                    $name = $exam_sections[$m]['name'];
+                    $result[$k]->$name = $sec->score;  
+                }
+    			
     		}
     		
     		$result[$k]->Score = $res->score;
