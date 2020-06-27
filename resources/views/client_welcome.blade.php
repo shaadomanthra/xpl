@@ -41,7 +41,9 @@
           </div>
           @if($_SERVER['HTTP_HOST'] == 'vaagdevi.xplore.co.in'  || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
           <div class="alert alert-warning alert-important">
-          <div class="blink h4 ">First Eamcet Mock Test is scheduled for <span class="text-danger">26th June, 9:00 AM</span></div>
+          <div class="blink h4 ">Second Eamcet Mock Test is scheduled for <span class="text-danger">30th June, 9:00 AM</span></div>
+          
+        <p id="d" class="my-2"></p>
         </div>
           @endif
           <div class=" my-auto">
@@ -77,6 +79,42 @@
     
 }
 setInterval(blink_text, 1000);
+
+
+
+// Set the date we're counting down to
+var countDownDate = new Date("June 30, 2020 09:00:00").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  if(document.getElementById("d"))
+  document.getElementById("d").innerHTML = days + "days " + hours + "hours "
+  + minutes + "min " + seconds + "sec ";
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    if(document.getElementById("d"))
+    document.getElementById("d").innerHTML = "";
+  }
+}, 1000);
+
   </script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
