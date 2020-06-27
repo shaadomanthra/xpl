@@ -139,6 +139,7 @@
 
     <div class="col-12 col-md-5 col-lg-4">
 
+      @if(isset($obj->trainer->name))
       <!--begin::Stats Widget 4-->
       <div class="card card-custom gutter-b">
         <!--begin::Body-->
@@ -152,7 +153,9 @@
         <!--end::Body-->
       </div>
       <!--end::Stats Widget 4-->
+      @endif
 
+      @if(isset($obj->tpo->name))
       <!--begin::Stats Widget 4-->
       <div class="card card-custom gutter-b">
         <!--begin::Body-->
@@ -166,6 +169,7 @@
         <!--end::Body-->
       </div>
       <!--end::Stats Widget 4-->
+      @endif
 
       <!--begin::Tiles Widget 11-->
       

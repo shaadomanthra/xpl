@@ -208,11 +208,7 @@ class TrainingController extends Controller
            
 
             $u = User::where('email',$row[1])->first();
-            $branch = ['CSE'=>9,'IT'=>10,'ECE'=>11,'EEE'=>12,'MECH'=>13,'CIVIL'=>14,'OTHER'=>15];
-            if(isset($branch[strtoupper($row[4])]))
-                $b=$branch[strtoupper($row[4])];
-            else
-                $b = 15;
+            
 
             $client_slug = subdomain();
 
@@ -224,8 +220,6 @@ class TrainingController extends Controller
                'client_slug' =>$client_slug,
                'phone'    => $row[2], 
                'password' => bcrypt($row[2]),
-               'year_of_passing' => $row[3],
-               'branch_id' => $b,
                'status'   => 1,
                 ]);
 
