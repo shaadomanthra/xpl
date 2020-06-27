@@ -34,7 +34,11 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            @if($_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'smec.xplore.co.in' )
+                            <label for="password" class="col-md-12 control-label">Phone Number</label>
+                            @else
                             <label for="password" class="col-md-12 control-label">Password</label>
+                            @endif
 
                             <div class="col-md-12">
                                 <input id="password" type="password" class="form-control" name="password" required>
