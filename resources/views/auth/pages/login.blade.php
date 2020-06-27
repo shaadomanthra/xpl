@@ -20,7 +20,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-12 control-label">Email Address</label>
+                            <label for="email" class="col-md-12 control-label">Registered Email Address</label>
 
                             <div class="col-md-12">
                                 <input type="text" class="form-control" name="email" placeholder="" value="{{ old('email') }}" required autofocus>
@@ -35,7 +35,7 @@
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             @if($_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'smec.xplore.co.in' )
-                            <label for="password" class="col-md-12 control-label">Phone Number</label>
+                            <label for="password" class="col-md-12 control-label">Registered Phone Number</label>
                             @else
                             <label for="password" class="col-md-12 control-label">Password</label>
                             @endif
