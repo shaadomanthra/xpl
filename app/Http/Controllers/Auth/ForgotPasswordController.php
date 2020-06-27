@@ -4,6 +4,9 @@ namespace PacketPrep\Http\Controllers\Auth;
 
 use PacketPrep\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
@@ -29,4 +32,22 @@ class ForgotPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    public function sendResetLinkEmail(Request $request)
+    {
+            $this->validate($request, ['email' => 'required'], ['email.required' => 'Please enter your email.']);
+
+             $response = $this->broker()->sendResetLink(
+                $request->only('email','client_slug')
+            );
+
+            if ($response === Password::RESET_LINK_SENT) {
+                return back()->with('status', trans($response));
+            }
+
+            return back()->withErrors(
+                ['email' => trans($response)]
+            );
+    }
+
 }

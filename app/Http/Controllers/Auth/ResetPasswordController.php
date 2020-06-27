@@ -4,6 +4,8 @@ namespace PacketPrep\Http\Controllers\Auth;
 
 use PacketPrep\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
@@ -40,5 +42,21 @@ class ResetPasswordController extends Controller
     {
 
         $this->middleware('guest');
+    }
+
+    protected function rules()
+    {
+        return [
+            'token' => 'required', 
+            'email' => 'required',
+            'password' => 'required|confirmed|min:6',
+        ];
+    }
+
+    protected function credentials(Request $request)
+    {
+        return $request->only(
+            'email', 'password', 'password_confirmation', 'token', 'client_slug'
+        );
     }
 }
