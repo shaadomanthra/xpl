@@ -273,6 +273,10 @@ class TrainingController extends Controller
     public function username($email){
         $parts = explode("@", $email);
         $username = $parts[0];
+        $u = User::where('username',$username)->first();
+        if($u){
+            $username = $username.'_'.rand(100,9999);
+        }
         return $username;
     }
 

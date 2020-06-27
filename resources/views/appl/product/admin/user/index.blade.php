@@ -21,19 +21,13 @@
           <a class="navbar-brand"><i class="fa fa-user"></i> Users ({{$users->total()}}) @if(request()->get('month')) <span class="badge badge-warning">{{request()->get('month')}}</span>@endif 
              @if(request()->get('recent')) <span class="badge badge-info">Recent Logins</span>@endif
           </a>
-
-
           <form class="form-inline" method="GET" >
-
             <a href="{{route('admin.user.create')}}">
               <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Add User</button>
             </a>
-
             <a href="{{route('admin.user')}}?recent=true">
               <button type="button" class="btn btn-outline-secondary my-2 my-sm-2 mr-sm-3">Recent</button>
             </a>
-             
-            
             <div class="input-group ">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fa fa-search"></i></div>
