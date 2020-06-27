@@ -64,12 +64,12 @@
                                     Login
                                 </button>
 
-                                @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+                                @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
                   <a class="btn btn-success" href="{{ route('register') }}">
                                     Register
                                 </a>
                                 <br>
-              @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+              @elseif($_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'smec.xplore.co.in' )
               @else
                  <a class="btn btn-success" href="{{ route('register') }}">
                                     Register
