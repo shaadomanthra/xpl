@@ -1,5 +1,5 @@
 
-@if($exams)
+ @if($exams->total()!=0)
 <div class="row ">
 @foreach($exams as $key=>$e)  
 
@@ -85,3 +85,7 @@
               @endforeach  
             </div>
 @endif
+
+<nav aria-label="Page navigation  " class="card-nav @if($exams->total() > config('global.no_of_records'))my-3 @endif">
+        {{$exams->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
+      </nav>

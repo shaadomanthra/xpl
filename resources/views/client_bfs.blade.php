@@ -90,6 +90,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<!--end::Form group-->
 								<!--begin::Action-->
 								<div class="pb-lg-0 pb-5">
+									<input id="client_slug" type="hidden" class="form-control" name="client_slug" value="{{subdomain()}}">
 									<button type="submit" id="kt_login_singin_form_submit_button" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3">Sign In</button>
 									<button type="button" class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg">
 									<span class="svg-icon svg-icon-md">

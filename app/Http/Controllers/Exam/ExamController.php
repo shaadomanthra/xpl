@@ -548,6 +548,9 @@ class ExamController extends Controller
         $exam= Exam::where('slug',$id)->first();
         $exam->precheck_auto_activation();
         
+        if(!\auth::user()->checkRole(['administrator','hr-manager','tpo'])){
+            return redirect()->route('assessment.show',$id);
+        }
         $this->authorize('view', $exam);
 
         if(request()->get('delete')=='banner'){

@@ -219,9 +219,11 @@ class ProductController extends Controller
           }
 
           if($search)
-            $exams = $user->exams()->where('name','LIKE',"%{$item}%")->orderBy('id','desc')->limit(10)->get();
+            $exams = $user->exams()->where('name','LIKE',"%{$item}%")->orderBy('id','desc')
+                    ->paginate(config('global.no_of_records'));
           else
-            $exams = $user->exams()->orderBy('id','desc')->limit(10)->get();
+            $exams = $user->exams()->orderBy('id','desc')
+                    ->paginate(config('global.no_of_records'));
           $user->attempts = $count;
           $view = $search ? 'snippets.hr_tests': 'hr_welcome';
 
