@@ -86,6 +86,6 @@
             </div>
 @endif
 
-<nav aria-label="Page navigation  " class="card-nav @if($exams->total() > config('global.no_of_records'))my-3 @endif">
+<nav aria-label="Page navigation  " class="card-nav @if($exams->total() > 8)my-3 @endif">
         {{$exams->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
       </nav>
