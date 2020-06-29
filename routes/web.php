@@ -126,10 +126,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	
 	Route::get('/t',function(){ echo $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix(); dd(); return view('appl.pages.terms'); })->name('terms');
 
-	Route::get('/terms',function(){ 
-		
-
-		return view('appl.pages.terms'); })->name('terms');
+	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
+	Route::get('/em',function(){ return view('appl.pages.eamcet'); })->name('eamcet');
 
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
 	Route::get('/hire',function(){ return view('xp_welcome')->with('welcome',1); })->name('xp');
@@ -391,6 +389,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	Route::get('/srecieee', function(){
 		return Redirect::to('/test/srecieee', 301); 
+	});
+
+	Route::get('/eamcet', function(){
+		return Redirect::to('https://vaagdevi.xplore.co.in', 301); 
 	});
 
 	Route::get('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');
