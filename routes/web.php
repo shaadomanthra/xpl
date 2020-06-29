@@ -392,7 +392,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	});
 
 	Route::get('/eamcet', function(){
-		return Redirect::to('https://vaagdevi.xplore.co.in', 301); 
+		return Redirect::to('https://vaagdevi.xplore.co.in/register', 301); 
 	});
 
 	Route::get('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');
