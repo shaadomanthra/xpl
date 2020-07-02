@@ -40,8 +40,8 @@
         src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
           </div>
           @if($_SERVER['HTTP_HOST'] == 'vaagdevi.xplore.co.in'  || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
-          <div class="alert alert-warning alert-important">
-          <div class="blink h4 ">We have postponed our 03/07/2020 mock test , as TS government postponed TS EAMCET in the view of this only we have postponed ...third mock test exam date will be announced shortly</div>
+          <div class="alert alert-warning alert-important mt-3">
+          <div class=" h4 ">We have postponed our 03/07/2020 mock test , as TS government postponed TS EAMCET in the view of this only we have postponed ...third mock test exam date will be announced shortly</div>
           
         <p id="d" class="my-2"></p>
         </div>
