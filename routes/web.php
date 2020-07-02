@@ -262,6 +262,35 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 		echo $user->roll_number."<br>";
 	})->name('loadtest');
 
+	Route::get('loadtest-dbread', function(){
+		$user = User::where('id',6)->first();
+		echo $user->name."<br>";
+	})->name('loadtest-dbread');
+
+	Route::get('loadtest-fileread', function(){
+		$filename = 'corporate.json';
+        $client = json_decode(file_get_contents($filename));
+		echo $client->name."<br>";
+	})->name('loadtest-fileread');
+
+	Route::get('loadtest-dbwrite', function(){
+		$user = User::where('id',6)->first();
+		echo $user->name."<br>";
+		if(!$user->roll_number && $user->roll_number!=0)
+		$user->roll_number = 0;
+		else
+			$user->roll_number = $user->roll_number +1;
+		$user->save();
+	})->name('loadtest-dbwrite');
+
+	Route::get('loadtest-filewrite', function(){
+		$filename = 'corporate.json';
+        $client = json_decode(file_get_contents($filename));
+        $client->contact = "new contact";
+        file_put_contents($filename, json_encode($client));
+		echo $client->name."<br>";
+	})->name('loadtest-filewrite');
+
 	Route::get('/pricing',function(){ return view('appl.product.pages.pricing'); })->name('pricing');
 
 	Route::get('/about-corporate',function(){ return view('appl.product.pages.about'); })->name('about-corporate');
