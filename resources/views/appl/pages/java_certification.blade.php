@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Java Language Exam - Vaagdevi')
 @section('content')
 
 
