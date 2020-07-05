@@ -124,7 +124,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	
 	
-	Route::get('/t',function(){ echo $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix(); dd(); return view('appl.pages.terms'); })->name('terms');
+	Route::get('/java-language-exam',function(){ return view('appl.pages.java_certification'); })->name('java.l.c');
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/em',function(){ return view('appl.pages.eamcet'); })->name('eamcet');
