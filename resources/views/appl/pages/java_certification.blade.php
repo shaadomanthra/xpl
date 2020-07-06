@@ -5,10 +5,11 @@
 
 <div class="bg-white">
 <div class="card-body p-4 ">
+<img src="{{ asset('img/vaagdevi.png')}}" class="py-2 mb-3" style="width:300px" />
 <h1>Java Language Exam</h1>
 
 <p>
- Java Language exam brought to you by Vaagdevi Colleges jointly certified by Computer Society of India - Hyderabad Chapter & Xplore.</p>
+ Java Language exam brought to you by Vaagdevi college of engineering jointly certified by Computer Society of India - Hyderabad Chapter & Xplore.</p>
 <p>
 Date of Exam:<b>11th July 2020</b><br><br>
 
