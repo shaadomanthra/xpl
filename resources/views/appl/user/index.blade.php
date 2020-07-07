@@ -60,8 +60,14 @@
              @endif
 
              @if($user->roll_number)
+
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-address-book-o'></i> &nbsp; Roll Number</dt>
+                <dt class="col-sm-3"><i class='fa fa-address-book-o'></i> &nbsp; 
+                @if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+              Roll Number
+                @else
+                Fathers or Mothers Name
+                @endif</dt>
                 <dd class="col-sm-9">{{$user->roll_number}}</dd>
               </dl>
              @endif
