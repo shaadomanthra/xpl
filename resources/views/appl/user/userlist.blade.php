@@ -11,7 +11,13 @@
 <div class='pb-4 dblue' >
   <div class='container'>
      <nav class="mb-0">
-      <a href="{{ request()->url() }}?export=1&month={{request()->get('month')}}" class="btn btn-sm btn-outline-primary float-md-right mt-3">Excel Download</a>
+      @if(\auth::user()->checkRole(['administrator']))
+        <a href="{{ request()->url() }}?export=1&month={{request()->get('month')}}" class="btn btn-sm btn-outline-primary float-md-right mt-3">Excel Download</a>
+        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
+        <a href="{{ request()->url() }}?export=1&month={{request()->get('month')}}" class="btn btn-sm btn-outline-primary float-md-right mt-3">Excel Download</a>
+        @else
+        @endif
+      
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
             <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Dashboard</a></li>
             <li class="breadcrumb-item">Users </li>

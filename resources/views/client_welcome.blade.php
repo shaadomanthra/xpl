@@ -43,6 +43,11 @@
           <div class="alert alert-warning alert-important mt-3">
           <div class=" h4 ">We have postponed our 03/07/2020 mock test , as TS government postponed TS EAMCET in the view of this only we have postponed ...third mock test exam date will be announced shortly</div>
           
+        </div>
+          @elseif($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in')
+          <div class="alert alert-warning alert-important mt-3">
+          <div class=" h4 ">The mock test link will be active on 19th July 2020, 9:00 Am.</div>
+          
         <p id="d" class="my-2"></p>
         </div>
           @endif
@@ -83,7 +88,7 @@ setInterval(blink_text, 1000);
 
 
 // Set the date we're counting down to
-var countDownDate = new Date("June 30, 2020 09:00:00").getTime();
+var countDownDate = new Date("July 19, 2020 09:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
