@@ -294,7 +294,7 @@
         </div>
         <div class="col-12 col-md-3">
             <div class="form-group{{ $errors->has('reservation') ? ' has-error' : '' }}">
-                <label for="reservation" class="col-md-8 control-label">Reservation</label>
+                <label for="reservation" class="col-md-8 control-label">Category</label>
 
                 <div class="col-md-12">
                     <select class="form-control" name="language">
