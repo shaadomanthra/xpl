@@ -168,7 +168,8 @@ class ProductController extends Controller
           if(isset($exam)){
               $attempts = $exam->getAttempts($e,$request->get('month'));
           }else{
-            $attempts = 0;
+            $exam = new Exam();
+            $attempts = $exam->getAttempts($e,$request->get('month'));
           }
           
           

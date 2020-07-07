@@ -109,11 +109,13 @@
               </dl>
              @endif
 
+             @if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
              @if($user->metrics)
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-gg'></i> &nbsp; Trained In</dt>
                 <dd class="col-sm-9">{{implode(', ',$user->metrics->pluck('name')->toArray())}}</dd>
               </dl>
+             @endif
              @endif
              
              @can('update',$user)
@@ -130,6 +132,8 @@
 
 
 @auth
+
+@if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
       <div class="row mr-2 mb-4 ml-2">
         
     </div>
@@ -206,6 +210,7 @@
 
         
       </div>
+    @endif
 @endauth
 
             </div>
