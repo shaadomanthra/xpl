@@ -30,7 +30,7 @@
           <div class="alert alert-warning alert-important mt-3">
           <div class=" h4 ">The mock test link will be active on 19th July 2020, 9:00 Am.</div>
           
-        <p id="d" class="my-2"></p>
+        <p id="d" class="my-2 text-danger blink"></p>
         </div>
           @endif
              @include('auth.pages.login')
