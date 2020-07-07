@@ -28,7 +28,7 @@
           <div class="login-section-wrapper my-auto">
             @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
           <div class="alert alert-warning alert-important mt-3">
-          <div class=" h4 ">The mock test link will be active on 19th July 2020, 9:00 Am.</div>
+          <div class=" h4 ">Last date for registration 18th July 2020, 6:00 pm.</div>
           
         <p id="d" class="my-2 text-danger blink"></p>
         </div>
@@ -96,7 +96,7 @@ setInterval(blink_text, 1000);
 
 
 // Set the date we're counting down to
-var countDownDate = new Date("July 19, 2020 09:00:00").getTime();
+var countDownDate = new Date("July 19, 2020 18:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
