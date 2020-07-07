@@ -24,14 +24,15 @@
             <img 
         src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
           </div>
-          @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
+
+          <div class="login-section-wrapper my-auto">
+            @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
           <div class="alert alert-warning alert-important mt-3">
           <div class=" h4 ">The mock test link will be active on 19th July 2020, 9:00 Am.</div>
           
         <p id="d" class="my-2"></p>
         </div>
           @endif
-          <div class="login-section-wrapper my-auto">
              @include('auth.pages.login')
              <div class="mt-5">
               <div class="p-2"></div>
