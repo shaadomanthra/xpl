@@ -165,7 +165,12 @@ class ProductController extends Controller
           $data['attempts_lastbeforemonth'] = $attempts_lastbeforemonth;
 
           $e = $user->exams->pluck('id')->toArray();
-          $attempts = $exam->getAttempts($e,$request->get('month'));
+          if(isset($exam)){
+              $attempts = $exam->getAttempts($e,$request->get('month'));
+          }else{
+            $attempts = 0;
+          }
+          
           
       }
         
