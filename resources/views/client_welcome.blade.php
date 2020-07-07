@@ -44,7 +44,7 @@
           <div class=" h4 ">We have postponed our 03/07/2020 mock test , as TS government postponed TS EAMCET in the view of this only we have postponed ...third mock test exam date will be announced shortly</div>
           
         </div>
-          @elseif($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in')
+          @elseif($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
           <div class="alert alert-warning alert-important mt-3">
           <div class=" h4 ">The mock test link will be active on 19th July 2020, 9:00 Am.</div>
           
