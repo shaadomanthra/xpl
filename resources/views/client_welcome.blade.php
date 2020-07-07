@@ -34,7 +34,7 @@
           </div>
         </div>
         @else
-        <div class="col-sm-6 login-section-wrapper">
+        <div class="col-sm-6 login-section-wrapper {{$_SERVER['HTTP_HOST']}} @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in') eamcet @endif">
           <div class="brand-wrapper">
             <img 
         src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
