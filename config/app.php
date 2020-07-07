@@ -198,8 +198,8 @@ return [
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         BC\Laravel\DropboxDriver\ServiceProvider::class,
-        Thujohn\Twitter\TwitterServiceProvider::class,
-        PacketPrep\Providers\FacebookServiceProvider::class,
+        //Thujohn\Twitter\TwitterServiceProvider::class,
+        //PacketPrep\Providers\FacebookServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -213,9 +213,9 @@ return [
         // PacketPrep\Providers\BroadcastServiceProvider::class,
         PacketPrep\Providers\EventServiceProvider::class,
         PacketPrep\Providers\RouteServiceProvider::class,
-        Anand\LaravelPaytmWallet\PaytmWalletServiceProvider::class,
+        //Anand\LaravelPaytmWallet\PaytmWalletServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-         Dawson\Youtube\YoutubeServiceProvider::class,
+        //Dawson\Youtube\YoutubeServiceProvider::class,
 
     ],
 

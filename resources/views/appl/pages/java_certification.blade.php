@@ -26,6 +26,10 @@ Date of Exam:<b>11th July 2020</b><br><br>
 	<li>Certificates will be issued 48 hours after completion of the examination</li>
 </ul>
 </p>
+<div class="alert alert-important alert-warning">
+
+	<b>Note:</b> While registering with xplore & while doing payment make sure you enter the Full name as per SSC Certificate. The same name will be used in the certificate. Any change requests later will not be accepted.
+</div>
 
 <div class='pm-button'><a href='https://www.payumoney.com/paybypayumoney/#/C4286FE63B2274EAF926ED4D9E27A003'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/23.png' /></a></div>
 
