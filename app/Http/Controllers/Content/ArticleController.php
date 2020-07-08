@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Redis;
 
 class ArticleController extends Controller
 {
@@ -36,11 +37,16 @@ class ArticleController extends Controller
      $filename = 'index.'.$this->app.'.'.$this->module.'.json';
      $filepath = $this->cache_path.$filename;
 
+     $visits = Redis::incr('visits'); 
+
      /* update in cache folder */
      if($request->refresh){
 
         // update articles
         $objs = $obj->orderBy('created_at','desc')->where('status',1)->get();  
+        //Storage::disk('spaces')->put('articles/'.$filename, json_encode($objs,JSON_PRETTY_PRINT));
+        //$data = Storage::disk('spaces')->get('articles/'.$filename);
+        //dd($data);
         file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
 
         foreach($objs as $obj){ 
@@ -55,6 +61,7 @@ class ArticleController extends Controller
                 $obj->related2 = $label2->articles()->where('status',1)->limit(4)->get(); 
             }
             $filepath = $this->cache_path.$filename;
+
             file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
         }
 
@@ -98,6 +105,7 @@ class ArticleController extends Controller
         ->with('objs',$objs)
         ->with('labels',$labels)
         ->with('obj',$obj)
+        ->with('visits',$visits)
         ->with('app',$this);
     }
 

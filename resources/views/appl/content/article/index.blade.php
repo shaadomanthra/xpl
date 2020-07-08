@@ -110,9 +110,10 @@
      </div>
   
 
-
+     <div class="pb-5">page hits: {{$visits}}</div>
      </div>   
 </div>
+
 
 @endsection           
 

@@ -698,18 +698,18 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('question/addtest/{question}','Dataentry\QuestionController@addTest');
 	Route::get('question/removetest/{question}','Dataentry\QuestionController@removeTest');
 
-	Route::resource('library','Library\RepositoryController')->middleware('auth');
-	Route::resource('library/{repository}/structure','Library\structureController')->middleware('auth');
-	Route::get('library/{repository}/structure/{structure}/question','Library\LquestionController@structure')->middleware('auth')->name('structure.question');
-	Route::get('library/{repository}/structure/{structure}/question/{id}','Library\LquestionController@structure')->middleware('auth')->name('structure.question');
-	Route::resource('library/{repository}/ltag','Library\LtagController')->middleware('auth');
-	Route::get('library/{repository}/ltag/{tag}/question','Library\LquestionController@tag')->middleware('auth')->name('ltag.question');
-	Route::get('library/{repository}/ltag/{tag}/question/{id}','Library\LquestionController@tag')->middleware('auth')->name('ltag.question');
-	Route::resource('library/{repository}/lpassage','Library\LpassageController')->middleware('auth');
-	Route::resource('library/{repository}/lquestion','Library\LquestionController')->middleware('auth');
-	Route::resource('library/{repository}/version','Library\VersionController')->middleware('auth');
-	Route::resource('library/{repository}/video','Library\VideoController')->middleware('auth');
-	Route::resource('library/{repository}/document','Library\DocumentController')->middleware('auth');
+	// Route::resource('library','Library\RepositoryController')->middleware('auth');
+	// Route::resource('library/{repository}/structure','Library\structureController')->middleware('auth');
+	// Route::get('library/{repository}/structure/{structure}/question','Library\LquestionController@structure')->middleware('auth')->name('structure.question');
+	// Route::get('library/{repository}/structure/{structure}/question/{id}','Library\LquestionController@structure')->middleware('auth')->name('structure.question');
+	// Route::resource('library/{repository}/ltag','Library\LtagController')->middleware('auth');
+	// Route::get('library/{repository}/ltag/{tag}/question','Library\LquestionController@tag')->middleware('auth')->name('ltag.question');
+	// Route::get('library/{repository}/ltag/{tag}/question/{id}','Library\LquestionController@tag')->middleware('auth')->name('ltag.question');
+	// Route::resource('library/{repository}/lpassage','Library\LpassageController')->middleware('auth');
+	// Route::resource('library/{repository}/lquestion','Library\LquestionController')->middleware('auth');
+	// Route::resource('library/{repository}/version','Library\VersionController')->middleware('auth');
+	// Route::resource('library/{repository}/video','Library\VideoController')->middleware('auth');
+	// Route::resource('library/{repository}/document','Library\DocumentController')->middleware('auth');
 
 	Route::resource('course','Course\CourseController');
 	Route::get('course/{course}/list','Course\CourseController@show4')->name('course.list');
@@ -746,9 +746,6 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	})->name('page');
 
     Route::get('user/{username}', 'User\UserController@index')->name('profile');
-
-    
-
 	Route::get('user/{username}/edit', 'User\UserController@edit')->name('profile.edit');
 	Route::get('user/{username}/manage', 'User\UserController@manage')->name('profile.manage');
 	Route::put('user/{username}', 'User\UserController@update')->name('profile.update');

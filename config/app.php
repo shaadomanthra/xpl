@@ -268,9 +268,9 @@ return [
         'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
-        'PaytmWallet' => Anand\LaravelPaytmWallet\Facades\PaytmWallet::class,
+        //'PaytmWallet' => Anand\LaravelPaytmWallet\Facades\PaytmWallet::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Youtube' => Dawson\Youtube\Facades\Youtube::class,
+        //'Youtube' => Dawson\Youtube\Facades\Youtube::class,
 
     ],
 

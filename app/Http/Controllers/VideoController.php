@@ -3,7 +3,6 @@
 namespace PacketPrep\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Youtube;
 use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
@@ -28,30 +27,7 @@ class VideoController extends Controller
         return view('appl.video.video');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $user = \auth::user();
-        $title = $user->name.' - Introduction';
-        $video = Youtube::upload($request->file('video')->getPathName(), [
-            'title'       => $title,
-            'description' => 'This is a self introduction video of the xplore student',
-            'tags'        => ['api', 'youtube'],
-
-        ],'unlisted');
-         
-        $id = $video->getVideoId();
-        
-        $user->video =$id;
-        $user->save();
-
-        return redirect()->route('video.upload');
-    }
+   
 
 
     public function save(Request $request)
