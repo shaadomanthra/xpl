@@ -222,6 +222,7 @@ function subdomain() {
     if($_SERVER['HTTP_HOST'] == 'xplore.co.in' )
             return 'xplore';
 
+
     $parsed = parse_url($url);
     $exploded = explode('.', $parsed["host"]);
      if(count($exploded) > 2){

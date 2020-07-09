@@ -157,12 +157,14 @@ class AssessmentController extends Controller
         $search = $request->search;
         $item = $request->item;
 
+        $client = subdomain();
+
         if($filter){
             $examtype = Examtype::where('slug',$filter)->first();
-            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->where('client',$client)->paginate(config('global.no_of_records'));
         }
         else
-            $exams = $exam->where('name','LIKE',"%{$item}%")->paginate(config('global.no_of_records'));
+            $exams = $exam->where('name','LIKE',"%{$item}%")->where('client',$client)->paginate(config('global.no_of_records'));
 
         $view = $search ? 'list': 'index';
 

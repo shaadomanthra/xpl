@@ -31,7 +31,8 @@ class Exam extends Model
         'auto_deactivation',
         'window_swap',
         'auto_termination',
-        'capture_frequency'
+        'capture_frequency',
+        'client',
         // add all other fields
     ];
 

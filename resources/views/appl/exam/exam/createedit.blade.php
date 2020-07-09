@@ -50,8 +50,10 @@
            @if($stub=='Update')
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="examtype_id" value="{{$exam->examtype_id}}">
+        <input type="hidden" name="client" value="{{ $exam->client }}">
         @else
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
+        <input type="hidden" name="client" value="{{ subdomain() }}">
         <input type="hidden" name="examtype_id" value="6">
 
         @endif

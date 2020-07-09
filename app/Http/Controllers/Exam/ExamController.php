@@ -43,9 +43,6 @@ class ExamController extends Controller
             foreach($objs as $obj){ 
                 $filename = $obj->slug.'.json';
                 $filepath = $this->cache_path.$filename;
-                $u = $obj->user;
-                $obj->client = $u->client_slug;
-                $obj->save();
                 $obj->sections = $obj->sections;
                 $obj->products = $obj->products;
                 $obj->product_ids = $obj->products->pluck('id')->toArray();
@@ -285,6 +282,7 @@ class ExamController extends Controller
          $this->authorize('create', $exam);
         if($r->user_id){
             $exam->user_id = $r->user_id; 
+            $exam->client = User::where('id',$r->user_id)->first()->client_slug; 
             $exam->save();
             flash('Test Ownership changed')->success();
         }
@@ -494,6 +492,7 @@ class ExamController extends Controller
             $exam->capture_frequency = $request->capture_frequency;
             $exam->window_swap = $request->window_swap;
             $exam->auto_terminate = $request->auto_terminate;
+            $exam->client = $request->client;
             if($request->auto_activation)
                 $exam->auto_activation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
             else
@@ -819,7 +818,6 @@ class ExamController extends Controller
 
         $this->authorize('update', $exam);
 
-
         if($exam)
             return view('appl.exam.exam.createedit')
                 ->with('stub','Update')
@@ -880,6 +878,7 @@ class ExamController extends Controller
             $exam->active = $request->active;
             $exam->camera = $request->camera;
             $exam->calculator = $request->calculator;
+            $exam->client = $request->client;
             if(!$request->camera)
                 $exam->capture_frequency = 0;
             else
