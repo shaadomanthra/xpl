@@ -3,6 +3,7 @@
 namespace PacketPrep\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use PacketPrep\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        
     }
 
     /**

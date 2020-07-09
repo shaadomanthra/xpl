@@ -217,51 +217,7 @@
 
 
 
-  @if(count(auth::user()->products)!=0)
-  <div class="rounded table-responsive ">
-            <table class="table table-bordered ">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Products</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Valid till</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach(auth::user()->products as $k=>$product)
-                 <tr>
-                  <th scope="row">{{ $k+1}}</th>
-                  <td>
-                    <a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a>
-                  </td>
-                  <td>
-                    @if($product->price==0)
-                      <span class="badge badge-warning">Free</span>
-                      @else
-                      <span class="badge badge-info">Premium</span>
-                      @endif
-                  </td>
-                  <td>{{date('d M Y', strtotime($product->pivot->valid_till))}}</td>
-                  <td> 
-                    @if(strtotime($product->pivot->valid_till) > strtotime(date('Y-m-d')))
-                      @if($product->pivot->status==1)
-                      <span class="badge badge-success">Active</span>
-                      @else
-                      <span class="badge badge-secondary">Disabled</span>
-                      @endif
-                    @else
-                        <span class="badge badge-danger">Expired</span>
-                    @endif
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-            </div>
-
-        @endif
+  
 
 
   </div>

@@ -65,10 +65,18 @@ return [
     */
 
     'providers' => [
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => PacketPrep\User::class,
+        // ],
         'users' => [
-            'driver' => 'eloquent',
+            'driver' => 'cached',
             'model' => PacketPrep\User::class,
         ],
+        // 'users' => [
+        //     'driver' => 'cache-user',
+        //     'model' =>  PacketPrep\User::class,
+        //]
 
         // 'users' => [
         //     'driver' => 'database',

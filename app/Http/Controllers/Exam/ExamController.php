@@ -43,6 +43,9 @@ class ExamController extends Controller
             foreach($objs as $obj){ 
                 $filename = $obj->slug.'.json';
                 $filepath = $this->cache_path.$filename;
+                $u = $obj->user;
+                $obj->client = $u->client_slug;
+                $obj->save();
                 $obj->sections = $obj->sections;
                 $obj->products = $obj->products;
                 $obj->product_ids = $obj->products->pluck('id')->toArray();
@@ -53,6 +56,7 @@ class ExamController extends Controller
                     }
                 
                 }
+
                 file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
             }
            

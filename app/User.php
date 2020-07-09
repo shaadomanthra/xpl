@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\Exam\Exam;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -179,9 +180,15 @@ class User extends Authenticatable
                 ->get();
         else
         {
-            $users = $this->where('client_slug',subdomain())->pluck('id')->toArray();
-                $tests = DB::table('exams')->whereIn('user_id',$users)->where('status',1)
+            $user = $this;
+            $users = Cache::remember('users_'.$user->id.'_'.subdomain(), 240, function() use ($user) {
+                return $this->where('client_slug',subdomain())->pluck('id')->toArray();
+            });
+            $tests = Cache::remember('tests_'.$user->id.'_'.subdomain(), 240, function() use ($users) {
+                return DB::table('exams')->whereIn('user_id',$users)->where('status',1)
                 ->get();
+            });
+
 
         }
   
@@ -297,9 +304,11 @@ class User extends Authenticatable
         $user = $this;
         if($user->isAdmin())
             return true;
-        $userroles = array();
-        foreach($user->roles as $role)
-            array_push($userroles, $role->slug);
+
+        $userroles = Cache::remember('userroles_'.$user->id, 240, function() use ($user) {
+           return $user->roles->pluck('slug')->toArray();
+        });
+
         
         foreach($roles as $r){
             if(in_array($r, $userroles)){
