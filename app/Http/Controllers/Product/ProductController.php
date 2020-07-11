@@ -242,6 +242,7 @@ class ProductController extends Controller
           else
             $exams = $usertests->paginate(8);
 
+          $exam = null;
           foreach($exams as $e){
             if($e)
             {
