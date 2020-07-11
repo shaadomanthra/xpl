@@ -136,10 +136,15 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\Training\Training');
     }
 
-    
-
     public function products(){
         return $this->belongsToMany('PacketPrep\Models\Product\Product')->withPivot('status','validity','created_at','valid_till');
+    }
+
+    public function myproducts(){
+        $u = $this;
+        return Cache::remember('myproducts'.$this->id, 240, function() use ($u){
+                return $u->products;
+        });
     }
 
     public function getImage(){
@@ -162,11 +167,30 @@ class User extends Authenticatable
     }
 
     public function attempted($id){
-        $test = DB::table('tests_overall')
-                    ->where('user_id', \auth::user()->id)
-                    ->where('test_id', $id)
-                    ->first();
-        return $test;
+        $user = \auth::user();
+        Cache::forget('attempt_'.$user->id.'_'.$id);
+        $attempts = Cache::get('attempts_'.$user->id);
+        //dd($attempts->where('test_id',$id)->count());
+        if(!$attempts)
+            return 0;
+
+        if($attempts->where('test_id',$id)->count()){
+            return $attempts->where('test_id',$id);
+        }else{
+            return 0;
+        }
+
+        // $test = Cache::remember('attempt_'.$user->id.'_'.$id, 240, function() use ($user,$id) {
+        //         $test = DB::table('tests_overall')
+        //             ->where('user_id', $user->id)
+        //             ->where('test_id', $id)
+        //             ->first();
+        //         if($test)
+        //             return $test;
+        //         return 0;
+        // });
+
+        // return $test;
     }
 
     public function newtests(){
@@ -176,19 +200,22 @@ class User extends Authenticatable
             $tests = DB::table('exams')->where('slug','psychometric-test')->orWhere('emails','LIKE',"%{$email}%")
                 ->get();
         else if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
-            $tests = DB::table('exams')->where('emails','LIKE',"%{$email}%")
-                ->get();
+            $tests = Cache::remember('mytests_'.$this->id, 240, function() use ($email) {
+                $tests = DB::table('exams')->where('emails','LIKE',"%{$email}%")->get();
+                if($tests)
+                    return $tests;
+                return 0;
+            });
         else
         {
             $user = $this;
-            $users = Cache::remember('users_'.$user->id.'_'.subdomain(), 240, function() use ($user) {
-                return $this->where('client_slug',subdomain())->pluck('id')->toArray();
+            
+            $client = subdomain();
+            //$tests = Cache::get('tests_'.subdomain());
+            
+            $tests = Cache::remember('tests_'.subdomain(), 240, function() use ($client) {
+                return DB::table('exams')->where('client',$client)->get();
             });
-            $tests = Cache::remember('tests_'.$user->id.'_'.subdomain(), 240, function() use ($users) {
-                return DB::table('exams')->whereIn('user_id',$users)->where('status',1)
-                ->get();
-            });
-
 
         }
   
@@ -213,22 +240,43 @@ class User extends Authenticatable
     }
 
     public function tests(){
-        $attempts = DB::table('tests_overall')
-                ->where('user_id', $this->id)
+        
+
+        $user = $this;
+        //Cache::forget('attempts_'.$user->id);
+        $attempts = Cache::remember('attempts_'.$user->id, 240, function() use ($user) {
+          return DB::table('tests_overall')
+                ->where('user_id', $user->id)
                 ->orderBy('id','desc')
                 ->get();
-        $test_idgroup = $attempts->groupby('test_id');
-        $test_ids = $attempts->pluck('test_id')->toArray();
-        $ids_ordered = implode(',', $test_ids);
-        if($ids_ordered)
-        $tests = DB::table('exams')
-                ->whereIn('id', $test_ids)
-                ->orderByRaw("FIELD(id, $ids_ordered)")
-                ->get();
-        else
-        $tests = DB::table('exams')
-                ->whereIn('id', $test_ids)
-                ->get(); 
+        });
+
+        // Cache::remember('attempts_'.$this->id, 40, function() use ($this) {
+        //   return DB::table('tests_overall')
+        //         ->where('user_id', $this->id)
+        //         ->orderBy('id','desc')
+        //         ->get();;
+        // });
+
+        if($attempts->count()){
+
+            if(!isset($attempts['test_id'])){
+                $test_idgroup = $attempts->groupby('test_id');
+                $test_ids = $attempts->pluck('test_id')->toArray();
+            }else{
+                $test_idgroup[$attempts['test_id']][0] = json_decode(json_encode($attempts));
+                $test_ids = [$attempts['test_id']];
+            }
+            
+            //Cache::forget('tests_'.$user->id);
+            $alltests = Cache::get('tests_'.subdomain());
+            $tests = $alltests->whereIn('id',$test_ids);
+            
+        
+        }else{
+            $tests = [];
+        }
+
         foreach($tests as $k=>$t){
             $tests[$k]->attempt_at = $test_idgroup[$t->id][0]->created_at;
             $tests[$k]->score = $test_idgroup[$t->id][0]->score;
@@ -304,6 +352,9 @@ class User extends Authenticatable
         $user = $this;
         if($user->isAdmin())
             return true;
+
+        if($user->role==1)
+            return false;
 
         $userroles = Cache::remember('userroles_'.$user->id, 240, function() use ($user) {
            return $user->roles->pluck('slug')->toArray();

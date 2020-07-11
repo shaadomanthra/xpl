@@ -16,6 +16,7 @@ use PacketPrep\Models\Dataentry\Question;
 use Illuminate\Support\Facades\Storage;
 use PacketPrep\Exports\TestReport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Cache;
 
 class ExamController extends Controller
 {
@@ -53,8 +54,11 @@ class ExamController extends Controller
                     }
                 
                 }
+                //update redis cache
+                $obj->updateCache();
 
                 file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+
             }
            
             flash('Exams Cache Updated')->success();
@@ -523,7 +527,8 @@ class ExamController extends Controller
                 }
                 
                 file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
-            
+            //update redis cache
+            $exam->updateCache();
            
             flash('Exams Cache Updated')->success();
       
@@ -849,7 +854,6 @@ class ExamController extends Controller
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
                 $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
-
                 $request->merge(['image' => $path]);
             }
            
@@ -900,24 +904,26 @@ class ExamController extends Controller
             $exam->code = strtoupper($request->code);
             $exam->save(); 
 
-             //update cache
-                $obj = $exam;
-                $filename = $obj->slug.'.json';
-                $filepath = $this->cache_path.$filename;
-                $obj->sections = $obj->sections;
-                $obj->products = $obj->products;
-                $obj->product_ids = $obj->products->pluck('id')->toArray();
-                foreach($obj->sections as $m=>$section){
-                    $obj->sections->questions = $section->questions;
-                    foreach($obj->sections->questions as $k=>$question){
-                       $obj->sections->questions[$k]->passage = $question->passage; 
-                    }
+            //update cache
+            $obj = $exam;
+            $filename = $obj->slug.'.json';
+            $filepath = $this->cache_path.$filename;
+            $obj->sections = $obj->sections;
+            $obj->products = $obj->products;
+            $obj->product_ids = $obj->products->pluck('id')->toArray();
+            foreach($obj->sections as $m=>$section){
+                $obj->sections->questions = $section->questions;
+                foreach($obj->sections->questions as $k=>$question){
+                   $obj->sections->questions[$k]->passage = $question->passage; 
                 }
-                
-                
-                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
-            
+            }
 
+            //update redis cache
+            $exam->updateCache();
+
+
+            
+            file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
             flash('Exam (<b>'.$request->name.'</b>) Successfully updated!')->success();
             return redirect()->route('exam.show',$request->slug);
         }

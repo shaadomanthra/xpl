@@ -30,6 +30,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class AdminController extends Controller
 {
@@ -868,6 +869,8 @@ class AdminController extends Controller
         if($request->get('tpo')==2){
             if($user->roles->contains(41))
                 $user->roles()->detach(41);
+            $user->role = 3;
+            $user->save();
         }
 
         if(in_array($request->get('hrmanager'),[10,11,12])){
@@ -1142,6 +1145,8 @@ class AdminController extends Controller
          if($request->get('tpo')==1){
             if(!$user->roles->contains(41))
                 $user->roles()->attach(41);
+            $user->role = 3;
+            $user->save();
         }
 
         if($request->get('tpo')==2){
@@ -1162,6 +1167,11 @@ class AdminController extends Controller
             $user->role = $request->get('hrmanager');
             $user->save();
         }
+
+        Cache::forget('userroles_'.$user->id);
+        $userroles = Cache::remember('userroles_'.$user->id, 240, function() use ($user) {
+           return $user->roles->pluck('slug')->toArray();
+        });
 
         //Services
         $service_list =  Service::orderBy('created_at','desc ')

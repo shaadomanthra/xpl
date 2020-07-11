@@ -7,6 +7,7 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\College\Service;
 use PacketPrep\User;
@@ -214,26 +215,33 @@ class ProductController extends Controller
               ->with('trainings',$trainings)
               ->with('exams',$exams);
       }
-      if($user->checkRole(['hr-manager'])){
+      if($user->checkRole(['hr-manager']) && !$user->isAdmin()){
 
           $search = $request->search;
           $item = $request->item;
 
           $count = 0;
-          foreach($user->exams as $exam){
-            $count = $count + $exam->getAttemptCount();           
-          }
+          $usertests = $user->exams()->orderBy('id','desc');
+          $alltests = Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->get();
+          $count = count($alltests);
+
+         
+          
+          // foreach($user->exams as $exam){
+          //   $count = $count + $exam->getAttemptCount();           
+          // }
 
           if($search)
             $exams = $user->exams()->where('name','LIKE',"%{$item}%")->orderBy('id','desc')
                     ->paginate(8);
           else
-            $exams = $user->exams()->orderBy('id','desc')
-                    ->paginate(8);
+            $exams = $this->paginateCollection($usertests,8);
+
           $user->attempts = $count;
           $view = $search ? 'snippets.hr_tests': 'hr_welcome';
 
-          $e = Exam::where('slug','psychometric-test')->first();
+          //$e = Exam::where('slug','psychometric-test')->first();
+          $e = null;
 
           if(!$user->isAdmin())
           return view($view)
@@ -250,6 +258,13 @@ class ProductController extends Controller
         
       return view($view)->with('user',$user);
 
+    }
+
+    function paginateCollection($items, $perPage = 15, $page = null, $options = [])
+    {
+        $page = $page ?: (\Illuminate\Pagination\Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof \Illuminate\Support\Collection ? $items : \Illuminate\Support\Collection::make($items);
+        return new \Illuminate\Pagination\LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
     

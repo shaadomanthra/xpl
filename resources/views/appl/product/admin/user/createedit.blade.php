@@ -125,25 +125,6 @@
       
 
 
-      @if(isset($branches))
-      <div class="form-group border p-3">
-        <label for="formGroupExampleInput ">Branches</label><br>
-        <div class="row">
-        @foreach($branches as $branch)
-        <div class="col-12 col-md-2">
-        <input  type="checkbox" name="branches[]" value="{{$branch->id}}" 
-              @if($stub!='Create')
-                  @if(in_array($branch->id, $user->branches()->pluck('id')->toArray()))
-                  checked
-                  @endif
-              @endif
-            > {{ $branch->name }} 
-          </div>
-        @endforeach
-      </div>
-
-      </div>
-      @endif
 
       
 
@@ -194,7 +175,7 @@
 
         <div class="col-12 col-md-4">
           <div class="form-group">
-        <label for="formGroupExampleInput ">Training and Placement Officer</label>
+        <label for="formGroupExampleInput ">Client Admin</label>
         <select class="form-control" name="tpo">
            <option value="2"  @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(41)) selected @endif @endif @endif>No</option>
           <option value="1" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(41)) selected @endif @endif @endif>Yes</option>

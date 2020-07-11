@@ -224,7 +224,7 @@
 
 
 
-  @if(count(auth::user()->products)!=0)
+  @if(count(auth::user()->myproducts())!=0)
   <div class="rounded table-responsive ">
             <table class="table table-bordered ">
               <thead>
@@ -237,7 +237,7 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach(auth::user()->products as $k=>$product)
+                @foreach(auth::user()->myproducts() as $k=>$product)
                  <tr>
                   <th scope="row">{{ $k+1}}</th>
                   <td>

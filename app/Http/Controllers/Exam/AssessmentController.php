@@ -14,6 +14,7 @@ use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
+use PacketPrep\Jobs\ProcessAttempts;
 
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
@@ -21,6 +22,8 @@ use PacketPrep\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Cache;
+use Log;
 
 class AssessmentController extends Controller
 {
@@ -181,16 +184,18 @@ class AssessmentController extends Controller
     public function instructions($test,Request $r)
     {
         
-            $filename = $test.'.json';
-            $filepath = $this->cache_path.$filename;
-            
-            if(file_exists($filepath))
-            {
-                $exam = json_decode(file_get_contents($filepath));
-               
-            }else{
-                $exam = Exam::where('slug',$test)->first();
-            }
+        $filename = $test.'.json';
+        $filepath = $this->cache_path.$filename;
+
+        $exam = Cache::get('test_'.$test);
+        if(!$exam)
+        if(file_exists($filepath))
+        {
+            $exam = json_decode(file_get_contents($filepath));
+
+        }else{
+            $exam = Exam::where('slug',$test)->first();
+        }
         
         if($exam->active){
             return view('appl.exam.assessment.inactive')->with('exam',$exam); 
@@ -214,8 +219,7 @@ class AssessmentController extends Controller
             $products = null;
         $product = null;
 
-        $test_taken = Test::where('test_id',$exam->id)
-                        ->where('user_id',$user->id)->first();
+        $test_taken = $user->attempted($exam->id);//Test::where('test_id',$exam->id)->where('user_id',$user->id)->first();
 
         if($test_taken)
             return redirect()->route('assessment.analysis',$exam->slug);
@@ -300,8 +304,7 @@ class AssessmentController extends Controller
             $products = null;
         $code = $request->get('code');
 
-        $test_taken = Test::where('test_id',$exam->id)
-                        ->where('user_id',$user->id)->first();
+        $test_taken = $user->attempted($exam->id);
         if($test_taken)
             return redirect()->route('assessment.analysis',$exam->slug);
 
@@ -931,25 +934,32 @@ class AssessmentController extends Controller
 
     public function submission($slug,Request $request)
     {
+
         $code_ques_flag =0;
         $test = $slug;
+        $user = \auth::user();
         $user_id = $request->get('user_id');
         $test_id = $request->get('test_id');
         $code = $request->get('code');
+        $exam = Cache::get('test_'.$test);
 
-        if(Test::where('user_id',$user_id)->where('test_id',$test_id)->first())
-            return redirect()->route('assessment.analysis',$slug);
         //dd($request->all());
-
         $filename = $test.'.json';
         $filepath = $this->cache_path.$filename;
 
+        
+        if(!$exam)
         if(file_exists($filepath))
         {
             $exam = json_decode(file_get_contents($filepath));
         }else{
             $exam = Exam::where('slug',$test)->first();
         }
+
+        $test_taken = $user->attempted($exam->id);
+
+        if($test_taken)
+            return redirect()->route('assessment.analysis',$slug);
 
         $qcount =0;
         foreach($exam->sections as $section){
@@ -968,6 +978,7 @@ class AssessmentController extends Controller
 
         $date_time = new \DateTime();
         $data = array();
+        $d =array();
         for($i=1;$i<=$qcount;$i++){
             $item = array();
             if($request->exists($i.'_time')){
@@ -1034,9 +1045,16 @@ class AssessmentController extends Controller
                 $item['created_at'] = $date_time;
                 $item['updated_at'] = $date_time;
                 array_push($data,$item);
+                array_push($d, json_decode(json_encode($item)));
+               
             }
+
             
         }
+
+        $tests_cache = new Test();
+        $tests_cache = collect($d);
+        Cache::put('responses_'.$user_id.'_'.$test_id,$tests_cache,240);
 
         
 
@@ -1098,20 +1116,41 @@ class AssessmentController extends Controller
         $test_overall['window_change'] =$request->get('window_change');
         $test_overall['face_detect'] = 0;
         $test_overall['cheat_detect'] = 0;
-        if($code_ques_flag)
+        $test_overall_cache = new Tests_Overall();
+        $test_overall_cache->user_id = $details['user_id'];
+        $test_overall_cache->test_id = $details['test_id'];
+        $test_overall_cache->window_change = $request->get('window_change');
+        $test_overall_cache->created_at = date('Y-m-d H:i:s');
+        $test_overall_cache->updated_at = date('Y-m-d H:i:s');
+        $test_overall_cache->code = $code;
+        $test_overall_cache->status = 0;
+        $test_overall_cache->face_detect = 0;
+        $test_overall_cache->cheat_detect = 0;
+
+        if($code_ques_flag){
             $test_overall['status'] = 1;
+            $test_overall_cache->status =1;
+        }
         foreach($sec as $s){
             $test_overall['unattempted'] = $test_overall['unattempted'] + $s['unattempted'];
-            
             $test_overall['correct'] = $test_overall['correct'] + $s['correct'];
             $test_overall['incorrect'] = $test_overall['incorrect'] + $s['incorrect'];
             $test_overall['score'] = $test_overall['score'] + $s['score'];
             $test_overall['time'] = $test_overall['time'] + $s['time'];
             $test_overall['max'] = $test_overall['max'] + $s['max'];
+
+            $test_overall_cache->unattempted = $test_overall['unattempted'];
+            $test_overall_cache->correct = $test_overall['correct'];
+            $test_overall_cache->incorrect = $test_overall['incorrect'];
+            $test_overall_cache->score = $test_overall['score'];
+            $test_overall_cache->time = $test_overall['time'];
+            $test_overall_cache->max = $test_overall['max'];
         }
 
-        if($test_overall['window_change']>3)
+        if($test_overall['window_change']>3){
             $test_overall['cheat_detect'] = 1;
+            $test_overall_cache->cheat_detect = 1;
+        }
 
         $pat = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
         $json_file =  $pat.'public/tests/json/'.\auth::user()->username.'_'.$exam->id.'.json';
@@ -1141,6 +1180,8 @@ class AssessmentController extends Controller
                 else
                     $test_overall['face_detect'] = 0;
 
+            $test_overall_cache->face_detect = $test_overall['face_detect'];
+
             if($total==$snaps){
                 $test_overall['cheat_detect'] = 0;
             }else if( $total < $snaps)
@@ -1156,10 +1197,27 @@ class AssessmentController extends Controller
 
         if($test_overall['window_change']>3)
             $test_overall['cheat_detect'] = 1;
+
+        $test_overall_cache->cheat_detect = $test_overall['cheat_detect'];
         
+
+        Cache::put('attempt_'.$user_id.'_'.$test_id,$test_overall_cache,240);
+        
+        Cache::forget('attempts_'.$user_id);
+        
+
+
         Test::insert($data); 
         Tests_Section::insert($sec);
-        Tests_Overall::insert($test_overall);
+        Tests_Overall::insert($test_overall); 
+
+        $test_oa = Tests_Overall::where('user_id', $user->id)
+                ->orderBy('id','desc')
+                ->get();
+
+        Cache::put('attempts_'.$user_id,$test_oa, 240);
+
+        //$this->dispatch(new ProcessAttempts($data,$sec,$test_overall));
 
 
         return redirect()->route('assessment.analysis',$slug);
@@ -1169,8 +1227,13 @@ class AssessmentController extends Controller
     public function show($id)
     {
         $filename = $id.'.json';
-        $filepath = $this->cache_path.$filename;
+        $filepath = $this->cache_path.$filename; 
         
+
+
+
+        $exam = Cache::get('test_'.$id);
+        if(!$exam)
         if(file_exists($filepath))
         {
             $exam = json_decode(file_get_contents($filepath));
@@ -1213,7 +1276,7 @@ class AssessmentController extends Controller
                 
             }
             
-            $attempt = Test::where('test_id',$exam->id)->where('user_id',$user->id)->first();
+            $attempt = $user->attempted($exam->id);//Test::where('test_id',$exam->id)->where('user_id',$user->id)->first();
             if($attempt)
             $entry = 1;
         }
@@ -1482,6 +1545,8 @@ class AssessmentController extends Controller
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
 
+        $exam = Cache::get('test_'.$slug);
+        if(!$exam)
         if(file_exists($filepath))
         {
             $exam = json_decode(file_get_contents($filepath));
@@ -1503,27 +1568,34 @@ class AssessmentController extends Controller
         if(!$student)
             $student = \auth::user();
 
+        $user_id = $student->id;
+        $test_id = $exam->id;
 
 
-        
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0,'evaluation'=>1];
         $details['course'] = $exam->name;
         $sum = 0;
         $c=0; $i=0; $u=0;
 
-        $tests = Test::where('test_id',$exam->id)
+        $tests = Cache::remember('responses_'.$user_id.'_'.$test_id,240,function() use ($exam,$student){
+            return Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
+        });
+        $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 240, function() use ($exam,$student){
+            return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
+        });
 
-        $evaluation = Test::where('test_id',$exam->id)
-                        ->where('user_id',$student->id)->where('status',2)->get();
+
+        //dd($tests->where('status',1));
+        $evaluation = $tests->where('status',2);
         if(count($evaluation))
             $details['evaluation'] = 0;
 
-        $tests_section = Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
-        $secs = $tests_section->groupBy('section_id');
+        // $tests_section = Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
+        // $secs = $tests_section->groupBy('section_id');
 
 
-        //dd($tests);
+        //dd($tests[0]->time);
         if(!count($tests))
             abort('404','Test not attempted');
 
@@ -1531,13 +1603,15 @@ class AssessmentController extends Controller
         foreach($exam->sections as $section){
             foreach($section->questions as $q){
                 $questions[$i] = $q;
-                $sections[$section->name] = $secs[$section->id][0];
-                    $i++;
+                $sections[$section->name] = $section->id;//$secs[$section->id][0];
+                $secs[$section->id] = $section;
+                $i++;
             }
         }
 
         if(count($sections)==1)
             $sections = null;
+        
 
         $details['correct_time'] =0;
         $details['incorrect_time']=0;
@@ -1633,48 +1707,52 @@ class AssessmentController extends Controller
             //dd($t->section->negative);
             if(isset($t)){
                 $sum = $sum + $t->time;
-                $details['testdate'] = $t->created_at->diffForHumans();
+                
+                if(isset($t->created_at->date))
+                $details['testdate'] = \carbon\carbon::parse($t->created_at->date)->diffForHumans();
+                else
+                $details['testdate'] = $t->created_at->diffForHumans(); 
             }
             
             //$ques = Question::where('id',$q->id)->first();
             if($t->response){
                 $details['attempted'] = $details['attempted'] + 1;  
                 if($t->accuracy==1){
-                    $details['c'][$c]['category'] = $t->question->categories->first();
-                    $details['c'][$c]['question'] = $t->question;
+                    //$details['c'][$c]['category'] = $t->question->categories->first();
+                    //$details['c'][$c]['question'] = $t->question;
                     $c++;
                     $details['correct'] = $details['correct'] + 1;
                     $details['correct_time'] = $details['correct_time'] + $t->time;
-                    $details['marks'] = $details['marks'] + $t->section->mark;
+                    $details['marks'] = $details['marks'] + $secs[$t->section_id]->mark;
                 }
                 else{
-                    $details['i'][$i]['category'] = $t->question->categories->first();
-                    $details['i'][$i]['question'] = $t->question;
+                    //$details['i'][$i]['category'] = $t->question->categories->first();
+                    //$details['i'][$i]['question'] = $t->question;
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
                     $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
-                    $details['marks'] = $details['marks'] - $t->section->negative; 
+                    $details['marks'] = $details['marks'] - $secs[$t->section_id]->negative; 
                 }
 
                 
             }else if($t->code){
                 $details['attempted'] = $details['attempted'] + 1; 
-                $details['i'][$i]['category'] = $t->question->categories->first();
-                    $details['i'][$i]['question'] = $t->question;
+                //$details['i'][$i]['category'] = $t->question->categories->first();
+                    //$details['i'][$i]['question'] = $t->question;
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
                     $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
-                    $details['marks'] = $details['marks'] - $t->section->negative; 
+                    $details['marks'] = $details['marks'] - $secs[$t->section_id]->negative; 
             }
             else{
-                $details['u'][$u]['category'] = $t->question->categories->last();
-                $details['u'][$u]['question'] = $t->question;
+                //$details['u'][$u]['category'] = $t->question->categories->last();
+                //$details['u'][$u]['question'] = $t->question;
                     $u++;
                 $details['unattempted'] = $details['unattempted'] + 1;  
                 $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
             }
 
-            $details['total'] = $details['total'] + $t->section->mark;
+            $details['total'] = $details['total'] + $secs[$t->section_id]->mark;
 
         } 
         $success_rate = $details['correct']/count($questions);
@@ -1704,9 +1782,10 @@ class AssessmentController extends Controller
         else 
             $details['unattempted_time'] = $details['unattempted_time'].' sec';   
             
-        $tests_overall = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
+        
 
         if($request->get('cheat_detect')){
+            $tests_overall = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
             if($request->get('cheat_detect')==3)
                 $tests_overall->cheat_detect = 0;
             else
@@ -1791,6 +1870,10 @@ class AssessmentController extends Controller
         if($request->get('user_id') && $request->get('test_id')){
             $user_id = $request->get('user_id');
             $test_id = $request->get('test_id');
+
+            Cache::forget('attempt_'.$user_id.'_'.$test_id);
+            Cache::forget('attempts_'.$user_id);
+            Cache::forget('responses_'.$user_id.'_'.$test_id);    
             Test::where('test_id',$test_id)->where('user_id',$user_id)->delete();
             Tests_Section::where('test_id',$test_id)->where('user_id',$user_id)->delete();
             Tests_Overall::where('test_id',$test_id)->where('user_id',$user_id)->delete(); 

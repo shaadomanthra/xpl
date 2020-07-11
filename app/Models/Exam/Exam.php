@@ -8,6 +8,7 @@ use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Exam\Section;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class Exam extends Model
 {
@@ -69,6 +70,18 @@ class Exam extends Model
         return 'primary';
     }
 
+    public function updateCache(){
+        $exam = $this;
+
+        Cache::forget('test_'.$exam->slug);
+        Cache::forever('test_'.$exam->slug,$exam);
+
+
+        Cache::forget('tests_'.$exam->client);
+        $exams = Exam::where('client',$exam->client)->get();
+        Cache::forever('tests_'.$exam->client,$exams);
+    }
+
     public function precheck_auto_activation(){
       $auto_activation  = \carbon\carbon::parse($this->auto_activation);
       $auto_deactivation  = \carbon\carbon::parse($this->auto_deactivation);
@@ -103,6 +116,7 @@ class Exam extends Model
         $exam->sections->questions = $section->questions;
       }
       file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
+      $this->updateCache();
     }
 
     public function question_count()
