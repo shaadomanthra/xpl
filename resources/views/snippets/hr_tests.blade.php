@@ -3,6 +3,7 @@
 <div class="row ">
 @foreach($exams as $key=>$e)  
 
+   
         <div class="col-12 col-md-6">
         <div class="mb-4 cardbox">
         	<div class="lblue " style="border-radius:5px;">

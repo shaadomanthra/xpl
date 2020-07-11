@@ -2,6 +2,10 @@
 
 namespace PacketPrep\Http\Controllers\Product;
 
+
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Product;
@@ -222,8 +226,9 @@ class ProductController extends Controller
 
           $count = 0;
           $usertests = $user->exams()->orderBy('id','desc');
-          $alltests = Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->get();
-          $count = count($alltests);
+
+          $count = Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->count();
+          //$count = count($alltests);
 
          
           
@@ -235,8 +240,17 @@ class ProductController extends Controller
             $exams = $user->exams()->where('name','LIKE',"%{$item}%")->orderBy('id','desc')
                     ->paginate(8);
           else
-            $exams = $this->paginateCollection($usertests,8);
+            $exams = $usertests->paginate(8);
 
+          foreach($exams as $e){
+            if($e)
+            {
+              $exam = $e;
+              break;
+            }
+          }
+
+        
           $user->attempts = $count;
           $view = $search ? 'snippets.hr_tests': 'hr_welcome';
 
@@ -246,7 +260,7 @@ class ProductController extends Controller
           if(!$user->isAdmin())
           return view($view)
               ->with('user',$user)
-              ->with('exam',$user->exams()->first())
+              ->with('exam',$exam)
               ->with('e',$e)
               ->with('exams',$exams);
       }
@@ -260,12 +274,14 @@ class ProductController extends Controller
 
     }
 
-    function paginateCollection($items, $perPage = 15, $page = null, $options = [])
-    {
-        $page = $page ?: (\Illuminate\Pagination\Paginator::resolveCurrentPage() ?: 1);
-        $items = $items instanceof \Illuminate\Support\Collection ? $items : \Illuminate\Support\Collection::make($items);
-        return new \Illuminate\Pagination\LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-    }
+    // public function paginate($items, $perPage = 15, $page = null, $options = [])
+    // {
+    //   $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+
+    //   $items = $items instanceof Collection ? $items : Collection::make($items);
+
+    //   return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    // }
 
     
     /**
