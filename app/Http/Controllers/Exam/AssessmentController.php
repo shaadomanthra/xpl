@@ -1581,7 +1581,7 @@ class AssessmentController extends Controller
             return Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
         });
-        $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 240, function() use ($exam,$student){
+        $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
 
@@ -1591,8 +1591,11 @@ class AssessmentController extends Controller
         if(count($evaluation))
             $details['evaluation'] = 0;
 
-        // $tests_section = Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
-        // $secs = $tests_section->groupBy('section_id');
+        $tests_section = Cache::remember('attempt_section_'.$user_id.'_'.$test_id,60,function() use($exam,$student){
+            return Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
+        });
+        $secs = $tests_section->groupBy('section_id');
+
 
 
         //dd($tests[0]->time);
@@ -1603,8 +1606,8 @@ class AssessmentController extends Controller
         foreach($exam->sections as $section){
             foreach($section->questions as $q){
                 $questions[$i] = $q;
-                $sections[$section->name] = $section->id;//$secs[$section->id][0];
-                $secs[$section->id] = $section;
+                $sections[$section->name] = $secs[$section->id][0];
+                //$secs[$section->id] = $section;
                 $i++;
             }
         }
@@ -1723,7 +1726,7 @@ class AssessmentController extends Controller
                     $c++;
                     $details['correct'] = $details['correct'] + 1;
                     $details['correct_time'] = $details['correct_time'] + $t->time;
-                    $details['marks'] = $details['marks'] + $secs[$t->section_id]->mark;
+                    $details['marks'] = $details['marks'] + $secs[$t->section_id][0]->mark;
                 }
                 else{
                     //$details['i'][$i]['category'] = $t->question->categories->first();
@@ -1731,7 +1734,7 @@ class AssessmentController extends Controller
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
                     $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
-                    $details['marks'] = $details['marks'] - $secs[$t->section_id]->negative; 
+                    $details['marks'] = $details['marks'] - $secs[$t->section_id][0]->negative; 
                 }
 
                 
@@ -1742,7 +1745,7 @@ class AssessmentController extends Controller
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
                     $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
-                    $details['marks'] = $details['marks'] - $secs[$t->section_id]->negative; 
+                    $details['marks'] = $details['marks'] - $secs[$t->section_id][0]->negative; 
             }
             else{
                 //$details['u'][$u]['category'] = $t->question->categories->last();
@@ -1752,7 +1755,7 @@ class AssessmentController extends Controller
                 $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
             }
 
-            $details['total'] = $details['total'] + $secs[$t->section_id]->mark;
+            $details['total'] = $details['total'] + $secs[$t->section_id][0]->mark;
 
         } 
         $success_rate = $details['correct']/count($questions);
