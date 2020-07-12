@@ -279,10 +279,32 @@
       
       <div class="card mb-4 ">
         <div class="card-body">
-            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails({{substr_count($exam->emails, "@")}}) <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=emails" class="float-right"><i class="fa fa-edit"></i> edit</a> </h4>
+            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=emails" class="float-right"><i class="fa fa-edit"></i> edit</a> </h4>
             <hr>
             @if($exam->emails)
-              {!! nl2br($exam->emails) !!}
+            <div class="row ">
+                <div class="col-12 col-md-4">
+                  <div class="bg-light border rounded p-3">
+                    <h5>Total</h5>
+                    <div class="display-3">
+                      <a href="" data-toggle="modal" data-target="#all_emails" data-tooltip="tooltip" data-placement="top" title="All Emails">{{substr_count($exam->emails, "@")}}</a></div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="bg-light border rounded p-3">
+                    <h5>Registered</h5>
+                    <div class="display-3">
+                      <a href="" data-toggle="modal" data-target="#registered_emails" data-tooltip="tooltip" data-placement="top" title="Registered Emails">{{ count($email_stack['registered']) }}</a></div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-4">
+                  <div class="bg-light border rounded p-3">
+                    <h5>Not Registered</h5>
+                    <div class="display-3"><a href="" data-toggle="modal" data-target="#not_registered_emails" data-tooltip="tooltip" data-placement="top" title="Not Registered Emails">{{ count($email_stack['not_registered'])}}</a></div>
+                  </div>
+                </div>
+            </div>
+            
               @else
               <span class="text-secondary"> - No emails listed</span>
               @endif
@@ -508,6 +530,63 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         	<button type="submit" class="btn btn-danger">Delete Permanently</button>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="all_emails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">All Emails({{substr_count($exam->emails, "@")}})</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {!! nl2br($exam->emails) !!}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="registered_emails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registered Emails({{ count($email_stack['registered'])}})</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {!! implode("<br> ",$email_stack['registered']) !!}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="not_registered_emails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Not Registered Emails({{ count($email_stack['not_registered'])}})</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {!! implode("<br> ",$email_stack['not_registered']) !!}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

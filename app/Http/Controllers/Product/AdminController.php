@@ -534,8 +534,8 @@ class AdminController extends Controller
         
         $user = User::create([
             'name' => $request->name,
-            'username' => $username,
-            'email' => $request->email,
+            'username' => strtolower($username),
+            'email' => strtolower($request->email),
             'password' => bcrypt($password),
             'activation_token' => $password,
             'user_id' =>$request->user_id,
@@ -780,8 +780,8 @@ class AdminController extends Controller
         
         $user = User::create([
             'name' => $request->name,
-            'username' => $username,
-            'email' => $request->email,
+            'username' => strtolower($username),
+            'email' => strtolower($request->email),
             'password' => bcrypt($password),
             'client_slug' => $request->client_slug,
             'phone' =>$request->get('phone'),

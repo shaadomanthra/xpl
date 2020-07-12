@@ -568,10 +568,19 @@ class ExamController extends Controller
             }
 
         }
+        $emails = implode(',',explode("\n", $exam->emails));
+        $emails =str_replace("\r", '', $emails);
+        $emails = explode(',',$emails);
+
+
+        $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
+        $email_stack['registered'] = $users->pluck('email')->toArray();
+        $email_stack['not_registered'] =  array_diff($emails,$email_stack['registered']);
 
         if($exam)
             return view('appl.exam.exam.show')
-                    ->with('exam',$exam);
+                    ->with('exam',$exam)
+                    ->with('email_stack',$email_stack);
         else
             abort(404);
     }

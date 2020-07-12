@@ -112,7 +112,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'username' => $username,
             'phone' => $data['phone'],
-            'email' => $data['email'],
+            'email' => strtolower($data['email']),
             'client_slug' => $subdomain,
             'status'=> 5,
             'password' => bcrypt($password),

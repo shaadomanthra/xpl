@@ -352,8 +352,8 @@ class UserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
-            'username' => $username,
-            'email' => $request->email,
+            'username' => strtolower($username),
+            'email' => strtolower($request->email),
             'password' => bcrypt($request->password),
             'activation_token' => str_random(20),
             'client_slug' => $subdomain,
