@@ -127,6 +127,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	
 	
 	Route::get('/java-language-exam',function(){ return view('appl.pages.java_certification'); })->name('java.l.c');
+	Route::get('/launch-offer',function(){ return view('appl.pages.launch_offer'); })->name('launch-offer');
 
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/em',function(){ return view('appl.pages.eamcet'); })->name('eamcet');
