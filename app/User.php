@@ -142,7 +142,7 @@ class User extends Authenticatable
 
     public function myproducts(){
         $u = $this;
-        Cache::forget('myproducts');
+        Cache::forget('myproducts'.$this->id);
         return Cache::remember('myproducts'.$this->id, 240, function() use ($u){
                 return $u->products;
         });
