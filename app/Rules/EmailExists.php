@@ -26,7 +26,7 @@ class EmailExists implements Rule
      */
     public function passes($attribute, $value)
     {
-        $u = User::where('email',$value)->where('client',subdomain())->first();
+        $u = User::where('email',$value)->where('client_slug',subdomain())->first();
         if($u)
             return False;
         else
