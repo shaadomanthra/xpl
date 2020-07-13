@@ -6,6 +6,7 @@
               <tr>
                 <th scope="col">#({{$objs->total()}})</th>
                 <th scope="col">Code </th>
+                <th scope="col">Usage </th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
               </tr>
@@ -18,6 +19,9 @@
                   <a href=" {{ route($app->module.'.show',$obj->id) }} ">
                   {{ $obj->code }}
                   </a>
+                </td>
+                 <td>
+                  {{ $obj->order->count() }}
                 </td>
                 <td>
                   @if($obj->status==0)

@@ -29,4 +29,9 @@ class Coupon extends Model
     {
         return $this->belongsTo('PacketPrep\Models\Product\Product');
     }
+
+    public function order()
+    {
+        return $this->hasMany('PacketPrep\Models\Product\Order');
+    }
 }

@@ -34,7 +34,7 @@ class CouponController extends Controller
         $search = $request->search;
         $item = $request->item;
         
-        $objs = $obj->where('code','LIKE',"%{$item}%")
+        $objs = $obj->where('code','LIKE',"%{$item}%")->with('order')
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records'));   
         $view = $search ? 'list': 'index';
