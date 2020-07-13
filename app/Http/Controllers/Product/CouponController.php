@@ -148,6 +148,7 @@ class CouponController extends Controller
     public function getamount($amount,$code,$product)
     {
         $obj = Obj::where('code',$code)->first();
+
         
         if($obj){
             if($obj->status == 0){
@@ -158,7 +159,10 @@ class CouponController extends Controller
             }elseif(strtotime($obj->expiry) < strtotime(date('Y-m-d'))){
                 $status = 'Coupon Expired';
             }else{
-                $amount = floor($amount * (1 - ($obj->percent / 100)));
+                if($obj->percent)
+                    $amount = $amount * (1 -round($obj->percent / 100,2));//floor($amount * (1 - round($obj->percent / 100,2)));
+                else if($obj->price)
+                    $amount = $amount - $price;
                 $status = 'Coupon Successfully Added';
             }
 
