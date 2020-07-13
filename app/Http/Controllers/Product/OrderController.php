@@ -161,7 +161,7 @@ class OrderController extends Controller
                   "amount" =>  $request->txn_amount,
                   "send_email" => false,
                   "email" => $user->email,
-                  "redirect_url" => "https://packetprep.com/order_payment"
+                  "redirect_url" => "https://xplore.co.in/order_payment"
                   ));
 
               //dd($response);
@@ -176,7 +176,7 @@ class OrderController extends Controller
                   "amount" =>  $request->txn_amount,
                   "send_email" => false,
                   "email" => $user->email,
-                  "redirect_url" => "https://packetprep.com/order_payment"
+                  "redirect_url" => "https://xplore.co.in/order_payment"
                   ));
                 $order->order_id = $response->id;
                 $o_check = Order::where('order_id',$order->order_id)->first();
