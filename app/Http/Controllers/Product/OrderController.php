@@ -45,14 +45,14 @@ class OrderController extends Controller
 
 
     public function instamojo(Request $request){
-    $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
+    $api = new Instamojo\Instamojo('b782a798506818377c826fd1e0c4874a', '595a9fdf328fd742fd04ff5863b43866');
 
       
 
     }
 
     public function instamojo_return(Request $request){
-      $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
+      $api = new Instamojo\Instamojo('b782a798506818377c826fd1e0c4874a', '595a9fdf328fd742fd04ff5863b43866');
       try {
             $id = $request->get('payment_request_id');
             //dd($id);
@@ -128,7 +128,7 @@ class OrderController extends Controller
           header('Location: '.url('/').'/pgRedirect.php?'.$data); */
           if($request->type=='instamojo' && $request->txn_amount!=0){
 
-          $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
+          $api = new Instamojo\Instamojo('b782a798506818377c826fd1e0c4874a', '595a9fdf328fd742fd04ff5863b43866');
           try {
             
 
@@ -218,7 +218,7 @@ class OrderController extends Controller
 
           
         }else{
-          $api = new Instamojo\Instamojo('dd96ddfc50d8faaf34b513d544b7bee7', 'd2f1beaacf12b2288a94558c573be485');
+          $api = new Instamojo\Instamojo('b782a798506818377c826fd1e0c4874a', '595a9fdf328fd742fd04ff5863b43866');
 
           try {
             

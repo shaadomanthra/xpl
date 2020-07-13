@@ -4,6 +4,7 @@ namespace PacketPrep\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PacketPrep\Jobs\SendEmail;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,15 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
         return view('home');
+    }
+
+    public function testemail()
+
+    {
+        $details = ['email' => 'packetcode@gmail.com'];
+        SendEmail::dispatch($details);
+        dd('Email Queued');
+        //return view('home');
     }
 
     public function imageupload(Request $request){

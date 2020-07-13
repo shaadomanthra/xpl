@@ -131,10 +131,13 @@ class CouponController extends Controller
     public function create()
     {
         $obj = new Obj();
+        $products = Product::all();
+
         $this->authorize('create', $obj);
 
         return view('appl.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
+                ->with('products',$products)
                 ->with('jqueryui',true)
                 ->with('obj',$obj)
                 ->with('app',$this);
@@ -149,6 +152,9 @@ class CouponController extends Controller
         if($obj){
             if($obj->status == 0){
                 $status = 'Coupon Inactive';
+            }
+            else if($obj->product_id != $product && ($obj->product_id!=0 || $obj->product_id!=null)){
+                $status = 'This Coupon is not valid for the above product.';
             }elseif(strtotime($obj->expiry) < strtotime(date('Y-m-d'))){
                 $status = 'Coupon Expired';
             }else{
@@ -233,12 +239,14 @@ class CouponController extends Controller
     public function edit($id)
     {
         $obj= Obj::where('id',$id)->first();
+        $products = Product::all();
         $this->authorize('update', $obj);
 
 
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Update')
+                ->with('products',$products)
                 ->with('jqueryui',true)
                 ->with('obj',$obj)->with('app',$this);
         else

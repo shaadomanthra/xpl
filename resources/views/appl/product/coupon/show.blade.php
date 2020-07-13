@@ -37,6 +37,12 @@
             <div class="col-md-8">{{ $item }}</div>
           </div>
           @endforeach
+          @if($obj->product_id)
+          <div class="row mb-2">
+            <div class="col-md-4">Product</div>
+            <div class="col-md-8">{{ $obj->product->name }}</div>
+          </div>
+          @endif
         </div>
       </div>
 

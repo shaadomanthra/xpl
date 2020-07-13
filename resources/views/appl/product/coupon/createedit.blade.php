@@ -28,6 +28,17 @@
           >
        
       </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Product</label>
+        <select class="form-control" name="product_id">
+          <option value="0" @if(isset($obj)) @if($obj->product_id==0) selected @endif @endif >All</option>
+          @foreach($products as $p)
+          <option value="{{$p->id}}" @if(isset($obj)) @if($obj->product_id==$p->id) selected @endif @endif >{{$p->name}}</option>
+          @endforeach
+          
+        </select>
+      </div>
       
 
       <div class="form-group">
@@ -45,7 +56,7 @@
         <label for="formGroupExampleInput2">Price</label>
         <input type="text" class="form-control" name="price" id="formGroupExampleInput2" placeholder="Enter the discount price"
             @if($stub=='Create')
-            value="{{ (old('price')) ? old('price') : '' }}"
+            value="{{ (old('price')) ? old('price') : '0' }}"
             @else
             value = "{{ $obj->price }}"
             @endif
@@ -55,6 +66,8 @@
         <label for="formGroupExampleInput ">Expiry</label>
       <input type="text" class="form-control" name="expiry"   value="{{isset($obj->expiry)? \carbon\carbon::parse($obj->expiry)->format('Y-m-d'):''}}" id="datepicker">
       </div>
+
+
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Type</label>

@@ -52,6 +52,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::post('/order_payment', 'Product\OrderController@instamojo_return');
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
+	Route::get('testemail','HomeController@testemail')->middleware('auth');
+
 
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
 

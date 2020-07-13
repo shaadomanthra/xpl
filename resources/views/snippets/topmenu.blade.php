@@ -113,12 +113,12 @@
             
 
 
-@if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
+
         <a class="dropdown-item"  href="{{ route('order.transactions') }}"
         >
         Transactions
     </a>
-    @endif
+
     <a class="dropdown-item"  href="{{ route('logout') }}"
     onclick="event.preventDefault();
     document.getElementById('logout-form').submit();">

@@ -15,13 +15,18 @@ class Coupon extends Model
         'percent',
         'status',
         'price','type',
-        'expiry'
+        'expiry',
+        'product_id'
         // add all other fields
     ];
 
 
     public function getAccess($coupon){
     	$coupon = $this->where('code',str_to_upper($coupon))->first();
-    	dd($coupon);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo('PacketPrep\Models\Product\Product');
     }
 }

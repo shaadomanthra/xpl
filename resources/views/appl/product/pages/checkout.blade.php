@@ -3,7 +3,6 @@
 
 @section('content')
 
-<!--
 <form method="post" action="{{ route('payment.order')}}">
    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 <div class="bg-white">
@@ -79,7 +78,7 @@
 </div>		
 </div>
 </form>
--->
+<!--
 <div class="p-4 bg-white">
 <h4>Reach us out at </h4>
 
@@ -100,5 +99,6 @@ Call: +91 7997444461<br>
 
 </div>
 </div>
+-->
 @endsection
         
