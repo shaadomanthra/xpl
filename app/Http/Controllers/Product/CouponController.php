@@ -160,7 +160,7 @@ class CouponController extends Controller
                 $status = 'Coupon Expired';
             }else{
                 if($obj->percent)
-                    $amount = $amount * (1 -round($obj->percent / 100,2));//floor($amount * (1 - round($obj->percent / 100,2)));
+                    $amount = $amount * round(1 -($obj->percent / 100),2);//floor($amount * (1 - round($obj->percent / 100,2)));
                 else if($obj->price)
                     $amount = $amount - $price;
                 $status = 'Coupon Successfully Added';
