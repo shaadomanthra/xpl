@@ -9,7 +9,7 @@
 <h1 class="text-danger"><i class="fa fa-check-circle"></i> Transaction Failure</h1>
 <hr>
 
-<p>  This transaction failed . Kindly contact the adminstrator, the contact details are mentioned in this <a href="{{ route('contact-corporate')}}">link</a></p>
+<p>  This transaction failed . Kindly contact the adminstrator, the contact details are mentioned in this <a href="{{ route('contact')}}">link</a></p>
 
 </div>
 </div>
