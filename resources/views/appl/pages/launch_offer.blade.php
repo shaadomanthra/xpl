@@ -12,7 +12,7 @@
 		<p>
  Launching the one-stop online Learning and Assessment portal for all your knowledge and placement support services.</p>
 
-<p>An inaugural offer, now at  Rs 100 only  (Py now and get 2 months access to the portal)</p>
+<p>An inaugural offer, now at  Rs 100 only  (Buy now and get 2 months access to the portal)</p>
  <ul>
 	<li> Access to exclusive online video content on aptitude, logical, mental ability,
 programming & Interview Skills</li>
