@@ -61,6 +61,7 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Xplore'),
     ],
 
+
     'report' => env('MAIL_REPORT_ADDRESS','packetcode@gmail.com'),
 
     /*
