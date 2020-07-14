@@ -2,10 +2,10 @@
 namespace PacketPrep\Provider;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\UserProvider as UP;
+use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Cache\Repository;
 
-final class UserProviderDecorator implements UP
+final class UserProviderDecorator implements UserProvider
 {
     /**
      * @var UserProvider
