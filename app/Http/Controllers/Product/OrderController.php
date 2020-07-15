@@ -15,6 +15,7 @@ use PacketPrep\Models\Product\Coupon;
 use PacketPrep\User;
 use Illuminate\Support\Facades\DB;
 use Instamojo as Instamojo;
+use Illuminate\Support\Facades\Cache;
 
 class OrderController extends Controller
 {
@@ -68,6 +69,8 @@ class OrderController extends Controller
             $order = Order::where('order_id',$id)->first();
             $user = User::where('id',$order->user_id)->first();
             $product = Product::where('id',$order->product_id)->first();
+
+            Cache::forget('myproducts_'.$user->id);
 
             $order->payment_mode = $response['payments'][0]['instrument_type'];
             $order->bank_txn_id = $response['payments'][0]['payment_id'];

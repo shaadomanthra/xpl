@@ -170,6 +170,23 @@
 
 @endif
 
+<div class="rounded p-4 mb-4" style="background: #dfecff; border:1px solid #98c3ff;">
+  <a href="{{ route('launch-offer')}}">
+<button class="btn btn-primary float-right mt-md-2">more details</button>
+</a>
+  <h1>Worried about Campus Placements?</h1>
+<p>An inaugural offer, now at  Rs 100 only  (Buy now and get 2 months access to the portal)</p>
+ <ul>
+  <li> Access to exclusive online video content on aptitude, logical, mental ability,
+programming & Interview Skills</li>
+<li>Timeline Mock & Practice Tests of Top MNCs with graphical reports of your performance analysis</li>
+<li>Verifiable e-certificate that counts as first level interview for some of our client organizations</li>
+<li>Utilize this service to get an advantage in India’s first, largest  and Free Virtual Career fair being organized by Xplore during this pandemic with 40+ top Companies and around 2,000+ Job openings </li>
+
+</ul>
+
+</div>
+
 
 @if(count(\auth::user()->tests())!=0)
   <div class="rounded table-responsive ">
@@ -242,7 +259,13 @@
                  <tr>
                   <th scope="row">{{ $k+1}}</th>
                   <td>
-                    <a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a>
+                    <a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a><br>
+                    @foreach($product->courses as $c)
+                         - <a href="{{ route('course.show',$c->slug)}}">{{$c->name}}</a> <span class="badge badge-primary">course</span><br>
+                    @endforeach
+                    @foreach($product->exams as $e)
+                         - <a href="{{ route('assessment.details',$e->slug)}}">{{$e->name}}</a> <span class="badge badge-secondary">Test</span><br>
+                    @endforeach
                   </td>
                   <td>
                     @if($product->price==0)

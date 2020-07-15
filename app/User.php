@@ -141,11 +141,12 @@ class User extends Authenticatable
     }
 
     public function myproducts(){
-        $u = $this;
-        Cache::forget('myproducts'.$this->id);
-        return Cache::remember('myproducts'.$this->id, 240, function() use ($u){
-                return $u->products;
+        $user = $this;
+        $products = Cache::remember('myproducts_'.$user->id, 240, function() use ($user) {
+          return $user->products()->with('courses')->with('exams')->get();
         });
+        return $products;
+        
     }
 
     public function getImage(){

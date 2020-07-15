@@ -13,7 +13,7 @@
 	<hr>
 In case of any query contact the adminstrator, the contact details are mentioned in this <a href="{{ route('contact')}}">link</a></p>
 
-<div class="bg-light p-3 border rounded mb-3"> For classroom training, you can take the print of the service activation from the below link and submit in the packetprep office.</div>
+<div class="bg-light p-3 border rounded mb-3"> For classroom training, you can take the print of the service activation from the below link and submit in the xplore office.</div>
 <a href="{{ route('productpage',$order->product->slug) }}">
 <button class="btn btn-outline-primary btn-lg"> View Product/Service</button>
 </a>
