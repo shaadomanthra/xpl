@@ -101,7 +101,7 @@
         <label for="formGroupExampleInput ">College <i class="fa fa-check-circle college_id @if($user->college_id) text-success @else text-silver @endif"></i></label>
         <select class="form-control" name="college_id">
           @foreach($colleges as $c)
-          <option value="{{$c->id}}" @if(isset($user)) @if($user->colleges->first()) @if($c->id == $user->colleges->first()->id ) selected @endif @endif @endif >{{ $c->name }}</option>
+          <option value="{{$c->id}}" @if(isset($user)) @if($user->college) @if($c->id == $user->college->id ) selected @endif @endif @endif >{{ $c->name }}</option>
           
           @endforeach         
         </select>
@@ -124,7 +124,7 @@
         <label for="formGroupExampleInput ">Branch <i class="fa fa-check-circle branch_id @if($user->branch_id) text-success @else text-silver @endif"></i></label><br>
         <select class="form-control" name="branch_id">
           @foreach($branches as $b)
-          <option value="{{$b->id}}" @if(isset($user)) @if($user->branches->first()) @if($b->id == $user->branches->first()->id ) selected @endif @endif @endif >{{ $b->name }}</option>
+          <option value="{{$b->id}}" @if(isset($user)) @if($user->branch) @if($b->id == $user->branch->id ) selected @endif @endif @endif >{{ $b->name }}</option>
           @endforeach         
         </select>
       </div>

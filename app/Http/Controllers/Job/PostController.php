@@ -203,6 +203,9 @@ class PostController extends Controller
     public function show($id)
     {
         $obj = Obj::where('slug',$id)->first();
+
+
+
         $this->authorize('view', $obj);
 
         if(request()->get('delete')){
@@ -221,6 +224,9 @@ class PostController extends Controller
     public function public_show($id,Request $request)
     {
         $obj = Obj::where('slug',$id)->first();
+
+        if(!$obj->status)
+            abort('403','Unauthorized Access');
 
         if($request->get('apply')==1){
             $user = \auth::user();

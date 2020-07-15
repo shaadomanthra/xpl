@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use PacketPrep\Exports\UExport;
 use Maatwebsite\Excel\Facades\Excel;
 use PacketPrep\Models\College\Metric;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -234,7 +235,8 @@ class UserController extends Controller
     {
 
         $username = substr($username, 1);
-        $user = User::where('username',$username)->first();
+        $user = User::where('username',$username)->with('college')->with('branch')->first();
+    
         $this->authorize($user);
         $user_details = User_Details::where('user_id',$user->id)->first();
         if(!$user_details)
@@ -525,7 +527,7 @@ class UserController extends Controller
         }
         
        
-
+        Cache::forget('id-' . $user->id);
 
         
 

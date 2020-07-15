@@ -113,4 +113,29 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade bd-example-modal-lg" id="myModal3"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+  <div class="modal-dialog ">
+
+    <div class="modal-content">
+      <div class="modal-header h4">
+        Profile Incomplete
+      </div>
+      <div class="modal-body">
+       Kindly complete your profile to apply for this job.
+      </div>
+      {{
+          request()->session()->put('redirect.url',url()->current())
+      }}
+      
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
+        <a href="{{ route('profile.complete')}}">
+        <button type="button" class="btn btn-primary">Complete Profile</button>
+      </a>
+      
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
