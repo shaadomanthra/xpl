@@ -9,6 +9,7 @@ use PacketPrep\Models\Job\Post as Obj;
 use Illuminate\Support\Facades\Storage;
 use PacketPrep\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
@@ -182,6 +183,8 @@ class PostController extends Controller
 
             $obj = $obj->create($request->all());
 
+            Cache::forever('post_'.$obj->id,$obj);
+
             flash('A new ('.$this->app.'/'.$this->module.') item is created!')->success();
             return redirect()->route($this->module.'.index');
         }
@@ -223,7 +226,9 @@ class PostController extends Controller
 
     public function public_show($id,Request $request)
     {
-        $obj = Obj::where('slug',$id)->first();
+        $obj = Cache::remember('post_'.$id,240,function() use($id){
+            return Obj::where('slug',$id)->first();
+        });
 
         if(!$obj->status)
             abort('403','Unauthorized Access');
@@ -346,6 +351,9 @@ class PostController extends Controller
 
             $this->authorize('update', $obj);
             $obj->update($request->all()); 
+
+            Cache::forget('post_'.$obj->id);
+            Cache::forever('post_'.$obj->id,$obj);
             flash('Job post item is updated!')->success();
             return redirect()->route($this->module.'.show',$id);
         }
