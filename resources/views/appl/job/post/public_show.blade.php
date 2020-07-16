@@ -32,7 +32,7 @@
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ {{ Storage::disk('spaces')->url('post/job_'.$obj->slug.'.png') }} }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
+                    src=" {{ Storage::disk('spaces')->url('post/job_'.$obj->slug.'.png') }}  " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
                   </picture>
                 </div>
               @endif
