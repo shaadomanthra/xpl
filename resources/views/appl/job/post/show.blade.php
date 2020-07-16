@@ -61,18 +61,18 @@
 
               <div class="float-md-right mb-3">
               
-              @if(Storage::disk('spaces')->exists('post/job_'.$obj->slug.'.jpg'))
+              @if(Storage::disk('public')->exists('post/job_'.$obj->slug.'.jpg'))
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ Storage::disk('spaces')->url('post/job_'.$obj->slug.'.jpg') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
+                    src="{{ Storage::disk('public')->url('post/job_'.$obj->slug.'.jpg') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
                   </picture>
                 </div>
-              @elseif(Storage::disk('spaces')->exists('post/job_'.$obj->slug.'.png'))
+              @elseif(Storage::disk('public')->exists('post/job_'.$obj->slug.'.png'))
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ Storage::disk('spaces')->url('post/job_'.$obj->slug.'.png') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
+                    src="{{ Storage::disk('public')->url('post/job_'.$obj->slug.'.png') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
                   </picture>
                 </div>
               @else
@@ -128,12 +128,12 @@
         <div class="card mb-3">
     <div class="card-header">Banner Image</div>
         <div class="card-body">
-      @if(Storage::disk('spaces')->exists('post/job_b_'.$obj->slug.'.png'))
-              <img src="{{ Storage::disk('spaces')->url('post/job_b_'.$obj->slug.'.png') }}?time={{microtime()}}" class=" w-100" />
+      @if(Storage::disk('public')->exists('post/job_b_'.$obj->slug.'.png'))
+              <img src="{{ Storage::disk('public')->url('post/job_b_'.$obj->slug.'.png') }}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('post.show',$obj->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
-              @elseif(Storage::disk('spaces')->exists('post/job_b_'.$obj->slug.'.jpg'))
-              <img src="{{ Storage::disk('spaces')->url('post/job_b_'.$obj->slug.'.jpg') }}?time={{microtime()}}" class=" w-100" />
+              @elseif(Storage::disk('public')->exists('post/job_b_'.$obj->slug.'.jpg'))
+              <img src="{{ Storage::disk('public')->url('post/job_b_'.$obj->slug.'.jpg') }}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('post.show',$obj->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @else
