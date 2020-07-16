@@ -159,8 +159,8 @@
             </div>
             <div class="d-inline pill" ><i class="fa fa-calendar"></i>  {{$u->year_of_passing}}</div>
             <div class="d-inline pill" ><i class="fa fa-graduation-cap"></i> {{$u->bachelors}}%</div>
-            @if($u->branch)
-            <div class="d-inline pill" ><i class="fa fa-tablet"></i> {{$u->branch->name}}</div>@endif
+            @if($u->branch_id)
+            <div class="d-inline pill" ><i class="fa fa-tablet"></i> {{$branches[$u->branch_id]->name}}</div>@endif
            
           </div>
         </div>

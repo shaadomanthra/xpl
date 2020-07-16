@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\User;
 use PacketPrep\Models\Job\Post as Obj;
+use PacketPrep\Models\College\Branch;
 use Illuminate\Support\Facades\Storage;
 use PacketPrep\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -205,9 +206,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $obj = Obj::where('slug',$id)->first();
-
-
+        $obj = Obj::where('slug',$id)->with(['users' => function ($query) {
+                    $query->orderBy('id','desc');
+                }])->first();
+        $branches = Branch::all()->keyBy('id');
 
         $this->authorize('view', $obj);
 
@@ -219,7 +221,7 @@ class PostController extends Controller
         }
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
-                    ->with('obj',$obj)->with('app',$this);
+                    ->with('obj',$obj)->with('app',$this)->with('branches',$branches);
         else
             abort(404);
     }
