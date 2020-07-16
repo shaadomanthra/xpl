@@ -7,9 +7,9 @@
 
 <div class="banner">
   @if(Storage::disk('public')->exists('post/job_b_'.$obj->slug.'.png'))
-  <img src="{{ asset('/storage/post/job_b_'.$obj->slug.'.png')}}?time={{microtime()}}" class=" w-100" />
+  <img src="{{ Storage::disk('spaces')->url('post/job_b_'.$obj->slug.'.png') }}" class=" w-100" />
   @elseif(Storage::disk('public')->exists('post/job_b_'.$obj->slug.'.jpg'))
-  <img src="{{ asset('/storage/post/job_b_'.$obj->slug.'.jpg')}}?time={{microtime()}}" class=" w-100" />
+  <img src="{{ Storage::disk('spaces')->url('post/job_b_'.$obj->slug.'.jpg') }}" class=" w-100" />
   @else
   <div class="p-5" style="background: #8ec6f9"></div>
 
@@ -25,14 +25,14 @@
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/post/job_'.$obj->slug.'.jpg') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
+                    src="{{ Storage::disk('spaces')->url('post/job_'.$obj->slug.'.jpg') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
                   </picture>
                 </div>
               @elseif(Storage::disk('public')->exists('post/job_'.$obj->slug.'.png'))
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/post/job_'.$obj->slug.'.png') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
+                    src="{{ {{ Storage::disk('spaces')->url('post/job_'.$obj->slug.'.png') }} }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
                   </picture>
                 </div>
               @endif
