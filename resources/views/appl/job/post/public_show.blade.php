@@ -6,10 +6,10 @@
 
 
 <div class="banner">
-  @if(Storage::disk('public')->exists('articles/job_b_'.$obj->slug.'.png'))
-  <img src="{{ asset('/storage/articles/job_b_'.$obj->slug.'.png')}}?time={{microtime()}}" class=" w-100" />
-  @elseif(Storage::disk('public')->exists('articles/job_b_'.$obj->slug.'.jpg'))
-  <img src="{{ asset('/storage/articles/job_b_'.$obj->slug.'.jpg')}}?time={{microtime()}}" class=" w-100" />
+  @if(Storage::disk('public')->exists('post/job_b_'.$obj->slug.'.png'))
+  <img src="{{ asset('/storage/post/job_b_'.$obj->slug.'.png')}}?time={{microtime()}}" class=" w-100" />
+  @elseif(Storage::disk('public')->exists('post/job_b_'.$obj->slug.'.jpg'))
+  <img src="{{ asset('/storage/post/job_b_'.$obj->slug.'.jpg')}}?time={{microtime()}}" class=" w-100" />
   @else
   <div class="p-5" style="background: #8ec6f9"></div>
 
@@ -21,18 +21,18 @@
     <div class="col-12 col-md-8">
       <div class="bg-white mb-2 mb-md-5 p-4 p-md-5" style="margin-top:-50px">
         <div class="float-right pb-4 pl-4">
-          @if(Storage::disk('public')->exists('articles/job_'.$obj->slug.'.jpg'))
+          @if(Storage::disk('public')->exists('post/job_'.$obj->slug.'.jpg'))
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/articles/job_'.$obj->slug.'.jpg') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
+                    src="{{ asset('/storage/post/job_'.$obj->slug.'.jpg') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
                   </picture>
                 </div>
-              @elseif(Storage::disk('public')->exists('articles/job_'.$obj->slug.'.png'))
+              @elseif(Storage::disk('public')->exists('post/job_'.$obj->slug.'.png'))
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/articles/job_'.$obj->slug.'.png') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
+                    src="{{ asset('/storage/post/job_'.$obj->slug.'.png') }} " class="d-print-none w-100" alt="{{  $obj->title }}" style='max-width:100px;'>
                   </picture>
                 </div>
               @endif
