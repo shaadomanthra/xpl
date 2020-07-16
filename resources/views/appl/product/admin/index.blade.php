@@ -100,7 +100,7 @@
             @foreach($branches as $b)
             <tr>
               <td><a href="{{ route('branch.view', $b->id)}}">{{ $b->name }} </a></td>
-              <td><a href="{{ route('branch.students',$b->id)}}?branch={{$b->name}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $data['branch'][$b->name]}}</a></td>
+              <td><a href="{{ route('branch.students',$b->id)}}?branch={{$b->name}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">@if(isset($data['branch'][$b->name])){{ $data['branch'][$b->name]}}@else 0 @endif</a></td>
             </tr> 
             @endforeach
 
