@@ -6,8 +6,10 @@
               <tr>
                 <th scope="col">#({{$objs->total()}})</th>
                 <th scope="col">Name </th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
+
+                <th scope="col">Contact</th>
+                <th scope="col">College </th>
+                <th scope="col">Bachelors </th>
               </tr>
             </thead>
             <tbody>
@@ -20,10 +22,14 @@
                   </a>
                 </td>
                 <td>
-                  {{$obj->email}}
+                  {{$obj->email}}<br>{{$obj->phone}}
+                </td>
+                
+                <td>
+                  @if($obj->college){{$obj->college->name}}@endif  @if($obj->branch) - {{$obj->branch->name}}@endif
                 </td>
                 <td>
-                  {{$obj->phone}}
+                  {{$obj->bachelors}}%
                 </td>
                 
               </tr>

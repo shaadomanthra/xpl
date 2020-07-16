@@ -75,7 +75,7 @@ class PostController extends Controller
         $users = $obj->users->pluck('id')->toArray();
         
         $this->authorize('view', $obj);
-        $objs = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")
+        $objs = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")->with('college')->with('branch')
                     ->paginate(config('global.no_of_records')); 
 
         if($request->get('export')){
