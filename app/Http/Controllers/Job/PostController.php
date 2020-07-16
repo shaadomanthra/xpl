@@ -352,8 +352,8 @@ class PostController extends Controller
             $this->authorize('update', $obj);
             $obj->update($request->all()); 
 
-            Cache::forget('post_'.$obj->id);
-            Cache::forever('post_'.$obj->id,$obj);
+            Cache::forget('post_'.$obj->slug);
+            Cache::forever('post_'.$obj->slug,$obj);
             flash('Job post item is updated!')->success();
             return redirect()->route($this->module.'.show',$id);
         }
