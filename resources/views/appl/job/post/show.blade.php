@@ -129,11 +129,11 @@
     <div class="card-header">Banner Image</div>
         <div class="card-body">
       @if(Storage::disk('spaces')->exists('post/job_b_'.$obj->slug.'.png'))
-              <img src="{{ asset('/storage/post/job_b_'.$obj->slug.'.png')}}?time={{microtime()}}" class=" w-100" />
+              <img src="{{ Storage::disk('spaces')->url('post/job_b_'.$obj->slug.'.png') }}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('post.show',$obj->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @elseif(Storage::disk('spaces')->exists('post/job_b_'.$obj->slug.'.jpg'))
-              <img src="{{ asset('/storage/post/job_b_'.$obj->slug.'.jpg')}}?time={{microtime()}}" class=" w-100" />
+              <img src="{{ Storage::disk('spaces')->url('post/job_b_'.$obj->slug.'.jpg') }}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('post.show',$obj->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @else
