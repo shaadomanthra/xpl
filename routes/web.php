@@ -419,6 +419,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 		return Redirect::to('/sample-tests', 301); 
 	});
 
+	Route::get('/job/34283', function(){
+		return Redirect::to('/jobs/34283', 301); 
+	});
+
 	Route::get('/srecieee', function(){
 		return Redirect::to('/test/srecieee', 301); 
 	});
