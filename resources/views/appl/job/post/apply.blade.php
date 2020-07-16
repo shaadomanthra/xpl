@@ -9,12 +9,12 @@
 					@if(auth::user()->bachelors < $obj->academic)
 					<div class="alert alert-info alert-important" role="alert">
 				 	 <p class="mb-0" >The following job opening requires a minimum academic percentage of {{$obj->academic}}% in bachelors. </p><hr>
-				 	 Your Academic percentage is {{auth::user()->bachelors}}. <br>Kindly <a href="{{ route('contact')}}">contact us</a> incase of any query.
+				 	 Your Academic percentage is {{auth::user()->bachelors}}. <br> <a href="{{ route('profile.complete')}}?redirect={{request()->url()}}">update your profile</a> to apply for this job.
 					</div>
 					@elseif(!in_array(auth::user()->branch->name,explode(',',$obj->education)))
 					<div class="alert alert-info alert-important" role="alert">
 				 	 <p class="mb-0" >The following job opening is only for {{str_replace(',',', ',$obj->education)}}. </p><hr>
-				 	 Your branch is {{auth::user()->branch->name}}. <br>Kindly <a href="{{ route('contact')}}">contact us</a> incase of any query.
+				 	 Your branch is {{auth::user()->branch->name}}. <br> <a href="{{ route('profile.complete')}}?redirect={{request()->url()}}">update your profile</a> to apply for this job.
 					</div>
 					@else
 					<a href="{{ route('job.show',$obj->slug)}}?apply=1" class="btn btn-lg btn-success w-100 ">Apply Now</a>

@@ -283,6 +283,7 @@
       <div class="form-group">
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="redirect" value="{{ request()->get('redirect') }}">
         
       </div>
       

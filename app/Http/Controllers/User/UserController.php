@@ -236,7 +236,7 @@ class UserController extends Controller
 
         $username = substr($username, 1);
         $user = User::where('username',$username)->with('college')->with('branch')->first();
-    
+
         $this->authorize($user);
         $user_details = User_Details::where('user_id',$user->id)->first();
         if(!$user_details)
@@ -533,6 +533,8 @@ class UserController extends Controller
 
 
         flash('User data updated!')->success();
+        if(request()->get('redirect'))
+            return redirect()->to(request()->get('redirect'));
         return redirect()->route('profile','@'.$username);
 
     }
