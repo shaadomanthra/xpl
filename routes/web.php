@@ -434,7 +434,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 		return Redirect::to('/jobs', 301); 
 	});
 	Route::get('jobs','Job\PostController@public_index')->name('jobs');
-	Route::get('job/{slug}','Job\PostController@public_show')->name('job.show');
+	Route::get('jobs/{slug}','Job\PostController@public_show')->name('job.show');
 
 	Route::resource('product','Product\ProductController')->middleware('auth');
 	Route::get('productpage','Product\ProductController@products')->name('products');
