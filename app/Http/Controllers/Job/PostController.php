@@ -160,14 +160,14 @@ class PostController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = 'job_'.$request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+                $path = Storage::disk('spaces')->putFileAs('articles', $request->file('file_'),$filename);
 
                 $request->merge(['image' => $path]);
             }
             if(isset($request->all()['file2_'])){
                 $file      = $request->all()['file2_'];
                 $filename = 'job_b_'.$request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file2_'),$filename);
+                $path = Storage::disk('spaces')->putFileAs('articles', $request->file('file2_'),$filename);
 
                 $request->merge(['image' => $path]);
             }
@@ -209,10 +209,10 @@ class PostController extends Controller
         $this->authorize('view', $obj);
 
         if(request()->get('delete')){
-            if(Storage::disk('public')->exists('articles/job_b_'.$obj->slug.'.jpg'))
-                    Storage::disk('public')->delete('articles/job_b_'.$obj->slug.'.jpg');
-            if(Storage::disk('public')->exists('articles/job_b_'.$obj->slug.'.png'))
-                    Storage::disk('public')->delete('articles/job_b_'.$obj->slug.'.png');
+            if(Storage::disk('spaces')->exists('articles/job_b_'.$obj->slug.'.jpg'))
+                    Storage::disk('spaces')->delete('articles/job_b_'.$obj->slug.'.jpg');
+            if(Storage::disk('spaces')->exists('articles/job_b_'.$obj->slug.'.png'))
+                    Storage::disk('spaces')->delete('articles/job_b_'.$obj->slug.'.png');
         }
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
@@ -310,14 +310,14 @@ class PostController extends Controller
             if(isset($request->all()['file_'])){
 
                 /* delete previous image */
-                if(Storage::disk('public')->exists('articles/job_'.$obj->slug.'.jpg'))
-                    Storage::disk('public')->delete('articles/job_'.$obj->slug.'.jpg');
-                if(Storage::disk('public')->exists('articles/job_'.$obj->slug.'.png'))
-                    Storage::disk('public')->delete('articles/job_'.$obj->slug.'.png');
+                if(Storage::disk('spaces')->exists('articles/job_'.$obj->slug.'.jpg'))
+                    Storage::disk('spaces')->delete('articles/job_'.$obj->slug.'.jpg');
+                if(Storage::disk('spaces')->exists('articles/job_'.$obj->slug.'.png'))
+                    Storage::disk('spaces')->delete('articles/job_'.$obj->slug.'.png');
             
                 $file      = $request->all()['file_'];
                 $filename = 'job_'.$request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+                $path = Storage::disk('spaces')->putFileAs('articles', $request->file('file_'),$filename,'public');
 
                 $request->merge(['image' => $path]);
             }
@@ -325,14 +325,14 @@ class PostController extends Controller
             if(isset($request->all()['file2_'])){
 
                 /* delete previous image */
-                if(Storage::disk('public')->exists('articles/job_b_'.$obj->slug.'.jpg'))
-                    Storage::disk('public')->delete('articles/job_b_'.$obj->slug.'.jpg');
-                if(Storage::disk('public')->exists('articles/job_b_'.$obj->slug.'.png'))
-                    Storage::disk('public')->delete('articles/job_b_'.$obj->slug.'.png');
+                if(Storage::disk('spaces')->exists('articles/job_b_'.$obj->slug.'.jpg'))
+                    Storage::disk('spaces')->delete('articles/job_b_'.$obj->slug.'.jpg');
+                if(Storage::disk('spaces')->exists('articles/job_b_'.$obj->slug.'.png'))
+                    Storage::disk('spaces')->delete('articles/job_b_'.$obj->slug.'.png');
 
                 $file      = $request->all()['file2_'];
                 $filename = 'job_b_'.$request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file2_'),$filename);
+                $path = Storage::disk('spaces')->putFileAs('articles', $request->file('file2_'),$filename,'public');
 
                 $request->merge(['image' => $path]);
             }

@@ -8,9 +8,9 @@
  <div class="bg-white p-4 p-md-5 mb-4">  
               <div class="media ">
               <div class="mr-4 d-none d-md-block" style="width:100px">
-            @if(Storage::disk('public')->exists('articles/job_'.$obj->slug.'.jpg'))
+            @if(Storage::disk('spaces')->exists('articles/job_'.$obj->slug.'.jpg'))
                   <img class="mr-3 w-100" src="{{ asset('/storage/articles/job_'.$obj->slug.'.jpg') }}" alt="{{$obj->title}}">
-              @elseif(Storage::disk('public')->exists('articles/job_'.$obj->slug.'.png'))
+              @elseif(Storage::disk('spaces')->exists('articles/job_'.$obj->slug.'.png'))
                <img class="mr-3 w-100" src="{{ asset('/storage/articles/job_'.$obj->slug.'.png') }}" alt="{{$obj->title}}">
               @else
               <img class="mr-3" src="{{ asset('img/job.jpg') }}" alt="{{$obj->title}}">
