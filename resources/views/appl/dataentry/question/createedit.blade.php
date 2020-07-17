@@ -101,6 +101,9 @@
       <li class="nav-item">
         <a class="nav-link" id="tag-tab" data-toggle="tab" href="#exam" role="tab" aria-controls="exam" aria-selected="false">Exam</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">Details</a>
+      </li>
       @if(!request()->get('default'))
 
       <li class="nav-item">

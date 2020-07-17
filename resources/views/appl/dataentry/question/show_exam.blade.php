@@ -78,6 +78,7 @@
           @endcan
 
           <span class="badge   badge-warning float-right mt-1">{{ strtoupper($question->type) }}</span>
+          <span class="badge badge-primary float-right mt-1 mr-2">{{$question->topic}}</span>
         </div>
         <div class="card-body ">
           
@@ -131,6 +132,8 @@
 
         </div>
         </div>
+
+
 
         @if($question->a)
          <div class="row no-gutters">
