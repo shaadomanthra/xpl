@@ -30,30 +30,26 @@ class Corporate
             }
             elseif(subdomain()!='hire' && subdomain()!='xplore' && subdomain()!='bfs'){
 
-                if(Storage::disk('s3')->exists('companies/'.subdomain().'.png'))
-                    $client->logo = Storage::disk('s3')->get('companies/'.subdomain().'.png');
-                else if(Storage::disk('s3')->exists('companies/'.subdomain().'.jpg'))
-                    $client->logo = Storage::disk('s3')->get('companies/'.subdomain().'.jpg');
-                else 
-                    $client->logo = url('/').'/img/xplore.png';
-
-
                 if(file_exists($filename)){
-
-                        $client = Cache::get('client_'.subdomain(),function() {
+                
+                    $client = Cache::get('client_'.subdomain(),function() {
                             return Client::where('slug',subdomain())->first();
-                        });
+                    });
+
+                    if(Storage::disk('s3')->exists('companies/'.subdomain().'.png'))
+                        $client->logo = Storage::disk('s3')->get('companies/'.subdomain().'.png');
+                    else if(Storage::disk('s3')->exists('companies/'.subdomain().'.jpg'))
+                        $client->logo = Storage::disk('s3')->get('companies/'.subdomain().'.jpg');
+                    else 
+                        $client->logo = url('/').'/img/xplore.png';
+
                         //$client = json_decode(file_get_contents($filename));
-
-
                         // if(urlexists($logo_1))
                         //     $client->logo = $logo_1;
                         // elseif(urlexists($logo_2))
                         //     $client->logo = $logo_2;
                         // else
                         //     $client->logo = $logo_3;
-
-
 
                         if($client->status==0)
                             abort(403,'Site is not published');
@@ -75,7 +71,6 @@ class Corporate
 
             }
             
-
             return $next($request);
             
         }
