@@ -47,7 +47,8 @@ class ArticleController extends Controller
         //Storage::disk('spaces')->put('articles/'.$filename, json_encode($objs,JSON_PRETTY_PRINT));
         //$data = Storage::disk('spaces')->get('articles/'.$filename);
         //dd($data);
-        file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
+        Storage::disk('s3')->put('articles/'.$filename, json_encode($objs,JSON_PRETTY_PRINT));
+        //file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
 
         foreach($objs as $obj){ 
             $filename = $obj->slug.'.json';
@@ -62,18 +63,22 @@ class ArticleController extends Controller
             }
             $filepath = $this->cache_path.$filename;
 
-            file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('articles/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
         }
 
         //update labels
         $labels = Label::where('status',1)->orderBy('created_at','desc')->get();
-        file_put_contents($filepath, json_encode($labels,JSON_PRETTY_PRINT));
+        $filename = 'index.'.$this->app.'.label.json';
+        Storage::disk('s3')->put('labels/'.$filename, json_encode($labels,JSON_PRETTY_PRINT));
+        //file_put_contents($filepath, json_encode($labels,JSON_PRETTY_PRINT));
 
         foreach($labels as $label){ 
             $filename = $label->slug.'.json';
             $label->articles = $label->articles;
             $filepath = $this->cache_label_path.$filename;
-            file_put_contents($filepath, json_encode($label,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('labels/'.$filename, json_encode($labels,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($label,JSON_PRETTY_PRINT));
         }
 
         flash('Articles/Labels Cache Updated')->success();
@@ -82,13 +87,13 @@ class ArticleController extends Controller
     $filename = 'index.'.$this->app.'.'.$this->module.'.json';
     $filepath = $this->cache_path.$filename;
 
-    if(file_exists($filepath) && !$search && !$page){
-    	$objs = json_decode(file_get_contents($filepath));
+    if(Storage::disk('s3')->exists('articles/'.$filename) && !$search && !$page){
+    	$objs = json_decode(Storage::disk('s3')->get('articles/'.$filename));
         $objs = $this->paginateAnswers($objs,18);
 
         $filename = 'index.'.$this->app.'.label.json';
         $filepath = $this->cache_label_path.$filename;
-        $labels = collect(json_decode(file_get_contents($filepath)));
+        $labels = collect(json_decode(Storage::disk('s3')->get('labels/'.$filename)));
 
     }else{
     	$objs = $obj->where('name','LIKE',"%{$item}%")
@@ -138,13 +143,13 @@ class ArticleController extends Controller
      $filepath = $this->cache_label_path.$filename;
 
 
-    if(file_exists($filepath) && !$search && !$page){
-        $label = json_decode(file_get_contents($filepath));
+    if(Storage::disk('s3')->exists('label/'.$filename) && !$search && !$page){
+        $label = json_decode(Storage::disk('s3')->get('label/'.$filename));
         $objs = $this->paginateAnswers($label->articles,18);
 
         $filename = 'index.'.$this->app.'.label.json';
         $filepath = $this->cache_label_path.$filename;
-        $labels = collect(json_decode(file_get_contents($filepath)));
+        $labels = collect(json_decode(Storage::disk('s3')->get('label/'.$filename)));
 
     }else{
         $label = Label::where('slug',$slug)->first();
@@ -272,7 +277,7 @@ class ArticleController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
 
                 $request->merge(['image' => $path]);
             }else{
@@ -317,14 +322,16 @@ class ArticleController extends Controller
             }
 
             $filepath = $this->cache_path.$filename;
-            file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('label/'.$filename,json_encode($obj,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
 
             /* update in cache folder main file */
             $filename = 'index.'.$this->app.'.'.$this->module.'.json';
             $filepath = $this->cache_path.$filename;
             $objs = $obj->orderBy('created_at','desc')->where('status',1)
                         ->get(); 
-            file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('label/'.$filename,json_encode($objs,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
 
             flash('A new job item is created!')->success();
             return redirect()->route('page',$request->get('slug'));
@@ -384,8 +391,8 @@ class ArticleController extends Controller
 
         $filepath = $this->questions_path.$filename;
         //load questions if they exist
-        if(file_exists($filepath))
-            $questions = json_decode(file_get_contents($filepath));
+        if(Storage::disk('s3')->exists('questions/'.$filename))
+            $questions = json_decode(Storage::disk('s3')->get('questions/'.$filename));
         else{
 
             $category = Category::where('slug',$slug)->first();
@@ -471,8 +478,8 @@ class ArticleController extends Controller
              /* delete file request */
             if($request->get('deletefile')){
 
-                if(Storage::disk('public')->exists($obj->image)){
-                    Storage::disk('public')->delete($obj->image);
+                if(Storage::disk('s3')->exists($obj->image)){
+                    Storage::disk('s3')->delete($obj->image);
                 }
                 redirect()->route('page',$slug);
             }
@@ -482,7 +489,7 @@ class ArticleController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
                 $request->merge(['image' => $path]);
             }
 
@@ -528,14 +535,15 @@ class ArticleController extends Controller
                 $obj->related2 = $label2->articles()->limit(4)->get(); 
             }
 
-            file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('articles/'.$filename,json_encode($obj,JSON_PRETTY_PRINT));
 
             /* update in cache folder main file */
             $filename = 'index.'.$this->app.'.'.$this->module.'.json';
             $filepath = $this->cache_path.$filename;
             $objs = $obj->orderBy('created_at','desc')->where('status',1)
                         ->get(); 
-            file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('articles/'.$filename,json_encode($objs,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
             
 
             flash('job item is updated!')->success();
@@ -576,14 +584,14 @@ class ArticleController extends Controller
             $image1 = '/articles/'.$obj->slug.'_'.$s.'.jpg';
             $image2 = '/articles/'.$obj->slug.'_'.$s.'.webp';
             
-            if(Storage::disk('public')->exists($image1)){
-                Storage::disk('public')->delete($image1);
+            if(Storage::disk('s3')->exists($image1)){
+                Storage::disk('s3')->delete($image1);
             }
-            if(Storage::disk('public')->exists($image2)){
-                Storage::disk('public')->delete($image2);
+            if(Storage::disk('s3')->exists($image2)){
+                Storage::disk('s3')->delete($image2);
             }
-            if(Storage::disk('public')->exists($image3)){
-                Storage::disk('public')->delete($image3);
+            if(Storage::disk('s3')->exists($image3)){
+                Storage::disk('s3')->delete($image3);
             }
         }
         $obj->delete();
@@ -593,7 +601,8 @@ class ArticleController extends Controller
             $filepath = $this->cache_path.$filename;
             $objs = $obj->orderBy('created_at','desc')->where('status',1)
                         ->get(); 
-            file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('articles/'.$filename,json_encode($objs,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($objs,JSON_PRETTY_PRINT));
             
 
         flash('('.$this->app.'/'.$this->module.') item  Successfully deleted!')->success();

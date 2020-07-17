@@ -11,6 +11,7 @@ use PacketPrep\User;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 
 class ClientController extends Controller
@@ -44,6 +45,7 @@ class ClientController extends Controller
                             ->paginate(config('global.no_of_records'));
 
         }
+
         
         $view = $search ? 'list': 'index';
 
@@ -109,7 +111,7 @@ class ClientController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'_header.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('companies', $request->file('file_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file_'),$filename);
 
             }
 
@@ -117,7 +119,7 @@ class ClientController extends Controller
             if(isset($request->all()['file2_'])){
                 $file      = $request->all()['file2_'];
                 $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('companies', $request->file('file2_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file2_'),$filename);
 
             }
 
@@ -141,8 +143,7 @@ class ClientController extends Controller
             foreach($client->toArray() as $key=>$value){
                     $param = $param.$key."=".$value."&";
             }
-            $filename = $this->cache_path.$client->slug.'.json';
-            file_put_contents($filename, json_encode($client));
+            Cache::forever('client_'.$client->slug,$client);
 
 
             flash('A new client('.$request->name.') is created!')->success();
@@ -188,11 +189,11 @@ class ClientController extends Controller
                 $file      = $request->all()['input_img'];
                 $filename = $request->client_slug.'.'.$file->getClientOriginalExtension();
 
-                $path = Storage::disk('public')->putFileAs('companies', $file,$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $file,$filename);
             }
 
             // save image
-            $img->save('img/clients/'.$request->client_slug.'.png');
+            //$img->save('img/clients/'.$request->client_slug.'.png');
 
 
             flash('Image is successfully uploaded!')->success();
@@ -221,39 +222,39 @@ class ClientController extends Controller
         $this->authorize('edit', $client);
 
         if(request()->get('delete')=='logo'){
-            if(Storage::disk('public')->exists('companies/'.$client->slug.'.jpg')){
-                Storage::disk('public')->delete('companies/'.$client->slug.'.jpg');
+            if(Storage::disk('s3')->exists('companies/'.$client->slug.'.jpg')){
+                Storage::disk('s3')->delete('companies/'.$client->slug.'.jpg');
              flash('Logo is deleted.')->error();
             }
 
-            if(Storage::disk('public')->exists('companies/'.$client->slug.'.png')){
-                Storage::disk('public')->delete('companies/'.$client->slug.'.png');
+            if(Storage::disk('s3')->exists('companies/'.$client->slug.'.png')){
+                Storage::disk('s3')->delete('companies/'.$client->slug.'.png');
              flash('Logo is deleted.')->error();
             }
 
         }
 
         if(request()->get('delete')=='banner'){
-            if(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.jpg')){
-                Storage::disk('public')->delete('companies/'.$client->slug.'_banner.jpg');
+            if(Storage::disk('s3')->exists('companies/'.$client->slug.'_banner.jpg')){
+                Storage::disk('s3')->delete('companies/'.$client->slug.'_banner.jpg');
              flash('Dashboard banner is deleted.')->error();
             }
 
-            if(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.png')){
-                Storage::disk('public')->delete('companies/'.$client->slug.'_banner.png');
+            if(Storage::disk('s3')->exists('companies/'.$client->slug.'_banner.png')){
+                Storage::disk('s3')->delete('companies/'.$client->slug.'_banner.png');
              flash('Dashboard banner is deleted.')->error();
             }
 
         }
 
         if(request()->get('delete')=='header'){
-            if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.jpg')){
-                Storage::disk('public')->delete('companies/'.$client->slug.'_header.jpg');
+            if(Storage::disk('s3')->exists('companies/'.$client->slug.'_header.jpg')){
+                Storage::disk('s3')->delete('companies/'.$client->slug.'_header.jpg');
              flash('Login page banner image is deleted.')->error();
             }
 
-            if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.png')){
-                Storage::disk('public')->delete('companies/'.$client->slug.'_header.png');
+            if(Storage::disk('s3')->exists('companies/'.$client->slug.'_header.png')){
+                Storage::disk('s3')->delete('companies/'.$client->slug.'_header.png');
              flash('Login page banner image is deleted.')->error();
             }
 
@@ -358,7 +359,7 @@ class ClientController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'_header.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('companies', $request->file('file_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file_'),$filename);
 
             }
 
@@ -366,7 +367,7 @@ class ClientController extends Controller
             if(isset($request->all()['file2_'])){
                 $file      = $request->all()['file2_'];
                 $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('companies', $request->file('file2_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file2_'),$filename);
 
             }
 
@@ -394,9 +395,12 @@ class ClientController extends Controller
             foreach($client->toArray() as $key=>$value){
                     $param = $param.$key."=".$value."&";
             }
+
+            Cache::forget('client_'.$client->slug)
+            Cache::forever('client_'.$client->slug,$client);
             
-            $filename = $this->cache_path.$client->slug.'.json';
-            file_put_contents($filename, json_encode($client));
+            // $filename = $this->cache_path.$client->slug.'.json';
+            // file_put_contents($filename, json_encode($client));
 
             flash('client (<b>'.$request->name.'</b>) Successfully updated!')->success();
             return redirect()->route('client.show',$request->slug);

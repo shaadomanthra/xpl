@@ -1,6 +1,9 @@
 <?php
 
 namespace PacketPrep\Http\Middleware;
+use PacketPrep\Models\Product\Client;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 use Closure;
 
@@ -17,7 +20,7 @@ class Corporate
     {
         if(subdomain()){
 
-            if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'bfs' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test'){
+            if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'bfs' ){
                 $filename = 'corporate.json';
                 $client = json_decode(file_get_contents($filename));
                 $client->name = 'Bajaj Finserv';
@@ -26,23 +29,29 @@ class Corporate
                 $request->session()->put('client',$client);
             }
             elseif(subdomain()!='hire' && subdomain()!='xplore' && subdomain()!='bfs'){
-               $filename = '../storage/app/cache/company/'.subdomain().'.json';
-               $logo_1 = url('/').'/storage/companies/'.subdomain().'.png';
-               $logo_2 = url('/').'/storage/companies/'.subdomain().'.jpg';
-               $logo_3 = url('/').'/img/xplore.png';
+
+                if(Storage::disk('s3')->exists('companies/'.subdomain().'.png'))
+                    $client->logo = Storage::disk('s3')->get('companies/'.subdomain().'.png');
+                else if(Storage::disk('s3')->exists('companies/'.subdomain().'.jpg'))
+                    $client->logo = Storage::disk('s3')->get('companies/'.subdomain().'.jpg');
+                else 
+                    $client->logo = url('/').'/img/xplore.png';
 
 
                 if(file_exists($filename)){
 
-                        $client = json_decode(file_get_contents($filename));
+                        $client = Cache::get('client_'.subdomain(),function() {
+                            return Client::where('slug',subdomain())->first();
+                        });
+                        //$client = json_decode(file_get_contents($filename));
 
 
-                        if(urlexists($logo_1))
-                            $client->logo = $logo_1;
-                        elseif(urlexists($logo_2))
-                            $client->logo = $logo_2;
-                        else
-                            $client->logo = $logo_3;
+                        // if(urlexists($logo_1))
+                        //     $client->logo = $logo_1;
+                        // elseif(urlexists($logo_2))
+                        //     $client->logo = $logo_2;
+                        // else
+                        //     $client->logo = $logo_3;
 
 
 
