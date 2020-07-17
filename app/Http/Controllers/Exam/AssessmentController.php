@@ -273,6 +273,8 @@ class AssessmentController extends Controller
         $filename = $test.'.json';
         $filepath = $this->cache_path.$filename;
 
+        $exam = Cache::get('test_'.$test);
+        if(!$exam)
         if(file_exists($filepath))
         {
             $exam = json_decode(file_get_contents($filepath));

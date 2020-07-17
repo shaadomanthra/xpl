@@ -42,8 +42,8 @@ class ExamController extends Controller
                         ->get();  
             
             foreach($objs as $obj){ 
-                $filename = $obj->slug.'.json';
-                $filepath = $this->cache_path.$filename;
+                //$filename = $obj->slug.'.json';
+                //$filepath = $this->cache_path.$filename;
                 $obj->sections = $obj->sections;
                 $obj->products = $obj->products;
                 $obj->product_ids = $obj->products->pluck('id')->toArray();
@@ -57,7 +57,7 @@ class ExamController extends Controller
                 //update redis cache
                 $obj->updateCache();
 
-                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+                //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
 
             }
            
@@ -340,7 +340,7 @@ class ExamController extends Controller
         //update cache
             $obj = $exam;
                 $filename = $obj->slug.'.json';
-                $filepath = $this->cache_path.$filename;
+                //$filepath = $this->cache_path.$filename;
                 $obj->sections = $obj->sections;
                 $obj->products = $obj->products;
                 $obj->product_ids = $obj->products->pluck('id')->toArray();
@@ -351,8 +351,8 @@ class ExamController extends Controller
                     }
                 }
                 
-                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
-            
+                //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            $obj->updateCache();
            
             flash('Exams Successfully Replicated')->success();
       
@@ -515,7 +515,7 @@ class ExamController extends Controller
             //update cache
             $obj = $exam;
                 $filename = $obj->slug.'.json';
-                $filepath = $this->cache_path.$filename;
+                //$filepath = $this->cache_path.$filename;
                 $obj->sections = $obj->sections;
                 $obj->products = $obj->products;
                 $obj->product_ids = $obj->products->pluck('id')->toArray();
@@ -526,7 +526,7 @@ class ExamController extends Controller
                     }
                 }
                 
-                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+                //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
             //update redis cache
             $exam->updateCache();
            
@@ -916,7 +916,7 @@ class ExamController extends Controller
             //update cache
             $obj = $exam;
             $filename = $obj->slug.'.json';
-            $filepath = $this->cache_path.$filename;
+            //$filepath = $this->cache_path.$filename;
             $obj->sections = $obj->sections;
             $obj->products = $obj->products;
             $obj->product_ids = $obj->products->pluck('id')->toArray();
@@ -932,7 +932,7 @@ class ExamController extends Controller
 
 
             
-            file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
             flash('Exam (<b>'.$request->name.'</b>) Successfully updated!')->success();
             return redirect()->route('exam.show',$request->slug);
         }

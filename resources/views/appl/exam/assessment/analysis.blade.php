@@ -48,7 +48,7 @@
 		@endif
 	</div>
 
-	@if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg'))
+		@if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg'))
                 <div class="my-3">
                   <picture class="">
                     <img 
