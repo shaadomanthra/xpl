@@ -30,12 +30,11 @@ class Corporate
             }
             elseif(subdomain()!='hire' && subdomain()!='xplore' && subdomain()!='bfs'){
 
-                if(file_exists($filename)){
-                
-                    $client = Cache::get('client_'.subdomain(),function() {
+                $client = Cache::get('client_'.subdomain(),function() {
                             return Client::where('slug',subdomain())->first();
-                    });
-
+                });
+                if($client){
+                    
                     if(Storage::disk('s3')->exists('companies/'.subdomain().'.png'))
                         $client->logo = Storage::disk('s3')->get('companies/'.subdomain().'.png');
                     else if(Storage::disk('s3')->exists('companies/'.subdomain().'.jpg'))
