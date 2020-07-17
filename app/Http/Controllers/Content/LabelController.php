@@ -40,7 +40,8 @@ class LabelController extends Controller
             $filename = $obj->slug.'.json';
             $obj->articles = $obj->articles;
             $filepath = $this->cache_path.$filename;
-            file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('label/'.$filename, json_encode($objs,JSON_PRETTY_PRINT));
         }
 
         flash('Labels Cache Updated')->success();
@@ -167,8 +168,8 @@ class LabelController extends Controller
              /* delete file request */
             if($request->get('deletefile')){
 
-                if(Storage::disk('public')->exists($obj->image)){
-                    Storage::disk('public')->delete($obj->image);
+                if(Storage::disk('s3')->exists($obj->image)){
+                    Storage::disk('s3')->delete($obj->image);
                 }
                 redirect()->route($this->module.'.show',[$id]);
             }
@@ -177,7 +178,7 @@ class LabelController extends Controller
             /* If file is given upload and store path */
             if(isset($request->all()['file'])){
                 $file      = $request->all()['file'];
-                $path = Storage::disk('public')->putFile('label', $request->file('file'));
+                $path = Storage::disk('s3')->putFile('label', $request->file('file'));
                 $request->merge(['image' => $path]);
             }
 
@@ -206,8 +207,8 @@ class LabelController extends Controller
         $this->authorize('update', $obj);
 
         // remove file
-        if(Storage::disk('public')->exists($obj->image))
-            Storage::disk('public')->delete($obj->image);
+        if(Storage::disk('s3')->exists($obj->image))
+            Storage::disk('s3')->delete($obj->image);
         
         $obj->delete();
 

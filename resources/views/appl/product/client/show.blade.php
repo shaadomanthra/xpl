@@ -151,11 +151,11 @@
 
             
             <div class="col-12">
-              @if(Storage::disk('public')->exists('companies/'.$client->slug.'.png'))
+              @if(Storage::disk('s3')->exists('companies/'.$client->slug.'.png'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'.png')}}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=logo" class="btn btn-danger btn-sm mt-3"> delete logo</a></div>
-              @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'.jpg'))
+              @elseif(Storage::disk('s3')->exists('companies/'.$client->slug.'.jpg'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'.jpg')}}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=logo" class="btn btn-danger btn-sm mt-3"> delete logo</a></div>
@@ -184,10 +184,10 @@
       <div class="card mb-4">
         <div class="card-header">Login Page Banner</div>
         <div class="card-body">
-      @if(Storage::disk('public')->exists('companies/'.$client->slug.'_header.png'))
+      @if(Storage::disk('s3')->exists('companies/'.$client->slug.'_header.png'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'_header.png')}}?time={{microtime()}}" class=" w-100 mb-3" />
               <div><a href="{{ route('client.show',$client->slug)}}?delete=header" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
-              @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_header.jpg'))
+              @elseif(Storage::disk('s3')->exists('companies/'.$client->slug.'_header.jpg'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'_header.jpg')}}?time={{microtime()}}" class=" w-100" />
               <div><a href="{{ route('client.show',$client->slug)}}?delete=header" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
               @else
@@ -200,11 +200,11 @@
         <div class="card mb-4">
         <div class="card-header">Dashboard Banner Image</div>
         <div class="card-body">
-      @if(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.png'))
+      @if(Storage::disk('s3')->exists('companies/'.$client->slug.'_banner.png'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'_banner.png')}}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>
-              @elseif(Storage::disk('public')->exists('companies/'.$client->slug.'_banner.jpg'))
+              @elseif(Storage::disk('s3')->exists('companies/'.$client->slug.'_banner.jpg'))
               <img src="{{ asset('/storage/companies/'.$client->slug.'_banner.jpg')}}?time={{microtime()}}" class=" w-100" />
               <div>
               <a href="{{ route('client.show',$client->slug)}}?delete=banner" class="btn btn-danger btn-sm mt-3"> delete banner</a></div>

@@ -152,18 +152,18 @@ class User extends Authenticatable
     public function getImage(){
         $user = $this;
         $username = $this->username;
-        if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpg'))
+        if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpg'))
                 {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.jpg');
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpg')
                 }
-                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.png'))
+                if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.png'))
                 {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.png');
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.png')
                 }
 
-                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpeg'))
+                if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpeg'))
                 {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.jpeg');
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg')
                 }
         return $user->image;
     }

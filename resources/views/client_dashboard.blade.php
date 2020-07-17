@@ -74,10 +74,10 @@
 </div>
 
 @if(isset(request()->session()->get('client')->slug))
-@if(Storage::disk('public')->exists('companies/'.request()->session()->get('client')->slug.'_banner.png'))
-              <img src="{{ asset('/storage/companies/'.request()->session()->get('client')->slug.'_banner.png')}}" class=" w-100 mb-3" />
-              @elseif(Storage::disk('public')->exists('companies/'.request()->session()->get('client')->slug.'_banner.jpg'))
-              <img src="{{ asset('/storage/companies/'.request()->session()->get('client')->slug.'_banner.jpg')}}" class=" w-100 mb-3" />
+@if(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_banner.png'))
+              <img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_banner.png')}}" class=" w-100 mb-3" />
+              @elseif(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_banner.jpg'))
+              <img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_banner.jpg')}}" class=" w-100 mb-3" />
              
               @endif
 @endif
@@ -103,11 +103,11 @@
           <div class="row">
             <div class='col-2 col-md-3'>
               @if(isset($e->image))
-                @if(Storage::disk('public')->exists($e->image))
+                @if(Storage::disk('s3')->exists($e->image))
                 <div class=" text-center">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/'.$e->image) }} " class="d-print-none w-100" alt="{{  $e->name }}" style='max-width:80px;'>
+                    src="{{ Storage::disk('s3')->url($e->image) }} " class="d-print-none w-100" alt="{{  $e->name }}" style='max-width:80px;'>
                   </picture>
                 </div>
                 @endif

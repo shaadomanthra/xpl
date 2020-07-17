@@ -34,11 +34,13 @@ class Corporate
                             return Client::where('slug',subdomain())->first();
                 });
                 if($client){
-                    
-                    if(Storage::disk('s3')->exists('companies/'.subdomain().'.png'))
-                        $client->logo = Storage::disk('s3')->get('companies/'.subdomain().'.png');
+
+
+                    if(Storage::disk('s3')->exists('companies/'.subdomain().'.png')){
+                        $client->logo = Storage::disk('s3')->url('companies/'.subdomain().'.png');
+                    }
                     else if(Storage::disk('s3')->exists('companies/'.subdomain().'.jpg'))
-                        $client->logo = Storage::disk('s3')->get('companies/'.subdomain().'.jpg');
+                        $client->logo = Storage::disk('s3')->url('companies/'.subdomain().'.jpg');
                     else 
                         $client->logo = url('/').'/img/xplore.png';
 

@@ -324,7 +324,8 @@ class CategoryController extends Controller
 
         $filename = $category->slug.'.json';
         $filepath = $this->cache_path.$filename;
-        file_put_contents($filepath, json_encode($questions,JSON_PRETTY_PRINT));
+        Storage::disk('s3')->put('questions/'.$filename, json_encode($questions,JSON_PRETTY_PRINT));
+        //file_put_contents($filepath, json_encode($questions,JSON_PRETTY_PRINT));
 
         flash('Category ('.$category_slug.')Tree Successfully Cached')->success();
         return redirect()->route('category.index',$project_slug);

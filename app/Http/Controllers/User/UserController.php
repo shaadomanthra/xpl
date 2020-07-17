@@ -65,18 +65,18 @@ class UserController extends Controller
                         
                 }
 
-                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpg'))
+                if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpg'))
                 {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.jpg');
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpg')
                 }
-                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.png'))
+                if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.png'))
                 {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.png');
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.png')
                 }
 
-                if(Storage::disk('public')->exists('articles/profile_'.$user->username.'.jpeg'))
+                if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpeg'))
                 {
-                    $user->image = asset('/storage/articles/profile_'.$username.'.jpeg');
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg')
                 }
 
                 return view('appl.user.'.$view)
@@ -441,21 +441,21 @@ class UserController extends Controller
 
                 $image = '/articles/profile_'.$username;
             
-                if(Storage::disk('public')->exists($image.'.jpg')){
-                    Storage::disk('public')->delete($image.'.jpg');
+                if(Storage::disk('s3')->exists($image.'.jpg')){
+                    Storage::disk('s3')->delete($image.'.jpg');
                 }
 
-                 if(Storage::disk('public')->exists($image.'.png')){
-                    Storage::disk('public')->delete($image.'.png');
+                 if(Storage::disk('s3')->exists($image.'.png')){
+                    Storage::disk('s3')->delete($image.'.png');
                 }
 
-                 if(Storage::disk('public')->exists($image.'.jpeg')){
-                    Storage::disk('public')->delete($image.'.jpeg');
+                 if(Storage::disk('s3')->exists($image.'.jpeg')){
+                    Storage::disk('s3')->delete($image.'.jpeg');
                 }
 
                 $file      = $request->all()['file_'];
                 $filename = 'profile_'.$username.'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename,'public');
                 $request->merge(['image' => $path]);
 
             }else{

@@ -41,7 +41,8 @@ class CourseController extends Controller
         if($request->refresh){
 
             $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','asc')->paginate(config('global.no_of_records')); 
-            file_put_contents($filepath, json_encode($courses,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('courses/'.$filename, json_encode($objs,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($courses,JSON_PRETTY_PRINT));
 
             foreach($courses as $obj){ 
                 $obj->products = $obj->products;
@@ -53,7 +54,8 @@ class CourseController extends Controller
                 $obj->tests = $course_data['tests'];
                 $filename = $obj->slug.'.json';
                 $filepath = $this->cache_path.$filename;
-                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+                //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+                 Storage::disk('s3')->put('courses/'.$filename, json_encode($objs,JSON_PRETTY_PRINT));
             }
 
             flash('Article Pages Cache Updated')->success();
@@ -132,9 +134,9 @@ class CourseController extends Controller
         //load course
         $filename = $id.'.json';
         $filepath = $this->cache_path.$filename;
-        if(file_exists($filepath))
-            $course = json_decode(file_get_contents($filepath));
-        else{
+        $course = json_encode(Storage::disk('s3')->get('courses/'.$filename));
+        if(!$course)
+            
             $course = Course::where('slug',$id)->first();
             $course_data = $course->category_list($course->slug);
             $course->categories = json_decode(json_encode($course_data['categories']));
