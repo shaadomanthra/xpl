@@ -33,7 +33,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 				return view('client_bfs')->with('welcome',1);
 			if( $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
 		      return view('welcome')->with('welcome',1);
-		 elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+		 elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' )
 		    return view('welcome3')->with('welcome3',1);
 		 elseif($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'p24.in')
 		 	return view('p24_welcome')->with('welcome3',1);
