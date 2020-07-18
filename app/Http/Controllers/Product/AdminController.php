@@ -68,7 +68,7 @@ class AdminController extends Controller
         $branches = Branch::all();
         $metrics = Metric::all();
 
-        if(file_exists($filename) && !$request->get('refresh')){
+        if(!$request->get('refresh')){
             $data =   json_decode(file_get_contents($filename),true);
             $data['users']['total'] = User::count();
 
