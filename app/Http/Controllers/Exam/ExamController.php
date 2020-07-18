@@ -461,8 +461,8 @@ class ExamController extends Controller
              /* If image is given upload and store path */
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
-                $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+                $filename = $request->get('slug').'.'.strtolower($file->getClientOriginalExtension());
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
 
                 $request->merge(['image' => $path]);
             }else{
@@ -473,8 +473,8 @@ class ExamController extends Controller
             if(isset($request->all()['file2_'])){
                 $file      = $request->all()['file2_'];
 
-                $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file2_'),$filename);
+                $filename = $request->get('slug').'_banner.'.strtolower($file->getClientOriginalExtension());
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file2_'),$filename);
             }
 
 
@@ -866,17 +866,17 @@ class ExamController extends Controller
             /* If image is given upload and store path */
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
-                $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file_'),$filename);
+                $filename = $request->get('slug').'.'.strtolower($file->getClientOriginalExtension());
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
                 $request->merge(['image' => $path]);
             }
            
            if(isset($request->all()['file2_'])){
-                Storage::disk('public')->delete('articles/'.$exam->slug.'_banner.jpg');
-                Storage::disk('public')->delete('articles/'.$exam->slug.'_banner.png');
+                Storage::disk('s3')->delete('articles/'.$exam->slug.'_banner.jpg');
+                Storage::disk('s3')->delete('articles/'.$exam->slug.'_banner.png');
                 $file      = $request->all()['file2_'];
-                $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('public')->putFileAs('articles', $request->file('file2_'),$filename);
+                $filename = $request->get('slug').'_banner.'.strtolower($file->getClientOriginalExtension());
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file2_'),$filename);
             }
 
 
