@@ -181,7 +181,7 @@
                  <tr>
                   <th scope="row">{{ $k+1}}</th>
                   <td>
-                    <a href="{{ route('assessment.details',$test->slug) }}">{{$test->name}}</a>
+                    <a href="{{ route('assessment.analysis',$test->slug) }}">{{$test->name}}</a>
                   </td>
 
                   <td>
