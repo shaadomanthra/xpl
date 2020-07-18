@@ -166,7 +166,7 @@
 
 @if(count(\auth::user()->tests())!=0)
   <div class="rounded table-responsive ">
-            <table class="table table-bordered ">
+            <table class="table table-bordered {{$i=0}}">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -179,7 +179,7 @@
               <tbody>
                 @foreach(\auth::user()->tests() as $k=>$test)
                  <tr>
-                  <th scope="row">{{ $k+1}}</th>
+                  <th scope="row">{{ $i=$i+1}}</th>
                   <td>
                     <a href="{{ route('assessment.analysis',$test->slug) }}">{{$test->name}}</a>
                   </td>
