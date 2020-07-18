@@ -48,14 +48,14 @@
 		@endif
 	</div>
 
-		@if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg'))
+		@if(Storage::disk('s3')->exists('articles/'.$exam->slug.'_banner.jpg'))
                 <div class="my-3">
                   <picture class="">
                     <img 
                     src="{{ asset('/storage/articles/'.$exam->slug.'_banner.jpg') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
                   </picture>
                 </div>
-            @elseif(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.png'))
+            @elseif(Storage::disk('s3')->exists('articles/'.$exam->slug.'_banner.png'))
                 <div class="my-3">
                   <picture class="">
                     <img 
@@ -157,18 +157,18 @@
 		@endif
 
 
-		@if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg'))
+		@if(Storage::disk('s3')->exists('articles/'.$exam->slug.'_banner.jpg'))
                 <div class="my-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/articles/'.$exam->slug.'_banner.jpg') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
+                    src="{{ Storage::disk('s3')->url('articles/'.$exam->slug.'_banner.jpg') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
                   </picture>
                 </div>
-            @elseif(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.png'))
+            @elseif(Storage::disk('s3')->exists('articles/'.$exam->slug.'_banner.png'))
                 <div class="my-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/articles/'.$exam->slug.'_banner.png') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
+                    src="{{ Storage::disk('s3')->url('articles/'.$exam->slug.'_banner.png') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
                   </picture>
                 </div>
             @else
@@ -239,12 +239,12 @@
 					</div>
 				</div>
 			</div>
-			@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_1.jpg'))
+			@if(Storage::disk('s3')->exists('tests/'.$user->username.'_'.$exam->id.'_1.jpg'))
 			<div class="row mb-4">
 				@for($i=1;$i<21;$i++)
-					@if(Storage::disk('public')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
+					@if(Storage::disk('s3')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
 					<div class='col-6 col-md-2'>
-						<img src="{{ asset('/storage/tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
+						<img src="{{ Storage::disk('s3')->url('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
 					</div>
 					@endif
 				@endfor

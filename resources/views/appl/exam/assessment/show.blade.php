@@ -14,10 +14,10 @@
 
 
 	 @if(isset($exam->image))
-	      @if(Storage::disk('public')->exists($exam->image))
+	      @if(Storage::disk('s3')->exists($exam->image))
 	      <picture>
 			  <img 
-      src="{{ asset('/storage/'.$exam->image) }} " class="w-100 d-print-none" alt="{{  $exam->name }}" style='max-width:200px;'>
+      src="{{ Storage::disk('s3')->url($exam->image) }} " class="w-100 d-print-none" alt="{{  $exam->name }}" style='max-width:200px;'>
 			</picture>
 	      @endif
 	  @else

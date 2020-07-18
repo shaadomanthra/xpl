@@ -59,11 +59,11 @@
             <div class="row mb-2">
             <div class="col-5  col-md-4 col-lg-3 pt-1">
               @if(isset($exam->image))
-                @if(Storage::disk('public')->exists($exam->image))
+                @if(Storage::disk('s3')->exists($exam->image))
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/'.$exam->image) }} " class="d-print-none w-100" alt="{{  $exam->name }}" style='max-width:200px;'>
+                    src="{{ Storage::disk('s3')->url($exam->image) }} " class="d-print-none w-100" alt="{{  $exam->name }}" style='max-width:200px;'>
                   </picture>
                 </div>
                 @endif
@@ -315,19 +315,19 @@
         <div class="card-body">
             <h4 class="mb-3"><i class="fa fa-angle-right"></i> Banner in report page <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=image" class="float-right"><i class="fa fa-edit"></i> edit</a> </h4>
             <hr>
-            @if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg'))
+            @if(Storage::disk('s3')->exists('articles/'.$exam->slug.'_banner.jpg'))
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/articles/'.$exam->slug.'_banner.jpg') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
+                    src="{{ Storage::disk('s3')->url('articles/'.$exam->slug.'_banner.jpg') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
                   </picture>
                 </div>
                 <a href="{{ route('exam.show',$exam->slug)}}?delete=banner" class="btn btn-danger btn-sm"> delete banner</a>
-            @elseif(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.png'))
+            @elseif(Storage::disk('s3')->exists('articles/'.$exam->slug.'_banner.png'))
                 <div class="mb-3">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/articles/'.$exam->slug.'_banner.png') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
+                    src="{{ Storage::disk('s3')->url('articles/'.$exam->slug.'_banner.png') }} " class="d-print-none w-100" alt="{{  $exam->name }}" >
                   </picture>
                 </div>
                 <a href="{{ route('exam.show',$exam->slug)}}?delete=banner" class="btn btn-danger btn-sm"> delete banner</a>
