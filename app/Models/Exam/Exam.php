@@ -133,7 +133,9 @@ class Exam extends Model
           $q->e = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->e);
           $q->explanation = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->explanation);
           $q->save();
-          echo $q->id;
+          echo $q->id."<br>";
+          echo $q->question;
+          echo "<br><br>";
         }
       }
 
