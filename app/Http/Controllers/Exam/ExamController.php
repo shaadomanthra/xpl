@@ -467,7 +467,7 @@ class ExamController extends Controller
                     $extension = strtolower($file->getClientOriginalExtension());
                 $filename = $request->get('slug').'.'.$extension;
 
-                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename,'public');
 
                 $request->merge(['image' => $path]);
             }else{
@@ -484,7 +484,7 @@ class ExamController extends Controller
                     $extension = strtolower($file->getClientOriginalExtension());
 
                 $filename = $request->get('slug').'_banner.'.$extension;
-                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file2_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file2_'),$filename,'public');
             }
 
 
@@ -883,7 +883,7 @@ class ExamController extends Controller
                     $extension = strtolower($file->getClientOriginalExtension());
 
                 $filename = $request->get('slug').'.'.$extension;
-                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename,'public');
                 $request->merge(['image' => $path]);
             }
            
@@ -897,7 +897,7 @@ class ExamController extends Controller
                 else
                     $extension = strtolower($file->getClientOriginalExtension());
                 $filename = $request->get('slug').'_banner.'.$extension;
-                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file2_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file2_'),$filename,'public');
             }
 
 
