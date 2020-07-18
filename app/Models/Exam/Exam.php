@@ -133,6 +133,7 @@ class Exam extends Model
           $q->e = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->e);
           $q->explanation = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->explanation);
 
+          $q->question = str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->question);
           $q->a = str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->a);
           $q->b = str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->b);
           $q->c = str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->c);
