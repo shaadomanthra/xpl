@@ -60,7 +60,7 @@ class AdminController extends Controller
         $users = new AdminController;
         $extension = 'json';
 
-        $filename  = $this->cache_path.'analytics_'.substr (url('/'), 8,5).'.' . $extension;
+        $filename  = 'https://s3-xplore.s3.ap-south-1.amazonaws.com/analytics_xplore.co.in.json';
        
 
         $services = Service::all();
