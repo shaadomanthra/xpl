@@ -35,7 +35,7 @@
 		@endif
 	</div>
 
-	@include('appl.exam.assessment.block.banner')
+	@include('appl.exam.assessment.blocks.banner')
 
 	@else
 
@@ -105,7 +105,7 @@
 		@endif
 
 
-		@include('appl.exam.assessment.block.banner')
+		@include('appl.exam.assessment.blocks.banner')
        
         
 	
