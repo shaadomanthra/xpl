@@ -67,7 +67,7 @@
           The following action will save the responses and ends the test.
         </div>
         
-
+<!--
         <div class="row mb-3">
           <div class="col-12 col-lg-2">
             <div class="row">
@@ -97,6 +97,7 @@
             </div>
           </div>
         </div>
+      -->
         
       </div>
       <div class="modal-footer">
