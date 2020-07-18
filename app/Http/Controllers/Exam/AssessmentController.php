@@ -1627,6 +1627,7 @@ class AssessmentController extends Controller
         $details['correct_time'] =0;
         $details['incorrect_time']=0;
         $details['unattempted_time']=0;
+        $topics = false;
 
         $i=0;
         if($exam->slug=='psychometric-test')
@@ -1728,6 +1729,9 @@ class AssessmentController extends Controller
             
             //$ques = Question::where('id',$q->id)->first();
             //dd($secs[$t->section_id]);
+            if($ques_keys[$t->question_id]['topic'])
+                $topics = true;
+
             if($t->response){
                 $details['attempted'] = $details['attempted'] + 1;  
                 if($t->accuracy==1){
@@ -1806,6 +1810,10 @@ class AssessmentController extends Controller
                 $tests_overall->cheat_detect = $request->get('cheat_detect');
             $tests_overall->save();
         }
+
+        if(!$topics)
+        unset($details['c']);
+        //dd($details);
 
         //dd($sections);
 

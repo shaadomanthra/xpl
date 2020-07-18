@@ -159,7 +159,7 @@ class UserController extends Controller
     elseif($month=='lastbeforemonth')
         $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month);
     else
-        $users = User::where('client_slug',subdomain());
+        $users = User::where('client_slug',subdomain())->with('roles');
 
      if($r->get('role')){
         $rol = $r->get('role');
@@ -179,7 +179,7 @@ class UserController extends Controller
         $users = $users->whereIn('id',$uids);
     }
 
-    $users = $users->orderBy('id','desc')->paginate(30);
+    $users = $users->orderBy('id','desc')->with('roles')->paginate(30);
 
 
     if($uids){
@@ -207,6 +207,7 @@ class UserController extends Controller
         $user = User::where('username',$r->get('username'))->first();
     else    
         $user = \auth::user();
+
 
     if(request()->get('export')){
         $users = User::where('client_slug',subdomain())->get();
