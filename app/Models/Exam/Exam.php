@@ -121,6 +121,7 @@ class Exam extends Model
 
     public function changeImageUrls(){
       $exam = $this;
+      $exam = Exam::where('id',$exam->id)->first();
       foreach($exam->sections as $s){
       
         foreach($s->questions as $q){
@@ -134,6 +135,7 @@ class Exam extends Model
           $q->save();
         }
       }
+
     }
 
     public function question_count()
