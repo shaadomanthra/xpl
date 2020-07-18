@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -69,7 +70,7 @@ class AdminController extends Controller
         $metrics = Metric::all();
 
         if(!$request->get('refresh')){
-            $data =   json_decode(file_get_contents($filename),true);
+            $data =   json_decode(Storage::disk('s3')->get('analytics_xplore.co.in.json'));
             $data['users']['total'] = User::count();
 
             return view('appl.product.admin.index')
