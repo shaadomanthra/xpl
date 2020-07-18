@@ -900,7 +900,6 @@ class ExamController extends Controller
                 $path = Storage::disk('s3')->putFileAs('articles', $request->file('file2_'),$filename,'public');
             }
 
-
             //dd($request->all());
             $exam->name = $request->name;
             $exam->slug = $request->slug;
