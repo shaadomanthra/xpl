@@ -70,7 +70,7 @@ class AdminController extends Controller
         $metrics = Metric::all();
 
         if(!$request->get('refresh')){
-            $data =   json_decode(Storage::disk('s3')->get('analytics_xplore.co.in.json'));
+            $data =   json_decode(Storage::disk('s3')->get('analytics_xplore.co.in.json'),true);
             $data['users']['total'] = User::count();
 
             return view('appl.product.admin.index')
