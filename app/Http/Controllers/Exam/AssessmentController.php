@@ -1612,6 +1612,8 @@ class AssessmentController extends Controller
         foreach($exam->sections as $section){
             foreach($section->questions as $q){
                 $questions[$i] = $q;
+                $ques_keys[$q->id]['topic'] = $q->topic;
+                $ques_keys[$q->id]['section'] = $section->name;
                 $sections[$section->name] = $secs[$section->id][0];
                 //$secs[$section->id] = $section;
                 $i++;
@@ -1626,6 +1628,7 @@ class AssessmentController extends Controller
         $details['incorrect_time']=0;
         $details['unattempted_time']=0;
 
+        $i=0;
         if($exam->slug=='psychometric-test')
         {
             $d['extroversion'] = 20;
@@ -1727,16 +1730,16 @@ class AssessmentController extends Controller
             if($t->response){
                 $details['attempted'] = $details['attempted'] + 1;  
                 if($t->accuracy==1){
-                    //$details['c'][$c]['category'] = $t->question->categories->first();
-                    //$details['c'][$c]['question'] = $t->question;
+                    $details['c'][$c]['topic'] = $ques_keys[$t->question_id]['topic'];
+                    $details['c'][$c]['section'] = $ques_keys[$t->question_id]['section'];
                     $c++;
                     $details['correct'] = $details['correct'] + 1;
                     $details['correct_time'] = $details['correct_time'] + $t->time;
                     $details['marks'] = $details['marks'] + $secs[$t->section_id][0]->mark;
                 }
                 else{
-                    //$details['i'][$i]['category'] = $t->question->categories->first();
-                    //$details['i'][$i]['question'] = $t->question;
+                    $details['i'][$i]['topic'] = $ques_keys[$t->question_id]['topic'];
+                    $details['i'][$i]['section'] = $ques_keys[$t->question_id]['section'];
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
                     $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
@@ -1745,17 +1748,17 @@ class AssessmentController extends Controller
 
                 
             }else if($t->code){
-                $details['attempted'] = $details['attempted'] + 1; 
-                //$details['i'][$i]['category'] = $t->question->categories->first();
-                    //$details['i'][$i]['question'] = $t->question;
+                    $details['attempted'] = $details['attempted'] + 1; 
+                    $details['i'][$i]['topic'] = $ques_keys[$t->question_id]['topic'];
+                    $details['i'][$i]['section'] = $ques_keys[$t->question_id]['section'];
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
                     $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
                     $details['marks'] = $details['marks'] - $secs[$t->section_id][0]->negative; 
             }
             else{
-                //$details['u'][$u]['category'] = $t->question->categories->last();
-                //$details['u'][$u]['question'] = $t->question;
+                $details['u'][$u]['topic'] = $ques_keys[$t->question_id]['topic'];
+                    $details['u'][$u]['section'] = $ques_keys[$t->question_id]['section'];
                     $u++;
                 $details['unattempted'] = $details['unattempted'] + 1;  
                 $details['unattempted_time'] = $details['unattempted_time'] + $t->time;

@@ -254,8 +254,85 @@
 		</div>
 		@endif
 
+		
+		
+
+		@if(!$exam->solutions)
+		@if(isset($details['c']))
+			<div class="card mt-3"  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
+			<div class="card-body">
+				<h1> Concept Breakup</h1>
+				<p>
+				<div class="row">
+					<div class="col-12 col-md-4">
+
+						<div class="p-1 mb-3 rounded" style="background: rgba(75, 192, 192, 0.2); border:1px solid rgba(75, 192, 192, 1);">
+							Correct ({{$details['correct_time']}})
+						</div>
+
+						@if(isset($details['c']))
+						@foreach($details['c'] as $m=>$item)
+						@if($item['topic'])
+						<div class="mb-3">
+							<div class="">{{ ucfirst($item['topic']) }} - <span class="text-secondary"> {{ ucfirst($item['section']) }} </span>
+							</div>
+						</div>
+						@endif
+						@endforeach
+						@else
+						<span class="text-secondary">- None -</span>
+						@endif
+						
+					</div>
+
+					<div class="col-12 col-md-4">
+
+						<div class="p-1 mb-3 rounded" style="background: rgba(255, 99, 132, 0.2); border:1px solid rgba(255,99,132,1)">
+							InCorrect ({{$details['incorrect_time']}})
+						</div>
+						@if(isset($details['i']))
+						@foreach($details['i'] as $m=>$item)
+						@if($item['topic'])
+						<div class="mb-3">
+							<div class="">{{ ucfirst($item['topic']) }} - <span class="text-secondary"> {{ ucfirst($item['section']) }} </span>
+							</div>
+						</div>
+						@endif
+						@endforeach
+						@else
+						<span class="text-secondary">- None -</span>
+						@endif
+						
+					</div>
+					<div class="col-12 col-md-4">
+
+						<div class="p-1 mb-3 rounded" style="background: rgba(255, 206, 86, 0.2); border:1px solid rgba(255, 206, 86, 1)">
+							Unattempted ({{$details['unattempted_time']}})
+						</div>
+						@if(isset($details['u']))
+						@foreach($details['u'] as $m=>$item)
+						@if($item['topic'])
+						<div class="mb-3">
+							<div class="">{{ ucfirst($item['topic']) }} - <span class="text-secondary"> {{ ucfirst($item['section']) }} </span>
+							</div>
+						</div>
+						@endif
+						@endforeach
+						@else
+						<span class="text-secondary">- None -</span>
+						@endif
+						
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+		@endif
+		@endif
+
 		@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-			<div class="card">
+			<div class="card mt-3">
 				<div class="card-body">
 					<div class="row">
 						<div class="col-12 col-md-3">
@@ -280,87 +357,6 @@
 					</div>
 				</div>
 			</div>
-		@endif
-		
-
-		@if(!$exam->solutions)
-		@if(isset($details['c']))
-			<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
-			<div class="card-body">
-				<h1> Concept Breakup</h1>
-				<p>
-				<div class="row">
-					<div class="col-12 col-md-4">
-
-						<div class="p-1 mb-3 rounded" style="background: rgba(75, 192, 192, 0.2); border:1px solid rgba(75, 192, 192, 1);">
-							Correct ({{$details['correct_time']}})
-						</div>
-
-						@if(isset($details['c']))
-						@foreach($details['c'] as $m=>$item)
-						@if($item['category']['name'])
-						<div class="mb-3">
-							<div class="">{{ ucfirst($item['category']['name']) }}</div>
-							<div class="blogd">
-							<a class="orange-link" href="{{route('course.show',$item['question']->project->slug)}}#{{$item['category']['slug']}}"><div class="text-small"><small><i class="fa fa-youtube-play"></i> Learn Now </small></div></a>
-							</div>
-						</div>
-						@endif
-						@endforeach
-						@else
-						<span class="text-secondary">- None -</span>
-						@endif
-						
-					</div>
-
-					<div class="col-12 col-md-4">
-
-						<div class="p-1 mb-3 rounded" style="background: rgba(255, 99, 132, 0.2); border:1px solid rgba(255,99,132,1)">
-							InCorrect ({{$details['incorrect_time']}})
-						</div>
-						@if(isset($details['i']))
-						@foreach($details['i'] as $m=>$item)
-						@if($item['category']['name'])
-						<div class="mb-3">
-							<div class="">{{ ucfirst($item['category']['name']) }}</div>
-							<div class="blogd">
-							<a class="orange-link" href="{{route('course.show',$item['question']->project->slug)}}#{{$item['category']['slug']}}"><div class="text-small"><small><i class="fa fa-youtube-play"></i> Learn Now </small></div></a>
-							</div>
-						</div>
-						@endif
-						@endforeach
-						@else
-						<span class="text-secondary">- None -</span>
-						@endif
-						
-					</div>
-					<div class="col-12 col-md-4">
-
-						<div class="p-1 mb-3 rounded" style="background: rgba(255, 206, 86, 0.2); border:1px solid rgba(255, 206, 86, 1)">
-							Unattempted ({{$details['unattempted_time']}})
-						</div>
-						@if(isset($details['u']))
-						@foreach($details['u'] as $m=>$item)
-						@if($item['category']['name'])
-						<div class="mb-3">
-							<div class="">{{ ucfirst($item['category']['name']) }}</div>
-							<div class="blogd">
-							<a class="orange-link" href="{{route('course.show',$item['question']->project->slug)}}#{{$item['category']['slug']}}"><div class="text-small"><small><i class="fa fa-youtube-play"></i> Learn Now </small></div></a>
-							</div>
-						</div>
-						@endif
-						@endforeach
-						@else
-						<span class="text-secondary">- None -</span>
-						@endif
-						
-					</div>
-
-				</div>
-			</div>
-
-		</div>
-		@endif
 		@endif
 
 	  @else

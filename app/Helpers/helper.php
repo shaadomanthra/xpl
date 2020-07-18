@@ -1,5 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+
+if (! function_exists('s3_upload')) {
+    function s3_upload($name,$path)
+    {
+
+        Storage::disk('s3')->put('summernote/'.$name,file_get_contents($path),'public'); 
+        return  Storage::disk('s3')->url('summernote/'.$name);
+    }
+}
 
 if (! function_exists('image_resize')) {
     function image_resize($image_path,$size)
@@ -91,7 +101,7 @@ if (! function_exists('summernote_imageupload')) {
                     $image_name=  $user->username.'_'. time().'_'.$k.'_'.rand().'.png';
 
                     $temp_path = storage_path() . $base_folder . 'temp_' . $image_name;
-                    $path = storage_path() . $base_folder . $image_name;
+                    //$path = storage_path() . $base_folder . $image_name;
                     file_put_contents($temp_path, $data);
                     //resize
                     $imgr = Image::make($temp_path);
@@ -99,19 +109,13 @@ if (! function_exists('summernote_imageupload')) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     });
-                    $imgr->save($path);
+                    $imgr->save($temp_path);
 
-                    $imgr = Image::make($temp_path);
-                    $imgr->resize(800, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    });
-                    $imgr->save($path);
-
+                    $url = s3_upload($image_name,$temp_path);
                     unlink(trim($temp_path));
 
                     $img->removeAttribute('src');
-                    $img->setAttribute('src', $web_path.$image_name);
+                    $img->setAttribute('src', $url);
                     $img->setAttribute('class', 'image');
                 }
                 

@@ -115,8 +115,25 @@ class Exam extends Model
       foreach($exam->sections as $m=>$section){
         $exam->sections->questions = $section->questions;
       }
-      file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
+      //file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
       $this->updateCache();
+    }
+
+    public function changeImageUrls(){
+      $exam = $this;
+      foreach($exam->sections as $s){
+      
+        foreach($s->questions as $q){
+          $q->question = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->question);
+          $q->a = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->a);
+          $q->b = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->b);
+          $q->c = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->c);
+          $q->d= str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->d);
+          $q->e = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->e);
+          $q->explanation = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->explanation);
+          $q->save();
+        }
+      }
     }
 
     public function question_count()

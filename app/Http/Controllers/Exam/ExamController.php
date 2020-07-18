@@ -561,6 +561,11 @@ class ExamController extends Controller
         }
         $this->authorize('view', $exam);
 
+        if(request()->get('refresh')){
+            flash('Image urls updated to AWS S3')->success();
+            $exam->changeImageUrls();
+        }
+
         if(request()->get('delete')=='banner'){
             if(Storage::disk('public')->exists('articles/'.$exam->slug.'_banner.jpg')){
                 Storage::disk('public')->delete('articles/'.$exam->slug.'_banner.jpg');

@@ -415,7 +415,8 @@ class QuestionController extends Controller
     }
 
 
-     public function show($project_slug,$id)
+
+    public function show($project_slug,$id)
     {
         $question = Question::where('id',$id)->first();
 
