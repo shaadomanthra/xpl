@@ -36,10 +36,10 @@
 
 
 	<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
-		@if($_SERVER['HTTP_HOST'] == 'smec.xplore.co.in' )
+		@if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
 		<div class="card-body">
 			Thank you.You have completed your test and your responses are recorded for internal evaluation.
-			Results will be announced on 8th July 2020. Kindly visit <a href="http://www.smec.ac.in">www.smec.ac.in</a>
+			Results will be announced tomorrow 20th July 2020.
 		</div>
 		@else
 			<div class="card-body">
