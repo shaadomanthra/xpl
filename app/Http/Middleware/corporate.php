@@ -60,7 +60,7 @@ class Corporate
                             abort(403,'Site services are terminated');
                         $request->session()->put('client',$client);
                 }else{
-                    abort(404,'Site not found');
+                    abort(404,'Site not found - '.subdomain());
                 } 
             }else{
                 $filename = 'corporate.json';
