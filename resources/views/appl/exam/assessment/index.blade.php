@@ -45,7 +45,7 @@
   </a>
   @foreach($examtypes as $et)
   <a href="{{ route('assessment.index')}}?filter={{$et->slug}}" class="list-group-item list-group-item-action  {{  (request()->get('filter')==$et->slug) ? 'active' : ''  }} ">
-     {{ $et->name }} ({{ count($et->exams->whereIn('status',[1,2]))}})
+     {{ $et->name }} 
   </a>
   @endforeach
 
