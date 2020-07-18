@@ -132,6 +132,14 @@ class Exam extends Model
           $q->d= str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->d);
           $q->e = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->e);
           $q->explanation = str_replace('https://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->explanation);
+
+          $q->a = str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->a);
+          $q->b = str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->b);
+          $q->c = str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->c);
+          $q->d= str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->d);
+          $q->e = str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->e);
+          $q->explanation = str_replace('http://xplore.co.in/storage', 'https://s3-xplore.s3.ap-south-1.amazonaws.com', $q->explanation);
+
           $q->save();
           echo $q->id."<br>";
           echo $q->question;
