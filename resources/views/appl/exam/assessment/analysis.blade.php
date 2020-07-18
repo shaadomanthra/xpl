@@ -272,7 +272,7 @@
 						@if(isset($details['c']))
 						@foreach($details['c'] as $m=>$item)
 						@if($item['topic'])
-						<div class="mb-3">
+						<div class="mb-2">
 							<div class="">{{ ucfirst($item['topic']) }} - <span class="text-secondary"> {{ ucfirst($item['section']) }} </span>
 							</div>
 						</div>
@@ -287,12 +287,12 @@
 					<div class="col-12 col-md-4">
 
 						<div class="p-1 mb-3 rounded" style="background: rgba(255, 99, 132, 0.2); border:1px solid rgba(255,99,132,1)">
-							InCorrect ({{$details['incorrect_time']}})
+							Incorrect ({{$details['incorrect_time']}})
 						</div>
 						@if(isset($details['i']))
 						@foreach($details['i'] as $m=>$item)
 						@if($item['topic'])
-						<div class="mb-3">
+						<div class="mb-2">
 							<div class="">{{ ucfirst($item['topic']) }} - <span class="text-secondary"> {{ ucfirst($item['section']) }} </span>
 							</div>
 						</div>
@@ -311,7 +311,7 @@
 						@if(isset($details['u']))
 						@foreach($details['u'] as $m=>$item)
 						@if($item['topic'])
-						<div class="mb-3">
+						<div class="mb-2">
 							<div class="">{{ ucfirst($item['topic']) }} - <span class="text-secondary"> {{ ucfirst($item['section']) }} </span>
 							</div>
 						</div>

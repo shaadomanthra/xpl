@@ -262,7 +262,7 @@
 					<div class="col-12 col-md-4">
 
 						<div class="p-1 mb-3 rounded" style="background: rgba(255, 99, 132, 0.2); border:1px solid rgba(255,99,132,1)">
-							InCorrect ({{$details['incorrect_time']}})
+							Incorrect ({{$details['incorrect_time']}})
 						</div>
 						@if(isset($details['i']))
 						@foreach($details['i'] as $m=>$item)
