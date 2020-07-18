@@ -396,7 +396,7 @@ class ClientController extends Controller
                     $param = $param.$key."=".$value."&";
             }
 
-            Cache::forget('client_'.$client->slug)
+            Cache::forget('client_'.$client->slug);
             Cache::forever('client_'.$client->slug,$client);
             
             // $filename = $this->cache_path.$client->slug.'.json';
