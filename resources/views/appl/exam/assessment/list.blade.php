@@ -25,7 +25,7 @@
                 <span class="badge badge-info">PREMIUM</span>
                 @endif
                   <h1>{{ $exam->name }}</h1>
-                    {{ $exam->question_count() }} Questions | {{ $exam->time() }} min<br>
+                    {{ $exam->time() }} min<br>
 
                     <div class="pt-2">
                   
