@@ -150,6 +150,17 @@ class UserController extends Controller
 
     public function userlist(Request $r){
 
+
+    if(request()->get('export')){
+        $users = User::where('client_slug',subdomain())->get();
+        request()->session()->put('users',$users);
+        $name = "Userlist_".$user->client_slug.".xlsx";
+        ob_end_clean(); // this
+        ob_start(); 
+        return Excel::download(new UExport, $name);
+
+    }
+
     $month = $r->get('month');
 
     if($month=='thismonth')
@@ -209,21 +220,49 @@ class UserController extends Controller
         $user = \auth::user();
 
 
-    if(request()->get('export')){
-        $users = User::where('client_slug',subdomain())->get();
-        request()->session()->put('users',$users);
-        $name = "Userlist_".$user->client_slug.".xlsx";
-        ob_end_clean(); // this
-        ob_start(); 
-        return Excel::download(new UExport, $name);
+    
 
-    }
+
 
     
       return view('appl.user.userlist')
                     ->with('count',$count)
                     ->with('users',$users)->with('data',$data)->with('user',$user);
 
+    }
+
+    public function exportCsv($users)
+    {
+   $fileName = 'users.csv';
+
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('Title', 'Assign', 'Description', 'Start Date', 'Due Date');
+
+        $callback = function() use($tasks, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($tasks as $task) {
+                $row['Title']  = $task->title;
+                $row['Assign']    = $task->assign->name;
+                $row['Description']    = $task->description;
+                $row['Start Date']  = $task->start_at;
+                $row['Due Date']  = $task->end_at;
+
+                fputcsv($file, array($row['Title'], $row['Assign'], $row['Description'], $row['Start Date'], $row['Due Date']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     /**

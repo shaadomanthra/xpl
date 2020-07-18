@@ -11,11 +11,11 @@
           <div class="row">
             <div class='col-2 col-md-3'>
               @if(isset($e->image))
-                @if(Storage::disk('public')->exists($e->image))
+                @if(Storage::disk('s3')->exists($e->image))
                 <div class=" text-center">
                   <picture class="">
                     <img 
-                    src="{{ asset('/storage/'.$e->image) }} " class="d-print-none w-100" alt="{{  $e->name }}" style='max-width:80px;'>
+                    src="{{ Storage::disk('s3')->url($e->image) }} " class="d-print-none w-100" alt="{{  $e->name }}" style='max-width:80px;'>
                   </picture>
                 </div>
                 @endif

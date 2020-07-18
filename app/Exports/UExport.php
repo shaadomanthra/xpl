@@ -59,7 +59,6 @@ class UExport implements FromCollection
 
         $users->prepend($ux);
 
-        dd($users);
         return $users;
     }
 }
