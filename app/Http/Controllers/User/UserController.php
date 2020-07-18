@@ -67,16 +67,16 @@ class UserController extends Controller
 
                 if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpg'))
                 {
-                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpg')
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpg');
                 }
                 if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.png'))
                 {
-                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.png')
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.png');
                 }
 
                 if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpeg'))
                 {
-                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg')
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg');
                 }
 
                 return view('appl.user.'.$view)
@@ -454,9 +454,13 @@ class UserController extends Controller
                 }
 
                 $file      = $request->all()['file_'];
+                try {
                 $filename = 'profile_'.$username.'.'.$file->getClientOriginalExtension();
                 $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename,'public');
                 $request->merge(['image' => $path]);
+                } catch (Exception $e) {
+
+                }
 
             }else{
                 $request->merge(['image' => '']);

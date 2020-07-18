@@ -273,7 +273,9 @@ class AssessmentController extends Controller
         $filename = $test.'.json';
         $filepath = $this->cache_path.$filename;
 
+
         $exam = Cache::get('test_'.$test);
+
         if(!$exam)
         if(file_exists($filepath))
         {
@@ -360,7 +362,10 @@ class AssessmentController extends Controller
         $section_questions = array();
         foreach($exam->sections as $section){
             $qset = $section->questions;
-            shuffle($qset);
+            
+
+            //shuffle($qset);
+            $qset = $qset->shuffle();
             $k=0;
             foreach( $qset as $q){
                 $q->dynamic = rand(1,4);
@@ -369,8 +374,6 @@ class AssessmentController extends Controller
                 $q = $this->option_swap2($q,$q->dynamic);
 
                 
-                
-
                 if($i==0){
                     $id = $q->id;
                 }
@@ -431,6 +434,7 @@ class AssessmentController extends Controller
         $exam = Exam::where('slug',$test)->first();
         $code = $request->get('code');
         $ajax = $request->get('ajax');
+
         if(!$ajax)
         if(!$code){
            if($exam->status == 2){

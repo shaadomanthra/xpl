@@ -154,16 +154,16 @@ class User extends Authenticatable
         $username = $this->username;
         if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpg'))
                 {
-                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpg')
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpg');
                 }
                 if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.png'))
                 {
-                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.png')
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.png');
                 }
 
                 if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpeg'))
                 {
-                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg')
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg');
                 }
         return $user->image;
     }

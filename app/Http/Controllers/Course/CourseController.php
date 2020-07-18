@@ -14,6 +14,7 @@ use PacketPrep\Models\Product\Order;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Course\Practice;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Facades\DB;
 
@@ -134,8 +135,10 @@ class CourseController extends Controller
         //load course
         $filename = $id.'.json';
         $filepath = $this->cache_path.$filename;
-        $course = json_encode(Storage::disk('s3')->get('courses/'.$filename));
-        if(!$course)
+
+        if(Storage::disk('s3')->exists('courses/'.$filename))
+            $course = json_encode(Storage::disk('s3')->get('courses/'.$filename));
+        else{
             
             $course = Course::where('slug',$id)->first();
             $course_data = $course->category_list($course->slug);
@@ -146,6 +149,7 @@ class CourseController extends Controller
             $course->tests = $course_data['tests'];
 
         }
+
 
         if(!$course)
             abort('404','Course Not Found');
