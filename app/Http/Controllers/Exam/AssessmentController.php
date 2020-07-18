@@ -1615,7 +1615,7 @@ class AssessmentController extends Controller
                 $ques_keys[$q->id]['topic'] = $q->topic;
                 $ques_keys[$q->id]['section'] = $section->name;
                 $sections[$section->name] = $secs[$section->id][0];
-                //$secs[$section->id] = $section;
+                $secs[$section->id] = $section;
                 $i++;
             }
         }
@@ -1727,6 +1727,7 @@ class AssessmentController extends Controller
             }
             
             //$ques = Question::where('id',$q->id)->first();
+            //dd($secs[$t->section_id]);
             if($t->response){
                 $details['attempted'] = $details['attempted'] + 1;  
                 if($t->accuracy==1){
@@ -1735,7 +1736,7 @@ class AssessmentController extends Controller
                     $c++;
                     $details['correct'] = $details['correct'] + 1;
                     $details['correct_time'] = $details['correct_time'] + $t->time;
-                    $details['marks'] = $details['marks'] + $secs[$t->section_id][0]->mark;
+                    $details['marks'] = $details['marks'] + $secs[$t->section_id]->mark;
                 }
                 else{
                     $details['i'][$i]['topic'] = $ques_keys[$t->question_id]['topic'];
@@ -1743,7 +1744,7 @@ class AssessmentController extends Controller
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
                     $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
-                    $details['marks'] = $details['marks'] - $secs[$t->section_id][0]->negative; 
+                    $details['marks'] = $details['marks'] - $secs[$t->section_id]->negative; 
                 }
 
                 
@@ -1754,7 +1755,7 @@ class AssessmentController extends Controller
                     $i++;
                     $details['incorrect'] = $details['incorrect'] + 1; 
                     $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
-                    $details['marks'] = $details['marks'] - $secs[$t->section_id][0]->negative; 
+                    $details['marks'] = $details['marks'] - $secs[$t->section_id]->negative; 
             }
             else{
                 $details['u'][$u]['topic'] = $ques_keys[$t->question_id]['topic'];
@@ -1764,7 +1765,8 @@ class AssessmentController extends Controller
                 $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
             }
 
-            $details['total'] = $details['total'] + $secs[$t->section_id][0]->mark;
+            $details['total'] = $details['total'] + $secs[$t->section_id]->mark;
+            //dd();
 
         } 
         $success_rate = $details['correct']/count($questions);
