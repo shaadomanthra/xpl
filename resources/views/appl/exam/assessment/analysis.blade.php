@@ -257,7 +257,6 @@
 		
 		
 
-		@if(!$exam->solutions)
 		@if(isset($details['c']))
 			<div class="card mt-3"  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
 			<div class="card-body">
@@ -329,7 +328,7 @@
 
 		</div>
 		@endif
-		@endif
+
 
 		@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
 			<div class="card mt-3">
