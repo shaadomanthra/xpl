@@ -8,6 +8,7 @@
 
 @include('appl.exam.exam.xp_css')
 
+
 <div class='pb-4 dblue' >
   <div class='container'>
      <nav class="mb-0">
@@ -64,7 +65,7 @@
 
 <div class="container mt-4 mb-4">
 
- 
+ @include('flash::message')
 
   <div class="mt-4 mb-4">
     @if($users->total()!=0)

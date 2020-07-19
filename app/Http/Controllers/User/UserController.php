@@ -158,8 +158,9 @@ class UserController extends Controller
         $name = "Userlist_".subdomain().".csv";
         ob_end_clean(); // this
         ob_start(); 
-        return Excel::download(new UExport, $name, \Maatwebsite\Excel\Excel::CSV, ['Content-Type' => 'text/csv']);
+        Excel::store(new UExport, $name,'s3');
 
+        flash('Export is queued, it will be ready for download in sometime.')->success();
     }
 
     $month = $r->get('month');

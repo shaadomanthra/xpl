@@ -5,9 +5,14 @@ namespace PacketPrep\Exports;
 use PacketPrep\Models\User\User_Details;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use PacketPrep\User;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\Exportable;
 
-class UExport implements FromCollection
+class UExport implements FromCollection, ShouldQueue
 {
+    use Exportable;
+
     /**
     * @return \Illuminate\Support\Collection
     */
