@@ -151,13 +151,14 @@ class UserController extends Controller
     public function userlist(Request $r){
 
 
+
     if(request()->get('export')){
         $users = User::where('client_slug',subdomain())->get();
         request()->session()->put('users',$users);
-        $name = "Userlist_".$user->client_slug.".xlsx";
+        $name = "Userlist_".subdomain().".csv";
         ob_end_clean(); // this
         ob_start(); 
-        return Excel::download(new UExport, $name, Excel::CSV, ['Content-Type' => 'text/csv']);
+        return Excel::download(new UExport, $name, \Maatwebsite\Excel\Excel::CSV, ['Content-Type' => 'text/csv']);
 
     }
 
