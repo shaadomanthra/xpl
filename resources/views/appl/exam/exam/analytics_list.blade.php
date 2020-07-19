@@ -1,8 +1,4 @@
-
-        
-
-         
-      @if(count($report)!=0)
+@if(count($report)!=0)
         <div class="table-responsive">
           @if($exam->slug!='psychometric-test')
           <div class="bg-light p-3 border"> Sorted by : <span class="badge badge-warning">@if(request()->get('score')) Score @else Date @endif</span></div>

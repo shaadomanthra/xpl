@@ -689,19 +689,19 @@ class ExamController extends Controller
         $data = $r->get('score');
         if($code){
             if($data)
-            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->orderby('score','desc')->get();
+            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
             else
-            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->orderby('id','desc')->get();
+            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('id','desc')->get();
               
             $users = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
-            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->with('user')->orderBy('section_id')->get()->groupBy('user_id');
 
         }else{
             if($data)
-            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
             else
-            $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('id','desc')->get();
               
             $users = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
@@ -716,7 +716,7 @@ class ExamController extends Controller
                     ->orderBy('created_at','desc ')
                     ->pluck('id');  
 
-            $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$users)->orderby('score','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$users)->with('user')->orderby('score','desc')->get();
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
 

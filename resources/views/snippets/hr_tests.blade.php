@@ -62,7 +62,7 @@
         <div class="line" style="padding:1px;background:#ebf1fb"></div>  
         	<div class="p-4">
 
-          @if(count($e->latestUsers()))
+          
         	@foreach($e->latestUsers() as $t)
         		<div class="mb-2"><img src="@if($t->user->getImage()) {{ ($t->user->getImage())}}@else {{ Gravatar::src($t->user->email, 20) }}@endif" class="img-cirlce" style="width:20px" /> &nbsp; &nbsp;
         			<a href="{{ route('profile','@'.$t->user->username) }}" data-toggle="tooltip" title="View  Profile">{{$t->user->name}} </a>
@@ -76,9 +76,7 @@
 
         		<span class="float-right text-secondary"><small>{{$t->created_at->diffForHumans()}}</small></span></div>
         	@endforeach
-          @else
-          <span class="text-muted">No Participants</span>
-          @endif
+          
         </div>
         </div>
     </div>
