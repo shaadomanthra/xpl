@@ -128,4 +128,19 @@ class TestReport implements FromCollection, ShouldQueue
 
         return $result;
     }
+
+     public function startRow(): int 
+    {
+         return 1;
+    }
+
+    public function batchSize(): int
+    {
+        return 500;
+    }
+
+    public function chunkSize(): int
+    {
+        return 500;
+    }
 }

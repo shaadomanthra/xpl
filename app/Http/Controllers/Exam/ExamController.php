@@ -725,26 +725,66 @@ class ExamController extends Controller
            
         }
 
-        $u = User::whereIn('id',$users)->get()->keyBy('id');
+        $ux = User::whereIn('id',$users)->get()->keyBy('id');
 
         $view = $search ? 'analytics_list': 'analytics';
         
 
-        if(request()->get('export')){
+        // if(request()->get('export')){
             
-            request()->session()->put('result',$result);
-            request()->session()->put('sections',$sections);
-            request()->session()->put('exam_sections',$exam_sections);
-            request()->session()->put('users',$u);
-            $ename = str_replace('/', '-', $exam->name);
+        //     request()->session()->put('result',$result);
+        //     request()->session()->put('sections',$sections);
+        //     request()->session()->put('exam_sections',$exam_sections);
+        //     request()->session()->put('users',$u);
+        //     $ename = str_replace('/', '-', $exam->name);
+        //     $ename = str_replace(' ', '_', $ename);
+        //     $ename = str_replace('\\', '-', $ename);
+        //     $name = "Report_".$ename.".xlsx";
+        //     ob_end_clean(); // this
+        //     ob_start(); 
+        //     return Excel::download(new TestReport, $name);
+
+        // }
+
+
+        $ename = str_replace('/', '-', $exam->name);
             $ename = str_replace(' ', '_', $ename);
             $ename = str_replace('\\', '-', $ename);
-            $name = "Report_".$ename.".xlsx";
-            ob_end_clean(); // this
-            ob_start(); 
-            return Excel::download(new TestReport, $name);
+            $filename ="exports/Report_".$ename.".xlsx";
+            
+    if(request()->get('export')){
+        $usrs = User::whereIn('id',$users)->get();
+        request()->session()->put('result',$result);
+            request()->session()->put('sections',$sections);
+            request()->session()->put('exam_sections',$exam_sections);
+            request()->session()->put('users',$usrs);
+            
+        if(!Storage::disk('s3')->exists($filename))
+            Storage::disk('s3')->delete($filename);
 
+        
+        //ini_set('memory_limit', '1024M');
+        Excel::store(new TestReport, $filename,'s3');
+
+        flash('Export is queued, it will be ready for download in 5min.')->success();
+        dd('Export is queued, it will be ready for download in 5min.');
+    }
+
+    if(request()->get('downloadexport')){
+        if(!Storage::disk('s3')->exists($filename))
+            flash('Report is not available. Re-queue the data after 5 mins.')->success();
+        else{
+            $file = Storage::disk('s3')->get($filename);
+
+            $headers = [
+                'Content-Type' => 'text/csv', 
+                'Content-Description' => 'File Transfer',
+                'Content-Disposition' => "attachment; filename={$filename}",
+                'filename'=> $filename
+            ];
+            return response($file, 200, $headers);
         }
+    }
 
 
         if($exam)
@@ -753,7 +793,7 @@ class ExamController extends Controller
                     ->with('exam_sections',$exam_sections)
                     ->with('sections',$sections)
                     ->with('exam',$exam)
-                    ->with('users',$u);
+                    ->with('users',$ux);
         else
             abort(404);
     }

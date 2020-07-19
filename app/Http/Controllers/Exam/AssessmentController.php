@@ -1603,6 +1603,7 @@ class AssessmentController extends Controller
         $secs = $tests_section->groupBy('section_id');
 
 
+        //dd($secs);
 
         //dd($tests[0]->time);
         if(!count($tests))
@@ -1610,18 +1611,22 @@ class AssessmentController extends Controller
 
         $sections = array();
         foreach($exam->sections as $section){
+            if(isset($secs[$section->id][0]))
+                $sections[$section->name] = $secs[$section->id][0];
+                else
+                $sections[$section->name] ='';
+            $secs[$section->id] = $section;
             foreach($section->questions as $q){
                 $questions[$i] = $q;
                 $ques_keys[$q->id]['topic'] = $q->topic;
                 $ques_keys[$q->id]['section'] = $section->name;
-                if(isset($secs[$section->id][0]))
-                $sections[$section->name] = $secs[$section->id][0];
-                else
-                $sections[$section->name] =$section;
-                $secs[$section->id] = $section;
                 $i++;
+
             }
+            
         }
+
+
 
         if(count($sections)==1)
             $sections = null;
