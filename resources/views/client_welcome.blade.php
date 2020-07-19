@@ -18,7 +18,7 @@
     <div class="container-fluid">
       <div class="row">
 
-        @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
+        @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
         <div class="col-sm-6 ">
           <div class="brand-wrapper">
             <img 
@@ -26,9 +26,10 @@
           </div>
 
           <div class="login-section-wrapper my-auto">
-            @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
+            @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
           <div class="alert alert-warning alert-important mt-3">
-          <div class=" h4 ">The Mock Test will be active till 9 pm (19th July 2020). Results will be released on 20th July 2020.</div>
+          <div class=" h4 ">The mock test link will be active till 9 pm today (19th July 2020). </div>
+          <div class="my-2 text-danger blink">Results will be released on 20th July 2020.</div>
           
         <p id="d" class="my-2 text-danger blink"></p>
         </div>
