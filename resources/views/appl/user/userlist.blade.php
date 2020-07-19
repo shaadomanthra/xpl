@@ -13,9 +13,11 @@
   <div class='container'>
      <nav class="mb-0">
       @if(\auth::user()->checkRole(['administrator']))
-        <a href="{{ request()->url() }}?export=1&month={{request()->get('month')}}" class="btn btn-sm btn-outline-primary float-md-right mt-3">Excel Download</a>
+        <a href="{{ request()->url() }}?export=1&month={{request()->get('month')}}" class="btn btn-sm btn-outline-primary float-md-right mt-3">Queue the data</a>
+        <a href="{{ request()->url() }}?downloadexport=1}}" class="btn btn-sm btn-outline-success float-md-right mt-3 mr-3">Download Queue</a>
         @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
-        <a href="{{ request()->url() }}?export=1&month={{request()->get('month')}}" class="btn btn-sm btn-outline-primary float-md-right mt-3">Excel Download</a>
+        <a href="{{ request()->url() }}?export=1&month={{request()->get('month')}}" class="btn btn-sm btn-outline-primary float-md-right mt-3">Queue the data</a>
+        <a href="{{ request()->url() }}?downloadexport=1}}" class="btn btn-sm btn-outline-success float-md-right mt-3 mr-3">Download Queue</a>
         @else
         @endif
       

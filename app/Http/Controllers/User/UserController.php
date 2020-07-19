@@ -150,20 +150,40 @@ class UserController extends Controller
 
     public function userlist(Request $r){
 
-
+    $filename = "exports/Userlist_".subdomain().".csv";
 
     if(request()->get('export')){
 
         $users = User::where('client_slug',subdomain())->get();
+        if(!Storage::disk('s3')->exists($filename))
+            Storage::disk('s3')->delete($filename)
+
+        //dd($users);
         request()->session()->put('users',$users);
-        $name = "Userlist_".subdomain().".csv";
         ob_end_clean(); // this
         ob_start(); 
-        ini_set('memory_limit', '2048M');
-        Excel::store(new UExport, $name,'s3');
+        //ini_set('memory_limit', '1024M');
+        Excel::store(new UExport, $filename,'s3');
 
-        flash('Export is queued, it will be ready for download in sometime.')->success();
+        flash('Export is queued, it will be ready for download in 5min.')->success();
     }
+
+    if(request()->get('downloadexport')){
+        if(!Storage::disk('s3')->exists($filename))
+            flash('Report is not available. Re-queue the data after 5 mins.')->success();
+        else{
+            $file = Storage::disk('s3')->get($filename);
+
+            $headers = [
+                'Content-Type' => 'text/csv', 
+                'Content-Description' => 'File Transfer',
+                'Content-Disposition' => "attachment; filename={$filename}",
+                'filename'=> $filename
+            ];
+            return response($file, 200, $headers);
+        }
+    }
+
 
     $month = $r->get('month');
 
@@ -235,39 +255,7 @@ class UserController extends Controller
 
     }
 
-    public function exportCsv($users)
-    {
-   $fileName = 'users.csv';
-
-        $headers = array(
-            "Content-type"        => "text/csv",
-            "Content-Disposition" => "attachment; filename=$fileName",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
-        );
-
-        $columns = array('Title', 'Assign', 'Description', 'Start Date', 'Due Date');
-
-        $callback = function() use($tasks, $columns) {
-            $file = fopen('php://output', 'w');
-            fputcsv($file, $columns);
-
-            foreach ($tasks as $task) {
-                $row['Title']  = $task->title;
-                $row['Assign']    = $task->assign->name;
-                $row['Description']    = $task->description;
-                $row['Start Date']  = $task->start_at;
-                $row['Due Date']  = $task->end_at;
-
-                fputcsv($file, array($row['Title'], $row['Assign'], $row['Description'], $row['Start Date'], $row['Due Date']));
-            }
-
-            fclose($file);
-        };
-
-        return response()->stream($callback, 200, $headers);
-    }
+  
 
     /**
      * Show the form for editing the specified resource.

@@ -8,62 +8,39 @@ use PacketPrep\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class UExport implements FromCollection, ShouldQueue
+class UExport implements FromQuery, ShouldQueue,WithHeadings
 {
     use Exportable;
+
+    public function headings(): array
+    {
+        return [
+            'id',
+            'Name',
+            'Email',
+            'Phone',
+            'Roll Number/Fathers Name',
+            'Year of Passing/ Father Phone',
+            'Hometown/ District',
+            'Current City/ Address',
+            'Date of Birth',
+            'Gender',
+            'Custom Field 1',
+            'Custom Field 2',
+            'Custom Field 3',
+            'Custom Field 4',
+            'Custom Field 5',
+        ];
+    }
 
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection()
+    public function query()
     {
-    	$users = request()->session()->get('users');
-    	foreach($users as $k=>$u){
-    			unset($users[$k]->id);
-                unset($users[$k]->created_at);
-                unset($users[$k]->updated_at);
-                unset($users[$k]->password);
-                unset($users[$k]->remember_token);
-                unset($users[$k]->username);
-                unset($users[$k]->status);
-                unset($users[$k]->activation_token);
-                unset($users[$k]->role);
-                unset($users[$k]->client_slug);
-                unset($users[$k]->user_id);
-                unset($users[$k]->branch_id);
-                unset($users[$k]->college_id);
-                unset($users[$k]->year_of_passing);
-                unset($users[$k]->tenth);
-                unset($users[$k]->twelveth);
-                unset($users[$k]->bachelors);
-                unset($users[$k]->masters);
-                
-    	}
 
-        $ux = new User();
-        foreach($ux as $k=>$v){
-           
-            unset($ux->$k);
-        }
-        $ux->name = "Name";
-        $ux->email = "Email";
-        $ux->roll_number = "Father Name";
-        $ux->phone = "Phone";
-        $ux->yop = "District";
-        $ux->addr = "Address ";
-        
-        $ux->window = "Fathers Phone Number";
-        $ux->dob = "Date of Birth";
-        $ux->c1 = "Custom Field 1";
-        $ux->c2 = "Custom Field 2";
-        $ux->c3 = "Custom Field 3";
-        $ux->c4 = "Custom Field 4";
-        $ux->c5 = "Custom Field 5";
-
-
-        $users->prepend($ux);
-
-        return $users;
+        return User::query()->select('id','name', 'email','phone','roll_number','year_of_passing','hometown','current_city','dob','gender','video','personality','confidence','fluency','language');
     }
 }

@@ -699,13 +699,14 @@ class ExamController extends Controller
 
         }else{
             if($data)
-            $result = Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
             else
-            $result = Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('id','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->get();
               
             $users = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+
         }
 
 
@@ -723,12 +724,14 @@ class ExamController extends Controller
             
            
         }
-         
+
+        $u = User::whereIn('id',$users)->get()->keyBy('id');
+
         $view = $search ? 'analytics_list': 'analytics';
         
 
         if(request()->get('export')){
-            $u = User::whereIn('id',$users)->get();
+            
             request()->session()->put('result',$result);
             request()->session()->put('sections',$sections);
             request()->session()->put('exam_sections',$exam_sections);
@@ -749,7 +752,8 @@ class ExamController extends Controller
                     ->with('report',$result)
                     ->with('exam_sections',$exam_sections)
                     ->with('sections',$sections)
-                    ->with('exam',$exam);
+                    ->with('exam',$exam)
+                    ->with('users',$u);
         else
             abort(404);
     }

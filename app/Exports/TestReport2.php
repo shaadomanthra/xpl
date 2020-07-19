@@ -9,14 +9,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
 
-
-class TestReport implements FromQuery, ShouldQueue
+class TestReport implements FromCollection, ShouldQueue
 {
     use Exportable;
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function query()
+    public function collection()
     {
     	$users = request()->session()->get('users');
     	//$usr = User::whereIn('id',$users)->get();

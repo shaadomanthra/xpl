@@ -31,8 +31,8 @@
                 @endif >
                 <th scope="row">{{$key+1 }}</th>
                 <td>
-                  <a href="{{route('profile','@'.$r->user->username)}}"  >
-                  {{ $r->user->name }}</a>
+                  <a href="{{route('profile','@'.$users[$r->user_id]->username)}}"  >
+                  {{ $users[$r->user_id]->name }}</a>
                 </td>
                 <td>
                 @if($r->cheat_detect==1)
@@ -44,7 +44,7 @@
                 @endif
                 </td>
                 @if($exam->slug!='psychometric-test')
-                @foreach($sections[$r->user->id] as $s)
+                @foreach($sections[$users[$r->user_id]->id] as $s)
                 <td>
                   {{ $s->score }}
                 </td>
@@ -64,18 +64,18 @@
                 <td>
                 <form method="post" class='form-inline' action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
                   @if(!$r->status)
-                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$r->user->username}}">
+                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$users[$r->user_id]->username}}">
                     <i class='fa fa-bar-chart'></i> Report
                   </a>&nbsp;&nbsp;&nbsp;
                   @if($exam->slug!='psychometric-test')
-                  <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$r->user->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
+                  <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$users[$r->user_id]->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
                   @endif
                   @else
                   - &nbsp;&nbsp;&nbsp;
                   @endif
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="user_id" value="{{ $r->user->id }}">
+                    <input type="hidden" name="user_id" value="{{ $users[$r->user_id]->id}}">
                     <input type="hidden" name="test_id" value="{{ $exam->id }}">
                     <button class="btn btn-link  p-0" type="submit"><i class='fa fa-trash'></i> delete</button>
                 @endif
