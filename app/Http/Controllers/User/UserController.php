@@ -157,7 +157,7 @@ class UserController extends Controller
         $name = "Userlist_".$user->client_slug.".xlsx";
         ob_end_clean(); // this
         ob_start(); 
-        return Excel::download(new UExport, $name);
+        return Excel::download(new UExport, $name, Excel::CSV, ['Content-Type' => 'text/csv']);
 
     }
 
