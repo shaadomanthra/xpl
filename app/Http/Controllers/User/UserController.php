@@ -153,12 +153,13 @@ class UserController extends Controller
 
 
     if(request()->get('export')){
-        ini_set('memory_limit', '2048M');
+
         $users = User::where('client_slug',subdomain())->get();
         request()->session()->put('users',$users);
         $name = "Userlist_".subdomain().".csv";
         ob_end_clean(); // this
         ob_start(); 
+        ini_set('memory_limit', '2048M');
         Excel::store(new UExport, $name,'s3');
 
         flash('Export is queued, it will be ready for download in sometime.')->success();
