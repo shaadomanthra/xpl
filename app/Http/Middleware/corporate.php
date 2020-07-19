@@ -28,7 +28,7 @@ class Corporate
 
                 $request->session()->put('client',$client);
             }
-            elseif(subdomain()!='hire' && subdomain()!='xplore' && subdomain()!='bfs'){
+            elseif( subdomain()!='hire' && subdomain()!='xplore' && subdomain()!='bfs'){
 
                 $client = Cache::get('client_'.subdomain(),function() {
                             return Client::where('slug',subdomain())->first();

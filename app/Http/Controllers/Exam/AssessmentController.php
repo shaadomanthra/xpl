@@ -1614,7 +1614,10 @@ class AssessmentController extends Controller
                 $questions[$i] = $q;
                 $ques_keys[$q->id]['topic'] = $q->topic;
                 $ques_keys[$q->id]['section'] = $section->name;
+                if(isset($secs[$section->id][0]))
                 $sections[$section->name] = $secs[$section->id][0];
+                else
+                $sections[$section->name] =$section;
                 $secs[$section->id] = $section;
                 $i++;
             }
