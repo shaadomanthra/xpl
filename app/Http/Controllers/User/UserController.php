@@ -156,7 +156,7 @@ class UserController extends Controller
 
         $users = User::where('client_slug',subdomain())->get();
         if(!Storage::disk('s3')->exists($filename))
-            Storage::disk('s3')->delete($filename)
+            Storage::disk('s3')->delete($filename);
 
         //dd($users);
         request()->session()->put('users',$users);
