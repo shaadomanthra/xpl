@@ -82,13 +82,13 @@
               @endif
 @endif
 
-@if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
+<!-- @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
           <div class="alert alert-warning alert-important mt-3">
           <div class=" h4 ">The mock test link will be activated on 19th July 2020, 9:00 am.</div>
           
         <p id="d" class="my-2 text-danger blink"></p>
         </div>
-@endif
+@endif -->
 
 
 @if(count(\auth::user()->newtests())!=0)
