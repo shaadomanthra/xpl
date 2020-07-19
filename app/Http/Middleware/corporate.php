@@ -60,6 +60,8 @@ class Corporate
                             abort(403,'Site services are terminated');
                         $request->session()->put('client',$client);
                 }else{
+                    if(subdomain()=='www')
+                        return Redirect::to('https://xplore.co.in', 301); 
                     abort(404,'Site not found - '.subdomain());
                 } 
             }else{
