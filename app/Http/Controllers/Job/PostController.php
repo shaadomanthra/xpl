@@ -76,16 +76,19 @@ class PostController extends Controller
         $users = $obj->users->pluck('id')->toArray();
         
         $this->authorize('view', $obj);
-        $objs = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")->with('college')->with('branch')
-                    ->paginate(config('global.no_of_records')); 
-
+        
         if($request->get('export')){
+            $objs = User::whereIn('id',$users)->with('college')->with('branch')
+                    ->get();
             request()->session()->put('users',$objs);
             $name = "Applicants_job_".$obj->slug.".xlsx";
             ob_end_clean(); // this
             ob_start(); 
             return Excel::download(new UsersExport, $name);
-        }  
+        } else{
+            $objs = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")->with('college')->with('branch')
+                    ->paginate(config('global.no_of_records')); 
+        } 
 
         $view = $search ? 'applicant_list': 'applicant_index';
 
