@@ -266,6 +266,53 @@ class ProductController extends Controller
               ->with('exams',$exams);
       }
 
+      if($user->checkRole(['tpo']) && !$user->isAdmin()){
+
+          $search = $request->search;
+          $item = $request->item;
+
+          $count = 0;
+          $usertests = Exam::where('client',subdomain())->orderBy('id','desc');
+
+          $count = Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->count();
+          //$count = count($alltests);
+
+         
+          
+          // foreach($user->exams as $exam){
+          //   $count = $count + $exam->getAttemptCount();           
+          // }
+
+          if($search)
+            $exams = Exam::where('client',subdomain())->where('name','LIKE',"%{$item}%")->orderBy('id','desc')
+                    ->paginate(8);
+          else
+            $exams = $usertests->paginate(8);
+
+          $exam = null;
+          foreach($exams as $e){
+            if($e)
+            {
+              $exam = $e;
+              break;
+            }
+          }
+
+        
+          $user->attempts = $count;
+          $view = $search ? 'snippets.hr_tests': 'hr_welcome';
+
+          //$e = Exam::where('slug','psychometric-test')->first();
+          $e = null;
+
+          if(!$user->isAdmin())
+          return view($view)
+              ->with('user',$user)
+              ->with('exam',$exam)
+              ->with('e',$e)
+              ->with('exams',$exams);
+      }
+
       $mytests = \auth::user()->tests();
 
       if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
