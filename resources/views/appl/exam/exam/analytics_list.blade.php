@@ -1,4 +1,4 @@
-@if(count($report)!=0)
+@if($report->total()!=0)
         <div class="table-responsive">
           @if($exam->slug!='psychometric-test')
           <div class="bg-light p-3 border"> Sorted by : <span class="badge badge-warning">@if(request()->get('score')) Score @else Date @endif</span></div>
@@ -93,4 +93,6 @@
           No Reports listed
         </div>
         @endif  
-      </div>
+<nav aria-label="Page navigation  " class="card-nav @if($report->total() > 30)mt-3 @endif">
+        {{$report->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
+      </nav>

@@ -689,9 +689,11 @@ class ExamController extends Controller
         $data = $r->get('score');
         if($code){
             if($data)
-            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
+            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('score','desc')->paginate(30);
             else
-            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('id','desc')->get();
+            $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('id','desc')->paginate(30);
+
+            $res = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->get();
               
             $users = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
@@ -699,9 +701,11 @@ class ExamController extends Controller
 
         }else{
             if($data)
-            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->paginate(30);
             else
-            $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->paginate(30);
+
+            $res = Tests_Overall::where('test_id',$exam->id)->get();
               
             $users = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
@@ -717,12 +721,10 @@ class ExamController extends Controller
                     ->orderBy('created_at','desc ')
                     ->pluck('id');  
 
-            $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$users)->with('user')->orderby('score','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$users)->with('user')->orderby('score','desc')->paginate(30);
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
 
-            
-           
         }
 
         $ux = User::whereIn('id',$users)->get()->keyBy('id');
@@ -790,6 +792,7 @@ class ExamController extends Controller
         if($exam)
             return view('appl.exam.exam.'.$view)
                     ->with('report',$result)
+                    ->with('r',$res)
                     ->with('exam_sections',$exam_sections)
                     ->with('sections',$sections)
                     ->with('exam',$exam)
