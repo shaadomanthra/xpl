@@ -266,6 +266,8 @@ class ProductController extends Controller
               ->with('exams',$exams);
       }
 
+      $mytests = \auth::user()->tests();
+
       if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
         $view = 'xplore_dashboard';
       else
