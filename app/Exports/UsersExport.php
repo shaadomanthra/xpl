@@ -18,6 +18,7 @@ class UsersExport implements FromCollection
     {
        $users = request()->session()->get('users');
         foreach($users as $k=>$u){
+
             unset($users[$k]->id);
                 unset($users[$k]->created_at);
                 unset($users[$k]->updated_at);
@@ -36,6 +37,10 @@ class UsersExport implements FromCollection
                 unset($users[$k]->user_id);
                 unset($users[$k]->college_id);
                 unset($users[$k]->branch_id);
+                unset($users[$k]->info);
+
+                $users[$k]->colleges = $users[$k]->college->name;
+                $users[$k]->branches = $users[$k]->branch->name;
   
         } 
         $ux = new User();
@@ -57,6 +62,9 @@ class UsersExport implements FromCollection
         $ux->c3 = "Current City";
         $ux->c4 = "Gender";
         $ux->c5 = "Date of Birth";
+        $ux->c6 = "Aadhar Number";
+        $ux->c7 = "College";
+        $ux->c8 = "Branch";
 
 
         $users->prepend($ux);

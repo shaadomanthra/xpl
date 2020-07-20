@@ -80,11 +80,16 @@ class PostController extends Controller
         if($request->get('export')){
             $objs = User::whereIn('id',$users)->with('college')->with('branch')
                     ->get();
-            request()->session()->put('users',$objs);
-            $name = "Applicants_job_".$obj->slug.".xlsx";
-            ob_end_clean(); // this
-            ob_start(); 
-            return Excel::download(new UsersExport, $name);
+            if($objs->count()<500){
+                request()->session()->put('users',$objs);
+                $name = "Applicants_job_".$obj->slug.".xlsx";
+                ob_end_clean(); // this
+                ob_start(); 
+                return Excel::download(new UsersExport, $name);
+            }else{
+                flash('Data more than 500 records has to be queued. Kindly contact administrator')->success();
+            }
+            
         } else{
             $objs = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")->with('college')->with('branch')
                     ->paginate(config('global.no_of_records')); 
