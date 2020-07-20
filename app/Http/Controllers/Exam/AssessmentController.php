@@ -1737,7 +1737,7 @@ class AssessmentController extends Controller
             
             //$ques = Question::where('id',$q->id)->first();
             //dd($secs[$t->section_id]);
-            //if($ques_keys[$t->question_id]['topic'])
+            if($ques_keys[$t->question_id]['topic'])
                 $topics = true;
 
             if($t->response){
