@@ -756,7 +756,7 @@ class ExamController extends Controller
             
     if(request()->get('export')){
         
-            
+        $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
         if(!Storage::disk('s3')->exists($filename))
             Storage::disk('s3')->delete($filename);
 
