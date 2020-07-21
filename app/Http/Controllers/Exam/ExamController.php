@@ -755,21 +755,29 @@ class ExamController extends Controller
             $filename ="exports/Report_".$ename.".xlsx";
             
     if(request()->get('export')){
-        $usrs = User::whereIn('id',$users)->get();
-        request()->session()->put('result',$result);
-            request()->session()->put('sections',$sections);
-            request()->session()->put('exam_sections',$exam_sections);
-            request()->session()->put('users',$usrs);
+        
             
         if(!Storage::disk('s3')->exists($filename))
             Storage::disk('s3')->delete($filename);
 
+        $usrs = User::whereIn('id',$users)->get();
         if(count($usrs)<500){
+            $usrs = User::whereIn('id',$users)->with('college')->with('branch')->get();
+            request()->session()->put('result',$result);
+            request()->session()->put('sections',$sections);
+            request()->session()->put('exam_sections',$exam_sections);
+            request()->session()->put('users',$usrs);
+
             ob_end_clean(); // this
             ob_start(); 
             $filename ="Report_".$ename.".xlsx";
             return Excel::download(new TestReport, $filename);
         }else{
+            
+            request()->session()->put('result',$result);
+            request()->session()->put('sections',$sections);
+            request()->session()->put('exam_sections',$exam_sections);
+            request()->session()->put('users',$usrs);
             //ini_set('memory_limit', '1024M');
             Excel::store(new TestReport, $filename,'s3');
             flash('Export is queued, it will be ready for download in 5min.')->success();
