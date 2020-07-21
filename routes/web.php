@@ -427,6 +427,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 		return Redirect::to('/test/srecieee', 301); 
 	});
 
+	Route::get('gni/careerfair2020', function(){
+		return Redirect::to('/jobs/career-fair-2020', 301); 
+	});
+
 	Route::get('/eamcet', function(){
 		return Redirect::to('https://vaagdevi.xplore.co.in/register', 301); 
 	});
