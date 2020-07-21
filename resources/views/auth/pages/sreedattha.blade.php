@@ -1,21 +1,23 @@
 
 <div class="py-4">
     <div class="row">
-        <div class="col-12 col-md-4 text-center text-md-left">
+        <div class="col-12 col-md-6 text-center text-md-left">
     <a class="navbar-brand abs text-center float-md-left" href="{{ url('/dashboard') }}" aria-label="Dashboard">
         <img 
         src="{{ request()->session()->get('client')->logo }} " width="300px" class="ml-md-0"  alt="logo " type="image/png">
     </a>  
     </div>
-    <div class="col-12 col-md-4 text-center text-md-center">
-        <div class="text-center text-md-center float-md-center mt-3"><h1 class="mb-3">Registration Page</h1></div>
+    <div class="col-12 col-md-6 text-center text-md-right">
+        <div class="text-center text-md-right float-md-right mt-3"><h1 class="mb-3">Registration Page</h1></div>
     </div>
+    <!--
     <div class="col-12 col-md-4 text-right text-md-right">
         <div class="text-right text-md-right float-md-right ">
             <img 
         src="{{ asset('img/alphores_iit.jpg') }} " height="100px" class="ml-md-0"  alt="logo " type="image/png" style="margin-top: -25px;">
         </div>
     </div>
+-->
 
     </div>
 </div>

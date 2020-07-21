@@ -764,12 +764,18 @@ class ExamController extends Controller
         if(!Storage::disk('s3')->exists($filename))
             Storage::disk('s3')->delete($filename);
 
+        if(count($usrs)<500){
+            ob_end_clean(); // this
+            ob_start(); 
+            $filename ="Report_".$ename.".xlsx";
+            return Excel::download(new TestReport, $filename);
+        }else{
+            //ini_set('memory_limit', '1024M');
+            Excel::store(new TestReport, $filename,'s3');
+            flash('Export is queued, it will be ready for download in 5min.')->success();
+            dd('Export is queued, it will be ready for download in 5min.');
+        }
         
-        //ini_set('memory_limit', '1024M');
-        Excel::store(new TestReport, $filename,'s3');
-
-        flash('Export is queued, it will be ready for download in 5min.')->success();
-        dd('Export is queued, it will be ready for download in 5min.');
     }
 
     if(request()->get('downloadexport')){
