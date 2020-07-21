@@ -309,22 +309,22 @@ class AdminController extends Controller
 
         if($recent){
             $users = User::where('name','LIKE',"%{$item}%")
-                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->orderBy('updated_at','desc')->paginate(30);
+                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->with('college')->orderBy('updated_at','desc')->paginate(30);
         }
         elseif($month=='thismonth')
-            $users = User::whereMonth('created_at', Carbon::now()->month)->orderBy('id','desc')->paginate(30);
+            $users = User::whereMonth('created_at', Carbon::now()->month)->with('college')->orderBy('id','desc')->paginate(30);
         elseif($month=='lastmonth')
-            $users = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->orderBy('id','desc')->paginate(30);
+            $users = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->with('college')->orderBy('id','desc')->paginate(30);
         elseif($month=='lastbeforemonth')
-            $users = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->orderBy('id','desc')->paginate(30);
+            $users = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->with('college')->orderBy('id','desc')->paginate(30);
         else
             $users = User::where('name','LIKE',"%{$item}%")
-                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->orderBy('created_at','desc')->paginate(30);
+                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->with('college')->orderBy('created_at','desc')->paginate(30);
               
         $data['users_all'] =  User::count();
-        $data['users_lastmonth'] = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
-        $data['users_thismonth'] = User::whereMonth('created_at', Carbon::now()->month)->count();
-        $data['users_lastbeforemonth'] = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
+        $data['users_lastmonth'] = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->whereYear('created_at', Carbon::now()->year)->count();
+        $data['users_thismonth'] = User::whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->count();
+        $data['users_lastbeforemonth'] = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->whereYear('created_at', Carbon::now()->year)->count();
 
         
         

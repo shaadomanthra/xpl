@@ -69,7 +69,7 @@ $(function(){
 
   /* profile completion page */
   if($('.screen').length){
-    $('.screen').hide();
+    $('.college_name').hide();
     $('.screen_1').show();
 
     $('.screen_next').on('click',function(){
@@ -95,6 +95,18 @@ $(function(){
         }else{
             $('.help_'+$name).hide();
         }
+      }
+
+
+      if($name=='college_id'){
+        if($(this).val()==5 || $(this).val()==295)
+        {
+          $('.college_name').slideDown();
+        }else{
+          $('.info').val('');
+          $('.college_name').hide();
+        }
+
       }
 
       // min and max condition
@@ -123,7 +135,7 @@ $(function(){
   }
 
   function screen($next){
-      $('.screen').hide();
+     
       $('.'+$next).show();
   }
 

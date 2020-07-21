@@ -48,7 +48,7 @@
              @if($user->college)
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-building'></i> &nbsp; College</dt>
-                <dd class="col-sm-9">@if($user->college){{ $user->college->name }}@endif</dd>
+                <dd class="col-sm-9">@if($user->college) @if($user->college_id==5 || $user->college_id==295) {{$user->info}} @else {{ $user->college->name }} @endif @else $user->info @endif</dd>
               </dl>
              @endif
 

@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 @section('title', 'Complete Profile')
 @section('content')
@@ -5,14 +6,12 @@
 .text-silver{ color:#eee; }
 </style>
   @include('flash::message') 
-  <div class="card">
+  <div class="card screen">
     <div class="card-body">
       <h1 class="mb-2">Edit Profile </h1>
-      <div class="progress mb-4" style="height:5px;">
-  <div class="progress-bar" role="progressbar" style="width: {{$user->profile_complete()}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" data-step="{{$user->profile_complete_step()}}" data-percent="{{$user->profile_complete()}}"></div>
-</div>
+     <hr>
        <form method="post" action="{{route('profile.update','@'.$user->username)}}" enctype="multipart/form-data">
-    <div class="screen screen_1">
+    <div class=" ">
 
       <div class="row">
 
@@ -85,11 +84,10 @@
          </div>
       </div>
 
-      <button type="button" class="btn btn-info screen_next" data-next="screen_2">Next</button>
     </div>
 
       
-    <div class="screen screen_2">
+    <div class=" ">
 
      
 
@@ -101,7 +99,7 @@
         <label for="formGroupExampleInput ">College <i class="fa fa-check-circle college_id @if($user->college_id) text-success @else text-silver @endif"></i></label>
         <select class="form-control" name="college_id">
           @foreach($colleges as $c)
-          <option value="{{$c->id}}" @if(isset($user)) @if($user->college) @if($c->id == $user->college->id ) selected @endif @endif @endif >{{ $c->name }}</option>
+          <option value="{{$c->id}}" @if(isset($user)) @if($user->college) @if($c->id == $user->college->id ) selected @endif @endif @endif >{{ $c->name }} {{$c->id}}</option>
           
           @endforeach         
         </select>
@@ -114,6 +112,16 @@
           <label for="formGroupExampleInput ">College Full Roll Number <i class="fa fa-check-circle roll_number @if($user->roll_number) text-success @else text-silver @endif"></i> </label>
           <input type="text" class="form-control" name="roll_number"  value="@if($user->roll_number){{  $user->roll_number }} @endif" >
         </div>
+         </div>
+
+
+         <div class="col-12 college_name" @if(!$user->info) style="display:none" @endif>
+            
+
+       <div class="form-group">
+        <label for="formGroupExampleInput ">College Name <i class="fa fa-check-circle info @if($user->info) text-success @else text-silver @endif"></i></label>
+        <input type="text" class="form-control info" name="info"  placeholder="Enter your college name" value="">
+      </div>
          </div>
 
         </div>
@@ -168,11 +176,9 @@
          </div>
       </div>
 
-      <button type="button" class="btn btn-outline-info screen_back" data-back="screen_1">Back</button>
-      <button type="button" class="btn btn-info screen_next" data-next="screen_3">Next</button>
     </div>
 
-    <div class="screen screen_3">
+    <div class=" ">
 
       <div class="alert alert-warning alert-important">The academic percentage has to be between 30 to 100. If your university awards CPGA, then convert it to percentage and then enter. <br><b>Eg:</b> For 7.2 CGPA, you can enter 72.</div>
 
@@ -217,11 +223,9 @@
           </div>
          </div>
       </div>
-      <button type="button" class="btn btn-outline-info screen_back" data-back="screen_2">Back</button>
-      <button type="button" class="btn btn-info screen_next" data-next="screen_4">Next</button>
     </div>
 
-     <div class="screen screen_4">
+     <div class=" ">
 
       
 
@@ -275,7 +279,6 @@
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-outline-info screen_back" data-back="screen_3">Back</button>
       <button type="submit" class="btn btn-primary btn-profile-save">Save</button>
     </div>
 

@@ -498,7 +498,7 @@ class UserController extends Controller
                 $request->merge(['image' => '']);
             }
 
-        $user->video = $request->get('video');
+        
         
        
         
@@ -515,6 +515,9 @@ class UserController extends Controller
 
             $user->personality = round(($user->confidence+$user->fluency+$user->language)/3,1);
         }
+
+        if($request->get('video'))
+        $user->video = $request->get('video');
 
         $user->roll_number = $request->roll_number;
         $user->college_id = $request->college_id;

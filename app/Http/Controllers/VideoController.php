@@ -4,6 +4,7 @@ namespace PacketPrep\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class VideoController extends Controller
 {
@@ -39,6 +40,9 @@ class VideoController extends Controller
         
         $user->video =$id;
         $user->save();
+
+        Cache::forget('id-' . $user->id);
+        Cache::forever('id-'.$user->id,$user);
 
         return redirect()->route('video.upload');
     }
