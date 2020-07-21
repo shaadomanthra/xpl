@@ -99,7 +99,7 @@
         <label for="formGroupExampleInput ">College <i class="fa fa-check-circle college_id @if($user->college_id) text-success @else text-silver @endif"></i></label>
         <select class="form-control" name="college_id">
           @foreach($colleges as $c)
-          <option value="{{$c->id}}" @if(isset($user)) @if($user->college) @if($c->id == $user->college->id ) selected @endif @endif @endif >{{ $c->name }} {{$c->id}}</option>
+          <option value="{{$c->id}}" @if(isset($user)) @if($user->college) @if($c->id == $user->college->id ) selected @endif @endif @endif >{{ $c->name }} </option>
           
           @endforeach         
         </select>
