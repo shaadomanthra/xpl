@@ -15,6 +15,7 @@ use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Question;
 use Illuminate\Support\Facades\Storage;
 use PacketPrep\Exports\TestReport;
+use PacketPrep\Exports\TestReport2;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
 
@@ -757,6 +758,9 @@ class ExamController extends Controller
     if(request()->get('export')){
         
         $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+        $users = $result->pluck('user_id');
+            $exam_sections = Section::where('exam_id',$exam->id)->get();
+            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
         if(!Storage::disk('s3')->exists($filename))
             Storage::disk('s3')->delete($filename);
 
@@ -771,7 +775,7 @@ class ExamController extends Controller
             ob_end_clean(); // this
             ob_start(); 
             $filename ="Report_".$ename.".xlsx";
-            return Excel::download(new TestReport, $filename);
+            return Excel::download(new TestReport2, $filename);
         }else{
             
             request()->session()->put('result',$result);

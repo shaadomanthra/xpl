@@ -5,13 +5,10 @@ use PacketPrep\User;
 use PacketPrep\Models\Exam\Tests_Overall;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\Exportable;
 
-class TestReport implements FromCollection, ShouldQueue
+class TestReport2 implements FromCollection
 {
-    use Exportable;
+   
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -129,18 +126,4 @@ class TestReport implements FromCollection, ShouldQueue
         return $result;
     }
 
-     public function startRow(): int 
-    {
-         return 1;
-    }
-
-    public function batchSize(): int
-    {
-        return 500;
-    }
-
-    public function chunkSize(): int
-    {
-        return 500;
-    }
 }
