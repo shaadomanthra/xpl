@@ -486,9 +486,26 @@ class UserController extends Controller
                 }
 
                 $file      = $request->all()['file_'];
+
+                $folder = public_path('../public/storage/profile/');
+
+                if (!Storage::exists($folder)) {
+                    Storage::makeDirectory($folder, 0775, true, true);
+                }
+
                 try {
+                    $name = 'profile_'.$username;
                 $filename = 'profile_'.$username.'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename,'public');
+
+                $path = Storage::disk('public')->putFileAs('profile',$request->file('file_'),$filename);
+                $image= jpg_resize('profile/'.$name,$path,400);
+
+                Storage::disk('s3')->put('articles/'.$filename, (string)$image,'public');
+
+                //Storage::disk('s3')->putFileAs('urq', new File($newpath), $filename);
+                $path = Storage::disk('s3')->url('articles/'.$filename);
+
+                //$path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename,'public');
                 $request->merge(['image' => $path]);
                 } catch (Exception $e) {
 

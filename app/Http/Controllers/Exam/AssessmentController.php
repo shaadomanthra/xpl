@@ -20,10 +20,12 @@ use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
 use PacketPrep\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Cache;
 use Log;
+
 
 class AssessmentController extends Controller
 {
@@ -793,11 +795,15 @@ class AssessmentController extends Controller
                     $details['response'] = $test->response;
                     $details['accuracy'] = $test->accuracy;
                     $details['time'] = $test->time;
+                    $details['mark'] = $test->mark;
+                    $details['comment'] = $test->comment;
                 }else{
                     $details['code'] = null;
                     $details['response'] = null;
                     $details['accuracy'] = null;
                     $details['time'] = null;
+                    $details['mark'] = null;
+                    $details['comment'] = null;
                 }
 
 
@@ -1228,6 +1234,52 @@ class AssessmentController extends Controller
 
         return redirect()->route('assessment.analysis',$slug);
 
+    }
+
+    public function upload_image($slug){
+
+        
+
+         /* If image is given upload and store path */
+            if(request()->all()['file']){
+                
+                
+                 $request = request();
+                 $file      = request()->get('file');
+                 $user_id = request()->get('user_id');
+                 $qid = request()->get('qid');
+
+                if(strtolower($request->file->getClientOriginalExtension()) == 'jpeg')
+                    $extension = 'jpg';
+                else
+                    $extension = strtolower($request->file->getClientOriginalExtension());
+                $name = $slug.'_'.$user_id.'_'.$qid;
+                $filename = $name.'.'.$extension;
+
+
+                $folder = public_path('../public/storage/urq/');
+
+                if (!Storage::exists($folder)) {
+                    Storage::makeDirectory($folder, 0775, true, true);
+                }
+
+                $path = Storage::disk('public')->putFileAs('urq',$request->file,$filename);
+                
+                 
+
+                $image= jpg_resize('urq/'.$name,$path,1000);
+
+                Storage::disk('s3')->put('urq/'.$filename, (string)$image,'public');
+
+                //Storage::disk('s3')->putFileAs('urq', new File($newpath), $filename);
+                $path = Storage::disk('s3')->url('urq/'.$filename);
+
+                echo  $path;
+                exit();
+            }else{
+                echo 1;
+                exit();
+            }
     }
 
     public function show($id)

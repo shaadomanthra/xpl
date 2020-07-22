@@ -83,7 +83,7 @@
         </div>
         </div>
 
-       @if($question->type!='code')
+       @if($question->type!='code' && $question->type!='urq' && $question->type!='sq')
         
         @if($question->a)
          <div class="row no-gutters">
@@ -149,6 +149,25 @@
         	<div class="col-10 col-md-10"><div class="pt-1 e">{!! $question->option_e!!}</div></div>
         </div>
         @endif
+
+      @elseif($question->type=='urq')
+     
+        @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'.jpg'))
+          <div class="border border-secondary">
+          <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'.jpg')}}" class="w-100" />
+        </div>
+
+      
+        @else
+          <div class="alert alert-warning alert-important mb-0" role="alert">
+  User has not uploaded the response image.
+</div>
+        @endif
+      @elseif($question->type=='sq')
+        <div class="alert alert-warning alert-important mb-0" role="alert">
+          <h3>User Response:</h3>
+          {{ ($details['response'])?$details['response']:'-' }}
+        </div>
       @else
         @if($question->a)
          <div class="row no-gutters">
@@ -243,6 +262,30 @@
           
         </div>
       </div>
+      @endif
+
+      @if($question->type=='sq' || $question->type=='urq')
+      <div class="card bg-light mb-3 ">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="bg-light p-3 border rounded mb-3 mb-md-0">
+                <h3><i class="fa fa-lightbulb-o"></i> Score</h3>
+                <div class="answer">{{ ($details['mark'])?$details['mark']:'-' }}</div>
+              </div>
+            </div>
+            
+            <div class="col-12 col-md-6">
+              <div class="bg-light p-3 border rounded" >
+
+                <h3><i class="fa fa-clock-o"></i> Response Time</h3>
+                <div class="p-1">{{ $details['time']}} sec</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       @endif
 
       @else

@@ -18,6 +18,8 @@ class Test extends Model
         'section_id',
         'dynamic',
         'code',
+        'mark',
+        'comment',
 
         // add all other fields
     ];

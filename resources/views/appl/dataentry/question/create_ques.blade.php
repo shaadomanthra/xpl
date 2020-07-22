@@ -27,6 +27,8 @@
   <a href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-primary"> Multi Choice Question (MCQ)</a>
   <a href="{{ route('question.create','default')}}?type=maq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-warning"> Multi Answer Question (MAQ) </a>
   <a href="{{ route('question.create','default')}}?type=fillup&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-success"> Fillup Question (FQ)</a>
+  <a href="{{ route('question.create','default')}}?type=sq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-success"> Subjective Question (SQ)</a>
+  <a href="{{ route('question.create','default')}}?type=urq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-success"> Upload Response Question (URQ)</a>
 
   @if(\auth::user()->checkRole(['administrator']))
        <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-secondary"> Code Question (CQ)</a>

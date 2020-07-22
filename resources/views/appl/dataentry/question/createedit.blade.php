@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Create/Edit Questions | PacketPrep')
+@section('title', 'Create/Edit Questions ')
 @section('content')
 
 
@@ -52,7 +52,8 @@
       <li class="nav-item">
         <a class="nav-link active" id="question-tab" data-toggle="tab" href="#question" role="tab" aria-controls="question" aria-selected="true">Ques</a>
       </li>
-      @if($type=='mcq' || $type=='maq')
+
+      @if($type=='mcq' || $type=='maq' )
       <li class="nav-item">
         <a class="nav-link" id="a-tab" data-toggle="tab" href="#a" role="tab" aria-controls="a" aria-selected="false">A</a>
       </li>
@@ -71,6 +72,7 @@
       <li class="nav-item">
         <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Ans</a>
       </li>
+     
       @endif
       @if($type=='code')
       <li class="nav-item">
@@ -333,6 +335,8 @@
             <option value="eq" @if(isset($question)) @if($question->type=='eq') selected @endif @endif >Explanation Question</option>
             <option value="code" @if(isset($question)) @if($question->type=='code') selected @endif @endif >Code Question</option>
             <option value="fillup" @if(isset($question)) @if($question->type=='fillup') selected @endif @endif >Fillup Question</option>
+            <option value="sq" @if(isset($question)) @if($question->type=='sq') selected @endif @endif >Subjective Question</option>
+            <option value="urq" @if(isset($question)) @if($question->type=='urq') selected @endif @endif >Upload Response Question</option>
           </select>
           @else
           <select class="form-control" name="type" >
@@ -342,6 +346,8 @@
             <option value="eq" @if($type =='eq') selected @endif  >Explanation Question</option>
             <option value="code" @if($type =='code') selected @endif  >Code Question</option>
             <option value="fillup" @if($type =='fillup')  selected  @endif >Fillup Question</option>
+            <option value="sq" @if($type =='sq')  selected  @endif >Subjective Question</option>
+            <option value="urq" @if($type =='urq')  selected  @endif >Upload Response Question</option>
           </select>
           @endif
             
@@ -357,7 +363,7 @@
         </select>
 
       </div>
-
+<!--
        <div class="form-group mt-3">
         <label for="formGroupExampleInput ">Include in Test</label>
         <select class="form-control" name="intest" >
@@ -365,7 +371,7 @@
           <option value="1" @if(isset($question)) @if($question->intest==1) selected @endif @endif >Yes</option>
         </select>
 
-      </div>
+      </div> -->
 
         <div class="form-group mt-3">
         <label for="formGroupExampleInput ">Status</label>

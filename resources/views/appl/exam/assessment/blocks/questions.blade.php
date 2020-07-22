@@ -179,6 +179,32 @@
         </div>
           @endif
 
+          @if($question->type=='sq')
+          <div class="bg-light border p-3 rounded mt-3">
+          <h5>Enter your answer</h5>
+          <textarea class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" ></textarea>
+        </div>
+          @endif
+
+          @if($question->type=='urq')
+          <div class="bg-light border p-3 rounded mt-3">
+          <h5>Upload your response (image format)</h5>
+
+          <input type="file" class="form-control w-100 input input_{{($i+1)}} input_urq_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" 
+          >
+          <button type="button" class="mt-3 btn btn-primary btn-urq btn_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ auth::user()->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.upload',$exam->slug)}}">Upload</button>
+
+          <div class="spinner-border spinner-border-sm float-right mt-3 spinner_{{$i+1}}" role="status" style="display:none">
+  <span class="sr-only">Loading...</span>
+</div>
+        </div>
+        <div class="img_container_{{$i+1}} pt-3" style="display: none">
+          <div class="img_status py-2"></div>
+          <img id="img_{{$i+1}}" class="img_{{$i+1}} w-100" src="" />
+        </div>
+          @endif
+
+
           <input id="{{($i+1)}}_time" class="form-input {{($i+1)}}_time" type="hidden" name="{{($i+1)}}_time"  value="0">
           <input  class="form-input " type="hidden" name="{{($i+1)}}_question_id"  value="{{$question->id}}">
           <input  class="form-input " type="hidden" name="{{($i+1)}}_dynamic"  value="{{$dynamic[$i]}}">

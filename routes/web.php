@@ -596,6 +596,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('test','Exam\AssessmentController@index')->name('assessment.index');
 	Route::get('test/{test}/submit','Exam\AssessmentController@submit')->name('assessment.submit');
 	Route::post('test/{test}/submission','Exam\AssessmentController@submission')->name('assessment.submission');
+	Route::post('uploadimage/{test}','Exam\AssessmentController@upload_image')->name('assessment.upload');
+	//Route::get('uploadimage/{test}','Exam\AssessmentController@upload_image')->name('assessment.uploadget');
 	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis2')->name('assessment.analysis')->middleware('auth');
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
 	Route::get('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q')->middleware('auth');

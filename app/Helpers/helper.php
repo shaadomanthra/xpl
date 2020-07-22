@@ -41,6 +41,31 @@ if (! function_exists('image_resize')) {
     }
 }
 
+if (! function_exists('jpg_resize')) {
+    function jpg_resize($name,$path,$size)
+    {
+        $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix();
+        $base_folder = '/app/public/';
+        $new_path = storage_path() . $base_folder . $name.'.jpg';
+        $npath = $storagePath.$path;
+
+            
+
+        $imgr = Image::make($npath)->encode('jpg', 100);
+
+
+        $imgr->resize($size, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+        });
+        $imgr->save($new_path);      
+        
+
+
+        return $imgr;
+    }
+}
+
 if (! function_exists('first_letters')) {
 
 function first_letters($string) {
@@ -96,8 +121,8 @@ if (! function_exists('summernote_imageupload')) {
                     list(, $data)      = explode(',', $data);
                     $data = base64_decode($data);
 
-                    $base_folder = '/app/public/summernote/';
-                    $web_path = env('APP_URL').'/storage/summernote/';
+                    $base_folder = '/app/public/';
+                    $web_path = env('APP_URL').'/storage/';
                     $image_name=  $user->username.'_'. time().'_'.$k.'_'.rand().'.png';
 
                     $temp_path = storage_path() . $base_folder . 'temp_' . $image_name;

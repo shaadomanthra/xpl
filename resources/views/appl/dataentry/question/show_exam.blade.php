@@ -209,12 +209,14 @@
 
 
 
+      @if($question->type!='sq' && $question->type!='urq')
       <div class="card mb-3 ">
       	<div class="card-body">
       		<h3>@if($question->type=='code') Output @else Answer @endif</h3>
       		<div class="answer">{!! $question->answer !!}</div>
       	</div>
       </div>
+      @endif
       
 
       <div class="card mb-3 mb-md-0">

@@ -866,6 +866,7 @@ $(document).ready(function() {
   </script>
 @endif
 @if(isset($timer))
+
 <script>
 // Set the date we're counting down to
 @if(!isset($time))
@@ -1005,6 +1006,77 @@ $(function(){
 
   });
   
+});
+</script>
+
+<script>
+   // upload user responses
+$(function(){
+  $(document).on('click','.btn-urq',function(e){
+      $name = $(this).data('name');
+      $url = $(this).data('url');
+      $user_id = $(this).data('user_id');
+      $qid = $(this).data('qid');
+      $token = $(this).data('token');
+      console.log($url);
+      e.preventDefault();
+
+       var fd = new FormData();
+       var files = $('.input_urq_'+$name)[0].files[0];
+       console.log('.input_urq_'+$name);
+        fd.append('file',files);
+        fd.append('user_id',$user_id);
+        fd.append('qid',$qid);
+        fd.append('_token',$token);
+        // Display the values
+        $('.spinner_'+$name).show();
+        $.ajax({
+          type : 'POST',
+          url : $url,
+          data:fd,
+          cache: false,
+          processData: false,
+          contentType: false,
+          beforeSend: function (request) {
+              return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+          },
+          success:function(response){
+            if(response != 0){
+                  $("#img_"+$name).attr({src : response})
+                  $(".img_container_"+$name).show(); // Display 
+                  $('.spinner_'+$name).hide();
+                  $('.img_status').text('Image upload success');
+                }else{
+                  console.log('error');
+                  $('.img_status').text('Image upload failed. Kindly retry.');
+                }
+          },
+          
+        });
+
+        // $.ajax({
+        //     url: $url,
+        //     type: 'GET',
+        //     data: fd,
+        //     contentType: false,
+        //     processData: false,
+        //     success: function(response){
+        //         if(response != 0){
+        //           console.log('done'+response);
+        //             $(".img_".$name).attr("src",response); 
+        //             $(".img_container_".$name).show(); // Display image element
+        //         }else{
+        //           console.log('error');
+        //             //alert('file not uploaded');
+        //         }
+        //     },
+        //     error: function(e){
+        //       console.log(e)
+        //     },
+        // });
+      
+  });
+
 });
 </script>
 
