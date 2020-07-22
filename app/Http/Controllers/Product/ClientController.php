@@ -111,7 +111,7 @@ class ClientController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'_header.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file_'),$filename,'public');
 
             }
 
@@ -119,7 +119,7 @@ class ClientController extends Controller
             if(isset($request->all()['file2_'])){
                 $file      = $request->all()['file2_'];
                 $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file2_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file2_'),$filename,'public');
 
             }
 
@@ -189,7 +189,7 @@ class ClientController extends Controller
                 $file      = $request->all()['input_img'];
                 $filename = $request->client_slug.'.'.$file->getClientOriginalExtension();
 
-                $path = Storage::disk('s3')->putFileAs('companies', $file,$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $file,$filename,'public');
             }
 
             // save image
@@ -359,7 +359,7 @@ class ClientController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'_header.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file_'),$filename,'public');
 
             }
 
@@ -367,7 +367,7 @@ class ClientController extends Controller
             if(isset($request->all()['file2_'])){
                 $file      = $request->all()['file2_'];
                 $filename = $request->get('slug').'_banner.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file2_'),$filename);
+                $path = Storage::disk('s3')->putFileAs('companies', $request->file('file2_'),$filename,'public');
 
             }
 
