@@ -31,7 +31,11 @@
         
         <div class="row">
           <div class="col-12 col-md-4">
+          @if($user->image)
+          <img src="{{ $user->image }}" class="w-100 p-3 pt-0"/>  
+          @else
           <img src="{{ asset('/img/user.png')}}" class="w-100 p-3 pt-0"/>    
+          @endif
           </div>
           <div class="col-12 col-md-8">
                     <dl class="row">
@@ -125,7 +129,7 @@
   
         </div>
       </div>
-@if($user->video && !$user->client_slug)
+@if($user->video && $user->client_slug=='xplore')
       <div class="card mb-3">
       <div class="card-body">
 @if(!is_numeric($user->video))
@@ -252,17 +256,15 @@
 
           <div class="col-12 col-md-9">
             <dl class="row">
-  @if($user->colleges()->first())        
+  @if($user->college)        
   <dt class="col-sm-6">College Name</dt>
-  <dd class="col-sm-6"><a href="{{ route('college.view',$user->colleges()->first()->id ) }}">{{ $user->colleges()->first()->name}}</a></dd>
+  <dd class="col-sm-6"><a href="{{ route('college.view',$user->college->id ) }}">{{ $user->college->name}}</a></dd>
   @endif
 
-  @if($user->branches())
+  @if($user->branch)
   <dt class="col-sm-6">Branch</dt>
   <dd class="col-sm-6">
-  @foreach($user->branches()->get() as $branch)
-    <a href="{{ route('branch.view',$branch->name ) }}">{{ $branch->name}}</a> &nbsp;
-  @endforeach
+    <a href="{{ route('branch.view',$user->branch->name ) }}">{{ $user->branch->name}}</a> &nbsp;
   </dd>
   @endif
 
@@ -272,8 +274,8 @@
   </dd>
 
   <dt class="col-sm-6">Year of Passing</dt>
-  <dd class="col-sm-9">
-    {{ ($user->details)?$user->details->year_of_passing:'' }}
+  <dd class="col-sm-6">
+    {{ ($user->year_of_passing)?$user->year_of_passing:'-' }}
   </dd>
 
   

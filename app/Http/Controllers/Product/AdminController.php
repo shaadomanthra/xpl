@@ -975,7 +975,20 @@ class AdminController extends Controller
              abort(403,'Unauthorised Access');   
         }
 
-        $user = User::where('username',$id)->first();
+        $user = User::where('username',$id)->with('college')->with('branch')->first();
+        if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpg'))
+                {
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpg');
+                }
+                if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.png'))
+                {
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.png');
+                }
+
+                if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpeg'))
+                {
+                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg');
+                }
         return view('appl.product.admin.user.show')->with('user',$user);
     }
 
