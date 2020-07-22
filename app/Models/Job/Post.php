@@ -28,6 +28,6 @@ class Post extends Model
 
     public function users()
     {
-        return $this->belongsToMany('PacketPrep\User');
+        return $this->belongsToMany('PacketPrep\User')->withPivot('created_at');
     }
 }

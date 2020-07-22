@@ -227,50 +227,19 @@ class CollegeController extends Controller
         $obj = Obj::where('id',$id)->first();
         $this->authorize('view', $obj);
 
-        $metrics = Metric::all();
+        $branches = $obj->branches()->orderBy('id')->get();
+        $users = $obj->users()->with('branch')->get();
+
         $data = array();
+        $data['branches'] = $users->groupBy('branch_id');
 
-       
 
-            $user_college = $obj->users->pluck('id')->toArray();
-
-            foreach($obj->branches as $b){
-                $user_branch = $b->users->pluck('id')->toArray();
-                $data['branches'][$b->name] = count(array_intersect($user_college, $user_branch));
-            /*$data['branches'][$b->name] = $obj->users()->whereHas('branches', function ($query) use ($b) {
-                            $query->where('name', '=', $b->name);
-                        })->count(); */
-            }
-
-            foreach($metrics as $m){
-                $user_metric = $m->users->pluck('id')->toArray();
-                $data['metrics'][$m->name]= count(array_intersect($user_college, $user_metric));
-                /*$data['metrics'][$m->name] = $obj->users()->whereHas('metrics', function ($query) use ($m) {
-                                $query->where('name', '=', $m->name);
-                            })->count(); */
-            }
-
-            $data['users']['all'] = count($user_college);
-            $data['users']['pro'] =  0;/*$obj->users()->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Pro Access');
-                            })->count();*/
-            $data['users']['premium'] = 0;/*$obj->users()->whereHas('services', function ($query) use ($m) {
-                                $query->where('name', '=', 'Premium Access');
-                            })->count();*/
-            
-   
-
-        
-
-        
-
-        
         if($obj)
-            return view('appl.'.$this->app.'.'.$this->module.'.show2')
+            return view('appl.'.$this->app.'.'.$this->module.'.show3')
                     ->with('college',$obj)->with('app',$this)
                     ->with('obj',$obj)->with('app',$this)
-                    ->with('metrics',$metrics)
-                    ->with('data',$data);
+                    ->with('data',$data)
+                    ->with('branches',$branches);
         else
             abort(404);
     }

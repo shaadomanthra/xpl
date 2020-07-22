@@ -73,11 +73,12 @@ class PostController extends Controller
         $search = $request->search;
         $item = $request->item;
         $obj = Obj::where('slug',$slug)->first();
-        $users = $obj->users->pluck('id')->toArray();
+        
         
         $this->authorize('view', $obj);
         
         if($request->get('export')){
+            $users = $obj->users->pluck('id')->toArray();
             $objs = User::whereIn('id',$users)->with('college')->with('branch')
                     ->get();
             if($objs->count()<500){
@@ -91,7 +92,7 @@ class PostController extends Controller
             }
             
         } else{
-            $objs = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")->with('college')->with('branch')
+            $objs = $obj->users()->where('name','LIKE',"%{$item}%")->orderBy('pivot_created_at','desc')->with('college')->with('branch')
                     ->paginate(config('global.no_of_records')); 
         } 
 
@@ -247,7 +248,7 @@ class PostController extends Controller
             $user = \auth::user();
             if($user){
                 if(!$obj->users->contains($user->id)){
-                    $obj->users()->attach($user->id);
+                    $obj->users()->attach($user->id,['created_at'=>date("Y-m-d H:i:s")]);
                     flash('Successfully applied the job')->success(); 
                 }
                 
