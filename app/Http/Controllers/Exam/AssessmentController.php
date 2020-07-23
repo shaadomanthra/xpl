@@ -1045,12 +1045,13 @@ class AssessmentController extends Controller
                 }else{
 
                     if(strpos($item['answer'],'/')!==false){
-                        $ans = explode('/',$item['response']);
+                        $ans = explode('/',$item['answer']);
+                        
                         $flag = false;
                         $item['accuracy'] =0;
                         foreach($ans as $an){
                             $an = str_replace(' ', '', $an);
-                            if($an==trim($item['response']))
+                            if($an==trim(str_replace(' ','',$item['response'])))
                                 $item['accuracy'] =1;
                         }
                        
