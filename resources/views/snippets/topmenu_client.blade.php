@@ -9,7 +9,7 @@
         src="{{ request()->session()->get('client')->logo }} " height="50px" class="ml-md-0"  alt="logo " type="image/png">
         @else
         <img 
-        src="{{ request()->session()->get('client')->logo }} " height="80px" class="ml-md-0"  alt="logo " type="image/png">
+        src="{{ request()->session()->get('client')->logo }} " height="60px" class="ml-md-0"  alt="logo " type="image/png">
         @endif
     </a>
     
