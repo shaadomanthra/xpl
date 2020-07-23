@@ -3,6 +3,7 @@
 @section('content')
 <div class="bg-white p-3 border rounded">
 	
+@include('flash::message')
 @if(\auth::user())
 @if(!\auth::user()->video)
 

@@ -36,13 +36,21 @@ class VideoController extends Controller
         $user = \auth::user();
         $url = $request->get('url');
         parse_str( parse_url( $url, PHP_URL_QUERY ), $my_array_of_vars );
-        $id = $my_array_of_vars['v'];
+        $id = preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+(?=\?)|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+#", $url, $matches);
+        if(isset($matches[0])){
+            $id = $matches[0];
         
         $user->video =$id;
         $user->save();
 
         Cache::forget('id-' . $user->id);
         Cache::forever('id-'.$user->id,$user);
+    }
+        else{
+            flash('Invalid URL. Kindly reach out to administrator if the error is persistent.')->error();
+        }
+        
+        
 
         return redirect()->route('video.upload');
     }
