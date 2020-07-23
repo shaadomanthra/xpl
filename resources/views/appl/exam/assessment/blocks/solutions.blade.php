@@ -329,7 +329,7 @@
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">Score</label>
     <div class="col-sm-10">
-      @foreach(range(0.5,$details['section']->mark,0.5) as $r)
+      @foreach(range(0,$details['section']->mark,0.5) as $r)
         <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="score" id="inlineRadio1" value="{{$r}}" @if($details['mark']==$r)checked @endif>
         <label class="form-check-label" for="inlineRadio1">{{$r}}</label>
@@ -337,6 +337,8 @@
       @endforeach
     </div>
   </div>
+  @else
+    <input class="form-check-input" type="hidden" name="score" id="inlineRadio1" value="{{$details['mark']}}">
   @endif
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-2 col-form-label">Feedback</label>
