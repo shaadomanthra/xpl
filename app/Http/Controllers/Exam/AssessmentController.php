@@ -1056,10 +1056,14 @@ class AssessmentController extends Controller
                         }
                        
                     }else{
-                        if(trim($item['response']) == $item['answer'])
-                        $item['accuracy'] =1;
-                        else
-                        $item['accuracy'] =0; 
+                        if($item['response']){
+                            if(trim($item['response']) == $item['answer'])
+                            $item['accuracy'] =1;
+                            else
+                            $item['accuracy'] =0; 
+                        }else{
+                            $item['accuracy'] =0; 
+                        }
                     }
                     
 
