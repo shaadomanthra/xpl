@@ -715,7 +715,7 @@ class ExamController extends Controller
               
             $users = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
-            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->with('user')->orderBy('section_id')->get()->groupBy('user_id');
+            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
 
         }else{
             if($data)
