@@ -20,6 +20,9 @@
                   @if($user->profile_complete()==100)
                   <i class="fa fa-check-circle text-success"></i>
                   @endif
+                  @if($user->video)
+                  <i class="fa fa-vcard-o text-secondary"></i>
+                  @endif
                   </a>
                   @if($user->client_slug)
                   <span class="badge badge-info">{{$user->client_slug}}</span>

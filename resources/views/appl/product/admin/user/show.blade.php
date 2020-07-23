@@ -129,6 +129,7 @@
   
         </div>
       </div>
+     <!-- && ( || $user->client_slug=='') -->
 @if($user->video && $user->client_slug=='xplore')
       <div class="card mb-3">
       <div class="card-body">

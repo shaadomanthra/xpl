@@ -20,6 +20,12 @@
                   <a href=" {{ route('profile','@'.$obj->username) }} ">
                   {{ $obj->name }}
                   </a>
+                  @if($obj->profile_complete()==100)
+                  <i class="fa fa-check-circle text-success"></i>
+                  @endif
+                  @if($obj->video)
+                  <i class="fa fa-vcard-o text-secondary"></i>
+                  @endif
                 </td>
                 <td>
                   {{$obj->email}}<br>{{$obj->phone}}
