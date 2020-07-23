@@ -379,6 +379,9 @@ class Exam extends Model
       $sattempted=0; $oattempted=0;
       $flag = true;
       foreach($tests as $t){
+        if($t->id==$entry->id)
+          $t->mark = $entry->mark;
+        
         if($t->section_id==$entry->section_id){
           $s['mark'] = $s['mark'] + $t->mark;
           if($t->status!=2){
