@@ -381,7 +381,7 @@ class Exam extends Model
       foreach($tests as $t){
         if($t->id==$entry->id)
           $t->mark = $entry->mark;
-        
+
         if($t->section_id==$entry->section_id){
           $s['mark'] = $s['mark'] + $t->mark;
           if($t->status!=2){
@@ -403,7 +403,7 @@ class Exam extends Model
       }
 
 
-      if($entry->mark){
+      
           $entry->accuracy=1;
           $e_section->score = $s['mark'];
           $e_overall->score = $mark;
@@ -417,7 +417,7 @@ class Exam extends Model
         $entry->save();
         $e_section->save();
         $e_overall->save();
-      }
+      
 
       $user_id = $entry->user_id;
       $test_id = $entry->test_id;
