@@ -259,7 +259,7 @@
             <div class="col-6 col-md-4">
               <div class="bg-light p-3 border rounded mb-3 mb-md-0">
                 <h3><i class="fa fa-lightbulb-o"></i> Score</h3>
-                <div class="answer">{{ ($details['mark'])?$details['mark']:'-' }}</div>
+                <div class="answer">{{ $details['mark'] }}</div>
               </div>
             </div>
             <div class="col-6 col-md-4">
@@ -329,7 +329,7 @@
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">Score</label>
     <div class="col-sm-10">
-      @foreach(range(0,$details['section']->mark,0.5) as $r)
+      @foreach(range(0,$question->mark,0.5) as $r)
         <div class="form-check form-check-inline">
         <input class="form-check-input" type="radio" name="score" id="inlineRadio1" value="{{$r}}" @if($details['mark']==$r)checked @endif>
         <label class="form-check-label" for="inlineRadio1">{{$r}}</label>

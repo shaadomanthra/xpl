@@ -159,7 +159,16 @@
       <div class="@if(request()->get('id')=='settings') p-3  pactive rounded bg-success text-white mb-3 @endif">
 
         <div class="row">
-        <div class="col-12 col-md-6">
+          <div class="col-12 col-md-6">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Question Shuffle</label>
+        <select class="form-control" name="shuffle">
+          <option value="1" @if(isset($exam)) @if($exam->shuffle==1) selected @endif @endif >Yes</option>
+          <option value="0" @if(isset($exam)) @if($exam->shuffle==0) selected @endif @endif >No</option>
+        </select>
+      </div>
+        </div>
+        <div class="col-12 col-md-3">
           <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
@@ -169,7 +178,7 @@
         </select>
       </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-3">
            <div class="form-group">
         <label for="formGroupExampleInput ">Link</label>
         <select class="form-control" name="active">
@@ -297,6 +306,13 @@
               <option value="6" @if(isset($exam)) @if($exam->auto_terminate==6) selected @endif @endif >after 6 window swaps</option>
               <option value="10" @if(isset($exam)) @if($exam->auto_terminate==10) selected @endif @endif >after 10 window swaps</option>
             </select>
+          </div>
+        </div>
+
+        <div class="col-12 ">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Message in 'No Report' page</label>
+            <input  class="form-control" type="text" value="{{($exam->message)? $exam->message:'Your responses are recorded for internal evaluation.'}}"  name="message"></input>
           </div>
         </div>
       </div>

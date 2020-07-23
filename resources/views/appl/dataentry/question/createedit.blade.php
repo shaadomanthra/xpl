@@ -322,7 +322,17 @@
               value = "{{ $question->topic }}"
               @endif
             >
-           
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="formGroupExampleInput ">Mark</label>
+          <input type="text" class="form-control"  id="formGroupExampleInput"  name="mark"
+              @if($stub=='Create')
+              value="{{ (old('mark')) ? old('mark') : '1' }}"
+              @else
+              value = "{{ $question->mark }}"
+              @endif
+            >
         </div>
 
         <div class="form-group mt-3">

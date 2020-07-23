@@ -1226,6 +1226,7 @@ class QuestionController extends Controller
             $question->level = $request->level;
             $question->intest = $request->intest;
             $question->topic = $request->topic;
+            $question->mark = $request->mark;
             $question->save(); 
 
             if($request->dynamic){

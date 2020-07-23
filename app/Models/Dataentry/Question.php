@@ -36,7 +36,8 @@ class Question extends Model
         'question_b',
         'question_c',
         'question_d',
-        'passage'
+        'passage',
+        'mark'
         // add all other fields
     ];
 

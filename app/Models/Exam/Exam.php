@@ -34,6 +34,8 @@ class Exam extends Model
         'auto_termination',
         'capture_frequency',
         'client',
+        'shuffle',
+        'message',
         // add all other fields
     ];
 
@@ -366,7 +368,6 @@ class Exam extends Model
     }
 
     public function updateScore($tests,$entry){
-      
       
       $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
       $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();

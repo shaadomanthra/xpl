@@ -367,10 +367,16 @@ class AssessmentController extends Controller
             
 
             //shuffle($qset);
-            $qset = $qset->shuffle();
+            if($exam->shuffle)
+                $qset = $qset->shuffle();
+
             $k=0;
             foreach( $qset as $q){
-                $q->dynamic = rand(1,4);
+                if($exam->shuffle)
+                    $q->dynamic = rand(1,4);
+                else
+                    $q->dynamic = 1;
+
                 $q->answer = $this->new_answer(strtoupper($q->answer),$q->dynamic);
                 //$q = $question->dynamic_variable_replacement($q->dynamic,$q);
                 $q = $this->option_swap2($q,$q->dynamic);
@@ -763,6 +769,8 @@ class AssessmentController extends Controller
             $response->mark = request()->get('score');
             $response->comment = request()->get('comment');
             $response->save();
+
+            
             $exam->updateScore($test_responses,$response);
         }
 
@@ -987,10 +995,11 @@ class AssessmentController extends Controller
                 $answers[$q->id] = $q->answer;
                 if(!isset($sections_max[$section->id]))
                     $sections_max[$section->id] = 0;
+                if($q->mark)
+                $sections_max[$section->id] = $sections_max[$section->id] + $q->mark;  
+                else
                 $sections_max[$section->id] = $sections_max[$section->id] + $section->mark;
                 $qcount++;
-
-
             }
         }
 
@@ -1068,13 +1077,20 @@ class AssessmentController extends Controller
 
                 }
 
-                if($item['accuracy']==1)
-                    $item['mark'] = 1;
-                else
-                    $item['mark'] = 0;
+                if($item['accuracy']==1){
+                    if($questions[$item['question_id']]->mark)
+                        $item['mark'] = $questions[$item['question_id']]->mark;
+                    elseif($secs[$item['section_id']]->mark)
+                        $item['mark'] = $secs[$item['section_id']]->mark;
+                    else
+                        $item['mark'] = 1;
+                }else{
+                    if($secs[$item['section_id']]->negative)
+                        $item['mark'] = 0 - $secs[$item['section_id']]->negative;
+                    else
+                        $item['mark'] = 0;
+                }
 
-
-                
 
                 $item['status'] = 1;
                 $item['dynamic'] = $request->get($i.'_dynamic');
@@ -1133,11 +1149,11 @@ class AssessmentController extends Controller
 
             if($item['accuracy']){
                 $sec[$item['section_id']]['correct']++;
-                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] + $secs[$item['section_id']]->mark;
+                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] + $item['mark'];
             }
             else if($item['response'] && $item['accuracy']==0){
                 $sec[$item['section_id']]['incorrect']++;
-                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] - $secs[$item['section_id']]->negative;
+                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] - $item['mark'];
             }
                 
             $sec[$item['section_id']]['time'] = $sec[$item['section_id']]['time'] + $item['time'];

@@ -64,6 +64,7 @@
   </thead>
   <tbody>
   	@foreach($tests as $k=>$t)
+
     <tr>
       <th scope="row">{{($k+1)}}</th>
       <td>{!! $questions[$t->question_id]->question !!}</td>
@@ -83,6 +84,7 @@
       	{!! $t->response !!}
       	@if($t->accuracy)
       		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
+
 	      		@if(!$t->mark)
 	      		<i class="fa fa-times-circle text-danger"></i>
 	      		@else
@@ -91,11 +93,15 @@
       		@else
       		<i class="fa fa-check-circle text-success"></i>
       		@endif
-
-      		
       	@else
+
       		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
       		<i class="fa fa-times-circle text-danger"></i>
+      		@else
+      			@if($t->mark==0 && $questions[$t->question_id]->type!='urq' && $questions[$t->question_id]->type!='sq')
+
+	      		<i class="fa fa-times-circle text-danger"></i>
+	      		@endif
       		@endif
       	@endif
       	@endif
@@ -107,7 +113,11 @@
       		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
       		0
       		@else
+      		@if($t->status!=2)
+      			0
+      		@else
       		<span class="badge badge-warning">Under Review</span>
+      		@endif
       		@endif
       	@endif
       </td>
