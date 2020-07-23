@@ -760,6 +760,7 @@ class AssessmentController extends Controller
         }
 
         if(request()->get('slug')){
+            if(request()->get('score'))
             $response->mark = request()->get('score');
             $response->comment = request()->get('comment');
             $response->save();
