@@ -1709,8 +1709,6 @@ class AssessmentController extends Controller
 
                 if($q->type=='sq' || $q->type=='urq')
                     $subjective= true;
-
-
             }
             
         }
@@ -1725,6 +1723,7 @@ class AssessmentController extends Controller
         $details['incorrect_time']=0;
         $details['unattempted_time']=0;
         $topics = false;
+        $review=false;
 
         $i=0;
         if($exam->slug=='psychometric-test')
@@ -1824,6 +1823,8 @@ class AssessmentController extends Controller
                 $details['testdate'] = $t->created_at->diffForHumans(); 
             }
             
+            if($t->status==2)
+                $review = true;
             //$ques = Question::where('id',$q->id)->first();
             //dd($secs[$t->section_id]);
             if($ques_keys[$t->question_id]['topic'])
@@ -1937,6 +1938,7 @@ class AssessmentController extends Controller
                         ->with('user',$student)
                         ->with('tests',$tests)
                         ->with('test_overall',$tests_overall)
+                        ->with('review',true)
                         ->with('chart',true);
 
     }

@@ -281,43 +281,7 @@
         </div>
       </div>
 
-@if(auth::user()->checkRole(['hr-manager']))
-      <div class="card">
-        <div class="card-body">
-          <h3>Award Score</h3>
-          <form id="award_score" action="{{ request()->url()}}" method="post">
-  <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label">Score</label>
-    <div class="col-sm-10">
-      @foreach(range(0.5,$details['section']->mark,0.5) as $r)
-        <div class="form-check form-check-inline">
-  <input class="form-check-input" type="radio" name="score" id="inlineRadio1" value="{{$r}}" @if($details['mark']==$r)checked @endif>
-  <label class="form-check-label" for="inlineRadio1">{{$r}}</label>
-</div>
-      @endforeach
-      
 
-      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-      <input type="hidden" name="student" value="{{ request()->get('student') }}">
-      <input type="hidden" name="slug" value="{{ $exam->slug }}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Feedback</label>
-    <div class="col-sm-10">
-      <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="4">@if(@details['comment']){{$details['comment']}}@endif</textarea>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label"></label>
-    <div class="col-sm-10">
-      <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-  </div>
-</form>
-        </div>
-      </div>
-@endif
       @endif
 
       @else
@@ -355,6 +319,44 @@
       </div>
 
       @endif
+
+      @if(auth::user()->checkRole(['hr-manager']))
+      <div class="card">
+        <div class="card-body">
+          <h3>Faculty Input</h3>
+          <form id="award_score" action="{{ request()->url()}}" method="post">
+  @if($question->type=='sq' || $question->type=='urq')
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Score</label>
+    <div class="col-sm-10">
+      @foreach(range(0.5,$details['section']->mark,0.5) as $r)
+        <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="score" id="inlineRadio1" value="{{$r}}" @if($details['mark']==$r)checked @endif>
+        <label class="form-check-label" for="inlineRadio1">{{$r}}</label>
+      </div>
+      @endforeach
+    </div>
+  </div>
+  @endif
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">Feedback</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="4">@if(@details['comment']){{$details['comment']}}@endif</textarea>
+      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="student" value="{{ request()->get('student') }}">
+      <input type="hidden" name="slug" value="{{ $exam->slug }}">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-10">
+      <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</form>
+        </div>
+      </div>
+@endif
 
       @if($question->explanation )
       <div class="card mb-3 mb-md-0">

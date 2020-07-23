@@ -377,7 +377,7 @@ class Exam extends Model
       $s['mark'] = 0;
       $mark = 0;
       $sattempted=0; $oattempted=0;
-      $flag = false;
+      $flag = true;
       foreach($tests as $t){
         if($t->section_id==$entry->section_id){
           $s['mark'] = $s['mark'] + $t->mark;
@@ -391,21 +391,25 @@ class Exam extends Model
             $mark = $mark +  $t->mark;
         }
 
-        if($t->status==2)
-          $flag = true;
+        if($t->status==2){
+          if($t->id==$entry->id && $entry->mark)
+            $flag = true;
+          else
+          $flag = false;
+        }
       }
+
 
       if($entry->mark){
           $entry->accuracy=1;
           $e_section->score = $s['mark'];
           $e_overall->score = $mark;
-
-          if(!$flag)
-            $e_overall->status = 0;
-
           $entry->status =1;
 
-          
+          if($flag){
+            $e_overall->status = 0;
+          }
+
 
         $entry->save();
         $e_section->save();

@@ -573,8 +573,10 @@ class ExamController extends Controller
         $this->authorize('view', $exam);
 
         if(request()->get('refresh')){
-            flash('Image urls updated to AWS S3')->success();
+            flash('Cache Updated. And image urls updated to AWS S3.')->success();
             $exam->changeImageUrls();
+            //update redis cache
+            $exam->updateCache();
         }
 
         if(request()->get('delete')=='banner'){

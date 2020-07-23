@@ -2,7 +2,17 @@
 @section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' ')
 @section('content')
 
-@if($exam->slug != 'proficiency-test')
+
+@if(auth::user()->checkRole(['hr-manager','admin']))
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb border">
+    <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
+    <li class="breadcrumb-item"><a class="white-link" href="{{ route('test.report',$exam->slug)}}">{{ ucfirst($exam->name) }} - Reports </a></li>
+    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.analysis',$exam->slug)}}">{{ ucfirst($exam->name) }} - Analysis </a></li>
+    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.solutions',$exam->slug)}}">Solutions</a> </li>
+  </ol>
+</nav>
+@elseif($exam->slug != 'proficiency-test')
 <nav aria-label="breadcrumb" class="mt-3">
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
@@ -25,7 +35,8 @@
 	<div class="">
 		<div class="p-3 border rounded bg-light mb-3" style="min-height: 130px">
 		<div class="bg-white p-3 float-right text-center border"><h5>Total Score</h5>
-			@if($details['marks'])
+
+			@if(!$test_overall->status)
 			<div class="display-4">{{ $details['marks']}} / {{ $details['total'] }} </div>
 			@else
 			<div class="badge badge-primary px-2" style="line-height: 1.4">Under<br>Review</div>
@@ -69,7 +80,10 @@
 			</div>
         @endif
       	@else
-      	{!! $questions[$t->question_id]->response !!}
+      	{!! $t->response !!}
+      	@if($t->accuracy)
+      		<i class="fa fa-check-circle text-success"></i>
+      	@endif
       	@endif
       </td>
       <td>
@@ -79,7 +93,7 @@
       		<span class="badge badge-warning">Under Review</span>
       	@endif
       </td>
-      <td>{{ ($t->comment)?$t->comment:'-' }}</td>
+      <td>{{ (isset($t->comment))?$t->comment:'-' }}</td>
     </tr>
     @endforeach
   </tbody>
