@@ -259,7 +259,11 @@
             <dl class="row">
   @if($user->college)        
   <dt class="col-sm-6">College Name</dt>
+  @if($user->college->id!=5 && $user->college->id!=295)
   <dd class="col-sm-6"><a href="{{ route('college.view',$user->college->id ) }}">{{ $user->college->name}}</a></dd>
+  @else
+  <dd class="col-sm-6">{{$user->info}}</dd>
+  @endif
   @endif
 
   @if($user->branch)

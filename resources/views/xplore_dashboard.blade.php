@@ -40,11 +40,31 @@
         <div class="col-12 col-md-9">
 
           <h2>Hi, {{  \auth::user()->name}} 
-            @if(auth::user()->profile_complete()==100)<i class="fa fa-check-circle text-success"></i>@endif</h2>
+            @if(auth::user()->profile_complete()==100)<i class="fa fa-check-circle text-success"  data-toggle="tooltip" title="Profile Completed"></i>@endif
+            @if(auth::user()->video)<i class="fa fa-vcard-o text-secondary"  data-toggle="tooltip" title="Profile Video"></i>@endif</h2>
       <p> Welcome aboard</p>
 
-      <p class="lead">Develop a passion for learning. If you do, you will never cease to grow - 
-            Anthony J Dangelo</p>
+      <p class="lead">
+        <dl class="row">
+  @if($user->college)        
+  <dt class="col-sm-5">College </dt>
+  @if($user->college->id!=5 && $user->college->id!=295)
+  <dd class="col-sm-7">{{ $user->college->name}}</dd>
+  @else
+  <dd class="col-sm-7">{{$user->info}}</dd>
+  @endif
+  @endif
+  @if($user->branch)
+  <dt class="col-sm-5">Branch</dt>
+  <dd class="col-sm-7">{{ $user->branch->name}} &nbsp;
+  </dd>
+  @endif
+  <dt class="col-sm-5">Year of Passing</dt>
+  <dd class="col-sm-7">
+    {{ ($user->year_of_passing)?$user->year_of_passing:'-' }}
+  </dd>
+</dl>
+      </p>
 
 
 
@@ -314,7 +334,22 @@ programming & Interview Skills</li>
     
 </div>
 @endif
+
+@if(!auth::user()->video)
+  <div class="bg-white  p-4 p-md-4 mb-md-4 mt-4" style="background-image:url({{asset('img/graphics/corner-3.png')}});background-position: right;background-repeat: no-repeat; border-radius:8px;box-shadow: 3px 3px 3px 3px #eee;background-size: auto;">
+  <div class="heading mb-4">
+    <h3 class="jost  text-blue" >Add Profile Video </h3>
+    
+  </div>
+  <p>A great profile video <i class="fa fa-vcard-o text-secondary"></i> can enhance your visibility to the HR's. </p>
+  <p class="mb-0 text-blue">
+    <a href="{{route('video.upload')}}"><b><i class="fa fa-angle-right"></i> add video</b></a></p>
+    
 </div>
+@endif
+</div>
+
+
   
 </div>
 
