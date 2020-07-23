@@ -82,7 +82,17 @@
       	@else
       	{!! $t->response !!}
       	@if($t->accuracy)
+      		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
+	      		@if(!$t->mark)
+	      		<i class="fa fa-times-circle text-danger"></i>
+	      		@else
+	      		<i class="fa fa-check-circle text-success"></i>
+	      		@endif
+      		@else
       		<i class="fa fa-check-circle text-success"></i>
+      		@endif
+
+      		
       	@else
       		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
       		<i class="fa fa-times-circle text-danger"></i>
