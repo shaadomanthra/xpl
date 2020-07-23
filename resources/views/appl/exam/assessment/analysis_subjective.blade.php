@@ -83,6 +83,10 @@
       	{!! $t->response !!}
       	@if($t->accuracy)
       		<i class="fa fa-check-circle text-success"></i>
+      	@else
+      		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
+      		<i class="fa fa-times-circle text-danger"></i>
+      		@endif
       	@endif
       	@endif
       </td>
@@ -90,7 +94,11 @@
       	@if($t->mark)
       			{{$t->mark }}
       	@else
+      		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
+      		0
+      		@else
       		<span class="badge badge-warning">Under Review</span>
+      		@endif
       	@endif
       </td>
       <td>{{ (isset($t->comment))?$t->comment:'-' }}</td>
