@@ -600,7 +600,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	//Route::get('uploadimage/{test}','Exam\AssessmentController@upload_image')->name('assessment.uploadget');
 	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis2')->name('assessment.analysis')->middleware('auth');
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
+	Route::post('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions.post')->middleware('auth');
 	Route::get('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q')->middleware('auth');
+	Route::post('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q.post')->middleware('auth');
 	Route::get('test/{test}/try','Exam\AssessmentController@try2')->middleware('auth')->name('assessment.try');
 	Route::get('test/{test}','Exam\AssessmentController@show')->name('assessment.show');
 	Route::get('test/{test}/details','Exam\AssessmentController@show')->name('assessment.details');

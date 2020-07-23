@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		</div>
-		<div class="qset" style="max-height: 170px;overflow-y: auto;">
+		<div class="qset" style="height: 230px;overflow-y: auto;">
 		<div class="{{ $i=1}}">
 
 			
@@ -43,6 +43,8 @@
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Multi Choice Question</a>
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=maq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Multi Answer Question</a>
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=fillup&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Fillup Question</a>
+      <a class="dropdown-item" href="{{ route('question.create','default')}}?type=sq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Subjective Question</a>
+      <a class="dropdown-item" href="{{ route('question.create','default')}}?type=urq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">User Response Question</a>
       @if(\auth::user()->checkRole(['administrator']))
        <a class="dropdown-item" href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Code Question</a>
         @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )

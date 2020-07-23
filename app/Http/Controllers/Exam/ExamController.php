@@ -564,7 +564,7 @@ class ExamController extends Controller
      */
     public function show($id)
     {
-        $exam= Exam::where('slug',$id)->first();
+        $exam= Exam::where('slug',$id)->with('user')->with('sections')->first();
         $exam->precheck_auto_activation();
         
         if(!\auth::user()->checkRole(['administrator','hr-manager','tpo'])){
@@ -588,14 +588,29 @@ class ExamController extends Controller
         $emails =str_replace("\r", '', $emails);
         $emails = explode(',',$emails);
 
+        if($exam->emails){
+            
+            $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
+            $email_stack['registered'] = $users->pluck('email')->toArray();
+            $email_stack['not_registered'] =  array_diff($emails,$email_stack['registered']);
+        }else{
+        $email_stack['registered'] = [];
+        $email_stack['not_registered'] =  [];
+        }
 
-        $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
-        $email_stack['registered'] = $users->pluck('email')->toArray();
-        $email_stack['not_registered'] =  array_diff($emails,$email_stack['registered']);
+        $data['attempt_count'] = $exam->getAttemptCount();
+        if($data['attempt_count'])
+            $data['users'] = $exam->latestUsers(); 
+        else
+            $data['users'] = 0;
+
+        $data['hr-managers'] = \auth::user()->getRole('hr-manager');
+       
 
         if($exam)
             return view('appl.exam.exam.show')
                     ->with('exam',$exam)
+                    ->with('data',$data)
                     ->with('email_stack',$email_stack);
         else
             abort(404);

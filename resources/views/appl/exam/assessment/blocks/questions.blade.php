@@ -182,7 +182,7 @@
           @if($question->type=='sq')
           <div class="bg-light border p-3 rounded mt-3">
           <h5>Enter your answer</h5>
-          <textarea class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" ></textarea>
+          <textarea class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" row=5></textarea>
         </div>
           @endif
 

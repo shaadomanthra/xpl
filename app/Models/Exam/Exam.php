@@ -365,6 +365,65 @@ class Exam extends Model
 
     }
 
+    public function updateScore($tests,$entry){
+      
+      
+      $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
+      $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
+      $section = Section::where('id',$entry->section_id)->first();
+
+      $q = $entry->question;
+
+      $s['mark'] = 0;
+      $mark = 0;
+      $sattempted=0; $oattempted=0;
+      $flag = false;
+      foreach($tests as $t){
+        if($t->section_id==$entry->section_id){
+          $s['mark'] = $s['mark'] + $t->mark;
+          if($t->status!=2){
+            $sattempted++;
+          }
+        }
+
+        if($t->status!=2){
+            $oattempted++;
+            $mark = $mark +  $t->mark;
+        }
+
+        if($t->status==2)
+          $flag = true;
+      }
+
+      if($entry->mark){
+          $entry->accuracy=1;
+          $e_section->score = $s['mark'];
+          $e_overall->score = $mark;
+
+          if(!$flag)
+            $e_overall->status = 0;
+
+          $entry->status =1;
+
+          
+
+        $entry->save();
+        $e_section->save();
+        $e_overall->save();
+      }
+
+      $user_id = $entry->user_id;
+      $test_id = $entry->test_id;
+
+      Cache::forget('attempt_'.$user_id.'_'.$test_id);
+      Cache::forget('responses_'.$user_id.'_'.$test_id); 
+
+        return 1;
+    }
+
+
+
+
     public function runCode($r=null){
      
 

@@ -227,7 +227,7 @@ programming & Interview Skills</li>
                       @if(!$test->attempt_status)
                       <span class="badge badge-success">Completed</span>
                       @else
-                      <span class="badge badge-warning">Processing</span>
+                      <span class="badge badge-warning">Under Review</span>
                       @endif
                     
                   </td>

@@ -734,7 +734,8 @@ class AssessmentController extends Controller
     public function solutions($slug,$id=null,Request $request)
     {
 
-        $exam = Exam::where('slug',$slug)->first();
+        $exam = Exam::where('slug',$slug)->with('sections')->first();
+
 
         if($request->get('student'))
             $student = User::where('username',$request->get('student'))->first();
@@ -744,26 +745,29 @@ class AssessmentController extends Controller
         if(!$student)
             $student = \auth::user();
 
+        $test_responses = Test::where('test_id',$exam->id)
+                                    ->where('user_id',$student->id)
+                                    ->get();
 
+        //dd($test_responses);
         if($id==null){
             $view ='questions';
-            $response = Test::where('test_id',$exam->id)
-                    ->where('user_id',$student->id)
-                    ->first();
+            $response = $test_responses->first();
             $id = $response->question_id;
         }else{
-            $response = Test::where('test_id',$exam->id)
-                    ->where('user_id',$student->id)
-                    ->where('question_id',$id)
-                    ->first();
+            $response = $test_responses->where('question_id',$id)->first();
             $view = 'q';
         }
+
+        if(request()->get('slug')){
+            $response->mark = request()->get('score');
+            $response->comment = request()->get('comment');
+            $response->save();
+            $exam->updateScore($test_responses,$response);
+        }
+
+      
         
-
-        
-
-
-
         if($id){
             $question = Question::where('id',$id)->first()->dynamic_variable_replacement($response->dynamic);
 
@@ -773,22 +777,20 @@ class AssessmentController extends Controller
 
             if($question){
             
+                if($question->passage_id)
                 $passage = Passage::where('id',$question->passage_id)->first();
+                else
+                    $passage = [];
                 
                 $questions = array();
                 $sections  = array();
                 $i=0;
 
-                $test_responses = Test::where('test_id',$exam->id)
-                                    ->where('user_id',$student->id)
-                                    ->get();
+                
 
                 $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'tag']; 
 
-                $test = Test::where('test_id',$exam->id)
-                            ->where('question_id',$id)
-                            ->where('user_id',$student->id)
-                            ->first();
+                $test = $response;
 
                 if($test){
                     $details['code'] = $test->code;
@@ -797,6 +799,7 @@ class AssessmentController extends Controller
                     $details['time'] = $test->time;
                     $details['mark'] = $test->mark;
                     $details['comment'] = $test->comment;
+                    $details['section'] = $test->section;
                 }else{
                     $details['code'] = null;
                     $details['response'] = null;
@@ -804,6 +807,7 @@ class AssessmentController extends Controller
                     $details['time'] = null;
                     $details['mark'] = null;
                     $details['comment'] = null;
+                    $details['section'] = null;
                 }
 
 
@@ -985,6 +989,8 @@ class AssessmentController extends Controller
                     $sections_max[$section->id] = 0;
                 $sections_max[$section->id] = $sections_max[$section->id] + $section->mark;
                 $qcount++;
+
+
             }
         }
 
@@ -1037,12 +1043,32 @@ class AssessmentController extends Controller
                         $item['accuracy'] =1;
                 }else{
 
-                    if(trim($item['response']) == $item['answer'])
-                    $item['accuracy'] =1;
-                    else
-                    $item['accuracy'] =0; 
+                    if(strpos($item['answer'],'/')!==false){
+                        $ans = explode('/',$item['response']);
+                        $flag = false;
+                        $item['accuracy'] =0;
+                        foreach($ans as $an){
+                            $an = str_replace(' ', '', $an);
+                            if($an==trim($item['response']))
+                                $item['accuracy'] =1;
+                        }
+                       
+                    }else{
+                        if(trim($item['response']) == $item['answer'])
+                        $item['accuracy'] =1;
+                        else
+                        $item['accuracy'] =0; 
+                    }
+                    
 
                 }
+
+                if($item['accuracy']==1)
+                    $item['mark'] = 1;
+                else
+                    $item['mark'] = 0;
+
+
                 
 
                 $item['status'] = 1;
@@ -1050,6 +1076,13 @@ class AssessmentController extends Controller
                 $item['code'] = $request->get('dynamic_'.$i);
 
                 if(strip_tags(trim($item['code']))){
+                    $code_ques_flag =1;
+                    $item['status'] = 2;
+                }
+
+                $type = $questions[$item['question_id']]->type;
+
+                if($type=='sq' || $type=='urq'){
                     $code_ques_flag =1;
                     $item['status'] = 2;
                 }
@@ -1069,8 +1102,6 @@ class AssessmentController extends Controller
         Cache::put('responses_'.$user_id.'_'.$test_id,$tests_cache,240);
 
         
-
-
         $details = ['user_id'=>$request->get('user_id'),'test_id'=>$request->get('test_id')];
 
         //update sections
@@ -1143,6 +1174,7 @@ class AssessmentController extends Controller
             $test_overall['status'] = 1;
             $test_overall_cache->status =1;
         }
+
         foreach($sec as $s){
             $test_overall['unattempted'] = $test_overall['unattempted'] + $s['unattempted'];
             $test_overall['correct'] = $test_overall['correct'] + $s['correct'];
@@ -1660,7 +1692,7 @@ class AssessmentController extends Controller
         //dd($tests[0]->time);
         if(!count($tests))
             abort('404','Test not attempted');
-
+        $subjective = false; 
         $sections = array();
         foreach($exam->sections as $section){
             if(isset($secs[$section->id][0]))
@@ -1670,9 +1702,14 @@ class AssessmentController extends Controller
             $secs[$section->id] = $section;
             foreach($section->questions as $q){
                 $questions[$i] = $q;
+                $ques[$q->id] = $q;
                 $ques_keys[$q->id]['topic'] = $q->topic;
                 $ques_keys[$q->id]['section'] = $section->name;
                 $i++;
+
+                if($q->type=='sq' || $q->type=='urq')
+                    $subjective= true;
+
 
             }
             
@@ -1800,7 +1837,10 @@ class AssessmentController extends Controller
                     $c++;
                     $details['correct'] = $details['correct'] + 1;
                     $details['correct_time'] = $details['correct_time'] + $t->time;
-                    $details['marks'] = $details['marks'] + $secs[$t->section_id]->mark;
+                    if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq')
+                        $details['marks'] = $details['marks'] + $t->mark;
+                    else
+                        $details['marks'] = $details['marks'] + $secs[$t->section_id]->mark;
                 }
                 else{
                     $details['i'][$i]['topic'] = $ques_keys[$t->question_id]['topic'];
@@ -1823,10 +1863,12 @@ class AssessmentController extends Controller
             }
             else{
                 $details['u'][$u]['topic'] = $ques_keys[$t->question_id]['topic'];
-                    $details['u'][$u]['section'] = $ques_keys[$t->question_id]['section'];
-                    $u++;
+                $details['u'][$u]['section'] = $ques_keys[$t->question_id]['section'];
+                $u++;
                 $details['unattempted'] = $details['unattempted'] + 1;  
                 $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
+                if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq')
+                        $details['marks'] = $details['marks'] + $t->mark;
             }
 
             $details['total'] = $details['total'] + $secs[$t->section_id]->mark;
@@ -1876,8 +1918,9 @@ class AssessmentController extends Controller
         //dd($details);
 
         //dd($sections);
-
-        if($exam->status==2)
+        if($subjective)
+            $view = "analysis_subjective";
+        else if($exam->status==2)
             $view = "analysis_private";
         else
             $view = "analysis";
@@ -1887,10 +1930,12 @@ class AssessmentController extends Controller
 
         return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
+                        ->with('questions',$ques)
                         ->with('sections',$sections)
                         ->with('details',$details)
                         ->with('student',$student)
                         ->with('user',$student)
+                        ->with('tests',$tests)
                         ->with('test_overall',$tests_overall)
                         ->with('chart',true);
 

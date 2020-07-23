@@ -505,6 +505,9 @@ $(document).ready(function() {
 @if(isset($chart))
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 <script>
+if(document.getElementById("myChart")){
+
+
 var ctx = document.getElementById("myChart");
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -540,6 +543,7 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+}
 </script>
 
 <script type="text/javascript">
@@ -581,9 +585,10 @@ var myChart = new Chart(ctx, {
     }
 }
 
+if(document.getElementById('chartOneContainer')){
 var ctxOne = document.getElementById('chartOneContainer').getContext('2d');
 new Chart(ctxOne, optionsOne);
-
+}
 </script>
 
 
@@ -632,8 +637,10 @@ new Chart(ctxOne, optionsOne);
     }
 }
 
+if(document.getElementById({{$section->section_id}}+'Container')){
 var ctx_{{$section->section_id}} = document.getElementById({{$section->section_id}}+'Container').getContext('2d');
 new Chart(ctx_{{$section->section_id}},options_{{$section->section_id}});
+}
 
 </script>
 @endforeach

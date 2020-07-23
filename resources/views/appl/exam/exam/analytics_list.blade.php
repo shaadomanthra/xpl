@@ -54,7 +54,7 @@
                   @if(!$r->status)
                   {{ $r->score }} / {{ $r->max }}
                   @else
-                  -
+                  <span class="badge badge-warning">Under Review</span>
                   @endif
                 </td>
                 @endif
@@ -63,16 +63,14 @@
                 </td>
                 <td>
                 <form method="post" class='form-inline' action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
-                  @if(!$r->status)
+                  
                   <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$users[$r->user_id]->username}}">
                     <i class='fa fa-bar-chart'></i> Report
                   </a>&nbsp;&nbsp;&nbsp;
                   @if($exam->slug!='psychometric-test')
                   <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$users[$r->user_id]->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
                   @endif
-                  @else
-                  - &nbsp;&nbsp;&nbsp;
-                  @endif
+                  
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="user_id" value="{{ $users[$r->user_id]->id}}">

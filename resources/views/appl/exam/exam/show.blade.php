@@ -12,7 +12,11 @@
         <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
             <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-            <li class="breadcrumb-item">Test</li>
+            @if(auth::user()->isAdmin())
+            <li class="breadcrumb-item"><a href="{{ url('/exam')}}">Tests</a></li>
+            @else
+            <li class="breadcrumb-item">Tests</li>
+            @endif
           </ol>
         </nav>
         <div class=' pb-3'>
@@ -22,7 +26,7 @@
       <div class="col-12 col-md-4 col-lg-2">
         <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
           <div class="h6">Attempts</div>
-          <div class="h2" ><a href="{{ route('test.report',$exam->slug)}}" >{{$exam->getAttemptCount()}}</a></div>
+          <div class="h2" ><a href="{{ route('test.report',$exam->slug)}}" >{{$data['attempt_count']}}</a></div>
         </div>
       </div>
     </div>
@@ -370,7 +374,7 @@
           </a>
         </div>
       </div>
-      @if($exam->getAttemptCount())
+      @if($data['attempt_count'])
       <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest participants <small><span class="text-secondary">({{$exam->getAttemptCount()}})</span></small><a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm float-lg-right mt-3 mt-lg-0">View all</a></div>
 
       @foreach($exam->latestUsers() as $u =>$t)
@@ -445,7 +449,7 @@
         <select class="form-control" name="user_id">
           <option value=""  >-None-</option>
           <option value="{{\auth::user()->id}}"  >{{ \auth::user()->username }}</option>
-          @foreach(\auth::user()->getRole('hr-manager') as $u)
+          @foreach($data['hr-managers'] as $u)
 
           <option value="{{$u->id}}"  >{{ $u->username }}</option>
           @endforeach
@@ -489,7 +493,7 @@
         <label for="formGroupExampleInput "> Select the HR Manager to assign for</label>
         <select class="form-control" name="user_id">
           <option value="{{\auth::user()->id}}"  >{{ \auth::user()->username }}</option>
-          @foreach(\auth::user()->getRole('hr-manager') as $u)
+          @foreach($data['hr-managers'] as $u)
 
           <option value="{{$u->id}}"  >{{ $u->username }}</option>
           @endforeach
