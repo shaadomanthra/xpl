@@ -174,6 +174,14 @@ class TrainingController extends Controller
                 $request->merge(['image' => $path]);
             }
 
+            if(!request()->get('tpo_id')){
+                $request->merge(['tpo_id' => 1]);
+            }
+
+            if(!request()->get('trainer_id')){
+                $request->merge(['trainer_id' => 1]);
+            }
+
             if($request->start_date)
                 $request->merge(['start_date' => \carbon\carbon::parse($request->start_date)->format('Y-m-d H:i:s')]);
             if($request->due_date)
