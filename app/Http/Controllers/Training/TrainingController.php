@@ -205,31 +205,27 @@ class TrainingController extends Controller
         
         $rows = $collection[0];
         foreach($rows as $key =>$row){
-           
-            $client_slug = subdomain();
-            $u = User::where('email',$row[1])->where('client_slug',$client_slug)->first();
+            if($key!=0){
+                $client_slug = subdomain();
+                $u = User::where('email',$row[1])->where('client_slug',$client_slug)->first();
 
-            if(!$u){
-                $u = new User([
-               'name'     => $row[0],
-               'email'    => $row[1], 
-               'username'    => $this->username($row[1]), 
-               'client_slug' =>$client_slug,
-               'phone'    => $row[2], 
-               'password' => bcrypt($row[2]),
-               'status'   => 1,
-                ]);
+                if(!$u){
+                    $u = new User([
+                   'name'     => $row[0],
+                   'email'    => $row[1], 
+                   'username'    => $this->username($row[1]), 
+                   'client_slug' =>$client_slug,
+                   'phone'    => $row[2], 
+                   'roll_number'    => $row[3], 
+                   'personality' =>$row[4],
+                   'confidence' =>$row[5],
+                   'password' => bcrypt($row[2]),
+                   'status'   => 1,
+                    ]);
 
-                // $u->roll_number = $row[5];
-                // $u->gender = $row[6];
-                // $u->hometown = $row[7];
-                // $u->current_city = $row[8];
-                // $u->dob = $row[9];
-                // $u->video = $row[10];
-                // $u->personality = $row[11];
-                // $u->confidence = $row[12];
-                // new save
-                $u->save();
+                }
+
+                
             }
             // else{
 
