@@ -206,6 +206,13 @@ class TrainingController extends Controller
         $file      = $request->all()['users'];
         $slug = $request->get('slug');
         $filename = 'users_'.$request->get('slug').'.'.$file->getClientOriginalExtension();
+
+        $folder = public_path('../public/storage/summernote/');
+
+        if (!Storage::exists($folder)) {
+            Storage::makeDirectory($folder, 0775, true, true);
+        }
+
         $path = Storage::disk('public')->putFileAs('summernote', $request->file('users'),$filename);
         $collection = Excel::toCollection(new UsersImport, storage_path('app/public/'.$path));
 
