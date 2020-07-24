@@ -245,8 +245,10 @@ class QuestionController extends Controller
 
             if(!request()->get('url'))
                 return redirect()->route('question.index',$this->project->slug);
-            else
+            else{
+                $exam->updateCache();
                 return redirect()->route('exam.question',[$exam->slug,$question->id]);
+            }
         }
         catch (QueryException $e){
            flash('There is some error in storing the data...kindly retry.')->error();
@@ -1292,8 +1294,14 @@ class QuestionController extends Controller
             //dd(request()->get('url'));
             if(!request()->get('url'))
             return redirect()->route('question.show',[$project_slug,$id]);
-            else
-            return redirect(request()->get('url'));
+            else{
+                if($request->get('exam')){
+                    $exam = Exam::where('id',$request->get('exam'))->first();
+                    $exam->updateCache();
+                }
+                return redirect(request()->get('url'));
+            }
+            
         }
         catch (QueryException $e){
             flash('There is some error in storing the data...kindly retry.')->error();

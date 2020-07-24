@@ -498,7 +498,7 @@ class UserController extends Controller
                 $filename = 'profile_'.$username.'.'.$file->getClientOriginalExtension();
 
                 $path = Storage::disk('public')->putFileAs('profile',$request->file('file_'),$filename);
-                $image= jpg_resize('profile/'.$name,$path,400);
+                $image= jpg_resize('profile/'.$name,$path,150);
 
                 Storage::disk('s3')->put('articles/'.$filename, (string)$image,'public');
 
