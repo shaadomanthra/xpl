@@ -233,6 +233,9 @@ class TrainingController extends Controller
 
                 }
 
+                if(!$obj->users->contains($u->id)){
+                    $obj->users()->attach($u->id);
+                }
                 
             }
             // else{
@@ -265,9 +268,7 @@ class TrainingController extends Controller
 
             // }
 
-            if(!$obj->users->contains($u->id)){
-                $obj->users()->attach($u->id);
-            }
+            
 
         }
         flash('Successfully added participants. The default password for the login is phone number')->success();
