@@ -217,6 +217,9 @@ class TrainingController extends Controller
         $rows = $collection[0];
         foreach($rows as $key =>$row){
             
+                if(!trim($row[0]))
+                    break;
+                
                 $client_slug = subdomain();
                 $u = User::where('email',$row[1])->where('client_slug',$client_slug)->first();
 
