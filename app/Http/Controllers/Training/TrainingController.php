@@ -210,18 +210,20 @@ class TrainingController extends Controller
        
 
         $path = Storage::disk('s3')->putFileAs('excel', $request->file('users'),$filename);
-        $collection = Excel::toCollection(new UsersImport, $filename,'s3'));
+        $collection = Excel::toCollection(new UsersImport, 'excel/'.$filename,'s3');
 
         $obj = Obj::where('slug',$request->get('slug'))->first();
         
         $rows = $collection[0];
         foreach($rows as $key =>$row){
-            if($key!=0){
+            
                 $client_slug = subdomain();
                 $u = User::where('email',$row[1])->where('client_slug',$client_slug)->first();
 
+
                 if(!$u){
-                    $u = new User([
+                    if(strtolower($row[1])!='email'){
+                        $u = new User([
                    'name'     => $row[0],
                    'email'    => $row[1], 
                    'username'    => $this->username($row[1]), 
@@ -234,13 +236,17 @@ class TrainingController extends Controller
                    'status'   => 1,
                     ]);
 
+                    $u->save();
+                    }
+                    
                 }
 
+                if(strtolower($row[1])!='email')
                 if(!$obj->users->contains($u->id)){
                     $obj->users()->attach($u->id);
                 }
                 
-            }
+            
             // else{
 
             //     $row[1] = str_replace('@', 'n@', $row[1]);
