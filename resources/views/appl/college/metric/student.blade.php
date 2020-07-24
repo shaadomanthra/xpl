@@ -41,7 +41,7 @@
               <tr>
                 <th scope="row">{{ $user->id }}</th>
                 <td>
-                  {{ ($user->details)?$user->details->roll_number:'-' }}
+                  {{ ($user->roll_number)?$user->roll_number:'-' }}
                  
                 </td>
                 <td>
@@ -49,10 +49,9 @@
                 </td>
                 
                 <td>
-                  @if($user->branches())
-                  @foreach($user->branches()->get() as $branch)
-                      <a href="{{ route('branch.view',$branch->name)}}">{{ $branch->name}}</a> &nbsp;
-                  @endforeach
+                  @if($user->branch)
+                      <a href="{{ route('branch.view',$user->branch->name)}}">{{ $user->branch->name}}</a> &nbsp;
+           
                   @endif
                 </td>
                 <td>

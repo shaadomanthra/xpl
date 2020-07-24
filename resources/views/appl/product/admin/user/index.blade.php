@@ -39,44 +39,7 @@
           </form>
         </nav>
 
-        <div class="my-3">
-          <div class="row">
-            <div class="col-6 col-md-3">
-              <div class="bg-light p-3 border rounded">
-                <h5>Total Users</h5>
-                <a href="{{ route('admin.user')}}">
-                <div class="display-3">{{$data['users_all']}}</div>
-                </a>  
-              </div>
-            </div>
-            <div class="col-6 col-md-3">
-              <div class="bg-light p-3 border rounded">
-                <h5>This month</h5>
-                 <a href="{{ route('admin.user')}}?month=thismonth">
-                <div class="display-3">{{$data['users_thismonth']}}</div>
-                </a> 
-              </div>
-            </div>
-            <div class="col-6 col-md-3">
-              <div class="bg-light p-3 border rounded">
-                <h5>Last Month</h5>
-                <a href="{{ route('admin.user')}}?month=lastmonth">
-                <div class="display-3">{{$data['users_lastmonth']}}</div>
-                </a> 
-              </div>
-            </div>
-            <div class="col-6 col-md-3">
-              <div class="bg-light p-3 border rounded">
-                <h5>Last Before Month</h5>
-                <a href="{{ route('admin.user')}}?month=lastbeforemonth">
-                <div class="display-3">{{$data['users_lastbeforemonth']}}</div>
-                </a> 
-              </div>
-            </div>
-
-
-          </div>
-        </div>
+       
 
         <div id="search-items">
          @include('appl.product.admin.user.list')

@@ -108,29 +108,32 @@ class BranchController extends Controller
         $zone = $request->get('zone');
         $metric= $request->get('metric');
 
-       
-        $z = Zone::where('name',$zone)->first();
-        $m = Metric::where('name',$metric)->first();
+        $z = null;
+        $m = null;
+        
+        
         $obj->zones = Zone::all();
         $obj_users = $obj->users()->pluck('id')->toArray();
         
         if($metric){
+            $m = Metric::where('name',$metric)->first();
             $metric_users = $m->users()->pluck('id')->toArray();
             $u= array_intersect($obj_users,$metric_users);
-            $users = User::whereIn('id',$u)->paginate(config('global.no_of_records'));
+            $users = User::whereIn('id',$u)->with('branch')->paginate(config('global.no_of_records'));
              $total = count($u);
         }
         if($zone){
+            $z = Zone::where('name',$zone)->first();
             $zone_users = $z->users()->pluck('id')->toArray();
             $u= array_intersect($obj_users,$zone_users);
-            $users = User::whereIn('id',$u)->paginate(config('global.no_of_records'));
+            $users = User::whereIn('id',$u)->with('branch')->paginate(config('global.no_of_records'));
             $total = count($u);
            
         }
         if(!$metric && !$zone)
         {
             $total = count($obj_users);
-            $users = $obj->users()->paginate(config('global.no_of_records'));
+            $users = $obj->users()->with('branch')->paginate(config('global.no_of_records'));
         }
 
 
@@ -152,29 +155,16 @@ class BranchController extends Controller
        
         $this->authorize('view', $obj);
 
+        $obj_users = $obj->users()->pluck('id')->toArray();
         
-        $metrics = Metric::all();
-        $zones = Zone::all();
-        $obj->zones = Zone::all();
+        $metrics = Metric::withCount(['users'=>function($query) use($obj_users){
+            return $query->whereIn('id', $obj_users);
+        }])->get();
+
         $data = array();
 
-        $obj_users = $obj->users()->pluck('id')->toArray();
-            
-            foreach($metrics as $m){
-                $metric_users = $m->users()->pluck('id')->toArray();
-                $u= array_intersect($obj_users,$metric_users);
-                $data['metrics'][$m->name] = count($u);
-            }
 
-            foreach($zones as $z){
-
-                $zone_users = $z->users()->pluck('id')->toArray();
-                $u= array_intersect($obj_users,$zone_users);
-                $data['zones'][$z->name] = count($u);
-
-            }
-
-            $data['users']['all'] = count($obj_users);
+        $data['users']['all'] = count($obj_users);
             
     
 

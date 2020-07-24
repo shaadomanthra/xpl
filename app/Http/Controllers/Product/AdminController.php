@@ -64,67 +64,47 @@ class AdminController extends Controller
         $filename  = 'https://s3-xplore.s3.ap-south-1.amazonaws.com/analytics_xplore.co.in.json';
        
 
-        $services = Service::all();
-        $zones = Zone::all();
-        $branches = Branch::all();
-        $metrics = Metric::all();
+        $branches = Branch::withCount('users')->get();
+        
+        $metrics = Metric::withCount('users')->get();
+        
 
         if(!$request->get('refresh')){
             $data =   json_decode(Storage::disk('s3')->get('analytics_xplore.co.in.json'),true);
             $data['users']['total'] = User::count();
 
+
+            // $last_year = (new \Carbon\Carbon('first day of last year'))->year;
+            // $this_year = (new \Carbon\Carbon('first day of this year'))->year;
+
+
+            // $last_year_first_day = (new \Carbon\Carbon('first day of January '.$last_year))->startofMonth()->toDateTimeString();
+            // $this_year_first_day = (new \Carbon\Carbon('first day of January '.$this_year))->startofMonth()->toDateTimeString();
+
+            // $users->last_year  = User::where('created_at','>', $last_year_first_day)->where('created_at','<', $this_year_first_day)->count();
+            // $users->this_year  = User::where(DB::raw('YEAR(created_at)'), '=', $this_year)->count();
+
+            // $data['users']['last_year'] =$users->last_year;
+            // $data['users']['this_year'] = $users->this_year;
+
+
+            $last_month_first_day = (new \Carbon\Carbon('first day of last month'))->startofMonth()->toDateTimeString();
+            $this_month_first_day = (new \Carbon\Carbon('first day of this month'))->startofMonth()->toDateTimeString();
+            
+            $users->last_month  = User::where('created_at','>', $last_month_first_day)->where('created_at','<', $this_month_first_day)->count();
+            $users->this_month  = User::where(DB::raw('MONTH(created_at)'), '=', date('n'))->count();
+
+            $data['users']['last_month'] = $users->last_month;
+            $data['users']['this_month'] = $users->this_month;
+
             return view('appl.product.admin.index')
                     ->with('users',$users)
                     ->with('metrics',$metrics)
                     ->with('branches',$branches)
-                    ->with('services',$services)
-                    ->with('zones',$zones)
                     ->with('data',$data);
         }else{
         
-        $data['users']['total'] = User::count();
-
-        $last_year = (new \Carbon\Carbon('first day of last year'))->year;
-        $this_year = (new \Carbon\Carbon('first day of this year'))->year;
-
-
-        $last_year_first_day = (new \Carbon\Carbon('first day of January '.$last_year))->startofMonth()->toDateTimeString();
-        $this_year_first_day = (new \Carbon\Carbon('first day of January '.$this_year))->startofMonth()->toDateTimeString();
-
-        $users->last_year  = User::where('created_at','>', $last_year_first_day)->where('created_at','<', $this_year_first_day)->count();
-        $users->this_year  = User::where(DB::raw('YEAR(created_at)'), '=', $this_year)->count();
-
-        $data['users']['last_year'] =$users->last_year;
-        $data['users']['this_year'] = $users->this_year;
-
-
-        $last_month_first_day = (new \Carbon\Carbon('first day of last month'))->startofMonth()->toDateTimeString();
-        $this_month_first_day = (new \Carbon\Carbon('first day of this month'))->startofMonth()->toDateTimeString();
         
-        $users->last_month  = User::where('created_at','>', $last_month_first_day)->where('created_at','<', $this_month_first_day)->count();
-        $users->this_month  = User::where(DB::raw('MONTH(created_at)'), '=', date('n'))->count();
-
-        $data['users']['last_month'] = $users->last_month;
-        $data['users']['this_month'] = $users->this_month;
-
-        
-
-        foreach($metrics as $metric){
-            $data['metric'][$metric->name] = 0;//count($metric->users);
-        }
-        
-
-        foreach($branches as $branch){
-            $data['branch'][$branch->name] = 0;//count($branch->users);
-        }
-        
-
-        foreach($zones as $zone){
-            $data['zone'][$zone->name]['users'] = 0;//count($zone->users);
-            $data['zone'][$zone->name]['colleges'] = 0;//count($zone->colleges);
-        }
-
-         file_put_contents($filename, json_encode($data,JSON_PRETTY_PRINT));
 
         }
            
@@ -317,16 +297,21 @@ class AdminController extends Controller
             $users = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->with('college')->orderBy('id','desc')->paginate(30);
         elseif($month=='lastbeforemonth')
             $users = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->with('college')->orderBy('id','desc')->paginate(30);
-        else
+        else{
+            if($search)
             $users = User::where('name','LIKE',"%{$item}%")
-                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->with('college')->orderBy('created_at','desc')->paginate(30);
+                                      ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->orderBy('created_at','desc')->paginate(30);
+            else
+            $users = User::orderBy('created_at','desc')->paginate(30);
+        }
               
-        $data['users_all'] =  User::count();
-        $data['users_lastmonth'] = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->whereYear('created_at', Carbon::now()->year)->count();
-        $data['users_thismonth'] = User::whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->count();
-        $data['users_lastbeforemonth'] = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->whereYear('created_at', Carbon::now()->year)->count();
+        // $data['users_all'] =  User::count();
+        // $data['users_lastmonth'] = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->whereYear('created_at', Carbon::now()->year)->count();
+        // $data['users_thismonth'] = User::whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', Carbon::now()->year)->count();
+        // $data['users_lastbeforemonth'] = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->whereYear('created_at', Carbon::now()->year)->count();
 
-        
+        $data['colleges']=College::all()->keyBy('id');
+        $data['branches']=Branch::all()->keyBy('id');
         
         $view = $search ? 'list': 'index';
 

@@ -44,11 +44,11 @@
 </div>
 
 <div class="wrapper " >
-    <div class="container pb-5" >  
+    <div class="container pb-2" >  
 
 <div class="row">
   
-  <div class="col-12 col-md-7">
+  <div class="col-12 col-md-12">
 
      <div class="bg-white p-4 border mb-3">
 
@@ -63,10 +63,10 @@
               <th>Number of students</th>
             </tr>
 
-            @foreach($obj->branches as $b)
+            @foreach($branches as $b)
             <tr>
               <td>{{ $b->name }} </td>
-              <td><a href="{{ route('metric.students',$obj->id)}}?branch={{$b->name}}">{{ $data['branches'][$b->name] }}</a></td>
+              <td><a href="{{ route('metric.students',$obj->id)}}?branch={{$b->name}}">{{ $b->users_count }}</a></td>
             </tr> 
             @endforeach
 
@@ -88,19 +88,7 @@
    </div>
 
 
-<div class="col-12 col-md-5">
-      <div class="bg-light ">
-       
-        
-        <div class="list-group">
-          <h1 href="#" class="list-group-item list-group-item-action active">Zones({{ count($data['zones'])}})</h1>
-           @foreach($data['zones'] as $k=>$z)
-         <a href="{{ route('metric.students',$obj->id)}}?zone={{$k}}" class="list-group-item list-group-item-action">{{ $k }} ({{ $z}})</a>
-        @endforeach
-        </div>
 
-      </div>
-  </div>
   </div>
 
 

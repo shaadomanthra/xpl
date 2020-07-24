@@ -114,28 +114,31 @@ class MetricController extends Controller
 
         $branch = $request->get('branch');
         $zone = $request->get('zone');
-        $z = Zone::where('name',$zone)->first();
-        $b = Branch::where('name',$branch)->first();
+        
+        $b=null;
+        $z=null;
 
         $obj_users = $obj->users()->pluck('id')->toArray();
         
         if($branch){
+            $b = Branch::where('name',$branch)->first();
             $branch_users = $b->users()->pluck('id')->toArray();
             $u= array_intersect($obj_users,$branch_users);
-            $users = User::whereIn('id',$u)->orderBy('id','desc')->paginate(config('global.no_of_records'));
+            $users = User::whereIn('id',$u)->with('branch')->orderBy('id','desc')->paginate(config('global.no_of_records'));
              $total = count($u);
         }
         if($zone){
+            $z = Zone::where('name',$zone)->first();
             $zone_users = $z->users()->pluck('id')->toArray();
             $u= array_intersect($obj_users,$zone_users);
-            $users = User::whereIn('id',$u)->orderBy('id','desc')->paginate(config('global.no_of_records'));
+            $users = User::whereIn('id',$u)->orderBy('id','desc')->with('branch')->paginate(config('global.no_of_records'));
             $total = count($u);
            
         }
         if(!$branch && !$zone)
         {
             $total = count($obj_users);
-            $users = $obj->users()->orderBy('id','desc')->paginate(config('global.no_of_records'));
+            $users = $obj->users()->with('branch')->orderBy('id','desc')->paginate(config('global.no_of_records'));
         }
 
 
@@ -157,28 +160,18 @@ class MetricController extends Controller
 
         $this->authorize('view', $obj);
 
-        $metrics = Obj::all();
-        $zones = Zone::all();
-        $obj->branches = Branch::all();
+        $obj_users = $obj->users()->pluck('id')->toArray();
+ 
+
+
+        $branches= Branch::withCount(['users'=>function($query) use($obj_users){
+            return $query->whereIn('id', $obj_users);
+        }])->get();
         $data = array();
 
-        $obj_users = $obj->users()->pluck('id')->toArray();
-            
-            foreach($obj->branches as $b){
-                $branch_users = $b->users()->pluck('id')->toArray();
-                $u= array_intersect($obj_users,$branch_users);
-                $data['branches'][$b->name] = count($u);
-            }
+        
 
-            foreach($zones as $z){
-
-                $zone_users = $z->users()->pluck('id')->toArray();
-                $u= array_intersect($obj_users,$zone_users);
-                $data['zones'][$z->name] = count($u);
-
-            }
-
-            $data['users']['all'] = count($obj_users);
+        $data['users']['all'] = count($obj_users);
             
     
 
@@ -186,7 +179,7 @@ class MetricController extends Controller
             return view('appl.'.$this->app.'.'.$this->module.'.show2')
                     ->with('college',$obj)->with('app',$this)
                     ->with('obj',$obj)->with('app',$this)
-                    ->with('metrics',$metrics)
+                    ->with('branches',$branches)
                     ->with('data',$data);
         else
             abort(404);
