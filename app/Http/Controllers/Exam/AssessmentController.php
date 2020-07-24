@@ -1940,8 +1940,11 @@ class AssessmentController extends Controller
         //dd($details);
 
         //dd($sections);
-        if($subjective)
+        $mathjax = false;
+        if($subjective){
+            $mathjax = true;
             $view = "analysis_subjective";
+        }
         else if($exam->status==2)
             $view = "analysis_private";
         else
@@ -1960,6 +1963,7 @@ class AssessmentController extends Controller
                         ->with('tests',$tests)
                         ->with('test_overall',$tests_overall)
                         ->with('review',true)
+                        ->with('mathjax',$mathjax)
                         ->with('chart',true);
 
     }
