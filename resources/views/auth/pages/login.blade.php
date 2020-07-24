@@ -73,7 +73,7 @@
                                     Register
                                 </a>
                                 <br>
-              @elseif($_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'smec.xplore.co.in' )
+              @elseif($_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'smec.xplore.co.in' ||$_SERVER['HTTP_HOST'] == 'fks.xplore.co.in' )
               @else
                  <a class="btn btn-success" href="{{ route('register') }}">
                                     Register
