@@ -534,7 +534,11 @@ class UserController extends Controller
         }
 
         if($request->get('video'))
-        $user->video = $request->get('video');
+            $user->video = $request->get('video');
+
+        if(\auth::user()->isAdmin()){
+            $user->video = $request->get('video');
+        }
 
         $user->roll_number = $request->roll_number;
         $user->college_id = $request->college_id;

@@ -72,12 +72,14 @@
               <th>Number of Students</th>
             </tr>
 
-            @foreach($metrics as $m)
+            @if(isset($data['metrics']))
+            @foreach($data['metrics'] as $m)
             <tr>
-              <td><a href="{{ route('metric.view', $m->id)}}">{{ $m->name }} </a></td>
-              <td><a href="{{ route('metric.students',$m->id)}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $m->users_count }}</a></td>
+              <td><a href="{{ route('metric.view', $m['id'])}}">{{ $m['name'] }} </a></td>
+              <td><a href="{{ route('metric.students',$m['id'])}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $m['users_count'] }}</a></td>
             </tr>
             @endforeach
+            @endif
 
           </table>
         </div>
@@ -90,12 +92,15 @@
               <th>Number of students</th>
             </tr>
 
-            @foreach($branches as $b)
+            @if(isset($data['branches']))
+
+            @foreach($data['branches'] as $b)
             <tr>
-              <td><a href="{{ route('branch.view', $b->id)}}">{{ $b->name }} </a></td>
-              <td><a href="{{ route('branch.students',$b->id)}}?branch={{$b->name}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $b->users_count}}</a></td>
+              <td><a href="{{ route('branch.view', $b['id'])}}">{{ $b['name'] }} </a></td>
+              <td><a href="{{ route('branch.students',$b['id'])}}?branch={{$b['name']}} @if(request()->get('year_of_passing')) &year_of_passing={{request()->get('year_of_passing')}} @endif">{{ $b['users_count']}}</a></td>
             </tr> 
             @endforeach
+            @endif
 
           </table>
       

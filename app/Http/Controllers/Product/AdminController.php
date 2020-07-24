@@ -64,14 +64,12 @@ class AdminController extends Controller
         $filename  = 'https://s3-xplore.s3.ap-south-1.amazonaws.com/analytics_xplore.co.in.json';
        
 
-        $branches = Branch::withCount('users')->get();
         
-        $metrics = Metric::withCount('users')->get();
-        
+        $data['users']['total'] = User::count();
 
         if(!$request->get('refresh')){
             $data =   json_decode(Storage::disk('s3')->get('analytics_xplore.co.in.json'),true);
-            $data['users']['total'] = User::count();
+            
 
 
             // $last_year = (new \Carbon\Carbon('first day of last year'))->year;
@@ -88,6 +86,17 @@ class AdminController extends Controller
             // $data['users']['this_year'] = $users->this_year;
 
 
+            
+
+            return view('appl.product.admin.index')
+                    ->with('users',$users)
+                    ->with('data',$data);
+        }else{
+
+            $data['branches'] = Branch::withCount('users')->get();
+        
+            $data['metrics'] = Metric::withCount('users')->get();
+
             $last_month_first_day = (new \Carbon\Carbon('first day of last month'))->startofMonth()->toDateTimeString();
             $this_month_first_day = (new \Carbon\Carbon('first day of this month'))->startofMonth()->toDateTimeString();
             
@@ -96,13 +105,6 @@ class AdminController extends Controller
 
             $data['users']['last_month'] = $users->last_month;
             $data['users']['this_month'] = $users->this_month;
-
-            return view('appl.product.admin.index')
-                    ->with('users',$users)
-                    ->with('metrics',$metrics)
-                    ->with('branches',$branches)
-                    ->with('data',$data);
-        }else{
         
         
 
@@ -111,15 +113,11 @@ class AdminController extends Controller
 
         if($request->get('refresh')){
             
-            file_put_contents($filename, json_encode($data,JSON_PRETTY_PRINT));
+            Storage::disk('s3')->put('analytics_xplore.co.in.json',json_encode($data));
         }    
 
         return view('appl.product.admin.index')
                     ->with('users',$users)
-                    ->with('metrics',$metrics)
-                    ->with('branches',$branches)
-                    ->with('services',$services)
-                    ->with('zones',$zones)
                     ->with('data',$data);
     }
 

@@ -35,7 +35,7 @@
                   @if($user->college_id)
                     {{ $data['colleges'][$user->college_id]->name }} 
                     @if($user->branch_id)
-                     - {{ data['branches'][$user->branch_id]->name }} 
+                     - {{ $data['branches'][$user->branch_id]->name }} 
                     @endif
                   @endif 
                   
