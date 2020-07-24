@@ -85,7 +85,8 @@ class SectionController extends Controller
                     }
                 }
                 
-                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+                $obj->updateCache();
+                //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
             
            
 
@@ -182,7 +183,7 @@ class SectionController extends Controller
                     }
                 }
                 
-                file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+                $obj->updateCache();
             
            
 
