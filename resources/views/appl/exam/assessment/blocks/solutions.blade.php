@@ -139,17 +139,17 @@
 
       @elseif($question->type=='urq')
      
-        @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'.jpg'))
-          <div class="border border-secondary">
-          <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'.jpg')}}" class="w-100" />
-        </div>
-
-      
-        @else
-          <div class="alert alert-warning alert-important mb-0" role="alert">
-  User has not uploaded the response image.
-</div>
-        @endif
+        <div class="">
+          @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'.jpg'))
+            <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'.jpg')}}" style="max-width:150px" class="border border-secondary p-1" />
+          @endif
+          @foreach(range(1,30) as $k)
+             @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'_'.$k.'.jpg'))
+             <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'_'.$k.'.jpg')}}" style="max-width:150px" class="border border-secondary p-1" />
+             @endif
+          @endforeach
+          </div>
+          
       @elseif($question->type=='sq')
         <div class="alert alert-warning alert-important mb-0" role="alert">
           <h3>User Response:</h3>
