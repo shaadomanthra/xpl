@@ -50,7 +50,7 @@
 		</div>
 
 
-	@if($exam->solutions ==2)
+	@if($exam->solutions ==2 && !\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
   <div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
     @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
@@ -88,10 +88,20 @@
       <td>{!! $questions[$t->question_id]->question !!}</td>
       <td>
       	@if($questions[$t->question_id]->type=='urq')
-     
+        
+
         @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'.jpg'))
           <div class="">
+
           <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'.jpg')}}" style="max-width:150px" class="border border-secondary" />
+
+          @foreach(range(1,10) as $k)
+           @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'_'.$k.'.jpg'))
+
+           <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'_'.$k.'.jpg')}}" style="max-width:150px" class="border border-secondary" />
+
+           @endif
+          @endforeach
         </div>
         @else
           <div class="alert alert-warning alert-important mb-0" role="alert">
