@@ -597,6 +597,12 @@ class ExamController extends Controller
             $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
             $email_stack['registered'] = $users->pluck('email')->toArray();
             $email_stack['not_registered'] =  array_diff($emails,$email_stack['registered']);
+
+            foreach($users as $ux)
+            if(request()->get('refresh2')){
+                $cache_data =  Cache::get('attempt_'.$ux->id.'_'.$exam->id);
+                Storage::disk('s3')->put('cache_attempts/'.'attempt_'.$ux->id.'_'.$exam->id.'.json',json_encode($cache_data));
+            }
         }else{
         $email_stack['registered'] = [];
         $email_stack['not_registered'] =  [];
