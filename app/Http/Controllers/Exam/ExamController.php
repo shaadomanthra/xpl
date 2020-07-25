@@ -600,7 +600,7 @@ class ExamController extends Controller
 
             foreach($users as $ux)
             if(request()->get('refresh2')){
-                $cache_data =  Cache::get('attempt_'.$ux->id.'_'.$exam->id);
+                $cache_data =  Cache::get('responses_'.$ux->id.'_'.$exam->id);
                 if($cache_data)
                 Storage::disk('s3')->put('cache_attempts_'.$exam->slug.'/'.'attempt_'.$ux->id.'_'.$exam->id.'.json',json_encode($cache_data));
                 else{
