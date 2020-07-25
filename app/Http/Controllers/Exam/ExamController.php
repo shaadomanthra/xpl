@@ -601,7 +601,11 @@ class ExamController extends Controller
             foreach($users as $ux)
             if(request()->get('refresh2')){
                 $cache_data =  Cache::get('attempt_'.$ux->id.'_'.$exam->id);
-                Storage::disk('s3')->put('cache_attempts/'.$exam->slug.'/'.'attempt_'.$ux->id.'_'.$exam->id.'.json',json_encode($cache_data));
+                if($cache_data)
+                Storage::disk('s3')->put('cache_attempts_'.$exam->slug.'/'.'attempt_'.$ux->id.'_'.$exam->id.'.json',json_encode($cache_data));
+                else{
+                    Storage::disk('s3')->put('cache_attempts_none_'.$exam->slug.'/'.'attempt_'.$ux->id.'_'.$exam->id.'.json',json_encode($cache_data));
+                }
             }
         }else{
         $email_stack['registered'] = [];
