@@ -1289,9 +1289,34 @@ class AssessmentController extends Controller
 
     }
 
+    public function delete_image($slug){
+
+        $user_id = request()->get('user_id');
+        $qid = request()->get('qid');
+
+        $name = $slug.'_'.$user_id.'_'.$qid;
+
+        foreach(range(0,5) as $i){
+                if($i==0){
+                    $name = $slug.'_'.$user_id.'_'.$qid;
+                }else{
+                    $name = $slug.'_'.$user_id.'_'.$qid.'_'.$i;
+                }
+                
+                if(Storage::disk('s3')->exists('urq/'.$name.'.jpg')){
+                    echo $name.'- ';
+                    Storage::disk('s3')->delete('urq/'.$name.'.jpg');
+                }
+                
+            }
+        echo 1;
+
+    }
+
     public function upload_image($slug){
 
         
+
 
          /* If image is given upload and store path */
             if(request()->all()['file']){
@@ -1301,13 +1326,26 @@ class AssessmentController extends Controller
                  $file      = request()->get('file');
                  $user_id = request()->get('user_id');
                  $qid = request()->get('qid');
+                 $k = request()->get('i');
 
                 if(strtolower($request->file->getClientOriginalExtension()) == 'jpeg')
                     $extension = 'jpg';
                 else
                     $extension = strtolower($request->file->getClientOriginalExtension());
+
                 $name = $slug.'_'.$user_id.'_'.$qid;
+
+                if($k==0){
+                    $name = $slug.'_'.$user_id.'_'.$qid;
+                }else{
+                    $name = $slug.'_'.$user_id.'_'.$qid.'_'.$k;
+                }
+                
+                
+
+                
                 $filename = $name.'.'.$extension;
+                $filename_org = $name.'_original.'.$extension;
 
 
                 $folder = public_path('../public/storage/urq/');
@@ -1318,11 +1356,17 @@ class AssessmentController extends Controller
 
                 $path = Storage::disk('public')->putFileAs('urq',$request->file,$filename);
                 
-                 
+                //Storage::disk('s3')->putFileAs('urq',$request->file,$filename_org);
+                
 
+                 
                 $image= jpg_resize('urq/'.$name,$path,1000);
 
+
+
                 Storage::disk('s3')->put('urq/'.$filename, (string)$image,'public');
+
+                
 
                 //Storage::disk('s3')->putFileAs('urq', new File($newpath), $filename);
                 $path = Storage::disk('s3')->url('urq/'.$filename);
@@ -2025,6 +2069,21 @@ class AssessmentController extends Controller
             $user_id = $request->get('user_id');
             $test_id = $request->get('test_id');
 
+            $attempts = Test::where('test_id',$test_id)->where('user_id',$user_id)->get();
+            foreach($attempts as $a){
+                //dd($a->question_id);
+                foreach(range(0,5) as $i){
+                    if($i==0){
+                       if(Storage::disk('s3')->exists('urq/'.$test_id.'_'.$user_id.'_'.$a->question_id.'.jpg')){
+                        Storage::disk('s3')->delete('urq/'.$test_id.'_'.$user_id.'_'.$a->question_id.'.jpg');
+                        } 
+                    }else{
+                        if(Storage::disk('s3')->exists('urq/'.$test_id.'_'.$user_id.'_'.$a->question_id.'_'.$i.'.jpg')){
+                        Storage::disk('s3')->delete('urq/'.$test_id.'_'.$user_id.'_'.$a->question_id.'_'.$i.'.jpg');
+                        }
+                    }
+                }
+            }
             Cache::forget('attempt_'.$user_id.'_'.$test_id);
             Cache::forget('attempts_'.$user_id);
             Cache::forget('responses_'.$user_id.'_'.$test_id);    

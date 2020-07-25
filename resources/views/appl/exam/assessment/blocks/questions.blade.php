@@ -198,9 +198,30 @@
   <span class="sr-only">Loading...</span>
 </div>
         </div>
-        <div class="img_container_{{$i+1}} pt-3" style="display: none">
+        <div class="img_container_{{$i+1}} pt-3" >
           <div class="img_status py-2"></div>
-          <img id="img_{{$i+1}}" class="img_{{$i+1}} w-100" src="" />
+          <div class="img_c img_c_{{$i+1}} {{$m=0}}">
+            @foreach(range(0,5) as $k)
+              @if($k==0)
+                @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'.jpg'))
+                <img id="img_{{$k}}" class="img_{{$i+1}} w-100 {{$m=1}} py-2" src="{{Storage::disk('s3')->url('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'.jpg')}}" />
+                @endif
+              @else
+                @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'_'.$k.'.jpg'))
+                <img id="img_{{$k}}" class="img_{{$i+1}} w-100 py-2" src="{{Storage::disk('s3')->url('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'_'.$k.'.jpg')}}" />
+                @endif
+
+              @endif
+          @endforeach
+          </div>
+
+          <!--<img id="img_{{$i+1}}" class="img_{{$i+1}} w-100" src="" />-->
+          @if($m==1)
+          <button type="button" class="mt-3 btn btn-danger btn-delete btn_delete_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ auth::user()->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.delete.image',$exam->slug)}}">Delete</button>
+          @else
+          <button type="button" class="mt-3 btn btn-danger btn-delete btn_delete_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ auth::user()->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.delete.image',$exam->slug)}}" style="display:none">Delete</button>
+          @endif
+          
         </div>
           @endif
 

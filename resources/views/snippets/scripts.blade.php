@@ -1025,6 +1025,16 @@ $(function(){
       $user_id = $(this).data('user_id');
       $qid = $(this).data('qid');
       $token = $(this).data('token');
+
+       var imgs = [0,1,2,3,4,5];
+                i = 0;
+                imgs.forEach(function(entry){
+                  if($(".img_"+entry).parent().length){
+                    i =i+1;
+                  }
+                });
+                console.log(i);
+
       console.log($url);
       e.preventDefault();
 
@@ -1035,6 +1045,7 @@ $(function(){
         fd.append('user_id',$user_id);
         fd.append('qid',$qid);
         fd.append('_token',$token);
+        fd.append('i',i);
         // Display the values
         $('.spinner_'+$name).show();
         $.ajax({
@@ -1049,10 +1060,16 @@ $(function(){
           },
           success:function(response){
             if(response != 0){
-                  $("#img_"+$name).attr({src : response})
+               
+
+                  
+                  $(".img_c_"+$name).prepend($('<img class="w-100 py-2 img_'+i+'"/>').attr('src',response));
+                  console.log(".img_c_"+$name);
+                  console.log(response);
                   $(".img_container_"+$name).show(); // Display 
                   $('.spinner_'+$name).hide();
                   $('.img_status').text('Image upload success');
+                  $('.btn_delete_urq_'+$name).show();
                 }else{
                   console.log('error');
                   $('.img_status').text('Image upload failed. Kindly retry.');
@@ -1081,6 +1098,51 @@ $(function(){
         //       console.log(e)
         //     },
         // });
+      
+  });
+
+
+  $(document).on('click','.btn-delete',function(e){
+      $name = $(this).data('name');
+      $url = $(this).data('url');
+      $user_id = $(this).data('user_id');
+      $qid = $(this).data('qid');
+      $token = $(this).data('token');
+      console.log($url);
+      e.preventDefault();
+
+       var fd = new FormData();
+       console.log('.input_urq_'+$name);
+        fd.append('user_id',$user_id);
+        fd.append('qid',$qid);
+        fd.append('_token',$token);
+        // Display the values
+        $('.spinner_'+$name).show();
+        $.ajax({
+          type : 'POST',
+          url : $url,
+          data:fd,
+          cache: false,
+          processData: false,
+          contentType: false,
+          beforeSend: function (request) {
+              return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+          },
+          success:function(response){
+            console.log(response);
+            if(response != 0){
+                  $(".img_c_"+$name).html('');
+                  $(".img_container_"+$name).show(); // Display 
+                  $('.spinner_'+$name).hide();
+                  $('.img_status').text('Images deleted successfully.');
+                  $('.btn_delete_urq_'+$name).hide();
+                }else{
+                  console.log('error');
+                  $('.img_status').text('Image delete failed. Kindly retry.');
+                }
+          },
+          
+        });
       
   });
 
