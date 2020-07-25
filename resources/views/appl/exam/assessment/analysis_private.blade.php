@@ -117,16 +117,21 @@
 			<div class="card-body">
 			<div class="row">
 				@foreach($sections as $sec =>$section)
+				@if(isset($section->section_id))
 				<div class="col-12 col-md-6">
+					
 						<div class="p-2 " height="200px">
 						<canvas id="{{$section->section_id}}Container" width="600" height="200px"></canvas>
 					</div>
+					
 				</div>
+				@endif
 				@endforeach
 			</div>
 		</div>
 		</div>
 		@endif
+
 
 		@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 		<div class="card mb-3 bg-light"  style="background: #FFF;border: 2px solid #EEE;">
