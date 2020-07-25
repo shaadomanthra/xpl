@@ -90,11 +90,11 @@
       	@if($questions[$t->question_id]->type=='urq')
           <div class="">
           @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'.jpg'))
-            <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'.jpg')}}" style="max-width:150px" class="border border-secondary" />
+            <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'.jpg')}}" style="max-width:150px" class="border border-secondary p-1" />
           @endif
-          @foreach(range(1,10) as $k)
+          @foreach(range(1,30) as $k)
              @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'_'.$k.'.jpg'))
-             <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'_'.$k.'.jpg')}}" style="max-width:150px" class="border border-secondary" />
+             <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'_'.$k.'.jpg')}}" style="max-width:150px" class="border border-secondary p-1" />
              @endif
           @endforeach
           </div>
