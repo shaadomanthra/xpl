@@ -1296,7 +1296,7 @@ class AssessmentController extends Controller
 
         $name = $slug.'_'.$user_id.'_'.$qid;
 
-        foreach(range(0,5) as $i){
+        foreach(range(0,10) as $i){
                 if($i==0){
                     $name = $slug.'_'.$user_id.'_'.$qid;
                 }else{

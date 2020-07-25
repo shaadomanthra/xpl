@@ -201,7 +201,7 @@
         <div class="img_container_{{$i+1}} pt-3" >
           <div class="img_status py-2"></div>
           <div class="img_c img_c_{{$i+1}} {{$m=0}}">
-            @foreach(range(0,5) as $k)
+            @foreach(range(0,10) as $k)
               @if($k==0)
                 @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'.jpg'))
                 <img id="img_{{$k}}" class="img_{{$i+1}} w-100 {{$m=1}} py-2" src="{{Storage::disk('s3')->url('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'.jpg')}}" />
