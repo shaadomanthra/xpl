@@ -141,11 +141,11 @@
      
         <div class="">
           @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'.jpg'))
-            <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'.jpg')}}" style="max-width:150px" class="border border-secondary p-1" />
+            <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'.jpg')}}" style="" class="border border-secondary p-1 w-100" />
           @endif
           @foreach(range(1,30) as $k)
              @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'_'.$k.'.jpg'))
-             <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'_'.$k.'.jpg')}}" style="max-width:150px" class="border border-secondary p-1" />
+             <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'_'.$k.'.jpg')}}" style="" class="border border-secondary p-1 w-100" />
              @endif
           @endforeach
           </div>
