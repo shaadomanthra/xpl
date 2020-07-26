@@ -49,10 +49,10 @@
   <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
   @endif
   @if(isset($highlight))
-  <link href="{{ asset('css/styles2.css') }}?new=12" rel="stylesheet">
+  <link href="{{ asset('css/styles2.css') }}?new=13" rel="stylesheet">
   @elseif($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test')
   @if(request()->segment(1)=='dashboard' || request()->segment(1)=='training')
-  <link href="{{ asset('css/styles.css') }}?new=12" rel="stylesheet">
+  <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
@@ -71,10 +71,10 @@
     <link href="{{asset('assets/css/themes/layout/brand/light.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/themes/layout/aside/light.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
   @else
-    <link href="{{ asset('css/styles.css') }}?new=12" rel="stylesheet">
+    <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   @endif
   @else
-  <link href="{{ asset('css/styles.css') }}?new=12" rel="stylesheet">
+  <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   @endif
   @if(isset($mathjax))
   <script type="text/x-mathjax-config">
