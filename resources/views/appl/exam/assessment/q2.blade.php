@@ -41,7 +41,8 @@
 					<a class="white-link" href="{{ route('assessment.solutions.q',[$exam->slug,$q->question_id]) }}?student={{$student->username}}">
 					<div class="pr-1">
 					<div class="w100 p-1 testqno s text-center rounded @if($q->question_id==$question->id) active @endif 
-					@if($questions[$i]['response'] !=null) @if($questions[$i]['accuracy'] == 0) qred-border @else qgreen-border @endif @else qborder  @endif" id="q{{$q->id}}" 
+					@if($questions[$i]['response'] !=null) @if($questions[$i]['accuracy'] == 0) qred-border @else qgreen-border @endif @else qborder  @endif @if($question->type=='sq' || $question->type=='urq')
+					@if($questions[$i]['status']!=2) qpink-border @endif @else qpink-border @endif" id="q{{$q->id}}" 
 					    >{{ (++$i ) }}</div>
 					</div>
 					</a>

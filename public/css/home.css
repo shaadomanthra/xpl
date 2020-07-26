@@ -416,6 +416,10 @@ p.article{line-height: 1.6em;}
 
 
 .bactive{ background: #b70016; }
+.qpink-border{
+    border:2px solid #4e60ae;
+    background:#5c6fc4;
+}
 .qblue-border{
     border:2px solid #4caf50;
     background:#459648;

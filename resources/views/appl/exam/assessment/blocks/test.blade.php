@@ -19,7 +19,11 @@
     @else
         <i class="fa fa-newspaper-o"></i> 
         @endif
-        {{$exam->name}}</div>
+        {{$exam->name}} 
+        @if(request()->get('admin'))
+        <span class="badge badge-primary">Admin Mode</span> <span class="badge badge-success"><i class="fa fa-user"></i> {{$user->name}}</span>
+        @endif
+      </div>
           <div class=" mb-3 d-block d-md-none ">
   <div class="blogd text-white pl-3 pr-3 pb-2 pt-3 pb-2 rounded" style="background:#ca2428">
     <div class="mb-2 text-center"> Timer : <span class="text-bold " id="timer2"></span></div>
@@ -31,7 +35,7 @@
         <div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""  style="display:none"><i class="fa fa-angle-double-left"data-testname="{{$exam->slug}}" ></i></div>
       </div>
 
-      <div class="col-6"> <div class="mt-1 text-center">Q({{ count($questions) }})</div></div>
+      <div class="col-6"> <div class="mt-1 text-center ques_count" data-count="{{count($questions)}}" data-url="{{route('assessment.savetest',$exam->slug)}}" data-save='0'>Q({{ count($questions) }})</div></div>
       <div class="col-3"> 
         <div class="right-qno cursor w100 p-1 text-center mr-3 " data-sno="2" data-testname="{{$exam->slug}}" ><i class="fa fa-angle-double-right" ></i></div>
       </div>
@@ -103,7 +107,13 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No, I will solve more questions</button>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
+        <input type="hidden" name="user_id" value="{{ $user->id }}">
+        @if(request()->get('admin'))
+        <input type="hidden" name="admin" value="1">
+        @else
+        <input type="hidden" name="admin" value="0">
+        @endif
+
         <input type="hidden" name="test_id" value="{{ $exam->id }}">
         <input type="hidden" name="code" value="{{ request()->get('code') }}">
         <input type="hidden" name="window_change" value="0" id="window_change">

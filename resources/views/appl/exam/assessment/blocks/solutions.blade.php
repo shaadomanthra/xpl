@@ -140,15 +140,12 @@
       @elseif($question->type=='urq')
      
         <div class="">
-          @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'.jpg'))
-            <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'.jpg')}}" style="" class="border border-secondary p-1 w-100" />
-          @endif
-          @foreach(range(1,30) as $k)
-             @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'_'.$k.'.jpg'))
-             <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$question->id.'_'.$k.'.jpg')}}" style="" class="border border-secondary p-1 w-100" />
-             @endif
+          @if(isset($images[$question->id]))
+          @foreach(array_reverse($images[$question->id]) as $url)
+             <img src="{{$url }}" style="" class="border border-secondary p-1 w-100 my-1" />
           @endforeach
-          </div>
+          @endif
+        </div>
 
       @elseif($question->type=='sq')
         <div class="alert alert-warning alert-important mb-0" role="alert">

@@ -72,6 +72,7 @@
                   @endif
                   
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+                  <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r->user_id]->username}}&admin=1" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="user_id" value="{{ $users[$r->user_id]->id}}">
                     <input type="hidden" name="test_id" value="{{ $exam->id }}">

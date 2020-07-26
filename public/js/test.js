@@ -57,6 +57,7 @@ $(document).ready(function(){
         $('.question_block').hide();
         $('.qblock_'+$sno).show();
         update_sno($sno);
+        saveTest()
         scroll($sno);
     }
     function update_sno($sno){
@@ -93,6 +94,28 @@ $(document).ready(function(){
     	}else{
     		$('.right-qno').show();
     	}
+    }
+
+    function saveTest(){
+        
+        $ques_count = $('.ques_count').data('count');
+        $qno = 1
+        var responses = [];
+        responses['test_id'] =  $('input[name=test_id]').val();
+        responses['user_id'] =  $('input[name=user_id]').val();
+        responses['_token'] =  $('input[name=_token]').val();
+        responses['code'] =  $('input[name=code]').val();
+        responses['admin'] =  $('input[name=admin]').val();
+        responses['window_change'] =  $('input[name=window_change]').val();
+
+        responses[$qno]['question_id'] = $('input[name='+$qno+'_question_id]').val();
+        responses[$qno]['section_id'] = $('input[name='+$qno+'_section_id]').val();
+        responses[$qno]['time'] = $('input[name='+$qno+'_time]').val();
+        responses[$qno]['dynamic'] = $('input[name='+$qno+'_dynamic]').val();
+        responses[$qno]['response'] = $('input[name='+$qno+']').val();
+
+        console.log(responses);
+
     }
 
     $(document).keydown(function(e) {

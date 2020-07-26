@@ -11,6 +11,13 @@ if (! function_exists('s3_upload')) {
     }
 }
 
+if (! function_exists('isJson')) {
+function isJson($string) {
+ json_decode($string);
+ return (json_last_error() == JSON_ERROR_NONE);
+}
+}
+
 if (! function_exists('image_resize')) {
     function image_resize($image_path,$size)
     {

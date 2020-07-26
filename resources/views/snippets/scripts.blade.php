@@ -1014,6 +1014,15 @@ $(function(){
   });
   
 });
+
+$(document).on("keypress", 'form', function (e) {
+    var code = e.keyCode || e.which;
+    if (code == 13) {
+        e.preventDefault();
+        return false;
+    }
+});
+
 </script>
 
 <script>
@@ -1026,16 +1035,7 @@ $(function(){
       $qid = $(this).data('qid');
       $token = $(this).data('token');
 
-       var imgs = [0,1,2,3,4,5];
-                i = 0;
-                imgs.forEach(function(entry){
-                  if($(".img_"+entry).parent().length){
-                    i =i+1;
-                  }
-                });
-                console.log(i);
-
-      console.log($url);
+      i = $qid+'_'+Math.floor(Math.random() * 1000);
       e.preventDefault();
 
        var fd = new FormData();
@@ -1060,15 +1060,10 @@ $(function(){
           },
           success:function(response){
             if(response != 0){
-               
-
-                  
-                  $(".img_c_"+$name).prepend($('<img class="w-100 py-2 img_'+i+'"/>').attr('src',response));
-                  console.log(".img_c_"+$name);
-                  console.log(response);
+                  $(".img_c_"+$name).prepend($('<img class="w-100 py-2 "/>').attr('src',response));
                   $(".img_container_"+$name).show(); // Display 
                   $('.spinner_'+$name).hide();
-                  $('.img_status').text('Image upload success');
+                  $('.img_status_'+$name).html('<span class="text-success"><i class="fa fa-check-circle"></i> Image upload successfully.</span>');
                   $('.btn_delete_urq_'+$name).show();
                 }else{
                   console.log('error');
@@ -1134,8 +1129,9 @@ $(function(){
                   $(".img_c_"+$name).html('');
                   $(".img_container_"+$name).show(); // Display 
                   $('.spinner_'+$name).hide();
-                  $('.img_status').text('Images deleted successfully.');
+                  $('.img_status_'+$name).html('<span class="text-danger"><i class="fa fa-trash"></i> Images deleted successfully.</span>');
                   $('.btn_delete_urq_'+$name).hide();
+                  $('.s'+$name).removeClass('qblue-border');
                 }else{
                   console.log('error');
                   $('.img_status').text('Image delete failed. Kindly retry.');
@@ -1240,8 +1236,6 @@ var x = setInterval(function() {
 function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
-
- 
 
 
 

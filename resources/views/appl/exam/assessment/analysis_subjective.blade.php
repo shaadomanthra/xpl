@@ -8,8 +8,8 @@
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
     <li class="breadcrumb-item"><a class="white-link" href="{{ route('test.report',$exam->slug)}}">{{ ucfirst($exam->name) }} - Reports </a></li>
-    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.analysis',$exam->slug)}}">{{ ucfirst($exam->name) }} - Analysis </a></li>
-    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.solutions',$exam->slug)}}">Solutions</a> </li>
+    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.analysis',$exam->slug)}}?student={{request()->get('student')}}">{{ ucfirst($exam->name) }} - Analysis </a></li>
+    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.solutions',$exam->slug)}}?student={{request()->get('student')}}">Solutions</a> </li>
   </ol>
 </nav>
 @elseif($exam->slug != 'proficiency-test')
@@ -89,14 +89,13 @@
       <td>
       	@if($questions[$t->question_id]->type=='urq')
           <div class="">
-          @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'.jpg'))
-            <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'.jpg')}}" style="max-width:150px" class="border border-secondary p-1" />
-          @endif
-          @foreach(range(1,30) as $k)
-             @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'_'.$k.'.jpg'))
-             <img src="{{ Storage::disk('s3')->url('urq/'.$exam->slug.'_'.$student->id.'_'.$questions[$t->question_id]->id.'_'.$k.'.jpg')}}" style="max-width:150px" class="border border-secondary p-1" />
-             @endif
+
+          @if(isset($questions[$t->question_id]->images))
+
+          @foreach(array_reverse($questions[$t->question_id]->images) as $url)
+             <img src="{{$url }}" style="width:150px;" class="border border-secondary p-1  my-1" />
           @endforeach
+          @endif
           </div>
         
       	@else

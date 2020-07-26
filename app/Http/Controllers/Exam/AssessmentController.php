@@ -186,6 +186,7 @@ class AssessmentController extends Controller
     public function instructions($test,Request $r)
     {
         
+
         $filename = $test.'.json';
         $filepath = $this->cache_path.$filename;
 
@@ -265,9 +266,10 @@ class AssessmentController extends Controller
             
         }
         
+        $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
 
         return view('appl.exam.assessment.instructions')
-                ->with('exam',$exam);
+                ->with('exam',$exam)->with('responses',$responses);
     }
 
     public function try2($test,$id=null, Request $request)
@@ -293,7 +295,35 @@ class AssessmentController extends Controller
             return view('appl.exam.assessment.inactive')->with('exam',$exam); 
         }
 
-        $user = \auth::user();
+        if($request->get('student') && $request->get('admin')){
+            $user = User::where('username',$request->get('student'))->first();
+            $responses = Test::where('test_id',$exam->id)->where('user_id',$user->id)->get();
+
+        }else{
+            $user = \auth::user();
+
+            $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
+
+            //dd($responses);
+
+            if(is_array($responses))
+            {
+                $responses = collect($responses);
+            }
+
+            //$responses = null;
+
+           
+        }
+
+        $jsonname = $test.'_'.$user->id;
+
+        if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json'))
+            $images = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+        else
+            $images = [];
+
+
         $window_change = true;
 
         if(trim(strip_tags($exam->emails))){
@@ -310,9 +340,11 @@ class AssessmentController extends Controller
             $products = null;
         $code = $request->get('code');
 
+        if(!$request->get('admin')){
         $test_taken = $user->attempted($exam->id);
         if($test_taken)
             return redirect()->route('assessment.analysis',$exam->slug);
+        }
 
         if(!$code){
            if($exam->status == 2){
@@ -349,7 +381,8 @@ class AssessmentController extends Controller
            
         }
 
-        $user = \auth::user();
+
+
         $completed = 0;
         $questions = array();
         $ques = [];
@@ -358,6 +391,7 @@ class AssessmentController extends Controller
 
         $question = new Question();
 
+        $time_used = 0;
         $code_ques =[];
         $passages = array();
         $dynamic =array();
@@ -372,10 +406,49 @@ class AssessmentController extends Controller
 
             $k=0;
             foreach( $qset as $q){
-                if($exam->shuffle)
-                    $q->dynamic = rand(1,4);
-                else
+                if($exam->shuffle){
+                    if(!$responses){
+                        $q->dynamic = rand(1,4);  
+                        $q->response = null;
+                        $q->time = 0;
+                        
+                    }else{
+                        $keys = $responses->keyBy('question_id');
+                        $q->dynamic = $keys[$q->id]->dynamic;
+                        if(!isset($keys[$q->id]->response))
+                            $keys[$q->id]->response = null;
+                        $q->response = $keys[$q->id]->response;
+                        $q->time = $keys[$q->id]->time;
+
+                        $time_used = $time_used + $q->time;
+                        
+                    }
+                }
+                else{
                     $q->dynamic = 1;
+                    if(!$responses){
+                        $q->response = null;
+                        $q->time =0;
+                    }else{
+                        $keys = $responses->keyBy('question_id');
+                        if(!isset($keys[$q->id]->response))
+                            $keys[$q->id]->response = null;
+                        $q->response = $keys[$q->id]->response;
+                        $q->time = $keys[$q->id]->time;
+                        $time_used = $time_used + $q->time;
+                    }
+                }
+
+                if(isset($images)){
+                    if(isset($images[$q->id]))
+                        $q->images = $images[$q->id];
+                    else
+                        $q->images = [];
+                }else{
+                    $q->images = [];
+                }
+
+
 
                 $q->answer = $this->new_answer(strtoupper($q->answer),$q->dynamic);
                 //$q = $question->dynamic_variable_replacement($q->dynamic,$q);
@@ -409,7 +482,13 @@ class AssessmentController extends Controller
         // time
         foreach($exam->sections as $section){
             $time = $time + $section->time;
+            
+
+
         }
+
+        $time = round(($time * 60 - $time_used)/60,2);
+
 
         if(!count($questions))
             abort(403,'No questions found');
@@ -419,6 +498,7 @@ class AssessmentController extends Controller
                         ->with('highlight',true)
                         ->with('exam',$exam)
                         ->with('code',true)
+                        ->with('user',$user)
                         ->with('code_ques',$code_ques)
                         ->with('timer2',true)
                         ->with('camera',$exam->camera)
@@ -740,6 +820,9 @@ class AssessmentController extends Controller
     public function solutions($slug,$id=null,Request $request)
     {
 
+        $exam = Cache::get('test_'.$slug);
+
+        if(!$exam)
         $exam = Exam::where('slug',$slug)->with('sections')->first();
 
 
@@ -751,9 +834,10 @@ class AssessmentController extends Controller
         if(!$student)
             $student = \auth::user();
 
-        $test_responses = Test::where('test_id',$exam->id)
-                                    ->where('user_id',$student->id)
-                                    ->get();
+        $test_responses = Cache::remember('responses_'.$student->id.'_'.$exam->id,240,function() use ($exam,$student){
+            return Test::where('test_id',$exam->id)
+                        ->where('user_id',$student->id)->get();
+        });
 
         //dd($test_responses);
         if($id==null){
@@ -769,8 +853,6 @@ class AssessmentController extends Controller
             $response->mark = request()->get('score');
             $response->comment = request()->get('comment');
             $response->save();
-
-            
             $exam->updateScore($test_responses,$response);
         }
 
@@ -794,8 +876,6 @@ class AssessmentController extends Controller
                 $sections  = array();
                 $i=0;
 
-                
-
                 $details = ['curr'=>null,'prev'=>null,'next'=>null,'qno'=>null,'display_type'=>'tag']; 
 
                 $test = $response;
@@ -817,10 +897,6 @@ class AssessmentController extends Controller
                     $details['comment'] = null;
                     $details['section'] = null;
                 }
-
-
-                
-                
             
                 $details['curr'] = route('assessment.solutions.q',[$exam->slug,$question->id]);
                 
@@ -848,7 +924,14 @@ class AssessmentController extends Controller
                 else
                     $view = 'solutions';
 
-                
+                $user_id = $student->id;
+
+                $jsonname = $slug.'_'.$user_id;
+
+                if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json'))
+                    $images = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+                else
+                    $images = [];
 
                 return view('appl.exam.assessment.'.$view)
                         ->with('mathjax',true)
@@ -857,6 +940,7 @@ class AssessmentController extends Controller
                         ->with('details',$details)
                         ->with('exam',$exam)
                         ->with('student',$student)
+                        ->with('images',$images)
                         ->with('highlight',true)
                         ->with('section_questions',$test_responses->groupBy('section_id'))
                         ->with('questions',$test_responses);
@@ -955,13 +1039,33 @@ class AssessmentController extends Controller
 
     }
 
+    public function savetest($slug,Request $request){
+        $resp = json_decode($request->get('responses'));
+        $user_id = $resp->user_id;
+        $exam_id = $resp->test_id;
+        $responses = $resp->responses;
+
+       
+
+        Cache::put('responses_'.$user_id.'_'.$exam_id,$responses,240);
+
+
+        Storage::disk('s3')->put('responses/responses_'.$user_id.'_'.$exam_id.'.json',json_encode($responses),'public');
+            
+        exit();
+    }
+
 
     public function submission($slug,Request $request)
     {
 
         $code_ques_flag =0;
         $test = $slug;
-        $user = \auth::user();
+        if($request->get('admin')){
+            $user = User::where('id',$request->get('user_id'))->first();
+        }else{
+            $user = \auth::user();
+        }
         $user_id = $request->get('user_id');
         $test_id = $request->get('test_id');
         $code = $request->get('code');
@@ -980,10 +1084,19 @@ class AssessmentController extends Controller
             $exam = Exam::where('slug',$test)->first();
         }
 
-        $test_taken = $user->attempted($exam->id);
+        if(!$request->get('admin')){
+            $test_taken = $user->attempted($exam->id);
 
-        if($test_taken)
-            return redirect()->route('assessment.analysis',$slug);
+            if($test_taken)
+                return redirect()->route('assessment.analysis',$slug);
+        }else{
+
+            Test::where('test_id',$test_id)->where('user_id',$user_id)->delete();
+            Tests_Section::where('test_id',$test_id)->where('user_id',$user_id)->delete();
+            Tests_Overall::where('test_id',$test_id)->where('user_id',$user_id)->delete(); 
+
+        }
+        
 
         $qcount =0;
         foreach($exam->sections as $section){
@@ -1118,9 +1231,12 @@ class AssessmentController extends Controller
             
         }
 
-        $tests_cache = new Test();
-        $tests_cache = collect($d);
-        Cache::put('responses_'.$user_id.'_'.$test_id,$tests_cache,240);
+        if(!$request->get('admin')){
+            $tests_cache = new Test();
+            $tests_cache = collect($d);
+            Cache::put('responses_'.$user_id.'_'.$test_id,$tests_cache,240);
+        }
+       
 
         
         $details = ['user_id'=>$request->get('user_id'),'test_id'=>$request->get('test_id')];
@@ -1265,27 +1381,30 @@ class AssessmentController extends Controller
 
         $test_overall_cache->cheat_detect = $test_overall['cheat_detect'];
         
-
-        Cache::put('attempt_'.$user_id.'_'.$test_id,$test_overall_cache,240);
-        
-        Cache::forget('attempts_'.$user_id);
-        
-
+        if(!$request->get('admin')){
+            Cache::put('attempt_'.$user_id.'_'.$test_id,$test_overall_cache,240);
+            Cache::forget('attempts_'.$user_id);
+        }
 
         Test::insert($data); 
         Tests_Section::insert($sec);
         Tests_Overall::insert($test_overall); 
 
-        $test_oa = Tests_Overall::where('user_id', $user->id)
-                ->orderBy('id','desc')
-                ->get();
+        if(!$request->get('admin')){
+            $test_oa = Tests_Overall::where('user_id', $user->id)
+                    ->orderBy('id','desc')
+                    ->get();
 
-        Cache::put('attempts_'.$user_id,$test_oa, 240);
+            Cache::put('attempts_'.$user_id,$test_oa, 240);
+        }
 
         //$this->dispatch(new ProcessAttempts($data,$sec,$test_overall));
 
+        if(!$request->get('admin'))
+            return redirect()->route('assessment.analysis',$slug);
+        else
+            return redirect()->route('test.report',$slug);
 
-        return redirect()->route('assessment.analysis',$slug);
 
     }
 
@@ -1295,32 +1414,32 @@ class AssessmentController extends Controller
         $qid = request()->get('qid');
 
         $name = $slug.'_'.$user_id.'_'.$qid;
+        $jsonname = $slug.'_'.$user_id;
 
-        foreach(range(0,10) as $i){
-                if($i==0){
-                    $name = $slug.'_'.$user_id.'_'.$qid;
-                }else{
-                    $name = $slug.'_'.$user_id.'_'.$qid.'_'.$i;
+        if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json')){
+            $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+
+            foreach($json as $q=>$ques){
+                if($qid == $q){
+                    foreach($ques as $filename=>$img){
+                        Storage::disk('s3')->delete('urq/'.$filename);
+                    }
+                    unset($json[$qid]);
                 }
-                
-                if(Storage::disk('s3')->exists('urq/'.$name.'.jpg')){
-                    echo $name.'- ';
-                    Storage::disk('s3')->delete('urq/'.$name.'.jpg');
-                }
-                
             }
+            Storage::disk('s3')->put('urq/'.$jsonname.'.json', json_encode($json));
+        }
+
         echo 1;
+        exit();
 
     }
 
     public function upload_image($slug){
 
-        
-
 
          /* If image is given upload and store path */
             if(request()->all()['file']){
-                
                 
                  $request = request();
                  $file      = request()->get('file');
@@ -1328,48 +1447,56 @@ class AssessmentController extends Controller
                  $qid = request()->get('qid');
                  $k = request()->get('i');
 
+
+
                 if(strtolower($request->file->getClientOriginalExtension()) == 'jpeg')
                     $extension = 'jpg';
                 else
                     $extension = strtolower($request->file->getClientOriginalExtension());
 
-                $name = $slug.'_'.$user_id.'_'.$qid;
+                $name = $slug.'_'.$user_id.'_'.$qid.'_'.$k;
+                $jsonname = $slug.'_'.$user_id;
+                $jsonfile = $jsonname.'.json';
 
-                if($k==0){
-                    $name = $slug.'_'.$user_id.'_'.$qid;
+                
+
+                if(Storage::disk('s3')->exists('urq/'.$jsonfile)){
+                    $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonfile),true);
+
+
+                    if(!$json){
+                        $json = array();
+                    }
                 }else{
-                    $name = $slug.'_'.$user_id.'_'.$qid.'_'.$k;
+                    $json = array();
                 }
-                
-                
 
-                
+
                 $filename = $name.'.'.$extension;
-                $filename_org = $name.'_original.'.$extension;
-
-
                 $folder = public_path('../public/storage/urq/');
-
                 if (!Storage::exists($folder)) {
                     Storage::makeDirectory($folder, 0775, true, true);
                 }
 
                 $path = Storage::disk('public')->putFileAs('urq',$request->file,$filename);
                 
-                //Storage::disk('s3')->putFileAs('urq',$request->file,$filename_org);
                 
 
-                 
+                //Storage::disk('s3')->putFileAs('urq',$request->file,$filename_org);
+                
                 $image= jpg_resize('urq/'.$name,$path,1000);
 
 
-
-                Storage::disk('s3')->put('urq/'.$filename, (string)$image,'public');
-
+                Storage::disk('s3')->put('urq/'.$name.'.jpg', (string)$image,'public');
                 
 
+
+
                 //Storage::disk('s3')->putFileAs('urq', new File($newpath), $filename);
-                $path = Storage::disk('s3')->url('urq/'.$filename);
+                $path = Storage::disk('s3')->url('urq/'.$name.'.jpg');
+
+                $json[$qid]['urq/'.$name.'.jpg'] = $path;
+                Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
 
                 echo  $path;
                 exit();
@@ -1436,6 +1563,8 @@ class AssessmentController extends Controller
             $entry = 1;
         }
 
+        $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
+
         //dd($exam->product_ids);
 
 
@@ -1445,6 +1574,7 @@ class AssessmentController extends Controller
                     ->with('entry',$entry)
                     ->with('cameratest',$exam->camera)
                     ->with('product',$product)
+                    ->with('responses',$responses)
                     ->with('attempt',$attempt);
         else
             abort(404);
@@ -1726,6 +1856,13 @@ class AssessmentController extends Controller
         $user_id = $student->id;
         $test_id = $exam->id;
 
+        $jsonname = $slug.'_'.$user_id;
+
+        if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json'))
+            $images = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+        else
+            $images = [];
+
 
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0,'evaluation'=>1];
         $details['course'] = $exam->name;
@@ -1766,6 +1903,16 @@ class AssessmentController extends Controller
                 $sections[$section->name] ='';
             $secs[$section->id] = $section;
             foreach($section->questions as $q){
+
+                if(isset($images)){
+                    if(isset($images[$q->id]))
+                        $q->images = $images[$q->id];
+                    else
+                        $q->images = [];
+                }else{
+                    $q->images = [];
+                }
+
                 $questions[$i] = $q;
                 $ques[$q->id] = $q;
                 $ques_keys[$q->id]['topic'] = $q->topic;

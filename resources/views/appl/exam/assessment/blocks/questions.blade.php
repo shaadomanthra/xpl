@@ -44,7 +44,7 @@
       <div class="col-3 col-md-2">
         <div class="pr-3 pb-2" >
           <div class="text-center p-1 rounded bg-light w100 border" >
-            <input class="form-check-input input input_{{($i+1)}}" type="checkbox" name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="A"> A </div>
+            <input class="form-check-input input input_{{($i+1)}}" type="checkbox" name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="A" @if(strpos($question->response,'A')!==false) checked @endif> A </div>
           </div>
         </div>
         <div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->option_a!!}</div></div>
@@ -56,7 +56,7 @@
         <div class="col-3 col-md-2">
           <div class="pr-3 pb-2" >
             <div class="text-center p-1 rounded bg-light w100 border" >
-              <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="B">  B</div>
+              <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="B" @if(strpos($question->response,'B')!==false) checked @endif>  B</div>
             </div>
           </div>
           <div class="col-9 col-md-10"><div class="pt-1 b">{!! $question->option_b!!}</div></div>
@@ -69,7 +69,7 @@
             <div class="pr-3 pb-2" >
               <div class="text-center p-1 rounded bg-light w100 border" >
 
-                <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="C" > C</div>
+                <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="C" @if(strpos($question->response,'C')!==false) checked @endif> C</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 c">{!! $question->option_c!!}</div></div>
@@ -81,7 +81,7 @@
             <div class="col-3 col-md-2">
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" >
-                  <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="D"> D</div>
+                  <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="D" @if(strpos($question->response,'D')!==false) checked @endif> D</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 d">{!! $question->option_d!!}</div></div>
@@ -94,7 +94,7 @@
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" > 
 
-                  <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="E" >
+                  <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="E" @if(strpos($question->response,'E')!==false) checked @endif>
                   E
                 </div>
               </div>
@@ -109,7 +109,7 @@
       <div class="col-3 col-md-2">
         <div class="pr-3 pb-2" >
           <div class="text-center p-1 rounded bg-light w100 border" >
-            <input class="form-check-input input input_{{($i+1)}}" type="radio" name="{{($i+1)}}" data-sno="{{($i+1)}}" value="A"> A </div>
+            <input class="form-check-input input input_{{($i+1)}}" type="radio" name="{{($i+1)}}" data-sno="{{($i+1)}}" value="A" @if(strpos($question->response,'A')!==false) checked @endif> A </div>
           </div>
         </div>
         <div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->option_a!!}</div></div>
@@ -121,7 +121,7 @@
         <div class="col-3 col-md-2">
           <div class="pr-3 pb-2" >
             <div class="text-center p-1 rounded bg-light w100 border" >
-              <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="B">  B</div>
+              <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="B" @if(strpos($question->response,'B')!==false) checked @endif>  B</div>
             </div>
           </div>
           <div class="col-9 col-md-10"><div class="pt-1 b">{!! $question->option_b!!}</div></div>
@@ -134,7 +134,7 @@
             <div class="pr-3 pb-2" >
               <div class="text-center p-1 rounded bg-light w100 border" >
 
-                <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="C" > C</div>
+                <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="C" @if(strpos($question->response,'C')!==false) checked @endif> C</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 c">{!! $question->option_c!!}</div></div>
@@ -146,7 +146,7 @@
             <div class="col-3 col-md-2">
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" >
-                  <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="D"> D</div>
+                  <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="D" @if(strpos($question->response,'D')!==false) checked @endif> D</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 d">{!! $question->option_d!!}</div></div>
@@ -159,7 +159,7 @@
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" > 
 
-                  <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="E" >
+                  <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="E" @if(strpos($question->response,'E')!==false) checked @endif>
                   E
                 </div>
               </div>
@@ -167,6 +167,7 @@
             <div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->option_e!!}</div></div>
           </div>
           @endif
+
         @endif
           @if($question->type=='code')
             @include('appl.exam.assessment.blocks.code')
@@ -175,14 +176,13 @@
           @if($question->type=='fillup')
           <div class="bg-light border p-3 rounded mt-3">
           <h5>Enter your answer</h5>
-          <input class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" >
+          <input class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="@if($question->response){{$question->response}} @endif" >
         </div>
           @endif
 
           @if($question->type=='sq')
           <div class="bg-light border p-3 rounded mt-3">
-          <h5>Enter your answer</h5>
-          <textarea class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" row=5></textarea>
+          <h5>Enter your answer</h5><textarea class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" row="5">@if($question->response){{$question->response}} @endif</textarea>
         </div>
           @endif
 
@@ -199,20 +199,14 @@
 </div>
         </div>
         <div class="img_container_{{$i+1}} pt-3" >
-          <div class="img_status py-2"></div>
+          <div class="img_status img_status_{{$i+1}} py-2"></div>
           <div class="img_c img_c_{{$i+1}} {{$m=0}}">
-            @foreach(range(0,10) as $k)
-              @if($k==0)
-                @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'.jpg'))
-                <img id="img_{{$k}}" class="img_{{$i+1}} w-100 {{$m=1}} py-2" src="{{Storage::disk('s3')->url('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'.jpg')}}" />
-                @endif
-              @else
-                @if(Storage::disk('s3')->exists('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'_'.$k.'.jpg'))
-                <img id="img_{{$k}}" class="img_{{$i+1}} w-100 py-2" src="{{Storage::disk('s3')->url('urq/'.$exam->slug.'_'.auth::user()->id.'_'.$question->id.'_'.$k.'.jpg')}}" />
-                @endif
 
-              @endif
-          @endforeach
+            @if($question->images)
+              @foreach(array_reverse($question->images) as $img)
+                <img id="" class="img_{{$i+1}} w-100 {{$m=1}} py-2" src="{{$img}}" />
+              @endforeach
+            @endif
           </div>
 
           <!--<img id="img_{{$i+1}}" class="img_{{$i+1}} w-100" src="" />-->
@@ -226,7 +220,7 @@
           @endif
 
 
-          <input id="{{($i+1)}}_time" class="form-input {{($i+1)}}_time" type="hidden" name="{{($i+1)}}_time"  value="0">
+          <input id="{{($i+1)}}_time" class="form-input {{($i+1)}}_time" type="hidden" name="{{($i+1)}}_time"  value="@if($question->time) {{$question->time}} @else 0 @endif">
           <input  class="form-input " type="hidden" name="{{($i+1)}}_question_id"  value="{{$question->id}}">
           <input  class="form-input " type="hidden" name="{{($i+1)}}_dynamic"  value="{{$dynamic[$i]}}">
           <input  class="form-input " type="hidden" name="{{($i+1)}}_section_id"  value="{{$sections[$i]->id}}">

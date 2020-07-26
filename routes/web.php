@@ -14,6 +14,7 @@
 use PacketPrep\Http\Middleware\RequestFilter;
 use PacketPrep\Http\Middleware\Corporate;
 use PacketPrep\User;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -143,7 +144,30 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('/checkout-success',function(){ return view('appl.product.pages.checkout_success'); })->name('checkout-success')->middleware('auth');
 	Route::get('/credit-rates',function(){ return view('appl.product.pages.credit_rates'); })->name('credit-rate')->middleware('auth');;
 
-	Route::get('/cam',function(){ return view('layouts.cam'); });
+	Route::get('/s3',function(){ 
+		$files = Storage::disk('s3')->allFiles('urq');
+		
+		$json = array();
+		foreach($files as $f){
+			$ext = pathinfo($f, PATHINFO_EXTENSION);
+			if($ext!='json'){
+				$file = str_replace('urq/', '', $f);
+				$image = 'https://s3-xplore.s3.ap-south-1.amazonaws.com/'.$f;
+				$pieces = explode('_', $file);
+				$jsonname = $pieces[0].'_'.$pieces[1];
+				$n = explode('.',$pieces[2]);
+				$qid = $n[0];
+				$json[$jsonname][$qid][$file] = $image;
+			}
+			
+		}
+		foreach($json as $m => $j){
+			$jsonfile = $m.'.json';
+			//Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($j));
+		}
+
+		dd('');
+	});
 
 
 	
@@ -598,6 +622,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::post('test/{test}/submission','Exam\AssessmentController@submission')->name('assessment.submission');
 	Route::post('uploadimage/{test}','Exam\AssessmentController@upload_image')->name('assessment.upload');
 	Route::post('deleteimage/{test}','Exam\AssessmentController@delete_image')->name('assessment.delete.image');
+	Route::post('savetest/{test}','Exam\AssessmentController@savetest')->name('assessment.savetest');
 	//Route::get('uploadimage/{test}','Exam\AssessmentController@upload_image')->name('assessment.uploadget');
 	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis2')->name('assessment.analysis')->middleware('auth');
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
