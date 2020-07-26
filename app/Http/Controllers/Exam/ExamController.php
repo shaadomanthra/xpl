@@ -510,6 +510,8 @@ class ExamController extends Controller
             $exam->client = $request->client;
             $exam->shuffle = $request->shuffle;
             $exam->message = $request->message;
+            $exam->save = $request->save;
+            $exam->extra = $request->extra;
             if($request->auto_activation)
                 $exam->auto_activation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
             else
@@ -1013,6 +1015,8 @@ class ExamController extends Controller
             $exam->client = $request->client;
             $exam->shuffle = $request->shuffle;
             $exam->message = $request->message;
+            $exam->save = $request->save;
+            $exam->extra = $request->extra;
             if(!$request->camera)
                 $exam->capture_frequency = 0;
             else

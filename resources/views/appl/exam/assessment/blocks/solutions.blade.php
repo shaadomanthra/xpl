@@ -256,7 +256,7 @@
             <div class="col-6 col-md-4">
               <div class="bg-light p-3 border rounded mb-3 mb-md-0">
                 <h3><i class="fa fa-lightbulb-o"></i> Score</h3>
-                <div class="answer">{{ $details['mark'] }}</div>
+                <div class="answer">@if($details['status']!=2){{ $details['mark'] }} @else - @endif</div>
               </div>
             </div>
             <div class="col-6 col-md-4">

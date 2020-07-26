@@ -159,16 +159,9 @@
       <div class="@if(request()->get('id')=='settings') p-3  pactive rounded bg-success text-white mb-3 @endif">
 
         <div class="row">
-          <div class="col-12 col-md-6">
-           <div class="form-group">
-        <label for="formGroupExampleInput ">Question Shuffle</label>
-        <select class="form-control" name="shuffle">
-          <option value="1" @if(isset($exam)) @if($exam->shuffle==1) selected @endif @endif >Yes</option>
-          <option value="0" @if(isset($exam)) @if($exam->shuffle==0) selected @endif @endif >No</option>
-        </select>
-      </div>
-        </div>
-        <div class="col-12 col-md-3">
+         
+
+        <div class="col-12 col-md-6">
           <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
@@ -178,7 +171,7 @@
         </select>
       </div>
         </div>
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-6">
            <div class="form-group">
         <label for="formGroupExampleInput ">Link</label>
         <select class="form-control" name="active">
@@ -309,12 +302,34 @@
           </div>
         </div>
 
-        <div class="col-12 ">
+        <div class="col-12 col-md-6">
           <div class="form-group">
             <label for="formGroupExampleInput ">Message in 'No Report' page</label>
             <input  class="form-control" type="text" value="{{($exam->message)? $exam->message:'Your responses are recorded for internal evaluation.'}}"  name="message"></input>
           </div>
         </div>
+
+         <div class="col-12 col-md-3">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Question Shuffle</label>
+        <select class="form-control" name="shuffle">
+          <option value="1" @if(isset($exam)) @if($exam->shuffle==1) selected @endif @endif >Yes</option>
+          <option value="0" @if(isset($exam)) @if($exam->shuffle==0) selected @endif @endif >No</option>
+        </select>
+      </div>
+        </div>
+
+         <div class="col-12 col-md-3">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Save Responses(every 10 secs)</label>
+        <select class="form-control" name="save">
+          <option value="1" @if(isset($exam)) @if($exam->save==1) selected @endif @endif >Yes</option>
+          <option value="0" @if(isset($exam)) @if($exam->save==0) selected @endif @endif >No</option>
+        </select>
+      </div>
+        </div>
+
+
       </div>
     </div>
     </div>

@@ -35,7 +35,7 @@
         <div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""  style="display:none"><i class="fa fa-angle-double-left"data-testname="{{$exam->slug}}" ></i></div>
       </div>
 
-      <div class="col-6"> <div class="mt-1 text-center ques_count" data-count="{{count($questions)}}" data-url="{{route('assessment.savetest',$exam->slug)}}" data-save='0'>Q({{ count($questions) }})</div></div>
+      <div class="col-6"> <div class="mt-1 text-center ques_count" data-count="{{count($questions)}}" data-url="{{route('assessment.savetest',$exam->slug)}}" data-save="@if(isset($exam->save)) @if($exam->save) 1 @else 0 @endif @else 0 @endif">Q({{ count($questions) }})</div></div>
       <div class="col-3"> 
         <div class="right-qno cursor w100 p-1 text-center mr-3 " data-sno="2" data-testname="{{$exam->slug}}" ><i class="fa fa-angle-double-right" ></i></div>
       </div>

@@ -36,6 +36,8 @@ class Exam extends Model
         'client',
         'shuffle',
         'message',
+        'save',
+        'extra',
         // add all other fields
     ];
 
@@ -424,9 +426,9 @@ class Exam extends Model
       $test_id = $entry->test_id;
 
       Cache::forget('attempt_'.$user_id.'_'.$test_id);
-      Cache::forget('responses_'.$user_id.'_'.$test_id); 
+      Cache::forget('resp_'.$user_id.'_'.$test_id); 
 
-        return 1;
+      return 1;
     }
 
 
