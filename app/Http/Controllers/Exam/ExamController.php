@@ -797,7 +797,7 @@ class ExamController extends Controller
 
         $usrs = User::whereIn('id',$users)->paginate(500);
         if(count($usrs)<500){
-            $usrs = User::whereIn('id',$users)->with('college')->with('branch')->get();
+            $usrs = User::whereIn('id',$users)->with('college')->with('branch')->paginate(500);
             request()->session()->put('result',$result);
             request()->session()->put('sections',$sections);
             request()->session()->put('exam_sections',$exam_sections);
