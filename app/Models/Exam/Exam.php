@@ -389,6 +389,10 @@ class Exam extends Model
       $sattempted=0; $oattempted=0;
       $flag = true;
       foreach($tests as $t){
+
+        if($t->accuracy)
+          $t->mark = 1;
+        
         if($t->id==$entry->id)
           $t->mark = $entry->mark;
 
