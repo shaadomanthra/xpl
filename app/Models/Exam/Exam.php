@@ -427,8 +427,21 @@ class Exam extends Model
 
 
     public function getDimensions($url){
-      $height = \Image::make($url)->height();
-      $width = \Image::make($url)->width();
+      if (!ini_get('allow_url_fopen') && function_exists('curl_version')) {
+
+          $curl = curl_init();
+          curl_setopt($curl, CURLOPT_URL, $url);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+          $content = curl_exec($curl);
+          curl_close($curl);
+
+      } else if (ini_get('allow_url_fopen')) {
+          $content = file_get_contents($url);
+      } else {
+          echo 'No dice.';
+      }
+      $height = \Image::make($content)->height();
+      $width = \Image::make($content)->width();
       return $width.'-'.$height;
     }
 
