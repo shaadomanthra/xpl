@@ -70,9 +70,13 @@
                   @if($exam->slug!='psychometric-test')
                   <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$users[$r->user_id]->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
                   @endif
+
+                  @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
+                  <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r->user_id]->username}}&admin=1" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
+                  @endif
                   
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-                  <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r->user_id]->username}}&admin=1" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
+                  
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="user_id" value="{{ $users[$r->user_id]->id}}">
                     <input type="hidden" name="test_id" value="{{ $exam->id }}">
