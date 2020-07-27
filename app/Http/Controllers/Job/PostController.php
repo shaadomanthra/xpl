@@ -80,8 +80,8 @@ class PostController extends Controller
         if($request->get('export')){
             $users = $obj->users->pluck('id')->toArray();
             $objs = User::whereIn('id',$users)->with('college')->with('branch')
-                    ->get();
-            if($objs->count()<500){
+                    ->paginate(500);
+            if($objs->total() <= 500){
                 request()->session()->put('users',$objs);
                 $name = "Applicants_job_".$obj->slug.".xlsx";
                 ob_end_clean(); // this

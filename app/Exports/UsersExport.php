@@ -37,10 +37,18 @@ class UsersExport implements FromCollection
                 unset($users[$k]->user_id);
                 unset($users[$k]->college_id);
                 unset($users[$k]->branch_id);
+                $coll = $users[$k]->info;
                 unset($users[$k]->info);
 
+                if(isset($users[$k]->college->name))
                 $users[$k]->colleges = $users[$k]->college->name;
+                else
+                   $users[$k]->colleges =  $coll;
+
+                if(isset($users[$k]->branch->name))
                 $users[$k]->branches = $users[$k]->branch->name;
+                else
+                    $users[$k]->branches = '-';
   
         } 
         $ux = new User();

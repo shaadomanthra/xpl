@@ -26,7 +26,7 @@
       <div class="col-12 col-md-4">
         <div class="mt-2 ">
           
-        <a href="{{ route('job.applicants',$obj->slug)}}?export=1}}" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
+        <a href="{{ route('job.applicants',$obj->slug)}}?export=1" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
         
 
           <form class="form-inline mr-3 " method="GET" action="{{ route('job.applicants',$obj->slug) }}">
