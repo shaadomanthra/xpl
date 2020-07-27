@@ -52,7 +52,7 @@
                 
                 <td>
                   @if(!$r->status)
-                  {{ $r->score }} / {{ $r->max }}
+                  {{ $r->score }}
                   @else
                   <span class="badge badge-warning">Under Review</span>
                   @endif
@@ -72,7 +72,7 @@
                   @endif
 
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
-                  <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r->user_id]->username}}&admin=1" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
+                  <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r->user_id]->username}}&admin=1&code={{$r->code}}" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
                   @endif
                   
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))

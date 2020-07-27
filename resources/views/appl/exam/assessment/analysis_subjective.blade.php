@@ -37,7 +37,7 @@
 		<div class="bg-white p-3 float-right text-center border"><h5>Total Score</h5>
 
 			@if(!$test_overall->status)
-			<div class="display-4">{{ $details['marks']}} / {{ $details['total'] }} </div>
+			<div class="display-4">{{ $details['marks']}} </div>
 			@else
 			<div class="badge badge-primary px-2" style="line-height: 1.4">Under<br>Review</div>
 			@endif
@@ -93,7 +93,7 @@
           @if(isset($questions[$t->question_id]->images))
 
           @foreach(array_reverse($questions[$t->question_id]->images) as $url)
-          
+
              <img src="{{$url }}" style="width:150px;" class="border border-secondary p-1  my-1" />
           @endforeach
           @endif
