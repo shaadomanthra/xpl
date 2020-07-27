@@ -81,7 +81,7 @@ class PostController extends Controller
         if($request->get('export')){
             $users = $obj->users->pluck('id')->toArray();
             $objs = User::whereIn('id',$users)
-                    ->paginate(500);
+                    ->paginate(200);
             $colleges = College::all()->keyBy('id');
             $branches = Branch::all()->keyBy('id');
 
