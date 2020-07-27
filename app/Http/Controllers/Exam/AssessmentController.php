@@ -420,7 +420,7 @@ class AssessmentController extends Controller
                         $q->response = $keys[$q->id]->response;
                         $q->time = $keys[$q->id]->time;
 
-                        $time_used = $time_used + $q->time;
+                        $time_used = $time_used + intval($q->time);
                         
                     }
                 }
