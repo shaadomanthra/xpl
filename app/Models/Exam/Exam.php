@@ -371,9 +371,15 @@ class Exam extends Model
 
     public function updateScore($tests,$entry){
       
+      $e = Test::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
       $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
       $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
-      $section = Section::where('id',$entry->section_id)->first();
+      //$section = Section::where('id',$entry->section_id)->first();
+
+      $e->mark = $entry->mark;
+      $e->comment = $e->comment;
+      $e->status = 1;
+      $e->save();
 
       $q = $entry->question;
 
@@ -386,40 +392,27 @@ class Exam extends Model
           $t->mark = $entry->mark;
 
         if($t->section_id==$entry->section_id){
-          $s['mark'] = $s['mark'] + $t->mark;
-          if($t->status!=2){
-            $sattempted++;
-          }
+          $s['mark'] = $s['mark'] + intval($t->mark);
         }
 
         if($t->status!=2){
-            $oattempted++;
-            $mark = $mark +  $t->mark;
+            $mark = $mark +  intval($t->mark);
         }
 
-        if($t->status==2){
-          if($t->id==$entry->id && $entry->mark)
-            $flag = true;
-          else
-          $flag = false;
-        }
+        if($t->status==2)
+          $flag= false;
+
       }
+      $e_section->score = $s['mark'];
+      $e_overall->score = $mark;
 
 
-      
-          $entry->accuracy=1;
-          $e_section->score = $s['mark'];
-          $e_overall->score = $mark;
-          $entry->status =1;
-
-          if($flag){
+      if($flag){
             $e_overall->status = 0;
-          }
-
-
-        $entry->save();
-        $e_section->save();
-        $e_overall->save();
+      }
+      
+      $e_section->save();
+      $e_overall->save();
       
 
       $user_id = $entry->user_id;
@@ -432,6 +425,13 @@ class Exam extends Model
     }
 
 
+
+    public function getDimensions($name){
+      $image = \Storage::disk('s3')->get($name);
+      $height = \Image::make($image)->height();
+      $width = \Image::make($image)->width();
+      return $width.'-'.$height;
+    }
 
 
     public function runCode($r=null){

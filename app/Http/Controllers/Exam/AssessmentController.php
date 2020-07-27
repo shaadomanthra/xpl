@@ -830,14 +830,25 @@ class AssessmentController extends Controller
         $exam = Exam::where('slug',$slug)->with('sections')->first();
 
 
-        if($request->get('student'))
+
+        if($request->get('student')){
+            $sketchpad = true;
             $student = User::where('username',$request->get('student'))->first();
-        else
+        }
+        else{
+            $sketchpad =  false;
             $student = \auth::user();
+        }
 
         if(!$student)
             $student = \auth::user();
 
+
+        if($request->get('name')){
+            $this->update_image($request);
+        }
+
+        Cache::forget('resp_'.$student->id.'_'.$exam->id);
         $test_responses = Cache::remember('resp_'.$student->id.'_'.$exam->id,240,function() use ($exam,$student){
             return Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
@@ -857,6 +868,7 @@ class AssessmentController extends Controller
         if(request()->get('slug')){
             $response->mark = request()->get('score');
             $response->comment = request()->get('comment');
+            $response->status = 1;
             $response->save();
             $exam->updateScore($test_responses,$response);
         }
@@ -930,7 +942,9 @@ class AssessmentController extends Controller
 
                     }
                     
+                   
                     $details['q'.$q->id] = null;
+                    
 
                 } 
 
@@ -951,6 +965,8 @@ class AssessmentController extends Controller
                 else
                     $images = [];
 
+
+
                 return view('appl.exam.assessment.'.$view)
                         ->with('mathjax',true)
                         ->with('question',$question)
@@ -960,6 +976,7 @@ class AssessmentController extends Controller
                         ->with('student',$student)
                         ->with('images',$images)
                         ->with('highlight',true)
+                        ->with('sketchpad',$sketchpad)
                         ->with('section_questions',$test_responses->groupBy('section_id'))
                         ->with('questions',$test_responses);
             }else
@@ -1252,7 +1269,9 @@ class AssessmentController extends Controller
         if(!$request->get('admin')){
             $tests_cache = new Test();
             $tests_cache = collect($d);
-            Cache::put('responses_'.$user_id.'_'.$test_id,$tests_cache,240);
+            Cache::put('resp_'.$user_id.'_'.$test_id,$tests_cache,240);
+        }else{
+            Cache::forget('resp_'.$user_id.'_'.$test_id);
         }
        
 
@@ -1402,6 +1421,9 @@ class AssessmentController extends Controller
         if(!$request->get('admin')){
             Cache::put('attempt_'.$user_id.'_'.$test_id,$test_overall_cache,240);
             Cache::forget('attempts_'.$user_id);
+        }else{
+            Cache::forget('attempt_'.$user_id.'_'.$test_id);
+            Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
         }
 
         Test::insert($data); 
@@ -1414,6 +1436,8 @@ class AssessmentController extends Controller
                     ->get();
 
             Cache::put('attempts_'.$user_id,$test_oa, 240);
+        }else{
+            Cache::forget('attempts_'.$user_id);
         }
 
         //$this->dispatch(new ProcessAttempts($data,$sec,$test_overall));
@@ -1453,6 +1477,44 @@ class AssessmentController extends Controller
 
     }
 
+    public function update_image($r){
+        $name = str_replace('urq/', '',$r->get('name'));
+        $slug = $r->get('slug');
+        $user_id = $r->get('user_id');
+        $qid = $r->get('qid');
+        $width = intval($r->get('width'));
+        $height = intval($r->get('height'));
+
+        $image = Storage::disk('s3')->get('urq/'.$name);
+        Storage::disk('s3')->put('urq/original_'.$name, $image,'public');
+
+        $bg = \Image::make($image)->resize($width,$height);
+
+        $img = \Image::make(file_get_contents($r->get('image')))->resize($width,$height); 
+
+        $bg->insert($img)->encode('jpg',100);   
+
+        $new_name = rand(10,100).'_'.$name;
+        Storage::disk('s3')->put('urq/'.$new_name, (string)$bg,'public');
+
+        $jsonname = $slug.'_'.$user_id;
+        $jsonfile = $jsonname.'.json';
+
+        if(Storage::disk('s3')->exists('urq/'.$jsonfile)){
+            $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonfile),true);
+        }else{
+            $json = array();
+        }
+
+        $path = Storage::disk('s3')->url('urq/'.$new_name);
+        $json[$qid]['urq/'.$name.'.jpg'] = $path;
+        Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
+
+        echo $new_name;
+
+
+    }
+
     public function upload_image($slug){
 
 
@@ -1464,6 +1526,7 @@ class AssessmentController extends Controller
                  $user_id = request()->get('user_id');
                  $qid = request()->get('qid');
                  $k = request()->get('i');
+
 
 
 
@@ -1888,7 +1951,7 @@ class AssessmentController extends Controller
         $sum = 0;
         $c=0; $i=0; $u=0;
 
-        $tests = Cache::remember('responses_'.$user_id.'_'.$test_id,240,function() use ($exam,$student){
+        $tests = Cache::remember('resp_'.$user_id.'_'.$test_id,240,function() use ($exam,$student){
             return Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
         });

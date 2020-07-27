@@ -76,6 +76,10 @@
   @else
   <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   @endif
+
+  @if(isset($sketchpad))
+  <link href="{{ asset('css/sketchpad.css') }}?new=13" rel="stylesheet">
+  @endif
   @if(isset($mathjax))
   <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -95,7 +99,7 @@
 @endif
 
 </head>
-<body>
+<body >
     <div id="app" >
 
         @yield('content-main')

@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		</div>
-		<div class="qset {{ $i=0 }}" style="max-height: 170px;overflow-y: auto;">
+		<div class="qset {{ $i=0 }}" style="@if(!request()->get('student'))max-height: 170px;@endif overflow-y: auto;">
 
 			@foreach($exam->sections as $section)
 				@if(count($exam->sections)!=1)
@@ -42,7 +42,7 @@
 					<div class="pr-1">
 					<div class="w100 p-1 testqno s text-center rounded @if($q->question_id==$question->id) active @endif 
 					@if($questions[$i]['response'] !=null) @if($questions[$i]['accuracy'] == 0) qred-border @else qgreen-border @endif @else qborder  @endif 
-					@if($questions[$i]['status']!=2) qpink-border @endif " id="q{{$q->id}}" 
+					@if(request()->get('student')) @if($questions[$i]['status']!=2) qpink-border @endif @endif" id="q{{$q->id}}" 
 					    > {{ (++$i ) }} </div>
 					</div>
 					</a>

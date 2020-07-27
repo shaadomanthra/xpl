@@ -93,6 +93,7 @@
           @if(isset($questions[$t->question_id]->images))
 
           @foreach(array_reverse($questions[$t->question_id]->images) as $url)
+          
              <img src="{{$url }}" style="width:150px;" class="border border-secondary p-1  my-1" />
           @endforeach
           @endif

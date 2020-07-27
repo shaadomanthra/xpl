@@ -241,6 +241,81 @@ $(function(){
 
   </script>
 
+@if(isset($sketchpad))
+<script src="{{asset('js/sketchpad.js')}}"></script>    
+
+<script>
+
+
+  function late(){
+    url = $('.correct_image').data('url');
+    height = $('.save_image').data('height');
+    console.log($('.save_image').data('url'));
+    $('.canvas').html('<canvas id="sketchpad" width="1100px" height="'+height+'px" style="background:#f8f8f8 ;background-image:url('+url+');background-repeat: no-repeat;background-size:100%"></canvas>').promise().done(function(){
+          init();
+          $('#exampleModal').modal();
+      });
+
+  }
+
+
+  $(document).on('click','.correct_image',function(e){
+      e.preventDefault();
+       name = $(this).data('name');
+      url = $('.correct_image').data('url');
+      dimensions = $('.correct_image').data('dimensions');
+      var res = dimensions.split("-");
+      width = res[0]
+      height = res[1];
+      height = Math.round((1100/width)*height);
+      $('.save_image').data('height',height);
+      $('.save_image').data('name',$('.correct_image').data('name'));
+
+      console.log($('.save_image').data('height'));
+      late();
+      
+  });
+
+  function redirectPost(url, data) {
+    var form = document.createElement('form');
+    document.body.appendChild(form);
+    form.method = 'post';
+    form.action = url;
+    for (var name in data) {
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = data[name];
+        form.appendChild(input);
+    }
+    form.submit();
+}
+
+  $(document).on('click','.save_image',function(e){
+    e.preventDefault();
+    url = $(this).data('url');
+    data = [];
+    data['name'] = $(this).data('name');
+    data['width'] = $(this).data('width');
+    data['height'] = $(this).data('height');
+    data['user_id'] = $(this).data('user_id');
+    data['slug'] = $(this).data('slug');
+    data['_token'] = $(this).data('token');
+
+    data['student'] = $(this).data('student');
+    canvas = document.getElementById('sketchpad');
+    data['image'] = canvas.toDataURL("image/png");
+    redirectPost(url,data);
+    
+  });
+
+
+
+
+</script>
+
+@endif
+
 @if(isset($editor))
 <!-- include summernote css/js-->
 <script src="{{asset('js/summernote/summernote-bs4.js')}}"></script>    
@@ -1040,6 +1115,19 @@ $(function(){
 
        var fd = new FormData();
        var files = $('.input_urq_'+$name)[0].files[0];
+
+       var ext = $('.input_urq_'+$name).val().split('.').pop().toLowerCase();
+        if($.inArray(ext, ['jfif','png','jpg','jpeg']) == -1) {
+            $('.img_status_'+$name).html('<span class="text-danger"><i class="fa fa-times-circle"></i> Only images with extension jpg,jpeg,png are supported. File uploaded is '+ext+'.</span>');
+                return 1;
+        }
+
+       if (files.size > 20971520) { 
+                $size = Math.round(files.size / Math.pow(1024,2));
+                $('.img_status_'+$name).html('<span class="text-danger"><i class="fa fa-times-circle"></i> Image size cannot be more than 20MB. File uploaded '+$size+'MB.</span>');
+                return 1;
+        }
+
        console.log('.input_urq_'+$name);
         fd.append('file',files);
         fd.append('user_id',$user_id);

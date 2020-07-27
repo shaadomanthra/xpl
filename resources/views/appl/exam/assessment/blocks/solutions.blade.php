@@ -139,10 +139,10 @@
 
       @elseif($question->type=='urq')
      
-        <div class="">
+        <div class="" >
           @if(isset($images[$question->id]))
-          @foreach(array_reverse($images[$question->id]) as $url)
-             <img src="{{$url }}" style="" class="border border-secondary p-1 w-100 my-1" />
+          @foreach(array_reverse($images[$question->id]) as $k=>$url)
+              <a href="#" id="{{$k}}" class="correct_image" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-dimensions="{{$exam->getDimensions($k)}}"><img src="{{$url }}"  class="border border-secondary p-1  my-1 w-100" data-name="{{$k}}"/></a>
           @endforeach
           @endif
         </div>
@@ -318,7 +318,7 @@
       @endif
 
       @if(auth::user()->checkRole(['hr-manager']))
-      <div class="card">
+      <div class="card mb-3">
         <div class="card-body">
           <h3>Faculty Input</h3>
           <form id="award_score" action="{{ request()->url()}}" method="post">
@@ -378,3 +378,22 @@
 
 
 </form>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Correct Paper</h1>
+        <button type="button" class="btn btn-primary save_image" data-url="{{ route('assessment.solutions.q.post',[$exam->slug,$question->id])}}?student={{request()->get('student')}}" data-name="" data-student="{{request()->get('student')}}" data-token="{{ csrf_token() }}" data-user_id="{{ $student->id }}" data-slug="{{$exam->slug}}"  data-qid="{{$question->id}}" data-width="1100" data-height="">
+          <span aria-hidden="true">Save </span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="canvas">
+        
+      </div>
+        <img id="image_display">
+      </div>
+    </div>
+  </div>
+</div>

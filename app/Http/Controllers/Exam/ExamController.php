@@ -795,7 +795,7 @@ class ExamController extends Controller
         if(!Storage::disk('s3')->exists($filename))
             Storage::disk('s3')->delete($filename);
 
-        $usrs = User::whereIn('id',$users)->get();
+        $usrs = User::whereIn('id',$users)->paginate(500);
         if(count($usrs)<500){
             $usrs = User::whereIn('id',$users)->with('college')->with('branch')->get();
             request()->session()->put('result',$result);

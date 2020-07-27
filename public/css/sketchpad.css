@@ -1,0 +1,53 @@
+/* Some CSS styling */
+#sketchpadapp {
+    /* Prevent nearby text being highlighted when accidentally dragging mouse outside confines of the canvas */
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.leftside {
+    float:left;
+    width:220px;
+    height:285px;
+    background-color:#def;
+    padding:10px;
+    border-radius:4px;
+}
+.rightside {
+    float:left;
+    margin-left:10px;
+}
+#sketchpad {
+    float:left;
+    border:2px solid #888;
+    border-radius:4px;
+    position:relative; /* Necessary for correct mouse co-ords in Firefox */
+    cursor: pointer;
+}
+#clear_button, #save_button {
+    float:left;
+    font-size: 15px;
+    padding: 10px;
+    -webkit-appearance: none;
+    background: #eee;
+    border: 1px solid #888;
+    margin-bottom:5px;
+}
+#save_remote {
+    float:left;
+    margin-left:5px;
+}
+.save_box {
+    border:1px solid #bbb;
+    border-radius:4px;
+    padding:5px;
+    clear:both;
+}
+#image_display {
+    width:80px;
+    height:60px;
+    border:1px solid #000;
+    margin:15px;
+}
