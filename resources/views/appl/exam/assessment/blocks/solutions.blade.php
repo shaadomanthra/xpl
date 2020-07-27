@@ -142,7 +142,13 @@
         <div class="" >
           @if(isset($images[$question->id]))
           @foreach(array_reverse($images[$question->id]) as $k=>$url)
-              <a href="#" id="{{$k}}" class="correct_image" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-dimensions="{{$exam->getDimensions($k)}}"><img src="{{$url }}"  class="border border-secondary p-1  my-1 w-100" data-name="{{$k}}"/></a>
+          <div class="border border-secondary">
+              <a href="#" id="{{$k}}" class="correct_image" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}"><img src="{{$url }}"  class=" p-1  my-1 w-100" data-name="{{$k}}"/>
+              </a>
+              <a href="{{ route('assessment.solutions.q',[$exam->slug,$question->id])}}?rotate=90&name={{$k}}&imgurl={{$url}}&qid={{$question->id}}&student={{$student->username}}" class="btn btn-outline-primary my-2 mr-1 ml-1">left <i class="fa fa-rotate-left"></i></a>
+              <a href="{{ route('assessment.solutions.q',[$exam->slug,$question->id])}}?rotate=-90&name={{$k}}&imgurl={{$url}}&qid={{$question->id}}&student={{$student->username}}" class="btn btn-outline-primary my-2 mr-1 ml-1">right <i class="fa fa-rotate-right"></i></a>
+              <a href="#" class="btn btn-outline-success my-2 correct_image float-right mr-1"> <i class="fa fa-pencil"></i> pen</a>
+          </div>
           @endforeach
           @endif
         </div>
@@ -384,15 +390,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title" id="exampleModalLabel">Correct Paper</h1>
-        <button type="button" class="btn btn-primary save_image" data-url="{{ route('assessment.solutions.q.post',[$exam->slug,$question->id])}}?student={{request()->get('student')}}" data-name="" data-student="{{request()->get('student')}}" data-token="{{ csrf_token() }}" data-user_id="{{ $student->id }}" data-slug="{{$exam->slug}}"  data-qid="{{$question->id}}" data-width="1100" data-height="">
-          <span aria-hidden="true">Save </span>
+        <button type="button" class="btn btn-danger clear_image float-right d-inline">clear</button>
+        <button type="button" class="btn btn-primary save_image float-right d-inline" data-url="{{ route('assessment.solutions.q.post',[$exam->slug,$question->id])}}?student={{request()->get('student')}}" data-name="" data-imgurl="" data-student="{{request()->get('student')}}" data-token="{{ csrf_token() }}" data-user_id="{{ $student->id }}" data-slug="{{$exam->slug}}"  data-qid="{{$question->id}}" data-width="1100" data-height="">
+          Save
         </button>
       </div>
       <div class="modal-body">
         <div class="canvas">
         
       </div>
-        <img id="image_display">
+        <img id="image_display" style="display: none">
       </div>
     </div>
   </div>

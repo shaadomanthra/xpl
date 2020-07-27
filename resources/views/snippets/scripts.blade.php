@@ -247,8 +247,8 @@ $(function(){
 <script>
 
 
-  function late(){
-    url = $('.correct_image').data('url');
+  function late(item){
+    url = item.data('url');
     height = $('.save_image').data('height');
     console.log($('.save_image').data('url'));
     $('.canvas').html('<canvas id="sketchpad" width="1100px" height="'+height+'px" style="background:#f8f8f8 ;background-image:url('+url+');background-repeat: no-repeat;background-size:100%"></canvas>').promise().done(function(){
@@ -259,20 +259,23 @@ $(function(){
   }
 
 
+
   $(document).on('click','.correct_image',function(e){
       e.preventDefault();
-       name = $(this).data('name');
-      url = $('.correct_image').data('url');
+      name = $(this).data('name');
+      url = $(this).data('url');
+      imgurl = $(this).data('imgurl');
       dimensions = $('.correct_image').data('dimensions');
       var res = dimensions.split("-");
       width = res[0]
       height = res[1];
       height = Math.round((1100/width)*height);
       $('.save_image').data('height',height);
-      $('.save_image').data('name',$('.correct_image').data('name'));
+      $('.save_image').data('name',$(this).data('name'));
+      $('.save_image').data('imgurl',$(this).data('imgurl'));
 
       console.log($('.save_image').data('height'));
-      late();
+      late($(this));
       
   });
 
@@ -289,17 +292,24 @@ $(function(){
         form.appendChild(input);
     }
     form.submit();
-}
+  } 
 
+
+
+  $(document).on('click','.clear_image',function(e){
+    clearCanvas(canvas,ctx);
+  });
   $(document).on('click','.save_image',function(e){
     e.preventDefault();
     url = $(this).data('url');
     data = [];
     data['name'] = $(this).data('name');
+    data['imgurl'] = $(this).data('imgurl');
     data['width'] = $(this).data('width');
     data['height'] = $(this).data('height');
     data['user_id'] = $(this).data('user_id');
     data['slug'] = $(this).data('slug');
+    data['qid'] = $(this).data('qid'); 
     data['_token'] = $(this).data('token');
 
     data['student'] = $(this).data('student');

@@ -844,8 +844,11 @@ class AssessmentController extends Controller
             $student = \auth::user();
 
 
-        if($request->get('name')){
+        if($request->get('name') && !$request->get('rotate')){
             $this->update_image($request);
+        }
+        if($request->get('rotate')){
+            return $this->rotate_image($slug,$student->id,$request);
         }
 
         Cache::forget('resp_'.$student->id.'_'.$exam->id);
@@ -1477,18 +1480,54 @@ class AssessmentController extends Controller
 
     }
 
+    public function rotate_image($slug,$user_id,$r){
+        $name = str_replace('urq/', '',$r->get('name'));
+        $imgurl = $r->get('imgurl');
+
+        $angle = $r->get('rotate');
+        $qid = intval($r->get('qid'));
+       
+        
+        $bg = \Image::make($imgurl)->rotate($angle)->encode('jpg',100);
+        $new_name = rand(10,100).'_'.$name;
+        Storage::disk('s3')->put('urq/'.$new_name, (string)$bg,'public');
+
+        $jsonname = $slug.'_'.$user_id;
+        $jsonfile = $jsonname.'.json';
+
+        if(Storage::disk('s3')->exists('urq/'.$jsonfile)){
+            $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonfile),true);
+        }else{
+            $json = array();
+        }
+
+        $path = Storage::disk('s3')->url('urq/'.$new_name);
+        $json[$qid]['urq/'.$name] = $path;
+        Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
+        Storage::disk('s3')->delete('urq/'.$name);
+
+        return redirect()->route('assessment.solutions.q',['slug'=>$slug,'question'=>$qid,'student'=>$r->get('student')]);
+
+
+    }
+
     public function update_image($r){
         $name = str_replace('urq/', '',$r->get('name'));
         $slug = $r->get('slug');
+        $imgurl = $r->get('imgurl');
         $user_id = $r->get('user_id');
         $qid = $r->get('qid');
         $width = intval($r->get('width'));
         $height = intval($r->get('height'));
 
-        $image = Storage::disk('s3')->get('urq/'.$name);
-        Storage::disk('s3')->put('urq/original_'.$name, $image,'public');
+        
+       
 
-        $bg = \Image::make($image)->resize($width,$height);
+        if(!Storage::disk('s3')->exists('urq/original_'.$name)){
+            $bg = \Image::make($imgurl)->resize($width,$height);
+            $b =$bg->encode('jpg',100);
+            Storage::disk('s3')->put('urq/original_'.$name, (string)$b,'public');
+        }
 
         $img = \Image::make(file_get_contents($r->get('image')))->resize($width,$height); 
 
@@ -1507,11 +1546,9 @@ class AssessmentController extends Controller
         }
 
         $path = Storage::disk('s3')->url('urq/'.$new_name);
-        $json[$qid]['urq/'.$name.'.jpg'] = $path;
+        $json[$qid]['urq/'.$name] = $path;
         Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
-
-        echo $new_name;
-
+        Storage::disk('s3')->delete('urq/'.$name);
 
     }
 

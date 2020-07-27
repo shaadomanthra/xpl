@@ -426,10 +426,9 @@ class Exam extends Model
 
 
 
-    public function getDimensions($name){
-      $image = \Storage::disk('s3')->get('urq/'.$name);
-      $height = \Image::make($image)->height();
-      $width = \Image::make($image)->width();
+    public function getDimensions($url){
+      $height = \Image::make($url)->height();
+      $width = \Image::make($url)->width();
       return $width.'-'.$height;
     }
 
