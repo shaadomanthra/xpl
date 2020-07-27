@@ -427,7 +427,7 @@ class Exam extends Model
 
 
     public function getDimensions($name){
-      $image = \Storage::disk('s3')->get($name);
+      $image = \Storage::disk('s3')->get('urq/'.$name);
       $height = \Image::make($image)->height();
       $width = \Image::make($image)->width();
       return $width.'-'.$height;
