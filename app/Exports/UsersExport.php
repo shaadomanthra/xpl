@@ -17,6 +17,8 @@ class UsersExport implements FromCollection
     public function collection()
     {
        $users = request()->session()->get('users');
+       $colleges = request()->session()->get('colleges');
+       $branches= request()->session()->get('branches');
         foreach($users as $k=>$u){
 
             unset($users[$k]->id);
@@ -37,16 +39,22 @@ class UsersExport implements FromCollection
                 unset($users[$k]->user_id);
                 unset($users[$k]->college_id);
                 unset($users[$k]->branch_id);
+                $c_id = $users[$k]->college_id;
+                $b_id = $users[$k]->branch_id;
                 $coll = $users[$k]->info;
                 unset($users[$k]->info);
 
-                if(isset($users[$k]->college->name))
-                $users[$k]->colleges = $users[$k]->college->name;
+               
+                if($c_id==5 || $c_id==295)
+                    $users[$k]->colleges =  $coll;
+                else if(!$c_id)
+                    $users[$k]->colleges = '-';
                 else
-                   $users[$k]->colleges =  $coll;
+                    $users[$k]->colleges = $colleges[$c_id]->name;
+                   
 
-                if(isset($users[$k]->branch->name))
-                $users[$k]->branches = $users[$k]->branch->name;
+                if($b_id)
+                    $users[$k]->branches =  $branches[$b_id]->name;
                 else
                     $users[$k]->branches = '-';
   

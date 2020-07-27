@@ -7,6 +7,7 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\User;
 use PacketPrep\Models\Job\Post as Obj;
 use PacketPrep\Models\College\Branch;
+use PacketPrep\Models\College\College;
 use Illuminate\Support\Facades\Storage;
 use PacketPrep\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -79,10 +80,15 @@ class PostController extends Controller
         
         if($request->get('export')){
             $users = $obj->users->pluck('id')->toArray();
-            $objs = User::whereIn('id',$users)->with('college')->with('branch')
+            $objs = User::whereIn('id',$users)
                     ->paginate(500);
+            $colleges = College::all()->keyBy('id');
+            $branches = Branch::all()->keyBy('id');
+
             if($objs->total() <= 500){
                 request()->session()->put('users',$objs);
+                request()->session()->put('colleges',$colleges);
+                request()->session()->put('branches',$branches);
                 $name = "Applicants_job_".$obj->slug.".xlsx";
                 ob_end_clean(); // this
                 ob_start(); 

@@ -126,6 +126,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	})->name('img.post');
 
 	
+	Route::get('/crt-aptitude',function(){ return view('appl.pages.crt_aptitude'); })->name('crt.aptitude');
 	
 	Route::get('/java-language-exam',function(){ return view('appl.pages.java_certification'); })->name('java.l.c');
 	Route::get('/launch-offer',function(){ return view('appl.pages.launch_offer'); })->name('launch-offer');
