@@ -436,7 +436,15 @@ class Exam extends Model
           curl_close($curl);
 
       } else if (ini_get('allow_url_fopen')) {
-          $content = file_get_contents($url);
+          $context = stream_context_create(
+    array(
+        "http" => array(
+            "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+        )
+    )
+);
+
+          $content = file_get_contents($url,false, $context);
       } else {
           echo 'No dice.';
       }
