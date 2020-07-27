@@ -80,7 +80,7 @@ class PostController extends Controller
         
         if($request->get('export')){
             $users = $obj->users->pluck('id')->toArray();
-            $objs = User::whereIn('id',$users)->paginate(200);
+            $objs = User::whereIn('id',$users)->paginate(500);
             $colleges = College::all()->keyBy('id');
             $branches = Branch::all()->keyBy('id');
 
@@ -91,7 +91,7 @@ class PostController extends Controller
                 ob_end_clean(); // this
                 ob_start(); 
                 return Excel::download(new UsersExport, $name);
-                
+
             // if($objs->total() <= 500){
                 
             // }else{

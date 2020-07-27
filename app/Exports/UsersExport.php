@@ -37,14 +37,14 @@ class UsersExport implements FromCollection
                 unset($users[$k]->fluency);
                 unset($users[$k]->confidence);
                 unset($users[$k]->user_id);
-                unset($users[$k]->college_id);
-                unset($users[$k]->branch_id);
+                
                 $c_id = $users[$k]->college_id;
                 $b_id = $users[$k]->branch_id;
                 $coll = $users[$k]->info;
                 unset($users[$k]->info);
+                unset($users[$k]->college_id);
+                unset($users[$k]->branch_id);
 
-               
                 if($c_id==5 || $c_id==295)
                     $users[$k]->colleges =  $coll;
                 else if(!$c_id)
