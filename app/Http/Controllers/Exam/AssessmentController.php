@@ -1579,7 +1579,10 @@ class AssessmentController extends Controller
             $entry = 1;
         }
 
-        $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
+        if($user)
+            $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
+        else
+            $responses = null;
 
         //dd($exam->product_ids);
 
