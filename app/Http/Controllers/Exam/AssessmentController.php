@@ -1467,7 +1467,9 @@ class AssessmentController extends Controller
             foreach($json as $q=>$ques){
                 if($qid == $q){
                     foreach($ques as $filename=>$img){
-                        Storage::disk('s3')->delete('urq/'.$filename);
+                        $s3 = 'https://s3-xplore.s3.ap-south-1.amazonaws.com/';
+                        $name = str_replace($s3, '', $img);
+                        Storage::disk('s3')->delete($name);
                     }
                     unset($json[$qid]);
                 }
@@ -1502,7 +1504,7 @@ class AssessmentController extends Controller
         }
 
         $path = Storage::disk('s3')->url('urq/'.$new_name);
-        $json[$qid]['urq/'.$name] = $path;
+        $json[$qid][$name] = $path;
         Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
         Storage::disk('s3')->delete('urq/'.$name);
 
@@ -1546,7 +1548,7 @@ class AssessmentController extends Controller
         }
 
         $path = Storage::disk('s3')->url('urq/'.$new_name);
-        $json[$qid]['urq/'.$name] = $path;
+        $json[$qid][$name] = $path;
         Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
         Storage::disk('s3')->delete('urq/'.$name);
 
@@ -1611,7 +1613,7 @@ class AssessmentController extends Controller
                 //Storage::disk('s3')->putFileAs('urq', new File($newpath), $filename);
                 $path = Storage::disk('s3')->url('urq/'.$name.'.jpg');
 
-                $json[$qid]['urq/'.$name.'.jpg'] = $path;
+                $json[$qid][$name.'.jpg'] = $path;
                 Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
 
                 echo  $path;
