@@ -9,6 +9,7 @@ use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Exam\Section;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class Exam extends Model
 {
