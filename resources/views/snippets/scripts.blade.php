@@ -1,6 +1,6 @@
-<script src="{{ asset('js/script.js')}}?new=12"></script>
-<script src="{{ asset('js/jquery.ui.min.js')}}?new=12"></script>
-<script src="{{ asset('js/osc.js')}}?new=12"></script>
+<script src="{{ asset('js/script.js')}}?new=13"></script>
+<script src="{{ asset('js/jquery.ui.min.js')}}?new=13"></script>
+<script src="{{ asset('js/osc.js')}}?new=13"></script>
 
  @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
   <script>
