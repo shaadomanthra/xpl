@@ -36,7 +36,7 @@ class HomeController extends Controller
     {
         //s3_upload();
         $details = ['email' => 'packetcode@gmail.com',
-                    'bcc'=>['shaadomanthra@gmail.com','krishnatejags@gmail.com']];
+                    'bcc'=>['shaadomanthra@gmail.com']];
         SendEmail::dispatch($details);
         dd('Email Queued');
         return view('home');
