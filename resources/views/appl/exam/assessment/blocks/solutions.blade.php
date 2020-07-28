@@ -143,11 +143,13 @@
           @if(isset($images[$question->id]))
           @foreach(array_reverse($images[$question->id]) as $k=>$url)
           <div class="border border-secondary">
-              <a href="#" id="{{$k}}" class="correct_image" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}"><img src="{{$url }}"  class=" p-1  my-1 w-100" data-name="{{$k}}"/>
+              <a href="#" id="{{$k}}" class="@if(auth::user()->checkRole(['hr-manager','administrator'])) correct_image @endif" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}"><img src="{{$url }}"  class=" p-1  my-1 w-100" data-name="{{$k}}"/>
               </a>
+              @if(auth::user()->checkRole(['hr-manager','administrator']))
               <a href="{{ route('assessment.solutions.q',[$exam->slug,$question->id])}}?rotate=90&name={{$k}}&imgurl={{$url}}&qid={{$question->id}}&student={{$student->username}}" class="btn btn-outline-primary my-2 mr-1 ml-1">left <i class="fa fa-rotate-left"></i></a>
               <a href="{{ route('assessment.solutions.q',[$exam->slug,$question->id])}}?rotate=-90&name={{$k}}&imgurl={{$url}}&qid={{$question->id}}&student={{$student->username}}" class="btn btn-outline-primary my-2 mr-1 ml-1">right <i class="fa fa-rotate-right"></i></a>
-              <a href="#" class="btn btn-outline-success my-2 correct_image float-right mr-1"> <i class="fa fa-pencil"></i> pen</a>
+              <a href="#" class="btn btn-outline-success my-2 correct_image float-right mr-1" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}"> <i class="fa fa-pencil"></i> pen</a>
+              @endif
           </div>
           @endforeach
           @endif

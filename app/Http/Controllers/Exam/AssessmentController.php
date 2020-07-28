@@ -303,17 +303,10 @@ class AssessmentController extends Controller
             $user = \auth::user();
 
             $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
-
-            //dd($responses);
-
             if(is_array($responses))
             {
                 $responses = collect($responses);
             }
-
-            //$responses = null;
-
-           
         }
 
         $jsonname = $test.'_'.$user->id;
@@ -399,7 +392,6 @@ class AssessmentController extends Controller
         foreach($exam->sections as $section){
             $qset = $section->questions;
             
-
             //shuffle($qset);
             if($exam->shuffle)
                 $qset = $qset->shuffle();
@@ -486,12 +478,10 @@ class AssessmentController extends Controller
         // time
         foreach($exam->sections as $section){
             $time = $time + $section->time;
-            
-
-
         }
 
-        $time = round(($time * 60 - $time_used)/60,2);
+        if(!$request->get('student') && !$request->get('admin'))
+            $time = round(($time * 60 - $time_used)/60,2);
 
 
         if(!count($questions))
@@ -852,6 +842,7 @@ class AssessmentController extends Controller
         }
 
         Cache::forget('resp_'.$student->id.'_'.$exam->id);
+
         $test_responses = Cache::remember('resp_'.$student->id.'_'.$exam->id,240,function() use ($exam,$student){
             return Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
@@ -873,7 +864,7 @@ class AssessmentController extends Controller
             $response->comment = request()->get('comment');
             $response->status = 1;
             $response->save();
-            $exam->updateScore($test_responses,$response);
+            $test_responses = $exam->updateScore($test_responses,$response);
         }
 
       
@@ -946,8 +937,10 @@ class AssessmentController extends Controller
                     }
                     
                    
+                   if(isset($q->id))
                     $details['q'.$q->id] = null;
-                    
+                    else
+                    $details['q'.$q->question_id] = null;
 
                 } 
 
@@ -981,7 +974,7 @@ class AssessmentController extends Controller
                         ->with('highlight',true)
                         ->with('sketchpad',$sketchpad)
                         ->with('section_questions',$test_responses->groupBy('section_id'))
-                        ->with('questions',$test_responses);
+                        ->with('questions',json_decode(json_encode($test_responses),true));
             }else
                 abort('404','Question not found');
             

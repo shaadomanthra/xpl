@@ -372,7 +372,7 @@ class Exam extends Model
 
     public function updateScore($tests,$entry){
       
-      $e = Test::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
+      $e = Test::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('question_id',$entry->question_id)->first();
       $e_section = Tests_Section::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('section_id',$entry->section_id)->first();
       $e_overall = Tests_Overall::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->first();
       //$section = Section::where('id',$entry->section_id)->first();
@@ -382,7 +382,7 @@ class Exam extends Model
       $e->status = 1;
       $e->save();
 
-      $q = $entry->question;
+      $q = $e->question;
 
       $s['mark'] = 0;
       $mark = 0;
@@ -390,18 +390,18 @@ class Exam extends Model
       $flag = true;
       foreach($tests as $t){
 
-        if($t->accuracy)
+        if($t->accuracy && !$t->mark)
           $t->mark = 1;
         
         if($t->id==$entry->id)
           $t->mark = $entry->mark;
 
         if($t->section_id==$entry->section_id){
-          $s['mark'] = $s['mark'] + intval($t->mark);
+          $s['mark'] = $s['mark'] + floatval($t->mark);
         }
 
         if($t->status!=2){
-            $mark = $mark +  intval($t->mark);
+            $mark = $mark +  floatval($t->mark);
         }
 
         if($t->status==2)
@@ -426,7 +426,7 @@ class Exam extends Model
       Cache::forget('attempt_'.$user_id.'_'.$test_id);
       Cache::forget('resp_'.$user_id.'_'.$test_id); 
 
-      return 1;
+      return Test::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->get();
     }
 
 

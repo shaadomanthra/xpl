@@ -42,7 +42,7 @@
 					<div class="pr-1">
 					<div class="w100 p-1 testqno s text-center rounded @if($q->question_id==$question->id) active @endif 
 					@if($questions[$i]['response'] !=null) @if($questions[$i]['accuracy'] == 0) qred-border @else qgreen-border @endif @else qborder  @endif 
-					@if(request()->get('student')) @if($questions[$i]['status']!=2) qpink-border @endif @endif" id="q{{$q->id}}" 
+					@if(request()->get('student')) @if($questions[$i]['status']!=2) qpink-border @endif @endif" id="q{{$q->question_id}}" 
 					    > {{ (++$i ) }} </div>
 					</div>
 					</a>

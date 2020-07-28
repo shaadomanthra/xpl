@@ -76,12 +76,11 @@
                   @endif
                   
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-                  
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="user_id" value="{{ $users[$r->user_id]->id}}">
                     <input type="hidden" name="test_id" value="{{ $exam->id }}">
                     <button class="btn btn-link  p-0" type="submit"><i class='fa fa-trash'></i> delete</button>
-                @endif
+                  @endif
                 </form>
                   
                 </td>

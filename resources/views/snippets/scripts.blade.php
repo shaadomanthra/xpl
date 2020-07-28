@@ -262,20 +262,24 @@ $(function(){
 
   $(document).on('click','.correct_image',function(e){
       e.preventDefault();
-      name = $(this).data('name');
-      url = $(this).data('url');
-      imgurl = $(this).data('imgurl');
-      dimensions = $('.correct_image').data('dimensions');
-      var res = dimensions.split("-");
-      width = res[0]
-      height = res[1];
-      height = Math.round((1100/width)*height);
-      $('.save_image').data('height',height);
-      $('.save_image').data('name',$(this).data('name'));
-      $('.save_image').data('imgurl',$(this).data('imgurl'));
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+          alert('Edit option available for desktop users only.');
+      }else{
+          name = $(this).data('name');
+          url = $(this).data('url');
+          imgurl = $(this).data('imgurl');
+          dimensions = $('.correct_image').data('dimensions');
+          var res = dimensions.split("-");
+          width = res[0]
+          height = res[1];
+          height = Math.round((1100/width)*height);
+          $('.save_image').data('height',height);
+          $('.save_image').data('name',$(this).data('name'));
+          $('.save_image').data('imgurl',$(this).data('imgurl'));
 
-      console.log($('.save_image').data('height'));
-      late($(this));
+          console.log($('.save_image').data('height'));
+          late($(this));
+      }
       
   });
 
@@ -293,8 +297,6 @@ $(function(){
     }
     form.submit();
   } 
-
-
 
   $(document).on('click','.clear_image',function(e){
     clearCanvas(canvas,ctx);
@@ -318,10 +320,6 @@ $(function(){
     redirectPost(url,data);
     
   });
-
-
-
-
 </script>
 
 @endif
