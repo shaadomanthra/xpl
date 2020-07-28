@@ -192,7 +192,7 @@
 
           <input type="file" class="form-control w-100 input input_{{($i+1)}} input_urq_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" 
           >
-          <button type="button" class="mt-3 btn btn-primary btn-urq btn_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ auth::user()->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.upload',$exam->slug)}}">Upload</button>
+          <button type="button" class="mt-3 btn btn-primary btn-urq btn_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ $user->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.upload',$exam->slug)}}">Upload</button>
 
           <div class="spinner-border spinner-border-sm float-right mt-3 spinner_{{$i+1}}" role="status" style="display:none">
   <span class="sr-only">Loading...</span>
@@ -211,9 +211,9 @@
 
           <!--<img id="img_{{$i+1}}" class="img_{{$i+1}} w-100" src="" />-->
           @if($m==1)
-          <button type="button" class="mt-3 btn btn-danger btn-delete btn_delete_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ auth::user()->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.delete.image',$exam->slug)}}">Delete</button>
+          <button type="button" class="mt-3 btn btn-danger btn-delete btn_delete_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ $user->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.delete.image',$exam->slug)}}">Delete</button>
           @else
-          <button type="button" class="mt-3 btn btn-danger btn-delete btn_delete_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ auth::user()->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.delete.image',$exam->slug)}}" style="display:none">Delete</button>
+          <button type="button" class="mt-3 btn btn-danger btn-delete btn_delete_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ $user->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.delete.image',$exam->slug)}}" style="display:none">Delete</button>
           @endif
           
         </div>
