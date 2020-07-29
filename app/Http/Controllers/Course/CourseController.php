@@ -47,19 +47,22 @@ class CourseController extends Controller
             $course->updatecache($courses,null);
             //file_put_contents($filepath, json_encode($courses,JSON_PRETTY_PRINT));
 
-            foreach($courses as $obj){ 
-                $obj->products = $obj->products;
-                $course_data = $obj->category_list($obj->slug);
-                $obj->categories = $course_data['categories'];
-                $obj->ques_count = $course_data['ques_count'];
-                $obj->nodes = $course_data['nodes'];
-                $obj->exams = $course_data['exams'];
-                $obj->tests = $course_data['tests'];
-                $filename = $obj->slug.'.json';
-                $filepath = $this->cache_path.$filename;
-                //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
-                //Storage::disk('s3')->put('courses/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
-                $obj->updatecache(null,$obj);
+            foreach($courses as $obj){
+                if($obj->status){
+                    $obj->products = $obj->products;
+                    $course_data = $obj->category_list($obj->slug);
+                    $obj->categories = $course_data['categories'];
+                    $obj->ques_count = $course_data['ques_count'];
+                    $obj->nodes = $course_data['nodes'];
+                    $obj->exams = $course_data['exams'];
+                    $obj->tests = $course_data['tests'];
+                    $filename = $obj->slug.'.json';
+                    $filepath = $this->cache_path.$filename;
+                    //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
+                    //Storage::disk('s3')->put('courses/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+                    $obj->updatecache(null,$obj);
+                } 
+                
             }
 
             flash('Article Pages Cache Updated')->success();
