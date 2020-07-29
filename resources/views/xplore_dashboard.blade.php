@@ -46,7 +46,7 @@
 
       <p class="lead">
         <dl class="row">
-  @if($user->college)        
+  @if($user->college_id)        
   <dt class="col-sm-5">College </dt>
   @if($user->college->id!=5 && $user->college->id!=295)
   <dd class="col-sm-7">{{ $user->college->name}}</dd>
@@ -54,15 +54,18 @@
   <dd class="col-sm-7">{{$user->info}}</dd>
   @endif
   @endif
-  @if($user->branch)
+  @if($user->branch_id)
   <dt class="col-sm-5">Branch</dt>
   <dd class="col-sm-7">{{ $user->branch->name}} &nbsp;
   </dd>
   @endif
+
+  @if($user->year_of_passing)
   <dt class="col-sm-5">Year of Passing</dt>
   <dd class="col-sm-7">
     {{ ($user->year_of_passing)?$user->year_of_passing:'-' }}
   </dd>
+  @endif
 </dl>
       </p>
 

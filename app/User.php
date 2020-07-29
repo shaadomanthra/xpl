@@ -456,7 +456,9 @@ class User extends Authenticatable
         return round(100/count($fields),2);
      }
     public function profile_complete($username=null){
-        if($username)
+        if($this->username == $username)
+            $u = $this;
+        elseif($username)
             $u = $this->where('username',$username)->first();
         else
             $u =$this;

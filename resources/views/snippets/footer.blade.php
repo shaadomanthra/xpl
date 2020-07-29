@@ -37,10 +37,10 @@
       <div class="col-6 col-md">
         <div class="">
         	<div class="mb-2">
-		  <a class=" text-muted mr-2 mr-md-3" rel="noreferrer" target="_blank" href="https://www.facebook.com/Pathway-361675304339306"><i class="fa fa-facebook-square fa-2x" aria-label="facebook page"></i></a></div>
+		  <a class=" text-muted mr-2 mr-md-3" rel="noreferrer" target="_blank" href="https://www.facebook.com/xplore.co.in/"><i class="fa fa-facebook-square fa-2x" aria-label="facebook page"></i></a></div>
 		  
 		  <div class="mb-2">
-		  <a class=" text-muted " rel="noreferrer" target="_blank" href="https://www.linkedin.com/in/pathway-hr-b5a952167/detail/recent-activity/" aria-label="packetprep youtube channel"  ><i class="fa fa-linkedin-square fa-2x"></i></a>
+		  <a class=" text-muted " rel="noreferrer" target="_blank" href="https://www.instagram.com/xplore.co.in/" aria-label="xplore instagram page"  ><i class="fa fa-instagram fa-2x"></i></a>
 		</div>
 		</div>
       </div>

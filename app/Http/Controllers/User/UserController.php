@@ -38,32 +38,38 @@ class UserController extends Controller
             $username = substr($username, 1);
             $user = User::where('username',$username)->first();
 
-            $user_details = User_Details::where('user_id',$user->id)->first();
+            //$user_details = User_Details::where('user_id',$user->id)->first();
 
 
             if($user)
             {
-                if(!isset($user_details))
+                if(!auth::user())
+                    $view = 'private';
+                elseif(auth::user()->id == $user->id || auth::user()->isAdmin())
                     $view = 'index';
+                else
+                    $view = 'private';
+                // if(!isset($user_details))
+                //     $view = 'index';
 
-                elseif($user_details->privacy==0)
-                    $view = 'index';
-                elseif($user_details->privacy==1){
-                    if(auth::user())
-                      $view = 'index';
-                    else
-                      $view = 'private';
+                // elseif($user_details->privacy==0)
+                //     $view = 'index';
+                // elseif($user_details->privacy==1){
+                //     if(auth::user())
+                //       $view = 'index';
+                //     else
+                //       $view = 'private';
 
-                }else{
+                // }else{
 
-                        if(!auth::user())
-                            $view = 'private';
-                        elseif(auth::user()->id == $user->id || auth::user()->isAdmin())
-                            $view = 'index';
-                        else
-                            $view = 'private';
+                //         if(!auth::user())
+                //             $view = 'private';
+                //         elseif(auth::user()->id == $user->id || auth::user()->isAdmin())
+                //             $view = 'index';
+                //         else
+                //             $view = 'private';
                         
-                }
+                // }
 
                 if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpg'))
                 {
@@ -79,9 +85,16 @@ class UserController extends Controller
                     $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg');
                 }
 
+                $colleges = Cache::remember('colleges',240,function(){
+                    return College::all()->keyBy('id');
+                });
+
+                $branches = Cache::remember('branches',240,function(){
+                    return Branch::all()->keyBy('id');
+                });
+
                 return view('appl.user.'.$view)
-                            ->with('user',$user)
-                            ->with('user_details',$user_details);
+                            ->with('user',$user)->with('colleges',$colleges)->with('branches',$branches);
 
             }else{
                 abort(404);

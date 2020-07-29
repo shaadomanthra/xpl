@@ -151,12 +151,18 @@ class AssessmentController extends Controller
     public function index(Exam $exam, Request $request)
     {
 
-        if(\auth::user())
-            $user = \auth::user();
-        else
-            $user = User::where('username','krishnateja')->first();
+        // if(\auth::user())
+        //     $user = \auth::user();
+        // else
+        //     $user = User::where('username','krishnateja')->first();
 
-        $examtypes = Examtype::all();
+        $examtypes = Cache::get('examtypes');
+
+        if(!$examtypes){
+
+            $examtypes = Examtype::all();
+            Cache::forever('examtypes',$examtypes);
+        }
 
         $filter = $request->get('filter');
         $search = $request->search;
@@ -165,7 +171,8 @@ class AssessmentController extends Controller
         $client = subdomain();
 
         if($filter){
-            $examtype = Examtype::where('slug',$filter)->first();
+            $examtype = $examtypes->where('slug',$filter)->first();
+
             $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->where('client',$client)->with('sections')->paginate(config('global.no_of_records'));
         }
         else

@@ -25,37 +25,29 @@
 
               
              </h2>
-             @if($user_details)
-               @if($user_details->designation)
-               <div class="mt-5 mr-4 ml-4">
-               <h4 class="text-secondary ">{{ $user_details->designation }}</h4>
-             </div>
-               @endif
-             @endif  
+             
               <div>
               
               </div>
               
             <div class="mr-4 ml-4">
-             @if($user_details)
-             <p class='mr-3'>{!! $user_details->bio !!}</p>
-             @endif
+            
 
               
              <p class="pt-1"></p>
 
 
-             @if($user->college)
+             @if(count($colleges))
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-building'></i> &nbsp; College</dt>
-                <dd class="col-sm-9">@if($user->college) @if($user->college_id==5 || $user->college_id==295) {{$user->info}} @else {{ $user->college->name }} @endif @else $user->info @endif</dd>
+                <dd class="col-sm-9">@if($user->college_id) @if($user->college_id==5 || $user->college_id==295) {{$user->info}} @else {{ $colleges[$user->college_id]->name }} @endif @else $user->info @endif</dd>
               </dl>
              @endif
 
-             @if($user->branch)
+             @if($branches)
              <dl class="row mb-0">
                 <dt class="col-sm-3"><i class='fa fa-bookmark-o'></i> &nbsp; Branch</dt>
-                <dd class="col-sm-9">@if($user->branch) {{  $user->branch->name  }} @endif</dd>
+                <dd class="col-sm-9">@if($user->branch_id) {{  $branches[$user->branch_id]->name  }} @endif</dd>
               </dl>
              @endif
 
@@ -133,7 +125,6 @@
 
             </div>
 
-@include('appl.user.psychometric_report')
 
 
 

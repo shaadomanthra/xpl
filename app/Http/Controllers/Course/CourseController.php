@@ -15,6 +15,7 @@ use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Course\Practice;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +43,8 @@ class CourseController extends Controller
         if($request->refresh){
 
             $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','asc')->paginate(config('global.no_of_records')); 
-            Storage::disk('s3')->put('courses/'.$filename, json_encode($objs,JSON_PRETTY_PRINT));
+            //Storage::disk('s3')->put('courses/'.$filename, json_encode($courses,JSON_PRETTY_PRINT));
+            $course->updatecache($courses,null);
             //file_put_contents($filepath, json_encode($courses,JSON_PRETTY_PRINT));
 
             foreach($courses as $obj){ 
@@ -56,13 +58,22 @@ class CourseController extends Controller
                 $filename = $obj->slug.'.json';
                 $filepath = $this->cache_path.$filename;
                 //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
-                 Storage::disk('s3')->put('courses/'.$filename, json_encode($objs,JSON_PRETTY_PRINT));
+                //Storage::disk('s3')->put('courses/'.$filename, json_encode($obj,JSON_PRETTY_PRINT));
+                $obj->updatecache(null,$obj);
             }
 
             flash('Article Pages Cache Updated')->success();
         }
 
-        $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','asc')->paginate(config('global.no_of_records'));
+        if($item)
+            $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','asc')->paginate(config('global.no_of_records'));
+        else
+        {
+            $courses = Cache::get('courses');
+            if(!$courses){
+                $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','asc')->paginate(config('global.no_of_records'));
+            }
+        }
         $view = $search ? 'list': 'index';
 
 
@@ -136,9 +147,9 @@ class CourseController extends Controller
         $filename = $id.'.json';
         $filepath = $this->cache_path.$filename;
 
-        if(Storage::disk('s3')->exists('courses/'.$filename))
-            $course = json_encode(Storage::disk('s3')->get('courses/'.$filename));
-        else{
+        $course = Cache::get('course_'.$id);
+
+        if(!$course){
             
             $course = Course::where('slug',$id)->first();
             $course_data = $course->category_list($course->slug);
@@ -149,6 +160,7 @@ class CourseController extends Controller
             $course->tests = $course_data['tests'];
 
         }
+
 
 
         if(!$course)
@@ -233,6 +245,7 @@ class CourseController extends Controller
             
             /* correct percent */
             foreach($course->categories as $c=>$cat){
+            if(isset($cat->total))
             if($cat->total!=0)
                 {
                     $course->categories->$c->correct_percent = $course->categories->$c->correct/$course->categories->$c->total*100;

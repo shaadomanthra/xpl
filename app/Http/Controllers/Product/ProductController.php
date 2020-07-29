@@ -29,6 +29,7 @@ use PacketPrep\Mail\OrderCreated;
 use Illuminate\Support\Facades\DB;
 use Instamojo as Instamojo;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 
 class ProductController extends Controller
@@ -189,7 +190,11 @@ class ProductController extends Controller
     public function welcome(Request $request)
     {
 
-      $user = \auth::user();
+      $u = \auth::user();
+      $user = Cache::remember('user_'.$u->id,240,function() use ($u){
+            return User::where('id',$u->id)->with('college')->with('branch')->first();
+        });
+
 
       $username = $user->username;
       $user->image = $user->getImage();

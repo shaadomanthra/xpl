@@ -9,6 +9,7 @@ use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Exam\Exam;
+use Illuminate\Support\Facades\Cache;
 
 class Course extends Model
 {
@@ -56,6 +57,26 @@ class Course extends Model
             }
         }
         return $p;
+    }
+
+    public function updateCache($courses=null,$course=null){
+        if($course){
+            $course_data = $course->category_list($course->slug);
+            $course->categories = json_decode(json_encode($course_data['categories']));
+            $course->ques_count = $course_data['ques_count'];
+            $course->nodes = $course_data['nodes'];
+            $course->exams = $course_data['exams'];
+            $course->tests = $course_data['tests'];
+
+            Cache::forget('course_'.$course->slug);
+            Cache::forever('course_'.$course->slug,$course);
+        }
+
+        if($courses){
+            Cache::forget('courses');
+            Cache::forever('courses',$courses);
+        }
+        
     }
 
     public function colleges(){
