@@ -85,7 +85,7 @@ class HomeController extends Controller
         
         //Storage::disk('s3')->putFileAs('webcam',(string)$image,$filename);
         Storage::disk('s3')->put('webcam/'.$filename, (string)$image,'public');
-        echo $filename;
+        echo 'uploaded - '.$filename;
         FaceDetect::dispatch($name)->delay(now()->addSeconds(5));
         exit();
     }
