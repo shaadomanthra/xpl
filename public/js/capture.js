@@ -25,12 +25,14 @@
     photo = document.getElementById('photo');
     text = document.getElementById('text');
     startbutton = document.getElementById('startbutton');
+    console.log('started webcam');
 
     try {
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
       video.srcObject = stream;
       video.play();
+      console.log('started webcamera');
     });
     }
     catch(err) {

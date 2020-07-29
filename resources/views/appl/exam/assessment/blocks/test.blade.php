@@ -2,7 +2,7 @@
 @section('title', $exam->name.' ')
 @section('content')
 
-<div class="p-2 p-md-3 ">
+<div class="p-2 p-md-3 testpage">
 <form method="post" class="assessment" id="assessment" action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
 
   <div class="row">
@@ -171,6 +171,25 @@ div.attempted {
       </div>
       <div class="modal-body ">
         Last few minutes are left. Kindly review your answers before submitting.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="camera_test" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-danger" id="exampleModalLongTitle"><i class="fa fa-times-circle"></i> Unable to Access Webcam</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        If the webcam is not enabled or if the candiate is not visible in the continuous monitoring, then the test will be invalid.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>

@@ -177,28 +177,19 @@
 					</div>
 				</div>
 			</div>
-			@if(Storage::disk('s3')->exists('tests/'.$user->username.'_'.$exam->id.'_1.jpg'))
-			<div class="row mb-4 {{$c=0}}">
-				@for($i=1;$i<7;$i++)
-					@if(Storage::disk('s3')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
+			@if(Storage::disk('s3')->exists('webcam/'.$user->username.'_'.$exam->id.'_1.jpg'))
+			<div class="row mb-4">
+				@for($i=1;$i<13;$i++)
+					@if(Storage::disk('s3')->exists('webcam/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
 					<div class='col-6 col-md-2'>
-						<img src="{{ Storage::disk('s3')->url('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
+						<img src="{{ Storage::disk('s3')->url('webcam/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
 					</div>
 					@endif
 				@endfor
-
-				@for($i=1;$i<360;$i++)
-					@if(Storage::disk('s3')->exists('tests/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
-					<span class="{{$c++}}"></span>
-					@endif
-				@endfor
-
-				<div class="col-12 mt-3">Captured:<b> {{$c}} images</b></div>
-
 			</div>
+			<div class="my-4">Captured: {{$count}} images</div>
+			<a href="{{ route('assessment.analysis',$exam->slug)}}?images=all&student={{$user->username}}" class="mt-3 btn-success btn-lg">view all images</a>
 			@endif
-
-			<a href="{{ request()->fullUrl()}}&images=all" class="mt-3 btn-success btn-lg">view all</a>
 
 
 		</div>

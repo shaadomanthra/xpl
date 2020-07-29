@@ -1376,10 +1376,10 @@ class AssessmentController extends Controller
             $test_overall_cache->cheat_detect = 1;
         }
 
-        $pat = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
-        $json_file =  $pat.'public/tests/json/'.\auth::user()->username.'_'.$exam->id.'.json';
-        if(file_exists($json_file)){
-            $json = json_decode(file_get_contents($json_file));
+        $jsonname = $user->username.'_'.$exam->id.'.json';
+
+        if(Storage::disk('s3')->exists('webcam/json/'.$jsonname)){
+            $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$jsonname));
             $zero =$one = $two =$three = $total = $snaps = 0;
             foreach($json as $i => $j){
                 $j = intval($j);
@@ -1951,6 +1951,9 @@ class AssessmentController extends Controller
 
     public function analysis2($slug,Request $request)
     {
+
+        
+
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
 
@@ -1986,6 +1989,21 @@ class AssessmentController extends Controller
             $images = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
         else
             $images = [];
+
+        if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){
+            $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$student->username.'_'.$exam->id.'.json'),true);
+            $count = count($json);
+        }
+        else{
+            $json = null;
+            $count = 0;
+        }
+
+        if(request()->get('images')){
+            $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$student->username.'_'.$exam->id.'.json'),true);
+           
+            return view('appl.exam.assessment.images')->with('exam',$exam)->with('user',$student)->with('count',$count);
+        }
 
 
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0,'evaluation'=>1];
@@ -2265,8 +2283,7 @@ class AssessmentController extends Controller
         else
             $view = "analysis";
 
-        if(request()->get('images'))
-            $view = 'images';
+        
 
         return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
@@ -2279,6 +2296,7 @@ class AssessmentController extends Controller
                         ->with('test_overall',$tests_overall)
                         ->with('review',true)
                         ->with('mathjax',$mathjax)
+                        ->with('count',$count)
                         ->with('chart',true);
 
     }

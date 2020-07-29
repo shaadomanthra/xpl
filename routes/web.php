@@ -82,61 +82,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('img/upl','HomeController@imageupload')->name('img.upl');
 
 
-	Route::get('process_image','HomeController@proccess_image')->name('process_image');
+	Route::get('process_image','HomeController@process_image')->name('process_image');
 
 	//Route::post('img/upl/file','VideoController@imageupload')->name('img.post');
-	Route::post('img/upl/file',function(){
-		
-		$request = request();
-        $image = $request->image;
-        $name = $request->name;  // your base64 encoded
-        $image = str_replace('data:image/jpeg;base64,', '', $image);
-        $image = str_replace(' ', '+', $image);
-
-
-
-        $image = base64_decode($image);
-
-        if($name)
-        	$filename = $name.'.jpg';
-        else
-        	$filename = 'imagecam.jpg';
-        
-        //Storage::disk('s3')->putFileAs('webcam',(string)$image,$filename);
-        Storage::disk('s3')->put('webcam/'.$filename, (string)$image,'public');
-        echo $filename;
-        exit();
-
-        // \File::move($filename, '../storage/app/public/tests/'.$filename);
-
-        // $pat = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
-        // $path = $pat.'public/tests/'.$filename;
-
-        
-        
-  //       $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml';
-  //       $count = shell_exec($cmd);
-  //       $end_time = microtime(true); 
-		  
-		// // Calculate script execution time 
-		// $execution_time = ($end_time - $start_time); 
-		
-		// $p = explode('_', $name);
-		// $json_file = $pat.'public/tests/json/'.$p[0].'_'.$p[1].'.json';
-		// $f_name = $p[2];
-
-		// if(file_exists($json_file)){
-		// 	$json = json_decode(file_get_contents($json_file));
-		// }else{
-		// 	$app = app();
-	 //    	$json = $app->make('stdClass');
-		// }
-		
-	 //    $json->$f_name = $count;
-	 //    file_put_contents($json_file, json_encode($json));
-
-
-	})->name('img.post');
+	Route::post('img/upl/file','HomeController@webcam_upload')->name('img.post');
 
 	
 	Route::get('/crt-aptitude',function(){ return view('appl.pages.crt_aptitude'); })->name('crt.aptitude');

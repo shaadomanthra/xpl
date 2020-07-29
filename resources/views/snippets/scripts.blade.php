@@ -1333,6 +1333,10 @@ function addMinutes(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
 
+function stopTimer() {
+  clearInterval(x);
+}
+
 
 
 
@@ -1460,15 +1464,21 @@ $(function(){
     photo = document.getElementById('photo');
     text = document.getElementById('text');
     startbutton = document.getElementById('startbutton');
-
+    console.log('webcam started');
     try {
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
       video.srcObject = stream;
       video.play();
-    });
+    }).catch(e => {
+      $('#camera_test').modal();
+        // $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">Camera not accessible.</div></div>');
+        
+    console.log(e);
+});
     }
     catch(err) {
+      $('.testpage').hide();
       console.log("An error occurred: " + err);
     }
 
@@ -1516,6 +1526,7 @@ $(function(){
   function takepicture() {
 
     var context = canvas.getContext('2d');
+
     var $counter = parseInt($('#video').data('c'));
 
     if (width && height) {
@@ -1547,6 +1558,8 @@ $(function(){
       $('#video').data('c',$c);
       console.log($name);
       console.log($c);
+    }else{
+      $('#camera_test').modal();
     } 
   }
   // Set up our event listener to run the startup process
@@ -1586,25 +1599,44 @@ function camera_test(){
   var canvas = null;
 
   video = document.getElementById('video');
-    canvas = document.getElementById('canvas');
-  try {
+  canvas = document.getElementById('canvas');
+  var isFirefox = typeof InstallTrigger !== 'undefined';
+   
 
+      
+      try {
+
+
+    
+    console.log('webcam started');
     var successCallback = function(stream) {
         video.srcObject = stream;
           video.play();
+          console.log('webcam started');
           $('.camera_fail').hide();
           $('.camera_success').show();
           $('.accesscode_btn').show();
     };
     var errorCallback = function(error) {
+      console.log(error);
       if ((error.name == 'NotAllowedError') ||
-        (error.name == 'PermissionDismissedError')) {
+        (error.name == 'PermissionDismissedError') || (error.name == 'NotFoundError')) {
+
           $('.camera_fail').show();
           $('.camera_success').hide();
           $('.accesscode_btn').hide();
         console.log('PermissionDismissedError');
       }
+
+
     };
+
+//     navigator.mediaDevices.getUserMedia({video: true, audio: false})
+//     .then(successCallback,errorCallback).catch(e => {
+//         $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">No camera</div></div>');
+//         stopTimer();
+//     console.log(e);
+// });
 
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(successCallback, errorCallback);
@@ -1616,6 +1648,10 @@ function camera_test(){
       $('.camera_success').hide();
       $('.accesscode_btn').hide();
     }
+
+    
+
+  
 }
 
 detect_mobile();
