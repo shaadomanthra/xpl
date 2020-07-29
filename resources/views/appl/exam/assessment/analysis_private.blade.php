@@ -187,8 +187,10 @@
 					@endif
 				@endfor
 			</div>
+			@if($count)
 			<div class="my-4">Captured: {{$count}} images</div>
 			<a href="{{ route('assessment.analysis',$exam->slug)}}?images=all&student={{$user->username}}" class="mt-3 btn-success btn-lg">view all images</a>
+			@endif
 			@endif
 
 

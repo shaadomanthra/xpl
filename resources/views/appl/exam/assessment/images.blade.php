@@ -4,6 +4,7 @@
 
 <div class="card">
 	<div class="card-body {{$c=0}}">
+@if($count)
 @if(Storage::disk('s3')->exists('webcam/'.$user->username.'_'.$exam->id.'_1.jpg'))
 			<div class="row mb-4">
 				@for($i=1;$i<=$count;$i++)
@@ -17,6 +18,7 @@
 			</div>
 			@endif
 			<div class="mt-4">Captured: {{$count}} images</div>
+@endif
 		</div>
 		</div>
 @endsection

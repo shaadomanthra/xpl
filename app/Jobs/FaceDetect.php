@@ -7,7 +7,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use PacketPrep\Models\Product\Product;
+use PacketPrep\Models\Exam\Tests_Overall;
+
 class FaceDetect implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -30,9 +31,9 @@ class FaceDetect implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Product $p)
+    public function handle(Tests_Overall $t)
     {
 
-        return $p->process_image($this->name);
+        return $t->process_image($this->name);
     }
 }
