@@ -516,7 +516,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
         'destroy'=>'chapter.destroy',
     ]]);
 
-	Route::get('video', 'VideoController@get')->name('video.upload');
+	Route::get('video', 'VideoController@get')->name('video.upload')->middleware('auth');
 	Route::post('video', 'VideoController@save')->name('video.upload');
 
 	Route::get('/proficiency-test', 'Product\TestController@proficiency_test')->name('proficiency_test');
