@@ -82,14 +82,18 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('img/upl','HomeController@imageupload')->name('img.upl');
 
 
+	Route::get('process_image','HomeController@proccess_image')->name('process_image');
+
 	//Route::post('img/upl/file','VideoController@imageupload')->name('img.post');
 	Route::post('img/upl/file',function(){
-		$start_time = microtime(true); 
+		
 		$request = request();
         $image = $request->image;
         $name = $request->name;  // your base64 encoded
         $image = str_replace('data:image/jpeg;base64,', '', $image);
         $image = str_replace(' ', '+', $image);
+
+
 
         $image = base64_decode($image);
 
@@ -97,8 +101,11 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
         	$filename = $name.'.jpg';
         else
         	$filename = 'imagecam.jpg';
-
-        Storage::disk('s3')->putFileAs('webcam',$image,$filename);
+        
+        //Storage::disk('s3')->putFileAs('webcam',(string)$image,$filename);
+        Storage::disk('s3')->put('webcam/'.$filename, (string)$image,'public');
+        echo $filename;
+        exit();
 
         // \File::move($filename, '../storage/app/public/tests/'.$filename);
 

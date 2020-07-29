@@ -42,6 +42,50 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function process_image(Request $request){
+        $start_time = microtime(true); 
+        $name = $request->get('name');
+        if($name){
+
+        $image = Storage::disk('s3')->get('webcam/'.$name.'.jpg');
+
+        Storage::disk('public')->putFileAs('webcam/'.$name.'.jpg');
+
+        \File::move($filename, '../storage/app/public/tests/'.$filename);
+
+        $pat = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+        $path = $pat.'public/tests/'.$filename;
+
+        
+        
+        $cmd = 'python3 camera/faceapp/fc1.py '.$path.' h.xml';
+        $count = shell_exec($cmd);
+        $end_time = microtime(true); 
+          
+        // Calculate script execution time 
+        $execution_time = ($end_time - $start_time); 
+        
+        $p = explode('_', $name);
+        $json_file = $pat.'public/tests/json/'.$p[0].'_'.$p[1].'.json';
+        $f_name = $p[2];
+
+        if(file_exists($json_file)){
+         $json = json_decode(file_get_contents($json_file));
+        }else{
+         $app = app();
+         $json = $app->make('stdClass');
+        }
+        
+        $json->$f_name = $count;
+        file_put_contents($json_file, json_encode($json));
+
+        }
+
+        return 1;
+
+    }
+
     public function imageupload(Request $request){
 
         //dd($request->all());
