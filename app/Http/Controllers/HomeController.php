@@ -39,13 +39,13 @@ class HomeController extends Controller
     {
         //s3_upload();
         $email1 = ['name'=>'Krishna Teja', 'email'=>'packetcode@gmail.com'];
-        $email6 = ['name'=>'KT', 'email'=>'shaadomanthra@gmail.com'];
-        $email3 = ['name'=>'Akhil', 'email'=>'akhil@xplore.co.in'];
-        $email4= ['name'=>'Akhil', 'email'=>'modheakhil@gmail.com'];
-        $email5= ['name'=>'Abhinav', 'email'=>'abhinavgoud.thippani@gmail.com'];
-        $email2 =['name'=>'Sunil', 'email'=>'sunil@acelinetech.com '];
+        $email2 = ['name'=>'KT', 'email'=>'shaadomanthra@gmail.com'];
+        // $email3 = ['name'=>'Akhil', 'email'=>'akhil@xplore.co.in'];
+        // $email4= ['name'=>'Akhil', 'email'=>'modheakhil@gmail.com'];
+        // $email5= ['name'=>'Abhinav', 'email'=>'abhinavgoud.thippani@gmail.com'];
+        // $email2 =['name'=>'Sunil', 'email'=>'sunil@acelinetech.com '];
 
-        $emails = [$email1,$email2,$email3,$email4,$email5,$email6];
+        $emails = [$email1,$email2];
         foreach($emails as $i=>$e){
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
