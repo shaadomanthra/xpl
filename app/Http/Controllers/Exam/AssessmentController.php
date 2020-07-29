@@ -1172,6 +1172,9 @@ class AssessmentController extends Controller
                 if(is_array($request->get($i))){
                     $item['response'] = strtoupper(implode(',',$request->get($i)));
                 }else{
+                    if($questions[$request->get($i.'_question_id')]->type=='sq')
+                        $item['response'] = $request->get($i); 
+                    else
                     $item['response'] = strtoupper($request->get($i)); 
                 }
                 

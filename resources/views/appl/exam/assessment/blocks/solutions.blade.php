@@ -226,36 +226,7 @@
       </div>
   
   	@if($question->type!='code')
-      @if($question->answer )
-      <div class="card bg-light mb-3 ">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12 col-md-4">
-              <div class="bg-light p-3 border rounded mb-3 mb-md-0">
-                <h3><i class="fa fa-lightbulb-o"></i> Correct  Answer</h3>
-                <div class="answer">{!! $question->answer !!}</div>
-              </div>
-            </div>
-            
-            <div class="col-12 col-md-4">
-              <div class="bg-light p-3 border rounded" >
-
-                <h3><i class="fa fa-clock-o"></i> Response Time</h3>
-                <div class="p-1">{{ $details['time']}} sec</div>
-              </div>
-            </div>
-            <div class="col-12 col-md-4">
-              <div class="bg-light p-3 border rounded mb-3 mb-md-0" >
-
-                <h3><i class="fa fa-flash"></i> Your Response</h3>
-                <div class="p-1">{{ ($details['response'])?$details['response']:'-' }}</div>
-              </div>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-      @endif
+      
 
       @if($question->type=='sq' || $question->type=='urq')
       <div class="card bg-light mb-3 ">
@@ -285,7 +256,35 @@
           </div>
         </div>
       </div>
+      @elseif($question->answer )
+      <div class="card bg-light mb-3 ">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <div class="bg-light p-3 border rounded mb-3 mb-md-0">
+                <h3><i class="fa fa-lightbulb-o"></i> Correct  Answer</h3>
+                <div class="answer">{!! $question->answer !!}</div>
+              </div>
+            </div>
+            
+            <div class="col-12 col-md-4">
+              <div class="bg-light p-3 border rounded" >
 
+                <h3><i class="fa fa-clock-o"></i> Response Time</h3>
+                <div class="p-1">{{ $details['time']}} sec</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="bg-light p-3 border rounded mb-3 mb-md-0" >
+
+                <h3><i class="fa fa-flash"></i> Your Response</h3>
+                <div class="p-1">{{ ($details['response'])?$details['response']:'-' }}</div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
 
       @endif
 
