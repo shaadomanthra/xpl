@@ -299,6 +299,7 @@ class AssessmentController extends Controller
             abort('404','Test not found');
 
         if($exam->active){
+            if(!$request->get('admin'))
             return view('appl.exam.assessment.inactive')->with('exam',$exam); 
         }
 
@@ -326,6 +327,7 @@ class AssessmentController extends Controller
 
         $window_change = true;
 
+        if(!$request->get('admin'))
         if(trim(strip_tags($exam->emails))){
             if(strpos(strtolower($exam->emails),strtolower($user->email))!==false)
             {
@@ -340,6 +342,7 @@ class AssessmentController extends Controller
             $products = null;
         $code = $request->get('code');
 
+        $test_taken = false;
         if(!$request->get('admin')){
         $test_taken = $user->attempted($exam->id);
         if($test_taken)
