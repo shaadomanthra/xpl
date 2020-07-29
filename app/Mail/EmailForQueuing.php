@@ -11,14 +11,15 @@ class EmailForQueuing extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $user;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -28,8 +29,9 @@ class EmailForQueuing extends Mailable
      */
     public function build()
     {
-       return $this->from('no-reply@xplore.co.in', 'Mailtrap')
-            ->subject('Test Queued Email')
-            ->view('mail.email');
+
+       return $this->from('no-reply@xplore.co.in', 'Xplore')
+            ->subject('Update your profile video')
+            ->view('mail.email')->with('user',$this->user);
     }
 }

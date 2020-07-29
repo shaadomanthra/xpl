@@ -41,7 +41,6 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
-        $email = new EmailForQueuing();
-        Mail::to($this->details['email'])->bcc($this->details['bcc'])->send($email);
+        Mail::to($this->details['email'])->send(new EmailForQueuing($this->details));
     }
 }

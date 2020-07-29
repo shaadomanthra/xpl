@@ -245,6 +245,15 @@
         margin: 20px 0; 
       }
 
+      .silver{color:silver;}
+      .text-center{
+      	display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 120px;
+  padding:15px 0px; 
+      }
+
       /* -------------------------------------
           RESPONSIVE AND MOBILE FRIENDLY STYLES
       ------------------------------------- */
@@ -333,7 +342,7 @@
     </style>
   </head>
   <body class="">
-    <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+    
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
       <tr>
         <td>&nbsp;</td>
@@ -347,10 +356,17 @@
               <tr>
                 <td class="wrapper">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                  	<tr>
+                  		<td class="text-center">
+                    		<img src="https://xplore.co.in/img/xplore.png" width="120px" />
+                    	</td>
+                  	</tr>
                     <tr>
+
                       <td>
-                        <p>Hi there,</p>
-                        <p>Sometimes you just want to send a simple HTML email with a simple design and clear call to action. This is it.</p>
+                        <p>Hi <b>{{$user['name']}}</b>,</p>
+                        <p>Your profile video is not updated.</p>
+                        <p>Think of the profile video as a tool for marketing yourself. It’s more than just a video: It outlines your background, your skills, and your education so that a potential employer is quickly and easily able to see how your individual experiences can contribute to a company’s success.</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
@@ -358,7 +374,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="http://htmlemail.io" target="_blank">Call To Action</a> </td>
+                                      <td> <a href="https://xplore.co.in/video" target="_blank">Add your profile video</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -366,8 +382,11 @@
                             </tr>
                           </tbody>
                         </table>
-                        <p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-                        <p>Good luck! Hope it works.</p>
+                        <p>A good profile video goes a long way.</p>
+                        <p>Good luck! </p><br>
+                        <p>regards,<br>Xplore Team</p><br>
+                       
+                       	<p >Join our Telegram group <a href="https://t.me/xplorejobs">Xplore Jobs</a> for latest updates on job openings</p>
                       </td>
                     </tr>
                   </table>
@@ -382,14 +401,12 @@
             <div class="footer">
               <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td class="content-block">
-                    <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                    <br> Don't like these emails? %unsubscribe_url%
+                  <td class="content-block">Don't like these emails? <a href="%unsubscribe_url%">Unsubscribe</a>
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block powered-by">
-                    Powered by <a href="http://xplore.co.in">Xplore</a>.
+                    Powered by <a href="https://xplore.co.in">Xplore</a>.
                   </td>
                 </tr>
               </table>

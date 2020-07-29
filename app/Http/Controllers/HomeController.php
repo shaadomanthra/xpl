@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PacketPrep\Jobs\SendEmail;
 use PacketPrep\Jobs\FaceDetect;
+use PacketPrep\Mail\EmailForQueuing;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -36,9 +38,22 @@ class HomeController extends Controller
 
     {
         //s3_upload();
-        $details = ['email' => 'packetcode@gmail.com',
-                    'bcc'=>['shaadomanthra@gmail.com']];
-        SendEmail::dispatch($details);
+        $email1 = ['name'=>'Krishna Teja', 'email'=>'packetcode@gmail.com'];
+        $email6 = ['name'=>'KT', 'email'=>'shaadomanthra@gmail.com'];
+        $email3 = ['name'=>'Akhil', 'email'=>'akhil@xplore.co.in'];
+        $email4= ['name'=>'Akhil', 'email'=>'modheakhil@gmail.com'];
+        $email5= ['name'=>'Abhinav', 'email'=>'abhinavgoud.thippani@gmail.com'];
+        $email2 =['name'=>'Sunil', 'email'=>'sunil@acelinetech.com '];
+
+        $emails = [$email1,$email2,$email3,$email4,$email5,$email6];
+        foreach($emails as $i=>$e){
+            $details['email'] = $e['email'];
+            $details['name'] = $e['name'];
+
+            //Mail::to($details['email'])->send(new EmailForQueuing($details));
+            SendEmail::dispatch($details)->delay(now()->addSeconds($i*3));
+        }
+        
         dd('Email Queued');
         return view('home');
     }
