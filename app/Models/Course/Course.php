@@ -147,7 +147,9 @@ class Course extends Model
         $project = Project::where('slug',$id)->first();
         $parent =  Category::where('slug',$id)->first();
 
-
+        if(!$parent)
+            return [];
+        
         //categories
         $categories_list = Category::defaultOrder()
                             ->descendantsOf($parent->id);
