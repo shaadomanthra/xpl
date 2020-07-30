@@ -13,6 +13,11 @@ use PacketPrep\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
 
+use PacketPrep\Jobs\SendEmail;
+use PacketPrep\Jobs\FaceDetect;
+use PacketPrep\Mail\EmailForQueuing;
+use Mail;
+
 class PostController extends Controller
 {
     public function __construct(){
@@ -93,6 +98,10 @@ class PostController extends Controller
         $data['no_video'] = count($users->where('video',''));
         $data['video'] = $data['total'] - $data['no_video'];
 
+        if(request()->get('sendmail_video')){
+            $this->mailer($users->where('video',''));
+        }
+
 
         $view ='analytics';
 
@@ -102,6 +111,7 @@ class PostController extends Controller
                 ->with('obj',$obj)
                 ->with('app',$this);
     }
+
 
     public function applicant_index($slug,Request $request)
     {
@@ -115,7 +125,7 @@ class PostController extends Controller
         
         if($request->get('export')){
             $users = $obj->users->pluck('id')->toArray();
-            $objs = User::whereIn('id',$users)->paginate(2000);
+            $objs = User::whereIn('id',$users)->paginate(10000);
             $colleges = College::all()->keyBy('id');
             $branches = Branch::all()->keyBy('id');
 
@@ -143,6 +153,20 @@ class PostController extends Controller
                 ->with('objs',$objs)
                 ->with('obj',$obj)
                 ->with('app',$this);
+    }
+
+    public function mailer($users){
+        
+        foreach($users as $i=>$u){
+            $details['email'] = $u->email;
+            $details['name'] = $u->name;
+
+            //Mail::to($details['email'])->send(new EmailForQueuing($details));
+            SendEmail::dispatch($details)->delay(now()->addSeconds($i*1));
+        }
+        
+        dd('Email Queued');
+        return view('home');
     }
 
     

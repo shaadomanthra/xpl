@@ -363,7 +363,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="https://xplore.co.in/video" target="_blank">Add your profile video</a> </td>
+                                      <td> <a href="https://bit.ly/xplorevideo" target="_blank">Add your profile video</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -375,7 +375,7 @@
                         <p>Good luck! </p><br>
                         <p>regards,<br>Xplore Team</p><br>
                        
-                       	<p >Join our Telegram group <a href="https://t.me/xplorejobs">Xplore Jobs</a> for latest updates on job openings</p>
+                       	<p >Join our Telegram group <a href="https://bit.ly/xplorejobstelegram">Xplore Jobs</a> for latest updates on job openings</p>
                       </td>
                     </tr>
                   </table>
