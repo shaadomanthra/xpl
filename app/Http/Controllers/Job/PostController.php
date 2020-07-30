@@ -79,16 +79,19 @@ class PostController extends Controller
         
         $users = $obj->users;
 
-        $data['colleges'] = Cache::remember('colleges',240,function(){
-                    return College::all()->keyBy('id');
+        $data['colleges'] = Cache::remember('college',240,function(){
+                    return College::orderBy('name')->get()->keyBy('id');
                 });
 
-        $data['branches'] = Cache::remember('branches',240,function(){
-                    return Branch::all()->keyBy('id');
+        $data['branches'] = Cache::remember('branche',240,function(){
+                    return Branch::orderBy('name')->get()->keyBy('id');
                 });
+        $data['total'] = count($users); 
         $data['college_group'] = $users->groupBy('college_id');
         $data['branch_group'] = $users->groupBy('branch_id');
         $data['yop_group'] = $users->groupBy('year_of_passing');
+        $data['no_video'] = count($users->where('video',''));
+        $data['video'] = $data['total'] - $data['no_video'];
 
 
         $view ='analytics';

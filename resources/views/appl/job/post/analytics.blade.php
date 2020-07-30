@@ -19,7 +19,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Applicants ({{$obj->users->count()}})
+          <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Applicants ({{$data['total']}})
           </p>
         </div>
       </div>
@@ -76,6 +76,28 @@
     </tr>
   @endif
   @endforeach
+  </tbody>
+</table>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Profile Video</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <tbody class="">
+    <tr>
+      <th scope="row">1</th>
+      <td>Completed</td>
+      <td>{{$data['video']}}</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Incomplete</td>
+      <td>{{$data['no_video']}}</td>
+    </tr>
   </tbody>
 </table>
 
