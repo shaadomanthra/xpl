@@ -206,7 +206,7 @@
       <div class="row">
         <div class="col-12 col-md-6">
             <div class="form-group ">
-            <label for="formGroupExampleInput ">BTech Percentage  <i class="fa fa-check-circle bachelors @if($user->bachelors) text-success @else text-silver @endif"></i></label><br>
+            <label for="formGroupExampleInput ">BTech/Degree Percentage  <i class="fa fa-check-circle bachelors @if($user->bachelors) text-success @else text-silver @endif"></i></label><br>
             <input type="number" minlength="1" class="form-control" name="graduation" id="formGroupExampleInput" value="{{ $user->bachelors }}" min="30" max="100">
             <span class="cp-help-block text-danger help_graduation" style="display: none">
             Error Message
