@@ -7,6 +7,7 @@ use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\User;
 use Illuminate\Support\Facades\Mail;
 use PacketPrep\Mail\ActivateUser2;
+use Illuminate\Support\Facades\Cache;
 
 class VerifyController extends Controller
 {
