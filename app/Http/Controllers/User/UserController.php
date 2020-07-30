@@ -602,6 +602,7 @@ class UserController extends Controller
         
        
         Cache::forget('id-' . $user->id);
+        Cache::forget('user_'.$user->id);
 
         
 

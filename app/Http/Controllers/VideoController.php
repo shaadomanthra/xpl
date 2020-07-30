@@ -44,6 +44,7 @@ class VideoController extends Controller
         $user->save();
 
         Cache::forget('id-' . $user->id);
+        Cache::forget('user_'.$user->id);
         Cache::forever('id-'.$user->id,$user);
     }
         else{

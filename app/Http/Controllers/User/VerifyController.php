@@ -79,6 +79,7 @@ class VerifyController extends Controller
     		flash($message)->success();	
     	}
         Cache::forget('id-' . $user->id);
+        Cache::forget('user_'.$user->id);
     	return view('appl.user.verify.activation')
                 ->with('user',$user);
     }
