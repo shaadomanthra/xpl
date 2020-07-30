@@ -157,6 +157,7 @@ class PostController extends Controller
 
     public function mailer($users){
         
+        dd($users);
         foreach($users as $i=>$u){
             $details['email'] = $u->email;
             $details['name'] = $u->name;
