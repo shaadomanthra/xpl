@@ -99,6 +99,7 @@ class VerifyController extends Controller
     		$user->activation_token =1;
     		$user->save();
     		$message = 'Successfully verified user email';
+            Cache::forget('id-' . $user->id);
     		flash($message)->success();
     	}else if($user->activation_token == 1){
     		$message = 'Email verification already completed';
@@ -128,6 +129,7 @@ class VerifyController extends Controller
     		$user->save();
             $error=0;
     		$message = 'Successfully verified user phone number.';
+            Cache::forget('id-' . $user->id);
     		flash($message)->success();
     	}else{
     		$message = 'Invalid phone verification code';
