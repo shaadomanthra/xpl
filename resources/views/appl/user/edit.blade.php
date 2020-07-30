@@ -242,6 +242,7 @@
       <div class="form-group">
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="client_slug" value="@if(isset($user->client_slug)) {{$user->client_slug}} @endif">
         @if(!\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
         <input type="hidden"  name="video"  value="{{ $user->video }}">
         @endif

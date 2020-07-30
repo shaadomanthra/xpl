@@ -79,19 +79,23 @@ class PostController extends Controller
         
         $users = $obj->users;
 
-        $colleges = Cache::remember('colleges',240,function(){
+        $data['colleges'] = Cache::remember('colleges',240,function(){
                     return College::all()->keyBy('id');
                 });
 
-        $branches = Cache::remember('branches',240,function(){
+        $data['branches'] = Cache::remember('branches',240,function(){
                     return Branch::all()->keyBy('id');
                 });
-        dd($users);
+        $data['college_group'] = $users->groupBy('college_id');
+        $data['branch_group'] = $users->groupBy('branch_id');
+        $data['yop_group'] = $users->groupBy('year_of_passing');
+
 
         $view ='analytics';
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('users',$users)
+                ->with('data',$data)
                 ->with('obj',$obj)
                 ->with('app',$this);
     }
@@ -127,8 +131,7 @@ class PostController extends Controller
             // }
             
         } else{
-            $objs = $obj->users()->where('name','LIKE',"%{$item}%")->orderBy('pivot_created_at','desc')->with('college')->with('branch')
-                    ->paginate(config('global.no_of_records')); 
+            $objs = $obj->users()->where('name','LIKE',"%{$item}%")->orderBy('pivot_created_at','desc')->paginate(config('global.no_of_records')); 
         } 
 
         $view = $search ? 'applicant_list': 'applicant_index';

@@ -35,9 +35,72 @@
 
 @include('flash::message')
 <div class="container">
-  <div  class="  mb-4 mt-4">
-    <div id="search-items">
-    sample
+  <div  class="row my-3">
+    <div class="col-12 col-md-6">
+      <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Branches</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <tbody class="{{$m=1}}">
+  @foreach($data['branch_group'] as $k =>$v)
+  @if(isset($data['branches'][$k]))
+    <tr>
+      <th scope="row">{{($m++)}}</th>
+      <td>{{$data['branches'][$k]->name}}</td>
+      <td>{{count($v)}}</td>
+    </tr>
+  @endif
+  @endforeach
+  </tbody>
+</table>
+    
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Year of Passing</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <tbody class="{{$m=1}}">
+  @foreach($data['yop_group'] as $k =>$v)
+  @if($k)
+    <tr>
+      <th scope="row">{{($m++)}}</th>
+      <td>{{$k}}</td>
+      <td>{{count($v)}}</td>
+    </tr>
+  @endif
+  @endforeach
+  </tbody>
+</table>
+
+    </div>
+    <div class="col-12 col-md-6">
+      <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">College</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <tbody class="{{$m=1}}">
+  @foreach($data['college_group'] as $k =>$v)
+  @if(isset($data['colleges'][$k]))
+    <tr>
+      <th scope="row">{{($m++)}}</th>
+      <td>{{$data['colleges'][$k]->name}}</td>
+      <td>{{count($v)}}</td>
+    </tr>
+  @endif
+  @endforeach
+  </tbody>
+</table>
     </div>
   </div>
 </div>

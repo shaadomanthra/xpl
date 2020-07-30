@@ -285,6 +285,7 @@
 
       <div class="form-group">
         <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="client_slug" value="@if(isset($user->client_slug)) {{$user->client_slug}} @endif">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="redirect" value="{{ request()->get('redirect') }}">
         
