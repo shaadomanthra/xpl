@@ -145,6 +145,10 @@
     </div>
 
     <div class="col-12 col-md-6 col-lg-4">
+        <a href="{{route('job.analytics',$obj->slug)}}"><div class="border p-3 rounded my-2 h4 lblue">
+          <i class="fa fa-bar-chart"> Analytics</i>
+        </div>
+      </a>
          <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest applicants <small><span class="text-secondary">({{$obj->users->count()}})</span></small><a href="{{ route('job.applicants',$obj->slug)}}" class="btn btn-outline-primary btn-sm float-md-right mt-3 mt-md-0">View all</a></div>
 
         

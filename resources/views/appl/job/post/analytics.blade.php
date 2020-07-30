@@ -19,7 +19,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Applicants ({{$data['total']}})
+          <p class="heading_two mb-2 f30" ><i class="fa fa-bar-chart "></i> Analytics ({{$data['total']}})
           </p>
         </div>
       </div>
@@ -38,7 +38,7 @@
   <div  class="row my-3">
     <div class="col-12 col-md-6">
       <table class="table table-bordered">
-  <thead>
+  <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Branches</th>
@@ -59,7 +59,7 @@
 </table>
     
     <table class="table table-bordered">
-  <thead>
+  <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Year of Passing</th>
@@ -80,7 +80,7 @@
 </table>
 
 <table class="table table-bordered">
-  <thead>
+  <thead class='thead-light'>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Profile Video</th>
@@ -104,7 +104,7 @@
     </div>
     <div class="col-12 col-md-6">
       <table class="table table-bordered">
-  <thead>
+  <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
       <th scope="col">College</th>
