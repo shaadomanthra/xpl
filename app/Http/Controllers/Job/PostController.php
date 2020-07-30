@@ -157,7 +157,7 @@ class PostController extends Controller
 
     public function mailer($users){
         
-        dd($users);
+
         foreach($users as $i=>$u){
             $details['email'] = $u->email;
             $details['name'] = $u->name;
@@ -166,7 +166,7 @@ class PostController extends Controller
             SendEmail::dispatch($details)->delay(now()->addSeconds($i*1));
         }
         
-        dd('Email Queued');
+        dd('Email Queued - '.count($users));
         return view('home');
     }
 
