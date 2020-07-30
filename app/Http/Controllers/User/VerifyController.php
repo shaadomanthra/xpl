@@ -78,6 +78,7 @@ class VerifyController extends Controller
     		$message = 'Successfully resent the activation code to '.$user->phone;
     		flash($message)->success();	
     	}
+        Cache::forget('id-' . $user->id);
     	return view('appl.user.verify.activation')
                 ->with('user',$user);
     }
