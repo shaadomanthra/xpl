@@ -423,6 +423,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 		return Redirect::to('https://vaagdevi.xplore.co.in/register', 301); 
 	});
 
+	Route::get('post/{slug}/analytics','Job\PostController@analytics')->name('job.analytics');
 	Route::get('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');
 	Route::resource('post','Job\PostController')->middleware('auth');
 

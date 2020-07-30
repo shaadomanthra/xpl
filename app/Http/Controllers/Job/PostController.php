@@ -67,6 +67,34 @@ class PostController extends Controller
                 ->with('app',$this);
     }
 
+    public function analytics($slug,Request $request)
+    {
+
+        $search = $request->search;
+        $item = $request->item;
+        $obj = Obj::where('slug',$slug)->first();
+        
+        
+        $this->authorize('view', $obj);
+        
+        $users = $obj->users;
+
+        $colleges = Cache::remember('colleges',240,function(){
+                    return College::all()->keyBy('id');
+                });
+
+        $branches = Cache::remember('branches',240,function(){
+                    return Branch::all()->keyBy('id');
+                });
+        dd($users);
+
+        $view ='analytics';
+
+        return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
+                ->with('users',$users)
+                ->with('obj',$obj)
+                ->with('app',$this);
+    }
 
     public function applicant_index($slug,Request $request)
     {

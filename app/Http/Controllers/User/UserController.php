@@ -45,7 +45,7 @@ class UserController extends Controller
             {
                 if(!auth::user())
                     $view = 'private';
-                elseif(auth::user()->id == $user->id || auth::user()->isAdmin())
+                elseif(auth::user()->id == $user->id || auth::user()->checkRole(['administrator','hr-manager','employee']))
                     $view = 'index';
                 else
                     $view = 'private';
