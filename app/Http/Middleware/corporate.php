@@ -20,7 +20,16 @@ class Corporate
     {
         if(subdomain()){
 
-            if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'bfs' ){
+            if(subdomain() == 'www'){
+                $url = url()->full();
+                $parsed = parse_url($url);
+                $exploded = explode('.', $parsed["host"]);
+                array_shift($exploded);
+                $new_url = implode('.',$exploded);
+
+                return redirect()->to('https://'.$new_url);
+            }
+            elseif($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'bfs' ){
                 $filename = 'corporate.json';
                 $client = json_decode(file_get_contents($filename));
                 $client->name = 'Bajaj Finserv';
