@@ -19,7 +19,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Applicants ({{$obj->users->count()}})
+          <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Applicants ({{$obj->users_count}})
           </p>
         </div>
       </div>

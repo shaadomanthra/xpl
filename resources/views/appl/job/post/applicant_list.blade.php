@@ -32,15 +32,17 @@
                 </td>
                 
                 <td>
-                  @if($obj->college)
+                  @if($obj->college_id)
                     @if($obj->college->id==5 || $obj->college->id==295)
                     {{$obj->info}}
                     @else
-                    {{$obj->college->name}}
+                    {{$colleges[$obj->college_id]->name}}
                     @endif
                   @endif  
 
-                  @if($obj->branch) - {{$obj->branch->name}}@endif
+                  @if($obj->branch_id) - 
+                    {{$branches[$obj->branch_id]->name}}
+                  @endif
                 </td>
                 <td>
                   {{$obj->bachelors}}%

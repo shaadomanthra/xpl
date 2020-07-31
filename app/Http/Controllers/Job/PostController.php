@@ -118,8 +118,17 @@ class PostController extends Controller
 
         $search = $request->search;
         $item = $request->item;
-        $obj = Obj::where('slug',$slug)->first();
+        $obj = Obj::where('slug',$slug)->withCount('users')->first();
         
+        $colleges = Cache::remember('colleges',240, function(){
+
+            return College::all()->keyBy('id');
+        });
+        $branches = Cache::remember('branches',240,function(){
+            return Branch::all()->keyBy('id');
+        });
+
+
         
         $this->authorize('view', $obj);
         
@@ -152,6 +161,8 @@ class PostController extends Controller
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('objs',$objs)
                 ->with('obj',$obj)
+                ->with('colleges',$colleges)
+                ->with('branches',$branches)
                 ->with('app',$this);
     }
 
