@@ -110,6 +110,12 @@ class User extends Authenticatable
         return $this->belongsTo('PacketPrep\Models\College\College');
     }
 
+    public function posts()
+    {
+        
+        return $this->belongsToMany('PacketPrep\Models\Job\Post');
+    }
+
     public function services()
     {
         return $this->belongsToMany('PacketPrep\Models\College\Service')->withPivot(['code','status']);

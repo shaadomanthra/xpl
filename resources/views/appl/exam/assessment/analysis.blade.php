@@ -50,6 +50,15 @@
 
 	@include('appl.exam.assessment.blocks.banner')
 
+	@if($exam->slug == '34781' && $_SERVER['HTTP_HOST'] == 'xplore.co.in')
+	<div class="card "  style="">
+		<div class="card-body">
+			<p>Enroll for JAVA Fullstack Training (Online) now. </p>
+			<a href="https://forms.gle/DhyQLm9PUC2gUkjX7" class="btn btn-primary ">Apply now</a>
+		</div>
+	</div>
+	@endif
+
 	@else
 
 	@if($exam->slug =='psychometric-test')

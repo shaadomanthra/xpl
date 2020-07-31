@@ -31,7 +31,7 @@ class EmailForQueuing extends Mailable
     {
 
        return $this->from('no-reply@xplore.co.in', 'Xplore')
-            ->subject('Hi, Update your profile video ')
+            ->subject('Career Fair Pre-assessment link is active now.')
             ->view('mail.email')->with('user',$this->user);
     }
 }

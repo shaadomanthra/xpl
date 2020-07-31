@@ -353,9 +353,9 @@
                     <tr>
 
                       <td>
-                        <p>Hi <b>{{$user['name']}}</b>,</p>
-                        <p>Your profile video is not updated.</p>
-                        <p>Think of the profile video as a tool for marketing yourself. It’s more than just a video: It outlines your background, your skills, and your education so that a potential employer is quickly and easily able to see how your individual experiences can contribute to a company’s success.</p>
+                        <p>Hi <b>@if(isset($user['name'])){{$user['name']}} @else  @endif</b>,</p>
+                        <p>Greetings!</p>
+                        <p>India's First Virtual Career Fair has started, and you can attempt the pre-assessment now. The test contains 30 questions to be answered in 45 minutes.The link will be active for next 3 days, you can attempt the test anytime before Aug 3rd, 6:00 PM.</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
@@ -363,7 +363,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="https://bit.ly/xplorevideo" target="_blank">Add your profile video</a> </td>
+                                      <td> <a href="https://xplore.co.in/test/34781" target="_blank">Attempt Test</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -371,7 +371,6 @@
                             </tr>
                           </tbody>
                         </table>
-                        <p>A good profile video goes a long way.</p>
                         <p>Good luck! </p><br>
                         <p>regards,<br>Xplore Team</p><br>
                        

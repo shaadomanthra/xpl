@@ -63,7 +63,11 @@
 						<button class="btn btn-lg btn-success"> Buy Now </button>
 						</a>
 						@endif
-					@elseif($exam->status==1) <!-- free Test -->
+                  	@elseif($exam->slug == '34781' && $user->posts->contains(4))
+                    <a href="{{route('assessment.instructions',$exam->slug)}}">
+					<button class="btn btn-lg btn-success accesscode_btn"> Attempt Test </button>
+					</a> 
+					@elseif($exam->slug != '34781' && $exam->status==1) <!-- free Test -->
 					<a href="{{route('assessment.instructions',$exam->slug)}}">
 					<button class="btn btn-lg btn-success accesscode_btn"> Attempt Test </button>
 					</a>
@@ -73,6 +77,8 @@
 					<a href="{{route('productpage',$product->slug)}}">
 						<button class="btn btn-lg btn-success"> Buy Now </button>
 					</a>
+					@else
+					<div class="bg-light border rounded p-3">You are not authorised to attempt this test.</div>
 					@endif
 
 					@endif
