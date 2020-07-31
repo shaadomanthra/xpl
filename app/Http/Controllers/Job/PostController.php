@@ -128,7 +128,6 @@ class PostController extends Controller
             return Branch::all()->keyBy('id');
         });
 
-
         
         $this->authorize('view', $obj);
         

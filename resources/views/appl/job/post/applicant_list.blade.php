@@ -33,10 +33,10 @@
                 
                 <td>
                   @if($obj->college_id)
-                    @if($obj->college->id==5 || $obj->college->id==295)
+                    @if($obj->college_id==5 || $obj->college_id==295)
                     {{$obj->info}}
                     @else
-                    {{$colleges[$obj->college_id]->name}}
+                    {{$colleges[$obj->college_id]['name']}}
                     @endif
                   @endif  
 
