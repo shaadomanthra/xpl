@@ -1,16 +1,31 @@
+<style>
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+</style>
 <div class="card mb-3 text-white d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
 		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer 
+
+
 		@if(isset($exam->calculator))
 		@if($exam->calculator)
 		<span class="float-md-right" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> Calculator</span>
 		@endif
 		@endif
 	</h4>
+
 		<h1 class="text-bold mb-2" id="timer"></h1>
+		<span class="text-warning "><i class="fa fa-dot-circle-o blink" aria-hidden="true"></i> Continuous monitoring is enabled</span>
 		
 		
-		<div class=" p-2 mb-2 rounded" style="border:2px solid #bb061c">
+		<div class=" p-2 mb-2 rounded mt-3" style="border:2px solid #bb061c">
 		<div class="row ">
 			<div class="col-3">
 				<div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""  style="display:none"><i class="fa fa-angle-double-left" ></i></div>
@@ -55,6 +70,7 @@
     <small><i class="fa fa-dot-circle-o text-danger" aria-hidden="true"></i> Continuous monitoring is enabled</small>
 </div>
 @endif
+
 
 
 
