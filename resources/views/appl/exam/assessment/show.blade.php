@@ -63,7 +63,7 @@
 						<button class="btn btn-lg btn-success"> Buy Now </button>
 						</a>
 						@endif
-                  	@elseif($exam->slug == '34781' && $user->posts->contains(4))
+                  	@elseif($exam->slug == '34781' && auth::user()->posts->contains(4))
                     <a href="{{route('assessment.instructions',$exam->slug)}}">
 					<button class="btn btn-lg btn-success accesscode_btn"> Attempt Test </button>
 					</a> 
