@@ -25,7 +25,7 @@
                   {{$obj->user->name}}
                 </td>
                 <td>
-                  {{$obj->users->count()}}
+                  {{$obj->users_count}}
                 </td>
                 <td>
                   @if($obj->status==0)

@@ -193,7 +193,7 @@ class ProductController extends Controller
       $u = \auth::user();
       $user = Cache::remember('user_'.$u->id,240,function() use ($u){
             return User::where('id',$u->id)->with('college')->with('branch')->first();
-        });
+      });
 
 
       $username = $user->username;

@@ -18,7 +18,7 @@
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-user"></i> Users ({{$users->total()}}) @if(request()->get('month')) <span class="badge badge-warning">{{request()->get('month')}}</span>@endif 
+          <a class="navbar-brand"><i class="fa fa-user"></i> Users ({{count($users)}}) @if(request()->get('month')) <span class="badge badge-warning">{{request()->get('month')}}</span>@endif 
              @if(request()->get('recent')) <span class="badge badge-info">Recent Logins</span>@endif
           </a>
           <form class="form-inline" method="GET" >

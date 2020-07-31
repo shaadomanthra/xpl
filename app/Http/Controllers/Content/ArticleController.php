@@ -277,8 +277,8 @@ class ArticleController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
-
+                Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
+                $path = 'articles/'.$filename;
                 $request->merge(['image' => $path]);
             }else{
                 $request->merge(['image' => '']);
@@ -489,7 +489,8 @@ class ArticleController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
-                $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
+                Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
+                $path = 'articles/'.$filename;
                 $request->merge(['image' => $path]);
             }
 

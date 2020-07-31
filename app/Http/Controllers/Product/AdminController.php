@@ -299,9 +299,14 @@ class AdminController extends Controller
             if($search)
             $users = User::where('name','LIKE',"%{$item}%")
                                       ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->orderBy('created_at','desc')->paginate(30);
-            else
-            $users = User::orderBy('created_at','desc')->paginate(30);
+            else{
+                $users = User::orderBy('created_at','desc')->paginate(30);
+            }
+            
         }
+
+
+
               
         // $data['users_all'] =  User::count();
         // $data['users_lastmonth'] = User::whereMonth('created_at', Carbon::now()->subMonth()->month)->whereYear('created_at', Carbon::now()->year)->count();

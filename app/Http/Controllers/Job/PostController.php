@@ -40,11 +40,11 @@ class PostController extends Controller
         $user =\auth::user();
         if($user->isAdmin())
             $objs = $obj->where('title','LIKE',"%{$item}%")
-                    ->orderBy('created_at','desc ')
+                    ->orderBy('created_at','desc ')->with('user')->withCount('users')
                     ->paginate(config('global.no_of_records')); 
         else
             $objs = $obj->where('user_id',$user->id)->where('title','LIKE',"%{$item}%")
-                    ->orderBy('created_at','desc ')
+                    ->orderBy('created_at','desc ')->with('user')->withCount('users')
                     ->paginate(config('global.no_of_records')); 
         $view = $search ? 'list': 'index';
 
@@ -282,8 +282,9 @@ class PostController extends Controller
     public function show($id)
     {
         $obj = Obj::where('slug',$id)->with(['users' => function ($query) {
-                    $query->orderBy('id','desc');
+                    $query->orderBy('id','desc')->limit(5);
                 }])->first();
+        $obj->users_count = $obj->users->count();
         $branches = Branch::all()->keyBy('id');
 
         $this->authorize('view', $obj);

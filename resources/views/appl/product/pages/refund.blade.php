@@ -16,7 +16,7 @@ Our focus is complete customer satisfaction. In the event, if you are displeased
 
 <h2>Cancellation Policy</h2>
 
-<p>For Cancellations please contact the us via <a href="{{ route('contact-corporate') }}">contact us</a> link.</p> 
+<p>For Cancellations please contact the us via <a href="{{ route('contact') }}">contact us</a> link.</p> 
 
 <p>Requests received later than 30 business days prior to the end of the current service period will be treated as cancellation of services for the next service period.</p>
 

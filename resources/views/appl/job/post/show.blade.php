@@ -22,7 +22,7 @@
       <div class="col-12 col-md-4 col-lg-2">
         <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
           <div class="h6">Applicants</div>
-          <div class="h2" ><a href="{{ route('job.applicants',$obj->slug)}}" >{{$obj->users->count()}}</a></div>
+          <div class="h2" ><a href="{{ route('job.applicants',$obj->slug)}}" >{{$obj->users_count}}</a></div>
         </div>
       </div>
     </div>
@@ -149,7 +149,7 @@
           <i class="fa fa-bar-chart"> Analytics</i>
         </div>
       </a>
-         <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest applicants <small><span class="text-secondary">({{$obj->users->count()}})</span></small><a href="{{ route('job.applicants',$obj->slug)}}" class="btn btn-outline-primary btn-sm float-md-right mt-3 mt-md-0">View all</a></div>
+         <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest applicants <small><span class="text-secondary">({{$obj->users_count}})</span></small><a href="{{ route('job.applicants',$obj->slug)}}" class="btn btn-outline-primary btn-sm float-md-right mt-3 mt-md-0">View all</a></div>
 
         
       @foreach($obj->users()->orderBy('pivot_created_at','desc')->get() as $k=>$u )
