@@ -281,10 +281,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $obj = Obj::where('slug',$id)->with(['users' => function ($query) {
-                    $query->orderBy('id','desc')->limit(5);
-                }])->first();
-        $obj->users_count = $obj->users->count();
+        $obj = Obj::where('slug',$id)->withCount('users')->first();
+        $latest = $obj->users()->orderBy('pivot_created_at','desc')->limit(5)->get();
         $branches = Branch::all()->keyBy('id');
 
         $this->authorize('view', $obj);
@@ -297,7 +295,7 @@ class PostController extends Controller
         }
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
-                    ->with('obj',$obj)->with('app',$this)->with('branches',$branches);
+                    ->with('obj',$obj)->with('latest',$latest)->with('app',$this)->with('branches',$branches);
         else
             abort(404);
     }
