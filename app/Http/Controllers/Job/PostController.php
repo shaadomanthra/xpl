@@ -99,7 +99,7 @@ class PostController extends Controller
         $data['video'] = $data['total'] - $data['no_video'];
 
         if(request()->get('sendmail_video')){
-            $this->mailer($users->where('video',''));
+            $this->mailer($users);
         }
 
 
@@ -197,7 +197,7 @@ class PostController extends Controller
             $slug = rand(10000,100000);
         }
 
-        $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BSC','BBA','MBA','BPHARM','MPHARM'];
+        $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BSC','BBA','MBA','BPHARM','MPHARM','OTHER'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA', '1.8LPA to 13LPA'];
         $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI'];
         $this->yop = ['2016','2017','2018','2019','2020','2021'];
@@ -349,7 +349,7 @@ class PostController extends Controller
         $obj= Obj::where('slug',$id)->first();
         $this->authorize('update', $obj);
 
-        $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BSC','BBA','MBA','BPHARM','MPHARM'];
+        $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BSC','BBA','MBA','BPHARM','MPHARM','OTHER'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA','1.8LPA to 13LPA'];
         $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI'];
         $this->yop = ['2016','2017','2018','2019','2020','2021'];

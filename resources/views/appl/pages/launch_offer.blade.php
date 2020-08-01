@@ -8,7 +8,7 @@
 <h1>Worried about Campus Placements?</h1>
 
 <div class="row">
-	<div class="col-12 col-md-8">
+	<div class="col-12 ">
 		<p>
  Launching the one-stop online Learning and Assessment portal for all your knowledge and placement support services.</p>
 
@@ -28,9 +28,7 @@ Or  9391002872( WhatsApp messages only)</p>
 
 <a href="https://xplore.co.in/productpage/aptitude-course" class="btn btn-primary btn-lg">Buy Now</a>
 	</div>
-	<div class="col-12 col-md-4">
-		<img src="{{ asset('img/virtual-fair.jpg')}}" class="py-2 mb-3 w-100"  />
-	</div>
+	
 </div>
 
 
