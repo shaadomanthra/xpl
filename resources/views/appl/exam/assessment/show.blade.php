@@ -74,7 +74,8 @@
 						@endif
 
 						@else
-							<div class="bg-light border rounded p-3">Kindly Login to attempt this test.</div>
+							<div class="bg-light border rounded p-3">Kindly Login to attempt this test.
+								<a href="{{ route('login')}}" class="btn btn-outline-primary">Login</a></div>
 						@endif
 					@elseif($exam->slug != '34781' && $exam->status==1) <!-- free Test -->
 					<a href="{{route('assessment.instructions',$exam->slug)}}">
