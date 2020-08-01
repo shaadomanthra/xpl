@@ -15,7 +15,7 @@ class ExamtypeController extends Controller
      */
     public function index(Examtype $examtype,Request $request)
     {
-        $this->authorize('view', $examtype);
+        
 
         $search = $request->search;
         $item = $request->item;
@@ -39,7 +39,6 @@ class ExamtypeController extends Controller
     public function create()
     {
         $examtype = new Examtype();
-        $this->authorize('create', $examtype);
 
 
         return view('appl.exam.examtype.createedit')
@@ -89,7 +88,6 @@ class ExamtypeController extends Controller
         $examtype= Examtype::where('slug',$id)->first();
 
         
-        $this->authorize('view', $examtype);
 
         if($examtype)
             return view('appl.exam.examtype.show')
@@ -130,7 +128,6 @@ class ExamtypeController extends Controller
         try{
             $examtype = Examtype::where('slug',$slug)->first();
 
-            $this->authorize('update', $examtype);
 
             $examtype->name = $request->name;
             $examtype->slug = $request->slug;
@@ -158,7 +155,7 @@ class ExamtypeController extends Controller
     public function destroy($id)
     {
         $examtype = Examtype::where('id',$id)->first();
-        $this->authorize('update', $examtype);
+   
 
         
         $examtype->delete();
