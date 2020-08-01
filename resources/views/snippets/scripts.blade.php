@@ -79,7 +79,7 @@ $(function(){
         url : $url,
         data:{'ajax':true},
         success:function(data){
-          $('#user_data').html(data);
+          $('#user_data').html('<div class="userdata">'+data+'</div>');
           $('#user_data').show();
           $('.loading').hide();
 
