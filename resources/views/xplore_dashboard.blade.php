@@ -120,16 +120,18 @@
               @endif
 @endif
 
+<div class="rounded p-4 mb-4" style="background: #fff3d5; border:1px solid #ffe298;">
+  <h3>Virtual Career Fair Pre-assessment  <span class="badge badge-warning">Active</span></h3>
+  <small>Last Date : 3rd Aug 2020, 6pm</small><br>
 
+  <a href="https://xplore.co.in/test/34781" class="btn btn-success mt-3">Attempt Now</a>
+
+</div>
 @if(count(\auth::user()->newtests())!=0)
   <div class="row ">
             
                 @foreach(\auth::user()->newtests() as $k=>$e)
-                @if($e->slug == '34781' && !\auth::user()->attempted($e->id))
-                  @if($user->posts->contains(4))
-                    @include('snippets.test')  
-                  @endif
-                @elseif(!\auth::user()->attempted($e->id))
+                @if(!\auth::user()->attempted($e->id))
                     @include('snippets.test')  
                 @endif
                 @endforeach

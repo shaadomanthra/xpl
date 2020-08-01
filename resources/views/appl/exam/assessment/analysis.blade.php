@@ -50,7 +50,7 @@
 
 	@include('appl.exam.assessment.blocks.banner')
 
-	@if($exam->slug == '34781' && $_SERVER['HTTP_HOST'] == 'xplore.co.in')
+	@if($exam->slug == '34781')
 	<div class="card "  style="">
 		<div class="card-body">
 			<p>Enroll for JAVA Fullstack Training (Online) now. </p>
