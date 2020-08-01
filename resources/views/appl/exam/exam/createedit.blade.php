@@ -67,7 +67,7 @@
     <div class="col-12 col-md-3">
       <label for="formGroupExampleInput ">Test type</label>
       <select class="form-control" name="examtype_id">
-        <option value="6" @if(isset($exam)) @if($exam->examtype_id==$et->id) selected @endif @endif >General</option>
+        <option value="6" @if(isset($exam)) @if($exam->examtype_id==6) selected @endif @endif >General</option>
         @foreach($examtypes as $et)
           <option value="{{$et->id}}" @if(isset($exam)) @if($exam->examtype_id==$et->id) selected @endif @endif >{{$et->name}}</option>
         @endforeach

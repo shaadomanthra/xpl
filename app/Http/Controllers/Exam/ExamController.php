@@ -86,7 +86,7 @@ class ExamController extends Controller
     public function create()
     {
         $exam = new Exam();
-        $examtypes = Examtype::all();
+        $examtypes = Examtype::where('client',subdomain())->get();
         $courses = Course::all();
         $this->authorize('create', $exam);
         $slug = rand(10000,100000);
@@ -941,7 +941,7 @@ class ExamController extends Controller
     public function edit($id)
     {
         $exam= Exam::where('slug',$id)->first();
-        $examtypes = Examtype::all();
+        $examtypes = Examtype::where('client',subdomain())->get();
         $courses = Course::all();
 
         $this->authorize('update', $exam);
