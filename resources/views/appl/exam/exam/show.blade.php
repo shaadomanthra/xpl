@@ -102,6 +102,13 @@
           </div>
 
           <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-bars"></i>&nbsp; Testtype</div>
+            <div class="col-6">
+              {{$exam->examtype->name}}
+            </div>
+          </div>
+
+          <div class="row mb-2">
             <div class="col-6"><i class="fa fa-calculator"></i>&nbsp; Calculator</div>
             <div class="col-6">
               @if($exam->calculator==1)

@@ -156,13 +156,13 @@ class AssessmentController extends Controller
         // else
         //     $user = User::where('username','krishnateja')->first();
 
-        $examtypes = Examtype::where('client',subdomain())->withCount('exams')->get();
+        $examtypes = Examtype::withCount('exams')->get();
 
         $filter = $request->get('filter');
         $search = $request->search;
         $item = $request->item;
 
-        $client = subdomain();
+        $client = (subdomain())?subdomain():'xplore';
 
         if($filter){
             $examtype = $examtypes->where('slug',$filter)->first();
