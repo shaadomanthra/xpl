@@ -70,11 +70,11 @@
 							<button class="btn btn-lg btn-success accesscode_btn"> Attempt Test </button>
 							</a> 
 						@else
-							<div class="bg-light border rounded p-3">You are not authorised to attempt this test.</div>
+							<div class="bg-light border rounded p-3">You are not authorised to attempt this test. Kindly apply for <a href="https://xplore.co.in/jobs/career-fair-2020">Virtual Career fair</a>  to take this test. </div>
 						@endif
 
 						@else
-							<div class="bg-light border rounded p-3">Kindly Login to attempt this test.
+							<div class="bg-light border rounded p-3">Kindly Login to attempt this test.<br>
 								<a href="{{ route('login')}}" class="btn btn-outline-primary">Login</a></div>
 						@endif
 					@elseif($exam->slug != '34781' && $exam->status==1) <!-- free Test -->
