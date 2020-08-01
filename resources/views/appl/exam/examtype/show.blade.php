@@ -37,6 +37,10 @@
             <div class="col-md-8">
               {{ $examtype->slug}}
             </div>
+            <div class="col-md-4">Client</div>
+            <div class="col-md-8">
+              {{ $examtype->client}}
+            </div>
           </div>
 
 

@@ -413,7 +413,8 @@ $(document).ready(function(){
 
     $('.input').on('input',function(e){
       $sno = $(this).data('sno');
-      answered($sno);
+      if($(this).data('type')!='urq')
+        answered($sno);
     });
 
     //time

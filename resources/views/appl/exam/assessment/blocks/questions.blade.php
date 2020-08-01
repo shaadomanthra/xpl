@@ -190,7 +190,7 @@
           <div class="bg-light border p-3 rounded mt-3">
           <h5>Upload your response (image format)</h5>
 
-          <input type="file" class="form-control w-100 input input_{{($i+1)}} input_urq_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" 
+          <input type="file" class="form-control w-100 input input_{{($i+1)}} input_urq_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-name="{{($i+1)}}" data-type="urq" data-sno="{{($i+1)}}" value="" 
           >
           <button type="button" class="mt-3 btn btn-primary btn-urq btn_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ $user->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.upload',$exam->slug)}}">Upload</button>
 

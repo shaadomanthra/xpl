@@ -34,7 +34,7 @@
        
       </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-3">
 
           <div class="form-group">
         <label for="formGroupExampleInput ">Test Slug (unique identifier)</label>
@@ -49,7 +49,6 @@
 
            @if($stub=='Update')
         <input type="hidden" name="_method" value="PUT">
-        <input type="hidden" name="examtype_id" value="{{$exam->examtype_id}}">
         <input type="hidden" name="client" value="{{ $exam->client }}">
         @else
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
@@ -64,6 +63,16 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       </div>
     </div>
+
+    <div class="col-12 col-md-3">
+      <label for="formGroupExampleInput ">Test type</label>
+      <select class="form-control" name="examtype_id">
+        <option value="6" @if(isset($exam)) @if($exam->examtype_id==$et->id) selected @endif @endif >General</option>
+        @foreach($examtypes as $et)
+          <option value="{{$et->id}}" @if(isset($exam)) @if($exam->examtype_id==$et->id) selected @endif @endif >{{$et->name}}</option>
+        @endforeach
+        </select>
+    </div>  
         
         
       </div>

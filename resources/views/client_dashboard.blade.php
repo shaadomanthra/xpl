@@ -27,7 +27,8 @@
         <div class="col-12 col-md-9">
 
           <h2>Hi, {{  \auth::user()->name}}</h2>
-      <p> Welcome aboard</p>
+      <p> @if(auth::user()->video) <span class="badge badge-primary">Class {{auth::user()->video}}</span>@else Welcome aboard @endif</p>
+      
 
       <p class="lead">Develop a passion for learning. If you do, you will never cease to grow - 
             Anthony J Dangelo</p>
@@ -95,6 +96,7 @@
   <div class="row ">
             
                 @foreach(\auth::user()->newtests() as $k=>$e)
+                @if($e->status!=0 && $e->examtype==auth::user()->video)
                 @if(!\auth::user()->attempted($e->id))
                        <div class="col-12 col-md-6">
         <div class="mb-4 cardbox">
@@ -156,6 +158,7 @@
         </div>
     </div>
               </div>
+                @endif
                 @endif
                 @endforeach
             </div>

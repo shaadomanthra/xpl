@@ -19,7 +19,12 @@ class ExamtypeController extends Controller
 
         $search = $request->search;
         $item = $request->item;
-        $examtypes = $examtype->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+        $examtypes = 
+            $examtype->where('name','LIKE',"%{$item}%")
+                ->where('client',subdomain())
+                ->orderBy('created_at','desc ')
+                ->paginate(config('global.no_of_records'));
+   
         $view = $search ? 'list': 'index';
 
         return view('appl.exam.examtype.'.$view)
@@ -58,6 +63,7 @@ class ExamtypeController extends Controller
 
             $examtype->name = $request->name;
             $examtype->slug = $request->slug;
+            $examtype->client = subdomain();
             $examtype->save(); 
 
             flash('A new examtype('.$request->name.') is created!')->success();
@@ -128,6 +134,7 @@ class ExamtypeController extends Controller
 
             $examtype->name = $request->name;
             $examtype->slug = $request->slug;
+            $examtype->client = subdomain();
             $examtype->save(); 
 
             flash('Examtype (<b>'.$request->name.'</b>) Successfully updated!')->success();

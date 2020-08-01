@@ -9,6 +9,7 @@ class Examtype extends Model
     protected $fillable = [
         'name',
         'slug',
+        'client',
         // add all other fields
     ];
 

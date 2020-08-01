@@ -149,7 +149,7 @@
 	</div>
 
   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
-    <div class="card mb-3 bg-light"  style="background: #FFF;border: 2px solid #EEE;">
+    <div class="card bg-light"  style="background: #FFF;border: 2px solid #EEE;">
       <div class="card-header">
         Cheating Detection
       </div>

@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=13"></script>
+<script src="{{ asset('js/script.js')}}?new=14"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=13"></script>
 <script src="{{ asset('js/osc.js')}}?new=13"></script>
 
@@ -1186,6 +1186,14 @@ $(function(){
                   $('.spinner_'+$name).hide();
                   $('.img_status_'+$name).html('<span class="text-success"><i class="fa fa-check-circle"></i> Image upload successfully.</span>');
                   $('.btn_delete_urq_'+$name).show();
+                  $(".input_urq_"+$name).val(null);
+
+                  if(!$('.s'+$name).hasClass('qblue-border'))
+                    $('.s'+$name).addClass('qblue-border');
+                  if(!$('.s'+$name).hasClass('active'))
+                        $('.s'+$name).removeClass('active');
+
+
                 }else{
                   console.log('error');
                   $('.img_status').text('Image upload failed. Kindly retry.');
@@ -1253,6 +1261,8 @@ $(function(){
                   $('.img_status_'+$name).html('<span class="text-danger"><i class="fa fa-trash"></i> Images deleted successfully.</span>');
                   $('.btn_delete_urq_'+$name).hide();
                   $('.s'+$name).removeClass('qblue-border');
+                  $(".input_urq_"+$name).val(null);
+
                 }else{
                   console.log('error');
                   $('.img_status').text('Image delete failed. Kindly retry.');

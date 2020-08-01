@@ -30,6 +30,10 @@
             ><i class="fa fas fa-home fa-dashboard"></i>
             Dashboard
         </a></li>
+
+        <li class="mr-3"><a class="nav-link" href="{{ url('test') }}" aria-label="Tests"
+            ><i class="fa fa-ravelry"></i> Tests
+        </a></li>
         @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
 
         

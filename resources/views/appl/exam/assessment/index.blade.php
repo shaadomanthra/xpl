@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-12 col-md-8">
       <h1 class="mt-2 mb-4 mb-md-2">
-      <i class="fa fa-gg"></i> &nbsp;Online Practice Tests
+      <i class="fa fa-gg"></i> &nbsp;Tests
       </h1>
     </div>
     <div class="col-12 col-md-4">
@@ -45,7 +45,7 @@
   </a>
   @foreach($examtypes as $et)
   <a href="{{ route('assessment.index')}}?filter={{$et->slug}}" class="list-group-item list-group-item-action  {{  (request()->get('filter')==$et->slug) ? 'active' : ''  }} ">
-     {{ $et->name }} 
+     {{ $et->name }} ({{$et->exams_count}})
   </a>
   @endforeach
 
