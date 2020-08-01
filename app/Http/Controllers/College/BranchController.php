@@ -30,6 +30,7 @@ class BranchController extends Controller
         $item = $request->item;
         
         $objs = $obj->where('name','LIKE',"%{$item}%")
+                    ->withCount('users')
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records'));   
         $view = $search ? 'list': 'index';

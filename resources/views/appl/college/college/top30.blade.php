@@ -16,12 +16,12 @@
         <div id="search-items">
          
 
- @if($objs->total()!=0)
+ @if(count($objs)!=0)
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{$objs->total()}})</th>
+                <th scope="col">#</th>
                 <th scope="col">College</th>
                 <th scope="col">Students </th>
               </tr>
@@ -29,12 +29,12 @@
             <tbody>
               @foreach($objs as $key=>$obj)  
               <tr>
-                <th scope="row">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
+                <th scope="row">{{ $key+1 }}</th>
                 <td>
                   {{ $obj->name }}
                 </td>
                  <td>
-                  {{ count($obj->users)}}
+                  {{ $obj->users_count}}
                 </td>
                 
               </tr>

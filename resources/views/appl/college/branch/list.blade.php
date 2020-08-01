@@ -20,7 +20,7 @@
                   </a>
                 </td>
                 <td>
-                  {{count($obj->users)}}
+                  {{$obj->users_count}}
                 </td>
                 
                 <td>{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</td>

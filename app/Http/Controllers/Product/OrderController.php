@@ -415,10 +415,12 @@ class OrderController extends Controller
      */
     public function list_transactions(Request $request)
     {
+
         $order = new Order();
         $search = $request->search;
         $item = $request->item;
         $orders = $order->where('order_id','LIKE',"%{$item}%")
+                  ->with('user')->with('product')
                   ->orderBy('created_at','desc ')
                   ->paginate(config('global.no_of_records'));
         $view = $search ? 'list': 'index';
@@ -436,6 +438,7 @@ class OrderController extends Controller
         $item = $request->item;
         $orders = $order->where('order_id','LIKE',"%{$item}%")
                   ->where('user_id',$user->id)
+                  ->with('user')->with('product')
                   ->orderBy('created_at','desc ')
                   ->paginate(config('global.no_of_records'));
         $view = $search ? 'newlist': 'transactions';

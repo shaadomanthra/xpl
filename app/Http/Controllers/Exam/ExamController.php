@@ -66,9 +66,11 @@ class ExamController extends Controller
         }
 
         if(\auth::user()->isAdmin())
-        $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+        $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
         else  
-        $exams = $exam->where('user_id',\auth::user()->id)->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->paginate(config('global.no_of_records')); 
+        $exams = $exam->where('user_id',\auth::user()->id)->where('name','LIKE',"%{$item}%")->with('user')->withCount('users')->orderBy('created_at','desc ')->paginate(config('global.no_of_records')); 
+
+
 
         $view = $search ? 'list': 'index';
 
@@ -569,6 +571,7 @@ class ExamController extends Controller
     public function show($id)
     {
         $exam= Exam::where('slug',$id)->with('user')->with('sections')->first();
+
         $exam->precheck_auto_activation();
         
         if(!\auth::user()->checkRole(['administrator','hr-manager','tpo'])){

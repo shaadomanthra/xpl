@@ -66,6 +66,11 @@ class Exam extends Model
         return $this->belongsTo('PacketPrep\Models\Course\Course');
     }
 
+    public function users()
+    {
+        return $this->hasMany('PacketPrep\Models\Exam\Tests_Overall','test_id');
+    }
+
     public function getColor(){
       if($this->status==0)
         return 'warning';

@@ -123,7 +123,7 @@
 <div class="rounded p-4 mb-4" style="background: #fff3d5; border:1px solid #ffe298;">
   <h3>Virtual Career Fair Pre-assessment  <span class="badge badge-warning">Active</span></h3>
   <p>Last Date : 3rd Aug 2020, 6pm</p><a href="https://xplore.co.in/test/34781" class="btn btn-success mt-3">Attempt Now</a><hr>
-  <p><b>Note:</b> You are required to update your <a href="{{ route('video.upload')}}">profile video</a> before 3rd Aug, 6pm. Also kindly ensure your profile details are up to date. Any discrepancies will lead to cancellation of the application.<br> For queries, call us at 1800 890 1324 or mail us at info@xplore.co.in</p>
+  <p><b>Note:</b> @if(!$user->video)You are required to update your <a href="{{ route('video.upload')}}">profile video</a> before 3rd Aug, 6pm. @endif Kindly ensure your profile details are up to date. Any discrepancies will lead to cancellation of the application. For queries, call us at 1800 890 1324 or mail us at info@xplore.co.in</p>
 
   
 

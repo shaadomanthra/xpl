@@ -65,7 +65,7 @@ class AdminController extends Controller
        
 
         
-        $data['users']['total'] = User::count();
+        
 
         if(!$request->get('refresh')){
             $data =   json_decode(Storage::disk('s3')->get('analytics_xplore.co.in.json'),true);
@@ -92,6 +92,7 @@ class AdminController extends Controller
                     ->with('users',$users)
                     ->with('data',$data);
         }else{
+            $data['users']['total'] = User::count();
 
             $data['branches'] = Branch::withCount('users')->get();
         
@@ -105,7 +106,7 @@ class AdminController extends Controller
 
             $data['users']['last_month'] = $users->last_month;
             $data['users']['this_month'] = $users->this_month;
-        
+            $data['created_at'] = \carbon\carbon::now()->format('d-M-Y,H:m:s');        
         
 
         }

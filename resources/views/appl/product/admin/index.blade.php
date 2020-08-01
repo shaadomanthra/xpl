@@ -21,6 +21,7 @@
         <nav class="navbar navbar-light bg-white justify-content-between border rounded p-3 mb-3">
           <a class="navbar-brand"><i class="fa fa-dashboard"></i> Admin </a>
 
+          <a href="{{ route('admin.index')}}?refresh=1"><button class="btn btn-sm btn-outline-primary"><i class="fa fa-retweet"></i> Refresh Cache </button></a>
           
           <a href="{{ route('college.top30')}}"><button class="btn btn-sm btn-outline-primary"><i class="fa fa-print"></i> Top Colleges </button></a>
         </nav>
@@ -52,6 +53,8 @@
                 </div>
               </div>
             </div>
+
+            <p>@if(isset($data['created_at'])) Showing Cached data - {{$data['created_at']}} @endif</p>
             
         </div>
 

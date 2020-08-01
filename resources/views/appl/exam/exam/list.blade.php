@@ -55,7 +55,7 @@
               
             </div>
             <div class='col-2 col-md-2'>
-              <div class="heading_one float-right f30">{{ $exam->getAttemptCount() }}</div>
+              <div class="heading_one float-right f30">{{ $exam->users_count }}</div>
             </div>
           </div>
         </div>

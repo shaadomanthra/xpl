@@ -24,6 +24,22 @@ class Client extends Model
         return $this->belongsToMany('PacketPrep\User');
     }
 
+    public function creator()
+    {
+        return $this->hasOne('PacketPrep\User','id','user_id_creator');
+    }
+
+    public function siteusers()
+    {
+        return $this->hasMany('PacketPrep\User','client_slug','slug');
+    }
+
+
+    public function exams()
+    {
+        return $this->hasMany('PacketPrep\Models\Exam\Exam','client','slug');
+    }
+
     public function courses(){
         return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('visible');;
     }

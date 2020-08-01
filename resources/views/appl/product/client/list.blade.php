@@ -24,7 +24,7 @@
                   </a>
                 </td>
                 <td>{{ $client->slug }}</td>
-                <td>{{ $client->usercount() }}</td>
+                <td>{{ $client->siteusers_count }}</td>
                 <td>
                    @if($client->status==0)
                       <span class="badge badge-secondary">Unpublished</span>
@@ -38,7 +38,7 @@
                 </td>
                 <td>{{ ($client->created_at) ? $client->created_at->diffForHumans() : '' }}</td>
                  @if(\auth::user()->isAdmin())
-                 <td>{{ \auth::user()->getName($client->user_id_creator) }}</td>
+                 <td>{{ $client->creator->name }}</td>
                  @endif
               </tr>
               @endforeach      

@@ -58,7 +58,7 @@ class CollegeController extends Controller
         $search = $request->search;
         $item = $request->item;
         
-        $objs = $obj->where('name','LIKE',"%{$item}%")->where('type','btech')->where('name','!=','- Not in List -')->withCount('users')->orderBy('users_count', 'desc')->paginate(25); 
+        $objs = $obj->where('name','LIKE',"%{$item}%")->where('type','btech')->where('name','!=','- Not in List -')->withCount('users')->orderBy('users_count', 'desc')->limit(30)->get(); 
 
         
 

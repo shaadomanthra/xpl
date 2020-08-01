@@ -36,11 +36,15 @@ class ClientController extends Controller
         $user = \auth::user();
         if($user->role != 2){
            $clients = $client->where('name','LIKE',"%{$item}%")
+                            ->withCount('siteusers')
+                            ->with('creator')
                             ->where('user_id_creator',$user->id)
                             ->orderBy('created_at','desc ')
                             ->paginate(config('global.no_of_records')); 
         }else{
             $clients = $client->where('name','LIKE',"%{$item}%")
+                            ->withCount('siteusers')
+                            ->with('creator')
                             ->orderBy('created_at','desc ')
                             ->paginate(config('global.no_of_records'));
 
@@ -264,25 +268,15 @@ class ClientController extends Controller
         $users = $hr->users;
         
         $u =['attempts_all'=>0,'attempts_thismonth'=>0,'attempts_lastmonth'=>0];
-        foreach($users as $k=>$user){
-            $users[$k]->attempts_all  =0;
-            $users[$k]->attempts_lastmonth =0;
-            $users[$k]->attempts_thismonth =0;
 
-            foreach($user->exams as $exam){
-                $users[$k]->attempts_all = $users[$k]->attempts_all + $exam->getAttemptCount();
-                $users[$k]->attempts_lastmonth = $users[$k]->attempts_lastmonth + $exam->getAttemptCount(null,'lastmonth');
-                $users[$k]->attempts_thismonth = $users[$k]->attempts_thismonth + $exam->getAttemptCount(null,'thismonth');
+        $exams  =$client->exams;
 
-            }
-            if($user->client_slug == $client->slug)
-            {
-                $u['attempts_all'] =  $users[$k]->attempts_all;
-                $u['attempts_lastmonth'] = $users[$k]->attempts_lastmonth;
-                $u['attempts_thismonth'] = $users[$k]->attempts_thismonth ;
-            }
-
+        foreach($exams as $exam){
+            $u['attempts_all'] = $u['attempts_all'] + $exam->getAttemptCount();
+            $u['attempts_lastmonth'] = $u['attempts_lastmonth']+ $exam->getAttemptCount(null,'lastmonth');
+            $u['attempts_thismonth'] = $u['attempts_thismonth'] + $exam->getAttemptCount(null,'thismonth');
         }
+
 
         $ucount = [];
         $ucount['users_all'] = User::where('client_slug',$client->slug)->count();
