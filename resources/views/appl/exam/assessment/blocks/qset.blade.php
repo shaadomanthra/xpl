@@ -1,14 +1,4 @@
-<style>
-.blink {
-  animation: blinker 1s linear infinite;
-}
 
-@keyframes blinker {
-  50% {
-    opacity: 0;
-  }
-}
-</style>
 <div class="card mb-3 text-white d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
 		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer 

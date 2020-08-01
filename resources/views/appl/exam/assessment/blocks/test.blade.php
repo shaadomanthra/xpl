@@ -4,6 +4,17 @@
 
 <div class="p-2 p-md-3 testpage">
 <form method="post" class="assessment" id="assessment" action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
+  <style>
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+</style>
 
   <div class="row">
     <div class="col-md-9">
@@ -27,7 +38,7 @@
           <div class=" mb-3 d-block d-md-none ">
   <div class="blogd text-white pl-3 pr-3 pb-2 pt-3 pb-2 rounded" style="background:#ca2428">
     <div class="mb-2 text-center"> Timer : <span class="text-bold " id="timer2"></span></div>
-    
+    <span class="text-warning "><i class="fa fa-dot-circle-o blink" aria-hidden="true"></i> Continuous monitoring is enabled</span>
 
     <div class="p-2 mb-2 rounded" style="border:2px solid #bb061c">
     <div class="row ">
