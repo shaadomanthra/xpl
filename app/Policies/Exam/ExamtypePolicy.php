@@ -36,7 +36,7 @@ class ExamtypePolicy
      */
     public function create(User $user)
     { 
-        return $user->checkRole(['administrator','data-manager']);
+        return $user->checkRole(['administrator','data-manager','hr-manager']);
     }
 
 
@@ -49,7 +49,7 @@ class ExamtypePolicy
      */
     public function edit(User $user)
     { 
-        if($user->checkRole(['administrator','data-manager'])){
+        if($user->checkRole(['administrator','data-manager','hr-manager'])){
             return true;
         }
         else
@@ -65,7 +65,7 @@ class ExamtypePolicy
      */
     public function update(User $user)
     { 
-        return $user->checkRole(['administrator','data-manager']);
+        return $user->checkRole(['administrator','data-manager','hr-manager']);
     }
 
 
