@@ -234,7 +234,7 @@ class Exam extends Model
 
     public function latestUsers()
     {
-        return Tests_Overall::where('test_id',$this->id)->orderBy('id','desc')->with('user')->limit(5)->get();
+        return Tests_Overall::where('test_id',$this->id)->orderBy('id','desc')->with('user')->take(5)->get();
     }
 
     public function psychometric_test($student){

@@ -17,7 +17,7 @@
               <tr>
                 <th scope="row">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
-                  <a href=" {{ route('profile','@'.$obj->username) }} ">
+                  <a href="#" class="showuser"  data-url="{{route('profile','@'.$obj->username)}}">
                   {{ $obj->name }}
                   </a>
                   @if($obj->profile_complete()==100)

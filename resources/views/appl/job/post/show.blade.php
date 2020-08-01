@@ -160,7 +160,7 @@
           </div>
           <div class='col-9 col-md-9 col-lg-9'>
             <div class="f18 mb-0">
-              <a href="{{ route('profile','@'.$u->username) }}"><b>{{$u->name}}</b></a>
+              <a href="#" class="showuser"  data-url="{{route('profile','@'.$u->username)}}"><b>{{$u->name}}</b></a>
             </div>
             <div class="d-inline pill" ><i class="fa fa-calendar"></i>  {{$u->year_of_passing}}</div>
             <div class="d-inline pill" ><i class="fa fa-graduation-cap"></i> {{$u->bachelors}}%</div>
@@ -206,6 +206,33 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <button type="submit" class="btn btn-danger">Delete Permanently</button>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Student Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="" id="">
+        <div class="p-3 loading">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>  
+        </div> Loading...
+        
+        </div>
+        <div id="user_data">
+      </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -67,6 +67,31 @@ var x = setInterval(function() {
   <script>
 $(function(){
 
+  $('.showuser').on('click',function(e){
+    e.preventDefault();
+
+    $('.loading').show();
+    $('#user_data').hide();
+    $('#user').modal();
+    $url = $(this).data('url');
+      $.ajax({
+        type : 'get',
+        url : $url,
+        data:{'ajax':true},
+        success:function(data){
+          $('#user_data').html(data);
+          $('#user_data').show();
+          $('.loading').hide();
+
+          
+        }
+      });
+      
+    
+    
+  });
+
+
   /* profile completion page */
   if($('.screen').length){
     $('.college_name').hide();

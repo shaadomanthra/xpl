@@ -93,6 +93,9 @@ class UserController extends Controller
                     return Branch::all()->keyBy('id');
                 });
 
+                if(request()->get('ajax'))
+                    $view = 'ajax';
+
                 return view('appl.user.'.$view)
                             ->with('user',$user)->with('colleges',$colleges)->with('branches',$branches);
 

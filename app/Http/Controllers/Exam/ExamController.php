@@ -570,7 +570,7 @@ class ExamController extends Controller
      */
     public function show($id)
     {
-        $exam= Exam::where('slug',$id)->with('user')->with('sections')->first();
+        $exam= Exam::where('slug',$id)->with('user')->with('sections')->withCount('users')->first();
 
         $exam->precheck_auto_activation();
         
@@ -603,21 +603,21 @@ class ExamController extends Controller
             $email_stack['registered'] = $users->pluck('email')->toArray();
             $email_stack['not_registered'] =  array_diff($emails,$email_stack['registered']);
 
-            foreach($users as $ux)
-            if(request()->get('refresh2')){
-                $cache_data =  Cache::get('responses_'.$ux->id.'_'.$exam->id);
-                if($cache_data)
-                Storage::disk('s3')->put('cache_attempts_'.$exam->slug.'/'.'attempt_'.$ux->id.'_'.$exam->id.'.json',json_encode($cache_data));
-                else{
-                    Storage::disk('s3')->put('cache_attempts_none_'.$exam->slug.'/'.'attempt_'.$ux->id.'_'.$exam->id.'.json',json_encode($cache_data));
-                }
-            }
+            // foreach($users as $ux)
+            // if(request()->get('refresh2')){
+            //     $cache_data =  Cache::get('responses_'.$ux->id.'_'.$exam->id);
+            //     if($cache_data)
+            //     Storage::disk('s3')->put('cache_attempts_'.$exam->slug.'/'.'attempt_'.$ux->id.'_'.$exam->id.'.json',json_encode($cache_data));
+            //     else{
+            //         Storage::disk('s3')->put('cache_attempts_none_'.$exam->slug.'/'.'attempt_'.$ux->id.'_'.$exam->id.'.json',json_encode($cache_data));
+            //     }
+            // }
         }else{
-        $email_stack['registered'] = [];
-        $email_stack['not_registered'] =  [];
+            $email_stack['registered'] = [];
+            $email_stack['not_registered'] =  [];
         }
 
-        $data['attempt_count'] = $exam->getAttemptCount();
+        $data['attempt_count'] = $exam->users_count;
         if($data['attempt_count'])
             $data['users'] = $exam->latestUsers(); 
         else
@@ -793,8 +793,8 @@ class ExamController extends Controller
         
         $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
         $users = $result->pluck('user_id');
-            $exam_sections = Section::where('exam_id',$exam->id)->get();
-            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+        $exam_sections = Section::where('exam_id',$exam->id)->get();
+        $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
         if(!Storage::disk('s3')->exists($filename))
             Storage::disk('s3')->delete($filename);
 

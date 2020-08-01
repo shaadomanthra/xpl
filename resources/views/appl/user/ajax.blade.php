@@ -1,4 +1,4 @@
-@extends('layouts.nowrap-white')
+@extends('layouts.full')
 @section('title', $user->name.' ')
 @section('content')
 

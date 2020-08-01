@@ -26,7 +26,7 @@
       <div class="col-12 col-md-4 col-lg-2">
         <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
           <div class="h6">Attempts</div>
-          <div class="h2" ><a href="{{ route('test.report',$exam->slug)}}" >{{$data['attempt_count']}}</a></div>
+          <div class="h2" ><a href="{{ route('test.report',$exam->slug)}}" >{{$exam->users_count}}</a></div>
         </div>
       </div>
     </div>
@@ -376,9 +376,9 @@
         </div>
       </div>
       @if($data['attempt_count'])
-      <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest participants <small><span class="text-secondary">({{$exam->getAttemptCount()}})</span></small><a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm float-lg-right mt-3 mt-lg-0">View all</a></div>
+      <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest participants <small><span class="text-secondary">({{$exam->users_count}})</span></small><a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm float-lg-right mt-3 mt-lg-0">View all</a></div>
 
-      @foreach($exam->latestUsers() as $u =>$t)
+      @foreach($data['users'] as $u =>$t)
       <div class='cardbox lblue p-3 mb-3'>
         <div class="row">
           <div class='col-3 col-md-3 col-lg-2'>
@@ -386,7 +386,7 @@
           </div>
           <div class='col-9 col-md-9 col-lg-10'>
             <div class="f18 mb-0">
-              <a href="{{ route('profile','@'.$t->user->username) }}"><b>{{$t->user->name}}</b></a>
+              <a href="#" class="showuser"  data-url="{{route('profile','@'.$t->user->username)}}"><b>{{$t->user->name}}</b></a>
 
               @if($t->status || $exam->slug=='psychometric-test')
               has attempted the test
@@ -589,6 +589,33 @@
       </div>
       <div class="modal-body">
         {!! implode("<br> ",$email_stack['not_registered']) !!}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Student Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="" id="">
+        <div class="p-3 loading">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>  
+        </div> Loading...
+        
+        </div>
+        <div id="user_data">
+      </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
