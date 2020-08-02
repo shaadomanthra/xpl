@@ -96,7 +96,7 @@
   <div class="row ">
             
                 @foreach(\auth::user()->newtests() as $k=>$e)
-                @if($e->status!=0)
+                @if($e->status!=0 && $e->active)
                 @if(!\auth::user()->attempted($e->id))
                        <div class="col-12 col-md-6">
         <div class="mb-4 cardbox">
