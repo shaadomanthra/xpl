@@ -88,7 +88,7 @@
 						<button class="btn btn-lg btn-success"> Buy Now </button>
 					</a>
 					@else
-					<div class="bg-light border rounded p-3">You are not authorised to attempt this test.</div>
+					
 					@endif
 
 					@endif
