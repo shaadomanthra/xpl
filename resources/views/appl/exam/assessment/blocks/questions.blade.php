@@ -8,6 +8,7 @@
    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 </style>
+
 @foreach($questions as $i=> $question)
 <div class="question_block qblock_{{$i+1}}" @if($i!=0) style="display:none;" @endif>
   @if($passages[$i])
@@ -33,7 +34,7 @@
           </div>
         </div>
         <div class="col-10 col-md-10">
-          <div class="pt-1 question disable-select">{!! $question->question!!}</div>
+          <div class="pt-1  disable-select">{!! $question->question!!}</div>
         </div>
       </div>
 
