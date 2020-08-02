@@ -222,7 +222,7 @@ class User extends Authenticatable
             //$tests = Cache::get('tests_'.subdomain());
             
             $tests = Cache::remember('tests_'.subdomain(), 240, function() use ($client) {
-                return DB::table('exams')->where('client',$client)->get();
+                return DB::table('exams')->where('client',$client)->orderBy('id','desc')->get();
             });
 
         }
