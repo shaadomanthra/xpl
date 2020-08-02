@@ -48,7 +48,7 @@
             <input class="form-check-input input input_{{($i+1)}}" type="checkbox" name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="A" @if(strpos($question->response,'A')!==false) checked @endif> A </div>
           </div>
         </div>
-        <div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->option_a!!}</div></div>
+        <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_a!!}</div></div>
       </div>
       @endif
 
@@ -60,7 +60,7 @@
               <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="B" @if(strpos($question->response,'B')!==false) checked @endif>  B</div>
             </div>
           </div>
-          <div class="col-9 col-md-10"><div class="pt-1 b">{!! $question->option_b!!}</div></div>
+          <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_b!!}</div></div>
         </div>
         @endif
 
@@ -73,7 +73,7 @@
                 <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="C" @if(strpos($question->response,'C')!==false) checked @endif> C</div>
               </div>
             </div>
-            <div class="col-9 col-md-10"><div class="pt-1 c">{!! $question->option_c!!}</div></div>
+            <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_c!!}</div></div>
           </div>
           @endif
 
@@ -85,7 +85,7 @@
                   <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="D" @if(strpos($question->response,'D')!==false) checked @endif> D</div>
               </div>
             </div>
-            <div class="col-9 col-md-10"><div class="pt-1 d">{!! $question->option_d!!}</div></div>
+            <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_d!!}</div></div>
           </div>
           @endif
 
@@ -100,7 +100,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->option_e!!}</div></div>
+            <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_e!!}</div></div>
           </div>
           @endif
 
