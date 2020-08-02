@@ -35,7 +35,6 @@
 	<div class="">
 		<div class="p-3 border rounded bg-light mb-3" style="min-height: 130px">
 		<div class="bg-white p-3 float-right text-center border"><h5>Total Score</h5>
-
 			@if(!$test_overall->status)
 			<div class="display-4">{{ $test_overall->score }} </div>
 			@else
@@ -50,9 +49,9 @@
 		</div>
 
 
-	@if($exam->solutions ==2 && !\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
-  <div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
+
+  <div class="card mb-3"  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
     @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
     <div class="card-body">
       Thank you.You have completed your test and your responses are recorded for internal evaluation.
@@ -67,7 +66,6 @@
 
   @include('appl.exam.assessment.blocks.banner')
 
-  @else
 
 	<div class="table-responsive">
 		<table class="table table-bordered bg-white">
@@ -76,8 +74,10 @@
       <th scope="col">#</th>
       <th scope="col">Question</th>
       <th scope="col">Response</th>
+      @if(!$test_overall->status)
       <th scope="col">Score</th>
       <th scope="col">Feedback</th>
+      @endif
     </tr>
   </thead>
   <tbody>
@@ -92,39 +92,44 @@
 
           @if(isset($questions[$t->question_id]->images))
 
-          @foreach(array_reverse($questions[$t->question_id]->images) as $url)
+          @foreach(array_reverse($questions[$t->question_id]->images) as $k=>$url)
 
+            <a href="#" id="{{$k}}" class="show_image" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" >
              <img src="{{$url }}" style="width:150px;" class="border border-secondary p-1  my-1" />
+           </a>
           @endforeach
           @endif
           </div>
         
       	@else
       	{!! $t->response !!}
-      	@if($t->accuracy)
-      		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
+        @if(!$test_overall->status)
+          	@if($t->accuracy)
+          		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
 
-	      		@if(!$t->mark)
-	      		<i class="fa fa-times-circle text-danger"></i>
-	      		@else
-	      		<i class="fa fa-check-circle text-success"></i>
-	      		@endif
-      		@else
-      		<i class="fa fa-check-circle text-success"></i>
-      		@endif
-      	@else
+    	      		@if(!$t->mark)
+    	      		<i class="fa fa-times-circle text-danger"></i>
+    	      		@else
+    	      		<i class="fa fa-check-circle text-success"></i>
+    	      		@endif
+          		@else
+          		<i class="fa fa-check-circle text-success"></i>
+          		@endif
+          	@else
 
-      		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
-      		<i class="fa fa-times-circle text-danger"></i>
-      		@else
-      			@if($t->mark==0 && $questions[$t->question_id]->type!='urq' && $questions[$t->question_id]->type!='sq')
+          		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
+          		<i class="fa fa-times-circle text-danger"></i>
+          		@else
+          			@if($t->mark==0 && $questions[$t->question_id]->type!='urq' && $questions[$t->question_id]->type!='sq')
 
-	      		<i class="fa fa-times-circle text-danger"></i>
-	      		@endif
-      		@endif
-      	@endif
+    	      		<i class="fa fa-times-circle text-danger"></i>
+    	      		@endif
+          		@endif
+          	@endif
+        @endif
       	@endif
       </td>
+      @if(!$test_overall->status)
       <td>
       	@if($t->mark)
       			{{$t->mark }}
@@ -141,6 +146,7 @@
       	@endif
       </td>
       <td>{{ (isset($t->comment))?$t->comment:'-' }}</td>
+      @endif
     </tr>
     @endforeach
   </tbody>
@@ -213,9 +219,24 @@
     </div>
     @endif
     
-  @endif
+
 	
 
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Image</h1>
+      </div>
+      <div class="modal-body">
+        <div class="canvas">
+        
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 

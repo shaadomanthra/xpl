@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=14"></script>
+<script src="{{ asset('js/script.js')}}?new=15"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=13"></script>
 <script src="{{ asset('js/osc.js')}}?new=13"></script>
 
@@ -264,6 +264,18 @@ $(function(){
     $("."+c).prop('checked', $(this).prop('checked'));
 });
 
+ $(document).on('click','.show_image',function(e){
+      e.preventDefault();
+      console.log('here');
+          url = $(this).data('url');
+          imgurl = $(this).data('imgurl');
+          $('.canvas').html('<canvas id="sketchpad" width="1100px" height="1100px" style="background:#f8f8f8 ;background-image:url('+url+');background-repeat: no-repeat;background-size:100%"></canvas>').promise().done(function(){
+          $('#exampleModal').modal();
+      });
+     
+      
+  });
+
   </script>
 
 @if(isset($sketchpad))
@@ -283,6 +295,8 @@ $(function(){
 
   }
 
+
+  
 
 
   $(document).on('click','.correct_image',function(e){
@@ -1297,18 +1311,18 @@ $('body').bind('copy paste',function(e) {
     });
 });
 
-var btn = document.getElementById('submit_button'),
-    clicked = false;
+// var btn = document.getElementById('submit_button'),
+//     clicked = false;
 
-btn.addEventListener('click', function () {
-  clicked = true;
-});
+// btn.addEventListener('click', function () {
+//   clicked = true;
+// });
 
-window.onbeforeunload = function () {
-  if(!clicked) {
-    return 'If you resubmit this page, progress will be lost.';
-  }
-};
+// window.onbeforeunload = function () {
+//   if(!clicked) {
+//     return 'If you resubmit this page, progress will be lost.';
+//   }
+// };
 
 
 @endif

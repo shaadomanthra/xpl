@@ -243,8 +243,11 @@ class TrainingController extends Controller
                     }
                     
                 }else{
-                    $u->info = $row[4];
-                    $u->save();
+                    if(!$u->info){
+                       $u->info = $row[4];
+                       $u->save(); 
+                    }
+                    
                 }
 
                 if(strtolower($row[1])!='email')

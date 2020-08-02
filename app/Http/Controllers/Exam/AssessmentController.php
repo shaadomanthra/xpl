@@ -156,7 +156,7 @@ class AssessmentController extends Controller
         // else
         //     $user = User::where('username','krishnateja')->first();
 
-        $examtypes = Examtype::withCount('exams')->get();
+        $examtypes = Examtype::where('client',subdomain())->withCount('exams')->get();
 
         $filter = $request->get('filter');
         $search = $request->search;
@@ -165,9 +165,16 @@ class AssessmentController extends Controller
         $client = (subdomain())?subdomain():'xplore';
 
         if($filter){
+
             $examtype = $examtypes->where('slug',$filter)->first();
 
-            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->where('client',$client)->with('sections')->paginate(config('global.no_of_records'));
+            if($examtype){
+                $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->where('client',$client)->with('sections')->paginate(config('global.no_of_records'));
+            }else{
+                $exams = null;
+            }
+
+            
         }
         else
             $exams = $exam->where('name','LIKE',"%{$item}%")->where('client',$client)->with('sections')->paginate(config('global.no_of_records'));

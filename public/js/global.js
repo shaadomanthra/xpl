@@ -464,7 +464,26 @@ $(document).ready(function(){
       if(!$('.s'+$sno).hasClass('qblue-border'))
         $('.s'+$sno).addClass('qblue-border');
       if(!$('.s'+$sno).hasClass('active'))
-            $('.s'+$sno).removeClass('active')
+            $('.s'+$sno).removeClass('active');
+
+      // update answer
+      var resp = {};
+      if($('.input_'+$sno).is(':checkbox')){
+        var ans =[]
+        $.each($(".input_"+$sno+":checked"), function(){
+          ans.push($(this).val());
+        });
+        resp.response = ans.join(",");
+      }
+      else if($('.input_'+$sno).is(':radio')){
+        resp.response = $(".input_"+$sno+":checked").val();
+      }else if($('.input_'+$sno).is("textarea")){
+        resp.response = $('.input_'+$sno).val();
+      }
+      else
+        resp.response = $('.input_'+$sno).val();
+
+      $('.final_response_'+$sno).html(resp.response);
     }
 
     function unanswered($sno){
