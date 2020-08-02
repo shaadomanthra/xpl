@@ -50,6 +50,7 @@
 
 
 
+@if($exam->solutions ==2 && !request()->get('student'))
 
   <div class="card mb-3"  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
     @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
@@ -66,7 +67,51 @@
 
   @include('appl.exam.assessment.blocks.banner')
 
+  <div class="table-responsive">
+    <table class="table table-bordered bg-white">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Question</th>
+      <th scope="col">Response</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($tests as $k=>$t)
 
+    <tr>
+      <th scope="row">{{($k+1)}}</th>
+      <td>{!! $questions[$t->question_id]->question !!}</td>
+      <td>
+        @if($questions[$t->question_id]->type=='urq')
+          <div class="">
+
+          @if(isset($questions[$t->question_id]->images))
+
+          @foreach(array_reverse($questions[$t->question_id]->images) as $k=>$url)
+
+            <a href="#" id="{{$k}}" class="show_image" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" >
+             <img src="{{$url }}" style="width:150px;" class="border border-secondary p-1  my-1" />
+           </a>
+          @endforeach
+          @endif
+          </div>
+        
+        @else
+        {!! $t->response !!}
+        
+        @endif
+      </td>
+      
+    </tr>
+    @endforeach
+  </tbody>
+</table>
+
+  </div>
+
+
+@else
 	<div class="table-responsive">
 		<table class="table table-bordered bg-white">
   <thead>
@@ -219,7 +264,7 @@
     </div>
     @endif
     
-
+@endif
 	
 
 </div>
