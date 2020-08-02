@@ -74,7 +74,7 @@
       <th scope="col">#</th>
       <th scope="col">Question</th>
       <th scope="col">Response</th>
-      @if(!$test_overall->status)
+      @if($test_overall->status)
       <th scope="col">Score</th>
       <th scope="col">Feedback</th>
       @endif
@@ -103,7 +103,7 @@
         
       	@else
       	{!! $t->response !!}
-        @if(!$test_overall->status)
+        @if($test_overall->status)
           	@if($t->accuracy)
           		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
 
@@ -129,7 +129,7 @@
         @endif
       	@endif
       </td>
-      @if(!$test_overall->status)
+      @if($test_overall->status)
       <td>
       	@if($t->mark)
       			{{$t->mark }}
