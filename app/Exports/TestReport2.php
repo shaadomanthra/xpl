@@ -19,20 +19,27 @@ class TestReport2 implements FromCollection
    		$result = request()->session()->get('result');
    		$sections = request()->session()->get('sections');
    		$exam_sections = request()->session()->get('exam_sections');
+        $colleges = request()->session()->get('colleges');
+        $branches= request()->session()->get('branches');
 
     	foreach($result as $k=>$res){
 
 
     		$result[$k]->Sno = $k+1;
     		$result[$k]->Name = $res->user->name;
-            if(isset($res->user->college->name))
-                $result[$k]->College = $res->user->college->name;
-            else
-                $result[$k]->College = '-';
-            if(isset($res->user->branch->name))
-                $result[$k]->Branch = $res->user->branch->name;
-            else
-                $result[$k]->Branch = '-';
+            
+            if($res->user->college_id==5 || $res->user->college_id==295)
+                    $result[$k]->college =  $res->user->info;
+                else if(!$res->user->college_id)
+                    $result[$k]->college  = '-';
+                else
+                    $result[$k]->college  = $colleges[$res->user->college_id]->name;
+                   
+
+                if($res->user->branch_id)
+                    $result[$k]->branch =  $branches[$res->user->branch_id]->name;
+                else
+                    $result[$k]->branch = '-';
 
             if(isset($res->user->year_of_passing))
                 $result[$k]->YOP = $res->user->year_of_passing;

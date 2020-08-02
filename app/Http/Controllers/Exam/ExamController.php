@@ -18,6 +18,8 @@ use PacketPrep\Exports\TestReport;
 use PacketPrep\Exports\TestReport2;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
+use PacketPrep\Models\College\Branch;
+use PacketPrep\Models\College\College;
 
 class ExamController extends Controller
 {
@@ -795,12 +797,16 @@ class ExamController extends Controller
         $users = $result->pluck('user_id');
         $exam_sections = Section::where('exam_id',$exam->id)->get();
         $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+        $colleges = College::all()->keyBy('id');
+        $branches = Branch::all()->keyBy('id');
+        request()->session()->put('colleges',$colleges);
+        request()->session()->put('branches',$branches);
+
         if(!Storage::disk('s3')->exists($filename))
             Storage::disk('s3')->delete($filename);
 
-        $usrs = User::whereIn('id',$users)->paginate(500);
-        if(count($usrs)<500){
-            $usrs = User::whereIn('id',$users)->with('college')->with('branch')->paginate(500);
+        $usrs = User::whereIn('id',$users)->get();
+        if(count($usrs)>0){
             request()->session()->put('result',$result);
             request()->session()->put('sections',$sections);
             request()->session()->put('exam_sections',$exam_sections);
