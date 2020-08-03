@@ -257,6 +257,8 @@ function subdomain() {
             return 'bfs';
     if($_SERVER['HTTP_HOST'] == 'xplore.co.in' )
             return 'xplore';
+     if($_SERVER['HTTP_HOST'] == 'xp.test' )
+            return 'xplore';
 
     if($_SERVER['HTTP_HOST'] == 'xplore.in.net' )
             return 'xplore';

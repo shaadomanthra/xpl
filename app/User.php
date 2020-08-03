@@ -116,6 +116,13 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\Job\Post');
     }
 
+    
+    public function clientexams()
+    {
+        
+        return $this->belongsToMany('PacketPrep\Models\Exam\Exam')->withPivot('role');
+    }
+
     public function services()
     {
         return $this->belongsToMany('PacketPrep\Models\College\Service')->withPivot(['code','status']);
@@ -350,9 +357,17 @@ class User extends Authenticatable
 
     public function getRole($role){
 
-        $r = Role::where('slug',$role)->first();
+        if(subdomain()=='xplore')
+            return Role::where('slug',$role)->first()->users;
+        else{
+            $r =Role::where('slug',$role)->first();
+            $users = $r->users()->where('client_slug',subdomain())->get();
+            if(!$users)
+                return $r->users;
+            else
+            return  $users;
+        }
 
-        return $r->users;
     }
     
 

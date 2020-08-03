@@ -89,11 +89,16 @@ class ExamController extends Controller
     {
         $exam = new Exam();
         $examtypes = Examtype::where('client',subdomain())->get();
+
+        $hr_managers = \auth::user()->getRole('hr-manager');
+  
         $courses = Course::all();
         $this->authorize('create', $exam);
         $slug = rand(10000,100000);
 
         $e = Exam::where('slug',$slug)->first();
+
+        
 
         if($e){
             $slug = rand(10000,100000);
@@ -107,6 +112,7 @@ class ExamController extends Controller
                 ->with('exam',$exam)
                 ->with('slug',$slug)
                 ->with('courses',$courses)
+                ->with('hr_managers',$hr_managers)
                 ->with('examtypes',$examtypes);
     }
 
@@ -492,6 +498,32 @@ class ExamController extends Controller
                 $path = Storage::disk('s3')->putFileAs('articles', $request->file('file2_'),$filename,'public');
             }
 
+            $exam->extra = $request->get('extra');
+            $viewers = $request->get('viewers');
+            if($viewers){
+                $exam->viewers()->wherePivot('role','viewer')->detach();
+                foreach($viewers as $v){
+                    if(!$exam->viewers->contains($v))
+                        $exam->viewers()->attach($v,['role'=>'viewer']);
+                }
+            }else{
+                $exam->viewers()->detach();
+            }
+
+            $evaluators = $request->get('evaluators');
+            if($evaluators){
+                $exam->evaluators()->wherePivot('role','evaluator')->detach();
+                foreach($evaluators as $ev){
+                    if(!$exam->evaluators->contains($ev))
+                        $exam->evaluators()->attach($ev,['role'=>'evaluator']);
+                }
+            }else{
+                $exam->evaluators()->detach();
+            }
+
+            //add owner
+            if(!$exam->viewers->contains($exam->user_id))
+                $exam->viewers()->attach($exam->user_id,['role'=>'owner']);
 
             $exam->name = $request->name;
             $exam->slug = $request->slug;
@@ -515,7 +547,6 @@ class ExamController extends Controller
             $exam->shuffle = $request->shuffle;
             $exam->message = $request->message;
             $exam->save = $request->save;
-            $exam->extra = $request->extra;
             if($request->auto_activation)
                 $exam->auto_activation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
             else
@@ -598,6 +629,13 @@ class ExamController extends Controller
         $emails = implode(',',explode("\n", $exam->emails));
         $emails =str_replace("\r", '', $emails);
         $emails = explode(',',$emails);
+
+        if($exam->extra){
+          $extra = json_decode($exam->extra,true);
+          $exam->viewers = User::whereIn('id',$extra['viewers'])->get();
+          $exam->evaluators = User::whereIn('id',$extra['evaluators'])->get();  
+        }
+        
 
         if($exam->emails){
             
@@ -936,6 +974,48 @@ class ExamController extends Controller
             abort(404);
     }
 
+     public function analytics3($slug,Request $request)
+    {
+
+        $search = $request->search;
+        $item = $request->item;
+        $obj = Exam::where('slug',$slug)->first();
+        
+        
+        $this->authorize('view', $obj);
+        
+        $u = $obj->users->pluck('user_id')->toArray();
+
+        $users = User::whereIn('id',$u)->get();
+
+        $data['colleges'] = Cache::remember('college',240,function(){
+                    return College::orderBy('name')->get()->keyBy('id');
+                });
+
+        $data['branches'] = Cache::remember('branche',240,function(){
+                    return Branch::orderBy('name')->get()->keyBy('id');
+                });
+        $data['total'] = count($users); 
+        $data['college_group'] = $users->groupBy('college_id');
+        $data['branch_group'] = $users->groupBy('branch_id');
+        $data['yop_group'] = $users->groupBy('year_of_passing');
+        $data['no_video'] = count($users->where('video',''));
+        $data['video'] = $data['total'] - $data['no_video'];
+
+        // if(request()->get('sendmail_video')){
+        //     $this->mailer($users);
+        // }
+
+
+        $view ='analytics3';
+
+        return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
+                ->with('users',$users)
+                ->with('data',$data)
+                ->with('obj',$obj)
+                ->with('app',$this);
+    }
+
 
 
     /**
@@ -947,8 +1027,16 @@ class ExamController extends Controller
     public function edit($id)
     {
         $exam= Exam::where('slug',$id)->first();
+
+
         $examtypes = Examtype::where('client',subdomain())->get();
+        $hr_managers = \auth::user()->getRole('hr-manager');
         $courses = Course::all();
+
+        if($exam->extra){
+            $exam->viewers = json_decode($exam->extra,true)['viewers'];
+            $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
+        }
 
         $this->authorize('update', $exam);
 
@@ -959,6 +1047,7 @@ class ExamController extends Controller
                 ->with('editor',true)
                 ->with('examtypes',$examtypes)
                 ->with('courses',$courses)
+                ->with('hr_managers',$hr_managers)
                 ->with('exam',$exam);
         else
             abort(404);
@@ -1005,6 +1094,35 @@ class ExamController extends Controller
                 $path = Storage::disk('s3')->putFileAs('articles', $request->file('file2_'),$filename,'public');
             }
 
+
+            $exam->extra = $request->get('extra');
+            $viewers = $request->get('viewers');
+            if($viewers){
+                $exam->viewers()->wherePivot('role','viewer')->detach();
+                foreach($viewers as $v){
+                    if(!$exam->viewers->contains($v))
+                        $exam->viewers()->attach($v,['role'=>'viewer']);
+                }
+            }else{
+                $exam->viewers()->detach();
+            }
+
+            $evaluators = $request->get('evaluators');
+            if($evaluators){
+                $exam->evaluators()->wherePivot('role','evaluator')->detach();
+                foreach($evaluators as $ev){
+                    if(!$exam->evaluators->contains($ev))
+                        $exam->evaluators()->attach($ev,['role'=>'evaluator']);
+                }
+            }else{
+                $exam->evaluators()->detach();
+            }
+
+            //add owner
+            if(!$exam->viewers->contains($exam->user_id))
+                $exam->viewers()->attach($exam->user_id,['role'=>'owner']);
+
+
             //dd($request->all());
             $exam->name = $request->name;
             $exam->slug = $request->slug;
@@ -1025,7 +1143,7 @@ class ExamController extends Controller
             $exam->shuffle = $request->shuffle;
             $exam->message = $request->message;
             $exam->save = $request->save;
-            $exam->extra = $request->extra;
+            
             if(!$request->camera)
                 $exam->capture_frequency = 0;
             else

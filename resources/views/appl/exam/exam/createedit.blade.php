@@ -338,6 +338,83 @@
       </div>
         </div>
 
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Viewers </label>
+            <div class="border p-3">
+              <div class="row">
+              @foreach($hr_managers as $hr)
+                 <div class="col-12 col-md-4">
+                  <input  type="checkbox" name="viewers[]" value="{{$hr->id}}"
+                    @if($stub=='Create')
+                      @if(old('viewer'))
+                        @if(in_array($hr->id,old('viewer')))
+                        checked
+                        @endif
+                      @endif
+                    @else
+                      @if($exam->viewers)
+                        @if(in_array($hr->id,$exam->viewers()->wherePivot('role','viewer')->pluck('id')->toArray()))
+                        checked
+                        @endif
+                      @endif
+                    @endif
+                  > 
+                  {{$hr->name }}
+                </div>
+              @endforeach
+            </div>
+            </div>
+            <div class="mt-2">
+          <small class=" "> 
+            <ul class="pt-2">
+              <li>Viewers can see the reports.</li>
+              <li>Download the excel.</li>
+              <li>Cannot modify test settings and responses.</li>
+            </ul>
+            </small>
+          </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Evaluators </label>
+            <div class="border p-3">
+              <div class="row">
+              @foreach($hr_managers as $hr)
+                 <div class="col-12 col-md-4">
+                  <input  type="checkbox" name="evaluators[]" value="{{$hr->id}}"
+                    @if($stub=='Create')
+                      @if(old('evaluator'))
+                        @if(in_array($hr->id,old('evaluator')))
+                        checked
+                        @endif
+                      @endif
+                    @else
+                      @if($exam->evaluators)
+                        @if(in_array($hr->id,$exam->viewers()->wherePivot('role','evaluator')->pluck('id')->toArray()))
+                        checked
+                        @endif
+                      @endif
+                    @endif
+                  > 
+                  {{$hr->name }}
+                </div>
+              @endforeach
+            </div>
+            </div>
+            <div class="mt-2">
+          <small class=" "> 
+            <ul class="pt-2">
+              <li>Evaluators can award marks to subjective questions.</li>
+              <li>View reports and download excel.</li>
+              <li>Cannot modify test settings.</li>
+            </ul>
+            </small>
+          </div>
+          </div>
+        </div>
+
 
       </div>
     </div>

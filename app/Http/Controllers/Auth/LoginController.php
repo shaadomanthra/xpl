@@ -68,6 +68,14 @@ class LoginController extends Controller
             ? $this->username()
             : 'username';
 
+        if($_SERVER['HTTP_HOST'] == 'xp.test')
+            return [
+                $field => $request->get($this->username()),
+                'password' => $request->password
+            ];
+            
+        else
+
         return [
                 $field => $request->get($this->username()),
                 'password' => $request->password,

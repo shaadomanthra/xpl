@@ -41,7 +41,7 @@ class Client extends Model
     }
 
     public function courses(){
-        return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('visible');;
+        return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('visible');
     }
 
     public function updateVisibility($client_id,$course_id=null,$visible){

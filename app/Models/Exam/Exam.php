@@ -56,6 +56,16 @@ class Exam extends Model
         return $this->belongsToMany('PacketPrep\Models\Product\Product');
     }
 
+    public function viewers()
+    {
+        return $this->belongsToMany('PacketPrep\User')->withPivot('role');
+    }
+
+    public function evaluators()
+    {
+        return $this->belongsToMany('PacketPrep\User')->withPivot('role');
+    }
+
     public function examtype()
     {
         return $this->belongsTo('PacketPrep\Models\Exam\Examtype');
@@ -82,6 +92,9 @@ class Exam extends Model
 
     public function updateCache(){
         $exam = $this;
+            //add owner
+        if(!$exam->viewers->contains($exam->user_id))
+                $exam->viewers()->attach($exam->user_id,['role'=>'owner']);
 
         Cache::forget('test_'.$exam->slug);
         Cache::forever('test_'.$exam->slug,$exam);

@@ -230,7 +230,12 @@ class ProductController extends Controller
           $item = $request->item;
 
           $count = 0;
-          $usertests = $user->exams()->orderBy('id','desc');
+
+          
+             
+          $usertests = $user->clientexams()->orderBy('id','desc')->withCount('users');
+          //$user->exams()->withCount('users')->orderBy('id','desc');
+
 
           $count = Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->count();
           //$count = count($alltests);
@@ -242,7 +247,7 @@ class ProductController extends Controller
           // }
 
           if($search)
-            $exams = $user->exams()->where('name','LIKE',"%{$item}%")->orderBy('id','desc')
+            $exams = $user->clientexams()->where('name','LIKE',"%{$item}%")->orderBy('id','desc')
                     ->paginate(8);
           else
             $exams = $usertests->paginate(8);

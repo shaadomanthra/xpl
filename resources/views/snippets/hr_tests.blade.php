@@ -41,41 +41,39 @@
 
               </h4>
               <div>
+
+
                   @if($e->active==1)
                 <span class=" badge badge-secondary">Inactive</span>
                 @else
                   <span class=" badge badge-success">Active</span>
                 @endif
+
+                @if($e->pivot->role=='viewer')
+                <span class=" badge badge-secondary">Viewer</span>
+                @elseif($e->pivot->role=='evaluator')
+                <span class=" badge badge-primary">Evaluator</span>
+                @else
+                  <span class=" badge badge-warning">Owner</span>
+                @endif
+
               </div>
               
             </div>
             <div class='col-2 col-md-2'>
               <div class="heading_one float-right f30">
               	<a href="{{ route('test.report',$e->slug)}}" data-toggle="tooltip" title="Attempts">
-              	@if(isset($e)){{ $e->getAttemptCount() }}@endif
+              	@if(isset($e)){{ $e->users_count }}@endif
               	</a>
               </div>
             </div>
 
           </div>
         </div>
-        <div class="line" style="padding:1px;background:#ebf1fb"></div>  
-        	<div class="p-4">
+        	<div class="pb-1">
 
           
-        	@foreach($e->latestUsers() as $t)
-        		<div class="mb-2"><img src="@if($t->user->getImage()) {{ ($t->user->getImage())}}@else {{ Gravatar::src($t->user->email, 20) }}@endif" class="img-cirlce" style="width:20px" /> &nbsp; &nbsp;
-        			<a href="{{ route('profile','@'.$t->user->username) }}" data-toggle="tooltip" title="View  Profile">{{$t->user->name}} </a>
-
-        		  @if($t->status || $e->slug=='psychometric-test')
-              has attempted the test
-              @else
-               has scored <a href="{{ route('assessment.analysis',$e->slug)}}?student={{$t->user->username}}" data-toggle="tooltip" title="View  Report"><b class="">
-                @if($t->score){{ $t->score }}@else 0 @endif</b></a> / {{ $t->max }}
-              @endif
-
-        		<span class="float-right text-secondary"><small>{{$t->created_at->diffForHumans()}}</small></span></div>
-        	@endforeach
+        	
           
         </div>
         </div>

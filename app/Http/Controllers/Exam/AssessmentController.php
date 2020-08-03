@@ -325,7 +325,6 @@ class AssessmentController extends Controller
         else
             $images = [];
 
-
         $window_change = true;
 
         if(!$request->get('admin'))
