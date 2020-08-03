@@ -1,5 +1,5 @@
 @extends('layouts.nowrap-white')
-@section('title', 'Analytics - '.$obj->title)
+@section('title', 'Analytics - '.$obj->name)
 @section('content')
 
 @include('appl.exam.exam.xp_css')
@@ -10,8 +10,8 @@
     <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
             <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('post.index') }}">Job post</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('post.show',$obj->slug) }}">{{$obj->title}}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('exam.index') }}">Tests</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('exam.show',$obj->slug) }}">{{$obj->name}}</a></li>
             <li class="breadcrumb-item">Analytics </li>
           </ol>
         </nav>
