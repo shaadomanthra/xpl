@@ -94,6 +94,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('/launch-offer',function(){ return view('appl.pages.launch_offer'); })->name('launch-offer');
 	Route::get('/email-template',function(){ return view('mail.email'); })->name('email.template');
 
+	Route::get('/cf-launch',function(){ return view('appl.pages.cf_launch'); })->name('cf.launch');
+
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/em',function(){ return view('appl.pages.eamcet'); })->name('eamcet');
 

@@ -4,7 +4,7 @@
 		  <h4 class="mb-0">You have applied for this job </h4>
 		</div>
 		@else
-			@if(\carbon\carbon::parse($obj->last_date)->gt(\carbon\carbon::now()))
+			@if(\carbon\carbon::parse($obj->last_date)->gte(\carbon\carbon::now()))
 				@if(auth::user()->branch_id && auth::user()->college_id && auth::user()->year_of_passing)
 					@if(auth::user()->bachelors < $obj->academic)
 					<div class="alert alert-info alert-important" role="alert">
