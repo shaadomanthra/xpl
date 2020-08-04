@@ -34,10 +34,7 @@
 
 <script>
 $(function(){
-	$(document).on('click','.btn-launch',function(e){
-		console.log('clicked');
-		$('.message').show();
-	});
+	
 });
 
 </script>

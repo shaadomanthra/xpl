@@ -75,9 +75,7 @@
         $('#startConfetti').click(InitializeConfetti);
         $('#stopConfetti').click(DeactivateConfetti);
         $('#restartConfetti').click(RestartConfetti);
-        setTimeout(function() {
-        DeactivateConfetti();
-}, 5000);
+        
     }
 
     function SetGlobals() {
@@ -99,6 +97,8 @@
             particles.push(new confettiParticle(particleColor));
         }
         StartConfetti();
+
+        setTimeout(DeactivateConfetti,5000);
     }
 
     function Draw() {
@@ -228,4 +228,12 @@
     this.restart = RestartConfetti;
   }
   $.confetti.init();
+
+  $(document).on('click','.btn-launch',function(e){
+        console.log('clicked');
+        $('.message').show();
+        $.confetti.deactivationTimerHandler = 5;
+         
+    });
+
 }(jQuery));
