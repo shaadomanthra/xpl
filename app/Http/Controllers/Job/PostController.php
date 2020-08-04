@@ -199,7 +199,7 @@ class PostController extends Controller
 
         $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BSC','BCA','BBA','MBA','BPHARM','MPHARM','MCOM','MCA','MSC','OTHER'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA', '1.8LPA to 13LPA'];
-        $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI'];
+        $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI','NCR REGION','SURAT','KOTA','AHMEDABAD','CHANDIGARH','COIMBATORE','GURGAON','GOA','OTHER' ];
         $this->yop = ['2016','2017','2018','2019','2020','2021'];
         $this->academic = ['55','60','65','70','75'];
 
@@ -351,7 +351,7 @@ class PostController extends Controller
 
         $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BCA','BSC','BBA','MBA','BPHARM','MPHARM','MCOM','MCA','MSC','OTHER'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA','1.8LPA to 13LPA'];
-        $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI'];
+        $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI','NCR REGION','SURAT','KOTA','AHMEDABAD','CHANDIGARH','COIMBATORE','GURGAON','GOA','OTHER' ];
         $this->yop = ['2016','2017','2018','2019','2020','2021'];
         $this->academic = ['55','60','65','70','75'];
 

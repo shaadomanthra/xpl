@@ -3,9 +3,9 @@
 @section('content')
 
 
-<div class="bg-white ">
-	<img src="https://xplore.co.in/img/jobs.jpg" class="w-100"></img>
-<div class="card-body p-5 text-center demo">
+<div class="bg-white border">
+	<img src="{{ asset('img/cflaunch.jpg')}}" class="w-100"></img>
+<div class="card-body p-5 text-center demo bg-light">
 
 <h1>India's First Virtual Career Fair</h1>
 <p>Gurunanak Institutions in association with Xplore is organizing career fair 2020 for all the graduates and postgraduates. </p>
