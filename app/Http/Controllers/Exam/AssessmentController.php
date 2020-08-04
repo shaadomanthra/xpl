@@ -230,7 +230,7 @@ class AssessmentController extends Controller
             $products = null;
         $product = null;
 
-        $test_taken = $user->attempted($exam->id);//Test::where('test_id',$exam->id)->where('user_id',$user->id)->first();
+        $test_taken = $user->attempted_test($exam->id);//Test::where('test_id',$exam->id)->where('user_id',$user->id)->first();
 
         if($test_taken)
             return redirect()->route('assessment.analysis',$exam->slug);
@@ -344,7 +344,7 @@ class AssessmentController extends Controller
 
         $test_taken = false;
         if(!$request->get('admin')){
-        $test_taken = $user->attempted($exam->id);
+        $test_taken = $user->attempted_test($exam->id);
         if($test_taken)
             return redirect()->route('assessment.analysis',$exam->slug);
         }
@@ -1385,7 +1385,7 @@ class AssessmentController extends Controller
         }
 
         if(!$request->get('admin')){
-            $test_taken = $user->attempted($exam->id);
+            $test_taken = $user->attempted_test($exam->id);
 
             if($test_taken)
                 return redirect()->route('assessment.analysis',$slug);

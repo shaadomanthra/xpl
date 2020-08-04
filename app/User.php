@@ -181,9 +181,25 @@ class User extends Authenticatable
         return $user->image;
     }
 
+    public function attempted_test($id){
+        $user = \auth::user();
+        $test = Cache::remember('attempt_'.$user->id.'_'.$id, 240, function() use ($user,$id) {
+                $test = DB::table('tests_overall')
+                    ->where('user_id', $user->id)
+                    ->where('test_id', $id)
+                    ->first();
+                if($test)
+                    return $test;
+                return 0;
+        });
+
+        return $test;
+
+    }
+
     public function attempted($id){
         $user = \auth::user();
-        Cache::forget('attempt_'.$user->id.'_'.$id);
+        //Cache::forget('attempt_'.$user->id.'_'.$id);
         $attempts = Cache::get('attempts_'.$user->id);
         //dd($attempts->where('test_id',$id)->count());
         if(!$attempts)
