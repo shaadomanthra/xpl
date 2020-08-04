@@ -1941,7 +1941,7 @@ class AssessmentController extends Controller
                 
             }
             
-            $attempt = $user->attempted($exam->id);//Test::where('test_id',$exam->id)->where('user_id',$user->id)->first();
+            $attempt = $user->attempted_test($exam->id);//Test::where('test_id',$exam->id)->where('user_id',$user->id)->first();
             if($attempt)
             $entry = 1;
         }
