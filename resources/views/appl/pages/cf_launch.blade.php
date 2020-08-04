@@ -12,7 +12,7 @@
 
 <button class="btn btn-lg btn-success btn-launch" id="startConfetti">Launch</button>
 
-<h1 class="text-primary py-3 pt-5 message blink_me" style="display: none">Now the candidates can apply for the job openings</h1>
+<h1 class="text-primary py-3 pt-5 message blink_me" style="display: none">Mails sent to all the applicants. <br>Now the candidates can apply for the job openings.</h1>
 
 
 </div>		

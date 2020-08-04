@@ -5,11 +5,15 @@
 		</div>
 		@else
 			@if(\carbon\carbon::parse($obj->last_date)->gte(\carbon\carbon::now()))
-				@if(auth::user()->branch_id && auth::user()->college_id && auth::user()->year_of_passing)
+				@if(auth::user()->branch_id && auth::user()->college_id && auth::user()->year_of_passing )
 					@if(auth::user()->bachelors < $obj->academic)
 					<div class="alert alert-info alert-important" role="alert">
 				 	 <p class="mb-0" >The following job opening requires a minimum academic percentage of {{$obj->academic}}% in bachelors. </p><hr>
 				 	 Your Academic percentage is {{auth::user()->bachelors}}. <br> <a href="{{ route('profile.complete')}}?redirect={{request()->url()}}">update your profile</a> to apply for this job.
+					</div>
+					@elseif(auth::user()->attempted_test(292))
+					<div class="alert alert-info alert-important" role="alert">
+				 	 <p class="mb-0" >The following job opening is only for the candidates you have taken Career Fair Assessment Test. </p>
 					</div>
 					@elseif(!in_array(auth::user()->branch->name,explode(',',$obj->education)))
 					<div class="alert alert-info alert-important" role="alert">
