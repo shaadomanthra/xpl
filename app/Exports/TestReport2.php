@@ -26,6 +26,7 @@ class TestReport2 implements FromCollection
 
 
     		$result[$k]->Sno = $k+1;
+            $result[$k]->uid = $res->user->id;
     		$result[$k]->Name = $res->user->name;
             
             if($res->user->college_id==5 || $res->user->college_id==295)
@@ -95,6 +96,7 @@ class TestReport2 implements FromCollection
     	$ux = new Tests_Overall();
         $ux->created = "Timestamp";
     	$ux->sno = "Sno";
+        $ux->uid = "UID";
     	$ux->name = "Name";
         $ux->college = "College";
 
