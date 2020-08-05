@@ -6,15 +6,15 @@
   @if($exam->status !=0)
 <div class="col-12 col-md-4 mb-4"> 
   
-          <div class="bg-white border">
-            <div  style="background: #ebf3f7">&nbsp;</div>
+          <div class="bg-white border rounded">
+            <div  style="background: #ebf3f7;padding:3px"></div>
               <div class="card-body">
                 @if($exam->active==1)
                 <span class="badge badge-secondary">Inactive</span>
-                @elseif($exam->status ==0)
+                @elseif($exam->active ==0)
                 <span class="badge badge-success">Active</span>
                 @endif
-                  <h4>{{ $exam->name }}</h4>
+                  <h4 class="my-2">{{ $exam->name }}</h4>
                     {{ $exam->time() }} min<br>
 
                     <div class="pt-2">
@@ -24,12 +24,9 @@
                     <i class="fa fa-paper-plane" ></i> Details
                   </button>
                   </a>
-                  
-                 
                 </div>
               </div>
           </div>
-    
 </div>
   @endif
     @endforeach  
