@@ -11,6 +11,9 @@
 				 	 <p class="mb-0" >The following job opening requires a minimum academic percentage of {{$obj->academic}}% in bachelors. </p><hr>
 				 	 Your Academic percentage is {{auth::user()->bachelors}}. <br> <a href="{{ route('profile.complete')}}?redirect={{request()->url()}}">update your profile</a> to apply for this job.
 					</div>
+					@elseif(!in_array(auth::user()->year_of_passing,explode(',',$obj->yop)))
+					<p class="mb-0" >The following job opening is only for {{str_replace(',',', ',$obj->yop)}} passed out candidates.  <br> <a href="{{ route('profile.complete')}}?redirect={{request()->url()}}">update your profile</a> to apply for this job.
+					</div>
 					@elseif(!auth::user()->attempted_test(292))
 					<div class="alert alert-info alert-important" role="alert">
 				 	 <p class="mb-0" >The following job opening is only for the candidates you have taken Career Fair Assessment Test. </p>
