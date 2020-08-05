@@ -333,8 +333,8 @@ class PostController extends Controller
             return Obj::where('slug',$id)->first();
         });
 
-        if(!$obj->status)
-            abort('403','Unauthorized Access');
+        // if(!$obj->status)
+        //     abort('403','Unauthorized Access');
 
         if($request->get('apply')==1){
             $user = \auth::user();
