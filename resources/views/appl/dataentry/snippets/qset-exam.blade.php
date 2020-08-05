@@ -33,6 +33,7 @@
 			
 			@foreach($exam->sections as $section)
 				<div class="mb-1 pb-2 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}  &nbsp;&nbsp;
+@can('update',$question)
 <div class="btn-group float-right " role="group" aria-label="Button group with nested dropdown float-right">
 
   <div class="btn-group" role="group">
@@ -51,11 +52,14 @@
        <a class="dropdown-item" href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Code Question</a>
         @else
         @endif
-        
-      
     </div>
   </div>
-</div></div></div>
+</div>
+@endcan
+</div>
+
+</div>
+
 				<div class="row no-gutters">
 
 				@foreach($section->questions as $k=> $q)

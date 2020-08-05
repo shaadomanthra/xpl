@@ -24,10 +24,12 @@
           <p class="h2 mb-0"><i class="fa fa-th "></i> {{ $section->name }} 
 
           @can('update',$section)
+            @can('update',$exam)
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route('sections.edit',[$exam->slug,$section->id]) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
+            @endcan
             @endcan
           </p>
         </div>

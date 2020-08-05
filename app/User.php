@@ -408,6 +408,27 @@ class User extends Authenticatable
         return false;
     }
 
+    public function checkExamRole($exam,$roles){
+        $user = $this;
+        if($user->isAdmin())
+            return true;
+
+        if($user->role==1)
+            return false;
+        
+        $exams = Cache::remember('userexamroles_'.$user->id, 60, function() use ($user) {
+           return $user->clientexams;
+        });
+        $ex = $exams->find($exam->id);
+        foreach($roles as $r){
+
+            if($ex->pivot->role == $r){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function checkUserRole($roles){
         $user = $this;
         $userroles = array();

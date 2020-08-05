@@ -81,12 +81,20 @@
             </div>
             <div class="col-12 col-md-12 col-lg-9">
               <div class="pt-2 f18 mb-4 lh15" >
-              <h4 class="mb-3"><i class="fa fa-angle-right"></i> Description <a href="{{ route('exam.edit',$exam->slug)}}?id=description" class="float-right"><i class="fa fa-edit"></i> edit</a></h4>
+              <h4 class="mb-3"><i class="fa fa-angle-right"></i> Description 
+                @can('update',$exam)
+                <a href="{{ route('exam.edit',$exam->slug)}}?id=description" class="float-right"><i class="fa fa-edit"></i> edit</a>
+                @endcan
+              </h4>
               {!! $exam->description !!}
               </div>
 
 
-              <h4 class="mb-3"><i class="fa fa-angle-right"></i> Settings <a href="{{ route('exam.edit',$exam->slug)}}?id=settings" class="float-right"><i class="fa fa-edit"></i> edit</a></h4>
+              <h4 class="mb-3"><i class="fa fa-angle-right"></i> Settings 
+                @can('update',$exam)
+                <a href="{{ route('exam.edit',$exam->slug)}}?id=settings" class="float-right"><i class="fa fa-edit"></i> edit</a>
+                @endcan
+              </h4>
               <div class="row mb-2">
 
             <div class="col-6"><i class="fa fa-th"></i>&nbsp; Report</div>
@@ -250,7 +258,11 @@
 
       <div class="card mb-4 ">
         <div class="card-body">
-            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Instructions <a href="{{ route('exam.edit',$exam->slug)}}?id=instructions" class="float-right"><i class="fa fa-edit"></i> edit</a></h4>
+            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Instructions 
+              @can('update',$exam)
+              <a href="{{ route('exam.edit',$exam->slug)}}?id=instructions" class="float-right"><i class="fa fa-edit"></i> edit</a>
+              @endcan
+            </h4>
             @if($exam->instructions)
               {!! $exam->instructions !!}
             @else
@@ -295,7 +307,11 @@
 
       <div class="card mb-4 ">
         <div class="card-body">
-      <h4 class="mb-3"><i class="fa fa-angle-right"></i> Access Codes <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Employer can uniquely name the access codes to categorise the participants based on job opening."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=accesscode" class="float-right"><i class="fa fa-edit"></i> edit</a></h4>
+      <h4 class="mb-3"><i class="fa fa-angle-right"></i> Access Codes <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Test creator can uniquely name the access codes to categorise the participants based on job opening."></i> 
+        @can('update',$exam)
+        <a href="{{ route('exam.edit',$exam->slug)}}?id=accesscode" class="float-right"><i class="fa fa-edit"></i> edit</a>
+        @endcan
+      </h4>
       <hr>
       
       <div class="">
@@ -312,7 +328,11 @@
       
       <div class="card mb-4 ">
         <div class="card-body">
-            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=emails" class="float-right"><i class="fa fa-edit"></i> edit</a> </h4>
+            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Candidates Emails <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> 
+              @can('update',$exam)
+              <a href="{{ route('exam.edit',$exam->slug)}}?id=emails" class="float-right"><i class="fa fa-edit"></i> edit</a> 
+              @endcan 
+            </h4>
             <hr>
             @if($exam->emails)
             <div class="row ">
@@ -346,7 +366,12 @@
 
       <div class="card mb-4 ">
         <div class="card-body">
-            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Banner in report page <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> <a href="{{ route('exam.edit',$exam->slug)}}?id=image" class="float-right"><i class="fa fa-edit"></i> edit</a> </h4>
+            <h4 class="mb-3"><i class="fa fa-angle-right"></i> Banner in report page <i class="fa fa-question-circle text-secondary" data-toggle="tooltip" title="Only the listed candidates can attempt the test with a valid access code. If no emails are listed, then the test will be open for all."></i> 
+              @can('update',$exam)
+              <a href="{{ route('exam.edit',$exam->slug)}}?id=image" class="float-right"><i class="fa fa-edit"></i> edit</a> 
+
+              @endcan
+            </h4>
             <hr>
             @if(Storage::disk('s3')->exists('articles/'.$exam->slug.'_banner.jpg'))
                 <div class="mb-3">

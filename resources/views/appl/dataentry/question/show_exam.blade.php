@@ -71,7 +71,7 @@
                 <a href="{{ route('question.edit',['project'=>$question->project->slug,'question'=>$question->id,'url'=> url()->current()]) }}&exam={{$exam->id}}&default=1"><i class="fa fa-edit"></i> edit</a> &nbsp;&nbsp;&nbsp;
           @endcan
 
-          @can('create',$question)
+          @can('update',$question)
             <a href="#"  data-toggle="modal" data-target="#exampleModal3">
          <i class="fa fa-unlink"></i> remove</a>
                 

@@ -75,7 +75,9 @@
                   @endif
 
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
+                  @can('update',$exam)
                   <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r->user_id]->username}}&admin=1&code={{$r->code}}" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
+                  @endcan
                   @endif
                   
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))

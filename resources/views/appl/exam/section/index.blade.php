@@ -27,7 +27,7 @@
 
           <form class="form-inline" method="GET" action="{{ route('sections.index',$exam->slug) }}">
 
-            @can('create',$exam)
+            @can('update',$exam)
             <a href="{{route('sections.create',$exam->slug)}}">
               <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Create Section</button>
             </a>

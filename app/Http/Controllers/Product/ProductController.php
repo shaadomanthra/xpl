@@ -234,6 +234,9 @@ class ProductController extends Controller
           
              
           $usertests = $user->clientexams()->orderBy('id','desc')->withCount('users');
+          
+
+          //dd($user->clientexams->pluck('id'));
           //$user->exams()->withCount('users')->orderBy('id','desc');
 
 
@@ -252,15 +255,21 @@ class ProductController extends Controller
           else
             $exams = $usertests->paginate(8);
 
+
+
           $exam = null;
-          foreach($exams as $e){
+          $ids =array();
+          foreach($exams as $k=>$e){
             if($e)
-            {
               $exam = $e;
-              break;
-            }
+            
+            if(!in_array($e->id, $ids))
+              array_push($ids, $e->id);
+            else
+              unset($exams[$k]);
           }
 
+          //dd($exams);
         
           $user->attempts = $count;
           $view = $search ? 'snippets.hr_tests': 'hr_welcome';

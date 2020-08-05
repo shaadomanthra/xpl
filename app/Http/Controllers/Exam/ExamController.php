@@ -1100,6 +1100,7 @@ class ExamController extends Controller
             if($viewers){
                 $exam->viewers()->wherePivot('role','viewer')->detach();
                 foreach($viewers as $v){
+                    Cache::forget('userexamroles_'.$v->id);
                     if(!$exam->viewers->contains($v))
                         $exam->viewers()->attach($v,['role'=>'viewer']);
                 }
@@ -1111,6 +1112,7 @@ class ExamController extends Controller
             if($evaluators){
                 $exam->evaluators()->wherePivot('role','evaluator')->detach();
                 foreach($evaluators as $ev){
+                    Cache::forget('userexamroles_'.$ev->id);
                     if(!$exam->evaluators->contains($ev))
                         $exam->evaluators()->attach($ev,['role'=>'evaluator']);
                 }
