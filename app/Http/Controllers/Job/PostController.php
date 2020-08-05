@@ -38,6 +38,19 @@ class PostController extends Controller
         $search = $request->search;
         $item = $request->item;
         $user =\auth::user();
+
+
+        if(request()->get('refresh')){
+            $objs = $obj->where('title','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')->with('user')->withCount('users')->get();
+            foreach($objs as $oj){
+                Cache::forget('post_'.$oj->id);
+                Cache::put('post_'.$oj->id,$oj,240);
+            }
+            flash('Posts cache is refreshed!')->success();
+            
+        }
+        
         if($user->isAdmin())
             $objs = $obj->where('title','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')->with('user')->withCount('users')
@@ -46,6 +59,9 @@ class PostController extends Controller
             $objs = $obj->where('user_id',$user->id)->where('title','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')->with('user')->withCount('users')
                     ->paginate(config('global.no_of_records')); 
+
+        
+
         $view = $search ? 'list': 'index';
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
@@ -312,6 +328,7 @@ class PostController extends Controller
 
     public function public_show($id,Request $request)
     {
+
         $obj = Cache::remember('post_'.$id,240,function() use($id){
             return Obj::where('slug',$id)->first();
         });
