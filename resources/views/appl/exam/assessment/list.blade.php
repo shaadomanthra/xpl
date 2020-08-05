@@ -9,12 +9,12 @@
           <div class="bg-white border">
             <div  style="background: #ebf3f7">&nbsp;</div>
               <div class="card-body">
-                @if($exam->status==1)
-                <span class="badge badge-warning">FREE</span>
-                @elseif($exam->status ==2)
-                <span class="badge badge-info">PREMIUM</span>
+                @if($exam->active==1)
+                <span class="badge badge-secondary">Inactive</span>
+                @elseif($exam->status ==0)
+                <span class="badge badge-success">Active</span>
                 @endif
-                  <h1>{{ $exam->name }}</h1>
+                  <h4>{{ $exam->name }}</h4>
                     {{ $exam->time() }} min<br>
 
                     <div class="pt-2">
