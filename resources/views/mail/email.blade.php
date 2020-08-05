@@ -355,7 +355,7 @@
                       <td>
                         <p>Hi <b>@if(isset($user['name'])){{$user['name']}} @else  @endif</b>,</p>
                         <p>Greetings!</p>
-                        <p>India's First Virtual Career Fair has started, and you can attempt the pre-assessment now. The test contains 30 questions to be answered in 45 minutes.The link will be active for next 3 days, you can attempt the test anytime before Aug 3rd, 6:00 PM.</p>
+                        <p>Virtual Career Fair Job Openings are active now. If you have completed the Career Fair <a href="https://xplore.co.in/test/34781" target="_blank">pre-assessment</a> then you can apply for job openings in 30+ companies. The links will be active for next 4 days, you can apply anytime before Aug 9th, 6:00 PM.</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
@@ -363,7 +363,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="https://xplore.co.in/test/34781" target="_blank">Attempt Test</a> </td>
+                                      <td> <a href="https://xplore.co.in/jobs" target="_blank">Apply for Jobs</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
