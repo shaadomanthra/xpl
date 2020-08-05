@@ -21,7 +21,12 @@
     <a href="{{ route('job.show',$obj->slug)}}"><h2 class="mt-0">{{$obj->title}}</h2></a>
     {!! substr(strip_tags($obj->details),0,200) !!} @if(strlen(strip_tags($obj->details))>200) ...@endif
     </div>
-
+     @auth
+     @if($j = $myjobs->find($obj->id))
+    <p>
+    <span class="badge badge-success"><i class="fa fa-check-circle"></i> Applied <span style="color:#9ed3a4">@if($j->created_at){{$j->created_at->diffForHumans()  }}@endif</span></span></p>
+    @endif
+    @endauth
     <div class="mb-4">
       <div class="row mb-2">
             <div class="col-5 col-md-4"><i class="fa fa-map-marker"></i>&nbsp; Locations</div>

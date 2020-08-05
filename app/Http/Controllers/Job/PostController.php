@@ -50,7 +50,7 @@ class PostController extends Controller
             flash('Posts cache is refreshed!')->success();
             
         }
-        
+
         if($user->isAdmin())
             $objs = $obj->where('title','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')->with('user')->withCount('users')
@@ -76,6 +76,12 @@ class PostController extends Controller
 
         $search = $request->search;
         $item = $request->item;
+        $user = \auth::user();
+        if($user){
+            $myjobs = $user->posts;
+        }else{
+            $myjobs = array();
+        }
         
         $objs = $obj->where('title','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
@@ -85,7 +91,8 @@ class PostController extends Controller
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('objs',$objs)
                 ->with('obj',$obj)
-                ->with('app',$this);
+                ->with('app',$this)
+                ->with('myjobs',$myjobs);
     }
 
     public function analytics($slug,Request $request)
@@ -329,6 +336,7 @@ class PostController extends Controller
     public function public_show($id,Request $request)
     {
 
+        $user = \auth::user();
         $obj = Cache::remember('post_'.$id,240,function() use($id){
             return Obj::where('slug',$id)->first();
         });
@@ -337,7 +345,7 @@ class PostController extends Controller
         //     abort('403','Unauthorized Access');
 
         if($request->get('apply')==1){
-            $user = \auth::user();
+          
             if($user){
                 if(!$obj->users->contains($user->id)){
                     $obj->users()->attach($user->id,['created_at'=>date("Y-m-d H:i:s")]);
@@ -347,6 +355,8 @@ class PostController extends Controller
             }
             $obj = Obj::where('slug',$id)->first();
         }
+
+        
 
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.public_show')
