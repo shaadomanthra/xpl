@@ -3,6 +3,7 @@
 namespace PacketPrep\Policies\Job;
 
 use PacketPrep\User;
+use PacketPrep\Models\Job\Post;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy
@@ -61,9 +62,18 @@ class PostPolicy
      * @param  \App\Post  $post
      * @return bool
      */
-    public function update(User $user)
+    public function update(User $user,Post $post)
     { 
-        return $user->checkRole(['administrator','manager','marketing-manager','marketing-executive','hr-manager']);
+        if($user->checkRole(['administrator','manager'])){
+            return true;
+        }
+        else{
+            if($user->checkRole(['hr-manager']))
+                if($post->user_id==$user->id)
+                    return true;
+            else    
+            return false;
+        }
     }
 
 

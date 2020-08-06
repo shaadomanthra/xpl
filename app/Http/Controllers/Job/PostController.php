@@ -58,7 +58,12 @@ class PostController extends Controller
                     ->orderBy('created_at','desc ')->with('user')->withCount('users')
                     ->paginate(config('global.no_of_records')); 
         else
-            $objs = $obj->where('user_id',$user->id)->where('title','LIKE',"%{$item}%")
+            if($item)
+                $objs = $obj->where('user_id',$user->id)->where('title','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')->with('user')->withCount('users')
+                    ->paginate(config('global.no_of_records')); 
+            else
+                $objs = $obj->where('user_id',$user->id)->orWhere('viewer_id',$user->id)
                     ->orderBy('created_at','desc ')->with('user')->withCount('users')
                     ->paginate(config('global.no_of_records')); 
 
