@@ -8,6 +8,8 @@ use PacketPrep\User;
 use PacketPrep\Models\Job\Post as Obj;
 use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\College\College;
+use PacketPrep\Models\Exam\Exam; 
+use PacketPrep\Models\Exam\Tests_Overall;   
 use Illuminate\Support\Facades\Storage;
 use PacketPrep\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -141,6 +143,7 @@ class PostController extends Controller
 
         $search = $request->search;
         $item = $request->item;
+        $filter = $request->filter;
         $obj = Obj::where('slug',$slug)->withCount('users')->first();
         
         $colleges = Cache::remember('colleges',240, function(){
@@ -159,10 +162,23 @@ class PostController extends Controller
             $objs = User::whereIn('id',$users)->paginate(10000);
             $colleges = College::all()->keyBy('id');
             $branches = Branch::all()->keyBy('id');
+            $exam_data = array();
+            $exms = array();
+            if($obj->exam_ids){
+                $exams = explode(',',$obj->exam_ids);
+                foreach($exams as $k=>$e){
+                    $ex = Exam::where('slug',$e)->first();
+                    $exms[$k] = $ex;
+
+                    $exam_data[$ex->id] = Tests_Overall::select('score','user_id')->where('test_id',$ex->id)->get()->keyBy('user_id');
+                }
+            }
 
             request()->session()->put('users',$objs);
                 request()->session()->put('colleges',$colleges);
                 request()->session()->put('branches',$branches);
+                request()->session()->put('exam_data',$exam_data);
+                request()->session()->put('exams',$exms);
                 $name = "Applicants_job_".$obj->slug.".xlsx";
                 ob_end_clean(); // this
                 ob_start(); 
@@ -175,7 +191,28 @@ class PostController extends Controller
             // }
             
         } else{
-            $objs = $obj->users()->where('name','LIKE',"%{$item}%")->orderBy('pivot_created_at','desc')->paginate(config('global.no_of_records')); 
+            if($item)
+            $objs = $obj->users()->where('name','LIKE',"%{$item}%")->orderBy('pivot_created_at','desc')->paginate(config('global.no_of_records'));
+            else if($filter){
+                $yop = explode(',',$request->get('yop'));
+                if(!$yop[0]){
+                    $yop=['2016','2017','2018','2019','2020','2021','2022','2023','2024'];
+                }
+                $branch = explode(',',$request->get('branch'));
+                if(!$branch[0]){
+                    $branch = $branches->pluck('id')->toArray();
+                }
+                $academics = $request->get('academics');
+
+                if(!$academics){
+                    $academics = 0;
+                }
+
+                $objs = $obj->users()->whereIn('year_of_passing',$yop)
+                        ->whereIn('branch_id',$branch)->where('bachelors','>=',$academics)
+                        ->orderBy('pivot_created_at','desc')->simplePaginate(config('global.no_of_records'));
+            }else
+                $objs = $obj->users()->orderBy('pivot_created_at','desc')->simplePaginate(config('global.no_of_records')); 
         } 
 
         $view = $search ? 'applicant_list': 'applicant_index';
@@ -226,12 +263,15 @@ class PostController extends Controller
         $this->yop = ['2016','2017','2018','2019','2020','2021'];
         $this->academic = ['55','60','65','70','75'];
 
+        $data['hr-managers'] = \auth::user()->getRole('hr-manager');
+
         return view('appl.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Create')
                 ->with('jqueryui',true)
                 ->with('editor',1)
                 ->with('obj',$obj)
                 ->with('slug',$slug)
+                ->with('data',$data)
                 ->with('app',$this);
     }
 
@@ -382,12 +422,14 @@ class PostController extends Controller
         $this->yop = ['2016','2017','2018','2019','2020','2021'];
         $this->academic = ['55','60','65','70','75'];
 
+        $data['hr-managers'] = \auth::user()->getRole('hr-manager');
 
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.createedit')
                 ->with('stub','Update')
                 ->with('jqueryui',true)
                 ->with('editor',1)
+                ->with('data',$data)
                 ->with('obj',$obj)->with('app',$this);
         else
             abort(404);
@@ -461,6 +503,8 @@ class PostController extends Controller
             }
             $details = summernote_imageupload(\auth::user(),$request->details);
             $request->merge(['details' => $details]);
+
+
 
             $this->authorize('update', $obj);
             $obj->update($request->all()); 

@@ -19,9 +19,11 @@ class UsersExport implements FromCollection
        $users = request()->session()->get('users');
        $colleges = request()->session()->get('colleges');
        $branches= request()->session()->get('branches');
+       $exam_data = request()->session()->get('exam_data');
+       $exams = request()->session()->get('exams');
         foreach($users as $k=>$u){
-
-            unset($users[$k]->id);
+                $id = $users[$k]->id;
+                unset($users[$k]->id);
                 unset($users[$k]->created_at);
                 unset($users[$k]->updated_at);
                 unset($users[$k]->password);
@@ -57,8 +59,24 @@ class UsersExport implements FromCollection
                     $users[$k]->branches =  $branches[$b_id]->name;
                 else
                     $users[$k]->branches = '-';
-  
+
+                foreach($exams as $m=>$ex){
+                    $name = 'e_'.$ex->slug;
+                    if(isset($exam_data[$ex->id][$id]['score'])){
+                        $users[$k]->$name = $exam_data[$ex->id][$id]['score'];
+                    }
+                    else
+                       {
+                        $users[$k]->$name = '-';
+                       }
+
+                }
+            
+            
         } 
+
+
+
         $ux = new User();
         foreach($ux as $k=>$v){
            
@@ -81,6 +99,11 @@ class UsersExport implements FromCollection
         $ux->c6 = "Aadhar Number";
         $ux->c7 = "College";
         $ux->c8 = "Branch";
+
+        foreach($exams as $k=>$ex){
+                    $name = 'ck'.$k;
+                    $ux->$name = $ex->name;
+        }
 
 
         $users->prepend($ux);

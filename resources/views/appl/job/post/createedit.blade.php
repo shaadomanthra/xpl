@@ -201,18 +201,32 @@
         </select>
       </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-3">
 
           <div class="form-group">
-        <label for="formGroupExampleInput ">Salary</label>
+        <label for="formGroupExampleInput ">Salary Range</label>
         <select class="form-control" name="salary">
           @foreach($app->salary as $s)
           <option value="{{$s}}" @if(isset($obj)) @if($obj->salary==$s) selected @endif @endif >{{$s}}</option>
 
           @endforeach
         </select>
+        <small class="text-secondary">Salary Range will  be displayed only if exactly salary is not given</small>
       </div>
 
+        </div>
+
+        <div class="col-12 col-md-3">
+          <div class="form-group">
+        <label for="formGroupExampleInput ">Exactly Salary </label>
+        <input type="text" class="form-control" name="salary_num" id="formGroupExampleInput" placeholder="Enter the exactly salary" 
+            @if($stub=='Create')
+            value="{{ (old('salary_num')) ? old('salary_num') : '' }}"
+            @else
+            value = "{{ $obj->salary_num }}"
+            @endif
+          >
+        </div>
         </div>
         
       </div>
@@ -221,7 +235,7 @@
         <div class="col-12 col-md-6">
           <div class="form-group">
         <label for="formGroupExampleInput ">Last Date for Application</label>
-      <input type="text" class="form-control" name="last_date"   value="{{isset($obj->last_date)? \carbon\carbon::parse($obj->last_date)->format('Y-m-d'):''}}" id="datepicker">
+      <input type="text" class="form-control" name="last_date"   value="{{isset($obj->last_date)? $obj->last_date:''}}" id="datetimepicker">
       </div>
 
         </div>
@@ -237,6 +251,52 @@
         </div>
 
       </div>
+
+      @if(\auth::user()->isAdmin())
+      <div class="bg-light border p-3 mb-3 rounded">
+        <h5>Admin access</h5>
+        <hr>
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+          <label for="formGroupExampleInput ">Owner</label>
+          <select class="form-control" name="user_id">
+              <option value="{{\auth::user()->id}}"  >{{ \auth::user()->username }}</option>
+              @foreach($data['hr-managers'] as $u)
+              <option value="{{$u->id}}"  @if($obj->user_id==$u->id) selected @endif>{{ $u->username }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+          <label for="formGroupExampleInput ">Viewer</label>
+          <select class="form-control" name="viewer_id">
+              <option value=""  >None</option>
+              @foreach($data['hr-managers'] as $u)
+              <option value="{{$u->id}}"  @if($obj->viewer_id==$u->id) selected @endif>{{ $u->username }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+        <label for="formGroupExampleInput ">Attach Exams </label>
+        <input type="text" class="form-control" name="exam_ids" id="formGroupExampleInput" placeholder="" 
+            @if($stub=='Create')
+            value="{{ (old('exam_ids')) ? old('exam_ids') : '' }}"
+            @else
+            value = "{{ $obj->exam_ids }}"
+            @endif
+          >
+        <small class="text-secondary">Add exam slugs seperated by commas, this will add exam results to the excel download</small>
+      </div>
+
+        </div>
+
+      </div>
+     </div>
+     @endif
       
 
      
@@ -248,7 +308,9 @@
         <input type="hidden" name="id" value="{{ $obj->id }}">
         @endif
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        @if(!\auth::user()->isAdmin())
         <input type="hidden" name="user_id" value="{{ \auth::user()->id }}">
+        @endif
       <button type="submit" class="btn btn-info">Save</button>
     </form>
     </div>

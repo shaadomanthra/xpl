@@ -1,10 +1,10 @@
 
- @if($objs->total()!=0)
+ @if(count($objs)!=0)
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{$objs->total()}})</th>
+                <th scope="col">#</th>
                 <th scope="col">Name </th>
 
                 <th scope="col">Contact</th>
@@ -58,6 +58,6 @@
           No {{ $app->module }} listed
         </div>
         @endif
-        <nav aria-label="Page navigation  " class="card-nav @if($objs->total() > config('global.no_of_records'))mt-3 @endif">
-        {{$objs->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
+        <nav aria-label="Page navigation  " class="card-nav mt-3">
+        {{$objs->appends(request()->except(['page','search']))->links() }}
       </nav>

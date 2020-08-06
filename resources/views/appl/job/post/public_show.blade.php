@@ -80,7 +80,13 @@
 
           <div class="row mb-2">
             <div class="col-6"><i class="fa fa-flickr"></i>&nbsp; Salary</div>
-            <div class="col-6">{{$obj->salary}} </div>
+            <div class="col-6">
+              @if($obj->salary_num)
+              {{$obj->salary_num}} 
+              @else
+              {{$obj->salary}} 
+              @endif
+            </div>
           </div>
     </div>
     </div>

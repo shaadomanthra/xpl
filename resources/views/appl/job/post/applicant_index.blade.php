@@ -51,10 +51,13 @@
 
 @include('flash::message')
 <div class="container">
-  <div  class="  mb-4 mt-4">
+  <div  class="row  mb-4 mt-4">
+    <div class="col-12 ">
     <div id="search-items">
     @include('appl.job.post.applicant_list')
     </div>
+  </div>
+
   </div>
 </div>
 @endsection

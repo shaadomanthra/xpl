@@ -18,7 +18,13 @@
             </div>
   <div class="media-body">
     <div class='mb-4'>
-    <a href="{{ route('job.show',$obj->slug)}}"><h2 class="mt-0">{{$obj->title}}</h2></a>
+    <a href="{{ route('job.show',$obj->slug)}}"><h2 class="mt-0">{{$obj->title}}
+      @if(\carbon\carbon::parse($obj->last_date)->gte(\carbon\carbon::now()))
+      <span class="badge badge-warning float-right">open</span>
+      @else
+      <span class="badge badge-secondary float-right">closed</span>
+      @endif
+    </h2></a>
     {!! substr(strip_tags($obj->details),0,200) !!} @if(strlen(strip_tags($obj->details))>200) ...@endif
     </div>
      @auth
@@ -50,7 +56,13 @@
 
           <div class="row mb-2">
             <div class="col-5 col-md-4"><i class="fa fa-flickr"></i>&nbsp; Salary</div>
-            <div class="col-7 col-md-8">{{$obj->salary}} </div>
+            <div class="col-7 col-md-8">
+              @if($obj->salary_num)
+              {{$obj->salary_num}} 
+              @else
+              {{$obj->salary}} 
+              @endif
+            </div>
           </div>
     </div>
 

@@ -112,9 +112,26 @@
           </div>
 
           <div class="row mb-2">
-            <div class="col-6"><i class="fa fa-flickr"></i>&nbsp; Salary</div>
+            <div class="col-6"><i class="fa fa-flickr"></i>&nbsp; Salary Range</div>
             <div class="col-6">{{$obj->salary}} </div>
           </div>
+
+           <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-rupee"></i>&nbsp; Exact Salary</div>
+            <div class="col-6">@if($obj->salary_num) {{$obj->salary_num}} @else - @endif </div>
+          </div>
+
+           <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-user"></i>&nbsp; Owner</div>
+            <div class="col-6">{{$obj->user->name}} </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-user"></i>&nbsp; Viewer</div>
+            <div class="col-6">@if($obj->viewer) {{$obj->viewer->name}} @else - @endif</div>
+          </div>
+
+
 
           
 
