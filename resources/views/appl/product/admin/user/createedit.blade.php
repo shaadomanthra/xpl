@@ -87,7 +87,7 @@
         <label for="formGroupExampleInput ">Client</label>
           
         <select class="form-control" name="client_slug">
-          <option value=""> Xplore </option>
+          <option value="xplore"> Xplore </option>
           @foreach($clients as $c)
           <option value="{{$c->slug}}" @if(isset($user)) @if($user->client_slug) @if($c->slug == $user->client_slug ) selected @endif @endif @endif >{{ $c->name }}</option>
           @endforeach         
