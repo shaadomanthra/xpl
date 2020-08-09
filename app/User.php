@@ -513,7 +513,8 @@ class User extends Authenticatable
         $fields = ["name",'email','phone','username','current_city','hometown','college_id','branch_id','year_of_passing','roll_number','gender','dob','tenth','twelveth','bachelors','pic','aadhar'];
         return round(100/count($fields),2);
      }
-    public function profile_complete($username=null){
+    public function profile_complete($username=null,$user=null){
+
         if($this->username == $username)
             $u = $this;
         elseif($username)
@@ -521,16 +522,29 @@ class User extends Authenticatable
         else
             $u =$this;
 
+        if($user)
+            $u = $user;
+
         $fields = ["name",'email','phone','username','current_city','hometown','college_id','branch_id','year_of_passing','roll_number','gender','dob','tenth','twelveth','bachelors','pic','aadhar'];
 
         $count =0;
         foreach($fields as $f){
-            if(!$u->$f){
-                $count++;
+            if(isset($u->$f)){
+                if(!$u->$f){
+                    $count++;
+                }else{
+                }
             }else{
+                if(isset($u[$f]))
+                if(!$u[$f]){
+                    $count++;
+                }else{
+                }
             }
+            
         }
 
+        if(!is_array($u))
         if($u->getImage()){
             $count--;
         }

@@ -67,13 +67,16 @@ var x = setInterval(function() {
   <script>
 $(function(){
 
+  /* show user ajax */
   $('.showuser').on('click',function(e){
     e.preventDefault();
 
     $('.loading').show();
     $('#user_data').hide();
+    $('#user_tools').hide();
     $('#user').modal();
     $url = $(this).data('url');
+    $id = $(this).data('id');
       $.ajax({
         type : 'get',
         url : $url,
@@ -81,16 +84,71 @@ $(function(){
         success:function(data){
           $('#user_data').html('<div class="userdata">'+data+'</div>');
           $('#user_data').show();
+          $('#user_tools').show();
+          $score = $('#u'+$id).data('score');
+          console.log($score);
+          $shortlisted = $('#u'+$id).data('shortlisted');
+          $('#score').val($score);
+          $('#shortlisted').val($shortlisted);
+          $('.message').remove();
+          $('.tools_save').data('user_id',$id)
           $('.loading').hide();
-
-          
         }
       });
-      
-    
-    
   });
 
+  $('.tools_save').on('click',function(e){
+    e.preventDefault();
+
+    $('.spinner-border2').show();
+    $url = $(this).data('url');
+    $user_id = $(this).data('user_id');
+    $post_id = $(this).data('post_id');
+    $token = $(this).data('token');
+    $score = $('#score').val();
+    $shortlisted = $('#shortlisted').val();
+
+    var fd = new FormData();
+    fd.append('user_id',$user_id);
+    fd.append('post_id',$post_id);
+    fd.append('_token',$token);
+    fd.append('score',$score);
+    fd.append('shortlisted',$shortlisted);
+     
+    $.ajax({
+          type : 'POST',
+          url : $url,
+          data:fd,
+          cache: false,
+          processData: false,
+          contentType: false,
+          beforeSend: function (request) {
+              return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+          },
+          success:function(response){
+            $('.message').remove();
+            $('.spinner-border2').hide();
+            console.log(response);
+            $('#u'+$user_id).data('score',$score);
+            $('#u'+$user_id).data('shortlisted',$shortlisted);
+            if(response != 0){
+
+                  
+                  $('<div class="message text-success mt-3"><i class="fa fa-check-circle"></i> Saved</div>').insertAfter('.tools_save');
+                  if($shortlisted=='YES')
+                    $('#tr'+$user_id).css('background','#dffbe2');
+                  else if($shortlisted=='MAY BE')
+                    $('#tr'+$user_id).css('background','#ffffed');
+                  else if($shortlisted=='NO')
+                    $('#tr'+$user_id).css('background','#fff3f3');
+                }else{
+                  console.log('error');
+                  $('<div class="message text-danger"">Data save failed. Kindly retry.</div>').insertAfter('.tools_save');
+                }
+          },
+          
+        });
+  });
 
   /* profile completion page */
   if($('.screen').length){

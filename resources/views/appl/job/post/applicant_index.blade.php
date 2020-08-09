@@ -19,7 +19,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Applicants ({{$obj->users_count}})
+          <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Applicants ({{$app->total}})
           </p>
         </div>
       </div>
@@ -51,6 +51,42 @@
 
 @include('flash::message')
 <div class="container">
+    <div class="alert alert-important alert-info mt-3">
+      Data is cached for faster access. Refresh Cache to load the updated data. 
+      <a href="{{request()->url()}}?refresh=1">
+      <span class="float-right"><i class="fa fa-retweet"></i> Refresh Now</span>
+      </a>
+    </div>
+    <div class="row my-3">
+      <div class="col-6 col-md-3 mb-3 mb-md-0">
+        <div class=" p-3 rounded" style="background: #fff;border:1px solid #d7d1e8">
+          <h5>Open Applicants</h5>
+          <div class="display-3">{{$app->none}}</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 mb-3 mb-md-0">
+        <div class="p-3 rounded" style="background: #f6fff7;border:1px solid #c9e2cc">
+          <h5 class="text-success"><i class="fa fa-check-circle"></i> Shortlisted (YES)</h5>
+          <div class="display-3">{{$app->yes}}
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 ">
+        <div class=" p-3 rounded " style="background: #fffdf6;border:1px solid #ece8d5">
+          <h5 class="text-warning"><i class="fa fa-ban"></i> Shortlisted (MAY BE)</h5>
+          <div class="display-3">{{$app->maybe}}
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 ">
+        <div class=" p-3 rounded" style="background: #fff6f6;border:1px solid #efd7d7" >
+          <h5 class="text-danger"><i class="fa fa-times-circle"></i> Shortlisted (NO)</h5>
+          <div class="display-3">{{$app->no}}
+          </div>
+        </div>
+      </div>
+  </div>
+
   <div  class="row  mb-4 mt-4">
     <div class="col-12 ">
     <div id="search-items">
@@ -80,6 +116,37 @@
         </div>
         <div id="user_data">
       </div>
+
+      <div id="user_tools" class="user_tools p-3" style="background: #fff3d7;border-top:1px solid #f5e6c4;display:none">
+        <h5>Recruiter Tools</h5>
+        <hr>
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="inputEmail4">Add Profile Score</label>
+              <input type="text" class="form-control" id="score" placeholder="Enter the score">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">Shortlisted</label>
+              <select  class="form-control" id="shortlisted">
+              <option value=""> - </option>
+              <option value="YES">YES</option>
+              <option value="NO">NO</option>
+              <option value ="MAY BE">MAY BE</option>
+            </select>
+            </div>
+          </div>
+          <small>The following changes will be reflected in the excel download</small>
+        </form>
+
+        <button type="button" class="btn btn-success mt-3 tools_save" data-user_id="" data-token="{{ csrf_token() }}" data-post_id="{{$obj->id}}" data-url="{{ route('update.applicant')}}">Save</button>
+        <div class="spinner-border2" role="status" style="display:none">
+          <span class="sr-only">Loading...</span>  
+        </div> 
+
+
+      </div>
+
 
       </div>
       <div class="modal-footer">

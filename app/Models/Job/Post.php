@@ -3,6 +3,7 @@
 namespace PacketPrep\Models\Job;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -35,6 +36,13 @@ class Post extends Model
 
     public function users()
     {
-        return $this->belongsToMany('PacketPrep\User')->withPivot('created_at');
+        return $this->belongsToMany('PacketPrep\User')->withPivot(['created_at','score','shortlisted']);
+    }
+
+    public function updateApplicant($post_id,$user_id,$score,$shortlisted){
+        $entry = DB::table('post_user')->where('post_id', $post_id)->where('user_id',$user_id)
+                ->update(['score' => $score,'shortlisted'=>$shortlisted]);
+        echo $entry;
+        exit();
     }
 }

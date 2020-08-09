@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Storage;
 use PacketPrep\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use PacketPrep\Jobs\SendEmail;
 use PacketPrep\Jobs\FaceDetect;
@@ -149,7 +152,16 @@ class PostController extends Controller
         $search = $request->search;
         $item = $request->item;
         $filter = $request->filter;
-        $obj = Obj::where('slug',$slug)->withCount('users')->first();
+
+        if($request->get('refresh')==1){
+            flash('Cache is Refreshed!')->success();
+            Cache::forget('post_appl_'.$slug);
+            Cache::forget('post_users_'.$slug);
+        }
+
+        $obj = Cache::remember('post_appl_'.$slug ,240, function() use($slug){
+            return Obj::where('slug',$slug)->withCount('users')->first();
+        });
         
         $colleges = Cache::remember('colleges',240, function(){
 
@@ -161,10 +173,16 @@ class PostController extends Controller
 
         
         $this->authorize('view', $obj);
+
+        $this->yes = 0;
+        $this->no = 0;
+        $this->maybe = 0;
+        $this->total = 0;
+        $this->none = 0;
         
         if($request->get('export')){
-            $users = $obj->users->pluck('id')->toArray();
-            $objs = User::whereIn('id',$users)->paginate(10000);
+            //$users = $obj->users->pluck('id')->toArray();
+            $objs = $obj->users()->get();//User::whereIn('id',$users)->paginate(10000);
             $colleges = College::all()->keyBy('id');
             $branches = Branch::all()->keyBy('id');
             $exam_data = array();
@@ -196,8 +214,24 @@ class PostController extends Controller
             // }
             
         } else{
+            $users = Cache::remember('post_users_'.$slug ,240, function() use($obj){
+                    return $obj->users->toArray();
+                });
+            foreach($users as $usx){
+                if($usx['pivot']['shortlisted']=='YES')
+                    $this->yes++;
+                elseif($usx['pivot']['shortlisted']=='NO')
+                    $this->no++; 
+                elseif($usx['pivot']['shortlisted']=='MAY BE')
+                    $this->maybe++; 
+                else
+                    $this->none++;
+
+                $this->total++;
+            }
+
             if($item)
-            $objs = $obj->users()->where('name','LIKE',"%{$item}%")->orderBy('pivot_created_at','desc')->paginate(config('global.no_of_records'));
+            $objs = $this->paginateAnswers($obj->users()->where('name','LIKE',"%{$item}%")->orderBy('pivot_created_at','desc')->get()->toArray(),30);
             else if($filter){
                 $yop = explode(',',$request->get('yop'));
                 if(!$yop[0]){
@@ -216,9 +250,12 @@ class PostController extends Controller
                 $objs = $obj->users()->whereIn('year_of_passing',$yop)
                         ->whereIn('branch_id',$branch)->where('bachelors','>=',$academics)
                         ->orderBy('pivot_created_at','desc')->simplePaginate(config('global.no_of_records'));
-            }else
-                $objs = $obj->users()->orderBy('pivot_created_at','desc')->simplePaginate(config('global.no_of_records')); 
+            }else{
+                
+                $objs = $this->paginateAnswers($users,config('global.no_of_records')); 
+            }
         } 
+
 
         $view = $search ? 'applicant_list': 'applicant_index';
 
@@ -228,6 +265,23 @@ class PostController extends Controller
                 ->with('colleges',$colleges)
                 ->with('branches',$branches)
                 ->with('app',$this);
+    }
+
+    protected function paginateAnswers(array $answers, $perPage = 10)
+    {
+        $page = Input::get('page', 1);
+
+        $offset = ($page * $perPage) - $perPage;
+
+        $paginator = new LengthAwarePaginator(
+            array_slice($answers, $offset, $perPage, true),
+            count($answers),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return $paginator;
     }
 
     public function mailer($users){
@@ -246,6 +300,22 @@ class PostController extends Controller
     }
 
     
+    public function updateApplicant(Request $request){
+        
+        $user_id = $request->get('user_id');
+        $post_id = $request->get('post_id');
+        $score = $request->get('score');
+        $shortlisted = $request->get('shortlisted');
+
+
+
+        $obj = new Obj();
+
+        $obj->updateApplicant($post_id,$user_id,$score,$shortlisted);
+
+
+        echo 1;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -362,6 +432,9 @@ class PostController extends Controller
         $obj = Obj::where('slug',$id)->withCount('users')->first();
         $latest = $obj->users()->orderBy('pivot_created_at','desc')->limit(5)->get();
         $branches = Branch::all()->keyBy('id');
+
+        Cache::forget('post_appl_'.$id);
+        Cache::forget('post_users_'.$id);
 
         $this->authorize('view', $obj);
 

@@ -6,10 +6,10 @@ use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
 use PacketPrep\Models\College\College;
 use Maatwebsite\Excel\Concerns\FromCollection;
-
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Support\Facades\DB;
 
-class UsersExport implements FromCollection
+class UsersExport implements FromCollection,ShouldAutoSize
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -60,6 +60,8 @@ class UsersExport implements FromCollection
                 else
                     $users[$k]->branches = '-';
 
+
+
                 foreach($exams as $m=>$ex){
                     $name = 'e_'.$ex->slug;
                     if(isset($exam_data[$ex->id][$id]['score'])){
@@ -71,6 +73,9 @@ class UsersExport implements FromCollection
                        }
 
                 }
+
+                $users[$k]->profile_score = $users[$k]->pivot->score;
+                $users[$k]->shortlisted = $users[$k]->pivot->shortlisted;
             
             
         } 
@@ -104,6 +109,9 @@ class UsersExport implements FromCollection
                     $name = 'ck'.$k;
                     $ux->$name = $ex->name;
         }
+
+        $ux->c9 = "Profile Score";
+        $ux->c10 = "Shortlisted";
 
 
         $users->prepend($ux);

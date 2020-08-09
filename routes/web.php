@@ -429,6 +429,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	Route::get('post/{slug}/analytics','Job\PostController@analytics')->name('job.analytics');
 	Route::get('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');
+	Route::post('post/updateapplicant','Job\PostController@updateApplicant')->name('update.applicant');
 	Route::resource('post','Job\PostController')->middleware('auth');
 
 	Route::get('/job', function(){
