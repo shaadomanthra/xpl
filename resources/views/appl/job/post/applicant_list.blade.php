@@ -10,6 +10,9 @@
                 <th scope="col">Contact</th>
                 <th scope="col">College </th>
                 <th scope="col">Bachelors </th>
+                @foreach($exams as $e)
+                <th scope="col">{{$e->name}} </th>
+                @endforeach
               </tr>
             </thead>
             <tbody>
@@ -54,6 +57,9 @@
                 <td>
                   {{$obj['bachelors']}}%
                 </td>
+                @foreach($exams as $ex)
+                <td >@if(isset($exam_data[$ex->id][$obj['id']]['score'])){{$exam_data[$ex->id][$obj['id']]['score']}}@else - @endif </td>
+                @endforeach
                 
               </tr>
               @endforeach      

@@ -171,6 +171,23 @@ class PostController extends Controller
             return Branch::all()->keyBy('id');
         });
 
+        $exam_data = array();
+        $exms = array();
+
+        if($obj->exam_ids){
+            $exams = explode(',',$obj->exam_ids);
+            foreach($exams as $k=>$e){
+                $ex =  Cache::remember('pa_'.$e,240,function() use($e){
+                return Exam::where('slug',$e)->first();
+                });
+                $exms[$k] = $ex;
+
+                $exam_data[$ex->id] = Cache::remember('pad_'.$ex->slug,240,function() use ($ex){
+                return Tests_Overall::select('score','user_id')->where('test_id',$ex->id)->get()->keyBy('user_id');
+                });
+            }
+        }
+
         
         $this->authorize('view', $obj);
 
@@ -185,17 +202,7 @@ class PostController extends Controller
             $objs = $obj->users()->get();//User::whereIn('id',$users)->paginate(10000);
             $colleges = College::all()->keyBy('id');
             $branches = Branch::all()->keyBy('id');
-            $exam_data = array();
-            $exms = array();
-            if($obj->exam_ids){
-                $exams = explode(',',$obj->exam_ids);
-                foreach($exams as $k=>$e){
-                    $ex = Exam::where('slug',$e)->first();
-                    $exms[$k] = $ex;
-
-                    $exam_data[$ex->id] = Tests_Overall::select('score','user_id')->where('test_id',$ex->id)->get()->keyBy('user_id');
-                }
-            }
+            
 
             request()->session()->put('users',$objs);
                 request()->session()->put('colleges',$colleges);
@@ -264,6 +271,8 @@ class PostController extends Controller
                 ->with('obj',$obj)
                 ->with('colleges',$colleges)
                 ->with('branches',$branches)
+                ->with('exams',$exms)
+                ->with('exam_data',$exam_data)
                 ->with('app',$this);
     }
 
