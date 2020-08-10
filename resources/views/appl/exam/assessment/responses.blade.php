@@ -62,6 +62,11 @@
   </div>
 </div>
 <div class='p-1  ddblue' ></div>
+<div class="p-3 text-center bg-light sticky-top">
+  @for($i=1;$i<31;$i++)
+<span class="border rounded p-1 px-2">{{$i}}</span>
+@endfor
+</div>
 
 
 
