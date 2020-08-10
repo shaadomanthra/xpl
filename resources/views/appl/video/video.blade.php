@@ -5,9 +5,9 @@
 	
 @include('flash::message')
 @if(\auth::user())
-@if(!\auth::user()->video)
+@if(!\auth::user()->video || request()->get('edit'))
 
-<h1> Add Profile Video </h1>
+<h1> Update Profile Video </h1>
 	<h5>Instructions</h5>
 	<p>
 		<ul>
@@ -22,14 +22,17 @@
 			<li>If you want to hide the video from public then mark the privacy for the video as 'unlisted' or you can leave the privacy as public. Dont make it private as it cannot be embedded into xplore platform.</li>
 			<li>Copy the url of the uploaded video</li>
 			<li>Enter the copied url in the below form and submit.</li>
-			<li>Note: You can add the video only once, so kindly verify the final video before adding it.</li>
 		</ul>
 	</p>
 <div class="border bg-light p-3 rounded">
 <form action="{{ url('video') }}" method="post" enctype="multipart/form-data">
     <div class="form-group ">
         <label for="exampleInputVideo">Youtube video url</label>
-        <input type="text" name="url" class="form-control" id="exampleInputVideo" />
+        <input type="text" name="url" class="form-control" id="exampleInputVideo" 
+        @if(auth::user()->video)
+        	value="https://www.youtube.com?v={{\auth::user()->video}}"
+        @endif
+        />
     </div>
     {{ csrf_field() }}
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -38,8 +41,9 @@
 @else
 	<h3 class="mb-4"> My Profile Video</h3>
 	<div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{\auth::user()->video}}?rel=0" allowfullscreen></iframe>
-</div>
+	  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{\auth::user()->video}}?rel=0" allowfullscreen></iframe>
+	</div>
+	<a href="{{ route('video.upload')}}?edit=1" class="btn btn-primary mt-3">edit</a>
 @endif
 @endif
 </div>

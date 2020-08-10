@@ -170,7 +170,12 @@
 @auth
       <div class="row mr-2 mb-4 ml-2">
         <div class="col-12 ">
-          <h3 class="bg-light p-3 mb-0"><i class='fa fa-youtube-play'></i> Profile Video</h3>
+          <h3 class="bg-light p-3 mb-0"><i class='fa fa-youtube-play'></i> Profile Video
+
+            @if($user->video)
+              <a href="{{ route('video.upload')}}" class="float-right">edit</a>
+            @endif
+          </h3>
          
           @if($user->video)
 @if(!is_numeric($user->video))
