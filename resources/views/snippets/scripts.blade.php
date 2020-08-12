@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=16"></script>
+<script src="{{ asset('js/script.js')}}?new=17"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
 
@@ -629,7 +629,7 @@ $(document).ready(function() {
                   $('.s'+$qno).addClass('qblue-border');
                 if(!$('.s'+$qno).hasClass('active'))
                       $('.s'+$qno).removeClass('active');
-
+                $('.final_response_'+$qno).html(data.stdout);
               }else{
                 $('.output_'+$qno).html("No Result - Code execution time exceeded - Retry.");
               }

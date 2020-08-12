@@ -496,7 +496,8 @@ $(document).ready(function(){
         $('.input_'+$sno).val('');
         $('.output_'+$sno).html("-");
       }
-      $('.s'+$sno).addClass('active')
+      $('.s'+$sno).addClass('active');
+      $('.final_response_'+$sno).html('');
     }
 
     function hide_buttons($sno){

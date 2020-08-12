@@ -117,6 +117,7 @@ if (! function_exists('summernote_imageupload')) {
             libxml_use_internal_errors(true);
             $dom->loadHtml(mb_convert_encoding($detail, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
             $images = $dom->getElementsByTagName('img');
+            $data = null;
 
             foreach($images as $k => $img){
 
@@ -150,9 +151,14 @@ if (! function_exists('summernote_imageupload')) {
                     $img->setAttribute('src', $url);
                     $img->setAttribute('class', 'image');
                 }
+
                 
             }
-            $detail = $dom->saveHTML();
+
+            if($data)
+                $detail = $dom->saveHTML();
+            else
+                $details = $editor_data;
         }
         return $detail;
     }

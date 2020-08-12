@@ -1207,6 +1207,8 @@ class QuestionController extends Controller
 
         try{
 
+
+
             $question = Question::where('id',$id)->first();
             $question->reference = strtoupper($request->reference);
             $question->question = summernote_imageupload(\auth::user(),$request->question);
@@ -1219,6 +1221,7 @@ class QuestionController extends Controller
             $question->c = summernote_imageupload(\auth::user(),$request->c);
             $question->d = summernote_imageupload(\auth::user(),$request->d);
             $question->e = summernote_imageupload(\auth::user(),$request->e);
+
             $question->answer = $request->answer;
             $question->type = $request->type;
             $question->explanation = summernote_imageupload(\auth::user(),$request->explanation);
