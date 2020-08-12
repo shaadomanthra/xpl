@@ -64,6 +64,29 @@ var x = setInterval(function() {
     <script src="{{ asset('assets/js/pages/widgets.js?v=7.0.4')}}"></script>
 @endif
 
+<script>
+$(function(){  
+
+var wrapper = $("#wrapper"),
+    $menu = $("#item"),
+    $window = $(window);
+
+$menu.on("click","span", function(){
+    var $this = $(this),
+        href = $this.attr("href"),
+        topY = $(href).offset().top;
+        wraptop = $('#wrapper').offset().top;
+      console.log(topY);
+      console.log(wraptop);
+    $("html, body").animate({ scrollTop: (topY-80) });
+  
+  return false;
+});  
+  
+});
+
+</script>
+
   <script>
 $(function(){
 
@@ -501,36 +524,95 @@ $(document).ready(function() {
   @endforeach
   @endif
 
-  $('.runcode').on('click',function(){
+  // $('.runcode').on('click',function(){
+  //     $qno = $(this).data('qno');
+  //     $lang = $(this).data('lang');
+  //     $name = $(this).data('name');
+  //     $c = ($(this).data('c'))?$(this).data('c'):null;
+  //     $input = $(this).data('input');
+  //     $url= $(this).data('url');
+  //     $url_stop= $(this).data('url_stop');
+  //     $url_remove= $(this).data('url_remove');
+      
+  //     $random = Math.random().toString(36).substring(7);
+   
+
+  //     var editor_ = editor_array[$name];
+
+  //     var code = editor_.getValue();
+      
+  //     $('.loading').show();
+
+  //       $.ajax({
+  //         type : 'get',
+  //         url : $url_remove,
+  //         success:function(data){
+  //         }
+  //       });
+
+  //       $.ajax({
+  //         type : 'get',
+  //         url : $url,
+  //         data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input,'name':$random},
+  //         success:function(data){
+  //           console.log(data);
+  //           data = JSON.parse(data);
+   
+  //           if(data){
+  //             if(data.stderr){
+  //               $('.output_'+$qno).html(data.stderr);
+  //             }else{
+  //               $('.output_'+$qno).html(data.stdout);
+  //               $('.input_'+$qno).attr('value',data.stdout);
+  //             }
+  //           }else{
+  //              $('.output_'+$qno).html("Data not compiled");
+  //           }
+            
+  //           $('.loading').hide();
+  //         }
+  //       });
+
+  //       setTimeout( function(){ 
+  //       $.ajax({
+  //         type : 'get',
+  //         url : $url_stop,
+  //         data:{'name':$random},
+  //         success:function(data){
+  //         }
+  //       });
+  //       }  , 3000 );
+        
+
+  //   }); 
+
+ $('.runcode').on('click',function(){
       $qno = $(this).data('qno');
       $lang = $(this).data('lang');
       $name = $(this).data('name');
+      $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
       $c = ($(this).data('c'))?$(this).data('c'):null;
       $input = $(this).data('input');
       $url= $(this).data('url');
-      $url_stop= $(this).data('url_stop');
-      $url_remove= $(this).data('url_remove');
-      
-      $random = Math.random().toString(36).substring(7);
-   
+      $stop= $(this).data('stop');
 
       var editor_ = editor_array[$name];
 
       var code = editor_.getValue();
       
       $('.loading').show();
-
-        $.ajax({
-          type : 'get',
-          url : $url_remove,
-          success:function(data){
-          }
+      setTimeout(function(){
+        $.get($stop,{'name':$namec}, function(data, status){
+        console.log(data);
+        console.log('Code execution stopped');
         });
+      }, 5000);
 
         $.ajax({
           type : 'get',
           url : $url,
-          data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input,'name':$random},
+          data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec},
+          timeout: 10000, 
           success:function(data){
             console.log(data);
             data = JSON.parse(data);
@@ -538,31 +620,28 @@ $(document).ready(function() {
             if(data){
               if(data.stderr){
                 $('.output_'+$qno).html(data.stderr);
-              }else{
+              }else if(data.stdout){
                 $('.output_'+$qno).html(data.stdout);
                 $('.input_'+$qno).attr('value',data.stdout);
+              }else{
+                $('.output_'+$qno).html("No Result - Code execution time exceeded - Retry.");
               }
             }else{
-               $('.output_'+$qno).html("Data not compiled");
+                $('.output_'+$qno).html("No Data - Code execution time exceeded - Retry.");
             }
-            
             $('.loading').hide();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+              if(textStatus==="timeout") {  
+                $('.output_'+$qno).html("Timeout(10s) - Code execution time exceeded - Retry.");
+              } else {
+                $('.output_'+$qno).html("Server Error - Code execution time exceeded - Retry.");
+              }
+              $('.loading').hide();
           }
         });
-
-        setTimeout( function(){ 
-        $.ajax({
-          type : 'get',
-          url : $url_stop,
-          data:{'name':$random},
-          success:function(data){
-          }
-        });
-        }  , 3000 );
-        
 
     }); 
-
 
   function editorValue( ed){
       return ed.getValue(); 

@@ -1513,8 +1513,9 @@ class AssessmentController extends Controller
                 $item['code'] = $request->get('dynamic_'.$i);
 
                 if(strip_tags(trim($item['code']))){
-                    $code_ques_flag =1;
-                    $item['status'] = 2;
+                    
+                    // $code_ques_flag =1;
+                    // $item['status'] = 2;
                 }
 
                 $type = $questions[$item['question_id']]->type;

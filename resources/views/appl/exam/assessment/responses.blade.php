@@ -62,18 +62,19 @@
   </div>
 </div>
 <div class='p-1  ddblue' ></div>
-<div class="p-3 text-center bg-light sticky-top">
-  @for($i=1;$i<31;$i++)
-<span class="border rounded p-1 px-2">{{$i}}</span>
-@endfor
+<div class="p-3 text-center bg-light sticky-top" id="item" style="margin-top:-2px;">
+
+  @foreach($tests as $i=>$t)
+<span class="border rounded p-1 px-2 @if($t->status!=2)qgreen @else qyellow @endif cursor" href="#item{{($i+1)}}">{{($i+1)}}</span>
+@endforeach
 </div>
 
 
 
 
-<div class="container my-3">
+<div class="container my-3" id="wrapper">
 @foreach($tests as $k=>$t)
-<div class="row">
+<div class="row" id="item{{($k+1)}}">
 	<div class="col-1 col-md-1">
 		<div class=" p-2 rounded text-center bg-light border">{{($k+1)}}</div>
 	</div>
@@ -138,7 +139,8 @@
 	</div>
 
 	<div class="col-12 col-md-3">
-		<div class=" rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3">
+    <div class="mt-3">
+		<div class=" rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 ">
 			<div class="card-body ">
 
 				<p>Status: @if($t->status==2)<span class="badge badge-warning">under review</span>
@@ -165,6 +167,7 @@
 
 			</div>
 		</div>
+  </div>
 	</div>
 </div>
 @endforeach
@@ -197,5 +200,7 @@
     </div>
   </div>
 </div>
+
+
 
 @endsection           

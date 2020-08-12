@@ -82,6 +82,37 @@ class EditorController extends Controller
 
     }
 
+    public function stopcode(Request $request)
+    {
+      $name = $request->get('name');
+      
+      // Get cURL resource
+      $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => 'http://code.p24.in/stopdockerid.php',
+          CURLOPT_POST => 1,
+      ]);
+
+      $form = array('name'=>$name);
+    
+    
+      //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
+      //echo $data;
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $form);
+
+      // Send the request & save response to $resp
+      $data = curl_exec($curl);
+      
+      // Close request to clear up some resources
+      curl_close($curl);
+
+      return $data;
+
+    }
+
 
     public function autoruncode(Request $request)
     {
