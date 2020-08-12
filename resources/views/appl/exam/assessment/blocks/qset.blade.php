@@ -12,7 +12,9 @@
 	</h4>
 
 		<h1 class="text-bold mb-2" id="timer"></h1>
+		@if(!$camera)
 		<span class="text-warning "><i class="fa fa-dot-circle-o blink" aria-hidden="true"></i> Continuous monitoring is enabled</span>
+		@endif
 		
 		
 		<div class=" p-2 mb-2 rounded mt-3" style="border:2px solid #bb061c">

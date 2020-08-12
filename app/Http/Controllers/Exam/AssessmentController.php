@@ -1345,12 +1345,14 @@ class AssessmentController extends Controller
         $exam_id = $resp->test_id;
         $responses = $resp->responses;
 
-       
+        
 
         Cache::put('responses_'.$user_id.'_'.$exam_id,$responses,240);
 
 
         Storage::disk('s3')->put('responses/responses_'.$user_id.'_'.$exam_id.'.json',json_encode($responses),'public');
+
+        echo 1;
             
         exit();
     }
@@ -1513,7 +1515,7 @@ class AssessmentController extends Controller
                 $item['code'] = $request->get('dynamic_'.$i);
 
                 if(strip_tags(trim($item['code']))){
-                    
+
                     // $code_ques_flag =1;
                     // $item['status'] = 2;
                 }

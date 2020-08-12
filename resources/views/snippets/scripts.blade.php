@@ -1,6 +1,6 @@
-<script src="{{ asset('js/script.js')}}?new=15"></script>
-<script src="{{ asset('js/jquery.ui.min.js')}}?new=13"></script>
-<script src="{{ asset('js/osc.js')}}?new=13"></script>
+<script src="{{ asset('js/script.js')}}?new=16"></script>
+<script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
+<script src="{{ asset('js/osc.js')}}?new=09"></script>
 
  @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
   <script>
@@ -599,6 +599,8 @@ $(document).ready(function() {
       var editor_ = editor_array[$name];
 
       var code = editor_.getValue();
+      $('.code_'+$qno).val(code);
+      console.log($('.code_'+$qno).val());
       
       $('.loading').show();
       setTimeout(function(){
@@ -623,6 +625,11 @@ $(document).ready(function() {
               }else if(data.stdout){
                 $('.output_'+$qno).html(data.stdout);
                 $('.input_'+$qno).attr('value',data.stdout);
+                if(!$('.s'+$qno).hasClass('qblue-border'))
+                  $('.s'+$qno).addClass('qblue-border');
+                if(!$('.s'+$qno).hasClass('active'))
+                      $('.s'+$qno).removeClass('active');
+
               }else{
                 $('.output_'+$qno).html("No Result - Code execution time exceeded - Retry.");
               }

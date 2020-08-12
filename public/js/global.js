@@ -491,6 +491,11 @@ $(document).ready(function(){
       $('.input_'+$sno).prop('checked',false);
       if($('.input_fillup_'+$sno).length)
       $('.input_fillup_'+$sno).val('');
+
+      if($('.input_'+$sno).length){
+        $('.input_'+$sno).val('');
+        $('.output_'+$sno).html("-");
+      }
       $('.s'+$sno).addClass('active')
     }
 
@@ -536,6 +541,8 @@ $(document).ready(function(){
           resp.section_id = $('input[name='+$qno+'_section_id]').val();
           resp.time = $('input[name='+$qno+'_time]').val();
           resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
+          if($('.code_'+$sno).length)
+            resp.code = $('.code_'+$sno).val();
           if($('.input_'+$qno).is(':checkbox')){
               var ans =[]
               $.each($(".input_"+$qno+":checked"), function(){
@@ -567,7 +574,7 @@ $(document).ready(function(){
           data:{'responses':all_data,'_token':responses.token},
           success:function(data){
             console.log('data cached');
-            //console.log(data);
+            console.log(data);
           }
         });
 
