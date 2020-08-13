@@ -457,7 +457,7 @@
 
               @if($exam->slug!='psychometric-test')
               <small class="mr-2">
-              <a href="{{ route('assessment.solutions',$exam->slug)}}?student={{$t->user->username}}" ><i class="fa fa-commenting-o"></i> Responses</a></small>
+              <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$t->user->username}}" ><i class="fa fa-commenting-o"></i> Responses</a></small>
               @endif
 
               <small class="mr-2 float-lg-right @if($t->cheat_detect==1) text-danger @elseif($t->cheat_detect==2) text-warning @else text-success @endif">

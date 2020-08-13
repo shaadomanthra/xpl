@@ -444,6 +444,12 @@ class Exam extends Model
       Cache::forget('attempt_'.$user_id.'_'.$test_id);
       Cache::forget('resp_'.$user_id.'_'.$test_id); 
 
+
+      if(request()->get('ajax')){
+                echo json_encode($e_overall);
+            exit();
+      }
+
       return Test::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->get();
     }
 

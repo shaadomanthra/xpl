@@ -8,8 +8,8 @@
   <ol class="breadcrumb border">
     <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
     <li class="breadcrumb-item"><a class="white-link" href="{{ route('test.report',$exam->slug)}}">{{ ucfirst($exam->name) }} - Reports </a></li>
-    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.analysis',$exam->slug)}}?student={{request()->get('student')}}">{{ ucfirst($exam->name) }} - Analysis </a></li>
-    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.solutions',$exam->slug)}}?student={{request()->get('student')}}">Solutions</a> </li>
+    <li class="breadcrumb-item">{{$student->name}} - Report </li>
+    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.responses',$exam->slug)}}?student={{request()->get('student')}}">Responses</a> </li>
   </ol>
 </nav>
 @elseif($exam->slug != 'proficiency-test')
@@ -41,9 +41,9 @@
 			<div class="badge badge-primary px-2" style="line-height: 1.4">Under<br>Review</div>
 			@endif
 		</div>
-		<div class="  display-4  mb-3 d-none d-md-block"><b>{{ ucfirst($exam->name) }} - Report</b></div>
+		<div class="  display-4  mb-3 d-none d-md-block"><b> {{$student->name}} - Report</b></div>
 		
-		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
+		<p>Name : <span class="text-primary">{{ ucfirst($exam->name) }}</span><br>
 			
 		</p>
 		</div>

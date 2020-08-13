@@ -821,7 +821,7 @@ class AssessmentController extends Controller
         return $new_ans;
     }
 
-     public function responses($slug,$id=null,Request $request)
+    public function responses($slug,$id=null,Request $request)
     {
          $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
@@ -888,6 +888,7 @@ class AssessmentController extends Controller
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
 
+        //dd($tests);
 
         //dd($tests->where('status',1));
         $evaluation = $tests->where('status',2);
@@ -1076,6 +1077,7 @@ class AssessmentController extends Controller
                         ->with('mathjax',$mathjax)
                         ->with('sketchpad',1)
                         ->with('count',$count)
+                        ->with('highlight',true)
                         ->with('chart',true);
     }
 
@@ -1083,10 +1085,12 @@ class AssessmentController extends Controller
     public function solutions($slug,$id=null,Request $request)
     {
 
+
         $exam = Cache::get('test_'.$slug);
 
         if(!$exam)
         $exam = Exam::where('slug',$slug)->with('sections')->first();
+
 
 
 
@@ -1118,22 +1122,37 @@ class AssessmentController extends Controller
         });
 
 
+
+
         //dd($test_responses);
         if($id==null){
+            
+
             $view ='questions';
             $response = $test_responses->first();
             $id = $response->question_id;
+
+
         }else{
             $response = $test_responses->where('question_id',$id)->first();
             $view = 'q';
         }
 
+
         if(request()->get('slug')){
+           
             $response->mark = request()->get('score');
             $response->comment = request()->get('comment');
             $response->status = 1;
+
+
             $response->save();
+
             $test_responses = $exam->updateScore($test_responses,$response);
+
+            
+
+                
         }
 
       

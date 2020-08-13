@@ -762,6 +762,8 @@ class ExamController extends Controller
         $code = $r->get('code');
         $item = $r->get('item');
         $data = $r->get('score');
+
+       
         if($code){
             if($data)
             $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('score','desc')->paginate(30);

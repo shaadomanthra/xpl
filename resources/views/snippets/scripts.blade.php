@@ -357,6 +357,47 @@ $(function(){
       
   });
 
+ $(document).on('click','.score_save',function(e){
+      e.preventDefault();
+
+      $url = $(this).data('url');
+      $id = $(this).data('id');
+      $slug = $(this).data('slug');
+      $score = $('input[name=score_'+$id+']:checked').val();
+      $comment = $('.comment_'+$id).val();
+      $student = $(this).data('student');
+      $token = $(this).data('token');
+
+      console.log($id+' '+$score+' '+$comment);
+      $('.loading_'+$id).show();
+      $.ajax({
+          type : 'post',
+          url : $url,
+          data:{'score':$score,'comment':$comment,'student':$student,'slug':$slug,'_token':$token},
+          success:function(data){
+            json = JSON.parse(data);
+            if(json.status==0){
+              $('.under_review_main').hide();
+              $('.score_main').html("<div class='display-4'>"+json.score+"</div>");
+            }
+            
+            $('.review_'+$id).removeClass('badge-warning').html('evaluated').addClass('badge-success');
+            $('.box_'+$id).removeClass('qyellow').addClass('qgreen');
+            if($comment)
+            $('.score_entry_'+$id).html('<div>'+$score+'</div><div class="my-2"><b>Feedback</b></div><p>'+$comment+'</p>');
+            else
+            $('.score_entry_'+$id).html('<div>'+$score+'</div>');
+            $('.score_save_'+$id).hide();
+            $('.loading_'+$id).hide();
+            $('.qno_'+$id).removeClass('qyellow').addClass('qgreen');
+            
+            
+          }
+        });
+     
+      
+  });
+
   </script>
 
 @if(isset($sketchpad))

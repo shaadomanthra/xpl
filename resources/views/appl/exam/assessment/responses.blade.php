@@ -17,8 +17,8 @@
   <ol class="breadcrumb p-0 pt-3" style="background: transparent;">
     <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
     <li class="breadcrumb-item"><a class="white-link" href="{{ route('test.report',$exam->slug)}}">{{ ucfirst($exam->name) }} - Reports </a></li>
-    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.analysis',$exam->slug)}}?student={{request()->get('student')}}">{{ ucfirst($exam->name) }} - Report </a></li>
-    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.responses',$exam->slug)}}?student={{request()->get('student')}}">Responses</a> </li>
+    <li class="breadcrumb-item"><a class="white-link" href="{{ route('assessment.analysis',$exam->slug)}}?student={{request()->get('student')}}">{{$student->name}} - Report </a></li>
+    <li class="breadcrumb-item">Responses </li>
   </ol>
 </nav>
 @elseif($exam->slug != 'proficiency-test')
@@ -49,11 +49,11 @@
       <div class="col-12 col-md-4 col-lg-2">
         <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
           <div class="h6">Total Score</div>
-          <div class="" >
+          <div class="score_main" >
           	@if(!$test_overall->status)
 			<div class="">{{ $test_overall->score }} </div>
 			@else
-			<div class="badge badge-primary " >Under <br>Review</div>
+			<div class="badge badge-primary under_review_main" >Under <br>Review</div>
 			@endif
           </div>
         </div>
@@ -65,7 +65,7 @@
 <div class="p-3 text-center bg-light sticky-top" id="item" style="margin-top:-2px;">
 
   @foreach($tests as $i=>$t)
-<span class="border rounded p-1 px-2 @if($t->status!=2)qgreen @else qyellow @endif cursor" href="#item{{($i+1)}}">{{($i+1)}}</span>
+<span class="border rounded p-1 px-2 @if($t->status!=2)qgreen @else qyellow @endif cursor qno_{{$t->question_id}}" href="#item{{($i+1)}}">{{($i+1)}}</span>
 @endforeach
 </div>
 
@@ -89,6 +89,7 @@
 
           @if(isset($questions[$t->question_id]->images))
 
+          @if(count($questions[$t->question_id]->images))
           @foreach(array_reverse($questions[$t->question_id]->images) as $k=>$url)
 
              <div class="border border-secondary">
@@ -102,15 +103,25 @@
           </div>
 
           @endforeach
+          @else
+            -
+          @endif
+
+          @else
+          -
 
           @endif
 
           
-
           </div>
-        
+       
       	@else
-      	{!! $t->response !!}
+
+          @if(trim(strip_tags($t->response)))
+        	{!! $t->response !!} 
+          @else
+          -
+          @endif
       	@if($t->accuracy)
       		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
 
@@ -140,29 +151,39 @@
 
 	<div class="col-12 col-md-3">
     <div class="mt-3">
-		<div class=" rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 ">
+		<div class=" rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 box_{{$t->question_id}}">
 			<div class="card-body ">
 
-				<p>Status: @if($t->status==2)<span class="badge badge-warning">under review</span>
+				<p>Status: @if($t->status==2)<span class="badge badge-warning review_{{$t->question_id}}">under review</span>
 				@else
 				<span class="badge badge-success">evaluated</span>
 				@endif</p>
 				<hr>
 				<b>Score</b><br>
 				@if($t->status==2)
-	<div class="mb-3">
+	<div class="mb-3 score_entry_{{$t->question_id}}">
       @foreach(range(0,$questions[$t->question_id]->mark,0.5) as $r)
         <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="score_{{$t->question_id}}" id="" value="{{$r}}" @if($t->mark==$r)checked @endif>
+        <input class="form-check-input score_{{$t->question_id}}" type="radio" name="score_{{$t->question_id}}" id="" value="{{$r}}" @if($t->mark==$r)checked @endif>
         <label class="form-check-label" for="inlineRadio1">{{$r}}</label>
       </div>
       @endforeach
       <div class="my-2"><b>Feedback</b></div>
-      <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="3"></textarea>
+      <textarea class="form-control comment_{{$t->question_id}}" name="comment" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
-      <button class="btn btn-primary btn-sm">save</button>
+  <div class="d-flex align-items-center float-right">
+  <div class="spinner-border spinner-border-sm  float-right loading_{{$t->question_id}}"  style="display:none" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+      <button class="btn btn-primary btn-sm score_save score_save_{{$t->question_id}}" data-id="{{$t->question_id}}" data-slug="{{$exam->slug}}"  data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?ajax=1" data-student="{{request()->get('student')}}" data-token="{{csrf_token()}}">save</button>
      @else
      {{$t->mark}}
+
+     @if($t->comment)
+     <div class="my-2"><b>Feedback</b></div>
+     <p>{{$t->comment}}</p>
+     @endif
      @endif
 
 			</div>
