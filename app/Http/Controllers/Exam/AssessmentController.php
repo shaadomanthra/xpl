@@ -1773,6 +1773,8 @@ class AssessmentController extends Controller
         $name = str_replace('urq/', '',$r->get('name'));
         $imgurl = $r->get('imgurl');
 
+        
+
         $angle = $r->get('rotate');
         $qid = intval($r->get('qid'));
        
@@ -1795,6 +1797,11 @@ class AssessmentController extends Controller
         Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
         Storage::disk('s3')->delete('urq/'.$name);
 
+        if($r->get('ajax')){
+            echo $path;
+            exit();
+        }
+
         return redirect()->route('assessment.solutions.q',['slug'=>$slug,'question'=>$qid,'student'=>$r->get('student')]);
 
 
@@ -1809,24 +1816,40 @@ class AssessmentController extends Controller
         $width = intval($r->get('width'));
         $height = intval($r->get('height'));
 
-        
-       
+
+        $bg = \Image::make($imgurl)->resize($width,$height);
+        $b =$bg->encode('jpg',100);
 
         if(!Storage::disk('s3')->exists('urq/original_'.$name)){
-            $bg = \Image::make($imgurl)->resize($width,$height);
-            $b =$bg->encode('jpg',100);
+            
             Storage::disk('s3')->put('urq/original_'.$name, (string)$b,'public');
+
         }
 
-        $img = \Image::make(file_get_contents($r->get('image')))->resize($width,$height); 
+        
+
+
+        $img = \Image::make($r->get('image'))->resize($width,$height); 
+
+
+        
 
         $bg->insert($img)->encode('jpg',100);   
+
+
+
+        
 
         $new_name = rand(10,100).'_'.$name;
         Storage::disk('s3')->put('urq/'.$new_name, (string)$bg,'public');
 
+
+
+
         $jsonname = $slug.'_'.$user_id;
         $jsonfile = $jsonname.'.json';
+
+
 
         if(Storage::disk('s3')->exists('urq/'.$jsonfile)){
             $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonfile),true);
@@ -1834,10 +1857,22 @@ class AssessmentController extends Controller
             $json = array();
         }
 
+
+
+
         $path = Storage::disk('s3')->url('urq/'.$new_name);
+
+
         $json[$qid][$name] = $path;
         Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
+
+
         Storage::disk('s3')->delete('urq/'.$name);
+
+        if($r->get('ajax')){
+            echo $path;
+            exit();
+        }
 
     }
 

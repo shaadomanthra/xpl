@@ -85,20 +85,28 @@
 				<hr>
 				<p><b>Response:</b></p>
 					@if($questions[$t->question_id]->type=='urq')
-          <div class="">
+          <div class="{{$w=0}}">
 
           @if(isset($questions[$t->question_id]->images))
 
           @if(count($questions[$t->question_id]->images))
           @foreach(array_reverse($questions[$t->question_id]->images) as $k=>$url)
 
-             <div class="border border-secondary">
-              <a href="#" id="{{$k}}" class="@if(auth::user()->checkRole(['hr-manager','administrator'])) correct_image @endif" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}"><img src="{{$url }}"  class=" p-1  my-1 w-100" data-name="{{$k}}"/>
+             <div class="border border-secondary {{$w=$w+1}}">
+              <a href="#" id="{{$k}}" class="@if(auth::user()->checkRole(['hr-manager','administrator'])) correct_image @endif" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}" data-id="{{$t->question_id}}_{{$w}}"><img src="{{$url }}"  class=" p-1  my-1 w-100 img_{{$t->question_id}}_{{$w}}" data-name="{{$k}}" />
               </a>
               @if(auth::user()->checkRole(['hr-manager','administrator']))
-              <a href="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=90&name={{$k}}&imgurl={{$url}}&qid={{$t->question_id}}&student={{$student->username}}" class="btn btn-outline-primary my-2 mr-1 ml-1">left <i class="fa fa-rotate-left"></i></a>
-              <a href="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=-90&name={{$k}}&imgurl={{$url}}&qid={{$t->question_id}}&student={{$student->username}}" class="btn btn-outline-primary my-2 mr-1 ml-1">right <i class="fa fa-rotate-right"></i></a>
-              <a href="#" class="btn btn-outline-success my-2 correct_image float-right mr-1" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}"> <i class="fa fa-pencil"></i> pen</a>
+              <a href="#" class="btn btn-outline-primary my-2 mr-1 ml-1 rotate_save" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=90&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}" >left <i class="fa fa-rotate-left"></i></a>
+
+              <a href="#" class="btn btn-outline-primary my-2 mr-1 ml-1 rotate_save" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=-90&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}">right <i class="fa fa-rotate-right"></i></a>
+
+               <div class="d-flex align-items-center float-right p-3" >
+  <div class="spinner-border spinner-border-sm   img_loading_{{$t->question_id}}_{{$w}}"  style="display:none" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+              <a href="#" class="btn btn-outline-success my-2 correct_image  correct_image_{{$t->question_id}}_{{$w}} ml-1" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-id="{{$t->question_id}}_{{$w}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}"> <i class="fa fa-pencil"></i> pen</a>
               @endif
           </div>
 
@@ -208,11 +216,12 @@
       <div class="modal-header">
         <h1 class="modal-title" id="exampleModalLabel">Correct Paper</h1>
         <button type="button" class="btn btn-danger clear_image float-right d-inline">clear</button>
-        <button type="button" class="btn btn-primary save_image float-right d-inline" data-url="{{ route('assessment.solutions.q.post',[$exam->slug,11])}}?student={{request()->get('student')}}" data-name="" data-imgurl="" data-student="{{request()->get('student')}}" data-token="{{ csrf_token() }}" data-user_id="{{ $student->id }}" data-slug="{{$exam->slug}}"  data-qid="11" data-width="1100" data-height="">
+        <button type="button" class="btn btn-primary save_image float-right d-inline" data-url="{{ route('assessment.solutions.q.post',[$exam->slug,11])}}?student={{request()->get('student')}}" data-name="" data-imgurl="" data-student="{{request()->get('student')}}" data-token="{{ csrf_token() }}" data-user_id="{{ $student->id }}" data-slug="{{$exam->slug}}"  data-qid="11" data-id="" data-width="1100" data-height="">
           Save
         </button>
       </div>
       <div class="modal-body">
+        <div class="canvas_message"></div>
         <div class="canvas">
         
       </div>

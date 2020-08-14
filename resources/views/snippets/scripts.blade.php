@@ -398,6 +398,49 @@ $(function(){
       
   });
 
+  $(document).on('click','.rotate_save',function(e){
+      e.preventDefault();
+
+      $url = $(this).data('url');
+      $id = $(this).data('id');
+      $imgurl = $(".img_"+$id).attr('src');
+  
+
+      $('.img_loading_'+$id).show();
+      $.ajax({
+          type : 'get',
+          url : $url,
+          data:{'imgurl':$imgurl},
+          success:function(data){
+            //console.log(data);
+            $(".img_"+$id).attr("src", data);
+            //console.log(".img_"+$id);
+            //console.log($(".img_"+$id).attr("src"));
+            $('.img_loading_'+$id).hide();
+            // json = JSON.parse(data);
+            // if(json.status==0){
+            //   $('.under_review_main').hide();
+            //   $('.score_main').html("<div class='display-4'>"+json.score+"</div>");
+            // }
+            
+            // $('.review_'+$id).removeClass('badge-warning').html('evaluated').addClass('badge-success');
+            // $('.box_'+$id).removeClass('qyellow').addClass('qgreen');
+            // if($comment)
+            // $('.score_entry_'+$id).html('<div>'+$score+'</div><div class="my-2"><b>Feedback</b></div><p>'+$comment+'</p>');
+            // else
+            // $('.score_entry_'+$id).html('<div>'+$score+'</div>');
+            // $('.score_save_'+$id).hide();
+            // $('.loading_'+$id).hide();
+            // $('.qno_'+$id).removeClass('qyellow').addClass('qgreen');
+            
+            
+          }
+        });
+     
+  });
+
+
+
   </script>
 
 @if(isset($sketchpad))
@@ -427,8 +470,16 @@ $(function(){
           alert('Edit option available for desktop users only.');
       }else{
           name = $(this).data('name');
+          id = $(this).data('id');
           url = $(this).data('url');
           imgurl = $(this).data('imgurl');
+
+          iurl = $('.img_'+id).attr('src');
+          console.log(id+' '+imgurl);
+          $('.canvas_message').html('');
+          if(iurl!=imgurl){
+            $('.canvas_message').html('<div class="p-3 text-danger">The image was updated. Kindly refresh the page to load the new image.</div>')
+          }
           dimensions = $('.correct_image').data('dimensions');
           var res = dimensions.split("-");
           width = res[0]
@@ -436,6 +487,7 @@ $(function(){
           height = Math.round((1100/width)*height);
           $('.save_image').data('height',height);
           $('.save_image').data('name',$(this).data('name'));
+          $('.save_image').data('id',$(this).data('id'));
           $('.save_image').data('imgurl',$(this).data('imgurl'));
 
           console.log($('.save_image').data('height'));
@@ -467,6 +519,7 @@ $(function(){
     url = $(this).data('url');
     data = [];
     data['name'] = $(this).data('name');
+    $id = $(this).data('id');
     data['imgurl'] = $(this).data('imgurl');
     data['width'] = $(this).data('width');
     data['height'] = $(this).data('height');
@@ -478,7 +531,40 @@ $(function(){
     data['student'] = $(this).data('student');
     canvas = document.getElementById('sketchpad');
     data['image'] = canvas.toDataURL("image/png");
-    redirectPost(url,data);
+    //redirectPost(url,data);
+
+    $('#exampleModal').modal('hide');
+
+    $('.img_loading_'+$id).show();
+      $.ajax({
+          type : 'post',
+          url : url,
+          data:{'imgurl':data['imgurl'],'name':data['name'],'width':data['width'],'height':data['height'],'user_id':data['user_id'],'slug':data['slug'],'qid':data['qid'],'_token':data['_token'],'student':data['student'],'image':data['image'],'ajax':1},
+          success:function(data){
+            console.log(data);
+            $(".img_"+$id).attr("src", data);
+            //console.log(".img_"+$id);
+            //console.log($(".img_"+$id).attr("src"));
+            $('.img_loading_'+$id).hide();
+            // json = JSON.parse(data);
+            // if(json.status==0){
+            //   $('.under_review_main').hide();
+            //   $('.score_main').html("<div class='display-4'>"+json.score+"</div>");
+            // }
+            
+            // $('.review_'+$id).removeClass('badge-warning').html('evaluated').addClass('badge-success');
+            // $('.box_'+$id).removeClass('qyellow').addClass('qgreen');
+            // if($comment)
+            // $('.score_entry_'+$id).html('<div>'+$score+'</div><div class="my-2"><b>Feedback</b></div><p>'+$comment+'</p>');
+            // else
+            // $('.score_entry_'+$id).html('<div>'+$score+'</div>');
+            // $('.score_save_'+$id).hide();
+            // $('.loading_'+$id).hide();
+            // $('.qno_'+$id).removeClass('qyellow').addClass('qgreen');
+            
+            
+          }
+        });
     
   });
 </script>
