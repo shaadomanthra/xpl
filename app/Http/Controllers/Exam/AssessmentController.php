@@ -859,6 +859,8 @@ class AssessmentController extends Controller
         else
             $images = [];
 
+        
+
         if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){
             $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$student->username.'_'.$exam->id.'.json'),true);
             $count = count($json);
@@ -1826,29 +1828,15 @@ class AssessmentController extends Controller
 
         }
 
-        
-
-
         $img = \Image::make($r->get('image'))->resize($width,$height); 
-
-
-        
-
         $bg->insert($img)->encode('jpg',100);   
-
-
-
-        
 
         $new_name = rand(10,100).'_'.$name;
         Storage::disk('s3')->put('urq/'.$new_name, (string)$bg,'public');
 
 
-
-
         $jsonname = $slug.'_'.$user_id;
         $jsonfile = $jsonname.'.json';
-
 
 
         if(Storage::disk('s3')->exists('urq/'.$jsonfile)){
@@ -1858,18 +1846,14 @@ class AssessmentController extends Controller
         }
 
 
-
-
         $path = Storage::disk('s3')->url('urq/'.$new_name);
-
 
         $json[$qid][$name] = $path;
         Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
-
-
         Storage::disk('s3')->delete('urq/'.$name);
 
         if($r->get('ajax')){
+           // echo json_encode($jsonfile);
             echo $path;
             exit();
         }

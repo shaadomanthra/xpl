@@ -475,7 +475,7 @@ $(function(){
           imgurl = $(this).data('imgurl');
 
           iurl = $('.img_'+id).attr('src');
-          console.log(id+' '+imgurl);
+         
           $('.canvas_message').html('');
           if(iurl!=imgurl){
             $('.canvas_message').html('<div class="p-3 text-danger">The image was updated. Kindly refresh the page to load the new image.</div>')
@@ -488,9 +488,11 @@ $(function(){
           $('.save_image').data('height',height);
           $('.save_image').data('name',$(this).data('name'));
           $('.save_image').data('id',$(this).data('id'));
+          $('.save_image').data('url',$(this).data('eurl'));
+          $('.save_image').data('qid',$(this).data('qid'));
           $('.save_image').data('imgurl',$(this).data('imgurl'));
 
-          console.log($('.save_image').data('height'));
+
           late($(this));
       }
       
@@ -517,6 +519,7 @@ $(function(){
   $(document).on('click','.save_image',function(e){
     e.preventDefault();
     url = $(this).data('url');
+
     data = [];
     data['name'] = $(this).data('name');
     $id = $(this).data('id');
