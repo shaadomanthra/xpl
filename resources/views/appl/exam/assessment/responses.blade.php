@@ -88,7 +88,7 @@
         <p><b>User Code:</b></p>
         <pre class="mb-3">
           <code>
-            {!! $t->code !!}
+            {!! htmlentities($t->code) !!}
           </code>
         </pre>
 
