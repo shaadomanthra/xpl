@@ -198,11 +198,14 @@
      @else
      {{$t->mark}}
 
+     @if(isset($t->comment))
      @if($t->comment)
      <div class="my-2"><b>Feedback</b></div>
      <p>{{$t->comment}}</p>
      @endif
      @endif
+     @endif
+
 
 			</div>
 		</div>
