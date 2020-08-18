@@ -83,6 +83,16 @@
 			<div class="card-body">
 				{!! $questions[$t->question_id]->question !!}
 				<hr>
+
+        @if($questions[$t->question_id]->type=='code')
+        <p><b>User Code:</b></p>
+        <pre class="mb-3">
+          <code>
+            {!! $t->code !!}
+          </code>
+        </pre>
+
+        @endif
 				<p><b>Response:</b></p>
 					@if($questions[$t->question_id]->type=='urq')
           <div class="{{$w=0}}">

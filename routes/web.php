@@ -165,8 +165,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 			->name('test.report')->middleware('auth');
 	Route::get('/test/{test}/analytics3', 'Exam\ExamController@analytics3')
 			->name('test.analytics3')->middleware('auth');
-	Route::get('/test/{test}/reportdeep', 'Exam\ExamController@analyticsdeep')
-			->name('test.reportdeep')->middleware('auth');
+	Route::get('/test/{test}/live', 'Exam\AssessmentController@live')
+			->name('test.live')->middleware('auth');
 	Route::get('/test/{test}/accesscode', 'Exam\ExamController@accesscode')
 			->name('test.accesscode')->middleware('auth');
 

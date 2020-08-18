@@ -760,8 +760,8 @@ class AssessmentController extends Controller
             return $question;
     }
 
-     public function new_answer($answer,$dynamic)
-     {
+    public function new_answer($answer,$dynamic)
+    {
      
         if(!$dynamic)
             return $answer;
@@ -776,6 +776,30 @@ class AssessmentController extends Controller
             $new_ans = implode(',', $ans);
         }else if(strlen($answer)==1){
             $new_ans = $this->new_ans_str($answer,$dynamic);
+        }
+
+        if(!isset($new_ans))
+            return $answer;
+
+        return $new_ans;
+    }
+
+    public function old_answer($answer,$dynamic)
+    {
+     
+        if(!$dynamic)
+            return $answer;
+
+        
+
+        if(strpos($answer,',')!== false){
+            $ans =explode(',', $answer);
+            foreach($ans as $k=>$a){
+                $ans[$k]=$this->old_ans_str($a,$dynamic);
+            }
+            $new_ans = implode(',', $ans);
+        }else if(strlen($answer)==1){
+            $new_ans = $this->old_ans_str($answer,$dynamic);
         }
 
         if(!isset($new_ans))
@@ -821,9 +845,41 @@ class AssessmentController extends Controller
         return $new_ans;
     }
 
+    public function old_ans_str($answer,$dynamic){
+        $new_ans = $answer;
+
+        $answer = strtoupper($answer);
+
+        if($dynamic ==1){
+            return $answer;
+        }elseif($dynamic==2){
+            if($answer == 'A') $new_ans = 'B';
+            if($answer == 'B') $new_ans = 'C';
+            if($answer == 'C') $new_ans = 'D';
+            if($answer == 'D') $new_ans = 'A';
+            if($answer == 'E') $new_ans = 'E';
+        }
+        elseif($dynamic==3){
+            if($answer == 'A') $new_ans = 'C';
+            if($answer == 'B') $new_ans = 'D';
+            if($answer == 'C') $new_ans = 'A';
+            if($answer == 'D') $new_ans = 'B';
+            if($answer == 'E') $new_ans = 'E';
+        }elseif($dynamic==4){
+            if($answer == 'A') $new_ans = 'D';
+            if($answer == 'B') $new_ans = 'A';
+            if($answer == 'C') $new_ans = 'B';
+            if($answer == 'D') $new_ans = 'C';
+            if($answer == 'E') $new_ans = 'E';
+        }
+
+
+        return $new_ans;
+    }
+
     public function responses($slug,$id=null,Request $request)
     {
-         $filename = $slug.'.json';
+        $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
 
         $exam = Cache::get('test_'.$slug);
@@ -1366,9 +1422,14 @@ class AssessmentController extends Controller
         $exam_id = $resp->test_id;
         $responses = $resp->responses;
 
+        $exam_cache = Cache::get('exam_cache_'.$exam_id);
+        if(!$exam_cache)
+        $exam_cache = array();
         
+        $exam_cache[$user_id] = $responses;
 
         Cache::put('responses_'.$user_id.'_'.$exam_id,$responses,240);
+        Cache::put('exam_cache_'.$exam_id,$exam_cache,240);
 
 
         Storage::disk('s3')->put('responses/responses_'.$user_id.'_'.$exam_id.'.json',json_encode($responses),'public');
@@ -1741,6 +1802,162 @@ class AssessmentController extends Controller
 
 
     }
+
+     public function live($id,Request $r)
+    {
+        $exam = Cache::get('test_'.$id,function() use($id){
+            return Exam::where('slug',$id)->first();
+        });
+        $this->authorize('create', $exam);
+
+        $exam_cache = Cache::get('exam_cache_'.$exam->id);
+        
+        if(!$exam_cache){
+            abort(404,"There is no live data");
+        }
+        
+        $questions = [];
+        $secs= [];
+        foreach($exam->sections as $section){
+            $qset = $section->questions;
+
+            foreach( $qset as $q){
+                $questions[$q->id] = $q;
+                $questions[$q->id]->attempted = 0;
+                $questions[$q->id]->correct = 0;
+                $questions[$q->id]->opt_a = 0;
+                $questions[$q->id]->opt_b = 0;
+                $questions[$q->id]->opt_c = 0;
+                $questions[$q->id]->opt_d = 0;
+                $questions[$q->id]->opt_e = 0;
+                $secs[$section->id] = $section;
+                $question = $q;
+            }
+        }
+
+        foreach($exam_cache as $u=>$r){
+
+            foreach($r as $k=>$w){
+
+                if(isset($w->response)){
+
+                    $questions[$w->question_id]->attempted++;
+
+                    if($this->evaluate($w->response,$questions[$w->question_id]['answer'],$w->dynamic))
+                        $questions[$w->question_id]->correct++;
+
+                    $w->response = $this->old_answer(strtoupper($w->response),$w->dynamic);
+
+                    if(strtoupper($w->response)=='A')
+                        $questions[$w->question_id]->opt_a++;
+                    if(strtoupper($w->response)=='B')
+                        $questions[$w->question_id]->opt_b++;
+                    if(strtoupper($w->response)=='C')
+                        $questions[$w->question_id]->opt_c++;
+                    if(strtoupper($w->response)=='D')
+                        $questions[$w->question_id]->opt_d++;
+                    if(strtoupper($w->response)=='E')
+                        $questions[$w->question_id]->opt_e++;
+                }
+                     
+            }
+
+           
+        }
+
+        foreach($questions as $m=>$q){
+            $total =$questions[$m]->attempted;
+            if($total){
+            $questions[$m]->opt_a  = (round($questions[$m]->opt_a/$total*100) );
+            $questions[$m]->opt_b  = (round($questions[$m]->opt_b/$total*100) );
+            $questions[$m]->opt_c  = (round($questions[$m]->opt_c/$total*100) );
+            $questions[$m]->opt_d = (round($questions[$m]->opt_d/$total*100) );
+            $questions[$m]->opt_e  = (round($questions[$m]->opt_e/$total*100) );
+            }
+
+        }
+
+
+        if($exam)
+            return view('appl.exam.exam.live')
+                    ->with('exam_cache',$exam_cache)
+                    ->with('questions',$questions)
+                    ->with('question',$question)
+                    ->with('mathjax',$question)
+                    ->with('exam',$exam);
+        else
+            abort(404);
+    }
+
+    public function evaluate($response,$answer,$dynamic){
+
+        $item['response'] = '';
+        $item['accuracy'] = '';
+        $item['answer'] = '';
+        if(is_array($response)){
+            $item['response'] = strtoupper(implode(',',$response));
+        }else{
+            $item['response'] = strtoupper($response); 
+        }
+                
+        $item['answer'] = $this->new_answer(strtoupper($answer),$dynamic);
+
+                if(strlen($item['answer'])==1){
+                   if($item['response'] == $item['answer'])
+                    $item['accuracy'] =1;
+                    else
+                    $item['accuracy'] =0; 
+                }elseif(strpos($item['answer'],',')!==false){
+                    
+                    $ans = explode(',',$item['response']);
+                    $flag = false;
+                    foreach($ans as $an)
+                    if($an)
+                    if(strpos($item['answer'],$an)!==false){
+
+                    }else{
+                        $flag = true;
+                        break;
+                    }
+
+                    if(!$flag){
+                        if(strlen($item['response']) != strlen($item['answer']))
+                            $flag = true;
+                    }
+
+                    if($flag)
+                        $item['accuracy'] =0;
+                    else
+                        $item['accuracy'] =1;
+                }else{
+
+                    if(strpos($item['answer'],'/')!==false){
+                        $ans = explode('/',$item['answer']);
+                        
+                        $flag = false;
+                        $item['accuracy'] =0;
+                        foreach($ans as $an){
+                            $an = str_replace(' ', '', $an);
+                            if($an==trim(str_replace(' ','',$item['response'])))
+                                $item['accuracy'] =1;
+                        }
+                       
+                    }else{
+                        if($item['response']){
+                            if(trim($item['response']) == $item['answer'])
+                            $item['accuracy'] =1;
+                            else
+                            $item['accuracy'] =0; 
+                        }else{
+                            $item['accuracy'] =0; 
+                        }
+                    }
+                    
+
+                }
+        return $item['accuracy'];
+    }
+
 
     public function delete_image($slug){
 
