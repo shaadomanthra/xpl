@@ -157,6 +157,10 @@ class PostController extends Controller
             flash('Cache is Refreshed!')->success();
             Cache::forget('post_appl_'.$slug);
             Cache::forget('post_users_'.$slug);
+            Cache::forget('filter_'.$slug.'_YES');
+            Cache::forget('filter_'.$slug.'_NO');
+            Cache::forget('filter_'.$slug.'_MAYBE');
+            
         }
 
         $obj = Cache::remember('post_appl_'.$slug ,240, function() use($slug){
