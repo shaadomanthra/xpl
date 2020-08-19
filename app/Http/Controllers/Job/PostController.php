@@ -240,6 +240,8 @@ class PostController extends Controller
             if($item)
             $objs = $this->paginateAnswers($obj->users()->where('name','LIKE',"%{$item}%")->orderBy('pivot_created_at','desc')->get()->toArray(),30);
             else if($filter){
+
+
                 $yop = explode(',',$request->get('yop'));
                 if(!$yop[0]){
                     $yop=['2016','2017','2018','2019','2020','2021','2022','2023','2024'];
@@ -248,14 +250,27 @@ class PostController extends Controller
                 if(!$branch[0]){
                     $branch = $branches->pluck('id')->toArray();
                 }
+
+                $shortlisted = $request->get('shortlisted');
+
+                if(!$shortlisted){
+                    $shortlisted = ['YES','NO','MAY BE'];
+                }else{
+                    $shortlisted = [$shortlisted];
+                }
+
                 $academics = $request->get('academics');
 
                 if(!$academics){
                     $academics = 0;
                 }
 
+                //dd($obj->users()->first());
+                //dd($obj->users()->wherePivot('created_at','')->get());
+
                 $objs = $obj->users()->whereIn('year_of_passing',$yop)
                         ->whereIn('branch_id',$branch)->where('bachelors','>=',$academics)
+                        ->wherePivotIn('shortlisted',$shortlisted)
                         ->orderBy('pivot_created_at','desc')->simplePaginate(config('global.no_of_records'));
             }else{
                 

@@ -61,27 +61,27 @@
       <div class="col-6 col-md-3 mb-3 mb-md-0">
         <div class=" p-3 rounded" style="background: #fff;border:1px solid #d7d1e8">
           <h5>Open Applicants</h5>
-          <div class="display-3">{{$app->none}}</div>
+          <div class="display-3"><a href="{{ route('job.applicants',$obj->slug)}}">{{$app->none}}</a></div>
         </div>
       </div>
       <div class="col-6 col-md-3 mb-3 mb-md-0">
         <div class="p-3 rounded" style="background: #f6fff7;border:1px solid #c9e2cc">
           <h5 class="text-success"><i class="fa fa-check-circle"></i> Shortlisted (YES)</h5>
-          <div class="display-3">{{$app->yes}}
+          <div class="display-3"><a href="{{ route('job.applicants',$obj->slug)}}?filter=1&shortlisted=YES">{{$app->yes}}</a>
           </div>
         </div>
       </div>
       <div class="col-6 col-md-3 ">
         <div class=" p-3 rounded " style="background: #fffdf6;border:1px solid #ece8d5">
           <h5 class="text-warning"><i class="fa fa-ban"></i> Shortlisted (MAY BE)</h5>
-          <div class="display-3">{{$app->maybe}}
+          <div class="display-3"><a href="{{ route('job.applicants',$obj->slug)}}?filter=1&shortlisted=MAY BE">{{$app->maybe}}</a>
           </div>
         </div>
       </div>
       <div class="col-6 col-md-3 ">
         <div class=" p-3 rounded" style="background: #fff6f6;border:1px solid #efd7d7" >
           <h5 class="text-danger"><i class="fa fa-times-circle"></i> Shortlisted (NO)</h5>
-          <div class="display-3">{{$app->no}}
+          <div class="display-3"><a href="{{ route('job.applicants',$obj->slug)}}?filter=1&shortlisted=NO">{{$app->no}}</a>
           </div>
         </div>
       </div>

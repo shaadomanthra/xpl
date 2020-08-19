@@ -121,21 +121,18 @@
 @endif
 
 
+<!--
 <div class="rounded p-4 mb-4" style="background: #d5fff6; border:1px solid #b1e4d9;">
   <h3>Virtual Career Fair - Apply for the Jobs  <span class="badge badge-warning">Active</span></h3>
   <p>Last Date : 09th Aug 2020, 9pm</p><a href="https://xplore.co.in/jobs" class="btn btn-primary mt-3">Open Jobs Page</a><hr>
   <p><b>Note:</b> Only the candidates who have attempted the career fair pre-assessment can apply for the jobs.  For queries, mail us at info@xplore.co.in</p>
-
 </div>
 
 <div class="rounded p-4 mb-4" style="background: #fff3d5; border:1px solid #ffe298;">
   <h3>Virtual Career Fair Pre-assessment  <span class="badge badge-warning">Active</span></h3>
   <p>Last Date : 5th Aug 2020, 9pm</p><a href="https://xplore.co.in/test/34781" class="btn btn-success mt-3">Open Test Page</a><hr>
   <p><b>Note:</b> @if(!$user->video)You are required to update your <a href="{{ route('video.upload')}}">profile video</a> before 5th Aug, 9pm. @endif Kindly ensure your profile details are up to date. Any discrepancies will lead to cancellation of the application. For queries, mail us at info@xplore.co.in</p>
-
-  
-
-</div>
+</div> -->
 @if(count(\auth::user()->newtests())!=0)
   <div class="row ">
             
