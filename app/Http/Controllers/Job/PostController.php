@@ -253,6 +253,8 @@ class PostController extends Controller
 
                 $shortlisted = $request->get('shortlisted');
 
+                $st = str_replace(' ', '', $request->get('shortlisted'));
+
                 if(!$shortlisted){
                     $shortlisted = ['YES','NO','MAY BE'];
                 }else{
@@ -268,10 +270,13 @@ class PostController extends Controller
                 //dd($obj->users()->first());
                 //dd($obj->users()->wherePivot('created_at','')->get());
 
-                $objs = $obj->users()->whereIn('year_of_passing',$yop)
-                        ->whereIn('branch_id',$branch)->where('bachelors','>=',$academics)
+                $objs_cache_filter = Cache::remember('filter_'.$slug.'_'.$st,240, function() use($obj,$shortlisted){
+                    return $obj->users()
                         ->wherePivotIn('shortlisted',$shortlisted)
-                        ->orderBy('pivot_created_at','desc')->simplePaginate(config('global.no_of_records'));
+                        ->orderBy('pivot_created_at','desc')->get()->toArray();
+                });
+
+                $objs = $this->paginateAnswers($objs_cache_filter,config('global.no_of_records')); 
             }else{
                 
                 $objs = $this->paginateAnswers($users,config('global.no_of_records')); 
