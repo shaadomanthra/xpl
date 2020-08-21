@@ -86,7 +86,7 @@
      <div class="row">
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('video') ? ' has-error' : '' }}">
-                <label for="video" class="col-md-8 control-label">Inter/Diploma College Name</label>
+                <label for="video" class="col-md-8 control-label">SSC/Inter/Diploma/School or College Name</label>
 
                 <div class="col-md-12">
                     <input id="video" type="text" class="form-control" name="video" value="{{ old('video') }}" required autofocus placeholder="">
@@ -105,6 +105,9 @@
 
                 <div class="col-md-12">
                     <select class="form-control" name="personality">
+                        <option value="SSC"  >SSC</option>
+                        <option value="INTER"  >Inter</option>
+                        <option value="DEGREE"  >DEGREE</option>
                       <option value="MPC"  >M.P.C</option>
                       <option value="BiPC"  > Bi.P.C</option>
                       <option value="CSE"  > CSE</option>
@@ -122,7 +125,7 @@
 
          <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('confidence') ? ' has-error' : '' }}">
-                <label for="confidence" class="col-md-8 control-label">Secured Marks in First Year</label>
+                <label for="confidence" class="col-md-8 control-label">Secured Marks in SSC/INTER/Degree</label>
 
                 <div class="col-md-12">
                     <input id="confidence" type="text" class="form-control" name="confidence" value="{{ old('confidence') }}" required autofocus>

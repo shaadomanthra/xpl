@@ -479,7 +479,7 @@ class AssessmentController extends Controller
                 $i++;$k++;
                 if($q->type=='code'){
                     $code_ques[$i]=1;
-                    $window_change = false;
+                    //$window_change = false;
                 }
             }
         }

@@ -730,15 +730,15 @@ $(document).ready(function() {
 
       var code = editor_.getValue();
       $('.code_'+$qno).val(code);
-      console.log($('.code_'+$qno).val());
+      //console.log($('.code_'+$qno).val());
       
       $('.loading').show();
-      setTimeout(function(){
-        $.get($stop,{'name':$namec}, function(data, status){
-        console.log(data);
-        console.log('Code execution stopped');
-        });
-      }, 5000);
+      // setTimeout(function(){
+      //   $.get($stop,{'name':$namec}, function(data, status){
+      //   console.log(data);
+      //   console.log('Code execution stopped');
+      //   });
+      // }, 5000);
 
         $.ajax({
           type : 'get',
@@ -746,7 +746,7 @@ $(document).ready(function() {
           data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec},
           timeout: 10000, 
           success:function(data){
-            console.log(data);
+            //console.log(data);
             data = JSON.parse(data);
    
             if(data){
@@ -1675,7 +1675,7 @@ function stopTimer() {
 
 <script>
  // window change events
-
+console.log('focus');
  function stopTimer() {
   var count = parseInt(document.getElementById("window_change").value) +1;
   var message = '';
