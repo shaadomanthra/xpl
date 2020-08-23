@@ -56,7 +56,7 @@ class Tests_Overall extends Model
 
           curl_setopt_array($curl, [
               CURLOPT_RETURNTRANSFER => 1,
-              CURLOPT_URL => 'http://yolo.packetprep.com',
+              CURLOPT_URL => 'http://yolo.p24.in',
               CURLOPT_POST => 1,
               CURLOPT_TIMEOUT => 30,
           ]);
