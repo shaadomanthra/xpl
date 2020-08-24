@@ -136,30 +136,30 @@ class HomeController extends Controller
 
           $jsondata = json_decode($j,true);
         
-        dd($jsondata);
-        $f_name = $p[2];
-
-        $json_file=$p[0].'_'.$p[1].'.json';
-        if(Storage::disk('s3')->exists('webcam/json/'.$json_file)){
-         $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$json_file));
-        }else{
-         $app = app();
-         $json = $app->make('stdClass');
-        }
-
-        $count = intval($jsondata['count']);
-
-        if(isset($t->face_detect))
-        if($t->face_detect<$count){
-            $t->face_detect = $count;
-            $t->save();
-        }
         
-        if($jsondata['count'])
-            $json->$f_name = $count;
-        else
-             $json->$f_name = 0;
-        Storage::disk('s3')->put('webcam/json/'.$json_file,json_encode($json),'public');
+        // $f_name = $p[2];
+
+        // $json_file=$p[0].'_'.$p[1].'.json';
+        // if(Storage::disk('s3')->exists('webcam/json/'.$json_file)){
+        //  $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$json_file));
+        // }else{
+        //  $app = app();
+        //  $json = $app->make('stdClass');
+        // }
+
+        // $count = intval($jsondata['count']);
+
+        // if(isset($t->face_detect))
+        // if($t->face_detect<$count){
+        //     $t->face_detect = $count;
+        //     $t->save();
+        // }
+        
+        // if($jsondata['count'])
+        //     $json->$f_name = $count;
+        // else
+        //      $json->$f_name = 0;
+        // Storage::disk('s3')->put('webcam/json/'.$json_file,json_encode($json),'public');
 
       
         $data = $jsondata['image'];
