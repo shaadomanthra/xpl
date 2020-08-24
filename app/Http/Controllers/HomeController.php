@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Storage;
 use PacketPrep\Jobs\SendEmail;
 use PacketPrep\Jobs\FaceDetect;
 use PacketPrep\Mail\EmailForQueuing;
+use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Tests_Overall;
+use PacketPrep\User;
+
 use Mail;
 
 class HomeController extends Controller
@@ -87,11 +91,19 @@ class HomeController extends Controller
 
      public function process_image(Request $request){
         
-        $name = 'image1';
-        $filename = 'image1.jpg';
+        $name = 'pranithadasari123_356_3';
+         $p = explode('_', $name);
+
+        $user = User::where('username',$p[0])->first();
+        //$exam = Exam::where('id',$p[1])->first();
+
+        //$t = Tests_Overall::where('user_id',$user->id)->where('test_id',$exam->id)->first();
+
+        $filename = $name.'.jpg';
         $image = Storage::disk('s3')->get('webcam/'.$filename);
+
         $b64_image =base64_encode($image);
-        
+
 
 
           // Get cURL resource
@@ -124,12 +136,7 @@ class HomeController extends Controller
 
           $jsondata = json_decode($j,true);
         
-          dd($jsondata);
-        exit();
-
-          $img = \Image::make($jsondata['image']);
-          $img->save('sample.jpg');
-        
+        dd($jsondata);
         $f_name = $p[2];
 
         $json_file=$p[0].'_'.$p[1].'.json';
@@ -158,6 +165,9 @@ class HomeController extends Controller
         $data = $jsondata['image'];
         $data = base64_decode($data);
         Storage::disk('s3')->put('webcam/'.$filename,$data,'public');
+        
+        return 1;
+
     }
 
     public function webcam_upload(Request $request){
