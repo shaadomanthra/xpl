@@ -54,6 +54,13 @@ class Tests_Overall extends Model
           $curl = curl_init();
           // Set some options - we are passing in a useragent too here
 
+          $headers = [
+          'Authorization: Token bba456d8-b9c9-4c80-bb84-39d44c5b0acb',
+          'Content-type: application/json'
+                ];
+
+         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
           curl_setopt_array($curl, [
               CURLOPT_RETURNTRANSFER => 1,
               CURLOPT_URL => 'https://api.p24.in/python',
@@ -63,7 +70,7 @@ class Tests_Overall extends Model
 
           $form = array('name'=>$name,'image'=>$b64_image);
 
-          curl_setopt($curl, CURLOPT_POSTFIELDS, $form);
+          curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($form));
 
           // Send the request & save response to $resp
           $j = curl_exec($curl);
