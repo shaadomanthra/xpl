@@ -94,6 +94,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('/java-language-exam',function(){ return view('appl.pages.java_certification'); })->name('java.l.c');
 	Route::get('/launch-offer',function(){ return view('appl.pages.launch_offer'); })->name('launch-offer');
 	Route::get('/email-template',function(){ return view('mail.email'); })->name('email.template');
+	Route::get('/versant',function(){ return view('appl.pages.verscent'); })->name('pages.verscent');
 
 	Route::get('/cf-launch',function(){ return view('appl.pages.cf_launch'); })->name('cf.launch');
 
