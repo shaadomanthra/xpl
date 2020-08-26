@@ -355,7 +355,7 @@
                       <td>
                         <p>Hi <b>@if(isset($user['name'])){{$user['name']}} @else  @endif</b>,</p>
                         <p>Greetings!</p>
-                        <p>[24]7Ai is hiring 2018,2019 and 2020 (who completed final exam) passed out candidates for Tech Support Role. The proposed compensation is 2.20 LPA till 4 LPA. Last date to apply is 31st Aug 2020. </p>
+                        <p>[24]7Ai is hiring 2018,2019 and 2020 passed out candidates for Tech Support Role. The proposed compensation is 2.20 LPA till 4 LPA. Last date to apply is 31st Aug 2020. </p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
