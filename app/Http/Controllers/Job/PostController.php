@@ -131,8 +131,12 @@ class PostController extends Controller
         $data['no_video'] = count($users->where('video',''));
         $data['video'] = $data['total'] - $data['no_video'];
 
+
+
         if(request()->get('sendmail_video')){
+            $users = $obj->users()->whereIn('year_of_passing',[2018,2019,2020])->get();
             $this->mailer($users);
+            //echo "mailed";
         }
 
 

@@ -355,7 +355,7 @@
                       <td>
                         <p>Hi <b>@if(isset($user['name'])){{$user['name']}} @else  @endif</b>,</p>
                         <p>Greetings!</p>
-                        <p>Virtual Career Fair Job Openings are active now. If you have completed the Career Fair <a href="https://xplore.co.in/test/34781" target="_blank">pre-assessment</a> then you can apply for job openings in 30+ companies. The links will be active for next 4 days, you can apply anytime before Aug 9th, 6:00 PM.</p>
+                        <p>[24]7Ai is hiring 2018,2019 and 2020 (who completed final exam) passed out candidates for Tech Support Role. The proposed compensation is 2.20 LPA till 4 LPA. Last date to apply is 31st Aug 2020. </p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>
@@ -363,7 +363,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="https://xplore.co.in/jobs" target="_blank">Apply for Jobs</a> </td>
+                                      <td> <a href="https://xplore.co.in/jobs/22228" target="_blank">Apply Now</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>

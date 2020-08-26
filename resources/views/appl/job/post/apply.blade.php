@@ -16,10 +16,6 @@
 					<p class="mb-0" >The following job opening is only for {{str_replace(',',', ',$obj->yop)}} passed out candidates. </p><hr>
 					 	 Your Year of passing is {{auth::user()->year_of_passing}}. <br> <a href="{{ route('profile.complete')}}?redirect={{request()->url()}}">update your profile</a> to apply for this job.
 					</div>
-					@elseif(!auth::user()->attempted_test(292))
-					<div class="alert alert-info alert-important" role="alert">
-				 	 <p class="mb-0" >The following job opening is only for the candidates you have taken <a href="https://xplore.co.in/test/34781" target="_blank"> Xplore - Preassessment Test</a> </p>
-					</div>
 					@elseif(!in_array(auth::user()->branch->name,explode(',',$obj->education)))
 
 						@if(!in_array('OTHER',explode(',',$obj->education)))
