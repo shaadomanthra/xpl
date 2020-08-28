@@ -259,14 +259,9 @@ if (! function_exists('subdomain')) {
 function subdomain() {
     $url = url()->full();
 
-    if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test')
-            return 'bfs';
-    if($_SERVER['HTTP_HOST'] == 'xplore.co.in' )
-            return 'xplore';
-     if($_SERVER['HTTP_HOST'] == 'xp.test' )
-            return 'xplore';
-
-    if($_SERVER['HTTP_HOST'] == 'xplore.in.net' )
+    if($_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'p24.in' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'onlinelibrary.test')
+            return 'corporate';
+    if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.in.net')
             return 'xplore';
 
     $parsed = parse_url($url);
@@ -279,6 +274,33 @@ function subdomain() {
      }
      else
         return null;
+
+}
+}
+
+if (! function_exists('domain')) {
+function domain() {
+    $url = url()->full();
+    $parsed = parse_url($url);
+    $exploded = explode('.', $parsed["host"]);
+     if(count($exploded) > 2){
+        $parsed = parse_url($url);
+        $exploded = explode('.', $parsed["host"]);
+        $domain = $exploded[1];
+        
+     }
+     else{
+         $parsed = parse_url($url);
+        $exploded = explode('.', $parsed["host"]);
+        $domain = $exploded[0];
+     }
+
+    if($domain == 'piofx' || $domain == 'p24' || $domain == 'onlinelibrary' )
+            $domain  = 'piofx';
+    if($domain == 'xplore' || $domain == 'xp' )
+            $domain =  'xplore';
+
+    return $domain;
 
 }
 }

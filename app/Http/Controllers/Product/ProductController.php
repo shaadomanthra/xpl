@@ -200,7 +200,7 @@ class ProductController extends Controller
       $user->image = $user->getImage();
       $users = [];
 
-      if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test'){
+      if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'onlinelibrary.test'){
         $trainings = null;
         $exams = null;
           if($user->checkRole(['administrator'])){

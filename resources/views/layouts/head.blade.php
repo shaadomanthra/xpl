@@ -50,7 +50,7 @@
   @endif
   @if(isset($highlight))
   <link href="{{ asset('css/styles2.css') }}?new=13" rel="stylesheet">
-  @elseif($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test')
+  @elseif(domain()=='piofx')
   @if(request()->segment(1)=='dashboard' || request()->segment(1)=='training')
   <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   <!--begin::Fonts-->

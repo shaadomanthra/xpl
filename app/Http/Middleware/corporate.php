@@ -29,15 +29,15 @@ class Corporate
 
                 return redirect()->to('https://'.$new_url);
             }
-            elseif($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'bfs' ){
+            elseif($_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'p24.in' ){
                 $filename = 'corporate.json';
                 $client = json_decode(file_get_contents($filename));
-                $client->name = 'Bajaj Finserv';
-                $client->logo = url('/').'/img/bfs.jpg';
+                $client->name = 'Piofx';
+                $client->logo = url('/').'/img/piofx.png';
 
                 $request->session()->put('client',$client);
             }
-            elseif( subdomain()!='hire' && subdomain()!='xplore' && subdomain()!='bfs'){
+            elseif( subdomain()!='xplore' && subdomain()!='bfs'){
 
                 $client = Cache::get('client_'.subdomain(),function() {
                             return Client::where('slug',subdomain())->first();
@@ -50,8 +50,13 @@ class Corporate
                     }
                     else if(Storage::disk('s3')->exists('companies/'.subdomain().'.jpg'))
                         $client->logo = Storage::disk('s3')->url('companies/'.subdomain().'.jpg');
-                    else 
-                        $client->logo = url('/').'/img/xplore.png';
+                    else{
+                        if(domain()=='piofx')
+                            $client->logo = url('/').'/img/piofx.png';
+                        else
+                            $client->logo = url('/').'/img/xplore.png';
+                    } 
+                        
 
                         //$client = json_decode(file_get_contents($filename));
                         // if(urlexists($logo_1))
@@ -85,6 +90,7 @@ class Corporate
             
         }
         else{
+
             $filename = 'corporate.json';
             $client = json_decode(file_get_contents($filename));
             $client->name = 'Xplore';

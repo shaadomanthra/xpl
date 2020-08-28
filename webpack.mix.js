@@ -23,6 +23,10 @@ mix.styles(['public/css/app.css','public/css/bootstrap.min.css',
     'public/css/home.css','public/css/highlight/an-old-hope.css'
 ], 'public/css/styles2.css');
 
+mix.styles(['public/assetsfront/vendor/hs-mega-menu/dist/hs-mega-menu.min.css',
+    'public/assetsfront/vendor/fancybox/dist/jquery.fancybox.min.css','public/assetsfront/vendor/aos/dist/aos.css'
+], 'public/css/front.css');
+
 mix.js(['public/js/jquery.js',
     'public/js/global.js'
 ], 'public/js/script_j.js');

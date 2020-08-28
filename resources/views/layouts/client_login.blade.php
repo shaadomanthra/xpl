@@ -4,12 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>{{(request()->session()->get('client'))?request()->session()->get('client')->name:'Xplore'}}</title>
+  <title>{{(request()->session()->get('client'))?request()->session()->get('client')->name: domain()}}</title>
   <meta name="description" content="An advanced assessments platform designed and developed by an expert team.">
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+  @if(domain()=='piofx')
+  <link rel="shortcut icon" href="{{ asset('favicon_piofx.ico' )}}" />
+  @else
+  <link rel="shortcut icon" href="{{ asset('favicon.ico' )}}" />
+  @endif
 </head>
 <body>
   <main>
@@ -18,7 +23,7 @@
         <div class="col-sm-6 login-section-wrapper">
           <div class="brand-wrapper">
             <img 
-        src="{{ (request()->session()->get('client'))?request()->session()->get('client')->logo:'https://xplore.co.in/img/xplore.png' }} " width="200px" class="ml-md-0"  alt="PacketPrep logo " type="image/png">
+        src="{{ (request()->session()->get('client'))?request()->session()->get('client')->logo:'https://xplore.co.in/img/xplore.png' }} " width="200px" class="ml-md-0"  alt="Logo " type="image/png">
           </div>
           <div class="login-wrapper my-auto">
              @yield('content')
