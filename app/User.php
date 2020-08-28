@@ -301,8 +301,10 @@ class User extends Authenticatable
             
             //Cache::forget('tests_'.$user->id);
             $alltests = Cache::get('tests_'.subdomain());
+            if($alltests)
             $tests = $alltests->whereIn('id',$test_ids);
-            
+            else
+            $tests = [];
         
         }else{
             $tests = [];
