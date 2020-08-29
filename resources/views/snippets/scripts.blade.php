@@ -476,7 +476,9 @@ $(function(){
       $data = [];
       $qtokens.forEach(function(item,index){
 
+
         if($rtokens[index]){
+          console.log($rtokens[index]+' '+item);
           if($rtokens[index] == item)
             $dtokens[index] = '<span class="text-success">'+item+'</span>';
           else{
