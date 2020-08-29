@@ -116,7 +116,7 @@
 
   @elseif($question->type=='typing')
   <div class="bg-light border p-3 rounded mt-3">
-          <h5>Type the highlighted word</h5><textarea class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}} typed_answer" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" rows="6">@if($question->response){{$question->response}} @endif</textarea>
+          <h5>Type the above paragraph</h5><textarea class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}} typed_answer" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" rows="6">@if($question->response){{$question->response}} @endif</textarea>
 
           <input id="{{($i+1)}}_time_start" class="form-input {{($i+1)}}_time_start" type="hidden" name="{{($i+1)}}_time_start"  value="0">
           <input id="{{($i+1)}}_time_end" class="form-input {{($i+1)}}_time_end" type="hidden" name="{{($i+1)}}_time_end"  value="0">
