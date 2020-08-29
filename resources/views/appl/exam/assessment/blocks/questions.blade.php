@@ -25,6 +25,7 @@
   @endif
   <div class="card  mb-3">
     <div class="card-body ">
+      @if($question->type!='typing')
       <div class="row no-gutters">
         <div class="col-2 col-md-2">
           <div class="pr-3 pb-2 " >
@@ -37,6 +38,15 @@
           <div class="pt-1  disable-select">{!! $question->question!!}</div>
         </div>
       </div>
+      @else
+      <div class="row no-gutters">
+        <div class="col-12 ">
+          <div class="pt-1  disable-select typed_question_html">{!! $question->question!!}</div>
+          <div class="d-none typed_question">{!! $question->question!!}</div>
+        </div>
+      </div>
+
+      @endif
 
   @if($question->type=='maq')
     <div class="alert alert-info alert-important">Select one or more choices from the given options.</div>
@@ -103,6 +113,16 @@
             <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_e!!}</div></div>
           </div>
           @endif
+
+  @elseif($question->type=='typing')
+  <div class="bg-light border p-3 rounded mt-3">
+          <h5>Type the highlighted word</h5><textarea class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}} typed_answer" type="text"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="" rows="6">@if($question->response){{$question->response}} @endif</textarea>
+
+          <input id="{{($i+1)}}_time_start" class="form-input {{($i+1)}}_time_start" type="hidden" name="{{($i+1)}}_time_start"  value="0">
+          <input id="{{($i+1)}}_time_end" class="form-input {{($i+1)}}_time_end" type="hidden" name="{{($i+1)}}_time_end"  value="0">
+          <input id="{{($i+1)}}_wpm" class="form-input {{($i+1)}}_wpm" type="hidden" name="{{($i+1)}}_wpm"  value="0">
+
+        </div>
 
   @elseif($question->type=='mcq')
     @if($question->a)
@@ -244,8 +264,10 @@
           End <span class="d-none d-md-inline">Test</span>
         </button>
       </a>
+      @if(count($questions)!=1)
         <button type="button" class="btn  btn-outline-primary  cursor right-qno" data-sno="2" data-testname="{{$exam->slug}}" >
          Next <i class="fa fa-angle-double-right"></i>
        </button>
+      @endif
      </div>
    </div>

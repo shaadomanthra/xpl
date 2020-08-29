@@ -433,6 +433,7 @@ class AssessmentController extends Controller
                         $q->time =0;
                     }else{
                         $keys = $responses->keyBy('question_id');
+
                         if(!isset($keys[$q->id]->response))
                             $keys[$q->id]->response = null;
                         $q->response = $keys[$q->id]->response;
@@ -1604,6 +1605,11 @@ class AssessmentController extends Controller
 
                 $type = $questions[$item['question_id']]->type;
 
+                if($type=='typing'){
+                    $item['mark'] = $request->get($i.'_wpm');
+                    $item['accuracy'] = 1;
+                }
+
                 if($type=='sq' || $type=='urq'){
                     $code_ques_flag =1;
                     $item['status'] = 2;
@@ -1611,6 +1617,7 @@ class AssessmentController extends Controller
 
                 $item['created_at'] = $date_time;
                 $item['updated_at'] = $date_time;
+
                 array_push($data,$item);
                 array_push($d, json_decode(json_encode($item)));
                

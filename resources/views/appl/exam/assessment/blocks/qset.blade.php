@@ -16,7 +16,7 @@
 		<span class="text-warning "><i class="fa fa-dot-circle-o blink" aria-hidden="true"></i> Continuous monitoring is enabled</span>
 		@endif
 		
-		
+	@if($exam->sections[0]->name!='typing')
 		<div class=" p-2 mb-2 rounded mt-3" style="border:2px solid #bb061c">
 		<div class="row ">
 			<div class="col-3">
@@ -48,8 +48,27 @@
 				</div>
 			@endforeach
 		</div>
+	@else
+		<div class="mt-4">
+			
+			<span class="badge badge-dark">Total word Count - <span class="word_total"></span></span><br>
+			<span class="badge badge-primary">Typed Word Count - <span class="word_typed"></span></span><br>
+			<span class="badge badge-warning">Pending Word Count - <span class="word_pending"></span></span><br>
+			<span class="badge badge-danger border">Error Count - <span class="word_error"></span></span><br>
+		</div>
+	@endif
 	</div>
 </div>
+
+@if($exam->sections[0]->name=='typing')
+	<div class="mt-4 border rounded p-3">
+		<h5>Color codes</h5><hr>
+		<div><span class="text-primary">Current word</span> is blue</div>
+		<div><span class="text-danger">Error word</span> is red</div>
+		<div><span class="text-success">Correct word</span> is green</div>
+
+	</div>
+@endif
 
 @if($camera)
 <div class="camera border p-3">

@@ -440,6 +440,69 @@ $(function(){
   });
 
 
+  $('.typed_answer').on('keyup',function(){
+      $question  = $('.typed_question').text();
+      $sno = $(this).data('sno');
+
+      $elapsed_time = parseInt($('.'+$sno+'_time').val());
+      $start_time = parseInt($('.'+$sno+'_time_start').val());
+
+      if(!$start_time)
+        $('.'+$sno+'_time_start').val($elapsed_time);
+
+
+      $response=$(this).val();
+      $d = match($question,$response);
+      $('.typed_question_html').html($d['html']);
+      $('.word_total').text($d['total']);
+      $('.word_typed').text($d['typed']);
+      $('.word_pending').text($d['pending']);
+      $('.word_error').text($d['error']);
+
+      $effective_time = $elapsed_time-$start_time;
+      $('.'+$sno+'_time_end').val($effective_time);
+      
+      $wpm = parseInt((($d['chars']/5)-parseInt($d['error']))*60/$effective_time);
+      $('.'+$sno+'_wpm').val($wpm);
+
+    });
+
+
+   function match($question,$response){
+      $qtokens = $question.split(" ");
+      $rtokens = $response.split(" ");
+      $dtokens = [];
+      $error = 0;
+      $data = [];
+      $qtokens.forEach(function(item,index){
+
+        if($rtokens[index]){
+          if($rtokens[index] == item)
+            $dtokens[index] = '<span class="text-success">'+item+'</span>';
+          else{
+            if(index != ($rtokens.length-1)){
+              $error++;
+              $dtokens[index] = '<span class="text-danger">'+item+'</span>';
+            }
+            else
+              $dtokens[index] = '<span class="text-primary ">'+item+'</span>';
+          }
+        }else{
+           $dtokens[index] = item;
+        }
+      });
+
+      $data['html'] = $dtokens.join(' ');
+      $data['chars'] = $response.replace(/\s/g, '').length;
+      $data['total'] = $qtokens.length;
+      $data['typed'] = $rtokens.length;
+      $data['pending'] = $data['total'] -$data['typed'];
+      $data['error'] = $error;
+      return $data;
+      
+   }
+
+
 
   </script>
 
