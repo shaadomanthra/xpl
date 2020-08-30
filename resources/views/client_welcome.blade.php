@@ -50,7 +50,7 @@
           @if($_SERVER['HTTP_HOST'] == 'vaagdevi.xplore.co.in'  || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
           <div class="alert alert-warning alert-important mt-3">
           <div class=" h4 ">Next mock test is scheduled for 7th Sept 2020.</div>
-          
+           <p id="d" class="my-2 text-danger blink"></p>
         </div>
           @elseif($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
           <div class="alert alert-warning alert-important mt-3">
@@ -96,7 +96,7 @@ setInterval(blink_text, 1000);
 
 
 // Set the date we're counting down to
-var countDownDate = new Date("July 18, 2020 18:00:00").getTime();
+var countDownDate = new Date("September, 7 2020 09:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
