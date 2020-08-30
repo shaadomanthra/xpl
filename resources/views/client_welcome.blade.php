@@ -49,7 +49,7 @@
           </div>
           @if($_SERVER['HTTP_HOST'] == 'vaagdevi.xplore.co.in'  || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
           <div class="alert alert-warning alert-important mt-3">
-          <div class=" h4 ">We have postponed our 03/07/2020 mock test , as TS government postponed TS EAMCET in the view of this only we have postponed ...third mock test exam date will be announced shortly</div>
+          <div class=" h4 ">Next mock test is scheduled for 7th Sept 2020.</div>
           
         </div>
           @elseif($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')

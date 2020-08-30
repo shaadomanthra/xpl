@@ -91,6 +91,14 @@
         </div>
 @endif -->
 
+@if($_SERVER['HTTP_HOST'] == 'vaagdevi.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.vaagdevi.xplore.co.in')
+          <div class="alert alert-warning alert-important mt-3">
+          <div class=" h4 ">The mock test link will be activated on 7th Sept 2020, 9:00 am.</div>
+          
+        <p id="d" class="my-2 text-danger blink"></p>
+        </div>
+@endif 
+
 
 @if(count(\auth::user()->newtests())!=0)
   <div class="row ">
