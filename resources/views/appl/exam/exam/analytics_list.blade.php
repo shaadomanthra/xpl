@@ -17,8 +17,12 @@
                   <th scope="col"><a href="" data-toggle="tooltip" title="{{$sec->name}}">{{first_letters($sec->name)}}</a></th>
                   @endif
                 @endforeach
-                
-                <th scope="col">Score</th>
+                  
+                   @if($sec->name=='typing')
+                    <th scope="col">WPM Score</th>
+                    @else
+                      <th scope="col">Score</th>
+                    @endif
                 @endif
                 <th scope="col">Date</th>
                 <th scope="col">Actions</th>

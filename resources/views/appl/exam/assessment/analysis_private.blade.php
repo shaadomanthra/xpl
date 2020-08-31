@@ -52,7 +52,7 @@
 					<div class="card-body">
 						<div class="text-center">
 						
-						<div class="">Score</div>
+						<div class="">Net WPM Score</div>
 						<h1>{{ $test_overall->score }}</h1>
 						</div>
 
