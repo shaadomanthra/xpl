@@ -53,7 +53,7 @@
                 @if($exam->slug!='psychometric-test')
                 @foreach($sections[$users[$r->user_id]->id] as $s)
                 <td>
-                  {{ $s->score }}
+                  {{ $s->score }} @if($sec->name=='typing')% @endif 
                 </td>
                 @endforeach
                 

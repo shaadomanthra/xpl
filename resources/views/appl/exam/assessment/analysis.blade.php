@@ -82,7 +82,7 @@
 			</div>
 		</div>
 	</div>
-	@elseif($exam->sections[0]->name)
+	@elseif($exam->sections[0]->name == 'typing')
 
 	<div class="row">
 			<div class="col-12 col-md-4 mb-3">
