@@ -402,7 +402,7 @@
 
     <div class="col-12 col-md-6 col-lg-5">
 
-      <div class="row mb-4">
+      <div class="row mb-1">
         <div class="col-6 col-md-4">
           <a href="{{ route('sections.index',$exam->slug)}}">
           <div class="cardbox p-4 p-md-1 p-lg-4 text-center mb-4 ">
@@ -428,6 +428,13 @@
           </a>
         </div>
       </div>
+
+      @if($cache)
+      <div class="h4 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.live',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Live Tracker </a> <a href="{{ route('test.live',$exam->slug)}}" class="  mt-3 mt-lg-0 float-right"><i class="fa fa-angle-right"></i></a></div>
+
+      @endif
+
+
       @if($data['attempt_count'])
       <div class="h4 mt-3 mb-4" ><i class="fa fa-angle-right"></i> Latest participants <small><span class="text-secondary">({{$exam->users_count}})</span></small><a href="{{ route('test.report',$exam->slug)}}" class="btn btn-outline-primary btn-sm float-lg-right mt-3 mt-lg-0">View all</a></div>
 

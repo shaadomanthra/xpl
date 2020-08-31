@@ -11,7 +11,11 @@
                 <th scope="col">Cheating</th>
                 @if($exam->slug!='psychometric-test')
                 @foreach($exam_sections as $sec)
-                <th scope="col"><a href="" data-toggle="tooltip" title="{{$sec->name}}">{{first_letters($sec->name)}}</a></th>
+                  @if($sec->name=='typing')
+                  <th scope="col">Accuracy</th>
+                  @else
+                  <th scope="col"><a href="" data-toggle="tooltip" title="{{$sec->name}}">{{first_letters($sec->name)}}</a></th>
+                  @endif
                 @endforeach
                 
                 <th scope="col">Score</th>

@@ -1504,6 +1504,7 @@ class AssessmentController extends Controller
         $date_time = new \DateTime();
         $data = array();
         $d =array();
+        $typing_accuracy =  $typing_score =0;
         for($i=1;$i<=$qcount;$i++){
             $item = array();
             if($request->exists($i.'_time')){
@@ -1607,6 +1608,8 @@ class AssessmentController extends Controller
 
                 if($type=='typing'){
                     $item['mark'] = $request->get($i.'_wpm');
+                    $typing_score = $request->get($i.'_wpm');
+                    $typing_accuracy = $request->get($i.'_accuracy');
                     $item['accuracy'] = 1;
                 }
 
@@ -1617,6 +1620,8 @@ class AssessmentController extends Controller
 
                 $item['created_at'] = $date_time;
                 $item['updated_at'] = $date_time;
+
+
 
                 array_push($data,$item);
                 array_push($d, json_decode(json_encode($item)));
@@ -1663,6 +1668,9 @@ class AssessmentController extends Controller
             if($item['accuracy']){
                 $sec[$item['section_id']]['correct']++;
                 $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] + $item['mark'];
+
+                if($typing_accuracy)
+                    $sec[$item['section_id']]['score'] = $typing_accuracy;
             }
             else if($item['response'] && $item['accuracy']==0){
                 $sec[$item['section_id']]['incorrect']++;
@@ -1716,6 +1724,11 @@ class AssessmentController extends Controller
             $test_overall['score'] = $test_overall['score'] + $s['score'];
             $test_overall['time'] = $test_overall['time'] + $s['time'];
             $test_overall['max'] = $test_overall['max'] + $s['max'];
+
+            if($typing_accuracy){
+                $test_overall['incorrect'] = $typing_accuracy;
+                $test_overall['score'] =  $typing_score ;
+            }
 
             $test_overall_cache->unattempted = $test_overall['unattempted'];
             $test_overall_cache->correct = $test_overall['correct'];
@@ -1825,6 +1838,8 @@ class AssessmentController extends Controller
         
         $questions = [];
         $secs= [];
+        $data['completed'] = 0;
+        $data['total'] = 0;
         foreach($exam->sections as $section){
             $qset = $section->questions;
 
@@ -1842,6 +1857,7 @@ class AssessmentController extends Controller
             }
         }
 
+        //dd($exam_cache);
         foreach($exam_cache as $u=>$r){
 
             foreach($r as $k=>$w){
@@ -1869,6 +1885,13 @@ class AssessmentController extends Controller
                      
             }
 
+            $completed = Cache::get('attempt_'.$u.'_'.$exam->id);
+            
+            if($completed)
+            {
+                $data['completed']++;
+            }
+            $data['total']++;
            
         }
 
@@ -1889,6 +1912,7 @@ class AssessmentController extends Controller
             return view('appl.exam.exam.live')
                     ->with('exam_cache',$exam_cache)
                     ->with('questions',$questions)
+                    ->with('data',$data)
                     ->with('question',$question)
                     ->with('mathjax',$question)
                     ->with('exam',$exam);
@@ -2218,6 +2242,7 @@ class AssessmentController extends Controller
 
         //dd($exam->product_ids);
 
+        
 
         if($exam)
             return view('appl.exam.assessment.show')
@@ -2466,6 +2491,8 @@ class AssessmentController extends Controller
         $tests_overall = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
        
 
+        
+
         return view('appl.exam.assessment.analysis')
                         ->with('exam',$exam)
                         ->with('test_overall',$tests_overall)
@@ -2547,6 +2574,7 @@ class AssessmentController extends Controller
         });
 
 
+
         //dd($tests->where('status',1));
         $evaluation = $tests->where('status',2);
         if(count($evaluation))
@@ -2592,6 +2620,19 @@ class AssessmentController extends Controller
                     $subjective= true;
             }
             
+        }
+
+        if($section->name == 'typing'){
+            $details['typing_performance'] = '';
+            if($tests_overall->score > 60)
+                $details['typing_performance'] = 'Excellent';
+            else if($tests_overall->score > 40 && $tests_overall->score < 59)
+                $details['typing_performance'] = 'Good';
+            else if($tests_overall->score > 29 && $tests_overall->score < 39)
+                $details['typing_performance'] = 'Average';
+            else
+                $details['typing_performance'] = 'Not upto the mark';
+
         }
 
 

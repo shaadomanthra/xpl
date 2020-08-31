@@ -463,7 +463,9 @@ $(function(){
       $('.'+$sno+'_time_end').val($effective_time);
       
       $wpm = parseInt((($d['chars']/5)-parseInt($d['error']))*60/$effective_time);
+      $accuracy = parseInt(100 - ($d['error']*100/$d['total']));
       $('.'+$sno+'_wpm').val($wpm);
+      $('.'+$sno+'_accuracy').val($accuracy);
 
     });
 

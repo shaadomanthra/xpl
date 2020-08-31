@@ -665,10 +665,12 @@ class ExamController extends Controller
 
         $data['hr-managers'] = \auth::user()->getRole('hr-manager');
        
+       $exam_cache = Cache::get('exam_cache_'.$exam->id);
 
         if($exam)
             return view('appl.exam.exam.show')
                     ->with('exam',$exam)
+                    ->with('cache',$exam_cache)
                     ->with('data',$data)
                     ->with('email_stack',$email_stack);
         else

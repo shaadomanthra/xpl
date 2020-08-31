@@ -121,6 +121,7 @@
           <input id="{{($i+1)}}_time_start" class="form-input {{($i+1)}}_time_start" type="hidden" name="{{($i+1)}}_time_start"  value="0">
           <input id="{{($i+1)}}_time_end" class="form-input {{($i+1)}}_time_end" type="hidden" name="{{($i+1)}}_time_end"  value="0">
           <input id="{{($i+1)}}_wpm" class="form-input {{($i+1)}}_wpm" type="hidden" name="{{($i+1)}}_wpm"  value="0">
+          <input id="{{($i+1)}}_accuracy" class="form-input {{($i+1)}}_accuracy" type="hidden" name="{{($i+1)}}_accuracy"  value="0">
 
         </div>
 
