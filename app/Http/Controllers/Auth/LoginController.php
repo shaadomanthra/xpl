@@ -182,6 +182,7 @@ class LoginController extends Controller
            Tests_Overall::where('user_id',$user->id)->delete();
            Cache::forget('attempts_'.$user->id);
            Cache::forget('mytests_'.$user->id);
+           Cache::forget('myproducts_'.$user->id);
         }
         
         
