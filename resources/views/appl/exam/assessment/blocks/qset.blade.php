@@ -4,6 +4,8 @@
 		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer 
 
 
+		
+
 		@if(isset($exam->calculator))
 		@if($exam->calculator)
 		<span class="float-md-right" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> Calculator</span>
@@ -70,8 +72,11 @@
 	</div>
 @endif
 
+
+@if(!isMobileDevice())
 @if($camera)
-<div class="camera border p-3 d-none d-md-block">
+<div class="camera_holder d-none d-md-block">
+<div class="camera border p-3 ">
     <video id="video" class="mb-3 bg-light w-100" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}">Video stream not available.</video>
     <canvas id="canvas" style='display: none'>
   	</canvas>
@@ -80,6 +85,8 @@
   </div>
     <small><i class="fa fa-dot-circle-o text-danger" aria-hidden="true"></i> Continuous monitoring is enabled</small>
 </div>
+</div>
+@endif
 @endif
 
 

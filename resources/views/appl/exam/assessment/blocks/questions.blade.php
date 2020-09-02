@@ -7,6 +7,7 @@
    -moz-user-select: none; /* Firefox */
    -ms-user-select: none; /* Internet Explorer/Edge */
 }
+
 </style>
 
 @foreach($questions as $i=> $question)

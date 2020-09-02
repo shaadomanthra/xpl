@@ -311,11 +311,21 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-3">
           <div class="form-group">
             <label for="formGroupExampleInput ">Message in 'No Report' page</label>
             <input  class="form-control" type="text" value="{{($exam->message)? $exam->message:'Your responses are recorded for internal evaluation.'}}"  name="message"></input>
           </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Mobile Disable</label>
+        <select class="form-control" name="extra">
+          <option value="1" @if(isset($exam)) @if($exam->extra==1) selected @endif @endif >Yes</option>
+          <option value="0" @if(isset($exam)) @if($exam->extra==0) selected @endif @endif >No</option>
+        </select>
+      </div>
         </div>
 
          <div class="col-12 col-md-3">

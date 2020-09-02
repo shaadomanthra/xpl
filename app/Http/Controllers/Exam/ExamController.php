@@ -547,6 +547,7 @@ class ExamController extends Controller
             $exam->shuffle = $request->shuffle;
             $exam->message = $request->message;
             $exam->save = $request->save;
+            $exam->extra = $request->extra;
             if($request->auto_activation)
                 $exam->auto_activation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
             else
@@ -630,11 +631,11 @@ class ExamController extends Controller
         $emails =str_replace("\r", '', $emails);
         $emails = explode(',',$emails);
 
-        if($exam->extra){
-          $extra = json_decode($exam->extra,true);
-          $exam->viewers = User::whereIn('id',$extra['viewers'])->get();
-          $exam->evaluators = User::whereIn('id',$extra['evaluators'])->get();  
-        }
+        // if($exam->extra){
+        //   $extra = json_decode($exam->extra,true);
+        //   $exam->viewers = User::whereIn('id',$extra['viewers'])->get();
+        //   $exam->evaluators = User::whereIn('id',$extra['evaluators'])->get();  
+        // }
         
 
         if($exam->emails){
@@ -962,10 +963,10 @@ class ExamController extends Controller
         $hr_managers = \auth::user()->getRole('hr-manager');
         $courses = Course::all();
 
-        if($exam->extra){
-            $exam->viewers = json_decode($exam->extra,true)['viewers'];
-            $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
-        }
+        // if($exam->extra){
+        //     $exam->viewers = json_decode($exam->extra,true)['viewers'];
+        //     $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
+        // }
 
         $this->authorize('update', $exam);
 
@@ -1072,6 +1073,7 @@ class ExamController extends Controller
             $exam->shuffle = $request->shuffle;
             $exam->message = $request->message;
             $exam->save = $request->save;
+            $exam->extra = $request->extra;
             
             if(!$request->camera)
                 $exam->capture_frequency = 0;

@@ -1970,10 +1970,16 @@ $(function() {
 
  function detect_mobile(){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      $('.camera_message').html("This test can be attempted from desktop or laptop only. Mobile & Tablets are not allowed. Kindly contact administrator incase of any query.");
-      $('.camera_fail').show();
-      $('.camera_success').hide();
-      $('.accesscode_btn').hide();
+      // $('.camera_message').html("This test can be attempted from desktop or laptop only. Mobile & Tablets are not allowed. Kindly contact administrator incase of any query.");
+      // $('.camera_fail').show();
+      // $('.camera_success').hide();
+      // $('.accesscode_btn').hide();
+      if($('.extra_info').length){
+        $('.accesscode_btn').hide();
+        $('.camera_success').hide();
+      }else{
+          camera_test();
+      }
     }else{
       camera_test();
     }

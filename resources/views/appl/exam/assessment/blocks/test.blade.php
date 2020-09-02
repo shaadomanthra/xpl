@@ -8,6 +8,7 @@
 .blink {
   animation: blinker 1s linear infinite;
 }
+.video_small{ max-width:80px;height:60px; }
 
 @keyframes blinker {
   50% {
@@ -38,16 +39,19 @@
           <div class=" mb-3 d-block d-md-none ">
   <div class="blogd text-white pl-3 pr-3 pb-2 pt-3 pb-2 rounded" style="background:#ca2428">
 
-    @if($camera)
-<div class=" d-inline d-md-none float-right" style="border-radius:5px;">
-    <video id="video" class="" style="width:80px;height:60px;border-radius:5px;" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}">Video stream not available.</video>
+@if(isMobileDevice())
+    <div class="camera_holder d-inline d-md-none float-right">
+<div class="">
+    <video id="video" class="video_small" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}">Video stream not available.</video>
     <canvas id="canvas" style='display: none'>
     </canvas>
     <div class="output">
     <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style='display: none'> 
   </div>
 </div>
+</div>
 @endif
+
 
     <div class="mb-2 "> Timer : <span class="text-bold " id="timer2"></span></div>
     <div class="text-warning mb-3"><i class="fa fa-dot-circle-o blink" aria-hidden="true"></i> Continuous monitoring is enabled</div>
