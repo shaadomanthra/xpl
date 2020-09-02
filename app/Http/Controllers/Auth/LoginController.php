@@ -11,6 +11,7 @@ use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
@@ -179,6 +180,8 @@ class LoginController extends Controller
            Test::where('user_id',$user->id)->delete();
            Tests_Section::where('user_id',$user->id)->delete();
            Tests_Overall::where('user_id',$user->id)->delete();
+           Cache::forget('attempts_'.$user->id);
+           Cache::forget('mytests_'.$user->id);
         }
         
         
