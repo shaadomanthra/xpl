@@ -174,12 +174,13 @@
 
 				<p>Status: @if($t->status==2)<span class="badge badge-warning review_{{$t->question_id}}">under review</span>
 				@else
-				<span class="badge badge-success">evaluated</span>
+				<span class="badge badge-success review_{{$t->question_id}}">evaluated</span>
 				@endif</p>
 				<hr>
 				<b>Score</b><br>
-				@if($t->status==2)
-	<div class="mb-3 score_entry_{{$t->question_id}}">
+				
+
+	   <div class="mb-3 score_entry_{{$t->question_id}}"  style="@if($t->status!=2) display:none @endif">
       @foreach(range(0,$questions[$t->question_id]->mark,0.5) as $r)
         <div class="form-check form-check-inline">
         <input class="form-check-input score_{{$t->question_id}}" type="radio" name="score_{{$t->question_id}}" id="" value="{{$r}}" @if($t->mark==$r)checked @endif>
@@ -189,22 +190,23 @@
       <div class="my-2"><b>Feedback</b></div>
       <textarea class="form-control comment_{{$t->question_id}}" name="comment" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
-  <div class="d-flex align-items-center float-right">
-  <div class="spinner-border spinner-border-sm  float-right loading_{{$t->question_id}}"  style="display:none" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
-      <button class="btn btn-primary btn-sm score_save score_save_{{$t->question_id}}" data-id="{{$t->question_id}}" data-slug="{{$exam->slug}}"  data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?ajax=1" data-student="{{request()->get('student')}}" data-token="{{csrf_token()}}">save</button>
-     @else
-     {{$t->mark}}
 
-     @if(isset($t->comment))
-     @if($t->comment)
-     <div class="my-2"><b>Feedback</b></div>
-     <p>{{$t->comment}}</p>
-     @endif
-     @endif
-     @endif
+      <div class="d-flex align-items-center float-right" style="@if($t->status!=2) display: none @endif">
+        <div class="spinner-border spinner-border-sm  float-right loading_{{$t->question_id}}"  style="display:none" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm score_save score_save_{{$t->question_id}}" data-id="{{$t->question_id}}" data-slug="{{$exam->slug}}"  data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?ajax=1" data-student="{{request()->get('student')}}" data-token="{{csrf_token()}}" style="@if($t->status!=2) display: none @endif">save</button>
+     
+     <div class="score_entry_val_{{$t->question_id}}" style="@if($t->status==2) display:none @endif"><div>{{$t->mark}} <i class="fa fa-edit text-primary cursor score_edit" data-id="{{$t->question_id}}"></i></div></div>
+
+       @if(isset($t->comment))
+         @if($t->comment)
+         <div class="my-2"><b>Feedback</b></div>
+         <p>{{$t->comment}}</p>
+         @endif
+       @endif
+     
 
 
 			</div>

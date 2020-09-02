@@ -355,8 +355,22 @@
                       <td>
                         <p>Hi <b>@if(isset($user['name'])){{$user['name']}} @else Candidate @endif</b>,</p>
                         <p>Greetings!</p>
-                        
-                        {!!$content!!}
+                        <p>[24]7Ai is hiring 2018,2019 and 2020 passed out candidates for Tech Support Role. The proposed compensation is 2.20 LPA till 4 LPA. Last date to apply is 31st Aug 2020. </p>
+                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                          <tbody>
+                            <tr>
+                              <td align="left">
+                                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                                  <tbody>
+                                    <tr>
+                                      <td> <a href="https://xplore.co.in/jobs/22228" target="_blank">Apply Now</a> </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                         <p>Good luck! </p><br>
                         <p>regards,<br>Xplore Team</p><br>
                        

@@ -28,10 +28,14 @@ class SendEmail implements ShouldQueue
     public $tries = 5;
     public $timeout = 20;
     protected $details;
+    public $subject;
+    public $content;
 
-    public function __construct($details)
+    public function __construct($details,$subject,$content)
     {
         $this->details = $details;
+        $this->subject = $subject;
+        $this->content = $content;
     }
 
     /**
@@ -41,6 +45,6 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->details['email'])->send(new EmailForQueuing($this->details));
+        Mail::to($this->details['email'])->send(new EmailForQueuing($this->details,$this->subject,$this->content));
     }
 }

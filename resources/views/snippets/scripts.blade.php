@@ -357,6 +357,18 @@ $(function(){
       
   });
 
+ $(document).on('click','.score_edit',function(e){
+    e.preventDefault();
+    $id = $(this).data('id');
+    $('.review_'+$id).removeClass('badge-success').html('under review').addClass('badge-warning');
+    $('.score_save_'+$id).show();
+    $('.qno_'+$id).removeClass('qgreen').addClass('qyellow');
+    $('.box_'+$id).removeClass('qgreen').addClass('qyellow');
+    $('.score_entry_'+$id).show();
+    $('.score_entry_val_'+$id).remove();
+
+ });
+
  $(document).on('click','.score_save',function(e){
       e.preventDefault();
 
@@ -383,10 +395,11 @@ $(function(){
             
             $('.review_'+$id).removeClass('badge-warning').html('evaluated').addClass('badge-success');
             $('.box_'+$id).removeClass('qyellow').addClass('qgreen');
+            $('.score_entry_'+$id).hide();
             if($comment)
-            $('.score_entry_'+$id).html('<div>'+$score+'</div><div class="my-2"><b>Feedback</b></div><p>'+$comment+'</p>');
+            $('<div class="score_entry_val_'+$id+'"><div>'+$score+'</div><div class="my-2"><b>Feedback</b></div><p>'+$comment+'</p></div>').insertAfter('.score_entry_'+$id);
             else
-            $('.score_entry_'+$id).html('<div>'+$score+'</div>');
+            $('<div class="score_entry_val_'+$id+'"><div>'+$score+' <i class="fa fa-edit text-primary cursor score_edit" data-id="'+$id+'"></i></div></div>').insertAfter('.score_entry_'+$id);
             $('.score_save_'+$id).hide();
             $('.loading_'+$id).hide();
             $('.qno_'+$id).removeClass('qyellow').addClass('qgreen');
@@ -1652,6 +1665,24 @@ $('body').bind('copy paste',function(e) {
     });
 });
 
+function copyToClipboard() {
+
+  var aux = document.createElement("input");
+  aux.setAttribute("value", "print screen disabled!");      
+  document.body.appendChild(aux);
+  aux.select();
+  document.execCommand("copy");
+  // Remove it from the body
+  document.body.removeChild(aux);
+  alert("Print screen disabled!");
+}
+
+$(window).keyup(function(e){
+  if(e.keyCode == 44){
+    copyToClipboard();
+  }
+});
+
 // var btn = document.getElementById('submit_button'),
 //     clicked = false;
 
@@ -1967,6 +1998,8 @@ $(function(){
 @if($cameratest)
 <script>
 $(function() {
+
+
 
  function detect_mobile(){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {

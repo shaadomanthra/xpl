@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Cache;
 use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\College\College;
 
+use PacketPrep\Jobs\SendEmail;
+use PacketPrep\Mail\EmailForQueuing;
+
 class ExamController extends Controller
 {
     public function __construct(){
@@ -631,6 +634,11 @@ class ExamController extends Controller
         $emails =str_replace("\r", '', $emails);
         $emails = explode(',',$emails);
 
+
+        if(request()->get('sendemail')){
+            $this->mailer($emails);
+        }
+
         // if($exam->extra){
         //   $extra = json_decode($exam->extra,true);
         //   $exam->viewers = User::whereIn('id',$extra['viewers'])->get();
@@ -700,6 +708,49 @@ class ExamController extends Controller
             abort(404);
     }
 
+
+    public function mailer($emails){
+        
+        foreach($emails as $i=>$email){
+            $details['email'] = $email;
+
+            $subject = 'ZenQ Test Link';
+            $content = '<p>ZenQ is conducting an online recruitment  test for the position of Software - Intern  </p>
+              <p>Your application for participating in the assessment is approved. Below are the details of the online assessment </p>
+              <p><div>Test URL: <a href="https://xplore.co.in/test/057480">https://xplore.co.in/test/057480</a> <br>
+Access Code: KLU123 <br>
+
+Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link will be activated at 2PM)</div></p>
+<div class="default-style">
+    <br>Note : 1)You can take test only in<strong>&nbsp;Laptop/desktop&nbsp;.</strong>
+   </div>
+   <div class="default-style">
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2) Please register at&nbsp;<a href="https://xplore.co.in/register">Xplore.co.in/register&nbsp;</a>&nbsp;before taking the test
+   </div>
+   <div class="default-style">
+    <br>&nbsp; &nbsp; &nbsp;
+    <br>Instructions:
+    <ul>
+     <li>Each question carries 1 mark and no negative marking</li>
+     <li><strong>Mandatory</strong>: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected</li>
+     <li>The test should be taken only from&nbsp;<strong>desktop/laptop with webcam</strong>&nbsp;facilities. Mobile Phones and Tabs are restricted</li>
+     <li>Please make sure that you&nbsp;<strong>disable all desktop notifications</strong>. Else, the test will be terminated in between</li>
+     <li>Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)</li>
+     <li>Please make sure that your camera is switched on and you are facing the light source</li>
+    </ul>For step by step process of Xplore assessment please click the below link
+    <br>
+    <br><a href="https://xplore.co.in/files/User_Manual_ZenQ_Assessment.pdf">https://xplore.co.in/files/User_Manual_ZenQ_Assessment.pdf</a>
+    <br>
+    <br>
+';
+
+            //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
+            SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*3));
+        }
+        
+        dd('Email Queued - '.count($emails));
+        return view('home');
+    }
     
 
     public function psyreport(Request $r)

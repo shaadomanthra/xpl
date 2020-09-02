@@ -12,14 +12,18 @@ class EmailForQueuing extends Mailable
     use Queueable, SerializesModels;
 
     protected $user;
+    public $subject;
+    public $content;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user,$subject,$content)
     {
         $this->user = $user;
+        $this->subject = $subject;
+        $this->content = $content;
     }
 
     /**
@@ -31,7 +35,7 @@ class EmailForQueuing extends Mailable
     {
 
        return $this->from('no-reply@xplore.co.in', 'Xplore')
-            ->subject('Apply for [24]7Ai Job Opening')
-            ->view('mail.email')->with('user',$this->user);
+            ->subject($this->subject)
+            ->view('mail.email')->with('user',$this->user)->with('content',$this->content);
     }
 }
