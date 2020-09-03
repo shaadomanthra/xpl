@@ -21,10 +21,9 @@ class UExport2 implements FromCollection, WithHeadings
             'Email',
             'Roll Number/Fathers Name',
             'Phone',
-            'Year of Passing/ Father Phone',
             'Hometown/ District',
             'Current City/ Address',
-            'Gender',
+            'Fathers Phone',
             'Date of Birth',
             'Custom Field 1',
             'Custom Field 2',
@@ -50,6 +49,7 @@ class UExport2 implements FromCollection, WithHeadings
                 unset($users[$k]->status);
                 unset($users[$k]->activation_token);
                 unset($users[$k]->role);
+                unset($users[$k]->year_of_passing);
                 unset($users[$k]->client_slug);
                 unset($users[$k]->tenth);
                 unset($users[$k]->twelveth);
