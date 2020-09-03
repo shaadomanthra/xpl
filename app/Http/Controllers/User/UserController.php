@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use PacketPrep\Exports\UExport;
+use PacketPrep\Exports\UExport2;
 use Maatwebsite\Excel\Facades\Excel;
 use PacketPrep\Models\College\Metric;
 use Illuminate\Support\Facades\Cache;
@@ -185,19 +186,35 @@ class UserController extends Controller
     }
 
     if(request()->get('downloadexport')){
-        if(!Storage::disk('s3')->exists($filename))
-            flash('Report is not available. Re-queue the data after 5 mins.')->success();
-        else{
-            $file = Storage::disk('s3')->get($filename);
 
-            $headers = [
-                'Content-Type' => 'text/csv', 
-                'Content-Description' => 'File Transfer',
-                'Content-Disposition' => "attachment; filename={$filename}",
-                'filename'=> $filename
-            ];
-            return response($file, 200, $headers);
+        $users = User::where('client_slug',subdomain())->get();
+
+        if(count($users)>0){
+            request()->session()->put('users',$users);
+
+            ob_end_clean(); // this
+            ob_start(); 
+            $filename ="Userlist_".subdomain().".xlsx";
+            return Excel::download(new UExport2, $filename);
+
+        }else{
+
+            if(!Storage::disk('s3')->exists($filename))
+                flash('Report is not available. Re-queue the data after 5 mins.')->success();
+            else{
+                $file = Storage::disk('s3')->get($filename);
+
+                $headers = [
+                    'Content-Type' => 'text/csv', 
+                    'Content-Description' => 'File Transfer',
+                    'Content-Disposition' => "attachment; filename={$filename}",
+                    'filename'=> $filename
+                ];
+                return response($file, 200, $headers);
+            }
+
         }
+        
     }
 
 
