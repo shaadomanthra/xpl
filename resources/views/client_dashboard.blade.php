@@ -105,7 +105,7 @@
               
                 @foreach(\auth::user()->newtests() as $k=>$e)
                 
-                @if($e->examtype->name==auth::user()->info)
+                @if($e->examtype->name == 'General' || $e->examtype->name==auth::user()->info)
                 @if($e->status!=0 && !$e->active)
                 @if(!\auth::user()->attempted($e->id))
                        <div class="col-12 col-md-6">

@@ -36,7 +36,9 @@ if (! function_exists('image_resize')) {
         
         $new_path = storage_path() . $base_folder .$explode[0];
 
-        $imgr = Image::make($path)->encode('webp', 100);
+        $imgr = Image::make($path)->save(storage_path('app/public/' . $filename));
+
+        //$imgr = Image::make($path)->encode('webp', 100);
        
         $imgr->resize($size, null, function ($constraint) {
                         $constraint->aspectRatio();
