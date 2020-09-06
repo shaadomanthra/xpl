@@ -1120,7 +1120,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
             $exam->active = $request->active;
             $exam->camera = $request->camera;
             $exam->calculator = $request->calculator;
-            $exam->client = $request->client;
+            $exam->client =  $exam->user->client_slug;
             $exam->shuffle = $request->shuffle;
             $exam->message = $request->message;
             $exam->save = $request->save;

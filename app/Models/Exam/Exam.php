@@ -99,7 +99,6 @@ class Exam extends Model
         Cache::forget('test_'.$exam->slug);
         Cache::forever('test_'.$exam->slug,$exam);
 
-
         Cache::forget('tests_'.$exam->client);
         $exams = Exam::where('client',$exam->client)->get();
         Cache::forever('tests_'.$exam->client,$exams);
