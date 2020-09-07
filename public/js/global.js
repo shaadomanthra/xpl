@@ -450,7 +450,8 @@ $(document).ready(function(){
         $('.qblock_'+$sno).show();
         update_sno($sno);
         scroll($sno);
-        saveTest();
+        if($('.save_test').val())
+          saveTest();
     }
     function update_sno($sno){
       

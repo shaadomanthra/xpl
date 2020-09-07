@@ -167,22 +167,29 @@ class UserController extends Controller
 
     public function userlist(Request $r){
 
+
+    if(!\auth::user())
+        abort('403','Unauthorized Access');
+
+    if(!\auth::user()->checkRole(['hr-manager','administrator']))
+        abort('403','Unauthorized Access');
+
     $filename = "exports/Userlist_".subdomain().".csv";
 
     if(request()->get('export')){
 
-        $users = User::where('client_slug',subdomain())->get();
-        if(!Storage::disk('s3')->exists($filename))
-            Storage::disk('s3')->delete($filename);
+        // $users = User::where('client_slug',subdomain())->get();
+        // if(!Storage::disk('s3')->exists($filename))
+        //     Storage::disk('s3')->delete($filename);
 
-        //dd($users);
-        request()->session()->put('users',$users);
-        ob_end_clean(); // this
-        ob_start(); 
-        //ini_set('memory_limit', '1024M');
-        Excel::store(new UExport, $filename,'s3');
+        // //dd($users);
+        // request()->session()->put('users',$users);
+        // ob_end_clean(); // this
+        // ob_start(); 
+        // //ini_set('memory_limit', '1024M');
+        // Excel::store(new UExport, $filename,'s3');
 
-        flash('Export is queued, it will be ready for download in 5min.')->success();
+        // flash('Export is queued, it will be ready for download in 5min.')->success();
     }
 
     if(request()->get('downloadexport')){
