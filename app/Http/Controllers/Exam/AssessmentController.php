@@ -2528,6 +2528,9 @@ class AssessmentController extends Controller
        
 
         $questions = array();
+        
+        
+        $ques = [];
         $i=0;
 
         if($request->get('student'))
@@ -2668,6 +2671,8 @@ class AssessmentController extends Controller
             
         }
 
+
+
         if(isset($section))
         if($section->name == 'typing'){
             $details['typing_performance'] = '';
@@ -2693,7 +2698,6 @@ class AssessmentController extends Controller
         $details['unattempted_time']=0;
         $topics = false;
         $review=false;
-        $ques=[];
 
         $i=0;
         if($exam->slug=='psychometric-test')
@@ -2802,6 +2806,7 @@ class AssessmentController extends Controller
             if(isset($ques_keys))
             if($ques_keys[$t->question_id]['topic'])
                 $topics = true;
+
 
             if($t->response){
                 $details['attempted'] = $details['attempted'] + 1;  
