@@ -426,7 +426,7 @@ class PostController extends Controller
      <br>&nbsp;
      <br>Below are the details of the online assessment
      <br>
-     <br>Test URL:<a href="https://xplore.co.in/test/566962">&nbsp;</a><a class="f20 text-white" href="https://xplore.co.in/test/045856">https://xplore.co.in/test/045856</a>
+     <br>Test URL:<a href="https://xplore.co.in/test/566962">&nbsp;</a><a class="f20 text-white" href="https://xplore.co.in/test/566962 ">https://xplore.co.in/test/566962</a>
      <br>
     </div>
     <div class="default-style">
@@ -439,7 +439,7 @@ class PostController extends Controller
      <br>
     </div>
     <div class="default-style">
-     <br><strong>Date &amp; Time of Assessment</strong>: 09rd Sep 2020 i.e Tuesday; 10AM IST (The test link will be activated at 10AM and will be open till 2PM)
+     <br><strong>Date &amp; Time of Assessment</strong>: 09rd Sep 2020 i.e Wednesday; 10AM IST (The test link will be activated at 10AM and will be open till 2PM)
     </div>
     <div class="default-style">
      <br>
