@@ -418,17 +418,11 @@ class PostController extends Controller
             $details['name'] = $u->name;
 
             $subject = 'Test Link for Tech/voice-support role 24[7]';
-            $content = '<div class="default-style">
-   Dear Candidate,
-   <br>
-  </div>
+            $content = '
   <div class="io-ox-signature">
    <div class="default-style">
     <div class="default-style">
-     &nbsp;
-     <br>Greetings from&nbsp; Xplore!
-     <br>&nbsp;
-     <br>24 seven is conducting an online recruitment&nbsp; test for the position of Tech/Voice - support
+     24 seven is conducting an online recruitment&nbsp; test for the position of Tech/Voice - support
      <br>&nbsp;
      <br>Below are the details of the online assessment
      <br>
@@ -468,10 +462,6 @@ class PostController extends Controller
       <li>Please make sure that your camera is switched on and you are facing the light source and camera</li>
      </ul>
      <br>
-     <br>
-     <br>
-     <br>Regards,
-     <br>Team Xplore
     </div>
    </div>
   </div>
