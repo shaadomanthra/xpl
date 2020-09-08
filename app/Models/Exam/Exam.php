@@ -104,6 +104,30 @@ class Exam extends Model
         Cache::forever('tests_'.$exam->client,$exams);
     }
 
+
+     public function getScore($id){
+        $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => env('API_URL').$this->slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&json=1',
+      ]);
+
+    
+    
+      //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
+      //echo $data;
+
+      // Send the request & save response to $resp
+      $data = json_decode(curl_exec($curl));
+      
+      // Close request to clear up some resources
+      curl_close($curl);
+
+      return $data->score;
+    }
+
     public function precheck_auto_activation(){
       $auto_activation  = \carbon\carbon::parse($this->auto_activation);
       $auto_deactivation  = \carbon\carbon::parse($this->auto_deactivation);

@@ -58,7 +58,9 @@
                   {{$obj['bachelors']}}%
                 </td>
                 @foreach($exams as $ex)
-                <td >@if(isset($exam_data[$ex->id][$obj['id']]['score'])){{$exam_data[$ex->id][$obj['id']]['score']}}@else - @endif </td>
+                <td >@if(isset($exam_data[$ex->id][$obj['id']]['score'])){{$exam_data[$ex->id][$obj['id']]['score']}}@else - @endif 
+                   
+                </td>
                 @endforeach
                 
               </tr>

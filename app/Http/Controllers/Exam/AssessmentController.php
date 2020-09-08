@@ -2397,6 +2397,8 @@ class AssessmentController extends Controller
         $sum = 0;
         $c=0; $i=0; $u=0;
 
+
+
         $tests = Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
 
@@ -2523,6 +2525,8 @@ class AssessmentController extends Controller
                 $exam = Exam::where('slug',$slug)->first();
         }
 
+       
+
         $questions = array();
         $i=0;
 
@@ -2586,11 +2590,53 @@ class AssessmentController extends Controller
         $secs = $tests_section->groupBy('section_id');
 
 
-        //dd($secs);
+        
 
         //dd($tests[0]->time);
-        if(!count($tests))
-            abort('404','Test not attempted');
+        if(!count($tests)){
+            if($request->get('reference')){
+                $id = explode('_',$request->get('reference'))[1];
+                $score = $exam->getScore($id);
+                $tests = new Test();
+                $tests->question_id = 809;
+                $tests->test_id = $exam->id;
+                $tests->user_id = $student->id;
+                $tests->accuracy  = 1;
+                $tests->answer  = 1;
+                $tests->time  = 1;
+                $tests->status = 1;
+                $tests->save();
+
+
+                $tests_section = new Tests_Section();
+                $tests_section->test_id = $exam->id;
+                $tests_section->user_id = $student->id;
+                $tests_section->section_id = $exam->sections[0]->id;
+                $tests_section->score = $score;
+                $tests_section->time = 1;
+                $tests_section->max = 100;
+                $tests_section->save();
+
+                $tests_overall = new Tests_Overall();
+                $tests_overall->test_id = $exam->id;
+                $tests_overall->user_id = $student->id;
+                $tests_section->score = $score;
+                $tests_overall->time = 1;
+                $tests_overall->max = 100;
+                $tests_overall->save();
+
+                Cache::forget('resp_'.$user_id.'_'.$test_id);
+                Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
+                Cache::forget('attempt_'.$user_id.'_'.$test_id);
+
+                //dd();
+
+                return redirect()->to(request()->fullUrl());
+
+
+            }else
+                abort('404','Test not attempted');
+        }
         $subjective = false; 
         $sections = array();
         foreach($exam->sections as $section){
@@ -2622,6 +2668,7 @@ class AssessmentController extends Controller
             
         }
 
+        if(isset($section))
         if($section->name == 'typing'){
             $details['typing_performance'] = '';
             if($tests_overall->score > 60)
@@ -2646,6 +2693,7 @@ class AssessmentController extends Controller
         $details['unattempted_time']=0;
         $topics = false;
         $review=false;
+        $ques=[];
 
         $i=0;
         if($exam->slug=='psychometric-test')
@@ -2733,6 +2781,8 @@ class AssessmentController extends Controller
                         ->with('student',$student)
                         ->with('chart',true);
         }
+
+        if(!request()->get('reference'))
         foreach($tests as $key=>$t){
 
             //dd($t->section->negative);
@@ -2749,6 +2799,7 @@ class AssessmentController extends Controller
                 $review = true;
             //$ques = Question::where('id',$q->id)->first();
             //dd($secs[$t->section_id]);
+            if(isset($ques_keys))
             if($ques_keys[$t->question_id]['topic'])
                 $topics = true;
 
@@ -2798,6 +2849,10 @@ class AssessmentController extends Controller
             //dd();
 
         } 
+
+
+        if(!count($questions))
+            $questions = [1];
         $success_rate = $details['correct']/count($questions);
         if($success_rate > 0.7)
             $details['performance'] = 'Excellent';
@@ -2846,8 +2901,11 @@ class AssessmentController extends Controller
             $mathjax = true;
             $view = "analysis_subjective";
         }
+        else if(request()->get('reference'))
+            $view = 'analysis_api';
         else if($exam->status==2)
             $view = "analysis_private";
+
         else
             $view = "analysis";
 

@@ -156,20 +156,35 @@ class PostController extends Controller
         $search = $request->search;
         $item = $request->item;
         $filter = $request->filter;
+        $profile = $request->get('profile');
 
-        if($request->get('refresh')==1){
+       
+
+        $obj = Cache::remember('post_appl_'.$slug ,240, function() use($slug){
+            return Obj::where('slug',$slug)->withCount('users')->first();
+        });
+
+         if($request->get('refresh')==1){
             flash('Cache is Refreshed!')->success();
             Cache::forget('post_appl_'.$slug);
             Cache::forget('post_users_'.$slug);
+
+            if($obj->conditions){
+                $conditions = json_decode($obj->conditions,true);
+                foreach($conditions as $p=>$c){
+                    Cache::forget('filter_'.$slug.'_'.$p.'_');
+                    Cache::forget('filter_'.$slug.'_'.$p.'_YES');
+                    Cache::forget('filter_'.$slug.'_'.$p.'_NO');
+                    Cache::forget('filter_'.$slug.'_'.$p.'_MAYBE');
+                }
+
+            }
+            Cache::forget('filter_'.$slug.'_');
             Cache::forget('filter_'.$slug.'_YES');
             Cache::forget('filter_'.$slug.'_NO');
             Cache::forget('filter_'.$slug.'_MAYBE');
             
         }
-
-        $obj = Cache::remember('post_appl_'.$slug ,240, function() use($slug){
-            return Obj::where('slug',$slug)->withCount('users')->first();
-        });
         
         $colleges = Cache::remember('colleges',240, function(){
 
@@ -181,6 +196,7 @@ class PostController extends Controller
 
         $exam_data = array();
         $exms = array();
+        $conditions = [];
 
         if($obj->exam_ids){
             $exams = explode(',',$obj->exam_ids);
@@ -193,8 +209,11 @@ class PostController extends Controller
                 $exam_data[$ex->id] = Cache::remember('pad_'.$ex->slug,240,function() use ($ex){
                 return Tests_Overall::select('score','user_id')->where('test_id',$ex->id)->get()->keyBy('user_id');
                 });
+
             }
         }
+
+
 
         
         $this->authorize('view', $obj);
@@ -232,6 +251,42 @@ class PostController extends Controller
             $users = Cache::remember('post_users_'.$slug ,240, function() use($obj){
                     return $obj->users->toArray();
                 });
+            foreach($users as $k=>$usersx){
+                foreach($exms as $ek =>$ev){
+                    $users[$k][$ev->slug] =0;
+                    if(isset($exam_data[$ev->id][$usersx['id']]))
+                    $users[$k][$ev->slug] = $exam_data[$ev->id][$usersx['id']]->score;
+                }
+            }
+
+            $ud=[];
+            //check for profile conditions
+            if($obj->conditions){
+                $conditions = json_decode($obj->conditions,true);
+
+                foreach($conditions as $p=>$c){
+                    $conditions[$p]['count'] = 0;
+                    $conditions[$p]['uids'] = [];
+                    foreach($users as $uc => $ucx){
+                        $u_yes = 1;
+                        foreach($c as $e=>$v){
+                            if($ucx[$e]<$v){
+                                $u_yes = 0;
+                                break;
+                            }
+                        }
+
+                        if($u_yes){
+                            $conditions[$p]['count']++;
+                            array_push($conditions[$p]['uids'], $ucx['id']);
+                            array_push($ud, $ucx);
+                        }
+                    }
+                    
+                }
+            }  
+
+
             foreach($users as $usx){
                 if($usx['pivot']['shortlisted']=='YES')
                     $this->yes++;
@@ -247,7 +302,7 @@ class PostController extends Controller
 
             if($item)
             $objs = $this->paginateAnswers($obj->users()->where('name','LIKE',"%{$item}%")->orderBy('pivot_created_at','desc')->get()->toArray(),30);
-            else if($filter){
+            else if($filter || $profile){
 
 
                 $yop = explode(',',$request->get('yop'));
@@ -266,7 +321,9 @@ class PostController extends Controller
                 if(!$shortlisted){
                     $shortlisted = ['YES','NO','MAY BE'];
                 }else{
+                    $filter = 'Shortlisted - '.$shortlisted;
                     $shortlisted = [$shortlisted];
+                    
                 }
 
                 $academics = $request->get('academics');
@@ -275,13 +332,39 @@ class PostController extends Controller
                     $academics = 0;
                 }
 
+                $profile = $request->get('profile');
+
+
+
+                if($profile)
+                    $filter = ucwords(str_replace('_', ' ', $profile));
+
+                
+
+                if(isset($conditions[$profile]['uids']))
+                    $p_uids = $conditions[$profile]['uids'];
+                else
+                    $p_uids = 0;
+
                 //dd($obj->users()->first());
                 //dd($obj->users()->wherePivot('created_at','')->get());
 
-                $objs_cache_filter = Cache::remember('filter_'.$slug.'_'.$st,240, function() use($obj,$shortlisted){
-                    return $obj->users()
+
+
+                $objs_cache_filter = Cache::remember('filter_'.$slug.'_'.$profile.'_'.$st,240, function() use($obj,$shortlisted,$p_uids){
+
+                    
+
+                    if($p_uids)
+                        $data = $obj->users()->whereIn('id',$p_uids)
+                        ->orderBy('pivot_created_at','desc')->get()->toArray();
+
+                    else
+                        $data = $obj->users()
                         ->wherePivotIn('shortlisted',$shortlisted)
                         ->orderBy('pivot_created_at','desc')->get()->toArray();
+
+                    return $data;
                 });
 
                 $objs = $this->paginateAnswers($objs_cache_filter,config('global.no_of_records')); 
@@ -290,6 +373,9 @@ class PostController extends Controller
                 $objs = $this->paginateAnswers($users,config('global.no_of_records')); 
             }
         } 
+
+        
+        
 
 
         $view = $search ? 'applicant_list': 'applicant_index';
@@ -300,6 +386,8 @@ class PostController extends Controller
                 ->with('colleges',$colleges)
                 ->with('branches',$branches)
                 ->with('exams',$exms)
+                ->with('conditions',$conditions)
+                ->with('filter',$filter)
                 ->with('exam_data',$exam_data)
                 ->with('app',$this);
     }

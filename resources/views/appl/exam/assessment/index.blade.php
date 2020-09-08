@@ -35,27 +35,23 @@
     <div class="container" >  
     
       <div class="row">
+
+        @if(domain()!='xplore' && domain()!='xp')
         <div class="col-12 col-md-3 mb-4">
-
-
-<div class="list-group">
-
-  <a href="{{ route('assessment.index')}}" class="list-group-item list-group-item-action  {{  (request()->has('filter')) ? '' : 'active'  }} ">
-     All Tests
-  </a>
-  @foreach($examtypes as $et)
-  <a href="{{ route('assessment.index')}}?filter={{$et->slug}}" class="list-group-item list-group-item-action  {{  (request()->get('filter')==$et->slug) ? 'active' : ''  }} ">
-     {{ $et->name }} ({{$et->exams_count}})
-  </a>
-  @endforeach
-
-  
-  
-</div>
-
+          <div class="list-group">
+            <a href="{{ route('assessment.index')}}" class="list-group-item list-group-item-action  {{  (request()->has('filter')) ? '' : 'active'  }} ">
+               All Tests
+            </a>
+            @foreach($examtypes as $et)
+            <a href="{{ route('assessment.index')}}?filter={{$et->slug}}" class="list-group-item list-group-item-action  {{  (request()->get('filter')==$et->slug) ? 'active' : ''  }} ">
+               {{ $et->name }} ({{$et->exams_count}})
+            </a>
+            @endforeach
+          </div>
         </div>
+        @endif
 
-        <div class="col-12 col-md-9">
+        <div class="col-12 col-md">
           <div id="search-items">
             @include('appl.exam.assessment.list')
           </div>

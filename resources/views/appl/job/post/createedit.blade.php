@@ -297,6 +297,10 @@
       </div>
      </div>
      @endif
+
+      <div class="form-group ">
+        <label for="formGroupExampleInput ">Shortlisting Conditions</label><textarea class="form-control " name="conditions"  rows="5">@if($stub=='Create'){{ (old('conditions')) ? old('conditions') : '' }}@else {{ $obj->conditions }} @endif</textarea>
+      </div>
       
 
      

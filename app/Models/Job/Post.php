@@ -23,6 +23,8 @@ class Post extends Model
         'viewer_id',
         'exam_ids',
         'status',
+        'extra',
+        'conditions'
         // add all other fields
     ];
 

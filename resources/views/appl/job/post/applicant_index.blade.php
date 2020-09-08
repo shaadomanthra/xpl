@@ -87,6 +87,20 @@
       </div>
   </div>
 
+@if(count($conditions))
+  <div class="p-3 rounded border bg-light">
+
+    <div class="float-right" style="margin-top:-7px;">
+
+    @foreach($conditions as $c=>$v)
+      <a href="{{ route('job.applicants',$obj->slug)}}?profile={{$c}}" class="btn btn-outline-primary">{{ ucwords(str_replace('_',' ',$c))}} <span class="badge badge-primary">{{ $v['count']}}</span></a>
+
+    @endforeach
+  </div>
+  <div class=""><b>AI Profile Filters:</b> {{$filter}}</div>
+
+  </div>
+@endif
   <div  class="row  mb-4 mt-4">
     <div class="col-12 ">
     <div id="search-items">
