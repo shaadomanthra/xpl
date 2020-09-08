@@ -439,7 +439,7 @@ class PostController extends Controller
      <br>
     </div>
     <div class="default-style">
-     <br><strong>Date &amp; Time of Assessment</strong>: 09rd Sep 2020 i.e Tuesday; 10AM IST (The test link will be activated at 10AM)
+     <br><strong>Date &amp; Time of Assessment</strong>: 09rd Sep 2020 i.e Tuesday; 10AM IST (The test link will be activated at 10AM and will be open till 2PM)
     </div>
     <div class="default-style">
      <br>
