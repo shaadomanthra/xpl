@@ -133,8 +133,9 @@ class PostController extends Controller
 
 
 
-        if(request()->get('sendmail_video')){
-            $users = $obj->users()->whereIn('year_of_passing',[2018,2019,2020])->get();
+        if(request()->get('sendmail')){
+            //$users = $obj->users()->whereIn('year_of_passing',[2018,2019,2020])->get();
+            $users = $obj->users()->get();
             $this->mailer($users);
             //echo "mailed";
         }
@@ -416,8 +417,68 @@ class PostController extends Controller
             $details['email'] = $u->email;
             $details['name'] = $u->name;
 
-            //Mail::to($details['email'])->send(new EmailForQueuing($details));
-            SendEmail::dispatch($details)->delay(now()->addSeconds($i*1));
+            $subject = 'Test Link for Tech/voice-support role 24[7]';
+            $content = '<div class="default-style">
+   Dear Candidate,
+   <br>
+  </div>
+  <div class="io-ox-signature">
+   <div class="default-style">
+    <div class="default-style">
+     &nbsp;
+     <br>Greetings from&nbsp; Xplore!
+     <br>&nbsp;
+     <br>24 seven is conducting an online recruitment&nbsp; test for the position of Tech/Voice - support
+     <br>&nbsp;
+     <br>Below are the details of the online assessment
+     <br>
+     <br>Test URL:<a href="https://xplore.co.in/test/566962">&nbsp;</a><a class="f20 text-white" href="https://xplore.co.in/test/045856">https://xplore.co.in/test/045856</a>
+     <br>
+    </div>
+    <div class="default-style">
+     <br>
+    </div>
+    <div class="default-style">
+     Access Code: XPLORE123
+    </div>
+    <div class="default-style">
+     <br>
+    </div>
+    <div class="default-style">
+     <br><strong>Date &amp; Time of Assessment</strong>: 09rd Sep 2020 i.e Tuesday; 10AM IST (The test link will be activated at 10AM)
+    </div>
+    <div class="default-style">
+     <br>
+    </div>
+    <div class="default-style">
+     <br>Note : 1)You can take test only in<strong>&nbsp;Laptop/desktop&nbsp;.</strong>
+    </div>
+    <div class="default-style">
+     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2) Please register at&nbsp;<a href="https://xplore.co.in/register">Xplore.co.in/register&nbsp;</a>&nbsp;before taking the test
+    </div>
+    <div class="default-style">
+     <br>&nbsp; &nbsp; &nbsp;
+     <br>Instructions:
+     <ul>
+      <li>Each question carries 1 mark and no negative marking</li>
+      <li><strong>Mandatory</strong>: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected</li>
+      <li>The test should be taken&nbsp; from <strong>desktop/laptop/mobile/tablet with webcam</strong> facilities.</li>
+      <li>Please make sure that you&nbsp;<strong>disable all&nbsp; notifications</strong>. Else, the test will be terminated in between</li>
+      <li>Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)</li>
+      <li>Please make sure that your camera is switched on and you are facing the light source and camera</li>
+     </ul>
+     <br>
+     <br>
+     <br>
+     <br>Regards,
+     <br>Team Xplore
+    </div>
+   </div>
+  </div>
+';
+
+            //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
+            SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*3));
         }
         
         dd('Email Queued - '.count($users));

@@ -14,7 +14,7 @@ use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Question;
 use Illuminate\Support\Facades\Storage;
-use PacketPrep\Exports\TestReport;
+//use PacketPrep\Exports\TestReport;
 use PacketPrep\Exports\TestReport2;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
@@ -912,14 +912,14 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
             return Excel::download(new TestReport2, $filename);
         }else{
             
-            request()->session()->put('result',$result);
-            request()->session()->put('sections',$sections);
-            request()->session()->put('exam_sections',$exam_sections);
-            request()->session()->put('users',$usrs);
-            //ini_set('memory_limit', '1024M');
-            Excel::store(new TestReport, $filename,'s3');
-            flash('Export is queued, it will be ready for download in 5min.')->success();
-            dd('Export is queued, it will be ready for download in 5min.');
+            // request()->session()->put('result',$result);
+            // request()->session()->put('sections',$sections);
+            // request()->session()->put('exam_sections',$exam_sections);
+            // request()->session()->put('users',$usrs);
+            // //ini_set('memory_limit', '1024M');
+            // Excel::store(new TestReport, $filename,'s3');
+            // flash('Export is queued, it will be ready for download in 5min.')->success();
+            // dd('Export is queued, it will be ready for download in 5min.');
         }
         
     }
