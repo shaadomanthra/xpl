@@ -36,7 +36,7 @@
     
       <div class="row">
 
-        @if(domain()!='xplore' && domain()!='xp')
+        @if($_SERVER['HTTP_HOST'] != 'xplore.co.in' && $_SERVER['HTTP_HOST'] != 'xp.test')
         <div class="col-12 col-md-3 mb-4">
           <div class="list-group">
             <a href="{{ route('assessment.index')}}" class="list-group-item list-group-item-action  {{  (request()->has('filter')) ? '' : 'active'  }} ">
