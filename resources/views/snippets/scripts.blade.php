@@ -2180,7 +2180,7 @@ function camera_test(){
           $('.camera_fail').show();
           $('.camera_success').hide();
           $('.accesscode_btn').hide();
-        console.log('PermissionDismissedError');
+          console.log('PermissionDismissedError');
       }
 
 
