@@ -103,41 +103,47 @@
 
 				@if($exam->status!=1 && !$attempt)
 				
-				@if(trim(strip_tags($exam->emails)))
+					@if(trim(strip_tags($exam->emails)))
 
-				   @auth
-				   @if(strpos(strtolower($exam->emails),strtolower(\auth::user()->email))!==false)
-				   	<div class="accesscode_btn_wrap mb-2" style="display: none">
-			       <a href="{{route('assessment.access',$exam->slug)}}">
-			       	<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
-					</a>
-					</div>
+					   @auth
+					   @if(strpos(strtolower($exam->emails),strtolower(\auth::user()->email))!==false)
+					   	<div class="accesscode_btn_wrap mb-2" style="display: none">
+				       <a href="{{route('assessment.access',$exam->slug)}}">
+				       	<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
+						</a>
+						</div>
+						@else
+						<div class="bg-light border rounded p-3">You are not authorised to attempt this test.</div>
+						@endif
+				       @else
+				       <div class="accesscode_btn_wrap mb-2" style="display: none">
+				       <a href="#" data-toggle="modal" data-target="#myModal2">
+				       	<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
+						</a>
+						</div>
+				       @endauth
+
+					
 					@else
-					<div class="bg-light border rounded p-3">You are not authorised to attempt this test.</div>
+
+					   @auth
+					   	
+				       <a href="{{route('assessment.access',$exam->slug)}}">
+				       @else
+				       <a href="#" data-toggle="modal" data-target="#myModal2">
+				       @endauth
+
+						<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
+						</a>
+
 					@endif
-			       @else
-			       <div class="accesscode_btn_wrap mb-2" style="display: none">
-			       <a href="#" data-toggle="modal" data-target="#myModal2">
-			       	<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
-					</a>
-				</div>
-			       @endauth
 
-				
 				@else
-					<div class="accesscode_btn_wrap mb-2" style="display: none">
-				   @auth
-				   	
-			       <a href="{{route('assessment.access',$exam->slug)}}">
-			       @else
-			       <a href="#" data-toggle="modal" data-target="#myModal2">
-			       @endauth
 
-					<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
-					</a>
-					</div>
+					<a href="#" data-toggle="modal" data-target="#myModal2">
+						<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
+						</a>
 
-				@endif
 				@endif
 
 				@if($attempt)
