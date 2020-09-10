@@ -49,7 +49,7 @@
 				@include('appl.exam.assessment.blocks.camera')
 				@if($entry)
 				  @if(!$attempt)
-				  <div class="accesscode_btn_wrap" style="display: none">
+				  <div class="accesscode_btn_wrap mb-2" style="display: none">
                   <a href="{{route('assessment.instructions',$exam->slug)}}">
 					<button class="btn btn-lg btn-success accesscode_btn" > Attempt Test </button>
 					</a>
@@ -58,7 +58,7 @@
 				@else
 					@if($product)
 						@if($exam->status ==1)
-						<div class="accesscode_btn_wrap" style="display: none">
+						<div class="accesscode_btn_wrap mb-2" style="display: none">
 						<a href="{{route('assessment.instructions',$exam->slug)}}">
 						<button class="btn btn-lg btn-success accesscode_btn" > Attempt Test </button>
 						</a>
@@ -70,7 +70,7 @@
 						@endif
                   	@elseif($exam->slug == '34781')
                   		@if(auth::user())
-                  			<div class="accesscode_btn_wrap" style="display: none">
+                  			<div class="accesscode_btn_wrap mb-2" style="display: none">
 		                    <a href="{{route('assessment.instructions',$exam->slug)}}">
 							<button class="btn btn-lg btn-success accesscode_btn" > Attempt Test </button>
 							</a> 
@@ -81,7 +81,7 @@
 								<a href="{{ route('login')}}" class="btn btn-outline-primary">Login</a></div>
 						@endif
 					@elseif($exam->slug != '34781' && $exam->status==1) <!-- free Test -->
-					<div class="accesscode_btn_wrap" style="display: none">
+					<div class="accesscode_btn_wrap mb-2" style="display: none">
 					<a href="{{route('assessment.instructions',$exam->slug)}}">
 					<button class="btn btn-lg btn-success accesscode_btn" style="display: none"> Attempt Test </button>
 					</a>
@@ -107,7 +107,7 @@
 
 				   @auth
 				   @if(strpos(strtolower($exam->emails),strtolower(\auth::user()->email))!==false)
-				   	<div class="accesscode_btn_wrap" style="display: none">
+				   	<div class="accesscode_btn_wrap mb-2" style="display: none">
 			       <a href="{{route('assessment.access',$exam->slug)}}">
 			       	<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
 					</a>
@@ -116,7 +116,7 @@
 					<div class="bg-light border rounded p-3">You are not authorised to attempt this test.</div>
 					@endif
 			       @else
-			       <div class="accesscode_btn_wrap" style="display: none">
+			       <div class="accesscode_btn_wrap mb-2" style="display: none">
 			       <a href="#" data-toggle="modal" data-target="#myModal2">
 			       	<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
 					</a>
@@ -125,7 +125,7 @@
 
 				
 				@else
-					<div class="accesscode_btn_wrap" style="display: none">
+					<div class="accesscode_btn_wrap mb-2" style="display: none">
 				   @auth
 				   	
 			       <a href="{{route('assessment.access',$exam->slug)}}">

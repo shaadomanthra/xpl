@@ -357,8 +357,15 @@ $(function(){
     if($('.os_details').length)
         $('.os_details').html(e.os.name+' v'+ Math.round(e.os.version));
 
-    if($('.browser_details').length)
-        $('.browser_details').html(e.browser.name+' v'+ Math.round(e.browser.version));
+    if($('.browser_details').length){
+      $msg = e.browser.name+' v'+ Math.round(e.browser.version)
+       if(e.browser.name == 'Firefox'){
+          $msg = $msg+ ' (Kindly use chrome browser. Camera enabled tests will not work in this browser)';
+      }
+
+      $('.browser_details').html($msg);
+    }
+        
     if($('.js_details').length){
         $('.js_details').html("enabled");
         $('.accesscode_btn_wrap').show();
@@ -371,6 +378,8 @@ $(function(){
         $('.ip_details').html(data.ip);
     });
     }
+
+
         
    
 
