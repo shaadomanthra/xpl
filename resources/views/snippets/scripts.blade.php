@@ -2297,6 +2297,27 @@ $(function(){
 
 @endif
 
+
+@if(isset($liveimage))
+<script type="text/javascript">
+
+  function load_newimage(){
+    var i =0;
+    for(i=0;i<100;i++){
+      if($('.u_'+i).length){
+        $name = $('.u_'+i).data('name');
+        $num = parseInt($('.u_'+i).data('number'))+1;
+        $new_image = "https://s3-xplore.s3.ap-south-1.amazonaws.com/webcam/"+$name+'_'+$num+'.jpg';
+        $('.u_'+i).attr('src',$new_image);
+        $('.u_'+i).data('number',$num);
+        console.log($name);
+      }
+    }
+  }
+  //setInterval(load_newimage, 5000);
+
+</script>
+@endif
 @if(isset($welcome))
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
 <script type="text/javascript">

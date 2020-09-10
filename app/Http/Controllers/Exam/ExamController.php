@@ -953,6 +953,54 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
             abort(404);
     }
 
+
+     public function analytics4($id,Request $r)
+    {
+        $exam= Exam::where('slug',$id)->first();
+        $this->authorize('create', $exam);
+        
+        $code = $r->get('code');
+        $item = $r->get('item');
+        $data = $r->get('score');
+
+       
+        if($data)
+            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->paginate(100);
+            else
+            $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->paginate(100);
+
+            $res = Tests_Overall::where('test_id',$exam->id)->get();
+              
+            $users = $result->pluck('user_id');
+            $exam_sections = Section::where('exam_id',$exam->id)->get();
+            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+
+
+
+        $search = $r->search;
+       
+
+        $ux = User::whereIn('id',$users)->get()->keyBy('id');
+
+        $view = $search ? 'analytics_list2': 'analytics2';
+        
+
+       
+
+
+
+        if($exam)
+            return view('appl.exam.exam.'.$view)
+                    ->with('report',$result)
+                    ->with('r',$res)
+                    ->with('exam_sections',$exam_sections)
+                    ->with('sections',$sections)
+                    ->with('exam',$exam)
+                    ->with('liveimage',1)
+                    ->with('users',$ux);
+        else
+            abort(404);
+    }
    
 
      public function analytics3($slug,Request $request)
