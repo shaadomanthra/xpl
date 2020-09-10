@@ -10,6 +10,7 @@ use PacketPrep\Mail\EmailForQueuing;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\User;
+use Google\Cloud\Core\ServiceBuilder;  
 
 use Mail;
 
@@ -24,6 +25,11 @@ class HomeController extends Controller
     {
         // this is a sample comment
         
+    }
+
+
+    public function gcloud(){
+
     }
 
     /**
