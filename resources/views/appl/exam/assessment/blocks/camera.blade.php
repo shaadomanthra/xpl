@@ -17,6 +17,7 @@
 @endif
 
 <div class="bg-light border rounded p-3 camera_success mb-3" style="display:none">
+	
 	<video id="video" class="mb-3 bg-light " width="300px" >Video stream not available.</video>
 	<canvas id="canvas" style='display: none'>
 	</canvas>
