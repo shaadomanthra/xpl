@@ -358,7 +358,7 @@ $(function(){
         $('.os_details').html(e.os.name+' v'+ Math.round(e.os.version));
 
     if($('.browser_details').length){
-      $msg = e.browser.name+' v'+ Math.round(e.browser.version)
+      var $msg = e.browser.name+' v'+ Math.round(e.browser.version)
        if(e.browser.name == 'Firefox'){
           $msg = $msg+ ' (Kindly use chrome browser. Camera enabled tests will not work in this browser)';
       }
