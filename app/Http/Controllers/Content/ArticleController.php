@@ -43,7 +43,7 @@ class ArticleController extends Controller
      if($request->refresh){
 
         // update articles
-        $objs = $obj->orderBy('created_at','desc')->where('status',1)->get();  
+        $objs = $obj->orderBy('created_at','desc')->get();  
         //Storage::disk('spaces')->put('articles/'.$filename, json_encode($objs,JSON_PRETTY_PRINT));
         //$data = Storage::disk('spaces')->get('articles/'.$filename);
         //dd($data);
@@ -277,7 +277,7 @@ class ArticleController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
-                Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
+                Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename,'public');
                 $path = 'articles/'.$filename;
                 $request->merge(['image' => $path]);
             }else{
@@ -295,10 +295,10 @@ class ArticleController extends Controller
             /* create a new entry */
             $obj = $obj->create($request->except(['file_']));
 
-            $sizes = [300,600,900,1200];
-            if(isset($path))
-            foreach($sizes as $s)
-                image_resize($path,$s);
+            // $sizes = [300,600,900,1200];
+            // if(isset($path))
+            // foreach($sizes as $s)
+            //     image_resize($path,$s);
 
             // attach the tags
             $labels = $request->get('labels');
@@ -489,7 +489,7 @@ class ArticleController extends Controller
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
                 $filename = $request->get('slug').'.'.$file->getClientOriginalExtension();
-                Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename);
+                Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename,'public');
                 $path = 'articles/'.$filename;
                 $request->merge(['image' => $path]);
             }
@@ -515,12 +515,12 @@ class ArticleController extends Controller
 
             $obj->update($request->except(['file_'])); 
 
-            $sizes = [300,600,900,1200];
+            // $sizes = [300,600,900,1200];
 
-            if($obj->image)
-            if(Storage::disk('public')->exists($obj->image))
-            foreach($sizes as $s)
-                image_resize($obj->image,$s);
+            // if($obj->image)
+            // if(Storage::disk('public')->exists($obj->image))
+            // foreach($sizes as $s)
+            //     image_resize($obj->image,$s);
 
             /* update cache file of this product */
             $filename = $obj->slug.'.json';

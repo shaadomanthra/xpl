@@ -9,6 +9,7 @@
           @include('flash::message')
 
 
+
           <h1 class=""> {{ $obj->name }}  
 
           @if(\auth::user())
@@ -38,7 +39,7 @@
             <div class="col-12 col-md-8">
               <div class="mb-4" style="word-wrap: break-word;">
                 <div class="float-left pr-4 pb-4 pt-2" style="max-width:350px">
-      @if(Storage::disk('public')->exists($obj->image))
+      @if(Storage::disk('s3')->exists($obj->image))
       <img src="{{ Storage::disk('s3')->url($obj->image) }} " class=" card-img-top" alt="{{  $obj->name }}" style="width:100%">
       @endif
                 </div>

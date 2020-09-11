@@ -45,6 +45,7 @@ if (! function_exists('image_resize')) {
                         $constraint->upsize();
         });
         $imgr->save($new_path.'_'.$size.'.webp');  
+        Storage::disk('s3')->put('articles/'.$name.'_'.$size.'.webp', (string)$imgr,'public');
 
         $imgr2 = Image::make($path)->encode('jpg', 100);
         $imgr2->resize($size, null, function ($constraint) {
@@ -52,6 +53,7 @@ if (! function_exists('image_resize')) {
                         $constraint->upsize();
         });
         $imgr2->save($new_path.'_'.$size.'.jpg');      
+        Storage::disk('s3')->put('articles/'.$name.'_'.$size.'.jpg', (string)$imgr2,'public');
         
 
         return true;
