@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Cache;
 
 class CampusController extends Controller
 {
+    
 
     public function __construct(){
         $this->app      =   'exam';

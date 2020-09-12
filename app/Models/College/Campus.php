@@ -27,6 +27,7 @@ class Campus extends Model
 {
     
 
+
     public static function getAnalytics($college,$branch,$batch,$r,$course_id=null,$category_id=null,$student_username=null){
 
         $data = array();
@@ -252,6 +253,11 @@ class Campus extends Model
     public static function analytics_test($college,$branch,$batch,$r,$course_id=null,$category_id=null,$exam_id =null,$student_username=null){
 
 
+
+        if(request()->get('refresh')){
+            Cache::forget('c_users_'.$exam_id);
+            Cache::forget('u_data_'.$exam_id);
+        }
         if($college)
     	   $courses = $college->courses;
         else
@@ -505,6 +511,8 @@ class Campus extends Model
         array_push($test_id,$exam_id);
         $data = array();
         $data['course']=array();
+
+        
         
         if($college && $branch){   
             $users_college = $college->users()->pluck('id')->toArray();
@@ -540,7 +548,11 @@ class Campus extends Model
         foreach($exam->sections as $section){
         if($users){
 
-            if(request()->get('all') && $branch){
+            if(request()->get('all') && $branch ){
+
+                    if(request()->get('refresh')){
+                        Cache::forget('tests_sections_'.$branch.'_'.$exam_id);
+                    }
 
                     $tests_sections = Cache::get('tests_sections_'.$branch.'_'.$exam_id);
                     if(!$tests_sections){
