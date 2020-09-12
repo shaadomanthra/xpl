@@ -35,7 +35,7 @@
 		      <td>@if(isset($branches[$user['branch']])){{  $branches[$user['branch']] }}@endif</td>
 
 		      @if($colleges)
-		      <td>@if($user['college']){{  $colleges[$user['college']][0]->name }}@endif</td>
+		      <td>@if(isset($user['college'])){{  $colleges[$user['college']][0]->name }}@endif</td>
 		      @endif
 
 		      @if(isset($sections))
