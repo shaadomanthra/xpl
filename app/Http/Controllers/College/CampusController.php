@@ -24,6 +24,7 @@ use PacketPrep\Models\Exam\Tests_Overall;
 
 use PacketPrep\Exports\ExamExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Cache;
 
 
 class CampusController extends Controller
@@ -676,6 +677,11 @@ class CampusController extends Controller
                 $college = \auth::user()->colleges()->first();
         }
 
+        if(request()->get('all'))
+                $college = null;
+
+
+
         $sections = $data = null;
         $campus = new Campus();
         $batch_code = $r->get('batch_code');
@@ -693,12 +699,51 @@ class CampusController extends Controller
             $data['item'] = $batch_code;
         }
 
+        if(request()->get('refresh')){
+            Cache::forget('analytics_test_'.$exam->id);
+            Cache::forget('analytics_test_detail_'.$exam->id);
+        }
 
-        $details = $campus->analytics_test($college,$branch_item,$batch_code,$r,null,null,$exam->id);
+        if(request()->get('all')){
+
+            $details = Cache::get('analytics_test_'.$exam->id);
+
+            if(!$details){
+                $details = $campus->analytics_test($college,$branch_item,$batch_code,$r,null,null,$exam->id);
+
+            }
+        }else{
+            $details = $campus->analytics_test($college,$branch_item,$batch_code,$r,null,null,$exam->id);
+              
+            Cache::forever('analytics_test_'.$exam->id,$details);
+
+
+        }
+        
+        
+
         if(count($exam->sections)>1){
-            $details['section'] = $campus->analytics_test_detail($college,$branch_item,$batch_code,$r,$exam->id);
+
+            if(request()->get('all')){
+                $secs = Cache::get('analytics_test_detail_'.$exam->id);
+
+                if(!$secs){
+                    $details['section'] = $campus->analytics_test_detail($college,$branch_item,$batch_code,$r,$exam->id);
+                }else
+                $details['section'] = $secs;
+              
+
+            }else{
+                $details['section'] = $campus->analytics_test_detail($college,$branch_item,$batch_code,$r,$exam->id);
+                Cache::forever('analytics_test_detail_'.$exam->id,$details['section']);
+            }
+            
             $sections = $exam->sections;
         }
+
+      
+
+
 
         if($r->get('batch')&& !$r->get('batch_code')){
 
@@ -726,13 +771,23 @@ class CampusController extends Controller
 
             $details['item_name'] = 'Branch';
         }
+
+
         
-        $branches = array(1=>"BCOM",2=>"",3=>"",4=>"",5=>"",6=>"",7=>"",8=>"",9=>"CSE",10=>"IT",11=>"ECE",12=>"EEE",13=>"MECH",14=>"CIVIL",15=>"OTHER");
+        $br = Branch::all();  
+        
+        foreach($br as $kb=>$vb)
+            $branches[$kb+1]=$vb->name;
+        
         if(!$college)
         $colleges = College::all()->groupBy('id');
         else
         $colleges = null;
 
+
+
+
+    if(isset($details['college_users']))
         if($details['college_users']){
             foreach($details['college_users'] as $coll => $counter){
                 if(!$coll)
@@ -744,6 +799,8 @@ class CampusController extends Controller
             $details['coll_list'] =$coll_list;
             }
         }
+
+
         //edd($details['users']);
         
         if(request()->get('export')){

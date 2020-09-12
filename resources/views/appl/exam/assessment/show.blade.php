@@ -140,7 +140,12 @@
 
 				@else
 
-					<a href="#" data-toggle="modal" data-target="#myModal2">
+					@auth
+					   	
+				       <a href="{{route('assessment.access',$exam->slug)}}">
+				       @else
+				       <a href="#" data-toggle="modal" data-target="#myModal2">
+				       @endauth
 						<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
 						</a>
 

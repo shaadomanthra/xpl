@@ -21,6 +21,7 @@ use PacketPrep\Models\Course\Practices_Topic;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
+use Illuminate\Support\Facades\Cache;
 
 class Campus extends Model
 {
@@ -335,33 +336,72 @@ class Campus extends Model
             elseif($college==null && $branch)
                 $users = $branch->users()->pluck('id');
             else
-                $users = User::all()->pluck('id');
+                $users = null;
+
 
 
             if($r->get('code')){
                 $users_code = DB::table('tests_overall')->whereIn('test_id', $test_id)->where('code',$r->get('code'))->pluck('user_id')->toArray();
                 $users = array_intersect($users->toArray(),$users_code);   
             }
-            
-            $Tests_Overall = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->orderBy('score','desc')->get();
+
+
+
+            if($users){
+                if(request()->get('all') && $branch){
+
+                    $Tests_Overall = Cache::get('test_overall_'.$branch.'_'.$exam_id);
+                    if(!$Tests_Overall){
+                        $Tests_Overall = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->orderBy('score','desc')->get();
+                        Cache::forever('test_overall_'.$branch.'_'.$exam_id,$Tests_Overall);
+                    }
+                    
+                }else{
+                    $Tests_Overall = Tests_Overall::whereIn('user_id',$users)->whereIn('test_id',$test_id)->orderBy('score','desc')->get();
+                }
+                
+            }
+            else
+                $Tests_Overall = Tests_Overall::whereIn('test_id',$test_id)->orderBy('score','desc')->get();
             $tests =$Tests_Overall->groupBy('user_id');
+
+
 
             
             $c_users = null;
             if(request()->get('all')){
-                $c_users =User::whereIn('id',$Tests_Overall->pluck('user_id'))->get()->groupBy('college_id');
+                $c_users = Cache::get('c_users_'.$exam_id);
+                if(!$c_users){
+                        $c_users =User::whereIn('id',$Tests_Overall->pluck('user_id'))->get()->groupBy('college_id');
+                        Cache::forever('c_users_'.$exam_id,$c_users);
+                }
                 
 
+            }else{
+                $c_users =User::whereIn('id',$Tests_Overall->pluck('user_id'))->get()->groupBy('college_id');
             }
 
+
+
             $u = array_keys($tests->toArray());
+
+            
+            if(request()->get('all')){
+                $u_data = Cache::get('u_data_'.$exam_id);
+                if(!$u_data){
+                    $u_data = User::whereIn('id',$u)->get()->groupBy('id');
+                    Cache::forever('u_data_'.$exam_id,$u_data);
+                }
+            }else{
+                $u_data = User::whereIn('id',$u)->get()->groupBy('id');
+            }
             
 
             $data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,
                             'participants'=>0,
                             "excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0,"count"=>count($test_id),"pace"=>0,"accuracy"=>0,"avg_pace"=>0,"avg_accuracy"=>0);
             
-            $data_tests = self::getData_Test($tests,$data_tests,User::whereIn('id',$u)->get()->groupBy('id'));
+            $data_tests = self::getData_Test($tests,$data_tests,$u_data);
 
             $data_tests['college_users'] = $c_users;
 
@@ -492,11 +532,32 @@ class Campus extends Model
         elseif($college==null && $branch)
             $users = $branch->users()->pluck('id');
         else
-            $users = User::all()->pluck('id');
+            $users = null;
+
+
 
         $exam = Exam::where('id',$exam_id)->first();
         foreach($exam->sections as $section){
-           $tests_sections = Tests_Section::whereIn('user_id',$users)->whereIn('test_id',$test_id)
+        if($users){
+
+            if(request()->get('all') && $branch){
+
+                    $tests_sections = Cache::get('tests_sections_'.$branch.'_'.$exam_id);
+                    if(!$tests_sections){
+                        $tests_sections = Tests_Section::whereIn('user_id',$users)->whereIn('test_id',$test_id)
+                            ->where('section_id',$section->id)->get()->groupBy('user_id');
+                        Cache::forever('tests_sections_'.$branch.'_'.$exam_id,$tests_sections);
+                    }
+                    
+                }else{
+                    $tests_sections = Tests_Section::whereIn('user_id',$users)->whereIn('test_id',$test_id)
+                            ->where('section_id',$section->id)->get()->groupBy('user_id');
+                }
+
+           
+        }
+        else
+            $tests_sections = Tests_Section::whereIn('test_id',$test_id)
                             ->where('section_id',$section->id)->get()->groupBy('user_id');
 
             $data = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,'participants'=>0,

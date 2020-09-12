@@ -17,9 +17,7 @@
 		      @endif
 		      <th scope="col" style="width:10%"  >Score</th>
 		      <th scope="col" class=" {{$m=0}} " style="width:20%" >Performance</th>
-		      @if(\auth::user()->isAdmin())
-		    	<th scope="col" style="width:8%"  >Delete</th>
-		    	@endif
+		     
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -28,16 +26,16 @@
 
 		    <tr>
 		      <th scope="row">{{++$m}}</th>
-		      <td><a href="{{ route('profile','@'.$user['username'])}}">{{$user['name']}}  
+		      <td><a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$user['username']}}">{{$user['name']}}  
 		      	@if($user['video'])
 		      	<i class="fa fa-check-circle text-success"></i>
 		      	@endif
 		      	</a> 
 		      </td>
-		      <td>@if($user['branch']){{  $branches[$user['branch']] }}@endif</td>
+		      <td>@if(isset($branches[$user['branch']])){{  $branches[$user['branch']] }}@endif</td>
 
 		      @if($colleges)
-		      <td><a href="{{ route('test.analytics',$exam->slug)}}?college_id={{$user['college']}}">@if($user['college']){{  $colleges[$user['college']][0]->name }}@endif</a></td>
+		      <td>@if($user['college']){{  $colleges[$user['college']][0]->name }}@endif</td>
 		      @endif
 
 		      @if(isset($sections))
@@ -59,18 +57,7 @@
 		      	@endif
 		      	
 		      </td>
-		      @if(\auth::user()->isAdmin())
-		      <td>
-		      		<form method="post" action="{{ route('assessment.delete',$exam->slug)}}" >
-		      			<input type="hidden" name="_token" value="{{ csrf_token() }}">
-		      			<input type="hidden" name="user_id" value="{{ $k }}">
-		      			<input type="hidden" name="test_id" value="{{ $exam->id }}">
-		      			<button class="btn btn-sm btn-primary" type="submit">delete</button>
-
-		      		</form>
-		      		
-		      	</td>
-		      	@endif
+		      
 		      </tr>
 		     @endforeach
 		  </tbody>

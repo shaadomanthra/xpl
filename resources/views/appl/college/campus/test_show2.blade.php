@@ -7,7 +7,6 @@
 	<div class="col-12 col-md-12">
 
 		<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;"><h1 class="display-3 ">
-			<a href="{{ request()->fullUrl() }}&export=1" class="btn btn-outline-primary float-right">Download Excel</a>
 			{{ ucfirst($exam->name) }} - Report</h1>
 
 			@if(isset($data['item_name']))
@@ -88,6 +87,7 @@
 		@endif
 
 
+		@if(!request()->get('branch'))
 		@if($details['college_users'])
 		 <div class="rounded table-responsive">
 		 <table class="table mt-4  table-bordered bg-white" >
@@ -106,8 +106,7 @@
 		      <th scope="row">{{++$w}}</th>
 		      <td>
 		      	@if($coll)
-		      	<a href="{{ route('test.analytics',$exam->slug)}}?college_id={{$coll}}">
-		      	{{ $colleges[$coll][0]->name }}</a>
+		      	{{ $colleges[$coll][0]->name }}
 		      	@else
 		      	 - unknown -
 		      	@endif
@@ -119,6 +118,7 @@
 		  </tbody>
 		</table>
 		</div>
+		@endif
 		@endif
 
 		@if(isset($details['items']))
