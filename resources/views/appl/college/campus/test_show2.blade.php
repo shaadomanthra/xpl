@@ -101,6 +101,7 @@
 		  </thead>
 		  <tbody>
 
+		  	@if(isset($details['coll_list']))
 		    @foreach($details['coll_list'] as $coll=>$counter)
 		    <tr>
 		      <th scope="row">{{++$w}}</th>
@@ -115,6 +116,7 @@
 		      
 		      </tr>
 		     @endforeach
+		     @endif
 		  </tbody>
 		</table>
 		</div>

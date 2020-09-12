@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Cache;
 
 class CampusController extends Controller
 {
-    
+
 
     public function __construct(){
         $this->app      =   'exam';
@@ -705,6 +705,8 @@ class CampusController extends Controller
             Cache::forget('analytics_test_detail_'.$exam->id);
         }
 
+       
+
         if(request()->get('all')){
 
             $details = Cache::get('analytics_test_'.$exam->id);
@@ -720,6 +722,8 @@ class CampusController extends Controller
 
 
         }
+
+
         
         
 
