@@ -27,7 +27,7 @@
 		    <tr>
 		      <th scope="row">{{++$m}}</th>
 		      <td><a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$user['username']}}">{{$user['name']}}  
-		      	@if($user['video'])
+		      	@if(isset($user['video']))
 		      	<i class="fa fa-check-circle text-success"></i>
 		      	@endif
 		      	</a> 
