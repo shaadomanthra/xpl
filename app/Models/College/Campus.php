@@ -381,6 +381,8 @@ class Campus extends Model
                         $c_users =User::whereIn('id',$Tests_Overall->pluck('user_id'))->get()->groupBy('college_id');
                         Cache::forever('c_users_'.$exam_id,$c_users);
                 }
+
+
                 
 
             }else{
@@ -402,16 +404,22 @@ class Campus extends Model
                 $u_data = User::whereIn('id',$u)->get()->groupBy('id');
             }
             
-            
+
 
             $data_tests = array("excellent"=>0,"good"=>0,"need_to_improve"=>0,
                             'participants'=>0,
                             "excellent_percent"=>0, "need_to_improve_percent"=>0,"good_percent"=>0,"count"=>count($test_id),"pace"=>0,"accuracy"=>0,"avg_pace"=>0,"avg_accuracy"=>0);
             
             $data_tests = self::getData_Test($tests,$data_tests,$u_data);
+            unset($data_tests['users']);
 
+            
+            foreach($c_users as $cm=>$ck){
+                $c_users[$cm] = count($ck);
+            }
             $data_tests['college_users'] = $c_users;
 
+              
             
 
             

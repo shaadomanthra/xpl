@@ -705,7 +705,7 @@ class CampusController extends Controller
             Cache::forget('analytics_test_detail_'.$exam->id);
         }
 
-       
+
 
         if(request()->get('all')){
 
@@ -722,6 +722,7 @@ class CampusController extends Controller
 
 
         }
+
 
 
         
@@ -797,7 +798,7 @@ class CampusController extends Controller
             foreach($details['college_users'] as $coll => $counter){
                 if(!$coll)
                     $coll =0;
-                $coll_list[$coll]= count($counter);
+                $coll_list[$coll]= $counter;
             }
             if(isset($coll_list)){
             arsort($coll_list);
