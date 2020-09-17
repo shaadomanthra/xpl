@@ -886,6 +886,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
             $ename = str_replace('\\', '-', $ename);
             $filename ="exports/Report_".$ename.".xlsx";
             
+    $email_stack = array();
     if(request()->get('export')){
         
         $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
@@ -900,12 +901,62 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
         if(!Storage::disk('s3')->exists($filename))
             Storage::disk('s3')->delete($filename);
 
-        $usrs = User::whereIn('id',$users)->get();
-        if(count($usrs)>0){
+
+        if($exam->emails){
+            $emails = implode(',',explode("\n", $exam->emails));
+            $emails =str_replace("\r", '', $emails);
+            $emails = explode(',',$emails);
+
+            $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
+            $email_stack['registered'] = $users->pluck('email')->toArray();
+            $uids = array_unique($users->pluck('id')->toArray());
+            $attemptedby = array_unique($result->pluck('user_id')->toArray());
+
+            $notattempted =  array_diff($uids,$attemptedby);
+            
+
+            //dd($count);
+
+        }else{
+            $email_stack['registered'] = [];
+            $email_stack['not_registered'] =  [];
+        }
+
+        foreach($notattempted as $k=>$u){
+            if(!in_array($u, $attemptedby)){
+                     $rs = new Tests_Overall();
+            $rs->user_id = $u;
+            $rs->test_id = $exam->id;
+            $rs->window_change = '';
+            $rs->cheat_detect = '';
+            $rs->score = '';
+            $result->push($rs);
+            }
+           
+        }
+
+        foreach($notattempted as $k=>$u){
+            if(!in_array($u, $attemptedby)){
+                $rs = new Tests_Section();
+                $rs->user_id = $u;
+                $rs->test_id = $exam->id;
+                $rs->score = '';
+                $sections->push($rs);
+            }
+        }
+
+
+        // foreach($users as $u){
+
+        //     if()
+        // }
+        
+
+        if(count($users)>0){
             request()->session()->put('result',$result);
             request()->session()->put('sections',$sections);
             request()->session()->put('exam_sections',$exam_sections);
-            request()->session()->put('users',$usrs);
+            request()->session()->put('users','');
 
             ob_end_clean(); // this
             ob_start(); 

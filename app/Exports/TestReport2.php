@@ -57,6 +57,8 @@ class TestReport2 implements FromCollection
             $result[$k]->cheating = 'Potential Cheating';
             else
               $result[$k]->cheating = 'No Cheating';  
+
+            if(isset($sections[$res->user->id]))
     		foreach($sections[$res->user->id] as $m=>$sec){
                 if(isset($exam_sections[$m]['name'])){
                     $name = $exam_sections[$m]['name'];

@@ -19,7 +19,7 @@ video {
 			<h4>{{ auth::user()->name}}</h4>
 			<p class="mb-0">
 				@if(auth::user()->roll_number) {{ auth::user()->roll_number}} <br> @endif
-				@if(auth::user()->branch->name) {{ auth::user()->branch->name}}</br> @endif
+				@if(auth::user()->branch_id) {{ auth::user()->branch->name}}</br> @endif
 			</p>
 
 		</div>
@@ -29,10 +29,11 @@ video {
       src="{{ $user->getImage() }}  " class="rounded d-inline float-right" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Profile Picture">
       @endif
       @if(isset($exam->settings))
+      @if(isset($exam->settings->signature))
           @if(strtolower($exam->settings->signature)=='yes')
      	<img 
       src="{{ $user->getImage('signature') }}  " class="rounded d-inline" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Signature">
-      @endif @endif
+      @endif @endif @endif
 		</div>
 	</div>
 

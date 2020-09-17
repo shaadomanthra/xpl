@@ -44,9 +44,11 @@
           <a href="#" data-toggle="modal" data-target="#questions">
             <i class="fa fa-question-circle ml-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
           @if(isset($exam->settings))
+          @if(isset($exam->settings->chat))
           @if(strtolower($exam->settings->chat)=='yes')
             <a href="#" class="message_proctor" data-time="0"  data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}">
           <i class="fa fa-commenting-o ml-2 cursor" data-toggle="tooltip"  title="Message Proctor"  x ></i></a>
+          @endif
           @endif
           @endif
         
@@ -78,11 +80,12 @@
           <a href="#" class="text-light" data-toggle="modal" data-target="#questions">
             <i class="fa fa-question-circle mr-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
             @if(isset($exam->settings))
+            @if(isset($exam->settings->chat))
           @if(strtolower($exam->settings->chat)=='yes')
             <a href="#"  class="message_proctor text-light" data-time="0"  data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}">
 
         <i class="fa fa-commenting-o mr-2 cursor" data-toggle="tooltip"  title="Message Proctor"  x ></i></a>
-        @endif @endif
+        @endif @endif @endif
         <a href="#" data-toggle="modal" class="text-light" data-target="#student_info">
             <i class="fa fa-user-circle mr-2 cursor" data-toggle="tooltip"  title="View Student Info"></i></a>
       </div>
@@ -420,7 +423,7 @@ div.chats {
       <h4>{{ auth::user()->name}}</h4>
       <p class="mb-0">
         {{ auth::user()->roll_number}}<br>
-        {{ auth::user()->branch->name}}</br>
+        @if(auth::user()->branch_id) {{  auth::user()->branch->name }} @endif</br>
       </p>
 
     </div>
@@ -428,10 +431,11 @@ div.chats {
         <img 
       src="{{ $user->getImage() }}  " class="rounded d-inline float-right" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Profile Picture">
       @if(isset($exam->settings))
+      @if(isset($exam->settings->signature))
           @if(strtolower($exam->settings->signature)=='yes')
       <img 
       src="{{ $user->getImage('signature') }}  " class="rounded d-inline" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Signature">
-      @endif @endif
+      @endif @endif @endif
     </div>
   </div>
       </div>
