@@ -223,20 +223,143 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
     public function webcam_upload(Request $request){
         $image = $request->image;
         $name = $request->name;  // your base64 encoded
-        $image = str_replace('data:image/jpeg;base64,', '', $image);
-        $image = str_replace(' ', '+', $image);
-
-        $image = base64_decode($image);
+        $username = $request->get('username');
+        $message = $request->get('message');
+        $time = $request->get('time');
+        if($image){
+          $image = str_replace('data:image/jpeg;base64,', '', $image);
+          $image = str_replace(' ', '+', $image);
+          $image = base64_decode($image);
+        }
 
         if($name)
             $filename = $name.'.jpg';
         else
             $filename = 'imagecam.jpg';
+
+          $pieces = explode('_',$name);
+
         
-        //Storage::disk('s3')->putFileAs('webcam',(string)$image,$filename);
-        Storage::disk('s3')->put('webcam/'.$filename, (string)$image,'public');
-        echo 'uploaded - '.$filename;
-        FaceDetect::dispatch($name)->delay(now()->addSeconds(5));
+        if($image){
+          //Storage::disk('s3')->putFileAs('webcam',(string)$image,$filename);
+          Storage::disk('s3')->put('webcam/'.$filename, (string)$image,'public');
+
+          // save activity
+          if(Storage::disk('s3')->exists('testlogs/activity/'.$pieces[1].'/'.$username.'.json')){
+              $json = json_decode(Storage::disk('s3')->get('testlogs/activity/'.$pieces[1].'/'.$username.'.json'),true);
+          }else{
+              $json = null;
+          }
+
+          $json[strtotime("now")] = array("activity"=>"Captured photo ".$pieces[2],"color"=>'green');
+          Storage::disk('s3')->put('testlogs/activity/'.$pieces[1].'/'.$username.'.json',json_encode($json),'public');
+
+          //save image
+          if(Storage::disk('s3')->exists('testlogs/pre-message/'.$pieces[1].'/'.$username.'.json')){
+              $json2 = json_decode(Storage::disk('s3')->get('testlogs/pre-message/'.$pieces[1].'/'.$username.'.json'),true);
+          }else{
+              $json2 = null;
+          }
+
+          $json2['photo'] = 'webcam/'.$filename;
+          $json2['time'] = strtotime(now());
+          Storage::disk('s3')->put('testlogs/pre-message/'.$pieces[1].'/'.$username.'.json',json_encode($json2),'public');
+
+          echo 'uploaded - '.$filename;
+        }
+
+        //save chat messages in cloud
+        if($message){
+
+          // save activity
+          if(Storage::disk('s3')->exists('testlogs/chats/'.$pieces[1].'/'.$username.'.json')){
+              $json = json_decode(Storage::disk('s3')->get('testlogs/chats/'.$pieces[1].'/'.$username.'.json'),true);
+          }else{
+              $json = null;
+          }
+
+          $json[strtotime("now")] = array("person"=>$pieces[0],"message"=>$message,"time"=>$time);
+          Storage::disk('s3')->put('testlogs/chats/'.$pieces[1].'/'.$username.'.json',json_encode($json),'public');
+
+          // save activity
+          if(Storage::disk('s3')->exists('testlogs/chats/'.$pieces[1].'/proctor.json')){
+              $json2 = json_decode(Storage::disk('s3')->get('testlogs/chats/'.$pieces[1].'/proctor.json'),true);
+          }else{
+              $json2 = null;
+          }
+
+          $json2[strtotime("now")] = array("person"=>$pieces[0],"message"=>$message,"time"=>$time);
+          Storage::disk('s3')->put('testlogs/chats/'.$pieces[1].'/proctor.json',json_encode($json2),'public');
+
+        }
+        
+        if($pieces[2]!='idcard' && $pieces[2]!='selfie')
+          FaceDetect::dispatch($name)->delay(now()->addSeconds(2));
+        else{
+          if($pieces[2]=='selfie'){
+            $jsonfile = 'approvals/'.$pieces[1].'.json';
+            if(Storage::disk('s3')->exists('testlogs/'.$jsonfile)){
+              $candidate  = json_decode(Storage::disk('s3')->get('testlogs/'.$jsonfile),true);
+            }else{
+                $candidate = [];
+            }
+            $candidate[$pieces[0]]['selfie'] = $filename;
+            if(!isset($candidate[$pieces[0]]['idcard']))
+              $candidate[$pieces[0]]['idcard'] = '';
+
+            if(!isset($candidate[$pieces[0]]['approved']))
+            $candidate[$pieces[0]]['approved'] = 0;
+
+            $candidate[$pieces[0]]['timestamp'] = strtotime("now");
+
+            Storage::disk('s3')->put('testlogs/'.$jsonfile, json_encode($candidate));
+          }
+
+          if($pieces[2]=='idcard'){
+
+            if($request->image){
+                $jsonfile = 'approvals/'.$pieces[1].'.json';
+                if(Storage::disk('s3')->exists('testlogs/'.$jsonfile)){
+                  $candidate  = json_decode(Storage::disk('s3')->get('testlogs/'.$jsonfile),true);
+                
+                }else{
+                    $candidate = [];
+                }
+                $candidate[$pieces[0]]['idcard'] = $filename;
+                if(!isset($candidate[$pieces[0]]['selfie']))
+                  $candidate[$pieces[0]]['selfie'] = '';
+                if(!isset($candidate[$pieces[0]]['approved']))
+                $candidate[$pieces[0]]['approved'] = 0;
+
+                $candidate[$pieces[0]]['timestamp'] = strtotime("now");
+
+                Storage::disk('s3')->put('testlogs/'.$jsonfile, json_encode($candidate));
+
+                $message['status'] = 0;
+                $message['message'] = '';
+                Storage::disk('s3')->put('testlogs/pre-message/'.$pieces[0].'.json', json_encode($message),'public');
+
+            }else{
+              $jsonfile = 'approvals/'.$pieces[1].'.json';
+                if(Storage::disk('s3')->exists('testlogs/'.$jsonfile)){
+                  $candidate  = json_decode(Storage::disk('s3')->get('testlogs/'.$jsonfile),true);
+                
+                }else{
+                    $candidate = [];
+                }
+                $username = $request->get('username');
+                $candidate[$username]['name'] =  $request->get('fullname');
+                $candidate[$username]['rollnumber'] =  $request->get('roll');
+                $candidate[$username]['college'] =  $request->get('college');
+                $candidate[$username]['branch'] =  $request->get('branch');
+                Storage::disk('s3')->put('testlogs/'.$jsonfile, json_encode($candidate));
+                
+            }
+
+
+          }
+        
+        }
         exit();
     }
 

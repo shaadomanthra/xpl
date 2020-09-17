@@ -49,10 +49,10 @@
   <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
   @endif
   @if(isset($highlight))
-  <link href="{{ asset('css/styles2.css') }}?new=13" rel="stylesheet">
+  <link href="{{ asset('css/styles2.css') }}?new=16" rel="stylesheet">
   @elseif(domain()=='piofx')
   @if(request()->segment(1)=='dashboard' || request()->segment(1)=='training')
-  <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
+  <link href="{{ asset('css/styles.css') }}?new=14" rel="stylesheet">
   <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->

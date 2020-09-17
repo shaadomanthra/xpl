@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "@ckeditor/ckeditor5-build-classic": "^1.0.0-alpha.2",
-        "font-awesome": "^4.7.0"
+        "font-awesome": "^4.7.0",
+        "html2canvas": "^1.0.0-rc.7"
     }
 }

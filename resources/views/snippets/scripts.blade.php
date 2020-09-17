@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=21"></script>
+<script src="{{ asset('js/script.js')}}?new=25"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
 
@@ -256,6 +256,198 @@ $(function(){
 
   }
 
+
+  //proctoring
+  $('.btn-approve').on('click',function(e){
+
+    e.preventDefault();
+    $username = $(this).data('username');
+    $approved = parseInt($(this).data('approved'));
+    $alert = $(this).data('alert');
+    $url = $(this).data('url');
+    $token = $(this).data('token');
+
+     $.post( $url ,{'username': $username ,'approved':$approved,'alert':$alert,'_token':$token,'api':1}, function( data ) {
+            if($approved==1){
+              if($('.card_'+$username).hasClass('bg-light-danger')){
+                  $('.counter_rejected').text(parseInt($('.counter_rejected').text())-1);
+                  $('.counter_approved').text(parseInt($('.counter_approved').text())+1);
+              }else{
+                $('.counter_waiting').text(parseInt($('.counter_waiting').text())-1);
+                $('.counter_approved').text(parseInt($('.counter_approved').text())+1);
+              }
+              $('.card_'+$username).removeClass('bg-light-warning').removeClass('bg-light-danger');
+              
+            }
+            
+            if($approved==2){
+              if($('.card_'+$username).hasClass('bg-light-warning')){
+                $('.counter_waiting').text(parseInt($('.counter_waiting').text())-1);
+                $('.counter_rejected').text(parseInt($('.counter_rejected').text())+1);
+              }else{
+                $('.counter_approved').text(parseInt($('.counter_approved').text())-1);
+                $('.counter_rejected').text(parseInt($('.counter_rejected').text())+1);
+              }
+
+              $('.card_'+$username).removeClass('bg-light-warning').addClass('bg-light-danger');
+              
+            }
+      });
+
+  });
+
+
+  function check_messages(){
+  if($('#photo').length){
+      $username = $('#photo').data('username');
+      $bucket = $('#photo').data('bucket');
+      $region = $('#photo').data('region');
+      $test= $('#photo').data('test');
+      $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/chats/'+$test+'/';
+      $url = $aws_url+$username+'.json';
+
+      $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+                 $message = JSON.stringify(result);
+                 $('.chat_messages').html('');
+                 var  i =0;
+                 for(var k in result) {
+                   $u = result[k].person;
+                   $message = result[k].message;
+                   $('.chat_messages').append("<div class='mt-2'><b>"+$username+":</b><br>"+$message+"</div>");
+                   i = i+1;
+                   if((Object.keys(result).length) == i){
+                    $time = parseInt($('.message_proctor').data('time'));
+                    $new_time = parseInt(result[k].time);
+                      if($new_image != $time){
+                          $('.message_proctor').addClass('text-danger').addClass('bg-warning');
+                      }
+                   }
+                    
+                  }
+
+                //window.location.href = backendUrl;
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+        });
+   }
+}
+
+$(document).on('click','.message_proctor',function(){
+
+   
+      $username = $(this).data('username');
+      $bucket = $(this).data('bucket');
+      $region = $(this).data('region');
+      $test= $(this).data('test');
+      $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/chats/'+$test+'/';
+      $url = $aws_url+$username+'.json';
+      $('.chat_messages').html('');
+      $('.send_chat').data('username',$username);
+
+
+      $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+                 $message = JSON.stringify(result);
+                 
+                 var  i =0;
+                 for(var k in result) {
+                   $u = result[k].person;
+                   $message = result[k].message;
+                   $('.chat_messages').append("<div class='mt-2'><b>"+$username+":</b><br>"+$message+"</div>");
+                   i = i+1;
+                   if((Object.keys(result).length) == i){
+
+                   }
+                    
+                  }
+
+                //window.location.href = backendUrl;
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+        });
+   
+
+  $('#chat').modal();
+});
+
+
+$(document).on('click','.send_chat',function(){
+
+    var objDiv = $('.chats')[0];
+    objDiv.scrollTop = $('.chats')[0].scrollHeight+ 300;
+
+    $username = $(this).data('username');
+    $testid = $(this).data('testid');
+    $user = $(this).data('user');
+    $message = $('#message-text').val();
+    url = $('#photo').data('hred');
+    $token = $('#photo').data('token');
+    $test = $('#video').data('test');
+    $name = $username+'_'+$test+'_chat';
+
+    $('.chat_messages').append("<div class='mt-2'><b>"+$user+":</b><br>"+$message+"</div>");
+    var d = Date.parse("2011-01-26 13:51:50 GMT") / 1000;
+    $time = d;
+
+    $('.message_proctor').data('time',$time);
+
+     $.post( url ,{'name': $name ,'username':$username,'image':null,'message':$message,'_token':$token,'time':$time}, function( data ) {
+            console.log(data);
+      });
+
+});
+
+
+$('.ques_count').on('click',function(){
+    $('.qsset').slideToggle();
+});
+
+function image_refresh(){
+  if($('.image_refresh').length){
+
+
+
+      $('.image_refresh').each(function(i, obj) {
+          $username = $(this).data('username');
+          $bucket = $(this).data('bucket');
+          $region = $(this).data('region');
+          $test= $(this).data('test');
+          $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/pre-message/'+$test+'/';
+          $aws2 = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/';
+          $url = $aws_url+$username+'.json';
+
+          $item = $(this);
+
+          $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+                 $message = JSON.stringify(result);
+                 
+                 console.log($message);
+                 $('.image_'+$username).attr('src',$aws2+result.photo);
+
+                //window.location.href = backendUrl;
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+          });
+
+          if($(this).is(":empty")){
+            //$(this).attr("src","second.jpg");
+        }
+      });
+
+      
+
+  }
+}
+
+setInterval(image_refresh,1000);
 
 
 });
@@ -1500,9 +1692,11 @@ var x = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="demo"
+ 
   document.getElementById("timer").innerHTML =  hours + "h "
   + minutes + "m " + seconds + "s ";
 
+  
   document.getElementById("timer2").innerHTML =  hours + "h "
   + minutes + "m " + seconds + "s ";
 
@@ -1593,8 +1787,90 @@ function addMinutes(date, minutes) {
     </script>
 
 
+@if(isset($terms))
+<script type="text/javascript">
+$(function(){
+
+  var appr = 0;
+ $('#terms').change(function() {
+      if($(this).prop("checked")){
+        $('.btn-accept').removeClass('disabled');
+      }else{
+        $('.btn-accept').addClass('disabled');
+      }
+  });
+
+ $(document).on('click','.btn-ins-next',function(){
+    $next = parseInt($(this).data('next'));
+    if($next!=7){
+       $('.ins_block').hide();
+      $('.ins_block_'+$next).show();
+    }else{
+
+      if(!$('.ins_block_7').length){
+        $link = $('.test_link').attr('href');
+        window.location.replace($link);
+      }else{
+
+        appr = setInterval(approval, 500);
+        
+        $('.ins_block').hide();
+        $('.ins_block_'+$next).show();
+      }
+    }
+    
+ });
+
+ function starttest(){
+    $link = $('.test_link').attr('href');
+    console.log($link);
+    window.location.href = $link;
+ }
+
+ function approval(){
+   if($('#photo').length){
+      $username = $('#photo').data('username');
+      $bucket = $('#photo').data('bucket');
+      $region = $('#photo').data('region');
+      $test= $('#photo').data('test');
+      $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/pre-message/'+$test+'/';
+      $url = $aws_url+$username+'.json';
+
+     
+
+      $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+              if(result.status==3)
+                $('.message').html('<div class="alert alert-important alert-warning">'+result.message+'</div>');
+              else if(result.status==2)
+                $('.message').html('<div class="alert alert-important alert-danger"> Your request is rejected by the proctor. You are not allowed to attempt test.</div>');
+              else if(result.status==1){
+                  $('.message').html('<div class="alert alert-important alert-success"> Your request is accepted by the proctor. Your test will  be begin in 5 secs.</div>');
+                  clearInterval(appr);
+                  setTimeout(starttest,5000);
+              }
+                
+                
+                //window.location.href = backendUrl;
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+        });
+   }
+    
+ }
+
+
+ 
+
+});
+</script>
+
+@endif
 
 @if(isset($timer2))
+<script src="{{ asset('js/html2canvas.min.js')}}?new=09"></script>
 <script type="text/javascript">
 $(function(){
   $(document).on('click','.qno-sub',function(){
@@ -1626,6 +1902,19 @@ $(document).on("keypress", 'form', function (e) {
         return false;
     }
 });
+
+
+if($('.timestamp').length)
+  setInterval(timestramp,1000);
+
+
+function timestramp(){
+  var d = new Date();
+  $('.timestamp').html(d);
+}
+  
+
+
 
 </script>
 
@@ -1722,6 +2011,8 @@ $(function(){
   });
 
 
+
+
   $(document).on('click','.btn-delete',function(e){
       $name = $(this).data('name');
       $url = $(this).data('url');
@@ -1770,6 +2061,13 @@ $(function(){
   });
 
 });
+
+
+// html2canvas(document.body).then(function(canvas) {
+//     document.body.appendChild(canvas);
+
+// });
+
 </script>
 
 <script>
@@ -1850,8 +2148,10 @@ var x = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="demo"
+
   document.getElementById("timer").innerHTML =  hours + "h "
   + minutes + "m " + seconds + "s ";
+
 
   document.getElementById("timer2").innerHTML =  hours + "h "
   + minutes + "m " + seconds + "s ";
@@ -1991,7 +2291,7 @@ setTimeout(win_focus,5000);
 <script>
 $(function(){
 
-  var width = 320;    // We will scale the photo width to this
+  var width = 280;    // We will scale the photo width to this
   var height = 0;     // This will be computed based on the input stream
 
   // |streaming| indicates whether or not we're currently streaming
@@ -2005,12 +2305,20 @@ $(function(){
   var video = null;
   var canvas = null;
   var photo = null;
+
+  var video2 = null;
+  var canvas2 = null;
+  var photo2 = null;
+
   var startbutton = null;
 
   function startup() {
     video = document.getElementById('video');
+    video2 = document.getElementById('video2');
     canvas = document.getElementById('canvas');
+    canvas2 = document.getElementById('canvas2');
     photo = document.getElementById('photo');
+    photo2 = document.getElementById('photo2');
     text = document.getElementById('text');
     startbutton = document.getElementById('startbutton');
     console.log('webcam started');
@@ -2019,17 +2327,47 @@ $(function(){
     .then(function(stream) {
       video.srcObject = stream;
       video.play();
+
+
+      if(video2){
+        video2.srcObject = stream;
+        video2.play();
+      }
+
     }).catch(e => {
       $('#camera_test').modal();
-        // $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">Camera not accessible.</div></div>');
-        
-    console.log(e);
-});
+              // $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">Camera not accessible.</div></div>');
+              
+          console.log(e);
+      });
     }
     catch(err) {
       $('.testpage').hide();
       console.log("An error occurred: " + err);
     }
+
+     if(video2){
+
+      video2.addEventListener('canplay', function(ev){
+      if (!streaming) {
+        height = video2.videoHeight / (video2.videoWidth/width);
+      
+        // Firefox currently has a bug where the height can't be read from
+        // the video, so we will make assumptions if this happens.
+      
+        if (isNaN(height)) {
+          height = width / (4/3);
+        }
+      
+        video2.setAttribute('width', width);
+        video2.setAttribute('height', height);
+        canvas2.setAttribute('width', width);
+        canvas2.setAttribute('height', height);
+        streaming = true;
+      }
+    }, false);
+
+     }
 
     video.addEventListener('canplay', function(ev){
       if (!streaming) {
@@ -2063,7 +2401,11 @@ $(function(){
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     var data = canvas.toDataURL('image/jpeg',0.5);
-    photo.setAttribute('src', data);
+
+
+
+    if($('#photo').length)
+      photo.setAttribute('src', data);
   }
   
   // Capture a photo by fetching the current contents of the video
@@ -2076,6 +2418,7 @@ $(function(){
 
     var context = canvas.getContext('2d');
 
+
     var $counter = parseInt($('#video').data('c'));
 
     if (width && height) {
@@ -2086,7 +2429,8 @@ $(function(){
     
       var data = canvas.toDataURL('image/jpeg',0.5);
 
-      photo.setAttribute('src', data);
+      if($('#photo').length)      
+        photo.setAttribute('src', data);
 
       var url = $('#photo').data('hred');
       var image = $('#photo').attr('src');
@@ -2095,16 +2439,97 @@ $(function(){
       // var url = $('#video').data('hred');
       // $token = $('#video').data('token');
       $c = parseInt($('#video').data('c'))+1;
+
+      console.log($c);
+
+      if($c == '200001')
+        $c = 'idcard_'+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+
       $username = $('#video').data('username');
       $test = $('#video').data('test');
+      $name = $username+'_'+$test+'_'+$c;
+
+      $.post( url ,{'name': $name ,'username':$username,'image':image,'_token':$token}, function( data ) {
+            console.log(data);
+            if(!Number.isInteger($c)){
+              
+              $bucket = $('#photo').data('bucket');
+              $region = $('#photo').data('region');
+              $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/';
+              $idcard_url = $aws_url+$name+'.jpg';
+
+              $('.idcard_container').html('<img src="'+$idcard_url+'" class="w-100"/>');
+            }
+      });
+
+      if(Number.isInteger($c)){
+
+          $('#video').data('c',$c);
+        console.log($name);
+        console.log($c);
+      }else{
+        var fullname = $('#photo').data('name');
+        var username = $('#photo').data('username');
+        var roll = $('#photo').data('roll');
+        var branch = $('#photo').data('branch');
+        var college = $('#photo').data('college');
+        $.post( url ,{'name': $name ,'fullname':fullname,'username':username,'roll':roll,'branch':branch,'college':college,'_token':$token}, function( data ) {
+            console.log(data);
+           
+      });
+      }
+      
+    }else{
+      $('#camera_test').modal();
+    } 
+  }
+
+  function takepicture2() {
+
+    var context = canvas2.getContext('2d');
+
+
+    var $counter = parseInt($('#video2').data('c'));
+
+    if (width && height) {
+ 
+      canvas2.width = width;
+      canvas2.height = height;
+      context.drawImage(video2, 0, 0, width, height);
+    
+      var data = canvas2.toDataURL('image/jpeg',0.5);
+
+      if($('#photo2').length)      
+        photo2.setAttribute('src', data);
+
+      var url = $('#photo2').data('hred');
+      var image = $('#photo2').attr('src');
+      $token = $('#photo2').data('token');
+
+      // var url = $('#video').data('hred');
+      // $token = $('#video').data('token');
+      $c = parseInt($('#video2').data('c'))+1;
+
+      if($c == '300001')
+        $c = 'selfie_'+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+
+      $username = $('#video2').data('username');
+      $test = $('#video2').data('test');
       $name = $username+'_'+$test+'_'+$c;
 
       $.post( url ,{'name': $name ,'image':image,'_token':$token}, function( data ) {
             console.log(data);
 
+             $bucket = $('#photo').data('bucket');
+              $region = $('#photo').data('region');
+              $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/';
+             
+              $selfie_url = $aws_url+$name+'.jpg';
+
+              $('.selfie_container').html('<img src="'+$selfie_url+'" class="w-100"/>');
       });
 
-      $('#video').data('c',$c);
+      //$('#video2').data('c',$c);
       console.log($name);
       console.log($c);
     }else{
@@ -2115,8 +2540,23 @@ $(function(){
   // once loading is complete.
   window.addEventListener('load', startup, false);
   $time = @if(isset($exam->capture_frequency))@if($exam->capture_frequency){{($exam->capture_frequency*1000)}} @else 300000 @endif @else 300000 @endif;
+  if(!$('.id_card_capture').length){
   setTimeout(function(){ takepicture(); }, 5000);
   setInterval(function(){ takepicture(); console.log($time); }, $time);
+  }else{
+      $(document).on('click','.id_capture',function(e){
+          e.preventDefault();
+          $(this).html('Retake');
+          takepicture();
+      });
+
+      $(document).on('click','.selfie_capture',function(e){
+          e.preventDefault();
+          $(this).html('Retake');
+          takepicture2();
+      });
+  }
+  
 });
 </script>
 @endif

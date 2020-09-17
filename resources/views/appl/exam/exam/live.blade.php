@@ -15,7 +15,7 @@
 
    
     <div class="row">
-      <div class="col-12 col-md-4 col-lg-8">
+      <div class="col-12 col-md-8 col-lg-8">
        <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
             <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
@@ -44,7 +44,7 @@
 
 <div class="container">
 <div class="row">
-<div class="col-md-4">
+<div class="col-6 col-md-3">
                     <!--begin::Stats Widget 30-->
                     <div class="card card-custom bg-info card-stretch gutter-b">
                       <!--begin::Body-->
@@ -68,7 +68,7 @@
                     <!--end::Stats Widget 30-->
                   </div>
 
-                  <div class="col-md-4">
+                  <div class="col-6 col-md-3">
                     <!--begin::Stats Widget 20-->
                     <div class="card card-custom bg-light-warning card-stretch gutter-b">
                       <!--begin::Body-->
@@ -85,7 +85,7 @@
                     <!--end::Stats Widget 20-->
                   </div>
 
-                  <div class="col-md-4">
+                  <div class="col-6 col-md-3">
                     <!--begin::Stats Widget 22-->
                     <div class="card card-custom bgi-no-repeat card-stretch gutter-b" style="background-position: right top; background-size: 30% auto; background-image: url({{asset('assets/media/svg/shapes/abstract-3.svg') }})">
                       <!--begin::Body-->
@@ -100,6 +100,22 @@
                       <!--end::Body-->
                     </div>
                     <!--end::Stats Widget 22-->
+                  </div>
+
+
+                  <div class="col-6 col-md-3">
+                    <!--begin::Stats Widget 20-->
+                    <div class="card card-custom bg-light-danger card-stretch gutter-b">
+                      <!--begin::Body-->
+                      <div class="card-body my-4">
+                        <a href="#" class="card-title font-weight-bolder text-danger font-size-h6 mb-4 text-hover-state-dark d-block">Inactive </a>
+                        <div class="font-weight-bold text-muted font-size-sm">
+                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2 counter_rejected">{{($data['inactive'])}}</span></div>
+                       
+                      </div>
+                      <!--end::Body-->
+                    </div>
+                    <!--end::Stats Widget 20-->
                   </div>
 
 </div>

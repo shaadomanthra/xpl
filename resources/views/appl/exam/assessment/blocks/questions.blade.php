@@ -8,6 +8,8 @@
    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
+
+
 </style>
 
 @foreach($questions as $i=> $question)
@@ -253,9 +255,12 @@
 @endforeach
 
    <div class="card mb-0">
-     <div class="card-body">
+     <div class="card-body p-2 p-md-3">
       <button type="button" class="btn  btn-outline-primary  cursor left-qno" data-sno="" data-testname="{{$exam->slug}}" style="display:none">
-        <i class="fa fa-angle-double-left"></i> Prev<span class="d-none d-md-inline">ious</span>
+        <i class="fa fa-angle-double-left"></i> <span class="d-none d-md-inline">Previous</span>
+      </button>
+
+      <button type="button" class="btn  btn-primary mark-qno cursor" data-sno="1">Mark 
       </button>
 
       <button type="button" class="btn  btn-secondary clear-qno cursor" data-sno="1">Clear <span class="d-none d-md-inline">Response</span>
@@ -273,3 +278,14 @@
       @endif
      </div>
    </div>
+
+   <div class="p-5  m-3 m-md-1"></div>
+
+   <div class=" border  p-3 bg-light" style="margin-top: -5px; position: fixed; bottom:0;left:0;right:0">
+    <h5 class="mb-0">Support&nbsp;&nbsp; <span class=" text-info"><b><i class="fa fa-phone-square"></i> 1800 890 1324</b></span> | <span class=" text-info"><b><i class="fa fa-inbox"></i> info@xplore.co.in</b></span> | <span class=" text-info"><b><i class="fa fa-whatsapp"></i> +91 630 533 1787</b></span>
+
+      <span class=" text-secondary float-md-right timestamp"></span>
+
+    </h5>
+
+  </div>

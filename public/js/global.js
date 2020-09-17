@@ -394,6 +394,7 @@ $(document).ready(function(){
     $(document).on('click','.test2qno', function() {
         $sno = $(this).data('sno');
         make_visible($sno);
+        closeModals();
     });
 
     $(document).on('click','.right-qno', function() {
@@ -411,6 +412,11 @@ $(document).ready(function(){
         unanswered($sno);
     });
 
+    $(document).on('click','.mark-qno', function() {
+        $sno = $(this).data('sno');
+        mark($sno);
+    });
+
     $('.input').on('input',function(e){
       $sno = $(this).data('sno');
       if($(this).data('type')!='urq')
@@ -426,6 +432,13 @@ $(document).ready(function(){
  
         $('.'+$sno+'_time').val((count+1));
       
+    }
+
+    function closeModals(){
+      if($("#questions").is(":visible"))
+      $("#questions").modal('hide');
+      if($("#exampleModal").is(":visible"))
+      $("#exampleModal").modal('hide');
     }
 
     function scroll($sno){
@@ -451,14 +464,26 @@ $(document).ready(function(){
         update_sno($sno);
         scroll($sno);
         if(parseInt($('.save_test').val()))
-          saveTest();
+          saveTest($sno);
     }
     function update_sno($sno){
       
       $('.left-qno').data('sno',$sno-1);
       $('.clear-qno').data('sno',$sno);
+      
       $('.right-qno').data('sno',$sno+1);
+      update_mark($sno);
       hide_buttons($sno);
+    }
+
+    function update_mark($sno){
+      $('.mark-qno').data('sno',$sno);
+      if(!$('.s'+$sno).hasClass('qmark')){
+        $('.mark-qno').html('Mark');
+      }
+      else{
+        $('.mark-qno').html('Unmark');
+      }
     }
 
     function answered($sno){
@@ -501,6 +526,20 @@ $(document).ready(function(){
       $('.final_response_'+$sno).html('');
     }
 
+    function mark($sno){
+      if(!$('.s'+$sno).hasClass('qmark')){
+        $('.s'+$sno).addClass('qmark').addClass('qmark-border');
+        $('.mark-qno').html('Unmark');
+      }
+      else{
+        $('.s'+$sno).removeClass('qmark').removeClass('qmark-border');
+        $('.mark-qno').html('Mark');
+      }
+
+    
+    }
+
+
     function hide_buttons($sno){
       if(($sno-1)==0){
         $('.left-qno').hide();
@@ -517,12 +556,13 @@ $(document).ready(function(){
     }
 
 
-    function saveTest(){
+    function saveTest($sno){
         
         if(!$('.ques_count').data('save'))
           return 1;
 
         $ques_count = $('.ques_count').data('count');
+
 
         $url = $('.ques_count').data('url');
         $qno = 1;
@@ -535,6 +575,8 @@ $(document).ready(function(){
         responses.code =  $('input[name=code]').val();
         responses.admin =  $('input[name=admin]').val();
         responses.window_change =  $('input[name=window_change]').val();
+        responses.username = $('#photo').data('username');
+        responses.qno = $sno;
 
         var r = [];
         while (number <= $ques_count) {  
@@ -543,6 +585,8 @@ $(document).ready(function(){
           resp.section_id = $('input[name='+$qno+'_section_id]').val();
           resp.time = $('input[name='+$qno+'_time]').val();
           resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
+
+
           if($('.code_'+$sno).length)
             resp.code = $('.code_'+$sno).val();
           if($('.input_'+$qno).is(':checkbox')){

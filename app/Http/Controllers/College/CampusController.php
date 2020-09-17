@@ -675,13 +675,8 @@ class CampusController extends Controller
             else if(request()->get('college_id'))
                 $college =  College::where('id',request()->get('college_id'))->first();
             else
-                $college = \auth::user()->colleges()->first();
-        }
-
-        if(request()->get('all'))
                 $college = null;
-
-
+        }
 
         $sections = $data = null;
         $campus = new Campus();
@@ -700,54 +695,14 @@ class CampusController extends Controller
             $data['item'] = $batch_code;
         }
 
-        if(request()->get('refresh')){
-            Cache::forget('analytics_test_'.$exam->id);
-            Cache::forget('analytics_test_detail_'.$exam->id);
-        }
 
 
-
-        if(request()->get('all')){
-
-            $details = Cache::get('analytics_test_'.$exam->id);
-
-            if(!$details){
-                $details = $campus->analytics_test($college,$branch_item,$batch_code,$r,null,null,$exam->id);
-
-            }
-        }else{
-            $details = $campus->analytics_test($college,$branch_item,$batch_code,$r,null,null,$exam->id);
-              
-            Cache::forever('analytics_test_'.$exam->id,$details);
-
-
-        }
-
-
-
-        
-        
+        $details = $campus->analytics_test($college,$branch_item,$batch_code,$r,null,null,$exam->id);
 
         if(count($exam->sections)>1){
-
-            if(request()->get('all')){
-                $secs = Cache::get('analytics_test_detail_'.$exam->id);
-
-                if(!$secs){
-                    $details['section'] = $campus->analytics_test_detail($college,$branch_item,$batch_code,$r,$exam->id);
-                }else
-                $details['section'] = $secs;
-              
-
-            }else{
-                $details['section'] = $campus->analytics_test_detail($college,$branch_item,$batch_code,$r,$exam->id);
-                Cache::forever('analytics_test_detail_'.$exam->id,$details['section']);
-            }
-            
+            $details['section'] = $campus->analytics_test_detail($college,$branch_item,$batch_code,$r,$exam->id);
             $sections = $exam->sections;
         }
-
-      
 
 
 
@@ -777,38 +732,27 @@ class CampusController extends Controller
 
             $details['item_name'] = 'Branch';
         }
-
-
         
-        $br = Branch::all();  
-        
-        foreach($br as $kb=>$vb)
-            $branches[$kb+1]=$vb->name;
-        
+        $branches = array(1=>"BCOM",2=>"",3=>"",4=>"",5=>"",6=>"",7=>"",8=>"",9=>"CSE",10=>"IT",11=>"ECE",12=>"EEE",13=>"MECH",14=>"CIVIL",15=>"OTHER");
         if(!$college)
         $colleges = College::all()->groupBy('id');
         else
         $colleges = null;
 
-
-
-
-    if(isset($details['college_users']))
         if($details['college_users']){
             foreach($details['college_users'] as $coll => $counter){
                 if(!$coll)
                     $coll =0;
-                $coll_list[$coll]= $counter;
+                $coll_list[$coll]= count($counter);
             }
             if(isset($coll_list)){
             arsort($coll_list);
             $details['coll_list'] =$coll_list;
             }
+            
         }
 
 
-        //edd($details['users']);
-        
         if(request()->get('export')){
             foreach($details['users'] as $w=>$u){
                 if($u['college']){
@@ -825,7 +769,10 @@ class CampusController extends Controller
 
                 if($sections)
                 foreach($sections as $s){
-                    $details['users'][$w][$s->name] = $details['section'][$s->id]['users'][$w]['score'];
+                    if(isset($details['section'][$s->id]['users'][$w]['score']))
+                        $details['users'][$w][$s->name] = $details['section'][$s->id]['users'][$w]['score'];
+                    else
+                        $details['users'][$w][$s->name] = 0;
                 }
             }
 
@@ -834,9 +781,17 @@ class CampusController extends Controller
             request()->session()->put('d',$d);
             request()->session()->put('sections',$sections);
             request()->session()->put('users',$users);
-            $name = "Report_".$exam->name.".xlsx";
-            return Excel::download(new ExamExport, $name);
+
+            $name = $exam->name;
+            if($code)
+                $name = $code.'_'.$exam->slug;
+            if(request()->get('export')==1)
+            return Excel::download(new ExamExport, $name."_full.xlsx");
+            else
+            return Excel::download(new ExamExport2, $name.".xlsx");
+
         }
+        
 
         return view('appl.college.campus.test_show2')
             ->with('exam',$exam)

@@ -47,6 +47,11 @@
 				</p>
 				@include('appl.exam.assessment.blocks.check')
 				@include('appl.exam.assessment.blocks.camera')
+
+				
+				
+				
+
 				@if($entry)
 				  @if(!$attempt)
 				  <div class="accesscode_btn_wrap mb-2" style="display: none">
@@ -140,14 +145,15 @@
 
 				@else
 
-					@auth
-					   	
+					@if($exam->status!=1)
+					   @auth
 				       <a href="{{route('assessment.access',$exam->slug)}}">
 				       @else
 				       <a href="#" data-toggle="modal" data-target="#myModal2">
 				       @endauth
 						<button class="btn btn-lg btn-outline-primary accesscode_btn" > Access Code </button>
 						</a>
+					@endif
 
 				@endif
 

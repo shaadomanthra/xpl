@@ -144,6 +144,12 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 			->name('test.analytics4')->middleware('auth');
 	Route::get('/test/{test}/live', 'Exam\AssessmentController@live')
 			->name('test.live')->middleware('auth');
+	Route::get('/test/{test}/proctor', 'Exam\AssessmentController@proctor')
+			->name('test.proctor')->middleware('auth');
+	Route::post('/test/{test}/proctor', 'Exam\AssessmentController@proctor')
+			->name('test.proctor')->middleware('auth');
+	Route::get('/test/{test}/active', 'Exam\AssessmentController@active')
+			->name('test.active')->middleware('auth');
 	Route::get('/test/{test}/accesscode', 'Exam\ExamController@accesscode')
 			->name('test.accesscode')->middleware('auth');
 
@@ -288,16 +294,16 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 
 	/*test */
-	Route::get('/onlinetest', 'Product\TestController@main')->name('onlinetest');
-	Route::get('/onlinetest/{test}/instructions','Product\TestController@instructions')->name('onlinetest.instructions')->middleware('auth');
-	Route::get('/onlinetest/{test}/questions','Product\TestController@index')->name('onlinetest.questions')->middleware('auth');
-	Route::get('/onlinetest/{test}/questions/{id}','Product\TestController@index')->name('onlinetest.questions.id');
-	Route::get('/onlinetest/{test}/questions/{id}/save','Product\TestController@save')->name('onlinetest.questions.save');
-	Route::get('/onlinetest/{test}/questions/{id}/clear','Product\TestController@clear')->name('onlinetest.questions.clear');
-	Route::get('/onlinetest/{test}/submit','Product\TestController@submit')->name('onlinetest.submit');
-	Route::get('/onlinetest/{test}/analysis','Product\TestController@analysis')->name('onlinetest.analysis')->middleware('auth');
-	Route::get('/onlinetest/{test}/solutions','Product\TestController@solutions')->name('onlinetest.solutions')->middleware('auth');
-	Route::get('/onlinetest/{test}/solutions/{question}','Product\TestController@solutions')->name('onlinetest.solutions.q')->middleware('auth');
+	// Route::get('/onlinetest', 'Product\TestController@main')->name('onlinetest');
+	// Route::get('/onlinetest/{test}/instructions','Product\TestController@instructions')->name('onlinetest.instructions')->middleware('auth');
+	// Route::get('/onlinetest/{test}/questions','Product\TestController@index')->name('onlinetest.questions')->middleware('auth');
+	// Route::get('/onlinetest/{test}/questions/{id}','Product\TestController@index')->name('onlinetest.questions.id');
+	// Route::get('/onlinetest/{test}/questions/{id}/save','Product\TestController@save')->name('onlinetest.questions.save');
+	// Route::get('/onlinetest/{test}/questions/{id}/clear','Product\TestController@clear')->name('onlinetest.questions.clear');
+	// Route::get('/onlinetest/{test}/submit','Product\TestController@submit')->name('onlinetest.submit');
+	// Route::get('/onlinetest/{test}/analysis','Product\TestController@analysis')->name('onlinetest.analysis')->middleware('auth');
+	// Route::get('/onlinetest/{test}/solutions','Product\TestController@solutions')->name('onlinetest.solutions')->middleware('auth');
+	// Route::get('/onlinetest/{test}/solutions/{question}','Product\TestController@solutions')->name('onlinetest.solutions.q')->middleware('auth');
 
 	Route::get('/sample-tests',function(){
 		return view('appl.exam.assessment.sampletests');

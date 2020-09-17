@@ -29,6 +29,8 @@
            @endif
            @endif 
 
+           <a href="{{ route('test.analytics',$exam->slug)}}?all=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-primary btn-sm   "> <i class="fa fa-pie-chart"></i> Performance</a>
+
           </p>
         </div>
       </div>

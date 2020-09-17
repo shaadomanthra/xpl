@@ -395,11 +395,28 @@ p.article{line-height: 1.6em;}
 .qyellow{
     background:#F8EFBA;border:1px solid #e4d998;
 }
+
+.qmark {
+  position: relative;
+}
+.qmark::before{
+   content: '';
+   display: inline-block;
+   width: 8px;
+   height: 8px;
+   -moz-border-radius: 7.5px;
+   -webkit-border-radius: 7.5px;
+   border-radius: 7.5px;
+   background-color: #F3C13A;
+   right:4px;
+   top:4px;
+   position: absolute;
+}
 .qgreen{
-    background:#c8f7c5;border:1px solid #66cc99;
+    background:#c8f7c5;
 }
 .qblue{
-    background:#F8EFBA;border:1px solid #2c4356;
+    background:#F8EFBA;
 }
 .qred{
     background:#f1a9a0;border:1px solid #e08283;
@@ -408,10 +425,13 @@ p.article{line-height: 1.6em;}
     border:2px solid #bb061c;
 }
 .qgreen-border{
-    border:2px solid #66cc99;
+    
 }
 .qred-border{
     border:2px solid #ff0c0c;
+}
+.qmark-border{
+    border:1px solid #FFA800;
 }
 
 
@@ -509,6 +529,11 @@ table {
   padding :10px
 }
 
+@media print {
+  a[href]:after {
+    content: none !important;
+  }
+}
 
 
 

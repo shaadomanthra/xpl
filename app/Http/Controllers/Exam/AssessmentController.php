@@ -212,6 +212,12 @@ class AssessmentController extends Controller
             return view('appl.exam.assessment.inactive')->with('exam',$exam); 
         }
 
+        $time=0;
+        foreach($exam->sections as $sec){
+            $time = $time  + $sec->time;
+        }
+        $exam->time = $time;
+        
 
         if(!trim(strip_tags($exam->instructions)))
         {
@@ -277,8 +283,11 @@ class AssessmentController extends Controller
         $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
 
         return view('appl.exam.assessment.instructions')
-                ->with('exam',$exam)->with('responses',$responses);
+                ->with('exam',$exam)->with('responses',$responses)->with('camera',$exam->camera)->with('terms',1);
     }
+
+
+    
 
     public function try2($test,$id=null, Request $request)
     {
@@ -1421,6 +1430,12 @@ class AssessmentController extends Controller
         $resp = json_decode($request->get('responses'));
         $user_id = $resp->user_id;
         $exam_id = $resp->test_id;
+        $username = $resp->username;
+        $qno = $resp->qno;
+        // if(isset($resp->get('qno')))
+        //     $qno = $resp->get('qno');
+        // else
+        //     $qno = '';
         $responses = $resp->responses;
 
         $exam_cache = Cache::get('exam_cache_'.$exam_id);
@@ -1432,6 +1447,20 @@ class AssessmentController extends Controller
         Cache::put('responses_'.$user_id.'_'.$exam_id,$responses,240);
         Cache::put('exam_cache_'.$exam_id,$exam_cache,240);
 
+        // echo 'testlogs/activity/'.$exam->id.'/'.$user_id.'.json';
+        // exit();
+        if(Storage::disk('s3')->exists('testlogs/activity/'.$exam_id.'/'.$username.'.json')){
+            $json = json_decode(Storage::disk('s3')->get('testlogs/activity/'.$exam_id.'/'.$username.'.json'),true);
+        }else{
+            $json = null;
+        }
+
+        // echo json_encode($json);
+        // exit();
+
+
+        $json[strtotime("now")] = array("activity"=>"Solving question ".($qno-1),"color"=>'green');
+        Storage::disk('s3')->put('testlogs/activity/'.$exam_id.'/'.$username.'.json',json_encode($json),'public');
 
         Storage::disk('s3')->put('responses/responses_'.$user_id.'_'.$exam_id.'.json',json_encode($responses),'public');
 
@@ -1832,14 +1861,17 @@ class AssessmentController extends Controller
 
         $exam_cache = Cache::get('exam_cache_'.$exam->id);
         
-        if(!$exam_cache){
-            abort(404,"There is no live data");
-        }
+        // if(!$exam_cache && !$r->get('all')){
+        //     abort(404,"There is no live data");
+        // }
         
         $questions = [];
         $secs= [];
         $data['completed'] = 0;
         $data['total'] = 0;
+        $data['inactive'] = 0;
+        $data['ques_analysis'] = 0;
+      
         foreach($exam->sections as $section){
             $qset = $section->questions;
 
@@ -1857,13 +1889,24 @@ class AssessmentController extends Controller
             }
         }
 
+        if(!$exam_cache){
+                $test_responses = Cache::remember('test_resp_'.$exam->id,60,function() use($exam){
+                    return Test::where('test_id',$exam->id)->get()->groupBy('user_id');
+                });
+                $exam_cache = $test_responses;
+                $data['ques_analysis'] = 1;
+        }
+        
+
         //dd($exam_cache);
         foreach($exam_cache as $u=>$r){
 
             foreach($r as $k=>$w){
 
-                if(isset($w->response)){
+                
 
+                if(isset($w->response)){
+                if(isset($questions[$w->question_id])){
                     $questions[$w->question_id]->attempted++;
 
                     if($this->evaluate($w->response,$questions[$w->question_id]['answer'],$w->dynamic))
@@ -1882,8 +1925,10 @@ class AssessmentController extends Controller
                     if(strtoupper($w->response)=='E')
                         $questions[$w->question_id]->opt_e++;
                 }
+                }
                      
             }
+
 
             $completed = Cache::get('attempt_'.$u.'_'.$exam->id);
             
@@ -1892,6 +1937,10 @@ class AssessmentController extends Controller
                 $data['completed']++;
             }
             $data['total']++;
+
+            if($data['ques_analysis']){
+                $data['completed'] = $data['total'];
+            }
            
         }
 
@@ -1918,6 +1967,160 @@ class AssessmentController extends Controller
                     ->with('exam',$exam);
         else
             abort(404);
+    }
+
+    public function active($id,Request $r){
+
+        $exam = Cache::get('test_'.$id,function() use($id){
+            return Exam::where('slug',$id)->first();
+        });
+
+        
+
+        if(!$r->get('api'))
+        $this->authorize('create', $exam);
+
+        if(Storage::disk('s3')->exists('testlogs/approvals/'.$exam->id.'.json')){
+            $json = json_decode(Storage::disk('s3')->get('testlogs/approvals/'.$exam->id.'.json'),true);
+        }else{
+            $json = null;
+        }
+
+        if($r->get('api')){
+            $username = $r->get('username');
+            $message = ['status'=>0,'message'=>''];
+            if($r->get('approved')==1){
+                $json[$username]['approved']=1;
+                $message['status'] = 1;
+            }
+            else if($r->get('approved')==2){
+                $json[$username]['approved']=2;
+                 $message['status'] = 2;
+            }
+
+            if($r->get('approved')){
+                Storage::disk('s3')->put('testlogs/approvals/'.$exam->id.'.json', json_encode($json));
+            }
+
+             if($r->get('alert')){
+                 $message['status'] = 3;
+                if($r->get('alert')==1)
+                    $message['message'] = 'Your Selfie picture is not clear. Kindly recapture.' ;
+                else if($r->get('alert')==2)
+                    $message['message'] = 'Your ID card picture is not clear. Kindly recapture.' ;
+                else if($r->get('alert')==3)
+                    $message['message'] = 'Your ID card is invalid. Kindly use the approved Photo ID for this test.' ;
+
+                
+            }
+
+            Storage::disk('s3')->put('testlogs/pre-message/'.$username.'.json', json_encode($message),'public');
+
+            exit();
+
+
+        }
+
+
+        $data = [];
+        $data['total'] = $data['waiting'] = $data['approved'] =  $data['rejected']=0;
+        foreach($json as $a=>$b){
+            $data['total'] = $data['total'] +1;
+            if($b['approved'] == 0 )
+            $data['waiting'] = $data['waiting'] +1;
+            else if($b['approved'] == 2 )
+            $data['rejected'] = $data['rejected'] +1;
+            else
+            $data['approved'] = $data['approved'] +1; 
+
+            $data['users'][$a] = $b;
+        }
+        
+        if($json)
+            return view('appl.exam.exam.active')
+                    ->with('data',$data)
+                    ->with('exam',$exam)
+                    ->with('active',1);
+        else
+            abort(404);
+        
+    }
+
+    public function proctor($id,Request $r){
+
+        $exam = Cache::get('test_'.$id,function() use($id){
+            return Exam::where('slug',$id)->first();
+        });
+
+        
+        
+
+        if(!$r->get('api'))
+        $this->authorize('create', $exam);
+
+        if(Storage::disk('s3')->exists('testlogs/approvals/'.$exam->id.'.json')){
+            $json = json_decode(Storage::disk('s3')->get('testlogs/approvals/'.$exam->id.'.json'),true);
+        }else{
+            $json = null;
+        }
+
+        if($r->get('api')){
+            $username = $r->get('username');
+            $message = ['status'=>0,'message'=>''];
+            if($r->get('approved')==1){
+                $json[$username]['approved']=1;
+                $message['status'] = 1;
+            }
+            else if($r->get('approved')==2){
+                $json[$username]['approved']=2;
+                 $message['status'] = 2;
+            }
+
+            if($r->get('approved')){
+                Storage::disk('s3')->put('testlogs/approvals/'.$exam->id.'.json', json_encode($json));
+            }
+
+             if($r->get('alert')){
+                 $message['status'] = 3;
+                if($r->get('alert')==1)
+                    $message['message'] = 'Your Selfie picture is not clear. Kindly recapture.' ;
+                else if($r->get('alert')==2)
+                    $message['message'] = 'Your ID card picture is not clear. Kindly recapture.' ;
+                else if($r->get('alert')==3)
+                    $message['message'] = 'Your ID card is invalid. Kindly use the approved Photo ID for this test.' ;
+
+                
+            }
+
+            Storage::disk('s3')->put('testlogs/pre-message/'.$exam->id.'/'.$username.'.json', json_encode($message),'public');
+
+            exit();
+
+
+        }
+
+
+        $data = [];
+        $data['total'] = $data['waiting'] = $data['approved'] =  $data['rejected']=0;
+        foreach($json as $a=>$b){
+            $data['total'] = $data['total'] +1;
+            if($b['approved'] == 0 )
+            $data['waiting'] = $data['waiting'] +1;
+            else if($b['approved'] == 2 )
+            $data['rejected'] = $data['rejected'] +1;
+            else
+            $data['approved'] = $data['approved'] +1; 
+
+            $data['users'][$a] = $b;
+        }
+        
+        if($json)
+            return view('appl.exam.exam.proctor')
+                    ->with('data',$data)
+                    ->with('exam',$exam);
+        else
+            abort(404);
+        
     }
 
     public function evaluate($response,$answer,$dynamic){
@@ -2242,7 +2445,6 @@ class AssessmentController extends Controller
 
         //dd($exam->product_ids);
 
-        
 
         if($exam)
             return view('appl.exam.assessment.show')

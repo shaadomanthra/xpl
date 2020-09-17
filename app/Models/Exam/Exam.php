@@ -39,6 +39,7 @@ class Exam extends Model
         'message',
         'save',
         'extra',
+        'settings'
         // add all other fields
     ];
 
@@ -93,6 +94,8 @@ class Exam extends Model
     public function updateCache(){
         $exam = $this;
             //add owner
+        $exam->settings = json_decode($exam->settings);
+        
         if(!$exam->viewers->contains($exam->user_id))
                 $exam->viewers()->attach($exam->user_id,['role'=>'owner']);
 

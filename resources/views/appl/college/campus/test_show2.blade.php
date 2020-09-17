@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Performance Analysis - '.$exam->name.'| PacketPrep')
+@section('title', 'Performance Analysis - '.$exam->name)
 @section('content')
 
 
@@ -7,7 +7,10 @@
 	<div class="col-12 col-md-12">
 
 		<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;"><h1 class="display-3 ">
+		
+
 			{{ ucfirst($exam->name) }} - Report</h1>
+
 
 			@if(isset($data['item_name']))
 				<div class="display-5 ">{{ $data['item_name'] }} : <b>{{ $data['item']->name }}</b></div>
@@ -20,6 +23,14 @@
 				<i class="fa fa-building"></i> {{ $college->name }}
 
 			@endif
+
+			@if(request()->get('code'))
+			<div>
+				<i class="fa fa-code"></i> Access Code - {{ request()->get('code') }}
+			</div>
+
+			@endif
+
 			
 		</div>
 
@@ -87,7 +98,6 @@
 		@endif
 
 
-		@if(!request()->get('branch'))
 		@if($details['college_users'])
 		 <div class="rounded table-responsive">
 		 <table class="table mt-4  table-bordered bg-white" >
@@ -101,13 +111,13 @@
 		  </thead>
 		  <tbody>
 
-		  	@if(isset($details['coll_list']))
 		    @foreach($details['coll_list'] as $coll=>$counter)
 		    <tr>
 		      <th scope="row">{{++$w}}</th>
 		      <td>
 		      	@if($coll)
-		      	{{ $colleges[$coll][0]->name }}
+		      	<a href="{{ route('test.analytics',$exam->slug)}}?college_id={{$coll}}&code={{request()->get('code')}}&branch={{request()->get('branch')}}">
+		      	{{ $colleges[$coll][0]->name }}</a>
 		      	@else
 		      	 - unknown -
 		      	@endif
@@ -116,11 +126,9 @@
 		      
 		      </tr>
 		     @endforeach
-		     @endif
 		  </tbody>
 		</table>
 		</div>
-		@endif
 		@endif
 
 		@if(isset($details['items']))
@@ -143,7 +151,7 @@
 		    @if($batch['participants']!=0)
 		    <tr>
 		      <th scope="row">{{++$m}}</th>
-		      <td><a href="{{ $batch['url']}}@if(request()->get('all')) &all=1 @endif">{{$batch['name']}}  </a></td>
+		      <td><a href="{{ $batch['url']}}@if(request()->get('all')) &all=1&code={{request()->get('code')}}&college_id={{request()->get('college_id')}} @endif ">{{$batch['name']}}  </a></td>
 		      <td>{{$batch['participants']}}  </td>
 		      <td>{{$batch['avg_accuracy']}}% </td>
 		      <td>{{$batch['avg_pace']}} </td>

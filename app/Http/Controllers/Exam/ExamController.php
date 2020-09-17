@@ -551,6 +551,7 @@ class ExamController extends Controller
             $exam->message = $request->message;
             $exam->save = $request->save;
             $exam->extra = $request->extra;
+            $exam->settings = $request->settings;
             if($request->auto_activation)
                 $exam->auto_activation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
             else
@@ -1173,6 +1174,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
             $exam->message = $request->message;
             $exam->save = $request->save;
             $exam->extra = $request->extra;
+            $exam->settings = $request->settings;
             
             if(!$request->camera)
                 $exam->capture_frequency = 0;

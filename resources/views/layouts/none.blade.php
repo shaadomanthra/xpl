@@ -62,7 +62,7 @@
     </style>
 
     </head>
-    <body>
+    <body >
     
     @yield('content')
 

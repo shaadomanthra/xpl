@@ -90,9 +90,10 @@
 
         @yield('content-main')
     </div>
+    @if(!isset($active))
     <div class="bg-dark">
         <footer class="text-light footer">
-            <div class="container py-3">
+            <div class="@if(!isset($active)) container @else px-5 @endif py-3">
              
 
               @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
@@ -106,6 +107,7 @@
             </div>
         </footer>
     </div>
+    @endif
     <!-- Scripts -->
     @include('snippets.scripts')
 </body>

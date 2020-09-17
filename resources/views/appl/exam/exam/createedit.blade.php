@@ -262,6 +262,9 @@
             @if(\auth::user()->checkRole(['administrator']))
             <select class="form-control" name="capture_frequency">
               <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
+              <option value="5" @if(isset($exam)) @if($exam->capture_frequency==5) selected @endif @endif >Every 5 secs</option>
+              <option value="10" @if(isset($exam)) @if($exam->capture_frequency==10) selected @endif @endif >Every 10 secs</option>
+              <option value="20" @if(isset($exam)) @if($exam->capture_frequency==20) selected @endif @endif >Every 20 secs</option>
               <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
               <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
               <option value="300" @if(isset($exam)) @if($exam->capture_frequency==300) selected @endif @endif >Every 5 mins</option>
@@ -429,6 +432,14 @@
       </div>
     </div>
     </div>
+
+
+    <div class="form-group p-3 ">
+        <label for="formGroupExampleInput ">Extra Settings</label>
+
+<textarea class="form-control " name="settings"  rows="5">@if($stub=='Create'){{ (old('settings')) ? old('settings') : '' }} @else{{ $exam->settings }} @endif
+        </textarea>
+      </div>
 
       
 

@@ -1,23 +1,77 @@
 
+<style>
+video {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.camera {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+}
+</style>
+<div class="pl-3 py-3 p-2 border rounded mb-2 d-none d-md-block">
+	<div class="row">
+		<div class="col-6">
+			<h4>{{ auth::user()->name}}</h4>
+			<p class="mb-0">
+				@if(auth::user()->roll_number) {{ auth::user()->roll_number}} <br> @endif
+				@if(auth::user()->branch->name) {{ auth::user()->branch->name}}</br> @endif
+			</p>
+
+		</div>
+		<div class="col-6">
+		@if($user->getImage())
+        <img 
+      src="{{ $user->getImage() }}  " class="rounded d-inline float-right" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Profile Picture">
+      @endif
+      @if(isset($exam->settings))
+          @if(strtolower($exam->settings->signature)=='yes')
+     	<img 
+      src="{{ $user->getImage('signature') }}  " class="rounded d-inline" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Signature">
+      @endif @endif
+		</div>
+	</div>
+
+</div>
 <div class="card mb-3 text-white d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
+
+		@if(!isMobileDevice())
+@if($camera)
+<div class="camera_holder  rounded float-right">
+<div class="">
+    <video id="video" class="video_small rounded" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style="width:60px;height:60px;">Video stream not available.</video>
+    <canvas id="canvas" style='display: none'>
+    </canvas>
+    <div class="output">
+    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}" style='display: none'> 
+  </div>
+</div>
+</div>
+
+
+@endif
+@endif
+
 		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer 
-
-
-		
-
 		@if(isset($exam->calculator))
 		@if($exam->calculator)
 		<span class="float-md-right" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> Calculator</span>
 		@endif
 		@endif
-	</h4>
+		</h4>
 
 		<h1 class="text-bold mb-2" id="timer"></h1>
 		@if(!$camera)
 		<span class="text-warning "><i class="fa fa-dot-circle-o blink" aria-hidden="true"></i> Continuous monitoring is enabled</span>
 		@endif
 		
+
+
 	@if($exam->sections[0]->name!='typing')
 		<div class=" p-2 mb-2 rounded mt-3" style="border:2px solid #bb061c">
 		<div class="row ">
@@ -41,7 +95,7 @@
 				@foreach($section_questions[$section->id] as $key=> $q)
 					<div class="col-3 mb-1">
 						<div class="pr-1">
-						<div class="w100 p-1 test2qno s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" 
+						<div class="w100 p-1 test2qno  s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" 
 						    >{{ ($i ) }}</div>
 						</div>
 					</div>
@@ -73,21 +127,8 @@
 @endif
 
 
-@if(!isMobileDevice())
-@if($camera)
-<div class="camera_holder d-none d-md-block">
-<div class="camera border p-3 ">
-    <video id="video" class="mb-3 bg-light w-100" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}">Video stream not available.</video>
-    <canvas id="canvas" style='display: none'>
-  	</canvas>
-  	<div class="output">
-    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style='display: none'> 
-  </div>
-    <small><i class="fa fa-dot-circle-o text-danger" aria-hidden="true"></i> Continuous monitoring is enabled</small>
-</div>
-</div>
-@endif
-@endif
+
+
 
 
 

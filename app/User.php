@@ -162,7 +162,11 @@ class User extends Authenticatable
         
     }
 
-    public function getImage(){
+    public function getImage($signature=null){
+
+        if($signature)
+            return Storage::disk('s3')->url('articles/signature.jpg');
+
         $user = $this;
         $username = $this->username;
         if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpg'))
