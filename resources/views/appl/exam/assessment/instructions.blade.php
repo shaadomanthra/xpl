@@ -121,8 +121,8 @@
 				</div>
 				<div class="col-12 col-md-4">
 					<canvas id="canvas" class="border w-100" width="250px"></canvas>
-					<img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="0" data-c="0" data-presigned="{{$url['idcard']}}" data-username="{{\auth::user()->username}}" data-name="{{\auth::user()->name}}" data-roll="{{\auth::user()->rollnumber}}" data-college="{{\auth::user()->college->name}}" data-aws_c=""
-					data-branch="{{\auth::user()->branch->name}}"  data-test="{{$exam->id}}" style='display: none' data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}" class="w-100"> 
+					<img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="0" data-c="0" data-presigned="{{$url['idcard']}}" data-username="{{\auth::user()->username}}" data-name="{{\auth::user()->name}}" data-roll="{{\auth::user()->rollnumber}}" data-college="" data-aws_c=""
+					data-branch=""  data-test="{{$exam->id}}" style='display: none' data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}" class="w-100"> 
 				</div>
 				<div class="col-12 col-md-4">
 					<div class="border bg-light rounded p-3 text-center">
