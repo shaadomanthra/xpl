@@ -608,6 +608,7 @@ class ExamController extends Controller
      */
     public function show($id)
     {
+
         $exam= Exam::where('slug',$id)->with('user')->with('sections')->withCount('users')->first();
 
         $exam->precheck_auto_activation();
@@ -633,7 +634,7 @@ class ExamController extends Controller
         }
         $emails = implode(',',explode("\n", $exam->emails));
         $emails =str_replace("\r", '', $emails);
-        $emails = explode(',',$emails);
+        $emails = array_unique(explode(',',$emails));
 
 
         if(request()->get('sendemail')){
@@ -647,11 +648,24 @@ class ExamController extends Controller
         // }
         
 
+        $email_stack['total'] =[];
         if($exam->emails){
             
             $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
-            $email_stack['registered'] = $users->pluck('email')->toArray();
-            $email_stack['not_registered'] =  array_diff($emails,$email_stack['registered']);
+             $inusers = array_unique($users->pluck('email')->toArray());
+           
+            $email_stack['total'] = [];
+            $email_stack['registered'] =$email_stack['not_registered'] =[];
+            $count = $count2=0;
+            foreach($emails as $e){
+                if(in_array($e, $inusers)){
+                    array_push($email_stack['registered'], $e);
+                }else{
+                    array_push($email_stack['not_registered'], $e);
+                }
+                array_push($email_stack['total'], $e);
+                
+            }
 
             // foreach($users as $ux)
             // if(request()->get('refresh2')){
@@ -890,7 +904,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
     if(request()->get('export')){
         
         $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
-        $users = $result->pluck('user_id');
+        $usrs = $result->pluck('user_id');
         $exam_sections = Section::where('exam_id',$exam->id)->get();
         $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
         $colleges = College::all()->keyBy('id');
@@ -905,45 +919,83 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
         if($exam->emails){
             $emails = implode(',',explode("\n", $exam->emails));
             $emails =str_replace("\r", '', $emails);
-            $emails = explode(',',$emails);
+            $emails = array_unique(explode(',',$emails));
 
-            $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
-            $email_stack['registered'] = $users->pluck('email')->toArray();
+            $users_result = User::whereIn('id',$usrs->toArray())->get()->keyBy('id');
+            $result_users = $users_result->pluck('email')->toArray();
+
+            $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get()->keyBy('id');
+            $inusers = array_unique($users->pluck('email')->toArray());
+            // $email_stack['registered'] = array_unique($users->pluck('email')->toArray());
+
+            $email_stack['total'] = [];
+            $email_stack['registered'] =$email_stack['not_registered'] =[];
+            $count = $count2=0;
+            foreach($emails as $e){
+                if(in_array($e, $inusers)){
+                    array_push($email_stack['registered'], $e);
+                }else{
+                    array_push($email_stack['not_registered'], $e);
+                }
+                array_push($email_stack['total'], $e);
+                
+            }
+
             $uids = array_unique($users->pluck('id')->toArray());
-            $attemptedby = array_unique($result->pluck('user_id')->toArray());
+            $attempted = [];//array_unique($result->pluck('user_id')->toArray());
 
-            $notattempted =  array_diff($uids,$attemptedby);
+            $notattempted =  [];//array_diff($email_stack['registered'],$result_users);
+            $nonusers = array_diff($emails,$email_stack['registered']);
             
+            foreach($email_stack['registered'] as $em){
+                if(!in_array($em, $result_users)){
+                    array_push($notattempted,$em);
+                }else{
+                    array_push($attempted,$em);
+
+                }
+            }
+
+            $attemptedby = User::whereIn('email',$attempted)->get()->pluck('id')->toArray();
+
+            dd($attemptedby);
+            $res = $result->whereIn('user_id',$attemptedby);
+            dd($res);
 
             //dd($count);
+            foreach($notattempted as $k=>$u){
+                if(!in_array($u, $attemptedby)){
+                         $rs = new Tests_Overall();
+                $rs->created_at = now();
+                $rs->user_id = $u;
+                $rs->test_id = $exam->id;
+                $rs->window_change = '-';
+                $rs->cheat_detect = 3;
+                $rs->score = 'ABSENT';
+                $result->push($rs);
+                }
+            }
+
+
 
         }else{
             $email_stack['registered'] = [];
             $email_stack['not_registered'] =  [];
         }
 
-        foreach($notattempted as $k=>$u){
-            if(!in_array($u, $attemptedby)){
-                     $rs = new Tests_Overall();
-            $rs->user_id = $u;
-            $rs->test_id = $exam->id;
-            $rs->window_change = '';
-            $rs->cheat_detect = '';
-            $rs->score = '';
-            $result->push($rs);
-            }
-           
-        }
+        
 
-        foreach($notattempted as $k=>$u){
-            if(!in_array($u, $attemptedby)){
-                $rs = new Tests_Section();
-                $rs->user_id = $u;
-                $rs->test_id = $exam->id;
-                $rs->score = '';
-                $sections->push($rs);
-            }
-        }
+
+
+        // foreach($notattempted as $k=>$u){
+        //     if(!in_array($u, $attemptedby)){
+        //         $rs = new Tests_Section();
+        //         $rs->user_id = $u;
+        //         $rs->test_id = $exam->id;
+        //         $rs->score = '';
+        //         $sections->push($rs);
+        //     }
+        // }
 
 
         // foreach($users as $u){

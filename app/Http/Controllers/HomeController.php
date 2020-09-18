@@ -14,6 +14,7 @@ use Google\Cloud\Core\ServiceBuilder;
 
 use Mail;
 
+
 class HomeController extends Controller
 {
     /**
@@ -28,7 +29,13 @@ class HomeController extends Controller
     }
 
 
-    public function gcloud(){
+    public function aws(){
+
+        $url = '';//\App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+        
+        
+        
+        return view('appl.pages.about')->with('awstest',1)->with('url',$url);
 
     }
 
@@ -220,17 +227,30 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
 
     }
 
+
+    public function face_detect_image(Request $request){
+        $count = $request->count;
+        $username = $request->username;
+        $test = $request->test;
+        $key = $request->key;
+        $m = (($key/$count) -1)*$count +1;
+        $n=[$key];
+        for($i=$m;$i<=$key;$i++){
+          $name = $username.'_'.$test.'_'.$i;
+          
+          FaceDetect::dispatch($name)->delay(now()->addSeconds(1));
+        }
+        
+        return json_encode($n);
+    }
+
     public function webcam_upload(Request $request){
         $image = $request->image;
         $name = $request->name;  // your base64 encoded
         $username = $request->get('username');
         $message = $request->get('message');
         $time = $request->get('time');
-        if($image){
-          $image = str_replace('data:image/jpeg;base64,', '', $image);
-          $image = str_replace(' ', '+', $image);
-          $image = base64_decode($image);
-        }
+        
 
         if($name)
             $filename = $name.'.jpg';
@@ -240,33 +260,6 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
           $pieces = explode('_',$name);
 
         
-        if($image){
-          //Storage::disk('s3')->putFileAs('webcam',(string)$image,$filename);
-          Storage::disk('s3')->put('webcam/'.$filename, (string)$image,'public');
-
-          // save activity
-          if(Storage::disk('s3')->exists('testlogs/activity/'.$pieces[1].'/'.$username.'.json')){
-              $json = json_decode(Storage::disk('s3')->get('testlogs/activity/'.$pieces[1].'/'.$username.'.json'),true);
-          }else{
-              $json = null;
-          }
-
-          $json[strtotime("now")] = array("activity"=>"Captured photo ".$pieces[2],"color"=>'green');
-          Storage::disk('s3')->put('testlogs/activity/'.$pieces[1].'/'.$username.'.json',json_encode($json),'public');
-
-          //save image
-          if(Storage::disk('s3')->exists('testlogs/pre-message/'.$pieces[1].'/'.$username.'.json')){
-              $json2 = json_decode(Storage::disk('s3')->get('testlogs/pre-message/'.$pieces[1].'/'.$username.'.json'),true);
-          }else{
-              $json2 = null;
-          }
-
-          $json2['photo'] = 'webcam/'.$filename;
-          $json2['time'] = strtotime(now());
-          Storage::disk('s3')->put('testlogs/pre-message/'.$pieces[1].'/'.$username.'.json',json_encode($json2),'public');
-
-          echo 'uploaded - '.$filename;
-        }
 
         //save chat messages in cloud
         if($message){

@@ -27,6 +27,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::post('/contactform', 'System\UpdateController@contact')->name('contactform');
 
 	Route::get('testemail','HomeController@testemail')->middleware('auth');
+	Route::get('aws','HomeController@aws')->middleware('auth');
 
 
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
@@ -59,7 +60,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('process_image','HomeController@process_image')->name('process_image');
 
 	//Route::post('img/upl/file','VideoController@imageupload')->name('img.post');
-	Route::post('img/upl/file','HomeController@webcam_upload')->name('img.post');
+	//Route::post('img/upl/file','HomeController@webcam_upload')->name('img.post');
+	Route::get('face_detect_image','HomeController@face_detect_image')->name('img.post');
+	Route::post('face_detect_image','HomeController@face_detect_image')->name('img.post');
+
 
 	
 	Route::get('/crt-aptitude',function(){ return view('appl.pages.crt_aptitude'); })->name('crt.aptitude');

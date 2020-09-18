@@ -340,7 +340,7 @@
                   <div class="bg-light border rounded p-3">
                     <h5>Total</h5>
                     <div class="display-3">
-                      <a href="" data-toggle="modal" data-target="#all_emails" data-tooltip="tooltip" data-placement="top" title="All Emails">{{substr_count($exam->emails, "@")}}</a></div>
+                      <a href="" data-toggle="modal" data-target="#all_emails" data-tooltip="tooltip" data-placement="top" title="All Emails">{{count($email_stack['total']) }}</a></div>
                   </div>
                 </div>
                 <div class="col-12 col-md-4">
@@ -610,7 +610,7 @@
         </button>
       </div>
       <div class="modal-body">
-        {!! nl2br($exam->emails) !!}
+       {!! implode("<br> ",$email_stack['total']) !!}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

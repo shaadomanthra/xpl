@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=25"></script>
+<script src="{{ asset('js/script.js')}}?new=30"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
 
@@ -1827,8 +1827,27 @@ $(function(){
     window.location.href = $link;
  }
 
+ function loadimages(){
+    $username = $('#video').data('username');
+    $test = $('#video').data('test');
+    $name = $username+'_'+$test+'_selfie';
+
+    $bucket = $('#photo').data('bucket');
+    $region = $('#photo').data('region');
+    $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+    $selfie_url = $aws_url+$name+'.jpg';
+
+    $('.selfie_container').html('<img src="'+$selfie_url+'" class="w-100"/>');
+
+    $c = $('#photo').data('aws_c');
+    $name = $username+'_'+$test+'_idcard';
+    $idcard_url = $aws_url+$name+'.jpg';
+    $('.idcard_container').html('<img src="'+$idcard_url+'" class="w-100"/>');
+ }
+
  function approval(){
    if($('#photo').length){
+    loadimages();
       $username = $('#photo').data('username');
       $bucket = $('#photo').data('bucket');
       $region = $('#photo').data('region');
@@ -1836,7 +1855,6 @@ $(function(){
       $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/pre-message/'+$test+'/';
       $url = $aws_url+$username+'.json';
 
-     
 
       $.ajax({
                 type: "GET",
@@ -2291,7 +2309,7 @@ setTimeout(win_focus,5000);
 <script>
 $(function(){
 
-  var width = 280;    // We will scale the photo width to this
+  var width = 600;    // We will scale the photo width to this
   var height = 0;     // This will be computed based on the input stream
 
   // |streaming| indicates whether or not we're currently streaming
@@ -2311,6 +2329,33 @@ $(function(){
   var photo2 = null;
 
   var startbutton = null;
+
+
+  function dataURItoBlob(dataURI) {
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+    }
+      return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
+  }
+
+  function uploadaws($data,$url){
+
+    var blob = dataURItoBlob($data);
+
+    $.ajax({
+            method: "PUT",
+            headers: {"Content-Type": "image/jpeg"},
+            processData: false,
+            data: blob,
+            url: $url
+    })
+    .done(function($url) {
+            console.log($url);
+    });
+
+  }
 
   function startup() {
     video = document.getElementById('video');
@@ -2432,7 +2477,7 @@ $(function(){
       if($('#photo').length)      
         photo.setAttribute('src', data);
 
-      var url = $('#photo').data('hred');
+      
       var image = $('#photo').attr('src');
       $token = $('#photo').data('token');
 
@@ -2440,27 +2485,41 @@ $(function(){
       // $token = $('#video').data('token');
       $c = parseInt($('#video').data('c'))+1;
 
-      console.log($c);
-
-      if($c == '200001')
-        $c = 'idcard_'+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-
       $username = $('#video').data('username');
       $test = $('#video').data('test');
       $name = $username+'_'+$test+'_'+$c;
 
-      $.post( url ,{'name': $name ,'username':$username,'image':image,'_token':$token}, function( data ) {
-            console.log(data);
-            if(!Number.isInteger($c)){
-              
-              $bucket = $('#photo').data('bucket');
-              $region = $('#photo').data('region');
-              $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/';
-              $idcard_url = $aws_url+$name+'.jpg';
+      $url = $('#photo').data('presigned');
 
-              $('.idcard_container').html('<img src="'+$idcard_url+'" class="w-100"/>');
-            }
-      });
+      console.log($c);
+
+      if($c == '200001'){
+        $c = 'idcard';
+
+        uploadaws(image,$url);
+
+      }else{
+        $url = $('.url_'+$c).data('url');
+        uploadaws(image,$url);
+
+        // update last photo
+        $bucket = $('#photo').data('bucket');
+        $region = $('#photo').data('region');
+        $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+             
+        $last_photo_url = $aws_url+$name+'.jpg';
+
+        $('#photo').data('last_photo',$last_photo_url);
+      }
+
+      $counnt = 2;
+      if($c % $counnt == 0){
+         var url = $('#photo').data('hred');
+         $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
+              console.log('Face Detect:' + data);
+        });
+      }
+     
 
       if(Number.isInteger($c)){
 
@@ -2511,23 +2570,29 @@ $(function(){
       $c = parseInt($('#video2').data('c'))+1;
 
       if($c == '300001')
-        $c = 'selfie_'+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+        $c = 'selfie';
 
       $username = $('#video2').data('username');
       $test = $('#video2').data('test');
       $name = $username+'_'+$test+'_'+$c;
 
-      $.post( url ,{'name': $name ,'image':image,'_token':$token}, function( data ) {
-            console.log(data);
+      $url = $('#photo2').data('presigned');
 
-             $bucket = $('#photo').data('bucket');
-              $region = $('#photo').data('region');
-              $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/';
+      uploadaws(image,$url);
+
+      
+
+      // $.post( url ,{'name': $name ,'image':image,'_token':$token}, function( data ) {
+      //       console.log(data);
+
+      //        $bucket = $('#photo').data('bucket');
+      //         $region = $('#photo').data('region');
+      //         $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/';
              
-              $selfie_url = $aws_url+$name+'.jpg';
+      //         $selfie_url = $aws_url+$name+'.jpg';
 
-              $('.selfie_container').html('<img src="'+$selfie_url+'" class="w-100"/>');
-      });
+      //         $('.selfie_container').html('<img src="'+$selfie_url+'" class="w-100"/>');
+      // });
 
       //$('#video2').data('c',$c);
       console.log($name);
@@ -2553,6 +2618,7 @@ $(function(){
       $(document).on('click','.selfie_capture',function(e){
           e.preventDefault();
           $(this).html('Retake');
+          $('.selfie_next').removeClass('disabled');
           takepicture2();
       });
   }
@@ -2560,6 +2626,28 @@ $(function(){
 });
 </script>
 @endif
+@endif
+
+
+@if(isset($awstest))
+<script>
+
+  $(function(){
+    console.log('awstests');
+    $url = $('.url').data('url');
+    $.ajax({
+            method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    processData: false,
+    data: '{"hello":"new"}',
+    url: $url
+        })
+        .done(function($url) {
+            console.log($url);
+        });
+  });
+
+</script>
 @endif
 
 @if(isset($cameratest))

@@ -5,12 +5,12 @@
 <div class="card">
 	<div class="card-body {{$c=0}}">
 @if($count)
-@if(Storage::disk('s3')->exists('webcam/'.$user->username.'_'.$exam->id.'_1.jpg'))
+@if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$user->username.'_'.$exam->id.'_1.jpg'))
 			<div class="row mb-4">
 				@for($i=1;$i<=$count;$i++)
-					@if(Storage::disk('s3')->exists('webcam/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
+					@if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
 					<div class='col-6 col-md-2 {{$c++}}'>
-						<img src="{{ Storage::disk('s3')->url('webcam/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
+						<img src="{{ Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
 					</div>
 					@endif
 				@endfor

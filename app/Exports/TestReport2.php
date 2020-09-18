@@ -55,17 +55,26 @@ class TestReport2 implements FromCollection
             $result[$k]->cheating = 'Cheating - Not Clear';
             elseif($res->cheat_detect==1)
             $result[$k]->cheating = 'Potential Cheating';
+            elseif($res->cheat_detect==3)
+                $result[$k]->cheating ='--';
             else
               $result[$k]->cheating = 'No Cheating';  
 
-            if(isset($sections[$res->user->id]))
-    		foreach($sections[$res->user->id] as $m=>$sec){
-                if(isset($exam_sections[$m]['name'])){
+            if(isset($sections[$res->user->id])){
+        		foreach($sections[$res->user->id] as $m=>$sec){
+                    if(isset($exam_sections[$m]['name'])){
+                        $name = $exam_sections[$m]['name'];
+                        $result[$k]->$name = $sec->score;  
+                    }
+        			
+        		}
+            }else{
+                foreach($exam_sections as $m=>$sec){
                     $name = $exam_sections[$m]['name'];
-                    $result[$k]->$name = $sec->score;  
+                     $result[$k]->$name = '-';  
                 }
-    			
-    		}
+
+            }
     		
     		$result[$k]->Score = $res->score;
 

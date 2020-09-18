@@ -279,11 +279,26 @@ class AssessmentController extends Controller
 
             
         }
+
+        if($exam->camera){
+            $folder = 'webcam/'.$exam->id.'/';
+            $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
+            $url['selfie'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'selfie.jpg']);
+            $url['idcard'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'idcard.jpg']);
+
+            
+        }else{
+            $url = null;
+        }
+
+
         
         $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
 
+
+
         return view('appl.exam.assessment.instructions')
-                ->with('exam',$exam)->with('responses',$responses)->with('camera',$exam->camera)->with('terms',1);
+                ->with('exam',$exam)->with('responses',$responses)->with('camera',$exam->camera)->with('terms',1)->with('url',$url);
     }
 
 
@@ -320,12 +335,20 @@ class AssessmentController extends Controller
         }else{
             $user = \auth::user();
 
-            $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
-            if(is_array($responses))
-            {
-                $responses = collect($responses);
+            if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/'.$user->username.'.json')){
+                $json = json_decode(Storage::disk('s3')->get('testlog/'.$exam->id.'/'.$user->username.'.json'),true);
+
+                $responses = $json['responses'];
+                if(is_array($responses))
+                {
+                    $responses = collect($responses);
+                }
+            }else{
+                $responses = null;
             }
+            
         }
+
 
         $jsonname = $test.'_'.$user->id;
 
@@ -425,13 +448,28 @@ class AssessmentController extends Controller
                         
                     }else{
                         $keys = $responses->keyBy('question_id');
-                        $q->dynamic = $keys[$q->id]->dynamic;
-                        if(!isset($keys[$q->id]->response))
-                            $keys[$q->id]->response = null;
-                        $q->response = $keys[$q->id]->response;
-                        $q->time = $keys[$q->id]->time;
+                        if(is_array($keys[$q->id])){
+                            $q->dynamic = $keys[$q->id]['dynamic'];
+                            //dd($keys[$q->id]['response']);
+                            if(!isset($keys[$q->id]['response']))
+                                $q->response = null;
+                            else
 
-                        $time_used = $time_used + intval($q->time);
+                            $q->response = $keys[$q->id]['response'];
+                            $q->time = $keys[$q->id]['time'];
+
+                            $time_used = $time_used + intval($q->time);
+                        }else{
+                            $q->dynamic = $keys[$q->id]->dynamic;
+                            if(!isset($keys[$q->id]->response))
+                                $keys[$q->id]->response = null;
+                            $q->response = $keys[$q->id]->response;
+                            $q->time = $keys[$q->id]->time;
+
+                            $time_used = $time_used + intval($q->time);
+
+                        }
+                        
                         
                     }
                 }
@@ -500,6 +538,30 @@ class AssessmentController extends Controller
             $time = $time + $section->time;
         }
 
+        $url = null;
+        if($exam->camera){
+            $folder = 'webcam/'.$exam->id.'/';
+            $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
+
+            if($exam->capture_frequency){
+                $count = ($time*60)/$exam->capture_frequency;
+            }else{
+                $count = 30;
+            }
+
+            for($i=0;$i<$count;$i++){
+                $url[$i] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.$i.'.jpg']);
+            }
+
+            $folder = 'testlog/'.$exam->id.'/';
+            $name = $folder.\auth::user()->username.'.json';
+
+            $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+        }else{
+            $url = null;
+        }
+
+
         if(!$request->get('student') && !$request->get('admin'))
             $time = round(($time * 60 - $time_used)/60,2);
 
@@ -512,6 +574,7 @@ class AssessmentController extends Controller
                         ->with('highlight',true)
                         ->with('exam',$exam)
                         ->with('code',true)
+                        ->with('urls',$url)
                         ->with('user',$user)
                         ->with('code_ques',$code_ques)
                         ->with('timer2',true)
@@ -2753,8 +2816,8 @@ class AssessmentController extends Controller
         else
             $images = [];
 
-        if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){
-            $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$student->username.'_'.$exam->id.'.json'),true);
+        if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/json/'.$student->username.'_'.$exam->id.'.json')){
+            $json = json_decode(Storage::disk('s3')->get('webcam/'.$exam->id.'/json/'.$student->username.'_'.$exam->id.'.json'),true);
             $count = count($json);
         }
         else{
@@ -2763,7 +2826,7 @@ class AssessmentController extends Controller
         }
 
         if(request()->get('images')){
-            $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$student->username.'_'.$exam->id.'.json'),true);
+            $json = json_decode(Storage::disk('s3')->get('webcam/'.$exam->id.'/json/'.$student->username.'_'.$exam->id.'.json'),true);
            
             return view('appl.exam.assessment.images')->with('exam',$exam)->with('user',$student)->with('count',$count);
         }

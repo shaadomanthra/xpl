@@ -577,6 +577,12 @@ $(document).ready(function(){
         responses.window_change =  $('input[name=window_change]').val();
         responses.username = $('#photo').data('username');
         responses.qno = $sno;
+        responses.last_photo = $('#photo').data('last_photo');
+
+        var today = new Date();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+
 
         var r = [];
         while (number <= $ques_count) {  
@@ -612,18 +618,34 @@ $(document).ready(function(){
 
         var all_data = JSON.stringify(responses);
         //console.log(all_data);
- 
+        aws_cache(all_data);
 
-        $.ajax({
-          type : 'post',
-          url : $url,
-          data:{'responses':all_data,'_token':responses.token},
-          success:function(data){
-            console.log('data cached');
-            console.log(data);
-          }
-        });
+        // $.ajax({
+        //   type : 'post',
+        //   url : $url,
+        //   data:{'responses':all_data,'_token':responses.token},
+        //   success:function(data){
+        //     console.log('data cached');
+        //     console.log(data);
+        //   }
+        // });
 
+    }
+
+    function aws_cache($data){
+      var $url = $('.url_testlog').data('url');
+      //console.log($url);
+
+      $.ajax({
+              method: "PUT",
+              headers: {"Content-Type": "application/json"},
+              processData: false,
+              data: $data,
+              url: $url
+      })
+      .done(function($url) {
+              console.log('cached');
+      });
     }
 
     

@@ -4,7 +4,7 @@
 
 
 <div class="bg-white">
-<div class="card-body p-4 ">
+<div class="card-body p-4 url" data-url="{{$url}}">
 <h1>About</h1>
 
 <p>
