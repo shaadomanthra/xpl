@@ -576,12 +576,13 @@ $(document).ready(function(){
         responses.admin =  $('input[name=admin]').val();
         responses.window_change =  $('input[name=window_change]').val();
         responses.username = $('#photo').data('username');
+        responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
         responses.last_photo = $('#photo').data('last_photo');
 
-        var today = new Date();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
+        var seconds = new Date().getTime() / 1000;
+        responses.last_updated = seconds;
+        responses.completed = 0;
 
 
         var r = [];

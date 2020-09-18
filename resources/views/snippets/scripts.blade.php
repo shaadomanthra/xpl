@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=30"></script>
+<script src="{{ asset('js/script.js')}}?new=32"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
 

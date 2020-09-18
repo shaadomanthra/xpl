@@ -1837,6 +1837,13 @@ class AssessmentController extends Controller
 
         $jsonname = $user->username.'_'.$exam->id.'.json';
 
+        if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/'.$user->username.'.json')){
+            $js = json_decode(Storage::disk('s3')->get('testlog/'.$exam->id.'/'.$user->username.'.json'),true);
+            $js['completed'] = 1;
+
+            Storage::disk('s3')->put('testlog/'.$exam->id.'/'.$user->username.'.json',json_encode($js),'public');
+        }
+
         if(Storage::disk('s3')->exists('webcam/json/'.$jsonname)){
             $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$jsonname));
             $zero =$one = $two =$three = $total = $snaps = 0;
@@ -2038,70 +2045,88 @@ class AssessmentController extends Controller
             return Exam::where('slug',$id)->first();
         });
 
-        
+        $users = array();
+        $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/');
+        foreach($files as $f){
+            $p = explode('/',$f);
+            $u = explode('.',$p[2]);
 
-        if(!$r->get('api'))
-        $this->authorize('create', $exam);
-
-        if(Storage::disk('s3')->exists('testlogs/approvals/'.$exam->id.'.json')){
-            $json = json_decode(Storage::disk('s3')->get('testlogs/approvals/'.$exam->id.'.json'),true);
-        }else{
-            $json = null;
+         
+            
+            array_push($users, json_decode(Storage::disk('s3')->get($f),true));
         }
 
-        if($r->get('api')){
-            $username = $r->get('username');
-            $message = ['status'=>0,'message'=>''];
-            if($r->get('approved')==1){
-                $json[$username]['approved']=1;
-                $message['status'] = 1;
-            }
-            else if($r->get('approved')==2){
-                $json[$username]['approved']=2;
-                 $message['status'] = 2;
-            }
+        // if(!$r->get('api'))
+        // $this->authorize('create', $exam);
 
-            if($r->get('approved')){
-                Storage::disk('s3')->put('testlogs/approvals/'.$exam->id.'.json', json_encode($json));
-            }
+        // if(Storage::disk('s3')->exists('testlogs/approvals/'.$exam->id.'.json')){
+        //     $json = json_decode(Storage::disk('s3')->get('testlogs/approvals/'.$exam->id.'.json'),true);
+        // }else{
+        //     $json = null;
+        // }
 
-             if($r->get('alert')){
-                 $message['status'] = 3;
-                if($r->get('alert')==1)
-                    $message['message'] = 'Your Selfie picture is not clear. Kindly recapture.' ;
-                else if($r->get('alert')==2)
-                    $message['message'] = 'Your ID card picture is not clear. Kindly recapture.' ;
-                else if($r->get('alert')==3)
-                    $message['message'] = 'Your ID card is invalid. Kindly use the approved Photo ID for this test.' ;
+        // if($r->get('api')){
+        //     $username = $r->get('username');
+        //     $message = ['status'=>0,'message'=>''];
+        //     if($r->get('approved')==1){
+        //         $json[$username]['approved']=1;
+        //         $message['status'] = 1;
+        //     }
+        //     else if($r->get('approved')==2){
+        //         $json[$username]['approved']=2;
+        //          $message['status'] = 2;
+        //     }
+
+        //     if($r->get('approved')){
+        //         Storage::disk('s3')->put('testlogs/approvals/'.$exam->id.'.json', json_encode($json));
+        //     }
+
+        //      if($r->get('alert')){
+        //          $message['status'] = 3;
+        //         if($r->get('alert')==1)
+        //             $message['message'] = 'Your Selfie picture is not clear. Kindly recapture.' ;
+        //         else if($r->get('alert')==2)
+        //             $message['message'] = 'Your ID card picture is not clear. Kindly recapture.' ;
+        //         else if($r->get('alert')==3)
+        //             $message['message'] = 'Your ID card is invalid. Kindly use the approved Photo ID for this test.' ;
 
                 
-            }
+        //     }
 
-            Storage::disk('s3')->put('testlogs/pre-message/'.$username.'.json', json_encode($message),'public');
+        //     Storage::disk('s3')->put('testlogs/pre-message/'.$username.'.json', json_encode($message),'public');
 
-            exit();
+        //     exit();
 
 
-        }
+        // }
 
 
         $data = [];
-        $data['total'] = $data['waiting'] = $data['approved'] =  $data['rejected']=0;
-        foreach($json as $a=>$b){
-            $data['total'] = $data['total'] +1;
-            if($b['approved'] == 0 )
-            $data['waiting'] = $data['waiting'] +1;
-            else if($b['approved'] == 2 )
-            $data['rejected'] = $data['rejected'] +1;
-            else
-            $data['approved'] = $data['approved'] +1; 
+        $data['total'] = $data['live'] = $data['completed'] =  $data['inactive']=0;
+        foreach($users as $a=>$b){
+            
 
-            $data['users'][$a] = $b;
+            $time = strtotime(now());
+            $diff = round($time - $b['last_updated']);
+            $data['total'] = $data['total'] +1;
+             if($b['completed']){
+                    $data['completed']++; 
+                }
+                else{
+                    if($diff > 300){
+                       $data['inactive']++;
+                    }else{
+                        $data['live']++;
+                    }
+                    
+            }
         }
+
         
-        if($json)
+        if(count($users))
             return view('appl.exam.exam.active')
                     ->with('data',$data)
+                    ->with('users',$users)
                     ->with('exam',$exam)
                     ->with('active',1);
         else
@@ -3257,6 +3282,7 @@ class AssessmentController extends Controller
             $attempts = Test::where('test_id',$test_id)->where('user_id',$user_id)->get();
             
             $jsonname = $slug.'_'.$user_id;
+            $user = User::where('id',$user_id)->first();
 
             if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json')){
                 $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
@@ -3270,6 +3296,10 @@ class AssessmentController extends Controller
                 Storage::disk('s3')->delete('urq/'.$jsonname.'.json');
             }
 
+            if(Storage::disk('s3')->exists('testlog/'.$test_id.'/'.$user->username.'.json')){
+                
+                Storage::disk('s3')->delete('testlog/'.$test_id.'/'.$user->username.'.json');
+            }
             
 
             Cache::forget('attempt_'.$user_id.'_'.$test_id);

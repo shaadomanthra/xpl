@@ -82,7 +82,7 @@
             @if(isset($exam->settings))
             @if(isset($exam->settings->chat))
           @if(strtolower($exam->settings->chat)=='yes')
-            <a href="#"  class="message_proctor text-light" data-time="0"  data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}">
+            <a href="#"  class="message_proctor text-light" data-time="0"  data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}">
 
         <i class="fa fa-commenting-o mr-2 cursor" data-toggle="tooltip"  title="Message Proctor"  x ></i></a>
         @endif @endif @endif

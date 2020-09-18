@@ -10,7 +10,7 @@
 .fright{ position: absolute;left:10px;top:18px; color:black;}
 </style>
 
-<div class="mt-4 " >
+<div class="mt-4 container" >
 
     <div class="row">
       <div class="col-12  col-md-5">
@@ -31,9 +31,7 @@
        
       </div>
       <div class="col-12  col-md-4">
-        <a href="#" class="btn btn-primary float-right mt-2" data-toggle="modal" data-target="#announce">
-    <i class="flaticon2-sms"></i> Mass Announcement
-</a>
+        
       </div>
       <div class="col-12  col-md-3">
          <!--begin::Form-->
@@ -55,30 +53,106 @@
 </div>
 
 
+<div class="container">
+<div class="row">
+<div class="col-6 col-md-3">
+                    <!--begin::Stats Widget 30-->
+                    <div class="card card-custom bg-info card-stretch gutter-b">
+                      <!--begin::Body-->
+                      <div class="card-body">
+                        <span class="svg-icon svg-icon-2x svg-icon-white">
+                          <!--begin::Svg Icon | path:/metronic/theme/html/demo1/dist/assets/media/svg/icons/Communication/Group.svg-->
+                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                              <polygon points="0 0 24 0 24 24 0 24" />
+                              <path d="M18,14 C16.3431458,14 15,12.6568542 15,11 C15,9.34314575 16.3431458,8 18,8 C19.6568542,8 21,9.34314575 21,11 C21,12.6568542 19.6568542,14 18,14 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                              <path d="M17.6011961,15.0006174 C21.0077043,15.0378534 23.7891749,16.7601418 23.9984937,20.4 C24.0069246,20.5466056 23.9984937,21 23.4559499,21 L19.6,21 C19.6,18.7490654 18.8562935,16.6718327 17.6011961,15.0006174 Z M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
+                            </g>
+                          </svg>
+                          <!--end::Svg Icon-->
+                        </span>
+                        <span class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 d-block">{{($data['total'])}}</span>
+                        <span class="font-weight-bold text-white font-size-sm">Total Participants</span>
+                      </div>
+                      <!--end::Body-->
+                    </div>
+                    <!--end::Stats Widget 30-->
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <!--begin::Stats Widget 20-->
+                    <div class="card card-custom bg-light-warning card-stretch gutter-b">
+                      <!--begin::Body-->
+                      <div class="card-body my-4">
+                        <a href="#" class="card-title font-weight-bolder text-warning font-size-h6 mb-4 text-hover-state-dark d-block">Live Participants ({{round((($data['live'])*100/$data['total']))}}%)</a>
+                        <div class="font-weight-bold text-muted font-size-sm">
+                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{($data['live'])}}</span></div>
+                        <div class="progress progress-xs mt-7 bg-warning-o-60">
+                          <div class="progress-bar bg-warning" role="progressbar" style="width: {{(($data['live'])*100/$data['total'])}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                      <!--end::Body-->
+                    </div>
+                    <!--end::Stats Widget 20-->
+                  </div>
+
+                  <div class="col-6 col-md-3">
+                    <!--begin::Stats Widget 22-->
+                    <div class="card card-custom bgi-no-repeat card-stretch gutter-b" style="background-position: right top; background-size: 30% auto; background-image: url({{asset('assets/media/svg/shapes/abstract-3.svg') }})">
+                      <!--begin::Body-->
+                      <div class="card-body my-4">
+                        <a href="#" class="card-title font-weight-bolder text-primary font-size-h6 mb-4 text-hover-state-dark d-block">Completed ({{round((($data['completed'])*100/$data['total']))}}%)</a>
+                        <div class="font-weight-bold text-muted font-size-sm">
+                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{($data['completed'])}}</span></div>
+                        <div class="progress progress-xs mt-7 bg-info-o-60">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: {{(($data['completed'])*100/$data['total'])}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                      <!--end::Body-->
+                    </div>
+                    <!--end::Stats Widget 22-->
+                  </div>
+
+
+                  <div class="col-6 col-md-3">
+                    <!--begin::Stats Widget 20-->
+                    <div class="card card-custom bg-light-danger card-stretch gutter-b">
+                      <!--begin::Body-->
+                      <div class="card-body my-4">
+                        <a href="#" class="card-title font-weight-bolder text-danger font-size-h6 mb-4 text-hover-state-dark d-block">Inactive </a>
+                        <div class="font-weight-bold text-muted font-size-sm">
+                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2 counter_rejected">{{($data['inactive'])}}</span></div>
+                       
+                      </div>
+                      <!--end::Body-->
+                    </div>
+                    <!--end::Stats Widget 20-->
+                  </div>
+
+</div>
+</div>
 
 
 @include('flash::message')
 
-<div class="px-5">
+<div class="px-5 container">
 <div  class="row  no-gutters {{$i=0}}">
 
 
-@foreach($data['users'] as $a => $b)
+@foreach($users as $a => $b)
 
 <div class="col-md-2 ">
-  <div class="card   mb-2 mx-1 @if($b['approved']==0)bg-light-warning @elseif($b['approved']==1) @else bg-light-danger @endif card_{{$a}}">
+  <div class="card   mb-2 mx-1 @if($b['completed']==0)bg-light-warning  @endif card_{{$a}}">
     <div class="p-4 ">
 
      
       <div class="">
         <div class="action_{{$a}} d-inline float-right">
-      <a href="#" class="message_proctor"  data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}"  data-username="{{$a}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}"><i class="fa fa-comment-alt text-success ml-3"></i></a>
-      <a href="#" class="logs" data-toggle="modal" data-target="#logs" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}"  data-username="{{$a}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}"><i class="fa fa-clipboard-list text-info ml-3"></i></a>
-      <a href="#" class="terminate" data-toggle="modal" data-target="#terminate" data-username="{{$a}}" data-approved="2" data-alert="0" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}"  ><i class="fa fa-window-close text-danger ml-3"></i></a>
+      
       </div>
-              <h6 class="mb-3 d-inline"> {{substr($b['name'],0,10)}}</h6>
+              <h6 class="mb-3 d-inline"> @if(isset($b['name'])){{substr($b['name'],0,15)}} @else {{substr($b['username'],0,15)}} @endif</h6>
             <div class="selfie_container mt-4">
-              <img src="https://{{env('AWS_BUCKET')}}.s3.{{env('AWS_DEFAULT_REGION')}}.amazonaws.com/webcam/{{$b['selfie']}}" data-time="" class="w-100 rounded image_refresh image_{{$a}}"  data-hred="{{ route('img.post') }}"  data-username="{{$a}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}">
+              <img src="{{$b['last_photo']}}" class="w-100">
             </div>
           </div>
   
