@@ -65,7 +65,7 @@
 				  <dt class="col-sm-2">Phone Number</dt>
 				  <dd class="col-sm-10">{{ auth::user()->phone}}</dd>
 			</dl>
-			<p>You can the above information in your profile page</p>
+			<p>You can change the above information in your profile page</p>
 
 			<a href="#" class="btn btn-lg btn-outline-secondary btn-ins-next mt-3 px-5" data-next="2"> Prev</a>
 			<a href="#" class="btn btn-lg btn-primary btn-ins-next mt-3 px-5" data-next="4"> Next</a>
