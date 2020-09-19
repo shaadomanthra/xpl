@@ -2754,8 +2754,8 @@ function camera_test(){
 
           if (width && height) {
               $('.camera_fail').hide();
-              $('.camera_success').show();
-              $('.accesscode_btn').show();
+              $('.camera_success').show().append('Kindly use latest version of google chrome browser.');
+              //$('.accesscode_btn').show();
           }else{
                $('.camera_fail').show().append('Kindly use latest version of google chrome browser.');
               $('.camera_success').hide();
