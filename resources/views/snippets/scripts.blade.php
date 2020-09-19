@@ -2748,10 +2748,20 @@ function camera_test(){
     var successCallback = function(stream) {
         video.srcObject = stream;
           video.play();
+
+
           console.log('webcam started');
-          $('.camera_fail').hide();
-          $('.camera_success').show();
-          $('.accesscode_btn').show();
+
+          if (width && height) {
+              $('.camera_fail').hide();
+              $('.camera_success').show();
+              $('.accesscode_btn').show();
+          }else{
+               $('.camera_fail').show().append('Kindly use latest version of google chrome browser.');
+              $('.camera_success').hide();
+              $('.accesscode_btn').hide();
+          }
+          
     };
     var errorCallback = function(error) {
       console.log(error);
