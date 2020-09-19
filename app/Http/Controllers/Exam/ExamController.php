@@ -924,6 +924,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
 
             $users_result = User::whereIn('id',$usrs->toArray())->get()->keyBy('id');
             $result_users = $users_result->pluck('email')->toArray();
+            $result_users_ids = $users_result->pluck('id')->toArray();
 
             $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get()->keyBy('id');
             $inusers = array_unique($users->pluck('email')->toArray());
@@ -942,39 +943,40 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
                 
             }
 
-            $uids = array_unique($users->pluck('id')->toArray());
-            $attempted = [];//array_unique($result->pluck('user_id')->toArray());
+            // $uids = array_unique($users->pluck('id')->toArray());
+            // $attempted = [];//array_unique($result->pluck('user_id')->toArray());
 
-            $notattempted =  [];//array_diff($email_stack['registered'],$result_users);
-            $nonusers = array_diff($emails,$email_stack['registered']);
+            // $notattempted =  [];//array_diff($email_stack['registered'],$result_users);
+            // $nonusers = array_diff($emails,$email_stack['registered']);
             
-            foreach($email_stack['registered'] as $em){
-                if(!in_array($em, $result_users)){
-                    array_push($notattempted,$em);
-                }else{
-                    array_push($attempted,$em);
+            // foreach($email_stack['registered'] as $em){
+            //     if(!in_array($em, $result_users)){
+            //         array_push($notattempted,$em);
+            //     }else{
+            //         array_push($attempted,$em);
 
-                }
-            }
+            //     }
+            // }
 
-            $attemptedby = User::whereIn('email',$attempted)->get()->pluck('id')->toArray();
+            $attemptedby = User::whereIn('email',$email_stack['registered'])->get()->pluck('id')->toArray();
 
             
             $res = $result->whereIn('user_id',$attemptedby);
         
 
             //dd($count);
-            foreach($notattempted as $k=>$u){
-                if(!in_array($u, $attemptedby)){
-                         $rs = new Tests_Overall();
-                $rs->created_at = now();
-                $rs->user_id = $u;
-                $rs->test_id = $exam->id;
-                $rs->window_change = '-';
-                $rs->cheat_detect = 3;
-                $rs->score = 'ABSENT';
-                $result->push($rs);
+            foreach($attemptedby as $k=>$u){
+                if(!in_array($u, $result_users_ids)){
+                    $rs = new Tests_Overall();
+                    $rs->created_at = now();
+                    $rs->user_id = $u;
+                    $rs->test_id = $exam->id;
+                    $rs->window_change = '-';
+                    $rs->cheat_detect = 3;
+                    $rs->score = 'ABSENT';
+                    $result->push($rs);  
                 }
+                
             }
 
 
@@ -1009,7 +1011,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
             request()->session()->put('result',$result);
             request()->session()->put('sections',$sections);
             request()->session()->put('exam_sections',$exam_sections);
-            request()->session()->put('users','');
+            request()->session()->put('email_stack',$email_stack);
 
             ob_end_clean(); // this
             ob_start(); 

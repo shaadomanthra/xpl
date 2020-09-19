@@ -21,6 +21,7 @@ class TestReport2 implements FromCollection
    		$exam_sections = request()->session()->get('exam_sections');
         $colleges = request()->session()->get('colleges');
         $branches= request()->session()->get('branches');
+        $email_stack= request()->session()->get('email_stack');
 
     	foreach($result as $k=>$res){
 
@@ -65,6 +66,7 @@ class TestReport2 implements FromCollection
                      $result[$k]->$name = '-';  
                 }
 
+            if(isset($sections[$res->user->id]))
             foreach($sections[$res->user->id] as $m=>$sec){
                     if(isset($exam_sections[$m]['name'])){
                         $name = $exam_sections[$m]['name'];
@@ -152,6 +154,48 @@ class TestReport2 implements FromCollection
     		unset($ux->updated_at);
 
     	$result->prepend($ux);
+
+        if(count($email_stack['not_registered']))
+        foreach($email_stack['not_registered'] as $e){
+            $ux = new Tests_Overall();
+        $ux->created = "-";
+        $ux->sno = "-";
+        $ux->uid = "-";
+        $ux->name = "-";
+        $ux->college = "-";
+
+        $ux->branch = "-";
+        $ux->yop = "-";
+        $ux->email = $e;
+        $ux->phone = "-";
+        $ux->cheat_d = "-";
+        $ux->window = "-";
+        foreach($exam_sections as $m=>$sec){
+                $name = $exam_sections[$m]['name'];
+                $ux->$name = "-";
+            }
+        $ux->Sc = "ABSENT";
+        $ux->adm = "";
+        
+        unset($ux->id);
+            unset($ux->user_id);
+            unset($ux->test_id);
+            unset($ux->unattempted);
+            unset($ux->correct);
+            unset($ux->incorrect);
+            unset($ux->score);
+            unset($ux->time);
+            unset($ux->max);
+            unset($ux->window_change);
+            unset($ux->face_detect);
+            unset($ux->cheat_detect);
+            unset($ux->code);
+            unset($ux->status);
+            unset($ux->created_at);
+            unset($ux->updated_at);
+
+        $result->push($ux);
+        }
 
         return $result;
     }
