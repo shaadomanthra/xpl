@@ -2917,8 +2917,11 @@ function camera_test(){
               console.log(canvas);
               streaming = true;
               $('.camera_success_message').show();
+              $('.camera_fail_message').hide();
               $('.camera_fail').hide();  
               $('.accesscode_btn').show();
+            }else{
+              $('.accesscode_btn').hide();
             }
           }, false);
 
@@ -2926,6 +2929,8 @@ function camera_test(){
           
 
           console.log('webcam started');
+
+
 
           
 
