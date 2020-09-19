@@ -2,7 +2,7 @@
 @section('title', $exam->name.' ')
 @section('content')
 
-<div class="p-2 p-md-3 testpage  ">
+<div class="p-2 p-md-3 testpage " style="display: none">
 <form method="post" class="assessment" id="assessment" action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
   <style>
 .blink {
@@ -158,6 +158,8 @@
       @include('appl.exam.assessment.blocks.qset')
     </div>
   </div> 
+
+
 
   <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -499,5 +501,14 @@ div.chats {
   @endforeach
   @endif
   </div>
+
+<div class="container fullscreen_container">
+  <div class='border rounded p-4 mt-5'>
+    <h3 class="mb-3 full_screen_message">You are all set !</h3>
+
+    <div class="btn btn-primary fullscreen">Start Test</div>
+  </div>
+
+</div>
 
 @endsection

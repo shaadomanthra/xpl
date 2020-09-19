@@ -1889,8 +1889,53 @@ $(function(){
 
 @if(isset($timer2))
 <script src="{{ asset('js/html2canvas.min.js')}}?new=09"></script>
+
 <script type="text/javascript">
 $(function(){
+
+  function toggleFullScreen() {
+  var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+  if (!fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      $('.fullscreen_container').hide();
+      $('.testpage').show();
+      $('.fullscreen').html('back to fullscreen');
+      $('.full_screen_message').html('You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.');
+  } else {
+    // if (document.exitFullscreen) {
+    //   $('.fullscreen_container').show();
+    //   $('.testpage').hide();
+    //   document.exitFullscreen(); 
+    // }
+  }
+}
+
+
+  function exitFullScreen() {
+    var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+    if (!fullscreenElement) {
+      $('.fullscreen_container').show();
+      $('.testpage').hide();
+      //document.exitFullscreen(); 
+    }
+
+  }
+
+document.addEventListener("fullscreenchange", onFullScreenChange, false);
+document.addEventListener("webkitfullscreenchange", onFullScreenChange, false);
+document.addEventListener("mozfullscreenchange", onFullScreenChange, false);
+
+function onFullScreenChange() {
+  exitFullScreen();
+  console.log('f change');
+}
+ 
+$(document).on('click','.fullscreen',function(){
+
+    toggleFullScreen();
+  });
+
+
   $(document).on('click','.qno-sub',function(){
     $qcount = $('.qset').data('lastsno');
     $notattempt = 0;
@@ -2352,7 +2397,14 @@ $(function(){
             url: $url
     })
     .done(function($url) {
-            console.log($url);
+            // update last photo
+        $bucket = $('#photo').data('bucket');
+        $region = $('#photo').data('region');
+        $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+             
+        $last_photo_url = $aws_url+$name+'.jpg';
+
+        $('#photo').data('last_photo',$last_photo_url);
     });
 
   }
@@ -2380,8 +2432,8 @@ $(function(){
       }
 
     }).catch(e => {
-      $('#camera_test').modal();
-              // $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">Camera not accessible.</div></div>');
+      //$('#camera_test').modal();
+               $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
               
           console.log(e);
       });
@@ -2532,14 +2584,15 @@ $(function(){
         var roll = $('#photo').data('roll');
         var branch = $('#photo').data('branch');
         var college = $('#photo').data('college');
-        $.post( url ,{'name': $name ,'fullname':fullname,'username':username,'roll':roll,'branch':branch,'college':college,'_token':$token}, function( data ) {
-            console.log(data);
+      //   $.post( url ,{'name': $name ,'fullname':fullname,'username':username,'roll':roll,'branch':branch,'college':college,'_token':$token}, function( data ) {
+      //       console.log(data);
            
-      });
+      // });
       }
       
     }else{
-      $('#camera_test').modal();
+      $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
+      //$('#camera_test').modal();
     } 
   }
 
@@ -2598,7 +2651,7 @@ $(function(){
       console.log($name);
       console.log($c);
     }else{
-      $('#camera_test').modal();
+      $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
     } 
   }
   // Set up our event listener to run the startup process
