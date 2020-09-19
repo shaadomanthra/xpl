@@ -906,7 +906,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
         $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
         $usrs = $result->pluck('user_id');
         $exam_sections = Section::where('exam_id',$exam->id)->get();
-        $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+        $sections = Tests_Section::whereIn('user_id',$usrs)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
         $colleges = College::all()->keyBy('id');
         $branches = Branch::all()->keyBy('id');
         request()->session()->put('colleges',$colleges);
@@ -915,6 +915,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
         if(!Storage::disk('s3')->exists($filename))
             Storage::disk('s3')->delete($filename);
 
+       // dd($sections);
 
         if($exam->emails){
             $emails = implode(',',explode("\n", $exam->emails));
@@ -958,9 +959,9 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
 
             $attemptedby = User::whereIn('email',$attempted)->get()->pluck('id')->toArray();
 
-            dd($attemptedby);
+            
             $res = $result->whereIn('user_id',$attemptedby);
-            dd($res);
+        
 
             //dd($count);
             foreach($notattempted as $k=>$u){

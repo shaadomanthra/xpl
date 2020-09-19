@@ -60,23 +60,33 @@ class TestReport2 implements FromCollection
             else
               $result[$k]->cheating = 'No Cheating';  
 
-            if(isset($sections[$res->user->id])){
-        		foreach($sections[$res->user->id] as $m=>$sec){
-                    if(isset($exam_sections[$m]['name'])){
-                        $name = $exam_sections[$m]['name'];
-                        $result[$k]->$name = $sec->score;  
-                    }
-        			
-        		}
-            }else{
-                foreach($exam_sections as $m=>$sec){
+            foreach($exam_sections as $m=>$sec){
                     $name = $exam_sections[$m]['name'];
                      $result[$k]->$name = '-';  
                 }
 
+            foreach($sections[$res->user->id] as $m=>$sec){
+                    if(isset($exam_sections[$m]['name'])){
+                        $name = $exam_sections[$m]['name'];
+                        if($sec->score)
+                        $result[$k]->$name = $sec->score;  
+                        else
+                        $result[$k]->$name = 0; 
+                    }
+                    
+                }   
+
+            if(isset($sections[$res->user->id])){
+        		
+            }else{
+                
+
             }
     		
-    		$result[$k]->Score = $res->score;
+            if($res->score)
+    		  $result[$k]->Score = $res->score;
+            else
+               $result[$k]->Score = 0; 
 
             if($res->user->fluency)
                 $result[$k]->f= $res->user->fluency;
