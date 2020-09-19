@@ -24,11 +24,12 @@
 
 @endif
 
-<div class="bg-light border rounded p-3 camera_success mb-3" style="display:none">
+<div class="bg-light border rounded p-3 camera_success mb-3" style="">
 	
 	<video id="video" class="mb-3 bg-light " width="200px" >Video stream not available.</video>
 	<canvas id="canvas" style='display: none'>
 	</canvas>
-	<div><i class="fa fa-thumbs-up text-success"></i> Camera test is successful. Proceed to the test.</div>
+	<img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="" data-count="" data-c="50000" data-username="" data-test="{{$exam->id}}"  data-uname="" data-last_photo="" style='display: none'> 
+	<div class="camera_success_message" style="display: none"><i class="fa fa-thumbs-up text-success"></i> Camera test is successful. Proceed to the test.</div>
 </div>
 @endif

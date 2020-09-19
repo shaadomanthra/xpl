@@ -2551,17 +2551,22 @@ $(function(){
         uploadaws(image,$url);
 
       }else{
-        $url = $('.url_'+$c).data('url');
-        uploadaws(image,$url);
+        if($('.url_'+$c).length){
+             $url = $('.url_'+$c).data('url');
+            uploadaws(image,$url);
 
-        // update last photo
-        $bucket = $('#photo').data('bucket');
-        $region = $('#photo').data('region');
-        $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
-             
-        $last_photo_url = $aws_url+$name+'.jpg';
+            // update last photo
+            $bucket = $('#photo').data('bucket');
+            $region = $('#photo').data('region');
+            $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+                 
+            $last_photo_url = $aws_url+$name+'.jpg';
 
-        $('#photo').data('last_photo',$last_photo_url);
+            $('#photo').data('last_photo',$last_photo_url);
+        }else{
+          return 1;
+        }
+       
       }
 
       $counnt = 2;
@@ -2709,6 +2714,28 @@ $(function(){
 $(function() {
 
 
+var width = 600;    // We will scale the photo width to this
+  var height = 0;     // This will be computed based on the input stream
+
+  // |streaming| indicates whether or not we're currently streaming
+  // video from the camera. Obviously, we start at false.
+
+  var streaming = false;
+
+  // The various HTML elements we need to configure or control. These
+  // will be set by the startup() function.
+
+  var video = null;
+  var canvas = null;
+  var photo = null;
+
+  var video2 = null;
+  var canvas2 = null;
+  var photo2 = null;
+
+  var startbutton = null;
+
+
 
  function detect_mobile(){
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -2728,6 +2755,126 @@ $(function() {
     }
   }
 
+
+   
+
+  // Fill the photo with an indication that none has been
+  // captured.
+
+  function clearphoto() {
+    var context = canvas.getContext('2d');
+    context.fillStyle = "#AAA";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    var data = canvas.toDataURL('image/jpeg',0.5);
+
+
+
+    if($('#photo').length)
+      photo.setAttribute('src', data);
+  }
+
+  function takepicture() {
+
+    video = document.getElementById('video');
+    canvas = document.getElementById('canvas');
+    photo = document.getElementById('photo');
+
+    var context = canvas.getContext('2d');
+
+
+    var $counter = parseInt($('#video').data('c'));
+
+    console.log(height);
+
+    if (width && height) {
+
+       console.log('all fine');
+ 
+      canvas.width = width;
+      canvas.height = height;
+      context.drawImage(video, 0, 0, width, height);
+    
+      var data = canvas.toDataURL('image/jpeg',0.5);
+
+      if($('#photo').length)      
+        photo.setAttribute('src', data);
+
+      
+      var image = $('#photo').attr('src');
+      $token = $('#photo').data('token');
+
+      // var url = $('#video').data('hred');
+      // $token = $('#video').data('token');
+      $c = parseInt($('#video').data('c'))+1;
+
+      $username = $('#video').data('username');
+      $test = $('#video').data('test');
+      $name = $username+'_'+$test+'_'+$c;
+
+      $url = $('#photo').data('presigned');
+
+      console.log($c);
+
+      if($c == '200001'){
+        $c = 'idcard';
+
+        uploadaws(image,$url);
+
+      }else{
+        if($('.url_'+$c).length){
+             $url = $('.url_'+$c).data('url');
+            uploadaws(image,$url);
+
+            // update last photo
+            $bucket = $('#photo').data('bucket');
+            $region = $('#photo').data('region');
+            $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+                 
+            $last_photo_url = $aws_url+$name+'.jpg';
+
+            $('#photo').data('last_photo',$last_photo_url);
+        }else{
+
+          return 1;
+        }
+       
+      }
+
+      $counnt = 2;
+      if($c % $counnt == 0){
+         var url = $('#photo').data('hred');
+         $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
+              console.log('Face Detect:' + data);
+        });
+      }
+     
+
+      if(Number.isInteger($c)){
+
+          $('#video').data('c',$c);
+        console.log($name);
+        console.log($c);
+      }else{
+        var fullname = $('#photo').data('name');
+        var username = $('#photo').data('username');
+        var roll = $('#photo').data('roll');
+        var branch = $('#photo').data('branch');
+        var college = $('#photo').data('college');
+      //   $.post( url ,{'name': $name ,'fullname':fullname,'username':username,'roll':roll,'branch':branch,'college':college,'_token':$token}, function( data ) {
+      //       console.log(data);
+           
+      // });
+      }
+      
+    }else{
+
+      $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
+      //$('#camera_test').modal();
+    } 
+  }
+
+
 function camera_test(){
   var width = 320;    // We will scale the photo width to this
   var height = 0;     // This will be computed based on the input stream
@@ -2746,21 +2893,43 @@ function camera_test(){
       try {
 
     var successCallback = function(stream) {
+
+      var context = canvas.getContext('2d');
+
         video.srcObject = stream;
           video.play();
 
+          video.addEventListener('canplay', function(ev){
+            if (!streaming) {
+              height = video.videoHeight / (video.videoWidth/width);
+            
+              // Firefox currently has a bug where the height can't be read from
+              // the video, so we will make assumptions if this happens.
+            
+              if (isNaN(height)) {
+                height = width / (4/3);
+              }
+            
+              video.setAttribute('width', width);
+              video.setAttribute('height', height);
+              canvas.setAttribute('width', width);
+              canvas.setAttribute('height', height);
+              console.log(canvas);
+              streaming = true;
+              $('.camera_success_message').show();
+              $('.camera_fail').hide();  
+              $('.accesscode_btn').show();
+            }
+          }, false);
+
+    
+          
 
           console.log('webcam started');
 
-          if (width && height) {
-              $('.camera_fail').hide();
-              $('.camera_success').show().append('Kindly use latest version of google chrome browser.');
-              //$('.accesscode_btn').show();
-          }else{
-               $('.camera_fail').show().append('Kindly use latest version of google chrome browser.');
-              $('.camera_success').hide();
-              $('.accesscode_btn').hide();
-          }
+          
+
+           
           
     };
     var errorCallback = function(error) {
