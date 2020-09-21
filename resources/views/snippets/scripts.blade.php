@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=32"></script>
+<script src="{{ asset('js/script.js')}}?new=33"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
 
@@ -561,6 +561,10 @@ setInterval(image_refresh,1000);
     if($('.js_details').length){
         $('.js_details').html("enabled");
         $('.accesscode_btn_wrap').show();
+        @if(!$exam->camera)
+        $('.start_btn').removeClass('disabled');
+        @endif
+        
     }
         
 
@@ -570,11 +574,6 @@ setInterval(image_refresh,1000);
         $('.ip_details').html(data.ip);
     });
     }
-
-
-        
-   
-
 }());
 
   </script>
@@ -1140,11 +1139,12 @@ $(document).ready(function() {
       //   });
       // }, 5000);
 
+
         $.ajax({
           type : 'get',
-          url : $url,
+          url : $url+'?time='+ new Date().getTime(),
           data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec},
-          timeout: 10000, 
+          timeout: 120000, 
           success:function(data){
             //console.log(data);
             data = JSON.parse(data);
@@ -1177,6 +1177,10 @@ $(document).ready(function() {
               $('.loading').hide();
           }
         });
+
+
+
+        
 
     }); 
 
@@ -1888,7 +1892,7 @@ $(function(){
 @endif
 
 @if(isset($timer2))
-<script src="{{ asset('js/html2canvas.min.js')}}?new=09"></script>
+
 
 <script type="text/javascript">
 $(function(){
@@ -1899,8 +1903,9 @@ $(function(){
       document.documentElement.requestFullscreen();
       $('.fullscreen_container').hide();
       $('.testpage').show();
+      $('.check_status').html('');
       $('.fullscreen').html('back to fullscreen');
-      $('.full_screen_message').html('You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.');
+      $('.full_screen_message').html('<span class="text-danger">You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.</span>');
   } else {
     // if (document.exitFullscreen) {
     //   $('.fullscreen_container').show();
@@ -1927,12 +1932,15 @@ document.addEventListener("mozfullscreenchange", onFullScreenChange, false);
 
 function onFullScreenChange() {
   exitFullScreen();
-  console.log('f change');
+  $('.check_status').hide();
 }
  
 $(document).on('click','.fullscreen',function(){
-
-    toggleFullScreen();
+    if(!$(this).hasClass('disabled')){
+      toggleFullScreen(); 
+      $('.check').hide();
+    }
+    
   });
 
 
@@ -2126,10 +2134,7 @@ $(function(){
 });
 
 
-// html2canvas(document.body).then(function(canvas) {
-//     document.body.appendChild(canvas);
 
-// });
 
 </script>
 
@@ -2351,6 +2356,7 @@ setTimeout(win_focus,5000);
 @auth
 @if(isset($camera))
 @if($camera)
+<script src="{{ asset('js/html2canvas.min.js')}}?new=09"></script>
 <script>
 $(function(){
 
@@ -2385,9 +2391,10 @@ $(function(){
       return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
   }
 
-  function uploadaws($data,$url){
+  function uploadaws($data,$url,$screen=false){
 
     var blob = dataURItoBlob($data);
+    console.log($url);
 
     $.ajax({
             method: "PUT",
@@ -2397,14 +2404,18 @@ $(function(){
             url: $url
     })
     .done(function($url) {
-            // update last photo
-        $bucket = $('#photo').data('bucket');
-        $region = $('#photo').data('region');
-        $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
-             
-        $last_photo_url = $aws_url+$name+'.jpg';
 
-        $('#photo').data('last_photo',$last_photo_url);
+       if($screen){
+          // update last photo
+          $bucket = $('#photo').data('bucket');
+          $region = $('#photo').data('region');
+          $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+               
+          $last_photo_url = $aws_url+$name+'.jpg';
+
+          $('#photo').data('last_photo',$last_photo_url);
+       }
+        
     });
 
   }
@@ -2513,9 +2524,19 @@ $(function(){
 
   function takepicture() {
 
+    
+
+    html2canvas(document.body).then(function(canv) {
+        //document.body.appendChild(canv);
+        $m = parseInt($('#video').data('c'));
+        $url = $('.url2_'+$m).data('url');
+        var data = canv.toDataURL('image/jpeg',0.5);
+        uploadaws(data,$url,true);
+
+
+    });
+
     var context = canvas.getContext('2d');
-
-
     var $counter = parseInt($('#video').data('c'));
 
     if (width && height) {
@@ -2523,6 +2544,7 @@ $(function(){
       canvas.width = width;
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
+
     
       var data = canvas.toDataURL('image/jpeg',0.5);
 
@@ -2580,7 +2602,12 @@ $(function(){
 
       if(Number.isInteger($c)){
 
-          $('#video').data('c',$c);
+        $('#video').data('c',$c);
+        if($c==1){
+          $('.cam_spinner').hide();
+          $('.start_btn').removeClass('disabled');
+          $('.cam_message').html('<span class="text-success"><i class="fa fa-check-circle"></i> Camera enabled. You can start the test now.</span>');
+        }
         console.log($name);
         console.log($c);
       }else{
@@ -2597,7 +2624,8 @@ $(function(){
       
     }else{
       $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
-      //$('#camera_test').modal();
+      $('.cam_spinner').hide();
+      $('.cam_message').html('<span class="text-danger"><i class="fa fa-times-circle"></i> Unable to access the camera...Kindly refresh the page and allow the access to the webcamera.</span>');
     } 
   }
 
@@ -2664,7 +2692,7 @@ $(function(){
   window.addEventListener('load', startup, false);
   $time = @if(isset($exam->capture_frequency))@if($exam->capture_frequency){{($exam->capture_frequency*1000)}} @else 300000 @endif @else 300000 @endif;
   if(!$('.id_card_capture').length){
-  setTimeout(function(){ takepicture(); }, 5000);
+  setTimeout(function(){ takepicture(); }, 2000);
   setInterval(function(){ takepicture(); console.log($time); }, $time);
   }else{
       $(document).on('click','.id_capture',function(e){
@@ -2687,26 +2715,6 @@ $(function(){
 @endif
 
 
-@if(isset($awstest))
-<script>
-
-  $(function(){
-    console.log('awstests');
-    $url = $('.url').data('url');
-    $.ajax({
-            method: "PUT",
-    headers: {"Content-Type": "application/json"},
-    processData: false,
-    data: '{"hello":"new"}',
-    url: $url
-        })
-        .done(function($url) {
-            console.log($url);
-        });
-  });
-
-</script>
-@endif
 
 @if(isset($cameratest))
 @if($cameratest)

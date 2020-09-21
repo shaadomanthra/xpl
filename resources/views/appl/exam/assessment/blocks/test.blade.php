@@ -500,13 +500,25 @@ div.chats {
     <div class="url_{{$k}} d-none " data-url="{{$url}}" ></div>
   @endforeach
   @endif
+  @if($urls2)
+  @foreach($urls2 as $k=> $url2)
+    <div class="url2_{{$k}} d-none " data-url="{{$url2}}" ></div>
+  @endforeach
+  @endif
   </div>
 
 <div class="container fullscreen_container">
   <div class='border rounded p-4 mt-5'>
-    <h3 class="mb-3 full_screen_message">You are all set !</h3>
+    <h3 class="mb-3 full_screen_message"><i class=" fa fa-check"></i> System Check </h3>
+    <p class="check_status">
+    @include('appl.exam.assessment.blocks.check')
+    
+    <p><div class="spinner-border spinner-border-sm cam_spinner" role="status">
+  <span class="sr-only">Loading...</span>
+</div> @if($exam->camera) <span class="cam_message">checking for webcam access ...</span> @endif</p>
+</p>
 
-    <div class="btn btn-primary fullscreen">Start Test</div>
+    <div class="btn btn-primary disabled fullscreen start_btn">Start Test</div>
   </div>
 
 </div>

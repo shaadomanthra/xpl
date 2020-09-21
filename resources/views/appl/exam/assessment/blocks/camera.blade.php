@@ -34,6 +34,6 @@
 	<div class="camera_success_message" style="display: none"><i class="fa fa-thumbs-up text-success"></i> Camera test is successful. Proceed to the test.</div>
 	<div class="camera_fail_message" style=""><div class="spinner-border spinner-border-sm " role="status">
   <span class="sr-only">Loading...</span>
-</div> &nbsp;Checking for webcam access. <br>If you are not able to see your live webcam feed here, then swtich to latest google chrome browser. Please note that, webcam access is madaatory to take this test.</div>
+</div> &nbsp;Checking for webcam access. <br>If you are not able to see your live webcam feed here, then swtich to latest google chrome browser. Please note that, webcam access is mandatory to take this test.</div>
 </div>
 @endif

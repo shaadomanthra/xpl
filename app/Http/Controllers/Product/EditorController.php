@@ -275,6 +275,11 @@ class EditorController extends Controller
 
     public function run_internal_p24($code,$input,$lang,$c,$name){
 
+      $name = request()->get('name');
+
+      if(!$name){
+        $name = substr(md5(time()), 0,7);
+      }
 
       // // Get cURL resource
       // $curl = curl_init();
@@ -282,7 +287,7 @@ class EditorController extends Controller
 
       // curl_setopt_array($curl, [
       //     CURLOPT_RETURNTRANSFER => 1,
-      //     CURLOPT_URL => 'http://code.p24.in',
+      //     CURLOPT_URL => 'http://phpcode.p24.in',
       //     CURLOPT_POST => 1,
       //     CURLOPT_TIMEOUT => 30,
       // ]);
@@ -303,11 +308,14 @@ class EditorController extends Controller
 
       // return $data;
 
-       $name = request()->get('name');
 
-      if(!$name){
-        $name = substr(md5(time()), 0,7);
-      }
+      
+
+      //  $name = request()->get('name');
+
+      // if(!$name){
+      //   $name = substr(md5(time()), 0,7);
+      // }
 
 
 

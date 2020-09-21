@@ -538,10 +538,11 @@ class AssessmentController extends Controller
             $time = $time + $section->time;
         }
 
-        $url = null;
+        $url =$url2= null;
         if($exam->camera){
             $folder = 'webcam/'.$exam->id.'/';
             $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
+            $name_prefix2 = $folder.'screens/'.\auth::user()->username.'_'.$exam->id.'_';
 
             if($exam->capture_frequency){
                 $count = ($time*60)/$exam->capture_frequency;
@@ -551,6 +552,7 @@ class AssessmentController extends Controller
 
             for($i=0;$i<$count;$i++){
                 $url[$i] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.$i.'.jpg']);
+                $url2[$i] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix2.$i.'.jpg']);
             }
 
             $folder = 'testlog/'.$exam->id.'/';
@@ -575,6 +577,7 @@ class AssessmentController extends Controller
                         ->with('exam',$exam)
                         ->with('code',true)
                         ->with('urls',$url)
+                        ->with('urls2',$url2)
                         ->with('user',$user)
                         ->with('code_ques',$code_ques)
                         ->with('timer2',true)

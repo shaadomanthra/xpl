@@ -576,6 +576,15 @@ $(document).ready(function(){
         responses.admin =  $('input[name=admin]').val();
         responses.window_change =  $('input[name=window_change]').val();
         responses.username = $('#photo').data('username');
+
+        if($('.os_details').length){
+          responses.os_details = $('.os_details').html();
+          responses.browser_details = $('.os_details').html();
+          responses.js_details = $('.js_details').html();
+          responses.ip_details = $('.ip_details').html();
+        }
+        
+
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
         responses.last_photo = $('#photo').data('last_photo');

@@ -45,7 +45,6 @@
 				<p class="mb-3">
 				{!! $exam->description  !!}
 				</p>
-				@include('appl.exam.assessment.blocks.check')
 				@include('appl.exam.assessment.blocks.camera')
 
 				
