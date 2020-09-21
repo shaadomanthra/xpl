@@ -561,8 +561,10 @@ setInterval(image_refresh,1000);
     if($('.js_details').length){
         $('.js_details').html("enabled");
         $('.accesscode_btn_wrap').show();
+        @if(isset($exam))
         @if(!$exam->camera)
         $('.start_btn').removeClass('disabled');
+        @endif
         @endif
         
     }
