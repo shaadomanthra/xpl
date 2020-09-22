@@ -2593,7 +2593,8 @@ $(function(){
        
       }
 
-      $counnt = 2;
+      $counnt = 6;
+      if($c!='idcard')
       if($c % $counnt == 0){
          var url = $('#photo').data('hred');
          $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
