@@ -62,9 +62,10 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
 @if(isMobileDevice())
     <div class="camera_holder d-inline d-md-none float-right">
 <div class="">
-    <video id="video" class="video_small" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}">Video stream not available.</video>
-    <canvas id="canvas" style='display: none'>
-    </canvas>
+  <img id="photo3" style="position: absolute;right:31px;top:15px" src=""> 
+    <video id="video" class="video_small" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style="width:60px;height:60px;position: absolute;right:31px;top:15px">Video stream not available.</video>
+    <canvas id="canvas" style='display: none'></canvas>
+     <canvas id="canvas3" style='display: none' ></canvas>
     <div class="output">
     <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}" data-last_photo="" style='display: none'> 
   </div>
@@ -514,12 +515,12 @@ div.chats {
     <div id="check" class="check_status">
     @include('appl.exam.assessment.blocks.check')
     
-    <p><div class="spinner-border spinner-border-sm cam_spinner" role="status">
+    <p><div class="spinner-border spinner-border-sm cam_spinner @if(!$exam->camera) d-none @endif" role="status">
   <span class="sr-only">Loading...</span>
 </div> @if($exam->camera) <span class="cam_message">checking for webcam access ...</span> @endif</p>
 </div>
 
-    <div class="btn btn-primary disabled fullscreen start_btn">Start Test</div>
+    <div class="btn btn-primary @if($exam->camera) disabled @endif fullscreen start_btn">Start Test</div>
   </div>
 
 </div>

@@ -45,8 +45,8 @@ video ,#photo3{
 @if($camera)
 <div class="camera_holder  rounded float-right">
 <div class="">
-	<img id="photo3" style="position: absolute;right:0;top:15px" src=""> 
-    <video id="video" class="video_small rounded" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style="width:60px;height:60px;position: absolute;right:0;top:15px">Video stream not available.</video>
+	<img id="photo3" style="position: absolute;right:10px;top:15px" src=""> 
+    <video id="video" class="video_small rounded" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style="width:60px;height:60px;position: absolute;right:10px;top:15px">Video stream not available.</video>
     <canvas id="canvas" style='display: none' >
     </canvas>
     <canvas id="canvas3" style='display: none' >

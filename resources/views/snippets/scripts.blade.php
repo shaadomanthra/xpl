@@ -2299,27 +2299,30 @@ $(function(){
     var blob = dataURItoBlob($data);
     console.log($url + ' -');
 
-    $.ajax({
-            method: "PUT",
-            headers: {"Content-Type": "image/jpeg"},
-            processData: false,
-            data: blob,
-            url: $url
-    })
-    .done(function($url) {
+    if($url){
+        $.ajax({
+                method: "PUT",
+                headers: {"Content-Type": "image/jpeg"},
+                processData: false,
+                data: blob,
+                url: $url
+        })
+        .done(function($url) {
 
-       if($screen){
-          // update last photo
-          $bucket = $('#photo').data('bucket');
-          $region = $('#photo').data('region');
-          $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
-               
-          $last_photo_url = $aws_url+$name+'.jpg';
+           if($screen){
+              // update last photo
+              $bucket = $('#photo').data('bucket');
+              $region = $('#photo').data('region');
+              $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+                   
+              $last_photo_url = $aws_url+$name+'.jpg';
 
-          $('#photo').data('last_photo',$last_photo_url);
-       }
-        
-    });
+              $('#photo').data('last_photo',$last_photo_url);
+           }
+            
+        });
+    }
+    
 
   }
 
@@ -2510,13 +2513,10 @@ $(function(){
        
       }
 
-
-      var context3 = canvas3.getContext('2d');
-      context3.drawImage(video, 0, 0, 60, 60);
-
-      var data3 = canvas3.toDataURL('image/jpeg',0.5);
-
       if($('#photo3').length){
+        var context3 = canvas3.getContext('2d');
+        context3.drawImage(video, 0, 0, 60, 60);
+        var data3 = canvas3.toDataURL('image/jpeg',0.5);
         $('#photo3').attr('src', data3);
       }      
         //$('#photo3').attr('src', data3);

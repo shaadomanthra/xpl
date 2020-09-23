@@ -2,21 +2,32 @@
 $(document).ready(function(){
 	
 
+    var browser = $('.browser_details').html();
+    var safari = browser.includes("Safari");
     /* fullscreen check */
     $('.fullscreen').on('click', () => {
-        if (screenfull.isEnabled) {
-            screenfull.request();
-            $('.fullscreen_container').hide();
-            $('.testpage').show();
-            $('#check').hide();
-            $('.fullscreen').html('back to fullscreen');
-            $('.full_screen_message').html('<span class="text-danger">You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.</span>');
+        if(safari){
+                $('.testpage').show();
+                $('.fullscreen_container').hide();
+                $('#check').hide();
+        }else{
+            if (screenfull.isEnabled) {
+                screenfull.request();
+                $('.fullscreen_container').hide();
+                $('.testpage').show();
+                $('#check').hide();
+                $('.fullscreen').html('back to fullscreen');
+                $('.full_screen_message').html('<span class="text-danger">You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.</span>');
+            }
+
         }
+        
     });
 
     if (screenfull.isEnabled) {
         screenfull.on('change', () => {
             console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
+            if(!safari)
             if(!screenfull.isFullscreen){
                 $('.fullscreen_container').show();
                 $('.testpage').hide();
