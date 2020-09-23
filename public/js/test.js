@@ -36,7 +36,7 @@ $(document).ready(function(){
                   $('.testpage').show();
               }
             }else{
-              $('.testpage').show();
+    
             }
             
         });
