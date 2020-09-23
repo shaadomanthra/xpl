@@ -2,6 +2,7 @@
 @section('title', $exam->name.' ')
 @section('content')
 
+<div class="testpage_wrap">
 <div class="p-2 p-md-3 testpage " style="display: none">
 <form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}" data-auto_terminate="{{$exam->auto_terminate}}"
 
@@ -528,6 +529,7 @@ div.chats {
 
 </div>
 
+</div>
 <div class="modal fade" id="no_connectivity" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

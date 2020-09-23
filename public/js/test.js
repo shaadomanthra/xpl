@@ -27,14 +27,20 @@ $(document).ready(function(){
     if (screenfull.isEnabled) {
         screenfull.on('change', () => {
             console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
-            if(!safari)
-            if(!screenfull.isFullscreen){
-                $('.fullscreen_container').show();
-                $('.testpage').hide();
+            if(!safari){
+              if(!screenfull.isFullscreen){
+                  $('.fullscreen_container').show();
+                  $('.testpage').hide();
+              }else{
+                  $('.testpage').show();
+              }
+            }else{
+              $('.testpage').show();
             }
+            
         });
     }
-    
+
 
     /* windowswap detection */
     function swapDetected() {
@@ -112,13 +118,12 @@ $(document).ready(function(){
       textContent = result ? 1 : 0;
       if(textContent){
         $('.connection_status').html("<i class='fa fa-circle text-success'></i> Online");
-        $('.testpage').show();
+        $('.testpage_wrap').show();
         $('#no_connectivity').modal('hide');
         $('.connection_status').data('status',1);
       }else{
-        $('.testpage').hide();
+        $('.testpage_wrap').hide();
         $('#no_connectivity').modal({backdrop: 'static', keyboard: false});
-        $('.fullscreen_container').hide();
         $('.connection_status').html("<i class='fa fa-circle text-secondary'></i> Offline");
         $('.connection_status').data('status',0);
       }

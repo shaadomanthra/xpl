@@ -2445,11 +2445,13 @@ $(function(){
 
     
     
-    html2canvas(document.body).then( function (canv) { 
+    html2canvas(document.body, {
+  scale:0.75
+}).then( function (canv) { 
         $m = parseInt($('#video').data('c'));
         console.log('html2canvas - '+$m);
         $url = $('.url2_'+$m).data('url');
-        var data = canv.toDataURL('image/jpeg',0.5);
+        var data = canv.toDataURL('image/jpeg',0.8);
 
         //$('#html2canvas').attr('src',data);
         uploadaws(data,$url,true);
