@@ -2,10 +2,11 @@
 $(document).ready(function(){
 	
 
-    var browser = $('.browser_details').html();
-    var safari = browser.includes("Safari");
+   
     /* fullscreen check */
     $('.fullscreen').on('click', () => {
+      var browser = $('.browser_details').html();
+      var safari = browser.includes("Safari");
         if(safari){
                 $('.testpage').show();
                 $('.fullscreen_container').hide();
@@ -25,7 +26,10 @@ $(document).ready(function(){
     });
 
     if (screenfull.isEnabled) {
+
         screenfull.on('change', () => {
+          var browser = $('.browser_details').html();
+          var safari = browser.includes("Safari");
             console.log('Am I fullscreen?', screenfull.isFullscreen ? 'Yes' : 'No');
             if(!safari){
               if(!screenfull.isFullscreen){
