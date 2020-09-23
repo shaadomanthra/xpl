@@ -489,21 +489,7 @@ div.chats {
   </div>
 </div>
 
-<div class="modal fade" id="no_connectivity" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title text-danger" id="exampleModalLongTitle"><i class="fa fa-times-circle"></i> Not connected to internet</h3>
-      
-      </div>
-      <div class="modal-body ">
-        <p><span class="badge badge-warning "><i class="fa fa-circle text-secondary"></i> Offline</span></p>
-       The test will auto resume as the device gets connected to the internet. For persistent disconnectivity, kindly reach out to the test administrator.
-      </div>
-      
-    </div>
-  </div>
-</div>
+
 
 @if(isset($exam->calculator))
   @if($exam->calculator)
@@ -540,6 +526,22 @@ div.chats {
     <div class="btn btn-primary @if($exam->camera) disabled @endif fullscreen start_btn">Start Test</div>
   </div>
 
+</div>
+
+<div class="modal fade" id="no_connectivity" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-danger" id="exampleModalLongTitle"><i class="fa fa-times-circle"></i> Not connected to internet</h3>
+      
+      </div>
+      <div class="modal-body ">
+        <p><span class="badge badge-warning "><i class="fa fa-circle text-secondary"></i> Offline</span></p>
+       The test will auto resume as the device gets connected to the internet. For persistent disconnectivity, kindly reach out to the test administrator.
+      </div>
+      
+    </div>
+  </div>
 </div>
 
 @endsection
