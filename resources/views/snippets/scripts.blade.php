@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=33"></script>
+<script src="{{ asset('js/script.js')}}?new=34"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
 @if(isset($proctor))

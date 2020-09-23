@@ -579,7 +579,7 @@ $(document).ready(function(){
 
         if($('.os_details').length){
           responses.os_details = $('.os_details').html();
-          responses.browser_details = $('.os_details').html();
+          responses.browser_details = $('.browser_details').html();
           responses.js_details = $('.js_details').html();
           responses.ip_details = $('.ip_details').html();
         }
