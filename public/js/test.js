@@ -34,6 +34,7 @@ $(document).ready(function(){
             }
         });
     }
+    
 
     /* windowswap detection */
     function swapDetected() {
