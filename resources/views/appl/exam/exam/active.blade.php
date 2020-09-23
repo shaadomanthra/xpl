@@ -143,7 +143,7 @@
 
 
 <div class="col-6 col-md-2 ">
-  <div class="card   mb-2 mx-1 @if($b['completed']==0)bg-light-warning  @endif card_{{$a}}">
+  <div class="card   mb-2 mx-1 @if($b['completed']==0) bg-light-warning  @endif card_{{$a}}">
     <div class="p-4 ">
 
      
@@ -160,7 +160,7 @@
 
             <p class="mb-0 mt-3">
               <i class="fa fa-comment-alt text-success mr-4 d-none"></i> 
-              <i class="far fa-list-alt text-info mr-4 cursor user_log"></i> 
+              <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}"></i> 
               <i class="fas fa-power-off text-danger mr-4"></i> </p>
           </div>
   
@@ -279,111 +279,23 @@ div.chats {
         </button>
       </div>
       <div class="modal-body ">
+       <div class="pb-4">
+        <img src="" class="float-right log_pic border" width="150px" style="display:none" />
+        <div class="">Name: <b><span class="log_name text-success"></span></b></div>
+        <div>Roll Number: <b><span class="log_rollnumber text-primary"></span></b></div>
+        <div>OS details: <b><span class="log_os text-muted"></span></b></div>
+        <div>Browser details: <b><span class="log_browser text-muted"></span></b></div>
+        <div>IP Address: <b><span class="log_ip text-muted"></span></b></div>
+        <div>Window Swaps: <b><span class="log_swaps text-danger"></span></b></div>
+      </div>
+    
         <div class="chats">
           
           <div class="">
             <div class="timeline timeline-5 mt-3">
-              <div class="timeline-item align-items-start">
-                            <!--begin::Label-->
-                            <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">04:29</div>
-                            <!--end::Label-->
-                            <!--begin::Badge-->
-                            <div class="timeline-badge">
-                              <i class="fa fa-genderless text-success icon-xl"></i>
-                            </div>
-                            <!--end::Badge-->
-                            <!--begin::Text-->
-                            <div class="font-weight-mormal font-size-lg timeline-content text-success pl-3">Test started</div>
-                            <!--end::Text-->
-                          </div>
-                          <!--begin::Item-->
-                          <div class="timeline-item align-items-start">
-                            <!--begin::Label-->
-                            <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">04:40</div>
-                            <!--end::Label-->
-                            <!--begin::Badge-->
-                            <div class="timeline-badge">
-                              <i class="fa fa-genderless text-warning icon-xl"></i>
-                            </div>
-                            <!--end::Badge-->
-                            <!--begin::Text-->
-                            <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">Solving Question 2</div>
-                            <!--end::Text-->
-                          </div>
-                          <div class="timeline-item align-items-start">
-                            <!--begin::Label-->
-                            <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">04:41</div>
-                            <!--end::Label-->
-                            <!--begin::Badge-->
-                            <div class="timeline-badge">
-                              <i class="fa fa-genderless text-warning icon-xl"></i>
-                            </div>
-                            <!--end::Badge-->
-                            <!--begin::Text-->
-                            <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">Solving Question 5</div>
-                            <!--end::Text-->
-                          </div>
+         
 
-                          <div class="timeline-item align-items-start">
-                            <!--begin::Label-->
-                            <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">04:42</div>
-                            <!--end::Label-->
-                            <!--begin::Badge-->
-                            <div class="timeline-badge">
-                              <i class="fa fa-genderless text-warning icon-xl"></i>
-                            </div>
-                            <!--end::Badge-->
-                            <!--begin::Text-->
-                            <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">Solving Question 7</div>
-                            <!--end::Text-->
-                          </div>
-                          <!--end::Item-->
-                          <!--begin::Item-->
-                          <div class="timeline-item align-items-start">
-                            <!--begin::Label-->
-                            <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">04:43</div>
-                            <!--end::Label-->
-                            <!--begin::Badge-->
-                            <div class="timeline-badge">
-                              <i class="fa fa-genderless text-danger icon-xl"></i>
-                            </div>
-                            <!--end::Badge-->
-                            <!--begin::Content-->
-                            <div class="timeline-content d-flex">
-                              <span class="font-weight-bolder text-danger-75 pl-3 font-size-lg">Window swap detected</span>
-                            </div>
-                            <!--end::Content-->
-                          </div>
-                          <!--end::Item-->
-
-                           <div class="timeline-item align-items-start">
-                            <!--begin::Label-->
-                            <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">04:44</div>
-                            <!--end::Label-->
-                            <!--begin::Badge-->
-                            <div class="timeline-badge">
-                              <i class="fa fa-genderless text-warning icon-xl"></i>
-                            </div>
-                            <!--end::Badge-->
-                            <!--begin::Text-->
-                            <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">Solving Question 8</div>
-                            <!--end::Text-->
-                          </div>
-                           <div class="timeline-item align-items-start">
-                            <!--begin::Label-->
-                            <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">04:45</div>
-                            <!--end::Label-->
-                            <!--begin::Badge-->
-                            <div class="timeline-badge">
-                              <i class="fa fa-genderless text-warning icon-xl"></i>
-                            </div>
-                            <!--end::Badge-->
-                            <!--begin::Text-->
-                            <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">Solving Question 10</div>
-                            <!--end::Text-->
-                          </div>
-
-                        </div>
+            </div>
             
           </div>
         </div>

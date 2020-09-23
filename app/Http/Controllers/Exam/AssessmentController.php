@@ -577,8 +577,10 @@ class AssessmentController extends Controller
 
             $folder = 'testlog/'.$exam->id.'/';
             $name = $folder.\auth::user()->username.'.json';
+            $name_log = $folder.'log/'.\auth::user()->username.'_log.json';
 
             $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+            $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
 
             if(Storage::disk('s3')->exists($exam->image)){
                 $base64_code = base64_encode(file_get_contents(Storage::disk('s3')->url($exam->image)));
@@ -594,8 +596,29 @@ class AssessmentController extends Controller
                
             }
 
+
         }else{
-            $url = null;
+
+            $folder = 'testlog/'.$exam->id.'/';
+            $name = $folder.\auth::user()->username.'.json';
+            $name_log = $folder.'log/'.\auth::user()->username.'_log.json';
+
+            $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+            $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
+
+            if(Storage::disk('s3')->exists($exam->image)){
+                $base64_code = base64_encode(file_get_contents(Storage::disk('s3')->url($exam->image)));
+                $base64_str = 'data:image/jpeg;base64,' . $base64_code;
+                $images['logo'] = $base64_str;
+            }
+
+            
+            if(\auth::user()->getImage()){
+                $base64_code = base64_encode(file_get_contents(\auth::user()->getImage()));
+                $base64_str = 'data:image/jpeg;base64,' . $base64_code;
+                $images['user'] = $base64_str;
+               
+            }
         }
 
 
@@ -1878,12 +1901,13 @@ class AssessmentController extends Controller
 
         $jsonname = $user->username.'_'.$exam->id.'.json';
 
-        if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/'.$user->username.'.json')){
-            $js = json_decode(Storage::disk('s3')->get('testlog/'.$exam->id.'/'.$user->username.'.json'),true);
+        if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/log/'.$user->username.'_log.json')){
+            $js = json_decode(Storage::disk('s3')->get('testlog/'.$exam->id.'/log/'.$user->username.'_log.json'),true);
             $js['completed'] = 1;
 
-            Storage::disk('s3')->put('testlog/'.$exam->id.'/'.$user->username.'.json',json_encode($js),'public');
+            Storage::disk('s3')->put('testlog/'.$exam->id.'/log/'.$user->username.'_log.json',json_encode($js),'public');
         }
+
 
         if(Storage::disk('s3')->exists('webcam/json/'.$jsonname)){
             $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$jsonname));
@@ -2087,7 +2111,7 @@ class AssessmentController extends Controller
         });
 
         $users = array();
-        $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/');
+        $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
         //$fl = collect($files);
         $pg = $this->paginateAnswers($files,18);
         foreach($pg as $f){
@@ -2095,28 +2119,35 @@ class AssessmentController extends Controller
             $u = explode('.',$p[2]);
 
             $content = json_decode(Storage::disk('s3')->get($f),true);
-            if(!$content['last_photo']){
-                $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
-                if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
-                    $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
-            }else{
-                $url_pieces = explode('_',$content['last_photo']);
-                $name = explode('/', $url_pieces[0]);
-                if(is_array($name))
-                    $name = $name[5];
-                
-                $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
-                if(!Storage::disk('s3')->exists($filepath)){
-                    $counter = explode('.',$url_pieces[2]);
-                    $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
-                    $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
-                    if(Storage::disk('s3')->exists($filepath)){
-                        $content['last_photo'] = $last_before_url ;
-                    }else{
-                        $content['last_photo'] = '';
+            $content['url'] = Storage::disk('s3')->url($f);
+
+            if(isset($content['last_photo'])){
+                if(!$content['last_photo']){
+                    $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
+                    if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
+                        $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+                }else{
+                    $url_pieces = explode('_',$content['last_photo']);
+                    $name = explode('/', $url_pieces[0]);
+                    if(is_array($name))
+                        $name = $name[5];
+                    
+                    $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
+                    if(!Storage::disk('s3')->exists($filepath)){
+                        $counter = explode('.',$url_pieces[2]);
+                        $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
+                        $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
+                        if(Storage::disk('s3')->exists($filepath)){
+                            $content['last_photo'] = $last_before_url ;
+                        }else{
+                            $content['last_photo'] = '';
+                        }
                     }
                 }
+            }else{
+                $content['last_photo'] = '';
             }
+            
 
             //var_dump($content->last_photo);
 

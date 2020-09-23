@@ -4,7 +4,7 @@
 
 <div class="testpage_wrap">
 <div class="p-2 p-md-3 testpage " style="display: none">
-<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}" data-auto_terminate="{{$exam->auto_terminate}}"
+<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}"
 
 action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
   <style>
@@ -68,7 +68,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
     <canvas id="canvas" style='display: none'></canvas>
      <canvas id="canvas3" style='display: none' ></canvas>
     <div class="output">
-    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}" data-last_photo="" style='display: none'> 
+    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}" data-rollnumber="{{\auth::user()->roll_number}}" data-uname="{{\auth::user()->name}}" data-last_photo="" style='display: none'> 
   </div>
 </div>
 </div>
@@ -511,7 +511,7 @@ div.chats {
     <div class="url2_{{$k}} d-none " data-url="{{$url2}}" ></div>
   @endforeach
   @endif
-  </div>
+</div>
 
 <div class="container fullscreen_container">
   <div class='border rounded p-4 mt-5'>

@@ -54,7 +54,7 @@ video ,#photo3{
     </canvas>
 
     <div class="output">
-    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}"  data-uname="{{\auth::user()->name}}" data-last_photo="" style='display: none' src=""> 
+    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}"  data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-last_photo="" style='display: none' src=""> 
      
   </div>
 </div>
