@@ -497,7 +497,8 @@ div.chats {
       
       </div>
       <div class="modal-body ">
-       The test will auto resume as the device gets connected to the internet. Kindly wait for reach out to test administrator.
+        <p><span class="badge badge-warning "><i class="fa fa-circle text-secondary"></i> Offline</span></p>
+       The test will auto resume as the device gets connected to the internet. For persistent disconnectivity, kindly reach out to the test administrator.
       </div>
       
     </div>
