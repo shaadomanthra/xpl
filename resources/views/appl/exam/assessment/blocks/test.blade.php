@@ -3,7 +3,9 @@
 @section('content')
 
 <div class="p-2 p-md-3 testpage " style="display: none">
-<form method="post" class="assessment" id="assessment" action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
+<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}" data-auto_terminate="{{$exam->auto_terminate}}"
+
+action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
   <style>
 .blink {
   animation: blinker 1s linear infinite;
@@ -26,7 +28,7 @@
         @if(Storage::disk('s3')->exists($exam->image))
         <picture>
         <img 
-      src="{{ Storage::disk('s3')->url($exam->image) }}  " class=" d-print-none mr-2" alt="{{  $exam->name }}" style='max-width:40px;'>
+      src="@if(isset($images['logo'])){{ $images['logo'] }} @endif " class="test_logo d-print-none mr-2" alt="{{  $exam->name }}" style='max-width:40px;'>
       </picture>
         @endif
         @else
@@ -158,7 +160,6 @@
       @include('appl.exam.assessment.blocks.qset')
     </div>
   </div> 
-
 
 
   <!-- Modal -->
@@ -436,7 +437,7 @@ div.chats {
       @if(isset($exam->settings->signature))
           @if(strtolower($exam->settings->signature)=='yes')
       <img 
-      src="{{ $user->getImage('signature') }}  " class="rounded d-inline" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Signature">
+      src="{{ $user->getImage('signature') }}  " class="rounded d-inline" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Signature" >
       @endif @endif @endif
     </div>
   </div>
@@ -510,13 +511,13 @@ div.chats {
 <div class="container fullscreen_container">
   <div class='border rounded p-4 mt-5'>
     <h3 class="mb-3 full_screen_message"><i class=" fa fa-check"></i> System Check </h3>
-    <p class="check_status">
+    <div id="check" class="check_status">
     @include('appl.exam.assessment.blocks.check')
     
     <p><div class="spinner-border spinner-border-sm cam_spinner" role="status">
   <span class="sr-only">Loading...</span>
 </div> @if($exam->camera) <span class="cam_message">checking for webcam access ...</span> @endif</p>
-</p>
+</div>
 
     <div class="btn btn-primary disabled fullscreen start_btn">Start Test</div>
   </div>

@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Cache;
 use Log;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class AssessmentController extends Controller
@@ -184,6 +186,24 @@ class AssessmentController extends Controller
         return view('appl.exam.assessment.'.$view)
             ->with('exams',$exams)->with('exam',$exam)->with('examtypes',$examtypes);
 
+
+    }
+
+    protected function paginateAnswers(array $answers, $perPage = 10)
+    {
+        $page = Input::get('page', 1);
+
+        $offset = ($page * $perPage) - $perPage;
+
+        $paginator = new LengthAwarePaginator(
+            array_slice($answers, $offset, $perPage, true),
+            count($answers),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return $paginator;
     }
 
     /**
@@ -538,7 +558,7 @@ class AssessmentController extends Controller
             $time = $time + $section->time;
         }
 
-        $url =$url2= null;
+        $url =$url2= $images = null;
         if($exam->camera){
             $folder = 'webcam/'.$exam->id.'/';
             $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
@@ -559,9 +579,26 @@ class AssessmentController extends Controller
             $name = $folder.\auth::user()->username.'.json';
 
             $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+
+            if(Storage::disk('s3')->exists($exam->image)){
+                $base64_code = base64_encode(file_get_contents(Storage::disk('s3')->url($exam->image)));
+                $base64_str = 'data:image/jpeg;base64,' . $base64_code;
+                $images['logo'] = $base64_str;
+            }
+
+            
+            if(\auth::user()->getImage()){
+                $base64_code = base64_encode(file_get_contents(\auth::user()->getImage()));
+                $base64_str = 'data:image/jpeg;base64,' . $base64_code;
+                $images['user'] = $base64_str;
+               
+            }
+
         }else{
             $url = null;
         }
+
+
 
 
         if(!$request->get('student') && !$request->get('admin'))
@@ -588,6 +625,7 @@ class AssessmentController extends Controller
                         ->with('passages',$passages)
                         ->with('questions',$questions)
                         ->with('dynamic',$dynamic)
+                        ->with('images',$images)
                         ->with('section_questions',$section_questions);
     }
 
@@ -2050,15 +2088,42 @@ class AssessmentController extends Controller
 
         $users = array();
         $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/');
-        foreach($files as $f){
+        //$fl = collect($files);
+        $pg = $this->paginateAnswers($files,18);
+        foreach($pg as $f){
             $p = explode('/',$f);
             $u = explode('.',$p[2]);
 
-         
-            
-            array_push($users, json_decode(Storage::disk('s3')->get($f),true));
+            $content = json_decode(Storage::disk('s3')->get($f),true);
+            if(!$content['last_photo']){
+                $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
+                if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
+                    $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+            }else{
+                $url_pieces = explode('_',$content['last_photo']);
+                $name = explode('/', $url_pieces[0]);
+                if(is_array($name))
+                    $name = $name[5];
+                
+                $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
+                if(!Storage::disk('s3')->exists($filepath)){
+                    $counter = explode('.',$url_pieces[2]);
+                    $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
+                    $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
+                    if(Storage::disk('s3')->exists($filepath)){
+                        $content['last_photo'] = $last_before_url ;
+                    }else{
+                        $content['last_photo'] = '';
+                    }
+                }
+            }
+
+            //var_dump($content->last_photo);
+
+            array_push($users, $content);
         }
 
+      
         // if(!$r->get('api'))
         // $this->authorize('create', $exam);
 
@@ -2130,7 +2195,9 @@ class AssessmentController extends Controller
             return view('appl.exam.exam.active')
                     ->with('data',$data)
                     ->with('users',$users)
+                    ->with('pg',$pg)
                     ->with('exam',$exam)
+                    ->with('proctor',1)
                     ->with('active',1);
         else
             abort(404);

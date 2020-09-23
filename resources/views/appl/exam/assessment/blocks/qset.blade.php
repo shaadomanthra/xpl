@@ -1,6 +1,6 @@
 
 <style>
-video {
+video ,#photo3{
     width: 60px;
     height: 60px;
     object-fit: cover;
@@ -24,9 +24,9 @@ video {
 
 		</div>
 		<div class="col-6">
-		@if($user->getImage())
+		@if(isset($images['user']))
         <img 
-      src="{{ $user->getImage() }}  " class="rounded d-inline float-right" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Profile Picture">
+      src="{{ $images['user'] }}  " class="rounded d-inline float-right" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Profile Picture">
       @endif
       @if(isset($exam->settings))
       @if(isset($exam->settings->signature))
@@ -41,15 +41,20 @@ video {
 <div class="card mb-3 text-white d-none d-md-block blogd" style="background:#ca2428">
 	<div class="card-body">
 
-		@if(!isMobileDevice())
+@if(!isMobileDevice())
 @if($camera)
 <div class="camera_holder  rounded float-right">
 <div class="">
-    <video id="video" class="video_small rounded" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style="width:60px;height:60px;">Video stream not available.</video>
-    <canvas id="canvas" style='display: none'>
+	<img id="photo3" style="position: absolute;right:0;top:15px" src=""> 
+    <video id="video" class="video_small rounded" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style="width:60px;height:60px;position: absolute;right:0;top:15px">Video stream not available.</video>
+    <canvas id="canvas" style='display: none' >
     </canvas>
+    <canvas id="canvas3" style='display: none' >
+    </canvas>
+
     <div class="output">
-    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}"  data-uname="{{\auth::user()->name}}" data-last_photo="" style='display: none'> 
+    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}"  data-uname="{{\auth::user()->name}}" data-last_photo="" style='display: none' src=""> 
+     
   </div>
 </div>
 </div>

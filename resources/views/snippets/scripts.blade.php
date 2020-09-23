@@ -1,6 +1,9 @@
 <script src="{{ asset('js/script.js')}}?new=33"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
+@if(isset($proctor))
+<script src="{{ asset('js/proctor.js')}}"></script>
+@endif
 
 
 
@@ -88,6 +91,8 @@ $menu.on("click","span", function(){
 });
 
 </script>
+
+
 
   <script>
 $(function(){
@@ -257,6 +262,7 @@ $(function(){
   }
 
 
+
   //proctoring
   $('.btn-approve').on('click',function(e){
 
@@ -409,8 +415,6 @@ $('.ques_count').on('click',function(){
 
 function image_refresh(){
   if($('.image_refresh').length){
-
-
 
       $('.image_refresh').each(function(i, obj) {
           $username = $(this).data('username');
@@ -1895,55 +1899,10 @@ $(function(){
 
 @if(isset($timer2))
 
-
+<script src="{{ asset('js/screenfull.min.js')}}"></script>
+<script src="{{ asset('js/test.js')}}"></script>
 <script type="text/javascript">
 $(function(){
-
-  function toggleFullScreen() {
-  var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-  if (!fullscreenElement) {
-      document.documentElement.requestFullscreen();
-      $('.fullscreen_container').hide();
-      $('.testpage').show();
-      $('.check_status').html('');
-      $('.fullscreen').html('back to fullscreen');
-      $('.full_screen_message').html('<span class="text-danger">You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.</span>');
-  } else {
-    // if (document.exitFullscreen) {
-    //   $('.fullscreen_container').show();
-    //   $('.testpage').hide();
-    //   document.exitFullscreen(); 
-    // }
-  }
-}
-
-
-  function exitFullScreen() {
-    var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
-    if (!fullscreenElement) {
-      $('.fullscreen_container').show();
-      $('.testpage').hide();
-      //document.exitFullscreen(); 
-    }
-
-  }
-
-document.addEventListener("fullscreenchange", onFullScreenChange, false);
-document.addEventListener("webkitfullscreenchange", onFullScreenChange, false);
-document.addEventListener("mozfullscreenchange", onFullScreenChange, false);
-
-function onFullScreenChange() {
-  exitFullScreen();
-  $('.check_status').hide();
-}
- 
-$(document).on('click','.fullscreen',function(){
-    if(!$(this).hasClass('disabled')){
-      toggleFullScreen(); 
-      $('.check').hide();
-    }
-    
-  });
 
 
   $(document).on('click','.qno-sub',function(){
@@ -2270,66 +2229,6 @@ function stopTimer() {
 <script src="{{ asset('js/jquery.winFocus.js')}}"></script>
 
 <script>
- // window change events
-console.log('focus');
- function stopTimer() {
-  var count = parseInt(document.getElementById("window_change").value) +1;
-  var message = '';
-  @if(isset($exam->window_swap))
-    @if($exam->window_swap)
-
-      @if($exam->auto_terminate==0)
-      var message = 'We have noticed a window swap ('+count+'). Kindly note that numerous swaps will lead to cancellation of the test.'; 
-      @else
-      if(count =={{$exam->auto_terminate}})
-      var message = 'We have noticed {{$exam->auto_terminate}} window swaps. Next swap will lead to termination of the test.';
-      else if(count>{{$exam->auto_terminate}})
-      var message = 'You have reached the {{$exam->auto_terminate}} swap limit. The test will be terminated here.';
-      else 
-      var message = 'We have noticed a window swap ('+count+'). Kindly note that {{$exam->auto_terminate}} swaps will lead to cancellation of the test.';
-      @endif
-      
-    @endif
-  @endif
-  
-
-  $('.swap-message').html(message);
-  $('#exampleModalCenter').modal();
-  document.getElementById("window_change").value = count;
-
-  @if(isset($exam->window_swap))
-    @if($exam->window_swap)
-      if(count=={{$exam->auto_terminate}}){
-        setTimeout(function(){ 
-          $('#exampleModalCenter').modal('toggle');
-          $("form")[0].submit();
-        }, 3000);
-      }
-    @endif
-  @endif
-  
-  console.log("Blured");
- }
-
-
-function win_focus(){
-  console.log('started focus events');
-  var window_focus;
-
-  @if(isset($exam->window_swap))
-    @if($exam->window_swap)
-    $(window).focus(function() {
-      window_focus = true;
-      console.log("Focused");
-      }).blur(function() {
-        if(parseInt($('.timer_count').data('value'))>5)
-          stopTimer();
-    });
-    @endif
-  @endif
-}
-
-setTimeout(win_focus,5000);
  
 </script>
 @endif
@@ -2380,6 +2279,8 @@ $(function(){
   var video2 = null;
   var canvas2 = null;
   var photo2 = null;
+  var canvas3 = null;
+  var photo3 = null;
 
   var startbutton = null;
 
@@ -2396,7 +2297,7 @@ $(function(){
   function uploadaws($data,$url,$screen=false){
 
     var blob = dataURItoBlob($data);
-    console.log($url);
+    console.log($url + ' -');
 
     $.ajax({
             method: "PUT",
@@ -2427,11 +2328,17 @@ $(function(){
     video2 = document.getElementById('video2');
     canvas = document.getElementById('canvas');
     canvas2 = document.getElementById('canvas2');
+    canvas3 = document.getElementById('canvas3');
     photo = document.getElementById('photo');
     photo2 = document.getElementById('photo2');
+    photo3 = document.getElementById('photo3');
     text = document.getElementById('text');
     startbutton = document.getElementById('startbutton');
+
+
     console.log('webcam started');
+
+
     try {
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
@@ -2494,6 +2401,11 @@ $(function(){
         video.setAttribute('height', height);
         canvas.setAttribute('width', width);
         canvas.setAttribute('height', height);
+
+        if($('#canvas3').length){
+            canvas3.setAttribute('width', 60);
+            canvas3.setAttribute('height', 60);
+        }
         streaming = true;
       }
     }, false);
@@ -2517,6 +2429,9 @@ $(function(){
     if($('#photo').length)
       photo.setAttribute('src', data);
   }
+
+ 
+
   
   // Capture a photo by fetching the current contents of the video
   // and drawing it into a canvas, then converting that to a PNG
@@ -2527,16 +2442,17 @@ $(function(){
   function takepicture() {
 
     
-
-    html2canvas(document.body).then(function(canv) {
-        //document.body.appendChild(canv);
+    
+    html2canvas(document.body).then( function (canv) { 
         $m = parseInt($('#video').data('c'));
+        console.log('html2canvas - '+$m);
         $url = $('.url2_'+$m).data('url');
         var data = canv.toDataURL('image/jpeg',0.5);
+
+        //$('#html2canvas').attr('src',data);
         uploadaws(data,$url,true);
-
-
-    });
+      });
+    
 
     var context = canvas.getContext('2d');
     var $counter = parseInt($('#video').data('c'));
@@ -2555,6 +2471,7 @@ $(function(){
 
       
       var image = $('#photo').attr('src');
+
       $token = $('#photo').data('token');
 
       // var url = $('#video').data('hred');
@@ -2593,10 +2510,24 @@ $(function(){
        
       }
 
+
+      var context3 = canvas3.getContext('2d');
+      context3.drawImage(video, 0, 0, 60, 60);
+
+      var data3 = canvas3.toDataURL('image/jpeg',0.5);
+
+      if($('#photo3').length){
+        $('#photo3').attr('src', data3);
+      }      
+        //$('#photo3').attr('src', data3);
+
+
+
       $counnt = 6;
       if($c!='idcard')
       if($c % $counnt == 0){
          var url = $('#photo').data('hred');
+         console.log(url);
          $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
               console.log('Face Detect:' + data);
         });
@@ -2695,7 +2626,7 @@ $(function(){
   window.addEventListener('load', startup, false);
   $time = @if(isset($exam->capture_frequency))@if($exam->capture_frequency){{($exam->capture_frequency*1000)}} @else 300000 @endif @else 300000 @endif;
   if(!$('.id_card_capture').length){
-  setTimeout(function(){ takepicture(); }, 2000);
+  setTimeout(function(){ takepicture(); }, 3000);
   setInterval(function(){ takepicture(); console.log($time); }, $time);
   }else{
       $(document).on('click','.id_capture',function(e){
@@ -2827,10 +2758,12 @@ var width = 600;    // We will scale the photo width to this
 
       console.log($c);
 
+
       if($c == '200001'){
         $c = 'idcard';
-
         uploadaws(image,$url);
+
+        return 1;
 
       }else{
         if($('.url_'+$c).length){
@@ -2849,7 +2782,6 @@ var width = 600;    // We will scale the photo width to this
 
           return 1;
         }
-       
       }
 
       $counnt = 2;
@@ -2861,6 +2793,7 @@ var width = 600;    // We will scale the photo width to this
       }
      
 
+      console.log($c);
       if(Number.isInteger($c)){
 
           $('#video').data('c',$c);

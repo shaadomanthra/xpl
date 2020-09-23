@@ -25,8 +25,8 @@
 
 @endif
 
+@auth
 <div class="bg-light border rounded p-3 camera_success mb-3" style="">
-	
 	<video id="video" class="mb-3 bg-light " width="200px" >Video stream not available.</video>
 	<canvas id="canvas" style='display: none'>
 	</canvas>
@@ -36,4 +36,6 @@
   <span class="sr-only">Loading...</span>
 </div> &nbsp;Checking for webcam access. <br>If you are not able to see your live webcam feed here, then swtich to latest google chrome browser. Please note that, webcam access is mandatory to take this test.</div>
 </div>
+@endauth
+
 @endif

@@ -1,5 +1,5 @@
 @extends('layouts.app-metronic')
-@section('title', 'Proctor - '.$exam->name)
+@section('title', 'Proctor Dashboard - '.$exam->name)
 @section('content')
 
 @include('appl.exam.exam.xp_css')
@@ -138,31 +138,45 @@
 <div class="px-5 container">
 <div  class="row  no-gutters {{$i=0}}">
 
-
+@if($pg->total()!=0)
 @foreach($users as $a => $b)
 
-<div class="col-md-2 ">
+
+<div class="col-6 col-md-2 ">
   <div class="card   mb-2 mx-1 @if($b['completed']==0)bg-light-warning  @endif card_{{$a}}">
     <div class="p-4 ">
 
      
       <div class="">
         <div class="action_{{$a}} d-inline float-right">
-      
+        
       </div>
-              <h6 class="mb-3 d-inline"> @if(isset($b['name'])){{substr($b['name'],0,15)}} @else {{substr($b['username'],0,15)}} @endif</h6>
+              <h6 class="mb-3 d-inline"> @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @else {{substr($b['username'],0,15)}} @endif</h6>
+            @if($b['last_photo'])
             <div class="selfie_container mt-4">
               <img src="{{$b['last_photo']}}" class="w-100">
             </div>
+            @endif
+
+            <p class="mb-0 mt-3">
+              <i class="fa fa-comment-alt text-success mr-4 d-none"></i> 
+              <i class="far fa-list-alt text-info mr-4 cursor user_log"></i> 
+              <i class="fas fa-power-off text-danger mr-4"></i> </p>
           </div>
   
     </div>
   </div>
 </div>
 @endforeach
+@endif
 
   
 </div>
+
+<nav aria-label="Page navigation  " class="card-nav @if($pg->total() > 16 )my-3 mb-5 @endif">
+        {{$pg->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
+      </nav>
+
 </div>
 
 <style>
