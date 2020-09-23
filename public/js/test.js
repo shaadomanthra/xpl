@@ -111,9 +111,11 @@ $(document).ready(function(){
       textContent = result ? 1 : 0;
       if(textContent){
         $('.connection_status').html("<i class='fa fa-circle text-success'></i> Online");
+        $('.testpage').show();
         $('#no_connectivity').modal('hide');
         $('.connection_status').data('status',1);
       }else{
+        $('.testpage').hide();
         $('#no_connectivity').modal({backdrop: 'static', keyboard: false});
         $('.connection_status').html("<i class='fa fa-circle text-secondary'></i> Offline");
         $('.connection_status').data('status',0);
