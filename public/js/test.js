@@ -117,6 +117,7 @@ $(document).ready(function(){
       }else{
         $('.testpage').hide();
         $('#no_connectivity').modal({backdrop: 'static', keyboard: false});
+        $('.fullscreen_container').hide();
         $('.connection_status').html("<i class='fa fa-circle text-secondary'></i> Offline");
         $('.connection_status').data('status',0);
       }
