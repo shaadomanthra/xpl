@@ -18,7 +18,7 @@
     </head>
     <body>
         <!-- ========== HEADER ========== -->
-        <header id="header" class="header header-box-shadow-on-scroll header-bg-transparent header-abs-top header-show-hide" data-hs-header-options='{
+        <header id="header" class="header  header-bg-transparent  header-abs-top" data-hs-header-options='{
             "fixMoment": 1000,
             "fixEffect": "slide"
           }'>
@@ -46,7 +46,7 @@
                                    
                                     <!-- Button -->
                                     <li class="navbar-nav-last-item">
-                                        <a class="btn btn-sm btn-primary transition-3d-hover" href="{{ route('login')}}" >
+                                        <a class="btn btn-sm btn-danger transition-3d-hover" href="{{ route('login')}}" >
                     Login</a>
                                     </li>
                                     <!-- End Button -->
@@ -63,15 +63,15 @@
         <!-- ========== MAIN ========== -->
         <main id="content" role="main" class="overflow-hidden">
             <!-- Hero Section -->
-            <div class="gradient-y-gray position-relative">
+            <div class=" bg-primary position-relative">
                 <div class="space-top-3 space-bottom-2 space-bottom-lg-3">
-                    <div class="container mt-lg-11">
+                    <div class="container mt-lg-11 text-white   ">
                         <!-- Content -->
-                        <div class="row">
+                        <div class="row" style="position:relative; z-index:10">
                             <div class="col-lg-5 col-xl-6">
                                 <div class="mb-5">
-                                    <h1 class="display-4">Defining new standards&nbsp;&nbsp;</h1>
-                                    <p class="lead">...in learning, assessments, hiring, content creation, testing, and data management.</p>
+                                    <h1 class="display-4 text-white">Defining new standards&nbsp;&nbsp;</h1>
+                                    <p class="lead text-white">...in learning, assessments, hiring, content creation, testing, and data management.</p>
                                 </div>
                                 <!-- Fancybox -->
                                 <a class="js-fancybox video-player video-player-btn media align-items-center text-dark" href="javascript:;" data-hs-fancybox-options="{
@@ -82,13 +82,36 @@
                    &quot;youtube&quot;: {
                      &quot;autoplay&quot;: 1
                    }
-                 }"> <span class="video-player-icon shadow-soft mr-3"> <i class="fa fa-play"></i> </span> <span class="media-body">
+                 }"> <span class="video-player-icon shadow-soft mr-3"> <i class="fa fa-play"></i> </span> <span class="media-body text-warning">
                   How it works </span> </a>
                                 <!-- End Fancybox -->
                             </div>
                         </div>
                         <!-- End Content -->
                     </div>
+                     <!-- SVG Shapes -->
+                <figure class="position-absolute top-0 left-0 w-60" style="">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1246 1078">
+                        <g opacity=".4">
+                            <linearGradient id="doubleEllipseTopLeftID1" gradientUnits="userSpaceOnUse" x1="2073.5078" y1="1.7251" x2="2273.4375" y2="1135.5818" gradientTransform="matrix(-1 0 0 1 2600 0)">
+                                <stop class="stop-color-primary-lighter" offset="0.4976" style="stop-color:#19A0FF"></stop>
+                                <stop class="stop-color-primary" offset="1" style="stop-color:#377DFF"></stop>
+                            </linearGradient>
+                            <polygon fill="url(#doubleEllipseTopLeftID1)" points="519.8,0.6 0,0.6 0,1078 863.4,1078   "></polygon>
+                            <linearGradient id="doubleEllipseTopLeftID2" gradientUnits="userSpaceOnUse" x1="1717.1648" y1="3.779560e-05" x2="1717.1648" y2="644.0417" gradientTransform="matrix(-1 0 0 1 2600 0)">
+                                <stop class="stop-color-primary-lighter" offset="1.577052e-06" style="stop-color:#19A0FF"></stop>
+                                <stop class="stop-color-primary" offset="1" style="stop-color:#377DFF"></stop>
+                            </linearGradient>
+                            <polygon fill="url(#doubleEllipseTopLeftID2)" points="519.7,0 1039.4,0.6 1246,639.1 725.2,644   "></polygon>
+                        </g>
+                    </svg>
+                </figure>
+                <figure class="position-absolute right-0 bottom-0 left-0 mb-n1">
+                    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+                        <path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"></path>
+                    </svg>
+                </figure>
+                <!-- End SVG Shapes -->         
                     <div class="transform-rotate-5">
                         <div class="d-none d-lg-flex flex-lg-wrap align-items-lg-end position-absolute top-0 left-50 transform-rotate-6" style="width: 45rem;">
                             <!-- Device Mockup -->
@@ -304,7 +327,7 @@
                     <!-- Title -->
                     <div class="w-md-80 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
                         <span class="d-block small font-weight-bold text-cap mb-2">For Schools and Training institues</span>
-                        <h2><span style="font-size: 1.875rem;">Focus on teaching, while we take  care of assessment, monitoring, learning and the metrics</span></h2>
+                        <h2><span style="font-size: 1.875rem;">Focus on running the business, while we take  care of assessment, monitoring, learning and the metrics</span></h2>
                     </div>
                     <!-- End Title -->
                     <div class="w-md-80 mx-md-auto">

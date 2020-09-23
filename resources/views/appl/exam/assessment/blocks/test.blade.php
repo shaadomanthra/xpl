@@ -428,6 +428,7 @@ div.chats {
       <p class="mb-0">
         {{ auth::user()->roll_number}}<br>
         @if(auth::user()->branch_id) {{  auth::user()->branch->name }} @endif</br>
+        <span class="badge badge-warning connection_status" data-status=1></span>
       </p>
 
     </div>
@@ -484,6 +485,21 @@ div.chats {
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="no_connectivity" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-danger" id="exampleModalLongTitle"><i class="fa fa-times-circle"></i> Not connected to internet</h3>
+      
+      </div>
+      <div class="modal-body ">
+       The test will auto resume as the device gets connected to the internet. Kindly wait for reach out to test administrator.
+      </div>
+      
     </div>
   </div>
 </div>

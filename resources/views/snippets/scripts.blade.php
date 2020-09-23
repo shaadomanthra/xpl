@@ -2166,44 +2166,43 @@ var countDownDate = addMinutes(new Date(),{{ ($time) }});
 // Update the count down every 1 second
 var x = setInterval(function() {
 
-  // Get todays date and time
-  var now = new Date().getTime();
+ if(parseInt($('.connection_status').data('status'))){
+    // Get todays date and time
+    var now = new Date().getTime();
 
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
 
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  // Display the result in the element with id="demo"
+    // Display the result in the element with id="demo"
+    document.getElementById("timer").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
+    document.getElementById("timer2").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
+    
+    
 
-  document.getElementById("timer").innerHTML =  hours + "h "
-  + minutes + "m " + seconds + "s ";
+    if(hours==0 && minutes==5 && seconds==1)
+      $('#timer_alert').modal();
 
+    $tcount = parseInt($('.timer_count').data('value'))-1;
+    $('.timer_count').data('value',$tcount);
+    // if(seconds==56)
+    //   $('#timer_alert').modal();
 
-  document.getElementById("timer2").innerHTML =  hours + "h "
-  + minutes + "m " + seconds + "s ";
+    // If the count down is finished, write some text 
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("timer").innerHTML = "EXPIRED";
+      document.getElementById("timer2").innerHTML = "EXPIRED";
 
-  if(hours==0 && minutes==5 && seconds==1)
-    $('#timer_alert').modal();
-
-  $tcount = parseInt($('.timer_count').data('value'))-1;
-  $('.timer_count').data('value',$tcount);
-  // if(seconds==56)
-  //   $('#timer_alert').modal();
-
-  // If the count down is finished, write some text 
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("timer").innerHTML = "EXPIRED";
-    document.getElementById("timer2").innerHTML = "EXPIRED";
-
-    @if(isset($exam))
-      alert('The Test time has expired. ');
-      document.getElementById("assessment").submit();
-      
-    @endif
+      @if(isset($exam))
+        alert('The Test time has expired. ');
+        document.getElementById("assessment").submit();
+        
+      @endif
+    }
   }
 }, 1000);
 

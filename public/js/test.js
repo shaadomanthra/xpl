@@ -92,6 +92,33 @@ $(document).ready(function(){
 
     // start window focus events after 5 seconds
     setTimeout(win_focus,5000);
+    $('.connection_status').data('status',1);
+    //check connectivity
+    const checkOnlineStatus = async () => {
+      try {
+        var time = new Date();
+        const online = await fetch("/1pixel.png?time="+time);
+
+        return online.status >= 200 && online.status < 300; // either true or false
+      } catch (err) {
+        return false; // definitely offline
+      }
+    };
+
+    setInterval(async () => {
+      const result = await checkOnlineStatus();
+      //const statusDisplay = document.getElementById("status");
+      textContent = result ? 1 : 0;
+      if(textContent){
+        $('.connection_status').html("<i class='fa fa-circle text-success'></i> Online");
+        $('#no_connectivity').modal('hide');
+        $('.connection_status').data('status',1);
+      }else{
+        $('#no_connectivity').modal({backdrop: 'static', keyboard: false});
+        $('.connection_status').html("<i class='fa fa-circle text-secondary'></i> Offline");
+        $('.connection_status').data('status',0);
+      }
+    }, 3000);
 
 
 });
