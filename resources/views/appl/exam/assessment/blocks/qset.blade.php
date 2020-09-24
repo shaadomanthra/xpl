@@ -64,7 +64,7 @@ video ,#photo3{
 @endif
 @endif
 
-		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer &nbps;&nbps;
+		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer &nbsp;&nbsp;
 		@if(isset($exam->calculator))
 		@if($exam->calculator)
 		<span class="" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> </span>
