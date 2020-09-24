@@ -90,6 +90,12 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
 
         <i class="fa fa-commenting-o mr-2 cursor" data-toggle="tooltip"  title="Message Proctor"  x ></i></a>
         @endif @endif @endif
+        @if(isset($exam->calculator))
+    @if($exam->calculator)
+    <span class=" mr-2" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> </span>
+    @endif
+    @endif
+
         <a href="#" data-toggle="modal" class="text-light" data-target="#student_info">
             <i class="fa fa-user-circle mr-2 cursor" data-toggle="tooltip"  title="View Student Info"></i></a>
       </div>

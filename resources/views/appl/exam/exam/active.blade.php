@@ -280,7 +280,7 @@ div.chats {
       </div>
       <div class="modal-body ">
        <div class="pb-4">
-        <img src="" class="float-right log_pic border" width="150px" style="display:none" />
+        <img src="" class="float-right log_pic border" height="100px" style="display:none" />
         <div class="">Name: <b><span class="log_name text-success"></span></b></div>
         <div>Roll Number: <b><span class="log_rollnumber text-primary"></span></b></div>
         <div>OS details: <b><span class="log_os text-muted"></span></b></div>
@@ -288,6 +288,10 @@ div.chats {
         <div>IP Address: <b><span class="log_ip text-muted"></span></b></div>
         <div>Window Swaps: <b><span class="log_swaps text-danger"></span></b></div>
       </div>
+
+      <div class="pb-4">
+      <a href="" class="btn btn-primary" target="_blank"><i class="fa fa-camera text-white"></i> Student Snaps</a> &nbsp;&nbsp;&nbsp;<a href="text-primary" class="btn btn-success" target="_blank"><i class="fa fa-image text-white"></i> Screen Snaps</a> 
+    </div>
     
         <div class="chats">
           
