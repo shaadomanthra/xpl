@@ -27,7 +27,7 @@
                     <!-- Nav -->
                     <nav class="js-mega-menu navbar navbar-expand-lg">
                         <!-- Logo -->
-                        <a class="navbar-brand" href="#" aria-label="Front"> <img src="{{ asset('img/piofx.png')}}" alt="Logo" class="p-1"> </a>
+                        <a class="navbar-brand" href="#" aria-label="Front"> <img src="{{ asset('img/piofx-white.png')}}" alt="Logo" class="p-1"> </a>
                         <!-- End Logo -->
                         <!-- Responsive Toggle Button -->
                         <button type="button" class="navbar-toggler btn btn-icon btn-sm rounded-circle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
