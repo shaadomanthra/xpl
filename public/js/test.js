@@ -8,11 +8,14 @@ $(document).ready(function(){
       var browser = $('.browser_details').html();
       var safari = browser.includes("Safari");
         if(safari){
+              if(!$('.start_btn').hasClass('disabled')){
                 $('.testpage').show();
                 $('.fullscreen_container').hide();
                 $('#check').hide();
+              }
+                
         }else{
-            if (screenfull.isEnabled) {
+            if (screenfull.isEnabled && !$('.start_btn').hasClass('disabled')) {
                 screenfull.request();
                 $('.fullscreen_container').hide();
                 $('.testpage').show();
@@ -313,8 +316,8 @@ $(document).ready(function(){
       if($('.js_details').length){
           $('.js_details').html("enabled");
           $('.accesscode_btn_wrap').show();
-          if(camera)
-          $('.start_btn').removeClass('disabled');
+          if(!camera)
+           $('.start_btn').removeClass('disabled');
           
     
       }

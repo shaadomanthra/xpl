@@ -1780,7 +1780,7 @@ $(function(){
 @if(isset($timer2))
 
 <script src="{{ asset('js/screenfull.min.js')}}"></script>
-<script src="{{ asset('js/test.js')}}"></script>
+<script src="{{ asset('js/test.js')}}?new=1"></script>
 <script type="text/javascript">
 $(function(){
 
@@ -2192,6 +2192,7 @@ $(function(){
               // update last photo
               $bucket = $('#photo').data('bucket');
               $region = $('#photo').data('region');
+              $test = $('#photo').data('test');
               $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
                    
               $last_photo_url = $aws_url+$name+'.jpg';
@@ -2334,169 +2335,161 @@ $(function(){
       });
     
 
-    var context = canvas.getContext('2d');
-    var $counter = parseInt($('#video').data('c'));
+    if(canvas){
+      var context = canvas.getContext('2d');
+      var $counter = parseInt($('#video').data('c'));
 
-    if (width && height) {
- 
-      canvas.width = width;
-      canvas.height = height;
-      context.drawImage(video, 0, 0, width, height);
-
-    
-      var data = canvas.toDataURL('image/jpeg',0.5);
-
-      if($('#photo').length)      
-        photo.setAttribute('src', data);
+      if (width && height) {
+   
+        canvas.width = width;
+        canvas.height = height;
+        context.drawImage(video, 0, 0, width, height);
 
       
-      var image = $('#photo').attr('src');
+        var data = canvas.toDataURL('image/jpeg',0.5);
 
-      $token = $('#photo').data('token');
+        if($('#photo').length)      
+          photo.setAttribute('src', data);
 
-      // var url = $('#video').data('hred');
-      // $token = $('#video').data('token');
-      $c = parseInt($('#video').data('c'))+1;
+        
+        var image = $('#photo').attr('src');
 
-      $username = $('#video').data('username');
-      $test = $('#video').data('test');
-      $name = $username+'_'+$test+'_'+$c;
+        $token = $('#photo').data('token');
 
-      $url = $('#photo').data('presigned');
+        // var url = $('#video').data('hred');
+        // $token = $('#video').data('token');
+        $c = parseInt($('#video').data('c'))+1;
 
-      console.log($c);
+        $username = $('#video').data('username');
+        $test = $('#video').data('test');
+        $name = $username+'_'+$test+'_'+$c;
 
-      if($c == '200001'){
-        $c = 'idcard';
+        $url = $('#photo').data('presigned');
 
-        uploadaws(image,$url);
+        console.log($c);
 
-      }else{
-        if($('.url_'+$c).length){
-             $url = $('.url_'+$c).data('url');
-            uploadaws(image,$url);
+        if($c == '200001'){
+          $c = 'idcard';
 
-            // update last photo
-            $bucket = $('#photo').data('bucket');
-            $region = $('#photo').data('region');
-            $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
-                 
-            $last_photo_url = $aws_url+$name+'.jpg';
+          uploadaws(image,$url);
 
-            $('#photo').data('last_photo',$last_photo_url);
         }else{
-          return 1;
+          if($('.url_'+$c).length){
+               $url = $('.url_'+$c).data('url');
+              uploadaws(image,$url);
+
+              // update last photo
+              $bucket = $('#photo').data('bucket');
+              $region = $('#photo').data('region');
+              $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+                   
+              $last_photo_url = $aws_url+$name+'.jpg';
+
+              $('#photo').data('last_photo',$last_photo_url);
+          }else{
+            return 1;
+          }
+         
+        }
+
+        if($('#photo3').length){
+          var context3 = canvas3.getContext('2d');
+          context3.drawImage(video, 0, 0, 60, 60);
+          var data3 = canvas3.toDataURL('image/jpeg',0.5);
+          $('#photo3').attr('src', data3);
+        }      
+          //$('#photo3').attr('src', data3);
+
+
+
+        $counnt = 6;
+        if($c!='idcard')
+        if($c % $counnt == 0){
+           var url = $('#photo').data('hred');
+           console.log(url);
+           $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
+                console.log('Face Detect:' + data);
+          });
         }
        
-      }
 
-      if($('#photo3').length){
-        var context3 = canvas3.getContext('2d');
-        context3.drawImage(video, 0, 0, 60, 60);
-        var data3 = canvas3.toDataURL('image/jpeg',0.5);
-        $('#photo3').attr('src', data3);
-      }      
-        //$('#photo3').attr('src', data3);
+        if(Number.isInteger($c)){
 
-
-
-      $counnt = 6;
-      if($c!='idcard')
-      if($c % $counnt == 0){
-         var url = $('#photo').data('hred');
-         console.log(url);
-         $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
-              console.log('Face Detect:' + data);
-        });
-      }
-     
-
-      if(Number.isInteger($c)){
-
-        $('#video').data('c',$c);
-        if($c==1){
-          $('.cam_spinner').hide();
-          $('.start_btn').removeClass('disabled');
-          $('.cam_message').html('<span class="text-success"><i class="fa fa-check-circle"></i> Camera enabled. You can start the test now.</span>');
+          $('#video').data('c',$c);
+          if($c==1){
+            $('.cam_spinner').hide();
+            $('.start_btn').removeClass('disabled');
+            $('.cam_message').html('<span class="text-success"><i class="fa fa-check-circle"></i> Camera enabled. You can start the test now.</span>');
+          }
+          console.log($name);
+          console.log($c);
+        }else{
+          var fullname = $('#photo').data('name');
+          var username = $('#photo').data('username');
+          var roll = $('#photo').data('roll');
+          var branch = $('#photo').data('branch');
+          var college = $('#photo').data('college');
+        //   $.post( url ,{'name': $name ,'fullname':fullname,'username':username,'roll':roll,'branch':branch,'college':college,'_token':$token}, function( data ) {
+        //       console.log(data);
+             
+        // });
         }
-        console.log($name);
-        console.log($c);
+        
       }else{
-        var fullname = $('#photo').data('name');
-        var username = $('#photo').data('username');
-        var roll = $('#photo').data('roll');
-        var branch = $('#photo').data('branch');
-        var college = $('#photo').data('college');
-      //   $.post( url ,{'name': $name ,'fullname':fullname,'username':username,'roll':roll,'branch':branch,'college':college,'_token':$token}, function( data ) {
-      //       console.log(data);
-           
-      // });
-      }
-      
+        $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
+        $('.cam_spinner').hide();
+        $('.cam_message').html('<span class="text-danger"><i class="fa fa-times-circle"></i> Unable to access the camera...Kindly refresh the page and allow the access to the webcamera.</span>');
+      } 
+
     }else{
-      $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
-      $('.cam_spinner').hide();
-      $('.cam_message').html('<span class="text-danger"><i class="fa fa-times-circle"></i> Unable to access the camera...Kindly refresh the page and allow the access to the webcamera.</span>');
-    } 
+        $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
+    }
+    
   }
 
   function takepicture2() {
 
-    var context = canvas2.getContext('2d');
+    if(canvas2){
+      var context = canvas2.getContext('2d');
+      var $counter = parseInt($('#video2').data('c'));
 
-
-    var $counter = parseInt($('#video2').data('c'));
-
-    if (width && height) {
- 
-      canvas2.width = width;
-      canvas2.height = height;
-      context.drawImage(video2, 0, 0, width, height);
-    
-      var data = canvas2.toDataURL('image/jpeg',0.5);
-
-      if($('#photo2').length)      
-        photo2.setAttribute('src', data);
-
-      var url = $('#photo2').data('hred');
-      var image = $('#photo2').attr('src');
-      $token = $('#photo2').data('token');
-
-      // var url = $('#video').data('hred');
-      // $token = $('#video').data('token');
-      $c = parseInt($('#video2').data('c'))+1;
-
-      if($c == '300001')
-        $c = 'selfie';
-
-      $username = $('#video2').data('username');
-      $test = $('#video2').data('test');
-      $name = $username+'_'+$test+'_'+$c;
-
-      $url = $('#photo2').data('presigned');
-
-      uploadaws(image,$url);
-
+      if (width && height) {
+   
+        canvas2.width = width;
+        canvas2.height = height;
+        context.drawImage(video2, 0, 0, width, height);
       
+        var data = canvas2.toDataURL('image/jpeg',0.5);
 
-      // $.post( url ,{'name': $name ,'image':image,'_token':$token}, function( data ) {
-      //       console.log(data);
+        if($('#photo2').length)      
+          photo2.setAttribute('src', data);
 
-      //        $bucket = $('#photo').data('bucket');
-      //         $region = $('#photo').data('region');
-      //         $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/';
-             
-      //         $selfie_url = $aws_url+$name+'.jpg';
+        var url = $('#photo2').data('hred');
+        var image = $('#photo2').attr('src');
+        $token = $('#photo2').data('token');
 
-      //         $('.selfie_container').html('<img src="'+$selfie_url+'" class="w-100"/>');
-      // });
+        // var url = $('#video').data('hred');
+        // $token = $('#video').data('token');
+        $c = parseInt($('#video2').data('c'))+1;
 
-      //$('#video2').data('c',$c);
-      console.log($name);
-      console.log($c);
+        if($c == '300001')
+          $c = 'selfie';
+
+        $username = $('#video2').data('username');
+        $test = $('#video2').data('test');
+        $name = $username+'_'+$test+'_'+$c;
+
+        $url = $('#photo2').data('presigned');
+
+        uploadaws(image,$url);
+      }else{
+        $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
+      } 
+
     }else{
-      $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
-    } 
+      $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">Unable tp read the camera. Kindly refresh the page.</div></div>');
+    }
+    
   }
   // Set up our event listener to run the startup process
   // once loading is complete.
