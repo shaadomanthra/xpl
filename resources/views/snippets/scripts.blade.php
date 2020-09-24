@@ -2487,7 +2487,7 @@ $(function(){
       } 
 
     }else{
-      $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">Unable tp read the camera. Kindly refresh the page.</div></div>');
+      $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">Unable to read the camera. Kindly refresh the page.</div></div>');
     }
     
   }
