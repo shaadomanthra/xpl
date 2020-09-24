@@ -509,7 +509,13 @@ div.chats {
 <div class="pre-singedurl-set">
   @if($urls)
   @foreach($urls as $k=> $url)
+    
+    @if($k=='testlog_log')
+    <div class="url_{{$k}} d-none " data-url="{{$url}}" data-json="@if($json_log){{$json_log}}@endif"></div>
+    @else
     <div class="url_{{$k}} d-none " data-url="{{$url}}" ></div>
+
+    @endif
   @endforeach
   @endif
   @if($urls2)

@@ -3,7 +3,9 @@
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
 @if(isset($proctor))
 <script src="{{ asset('js/proctor.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 @endif
+
 
 
 
@@ -2176,7 +2178,7 @@ $(function(){
   function uploadaws($data,$url,$screen=false){
 
     var blob = dataURItoBlob($data);
-    console.log($url + ' -');
+    
 
     if($url){
         $.ajax({
@@ -2366,7 +2368,7 @@ $(function(){
 
         $url = $('#photo').data('presigned');
 
-        console.log($c);
+        
 
         if($c == '200001'){
           $c = 'idcard';
@@ -2421,8 +2423,7 @@ $(function(){
             $('.start_btn').removeClass('disabled');
             $('.cam_message').html('<span class="text-success"><i class="fa fa-check-circle"></i> Camera enabled. You can start the test now.</span>');
           }
-          console.log($name);
-          console.log($c);
+         
         }else{
           var fullname = $('#photo').data('name');
           var username = $('#photo').data('username');

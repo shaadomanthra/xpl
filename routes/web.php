@@ -154,6 +154,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 			->name('test.proctor')->middleware('auth');
 	Route::get('/test/{test}/active', 'Exam\AssessmentController@active')
 			->name('test.active')->middleware('auth');
+	Route::get('/test/{test}/snaps', 'Exam\AssessmentController@snaps')
+			->name('test.snaps')->middleware('auth');
 	Route::get('/test/{test}/accesscode', 'Exam\ExamController@accesscode')
 			->name('test.accesscode')->middleware('auth');
 

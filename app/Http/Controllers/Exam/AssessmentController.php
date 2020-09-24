@@ -328,6 +328,7 @@ class AssessmentController extends Controller
     {
         $filename = $test.'.json';
         $filepath = $this->cache_path.$filename;
+        $json_log =null;
 
 
         $exam = Cache::get('test_'.$test);
@@ -366,6 +367,11 @@ class AssessmentController extends Controller
             }else{
                 $responses = null;
             }
+
+             if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/log/'.$user->username.'_log.json')){
+                $json_log = Storage::disk('s3')->get('testlog/'.$exam->id.'/log/'.$user->username.'_log.json');
+            }
+
             
         }
 
@@ -582,6 +588,9 @@ class AssessmentController extends Controller
             $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
             $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
 
+            $url['testlog_log_get'] = Storage::disk('s3')->url($name_log);
+           
+
             if(Storage::disk('s3')->exists($exam->image)){
                 $base64_code = base64_encode(file_get_contents(Storage::disk('s3')->url($exam->image)));
                 $base64_str = 'data:image/jpeg;base64,' . $base64_code;
@@ -605,6 +614,7 @@ class AssessmentController extends Controller
 
             $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
             $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
+            $url['testlog_log_get'] = Storage::disk('s3')->url($name_log);
 
             if(Storage::disk('s3')->exists($exam->image)){
                 $base64_code = base64_encode(file_get_contents(Storage::disk('s3')->url($exam->image)));
@@ -638,6 +648,7 @@ class AssessmentController extends Controller
                         ->with('code',true)
                         ->with('urls',$url)
                         ->with('urls2',$url2)
+                        ->with('json_log',$json_log)
                         ->with('user',$user)
                         ->with('code_ques',$code_ques)
                         ->with('timer2',true)
@@ -2104,6 +2115,63 @@ class AssessmentController extends Controller
             abort(404);
     }
 
+
+    public function snaps($id,Request $r){
+
+        $exam = Cache::get('test_'.$id,function() use($id){
+            return Exam::where('slug',$id)->first();
+        });
+
+        $username = $r->get('username');
+        $type = $r->get('type');
+        $folder = 'webcam/'.$exam->id.'/';
+        $files = Storage::disk('s3')->allFiles($folder);
+
+        $mask= $username.'_'.$exam->id;
+
+        $files = array_where($files, function ($value, $key) use ($mask) {
+           return starts_with(basename($value), $mask);
+        });
+
+        $pics = [];$i=0;
+        if($type=='snaps'){
+            foreach($files as $a=>$b){
+                if (strpos($b, 'jpg') !== false) 
+                if (strpos($b, 'screens') !== false) {
+                    
+                }else{
+                    $pics[$i] = $b;
+                }
+                $i++;
+                
+            } 
+        }else{
+            foreach($files as $a=>$b){
+                if (strpos($b, 'jpg') !== false) 
+                if (strpos($b, 'screens') !== false) {
+                    $pics[$i] = $b;
+                }
+                $i++;
+                
+            } 
+        }
+        
+        $pg = $this->paginateAnswers($pics,18);
+
+
+        if($pg->total())
+            return view('appl.exam.exam.snaps')
+                    ->with('pg',$pg)
+                    ->with('exam',$exam)
+                    ->with('active',1)
+                    ->with('proctor',1)
+                    ->with('total',count($pics));
+        else
+            abort(403,'No pics captured');
+
+
+    }
+
     public function active($id,Request $r){
 
         $exam = Cache::get('test_'.$id,function() use($id){
@@ -2147,6 +2215,7 @@ class AssessmentController extends Controller
             }else{
                 $content['last_photo'] = '';
             }
+            
             
 
             //var_dump($content->last_photo);
@@ -2210,16 +2279,21 @@ class AssessmentController extends Controller
             $data['total'] = $data['total'] +1;
              if($b['completed']){
                     $data['completed']++; 
+                    $users[$a]['active'] = 2;
                 }
                 else{
                     if($diff > 300){
                        $data['inactive']++;
+                       $users[$a]['active'] = 0;
                     }else{
                         $data['live']++;
+                        $users[$a]['active'] = 1;
                     }
                     
             }
         }
+
+
 
         
         if(count($users))
@@ -3398,8 +3472,11 @@ class AssessmentController extends Controller
             }
 
             if(Storage::disk('s3')->exists('testlog/'.$test_id.'/'.$user->username.'.json')){
-                
                 Storage::disk('s3')->delete('testlog/'.$test_id.'/'.$user->username.'.json');
+            }
+
+             if(Storage::disk('s3')->exists('testlog/'.$test_id.'/log/'.$user->username.'_log.json')){
+                Storage::disk('s3')->delete('testlog/'.$test_id.'/log/'.$user->username.'_log.json');
             }
             
 
@@ -3415,7 +3492,7 @@ class AssessmentController extends Controller
             else
                 return redirect()->route('assessment.show',$slug);
         }
-        flash('Test attempt NOT DELETED')->success();
+        flash('Test attempt DELETED')->success();
         return redirect()->route('assessment.show',$slug);
         
 

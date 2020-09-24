@@ -56,6 +56,7 @@ $(document).ready(function(){
           var message = '';
           var window_swap = parseInt($('.assessment').data('window_swap'));
           var auto_terminate = parseInt($('.assessment').data('auto_terminate'));
+          document.getElementById("window_change").value = count;
           if(window_swap){
              user_test_log(new Date().getTime() / 1000, 'Window Swap - '+count);
              if(auto_terminate==0){
@@ -75,7 +76,7 @@ $(document).ready(function(){
           $('.swap-message').html(message);
           if($('.testpage').is(":visible"))
             $('#exampleModalCenter').modal();
-          document.getElementById("window_change").value = count;
+          
 
 
           // auto submit the test
@@ -149,63 +150,140 @@ $(document).ready(function(){
 
           var log = $('.url_testlog_log');
           $url = log.data('url');
-          if(log.data('json'))
-            $json = JSON.parse(log.data('json'));
+          
+          if(log.data('json')){
+
+            $json = log.data('json')
+
+            if($json.username)
+              $json = log.data('json');
+            else
+              $json = JSON.parse(log.data('json'));
+          }
           else
             $json = null;
+
 
           $time = Math.floor($time);
 
 
 
           if(!$json){
-            $json = {};
-            var activity = {};
-            let time = $time;
 
-            $json.username = $('.assessment').data('username');
 
-            if($('.os_details').length){
-              $json.os_details = $('.os_details').html();
-              $json.browser_details = $('.browser_details').html();
-              $json.js_details = $('.js_details').html();
-              $json.ip_details = $('.ip_details').html();
-            }
-            $json.uname = $('.assessment').data('uname');
-            $json.rollnumber = $('.assessment').data('rollnumber');
+            $geturl = $('.url_testlog_log_get').data('url');
+            $.ajax({
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+                processData: false,
+                url: $geturl,
+                success: function (response) {
+                    $json = response;
+                    if(!$json.completed){
+                      $jsondata = JSON.stringify($json);
+                      log.data('json',$jsondata);
 
-            $json.start = $time;
-            activity[time] = 'Exam Started';
-            $json.activity = activity;
+                       $.ajax({
+                          method: "PUT",
+                          headers: {"Content-Type": "application/json"},
+                          processData: false,
+                          data: $jsondata,
+                          url: $url
+                        })
+                        .done(function($url) {
+                                console.log('log updated');
+                        });
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.';
+                        $json = {};
+                        var activity = {};
+                        let time = $time;
+
+                        $json.username = $('.assessment').data('username');
+
+                        if($('.os_details').length){
+                          $json.os_details = $('.os_details').html();
+                          $json.browser_details = $('.browser_details').html();
+                          $json.js_details = $('.js_details').html();
+                          $json.ip_details = $('.ip_details').html();
+                        }
+                        $json.uname = $('.assessment').data('uname');
+                        $json.rollnumber = $('.assessment').data('rollnumber');
+
+                        $json.start = $time;
+                        activity[time] = 'Exam Started';
+                        $json.activity = activity;
+                        $json.completed = 0;
+
+                        if(!$json.completed){
+                          $jsondata = JSON.stringify($json);
+                          log.data('json',$jsondata);
+
+                           $.ajax({
+                              method: "PUT",
+                              headers: {"Content-Type": "application/json"},
+                              processData: false,
+                              data: $jsondata,
+                              url: $url
+                            })
+                            .done(function($url) {
+                                    console.log('log updated');
+                            });
+                        }
+
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+                    console.log(msg);
+                }
+              });
             
           }else{
             let time = $time;
             var activity = $json.activity;
             
             $json.activity[time] =$action;
-            //$json.activity[$time] = activity;
+            $json.window_change =  $('input[name=window_change]').val();
+            $json.last_photo = $('#photo').data('last_photo');
+            $json.last_updated = $time;
+            
+            $json.window_swap = parseInt($('.assessment').data('window_swap'));
+            if($action && $action!='null')
+            if(!$json.completed){
+              $jsondata = JSON.stringify($json);
+              log.data('json',$jsondata);
+
+               $.ajax({
+                  method: "PUT",
+                  headers: {"Content-Type": "application/json"},
+                  processData: false,
+                  data: $jsondata,
+                  url: $url
+                })
+                .done(function($url) {
+                        console.log('log updated');
+                });
+            }
+
           }
 
-          $json.window_change =  $('input[name=window_change]').val();
-          $json.last_photo = $('#photo').data('last_photo');
-          $json.last_updated = $time;
-          $json.completed = 0;
-          $json.window_swap = parseInt($('.assessment').data('window_swap'));
+         
 
-          $jsondata = JSON.stringify($json);
-          log.data('json',$jsondata);
-
-           $.ajax({
-              method: "PUT",
-              headers: {"Content-Type": "application/json"},
-              processData: false,
-              data: $jsondata,
-              url: $url
-            })
-            .done(function($url) {
-                    console.log('log updated');
-            });
-        
+          
       }
 
 

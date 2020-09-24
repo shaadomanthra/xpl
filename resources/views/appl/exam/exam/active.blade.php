@@ -143,7 +143,7 @@
 
 
 <div class="col-6 col-md-2 ">
-  <div class="card   mb-2 mx-1 @if($b['completed']==0) bg-light-warning  @endif card_{{$a}}">
+  <div class="card   mb-2 mx-1 @if($b['active']==0) bg-light-danger @elseif($b['active']==1) bg-light-warning  @endif card_{{$a}}">
     <div class="p-4 ">
 
      
@@ -151,7 +151,12 @@
         <div class="action_{{$a}} d-inline float-right">
         
       </div>
-              <h6 class="mb-3 d-inline"> @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @else {{substr($b['username'],0,15)}} @endif</h6>
+              <h6 class="mb-3 d-inline"> @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @else {{substr($b['username'],0,15)}} @endif
+
+                @if($b['window_change'])
+                <small><span class="badge badge-danger float-right">{{$b['window_change']}}</span></small>
+                @endif
+              </h6>
             @if($b['last_photo'])
             <div class="selfie_container mt-4">
               <img src="{{$b['last_photo']}}" class="w-100">
@@ -290,7 +295,7 @@ div.chats {
       </div>
 
       <div class="pb-4">
-      <a href="" class="btn btn-primary" target="_blank"><i class="fa fa-camera text-white"></i> Student Snaps</a> &nbsp;&nbsp;&nbsp;<a href="text-primary" class="btn btn-success" target="_blank"><i class="fa fa-image text-white"></i> Screen Snaps</a> 
+      <a href="" class="btn btn-primary link_snaps" data-url="{{ route('test.snaps',$exam->slug)}}" target="_blank"><i class="fa fa-camera text-white"></i> Student Snaps</a> &nbsp;&nbsp;&nbsp;<a href="" data-url="{{ route('test.snaps',$exam->slug)}}" class="btn btn-success link_screens" target="_blank"><i class="fa fa-image text-white"></i> Screen Snaps</a> 
     </div>
     
         <div class="chats">

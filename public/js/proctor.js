@@ -20,6 +20,8 @@ $(function(){
                 url: $url
             }).done(function (result) {
             	console.log(result);
+            	var username = result.username;
+            	var link = $('.link_snaps').data('url');
                 $('.timeline').html('');
                 $('.log_name').html(result.uname);
                 $('.log_rollnumber').html(result.rollnumber);
@@ -27,6 +29,9 @@ $(function(){
                 $('.log_browser').html(result.browser_details);
                 $('.log_ip').html(result.ip_details);
                 $('.log_swaps').html(result.window_change);
+                $('.link_snaps').attr('href',link+'?username='+username+'&type=snaps');
+                $('.link_screens').attr('href',link+'?username='+username+'&type=screens');
+              
                 if(result.last_photo){
                 	$('.log_pic').show();
                 	$('.log_pic').attr('src',result.last_photo);

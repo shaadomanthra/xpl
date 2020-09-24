@@ -28,6 +28,11 @@
      <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
   @endif
 
+
+  @if(isset($proctor))
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  @endif
+  
   @if(isset($editor))
   <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
   @endif
