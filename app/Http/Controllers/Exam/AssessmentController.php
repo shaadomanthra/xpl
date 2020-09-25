@@ -660,6 +660,7 @@ class AssessmentController extends Controller
                         ->with('questions',$questions)
                         ->with('dynamic',$dynamic)
                         ->with('images',$images)
+                        ->with('noback',1)
                         ->with('section_questions',$section_questions);
     }
 
@@ -1796,7 +1797,6 @@ class AssessmentController extends Controller
                     // $item['status'] = 2;
                 }
 
-                dd($item);
 
                 $type = $questions[$item['question_id']]->type;
 
@@ -3422,6 +3422,7 @@ class AssessmentController extends Controller
                         ->with('review',true)
                         ->with('mathjax',$mathjax)
                         ->with('count',$count)
+                        ->with('noback',1)
                         ->with('chart',true);
 
     }

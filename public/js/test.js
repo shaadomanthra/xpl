@@ -150,6 +150,7 @@ $(document).ready(function(){
 
           var log = $('.url_testlog_log');
           $url = log.data('url');
+
           
           if(log.data('json')){
 
@@ -170,7 +171,7 @@ $(document).ready(function(){
 
           if(!$json){
 
-
+            console.log('log updated - 1');
             $geturl = $('.url_testlog_log_get').data('url');
             $.ajax({
                 method: "GET",
@@ -253,6 +254,8 @@ $(document).ready(function(){
               });
             
           }else{
+            console.log('log updated - '+$action);
+            console.log($json);
             let time = $time;
             var activity = $json.activity;
             
@@ -407,9 +410,10 @@ $(document).ready(function(){
           setTimeout(function(){
             if(!camera)
            $('.start_btn').removeClass('disabled');
-          },500);
+         $('.cam_spinner').hide();
+          },1000);
           
-          setTimeout(user_test_log(new Date().getTime() / 1000),1000);
+          setTimeout(user_test_log(new Date().getTime() / 1000),30000);
         });
       }
      }

@@ -2916,6 +2916,23 @@ $(function(){
 @endif
 
 
+@if(isset($noback))
+<script>
+$(function(){
+
+
+history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+
+});
+
+
+</script>
+@endif
+
+
 @if(isset($liveimage))
 <script type="text/javascript">
 
