@@ -3,7 +3,26 @@
 @section('content')
 
 @include('appl.exam.exam.xp_css')
+<style>
+pre, code {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+.hljs {
+    display: block;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    padding: 0.5em;
+    background: #002b36;
+    color: #839496;
+}
+.spanitem{
+  line-height: 35px;
+}
+</style>
 
+<div id="pdf">
 <div class="dblue" >
   <div class="container">
 
@@ -42,7 +61,7 @@
         <div class=' pb-1'>
           <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> {{$student->name}}
 
-
+            <button class="btn btn-outline-primary btn-sm" onclick="downloadpdf()">Download PDF</button>
           </p>
         </div>
       </div>
@@ -65,29 +84,28 @@
 <div class="p-3 text-center bg-light sticky-top" id="item" style="margin-top:-2px;">
 
   @foreach($tests as $i=>$t)
-<span class="border rounded p-1 px-2 @if($t->status!=2)qgreen @else qyellow @endif cursor qno_{{$t->question_id}}" href="#item{{($i+1)}}">{{($i+1)}}</span>
+<span class="border spanitem rounded p-1 px-2 @if($t->status!=2)qgreen @else qyellow @endif cursor qno_{{$t->question_id}}" href="#item{{($i+1)}}">{{($i+1)}}</span>
 @endforeach
 </div>
 
 
 
 
-<div class="container my-3" id="wrapper">
+<div class="px-2  my-3" id="wrapper">
 @foreach($tests as $k=>$t)
-<div class="row" id="item{{($k+1)}}">
-	<div class="col-1 col-md-1">
-		<div class=" p-2 rounded text-center bg-light border">{{($k+1)}}</div>
-	</div>
-	<div class="col-11 col-md-8">
+<div class="row no-gutters" id="item{{($k+1)}}">
+	<div class="col-12 col-md-10 col-lg-9">
 		<div class="card mb-3">
 			<div class="card-body">
-				{!! $questions[$t->question_id]->question !!}
+        <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
+				<p class="d-inline {{ $question = $questions[$t->question_id]}}">{!! $questions[$t->question_id]->question !!}</p>
 				<hr>
+
 
         @if($questions[$t->question_id]->type=='code')
         <p><b>User Code:</b></p>
-        <pre class="mb-3">
-          <code>
+        <pre class="mb-3" style="">
+          <code style="overflow-wrap: break-word;word-wrap: break-word">
             {!! htmlentities($t->code) !!}
           </code>
         </pre>
@@ -167,8 +185,8 @@
 		</div>
 	</div>
 
-	<div class="col-12 col-md-3">
-    <div class="mt-3">
+	<div class="col-12 col-md-2 col-lg-3">
+    <div class="mt-1 ml-2">
 		<div class=" rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 box_{{$t->question_id}}">
 			<div class="card-body ">
 
@@ -224,6 +242,7 @@
 </div>
 
 </div>
+</div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -245,6 +264,18 @@
     </div>
   </div>
 </div>
+
+<script src="{{ asset('js/html2pdf.bundle.min.js') }}"></script>
+<script>
+
+  function downloadpdf(){
+      var element = document.getElementById('pdf');
+    html2pdf(element);
+  }
+
+  
+
+</script>
 
 
 
