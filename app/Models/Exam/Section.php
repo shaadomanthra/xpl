@@ -15,7 +15,6 @@ class Section extends Model
         'time',
         'user_id',
         'exam_id',
-
         'instructions',
         // add all other fields
     ];

@@ -1764,12 +1764,39 @@ class AssessmentController extends Controller
                 $item['status'] = 1;
                 $item['dynamic'] = $request->get($i.'_dynamic');
                 $item['code'] = $request->get('dynamic_'.$i);
+                $item['comment'] = $request->get('out_'.$i);
 
                 if(strip_tags(trim($item['code']))){
+                    $testcases = json_decode($item['comment'],true);
+                    if($testcases['pass_1']=='1' && $testcases['pass_2']=='1' && $testcases['pass_3']=='1'){
+                        $item['accuracy'] =1;
+                        if($item['accuracy']==1){
+                            if($questions[$item['question_id']]->mark)
+                                $item['mark'] = $questions[$item['question_id']]->mark;
+                            elseif($secs[$item['section_id']]->mark)
+                                $item['mark'] = $secs[$item['section_id']]->mark;
+                            else
+                                $item['mark'] = 1;
+                        }else{
+                            if($secs[$item['section_id']]->negative)
+                                $item['mark'] = 0 - $secs[$item['section_id']]->negative;
+                            else
+                                $item['mark'] = 0;
+                        }
 
+                    }else{
+                        $item['accuracy'] =0;
+                        if($secs[$item['section_id']]->negative)
+                            $item['mark'] = 0 - $secs[$item['section_id']]->negative;
+                        else
+                            $item['mark'] = 0;
+
+                    }
                     // $code_ques_flag =1;
                     // $item['status'] = 2;
                 }
+
+                dd($item);
 
                 $type = $questions[$item['question_id']]->type;
 

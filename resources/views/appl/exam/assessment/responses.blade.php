@@ -152,9 +152,8 @@ pre, code {
           </div>
        
       	@else
-
           @if(trim(strip_tags($t->response)))
-        	{!! $t->response !!} 
+        	{!! nl2br($t->response) !!} 
           @else
           -
           @endif

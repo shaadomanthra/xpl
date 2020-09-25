@@ -215,6 +215,18 @@ class QuestionController extends Controller
 
             $question = Question::create($request->except(['category','tag','sections']));
 
+             if($request->get('in_1')){
+                $testcases = array();
+                $testcases['in_1'] = $request->get('in_1');
+                $testcases['in_2'] = $request->get('in_2');
+                $testcases['in_3'] = $request->get('in_3');
+                $testcases['out_1'] = $request->get('out_1');
+                $testcases['out_2'] = $request->get('out_2');
+                $testcases['out_3'] = $request->get('out_3');
+                $question->a = json_encode($testcases);
+
+            }
+
             if($request->dynamic){
                 $question->dynamic_code_save();
             }
@@ -239,6 +251,8 @@ class QuestionController extends Controller
                 if(!$question->sections->contains($section))
                     $question->sections()->attach($section);
             }
+
+            $question->save();
 
             flash('A new question is created!')->success();
             
@@ -1037,17 +1051,21 @@ class QuestionController extends Controller
 
             if(request()->get('remove'))
             {
+
                 if(count($exam->sections)!=0)
                 foreach($exam->sections as $section){
                     if(count($section->questions)!=0)
                     foreach($section->questions as $ques)
                     {
-                        if($id == $ques->id)
+                        if($id == $ques->id){
                             $sec = $section;
                             break; 
+                        }
+                            
                     }
                 }
 
+                
                 if(isset($sec)){
                     $sec->questions()->detach($id);
                     return redirect()->route('exam.questions',$exam_slug);
@@ -1151,6 +1169,8 @@ class QuestionController extends Controller
         else
             $categories =null;
 
+        $testcases = array("in_1"=>"","in_2"=>"","in_3"=>"","out_1"=>"","out_2"=>"","out_3"=>"");
+
         //tags
         $tags =  Tag::where('project_id',$this->project->id)
                         ->orderBy('created_at','desc ')
@@ -1164,6 +1184,16 @@ class QuestionController extends Controller
         else
         $exams =  Exam::orderBy('name','desc ')->get();
 
+        if($question->type=='code' && $question->a){
+            $tc = json_decode($question->a,true);
+
+            foreach ($testcases as $key => $value) {
+                if(isset($tc[$key]))
+                    $testcases[$key] = $tc[$key];
+            }
+        }
+        
+
         $question->tags = $question->tags->pluck('id')->toArray();         
 
         if($question)
@@ -1175,6 +1205,7 @@ class QuestionController extends Controller
                     ->with('categories',$categories)
                     ->with('tags',$tags)
                     ->with('exams',$exams)
+                    ->with('testcases',$testcases)
                     ->with('type',$question->type)
                     ->with('code',true)
                     ->with('editor',true)
@@ -1232,6 +1263,18 @@ class QuestionController extends Controller
             $question->intest = $request->intest;
             $question->topic = $request->topic;
             $question->mark = $request->mark;
+
+            if($request->get('in_1')){
+                $testcases = array();
+                $testcases['in_1'] = $request->get('in_1');
+                $testcases['in_2'] = $request->get('in_2');
+                $testcases['in_3'] = $request->get('in_3');
+                $testcases['out_1'] = $request->get('out_1');
+                $testcases['out_2'] = $request->get('out_2');
+                $testcases['out_3'] = $request->get('out_3');
+                $question->a = json_encode($testcases);
+            }
+
             $question->save(); 
 
             if($request->dynamic){

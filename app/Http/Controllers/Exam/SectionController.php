@@ -169,6 +169,7 @@ class SectionController extends Controller
             $section->time = $request->time;
             $section->save(); 
 
+            //dd($request->instructions);
             //update cache
             $obj = $exam;
                 $filename = $obj->slug.'.json';

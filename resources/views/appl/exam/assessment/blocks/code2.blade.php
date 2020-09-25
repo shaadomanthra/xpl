@@ -11,7 +11,7 @@
     <label class="input-group-text bg-light border  rounded mr-3" for="inputGroupSelect01">Language</label>
   </div>
   <select class="w-25 lang" id="inputGroupSelect01_{{($i+1)}}" data-qno="{{($i+1)}}">
-    @foreach(['c','cpp','java','python','perl','csharp'] as $lang)
+    @foreach(['c','cpp','java','python','perl','csharp','javascript'] as $lang)
     <option value="{{$lang}}">{{$lang}}</option>
     @endforeach
   </select>
@@ -23,7 +23,7 @@
 
 @else
 
-<div class="p-3 mt-4" style="background: #eee">Language : <span class="badge badge-warning">{{$question->b}}</span></div>
+<div class="p-3 mt-4" style="background: #eee">Language : <span class="badge badge-warning">{{$question->b}}</span> <a href="#" class="ml-3 btn  btn-outline-primary" data-toggle="modal" data-target="#io_code">I/O Instructions</a></div>
 
 <textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}"  rows="5">{{$question->c}}</textarea>
 

@@ -42,7 +42,7 @@
       </div>
 
 
-      <div class="row mb-3">
+      <div class="row ">
         <div class="col-12 col-md-4">
           <div class="form-group">
         <label for="formGroupsectionspleInput ">Correct Mark</label>
@@ -79,6 +79,13 @@
           >
       </div>
         </div>
+      </div>
+
+      <div class="form-group p-3 rounded border bg-light">
+        <label for="formGroupExampleInput ">Extra Settings (Optional)</label>
+
+<textarea class="form-control " name="instructions"  rows="5">@if($stub=='Create'){{ (old('instructions')) ? old('instructions') : '' }} @else{{ $section->instructions }} @endif
+        </textarea>
       </div>
 
       

@@ -1007,11 +1007,17 @@ $(document).ready(function() {
       $qno = $(this).data('qno');
       $lang = $(this).data('lang');
       $name = $(this).data('name');
+      $test = $(this).data('test');
+      $qslug = $(this).data('qslug');
+      $testcase = $(this).data('testcase');
       $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
       $c = ($(this).data('c'))?$(this).data('c'):null;
       $input = $(this).data('input');
       $url= $(this).data('url');
       $stop= $(this).data('stop');
+
+      console.log($qslug);
+      
 
       var editor_ = editor_array[$name];
 
@@ -1019,7 +1025,7 @@ $(document).ready(function() {
       $('.code_'+$qno).val(code);
       //console.log($('.code_'+$qno).val());
       
-      $('.loading').show();
+      $('.loading_'+$qno).show();
       // setTimeout(function(){
       //   $.get($stop,{'name':$namec}, function(data, status){
       //   console.log(data);
@@ -1027,27 +1033,56 @@ $(document).ready(function() {
       //   });
       // }, 5000);
 
-
+      if(!$('.runcode_'+$qno).hasClass('disabled')){
+        $(this).addClass('disabled');
         $.ajax({
           type : 'get',
           url : $url+'?time='+ new Date().getTime(),
-          data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec},
+          data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug},
           timeout: 120000, 
           success:function(data){
+            $('.runcode_'+$qno).removeClass('disabled');
             //console.log(data);
-            data = JSON.parse(data);
-   
+            //console.log(data);
+            var jso = data;
+            dat = JSON.parse(data);
+            console.log(dat);
+            
+            data = dat.response_1;
+            console.log(data);
             if(data){
               if(data.stderr){
                 $('.output_'+$qno).html(data.stderr);
+                $('.output_testcase_'+$qno).html('');
               }else if(data.stdout){
                 $('.output_'+$qno).html(data.stdout);
                 $('.input_'+$qno).attr('value',data.stdout);
-                if(!$('.s'+$qno).hasClass('qblue-border'))
-                  $('.s'+$qno).addClass('qblue-border');
-                if(!$('.s'+$qno).hasClass('active'))
-                      $('.s'+$qno).removeClass('active');
-                $('.final_response_'+$qno).html(data.stdout);
+                $('.out_'+$qno).attr('value',jso);
+                if($testcase==3){
+                  if(!$('.s'+$qno).hasClass('qblue-border'))
+                    $('.s'+$qno).addClass('qblue-border');
+                  if(!$('.s'+$qno).hasClass('active'))
+                        $('.s'+$qno).removeClass('active');
+
+                  if(dat.pass_1 == "1")
+                    $test1 = '<p><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test1 = '<p><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_2 == "1")
+                    $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_3 == "1")
+                    $test3 = '<p class="mb-0"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test3 = '<p class="mb-0"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  $('.output_testcase_'+$qno).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+'</div>');
+                  $('.final_response_'+$qno).html(data.stdout);
+                }
+                
               }else{
                 $('.output_'+$qno).html("No Result - Code execution time exceeded - Retry.");
               }
@@ -1055,8 +1090,10 @@ $(document).ready(function() {
                 $('.output_'+$qno).html("No Data - Code execution time exceeded - Retry.");
             }
             $('.loading').hide();
+            $('.loading_'+$qno).hide();
           },
           error: function(jqXHR, textStatus, errorThrown) {
+             $('.runcode_'+$qno).removeClass('disabled');
               if(textStatus==="timeout") {  
                 $('.output_'+$qno).html("Timeout(10s) - Code execution time exceeded - Retry.");
               } else {
@@ -1065,6 +1102,7 @@ $(document).ready(function() {
               $('.loading').hide();
           }
         });
+      }
 
 
 

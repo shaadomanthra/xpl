@@ -394,8 +394,7 @@ $(document).ready(function(){
       if($('.js_details').length){
           $('.js_details').html("enabled");
           $('.accesscode_btn_wrap').show();
-          if(!camera)
-           $('.start_btn').removeClass('disabled');
+          
           
     
       }
@@ -405,7 +404,12 @@ $(document).ready(function(){
          $.getJSON("https://api.ipify.org?format=json", 
                                             function(data) {
           $('.ip_details').html(data.ip);
-          setTimeout(user_test_log(new Date().getTime() / 1000),500);
+          setTimeout(function(){
+            if(!camera)
+           $('.start_btn').removeClass('disabled');
+          },500);
+          
+          setTimeout(user_test_log(new Date().getTime() / 1000),1000);
         });
       }
      }

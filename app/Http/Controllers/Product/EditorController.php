@@ -8,6 +8,9 @@ use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Exam;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Cache;
 
 class EditorController extends Controller
 {
@@ -77,8 +80,8 @@ class EditorController extends Controller
       $c = $request->get('c');
       $data = $this->run_internal_p24($code,$input,$lang,$c,$name);
       //$data = $this->run_internal($code,$input);
-      $json = json_encode(json_decode($data));
-      print $json;
+      
+      print $data;
 
     }
 
@@ -276,48 +279,85 @@ class EditorController extends Controller
     public function run_internal_p24($code,$input,$lang,$c,$name){
 
       $name = request()->get('name');
+      $testcase = request()->get('testcase');
+      $test = request()->get('test');
+      $qslug = request()->get('qslug');
+
+
+      $exam = Cache::get('test_'.$test);
+
+      if(!$exam){
+        $exam = Exam::where('slug',$test)->with('sections')->first();
+      }
 
       if(!$name){
         $name = substr(md5(time()), 0,7);
       }
 
-      // // Get cURL resource
-      // $curl = curl_init();
-      // // Set some options - we are passing in a useragent too here
+      $questions = [];
+      foreach($exam->sections as $section){
+            foreach($section->questions as $q){
 
-      // curl_setopt_array($curl, [
-      //     CURLOPT_RETURNTRANSFER => 1,
-      //     CURLOPT_URL => 'http://phpcode.p24.in',
-      //     CURLOPT_POST => 1,
-      //     CURLOPT_TIMEOUT => 30,
-      // ]);
+              if($qslug == $q->slug){
+                //dd($q);
+                $testcases = json_decode($q->a,true);
+                break;
+              }
+            }
 
-      // $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'1','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input,'name'=>$name);
-
-      
-      // //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
-      // //echo $data;
-      // curl_setopt($curl, CURLOPT_POSTFIELDS, $form);
-
-      // // Send the request & save response to $resp
-      // $data = curl_exec($curl);
-      
-      // // Close request to clear up some resources
-      // curl_close($curl);
-
-
-      // return $data;
-
+      }
 
       
+      if($testcase =="1")
+      {
+        $input = $testcases['in_1'];
+        $data['pass_1'] = 0;
+        $data['response_1'] = json_decode($this->curl_req($c,$lang,$code,$name,$input),true);
+        if($data['response_1']['stdout'] == $testcases['out_1']){
+          $data['pass_1'] = 1;
+        }
+      }else{
+        $input = $testcases['in_1'];
+        $data['pass_1'] = 0;
+        $data['response_1'] = json_decode($this->curl_req($c,$lang,$code,$name.'_1',$input),true);
+        $resp = trim(str_replace(array("\n", "\r"), '', $data['response_1']['stdout']));
+        $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_1']));
+        if($resp == $output){
+          $data['pass_1'] = 1;
+        }
 
-      //  $name = request()->get('name');
+        $input = $testcases['in_2'];
+        $data['pass_2'] = 0;
+        $data['response_2'] = json_decode($this->curl_req($c,$lang,$code,$name.'_2',$input),true);
+        $resp = trim(str_replace(array("\n", "\r"), '', $data['response_2']['stdout']));
+        $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_2']));
+        if($resp == $output){
+          $data['pass_2'] = 1;
+        }
 
-      // if(!$name){
-      //   $name = substr(md5(time()), 0,7);
-      // }
+        $input = $testcases['in_3'];
+        $data['pass_3'] = 0;
+        $data['response_3'] = json_decode($this->curl_req($c,$lang,$code,$name.'_3',$input),true);
+        $resp = trim(str_replace(array("\n", "\r"), '', $data['response_3']['stdout']));
+        $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_3']));
+        if($resp == $output){
+          $data['pass_3'] = 1;
+        }
+
+        
+
+      }
+
+      $data = json_encode($data,JSON_PRETTY_PRINT);
+     
+
+      return $data;
 
 
+    }
+
+
+    public function curl_req($c,$lang,$code,$name,$input){
 
       // Get cURL resource
       $curl = curl_init();
@@ -334,7 +374,6 @@ class EditorController extends Controller
       $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'1','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input,'name'=>$name);
     
       
-  
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
       
       curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($form));
@@ -347,9 +386,7 @@ class EditorController extends Controller
      
       // Close request to clear up some resources
       curl_close($curl);
-
       return $data;
-
 
     }
 

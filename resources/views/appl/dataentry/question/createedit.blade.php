@@ -2,7 +2,12 @@
 @section('title', 'Create/Edit Questions ')
 @section('content')
 
+<style>
+tr{ border:1px solid silver; }
+td{ border:1px solid silver; }
+th{ border:1px solid silver; }
 
+</style>
 @include('flash::message')
   <div class="card">
     <div class="card-body">
@@ -76,16 +81,13 @@
       @endif
       @if($type=='code')
       <li class="nav-item">
-        <a class="nav-link" id="a-tab" data-toggle="tab" href="#a" role="tab" aria-controls="a" aria-selected="false">Input</a>
+        <a class="nav-link" id="a-tab" data-toggle="tab" href="#a" role="tab" aria-controls="a" aria-selected="false">Testcases</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="b-tab" data-toggle="tab" href="#b" role="tab" aria-controls="b" aria-selected="false">Lang</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="c-tab" data-toggle="tab" href="#c" role="tab" aria-controls="c" aria-selected="false">Preset code</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Output</a>
+        <a class="nav-link" id="c-tab" data-toggle="tab" href="#c" role="tab" aria-controls="c" aria-selected="false">Preset Code</a>
       </li>
       @endif
       @if($type=='fillup')
@@ -136,21 +138,49 @@
       @if($type=='code')
        <div class="tab-pane fade" id="a" role="tabpanel" aria-labelledby="a-tab">
         <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Code Input</label><br>
-         <input class="form-control " type="text" name="a" value="@if($stub=='Create'){{ (old('a')) ? old('a') : '' }}@else{{ $question->a }}@endif" id="defaultCheck1" >
+          <table class="table">
+  <thead>
+    <tr class="bg-light">
+      <th scope="col" width="10%">#</th>
+      <th scope="col" width="45%">Input<br>
+      <small>Input arguments have to be seperated by spaces only.</small></th>
+      <th scope="col" width="45%">Output<br>
+       <small>Output supports multiple lines.</small></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td><input class="form-control " type="text" name="in_1" value="@if($stub=='Create'){{ (old('in_1')) ? old('in_1') : '' }}@else{{ $testcases['in_1'] }}@endif"  ></td>
+      <td><textarea class="form-control " name="out_1"  rows="3">@if($stub=='Create'){{ (old('out_1')) ? old('out_1') : '' }}@else {{ $testcases['out_1'] }}@endif</textarea></td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td><input class="form-control " type="text" name="in_2" value="@if($stub=='Create'){{ (old('in_2')) ? old('in_2') : '' }}@else{{ $testcases['in_2'] }}@endif"  ></td>
+      <td><textarea class="form-control " name="out_2"  rows="3">@if($stub=='Create'){{ (old('out_2')) ? old('out_2') : '' }}@else {{ $testcases['out_2'] }}@endif</textarea></td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td><input class="form-control " type="text" name="in_3" value="@if($stub=='Create'){{ (old('in_3')) ? old('in_3') : '' }}@else{{ $testcases['in_3'] }}@endif"  ></td>
+      <td><textarea class="form-control " name="out_3"  rows="3">@if($stub=='Create'){{ (old('out_3')) ? old('out_3') : '' }}@else {{ $testcases['out_3'] }}@endif</textarea></td>
+    </tr>
+  </tbody>
+</table>
+         
       </div>
       </div>
       <div class="tab-pane fade" id="b" role="tabpanel" aria-labelledby="b-tab">
         <div class="form-group mt-3">
         <label for="formGroupExampleInput2">Language </label><br>
   <select class="form-control"  name="b">
-   <option value="" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='') selected @endif @endif >-NA-</option>
+   <option value="" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='') selected @endif @endif >-NA- (User can select the language)</option>
     <option value="c" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='C') selected @endif @endif >c</option>
     <option value="cpp" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='CPP') selected @endif @endif >cpp</option>
     <option value="java" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='JAVA') selected @endif @endif >java</option>
     <option value="python" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='PYTHON') selected @endif @endif >python</option>
     <option value="perl" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='PERL') selected @endif @endif >perl</option>
     <option value="csharp" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='CSHARP') selected @endif @endif >c#</option>
+    <option value="javascript" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='JAVASCRIPT') selected @endif @endif >javascript</option>
      
   </select>
       </div>
@@ -158,7 +188,7 @@
 
        <div class="tab-pane fade" id="c" role="tabpanel" aria-labelledby="c-tab">
         <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Preset Code</label><br>
+        <label for="formGroupExampleInput2">Preset Code (Use this only if, language is fixed)</label><br>
         <textarea class="form-control " name="c"  rows="5">@if($stub=='Create'){{ (old('c')) ? old('c') : '' }}@else{{ $question->c }}@endif
         </textarea>
       </div>
@@ -233,7 +263,7 @@
       </div>
       <div class="tab-pane fade" id="explanation" role="tabpanel" aria-labelledby="explanation-tab">
        <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Explanation</label>
+        <label for="formGroupExampleInput2">Explanation / Solution (Visible to candidates only if solutions are enabled for the test report)</label>
          <textarea class="form-control summernote" name="explanation"  rows="5">
             @if($stub=='Create')
             {{ (old('explanation')) ? old('explanation') : '' }}
