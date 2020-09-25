@@ -1,3 +1,13 @@
+@if(isset($noback))
+<script>
+history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+
+</script>
+@endif
+
 <script src="{{ asset('js/script.js')}}?new=35"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
@@ -2916,21 +2926,7 @@ $(function(){
 @endif
 
 
-@if(isset($noback))
-<script>
-$(function(){
 
-
-history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.go(1);
-    };
-
-});
-
-
-</script>
-@endif
 
 
 @if(isset($liveimage))
