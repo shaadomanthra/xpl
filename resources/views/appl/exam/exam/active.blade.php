@@ -141,35 +141,32 @@
 @if($pg->total()!=0)
 @foreach($users as $a => $b)
 @if(isset($b['username']))
-
-
 <div class="col-6 col-md-2 ">
   <div class="card   mb-2 mx-1 @if($b['active']==0) bg-light-danger @elseif($b['active']==1) bg-light-warning  @endif card_{{$a}}">
     <div class="p-4 ">
-
-     
       <div class="">
         <div class="action_{{$a}} d-inline float-right">
-        
-      </div>
+          </div>
               <h6 class="mb-3 d-inline"> @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif
 
+                @if(isset($b['window_change']))
                 @if($b['window_change'])
                 <small><span class="badge badge-danger float-right">{{$b['window_change']}}</span></small>
                 @endif
+                @endif
               </h6>
+            @if(isset($b['last_photo']))
             @if($b['last_photo'])
             <div class="selfie_container mt-4">
               <img src="{{$b['last_photo']}}" class="w-100">
             </div>
             @endif
-
+            @endif
             <p class="mb-0 mt-3">
               <i class="fa fa-comment-alt text-success mr-4 d-none"></i> 
               <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}"></i> 
               <i class="fas fa-power-off text-danger mr-4"></i> </p>
           </div>
-  
     </div>
   </div>
 </div>
