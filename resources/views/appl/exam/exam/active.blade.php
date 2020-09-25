@@ -151,7 +151,7 @@
         <div class="action_{{$a}} d-inline float-right">
         
       </div>
-              <h6 class="mb-3 d-inline"> @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @else {{substr($b['username'],0,15)}} @endif
+              <h6 class="mb-3 d-inline"> @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif
 
                 @if($b['window_change'])
                 <small><span class="badge badge-danger float-right">{{$b['window_change']}}</span></small>
