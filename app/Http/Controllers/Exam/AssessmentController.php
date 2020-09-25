@@ -2270,7 +2270,7 @@ class AssessmentController extends Controller
 
 
         $data = [];
-        $data['total'] = $data['live'] = $data['completed'] =  $data['inactive']==0;
+        $data['total'] = $data['live'] = $data['completed'] =  $data['inactive']=0;
         $diff =400;
         foreach($users as $a=>$b){
             
