@@ -140,6 +140,7 @@
 
 @if($pg->total()!=0)
 @foreach($users as $a => $b)
+@if(isset($b['username']))
 
 
 <div class="col-6 col-md-2 ">
@@ -172,6 +173,7 @@
     </div>
   </div>
 </div>
+@endif
 @endforeach
 @endif
 
