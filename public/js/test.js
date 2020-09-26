@@ -165,7 +165,10 @@ $(document).ready(function(){
             $json = null;
 
 
+
           $time = Math.floor($time);
+         
+
 
 
 
@@ -254,21 +257,41 @@ $(document).ready(function(){
               });
             
           }else{
-            console.log('log updated - '+$action);
-            console.log($json);
+            console.log('log  - '+$action);
+            
             let time = $time;
             var activity = $json.activity;
+
+            $json.username = $('.assessment').data('username');
+
+             if($('.os_details').length){
+              $json.os_details = $('.os_details').html();
+              $json.browser_details = $('.browser_details').html();
+              $json.js_details = $('.js_details').html();
+              $json.ip_details = $('.ip_details').html();
+            }
+            $json.uname = $('.assessment').data('uname');
+            $json.rollnumber = $('.assessment').data('rollnumber');
+
+            if(activity)
+              $json.activity[time] =$action;
+            else{
+              activity[time] = $action;
+              $json.activity = activity;
+            }
             
-            $json.activity[time] =$action;
             $json.window_change =  $('input[name=window_change]').val();
             $json.last_photo = $('#photo').data('last_photo');
             $json.last_updated = $time;
+
             
             $json.window_swap = parseInt($('.assessment').data('window_swap'));
             if($action && $action!='null')
             if(!$json.completed){
               $jsondata = JSON.stringify($json);
               log.data('json',$jsondata);
+
+              
 
                $.ajax({
                   method: "PUT",
@@ -413,7 +436,7 @@ $(document).ready(function(){
          $('.cam_spinner').hide();
           },1000);
           
-          setTimeout(user_test_log(new Date().getTime() / 1000),30000);
+    
         });
       }
      }
@@ -587,10 +610,14 @@ $(document).ready(function(){
     }
 
 
-    function saveTest($sno){
+    function saveTest($sno=null,$live=null){
         
         if(!$('.ques_count').data('save'))
           return 1;
+
+
+        if(!$sno)
+          $sno = $('.active').data('sno');
 
         $ques_count = $('.ques_count').data('count');
 
@@ -659,20 +686,22 @@ $(document).ready(function(){
 
         var all_data = JSON.stringify(responses);
 
-        user_test_log(new Date().getTime() / 1000, 'Solving Question - Q'+$sno);
-        //console.log(all_data);
-        aws_cache(all_data);
+        if(!$live){
+            user_test_log(new Date().getTime() / 1000, 'Solving Question - Q'+$sno);
+            aws_cache(all_data);
+        }else{
 
-        // $.ajax({
-        //   type : 'post',
-        //   url : $url,
-        //   data:{'responses':all_data,'_token':responses.token},
-        //   success:function(data){
-        //     console.log('data cached');
-        //     console.log(data);
-        //   }
-        // });
+            $.ajax({
+            type : 'post',
+            url : $url,
+            data:{'responses':all_data,'_token':responses.token},
+            success:function(data){
+              console.log('Live data updated');
+            }
+          });
 
+        }
+        
     }
 
     function aws_cache($data){
@@ -691,6 +720,100 @@ $(document).ready(function(){
       });
     }
 
+
+       function saveLive($sno=null,$live=null){
+        
+        if(!$('.ques_count').data('save'))
+          return 1;
+
+
+        if(!$sno)
+          $sno = $('.active').data('sno');
+
+        $ques_count = $('.ques_count').data('count');
+
+
+        $url = $('.ques_count').data('url');
+        $qno = 1;
+        var responses = {};
+        number =1;
+        
+        responses.test_id =  $('input[name=test_id]').val();
+        responses.user_id =  $('input[name=user_id]').val();
+        responses.token =  $('input[name=_token]').val();
+        responses.code =  $('input[name=code]').val();
+        responses.admin =  $('input[name=admin]').val();
+        responses.window_change =  $('input[name=window_change]').val();
+        responses.username = $('#photo').data('username');
+
+        if($('.os_details').length){
+          responses.os_details = $('.os_details').html();
+          responses.browser_details = $('.browser_details').html();
+          responses.js_details = $('.js_details').html();
+          responses.ip_details = $('.ip_details').html();
+        }
+        
+
+        responses.uname = $('#photo').data('uname');
+        responses.qno = $sno;
+        responses.last_photo = $('#photo').data('last_photo');
+
+        var seconds = new Date().getTime() / 1000;
+        responses.last_updated = seconds;
+        responses.completed = 0;
+
+
+        var r = [];
+        while (number <= $ques_count) {  
+          var resp = {};
+          resp.question_id = $('input[name='+$qno+'_question_id]').val();
+          resp.section_id = $('input[name='+$qno+'_section_id]').val();
+          resp.time = $('input[name='+$qno+'_time]').val();
+          resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
+
+
+          if($('.code_'+$sno).length)
+            resp.code = $('.code_'+$sno).val();
+          if($('.input_'+$qno).is(':checkbox')){
+              var ans =[]
+              $.each($(".input_"+$qno+":checked"), function(){
+                  ans.push($(this).val());
+              });
+              resp.response = ans.join(",");
+          }
+          else if($('.input_'+$qno).is(':radio')){
+                resp.response = $(".input_"+$qno+":checked").val();
+          }else if($('.input_'+$qno).is("textarea")){
+                resp.response = $('.input_'+$qno).val();
+          }
+          else
+              resp.response = $('.input_'+$qno).val();
+          //console.log('selected='+resp.response);
+          r.push(resp);
+          number++; 
+          $qno++;            
+        }
+        responses.responses = r;
+
+        var all_data = JSON.stringify(responses);
+
+        
+
+            $.ajax({
+            type : 'post',
+            url : $url,
+            data:{'responses':all_data,'_token':responses.token},
+            success:function(data){
+              console.log('Live data updated');
+              console.log(data);
+            }
+          });
+
+        
+        
+    }
+
+    setInterval(saveLive,60000);
 
       
 

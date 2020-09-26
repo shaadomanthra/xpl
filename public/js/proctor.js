@@ -14,7 +14,8 @@ $(function(){
 
 	$('.user_log').on('click',function(e){
 		console.log('log check');
-		$url = $(this).data('url');
+		$url = $(this).data('url')+"?time="+$.now();
+		console.log($url);
 		$.ajax({
                 type: "GET",
                 url: $url

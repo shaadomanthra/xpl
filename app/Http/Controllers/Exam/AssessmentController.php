@@ -585,10 +585,7 @@ class AssessmentController extends Controller
             $name = $folder.\auth::user()->username.'.json';
             $name_log = $folder.'log/'.\auth::user()->username.'_log.json';
 
-            $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
-            $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
-
-            $url['testlog_log_get'] = Storage::disk('s3')->url($name_log);
+           
            
 
             if(Storage::disk('s3')->exists($exam->image)){
@@ -612,9 +609,7 @@ class AssessmentController extends Controller
             $name = $folder.\auth::user()->username.'.json';
             $name_log = $folder.'log/'.\auth::user()->username.'_log.json';
 
-            $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
-            $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
-            $url['testlog_log_get'] = Storage::disk('s3')->url($name_log);
+            
 
             if(Storage::disk('s3')->exists($exam->image)){
                 $base64_code = base64_encode(file_get_contents(Storage::disk('s3')->url($exam->image)));
@@ -630,6 +625,23 @@ class AssessmentController extends Controller
                
             }
         }
+
+
+         $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+         $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
+
+         $activity = [strtotime(now())=>"Exam Link Opened"];
+         $userdata = ['username'=>$user->username,'uname'=>$user->name,'rollnumber'=>$user->roll_number,"completed"=>0,"activity"=>$activity];
+         $json_d = json_encode($userdata);
+
+         if(!$json_log)
+         if(!Storage::disk('s3')->exists($name_log)){
+            Storage::disk('s3')->put($name_log,$json_d);
+            $json_log = $json_d;
+         }
+            
+
+         $url['testlog_log_get'] = Storage::disk('s3')->url($name_log);
 
 
 
@@ -1566,15 +1578,24 @@ class AssessmentController extends Controller
     }
 
     public function savetest($slug,Request $request){
+
+
         $resp = json_decode($request->get('responses'));
         $user_id = $resp->user_id;
         $exam_id = $resp->test_id;
-        $username = $resp->username;
+        //$username = $resp->username;
         $qno = $resp->qno;
         // if(isset($resp->get('qno')))
         //     $qno = $resp->get('qno');
         // else
         //     $qno = '';
+
+
+        echo 1;
+
+        //echo json_encode($request->all());
+        
+
         $responses = $resp->responses;
 
         $exam_cache = Cache::get('exam_cache_'.$exam_id);
@@ -1588,22 +1609,12 @@ class AssessmentController extends Controller
 
         // echo 'testlogs/activity/'.$exam->id.'/'.$user_id.'.json';
         // exit();
-        if(Storage::disk('s3')->exists('testlogs/activity/'.$exam_id.'/'.$username.'.json')){
-            $json = json_decode(Storage::disk('s3')->get('testlogs/activity/'.$exam_id.'/'.$username.'.json'),true);
-        }else{
-            $json = null;
-        }
+        
 
         // echo json_encode($json);
         // exit();
 
-
-        $json[strtotime("now")] = array("activity"=>"Solving question ".($qno-1),"color"=>'green');
-        Storage::disk('s3')->put('testlogs/activity/'.$exam_id.'/'.$username.'.json',json_encode($json),'public');
-
-        Storage::disk('s3')->put('responses/responses_'.$user_id.'_'.$exam_id.'.json',json_encode($responses),'public');
-
-        echo 1;
+        
             
         exit();
     }
@@ -2069,8 +2080,12 @@ class AssessmentController extends Controller
                 $exam_cache = $test_responses;
                 $data['ques_analysis'] = 1;
         }
-        
 
+        $completion = Tests_Overall::where('test_id',$exam->id)->pluck('user_id')->toArray();
+        
+        $data['completed'] = count($completion);
+        $data['total'] = $data['completed'];
+        
         //dd($exam_cache);
         foreach($exam_cache as $u=>$r){
 
@@ -2104,15 +2119,9 @@ class AssessmentController extends Controller
 
 
             $completed = Cache::get('attempt_'.$u.'_'.$exam->id);
-            
-            if($completed)
-            {
-                $data['completed']++;
-            }
-            $data['total']++;
 
-            if($data['ques_analysis']){
-                $data['completed'] = $data['total'];
+            if(!in_array($u, $completion)){
+                $data['total']++;
             }
            
         }
