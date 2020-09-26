@@ -25,6 +25,7 @@
             </g>
         </svg><!--end::Svg Icon--></span>
            Proctoring</p>
+           <span class="text-secondary"><small>Auto page refresh - 10 sec</small></span>
         </div>
 
        
@@ -240,6 +241,12 @@ div.chats {
     </div>
   </div>
 </div>
+
+<script>
+setTimeout(function(){
+   window.location.reload(1);
+}, 10000);
+  </script>
 
 
 

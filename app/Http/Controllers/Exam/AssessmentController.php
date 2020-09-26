@@ -2145,6 +2145,7 @@ class AssessmentController extends Controller
                     ->with('questions',$questions)
                     ->with('data',$data)
                     ->with('question',$question)
+                    ->with('highlight',1)
                     ->with('mathjax',$question)
                     ->with('exam',$exam);
         else
@@ -2343,7 +2344,7 @@ class AssessmentController extends Controller
                     ->with('proctor',1)
                     ->with('active',1);
         else
-            abort(404);
+            abort(403,'No Live data');
         
     }
 

@@ -6,8 +6,19 @@
 <div class="row mb-md-1">
 	<div class="col-12 col-md-12">
 
+
 		<div class="p-4   rounded  mb-4" style="background: #f7f1e3;border: 2px solid #d1ccc0;"><h1 class="display-3 ">
 		
+
+		@if(isset($exam->image))
+                @if(Storage::disk('s3')->exists($exam->image))
+                
+                    <img 
+                    src="{{ Storage::disk('s3')->url($exam->image) }} " class="float-right" alt="{{  $exam->name }}" style='max-width:60px;'>
+                  
+                @endif
+             @endif
+			
 
 			{{ ucfirst($exam->name) }} - Report</h1>
 

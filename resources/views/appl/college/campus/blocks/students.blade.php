@@ -26,7 +26,11 @@
 
 		    <tr>
 		      <th scope="row">{{++$m}}</th>
-		      <td><a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$user['username']}}">{{$user['name']}}  
+		      <td>
+		      	@if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$user['username'].'_'.$exam->id.'_selfie.jpg'))
+		      		<img src="{{ Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$user['username'].'_'.$exam->id.'_selfie.jpg')}}" width="100px" class="rounded" /><br>
+		      	@endif
+		      	<a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$user['username']}}">{{$user['name']}}  
 		      	@if(isset($user['video']))
 		      	<i class="fa fa-check-circle text-success"></i>
 		      	@endif
