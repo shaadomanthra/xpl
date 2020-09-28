@@ -561,8 +561,10 @@ class AssessmentController extends Controller
                         else
                                 $q->response = $keys[$q->id]->response;
                         
-                        $q->response = $keys[$q->id]->response;
+                        if(isset($keys[$q->id]->time))
                         $q->time = $keys[$q->id]->time;
+                        else
+                            $q->time = 0;
                         
                         
                          $time_used = $time_used + intval($q->time);
