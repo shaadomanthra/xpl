@@ -28,7 +28,12 @@
             </div>
             <div class='col-8 col-md-7'>
               <h4 class="mb-1 mt-2 lh15">
-                <a href=" {{ route('exam.show',$e->slug) }} " data-toggle="tooltip" title="View Test">
+                @if($e->pivot->role=='viewer')
+                  <a href=" {{ route('test.active',$e->slug)}} " data-toggle="tooltip" title="View Test">
+                @else
+                  <a href=" {{ route('exam.show',$e->slug) }} " data-toggle="tooltip" title="View Test">
+                @endif
+                
                 @if($e->status==0)
                 <i class="fa fa-square-o"></i> 
                 @elseif($e->status==1)
@@ -43,14 +48,14 @@
               <div>
 
 
-                  @if($e->active==1)
+                @if($e->active==1)
                 <span class=" badge badge-secondary">Inactive</span>
                 @else
                   <span class=" badge badge-success">Active</span>
                 @endif
 
                 @if($e->pivot->role=='viewer')
-                <span class=" badge badge-secondary">Viewer</span>
+                <span class=" badge badge-secondary">Invigilator</span>
                 @elseif($e->pivot->role=='evaluator')
                 <span class=" badge badge-primary">Evaluator</span>
                 @else
@@ -61,11 +66,13 @@
               
             </div>
             <div class='col-2 col-md-2'>
+               @if($e->pivot->role!='viewer')
               <div class="heading_one float-right f30">
               	<a href="{{ route('test.report',$e->slug)}}" data-toggle="tooltip" title="Attempts">
               	@if(isset($e)){{ $e->users_count }}@endif
               	</a>
               </div>
+              @endif
             </div>
 
           </div>

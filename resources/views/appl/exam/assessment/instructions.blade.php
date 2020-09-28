@@ -123,6 +123,8 @@
 					<canvas id="canvas" class="border w-100" width="250px"></canvas>
 					<img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="0" data-c="0" data-presigned="{{$url['idcard']}}" data-username="{{\auth::user()->username}}" data-name="{{\auth::user()->name}}" data-roll="{{\auth::user()->rollnumber}}" data-college="" data-aws_c=""
 					data-branch=""  data-test="{{$exam->id}}" style='display: none' data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}" class="w-100"> 
+					<div class="url_approval d-none" data-url="{{$url['approval']}}"></div>
+					<div class="url_pre_message d-none" data-url="{{$url['pre_message']}}"></div>
 				</div>
 				<div class="col-12 col-md-4">
 					<div class="border bg-light rounded p-3 text-center">
@@ -174,13 +176,13 @@
 					<div class="col-12 col-md-4">
 						<div class="bg-light border rounded p-3 mb-3 mb-md-0">
 							<h5><i class="fa fa-picture-o"></i> Selfie Photo</h5>
-						<div class="selfie_container"></div>
+						<div class="selfie_container"><img src="" class="selfie_img w-100"/></div>
 						</div>
 					</div>
 					<div class="col-12 col-md-4">
 						<div class="bg-light border rounded p-3">
 							<h5><i class="fa fa-vcard"></i> ID Card Photo</h5>
-						<div class="idcard_container"></div>
+						<div class="idcard_container"><img src="" class=" idcard_img w-100"/></div>
 						</div>
 					</div>
 				</div>

@@ -299,13 +299,55 @@ class AssessmentController extends Controller
 
             
         }
-
+        $username = \auth::user()->username;
         if($exam->camera){
             $folder = 'webcam/'.$exam->id.'/';
             $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
             $url['selfie'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'selfie.jpg']);
             $url['idcard'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'idcard.jpg']);
+            
+            $url['approval']  = '';
+            $url['pre_message'] = '';
+            if(isset($exam->settings->manual_approval)){
+                $name = 'testlog/approvals/'.$exam->id.'.json';
+                $url['approval'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+                $name = 'testlog/pre-message/'.$exam->id.'/'.$username.'.json';
+                $url['pre_message'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
 
+                $jsonfile = 'testlog/approvals/'.$exam->id.'.json';
+                if(Storage::disk('s3')->exists('testlogs/'.$jsonfile)){
+                  $candidate  = json_decode(Storage::disk('s3')->get($jsonfile),true);
+                }else{
+                    $candidate = [];
+                }
+                $candidate[$username]['name'] =  \auth::user()->name;
+                $candidate[$username]['rollnumber'] =  \auth::user()->rollnumber;
+                $candidate[$username]['college'] = (\auth::user()->college_id)? \auth::user()->college->name:'';
+                $candidate[$username]['branch'] =   (\auth::user()->branch_id)?\auth::user()->branch->name:'';
+                $candidate[$username]['image'] =   \auth::user()->getImage();
+                $candidate[$username]['selfie'] = '';
+                $candidate[$username]['idcard'] = '';
+                $candidate[$username]['approved'] = 0;
+                $candidate[$username]['time'] = strtotime(now());
+
+                if(!Storage::disk('s3')->exists($name))
+                {
+                    $message = array("status"=>0,"message"=>"");
+                    Storage::disk('s3')->put($name, json_encode($message),'public');
+
+                }
+                else{
+                    $message = json_decode(Storage::disk('s3')->get($name),true);
+                    $candidate[$username]['approved'] = $message['status'];
+                 
+                }
+
+                
+                
+                Storage::disk('s3')->put($jsonfile, json_encode($candidate),'public');
+
+
+            }
             
         }else{
             $url = null;
@@ -322,6 +364,7 @@ class AssessmentController extends Controller
     }
 
 
+
     
 
     public function try2($test,$id=null, Request $request)
@@ -331,7 +374,10 @@ class AssessmentController extends Controller
         $json_log =null;
 
 
+        
         $exam = Cache::get('test_'.$test);
+
+
 
         if(!$exam)
         if(file_exists($filepath))
@@ -458,7 +504,9 @@ class AssessmentController extends Controller
         $dynamic =array();
         $section_questions = array();
         foreach($exam->sections as $section){
-            $qset = $section->questions;
+            $qset = $exam->getQuestionsSection($section->id,$user->id);//$section->questions;
+
+            //dd($qset);
             
             //shuffle($qset);
             if($exam->shuffle)
@@ -488,7 +536,8 @@ class AssessmentController extends Controller
                         }else{
                             $q->dynamic = $keys[$q->id]->dynamic;
                             if(!isset($keys[$q->id]->response))
-                                $keys[$q->id]->response = null;
+                                $q->response = null;
+                            else
                             $q->response = $keys[$q->id]->response;
                             $q->time = $keys[$q->id]->time;
 
@@ -564,6 +613,20 @@ class AssessmentController extends Controller
             $time = $time + $section->time;
         }
 
+
+        // access code based timer
+        $settings = json_decode($exam->getOriginal('settings'),true);
+       
+        
+        if(isset($settings['timer']))
+        foreach($settings['timer'] as $cd=>$tm){
+            if(strtoupper($cd)==strtoupper($code)){
+                
+                $time = $tm;
+            }
+        }
+
+
         $url =$url2= $images = null;
         if($exam->camera){
             $folder = 'webcam/'.$exam->id.'/';
@@ -577,8 +640,13 @@ class AssessmentController extends Controller
             }
 
             for($i=0;$i<$count;$i++){
-                $url[$i] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.$i.'.jpg']);
-                $url2[$i] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix2.$i.'.jpg']);
+                $nm = $i;
+                if(strlen($nm)==1)
+                    $nm ="00".$nm;
+                else if(strlen($nm)==1)
+                    $nm ="0".$nm;
+                $url[$i] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.$nm.'.jpg']);
+                $url2[$i] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix2.$nm.'.jpg']);
             }
 
             $folder = 'testlog/'.$exam->id.'/';
@@ -631,19 +699,17 @@ class AssessmentController extends Controller
          $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
 
          $activity = [strtotime(now())=>"Exam Link Opened"];
-         $userdata = ['username'=>$user->username,'uname'=>$user->name,'rollnumber'=>$user->roll_number,"completed"=>0,"activity"=>$activity];
+         $userdata = ['username'=>$user->username,'uname'=>$user->name,'rollnumber'=>$user->roll_number,"completed"=>0,"activity"=>$activity,"last_photo"=>"",'window_change'=>0];
          $json_d = json_encode($userdata);
 
          if(!$json_log)
          if(!Storage::disk('s3')->exists($name_log)){
-            Storage::disk('s3')->put($name_log,$json_d);
+            Storage::disk('s3')->put($name_log,$json_d,'public');
             $json_log = $json_d;
          }
             
 
          $url['testlog_log_get'] = Storage::disk('s3')->url($name_log);
-
-
 
 
         if(!$request->get('student') && !$request->get('admin'))
@@ -668,6 +734,7 @@ class AssessmentController extends Controller
                         ->with('window_change',$window_change)
                         ->with('time',$time)
                         ->with('sections',$sections)
+                        ->with('settings',$settings)
                         ->with('passages',$passages)
                         ->with('questions',$questions)
                         ->with('dynamic',$dynamic)
@@ -1068,6 +1135,7 @@ class AssessmentController extends Controller
 
         $user_id = $student->id;
         $test_id = $exam->id;
+        $user = $student;
 
         $jsonname = $slug.'_'.$user_id;
 
@@ -1130,10 +1198,13 @@ class AssessmentController extends Controller
         foreach($exam->sections as $section){
             if(isset($secs[$section->id][0]))
                 $sections[$section->name] = $secs[$section->id][0];
-                else
+            else
                 $sections[$section->name] ='';
+
             $secs[$section->id] = $section;
-            foreach($section->questions as $q){
+
+            $qset = $exam->getQuestionsSection($section->id,$user->id);
+            foreach($qset as $q){
 
                 if(isset($images)){
                     if(isset($images[$q->id]))
@@ -1664,7 +1735,8 @@ class AssessmentController extends Controller
 
         $qcount =0;
         foreach($exam->sections as $section){
-            $qset = $section->questions;
+            //$qset = $section->questions;
+            $qset = $exam->getQuestionsSection($section->id,$user->id);
 
             foreach( $qset as $q){
                 $questions[$q->id] = $q;
@@ -2218,93 +2290,149 @@ class AssessmentController extends Controller
         $users = array();
         $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
         //$fl = collect($files);
-        $pg = $this->paginateAnswers($files,18);
-        foreach($pg as $f){
-            $p = explode('/',$f);
-            $u = explode('.',$p[2]);
 
-            $content = json_decode(Storage::disk('s3')->get($f),true);
-            $content['url'] = Storage::disk('s3')->url($f);
+        $user = \auth::user();
+        //dd($exam->settings);
+        if(!isset($exam->settings->invigilation))
+            $exam_settings = json_decode($exam->settings,true);
+        else
+            $exam_settings = json_decode(json_encode($exam->settings),true);
 
-            if(isset($content['last_photo'])){
-                if(!$content['last_photo']){
-                    $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
-                    if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
-                        $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
-                }else{
-                    $url_pieces = explode('_',$content['last_photo']);
-                    $name = explode('/', $url_pieces[0]);
-                    if(is_array($name))
-                        $name = $name[5];
-                    
-                    $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
-                    if(!Storage::disk('s3')->exists($filepath)){
-                        $counter = explode('.',$url_pieces[2]);
-                        $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
-                        $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
-                        if(Storage::disk('s3')->exists($filepath)){
-                            $content['last_photo'] = $last_before_url ;
-                        }else{
-                            $content['last_photo'] = '';
-                        }
-                    }
+        $candidates = [];
+        if(isset($exam_settings['invigilation'])){
+            foreach($exam_settings['invigilation'] as $in=>$emails){
+                if($user->id==$in){
+                    $candidates = $emails;
                 }
-            }else{
-                $content['last_photo'] = '';
             }
-
-            
-
-            //var_dump($content->last_photo);
-
-            array_push($users, $content);
         }
 
-      
-        // if(!$r->get('api'))
-        // $this->authorize('create', $exam);
+        //dd($files);
+        //dd($candidates);
+        
+        $pg=[];
+        if(count($candidates)){
+            $usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
+            foreach($usr as $a=> $b){
+                $name = $b->username.'_log.json';
+                $pg[$name] = 'testlog/'.$exam->id.'/log/'.$name;
+            }
 
-        // if(Storage::disk('s3')->exists('testlogs/approvals/'.$exam->id.'.json')){
-        //     $json = json_decode(Storage::disk('s3')->get('testlogs/approvals/'.$exam->id.'.json'),true);
-        // }else{
-        //     $json = null;
-        // }
 
-        // if($r->get('api')){
-        //     $username = $r->get('username');
-        //     $message = ['status'=>0,'message'=>''];
-        //     if($r->get('approved')==1){
-        //         $json[$username]['approved']=1;
-        //         $message['status'] = 1;
-        //     }
-        //     else if($r->get('approved')==2){
-        //         $json[$username]['approved']=2;
-        //          $message['status'] = 2;
-        //     }
 
-        //     if($r->get('approved')){
-        //         Storage::disk('s3')->put('testlogs/approvals/'.$exam->id.'.json', json_encode($json));
-        //     }
+            
+            $pg = $this->paginateAnswers($pg,count($pg));
+         
+            foreach($pg as $f){
+                $p = explode('/',$f);
+                $u = explode('.',$p[2]);
 
-        //      if($r->get('alert')){
-        //          $message['status'] = 3;
-        //         if($r->get('alert')==1)
-        //             $message['message'] = 'Your Selfie picture is not clear. Kindly recapture.' ;
-        //         else if($r->get('alert')==2)
-        //             $message['message'] = 'Your ID card picture is not clear. Kindly recapture.' ;
-        //         else if($r->get('alert')==3)
-        //             $message['message'] = 'Your ID card is invalid. Kindly use the approved Photo ID for this test.' ;
+                $content = [];
+                //echo $f."<br>";
+                if(Storage::disk('s3')->exists($f)){
+                   
+                    $content = json_decode(Storage::disk('s3')->get($f),true);
+                    $content['url'] = Storage::disk('s3')->url($f);
+                    $content['selfie_url'] = '';
+                    $content['idcard_url'] ='';
+                    
+                    if(isset($content['username'])){
+                        $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
+                        $content['selfie_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
 
+                        $idcard = $content['username'].'_'.$exam->id.'_idcard.jpg';
+                        $content['idcard_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$idcard);
+                    }
+                    
+
+                    if(isset($content['last_photo'])){
+                        if(!$content['last_photo']){
+                            
+                            if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
+                                $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+                        }else{
+                            $url_pieces = explode('_',$content['last_photo']);
+                            $name = explode('/', $url_pieces[0]);
+                            if(is_array($name))
+                                $name = $name[5];
+                            
+                            $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
+                            if(!Storage::disk('s3')->exists($filepath)){
+                                $counter = explode('.',$url_pieces[2]);
+                                $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
+                                $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
+                                if(Storage::disk('s3')->exists($filepath)){
+                                    $content['last_photo'] = $last_before_url ;
+                                }else{
+                                    $content['last_photo'] = '';
+                                }
+                            }
+                        }
+                    }else{
+                        $content['last_photo'] = '';
+                    }
+                }
                 
-        //     }
 
-        //     Storage::disk('s3')->put('testlogs/pre-message/'.$username.'.json', json_encode($message),'public');
+                array_push($users, $content);
+            }
+           
+          
 
-        //     exit();
+        }else{
 
+            
+             $pg = $this->paginateAnswers($files,18);
+            foreach($pg as $f){
+                $p = explode('/',$f);
+                $u = explode('.',$p[2]);
 
-        // }
+                $content = json_decode(Storage::disk('s3')->get($f),true);
+                $content['url'] = Storage::disk('s3')->url($f);
 
+                $content['selfie_url'] ='';
+                $content['idcard_url'] ='';
+
+                if(isset($content['username'])){
+                        $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
+                        $content['selfie_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+
+                        $idcard = $content['username'].'_'.$exam->id.'_idcard.jpg';
+                        $content['idcard_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$idcard);
+                    }
+
+                if(isset($content['last_photo'])){
+                    if(!$content['last_photo']){
+                        $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
+                        if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
+                            $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+                    }else{
+                        $url_pieces = explode('_',$content['last_photo']);
+                        $name = explode('/', $url_pieces[0]);
+                        if(is_array($name))
+                            $name = $name[5];
+                        
+                        $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
+                        if(!Storage::disk('s3')->exists($filepath)){
+                            $counter = explode('.',$url_pieces[2]);
+                            $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
+                            $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
+                            if(Storage::disk('s3')->exists($filepath)){
+                                $content['last_photo'] = $last_before_url ;
+                            }else{
+                                $content['last_photo'] = '';
+                            }
+                        }
+                    }
+                }else{
+                    $content['last_photo'] = '';
+                }
+
+                array_push($users, $content);
+            }
+        }
+        
+        
 
         $data = [];
         $data['total'] = $data['live'] = $data['completed'] =  $data['inactive']=0;
@@ -2332,9 +2460,7 @@ class AssessmentController extends Controller
             }
         }
 
-
-
-        
+      
         if(count($users))
             return view('appl.exam.exam.active')
                     ->with('data',$data)
@@ -2355,15 +2481,13 @@ class AssessmentController extends Controller
         });
 
         
-        
-
         if(!$r->get('api'))
         $this->authorize('create', $exam);
 
-        if(Storage::disk('s3')->exists('testlogs/approvals/'.$exam->id.'.json')){
-            $json = json_decode(Storage::disk('s3')->get('testlogs/approvals/'.$exam->id.'.json'),true);
+        if(Storage::disk('s3')->exists('testlog/approvals/'.$exam->id.'.json')){
+            $json = json_decode(Storage::disk('s3')->get('testlog/approvals/'.$exam->id.'.json'),true);
         }else{
-            $json = null;
+            $json = [];
         }
 
         if($r->get('api')){
@@ -2379,7 +2503,7 @@ class AssessmentController extends Controller
             }
 
             if($r->get('approved')){
-                Storage::disk('s3')->put('testlogs/approvals/'.$exam->id.'.json', json_encode($json));
+                Storage::disk('s3')->put('testlog/approvals/'.$exam->id.'.json', json_encode($json));
             }
 
              if($r->get('alert')){
@@ -2394,12 +2518,14 @@ class AssessmentController extends Controller
                 
             }
 
-            Storage::disk('s3')->put('testlogs/pre-message/'.$exam->id.'/'.$username.'.json', json_encode($message),'public');
+            Storage::disk('s3')->put('testlog/pre-message/'.$exam->id.'/'.$username.'.json', json_encode($message),'public');
 
             exit();
 
 
         }
+
+        //dd($json);
 
 
         $data = [];
@@ -2421,7 +2547,7 @@ class AssessmentController extends Controller
                     ->with('data',$data)
                     ->with('exam',$exam);
         else
-            abort(404);
+            abort(403,'Exam not started');
         
     }
 
@@ -3047,6 +3173,7 @@ class AssessmentController extends Controller
 
         $user_id = $student->id;
         $test_id = $exam->id;
+        $user = $student;
 
         $jsonname = $slug.'_'.$user_id;
 
@@ -3152,7 +3279,8 @@ class AssessmentController extends Controller
                 else
                 $sections[$section->name] ='';
             $secs[$section->id] = $section;
-            foreach($section->questions as $q){
+            $qset = $exam->getQuestionsSection($section->id,$user->id);
+            foreach($qset as $q){
 
                 if(isset($images)){
                     if(isset($images[$q->id]))

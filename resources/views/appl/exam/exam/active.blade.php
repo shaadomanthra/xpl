@@ -64,7 +64,7 @@
 
 @if($pg->total()!=0)
 @foreach($users as $a => $b)
-@if(isset($b['username']))
+
 <div class="col-6 col-md-2 ">
   <div class="card   mb-2 mx-1 @if($b['active']==0) bg-light-danger @elseif($b['active']==1) bg-light-warning  @endif card_{{$a}}">
     <div class="p-4 ">
@@ -72,6 +72,8 @@
         <div class="action_{{$a}} d-inline float-right">
           </div>
               <h6 class="mb-3 d-inline"> @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif
+
+
 
                 @if(isset($b['window_change']))
                 @if($b['window_change'])
@@ -88,13 +90,13 @@
             @endif
             <p class="mb-0 mt-3">
               <i class="fa fa-comment-alt text-success mr-4 d-none"></i> 
-              <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}"></i> 
+              <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}" data-selfie_url="{{$b['selfie_url']}}" data-idcard_url="{{$b['idcard_url']}}"></i> 
               <i class="fas fa-power-off text-danger mr-4"></i> </p>
           </div>
     </div>
   </div>
 </div>
-@endif
+
 @endforeach
 @endif
 
@@ -208,7 +210,8 @@ div.chats {
       </div>
       <div class="modal-body ">
        <div class="pb-4">
-        <img src="" class="float-right log_pic border" height="100px" style="display:none" />
+        <div class="p-3 border float-right">Last Photo<br>
+        <img src="" class=" log_pic border" height="100px" style="display:none" /></div>
         <div class="">Name: <b><span class="log_name text-success"></span></b></div>
         <div>Roll Number: <b><span class="log_rollnumber text-primary"></span></b></div>
         <div>OS details: <b><span class="log_os text-muted"></span></b></div>
@@ -217,11 +220,13 @@ div.chats {
         <div>Window Swaps: <b><span class="log_swaps text-danger"></span></b></div>
       </div>
 
+      
+
       <div class="pb-4">
       <a href="" class="btn btn-primary link_snaps" data-url="{{ route('test.snaps',$exam->slug)}}" target="_blank"><i class="fa fa-camera text-white"></i> Student Snaps</a> &nbsp;&nbsp;&nbsp;<a href="" data-url="{{ route('test.snaps',$exam->slug)}}" class="btn btn-success link_screens" target="_blank"><i class="fa fa-image text-white"></i> Screen Snaps</a> 
     </div>
     
-        <div class="chats">
+        <div class="chats mb-3">
           
           <div class="">
             <div class="timeline timeline-5 mt-3">
@@ -232,6 +237,15 @@ div.chats {
           </div>
         </div>
 
+        <div class="pt-4">
+        <div class="row">
+          <div class="col-6">
+            <div class="border p-2 bg-light">Selfie<br><img src="w-100" class="log_selfie_pic border rounded" width="200px"  /></div></div>
+          <div class="col-6">
+            <div class="border p-2 bg-light">ID Card<br><img src="w-100" class=" log_idcard_pic border rounded" width="200px"  /></div></div>
+        </div>
+      </div>
+
 
       </div>
       <div class="modal-footer">
@@ -241,13 +255,6 @@ div.chats {
     </div>
   </div>
 </div>
-
-<script>
-setTimeout(function(){
-   window.location.reload(1);
-}, 10000);
-  </script>
-
 
 
 @endsection

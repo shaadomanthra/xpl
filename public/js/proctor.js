@@ -15,6 +15,9 @@ $(function(){
 	$('.user_log').on('click',function(e){
 		console.log('log check');
 		$url = $(this).data('url')+"?time="+$.now();
+       
+                $('.log_selfie_pic').attr('src',$(this).data('selfie_url'));
+                $('.log_idcard_pic').attr('src',$(this).data('idcard_url'));
 		console.log($url);
 		$.ajax({
                 type: "GET",
@@ -39,6 +42,8 @@ $(function(){
                 }
                 else
                 	$('.log_pic').hide();
+
+                
                 Object.keys(result.activity).forEach(function(k){
                 	var ele = '<div class="timeline-item align-items-start">\
                             <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">'+toDateTime(k)+'</div>\

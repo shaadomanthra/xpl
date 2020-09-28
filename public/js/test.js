@@ -7,11 +7,15 @@ $(document).ready(function(){
     $('.fullscreen').on('click', () => {
       var browser = $('.browser_details').html();
       var safari = browser.includes("Safari");
+      if(!$('.start_btn').hasClass('disabled'))
+        user_test_log(new Date().getTime() / 1000, 'Fullscreen - Enabled');
         if(safari){
               if(!$('.start_btn').hasClass('disabled')){
                 $('.testpage').show();
                 $('.fullscreen_container').hide();
                 $('#check').hide();
+                load_timer();
+                $('.start_btn').addClass('exam_started');
               }
                 
         }else{
@@ -21,6 +25,8 @@ $(document).ready(function(){
                 $('.testpage').show();
                 $('#check').hide();
                 $('.fullscreen').html('back to fullscreen');
+                $('.start_btn').addClass('exam_started');
+                load_timer();
                 $('.full_screen_message').html('<span class="text-danger">You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.</span>');
             }
 
@@ -93,18 +99,21 @@ $(document).ready(function(){
 
     function win_focus(){
       console.log('Started focus events');
-      var window_focus;
-      var window_swap = parseInt($('.assessment').data('window_swap'));
+      if($('.start_btn').hasClass('exam_started')){
+        var window_focus;
+        var window_swap = parseInt($('.assessment').data('window_swap'));
 
-      if(window_swap){
-        $(window).focus(function() {
-              window_focus = true;
-              console.log("Focused");
-          }).blur(function() {
-            if(parseInt($('.timer_count').data('value'))>5)
-              swapDetected();
-        });
+        if(window_swap){
+          $(window).focus(function() {
+                window_focus = true;
+                console.log("Focused");
+            }).blur(function() {
+              if(parseInt($('.timer_count').data('value'))>5)
+                swapDetected();
+          });
+        }
       }
+      
     }
 
     // start window focus events after 5 seconds
@@ -151,11 +160,8 @@ $(document).ready(function(){
           var log = $('.url_testlog_log');
           $url = log.data('url');
 
-          
           if(log.data('json')){
-
             $json = log.data('json')
-
             if($json.username)
               $json = log.data('json');
             else
@@ -164,97 +170,10 @@ $(document).ready(function(){
           else
             $json = null;
 
-
-
           $time = Math.floor($time);
          
-
-
-
-
           if(!$json){
 
-            console.log('log updated - 1');
-            $geturl = $('.url_testlog_log_get').data('url');
-            $.ajax({
-                method: "GET",
-                headers: {"Content-Type": "application/json"},
-                processData: false,
-                url: $geturl,
-                success: function (response) {
-                    $json = response;
-                    if(!$json.completed){
-                      $jsondata = JSON.stringify($json);
-                      log.data('json',$jsondata);
-
-                       $.ajax({
-                          method: "PUT",
-                          headers: {"Content-Type": "application/json"},
-                          processData: false,
-                          data: $jsondata,
-                          url: $url
-                        })
-                        .done(function($url) {
-                                console.log('log updated');
-                        });
-                    }
-                },
-                error: function (jqXHR, exception) {
-                    var msg = '';
-                    if (jqXHR.status === 0) {
-                        msg = 'Not connect.\n Verify Network.';
-                        $json = {};
-                        var activity = {};
-                        let time = $time;
-
-                        $json.username = $('.assessment').data('username');
-
-                        if($('.os_details').length){
-                          $json.os_details = $('.os_details').html();
-                          $json.browser_details = $('.browser_details').html();
-                          $json.js_details = $('.js_details').html();
-                          $json.ip_details = $('.ip_details').html();
-                        }
-                        $json.uname = $('.assessment').data('uname');
-                        $json.rollnumber = $('.assessment').data('rollnumber');
-
-                        $json.start = $time;
-                        activity[time] = 'Exam Started';
-                        $json.activity = activity;
-                        $json.completed = 0;
-
-                        if(!$json.completed){
-                          $jsondata = JSON.stringify($json);
-                          log.data('json',$jsondata);
-
-                           $.ajax({
-                              method: "PUT",
-                              headers: {"Content-Type": "application/json"},
-                              processData: false,
-                              data: $jsondata,
-                              url: $url
-                            })
-                            .done(function($url) {
-                                    console.log('log updated');
-                            });
-                        }
-
-                    } else if (jqXHR.status == 404) {
-                        msg = 'Requested page not found. [404]';
-                    } else if (jqXHR.status == 500) {
-                        msg = 'Internal Server Error [500].';
-                    } else if (exception === 'parsererror') {
-                        msg = 'Requested JSON parse failed.';
-                    } else if (exception === 'timeout') {
-                        msg = 'Time out error.';
-                    } else if (exception === 'abort') {
-                        msg = 'Ajax request aborted.';
-                    } else {
-                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                    }
-                    console.log(msg);
-                }
-              });
             
           }else{
             console.log('log  - '+$action);
@@ -264,7 +183,7 @@ $(document).ready(function(){
 
             $json.username = $('.assessment').data('username');
 
-             if($('.os_details').length){
+            if($('.os_details').length){
               $json.os_details = $('.os_details').html();
               $json.browser_details = $('.browser_details').html();
               $json.js_details = $('.js_details').html();
@@ -291,8 +210,6 @@ $(document).ready(function(){
               $jsondata = JSON.stringify($json);
               log.data('json',$jsondata);
 
-              
-
                $.ajax({
                   method: "PUT",
                   headers: {"Content-Type": "application/json"},
@@ -306,10 +223,6 @@ $(document).ready(function(){
             }
 
           }
-
-         
-
-          
       }
 
 
@@ -431,8 +344,12 @@ $(document).ready(function(){
                                             function(data) {
           $('.ip_details').html(data.ip);
           setTimeout(function(){
-            if(!camera)
-           $('.start_btn').removeClass('disabled');
+            if(!camera){
+              if(!$('#d').length){
+                $('.start_btn').removeClass('disabled');
+              }
+            }
+           
          $('.cam_spinner').hide();
           },1000);
           
@@ -440,6 +357,120 @@ $(document).ready(function(){
         });
       }
      }
+
+
+
+    // start test timer
+    $start_time = $('.assessment').data('start');
+    console.log($start_time);
+
+    if($start_time){
+      // Set the date we're counting down to
+      var countDownDate = new Date($start_time).getTime();
+
+      // Update the count down every 1 second
+      var w = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+          
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+          
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          
+        // Output the result in an element with id="demo"
+        if(document.getElementById("d")){
+          if(days){
+          document.getElementById("d").innerHTML = days + "days " + hours + "hours "+ minutes + "min " + seconds + "sec ";
+          }else{
+            if(hours){
+            document.getElementById("d").innerHTML =  hours + "hours " + minutes + "min " + seconds + "sec ";
+            }else{
+              if(minutes){
+                document.getElementById("d").innerHTML =   minutes + "min " + seconds + "sec ";
+              }else{
+                document.getElementById("d").innerHTML =   seconds + "sec ";
+
+              }
+            }
+          }
+
+        
+        
+          
+        // If the count down is over, write some text 
+        if (distance < 0) {
+          clearInterval(w);
+          if(document.getElementById("d"))
+          document.getElementById("d").innerHTML = "";
+          $('.start_btn').removeClass('disabled');
+        }
+          }
+      }, 1000);
+
+    }
+
+
+    // exam timer
+    function load_timer(){
+            // Set the date we're counting down to
+        
+        var t = parseInt($('.assessment').data('exam_time'));
+        var countDownDate = addMinutes(new Date(),t);
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+
+         if(parseInt($('.connection_status').data('status'))){
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            document.getElementById("timer").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
+            document.getElementById("timer2").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
+            
+
+            if(hours==0 && minutes==5 && seconds==1)
+              $('#timer_alert').modal();
+
+            $tcount = parseInt($('.timer_count').data('value'))-1;
+            $('.timer_count').data('value',$tcount);
+            // if(seconds==56)
+            //   $('#timer_alert').modal();
+
+            // If the count down is finished, write some text 
+            if (distance < 0) {
+              clearInterval(x);
+              document.getElementById("timer").innerHTML = "EXPIRED";
+              document.getElementById("timer2").innerHTML = "EXPIRED";
+              alert('The Test time has expired. ');
+              document.getElementById("assessment").submit();
+                
+            }
+          }
+        }, 1000);
+    }
+
+
+    function addMinutes(date, minutes) {
+        return new Date(date.getTime() + minutes*60000);
+    }
+
+    function stopTimer() {
+      clearInterval(x);
+    }
 
 
   // new test
@@ -721,7 +752,7 @@ $(document).ready(function(){
     }
 
 
-       function saveLive($sno=null,$live=null){
+    function saveLive($sno=null,$live=null){
         
         if(!$('.ques_count').data('save'))
           return 1;

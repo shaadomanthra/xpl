@@ -197,6 +197,74 @@ class Exam extends Model
 
     }
 
+
+   
+    public function getQuestionsSection($id, $uid){
+
+       $i = $uid %10;
+       $name = 'set_'.$this->slug.'_'.$i;
+       $set = Cache::get($name);
+       
+       $sec = $this->sections->find($id);
+       if($set){
+          $qids = $set[$id];
+          return $sec->questions()->whereIn('question_id',$qids)->get();
+       }else{
+          return $sec->questions;
+       }
+    }
+
+
+
+    public function pool_qset($qset,$formula){
+
+
+        if(!$formula)
+          return $qset->pluck('id')->toArray();
+
+        $l1_ques= $qset->where('level','1');
+        $l2_ques = $qset->where('level','2');
+        $l3_ques = $qset->where('level','3');
+
+        $ques = [];
+        if(isset($formula->level1)){
+        $level1 = $formula->level1;
+
+        foreach($level1 as $topic=>$qcount){
+          $ques_temp = $l1_ques->where('topic',$topic)->pluck('id')->shuffle()->take($qcount);
+
+          foreach($ques_temp as $a=>$qid){
+            array_push($ques, $qid);
+          }
+        }
+        }
+
+
+        if(isset($formula->level2)){
+        $level2 = $formula->level2;
+        foreach($level2 as $topic=>$qcount){
+          $ques_temp = $l2_ques->where('topic',$topic)->pluck('id')->shuffle()->take($qcount);
+          foreach($ques_temp as $a=>$qid){
+            array_push($ques, $qid);
+          }
+        }
+        }
+
+        if(isset($formula->level3)){
+          $level3 = $formula->level3;
+          foreach($level3 as $topic=>$qcount){
+            $ques_temp = $l3_ques->where('topic',$topic)->pluck('id')->shuffle()->take($qcount);
+            foreach($ques_temp as $a=>$qid){
+              array_push($ques, $qid);
+            }
+          }
+        }
+
+        return $ques;
+
+
+    }
+
     public function question_count()
     {
         $exam = $this;$count =0;

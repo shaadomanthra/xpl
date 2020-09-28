@@ -61,7 +61,7 @@ pre, code {
         <div class=' pb-1'>
           <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> {{$student->name}}
 
-            <button class="btn btn-outline-primary btn-sm" onclick="downloadpdf()">Download PDF</button>
+            <button id="pdfbtn" class="btn btn-outline-primary btn-sm pdfbtn" onclick="downloadpdf()" data-name="{{$student->name}}_{{$exam->name}}">Download PDF</button>
           </p>
         </div>
       </div>
@@ -91,7 +91,7 @@ pre, code {
 
 
 
-<div class="px-2  my-3" id="wrapper">
+<div class="px-5  my-3" id="wrapper">
 @foreach($tests as $k=>$t)
 <div class="row no-gutters" id="item{{($k+1)}}">
 	<div class="col-12 col-md-10 col-lg-9">
@@ -269,7 +269,10 @@ pre, code {
 
   function downloadpdf(){
       var element = document.getElementById('pdf');
-    html2pdf(element);
+      var pdfbtn = document.getElementById('pdfbtn');
+      var name = pdfbtn.getAttribute('data-name');
+      //alert(name);
+      html2pdf().from(element).save(name+'.pdf');;
   }
 
   

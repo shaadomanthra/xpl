@@ -1767,12 +1767,14 @@ $(function(){
     $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
     $selfie_url = $aws_url+$name+'.jpg';
 
-    $('.selfie_container').html('<img src="'+$selfie_url+'" class="w-100"/>');
+    $('.selfie_img').attr('src',$selfie_url+'?time='+ new Date());
+    //$('.selfie_container').html('<img src="'+$selfie_url+'?time='+ new Date()+'" class="w-100"/>');
 
     $c = $('#photo').data('aws_c');
     $name = $username+'_'+$test+'_idcard';
     $idcard_url = $aws_url+$name+'.jpg';
-    $('.idcard_container').html('<img src="'+$idcard_url+'" class="w-100"/>');
+    $('.idcard_img').attr('src',$idcard_url+'?time='+ new Date());
+    //$('.idcard_container').html('<img src="'+$idcard_url+'?time='+ new Date()+'" class="w-100"/>');
  }
 
  function approval(){
@@ -1782,14 +1784,16 @@ $(function(){
       $bucket = $('#photo').data('bucket');
       $region = $('#photo').data('region');
       $test= $('#photo').data('test');
-      $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/pre-message/'+$test+'/';
-      $url = $aws_url+$username+'.json';
+      $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlog/pre-message/'+$test+'/';
+      $url = $aws_url+$username+'.json?new='+new Date();
+
 
 
       $.ajax({
                 type: "GET",
                 url: $url
             }).done(function (result) {
+              console.log(result);
               if(result.status==3)
                 $('.message').html('<div class="alert alert-important alert-warning">'+result.message+'</div>');
               else if(result.status==2)
@@ -2076,63 +2080,8 @@ $(window).keyup(function(e){
 @endif
 
 
-// Set the date we're counting down to
-@if(!isset($time))
-var countDownDate = addMinutes(new Date(),{{ count($questions) }});
-@else
-var countDownDate = addMinutes(new Date(),{{ ($time) }});
-@endif
 
-// Update the count down every 1 second
-var x = setInterval(function() {
 
- if(parseInt($('.connection_status').data('status'))){
-    // Get todays date and time
-    var now = new Date().getTime();
-
-    // Find the distance between now and the count down date
-    var distance = countDownDate - now;
-
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Display the result in the element with id="demo"
-    document.getElementById("timer").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
-    document.getElementById("timer2").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
-    
-    
-
-    if(hours==0 && minutes==5 && seconds==1)
-      $('#timer_alert').modal();
-
-    $tcount = parseInt($('.timer_count').data('value'))-1;
-    $('.timer_count').data('value',$tcount);
-    // if(seconds==56)
-    //   $('#timer_alert').modal();
-
-    // If the count down is finished, write some text 
-    if (distance < 0) {
-      clearInterval(x);
-      document.getElementById("timer").innerHTML = "EXPIRED";
-      document.getElementById("timer2").innerHTML = "EXPIRED";
-
-      @if(isset($exam))
-        alert('The Test time has expired. ');
-        document.getElementById("assessment").submit();
-        
-      @endif
-    }
-  }
-}, 1000);
-
-function addMinutes(date, minutes) {
-    return new Date(date.getTime() + minutes*60000);
-}
-
-function stopTimer() {
-  clearInterval(x);
-}
 
 
 
@@ -2216,7 +2165,7 @@ $(function(){
   function uploadaws($data,$url,$screen=false){
 
     var blob = dataURItoBlob($data);
-    
+    console.log('pictire captured');
 
     if($url){
         $.ajax({
@@ -2364,6 +2313,7 @@ $(function(){
 
   function takepicture() {
 
+    if($('.start_btn').hasClass('exam_started'))
     html2canvas(document.body, {scale:0.75}).then( function (canv) { 
         $m = parseInt($('#video').data('c'));
         console.log('html2canvas - '+$m);
@@ -2398,24 +2348,77 @@ $(function(){
 
         // var url = $('#video').data('hred');
         // $token = $('#video').data('token');
+        $c = parseInt($('#video').data('c'));
+        if(parseInt($('#video').data('c'))!=200000)
+         $c=0;
+        if($('.start_btn').hasClass('exam_started'))
         $c = parseInt($('#video').data('c'))+1;
+
+      
+
 
         $username = $('#video').data('username');
         $test = $('#video').data('test');
-        $name = $username+'_'+$test+'_'+$c;
+        $len = $c.toString().length;
+        $cc = $c;
+        if($len==1)
+          $cc= '00'+$c;
+        else if($len==2)
+          $cc = '0'+$c;
+
+
+        $name = $username+'_'+$test+'_'+$cc;
 
         $url = $('#photo').data('presigned');
 
         
 
-        if($c == '200001'){
+        if($c == '200000'){
+
           $c = 'idcard';
+          $name = $username+'_'+$test+'_'+$c;
 
           uploadaws(image,$url);
 
+          // update the approval json
+          $url1 = $('.url_approval').data('url');
+          $bucket = $('#photo').data('bucket');
+          $region = $('#photo').data('region');
+          $test = $('#photo').data('test');
+          $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+          $url_get = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlog/approvals/'+$test+'.json';
+          $last_photo_url = $aws_url+$name+'.jpg';
+
+          $.ajax({
+                  type: "GET",
+                  url: $url_get
+            }).done(function (result) {
+
+              
+              result[$username]['idcard'] = $last_photo_url;
+              var data =JSON.stringify(result);
+              $.ajax({
+                      method: "PUT",
+                      headers: {"Content-Type": "application/json"},
+                      processData: false,
+                      data: data,
+                      url: $url1
+              })
+              .done(function() {
+
+                 console.log('idcard log uploaded');
+                  
+              });
+                   
+            }).fail(function () {
+                  console.log("Sorry URL is not access able");
+          });
+
         }else{
+          if($('.start_btn').hasClass('exam_started') || !$('#photo').data('last_photo'))
           if($('.url_'+$c).length){
-               $url = $('.url_'+$c).data('url');
+
+              $url = $('.url_'+$c).data('url');
               uploadaws(image,$url);
 
               // update last photo
@@ -2446,7 +2449,7 @@ $(function(){
         if($c!='idcard')
         if($c % $counnt == 0){
            var url = $('#photo').data('hred');
-           console.log(url);
+          if($('.start_btn').hasClass('exam_started'))
            $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
                 console.log('Face Detect:' + data);
           });
@@ -2456,10 +2459,11 @@ $(function(){
         if(Number.isInteger($c)){
 
           $('#video').data('c',$c);
-          if($c==1){
+          if($c==0){
             $('.cam_spinner').hide();
-            $('.start_btn').removeClass('disabled');
-            $('.cam_message').html('<span class="text-success"><i class="fa fa-check-circle"></i> Camera enabled. You can start the test now.</span>');
+            if(!$('#d').html())
+              $('.start_btn').removeClass('disabled');
+            $('.cam_message').html('<span class="text-success"><i class="fa fa-check-circle"></i> Camera enabled </span>');
           }
          
         }else{
@@ -2519,8 +2523,49 @@ $(function(){
         $name = $username+'_'+$test+'_'+$c;
 
         $url = $('#photo2').data('presigned');
-
         uploadaws(image,$url);
+
+        // update the approval json
+
+        $url1 = $('.url_approval').data('url');
+        $bucket = $('#photo').data('bucket');
+        $region = $('#photo').data('region');
+        $test = $('#photo').data('test');
+        $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
+        $url_get = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlog/approvals/'+$test+'.json';
+        $last_photo_url = $aws_url+$name+'.jpg';
+
+        $.ajax({
+                type: "GET",
+                url: $url_get
+          }).done(function (result) {
+
+            
+            result[$username]['selfie'] = $last_photo_url;
+            var data =JSON.stringify(result);
+            $.ajax({
+                    method: "PUT",
+                    headers: {"Content-Type": "application/json"},
+                    processData: false,
+                    data: data,
+                    url: $url1
+            })
+            .done(function() {
+
+               console.log('selfie log uploaded');
+                
+            });
+                 
+          }).fail(function () {
+                console.log("Sorry URL is not access able");
+        });
+
+         
+
+
+
+
+
       }else{
         $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
       } 

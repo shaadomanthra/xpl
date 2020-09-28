@@ -733,31 +733,31 @@ class ExamController extends Controller
             $content = '<p>ZenQ is conducting an online recruitment  test for the position of Software - Intern  </p>
               <p>Your application for participating in the assessment is approved. Below are the details of the online assessment </p>
               <p><div>Test URL: <a href="https://xplore.co.in/test/057480">https://xplore.co.in/test/057480</a> <br>
-Access Code: KLU123 <br>
+                Access Code: KLU123 <br>
 
-Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link will be activated at 2PM)</div></p>
-<div class="default-style">
-    <br>Note : 1)You can take test only in<strong>&nbsp;Laptop/desktop&nbsp;.</strong>
-   </div>
-   <div class="default-style">
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2) Please register at&nbsp;<a href="https://xplore.co.in/register">Xplore.co.in/register&nbsp;</a>&nbsp;before taking the test
-   </div>
-   <div class="default-style">
-    <br>&nbsp; &nbsp; &nbsp;
-    <br>Instructions:
-    <ul>
-     <li>Each question carries 1 mark and no negative marking</li>
-     <li><strong>Mandatory</strong>: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected</li>
-     <li>The test should be taken only from&nbsp;<strong>desktop/laptop with webcam</strong>&nbsp;facilities. Mobile Phones and Tabs are restricted</li>
-     <li>Please make sure that you&nbsp;<strong>disable all desktop notifications</strong>. Else, the test will be terminated in between</li>
-     <li>Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)</li>
-     <li>Please make sure that your camera is switched on and you are facing the light source</li>
-    </ul>For step by step process of Xplore assessment please click the below link
-    <br>
-    <br><a href="https://xplore.co.in/files/User_Manual_ZenQ_Assessment.pdf">https://xplore.co.in/files/User_Manual_ZenQ_Assessment.pdf</a>
-    <br>
-    <br>
-';
+                Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link will be activated at 2PM)</div></p>
+                <div class="default-style">
+                    <br>Note : 1)You can take test only in<strong>&nbsp;Laptop/desktop&nbsp;.</strong>
+                   </div>
+                   <div class="default-style">
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2) Please register at&nbsp;<a href="https://xplore.co.in/register">Xplore.co.in/register&nbsp;</a>&nbsp;before taking the test
+                   </div>
+                   <div class="default-style">
+                    <br>&nbsp; &nbsp; &nbsp;
+                    <br>Instructions:
+                    <ul>
+                     <li>Each question carries 1 mark and no negative marking</li>
+                     <li><strong>Mandatory</strong>: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected</li>
+                     <li>The test should be taken only from&nbsp;<strong>desktop/laptop with webcam</strong>&nbsp;facilities. Mobile Phones and Tabs are restricted</li>
+                     <li>Please make sure that you&nbsp;<strong>disable all desktop notifications</strong>. Else, the test will be terminated in between</li>
+                     <li>Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)</li>
+                     <li>Please make sure that your camera is switched on and you are facing the light source</li>
+                    </ul>For step by step process of Xplore assessment please click the below link
+                    <br>
+                    <br><a href="https://xplore.co.in/files/User_Manual_ZenQ_Assessment.pdf">https://xplore.co.in/files/User_Manual_ZenQ_Assessment.pdf</a>
+                    <br>
+                    <br>
+                ';
 
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
             SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*3));
@@ -766,6 +766,183 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
         dd('Email Queued - '.count($emails));
         return view('home');
     }
+
+
+    public function user_roles($id, Request $r){
+
+        $data = array('invigilation'=>0);
+        $exam= Exam::where('slug',$id)->with('sections')->first();
+
+        if($r->get('_token')){
+
+            Cache::forget('test_'.$exam->slug);
+            $viewers = $r->get('viewers');
+            if($viewers){
+                $exam->viewers()->wherePivot('role','viewer')->detach();
+                foreach($viewers as $v){
+
+                    Cache::forget('userexamroles_'.$v);
+                    if(!$exam->viewers()->wherePivot('role','viewer')->find($v))
+                        $exam->viewers()->attach($v,['role'=>'viewer']);
+                }
+            }
+
+            if($exam->viewers()->wherePivot('role','viewer')->get()){
+                if($exam->emails){
+                    $emails = implode(',',explode("\n", $exam->emails));
+                    $emails =str_replace("\r", '', $emails);
+                    $emails = array_unique(explode(',',$emails));
+                    //shuffle($emails);
+
+                    $viewers = $exam->viewers()->wherePivot('role','viewer')->get();
+                    $count = intval(floor(count($emails)/count($viewers)));
+
+                    $set = [];
+                    foreach($viewers as $m=>$v){
+                        $set[$v->id] = array_slice($emails,$m*$count,$count);
+                        //var_dump($count);
+
+
+                        if(count($viewers)-1==$m){
+                            $mod = count($emails)% $count;
+                            $leftout = array_slice($emails,-$mod,$mod);
+                            $set[$v->id] = array_merge($set[$v->id],$leftout);
+                        }
+
+                    }
+                    $settings = json_decode($exam->settings,true);
+
+                    //dd($settings);
+                    $settings['invigilation'] = $set;
+                    $exam->settings = json_encode($settings);
+                    //dd($exam->settings);
+                    $exam->save();
+
+
+                }
+            }
+
+
+
+            $evaluators = $r->get('evaluators');
+            if($evaluators){
+                //dd($exam);
+                $exam->evaluators()->wherePivot('role','evaluator')->detach();
+                foreach($evaluators as $ev){
+                    Cache::forget('userexamroles_'.$ev);
+                    if(!$exam->evaluators()->wherePivot('role','evaluator')->find($ev)){
+                        $exam->evaluators()->attach($ev,['role'=>'evaluator']);
+                    }
+                }
+            }
+
+            //dd($viewers);
+            Cache::forever('test_'.$exam->slug,$exam);
+
+
+
+        }
+
+        //dd($exam->settings);
+
+
+
+        $exam_settings = json_decode($exam->settings,true);
+        if(isset($exam_settings['invigilation']))
+            $data['invigilation'] = $exam_settings['invigilation'];
+        
+
+        //dd($data);
+
+        if(\auth::user()->isAdmin())
+            $data['hr-managers'] = \auth::user()->getRole('hr-manager');
+        else
+            $data['hr-managers'] = \auth::user()->where('client_slug',subdomain())->getRole('hr-manager');
+
+        if($exam)
+            return view('appl.exam.exam.user_roles')
+                    ->with('exam',$exam)
+                    ->with('data',$data);
+        else
+            abort(404);
+    }
+
+    public function set_creator($id,Request $r){
+        $exam= Exam::where('slug',$id)->with('sections')->first();
+
+
+         if($r->get('delete')){
+            for($i=0;$i<10;$i++){
+                $name = 'set_'.$exam->slug.'_'.$i;
+                //Storage::disk('s3')->delete('paper_set/'.$exam->id.'/'.$name.'.json');
+                Cache::forget($name);
+            }
+        }
+
+        if($r->get('_token')){
+
+         
+            foreach($exam->sections as $sec){
+                    $sec->instructions = $r->get($sec->id);
+                    $sec->save();
+            }
+
+            for($i=0;$i<10;$i++){
+                foreach($exam->sections as $sec){
+                        $formula = json_decode($r->get($sec->id));
+                        $qset = $sec->questions;
+                        $ques[$sec->id] = $exam->pool_qset($qset,$formula);
+                        //     
+                }
+                $name = 'set_'.$exam->slug.'_'.$i;
+                //Storage::disk('s3')->put('paper_set/'.$exam->id.'/'.$name.'.json',json_encode($ques));
+                Cache::forever($name,$ques);
+            }
+
+          
+            
+        }
+
+        $questions = [];$data = array('no_topic'=>0,'level'=>0,'qcount'=>0);
+        foreach($exam->sections as $sec){
+            foreach($sec->questions as $q){
+                $questions[$q->id] = $q;
+                $data['qcount']++;
+                if(!$q->topic)
+                    $data['no_topic']++;
+
+                if(!$q->level)
+                    $data['level']++;
+            }
+        }
+
+        $paper_sets = [];$paper_count= [];
+        for($i=0;$i<10;$i++){
+            $name = 'set_'.$exam->slug.'_'.$i;
+
+            if(Cache::get($name)){
+                $paper_sets[$i] = Cache::get($name);
+                $paper_count[$i] = 0;
+                foreach($paper_sets[$i] as $s=>$qid){
+                    $paper_count[$i] = $paper_count[$i] + count($qid);
+                }
+
+            }
+
+        }
+        
+        if($exam)
+            return view('appl.exam.exam.set_creator')
+                    ->with('exam',$exam)
+                    ->with('paper_sets',$paper_sets)
+                    ->with('paper_count',$paper_count)
+                    ->with('data',$data);
+        else
+            abort(404);
+    }
+
+
+   
     
 
     public function psyreport(Request $r)

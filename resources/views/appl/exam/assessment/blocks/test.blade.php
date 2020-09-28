@@ -4,7 +4,7 @@
 
 <div class="testpage_wrap">
 <div class="p-2 p-md-3 testpage " style="display: none">
-<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}"
+<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif"
 
 action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
   <style>
@@ -268,7 +268,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         <input type="hidden" name="test_id" value="{{ $exam->id }}">
         <input type="hidden" name="save" class="save_test" value="{{ $exam->save }}">
         <input type="hidden" name="code" value="{{ request()->get('code') }}">
-        <input type="hidden" name="window_change" value="0" id="window_change">
+        <input type="hidden" name="window_change" value="{{ json_decode($json_log,true)['window_change']}}" id="window_change">
         <button type="submit" class="btn  btn-warning " data-submit="1">
            I confirm, End Test
         </button>
@@ -534,6 +534,13 @@ div.chats {
     <p><div class="spinner-border spinner-border-sm cam_spinner " role="status">
   <span class="sr-only">Loading...</span>
 </div> @if($exam->camera) <span class="cam_message">checking for webcam access ...</span> @endif</p>
+
+
+@if(isset($settings['start_time']))
+<p class="my-2"><div class="alert alert-important alert-warning">
+  Exam starts in <b><span id="d" class="d"></span></b>
+</div></p>
+@endif
 </div>
 
     <div class="btn btn-primary disabled  fullscreen start_btn">Start Test</div>

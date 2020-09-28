@@ -158,6 +158,15 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 			->name('test.snaps')->middleware('auth');
 	Route::get('/test/{test}/accesscode', 'Exam\ExamController@accesscode')
 			->name('test.accesscode')->middleware('auth');
+	Route::get('/test/{test}/set_creator', 'Exam\ExamController@set_creator')
+			->name('test.sets')->middleware('auth');
+	Route::post('/test/{test}/set_creator', 'Exam\ExamController@set_creator')
+			->name('test.sets')->middleware('auth');
+	Route::post('/test/{test}/user_roles', 'Exam\ExamController@user_roles')
+			->name('test.user_roles')->middleware('auth'); 
+	Route::get('/test/{test}/user_roles', 'Exam\ExamController@user_roles')
+			->name('test.user_roles')->middleware('auth'); 
+
 
 	Route::get('/campus/tests/{test}/{student}', 'College\CampusController@test_student')
 			->name('campus.tests.student.show')->middleware('auth');

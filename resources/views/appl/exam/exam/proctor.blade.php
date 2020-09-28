@@ -32,7 +32,7 @@
         <path d="M8.7295372,14.6839411 C8.35180695,15.0868534 7.71897114,15.1072675 7.31605887,14.7295372 C6.9131466,14.3518069 6.89273254,13.7189711 7.2704628,13.3160589 L11.0204628,9.31605887 C11.3857725,8.92639521 11.9928179,8.89260288 12.3991193,9.23931335 L15.358855,11.7649545 L19.2151172,6.88035571 C19.5573373,6.44687693 20.1861655,6.37289714 20.6196443,6.71511723 C21.0531231,7.05733733 21.1271029,7.68616551 20.7848828,8.11964429 L16.2848828,13.8196443 C15.9333973,14.2648593 15.2823707,14.3288915 14.8508807,13.9606866 L11.8268294,11.3801628 L8.7295372,14.6839411 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
     </g>
 </svg><!--end::Svg Icon--></span>
-           Proctor Dashboard</p>
+           Approval Dashboard</p>
         </div>
       </div>
      
@@ -128,6 +128,8 @@
   <div class="card  card-custom @if($b['approved']==0)bg-light-warning @elseif($b['approved']==1) @else bg-light-danger @endif my-3 card_{{$a}}">
     <div class="card-body ">
 
+      <img src="{{$b['image']}}" class="rounded float-right" width="100px"/>
+
       <dl class="row">
           <dt class="col-5 col-sm-4">Full Name</dt>
           <dd class="col-7 col-sm-8"><h3>{{ $b['name']}}</h3></dd>
@@ -144,7 +146,7 @@
           <div class=" mb-3 mb-md-0">
               <h5><i class="fa fa-picture-o"></i> Selfie Photo</h5>
             <div class="selfie_container">
-              <img src="https://{{env('AWS_BUCKET')}}.s3.{{env('AWS_DEFAULT_REGION')}}.amazonaws.com/webcam/{{$b['selfie']}}" class="w-100 rounded">
+              <img src="{{$b['selfie']}}" class="w-100 rounded">
             </div>
           </div>
           
@@ -153,7 +155,7 @@
           <div class=" mb-3 mb-md-0">
               <h5><i class="fa fa-vcard"></i> ID Card Photo</h5>
             <div class="selfie_container">
-              <img src="https://{{env('AWS_BUCKET')}}.s3.{{env('AWS_DEFAULT_REGION')}}.amazonaws.com/webcam/{{$b['idcard']}}" class="w-100 rounded">
+              <img src="{{$b['idcard']}}" class="w-100 rounded">
             </div>
           </div>
 
@@ -174,6 +176,8 @@
     </div>
 </div>
       </div>
+
+     
   
     </div>
   </div>
