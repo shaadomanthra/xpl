@@ -405,6 +405,7 @@ $(document).ready(function(){
 
     if($start_time){
       // Set the date we're counting down to
+      $start_time = new Date($start_time.replace(/-/g, '/'));
       var countDownDate = new Date($start_time).getTime();
 
       // Update the count down every 1 second
@@ -439,17 +440,16 @@ $(document).ready(function(){
             }
           }
 
-          
         // If the count down is over, write some text 
         if (distance < 0) {
           clearInterval(w);
           if(document.getElementById("d"))
-          document.getElementById("d").innerHTML = "";
+          document.getElementById("d").innerHTML = "0";
           $('.start_btn').removeClass('disabled');
           $('.started').html('started');
           load_timer();
         }
-          }
+        }
       }, 1000);
 
     }else{
