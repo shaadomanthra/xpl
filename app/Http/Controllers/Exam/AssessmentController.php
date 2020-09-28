@@ -228,8 +228,17 @@ class AssessmentController extends Controller
             $exam = Exam::where('slug',$test)->first();
         }
         
+        $user = \auth::user();
+
+        if($user)
+            $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
+        else
+            $responses = null;
         if($exam->active){
-            return view('appl.exam.assessment.inactive')->with('exam',$exam); 
+            if(!$responses)
+                return view('appl.exam.assessment.inactive')->with('exam',$exam); 
+        }else if($exam->status==0){
+            abort(403,'Test is in draft state');
         }
 
         $time=0;
@@ -328,6 +337,7 @@ class AssessmentController extends Controller
                 $candidate[$username]['selfie'] = '';
                 $candidate[$username]['idcard'] = '';
                 $candidate[$username]['approved'] = 0;
+                $candidate[$username]['terminated'] = 0;
                 $candidate[$username]['time'] = strtotime(now());
 
                 if(!Storage::disk('s3')->exists($name))
@@ -390,9 +400,20 @@ class AssessmentController extends Controller
         if(!$exam)
             abort('404','Test not found');
 
+        $user = \auth::user();
+
+        if($user)
+            $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
+        else
+            $responses = null;
+
+
+
         if($exam->active){
-            if(!$request->get('admin'))
-            return view('appl.exam.assessment.inactive')->with('exam',$exam); 
+            if(!$responses)
+                return view('appl.exam.assessment.inactive')->with('exam',$exam); 
+        }else if($exam->status==0){
+            abort(403,'Test is in draft state');
         }
 
         if($request->get('student') && $request->get('admin')){
@@ -702,6 +723,21 @@ class AssessmentController extends Controller
 
          $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
          $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
+         $approval_link_name = 'testlog/approvals/'.$exam->id.'.json';
+         $url['approval'] = Storage::disk('s3')->url($approval_link_name);
+
+
+         $settings = json_decode($exam->getOriginal('settings'),true);
+         $invigilation = (isset($settings->invigilation))?$settings->invigilation:null;
+         if($invigilation){
+
+         }else{
+            $proctor = $exam->user;
+         }
+         $chatname = 'testlog/'.$exam->id.'/chats/'.$user->username.'.json';
+         $url['chat'] = Storage::disk('s3')->url($chatname);
+         $url['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
+
 
          $activity = [strtotime(now())=>"Exam Link Opened"];
          $userdata = ['username'=>$user->username,'uname'=>$user->name,'rollnumber'=>$user->roll_number,"completed"=>0,"activity"=>$activity,"last_photo"=>"",'window_change'=>0];
@@ -712,6 +748,13 @@ class AssessmentController extends Controller
             Storage::disk('s3')->put($name_log,$json_d,'public');
             $json_log = $json_d;
          }
+
+         if(!Storage::disk('s3')->exists($chatname)){
+            $activity = [strtotime(now())=> array("name"=>"proctor","username"=>"","message"=>"For queries, you can send me a message.")];
+            
+            Storage::disk('s3')->put($chatname,json_encode($activity),'public');
+         }
+
             
 
          $url['testlog_log_get'] = Storage::disk('s3')->url($name_log);
@@ -1706,6 +1749,7 @@ class AssessmentController extends Controller
         }else{
             $user = \auth::user();
         }
+
         $user_id = $request->get('user_id');
         $test_id = $request->get('test_id');
         $code = $request->get('code');
@@ -2072,8 +2116,6 @@ class AssessmentController extends Controller
                 $test_overall['cheat_detect'] = 1;
             }
 
-
-
         }
 
         if($test_overall['window_change']>3)
@@ -2298,10 +2340,10 @@ class AssessmentController extends Controller
 
         $user = \auth::user();
         //dd($exam->settings);
-        if(!isset($exam->settings->invigilation))
-            $exam_settings = json_decode($exam->settings,true);
+        if(!isset($exam->getOriginal('settings')->invigilation))
+            $exam_settings = json_decode($exam->getOriginal('settings'),true);
         else
-            $exam_settings = json_decode(json_encode($exam->settings),true);
+            $exam_settings = json_decode(json_encode($exam->getOriginal('settings')),true);
 
         $candidates = [];
         if(isset($exam_settings['invigilation'])){
@@ -2322,9 +2364,6 @@ class AssessmentController extends Controller
                 $name = $b->username.'_log.json';
                 $pg[$name] = 'testlog/'.$exam->id.'/log/'.$name;
             }
-
-
-
             
             $pg = $this->paginateAnswers($pg,count($pg));
          
@@ -2338,17 +2377,37 @@ class AssessmentController extends Controller
                    
                     $content = json_decode(Storage::disk('s3')->get($f),true);
                     $content['url'] = Storage::disk('s3')->url($f);
-                    $content['selfie_url'] = '';
+                    
+                    $content['selfie_url'] ='';
                     $content['idcard_url'] ='';
-                    
-                    if(isset($content['username'])){
-                        $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
-                        $content['selfie_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+                    $content['approval'] ='';
+                    $content['chat'] ='';
+                    $content['chat_post'] ='';
+                    $content['approval_post'] = '';
 
-                        $idcard = $content['username'].'_'.$exam->id.'_idcard.jpg';
-                        $content['idcard_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$idcard);
+                    if(isset($content['username'])){
+                            $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
+                            $content['selfie_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+
+                            $idcard = $content['username'].'_'.$exam->id.'_idcard.jpg';
+                            $content['idcard_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$idcard);
+
+                            $name = 'testlog/approvals/'.$exam->id.'.json';
+                            $content['approval'] = Storage::disk('s3')->url($name);
+
+                            $name = 'testlog/approvals/'.$exam->id.'.json';
+                            $content['approval_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+
+                            $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
+                            $content['chat'] = Storage::disk('s3')->url($chatname);
+
+                            $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
+                            $content['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
+
+                            //$name = 'testlog/approvals/'.$exam->id.'.json';
+                            //$content['approval_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
                     }
-                    
+                        
 
                     if(isset($content['last_photo'])){
                         if(!$content['last_photo']){
@@ -2397,6 +2456,10 @@ class AssessmentController extends Controller
 
                 $content['selfie_url'] ='';
                 $content['idcard_url'] ='';
+                $content['approval'] ='';
+                $content['chat'] ='';
+                $content['chat_post'] ='';
+                $content['approval_post'] = '';
 
                 if(isset($content['username'])){
                         $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
@@ -2404,7 +2467,21 @@ class AssessmentController extends Controller
 
                         $idcard = $content['username'].'_'.$exam->id.'_idcard.jpg';
                         $content['idcard_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$idcard);
-                    }
+
+                        $name = 'testlog/approvals/'.$exam->id.'.json';
+                        $content['approval'] = Storage::disk('s3')->url($name);
+
+                        $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
+                        $content['chat'] = Storage::disk('s3')->url($chatname);
+
+                        $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
+                        $content['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
+
+
+                        $name = 'testlog/approvals/'.$exam->id.'.json';
+                        $content['approval_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+
+                }
 
                 if(isset($content['last_photo'])){
                     if(!$content['last_photo']){
@@ -2417,17 +2494,20 @@ class AssessmentController extends Controller
                         if(is_array($name))
                             $name = $name[5];
                         
-                        $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
-                        if(!Storage::disk('s3')->exists($filepath)){
-                            $counter = explode('.',$url_pieces[2]);
-                            $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
-                            $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
-                            if(Storage::disk('s3')->exists($filepath)){
-                                $content['last_photo'] = $last_before_url ;
-                            }else{
-                                $content['last_photo'] = '';
-                            }
+                        if(isset($url_pieces[2])){
+                             $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
+                            if(!Storage::disk('s3')->exists($filepath)){
+                                $counter = explode('.',$url_pieces[2]);
+                                $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
+                                $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
+                                if(Storage::disk('s3')->exists($filepath)){
+                                    $content['last_photo'] = $last_before_url ;
+                                }else{
+                                    $content['last_photo'] = '';
+                                }
+                            } 
                         }
+                       
                     }
                 }else{
                     $content['last_photo'] = '';
@@ -2465,6 +2545,11 @@ class AssessmentController extends Controller
             }
         }
 
+        $settings = json_decode($exam->getOriginal('settings'),true);
+
+        $chatname = 'testlog/'.$exam->id.'/chats/proctor_'.\auth::user()->username.'.json';
+        $data['chat'] = Storage::disk('s3')->url($chatname);
+        $data['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
       
         if(count($users))
             return view('appl.exam.exam.active')
@@ -2472,6 +2557,7 @@ class AssessmentController extends Controller
                     ->with('users',$users)
                     ->with('pg',$pg)
                     ->with('exam',$exam)
+                    ->with('settings',$settings)
                     ->with('proctor',1)
                     ->with('active',1);
         else
@@ -2819,9 +2905,6 @@ class AssessmentController extends Controller
         $filename = $id.'.json';
         $filepath = $this->cache_path.$filename; 
         
-
-
-
         $exam = Cache::get('test_'.$id);
         if(!$exam)
         if(file_exists($filepath))
@@ -2847,8 +2930,18 @@ class AssessmentController extends Controller
         $products = $exam->product_ids;
         $product = null;
 
+        $user = \auth::user();
+
+        if($user)
+            $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
+        else
+            $responses = null;
+
+
+
         if($exam->active){
-            return view('appl.exam.assessment.inactive')->with('exam',$exam); 
+            if(!$responses)
+                return view('appl.exam.assessment.inactive')->with('exam',$exam); 
         }else if($exam->status==0){
             abort(403,'Test is in draft state');
         }
@@ -2871,10 +2964,8 @@ class AssessmentController extends Controller
             $entry = 1;
         }
 
-        if($user)
-            $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
-        else
-            $responses = null;
+
+        
 
         //dd($exam->product_ids);
 

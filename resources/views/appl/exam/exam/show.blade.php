@@ -240,12 +240,12 @@
             </div>
           </div>
 
-         
-          @if(isset(json_decode($exam->settings)->start_time))
+
+          @if(isset(json_decode($exam->getOriginal('settings'))->start_time))
            <div class="row mb-2">
             <div class="col-6"><i class="fa fa-calendar"></i>&nbsp; Exam Start time</div>
             <div class="col-6">
-                {{\carbon\carbon::parse(json_decode($exam->settings)->start_time)->toDayDateTimeString()}}
+                {{\carbon\carbon::parse(json_decode($exam->getOriginal('settings'))->start_time)->toDayDateTimeString()}}
             
             </div>
           </div>

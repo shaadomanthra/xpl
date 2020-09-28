@@ -14,7 +14,8 @@ $(document).ready(function(){
                 $('.testpage').show();
                 $('.fullscreen_container').hide();
                 $('#check').hide();
-                load_timer();
+               
+                win_focus();
                 $('.start_btn').addClass('exam_started');
               }
                 
@@ -26,7 +27,8 @@ $(document).ready(function(){
                 $('#check').hide();
                 $('.fullscreen').html('back to fullscreen');
                 $('.start_btn').addClass('exam_started');
-                load_timer();
+               
+                win_focus();
                 $('.full_screen_message').html('<span class="text-danger">You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.</span>');
             }
 
@@ -61,6 +63,8 @@ $(document).ready(function(){
           var count = parseInt(document.getElementById("window_change").value) +1;
           var message = '';
           var window_swap = parseInt($('.assessment').data('window_swap'));
+
+          console.log('window swap - '+count);
           var auto_terminate = parseInt($('.assessment').data('auto_terminate'));
           document.getElementById("window_change").value = count;
           if(window_swap){
@@ -103,6 +107,7 @@ $(document).ready(function(){
         var window_focus;
         var window_swap = parseInt($('.assessment').data('window_swap'));
 
+        console.log('Exam Started - focus');
         if(window_swap){
           $(window).focus(function() {
                 window_focus = true;
@@ -116,8 +121,8 @@ $(document).ready(function(){
       
     }
 
-    // start window focus events after 5 seconds
-    setTimeout(win_focus,5000);
+    // // start window focus events after 5 seconds
+    // setTimeout(win_focus,5000);
 
 
     
@@ -358,11 +363,44 @@ $(document).ready(function(){
       }
      }
 
+     var tr = setInterval(termination_check,5000);
+
+     //check for termination of the candidate
+     function termination_check(){
+      $url = $('.url_approval').data('url');
+      $username = $('.assessment').data('username');
+      
+      if(!$('.start_btn').hasClass('disabled'))
+      $.ajax({
+          type: "GET",
+          url: $url
+        }).done(function (result) {
+
+         if(result[$username]['terminated']){
+          clearInterval(tr);
+             $('#terminated').modal();
+             user_test_log(new Date().getTime() / 1000, 'Test terminated by proctor');
+             setTimeout(function(){ 
+                  $("form")[0].submit();
+                }, 3000);
+
+         }
+             
+       
+        }).fail(function () {
+                      console.log("Sorry URL is not access able");
+        });
+            
+
+        
+      }
+
+      
+
 
 
     // start test timer
     $start_time = $('.assessment').data('start');
-    console.log($start_time);
 
     if($start_time){
       // Set the date we're counting down to
@@ -416,6 +454,7 @@ $(document).ready(function(){
     }
 
 
+     load_timer();
     // exam timer
     function load_timer(){
             // Set the date we're counting down to

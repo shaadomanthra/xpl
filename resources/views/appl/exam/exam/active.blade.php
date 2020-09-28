@@ -9,6 +9,17 @@
 .fleft{ position: absolute;right:10px;top:18px; color:black;}
 .fright{ position: absolute;left:10px;top:18px; color:black;}
 </style>
+  <style>
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+</style>
 
 <div class="mt-4 container" >
 
@@ -89,9 +100,15 @@
             @endif
             @endif
             <p class="mb-0 mt-3">
-              <i class="fa fa-comment-alt text-success mr-4 d-none"></i> 
+              @if(isset($settings['chat']))
+              @if(strtolower($settings['chat'])=='yes')
+              @if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/chats/'.$b['username'].'.json'))
+              <i class="fa fa-comment-alt text-success mr-4 cursor message_student message_{{$b['username']}}" data-urlpost="{{$b['chat_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"data-url="{{$b['chat']}}" data-lastchat=""></i> 
+              @endif
+              @endif
+              @endif
               <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}" data-selfie_url="{{$b['selfie_url']}}" data-idcard_url="{{$b['idcard_url']}}"></i> 
-              <i class="fas fa-power-off text-danger mr-4"></i> </p>
+              <i class="fas fa-power-off text-danger mr-4 cursor user_terminate user_terminate_{{$b['username']}}" data-url="{{$b['approval']}}" data-urlpost="{{$b['approval_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"  ></i> </p>
           </div>
     </div>
   </div>
@@ -124,7 +141,7 @@ div.chats {
   <div class="modal-dialog  " role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title text-info" id="exampleModalLongTitle"><i class="fa fa-comment-alt "></i> Message </h3>
+        <h3 class="modal-title text-info" id="exampleModalLongTitle"><i class="fa fa-comment-alt "></i> Message: <b><span class="message_name"></span></b> </h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -162,13 +179,13 @@ div.chats {
       </div>
       <div class="modal-body ">
         
-        I confirm, the test termination
+        I confirm, the test termination of <b><span class="terminate_name"></span></b> due to misconduct during the test.
        
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary ">Confirm</button>
+        <button type="button" class="btn btn-primary termination_confirm" data-username="">Confirm</button>
       </div>
     </div>
   </div>
@@ -210,7 +227,7 @@ div.chats {
       </div>
       <div class="modal-body ">
        <div class="pb-4">
-        <div class="p-3 border float-right">Last Photo<br>
+        <div class="p-3 border float-right">Lastest Capture<br>
         <img src="" class=" log_pic border" height="100px" style="display:none" /></div>
         <div class="">Name: <b><span class="log_name text-success"></span></b></div>
         <div>Roll Number: <b><span class="log_rollnumber text-primary"></span></b></div>
@@ -223,7 +240,7 @@ div.chats {
       
 
       <div class="pb-4">
-      <a href="" class="btn btn-primary link_snaps" data-url="{{ route('test.snaps',$exam->slug)}}" target="_blank"><i class="fa fa-camera text-white"></i> Student Snaps</a> &nbsp;&nbsp;&nbsp;<a href="" data-url="{{ route('test.snaps',$exam->slug)}}" class="btn btn-success link_screens" target="_blank"><i class="fa fa-image text-white"></i> Screen Snaps</a> 
+      <a href="" class="btn btn-primary link_snaps" data-url="{{ route('test.snaps',$exam->slug)}}" target="_blank"><i class="fa fa-camera text-white"></i> Selfie</a> &nbsp;&nbsp;&nbsp;<a href="" data-url="{{ route('test.snaps',$exam->slug)}}" class="btn btn-success link_screens" target="_blank"><i class="fa fa-image text-white"></i> Screens</a> 
     </div>
     
         <div class="chats mb-3">

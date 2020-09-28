@@ -65,4 +65,56 @@ $(function(){
 	    
 	 });
 
+
+    $('.user_terminate').on('click',function(e){
+
+        $url = $(this).data('url')+"?time="+$.now();
+        $username = $(this).data('username');
+        $name = $(this).data('name');
+        $('.terminate_name').html($name);
+        $('.termination_confirm').data('username',$username);
+        $('#terminate').modal();
+
+     });
+
+   
+
+    
+
+
+    $('.termination_confirm').on('click',function(e){
+
+        $username = $(this).data('username');
+        $url = $('.user_terminate_'+$username).data('url');
+        $urlpost = $('.user_terminate_'+$username).data('urlpost');
+
+        $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+                console.log(JSON.stringify(result));
+                result[$username]['terminated'] = 1;
+                var $data = JSON.stringify(result);
+
+                 $.ajax({
+                      method: "PUT",
+                      headers: {"Content-Type": "application/json"},
+                      processData: false,
+                      data: $data,
+                      url: $urlpost
+              })
+              .done(function($url) {
+                      console.log('terminated');
+                      $('#terminate').modal('hide');
+              });
+                
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+        });
+
+       
+
+     });
+
+
 });

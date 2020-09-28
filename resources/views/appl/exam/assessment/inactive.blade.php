@@ -8,11 +8,27 @@
 <div class="bg-white border p-3">
  
   <div class="p-2">
-  	<h5><span class="badge badge-info">{{ $exam->name }}</span></h5>
+  	
+    @if(isset($exam->image))
+        @if(Storage::disk('s3')->exists($exam->image))
+   
+        <img 
+      src="{{ Storage::disk('s3')->url($exam->image) }} " class="w-100 d-print-none float-right" alt="{{  $exam->name }}" style='max-width:200px;'>
+    
+        @endif
+      @endif
+    <h2> <i class="fa fa-angle-right"></i> {{ $exam->name }}</h2>
+    <h5><span class="badge badge-info">Status : Inactive</span></h5>
+    <hr>
+    <h4>Instructions</h4>
+    {!! $exam->instructions !!}
+
+    <hr>
   	@if(!$exam->auto_activation)
     <h1 class="display-4"> <div class=""><i class="fa fa-link"></i> The Test  is inactive</div></h1>
     @else
-    <h3 class="display-5"> <div class=""><i class="fa fa-link"></i> This Test  will be activated on <span class="text-danger">{{\carbon\carbon::parse($exam->auto_activation)->toDayDateTimeString()}}</span></div></h3>
+    <h3 class="display-5 mb-1"> <div class=""> This Test  will be activated on <span class="text-danger">{{\carbon\carbon::parse($exam->auto_activation)->toDayDateTimeString()}}</span></div></h3>
+    <p>and closes by <span class="text-info">{{\carbon\carbon::parse($exam->auto_deactivation)->toDayDateTimeString()}}</span></p>
     @endif
     <p>  For queries, kindly write to us at <span class="text-primary">info@xplore.co.in</span> </p>
     <p>

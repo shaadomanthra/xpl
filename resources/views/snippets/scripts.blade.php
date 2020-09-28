@@ -343,46 +343,66 @@ $(function(){
    }
 }
 
-$(document).on('click','.message_proctor',function(){
-
-   
-      $username = $(this).data('username');
-      $bucket = $(this).data('bucket');
-      $region = $(this).data('region');
-      $test= $(this).data('test');
-      $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/chats/'+$test+'/';
-      $url = $aws_url+$username+'.json';
-      $('.chat_messages').html('');
-      $('.send_chat').data('username',$username);
 
 
-      $.ajax({
+ function sortObject(obj) {
+        return Object.keys(obj).sort().reduce(function (result, key) {
+            result[key] = obj[key];
+            return result;
+        }, {});
+    }
+
+
+$('.message_student').on('click',function(e){
+
+        $url = $(this).data('url')+"?time="+$.now();
+        $username = $(this).data('username');
+        $name = $(this).data('name');
+        item = $('.message_'+$username);
+        $('.message_name').html($name);
+        $('.send_chat').data('username',$username);
+        $('.chat_messages').html('');
+
+         $.ajax({
                 type: "GET",
                 url: $url
             }).done(function (result) {
-                 $message = JSON.stringify(result);
-                 
-                 var  i =0;
-                 for(var k in result) {
-                   $u = result[k].person;
-                   $message = result[k].message;
-                   $('.chat_messages').append("<div class='mt-2'><b>"+$username+":</b><br>"+$message+"</div>");
+                // result.forEach(obj => {
+                //     Object.entries(obj).forEach(([key, value]) => {
+                //         console.log(`${key} ${value}`);
+                //     });
+                //     console.log('-------------------');
+                // });
+
+                const ordered = sortObject(result);
+
+                i=0;
+                for(var k in ordered) {
+                   $u = ordered[k].name;
+                   $message = ordered[k].message;
+                   $('.chat_messages').append("<div class='mt-2'><b>"+$u+":</b><br>"+$message+"</div>");
                    i = i+1;
-                   if((Object.keys(result).length) == i){
-
+                   if((Object.keys(ordered).length) == i){
+                      console.log(k);
+                      item.data('lastchat',k);
+                      console.log(item.data('lastchat'));
                    }
-                    
-                  }
+                }
 
-                //window.location.href = backendUrl;
+                
+
+                //console.log(result);
+                console.log(ordered);
+
+                 
+                
             }).fail(function () {
                 console.log("Sorry URL is not access able");
         });
-   
 
-  $('#chat').modal();
-});
+        $('#chat').modal();
 
+     });
 
 $(document).on('click','.send_chat',function(){
 
@@ -390,23 +410,46 @@ $(document).on('click','.send_chat',function(){
     objDiv.scrollTop = $('.chats')[0].scrollHeight+ 300;
 
     $username = $(this).data('username');
+    $uname = $('.message_'+$username).data('name');
     $testid = $(this).data('testid');
     $user = $(this).data('user');
     $message = $('#message-text').val();
-    url = $('#photo').data('hred');
-    $token = $('#photo').data('token');
+    $url = $('.message_'+$username).data('url');
+    $urlpost = $('.message_'+$username).data('urlpost');
     $test = $('#video').data('test');
     $name = $username+'_'+$test+'_chat';
+    it = $('.message_'+$username);
 
-    $('.chat_messages').append("<div class='mt-2'><b>"+$user+":</b><br>"+$message+"</div>");
-    var d = Date.parse("2011-01-26 13:51:50 GMT") / 1000;
-    $time = d;
+    $('.chat_messages').append("<div class='mt-2'><b>"+$uname+":</b><br>"+$message+"</div>");
+    const now = new Date()  
+    const $time = Math.round(now.getTime() / 1000) 
 
     $('.message_proctor').data('time',$time);
 
-     $.post( url ,{'name': $name ,'username':$username,'image':null,'message':$message,'_token':$token,'time':$time}, function( data ) {
-            console.log(data);
-      });
+        $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+
+                var item ={ "name": $uname, "username":$username,"message":$message};
+                result[$time] = item;
+                it.data('lastchat',item);
+                var $data = JSON.stringify(result);
+                console.log($data);
+                 $.ajax({
+                      method: "PUT",
+                      headers: {"Content-Type": "application/json"},
+                      processData: false,
+                      data: $data,
+                      url: $urlpost
+              })
+              .done(function($url) {
+                      console.log('message sent');
+              });
+                
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+        });
 
 });
 
@@ -414,6 +457,73 @@ $(document).on('click','.send_chat',function(){
 $('.ques_count').on('click',function(){
     $('.qsset').slideToggle();
 });
+
+
+
+
+
+function chat_refresh(){
+  if($('.message_student').length){
+
+      $('.message_student').each(function(i, obj) {
+          
+        $url = $(this).data('url')+"?time="+$.now();
+        $username = $(this).data('username');
+        $lastchat = $(this).data('lastchat');
+        $name = $(this).data('name');
+        item = $('.message_'+$username);
+        $lastestchat = $lastchat;
+
+
+         $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+
+                const ordered = sortObject(result);
+
+                i=0;
+                for(var k in ordered) {
+                   $u = ordered[k].name;
+                   i = i+1;
+                   if((Object.keys(ordered).length) == i){
+                      console.log(k);
+                      $lastestchat = k;
+
+                      if(!$lastchat){
+                        item.data('lastchat',k);
+                      }else{
+                        if($lastestchat > $lastchat){
+                            $('.message_'+$username).addClass('blink');
+                        }else{
+                           $('.message_'+$username).removeClass('blink');
+                        } 
+                      }
+
+                      
+
+                   }
+                }
+
+                
+
+                //console.log(result);
+                console.log(ordered);
+
+                 
+                
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+        });
+      });
+
+      
+
+  }
+}
+
+setInterval(chat_refresh,1000);
+
 
 function image_refresh(){
   if($('.image_refresh').length){
