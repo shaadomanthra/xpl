@@ -538,7 +538,7 @@ class AssessmentController extends Controller
                             if(!isset($keys[$q->id]->response))
                                 $q->response = null;
                             else
-                            $q->response = $keys[$q->id]->response;
+                                $q->response = $keys[$q->id]->response;
                             $q->time = $keys[$q->id]->time;
 
                             $time_used = $time_used + intval($q->time);
@@ -557,7 +557,10 @@ class AssessmentController extends Controller
                         $keys = $responses->keyBy('question_id');
 
                         if(!isset($keys[$q->id]->response))
-                            $keys[$q->id]->response = null;
+                                $q->response = null;
+                        else
+                                $q->response = $keys[$q->id]->response;
+                        
                         $q->response = $keys[$q->id]->response;
                         $q->time = $keys[$q->id]->time;
                         
