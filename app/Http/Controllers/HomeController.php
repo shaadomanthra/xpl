@@ -236,12 +236,16 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
         $m = (($key/$count) -1)*$count +1;
         $n=[$key];
         for($i=$m;$i<=$key;$i++){
+          if(strlen($i)==1)
+            $i='00'.$i;
+          else if(strlen($i)==2)
+            $i='0'.$i;
           $name = $username.'_'.$test.'_'.$i;
           
           FaceDetect::dispatch($name)->delay(now()->addSeconds(1));
         }
         
-        return json_encode($n);
+        return json_encode($name);
     }
 
     public function webcam_upload(Request $request){

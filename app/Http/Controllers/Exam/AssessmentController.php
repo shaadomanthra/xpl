@@ -667,13 +667,14 @@ class AssessmentController extends Controller
 
             for($i=0;$i<$count;$i++){
                 $nm = $i;
-                if(strlen($nm)==1)
+                if(strlen($i)==1)
                     $nm ="00".$nm;
-                else if(strlen($nm)==1)
+                else if(strlen($i)==2)
                     $nm ="0".$nm;
-                $url[$i] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.$nm.'.jpg']);
-                $url2[$i] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix2.$nm.'.jpg']);
+                $url[$nm] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.$nm.'.jpg']);
+                $url2[$nm] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix2.$nm.'.jpg']);
             }
+
 
             $folder = 'testlog/'.$exam->id.'/';
             $name = $folder.\auth::user()->username.'.json';
@@ -748,6 +749,7 @@ class AssessmentController extends Controller
             Storage::disk('s3')->put($name_log,$json_d,'public');
             $json_log = $json_d;
          }
+
 
          if(!Storage::disk('s3')->exists($chatname)){
             $activity = [strtotime(now())=> array("name"=>"proctor","username"=>"","message"=>"For queries, you can send me a message.")];
@@ -2079,8 +2081,9 @@ class AssessmentController extends Controller
         }
 
 
-        if(Storage::disk('s3')->exists('webcam/json/'.$jsonname)){
-            $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$jsonname));
+        if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/json/'.$jsonname)){
+            $json = json_decode(Storage::disk('s3')->get('webcam/'.$exam->id.'/json/'.$jsonname));
+
             $zero =$one = $two =$three = $total = $snaps = 0;
             foreach($json as $i => $j){
                 $j = intval($j);
@@ -3278,19 +3281,55 @@ class AssessmentController extends Controller
         else
             $images = [];
 
-        if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/json/'.$student->username.'_'.$exam->id.'.json')){
-            $json = json_decode(Storage::disk('s3')->get('webcam/'.$exam->id.'/json/'.$student->username.'_'.$exam->id.'.json'),true);
-            $count = count($json);
+
+        // images
+        $username = $student->username;
+        $folder = 'webcam/'.$exam->id.'/';
+        $files = Storage::disk('s3')->allFiles($folder);
+
+        $mask= $username.'_'.$exam->id;
+        $image_files = array_where($files, function ($value, $key) use ($mask) {
+           return starts_with(basename($value), $mask);
+        });
+
+        $images = [];
+        foreach($image_files as $j=>$im){
+           if (strpos($im, 'screen') !== false) {
+                $images['screens'][$j] =$im ;
+            }else if (strpos($im, 'idcard') !== false) {
+                $images['idcard'][$j] =$im ;
+            }else if (strpos($im, 'selfie') !== false) {
+                $images['selfie'][$j] =$im ;
+            }else if (strpos($im, 'json') !== false) {
+                $images['json'][$j] =$im ;
+            }else{
+                $images['webcam'][$j] =$im ;
+            }
+
         }
-        else{
-            $json = null;
-            $count = 0;
+        
+
+        $count = array('webcam'=>0,'screenshot'=>0);
+
+        if($image_files){
+            $count['webcam'] = count($images['webcam']);
+            if(isset($images['screens']))
+            $count['screenshot'] = count($images['screens']);
+            else
+                $count['screenshot']  = 0;
         }
 
+
+
         if(request()->get('images')){
-            $json = json_decode(Storage::disk('s3')->get('webcam/'.$exam->id.'/json/'.$student->username.'_'.$exam->id.'.json'),true);
-           
-            return view('appl.exam.assessment.images')->with('exam',$exam)->with('user',$student)->with('count',$count);
+            if(request()->get('images')=='webcam'){
+                $count = $count['webcam'];
+                $images = $images['webcam'];
+            }else{
+                $count = $count['screenshot'];
+                $images = $images['screens'];
+            }
+            return view('appl.exam.assessment.images')->with('exam',$exam)->with('user',$student)->with('count',$count)->with('images',$images);
         }
 
 
@@ -3642,7 +3681,6 @@ class AssessmentController extends Controller
         else
             $view = "analysis";
 
-        
 
         return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
@@ -3656,6 +3694,7 @@ class AssessmentController extends Controller
                         ->with('review',true)
                         ->with('mathjax',$mathjax)
                         ->with('count',$count)
+                        ->with('images',$images)
                         ->with('noback',1)
                         ->with('chart',true);
 

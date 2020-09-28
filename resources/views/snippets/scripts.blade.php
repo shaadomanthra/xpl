@@ -383,16 +383,16 @@ $('.message_student').on('click',function(e){
                    $('.chat_messages').append("<div class='mt-2'><b>"+$u+":</b><br>"+$message+"</div>");
                    i = i+1;
                    if((Object.keys(ordered).length) == i){
-                      console.log(k);
+                      //console.log(k);
                       item.data('lastchat',k);
-                      console.log(item.data('lastchat'));
+                      //console.log(item.data('lastchat'));
                    }
                 }
 
                 
 
                 //console.log(result);
-                console.log(ordered);
+                //console.log(ordered);
 
                  
                 
@@ -508,7 +508,7 @@ function chat_refresh(){
                 
 
                 //console.log(result);
-                console.log(ordered);
+               /// console.log(ordered);
 
                  
                 
@@ -522,7 +522,7 @@ function chat_refresh(){
   }
 }
 
-setInterval(chat_refresh,1000);
+setInterval(chat_refresh,3000);
 
 
 function image_refresh(){
@@ -530,12 +530,13 @@ function image_refresh(){
 
       $('.image_refresh').each(function(i, obj) {
           $username = $(this).data('username');
-          $bucket = $(this).data('bucket');
-          $region = $(this).data('region');
-          $test= $(this).data('test');
-          $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/pre-message/'+$test+'/';
-          $aws2 = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/';
-          $url = $aws_url+$username+'.json';
+          //console.log($username);
+          // $bucket = $(this).data('bucket');
+          // $region = $(this).data('region');
+          // $test= $(this).data('test');
+          // $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/pre-message/'+$test+'/';
+          // $aws2 = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/';
+          $url = $(this).data('url');
 
           $item = $(this);
 
@@ -543,10 +544,38 @@ function image_refresh(){
                 type: "GET",
                 url: $url
             }).done(function (result) {
-                 $message = JSON.stringify(result);
                  
-                 console.log($message);
-                 $('.image_'+$username).attr('src',$aws2+result.photo);
+                 window_change = result.window_change;
+                 last_photo = result.last_photo;
+                 $username = result.username;
+                 
+                 if($username){
+                     $('.image_refresh_'+$username).attr('src',last_photo);
+                 if(window_change){
+                    $('.window_change_'+$username).show();
+                 }
+                    $('.window_change_'+$username).html(window_change);
+                 }
+
+                 if(result.completed)
+                  $('.card_'+$username).removeClass('bg-light-danger').removeClass('bg-light-warning');
+
+                 if(result.last_updated)
+                  $('.card_'+$username).data('last',result.last_updated);
+
+                  $time = new Date().getTime() ;
+
+                  
+
+                if(result.last_seconds){
+                    if((parseInt($time) - result.last_seconds)/1000 > 30){
+                        $('.card_'+$username).removeClass('bg-light-warning').addClass('bg-light-danger');
+                    }
+                  else
+                    $('.card_'+$username).addClass('bg-light-warning').removeClass('bg-light-danger');
+                }
+                 
+                
 
                 //window.location.href = backendUrl;
             }).fail(function () {
@@ -2272,7 +2301,7 @@ $(function(){
       return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
   }
 
-  function uploadaws($data,$url,$screen=false){
+  function uploadaws($data,$url,$screen=false,$name){
 
     var blob = dataURItoBlob($data);
     console.log('pictire captured');
@@ -2295,6 +2324,7 @@ $(function(){
               $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
                    
               $last_photo_url = $aws_url+$name+'.jpg';
+              console.log($last_photo_url);
 
               $('#photo').data('last_photo',$last_photo_url);
            }
@@ -2406,8 +2436,6 @@ $(function(){
 
     var data = canvas.toDataURL('image/jpeg',0.5);
 
-
-
     if($('#photo').length)
       photo.setAttribute('src', data);
   }
@@ -2425,13 +2453,29 @@ $(function(){
 
     if($('.start_btn').hasClass('exam_started'))
     html2canvas(document.body, {scale:0.75}).then( function (canv) { 
+        $username = $('#video').data('username');
+        $test = $('#video').data('test');
+        $len = $c.toString().length;
+        $cc = $c;
+        if($len==1)
+          $cc= '00'+$c;
+        else if($len==2)
+          $cc = '0'+$c;
+        $name = $username+'_'+$test+'_'+$cc;
+
         $m = parseInt($('#video').data('c'));
-        console.log('html2canvas - '+$m);
-        $url = $('.url2_'+$m).data('url');
+        $len = $m.toString().length;
+        $mm = $m;
+        if($len==1)
+          $mm= '00'+$m;
+        else if($len==2)
+          $mm = '0'+$m;
+        console.log('html2canvas - '+$mm);
+        $url = $('.url2_'+$mm).data('url');
         var data = canv.toDataURL('image/jpeg',0.8);
 
         //$('#html2canvas').attr('src',data);
-        uploadaws(data,$url,true);
+        uploadaws(data,$url,true,$name);
       });
     
 
@@ -2482,13 +2526,13 @@ $(function(){
         $url = $('#photo').data('presigned');
 
         
-
+        console.log($name);
         if($c == '200000'){
 
           $c = 'idcard';
           $name = $username+'_'+$test+'_'+$c;
 
-          uploadaws(image,$url);
+          uploadaws(image,$url,false,$name);
 
           // update the approval json
           $url1 = $('.url_approval').data('url');
@@ -2526,10 +2570,11 @@ $(function(){
 
         }else{
           if($('.start_btn').hasClass('exam_started') || !$('#photo').data('last_photo'))
-          if($('.url_'+$c).length){
+          if($('.url_'+$cc).length){
 
-              $url = $('.url_'+$c).data('url');
-              uploadaws(image,$url);
+              $url = $('.url_'+$cc).data('url');
+              $name = $username+'_'+$test+'_'+$cc;
+              uploadaws(image,$url,false,$name);
 
               // update last photo
               $bucket = $('#photo').data('bucket');
@@ -2633,7 +2678,7 @@ $(function(){
         $name = $username+'_'+$test+'_'+$c;
 
         $url = $('#photo2').data('presigned');
-        uploadaws(image,$url);
+         uploadaws(image,$url,false,$name);
 
         // update the approval json
 
@@ -2825,14 +2870,16 @@ var width = 600;    // We will scale the photo width to this
 
       if($c == '200001'){
         $c = 'idcard';
-        uploadaws(image,$url);
+        $name = $username+'_'+$test+'_'+$c;
+         uploadaws(image,$url,false,$name);
 
         return 1;
 
       }else{
         if($('.url_'+$c).length){
              $url = $('.url_'+$c).data('url');
-            uploadaws(image,$url);
+             $name = $username+'_'+$test+'_'+$c;
+              uploadaws(image,$url,false,$name);
 
             // update last photo
             $bucket = $('#photo').data('bucket');

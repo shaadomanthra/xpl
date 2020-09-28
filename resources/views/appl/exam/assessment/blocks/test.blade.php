@@ -81,13 +81,11 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
             <i class="fa fa-info-circle  mr-2 cursor" data-toggle="tooltip"  title="View Instructions" ></i></a>
           <a href="#" class="text-light" data-toggle="modal" data-target="#questions">
             <i class="fa fa-question-circle mr-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
-            @if(isset($exam->settings))
-            @if(isset($exam->settings->chat))
-          @if(strtolower($exam->settings->chat)=='yes')
-            <a href="#"  class="message_proctor text-light" data-time="0"  data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}">
-
-        <i class="fa fa-commenting-o mr-2 cursor" data-toggle="tooltip"  title="Message Proctor"  x ></i></a>
-        @endif @endif @endif
+            @if(isset($settings['chat']))
+          @if(strtolower($settings['chat'])=='yes')
+             <i class="fa fa-commenting-o text-success ml-2 text-primary cursor message_student message_{{$user->username}}" data-urlpost="{{$urls['chat_post']}}" data-toggle="tooltip"  title="Message proctor" data-username="{{$user->username}}" data-name="{{$user->name}}"data-url="{{$urls['chat']}}" data-lastchat=""></i> 
+          @endif
+          @endif
         @if(isset($exam->calculator))
     @if($exam->calculator)
     <span class=" mr-2" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> </span>
@@ -537,9 +535,10 @@ div.chats {
 </div> @if($exam->camera) <span class="cam_message">checking for webcam access ...</span> @endif</p>
 
 
+
 @if(isset($settings['start_time']))
 <p class="my-2"><div class="alert alert-important alert-warning">
-  Exam starts in <b><span id="d" class="d"></span></b>
+  Exam <span class="started">starts in</span> <b><span id="d" class="d"></span></b>
 </div></p>
 @endif
 </div>

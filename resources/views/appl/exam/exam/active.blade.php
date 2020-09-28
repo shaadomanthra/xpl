@@ -36,7 +36,6 @@
             </g>
         </svg><!--end::Svg Icon--></span>
            Proctoring</p>
-           <span class="text-secondary"><small>Auto page refresh - 10 sec</small></span>
         </div>
 
        
@@ -68,6 +67,8 @@
 
 
 
+
+
 @include('flash::message')
 
 <div class="px-5 container">
@@ -77,7 +78,7 @@
 @foreach($users as $a => $b)
 
 <div class="col-6 col-md-2 ">
-  <div class="card   mb-2 mx-1 @if($b['active']==0) bg-light-danger @elseif($b['active']==1) bg-light-warning  @endif card_{{$a}}">
+  <div class="card   mb-2 mx-1 @if($b['active']==0) bg-light-danger @elseif($b['active']==1) bg-light-warning  @endif card_{{$a}} card_{{$b['username']}}" data-last="">
     <div class="p-4 ">
       <div class="">
         <div class="action_{{$a}} d-inline float-right">
@@ -88,14 +89,14 @@
 
                 @if(isset($b['window_change']))
                 @if($b['window_change'])
-                <small><span class="badge badge-danger float-right">{{$b['window_change']}}</span></small>
+                <small><span class="badge badge-danger float-right window_change window_change_{{$b['username']}}">{{$b['window_change']}}</span></small>
                 @endif
                 @endif
               </h6>
             @if(isset($b['last_photo']))
             @if($b['last_photo'])
             <div class="selfie_container mt-4">
-              <img src="{{$b['last_photo']}}" class="w-100">
+              <img src="{{$b['last_photo']}}" class="w-100 image_refresh image_refresh_{{$b['username']}}" data-url="{{$b['url']}}" data-username="{{$b['username']}}" >
             </div>
             @endif
             @endif
@@ -273,6 +274,11 @@ div.chats {
   </div>
 </div>
 
+<script>
+setTimeout(function(){
+   window.location.reload(1);
+}, 60000);
+  </script>
 
 @endsection
 

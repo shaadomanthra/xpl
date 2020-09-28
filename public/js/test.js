@@ -167,7 +167,7 @@ $(document).ready(function(){
 
           if(log.data('json')){
             $json = log.data('json')
-            if($json.username)
+            if($json['activity'])
               $json = log.data('json');
             else
               $json = JSON.parse(log.data('json'));
@@ -207,6 +207,7 @@ $(document).ready(function(){
             $json.window_change =  $('input[name=window_change]').val();
             $json.last_photo = $('#photo').data('last_photo');
             $json.last_updated = $time;
+            $json.last_seconds = new Date().getTime();
 
             
             $json.window_swap = parseInt($('.assessment').data('window_swap'));
@@ -438,8 +439,6 @@ $(document).ready(function(){
             }
           }
 
-        
-        
           
         // If the count down is over, write some text 
         if (distance < 0) {
@@ -447,14 +446,18 @@ $(document).ready(function(){
           if(document.getElementById("d"))
           document.getElementById("d").innerHTML = "";
           $('.start_btn').removeClass('disabled');
+          $('.started').html('started');
+          load_timer();
         }
           }
       }, 1000);
 
+    }else{
+      load_timer();
     }
 
 
-     load_timer();
+     
     // exam timer
     function load_timer(){
             // Set the date we're counting down to

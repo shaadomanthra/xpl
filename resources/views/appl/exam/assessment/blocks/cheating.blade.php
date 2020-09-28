@@ -42,19 +42,24 @@
 					</div>
 				</div>
 			</div>
-			@if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$user->username.'_'.$exam->id.'_1.jpg'))
-			<div class="row mb-4">
-				@for($i=1;$i<13;$i++)
-					@if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg'))
-					<div class='col-6 col-md-2'>
-						<img src="{{ Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$user->username.'_'.$exam->id.'_'.$i.'.jpg') }}" class="w-100 mb-2" />
+
+			@if($count)
+			<div class="row mb-4 {{$m=0}}">
+
+				@foreach($images['webcam'] as $k=>$f)
+				<div class='col-6 col-md-2 {{$m=$m+1}}'>
+						<img src="{{ Storage::disk('s3')->url($f) }}" class="w-100 mb-2" />
 					</div>
-					@endif
-				@endfor
+				@if($m==12)
+					@break
+				@endif
+
+				@endforeach
+				
 			</div>
 			@if($count)
-			<div class="my-4">Captured: {{$count}} images</div>
-			<a href="{{ route('assessment.analysis',$exam->slug)}}?images=all&student={{$user->username}}" class="mt-3 btn-success btn-lg">view all images</a>
+			<div class="my-4"><b>Captured :</b> <a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$user->username}}" class="">{{$count['webcam']}} webcam</a> images | <a href="{{ route('test.snaps',$exam->slug)}}?type=screens&username={{$user->username}}" class="">{{$count['screenshot']}} screenshot</a> images</div>
+			
 			@endif
 			@endif
 
