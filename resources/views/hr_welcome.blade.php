@@ -48,6 +48,7 @@
         </div>
       </div>
       @if( $_SERVER['HTTP_HOST'] != 'xplore.co.in')
+      @if(\auth::user()->role == 12 || \auth::user()->isAdmin())
       <div class="col-12 col-md-2">
         <div class="row mt-4">
           <div class="col-12 ">
@@ -59,7 +60,9 @@
         </div>
       </div>
       @endif
+      @endif
 
+      @if(\auth::user()->role == 12 || \auth::user()->isAdmin())
       <div class="col-12 col-md-2">
         <div class="row mt-4">
          
@@ -72,6 +75,7 @@
           
         </div>
       </div>
+      @endif
     </div>
   </div>
 </div>
