@@ -768,14 +768,14 @@ $(document).ready(function(){
             aws_cache(all_data);
         }else{
 
-            $.ajax({
-            type : 'post',
-            url : $url,
-            data:{'responses':all_data,'_token':responses.token},
-            success:function(data){
-              console.log('Live data updated');
-            }
-          });
+          //   $.ajax({
+          //   type : 'post',
+          //   url : $url,
+          //   data:{'responses':all_data,'_token':responses.token},
+          //   success:function(data){
+          //     console.log('Live data updated');
+          //   }
+          // });
 
         }
         
@@ -876,15 +876,15 @@ $(document).ready(function(){
 
         
 
-            $.ajax({
-            type : 'post',
-            url : $url,
-            data:{'responses':all_data,'_token':responses.token},
-            success:function(data){
-              console.log('Live data updated');
-              console.log(data);
-            }
-          });
+          //   $.ajax({
+          //   type : 'post',
+          //   url : $url,
+          //   data:{'responses':all_data,'_token':responses.token},
+          //   success:function(data){
+          //     console.log('Live data updated');
+          //     console.log(data);
+          //   }
+          // });
 
         
         

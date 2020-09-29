@@ -1993,7 +1993,7 @@ $(function(){
 @if(isset($timer2))
 
 <script src="{{ asset('js/screenfull.min.js')}}"></script>
-<script src="{{ asset('js/test.js')}}?new=5"></script>
+<script src="{{ asset('js/test.js')}}?new=6"></script>
 <script type="text/javascript">
 $(function(){
 
@@ -2634,10 +2634,10 @@ $(function(){
         if($c!='idcard')
         if($c % $counnt == 0){
            var url = $('#photo').data('hred');
-          if($('.start_btn').hasClass('exam_started'))
-           $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
-                console.log('Face Detect:' + data);
-          });
+          // if($('.start_btn').hasClass('exam_started'))
+          //  $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
+          //       console.log('Face Detect:' + data);
+          // });
         }
        
 
