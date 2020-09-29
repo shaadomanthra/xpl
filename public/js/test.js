@@ -378,16 +378,16 @@ $(document).ready(function(){
         }).done(function (result) {
 
         if(result)
-         if($username in result){
-          console.log(result);
-          // clearInterval(tr);
-          //    $('#terminated').modal();
-          //    user_test_log(new Date().getTime() / 1000, 'Test terminated by proctor');
-          //    setTimeout(function(){ 
-          //         $("form")[0].submit();
-          //       }, 3000);
-
-         }
+          //console.log(result);
+          if(result['terminated']){
+            clearInterval(tr);
+             $('#terminated').modal();
+             user_test_log(new Date().getTime() / 1000, 'Test terminated by proctor');
+             setTimeout(function(){ 
+                  $("form")[0].submit();
+                }, 3000);
+          }
+          
              
        
         }).fail(function () {

@@ -87,7 +87,7 @@
 @if(isset($b['username']))
 
 <div class="col-6 col-md-2 ">
-  <div class="card   mb-2 mx-1  @if($b['completed']==1) bg-light-warning @else  @endif card_{{$a}} card_{{$b['username']}}" data-last="">
+  <div class="card   mb-2 mx-1  @if($b['completed']==1) complted @else bg-light-warning @endif card_{{$a}} card_{{$b['username']}}" data-last="">
     <div class="p-4 ">
       <div class="">
         <div class="action_{{$a}} d-inline float-right">

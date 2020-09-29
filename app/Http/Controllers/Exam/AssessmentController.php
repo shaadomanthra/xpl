@@ -317,19 +317,20 @@ class AssessmentController extends Controller
             
             $url['approval']  = '';
             $url['pre_message'] = '';
-            if(isset($exam->settings->manual_approval)){
-                $name = 'testlog/approvals/'.$exam->id.'.json';
+            if(true){
+                $name = 'testlog/approvals/'.$exam->id.'/'.$username.'.json';
                 $url['approval'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
                 $name = 'testlog/pre-message/'.$exam->id.'/'.$username.'.json';
                 $url['pre_message'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
 
-                $jsonfile = 'testlog/approvals/'.$exam->id.'.json';
+                $jsonfile = 'testlog/approvals/'.$exam->id.'/'.$username.'.json';
                 if(Storage::disk('s3')->exists('testlogs/'.$jsonfile)){
                   $candidate  = json_decode(Storage::disk('s3')->get($jsonfile),true);
                 }else{
                     $candidate = [];
                 }
                 $candidate[$username]['name'] =  \auth::user()->name;
+                $candidate[$username]['username'] =  \auth::user()->username;
                 $candidate[$username]['rollnumber'] =  \auth::user()->rollnumber;
                 $candidate[$username]['college'] = (\auth::user()->college_id)? \auth::user()->college->name:'';
                 $candidate[$username]['branch'] =   (\auth::user()->branch_id)?\auth::user()->branch->name:'';
@@ -338,6 +339,7 @@ class AssessmentController extends Controller
                 $candidate[$username]['idcard'] = '';
                 $candidate[$username]['approved'] = 0;
                 $candidate[$username]['terminated'] = 0;
+                $candidate[$username]['status'] = 0;
                 $candidate[$username]['time'] = strtotime(now());
 
                 if(!Storage::disk('s3')->exists($name))
@@ -354,7 +356,7 @@ class AssessmentController extends Controller
 
                 
                 
-                Storage::disk('s3')->put($jsonfile, json_encode($candidate),'public');
+                Storage::disk('s3')->put($jsonfile, json_encode($candidate[$username]),'public');
 
 
             }
@@ -724,7 +726,7 @@ class AssessmentController extends Controller
          $settings = json_decode($exam->getOriginal('settings'),true);
          $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
          $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
-         $approval_link_name = 'testlog/approvals/'.$exam->id.'.json';
+         $approval_link_name = 'testlog/approvals/'.$exam->id.'/'.$user->username.'.json';
          $url['approval'] = Storage::disk('s3')->url($approval_link_name);
 
         
@@ -2365,8 +2367,6 @@ class AssessmentController extends Controller
             }
         }
 
-        
-
         //dd($files);
         //dd($candidates);
         
@@ -2410,10 +2410,9 @@ class AssessmentController extends Controller
                             $idcard = $content['username'].'_'.$exam->id.'_idcard.jpg';
                             $content['idcard_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$idcard);
 
-                            $name = 'testlog/approvals/'.$exam->id.'.json';
+                            $name = 'testlog/approvals/'.$exam->id.'/'.$content['username'].'.json';
                             $content['approval'] = Storage::disk('s3')->url($name);
 
-                            $name = 'testlog/approvals/'.$exam->id.'.json';
                             $content['approval_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
 
                             $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
@@ -2431,7 +2430,7 @@ class AssessmentController extends Controller
                         if(!$content['last_photo']){
                             
                             if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
-                                $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+                                $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie).'?time='.strtotime(now());
                         }else{
                             $url_pieces = explode('_',$content['last_photo']);
                             $name = explode('/', $url_pieces[0]);
@@ -2441,10 +2440,17 @@ class AssessmentController extends Controller
                             $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
                             if(!Storage::disk('s3')->exists($filepath)){
                                 $counter = explode('.',$url_pieces[2]);
-                                $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
-                                $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
+                                $nm = intval($counter[0])-1;
+                                if(strlen($nm)==1)
+                                    $nm ="00".$nm;
+                                else if(strlen($nm)==2)
+                                    $nm ="0".$nm;
+                               
+
+                                $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.($nm).'.jpg';
+                                $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.($nm).'.jpg';
                                 if(Storage::disk('s3')->exists($filepath)){
-                                    $content['last_photo'] = $last_before_url ;
+                                    $content['last_photo'] = $last_before_url .'?time='.strtotime(now());
                                 }else{
                                     $content['last_photo'] = '';
                                 }
@@ -2489,8 +2495,9 @@ class AssessmentController extends Controller
                         $idcard = $content['username'].'_'.$exam->id.'_idcard.jpg';
                         $content['idcard_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$idcard);
 
-                        $name = 'testlog/approvals/'.$exam->id.'.json';
+                        $name = 'testlog/approvals/'.$exam->id.'/'.$content['username'].'.json';
                         $content['approval'] = Storage::disk('s3')->url($name);
+                         $content['approval_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
 
                         $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
                         $content['chat'] = Storage::disk('s3')->url($chatname);
@@ -2499,8 +2506,6 @@ class AssessmentController extends Controller
                         $content['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
 
 
-                        $name = 'testlog/approvals/'.$exam->id.'.json';
-                        $content['approval_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
 
                 }
 
@@ -2508,7 +2513,7 @@ class AssessmentController extends Controller
                     if(!$content['last_photo']){
                         $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
                         if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
-                            $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+                            $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie).'?time='.strtotime(now());
                     }else{
                         $url_pieces = explode('_',$content['last_photo']);
                         $name = explode('/', $url_pieces[0]);
@@ -2519,10 +2524,15 @@ class AssessmentController extends Controller
                              $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
                             if(!Storage::disk('s3')->exists($filepath)){
                                 $counter = explode('.',$url_pieces[2]);
-                                $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.(intval($counter[0])-1).'.jpg';
-                                $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.(intval($counter[0])-1).'.jpg';
+                                $nm = intval($counter[0])-1;
+                                if(strlen($nm)==1)
+                                    $nm ="00".$nm;
+                                else if(strlen($nm)==2)
+                                    $nm ="0".$nm;
+                                $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.($nm).'.jpg';
+                                $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.($nm).'.jpg';
                                 if(Storage::disk('s3')->exists($filepath)){
-                                    $content['last_photo'] = $last_before_url ;
+                                    $content['last_photo'] = $last_before_url .'?time='.strtotime(now());
                                 }else{
                                     $content['last_photo'] = '';
                                 }
@@ -2619,11 +2629,23 @@ class AssessmentController extends Controller
         if(!$r->get('api'))
         $this->authorize('create', $exam);
 
-        if(Storage::disk('s3')->exists('testlog/approvals/'.$exam->id.'.json')){
-            $json = json_decode(Storage::disk('s3')->get('testlog/approvals/'.$exam->id.'.json'),true);
-        }else{
-            $json = [];
+
+        $folder = 'testlog/approvals/'.$exam->id.'/';
+        $files = Storage::disk('s3')->allFiles($folder);
+
+        $json =[];
+
+        
+        foreach($files as $f){
+            $fl = json_decode(Storage::disk('s3')->get($f),true);
+            $json[$fl['username']] = $fl; 
         }
+
+        // if(Storage::disk('s3')->exists('testlog/approvals/'.$exam->id.'/'.$user->username.'.json')){
+        //     $json = json_decode(Storage::disk('s3')->get('testlog/approvals/'.$exam->id.'.json'),true);
+        // }else{
+        //     $json = [];
+        // }
 
         if($r->get('api')){
             $username = $r->get('username');
@@ -2631,15 +2653,16 @@ class AssessmentController extends Controller
             if($r->get('approved')==1){
                 $json[$username]['approved']=1;
                 $message['status'] = 1;
+
             }
             else if($r->get('approved')==2){
                 $json[$username]['approved']=2;
                  $message['status'] = 2;
             }
 
-            if($r->get('approved')){
-                Storage::disk('s3')->put('testlog/approvals/'.$exam->id.'.json', json_encode($json));
-            }
+            // if($r->get('approved')){
+            //     Storage::disk('s3')->put('testlog/approvals/'.$exam->id.'/'.$username.'.json', json_encode($json));
+            // }
 
              if($r->get('alert')){
                  $message['status'] = 3;
@@ -2652,8 +2675,10 @@ class AssessmentController extends Controller
 
                 
             }
+            $json[$username]['status'] = $message['status'];
+            $json[$username]['message'] = $message['message'];
 
-            Storage::disk('s3')->put('testlog/pre-message/'.$exam->id.'/'.$username.'.json', json_encode($message),'public');
+            Storage::disk('s3')->put('testlog/approvals/'.$exam->id.'/'.$username.'.json', json_encode($json[$username]),'public');
 
             exit();
 
@@ -3834,8 +3859,8 @@ class AssessmentController extends Controller
                 Storage::disk('s3')->delete('testlog/'.$test_id.'/chats/'.$user->username.'.json');
             }
 
-            if(Storage::disk('s3')->exists('testlog/pre-message/'.$test_id.'/'.$user->username.'.json')){
-                Storage::disk('s3')->delete('testlog/pre-message/'.$test_id.'/'.$user->username.'.json');
+            if(Storage::disk('s3')->exists('testlog/approvals/'.$test_id.'/'.$user->username.'.json')){
+                Storage::disk('s3')->delete('testlog/approvals/'.$test_id.'/'.$user->username.'.json');
             }
             
             if(Storage::disk('s3')->exists('testlog/approvals/'.$test_id.'.json')){

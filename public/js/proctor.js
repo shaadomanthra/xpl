@@ -104,7 +104,7 @@ $(function(){
                 url: $url
             }).done(function (result) {
                 console.log(JSON.stringify(result));
-                result[$username]['terminated'] = 1;
+                result['terminated'] = 1;
                 var $data = JSON.stringify(result);
 
                  $.ajax({

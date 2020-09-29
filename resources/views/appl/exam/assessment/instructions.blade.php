@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="mb-md-5 mb-2 mt-3 testpage">
+<div class="mb-md-5 mb-2 mt-3 testpage " data-startup="0">
 	<div class="">
 
 	<div class=" border p-4 p-md-5 bg-white rounded">

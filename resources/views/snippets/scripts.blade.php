@@ -558,7 +558,7 @@ function image_refresh(){
           // $test= $(this).data('test');
           // $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/pre-message/'+$test+'/';
           // $aws2 = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/';
-          $url = $(this).data('url');
+          $url = $(this).data('url')+'?time='+new Date();
 
           $item = $(this);
 
@@ -1877,7 +1877,7 @@ function addMinutes(date, minutes) {
 <script type="text/javascript">
 $(function(){
 
-  var appr = 0;
+ var appr = 0;
  $('#terms').change(function() {
       if($(this).prop("checked")){
         $('.btn-accept').removeClass('disabled');
@@ -1898,8 +1898,8 @@ $(function(){
         window.location.replace($link);
       }else{
 
-        appr = setInterval(approval, 500);
         
+        appr = setInterval(approval, 500);
         $('.ins_block').hide();
         $('.ins_block_'+$next).show();
       }
@@ -1940,7 +1940,7 @@ $(function(){
       $bucket = $('#photo').data('bucket');
       $region = $('#photo').data('region');
       $test= $('#photo').data('test');
-      $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlog/pre-message/'+$test+'/';
+      $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlog/approvals/'+$test+'/';
       $url = $aws_url+$username+'.json?new='+new Date();
 
 
@@ -1956,8 +1956,9 @@ $(function(){
                 $('.message').html('<div class="alert alert-important alert-danger"> Your request is rejected by the proctor. You are not allowed to attempt test.</div>');
               else if(result.status==1){
                   $('.message').html('<div class="alert alert-important alert-success"> Your request is accepted by the proctor. Your test will  be begin in 5 secs.</div>');
-                  clearInterval(appr);
-                  setTimeout(starttest,5000);
+                  stopAppr();
+
+                  //
               }
                 
                 
@@ -1968,6 +1969,18 @@ $(function(){
    }
     
  }
+
+ function stopAppr() {
+  clearInterval(appr);
+  console.log('stopped approval');
+  var $startup = $('.testpage').data('startup');
+  if(!$startup){
+      $('.testpage').data('startup',1);
+      setTimeout(starttest,5000);
+  }
+  
+  console.log('test starts in 5 sec');
+}
 
 
  
@@ -1980,7 +1993,7 @@ $(function(){
 @if(isset($timer2))
 
 <script src="{{ asset('js/screenfull.min.js')}}"></script>
-<script src="{{ asset('js/test.js')}}?new=4"></script>
+<script src="{{ asset('js/test.js')}}?new=5"></script>
 <script type="text/javascript">
 $(function(){
 
@@ -2557,7 +2570,7 @@ $(function(){
           $region = $('#photo').data('region');
           $test = $('#photo').data('test');
           $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
-          $url_get = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlog/approvals/'+$test+'.json';
+          $url_get = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlog/approvals/'+$test+'/'+$username+'.json?new='+ new Date();
           $last_photo_url = $aws_url+$name+'.jpg';
 
           $.ajax({
@@ -2565,8 +2578,8 @@ $(function(){
                   url: $url_get
             }).done(function (result) {
 
-              
-              result[$username]['idcard'] = $last_photo_url;
+              console.log(result);
+              result['idcard'] = $last_photo_url;
               var data =JSON.stringify(result);
               $.ajax({
                       method: "PUT",
@@ -2704,16 +2717,16 @@ $(function(){
         $region = $('#photo').data('region');
         $test = $('#photo').data('test');
         $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
-        $url_get = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlog/approvals/'+$test+'.json';
+        $url_get = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlog/approvals/'+$test+'/'+$username+'.json?new='+ new Date();
         $last_photo_url = $aws_url+$name+'.jpg';
 
         $.ajax({
                 type: "GET",
                 url: $url_get
           }).done(function (result) {
-
+            console.log(result);
             
-            result[$username]['selfie'] = $last_photo_url;
+            result['selfie'] = $last_photo_url;
             var data =JSON.stringify(result);
             $.ajax({
                     method: "PUT",
