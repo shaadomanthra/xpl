@@ -2543,6 +2543,7 @@ class AssessmentController extends Controller
                 }else{
                     $content['last_photo'] = '';
                 }
+                if(isset($content['username']))
                  $users[$content['username']] = $content;
                 //array_push($users, $content);
             }
