@@ -72,8 +72,8 @@ class Tests_Overall extends Model
 
           // Send the request & save response to $resp
         $j = curl_exec($curl);
-        $json_file2=$p[0].'_'.$p[1].'_check.json';
-        Storage::disk('s3')->put('webcam/json/'.$json_file2,$j,'public');
+        //$json_file2=$p[0].'_'.$p[1].'_check.json';
+        //Storage::disk('s3')->put('webcam/json/'.$json_file2,$j,'public');
 
           // Close request to clear up some resources
         curl_close($curl);

@@ -721,14 +721,21 @@ class AssessmentController extends Controller
             }
         }
 
-
+         $settings = json_decode($exam->getOriginal('settings'),true);
          $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
          $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
          $approval_link_name = 'testlog/approvals/'.$exam->id.'.json';
          $url['approval'] = Storage::disk('s3')->url($approval_link_name);
 
+        
+         if(!Storage::disk('s3')->exists($approval_link_name) && !isset($settings['manual_approval'])){
+            $item = array($user->username=>0);
+            $item[$user->username] = ["approved"=> 1,"terminated"=>0];
+            Storage::disk('s3')->put($approval_link_name,json_encode($item),'public');
+         }
 
-         $settings = json_decode($exam->getOriginal('settings'),true);
+
+         
          $invigilation = (isset($settings->invigilation))?$settings->invigilation:null;
          if($invigilation){
 
@@ -2561,6 +2568,7 @@ class AssessmentController extends Controller
                     ->with('pg',$pg)
                     ->with('exam',$exam)
                     ->with('settings',$settings)
+                    ->with('candidates',$candidates)
                     ->with('proctor',1)
                     ->with('active',1);
         else
@@ -3781,7 +3789,23 @@ class AssessmentController extends Controller
              if(Storage::disk('s3')->exists('testlog/'.$test_id.'/log/'.$user->username.'_log.json')){
                 Storage::disk('s3')->delete('testlog/'.$test_id.'/log/'.$user->username.'_log.json');
             }
+
+            if(Storage::disk('s3')->exists('testlog/'.$test_id.'/chats/'.$user->username.'.json')){
+                Storage::disk('s3')->delete('testlog/'.$test_id.'/chats/'.$user->username.'.json');
+            }
+
+            if(Storage::disk('s3')->exists('testlog/pre-message/'.$test_id.'/'.$user->username.'.json')){
+                Storage::disk('s3')->delete('testlog/pre-message/'.$test_id.'/'.$user->username.'.json');
+            }
             
+            if(Storage::disk('s3')->exists('testlog/approvals/'.$test_id.'.json')){
+                $json = json_decode(Storage::disk('s3')->get('testlog/approvals/'.$test_id.'.json'),true);
+
+                unset($json[$user->username]);
+                Storage::disk('s3')->put('testlog/approvals/'.$test_id.'.json',json_encode($json),'public');
+
+            }
+
 
             Cache::forget('attempt_'.$user_id.'_'.$test_id);
             Cache::forget('attempts_'.$user_id);

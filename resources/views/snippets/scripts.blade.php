@@ -386,7 +386,10 @@ $('.message_student').on('click',function(e){
                       //console.log(k);
                       item.data('lastchat',k);
                       //console.log(item.data('lastchat'));
+                      $('.chat_messages').animate({scrollTop: 5000},400);
+                   $('.chats').animate({scrollTop: 5000},400);
                    }
+
                 }
 
                 
@@ -420,7 +423,8 @@ $(document).on('click','.send_chat',function(){
     $name = $username+'_'+$test+'_chat';
     it = $('.message_'+$username);
 
-    $('.chat_messages').append("<div class='mt-2'><b>"+$uname+":</b><br>"+$message+"</div>");
+    
+    $('.chat_messages').animate({scrollTop: 5000},400);
     const now = new Date()  
     const $time = Math.round(now.getTime() / 1000) 
 
@@ -435,7 +439,9 @@ $(document).on('click','.send_chat',function(){
                 result[$time] = item;
                 it.data('lastchat',item);
                 var $data = JSON.stringify(result);
+                $('.chat_messages').append("<div class='mt-2'><b>"+$uname+":</b><br>"+$message+"</div>");
                 console.log($data);
+                $('#message-text').val('');
                  $.ajax({
                       method: "PUT",
                       headers: {"Content-Type": "application/json"},
@@ -444,6 +450,7 @@ $(document).on('click','.send_chat',function(){
                       url: $urlpost
               })
               .done(function($url) {
+                     $('.chat_messages').animate({scrollTop: 5000},400);
                       console.log('message sent');
               });
                 
@@ -457,6 +464,7 @@ $(document).on('click','.send_chat',function(){
 $('.ques_count').on('click',function(){
     $('.qsset').slideToggle();
 });
+
 
 
 
@@ -482,21 +490,30 @@ function chat_refresh(){
 
                 const ordered = sortObject(result);
 
-                i=0;
+                i=0;$count =0 ;
                 for(var k in ordered) {
                    $u = ordered[k].name;
                    i = i+1;
                    if((Object.keys(ordered).length) == i){
-                      console.log(k);
+                      
                       $lastestchat = k;
 
                       if(!$lastchat){
                         item.data('lastchat',k);
                       }else{
+                        if(k>$lastchat)
+                          $count++;
+
                         if($lastestchat > $lastchat){
                             $('.message_'+$username).addClass('blink');
+                            $('.chat_count_'+$username).html($count);
+                            $('.chat_count_'+$username).show();
+                            if($('.send_chat').data('username')==$username){
+                              $('.chat_messages').append("<div class='mt-2'><b>"+$uname+": <span class='badge badge-warning'>new</span></b><br>"+$message+"</div>");
+                            }
                         }else{
                            $('.message_'+$username).removeClass('blink');
+                           $('.chat_count_'+$username).hide();
                         } 
                       }
 
@@ -559,23 +576,18 @@ function image_refresh(){
 
                  if(result.completed)
                   $('.card_'+$username).removeClass('bg-light-danger').removeClass('bg-light-warning');
-
-                 if(result.last_updated)
-                  $('.card_'+$username).data('last',result.last_updated);
-
-                  $time = new Date().getTime() ;
-
-                  
-
-                if(result.last_seconds){
-                    if((parseInt($time) - result.last_seconds)/1000 > 30){
-                        $('.card_'+$username).removeClass('bg-light-warning').addClass('bg-light-danger');
+                 else if(result.last_updated){
+                    $('.card_'+$username).data('last',result.last_updated);
+                    $time = new Date().getTime() ;
+                    if(result.last_seconds){
+                      if((parseInt($time) - result.last_seconds)/1000 > 30){
+                          $('.card_'+$username).removeClass('bg-light-warning').addClass('bg-light-danger');
+                      }
+                    else
+                      $('.card_'+$username).addClass('bg-light-warning').removeClass('bg-light-danger');
                     }
-                  else
-                    $('.card_'+$username).addClass('bg-light-warning').removeClass('bg-light-danger');
-                }
-                 
-                
+                 }
+                  
 
                 //window.location.href = backendUrl;
             }).fail(function () {
@@ -1963,7 +1975,7 @@ $(function(){
 @if(isset($timer2))
 
 <script src="{{ asset('js/screenfull.min.js')}}"></script>
-<script src="{{ asset('js/test.js')}}?new=3"></script>
+<script src="{{ asset('js/test.js')}}?new=4"></script>
 <script type="text/javascript">
 $(function(){
 

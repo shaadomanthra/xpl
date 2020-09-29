@@ -14,8 +14,7 @@ $(document).ready(function(){
                 $('.testpage').show();
                 $('.fullscreen_container').hide();
                 $('#check').hide();
-               
-                win_focus();
+                
                 $('.start_btn').addClass('exam_started');
               }
                 
@@ -28,11 +27,11 @@ $(document).ready(function(){
                 $('.fullscreen').html('back to fullscreen');
                 $('.start_btn').addClass('exam_started');
                
-                win_focus();
                 $('.full_screen_message').html('<span class="text-danger">You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.</span>');
             }
 
         }
+        win_focus();
         
     });
 
@@ -368,22 +367,25 @@ $(document).ready(function(){
 
      //check for termination of the candidate
      function termination_check(){
-      $url = $('.url_approval').data('url');
+      $url = $('.url_approval').data('url')+'?time='+ new Date();
       $username = $('.assessment').data('username');
       
+      console.log($url);
       if(!$('.start_btn').hasClass('disabled'))
       $.ajax({
           type: "GET",
           url: $url
         }).done(function (result) {
 
-         if(result[$username]['terminated']){
-          clearInterval(tr);
-             $('#terminated').modal();
-             user_test_log(new Date().getTime() / 1000, 'Test terminated by proctor');
-             setTimeout(function(){ 
-                  $("form")[0].submit();
-                }, 3000);
+        if(result)
+         if($username in result){
+          console.log(result);
+          // clearInterval(tr);
+          //    $('#terminated').modal();
+          //    user_test_log(new Date().getTime() / 1000, 'Test terminated by proctor');
+          //    setTimeout(function(){ 
+          //         $("form")[0].submit();
+          //       }, 3000);
 
          }
              
@@ -444,16 +446,18 @@ $(document).ready(function(){
         if (distance < 0) {
           clearInterval(w);
           if(document.getElementById("d"))
-          document.getElementById("d").innerHTML = "0";
+          document.getElementById("d").innerHTML = "";
           $('.start_btn').removeClass('disabled');
           $('.started').html('started');
           load_timer();
+          win_focus();
         }
         }
       }, 1000);
 
     }else{
       load_timer();
+      win_focus();
     }
 
 

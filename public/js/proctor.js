@@ -16,8 +16,11 @@ $(function(){
 		console.log('log check');
 		$url = $(this).data('url')+"?time="+$.now();
        
-                $('.log_selfie_pic').attr('src',$(this).data('selfie_url'));
-                $('.log_idcard_pic').attr('src',$(this).data('idcard_url'));
+        if($(this).data('selfie_url'))
+        $('.log_selfie_pic').attr('src',$(this).data('selfie_url'));
+
+        $(this).data('idcard_url')
+        $('.log_idcard_pic').attr('src',$(this).data('idcard_url'));
 		console.log($url);
 		$.ajax({
                 type: "GET",
@@ -44,6 +47,11 @@ $(function(){
                 	$('.log_pic').hide();
 
                 
+
+                
+
+                //console.log(objDiv.scrollTop);
+                
                 Object.keys(result.activity).forEach(function(k){
                 	var ele = '<div class="timeline-item align-items-start">\
                             <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">'+toDateTime(k)+'</div>\
@@ -55,7 +63,10 @@ $(function(){
                 	
               		$('.timeline').append(ele);
 				});
+                // $('#logs').animate({ scrollTop: $('#logs .chats').height()+2000 }, 'slow');
                 $('#logs').modal();
+                $('.chats').animate({scrollTop: 5000},400);
+                
 
                 //window.location.href = backendUrl;
             }).fail(function () {

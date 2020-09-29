@@ -72,6 +72,13 @@
 @include('flash::message')
 
 <div class="px-5 container">
+
+
+@if($candidates)
+<div class="alert alert-important alert-primary">
+  <a href="{{ route('test.proctor',$exam->slug)}}" class="text-white"><i class="fa fa-angle-right" class="text-white"></i> Approval dashboard link </a>
+</div>
+@endif
 <div  class="row  no-gutters {{$i=0}}">
 
 @if($pg->total()!=0)
@@ -104,7 +111,7 @@
               @if(isset($settings['chat']))
               @if(strtolower($settings['chat'])=='yes')
               @if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/chats/'.$b['username'].'.json'))
-              <i class="fa fa-comment-alt text-success mr-4 cursor message_student message_{{$b['username']}}" data-urlpost="{{$b['chat_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"data-url="{{$b['chat']}}" data-lastchat=""></i> 
+              <span class="mr-4"><i class="fa fa-comment-alt text-success  cursor message_student message_{{$b['username']}}" data-urlpost="{{$b['chat_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"data-url="{{$b['chat']}}" data-lastchat=""></i> <span class="badge badge-warning p-1 text-white chat_count chat-count_{{$b['username']}} d-none"></span></span>
               @endif
               @endif
               @endif
@@ -258,9 +265,9 @@ div.chats {
         <div class="pt-4">
         <div class="row">
           <div class="col-6">
-            <div class="border p-2 bg-light">Selfie<br><img src="w-100" class="log_selfie_pic border rounded" width="200px"  /></div></div>
+            <div class="border p-2 bg-light">Selfie<br><img src="w-100" class="log_selfie_pic border rounded d-none" width="200px"  /></div></div>
           <div class="col-6">
-            <div class="border p-2 bg-light">ID Card<br><img src="w-100" class=" log_idcard_pic border rounded" width="200px"  /></div></div>
+            <div class="border p-2 bg-light">ID Card<br><img src="w-100" class=" log_idcard_pic border rounded d-none" width="200px"  /></div></div>
         </div>
       </div>
 
@@ -274,11 +281,7 @@ div.chats {
   </div>
 </div>
 
-<script>
-setTimeout(function(){
-   window.location.reload(1);
-}, 60000);
-  </script>
+
 
 @endsection
 
