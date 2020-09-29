@@ -285,9 +285,9 @@ div.chats {
         <div class="pt-4">
         <div class="row">
           <div class="col-6">
-            <div class="border p-2 bg-light">Selfie<br><img src="w-100" class="log_selfie_pic border rounded d-none" width="200px"  /></div></div>
+            <div class="border p-2 bg-light">Selfie<br><img src="w-100" class="log_selfie_pic border rounded " width="200px"  /></div></div>
           <div class="col-6">
-            <div class="border p-2 bg-light">ID Card<br><img src="w-100" class=" log_idcard_pic border rounded d-none" width="200px"  /></div></div>
+            <div class="border p-2 bg-light">ID Card<br><img src="w-100" class=" log_idcard_pic border rounded " width="200px"  /></div></div>
         </div>
       </div>
 
