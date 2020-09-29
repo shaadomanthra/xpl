@@ -76,9 +76,10 @@
          <i class="fa fa-unlink"></i> remove</a>
                 
           @endcan
+          @if($question->level)<span class="badge badge-info float-right mt-1  ml-2">Level {{$question->level}}</span>@endif
           <span class="badge badge-success float-right mt-1  ml-2">{{$question->mark}}M</span>
           <span class="badge   badge-warning float-right mt-1 ml-2">{{ strtoupper($question->type) }}</span>
-          <span class="badge badge-primary float-right mt-1 mr-2">{{$question->topic}}</span>
+          <span class="badge badge-primary float-right mt-1 ">{{$question->topic}}</span>
         </div>
         <div class="card-body ">
           
