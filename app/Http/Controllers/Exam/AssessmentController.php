@@ -2345,6 +2345,7 @@ class AssessmentController extends Controller
         });
 
         $users = array();
+        $userset = [];
         $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
         //$fl = collect($files);
 
@@ -2364,11 +2365,18 @@ class AssessmentController extends Controller
             }
         }
 
+        
+
         //dd($files);
         //dd($candidates);
         
         $pg=[];
         if(count($candidates)){
+            $userset = User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+            foreach($userset as $u=>$usr){
+                $users[$u] = 1;
+            }
+
             $usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
             foreach($usr as $a=> $b){
                 $name = $b->username.'_log.json';
@@ -2447,9 +2455,12 @@ class AssessmentController extends Controller
                     }
                 }
                 
-
-                array_push($users, $content);
+                if(isset($content['username']))
+                $users[$content['username']] = $content;
+                //array_push($users, $content);
             }
+
+         
            
           
 
@@ -2522,8 +2533,8 @@ class AssessmentController extends Controller
                 }else{
                     $content['last_photo'] = '';
                 }
-
-                array_push($users, $content);
+                 $users[$content['username']] = $content;
+                //array_push($users, $content);
             }
         }
         
@@ -2532,28 +2543,29 @@ class AssessmentController extends Controller
         $data = [];
         $data['total'] = $data['live'] = $data['completed'] =  $data['inactive']=0;
         $diff =400;
-        foreach($users as $a=>$b){
+        // foreach($users as $a=>$b){
             
-
-            $time = strtotime(now());
-            if(isset($b['last_updated']))
-            $diff = round($time - $b['last_updated']);
-            $data['total'] = $data['total'] +1;
-             if($b['completed']){
-                    $data['completed']++; 
-                    $users[$a]['active'] = 2;
-                }
-                else{
-                    if($diff > 300){
-                       $data['inactive']++;
-                       $users[$a]['active'] = 0;
-                    }else{
-                        $data['live']++;
-                        $users[$a]['active'] = 1;
-                    }
+            
+        //     $time = strtotime(now());
+        //     if(isset($b['last_updated']))
+        //     $diff = round($time - $b['last_updated']);
+        //     $data['total'] = $data['total'] +1;
+        //      if(isset($b['completed'])){
+        //             $data['completed']++; 
+        //             $users[$a]['active'] = 2;
+        //         }
+        //         else{
+        //             if($diff > 300){
+        //                $data['inactive']++;
+        //                $users[$a]['active'] = 0;
+        //             }else{
+        //                 $data['live']++;
+        //                 $users[$a]['active'] = 1;
+        //             }
                     
-            }
-        }
+        //     }
+        // }
+       
 
         $settings = json_decode($exam->getOriginal('settings'),true);
 
@@ -2567,6 +2579,7 @@ class AssessmentController extends Controller
                     ->with('users',$users)
                     ->with('pg',$pg)
                     ->with('exam',$exam)
+                    ->with('userset',$userset)
                     ->with('settings',$settings)
                     ->with('candidates',$candidates)
                     ->with('proctor',1)
@@ -2581,6 +2594,26 @@ class AssessmentController extends Controller
         $exam = Cache::get('test_'.$id,function() use($id){
             return Exam::where('slug',$id)->first();
         });
+
+
+        $user = \auth::user();
+        //dd($exam->settings);
+        if(!isset($exam->getOriginal('settings')->invigilation))
+            $exam_settings = json_decode($exam->getOriginal('settings'),true);
+        else
+            $exam_settings = json_decode(json_encode($exam->getOriginal('settings')),true);
+
+        $candidates = [];
+        if(isset($exam_settings['invigilation'])){
+            foreach($exam_settings['invigilation'] as $in=>$emails){
+                if($user->id==$in){
+                    $candidates = $emails;
+                }
+            }
+        }
+
+        $userset = User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+        
 
         
         if(!$r->get('api'))
@@ -2628,11 +2661,15 @@ class AssessmentController extends Controller
         }
 
         //dd($json);
-
-
         $data = [];
+        foreach($userset as $u=>$usr){
+            $data['users'][$u] = 1; 
+        }
+        
         $data['total'] = $data['waiting'] = $data['approved'] =  $data['rejected']=0;
         foreach($json as $a=>$b){
+            if(isset($userset[$a]))
+            $userset[$a]->started = $b;
             $data['total'] = $data['total'] +1;
             if($b['approved'] == 0 )
             $data['waiting'] = $data['waiting'] +1;
@@ -2642,11 +2679,14 @@ class AssessmentController extends Controller
             $data['approved'] = $data['approved'] +1; 
 
             $data['users'][$a] = $b;
+
         }
+
         
         if($json)
             return view('appl.exam.exam.proctor')
                     ->with('data',$data)
+                    ->with('userset',$userset)
                     ->with('exam',$exam);
         else
             abort(403,'Exam not started');

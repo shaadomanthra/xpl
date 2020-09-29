@@ -15,14 +15,7 @@
    
     <div class="row">
       <div class="col-12  col-lg-8">
-       <nav class="mb-0">
-          <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
-            <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-            
-            <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug) }}">{{$exam->name}}</a></li>
-            <li class="breadcrumb-item">Participants </li>
-          </ol>
-        </nav>
+       
         <div class=' pb-3'>
           <p class="heading_two mb-2 f30 " >
             <span class="svg-icon svg-icon-primary svg-icon-3x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2020-08-25-063451/theme/html/demo1/dist/../src/media/svg/icons/Shopping/Chart-line1.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -33,6 +26,7 @@
     </g>
 </svg><!--end::Svg Icon--></span>
            Approval Dashboard</p>
+           <span class="text-secondary"><small>Auto page refresh - 10 sec</small></span>
         </div>
       </div>
      
@@ -123,7 +117,7 @@
 
 
 @foreach($data['users'] as $a => $b)
-
+@if($b!=1)
 <div class="col-md-6 ">
   <div class="card  card-custom @if($b['approved']==0)bg-light-warning @elseif($b['approved']==1) @else bg-light-danger @endif my-3 card_{{$a}}">
     <div class="card-body ">
@@ -146,7 +140,7 @@
           <div class=" mb-3 mb-md-0">
               <h5><i class="fa fa-picture-o"></i> Selfie Photo</h5>
             <div class="selfie_container">
-              <img src="{{$b['selfie']}}" class="w-100 rounded">
+              <img src="{{$b['selfie']}}?time={{strtotime(now())}}" class="w-100 rounded">
             </div>
           </div>
           
@@ -155,7 +149,7 @@
           <div class=" mb-3 mb-md-0">
               <h5><i class="fa fa-vcard"></i> ID Card Photo</h5>
             <div class="selfie_container">
-              <img src="{{$b['idcard']}}" class="w-100 rounded">
+              <img src="{{$b['idcard']}}?time={{strtotime(now())}}" class="w-100 rounded">
             </div>
           </div>
 
@@ -182,11 +176,45 @@
     </div>
   </div>
 </div>
+@else
+<div class="col-md-6 ">
+  <div class="card  card-custom  bg-light-secondary   my-3 card_{{$a}}" style="border: 1px solid silver">
+    <div class="card-body ">
+
+      <img src="{{ $userset[$a]->getImage()}}" class="rounded float-right" width="100px"/>
+
+      <dl class="row">
+          <dt class="col-5 col-sm-4">Full Name</dt>
+          <dd class="col-7 col-sm-8"><h3>{{ $userset[$a]->name}}</h3></dd>
+          <dt class="col-5 col-sm-4">College Name</dt>
+          <dd class="col-7 col-sm-8">{{ $userset[$a]->college->name}}</dd>
+          <dt class="col-5 col-sm-4">Branch</dt>
+          <dd class="col-7 col-sm-8">{{ ($userset[$a]->branch_id)?$userset[$a]->branch->name:""}}</dd>
+          <dt class="col-5 col-sm-4">Roll Number</dt>
+          <dd class="col-7 col-sm-8">{{ $userset[$a]->roll_number}}</dd>
+      </dl>
+
+      <span class="badge badge-info">yet to open the link</span>
+     
+
+     
+  
+    </div>
+  </div>
+</div>
+
+@endif
 @endforeach
   
 
  
 </div>
+
+<script>
+setTimeout(function(){
+   window.location.reload(1);
+}, 10000);
+  </script>
 
 @endsection
 

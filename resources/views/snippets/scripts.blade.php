@@ -277,6 +277,7 @@ $(function(){
 
      $.post( $url ,{'username': $username ,'approved':$approved,'alert':$alert,'_token':$token,'api':1}, function( data ) {
             if($approved==1){
+              if($('.card_'+$username).hasClass('bg-light-danger') || $('.card_'+$username).hasClass('bg-light-warning') ){
               if($('.card_'+$username).hasClass('bg-light-danger')){
                   $('.counter_rejected').text(parseInt($('.counter_rejected').text())-1);
                   $('.counter_approved').text(parseInt($('.counter_approved').text())+1);
@@ -285,19 +286,23 @@ $(function(){
                 $('.counter_approved').text(parseInt($('.counter_approved').text())+1);
               }
               $('.card_'+$username).removeClass('bg-light-warning').removeClass('bg-light-danger');
+            }
               
             }
             
             if($approved==2){
-              if($('.card_'+$username).hasClass('bg-light-warning')){
-                $('.counter_waiting').text(parseInt($('.counter_waiting').text())-1);
-                $('.counter_rejected').text(parseInt($('.counter_rejected').text())+1);
-              }else{
-                $('.counter_approved').text(parseInt($('.counter_approved').text())-1);
-                $('.counter_rejected').text(parseInt($('.counter_rejected').text())+1);
-              }
+              if(!$('.card_'+$username).hasClass('bg-light-danger')){
+                  if($('.card_'+$username).hasClass('bg-light-warning')){
+                  $('.counter_waiting').text(parseInt($('.counter_waiting').text())-1);
+                  $('.counter_rejected').text(parseInt($('.counter_rejected').text())+1);
+                }else{
+                  $('.counter_approved').text(parseInt($('.counter_approved').text())-1);
+                  $('.counter_rejected').text(parseInt($('.counter_rejected').text())+1);
+                }
 
-              $('.card_'+$username).removeClass('bg-light-warning').addClass('bg-light-danger');
+                $('.card_'+$username).removeClass('bg-light-warning').addClass('bg-light-danger');
+              }
+              
               
             }
       });

@@ -84,12 +84,14 @@
           <p class="heading_two mb-2 f30 text-white" ><i class="fa fa-inbox "></i> My Tests
 
             @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
+            @if(\auth::user()->role == 12 || \auth::user()->isAdmin())
             <a href="{{route('examtype.index')}}">
               <button type="button" class="btn btn-outline-light my-2 my-sm-2 mr-sm-3">Testtypes</button>
             </a>
             <a href="{{route('exam.create')}}">
               <button type="button" class="btn btn-success float-right my-2 my-sm-2 ">Create Test</button>
             </a>
+            @endif
             @endif
 
           </p>

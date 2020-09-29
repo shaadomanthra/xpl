@@ -76,16 +76,17 @@
 
 @if($candidates)
 <div class="alert alert-important alert-primary">
-  <a href="{{ route('test.proctor',$exam->slug)}}" class="text-white"><i class="fa fa-angle-right" class="text-white"></i> Approval dashboard link </a>
+  <a href="{{ route('test.proctor',$exam->slug)}}" target="_blank" class="text-white"><i class="fa fa-angle-right" class="text-white"></i> Approval dashboard link </a>
 </div>
 @endif
 <div  class="row  no-gutters {{$i=0}}">
 
 @if($pg->total()!=0)
 @foreach($users as $a => $b)
+@if(isset($b['username']))
 
 <div class="col-6 col-md-2 ">
-  <div class="card   mb-2 mx-1 @if($b['active']==0) bg-light-danger @elseif($b['active']==1) bg-light-warning  @endif card_{{$a}} card_{{$b['username']}}" data-last="">
+  <div class="card   mb-2 mx-1  @if($b['completed']==1) bg-light-warning @else  @endif card_{{$a}} card_{{$b['username']}}" data-last="">
     <div class="p-4 ">
       <div class="">
         <div class="action_{{$a}} d-inline float-right">
@@ -122,6 +123,24 @@
   </div>
 </div>
 
+@else
+
+<div class="col-6 col-md-2 ">
+  <div class="card   mb-2 mx-1 ) bg-light-secondary " data-last="" style="border:1px solid silver">
+    <div class="p-4 ">
+      <div class="">
+        <div class="action_{{$a}} d-inline float-right">
+          </div>
+              <h6 class="mb-4 "> {{$userset[$a]->name}}
+              </h6>
+              <span class="badge badge-warning">yet to open the link</span>
+           
+          </div>
+    </div>
+  </div>
+</div>
+
+@endif
 @endforeach
 @endif
 

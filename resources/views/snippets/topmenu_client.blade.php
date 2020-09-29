@@ -35,13 +35,14 @@
             ><i class="fa fa-ravelry"></i> Tests
         </a></li>
         @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
+         @if(\auth::user()->role == 12 || \auth::user()->isAdmin())
 
         
         <li class="mr-3"><a class="nav-link" href="{{ route('user.list') }}" aria-label="exams page"
             ><i class="fa fa-user"></i>
             Users
         </a></li>
-
+        @endif
         @endif
 
         <li class="mr-3"><a class="nav-link" href="{{ route('logout') }}" aria-label="Logout page" onclick="event.preventDefault();
