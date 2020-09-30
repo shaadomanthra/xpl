@@ -3370,10 +3370,12 @@ class AssessmentController extends Controller
         $folder = 'webcam/'.$exam->id.'/';
         $files = Storage::disk('s3')->allFiles($folder);
 
-        $mask= $username.'_'.$exam->id;
-        $image_files = array_where($files, function ($value, $key) use ($mask) {
-           return starts_with(basename($value), $mask);
-        });
+        // $mask= $username.'_'.$exam->id;
+        // $image_files = array_where($files, function ($value, $key) use ($mask) {
+        //    return starts_with(basename($value), $mask);
+        // });
+
+        $image_files = [];
 
         $images = [];
         foreach($image_files as $j=>$im){
@@ -3394,7 +3396,7 @@ class AssessmentController extends Controller
 
         $count = array('webcam'=>0,'screenshot'=>0);
 
-        if($image_files){
+        if(count($image_files)){
             $count['webcam'] = count($images['webcam']);
             if(isset($images['screens']))
             $count['screenshot'] = count($images['screens']);
