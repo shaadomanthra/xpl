@@ -238,7 +238,7 @@ class TrainingController extends Controller
                    'phone'    => $row[2], 
                    'roll_number'    => $row[3], 
                    'branch_id' => $b,
-                   'college_id' => 372,
+                   'college_id' => $c,
                    'personality' =>$row[4],
                    'confidence' =>$row[5],
                    'year_of_passing' =>$row[6],
