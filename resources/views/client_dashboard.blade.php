@@ -32,7 +32,7 @@
           @if(auth::user()->branch->name) <span class="badge badge-primary"> {{auth::user()->branch->name}}</span>@else Welcome aboard @endif
         @else
           @if(auth::user()->info) <span class="badge badge-primary">Class {{auth::user()->info}}</span>@else Welcome aboard @endif
-        @endi
+        @endif
       </p>
       
 
