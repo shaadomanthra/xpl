@@ -223,6 +223,10 @@ class TrainingController extends Controller
                 $client_slug = subdomain();
                 $u = User::where('email',$row[1])->where('client_slug',$client_slug)->first();
 
+                $branch = array("CS"=>22,"EC"=>23,"CE"=>24,"ME"=>25,"CH"=>26,"MM"=>27);
+                $college = array("RKV"=>372,"N"=>364);
+                $b = (isset($branch[$row[4]]))?$branch[$row[4]]:null;
+                $c = (isset($college[$row[5]]))?$college[$row[5]]:null;
 
                 if(!$u){
                     if(strtolower($row[1])!='email'){
@@ -233,6 +237,8 @@ class TrainingController extends Controller
                    'client_slug' =>$client_slug,
                    'phone'    => $row[2], 
                    'roll_number'    => $row[3], 
+                   'branch_id' => $b,
+                   'college_id' => $c,
                    'personality' =>$row[4],
                    'confidence' =>$row[5],
                    'year_of_passing' =>$row[6],
