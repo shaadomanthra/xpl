@@ -176,6 +176,18 @@ class UserController extends Controller
 
     $filename = "exports/Userlist_".subdomain().".csv";
 
+    if(request()->get('hr')){
+        $users = User::where('role',11)->get();
+        foreach($users as $user){
+            if(!$user->roles->contains(28))
+                $user->roles()->attach(28);
+            $user->save();
+        }
+        
+
+        dd();
+    }
+
     if(request()->get('export')){
 
         // $users = User::where('client_slug',subdomain())->get();
