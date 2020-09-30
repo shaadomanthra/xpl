@@ -181,11 +181,10 @@ class UserController extends Controller
         foreach($users as $user){
             if(!$user->roles->contains(28))
                 $user->roles()->attach(28);
-            $user->save();
         }
         
 
-        dd();
+        dd(count($users));
     }
 
     if(request()->get('export')){
