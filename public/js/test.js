@@ -126,35 +126,36 @@ $(document).ready(function(){
 
     
 
-    /* check connectivity */
-    $('.connection_status').data('status',1);
-    const checkOnlineStatus = async () => {
-      try {
-        var time = new Date();
-        const online = await fetch("/1pixel.png?time="+time);
+    // /* check connectivity */
+    // $('.connection_status').data('status',1);
+    // const checkOnlineStatus = async () => {
+    //   try {
+    //     var time = new Date();
+    //     const online = await fetch("/1pixel.png?time="+time);
 
-        return online.status >= 200 && online.status < 300; // either true or false
-      } catch (err) {
-        return false; // definitely offline
-      }
-    };
+    //     return online.status >= 200 && online.status < 300; // either true or false
+    //   } catch (err) {
+    //     return false; // definitely offline
+    //   }
+    // };
 
-    setInterval(async () => {
-      const result = await checkOnlineStatus();
-      //const statusDisplay = document.getElementById("status");
-      textContent = result ? 1 : 0;
-      if(textContent){
-        $('.connection_status').html("<i class='fa fa-circle text-success'></i> Online");
-        $('.testpage_wrap').show();
-        $('#no_connectivity').modal('hide');
-        $('.connection_status').data('status',1);
-      }else{
-        $('.testpage_wrap').hide();
-        $('#no_connectivity').modal({backdrop: 'static', keyboard: false});
-        $('.connection_status').html("<i class='fa fa-circle text-secondary'></i> Offline");
-        $('.connection_status').data('status',0);
-      }
-    }, 3000);
+    // setInterval(async () => {
+    //   const result = await checkOnlineStatus();
+    //   //const statusDisplay = document.getElementById("status");
+    //   textContent = result ? 1 : 0;
+    //   if(textContent){
+    //     $('.connection_status').html("<i class='fa fa-circle text-success'></i> Online");
+    //     $('.testpage_wrap').show();
+    //     $('#no_connectivity').modal('hide');
+    //     $('.connection_status').data('status',1);
+    //   }else{
+    //     $('.testpage_wrap').hide();
+    //     $('#no_connectivity').modal({backdrop: 'static', keyboard: false});
+    //     $('.connection_status').html("<i class='fa fa-circle text-secondary'></i> Offline");
+    //     $('.connection_status').data('status',0);
+    //   }
+    // }, 3000);
+    
 
 
 
