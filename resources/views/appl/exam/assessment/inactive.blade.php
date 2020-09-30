@@ -28,7 +28,7 @@
     <h1 class="display-4"> <div class=""><i class="fa fa-link"></i> The Test  is inactive</div></h1>
     @else
     <h3 class="display-5 mb-1"> <div class=""> This test link  will be activated on <span class="text-danger">{{\carbon\carbon::parse($exam->auto_activation)->toDayDateTimeString()}}</span></div></h3>
-    <p>and will be deactiveted by <span class="text-info">{{\carbon\carbon::parse($exam->auto_deactivation)->toDayDateTimeString()}}</span></p>
+    <p>and will be deactivated by <span class="text-info">{{\carbon\carbon::parse($exam->auto_deactivation)->toDayDateTimeString()}}</span></p>
     <p><b> Note:</b> You are required to start the test within the above mentioned test window. </p>
     @endif
     <p>  For queries, kindly write to us at <span class="text-primary">info@xplore.co.in</span> </p>
