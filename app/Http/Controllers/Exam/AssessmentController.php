@@ -3333,7 +3333,7 @@ class AssessmentController extends Controller
                 $exam = Exam::where('slug',$slug)->first();
         }
 
-        if($slug=='tcsnqt' || $slug=='56865'){
+        if($slug=='tcsnqt'){
             return view('appl.exam.assessment.completed')
                         ->with('exam',$exam);
         }
