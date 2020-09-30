@@ -22,12 +22,18 @@
         <div class="col-12 col-md-3">
 
 
-          <img class="img-thumbnail rounded-circle mb-3" src="@if(\auth::user()->image) {{ (\auth::user()->image)}}@else {{ Gravatar::src(\auth::user()->email, 150) }}@endif">
+          <img class="img-thumbnail rounded-circle mb-3" src="@if(\auth::user()->getImage()) {{ (\auth::user()->getImage())}}@else {{ Gravatar::src(\auth::user()->email, 150) }}@endif">
         </div>
         <div class="col-12 col-md-9">
 
           <h2>Hi, {{  \auth::user()->name}}</h2>
-      <p> @if(auth::user()->info) <span class="badge badge-primary">Class {{auth::user()->info}}</span>@else Welcome aboard @endif</p>
+      <p> 
+        @if(auth::user()->branch_id)
+          @if(auth::user()->branch->name) <span class="badge badge-primary"> {{auth::user()->branch->name}}</span>@else Welcome aboard @endif
+        @else
+          @if(auth::user()->info) <span class="badge badge-primary">Class {{auth::user()->info}}</span>@else Welcome aboard @endif
+        @endi
+      </p>
       
 
       <p class="lead">Develop a passion for learning. If you do, you will never cease to grow - 
