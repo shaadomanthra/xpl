@@ -709,16 +709,18 @@ class AssessmentController extends Controller
             
 
             if(Storage::disk('s3')->exists($exam->image)){
-                $base64_code = base64_encode(file_get_contents(Storage::disk('s3')->url($exam->image)));
-                $base64_str = 'data:image/jpeg;base64,' . $base64_code;
-                $images['logo'] = $base64_str;
+                //$base64_code = base64_encode(file_get_contents(Storage::disk('s3')->url($exam->image)));
+                //$base64_str = 'data:image/jpeg;base64,' . $base64_code;
+                //$images['logo'] = $base64_str;
+                $images['logo'] =Storage::disk('s3')->url($exam->image);
             }
 
             
             if(\auth::user()->getImage()){
-                $base64_code = base64_encode(file_get_contents(\auth::user()->getImage()));
-                $base64_str = 'data:image/jpeg;base64,' . $base64_code;
-                $images['user'] = $base64_str;
+                // $base64_code = base64_encode(file_get_contents(\auth::user()->getImage()));
+                // $base64_str = 'data:image/jpeg;base64,' . $base64_code;
+                // $images['user'] = $base64_str;
+                $images['user'] =\auth::user()->getImage();
                
             }
         }
