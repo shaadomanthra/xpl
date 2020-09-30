@@ -43,9 +43,9 @@
 				</div>
 			</div>
 
-			@if($count)
+			@if($count['webcam'])
 			<div class="row mb-4 {{$m=0}}">
-
+				@if(isset($images['webcam']))
 				@foreach($images['webcam'] as $k=>$f)
 				<div class='col-6 col-md-2 {{$m=$m+1}}'>
 						<img src="{{ Storage::disk('s3')->url($f) }}" class="w-100 mb-2" />
@@ -55,9 +55,10 @@
 				@endif
 
 				@endforeach
+				@endif
 				
 			</div>
-			@if($count)
+			@if($count['webcam'])
 			<div class="my-4"><b>Captured :</b> <a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$user->username}}" class="">{{$count['webcam']}} webcam</a> images | <a href="{{ route('test.snaps',$exam->slug)}}?type=screens&username={{$user->username}}" class="">{{$count['screenshot']}} screenshot</a> images</div>
 			
 			@endif
