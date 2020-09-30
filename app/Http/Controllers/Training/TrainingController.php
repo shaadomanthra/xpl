@@ -235,6 +235,8 @@ class TrainingController extends Controller
                    'roll_number'    => $row[3], 
                    'personality' =>$row[4],
                    'confidence' =>$row[5],
+                   'year_of_passing' =>$row[6],
+                   'gender' =>$row[7],
                    'password' => bcrypt($row[2]),
                    'status'   => 1,
                     ]);
@@ -250,10 +252,10 @@ class TrainingController extends Controller
                     
                 }
 
-                if(strtolower($row[1])!='email')
-                if(!$obj->users->contains($u->id)){
-                    $obj->users()->attach($u->id);
-                }
+                // if(strtolower($row[1])!='email')
+                // if(!$obj->users->contains($u->id)){
+                //     $obj->users()->attach($u->id);
+                // }
                 
             
             // else{
