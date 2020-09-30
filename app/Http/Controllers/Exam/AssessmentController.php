@@ -2169,6 +2169,8 @@ class AssessmentController extends Controller
 
      public function live($id,Request $r)
     {
+        abort(403,"Page disabled for load testing");
+
         $exam = Cache::get('test_'.$id,function() use($id){
             return Exam::where('slug',$id)->first();
         });
