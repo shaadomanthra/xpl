@@ -3316,6 +3316,7 @@ class AssessmentController extends Controller
     {
 
         
+        
 
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
@@ -3332,6 +3333,10 @@ class AssessmentController extends Controller
                 $exam = Exam::where('slug',$slug)->first();
         }
 
+        if($slug=='tcsnqt'){
+            return view('appl.exam.assessment.completed')
+                        ->with('exam',$exam);
+        }
        
 
         $questions = array();
