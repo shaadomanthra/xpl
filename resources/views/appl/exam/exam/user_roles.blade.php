@@ -50,6 +50,7 @@
          <div class="form-group">
             <div class="mt-2">
           <small class=" "> 
+            <INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /> Check All
              <ul class="pt-2">
               <li>Assigned users can invigilate students assigned to them (automated) </li>
             </ul>
@@ -116,20 +117,7 @@
           </div>
             <div class="border p-3">
               <div class="row">
-              @foreach($data['hr-managers'] as $hr)
-                 <div class="col-12 col-md-3">
-                  <input  type="checkbox" name="evaluators[]" value="{{$hr->id}}"
-                   
-                      @if($exam->evaluators)
-                        @if(in_array($hr->id,$exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray()))
-                        checked
-                        @endif
-                      @endif
-                   
-                  > 
-                  {{$hr->name }}
-                </div>
-              @endforeach
+              
             </div>
             </div>
             
@@ -143,6 +131,25 @@
 
   </div>
 </div>
+<script>
+function checkAll(ele) {
+     var checkboxes = document.getElementsByTagName('input');
+     if (ele.checked) {
+         for (var i = 0; i < checkboxes.length; i++) {
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = true;
+             }
+         }
+     } else {
+         for (var i = 0; i < checkboxes.length; i++) {
+             console.log(i)
+             if (checkboxes[i].type == 'checkbox') {
+                 checkboxes[i].checked = false;
+             }
+         }
+     }
+ }
+</script>
 
 
 @endsection

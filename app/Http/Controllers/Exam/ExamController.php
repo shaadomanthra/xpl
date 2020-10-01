@@ -854,10 +854,7 @@ class ExamController extends Controller
 
         //dd($data);
 
-        if(\auth::user()->isAdmin())
-            $data['hr-managers'] = \auth::user()->getRole('hr-manager');
-        else
-            $data['hr-managers'] = \auth::user()->where('client_slug',subdomain())->getRole('hr-manager');
+        $data['hr-managers'] = \auth::user()->getRole('hr-manager');
 
         if($exam)
             return view('appl.exam.exam.user_roles')
