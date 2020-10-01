@@ -94,7 +94,8 @@
           </div>
               <h6 class="mb-3 d-inline"> 
                 @if(isset($userset[$a]))<img src="{{ $userset[$a]->getImage()}}" class="rounded inline" width="30px"/>@endif
-                @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif
+                @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif<br>
+                @if(isset($userset[$a])) {{$userset[$a]->roll_number}} @endif
 
 
 
@@ -139,7 +140,8 @@
       <div class="">
         <div class="action_{{$a}} d-inline float-right">
           </div>
-              <h6 class="mb-4 "> {{$userset[$a]->name}}
+              <h6 class="mb-4 ">@if(isset($userset[$a]))<img src="{{ $userset[$a]->getImage()}}" class="rounded inline" width="30px"/>@endif  {{$userset[$a]->name}}<br>
+                {{$userset[$a]->roll_number}}
               </h6>
               <span class="badge badge-warning">yet to open the link</span>
            

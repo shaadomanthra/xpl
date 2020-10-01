@@ -2664,12 +2664,12 @@ class AssessmentController extends Controller
             }
         }else{
 
-            $folder = 'testlog/approvals/'.$exam->id.'/';
-            $files = Storage::disk('s3')->allFiles($folder);
-            foreach($files as $f){
-                $fl = json_decode(Storage::disk('s3')->get($f),true);
-                $json[$fl['username']] = $fl; 
-            }
+            // $folder = 'testlog/approvals/'.$exam->id.'/';
+            // $files = Storage::disk('s3')->allFiles($folder);
+            // foreach($files as $f){
+            //     $fl = json_decode(Storage::disk('s3')->get($f),true);
+            //     $json[$fl['username']] = $fl; 
+            // }
         }
         
 
@@ -2747,7 +2747,7 @@ class AssessmentController extends Controller
                     ->with('userset',$userset)
                     ->with('exam',$exam);
         else
-            abort(403,'Exam not started');
+            abort(403,'Page on hold / Not records found');
         
     }
 
@@ -3343,9 +3343,6 @@ class AssessmentController extends Controller
     public function analysis2($slug,Request $request)
     {
 
-        
-        
-
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
 
@@ -3361,10 +3358,10 @@ class AssessmentController extends Controller
                 $exam = Exam::where('slug',$slug)->first();
         }
 
-        if($slug=='tcsnqt' || $slug=='56865'){
-            return view('appl.exam.assessment.completed')
-                        ->with('exam',$exam);
-        }
+        // if($slug=='tcsnqt' || $slug=='56865'){
+        //     return view('appl.exam.assessment.completed')
+        //                 ->with('exam',$exam);
+        // }
        
 
         $questions = array();

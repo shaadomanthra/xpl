@@ -44,8 +44,13 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         <div class="float-right d-inline">
           <a href="#" data-toggle="modal" data-target="#instructions">
             <i class="fa fa-info-circle ml-2 cursor" data-toggle="tooltip"  title="View Instructions" ></i></a>
+
+            @if(isset($settings['question_list']))
+          @if(strtolower($settings['question_list'])=='yes')
           <a href="#" data-toggle="modal" data-target="#questions">
             <i class="fa fa-question-circle ml-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
+            @endif
+            @endif
           
           @if(isset($settings['chat']))
           @if(strtolower($settings['chat'])=='yes')
@@ -79,8 +84,14 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
       <div class="d-inline">
           <a href="#" class="text-light" data-toggle="modal" data-target="#instructions">
             <i class="fa fa-info-circle  mr-2 cursor" data-toggle="tooltip"  title="View Instructions" ></i></a>
+
+            @if(isset($settings['question_list']))
+          @if(strtolower($settings['question_list'])=='yes')
           <a href="#" class="text-light" data-toggle="modal" data-target="#questions">
             <i class="fa fa-question-circle mr-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
+            @endif
+            @endif
+
             @if(isset($settings['chat']))
           @if(strtolower($settings['chat'])=='yes')
              <i class="fa fa-commenting-o text-light mr-2 cursor message_student message_{{$user->username}}" data-urlpost="{{$urls['chat_post']}}" data-toggle="tooltip"  title="Message proctor" data-username="{{$user->username}}" data-name="{{$user->name}}"data-url="{{$urls['chat']}}" data-lastchat=""></i> 
