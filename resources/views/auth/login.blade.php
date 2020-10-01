@@ -75,7 +75,7 @@
                                     Register
                                 </a>
                                 <br>
-                                @elseif($_SERVER['HTTP_HOST'] == 'fks.xplore.co.in' )
+                                @elseif($_SERVER['HTTP_HOST'] == 'fks.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'rguktn.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'rguktrkv.xplore.co.in')
               @else
                  <a class="btn btn-success" href="{{ route('register') }}">
                                     Register
@@ -83,12 +83,13 @@
                                 <br>
               @endif
                                 
-                                
+                                @if(if( $_SERVER['HTTP_HOST'] != 'rguktn.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'rguktrkv.xplore.co.in'))
                                 <div class="mt-4">
                                 <a class="" href="{{ route('password.request') }}">
                                      Reset password via email
                                 </a>
-                            </div>
+                                </div>
+                                @endif
                                 <!--
                                 <a class="btn btn-link" href="{{ route('password.forgot') }}">
                                     Recieve password via sms

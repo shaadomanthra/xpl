@@ -26,7 +26,7 @@
     </g>
 </svg><!--end::Svg Icon--></span>
            Approval Dashboard</p>
-           <span class="text-secondary"><small>Auto page refresh - 10 sec</small></span>
+           <span class="text-secondary"><small>Auto page refresh - 60 sec</small></span>
         </div>
       </div>
      
@@ -213,7 +213,7 @@
 <script>
 setTimeout(function(){
    window.location.reload(1);
-}, 10000);
+}, 60000);
   </script>
 
 @endsection

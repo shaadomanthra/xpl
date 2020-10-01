@@ -2297,36 +2297,53 @@ class AssessmentController extends Controller
         $username = $r->get('username');
         $type = $r->get('type');
         $folder = 'webcam/'.$exam->id.'/';
-        $files = Storage::disk('s3')->allFiles($folder);
 
-        $mask= $username.'_'.$exam->id;
 
-        $files = array_where($files, function ($value, $key) use ($mask) {
-           return starts_with(basename($value), $mask);
-        });
+        //$files = Storage::disk('s3')->allFiles($folder);
+
+        // $mask= $username.'_'.$exam->id;
+
+        // $files = array_where($files, function ($value, $key) use ($mask) {
+        //    return starts_with(basename($value), $mask);
+        // });
+
+        //log file
+        $name = $username.'_log.json';
+        $filepath = 'testlog/'.$exam->id.'/log/'.$name;
+
+        $content = null;
+        if(Storage::disk('s3')->exists($filepath)){
+            $content = json_decode(Storage::disk('s3')->get($filepath),true);
+             if(isset($content['last_photo'])){
+                $url_pieces = explode('_',$content['last_photo']);
+                $counter = explode('.',$url_pieces[2]);
+                $last_number = intval($counter[0])-1;  
+            }else{
+                $content['last_photo'] = '';
+                $last_number = 0;
+            }
+        }
+
+
 
         $pics = [];$i=0;
-        if($type=='snaps'){
-            foreach($files as $a=>$b){
-                if (strpos($b, 'jpg') !== false) 
-                if (strpos($b, 'screens') !== false) {
-                    
-                }else{
-                    $pics[$i] = $b;
-                }
+
+        if($type=='snaps')
+        $imagepath = 'webcam/'.$exam->id.'/'.$username.'_'.$exam->id.'_';
+        else
+        $imagepath = 'webcam/'.$exam->id.'/screens/'.$username.'_'.$exam->id.'_'; 
+
+        if($content){
+            for($i=1;$i<$last_number;$i++){
+                if(strlen($i)==1)
+                    $nm ="00".$i;
+                else if(strlen($i)==2)
+                    $nm ="0".$i;
+                $pics[$i] = $imagepath.$nm.'.jpg';
                 $i++;
-                
-            } 
-        }else{
-            foreach($files as $a=>$b){
-                if (strpos($b, 'jpg') !== false) 
-                if (strpos($b, 'screens') !== false) {
-                    $pics[$i] = $b;
-                }
-                $i++;
-                
-            } 
+            }
         }
+       
         
         $pg = $this->paginateAnswers($pics,18);
 
@@ -2352,7 +2369,7 @@ class AssessmentController extends Controller
 
         $users = array();
         $userset = [];
-        $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
+        
         //$fl = collect($files);
 
         $user = \auth::user();
@@ -2476,8 +2493,8 @@ class AssessmentController extends Controller
 
         }else{
 
-            
-             $pg = $this->paginateAnswers($files,18);
+            $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
+            $pg = $this->paginateAnswers($files,18);
             foreach($pg as $f){
                 $p = explode('/',$f);
                 $u = explode('.',$p[2]);
@@ -2627,24 +2644,34 @@ class AssessmentController extends Controller
             }
         }
 
-        $userset = User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
         
-
         
         if(!$r->get('api'))
         $this->authorize('create', $exam);
 
 
-        $folder = 'testlog/approvals/'.$exam->id.'/';
-        $files = Storage::disk('s3')->allFiles($folder);
-
         $json =[];
 
-        
-        foreach($files as $f){
-            $fl = json_decode(Storage::disk('s3')->get($f),true);
-            $json[$fl['username']] = $fl; 
+        $userset = User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+        if($candidates){
+            foreach($userset as $ux=>$sx){
+                $file = 'testlog/approvals/'.$exam->id.'/'.$ux.'.json';
+                if(Storage::disk('s3')->exists($file)){
+                    $json[$ux] = json_decode(Storage::disk('s3')->get($file),true);
+                }else{
+                    $json[$ux] = null;
+                }
+            }
+        }else{
+
+            $folder = 'testlog/approvals/'.$exam->id.'/';
+            $files = Storage::disk('s3')->allFiles($folder);
+            foreach($files as $f){
+                $fl = json_decode(Storage::disk('s3')->get($f),true);
+                $json[$fl['username']] = $fl; 
+            }
         }
+        
 
         // if(Storage::disk('s3')->exists('testlog/approvals/'.$exam->id.'/'.$user->username.'.json')){
         //     $json = json_decode(Storage::disk('s3')->get('testlog/approvals/'.$exam->id.'.json'),true);
@@ -2669,16 +2696,14 @@ class AssessmentController extends Controller
             //     Storage::disk('s3')->put('testlog/approvals/'.$exam->id.'/'.$username.'.json', json_encode($json));
             // }
 
-             if($r->get('alert')){
+            if($r->get('alert')){
                  $message['status'] = 3;
                 if($r->get('alert')==1)
                     $message['message'] = 'Your Selfie picture is not clear. Kindly recapture.' ;
                 else if($r->get('alert')==2)
                     $message['message'] = 'Your ID card picture is not clear. Kindly recapture.' ;
                 else if($r->get('alert')==3)
-                    $message['message'] = 'Your ID card is invalid. Kindly use the approved Photo ID for this test.' ;
-
-                
+                    $message['message'] = 'Your ID card is invalid. Kindly use the approved Photo ID for this test.' ; 
             }
             $json[$username]['status'] = $message['status'];
             $json[$username]['message'] = $message['message'];
@@ -2692,6 +2717,7 @@ class AssessmentController extends Controller
 
         //dd($json);
         $data = [];
+        
         foreach($userset as $u=>$usr){
             $data['users'][$u] = 1; 
         }
@@ -3368,7 +3394,7 @@ class AssessmentController extends Controller
         // images
         $username = $student->username;
         $folder = 'webcam/'.$exam->id.'/';
-        $files = Storage::disk('s3')->allFiles($folder);
+        //$files = Storage::disk('s3')->allFiles($folder);
 
         // $mask= $username.'_'.$exam->id;
         // $image_files = array_where($files, function ($value, $key) use ($mask) {
@@ -3404,18 +3430,16 @@ class AssessmentController extends Controller
                 $count['screenshot']  = 0;
         }
 
-
-
-        if(request()->get('images')){
-            if(request()->get('images')=='webcam'){
-                $count = $count['webcam'];
-                $images = $images['webcam'];
-            }else{
-                $count = $count['screenshot'];
-                $images = $images['screens'];
-            }
-            return view('appl.exam.assessment.images')->with('exam',$exam)->with('user',$student)->with('count',$count)->with('images',$images);
-        }
+        // if(request()->get('images')){
+        //     if(request()->get('images')=='webcam'){
+        //         $count = $count['webcam'];
+        //         $images = $images['webcam'];
+        //     }else{
+        //         $count = $count['screenshot'];
+        //         $images = $images['screens'];
+        //     }
+        //     return view('appl.exam.assessment.images')->with('exam',$exam)->with('user',$student)->with('count',$count)->with('images',$images);
+        // }
 
 
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0,'evaluation'=>1];
