@@ -83,7 +83,7 @@
                                 <br>
               @endif
                                 
-                                @if(if( $_SERVER['HTTP_HOST'] != 'rguktn.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'rguktrkv.xplore.co.in'))
+                                @if($_SERVER['HTTP_HOST'] != 'rguktn.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'rguktrkv.xplore.co.in')
                                 <div class="mt-4">
                                 <a class="" href="{{ route('password.request') }}">
                                      Reset password via email
