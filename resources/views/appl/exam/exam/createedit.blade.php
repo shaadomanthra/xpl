@@ -262,8 +262,6 @@
             @if(\auth::user()->checkRole(['administrator']))
             <select class="form-control" name="capture_frequency">
               <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
-              <option value="5" @if(isset($exam)) @if($exam->capture_frequency==5) selected @endif @endif >Every 5 secs</option>
-              <option value="10" @if(isset($exam)) @if($exam->capture_frequency==10) selected @endif @endif >Every 10 secs</option>
               <option value="20" @if(isset($exam)) @if($exam->capture_frequency==20) selected @endif @endif >Every 20 secs</option>
               <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
               <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
@@ -273,6 +271,7 @@
             @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
             <select class="form-control" name="capture_frequency">
               <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
+              <option value="20" @if(isset($exam)) @if($exam->capture_frequency==20) selected @endif @endif >Every 20 secs</option>
               <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
               <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
               <option value="300" @if(isset($exam)) @if($exam->capture_frequency==300) selected @endif @endif >Every 5 mins</option>
@@ -281,6 +280,7 @@
             @else
             <select class="form-control" name="capture_frequency" disabled>
               <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
+              <option value="20" @if(isset($exam)) @if($exam->capture_frequency==20) selected @endif @endif >Every 20 secs</option>
               <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
               <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
               <option value="300" @if(isset($exam)) @if($exam->capture_frequency==300) selected @endif @endif >Every 5 mins</option>
@@ -351,82 +351,7 @@
       </div>
         </div>
 
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <label for="formGroupExampleInput ">Viewers </label>
-            <div class="border p-3">
-              <div class="row">
-              @foreach($hr_managers as $hr)
-                 <div class="col-12 col-md-4">
-                  <input  type="checkbox" name="viewers[]" value="{{$hr->id}}"
-                    @if($stub=='Create')
-                      @if(old('viewer'))
-                        @if(in_array($hr->id,old('viewer')))
-                        checked
-                        @endif
-                      @endif
-                    @else
-                      @if($exam->viewers)
-                        @if(in_array($hr->id,$exam->viewers()->wherePivot('role','viewer')->pluck('id')->toArray()))
-                        checked
-                        @endif
-                      @endif
-                    @endif
-                  > 
-                  {{$hr->name }}
-                </div>
-              @endforeach
-            </div>
-            </div>
-            <div class="mt-2">
-          <small class=" "> 
-            <ul class="pt-2">
-              <li>Viewers can see the reports.</li>
-              <li>Download the excel.</li>
-              <li>Cannot modify test settings and responses.</li>
-            </ul>
-            </small>
-          </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
-          <div class="form-group">
-            <label for="formGroupExampleInput ">Evaluators </label>
-            <div class="border p-3">
-              <div class="row">
-              @foreach($hr_managers as $hr)
-                 <div class="col-12 col-md-4">
-                  <input  type="checkbox" name="evaluators[]" value="{{$hr->id}}"
-                    @if($stub=='Create')
-                      @if(old('evaluator'))
-                        @if(in_array($hr->id,old('evaluator')))
-                        checked
-                        @endif
-                      @endif
-                    @else
-                      @if($exam->evaluators)
-                        @if(in_array($hr->id,$exam->viewers()->wherePivot('role','evaluator')->pluck('id')->toArray()))
-                        checked
-                        @endif
-                      @endif
-                    @endif
-                  > 
-                  {{$hr->name }}
-                </div>
-              @endforeach
-            </div>
-            </div>
-            <div class="mt-2">
-          <small class=" "> 
-            <ul class="pt-2">
-              <li>Evaluators can award marks to subjective questions.</li>
-              <li>View reports and download excel.</li>
-              <li>Cannot modify test settings.</li>
-            </ul>
-            </small>
-          </div>
-          </div>
-        </div>
+
 
 
       </div>
