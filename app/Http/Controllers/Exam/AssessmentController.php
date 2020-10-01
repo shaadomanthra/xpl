@@ -2724,18 +2724,20 @@ class AssessmentController extends Controller
         
         $data['total'] = $data['waiting'] = $data['approved'] =  $data['rejected']=0;
         foreach($json as $a=>$b){
-            if(isset($userset[$a]))
-            $userset[$a]->started = $b;
-            $data['total'] = $data['total'] +1;
-            if($b['approved'] == 0 )
-            $data['waiting'] = $data['waiting'] +1;
-            else if($b['approved'] == 2 )
-            $data['rejected'] = $data['rejected'] +1;
-            else
-            $data['approved'] = $data['approved'] +1; 
+            if($b){
+                if(isset($userset[$a]))
+                $userset[$a]->started = $b;
+                $data['total'] = $data['total'] +1;
+                if($b['approved'] == 0 )
+                $data['waiting'] = $data['waiting'] +1;
+                else if($b['approved'] == 2 )
+                $data['rejected'] = $data['rejected'] +1;
+                else
+                $data['approved'] = $data['approved'] +1; 
 
-            $data['users'][$a] = $b;
-
+                $data['users'][$a] = $b;
+            }
+            
         }
 
         
