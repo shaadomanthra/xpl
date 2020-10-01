@@ -116,7 +116,7 @@
               @if(isset($settings['chat']))
               @if(strtolower($settings['chat'])=='yes')
               @if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/chats/'.$b['username'].'.json'))
-              <span class="mr-4"><i class="fa fa-comment-alt text-success  cursor message_student message_{{$b['username']}}" data-urlpost="{{$b['chat_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"data-url="{{$b['chat']}}" data-lastchat=""></i> <span class="badge badge-warning p-1 text-white chat_count chat-count_{{$b['username']}} d-none"></span></span>
+              <span class="mr-4"><i class="fa fa-comment-alt text-success  cursor message_student message_{{$b['username']}}" data-urlpost="{{$b['chat_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"data-url="{{$b['chat']}}" data-proctor="{{\auth::user()->name}}"  data-p="1" data-lastchat=""></i> <span class="badge badge-warning p-1 text-white chat_count chat-count_{{$b['username']}} d-none"></span></span>
               @endif
               @endif
               @endif

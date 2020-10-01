@@ -419,6 +419,8 @@ $(document).on('click','.send_chat',function(){
 
     $username = $(this).data('username');
     $uname = $('.message_'+$username).data('name');
+    $pname = $('.message_'+$username).data('proctor');
+    $p = $('.message_'+$username).data('p');
     $testid = $(this).data('testid');
     $user = $(this).data('user');
     $message = $('#message-text').val();
@@ -427,6 +429,9 @@ $(document).on('click','.send_chat',function(){
     $test = $('#video').data('test');
     $name = $username+'_'+$test+'_chat';
     it = $('.message_'+$username);
+
+    if($p)
+      $uname = $pname;
 
     
     $('.chat_messages').animate({scrollTop: 5000},400);
