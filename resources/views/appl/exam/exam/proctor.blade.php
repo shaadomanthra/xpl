@@ -122,7 +122,7 @@
   <div class="card  card-custom @if($b['approved']==0)bg-light-warning @elseif($b['approved']==1) @else bg-light-danger @endif my-3 card_{{$a}}">
     <div class="card-body ">
 
-      <img src="{{$b['image']}}" class="rounded float-right" width="100px"/>
+      <img src="{{$b['image']}}" class="rounded float-right" width="50px"/>
 
       <dl class="row">
           <dt class="col-5 col-sm-4">Full Name</dt>
@@ -181,7 +181,7 @@
   <div class="card  card-custom  bg-light-secondary   my-3 card_{{$a}}" style="border: 1px solid silver">
     <div class="card-body ">
 
-      <img src="{{ $userset[$a]->getImage()}}" class="rounded float-right" width="100px"/>
+      <img src="{{ $userset[$a]->getImage()}}" class="rounded float-right" width="50px"/>
 
       <dl class="row">
           <dt class="col-5 col-sm-4">Full Name</dt>

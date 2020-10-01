@@ -92,7 +92,9 @@
       <div class="">
         <div class="action_{{$a}} d-inline float-right">
           </div>
-              <h6 class="mb-3 d-inline"> @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif
+              <h6 class="mb-3 d-inline"> 
+                @if(isset($userset[$a]))<img src="{{ $userset[$a]->getImage()}}" class="rounded inline" width="30px"/>@endif
+                @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif
 
 
 
@@ -118,7 +120,12 @@
               @endif
               @endif
               <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}" data-selfie_url="{{$b['selfie_url']}}" data-idcard_url="{{$b['idcard_url']}}"></i> 
-              <i class="fas fa-power-off text-danger mr-4 cursor user_terminate user_terminate_{{$b['username']}}" data-url="{{$b['approval']}}" data-urlpost="{{$b['approval_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"  ></i> </p>
+
+              @if(!$candidates)
+              <i class="fas fa-power-off text-danger mr-4 cursor user_terminate user_terminate_{{$b['username']}}" data-url="{{$b['approval']}}" data-urlpost="{{$b['approval_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"  ></i>
+              @endif 
+            </p>
+
           </div>
     </div>
   </div>
