@@ -28,7 +28,7 @@
           </h1>
           @if(isset($obj->labels))
           <div class="mb-3" >
-            <a href="{{ route('article.index')}}"><span class="badge badge-secondary">jobs</span></a>
+            <a href="{{ route('article.index')}}"><span class="badge badge-secondary">blogs</span></a>
           @foreach($obj->labels as $k=>$label)
           <a href="{{ route('blog.label',$label->slug)}}"><span class="badge  badge-warning  ">{{$label->name }}</span></a>
           @endforeach
@@ -59,7 +59,7 @@
               @if(isset($obj->related1))
               @if(count($obj->related1)!=0)
               <div class=" border rounded bg-secondary text-white mb-4 d-none d-md-block">
-                  <h4 class="mb-0 p-3">Related Jobs</h4>
+                  <h4 class="mb-0 p-3">Related Blogs</h4>
                  <div class="list-group ">
                 @foreach($obj->related1 as $item)
                   @if($item->slug != $obj->slug)
