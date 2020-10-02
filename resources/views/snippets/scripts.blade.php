@@ -275,6 +275,8 @@ $(function(){
     $url = $(this).data('url');
     $token = $(this).data('token');
 
+    $('.spinner_'+$username).show();
+
      $.post( $url ,{'username': $username ,'approved':$approved,'alert':$alert,'_token':$token,'api':1}, function( data ) {
             if($approved==1){
               if($('.card_'+$username).hasClass('bg-light-danger') || $('.card_'+$username).hasClass('bg-light-warning') ){
@@ -286,6 +288,8 @@ $(function(){
                 $('.counter_approved').text(parseInt($('.counter_approved').text())+1);
               }
               $('.card_'+$username).removeClass('bg-light-warning').removeClass('bg-light-danger');
+              $('.action_'+$username).html("<div class='h3 text-success mt-3'><i class='fa fa-check-circle text-success'></i> Approved</div>");
+
             }
               
             }

@@ -82,7 +82,7 @@
               </div>
             <div class="col-md-8">
               @if(count($product->exams)==0 && count($product->courses)==0 )
-              Classroom program
+              Online program
               @else
               {{ $product->validity }} months
               @endif
@@ -192,8 +192,7 @@
             <div class="col-12 col-md-8">
            
            <div class="p-3 border rounded mb-2">
-            <h3>Classroom Training</h3>
-            <p class="bg-light p-3  rounded"> Kindly carry the print out of the following page to the packetprep office, after payment. </p>
+            <h3>Online Training</h3>
           </div>
            
             </div>

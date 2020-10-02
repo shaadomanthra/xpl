@@ -159,6 +159,12 @@
                   </a>
 				@endif
 
+				@guest
+				<a href="{{ route('login')}}">
+		        <button type="button" class="btn btn-success">Login</button>
+		    	</a>
+				@endguest
+
 				@auth
 				@if(\auth::user()->username=='demo500')
 				@if($exam->status!=1)

@@ -8,6 +8,10 @@ use PacketPrep\Models\Dataentry\Tag;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Dataentry\Passage;
+
+use PacketPrep\Models\College\College;
+use PacketPrep\Models\College\Branch;
+
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Examtype;
@@ -2393,13 +2397,15 @@ class AssessmentController extends Controller
         
         $pg=[];
         if(count($candidates)){
-            $userset = User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+            $userset = Cache::remember('candidates_'.$user->username,240, function() {
+                return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+            }
             foreach($userset as $u=>$usr){
                 $users[$u] = 1;
             }
 
-            $usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
-            foreach($usr as $a=> $b){
+            //$usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
+            foreach($userset as $a=> $b){
                 $name = $b->username.'_log.json';
                 $pg[$name] = 'testlog/'.$exam->id.'/log/'.$name;
             }
@@ -2450,8 +2456,6 @@ class AssessmentController extends Controller
                     if(isset($content['last_photo'])){
                         if(!$content['last_photo']){
                             
-                            if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
-                                $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie).'?time='.strtotime(now());
                         }else{
                             $url_pieces = explode('_',$content['last_photo']);
                             $name = explode('/', $url_pieces[0]);
@@ -2473,7 +2477,7 @@ class AssessmentController extends Controller
                                 if(Storage::disk('s3')->exists($filepath)){
                                     $content['last_photo'] = $last_before_url .'?time='.strtotime(now());
                                 }else{
-                                    $content['last_photo'] = '';
+
                                 }
                             }
                         }
@@ -2532,9 +2536,7 @@ class AssessmentController extends Controller
 
                 if(isset($content['last_photo'])){
                     if(!$content['last_photo']){
-                        $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
-                        if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$selfie))
-                            $content['last_photo'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie).'?time='.strtotime(now());
+                       
                     }else{
                         $url_pieces = explode('_',$content['last_photo']);
                         $name = explode('/', $url_pieces[0]);
@@ -2555,7 +2557,6 @@ class AssessmentController extends Controller
                                 if(Storage::disk('s3')->exists($filepath)){
                                     $content['last_photo'] = $last_before_url .'?time='.strtotime(now());
                                 }else{
-                                    $content['last_photo'] = '';
                                 }
                             } 
                         }
@@ -2599,7 +2600,6 @@ class AssessmentController extends Controller
         // }
        
 
-        $settings = json_decode($exam->getOriginal('settings'),true);
 
         $chatname = 'testlog/'.$exam->id.'/chats/proctor_'.\auth::user()->username.'.json';
         $data['chat'] = Storage::disk('s3')->url($chatname);
@@ -2612,7 +2612,7 @@ class AssessmentController extends Controller
                     ->with('pg',$pg)
                     ->with('exam',$exam)
                     ->with('userset',$userset)
-                    ->with('settings',$settings)
+                    ->with('settings',$exam_settings)
                     ->with('candidates',$candidates)
                     ->with('proctor',1)
                     ->with('active',1);
@@ -2626,6 +2626,8 @@ class AssessmentController extends Controller
         $exam = Cache::get('test_'.$id,function() use($id){
             return Exam::where('slug',$id)->first();
         });
+
+
 
 
         $user = \auth::user();
@@ -2652,7 +2654,10 @@ class AssessmentController extends Controller
 
         $json =[];
 
-        $userset = User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+        $userset = Cache::remember('candidates_'.$user->username, 240, function() use ($candidates){
+            return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+        });
+        
         if($candidates){
             foreach($userset as $ux=>$sx){
                 $file = 'testlog/approvals/'.$exam->id.'/'.$ux.'.json';
@@ -2739,6 +2744,14 @@ class AssessmentController extends Controller
             }
             
         }
+
+        $data['colleges'] = Cache::remember('colleges_'.$exam->id, 240,function(){
+            return College::get()->keyBy('id');
+        });
+        $data['branch'] = Cache::remember('branches_'.$exam->id, 240,function(){
+            return Branch::get()->keyBy('id');
+        });
+
 
         
         if($json)
