@@ -93,17 +93,17 @@
         <div class="action_{{$a}} d-inline float-right">
           </div>
               <h6 class="mb-3 d-inline"> 
-                @if(isset($userset[$a]))<img src="{{ $userset[$a]->getImage()}}" class="rounded inline" width="30px"/>@endif
-                @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif<br>
-                @if(isset($userset[$a])) {{$userset[$a]->roll_number}} @endif
-
-
-
-                @if(isset($b['window_change']))
+                 @if(isset($b['window_change']))
                 @if($b['window_change'])
                 <small><span class="badge badge-danger float-right window_change window_change_{{$b['username']}}">{{$b['window_change']}}</span></small>
                 @endif
                 @endif
+                @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif<br>
+                <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
+
+
+
+               
               </h6>
             @if(isset($b['last_photo']))
             @if($b['last_photo'])
@@ -128,7 +128,21 @@
             </p>
 
           </div>
+
     </div>
+    @if(count($chats))
+    <div class="bg-light p-3"><small><b class="text-success">Student Message : </b></small> 
+        @if(isset($chats[$b['username']]['last_time']))
+        <small><span class="time time_{{$b['username']}} text-warning">$chats[$b['username']]['last_time']</span></small>
+        @endif
+
+        @if(isset($chats[$b['username']]['last_message']))
+        <span class="student_message student_message_{{$b['username']}}">{{ $chats[$b['username']]['last_message']}}</span> 
+        @else
+        <span class="student_message student_message_{{$b['username']}}"> - </span> 
+        @endif
+    </div>
+    @endif
   </div>
 </div>
 
@@ -140,8 +154,8 @@
       <div class="">
         <div class="action_{{$a}} d-inline float-right">
           </div>
-              <h6 class="mb-4 ">@if(isset($userset[$a]))<img src="{{ $userset[$a]->getImage()}}" class="rounded inline" width="30px"/>@endif  {{$userset[$a]->name}}<br>
-                {{$userset[$a]->roll_number}}
+              <h6 class="mb-4 ">{{$userset[$a]->name}}<br>
+                <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
               </h6>
               <span class="badge badge-warning">yet to open the link</span>
            

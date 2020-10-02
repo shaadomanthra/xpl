@@ -792,7 +792,7 @@ class ExamController extends Controller
                     $emails = implode(',',explode("\n", $exam->emails));
                     $emails =str_replace("\r", '', $emails);
                     $emails = array_unique(explode(',',$emails));
-                    //shuffle($emails);
+                    shuffle($emails);
 
                     $viewers = $exam->viewers()->wherePivot('role','viewer')->get();
                     $count = intval(floor(count($emails)/count($viewers)));

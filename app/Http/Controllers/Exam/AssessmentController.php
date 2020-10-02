@@ -2384,6 +2384,7 @@ class AssessmentController extends Controller
             $exam_settings = json_decode(json_encode($exam->getOriginal('settings')),true);
 
         $candidates = [];
+
         if(isset($exam_settings['invigilation'])){
             foreach($exam_settings['invigilation'] as $in=>$emails){
                 if($user->id==$in){
@@ -2396,23 +2397,31 @@ class AssessmentController extends Controller
         //dd($candidates);
         
         $pg=[];
+        $chats = [];
         if(count($candidates)){
-            $userset = Cache::remember('candidates_'.$user->username,240, function() {
-                return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+            if(request()->get('forget')){
+
+                Cache::forget('candidates_'.$user->username);
+                
             }
+
+            $userset = Cache::remember('candidates_'.$user->username,240, function() use($candidates) {
+                return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+            });
             foreach($userset as $u=>$usr){
                 $users[$u] = 1;
+                $chats[$u] = 1;
             }
 
             //$usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
             foreach($userset as $a=> $b){
                 $name = $b->username.'_log.json';
-                $pg[$name] = 'testlog/'.$exam->id.'/log/'.$name;
+                $pg[$b->username] = 'testlog/'.$exam->id.'/log/'.$name;
             }
             
             $pg = $this->paginateAnswers($pg,count($pg));
          
-            foreach($pg as $f){
+            foreach($pg as $usc=>$f){
                 $p = explode('/',$f);
                 $u = explode('.',$p[2]);
 
@@ -2422,6 +2431,15 @@ class AssessmentController extends Controller
                    
                     $content = json_decode(Storage::disk('s3')->get($f),true);
                     $content['url'] = Storage::disk('s3')->url($f);
+
+                    $chaturl = 'testlog/'.$exam->id.'/chats/'.$usc.'.json';
+
+                    if(Storage::disk('s3')->exists($chaturl)){
+                        $chat_messages = json_decode(Storage::disk('s3')->get($chaturl),true);
+                        rsort($chat_messages);
+                        $chats[$usc] = $chat_messages;
+                       
+                    }
                     
                     $content['selfie_url'] ='';
                     $content['idcard_url'] ='';
@@ -2513,6 +2531,8 @@ class AssessmentController extends Controller
                 $content['chat_post'] ='';
                 $content['approval_post'] = '';
 
+
+
                 if(isset($content['username'])){
                         $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
                         $content['selfie_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
@@ -2575,7 +2595,7 @@ class AssessmentController extends Controller
 
         $data = [];
         $data['total'] = $data['live'] = $data['completed'] =  $data['inactive']=0;
-        $diff =400;
+        $diff = 400;
         // foreach($users as $a=>$b){
             
             
@@ -2601,9 +2621,9 @@ class AssessmentController extends Controller
        
 
 
-        $chatname = 'testlog/'.$exam->id.'/chats/proctor_'.\auth::user()->username.'.json';
-        $data['chat'] = Storage::disk('s3')->url($chatname);
-        $data['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
+        // $chatname = 'testlog/'.$exam->id.'/chats/proctor_'.\auth::user()->username.'.json';
+        // $data['chat'] = Storage::disk('s3')->url($chatname);
+        // $data['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
       
         if(count($users))
             return view('appl.exam.exam.active')
@@ -2615,7 +2635,8 @@ class AssessmentController extends Controller
                     ->with('settings',$exam_settings)
                     ->with('candidates',$candidates)
                     ->with('proctor',1)
-                    ->with('active',1);
+                    ->with('active',1)
+                    ->with('chats',$chats);
         else
             abort(403,'No Live data');
         
