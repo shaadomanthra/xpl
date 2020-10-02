@@ -477,7 +477,11 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('/j/template', function(){ return view('appl.content.article.template'); })->name('template');
 	Route::get('/j/myblogs','Content\ArticleController@myblogs' )->name('myblogs')->middleware('auth');
 
-	Route::get('joblist','Content\ArticleController@index' )->name('article.index');
+	Route::get('joblist',/*'Product\AdminController@estudentregister'*/ function(){
+		return Redirect::to('/job');
+	})->name('job.list');
+
+	Route::get('blog','Content\ArticleController@index' )->name('article.index');
 	Route::get('j/{label}','Content\ArticleController@label' )->name('blog.label');
 	Route::resource('article','Content\ArticleController',['names' => [
         'index' => 'blog.index',

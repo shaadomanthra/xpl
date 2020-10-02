@@ -22,11 +22,11 @@
   <div class="row">
     <div class="col-12 col-md-8">
       <h1 class="mt-1 mb-2 mb-md-0">
-      <i class="fa fa-th"></i> &nbsp; @if(isset($label)) {{ ucfirst($label->name)}} Jobs @elseif(isset($listing)) Job Listing (Adminview) @else Latest Jobs @endif
+      <i class="fa fa-th"></i> &nbsp; @if(isset($label)) {{ ucfirst($label->name)}} Blogs @elseif(isset($listing)) Blog Listing (Adminview) @else Latest Blogs @endif
 
       @can('create',$obj)
             <a href="{{route($app->module.'.create')}}">
-              <button type="button" class="btn btn-outline-success btn-sm my-2 my-sm-2 mr-sm-1">Create Job </button>
+              <button type="button" class="btn btn-outline-success btn-sm my-2 my-sm-2 mr-sm-1">Create Blog </button>
             </a>
             <a href="{{route('article.index')}}?refresh=1">
               <button type="button" class="btn btn-outline-primary btn-sm my-2 my-sm-2 mr-sm-3">Refresh Cache</button>
@@ -72,7 +72,7 @@
         <div class=" border rounded  text-white mb-4">
          <div class="list-group ">
         <a href="{{ route('article.index')}}" class="list-group-item list-group-item-action list-group-item-primary @if(!isset($label) && !isset($myblogs))  active @endif ">
-          All Jobs
+          All Blogs
         </a>
         @if(\Auth::user())
         @if(\Auth::user()->checkRole(['administrator','manager','blog-writer','editor']))
@@ -80,10 +80,10 @@
           Labels
         </a>
         <a href="{{ route('myblogs')}}" class="list-group-item list-group-item-action list-group-item-secondary @if(isset($myblogs))  active @endif ">
-          My Jobs
+          My Blogs
         </a>
         <a href="{{ route('article.listing')}}" class="list-group-item list-group-item-action list-group-item-secondary ">
-          Job Listing
+          Blog Listing
         </a>
         @endif
         @endif
