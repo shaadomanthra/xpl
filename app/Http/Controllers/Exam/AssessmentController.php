@@ -1322,6 +1322,7 @@ class AssessmentController extends Controller
                 $review = true;
             //$ques = Question::where('id',$q->id)->first();
             //dd($secs[$t->section_id]);
+            if(isset($ques_keys[$t->question_id]))
             if($ques_keys[$t->question_id]['topic'])
                 $topics = true;
 
@@ -2402,7 +2403,7 @@ class AssessmentController extends Controller
             if(request()->get('forget')){
 
                 Cache::forget('candidates_'.$user->username);
-                
+
             }
 
             $userset = Cache::remember('candidates_'.$user->username,240, function() use($candidates) {
