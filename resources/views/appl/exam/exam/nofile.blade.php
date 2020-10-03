@@ -13,9 +13,11 @@
   <div class="card-body">
 
 <h1>{{$message}}</h1>
+@if(isset($user))
 <hr>
 <h4>{{$user->name}}</h4>
 <h5 class="text-primary">{{$user->roll_number}}</h5>
+@endif
 </div>
 </div>
 

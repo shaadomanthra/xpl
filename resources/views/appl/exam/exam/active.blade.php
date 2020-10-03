@@ -21,7 +21,21 @@
 }
 </style>
 
+
+
 <div class="mt-4 container" >
+<nav class="mb-0">
+  <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
+    <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
+    @if(auth::user()->role!=11)
+    <li class="breadcrumb-item"><a href="{{ url('/exam')}}">Tests</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug)}}">{{$exam->name}}</a></li>
+
+    @else
+    <li class="breadcrumb-item">Tests</li>
+    @endif
+  </ol>
+</nav>
 
     <div class="row">
       <div class="col-12  col-md-5">
@@ -36,7 +50,6 @@
             </g>
         </svg><!--end::Svg Icon--></span>
            Proctoring</p>
-           <span class="text-secondary"><small>Auto page refresh - 120 sec</small></span>
         </div>
 
        
@@ -47,10 +60,10 @@
       </div>
       <div class="col-12  col-md-3">
          <!--begin::Form-->
-         <form class="form">
+         <form class="w-100" method="GET" action="{{ route('test.active',$exam->slug) }}">
            <div class="form-group mt-2">
             <div class="input-icon">
-             <input type="text" class="form-control" placeholder="Search..."/>
+             <input type="text" class="form-control" name="search" placeholder="Search by rollnumber..."/>
              <span><i class="flaticon2-search-1 icon-md"></i></span>
             </div>
            </div>
@@ -144,7 +157,7 @@
         @if(isset($chats[a]['last_time']))
         <small><span class="time time_{{$a}} text-warning">$chats[$a]['last_time']</span></small>
         @endif
-        
+
 
         @if(isset($chats[$a]['last_message']))
         <span class="student_message student_message_{{$a}}">{{ $chats[$a]['last_message']}}</span> 

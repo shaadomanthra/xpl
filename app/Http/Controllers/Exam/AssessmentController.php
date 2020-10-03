@@ -2176,7 +2176,7 @@ class AssessmentController extends Controller
 
      public function live($id,Request $r)
     {
-        abort(403,"Page disabled for load testing");
+        
 
         $exam = Cache::get('test_'.$id,function() use($id){
             return Exam::where('slug',$id)->first();
@@ -2399,6 +2399,11 @@ class AssessmentController extends Controller
             return Exam::where('slug',$id)->first();
         });
 
+        $search = trim($r->get('search'));
+
+
+
+
         $users = array();
         $userset = [];
         
@@ -2421,6 +2426,7 @@ class AssessmentController extends Controller
             }
         }
 
+
         //dd($files);
         //dd($candidates);
         
@@ -2430,13 +2436,22 @@ class AssessmentController extends Controller
             if(request()->get('forget')){
                 Cache::forget('candidates_'.$user->username);
             }
+            if(!$search)
+                $userset = Cache::remember('candidates_'.$user->username,240, function() use($candidates) {
+                    return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+                });
+            else{
 
-            $userset = Cache::remember('candidates_'.$user->username,240, function() use($candidates) {
-                return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
-            });
+
+                $userset = User::whereIn('username',[$search])->where('client_slug',subdomain())->get()->keyBy('username');
+            }
+
             foreach($userset as $u=>$usr){
+
                 $users[$u] = 1;
                 $chats[$u] = 1;
+                
+                
             }
 
             //$usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
@@ -2554,8 +2569,21 @@ class AssessmentController extends Controller
                     ->with('user',$user)
                     ->with('active',1);
 
-            $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
-            $pg = $this->paginateAnswers($files,18);
+           
+
+            if($search){
+                $file = 'testlog/'.$exam->id.'/log/'.$search.'_log.json';
+                $files = [];
+                if(Storage::disk('s3')->exists($file)) 
+                    $files = [$file];
+                $pg = $this->paginateAnswers($files,18);
+
+            }else{
+                $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
+                $pg = $this->paginateAnswers($files,18);
+            }
+
+            
             foreach($pg as $f){
                 $p = explode('/',$f);
                 $u = explode('.',$p[2]);
@@ -2664,7 +2692,14 @@ class AssessmentController extends Controller
         // $data['chat'] = Storage::disk('s3')->url($chatname);
         // $data['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
       
-        if(count($users))
+        if(count($users)==0 && $search){
+                return view('appl.exam.exam.nofile')
+                    ->with('exam',$exam)
+                    ->with('active',1)
+                    ->with('message','No user found');
+        }
+
+        else if(count($users))
             return view('appl.exam.exam.active')
                     ->with('data',$data)
                     ->with('users',$users)

@@ -442,11 +442,20 @@
 
       <div class="row">
         <div class="col-6">
-          <div class="h5 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.live',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Live Tracker </a> </div>
+          <div class="h5 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.live',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Ques Analysis </a> </div>
 
         </div>
         <div class="col-6">
-          <div class="h5 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.active',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Proctor </a> </div>
+          <div class="h5 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.active',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Live Tracker  </a> </div>
+
+        </div>
+
+        <div class="col-6">
+          <div class="h5 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.proctorlist',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Proctors </a> </div>
+
+        </div>
+        <div class="col-6">
+          <div class="h5 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.candidatelist',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Candidates  </a> </div>
 
         </div>
 
