@@ -635,9 +635,9 @@ $(document).ready(function(){
         resp.response = ans.join(",");
       }
       else if($('.input_'+$sno).is(':radio')){
-
-        
-
+        $(".input_"+$sno+"_"+$val).prop('checked',true);
+        $(".input_"+$sno+"_"+$val).val($val);
+        console.log($(".input_"+$sno+"_"+$val+":checked").val());
         resp.response = $val;
       }else if($('.input_'+$sno).is("textarea")){
         resp.response = $('.input_'+$sno).val();

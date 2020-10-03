@@ -2002,7 +2002,7 @@ $(function(){
 @if(isset($timer2))
 
 <script src="{{ asset('js/screenfull.min.js')}}"></script>
-<script src="{{ asset('js/test.js')}}?new=9"></script>
+<script src="{{ asset('js/test.js')}}?new=10"></script>
 <script type="text/javascript">
 $(function(){
 
