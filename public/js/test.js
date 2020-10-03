@@ -548,9 +548,12 @@ $(document).ready(function(){
     });
 
     $('.input').on('input',function(e){
+
       $sno = $(this).data('sno');
+      $val = $(this).data('opt');
+     
       if($(this).data('type')!='urq')
-        answered($sno);
+        answered($sno,$val);
     });
 
     //time
@@ -616,7 +619,7 @@ $(document).ready(function(){
       }
     }
 
-    function answered($sno){
+    function answered($sno,$val){
       if(!$('.s'+$sno).hasClass('qblue-border'))
         $('.s'+$sno).addClass('qblue-border');
       if(!$('.s'+$sno).hasClass('active'))
@@ -632,20 +635,24 @@ $(document).ready(function(){
         resp.response = ans.join(",");
       }
       else if($('.input_'+$sno).is(':radio')){
-        resp.response = $(".input_"+$sno+":checked").val();
+
+        
+
+        resp.response = $val;
       }else if($('.input_'+$sno).is("textarea")){
         resp.response = $('.input_'+$sno).val();
       }
       else
         resp.response = $('.input_'+$sno).val();
 
-
+   
 
       $('.final_response_'+$sno).html(resp.response);
     }
 
     function unanswered($sno){
       $('.s'+$sno).removeClass('qblue-border');
+      
       $('.input_'+$sno).prop('checked',false);
       if($('.input_fillup_'+$sno).length)
       $('.input_fillup_'+$sno).val('');

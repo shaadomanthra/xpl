@@ -150,6 +150,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 			->name('test.live')->middleware('auth');
 	Route::get('/test/{test}/proctor', 'Exam\AssessmentController@proctor')
 			->name('test.proctor')->middleware('auth');
+	Route::get('/test/{test}/proctorlist', 'Exam\ExamController@proctorlist')
+			->name('test.proctorlist')->middleware('auth');
+
 	Route::post('/test/{test}/proctor', 'Exam\AssessmentController@proctor')
 			->name('test.proctor')->middleware('auth');
 	Route::get('/test/{test}/active', 'Exam\AssessmentController@active')

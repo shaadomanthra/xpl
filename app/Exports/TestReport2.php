@@ -95,7 +95,7 @@ class TestReport2 implements FromCollection
             else if(intval($res->user->confidence)>1000)
                 $result[$k]->f = $res->user->confidence;
             else
-                $result[$k]->f = '';
+                $result[$k]->f = $res->user->roll_number;
 
     		unset($result[$k]->id);
     		unset($result[$k]->user_id);

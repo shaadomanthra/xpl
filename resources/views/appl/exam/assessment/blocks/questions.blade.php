@@ -58,7 +58,7 @@
       <div class="col-3 col-md-2">
         <div class="pr-3 pb-2" >
           <div class="text-center p-1 rounded bg-light w100 border" >
-            <input class="form-check-input input input_{{($i+1)}}" type="checkbox" name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="A" @if(strpos($question->response,'A')!==false) checked @endif> A </div>
+            <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_A" data-opt="A" type="checkbox" name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="A" @if(strpos($question->response,'A')!==false) checked @endif> A </div>
           </div>
         </div>
         <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_a!!}</div></div>
@@ -70,7 +70,7 @@
         <div class="col-3 col-md-2">
           <div class="pr-3 pb-2" >
             <div class="text-center p-1 rounded bg-light w100 border" >
-              <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="B" @if(strpos($question->response,'B')!==false) checked @endif>  B</div>
+              <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_B" data-opt="B" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="B" @if(strpos($question->response,'B')!==false) checked @endif>  B</div>
             </div>
           </div>
           <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_b!!}</div></div>
@@ -83,7 +83,7 @@
             <div class="pr-3 pb-2" >
               <div class="text-center p-1 rounded bg-light w100 border" >
 
-                <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="C" @if(strpos($question->response,'C')!==false) checked @endif> C</div>
+                <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_C" data-opt="C" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="C" @if(strpos($question->response,'C')!==false) checked @endif> C</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_c!!}</div></div>
@@ -95,7 +95,7 @@
             <div class="col-3 col-md-2">
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" >
-                  <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="D" @if(strpos($question->response,'D')!==false) checked @endif> D</div>
+                  <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_D" data-opt="D" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}"  value="D" @if(strpos($question->response,'D')!==false) checked @endif> D</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 ">{!! $question->option_d!!}</div></div>
@@ -108,7 +108,7 @@
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" > 
 
-                  <input class="form-check-input input input_{{($i+1)}}" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="E" @if(strpos($question->response,'E')!==false) checked @endif>
+                  <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_E" data-opt="E" type="checkbox"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="E" @if(strpos($question->response,'E')!==false) checked @endif>
                   E
                 </div>
               </div>
@@ -134,7 +134,7 @@
       <div class="col-3 col-md-2">
         <div class="pr-3 pb-2" >
           <div class="text-center p-1 rounded bg-light w100 border" >
-            <input class="form-check-input input input_{{($i+1)}}" type="radio" name="{{($i+1)}}" data-sno="{{($i+1)}}" value="A" @if(strpos($question->response,'A')!==false) checked @endif> A </div>
+            <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_A" data-opt="A" type="radio" name="{{($i+1)}}" data-sno="{{($i+1)}}" value="A" @if(strpos($question->response,'A')!==false) checked @endif> A </div>
           </div>
         </div>
         <div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->option_a!!}</div></div>
@@ -146,7 +146,7 @@
         <div class="col-3 col-md-2">
           <div class="pr-3 pb-2" >
             <div class="text-center p-1 rounded bg-light w100 border" >
-              <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="B" @if(strpos($question->response,'B')!==false) checked @endif>  B</div>
+              <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_B" data-opt="B" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="B" @if(strpos($question->response,'B')!==false) checked @endif>  B</div>
             </div>
           </div>
           <div class="col-9 col-md-10"><div class="pt-1 b">{!! $question->option_b!!}</div></div>
@@ -159,7 +159,7 @@
             <div class="pr-3 pb-2" >
               <div class="text-center p-1 rounded bg-light w100 border" >
 
-                <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="C" @if(strpos($question->response,'C')!==false) checked @endif> C</div>
+                <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_C" data-opt="C" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="C" @if(strpos($question->response,'C')!==false) checked @endif> C</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 c">{!! $question->option_c!!}</div></div>
@@ -171,7 +171,7 @@
             <div class="col-3 col-md-2">
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" >
-                  <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="D" @if(strpos($question->response,'D')!==false) checked @endif> D</div>
+                  <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_D" data-opt="D" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}"  value="D" @if(strpos($question->response,'D')!==false) checked @endif> D</div>
               </div>
             </div>
             <div class="col-9 col-md-10"><div class="pt-1 d">{!! $question->option_d!!}</div></div>
@@ -184,7 +184,7 @@
               <div class="pr-3 pb-2" >
                 <div class="text-center p-1 rounded bg-light w100 border" > 
 
-                  <input class="form-check-input input input_{{($i+1)}}" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="E" @if(strpos($question->response,'E')!==false) checked @endif>
+                  <input class="form-check-input input input_{{($i+1)}} input_{{($i+1)}}_E" data-opt="E" type="radio"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="E" @if(strpos($question->response,'E')!==false) checked @endif>
                   E
                 </div>
               </div>

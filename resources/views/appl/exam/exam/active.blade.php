@@ -130,6 +130,7 @@
           </div>
 
     </div>
+    @if(isset($chats[$b['username']]['last_message']))
     @if(count($chats))
     <div class="bg-light p-3"><small><b class="text-success">Student Message : </b></small> 
         @if(isset($chats[$b['username']]['last_time']))
@@ -142,6 +143,7 @@
         <span class="student_message student_message_{{$b['username']}}"> - </span> 
         @endif
     </div>
+    @endif
     @endif
   </div>
 </div>

@@ -2643,6 +2643,8 @@ class AssessmentController extends Controller
         
     }
 
+   
+
     public function proctor($id,Request $r){
 
         $exam = Cache::get('test_'.$id,function() use($id){

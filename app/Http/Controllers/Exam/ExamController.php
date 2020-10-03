@@ -768,6 +768,103 @@ class ExamController extends Controller
     }
 
 
+    public function proctorlist($id, Request $r){
+
+        $data = array('invigilation'=>0);
+        $exam= Exam::where('slug',$id)->with('sections')->first();
+
+        if($r->get('_token')){
+
+            Cache::forget('test_'.$exam->slug);
+            $viewers = $r->get('viewers');
+            if($viewers){
+                $exam->viewers()->wherePivot('role','viewer')->detach();
+                foreach($viewers as $v){
+
+                    Cache::forget('userexamroles_'.$v);
+                    if(!$exam->viewers()->wherePivot('role','viewer')->find($v))
+                        $exam->viewers()->attach($v,['role'=>'viewer']);
+                }
+            }
+
+            if($exam->viewers()->wherePivot('role','viewer')->get()){
+                if($exam->emails){
+                    $emails = implode(',',explode("\n", $exam->emails));
+                    $emails =str_replace("\r", '', $emails);
+                    $emails = array_unique(explode(',',$emails));
+                    shuffle($emails);
+
+                    $viewers = $exam->viewers()->wherePivot('role','viewer')->get();
+                    $count = intval(floor(count($emails)/count($viewers)));
+
+                    $set = [];
+                    foreach($viewers as $m=>$v){
+                        $set[$v->id] = array_slice($emails,$m*$count,$count);
+                        //var_dump($count);
+
+
+                        if(count($viewers)-1==$m){
+                            $mod = count($emails)% $count;
+                            $leftout = array_slice($emails,-$mod,$mod);
+                            $set[$v->id] = array_merge($set[$v->id],$leftout);
+                        }
+
+                    }
+                    $settings = json_decode($exam->settings,true);
+
+                    //dd($settings);
+                    $settings['invigilation'] = $set;
+                    $exam->settings = json_encode($settings);
+                    //dd($exam->settings);
+                    $exam->save();
+
+
+                }
+            }
+
+
+
+            $evaluators = $r->get('evaluators');
+            if($evaluators){
+                //dd($exam);
+                $exam->evaluators()->wherePivot('role','evaluator')->detach();
+                foreach($evaluators as $ev){
+                    Cache::forget('userexamroles_'.$ev);
+                    if(!$exam->evaluators()->wherePivot('role','evaluator')->find($ev)){
+                        $exam->evaluators()->attach($ev,['role'=>'evaluator']);
+                    }
+                }
+            }
+
+            //dd($viewers);
+            Cache::forever('test_'.$exam->slug,$exam);
+
+
+
+        }
+
+        //dd($exam->settings);
+
+
+
+        $exam_settings = json_decode($exam->settings,true);
+        if(isset($exam_settings['invigilation']))
+            $data['invigilation'] = $exam_settings['invigilation'];
+        
+
+        //dd($data);
+
+        $data['hr-managers'] = \auth::user()->getRole('hr-manager');
+
+        if($exam)
+            return view('appl.exam.exam.user_roles')
+                    ->with('exam',$exam)
+                    ->with('data',$data);
+        else
+            abort(404);
+    }
+
+
     public function user_roles($id, Request $r){
 
         $data = array('invigilation'=>0);
