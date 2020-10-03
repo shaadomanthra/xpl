@@ -18,7 +18,7 @@
 
 <div class="modal fade" id="calculator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="background-color: transparent;background: transparent; border: 0px solid transparent">
 
       <div class="">
 <!-- Calculator -->
