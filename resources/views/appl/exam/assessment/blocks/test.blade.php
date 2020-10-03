@@ -83,28 +83,28 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
     <div class="text-warning mb-3">
       <div class="d-inline">
           <a href="#" class="text-light" data-toggle="modal" data-target="#instructions">
-            <i class="fa fa-info-circle  mr-2 cursor" data-toggle="tooltip"  title="View Instructions" ></i></a>
+            <i class="fa fa-info-circle  mr-4 cursor" data-toggle="tooltip"  title="View Instructions" ></i></a>
 
             @if(isset($settings['question_list']))
           @if(strtolower($settings['question_list'])=='yes')
           <a href="#" class="text-light" data-toggle="modal" data-target="#questions">
-            <i class="fa fa-question-circle mr-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
+            <i class="fa fa-question-circle mr-4 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
             @endif
             @endif
 
             @if(isset($settings['chat']))
           @if(strtolower($settings['chat'])=='yes')
-             <i class="fa fa-commenting-o text-light mr-2 cursor message_student message_{{$user->username}}" data-urlpost="{{$urls['chat_post']}}" data-toggle="tooltip"  title="Message proctor" data-username="{{$user->username}}" data-name="{{$user->name}}"data-url="{{$urls['chat']}}" data-lastchat=""></i> 
+             <i class="fa fa-commenting-o text-light mr-4 cursor message_student message_{{$user->username}}" data-urlpost="{{$urls['chat_post']}}" data-toggle="tooltip"  title="Message proctor" data-username="{{$user->username}}" data-name="{{$user->name}}"data-url="{{$urls['chat']}}" data-lastchat=""></i> 
           @endif
           @endif
         @if(isset($exam->calculator))
     @if($exam->calculator)
-    <span class=" mr-2 text-light" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator text-light" aria-hidden="true"></i> </span>
+    <span class=" mr-4 text-light" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator text-light" aria-hidden="true"></i> </span>
     @endif
     @endif
 
         <a href="#" data-toggle="modal" class="text-light" data-target="#student_info">
-            <i class="fa fa-user-circle mr-2 cursor" data-toggle="tooltip"  title="View Student Info"></i></a>
+            <i class="fa fa-user-circle mr-4 cursor" data-toggle="tooltip"  title="View Student Info"></i></a>
       </div>
     </div>
 

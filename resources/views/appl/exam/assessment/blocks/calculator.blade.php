@@ -18,9 +18,9 @@
 
 <div class="modal fade" id="calculator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="background-color: transparent;background: transparent; border: 0px solid transparent">
+    <div class="modal-content" style="background-color: transparent;background: transparent; border: 0px solid transparent;text-align: center">
 
-      <div class="">
+      <div class="" style="width:302px;">
 <!-- Calculator -->
  <div id="keyPad" class="ui-widget-content calc_container">
         <!-- new Help changes -->
@@ -30,9 +30,7 @@
             
         </div>
         <!-- new Help changes -->
-        <div class="calc_min" id="calc_min"></div>
-        <!-- <div class="calc_max hide" id="calc_max"></div> -->
-        <div class="calc_close" id="closeButton"></div>
+        
         <!-- main content start here-->
         <div id="mainContentArea">
             <input type="text" id="keyPad_UserInput1" class="keyPad_TextBox1" readonly="" style="display: block;">
