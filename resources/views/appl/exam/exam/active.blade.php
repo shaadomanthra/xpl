@@ -84,10 +84,10 @@
 
 @if($pg->total()!=0)
 @foreach($users as $a => $b)
-@if(isset($b['username']))
+@if($b!=1)
 
 <div class="col-6 col-md-2 ">
-  <div class="card   mb-2 mx-1  @if($b['completed']==1) complted @else bg-light-warning @endif card_{{$a}} card_{{$b['username']}}" data-last="">
+  <div class="card   mb-2 mx-1  @if($b['completed']==1) complted @else bg-light-warning @endif card_{{$a}}" data-last="">
     <div class="p-4 ">
       <div class="">
         <div class="action_{{$a}} d-inline float-right">
@@ -95,7 +95,7 @@
               <h6 class="mb-3 d-inline"> 
                  @if(isset($b['window_change']))
                 @if($b['window_change'])
-                <small><span class="badge badge-danger float-right window_change window_change_{{$b['username']}}">{{$b['window_change']}}</span></small>
+                <small><span class="badge badge-danger float-right window_change window_change_{{$a}}">{{$b['window_change']}}</span></small>
                 @endif
                 @endif
                 @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif<br>
@@ -108,39 +108,48 @@
             @if(isset($b['last_photo']))
             @if($b['last_photo'])
             <div class="selfie_container mt-4">
-              <img src="{{$b['last_photo']}}" class="w-100 image_refresh image_refresh_{{$b['username']}}" data-url="{{$b['url']}}" data-username="{{$b['username']}}" >
+              <img src="{{$b['last_photo']}}" class="w-100 image_refresh image_refresh_{{$a}}" data-url="{{$b['url']}}" data-username="{{$a}}" >
             </div>
             @endif
             @endif
+
+            @if($b['completed']!=1)
             <p class="mb-0 mt-3">
               @if(isset($settings['chat']))
               @if(strtolower($settings['chat'])=='yes')
-              @if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/chats/'.$b['username'].'.json'))
-              <span class="mr-4"><i class="fa fa-comment-alt text-success  cursor message_student message_{{$b['username']}}" data-urlpost="{{$b['chat_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"data-url="{{$b['chat']}}" data-proctor="{{\auth::user()->name}}"  data-p="1" data-lastchat=""></i> <span class="badge badge-warning p-1 text-white chat_count chat-count_{{$b['username']}} d-none"></span></span>
+              @if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/chats/'.$a.'.json'))
+              <span class="mr-4"><i class="fa fa-comment-alt text-success  cursor message_student message_{{$a}}" data-urlpost="{{$b['chat_post']}}" data-username="{{$a}}" data-name="{{$b['uname']}}"data-url="{{$b['chat']}}" data-proctor="{{\auth::user()->name}}"  data-p="1" data-lastchat=""></i> <span class="badge badge-warning p-1 text-white chat_count chat-count_{{$a}} d-none"></span></span>
               @endif
               @endif
               @endif
               <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}" data-selfie_url="{{$b['selfie_url']}}" data-idcard_url="{{$b['idcard_url']}}"></i> 
 
               @if(!$candidates)
-              <i class="fas fa-power-off text-danger mr-4 cursor user_terminate user_terminate_{{$b['username']}}" data-url="{{$b['approval']}}" data-urlpost="{{$b['approval_post']}}" data-username="{{$b['username']}}" data-name="{{$b['uname']}}"  ></i>
+              <i class="fas fa-power-off text-danger mr-4 cursor user_terminate user_terminate_{{$a}}" data-url="{{$b['approval']}}" data-urlpost="{{$b['approval_post']}}" data-username="{{$a}}" data-name="{{$b['uname']}}"  ></i>
               @endif 
             </p>
+            @else
+            <p class="mb-0 mt-3">
+             <span class="text-success float-right"><b><i class="fa fa-check-circle text-success"></i> completed</b></span>
+             <i class="far fa-list-alt text-info mr-4 cursor user_log " data-url="{{$b['url']}}" data-selfie_url="{{$b['selfie_url']}}" data-idcard_url="{{$b['idcard_url']}}"></i> 
+            </p>
+            @endif
 
           </div>
 
     </div>
-    @if(isset($chats[$b['username']]['last_message']))
+    @if(isset($chats[$a]['last_message']))
     @if(count($chats))
     <div class="bg-light p-3"><small><b class="text-success">Student Message : </b></small> 
-        @if(isset($chats[$b['username']]['last_time']))
-        <small><span class="time time_{{$b['username']}} text-warning">$chats[$b['username']]['last_time']</span></small>
+        @if(isset($chats[a]['last_time']))
+        <small><span class="time time_{{$a}} text-warning">$chats[$a]['last_time']</span></small>
         @endif
+        
 
-        @if(isset($chats[$b['username']]['last_message']))
-        <span class="student_message student_message_{{$b['username']}}">{{ $chats[$b['username']]['last_message']}}</span> 
+        @if(isset($chats[$a]['last_message']))
+        <span class="student_message student_message_{{$a}}">{{ $chats[$a]['last_message']}}</span> 
         @else
-        <span class="student_message student_message_{{$b['username']}}"> - </span> 
+        <span class="student_message student_message_{{$a}}"> - </span> 
         @endif
     </div>
     @endif
@@ -150,21 +159,42 @@
 
 @else
 
-<div class="col-6 col-md-2 ">
-  <div class="card   mb-2 mx-1 ) bg-light-secondary " data-last="" style="border:1px solid silver">
-    <div class="p-4 ">
-      <div class="">
-        <div class="action_{{$a}} d-inline float-right">
-          </div>
-              <h6 class="mb-4 ">{{$userset[$a]->name}}<br>
-                <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
-              </h6>
-              <span class="badge badge-warning">yet to open the link</span>
-           
-          </div>
+  @if($b==1)
+  <div class="col-6 col-md-2 ">
+    <div class="card   mb-2 mx-1 ) bg-light-secondary " data-last="" style="border:1px solid silver">
+      <div class="p-4 ">
+        <div class="">
+          <div class="action_{{$a}} d-inline float-right">
+            </div>
+                <h6 class="mb-4 ">{{$userset[$a]->name}}<br>
+                  <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
+                </h6>
+                <span class="badge badge-warning">yet to open the link</span>
+             
+            </div>
+      </div>
     </div>
   </div>
-</div>
+  @else
+
+  <div class="col-6 col-md-2 ">
+    <div class="card   mb-2 mx-1 ) bg-light-secondary " data-last="" style="border:1px solid silver">
+      <div class="p-4 ">
+        <div class="">
+          <div class="action_{{$a}} d-inline float-right">
+            </div>
+                <h6 class="mb-4 ">{{$userset[$a]->name}}<br>
+                  <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
+                </h6>
+                <span class="badge badge-primary">Started exam but<br> no data recored yet.</span>
+             
+            </div>
+      </div>
+    </div>
+  </div>
+
+
+  @endif
 
 @endif
 @endforeach

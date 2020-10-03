@@ -23,7 +23,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
   <div class="row">
     <div class="col-md-9">
 
-      <div class=" rounded p-3 mb-3 h4 d-none d-md-block" style="border:#dad6b5;background:#f8efba;">
+      <div class=" rounded p-3 mb-3 h4 d-none d-md-block  sample" style="border:#dad6b5;background:#f8efba;">
      
         @if(isset($exam->image))
         @if(Storage::disk('s3')->exists($exam->image))

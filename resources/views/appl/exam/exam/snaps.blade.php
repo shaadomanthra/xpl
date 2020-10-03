@@ -20,6 +20,12 @@
            Student - {{request()->get('type')}} ({{$total}})</p>
         </div>
       </div>
+      <div class="col-12  col-md-7">
+        <div class='pt-3 pb-3 text-right'>
+          <h4>{{$user->name}}</h4>
+<h5 class="text-primary">{{$user->roll_number}}</h5>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -29,13 +35,18 @@
 
 @include('flash::message')
 
-<div class="px-5 container">
+<div class="p-5 container">
+
+
+
+
 <div  class="row  no-gutters {{$i=0}}">
 
 @if($pg->total()!=0)
 @foreach($pg as $a => $b)
 @if (strpos($b, 'jpg') !== false) 
 
+@if(Storage::disk('s3')->exists($b))
 <div class="col-6 col-md-2 ">
   <div class="card   mb-2 mx-1  ">
     <div class="p-3 ">
@@ -56,6 +67,8 @@
     </div>
   </div>
 </div>
+@endif
+
 @endif
 @endforeach
 @endif

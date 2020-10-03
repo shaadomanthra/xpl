@@ -2302,6 +2302,7 @@ class AssessmentController extends Controller
         $username = $r->get('username');
         $type = $r->get('type');
         $folder = 'webcam/'.$exam->id.'/';
+        $user = User::where('username',$username)->first();
 
 
         //$files = Storage::disk('s3')->allFiles($folder);
@@ -2319,16 +2320,27 @@ class AssessmentController extends Controller
         $content = null;
         if(Storage::disk('s3')->exists($filepath)){
             $content = json_decode(Storage::disk('s3')->get($filepath),true);
+
              if(isset($content['last_photo'])){
-                $url_pieces = explode('_',$content['last_photo']);
-                $counter = explode('.',$url_pieces[2]);
-                $last_number = intval($counter[0])-1;  
+                if(trim($content['last_photo'])!=''){
+                    $url_pieces = explode('_',$content['last_photo']);
+                    $counter = explode('.',$url_pieces[2]);
+                    $last_number = intval($counter[0])-1;   
+                }else
+                {
+                    $content['last_photo'] = '';
+                    $last_number = 0;
+                }
+                 
             }else{
                 $content['last_photo'] = '';
                 $last_number = 0;
             }
+                
         }
 
+        if($last_number==-1)
+            $last_number = 0;
 
 
         $pics = [];$i=0;
@@ -2339,15 +2351,25 @@ class AssessmentController extends Controller
         $imagepath = 'webcam/'.$exam->id.'/screens/'.$username.'_'.$exam->id.'_'; 
 
         if($content){
-            for($i=1;$i<$last_number;$i++){
+            for($i=0;$i<=$last_number;$i++){
                 if(strlen($i)==1)
                     $nm ="00".$i;
                 else if(strlen($i)==2)
                     $nm ="0".$i;
                 $pics[$i] = $imagepath.$nm.'.jpg';
-                $i++;
+
+            }
+
+            if($last_number==0){
+
+                if(!Storage::disk('s3')->exists($pics[$i-1]))
+                {
+                    $pics[0] = "";
+                    unset($pics[0]);
+                }
             }
         }
+
        
         
         $pg = $this->paginateAnswers($pics,18);
@@ -2359,9 +2381,14 @@ class AssessmentController extends Controller
                     ->with('exam',$exam)
                     ->with('active',1)
                     ->with('proctor',1)
+                    ->with('user',$user)
                     ->with('total',count($pics));
         else
-            abort(403,'No pics captured');
+             return view('appl.exam.exam.nofile')
+                    ->with('exam',$exam)
+                    ->with('user',$user)
+                    ->with('active',1)
+                    ->with('message','No pictures captured');
 
 
     }
@@ -2401,9 +2428,7 @@ class AssessmentController extends Controller
         $chats = [];
         if(count($candidates)){
             if(request()->get('forget')){
-
                 Cache::forget('candidates_'.$user->username);
-
             }
 
             $userset = Cache::remember('candidates_'.$user->username,240, function() use($candidates) {
@@ -2506,15 +2531,28 @@ class AssessmentController extends Controller
                 }
                 
                 if(isset($content['username']))
-                $users[$content['username']] = $content;
+                    $users[$content['username']] = $content;
+
+                if(!isset($content['username']) && isset($content['url'])){
+                    $url = $content['url'];
+                    $pc = explode('/',$url);
+                    $pc2 = explode('_',$pc[6]);
+                  
+
+                    if(isset($pc2[0]))
+                        $users[$pc2[0]] = $content;
+                }
                 //array_push($users, $content);
             }
 
-         
-           
-          
-
         }else{
+
+
+            if($user->role==11)
+                return view('appl.exam.exam.nofile')->with('message','You are not authorized to access this data.')
+                    ->with('exam',$exam)
+                    ->with('user',$user)
+                    ->with('active',1);
 
             $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
             $pg = $this->paginateAnswers($files,18);
