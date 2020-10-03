@@ -99,7 +99,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
           @endif
         @if(isset($exam->calculator))
     @if($exam->calculator)
-    <span class=" mr-2" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> </span>
+    <span class=" mr-2 text-light" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator text-light" aria-hidden="true"></i> </span>
     @endif
     @endif
 

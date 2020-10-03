@@ -551,7 +551,7 @@ $(document).ready(function(){
 
       $sno = $(this).data('sno');
       $val = $(this).data('opt');
-     
+      $(".input_"+$sno+"_"+$val).val($val);
       if($(this).data('type')!='urq')
         answered($sno,$val);
     });
