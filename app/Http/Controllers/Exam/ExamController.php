@@ -1002,12 +1002,15 @@ class ExamController extends Controller
 
 
             $evaluators = $r->get('evaluators');
+          
             if($evaluators){
                 //dd($exam);
                 $exam->evaluators()->wherePivot('role','evaluator')->detach();
                 foreach($evaluators as $ev){
+
                     Cache::forget('userexamroles_'.$ev);
                     if(!$exam->evaluators()->wherePivot('role','evaluator')->find($ev)){
+
                         $exam->evaluators()->attach($ev,['role'=>'evaluator']);
                     }
                 }
@@ -1023,7 +1026,6 @@ class ExamController extends Controller
         //dd($exam->settings);
 
 
-
         $exam_settings = json_decode($exam->settings,true);
         if(isset($exam_settings['invigilation']))
             $data['invigilation'] = $exam_settings['invigilation'];
@@ -1037,14 +1039,23 @@ class ExamController extends Controller
 
         //dd($data);
         $data['viewers'] = $exam->viewers()->wherePivot('role','viewer')->pluck('id')->toArray();
+        $data['evaluators'] = $exam->viewers()->wherePivot('role','evaluator')->pluck('id')->toArray();
+
 
 
         $data['hr-managers'] = \auth::user()->getRole('hr-manager');
 
         $data['candidates'] = $candidates;
 
+        if($r->get('evaluator')){
+            //return redirect()->to('test.user_roles',['test'=>$exam->slug])->with('evaluator',1);
+            $view = 'evaluators';
+        }
+        else
+            $view = 'viewers';
+
         if($exam)
-            return view('appl.exam.exam.user_roles')
+            return view('appl.exam.exam.'.$view)
                     ->with('exam',$exam)
 
                     ->with('data',$data);

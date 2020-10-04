@@ -1873,16 +1873,22 @@ class AssessmentController extends Controller
                 }else{
 
                     if(strpos($item['answer'],'/')!==false){
-                        $ans = explode('/',$item['answer']);
-                        
-                        $flag = false;
-                        $item['accuracy'] =0;
-                        foreach($ans as $an){
-                            $an = str_replace(' ', '', $an);
-                            if($an==trim(str_replace(' ','',$item['response'])))
-                                $item['accuracy'] =1;
+                        $an = str_replace(' ', '', $item['answer']);
+                        $rp = str_replace(' ', '', $item['response']);
+
+                        if(trim($an)==trim($rp)){
+                            $item['accuracy'] =1;
+                        }else{
+                            $ans = explode('/',$item['answer']);
+                            $flag = false;
+                            $item['accuracy'] =0;
+                            foreach($ans as $an){
+                                $an = str_replace(' ', '', $an);
+                                if($an==trim(str_replace(' ','',$item['response'])))
+                                    $item['accuracy'] =1;
+                            }
+
                         }
-                       
                     }else{
                         if($item['response']){
                             if(trim($item['response']) == $item['answer'])
