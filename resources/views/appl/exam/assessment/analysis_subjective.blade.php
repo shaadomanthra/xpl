@@ -53,13 +53,12 @@
 @if($exam->solutions ==2 && !request()->get('student'))
 
   <div class="card mb-3"  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
-    @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
+    @if($exam->message)
     <div class="card-body">
-      Thank you.You have completed your test and your responses are recorded for internal evaluation.
-      Results will be announced tomorrow 20th July 2020.
+      {{$exam->message}}
     </div>
     @else
-      <div class="card-body">
+    <div class="card-body">
       Your responses are recorded for internal evaluation.
     </div>
     @endif

@@ -36,13 +36,12 @@
 
 
 	<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
-		@if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' )
+		@if($exam->message)
 		<div class="card-body">
-			Thank you.You have completed your test and your responses are recorded for internal evaluation.
-			Results will be announced tomorrow 20th July 2020.
+			{{$exam->message}}
 		</div>
 		@else
-			<div class="card-body">
+		<div class="card-body">
 			Your responses are recorded for internal evaluation.
 		</div>
 		@endif
@@ -50,14 +49,7 @@
 
 	@include('appl.exam.assessment.blocks.banner')
 
-	@if($exam->slug == '34781')
-	<div class="card "  style="">
-		<div class="card-body">
-			<p>Enroll for JAVA Fullstack Training (Online) now. </p>
-			<a href="https://forms.gle/DhyQLm9PUC2gUkjX7" class="btn btn-primary ">Apply now</a>
-		</div>
-	</div>
-	@endif
+	
 
 	@else
 

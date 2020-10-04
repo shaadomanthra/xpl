@@ -30,67 +30,67 @@
             </thead>
             <tbody>
               @foreach($report as $key=>$r)  
-              <tr @if($r->cheat_detect==1)
+              <tr @if($r['cheat_detect']==1)
                   style='background: #fff3f3' 
-                @elseif($r->cheat_detect==2)
+                @elseif($r['cheat_detect']==2)
                   style='background: #ffffed' 
                 @else
                   
                 @endif >
                 <th scope="row">{{$key+1 }}</th>
                 <td>
-                  <a href="#" class="showuser"  data-url="{{route('profile','@'.$users[$r->user_id]->username)}}" >
-                  {{ $users[$r->user_id]->name }}</a>
-                   @if($users[$r->user_id]->profile_complete()==100)<i class="fa fa-check-circle text-success"  data-toggle="tooltip" title="Profile Completed"></i>@endif
-                  @if($users[$r->user_id]->video)<i class="fa fa-vcard-o text-secondary"  data-toggle="tooltip" title="Profile Video"></i>@endif
+                  <a href="#" class="showuser"  data-url="{{route('profile','@'.$users[$r['user_id']]->username)}}" >
+                  {{ $users[$r['user_id']]->name }}</a>
+                   @if($users[$r['user_id']]->profile_complete()==100)<i class="fa fa-check-circle text-success"  data-toggle="tooltip" title="Profile Completed"></i>@endif
+                  @if($users[$r['user_id']]->video)<i class="fa fa-vcard-o text-secondary"  data-toggle="tooltip" title="Profile Video"></i>@endif
 
                 </td>
                 <td>
-                @if($r->cheat_detect==1)
+                @if($r['cheat_detect']==1)
                   <span class="text-danger"><i class="fa fa-ban "></i> Potential Cheating  </span>
-                @elseif($r->cheat_detect==2)
+                @elseif($r['cheat_detect']==2)
                   <span class="text-warning"><i class="fa fa-ban"></i> Cheating - Not Clear </span>
                 @else
                   <span class="text-success"><i class="fa fa-check-circle"></i> No Cheating  </span>
                 @endif
                 </td>
                 @if($exam->slug!='psychometric-test')
-                @foreach($sections[$users[$r->user_id]->id] as $s)
+                @foreach($sections[$users[$r['user_id']]->id] as $s)
                 <td>
                   {{ $s->score }} @if($sec->name=='typing')% @endif 
                 </td>
                 @endforeach
                 
                 <td>
-                  @if(!$r->status)
-                  {{ $r->score }}
+                  @if(!$r['status'])
+                  {{ $r['score'] }}
                   @else
                   <span class="badge badge-warning">Under Review</span>
                   @endif
                 </td>
                 @endif
                 <td>
-                  {{$r->created_at->format('d-m-Y')}}
+                  {{\carbon\carbon::parse($r['created_at'])->format('d-m-Y')}}
                 </td>
                 <td>
                 <form method="post" class='form-inline' action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
                   
-                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$users[$r->user_id]->username}}">
+                  <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$users[$r['user_id']]->username}}">
                     <i class='fa fa-bar-chart'></i> Report
                   </a>&nbsp;&nbsp;&nbsp;
                   @if($exam->slug!='psychometric-test')
-                  <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$users[$r->user_id]->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
+                  <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$users[$r['user_id']]->username}}" ><i class='fa fa-commenting-o'></i> responses</a>&nbsp;&nbsp;&nbsp;
                   @endif
 
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
                   @can('update',$exam)
-                  <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r->user_id]->username}}&admin=1&code={{$r->code}}" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
+                  <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r['user_id']]->username}}&admin=1&code={{$r['code']}}" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
                   @endcan
                   @endif
                   
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="user_id" value="{{ $users[$r->user_id]->id}}">
+                    <input type="hidden" name="user_id" value="{{ $users[$r['user_id']]->id}}">
                     <input type="hidden" name="test_id" value="{{ $exam->id }}">
                     <button class="btn btn-link  p-0" type="submit"><i class='fa fa-trash'></i> delete</button>
                   @endif

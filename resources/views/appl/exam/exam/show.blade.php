@@ -193,26 +193,7 @@
             </div>
           </div>
 
-          <div class="row mb-0">
-            <div class="col-6"> <i class="fa fa-vcard-o"></i>&nbsp;Viewers</div>
-            <div class="col-6">
-              @if($exam->viewers)
-              @foreach($exam->viewers()->wherePivot('role','viewer')->get()  as $v)
-                {{$v->name}}<br>
-              @endforeach
-              @endif
-            </div>
-          </div>
-          <div class="row mb-0">
-            <div class="col-6"> <i class="fa fa-pencil"></i>&nbsp;Evaluators</div>
-            <div class="col-6">
-              @if($exam->evaluators)
-              @foreach($exam->evaluators()->wherePivot('role','evaluator')->get() as $v)
-                {{$v->name}}<br>
-              @endforeach
-              @endif
-            </div>
-          </div>
+          
 
 
 

@@ -23,9 +23,15 @@
 
 
 	<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
+		@if($exam->message)
+		<div class="card-body">
+			{{$exam->message}}
+		</div>
+		@else
 		<div class="card-body">
 			Your responses are recorded for internal evaluation.
 		</div>
+		@endif
 	</div>
 
 	@include('appl.exam.assessment.blocks.banner')

@@ -2711,8 +2711,13 @@ class AssessmentController extends Controller
                     ->with('proctor',1)
                     ->with('active',1)
                     ->with('chats',$chats);
-        else
-            abort(403,'No Live data');
+        else{
+                return view('appl.exam.exam.nofile')
+                        ->with('exam',$exam)
+                        ->with('active',1)
+                        ->with('message',"No data available yet. Atleast one candidate has to start the exam.");
+        
+        }
         
     }
 
