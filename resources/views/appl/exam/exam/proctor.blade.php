@@ -156,7 +156,7 @@
         </div>
       </div>
 
-@if($b['approved']==0)
+@if($b['approved']==0 ||$b['approved']==2 )
       <div class="pt-3 action_{{$a}}">
       <a href="#" class="btn btn-success btn-approve" data-username="{{$a}}" data-approved="1" data-alert="0" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Approve</a>
       <a href="#" class="btn btn-danger btn-approve" data-username="{{$a}}" data-approved="2" data-alert="0" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Reject</a>
@@ -175,10 +175,19 @@
         <a class="dropdown-item btn-approve" href="#" data-username="{{$a}}" data-approved="0" data-alert="3" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Invalid ID Card</a>
     </div>
 </div>
-      </div>
-      @else
 
+
+      </div>
+      @if($b['approved']==2)
+        <div class="status_{{$a}}"><div class='h3 text-danger mt-3'><i class='fa fa-times-circle text-danger'></i> Rejected</div></div>
+      @else
+      <div class="status_{{$a}}"></div>
+      @endif
+
+      @else
+      <div class="status_{{$a}}">
       <div class='h3 text-success mt-3'><i class='fa fa-check-circle text-success'></i> Approved</div>
+      </div>
       @endif
 
      

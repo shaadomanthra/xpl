@@ -778,19 +778,35 @@ class ExamController extends Controller
 
         $item = $r->get('item');
 
-        if($item){
-            $uids = $exam->viewers()->wherePivot('role','viewer')->pluck('id')->toArray();
-            $viewers = User::whereIn('id',$uids)->where('name','LIKE',"%{$item}%")->get();
-        }
-        else
-            $viewers = $exam->viewers()->wherePivot('role','viewer')->get();
         $settings = $exam->getOriginal('settings');
 
         $candidates = null;
+        $students = array();
         if($settings){
             $settings = json_decode($settings,true);
             $candidates = $settings['invigilation'];
+            foreach($candidates as $id=>$e){
+                foreach($e as $em){
+                    $it = explode('@',$em);
+                    $students[$it[0]] = $id; 
+                }
+            }
         }
+
+
+        if($item){
+            $uids = $exam->viewers()->wherePivot('role','viewer')->pluck('id')->toArray();
+            $viewers = User::whereIn('id',$uids)->where('name','LIKE',"%{$item}%")->get();
+
+            if(!count($viewers)){
+                $uids=$students[$item];
+                $viewers = User::where('id',$uids)->get();
+            }
+        }
+        else
+            $viewers = $exam->viewers()->wherePivot('role','viewer')->get();
+
+        
 
         if($candidates)
         foreach($viewers as $m=>$u){
@@ -870,10 +886,6 @@ class ExamController extends Controller
 
         foreach($files as $f){
             $p = explode('/',$f);
-
-
-            
-            
             if(isset($p[3])){
                 $id_p = explode('_',$p[3]);
                  

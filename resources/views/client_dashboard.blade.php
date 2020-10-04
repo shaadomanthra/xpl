@@ -28,6 +28,10 @@
 
           <h2>Hi, {{  \auth::user()->name}}</h2>
       <p> 
+        @if(auth::user()->roll_number)
+        <span class="badge badge-info">{{auth::user()->roll_number}}</span>
+
+        @endif
         @if(auth::user()->branch_id)
           @if(auth::user()->branch->name) <span class="badge badge-primary"> {{auth::user()->branch->name}}</span>@else Welcome aboard @endif
         @else

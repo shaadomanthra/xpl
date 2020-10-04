@@ -288,7 +288,8 @@ $(function(){
                 $('.counter_approved').text(parseInt($('.counter_approved').text())+1);
               }
               $('.card_'+$username).removeClass('bg-light-warning').removeClass('bg-light-danger');
-              $('.action_'+$username).html("<div class='h3 text-success mt-3'><i class='fa fa-check-circle text-success'></i> Approved</div>");
+              $('.action_'+$username).hide();
+              $('.status_'+$username).html("<div class='h3 text-success mt-3'><i class='fa fa-check-circle text-success'></i> Approved</div>");
 
             }
               
@@ -307,8 +308,10 @@ $(function(){
                 $('.card_'+$username).removeClass('bg-light-warning').addClass('bg-light-danger');
               }
               
+              $('.status_'+$username).html("<div class='h3 text-danger mt-3'><i class='fa fa-times-circle text-danger'></i> Rejected</div>");
               
             }
+             $('.spinner_'+$username).hide();
       });
 
   });

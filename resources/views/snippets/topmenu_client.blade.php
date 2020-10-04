@@ -31,9 +31,12 @@
             Dashboard
         </a></li>
 
+        @if($_SERVER['HTTP_HOST'] != 'rguktn.xplore.co.inn' && $_SERVER['HTTP_HOST'] != 'rguktrkv.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'corporate.onlinelibrary.test')
         <li class="mr-3"><a class="nav-link" href="{{ url('test') }}" aria-label="Tests"
             ><i class="fa fa-ravelry"></i> Tests
         </a></li>
+        @endif
+
         @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
          @if(\auth::user()->role == 12 || \auth::user()->isAdmin())
 
