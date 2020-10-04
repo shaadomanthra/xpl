@@ -969,7 +969,10 @@ class ExamController extends Controller
 
 
                     $viewers = $exam->viewers()->wherePivot('role','viewer')->get();
+                    if(count($viewers))
                     $count = intval(ceil(count($emails)/count($viewers)));
+                    else
+                        $count = 0;
 
                     
                 
