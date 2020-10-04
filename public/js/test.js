@@ -591,9 +591,7 @@ $(document).ready(function(){
 
     function make_visible($sno){
 
-      $('.note-video-clip').each(function(){
-    $(this).stopVideo();
-  });
+      
 
       $('.active').removeClass('active');
         $('.s'+$sno).addClass('active');

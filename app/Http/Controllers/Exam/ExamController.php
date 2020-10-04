@@ -931,6 +931,7 @@ class ExamController extends Controller
 
         $data = array('invigilation'=>0);
         $exam= Exam::where('slug',$id)->with('sections')->first();
+        $candidates = null;
 
         if($r->get('_token')){
 
@@ -951,12 +952,14 @@ class ExamController extends Controller
                     $emails = implode(',',explode("\n", $exam->emails));
                     $emails =str_replace("\r", '', $emails);
                     $emails = array_unique(explode(',',$emails));
+                    $candidates = count($emails);
                     //shuffle($emails);
 
 
                     $viewers = $exam->viewers()->wherePivot('role','viewer')->get();
                     $count = intval(ceil(count($emails)/count($viewers)));
 
+                    
                 
 
                     $set = [];
@@ -1013,14 +1016,25 @@ class ExamController extends Controller
         if(isset($exam_settings['invigilation']))
             $data['invigilation'] = $exam_settings['invigilation'];
         
+        if($exam->emails && !$candidates){
+            $emails = implode(',',explode("\n", $exam->emails));
+            $emails =str_replace("\r", '', $emails);
+            $emails = array_unique(explode(',',$emails));
+            $candidates = count($emails);
+        }
 
         //dd($data);
+        $data['viewers'] = $exam->viewers()->wherePivot('role','viewer')->pluck('id')->toArray();
+
 
         $data['hr-managers'] = \auth::user()->getRole('hr-manager');
+
+        $data['candidates'] = $candidates;
 
         if($exam)
             return view('appl.exam.exam.user_roles')
                     ->with('exam',$exam)
+
                     ->with('data',$data);
         else
             abort(404);

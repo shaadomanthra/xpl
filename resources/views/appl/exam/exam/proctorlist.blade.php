@@ -25,7 +25,7 @@
         <div class=' pb-1'>
           <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Proctors 
 
-
+            <a href="{{ route('test.user_roles',$exam->slug)}}" class="btn  btn-success btn-sm "> Assign Proctors</a>
           </p>
         </div>
       </div>
@@ -80,8 +80,9 @@
               <tr>
                 <th scope="row">{{  $key+1 }}</th>
                 <td>
-                  <h5>{{ $obj->name }} </h5><span class="text-secondary">{{$obj->phone}}</span>
-                
+                  <h5>{{ $obj->name }} </h5>
+                  <span class="text-secondary">{{$obj->email}}</span><br>
+                  <span class="text-secondary">{{$obj->phone}}</span>
                 </td>
                  <td>
                   {!! implode(", ",$obj->candidates) !!}

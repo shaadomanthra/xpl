@@ -74,10 +74,13 @@
               <tr>
                 <th scope="row">{{ $obj->username }}</th>
                 <td>
-                  <h5>{{ $obj->name }} </h5><span class="text-secondary">{{$obj->phone}}</span>
+                  <h5>{{ $obj->name }} </h5>
+                  <span class="text-secondary">{{$obj->email}}</span><br>
+                  <span class="text-secondary">{{$obj->phone}}</span>
                 </td>
                  <td> 
-                  @if(isset($emails[trim($obj->email)])) {{$proctors[$emails[trim($obj->email)]]->name}} <br> {{$proctors[$emails[trim($obj->email)]]->phone}} @endif
+                  @if(isset($emails[trim($obj->email)])) {{$proctors[$emails[trim($obj->email)]]->name}} 
+                  <br><span class="text-secondary">{{$proctors[$emails[trim($obj->email)]]->email}}<br> {{$proctors[$emails[trim($obj->email)]]->phone}}</span> @endif
                 </td>
                 
                 <td>@if(isset($candidates[$obj->username])) {{ $candidates[$obj->username]['time'] }} @endif</td>

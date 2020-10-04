@@ -389,9 +389,9 @@ class User extends Authenticatable
             return Role::where('slug',$role)->first()->users;
         else{
             $r =Role::where('slug',$role)->first();
-            $users = $r->users()->where('client_slug',subdomain())->get();
+            $users = $r->users()->orderBy('name')->where('client_slug',subdomain())->get()->keyBy('id');
             if(!$users)
-                return $r->users;
+                return $r->users()->orderBy('name')->get()->keyBy('id');
             else
             return  $users;
         }
