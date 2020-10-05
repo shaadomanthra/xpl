@@ -40,7 +40,9 @@
                 <th scope="row">{{$key+1 }}</th>
                 <td>
                   <a href="#" class="showuser"  data-url="{{route('profile','@'.$users[$r['user_id']]->username)}}" >
-                  {{ $users[$r['user_id']]->name }}</a>
+                  {{ $users[$r['user_id']]->name }}</a> 
+
+                  @if($users[$r['user_id']]->roll_number) {{$users[$r['user_id']]->roll_number}} @endif
                    @if($users[$r['user_id']]->profile_complete()==100)<i class="fa fa-check-circle text-success"  data-toggle="tooltip" title="Profile Completed"></i>@endif
                   @if($users[$r['user_id']]->video)<i class="fa fa-vcard-o text-secondary"  data-toggle="tooltip" title="Profile Video"></i>@endif
 

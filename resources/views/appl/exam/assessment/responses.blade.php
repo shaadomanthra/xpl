@@ -64,6 +64,7 @@ pre, code {
             <button id="pdfbtn" class="btn btn-outline-primary btn-sm pdfbtn" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}">Download PDF</button>
           </p>
           @if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
+           @if($student->branch_id)<span class="badge badge-danger ">{{$student->branch->name}}</span>@endif
       @if($student->college_id)<span class="badge badge-info">{{$student->college->name}}</span><br>@endif
       <p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><br>
         </div>

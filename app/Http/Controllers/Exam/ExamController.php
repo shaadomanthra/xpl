@@ -1272,7 +1272,7 @@ class ExamController extends Controller
 
         $search = $r->search;
         if($item){
-            $users = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")
+            $users = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")->orWhere('roll_number','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
                     ->pluck('id');  
 

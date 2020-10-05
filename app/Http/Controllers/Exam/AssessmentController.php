@@ -2201,6 +2201,8 @@ class AssessmentController extends Controller
         });
         $this->authorize('create', $exam);
 
+
+
         
         
         // if(!$exam_cache && !$r->get('all')){
@@ -2234,6 +2236,16 @@ class AssessmentController extends Controller
         $test_responses = Cache::remember('test_resp_'.$exam->id,60,function() use($exam){
                     return Test::where('test_id',$exam->id)->get()->groupBy('user_id');
             });
+
+        $c1 = count($test_responses);
+        $c2 = count($questions);
+        if($c1 * $c2 > 50000)
+             return view('appl.exam.exam.nofile')
+                    ->with('exam',$exam)
+                    ->with('active',1)
+                    ->with('message','Data analysis is disabled for large volume data.');
+
+
         $exam_cache = $test_responses;
         $data['ques_analysis'] = 1;
 
@@ -2296,6 +2308,7 @@ class AssessmentController extends Controller
                     ->with('data',$data)
                     ->with('question',$question)
                     ->with('highlight',1)
+                     ->with('active',1)
                     ->with('mathjax',$question)
                     ->with('exam',$exam);
         else

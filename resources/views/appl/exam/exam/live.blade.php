@@ -68,8 +68,10 @@
           </div>
         </div>
         <div class="col-10 col-md-11">
+          <div class="mb-2">
           <div class="pt-1  disable-select">{!! $question->question!!}</div>
-          <span class='badge badge-warning'>{{$question->attempted}}</span>
+          <span class='badge bg-light-danger'>Attempted by {{$question->attempted}}</span>
+        </div>
         </div>
       </div>
 
@@ -108,7 +110,7 @@
                   <div class="progress-bar" role="progressbar" style="width: {{$question->opt_b}}%;height:50px;color:black;background: #c8d5de" aria-valuenow="{{$question->opt_b}}" aria-valuemin="0" aria-valuemax="100"> 
 
                   </div>
-                  <span class="fleft" >{{$question->opt_b}}%</span>
+                  <span class="fleft" >{{$question->opt_b}}% </span>
                   <span class="fright" >{!! $question->b!!}</span>
                 </div>
           </div></div>
@@ -189,7 +191,7 @@
                 <div class="progress-bar" role="progressbar" style="width: {{$question->opt_a}}%;height:50px;color:black;background: #c8d5de" aria-valuenow="{{$question->opt_a}}" aria-valuemin="0" aria-valuemax="100"> 
 
                 </div>
-                <span class="fleft" >{{$question->opt_a}}%</span>
+                <span class="fleft" >{{$question->opt_a}}% [{{floor($question->opt_a/100*$question->attempted)}}]</span>
                 <span class="fright" >{!! $question->a  !!}</span>
               </div>
         </div></div>
@@ -208,7 +210,7 @@
                 <div class="progress-bar" role="progressbar" style="width: {{$question->opt_b}}%;height:50px;color:black;background: #c8d5de;" aria-valuenow="{{$question->opt_b}}" aria-valuemin="0" aria-valuemax="100"> 
                   
                 </div>
-                <span class="fleft" >{{$question->opt_b}}%</span>
+                <span class="fleft" >{{$question->opt_b}}% [{{floor($question->opt_b/100*$question->attempted)}}]</span>
                 <span class="fright" >{!! $question->b!!}</span>
               </div>
           </div></div>
@@ -227,7 +229,7 @@
                 <div class="progress-bar" role="progressbar" style="width: {{$question->opt_c}}%;height:50px;color:black;background: #c8d5de" aria-valuenow="{{$question->opt_c}}" aria-valuemin="0" aria-valuemax="100"> 
                 
                 </div>
-                <span class="fleft" >{{$question->opt_c}}%</span>
+                <span class="fleft" >{{$question->opt_c}}% [{{floor($question->opt_c/100*$question->attempted)}}]</span>
                 <span class="fright" >{!! $question->c!!}</span>
               </div>
             </div></div>
@@ -247,7 +249,7 @@
                 <div class="progress-bar" role="progressbar" style="width: {{$question->opt_d}}%;height:50px;color:black;background: #c8d5de" aria-valuenow="{{$question->opt_d}}" aria-valuemin="0" aria-valuemax="100"> 
                   
                 </div>
-                <span class="fleft" >{{$question->opt_d}}%</span>
+                <span class="fleft" >{{$question->opt_d}}% [{{floor($question->opt_d/100*$question->attempted)}}]</span>
                 <span class="fright" >{!! $question->d!!}</span>
               </div>
               </div></div>
@@ -268,7 +270,7 @@
               <div class="progress " style="height:32px;margin-top:1px;color:red">
                 <div class="progress-bar" role="progressbar" style="width: {{$question->opt_e}}%;height:50px;color:black;background: #c8d5de" aria-valuenow="{{$question->opt_e}}" aria-valuemin="0" aria-valuemax="100"> 
                 </div>
-                <span class="fleft" >{{$question->opt_e}}%</span>
+                <span class="fleft" >{{$question->opt_e}}% [{{floor($question->opt_e/100*$question->attempted)}}]</span>
                 <span class="fright" >{!! $question->e!!}</span>
               </div>
             </div></div>
