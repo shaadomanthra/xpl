@@ -1261,7 +1261,7 @@ class ExamController extends Controller
             
               
             
-            $exam_sections = Cache::remember('exam_sections_',240,function() use($exam){
+            $exam_sections = Cache::remember('exam_sections_'.$exam->id,240,function() use($exam){
                 return Section::where('exam_id',$exam->id)->get();
             });
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');

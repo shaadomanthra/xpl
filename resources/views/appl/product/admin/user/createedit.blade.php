@@ -168,6 +168,7 @@
           <option value="10" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(28) && $user->role==10) selected @endif @endif @endif>Basic</option>
           <option value="11" @if(isset($user))@if($user->roles()->first()) @if($user->roles()->find(28) && $user->role==11) selected @endif @endif @endif>Pro</option>
           <option value="12" @if(isset($user) )@if($user->roles()->first()) @if($user->roles()->find(28) && $user->role==12) selected @endif @endif @endif>Advanced</option>
+          <option value="13" @if(isset($user) )@if($user->roles()->first()) @if($user->roles()->find(28) && $user->role==13) selected @endif @endif @endif>Admin (for subdomains)</option>
         </select>
       </div>
 

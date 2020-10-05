@@ -51,7 +51,7 @@ class ExamPolicy
     public function edit(User $user,Exam $exam)
     { 
         if($user->checkRole(['administrator','data-manager','hr-manager'])){
-            if($exam->user_id==$user->id )
+            if($exam->user_id==$user->id || ($user->role==13 && subdomain()!='xplore'))
                 return true;
             else
                 return false;
@@ -70,7 +70,7 @@ class ExamPolicy
     public function update(User $user,Exam $exam)
     { 
         if($user->checkRole(['administrator','data-manager','hr-manager'])){
-            if($exam->user_id==$user->id )
+            if($exam->user_id==$user->id || ($user->role==13 && subdomain()!='xplore'))
                 return true;
             else
                 return false;

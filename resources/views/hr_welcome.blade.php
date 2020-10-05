@@ -10,6 +10,7 @@
 
 @include('appl.exam.exam.xp_css')
 
+
 <div class="dblue" >
   <div class="container">
 
@@ -32,6 +33,8 @@
         Pro 
       @elseif(\auth::user()->role==12)
         Advanced 
+      @elseif(\auth::user()->role==13)
+        Admin
       @endif 
     </span>
            </h2>
@@ -48,7 +51,7 @@
         </div>
       </div>
       @if( $_SERVER['HTTP_HOST'] != 'xplore.co.in')
-      @if(\auth::user()->role == 12 || \auth::user()->isAdmin())
+      @if(\auth::user()->role == 12 || \auth::user()->role == 13 || \auth::user()->isAdmin())
       <div class="col-12 col-md-2">
         <div class="row mt-4">
           <div class="col-12 ">
@@ -62,7 +65,7 @@
       @endif
       @endif
 
-      @if(\auth::user()->role == 12 || \auth::user()->isAdmin())
+      @if(\auth::user()->role == 12 || \auth::user()->role == 13 || \auth::user()->isAdmin())
       <div class="col-12 col-md-2">
         <div class="row mt-4">
          
@@ -88,7 +91,7 @@
           <p class="heading_two mb-2 f30 text-white" ><i class="fa fa-inbox "></i> My Tests
 
             @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
-            @if(\auth::user()->role == 10 || \auth::user()->role == 12 || \auth::user()->isAdmin())
+            @if(\auth::user()->role == 10 || \auth::user()->role == 12 || \auth::user()->role == 13 ||  \auth::user()->isAdmin())
             <a href="{{route('examtype.index')}}">
               <button type="button" class="btn btn-outline-light my-2 my-sm-2 mr-sm-3">Testtypes</button>
             </a>

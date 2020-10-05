@@ -297,7 +297,7 @@ class AdminController extends Controller
         elseif($month=='lastbeforemonth')
             $users = User::whereMonth('created_at', Carbon::now()->subMonth(2)->month)->with('college')->orderBy('id','desc')->paginate(30);
         else{
-            if($search)
+            if($item)
             $users = User::where('name','LIKE',"%{$item}%")
                                       ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->orderBy('created_at','desc')->paginate(30);
             else{
@@ -863,11 +863,14 @@ class AdminController extends Controller
             $user->save();
         }
 
-        if(in_array($request->get('hrmanager'),[10,11,12])){
+        if(in_array($request->get('hrmanager'),[10,11,12,13])){
             if(!$user->roles->contains(28))
                 $user->roles()->attach(28);
             $user->role = $request->get('hrmanager');
             $user->save();
+
+            Cache::forget('id-' . $user->id);
+            Cache::forget('user_'.$user->id);
         }
 
         if($request->get('hrmanager')==1){
@@ -1157,11 +1160,15 @@ class AdminController extends Controller
                 $user->roles()->detach(41);
         }
 
-        if(in_array($request->get('hrmanager'),[10,11,12])){
+        if(in_array($request->get('hrmanager'),[10,11,12,13])){
             if(!$user->roles->contains(28))
                 $user->roles()->attach(28);
             $user->role = $request->get('hrmanager');
             $user->save();
+
+            Cache::forget('id-' . $user->id);
+            Cache::forget('user_'.$user->id);
+
         }
 
         if($request->get('hrmanager')==1){

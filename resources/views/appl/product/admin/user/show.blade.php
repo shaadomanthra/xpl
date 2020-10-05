@@ -87,6 +87,8 @@
         Pro
       @elseif($user->role==12)
         Advanced
+      @elseif($user->role==13)
+        Admin
       @endif 
     </span>
     @endif

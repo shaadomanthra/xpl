@@ -224,7 +224,7 @@ class ProductController extends Controller
               ->with('trainings',$trainings)
               ->with('exams',$exams);
       }
-      if($user->checkRole(['hr-manager']) && !$user->isAdmin()){
+      if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role!=13){
 
           $search = $request->search;
           $item = $request->item;
@@ -283,6 +283,68 @@ class ProductController extends Controller
               ->with('exam',$exam)
               ->with('e',$e)
               ->with('exams',$exams);
+      }else if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role==13){
+
+          $search = $request->search;
+          $item = $request->item;
+
+          $count = 0;
+
+          
+          
+          $usertests = Exam::where('client',subdomain())->orderBy('id','desc')->withCount('users');
+
+
+          
+
+          //dd($user->clientexams->pluck('id'));
+          //$user->exams()->withCount('users')->orderBy('id','desc');
+
+
+          $count = Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->count();
+          //$count = count($alltests);
+
+         
+          
+          // foreach($user->exams as $exam){
+          //   $count = $count + $exam->getAttemptCount();           
+          // }
+
+          if($search)
+            $exams = Exam::where('client',subdomain())->where('name','LIKE',"%{$item}%")->orderBy('id','desc')->withCount('users')
+                    ->paginate(8);
+          else
+            $exams = $usertests->paginate(8);
+
+
+
+          $exam = null;
+          $ids =array();
+          foreach($exams as $k=>$e){
+            if($e)
+              $exam = $e;
+            
+            if(!in_array($e->id, $ids))
+              array_push($ids, $e->id);
+            else
+              unset($exams[$k]);
+          }
+
+          //dd($exams);
+        
+          $user->attempts = $count;
+          $view = $search ? 'snippets.hr_tests': 'hr_welcome';
+
+          //$e = Exam::where('slug','psychometric-test')->first();
+          $e = null;
+
+          if(!$user->isAdmin())
+          return view($view)
+              ->with('user',$user)
+              ->with('exam',$exam)
+              ->with('e',$e)
+              ->with('exams',$exams);
+
       }
 
       if($user->checkRole(['tpo']) && !$user->isAdmin()){

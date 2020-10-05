@@ -27,9 +27,16 @@
               @endif
             </div>
             <div class='col-8 col-md-7'>
+
+
               <h4 class="mb-1 mt-2 lh15">
-                @if($e->pivot->role=='viewer')
+
+                @if(isset($e->pivot->role))
+                  @if($e->pivot->role=='viewer')
                   <a href=" {{ route('test.active',$e->slug)}} " data-toggle="tooltip" title="View Test">
+                  @else
+                  <a href=" {{ route('exam.show',$e->slug) }} " data-toggle="tooltip" title="View Test">
+                  @endif
                 @else
                   <a href=" {{ route('exam.show',$e->slug) }} " data-toggle="tooltip" title="View Test">
                 @endif
@@ -54,25 +61,51 @@
                   <span class=" badge badge-success">Active</span>
                 @endif
 
-                @if($e->pivot->role=='viewer')
-                <span class=" badge badge-secondary">Invigilator</span>
-                @elseif($e->pivot->role=='evaluator')
-                <span class=" badge badge-primary">Evaluator</span>
+
+                @if($user->role==13)
+                   <span class=" badge badge-warning">Admin</span>
                 @else
-                  <span class=" badge badge-warning">Owner</span>
+
+                  @if(isset($e->pivot->role))
+                    @if($e->pivot->role=='viewer')
+                    <span class=" badge badge-secondary">Invigilator</span>
+                    @elseif($e->pivot->role=='evaluator')
+                    <span class=" badge badge-primary">Evaluator</span>
+                    @elseif(auth::user()->role==13)
+                      <span class=" badge badge-warning">Admin</span>
+                    @else
+                      <span class=" badge badge-warning">Owner</span>
+                    @endif
+                  @endif
+
+
                 @endif
+                
 
               </div>
               
             </div>
             <div class='col-2 col-md-2'>
-               @if($e->pivot->role!='viewer')
-              <div class="heading_one float-right f30">
-              	<a href="{{ route('test.report',$e->slug)}}" data-toggle="tooltip" title="Attempts">
-              	@if(isset($e)){{ $e->users_count }}@endif
-              	</a>
-              </div>
+              @if($user->role==13)
+                <div class="heading_one float-right f30">
+                    <a href="{{ route('test.report',$e->slug)}}" data-toggle="tooltip" title="Attempts">
+                    @if(isset($e)){{ $e->users_count }}@endif
+                    </a>
+                  </div>
+              @else
+
+                @if(isset($e->pivot->role))
+                 @if($e->pivot->role!='viewer')
+                  <div class="heading_one float-right f30">
+                    <a href="{{ route('test.report',$e->slug)}}" data-toggle="tooltip" title="Attempts">
+                    @if(isset($e)){{ $e->users_count }}@endif
+                    </a>
+                  </div>
+                  @endif
+                @endif
+
               @endif
+               
             </div>
 
           </div>
