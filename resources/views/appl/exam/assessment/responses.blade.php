@@ -59,10 +59,13 @@ pre, code {
 @endif
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> {{$student->name}}
+          <p class="heading_two mb-1 f30" ><i class="fa fa-user "></i> {{$student->name}}
 
-            <button id="pdfbtn" class="btn btn-outline-primary btn-sm pdfbtn" onclick="downloadpdf()" data-name="{{$student->name}}_{{$exam->name}}">Download PDF</button>
+            <button id="pdfbtn" class="btn btn-outline-primary btn-sm pdfbtn" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}">Download PDF</button>
           </p>
+          @if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
+      @if($student->college_id)<span class="badge badge-info">{{$student->college->name}}</span><br>@endif
+      <p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><br>
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-2">
@@ -98,7 +101,27 @@ pre, code {
 		<div class="card mb-3">
 			<div class="card-body">
         <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
-				<p class="d-inline {{ $question = $questions[$t->question_id]}}">{!! $questions[$t->question_id]->question !!}</p>
+				<p class="d-inline {{ $question = $questions[$t->question_id]}} mb-3">{!! $questions[$t->question_id]->question !!}</p>
+
+        @if($questions[$t->question_id]->type=='mcq')
+        <div class="mt-3">
+          @if($question->option_a)
+          <div class=""><span class=" @if($questions[$t->question_id]->answer=='A') text-success font-weight-bold @endif">(A)</span><div class="pt-1 d-inline "> {!! $question->option_a!!}</div></div>
+          @endif
+          @if($question->option_b)
+          <div class=""><span class=" @if($questions[$t->question_id]->answer=='B') text-success font-weight-bold @endif">(B)</span><div class="pt-1 d-inline "> {!! $question->option_b!!}</div></div>
+          @endif
+          @if($question->option_c)
+          <div class=""><span class=" @if($questions[$t->question_id]->answer=='C') text-success font-weight-bold @endif">(C)</span><div class="pt-1 d-inline "> {!! $question->option_c!!}</div></div>
+          @endif
+          @if($question->option_d)
+          <div class=""><span class=" @if($questions[$t->question_id]->answer=='D') text-success font-weight-bold @endif">(D)</span><div class="pt-1 d-inline "> {!! $question->option_d!!}</div></div>
+          @endif
+          @if($question->option_e)
+          <div class=""><span class=" @if($questions[$t->question_id]->answer=='E') text-success font-weight-bold @endif">(E)</span><div class="pt-1 d-inline "> {!! $question->option_e!!}</div></div>
+          @endif
+        </div>
+        @endif
 				<hr>
 
 
@@ -111,7 +134,7 @@ pre, code {
         </pre>
 
         @endif
-				<p><b>Response:</b></p>
+				<p><b>User Response:</b></p>
 					@if($questions[$t->question_id]->type=='urq')
           <div class="{{$w=0}}">
 

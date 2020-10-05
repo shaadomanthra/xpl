@@ -328,39 +328,30 @@ class AssessmentController extends Controller
                 $url['pre_message'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
 
                 $jsonfile = 'testlog/approvals/'.$exam->id.'/'.$username.'.json';
-                if(Storage::disk('s3')->exists('testlogs/'.$jsonfile)){
+                if(Storage::disk('s3')->exists($jsonfile)){
                   $candidate  = json_decode(Storage::disk('s3')->get($jsonfile),true);
+                 
                 }else{
                     $candidate = [];
-                }
-                $candidate[$username]['name'] =  \auth::user()->name;
-                $candidate[$username]['username'] =  \auth::user()->username;
-                $candidate[$username]['rollnumber'] =  \auth::user()->rollnumber;
-                $candidate[$username]['college'] = (\auth::user()->college_id)? \auth::user()->college->name:'';
-                $candidate[$username]['branch'] =   (\auth::user()->branch_id)?\auth::user()->branch->name:'';
-                $candidate[$username]['image'] =   \auth::user()->getImage();
-                $candidate[$username]['selfie'] = '';
-                $candidate[$username]['idcard'] = '';
-                $candidate[$username]['approved'] = 0;
-                $candidate[$username]['terminated'] = 0;
-                $candidate[$username]['status'] = 0;
-                $candidate[$username]['time'] = strtotime(now());
-
-                if(!Storage::disk('s3')->exists($name))
-                {
-                    $message = array("status"=>0,"message"=>"");
-                    Storage::disk('s3')->put($name, json_encode($message),'public');
-
-                }
-                else{
-                    $message = json_decode(Storage::disk('s3')->get($name),true);
-                    $candidate[$username]['approved'] = $message['status'];
-                 
+                    $candidate['approved'] = 0;
+                    $candidate['terminated'] = 0;
+                    $candidate['status'] = 0;
+                    $candidate['message']='';
                 }
 
                 
                 
-                Storage::disk('s3')->put($jsonfile, json_encode($candidate[$username]),'public');
+
+                $candidate['name'] =  \auth::user()->name;
+                $candidate['username'] =  \auth::user()->username;
+                $candidate['rollnumber'] =  \auth::user()->roll_number;
+                $candidate['college'] = (\auth::user()->college_id)? \auth::user()->college->name:'';
+                $candidate['branch'] =   (\auth::user()->branch_id)?\auth::user()->branch->name:'';
+                $candidate['image'] =   \auth::user()->getImage();
+                $candidate['selfie'] = '';
+                $candidate['idcard'] = '';
+                $candidate['time'] = strtotime(now()); 
+                Storage::disk('s3')->put($jsonfile, json_encode($candidate),'public');
 
 
             }
@@ -1176,6 +1167,8 @@ class AssessmentController extends Controller
         $filepath = $this->cache_path.$filename;
 
         $exam = Cache::get('test_'.$slug);
+
+
         if(!$exam)
         if(file_exists($filepath))
         {
@@ -1209,7 +1202,10 @@ class AssessmentController extends Controller
         else
             $images = [];
 
-        
+        $keys = [];
+            
+
+       
 
         if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){
             $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$student->username.'_'.$exam->id.'.json'),true);
@@ -1240,7 +1236,9 @@ class AssessmentController extends Controller
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
 
-        //dd($tests);
+        $tests_keys = $tests->keyBy('question_id');
+
+
 
         //dd($tests->where('status',1));
         $evaluation = $tests->where('status',2);
@@ -1251,6 +1249,7 @@ class AssessmentController extends Controller
             return Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
         });
         $secs = $tests_section->groupBy('section_id');
+
 
 
         //dd($secs);
@@ -1278,6 +1277,12 @@ class AssessmentController extends Controller
                         $q->images = [];
                 }else{
                     $q->images = [];
+                }
+
+
+                if(isset($keys[$q->id]['dynamic'])){
+                    $dynamic = $keys[$q->id]['dynamic'];
+                    $q = $this->option_swap2($q,$dynamic);
                 }
 
                 $questions[$i] = $q;
@@ -1317,6 +1322,13 @@ class AssessmentController extends Controller
                 else
                 $details['testdate'] = $t->created_at->diffForHumans(); 
             }
+
+            $qd = $ques[$t->question_id];
+
+            $qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
+
+
+            $ques[$t->question_id] = $this->option_swap2($qd,$t->dynamic);
             
             if($t->status==2)
                 $review = true;
@@ -1434,7 +1446,7 @@ class AssessmentController extends Controller
                         ->with('sketchpad',1)
                         ->with('count',$count)
                         ->with('highlight',true)
-                        ->with('chart',true);
+                        ->with('chart',false);
     }
 
 

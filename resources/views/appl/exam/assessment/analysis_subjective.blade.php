@@ -41,9 +41,11 @@
 			<div class="badge badge-primary px-2" style="line-height: 1.4">Under<br>Review</div>
 			@endif
 		</div>
-		<div class="  display-4  mb-3 d-none d-md-block"><b> {{$student->name}} - Report</b></div>
-		
-		<p>Name : <span class="text-primary">{{ ucfirst($exam->name) }}</span><br>
+		<div class="  display-4  mb-1 d-none d-md-block"><b> {{$student->name}} - Report</b></div>
+		@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
+      @if($student->college_id)<span class="badge badge-info">{{$student->college->name}}</span><br>@endif
+		<p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><br>
+      
 			
 		</p>
 		</div>

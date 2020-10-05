@@ -25,7 +25,10 @@
 	<div class="">
 		<div class="p-3 border rounded bg-light mb-4">
 		<div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Report</b></div>
+		@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
+      @if($student->college_id)<span class="badge badge-info">{{$student->college->name}}</span><br>@endif
 		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
+			
 			
 		</p>
 	</div>
