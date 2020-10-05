@@ -184,7 +184,7 @@
                 <h6 class="mb-4 ">{{$userset[$a]->name}}<br>
                   <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
                 </h6>
-                <span class="badge badge-warning">yet to open the link</span>
+                <span class="badge badge-warning">no data yet</span>
              
             </div>
       </div>
