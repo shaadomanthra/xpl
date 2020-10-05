@@ -780,13 +780,13 @@ class ExamController extends Controller
 
         $settings = $exam->getOriginal('settings');
 
-        $candidates = null;
+        $candidates = array();
         $students = array();
         if($settings){
             $settings = json_decode($settings,true);
             if(isset($settings['invigilation']))
             $candidates = $settings['invigilation'];
-            
+
             foreach($candidates as $id=>$e){
                 foreach($e as $em){
                     $it = explode('@',$em);
