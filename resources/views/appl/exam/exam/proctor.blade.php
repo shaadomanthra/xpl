@@ -132,7 +132,7 @@
           <dt class="col-5 col-sm-4">Branch</dt>
           <dd class="col-7 col-sm-8">{{ $b['branch']}}</dd>
           <dt class="col-5 col-sm-4">Roll Number</dt>
-          <dd class="col-7 col-sm-8">{{ $b['rollnumber']}}</dd>
+          <dd class="col-7 col-sm-8">@if(isset($userset[$a])) {{ $userset[$a]->roll_number }} @endif</dd>
       </dl>
 
       <div class="row ">
