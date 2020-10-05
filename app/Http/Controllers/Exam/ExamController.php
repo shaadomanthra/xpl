@@ -814,6 +814,11 @@ class ExamController extends Controller
         foreach($viewers as $m=>$u){
             $viewers[$m]->candidates = $candidates[$u->id];
         }
+        else
+            foreach($viewers as $m=>$u){
+            $viewers[$m]->candidates = array();
+        }
+
 
         if($viewers)
          return view('appl.exam.exam.proctorlist')
