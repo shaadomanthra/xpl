@@ -140,7 +140,9 @@
           <div class=" mb-3 mb-md-0">
               <h5><i class="fa fa-picture-o"></i> Selfie Photo</h5>
             <div class="selfie_container">
+              @if($b['selfie'])
               <img src="{{$b['selfie']}}?time={{strtotime(now())}}" class="w-100 rounded">
+              @endif
             </div>
           </div>
           
@@ -149,7 +151,9 @@
           <div class=" mb-3 mb-md-0">
               <h5><i class="fa fa-vcard"></i> ID Card Photo</h5>
             <div class="selfie_container">
+              @if($b['idcard'])
               <img src="{{$b['idcard']}}?time={{strtotime(now())}}" class="w-100 rounded">
+              @endif
             </div>
           </div>
 

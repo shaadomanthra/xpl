@@ -399,6 +399,256 @@ $(document).ready(function(){
         
       }
 
+
+
+    function sortObject(obj) {
+        return Object.keys(obj).sort().reduce(function (result, key) {
+            result[key] = obj[key];
+            return result;
+        }, {});
+    }
+
+    function toDateTime(secs) {
+      var t = new Date(1970, 0, 1); // Epoch
+      t.setSeconds(secs);
+      
+    t.setHours(t.getHours() + 5); 
+    t.setMinutes(t.getMinutes() + 30);
+    datetext = t.toTimeString();
+    datetext = datetext.split(' ')[0];
+
+      return datetext;
+  }
+
+    // chat system
+
+    $('.m_student').on('click',function(e){
+
+        $url = $(this).data('url')+"?time="+$.now();
+        $username = $(this).data('username');
+        $name = $(this).data('name');
+        item = $('.m_'+$username);
+         $('.chat_messages').html('');
+
+         $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+
+                const ordered = sortObject(result);
+                i=0;
+                for(var k in ordered) {
+                   $u = ordered[k].name;
+                   $message = ordered[k].message;
+                   $('.chat_messages').append("<div class='mt-2'><b>"+$u+":</b><br>"+$message+"</div>");
+                   i = i+1;
+                   if((Object.keys(ordered).length) == i){
+                      //console.log(k);
+                      item.data('lastchat',k);
+                      //console.log(item.data('lastchat'));
+                      $('.chat_messages').animate({scrollTop: 10000},400);
+                      $('.chats').animate({scrollTop: 5000},400);
+                   }
+
+                }
+                
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+        });
+
+        $('#chat').modal();
+
+     });
+
+
+    $(document).on('click','.s_chat',function(){
+
+    var objDiv = $('.chats')[0];
+    objDiv.scrollTop = $('.chats')[0].scrollHeight+ 300;
+
+    $username = $(this).data('username');
+    $uname = $('.m_'+$username).data('name');
+    $pname = $('.m_'+$username).data('proctor');
+    $p = $('.m_'+$username).data('p');
+    $testid = $(this).data('testid');
+    $user = $(this).data('user');
+    $message = $('#message-text').val();
+    $url = $('.m_'+$username).data('url');
+    $urlpost = $('.m_'+$username).data('urlpost');
+    $test = $('#video').data('test');
+    $name = $username+'_'+$test+'_chat';
+    it = $('.m_'+$username);
+
+    if($p)
+      $uname = $pname;
+
+    
+    $('.chat_messages').animate({scrollTop: 10000},400);
+    const now = new Date()  
+    const $time = Math.round(now.getTime() / 1000) 
+
+    $('.message_proctor').data('time',$time);
+
+        $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+
+                var item ={ "name": $uname, "username":$username,"message":$message};
+                result[$time] = item;
+                it.data('lastchat',item);
+                var $data = JSON.stringify(result);
+                $('.chat_messages').append("<div class='mt-2'><b>"+$uname+":</b><br>"+$message+"</div>");
+                
+                $('#message-text').val('');
+                 $.ajax({
+                      method: "PUT",
+                      headers: {"Content-Type": "application/json"},
+                      processData: false,
+                      data: $data,
+                      url: $urlpost
+              })
+              .done(function($url) {
+                     $('.chat_messages').animate({scrollTop: 10000},400);
+                      console.log('message sent');
+              });
+                
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+        });
+
+});
+
+    function chat_refresh(){
+      if($('.m_student').length && !$('#chat').is(':visible')){
+          
+        $url = $('.m_student').data('url')+"?time="+$.now();
+        $username = $('.m_student').data('username');
+        $lastchat = $('.m_student').data('lastchat');
+        $name = $('.m_student').data('name');
+        item = $('.m_'+$username);
+        $lastestchat = $lastchat;
+        $('.chat_messages').html('');
+
+
+         $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+
+                const ordered = sortObject(result);
+
+                i=0;$count =0 ;
+                for(var k in ordered) {
+                   $u = ordered[k].name;
+                   $message = ordered[k].message;
+                   i = i+1;
+
+                   // last item
+                   $('.chat_messages').append("<div class='mt-2'><b>"+$u+":</b><br>"+$message+"</div>");
+                   if((Object.keys(ordered).length) == i){
+                      $lastestchat = k;
+                      if(!$lastchat){
+                        item.data('lastchat',k);
+                      }else{
+
+                        if(k>$lastchat)
+                          $count++;
+
+                        if($lastestchat > $lastchat){
+                            $('.m_'+ordered[k].username).addClass('blink');
+
+                            if($('#chat').is(':visible')){
+                              // will only come inside after the modal is shown
+                              $('.chat_messages').append("<div class='mt-2'><b>"+ordered[k].name+": <span class='badge badge-warning'>new</span></b><br>"+ordered[k].message+"</div>");
+                            }else{
+                              item.data('lastchat',k);
+                              $('.m_'+ordered[k].username).removeClass('blink');
+                              $('.chat_messages').animate({scrollTop: 10000},400);
+                              $('.chats').animate({scrollTop: 5000},400);
+                              $('#chat').modal();
+                            }
+                           
+                            
+                            // if($('.send_chat').data('username')==$username){
+                            //   $('.chat_messages').append("<div class='mt-2'><b>"+$uname+": <span class='badge badge-warning'>new</span></b><br>"+$message+"</div>");
+                            // }
+                        }else{
+                           $('.m_'+ordered[k].username).removeClass('blink');
+                           $('.chat_count_'+ordered[k].username).hide();
+                        } 
+                      }
+
+                      
+
+                   }
+                }
+
+                
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+          });
+      }else if($('.m_student').length && $('#chat').is(':visible')){
+
+        $url = $('.m_student').data('url')+"?time="+$.now();
+        $username = $('.m_student').data('username');
+        $lastchat = $('.m_student').data('lastchat');
+        $name = $('.m_student').data('name');
+        item = $('.m_'+$username);
+        $lastestchat = $lastchat;
+
+
+         $.ajax({
+                type: "GET",
+                url: $url
+            }).done(function (result) {
+
+                const ordered = sortObject(result);
+
+                i=0;$count =0 ;
+                for(var k in ordered) {
+                   $u = ordered[k].name;
+                   $message = ordered[k].message;
+                   i = i+1;
+
+                   // last item
+                   if((Object.keys(ordered).length) == i){
+                      $lastestchat = k;
+                      if(!$lastchat){
+                        item.data('lastchat',k);
+                      }else{
+
+                        if(k>$lastchat)
+                          $count++;
+
+
+                        if($lastestchat > $lastchat){
+                            $('.chat_messages').append("<div class='mt-2'><b>"+ordered[k].name+": <span class='badge badge-warning'>new</span></b><br>"+ordered[k].message+"</div>");
+                            $('.chat_messages').animate({scrollTop: 10000},400);
+                            $('.chats').animate({scrollTop: 5000},400);
+                            item.data('lastchat',k);
+                           
+                        }else{
+
+                        } 
+                      }
+
+                      
+
+                   }
+                }
+
+                
+            }).fail(function () {
+                console.log("Sorry URL is not access able");
+          });
+
+
+      }
+    }
+
+    setInterval(chat_refresh,1000);
+
       
 
 

@@ -2407,9 +2407,6 @@ class AssessmentController extends Controller
 
         $search = trim($r->get('search'));
 
-
-
-
         $users = array();
         $userset = [];
         
@@ -2483,10 +2480,15 @@ class AssessmentController extends Controller
 
                     if(Storage::disk('s3')->exists($chaturl)){
                         $chat_messages = json_decode(Storage::disk('s3')->get($chaturl),true);
-                        rsort($chat_messages);
                         $chats[$usc] = $chat_messages;
+                        $end = end($chats[$usc]);
+                        $chats[$usc]['last_message'] = $end['message'];
+                        $chats[$usc]['last_time'] = key($chats[$usc]);
+                        $chats[$usc]['last_user'] = $end['name'];
                        
                     }
+
+
                     
                     $content['selfie_url'] ='';
                     $content['idcard_url'] ='';
@@ -2565,6 +2567,7 @@ class AssessmentController extends Controller
                 }
                 //array_push($users, $content);
             }
+            
 
         }else{
 

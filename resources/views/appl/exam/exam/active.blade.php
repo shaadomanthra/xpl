@@ -151,20 +151,22 @@
           </div>
 
     </div>
+    @if($b['completed']!=1)
     @if(isset($chats[$a]['last_message']))
     @if(count($chats))
-    <div class="bg-light p-3"><small><b class="text-success">Student Message : </b></small> 
-        @if(isset($chats[a]['last_time']))
-        <small><span class="time time_{{$a}} text-warning">$chats[$a]['last_time']</span></small>
+    <div class="bg-light p-3"><b><span class="text-primary student_name_{{$a}}">{{ $chats[$a]['last_user'] }} </span></b>
+        @if(isset($chats[$a]['last_time']))
+        <span class="time time_{{$a}} text-primary float-right">{{ date("h:i:s ",$chats[$a]['last_time'])  }}</span>
         @endif
 
 
         @if(isset($chats[$a]['last_message']))
-        <span class="student_message student_message_{{$a}}">{{ $chats[$a]['last_message']}}</span> 
+        <p class="student_message student_message_{{$a}}">{{ $chats[$a]['last_message']}}</p> 
         @else
         <span class="student_message student_message_{{$a}}"> - </span> 
         @endif
     </div>
+    @endif
     @endif
     @endif
   </div>
@@ -244,7 +246,6 @@ div.chats {
       </div>
       <div class="modal-body ">
         <div class="chats">
-          
           <div class="chat_messages">
             
           </div>

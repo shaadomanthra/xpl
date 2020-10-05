@@ -2876,7 +2876,10 @@ var KTWidgets = function() {
     var _initMixedWidget14 = function() {
         var element = document.getElementById("kt_mixed_widget_14_chart");
         var height = parseInt(KTUtil.css(element, 'height'));
+        if(element)
         var series = parseInt(element.dataset.series);
+        else
+            var series = 74;
 
         if(!series)
             series = 74;

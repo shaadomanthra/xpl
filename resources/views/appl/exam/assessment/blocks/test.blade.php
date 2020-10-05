@@ -54,7 +54,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
           
           @if(isset($settings['chat']))
           @if(strtolower($settings['chat'])=='yes')
-             <i class="fa fa-commenting-o text-success ml-2 text-primary cursor message_student message_{{$user->username}}" data-urlpost="{{$urls['chat_post']}}" data-toggle="tooltip"  title="Message proctor" data-username="{{$user->username}}" data-name="{{$user->name}}"data-url="{{$urls['chat']}}" data-lastchat=""></i> 
+             <i class="fa fa-commenting-o text-success ml-2 text-primary cursor m_student m_{{$user->username}}" data-urlpost="{{$urls['chat_post']}}" data-toggle="tooltip"  title="Message proctor" data-username="{{$user->username}}" data-name="{{$user->name}}"data-url="{{$urls['chat']}}" data-lastchat=""></i> 
           @endif
           @endif
         
@@ -94,7 +94,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
 
             @if(isset($settings['chat']))
           @if(strtolower($settings['chat'])=='yes')
-             <i class="fa fa-commenting-o text-light mr-4 cursor message_student message_{{$user->username}}" data-urlpost="{{$urls['chat_post']}}" data-toggle="tooltip"  title="Message proctor" data-username="{{$user->username}}" data-name="{{$user->name}}"data-url="{{$urls['chat']}}" data-lastchat=""></i> 
+             <i class="fa fa-commenting-o text-light mr-4 cursor m_student m_{{$user->username}}" data-urlpost="{{$urls['chat_post']}}" data-toggle="tooltip"  title="Message proctor" data-username="{{$user->username}}" data-name="{{$user->name}}"data-url="{{$urls['chat']}}" data-lastchat=""></i> 
           @endif
           @endif
         @if(isset($exam->calculator))
@@ -358,7 +358,7 @@ div.chats {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary send_chat" data-user="{{$user->name}}" data-testid="{{$exam->id}}" data-username="{{$user->username}}">Send message</button>
+        <button type="button" class="btn btn-primary s_chat" data-user="{{$user->name}}" data-testid="{{$exam->id}}" data-username="{{$user->username}}">Send message</button>
       </div>
     </div>
   </div>

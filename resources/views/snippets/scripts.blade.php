@@ -419,6 +419,18 @@ $('.message_student').on('click',function(e){
 
      });
 
+function toDateTime(secs) {
+      var t = new Date(1970, 0, 1); // Epoch
+      t.setSeconds(secs);
+      
+    t.setHours(t.getHours() + 5); 
+    t.setMinutes(t.getMinutes() + 30);
+    datetext = t.toTimeString();
+    datetext = datetext.split(' ')[0];
+
+      return datetext;
+  }
+
 $(document).on('click','.send_chat',function(){
 
     var objDiv = $('.chats')[0];
@@ -454,10 +466,10 @@ $(document).on('click','.send_chat',function(){
 
                 var item ={ "name": $uname, "username":$username,"message":$message};
                 result[$time] = item;
-                it.data('lastchat',item);
+                it.data('lastchat',$time);
                 var $data = JSON.stringify(result);
                 $('.chat_messages').append("<div class='mt-2'><b>"+$uname+":</b><br>"+$message+"</div>");
-                console.log($data);
+             
                 $('#message-text').val('');
                  $.ajax({
                       method: "PUT",
@@ -468,6 +480,9 @@ $(document).on('click','.send_chat',function(){
               })
               .done(function($url) {
                      $('.chat_messages').animate({scrollTop: 5000},400);
+                     $('.student_name_'+$username).html($uname);
+                     $('.student_message_'+$username).html($message);
+                     $('.time_'+$username).html(toDateTime($time));
                       console.log('message sent');
               });
                 
@@ -511,26 +526,53 @@ function chat_refresh(){
                 for(var k in ordered) {
                    $u = ordered[k].name;
                    i = i+1;
+
                    if((Object.keys(ordered).length) == i){
                       
                       $lastestchat = k;
+                      $lastchat = $('.message_'+ordered[k].username).data('lastchat');
 
+                      if(ordered[k].username){
+                        if($('.student_name_'+ordered[k].username).length){
+                              $('.student_name_'+ordered[k].username).html(ordered[k].name);
+                             $('.student_message_'+ordered[k].username).html(ordered[k].message);
+                             $('.time_'+ordered[k].username).html(toDateTime(k));
+                        }
+                      }
+
+                      
+                        
+
+                      console.log($lastestchat+' - '+$lastchat+' - '+ordered[k].username);
+                     
                       if(!$lastchat){
-                        item.data('lastchat',k);
+                        $('.message_'+ordered[k].username).data('lastchat',k);
                       }else{
+                        
                         if(k>$lastchat)
                           $count++;
 
                         if($lastestchat > $lastchat){
-                            $('.message_'+$username).addClass('blink');
-                            $('.chat_count_'+$username).html($count);
-                            $('.chat_count_'+$username).show();
-                            if($('.send_chat').data('username')==$username){
-                              $('.chat_messages').append("<div class='mt-2'><b>"+$uname+": <span class='badge badge-warning'>new</span></b><br>"+$message+"</div>");
+                          if($('#chat').is(':visible')){
+                            $live_username = $('.send_chat').data('username');
+                            if($live_username==ordered[k].username){
+                              console.log("new append");
+                              $('.chat_messages').append("<div class='mt-2'><b>"+ordered[k].name+": <span class='badge badge-warning'>new</span></b><br>"+ordered[k].message+"</div>");
+                              $('.message_'+ordered[k].username).data('lastchat',k);
                             }
+                            
+
+                          }else{
+                              $('.message_'+ordered[k].username).addClass('blink');
+                          }
+
+                            
+                            // if($('.send_chat').data('username')==$username){
+                            //   
+                            // }
                         }else{
-                           $('.message_'+$username).removeClass('blink');
-                           $('.chat_count_'+$username).hide();
+                           $('.message_'+ordered[k].username).removeClass('blink');
+                           $('.chat_count_'+ordered[k].username).hide();
                         } 
                       }
 
@@ -556,7 +598,7 @@ function chat_refresh(){
   }
 }
 
-setInterval(chat_refresh,3000);
+setInterval(chat_refresh,1000);
 
 
 function image_refresh(){
