@@ -2201,7 +2201,7 @@ class AssessmentController extends Controller
         });
         $this->authorize('create', $exam);
 
-        $exam_cache = Cache::get('exam_cache_'.$exam->id);
+        
         
         // if(!$exam_cache && !$r->get('all')){
         //     abort(404,"There is no live data");
@@ -2231,13 +2231,11 @@ class AssessmentController extends Controller
             }
         }
 
-        if(!$exam_cache){
-                $test_responses = Cache::remember('test_resp_'.$exam->id,60,function() use($exam){
+        $test_responses = Cache::remember('test_resp_'.$exam->id,60,function() use($exam){
                     return Test::where('test_id',$exam->id)->get()->groupBy('user_id');
-                });
-                $exam_cache = $test_responses;
-                $data['ques_analysis'] = 1;
-        }
+            });
+        $exam_cache = $test_responses;
+        $data['ques_analysis'] = 1;
 
         $completion = Tests_Overall::where('test_id',$exam->id)->pluck('user_id')->toArray();
         
@@ -2275,12 +2273,6 @@ class AssessmentController extends Controller
                      
             }
 
-
-            $completed = Cache::get('attempt_'.$u.'_'.$exam->id);
-
-            if(!in_array($u, $completion)){
-                $data['total']++;
-            }
            
         }
 
