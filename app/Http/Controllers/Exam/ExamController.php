@@ -810,7 +810,7 @@ class ExamController extends Controller
 
         
 
-        if($candidates)
+        if(count($candidates))
         foreach($viewers as $m=>$u){
             $viewers[$m]->candidates = $candidates[$u->id];
         }
