@@ -784,7 +784,9 @@ class ExamController extends Controller
         $students = array();
         if($settings){
             $settings = json_decode($settings,true);
+            if(isset($settings['invigilation']))
             $candidates = $settings['invigilation'];
+            
             foreach($candidates as $id=>$e){
                 foreach($e as $em){
                     $it = explode('@',$em);
