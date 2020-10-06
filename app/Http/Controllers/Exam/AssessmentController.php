@@ -2329,6 +2329,8 @@ class AssessmentController extends Controller
         $folder = 'webcam/'.$exam->id.'/';
         $user = User::where('username',$username)->first();
 
+        $this->authorize('create', $exam);
+
 
         //$files = Storage::disk('s3')->allFiles($folder);
 
