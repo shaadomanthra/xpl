@@ -571,8 +571,9 @@
         <select class="form-control" name="user_id">
           <option value="{{\auth::user()->id}}"  >{{ \auth::user()->username }}</option>
           @foreach($data['hr-managers'] as $u)
-
-          <option value="{{$u->id}}"  >{{ $u->username }}</option>
+          @if($u->role==12 || $u->role==13)
+          <option value="{{$u->id}}"  >{{ $u->name }} ({{ $u->client_slug }})</option>
+          @endif
           @endforeach
         </select>
       </div>

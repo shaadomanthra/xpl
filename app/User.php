@@ -386,7 +386,7 @@ class User extends Authenticatable
     public function getRole($role){
 
         if(subdomain()=='xplore')
-            return Role::where('slug',$role)->first()->users;
+            return Role::where('slug',$role)->first()->users()->orderBy('name')->get();
         else{
             $r =Role::where('slug',$role)->first();
             $users = $r->users()->orderBy('name')->where('client_slug',subdomain())->get()->keyBy('id');
