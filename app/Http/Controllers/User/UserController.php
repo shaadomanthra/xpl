@@ -182,9 +182,18 @@ class UserController extends Controller
             if(!$user->roles->contains(28))
                 $user->roles()->attach(28);
         }
-        
 
-        dd(count($users));
+        echo  count($users);
+
+        $users = User::where('role',10)->get();
+        foreach($users as $user){
+            if(!$user->roles->contains(28))
+                $user->roles()->attach(28);
+        }
+        echo "<br>";
+        echo  count($users)."<br>";
+
+        dd('done');
     }
 
     if(request()->get('export')){
