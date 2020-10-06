@@ -1168,6 +1168,8 @@ class AssessmentController extends Controller
 
         $exam = Cache::get('test_'.$slug);
 
+        $this->authorize('view', $exam);
+
 
         if(!$exam)
         if(file_exists($filepath))
@@ -2427,7 +2429,7 @@ class AssessmentController extends Controller
         $users = array();
         $userset = [];
 
-        
+        $this->authorize('view', $exam);
         //$fl = collect($files);
 
         $user = \auth::user();
@@ -2756,7 +2758,6 @@ class AssessmentController extends Controller
         $exam = Cache::get('test_'.$id,function() use($id){
             return Exam::where('slug',$id)->first();
         });
-
 
 
 
@@ -3173,6 +3174,7 @@ class AssessmentController extends Controller
             }
             file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
         }
+
         //precheck for auto activation
         $exam = $this->precheck_auto_activation($exam);
         //dd($exam);
