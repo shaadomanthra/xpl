@@ -813,6 +813,9 @@ class ExamController extends Controller
         if(count($candidates))
         foreach($viewers as $m=>$u){
             $viewers[$m]->candidates = $candidates[$u->id];
+
+            if(isset($viewers[$m]->username))
+                Cache::forget('candidates_'.$viewers[$m]->username);
         }
         else
             foreach($viewers as $m=>$u){

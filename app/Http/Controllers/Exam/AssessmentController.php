@@ -2427,14 +2427,10 @@ class AssessmentController extends Controller
         $users = array();
         $userset = [];
 
-
-
         
         //$fl = collect($files);
 
         $user = \auth::user();
-
-        
 
         //dd($exam->settings);
         if(!isset($exam->getOriginal('settings')->invigilation))
