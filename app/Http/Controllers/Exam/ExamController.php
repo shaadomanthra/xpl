@@ -853,7 +853,7 @@ class ExamController extends Controller
         if($item)
         $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->where('username','LIKE',"%{$item}%")->get()->keyBy('username');
         else
-        $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get()->keyBy('username');
+        $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->orderby('roll_number','asc')->get()->keyBy('username');
 
 
 
