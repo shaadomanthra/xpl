@@ -1102,7 +1102,16 @@ $(function(){
                 focus: true, 
                 codemirror: { // codemirror options
                   theme: 'monokai'
-                },
+                },toolbar: [
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['font', ['superscript', 'subscript']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['table', ['table']],
+      ['insert', ['link', 'picture', 'video']],
+      ['view', ['fullscreen', 'codeview', 'help']]
+    ],
                 callbacks: {
         onPaste: function (e) {
             var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
