@@ -17,6 +17,8 @@ use PacketPrep\User;
 use Illuminate\Support\Facades\Storage;
 
 
+
+
 Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function () {
 	
 	Route::get('/', 'HomeController@root')->name('root');
@@ -411,6 +413,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('/referral/list','Product\StudentController@referrallist')->middleware('auth')->name('referral.list');
 	Route::get('/referral/{user}','Product\StudentController@userreferral')->middleware('auth')->name('user.referral');
 
+	
+
 	Route::get('/productpage/aptitude-assessments', function(){
 		return Redirect::to('/sample-tests', 301); 
 	});
@@ -429,6 +433,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 
 	Route::get('/eamcet', function(){
 		return Redirect::to('https://vaagdevi.xplore.co.in/register', 301); 
+	});
+
+	Route::get('/test/052740', function(){
+		return Redirect::to('https://iidt.xplore.co.in/test/067855', 301); 
 	});
 
 	Route::get('post/{slug}/analytics','Job\PostController@analytics')->name('job.analytics');
