@@ -1082,7 +1082,7 @@ $(function(){
         toolbar: [
           // [groupName, [list of button]]
           ['style', ['bold', 'italic', 'underline', 'clear']],
-          ['fontsize', ['fontsize']],
+          ['fontsize', ['fontsize','superscript', 'subscript']],
           ['color', ['color']],
           ['para', ['ul', 'ol', 'paragraph']],
           ['height', ['height']]
