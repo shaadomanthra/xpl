@@ -348,8 +348,20 @@ class AssessmentController extends Controller
                 $candidate['name'] =  \auth::user()->name;
                 $candidate['username'] =  \auth::user()->username;
                 $candidate['rollnumber'] =  \auth::user()->roll_number;
-                $candidate['college'] = (isset($data['colleges'][\auth::user()->college_id]))? $data['colleges'][\auth::user()->college_id]->name:'';
-                $candidate['branch'] =   (isset($data['colleges'][\auth::user()->branch_id]))? $data['colleges'][\auth::user()->college_id]->name:'';
+                $candidate['college'] = "";
+
+                if(\auth::user()->college_id)
+                    if(isset($data['colleges'][\auth::user()->college_id]))
+                        $candidate['college'] = $data['colleges'][\auth::user()->college_id]->name;
+
+              
+                $candidate['branch'] =  '';
+
+                if(\auth::user()->branch_id) 
+                    if(isset($data['colleges'][\auth::user()->college_id]))
+                     $candidate['branch'] = $data['colleges'][\auth::user()->college_id]->name;
+
+
                 $candidate['image'] =   \auth::user()->getImage();
                 $candidate['selfie'] = '';
                 $candidate['idcard'] = '';
