@@ -10,6 +10,7 @@
 			<img 
           src="{{ asset('img/xplore.png') }} " width="100px" class=" float-right"  alt="Xplore logo " type="image/png">
 		<h1>Register</h1>
+		<!--
 		<div class="alert alert-primary alert-important py-4 mt-3">
 		    <p class="px-3">Verification of phone number is mandatory. Kindly enter the correct 10 digit phone number to complete the registration.</p>
 		    <div class="row">
@@ -52,7 +53,7 @@
 		            
 		        </div>
     		</div>
-			</div>
+			</div> -->
 
 			<div class="alert alert-warning alert-important" role="alert">
       
@@ -120,8 +121,25 @@
     			</div>
     		</div>
     	</div>
-    </div>
 
+    	<div class="col-12 col-md-6">
+			<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+				<label for="phone" class="col-md-12 control-label">Phone</label>
+
+				<div class="col-md-12">
+					<input id="phone" type="text" class="form-control" name="phone" required>
+
+					@if ($errors->has('phone'))
+					<span class="help-block text-danger">
+						<strong>{{ $errors->first('phone') }}</strong>
+					</span>
+					@endif
+				</div>
+			</div>
+    	</div>
+
+    </div>
+    <input id="phone" type="hidden" class="form-control" name="otp" value="{{$code}}" required placeholder="Enter otp sent to your phone number">
                         
     <div class="row">
     	<div class="col-12">
