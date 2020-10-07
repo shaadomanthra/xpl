@@ -8,6 +8,7 @@ use PacketPrep\Models\College\Branch as Obj;
 use PacketPrep\Models\College\Metric;
 use PacketPrep\Models\College\Zone;
 use PacketPrep\User;
+use Illuminate\Support\Facades\Cache;
 
 class BranchController extends Controller
 {
@@ -33,6 +34,8 @@ class BranchController extends Controller
                     ->withCount('users')
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records'));   
+        Cache::forever('branches',$obj->all()->keyBy('id'));
+
         $view = $search ? 'list': 'index';
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)

@@ -33,7 +33,7 @@
 
         @endif
         @if(auth::user()->branch_id)
-          @if(auth::user()->branch->name) <span class="badge badge-primary"> {{auth::user()->branch->name}}</span>@else Welcome aboard @endif
+          @if(isset($data['branches'][auth::user()->branch_id])) <span class="badge badge-primary"> {{ $data['branches'][auth::user()->branch_id]->name}}</span>@else Welcome aboard @endif
         @else
           @if(auth::user()->info) <span class="badge badge-primary">Class {{auth::user()->info}}</span>@else Welcome aboard @endif
         @endif
@@ -115,7 +115,7 @@
               
                 @foreach(\auth::user()->newtests() as $k=>$e)
                 
-                @if($e->examtype->name == 'General' || $e->examtype->name==auth::user()->info)
+                @if($e->examtype->name == 'General' || $e->examtype->name==auth::user()->info || auth::user()->authorizedEmail($e))
                 @if($e->status!=0 && !$e->active)
                 @if(!\auth::user()->attempted($e->id))
                        <div class="col-12 col-md-6">

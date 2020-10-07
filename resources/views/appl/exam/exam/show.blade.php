@@ -186,6 +186,88 @@
             </div>
           </div>
 
+
+          <div class="row mb-2">
+            <div class="col-6"> <i class="fa fa-mobile-phone"></i>&nbsp;Mobile Disable</div>
+            <div class="col-6">
+              @if($exam->extra==0)
+                <span class="badge badge-warning">No</span>
+              @elseif($exam->extra==1)
+                <span class="badge badge-success" >Yes</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-6"> <i class="fa fa-retweet"></i>&nbsp;Question Shuffle</div>
+            <div class="col-6">
+              @if($exam->shuffle==0)
+                <span class="badge badge-warning">No</span>
+              @elseif($exam->shuffle==1)
+                <span class="badge badge-success" >Yes</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-6"> <i class="fa fa-cloud-upload"></i>&nbsp;Save Responses</div>
+            <div class="col-6">
+              @if($exam->save==0)
+                <span class="badge badge-warning">No</span>
+              @elseif($exam->save==1)
+                <span class="badge badge-success" >Yes</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-6"> <i class="fa fa-commenting-o"></i>&nbsp;Chat</div>
+            <div class="col-6">
+              @if($exam->chat=="no")
+                <span class="badge badge-warning">No</span>
+              @elseif($exam->chat=="yes")
+                <span class="badge badge-success" >Yes</span>
+              @endif
+            </div>
+          </div>
+
+           <div class="row mb-2">
+            <div class="col-6"> <i class="fa fa-user-circle-o"></i>&nbsp;Approval</div>
+            <div class="col-6">
+              @if($exam->manual_approval=="no")
+                <span class="badge badge-warning">Automatic</span>
+              @elseif($exam->manual_approval=="yes")
+                <span class="badge badge-success" >Manual</span>
+              @endif
+            </div>
+          </div>
+
+
+          <div class="row mb-2">
+            <div class="col-6"> <i class="fa fa-bars"></i>&nbsp;Section Timer</div>
+            <div class="col-6">
+              @if($exam->section_timer=="no")
+                <span class="badge badge-warning">No</span>
+              @elseif($exam->section_timer=="yes")
+                <span class="badge badge-success" >Yes</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-6"> <i class="fa fa-bars"></i>&nbsp;Marking Scheme</div>
+            <div class="col-6">
+              @if($exam->section_marking=="no")
+                <span class="">Question Wise</span>
+              @elseif($exam->section_marking=="yes")
+                <span class="" >Section Wise</span>
+              @endif
+            </div>
+          </div>
+
+
+
+
           <div class="row mb-0">
             <div class="col-6"> <i class="fa fa-user"></i>&nbsp;Ownership</div>
             <div class="col-6">

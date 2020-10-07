@@ -19,7 +19,7 @@ video ,#photo3{
 			<h4>{{ auth::user()->name}}</h4>
 			<p class="mb-0">
 				@if(auth::user()->roll_number) {{ auth::user()->roll_number}} <br> @endif
-				@if(auth::user()->branch_id) {{ auth::user()->branch->name}}</br> @endif
+				 @if(isset($data['branches'][auth::user()->branch_id])) {{ $data['branches'][auth::user()->branch_id]->name}} <br>@endif
 				<span class="badge badge-warning connection_status" data-status=1></span>
 			</p>
 

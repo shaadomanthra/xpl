@@ -351,6 +351,48 @@
       </div>
         </div>
 
+         <div class="col-12 col-md-3">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Approval</label>
+        <select class="form-control" name="manual_approval">
+          <option value="no" @if(isset($exam)) @if($exam->manual_approval=="no") selected @endif @endif >Automatic</option>
+          <option value="yes" @if(isset($exam)) @if($exam->manual_approval=="yes") selected @endif @endif >Manual</option>
+        </select>
+      </div>
+      <small class='text-secondary'>Choose 'manual' if proctors have to verify student data before exam</small>
+        </div>
+
+         <div class="col-12 col-md-3">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Proctor Chat</label>
+        <select class="form-control" name="chat">
+          <option value="no" @if(isset($exam)) @if($exam->chat=="no") selected @endif @endif >No</option>
+          <option value="yes" @if(isset($exam)) @if($exam->chat=="yes") selected @endif @endif >Yes</option>
+        </select>
+      </div>
+      <small class='text-secondary'>Enable it only, if proctors are assigned for the exam</small>
+        </div>
+
+
+        <div class="col-12 col-md-3">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Section Timer</label>
+        <select class="form-control" name="section_timer">
+          <option value="no" @if(isset($exam)) @if($exam->section_timer=="no") selected @endif @endif >No</option>
+          <option value="yes" @if(isset($exam)) @if($exam->section_timer=="yes") selected @endif @endif >Yes</option>
+        </select>
+      </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+           <div class="form-group">
+        <label for="formGroupExampleInput ">Marking Scheme</label>
+        <select class="form-control" name="section_marking">
+          <option value="no" @if(isset($exam)) @if($exam->section_marking=="no") selected @endif @endif >Question wise</option>
+          <option value="yes" @if(isset($exam)) @if($exam->section_marking=="yes") selected @endif @endif >Section wise</option>
+        </select>
+      </div>
+        </div>
 
 
 
@@ -359,7 +401,7 @@
     </div>
 
 
-    <div class="form-group p-3 ">
+    <div class="form-group p-3 d-none">
         <label for="formGroupExampleInput ">Extra Settings</label>
 
 <textarea class="form-control " name="settings"  rows="5">@if($stub=='Create'){{ (old('settings')) ? old('settings') : '' }} @else{{ $exam->settings }} @endif

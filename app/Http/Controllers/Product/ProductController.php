@@ -195,6 +195,10 @@ class ProductController extends Controller
             return User::where('id',$u->id)->with('college')->with('branch')->first();
       });
 
+      $data['branches'] = Cache::get('branches');
+      $data['colleges'] = Cache::get('colleges');
+
+
 
       $username = $user->username;
       $user->image = $user->getImage();
@@ -221,6 +225,7 @@ class ProductController extends Controller
           }
           return view($view)
               ->with('user',$user)
+              ->with('data',$data)
               ->with('trainings',$trainings)
               ->with('exams',$exams);
       }
@@ -401,7 +406,7 @@ class ProductController extends Controller
       else
         $view = 'client_dashboard';
         
-      return view($view)->with('user',$user);
+      return view($view)->with('user',$user)->with('data',$data);
 
     }
 

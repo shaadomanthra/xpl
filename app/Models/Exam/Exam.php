@@ -92,8 +92,8 @@ class Exam extends Model
     }
 
     public function updateCache(){
-        $exam = $this;
             //add owner
+        $exam = $this;
         $exam->settings = json_decode($exam->settings);
         
         if(!$exam->viewers->contains($exam->user_id))
@@ -103,7 +103,7 @@ class Exam extends Model
         Cache::forever('test_'.$exam->slug,$exam);
 
         Cache::forget('tests_'.$exam->client);
-        $exams = Exam::where('client',$exam->client)->get();
+        $exams = Exam::where('client',$exam->client)->with('examtype')->get();
         Cache::forever('tests_'.$exam->client,$exams);
     }
 

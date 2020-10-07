@@ -11,6 +11,7 @@ use PacketPrep\Models\College\Metric;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
+use Illuminate\Support\Facades\Cache;
 
 
 class CollegeController extends Controller
@@ -35,7 +36,7 @@ class CollegeController extends Controller
         
      
         $objs = $obj->where('name','LIKE',"%{$item}%")->withCount('users')->orderBy('users_count', 'desc')->paginate(config('global.no_of_records')); 
-
+        Cache::forever('colleges',$obj->all()->keyBy('id'));
 
 
         $view = $search ? 'list': 'index';

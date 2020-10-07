@@ -49,11 +49,17 @@
 				  <dd class="col-sm-10">{{ auth::user()->name}}</dd>
 				  @if(auth::user()->college_id)
 				  <dt class="col-sm-2">College Name</dt>
-				  <dd class="col-sm-10">{{ auth::user()->college->name}}</dd>
+				  <dd class="col-sm-10">
+				  	 @if(isset($data['branches'][auth::user()->college_id])) {{ $data['branches'][auth::user()->college_id]->name}}
+				  	 @endif
+				  </dd>
 				  @endif
 				  @if(auth::user()->branch_id)
 				  <dt class="col-sm-2">Branch</dt>
-				  <dd class="col-sm-10">{{ auth::user()->branch->name}}</dd>
+				  <dd class="col-sm-10">
+				  	@if(isset($data['branches'][auth::user()->branch_id])) {{ $data['branches'][auth::user()->branch_id]->name}}
+				  	 @endif
+				  </dd>
 				  @endif
 
 				  @if(auth::user()->roll_number)

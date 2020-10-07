@@ -39,7 +39,7 @@ class Corporate
             }
             elseif( subdomain()!='xplore' && subdomain()!='bfs'){
 
-                $client = Cache::get('client_'.subdomain(),function() {
+                $client = Cache::remember('client_'.subdomain(),2400,function() {
                             return Client::where('slug',subdomain())->first();
                 });
                 if($client){

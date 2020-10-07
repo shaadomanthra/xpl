@@ -255,7 +255,7 @@ class User extends Authenticatable
             //$tests = Cache::get('tests_'.subdomain());
             
             $tests = Cache::remember('tests_'.subdomain(), 240, function() use ($client) {
-                return DB::table('exams')->where('client',$client)->orderBy('id','desc')->get();
+                return Exam::where('client',$client)->with('examtype')->orderBy('id','desc')->get();
             });
 
         }
@@ -278,6 +278,25 @@ class User extends Authenticatable
 
 
         return $tests;
+    }
+
+
+    public function authorizedEmail($e){
+        $user = $this;
+
+        $emails = $e->emails;
+        $emails = implode(',',explode("\n", $e->emails));
+        $emails =str_replace("\r", '', $emails);
+        $emails = array_unique(explode(',',$emails));
+
+        $flag = 0;
+        foreach($emails as $em){
+            if(strtoupper($user->email) == strtoupper(trim($em))){
+                $flag = 1;break;
+            }
+        }
+        return $flag;
+
     }
 
     public function tests(){

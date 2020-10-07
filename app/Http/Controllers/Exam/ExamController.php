@@ -555,7 +555,14 @@ class ExamController extends Controller
             $exam->message = $request->message;
             $exam->save = $request->save;
             $exam->extra = $request->extra;
-            $exam->settings = $request->settings;
+
+            $settings = array();
+            $settings['chat'] = $request->get('chat');
+            $settings['manual_approval'] = $request->get('manual_approval');
+            $settings['section_timer'] = $request->get('section_timer');
+            $settings['section_marking'] = $request->get('section_marking');
+
+            $exam->settings = json_encode($settings);
             if($request->auto_activation)
                 $exam->auto_activation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
             else
@@ -695,6 +702,31 @@ class ExamController extends Controller
        
        $exam_cache = Cache::get('exam_cache_'.$exam->id);
 
+       $settings = json_decode($exam->getOriginal('settings'),true);
+
+
+
+        if(isset($settings['chat']))
+            $exam->chat = $settings['chat'];
+        else
+            $exam->chat = 'no';
+
+        if(isset($settings['manual_approval']))
+            $exam->manual_approval = $settings['manual_approval'];
+        else
+            $exam->manual_approval = 'no';
+
+        if(isset($settings['section_timer']))
+            $exam->section_timer = $settings['section_timer'];
+        else
+            $exam->section_timer = 'no';
+
+        if(isset($settings['section_marking']))
+            $exam->section_marking = $settings['section_marking'];
+        else
+            $exam->section_marking = 'no';
+
+
         if($exam)
             return view('appl.exam.exam.show')
                     ->with('exam',$exam)
@@ -815,7 +847,7 @@ class ExamController extends Controller
             $viewers[$m]->candidates = $candidates[$u->id];
 
             if(isset($viewers[$m]->username))
-                Cache::forget('candidates_'.$viewers[$m]->username);
+                Cache::forget('candidates_'.$exam->slug.'_'.$viewers[$m]->username);
         }
         else
             foreach($viewers as $m=>$u){
@@ -1567,6 +1599,28 @@ class ExamController extends Controller
         $hr_managers = \auth::user()->getRole('hr-manager');
         $courses = Course::all();
 
+        $settings = json_decode($exam->getOriginal('settings'),true);
+
+        if(isset($settings['chat']))
+            $exam->chat = $settings['chat'];
+        else
+            $exam->chat = 'no';
+
+        if(isset($settings['manual_approval']))
+            $exam->manual_approval = $settings['manual_approval'];
+        else
+            $exam->manual_approval = 'no';
+
+        if(isset($settings['section_timer']))
+            $exam->section_timer = $settings['section_timer'];
+        else
+            $exam->section_timer = 'no';
+
+        if(isset($settings['section_marking']))
+            $exam->section_marking = $settings['section_marking'];
+        else
+            $exam->section_marking = 'no';
+
         // if($exam->extra){
         //     $exam->viewers = json_decode($exam->extra,true)['viewers'];
         //     $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
@@ -1597,7 +1651,7 @@ class ExamController extends Controller
     public function update(Request $request, $slug)
     {
         try{
-            $exam = Exam::where('slug',$slug)->first();
+            $exam = Exam::where('slug',$slug)->with('examtype')->first();
 
             $this->authorize('update', $exam);
 
@@ -1657,6 +1711,14 @@ class ExamController extends Controller
                 $exam->viewers()->attach($exam->user_id,['role'=>'owner']);
 
 
+            $settings = json_decode($exam->getOriginal('settings'),true);
+            $settings['chat'] = $request->get('chat');
+            $settings['manual_approval'] = $request->get('manual_approval');
+            $settings['section_timer'] = $request->get('section_timer');
+            $settings['section_marking'] = $request->get('section_marking');
+
+
+
             //dd($request->all());
             $exam->name = $request->name;
             $exam->slug = $request->slug;
@@ -1678,7 +1740,7 @@ class ExamController extends Controller
             $exam->message = $request->message;
             $exam->save = $request->save;
             $exam->extra = $request->extra;
-            $exam->settings = $request->settings;
+            $exam->settings = json_encode($settings);
             
             if(!$request->camera)
                 $exam->capture_frequency = 0;

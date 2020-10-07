@@ -234,6 +234,9 @@ class AssessmentController extends Controller
         
         $user = \auth::user();
 
+        $data['branches'] = Cache::get('branches');
+       $data['colleges'] = Cache::get('colleges');
+
         if($user)
             $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
         else
@@ -345,8 +348,8 @@ class AssessmentController extends Controller
                 $candidate['name'] =  \auth::user()->name;
                 $candidate['username'] =  \auth::user()->username;
                 $candidate['rollnumber'] =  \auth::user()->roll_number;
-                $candidate['college'] = (\auth::user()->college_id)? \auth::user()->college->name:'';
-                $candidate['branch'] =   (\auth::user()->branch_id)?\auth::user()->branch->name:'';
+                $candidate['college'] = (isset($data['colleges'][\auth::user()->college_id]))? $data['colleges'][\auth::user()->college_id]->name:'';
+                $candidate['branch'] =   (isset($data['colleges'][\auth::user()->branch_id]))? $data['colleges'][\auth::user()->college_id]->name:'';
                 $candidate['image'] =   \auth::user()->getImage();
                 $candidate['selfie'] = '';
                 $candidate['idcard'] = '';
@@ -364,10 +367,15 @@ class AssessmentController extends Controller
         
         $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
 
+        
+
 
 
         return view('appl.exam.assessment.instructions')
-                ->with('exam',$exam)->with('responses',$responses)->with('camera',$exam->camera)->with('terms',1)->with('url',$url);
+                ->with('exam',$exam)->with('responses',$responses)
+                ->with('camera',$exam->camera)->with('terms',1)
+                ->with('data',$data)
+                ->with('url',$url);
     }
 
 
@@ -383,7 +391,8 @@ class AssessmentController extends Controller
 
         
         $exam = Cache::get('test_'.$test);
-
+        $data['branches'] = Cache::get('branches');
+       $data['colleges'] = Cache::get('colleges');
 
 
         if(!$exam)
@@ -795,6 +804,7 @@ class AssessmentController extends Controller
                         ->with('questions',$questions)
                         ->with('dynamic',$dynamic)
                         ->with('images',$images)
+                        ->with('data',$data)
                         ->with('noback',1)
                         ->with('section_questions',$section_questions);
     }
@@ -2460,10 +2470,10 @@ class AssessmentController extends Controller
         $chats = [];
         if(count($candidates)){
             if(request()->get('forget')){
-                Cache::forget('candidates_'.$user->username);
+                Cache::forget('candidates_'.$exam->slug.'_'.$user->username);
             }
             if(!$search)
-                $userset = Cache::remember('candidates_'.$user->username,240, function() use($candidates) {
+                $userset = Cache::remember('candidates_'.$exam->slug.'_'.$user->username,240, function() use($candidates) {
                     return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
                 });
             else{
