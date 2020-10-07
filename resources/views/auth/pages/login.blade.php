@@ -83,14 +83,13 @@
                                 <br>
               @endif
                                 
-                                @if($_SERVER['HTTP_HOST'] != 'rguktn.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'rguktrkv.xplore.co.in')
-                               
+                                
                                 <div class="mt-4">
                                 <a class="" href="{{ route('password.request') }}">
                                      Reset password via email
                                 </a>
                             </div>
-                            @endif
+                        
                                 <!--
                                 <a class="btn btn-link" href="{{ route('password.forgot') }}">
                                     Recieve password via sms

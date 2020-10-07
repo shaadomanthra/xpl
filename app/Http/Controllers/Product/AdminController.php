@@ -515,7 +515,7 @@ class AdminController extends Controller
 
         if($user){         
             while(1){
-                $username = $username.'_'.str_random(5);
+                $username = $username.'-'.str_random(5);
                 $user = User::where('username',$username)->first();
                 if(!$user)
                     break;
@@ -760,7 +760,7 @@ class AdminController extends Controller
 
         if($user){         
             while(1){
-                $username = $username.'_'.str_random(5);
+                $username = $username.'-'.str_random(5);
                 $user = User::where('username',$username)->first();
                 if(!$user)
                     break;
