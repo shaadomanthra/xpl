@@ -665,6 +665,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('/user/password/forgot', 'Auth\LoginController@forgotPassword')->name('password.forgot');
 	Route::post('/user/password/forgot', 'Auth\LoginController@sendPassword')->name('password.forgot.send');
 
+	Route::get('/user/password_change', 'User\UserController@changePassword')->name('password.change');
+	Route::post('/user/password_change', 'User\UserController@changePassword')->name('password.change');
+
 	
 
 	Route::get('/wipro-verbal-ability-questions', function(){

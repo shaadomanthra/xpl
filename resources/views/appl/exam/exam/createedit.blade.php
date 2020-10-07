@@ -235,31 +235,17 @@
         <div class="col-12 col-md-3">
           <div class="form-group">
             <label for="formGroupExampleInput ">Camera</label>
-            @if(\auth::user()->checkRole(['administrator']))
             <select class="form-control" name="camera">
               <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
               <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
             </select>
-            @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
-            <select class="form-control" name="camera">
-              <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
-              <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
-            </select>
-            @else
-            <select class="form-control" name="camera" disabled>
-              <option value="0" @if(isset($exam)) @if($exam->camera==0) selected @endif @endif >Disable</option>
-              <option value="1" @if(isset($exam)) @if($exam->camera==1) selected @endif @endif >Enable</option>
-            </select>
-            <input type="hidden" name="camera" value="0">
-            @endif
-            <small class='text-secondary'>Camera option is available for pro and advanced accounts only</small>
+            
           </div>
         </div>
 
         <div class="col-12 col-md-3">
           <div class="form-group">
             <label for="formGroupExampleInput ">Photo Capture Frequency</label>
-            @if(\auth::user()->checkRole(['administrator']))
             <select class="form-control" name="capture_frequency">
               <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
               <option value="20" @if(isset($exam)) @if($exam->capture_frequency==20) selected @endif @endif >Every 20 secs</option>
@@ -268,28 +254,6 @@
               <option value="300" @if(isset($exam)) @if($exam->capture_frequency==300) selected @endif @endif >Every 5 mins</option>
               <option value="600" @if(isset($exam)) @if($exam->capture_frequency==600) selected @endif @endif >Every 10 mins</option>
             </select>
-            @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
-            <select class="form-control" name="capture_frequency">
-              <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
-              <option value="20" @if(isset($exam)) @if($exam->capture_frequency==20) selected @endif @endif >Every 20 secs</option>
-              <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
-              <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
-              <option value="300" @if(isset($exam)) @if($exam->capture_frequency==300) selected @endif @endif >Every 5 mins</option>
-              <option value="600" @if(isset($exam)) @if($exam->capture_frequency==600) selected @endif @endif >Every 10 mins</option>
-            </select>
-            @else
-            <select class="form-control" name="capture_frequency" disabled>
-              <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
-              <option value="20" @if(isset($exam)) @if($exam->capture_frequency==20) selected @endif @endif >Every 20 secs</option>
-              <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
-              <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
-              <option value="300" @if(isset($exam)) @if($exam->capture_frequency==300) selected @endif @endif >Every 5 mins</option>
-              <option value="600" @if(isset($exam)) @if($exam->capture_frequency==600) selected @endif @endif >Every 10 mins</option>
-            </select>
-            <input type="hidden" name="capture_frequency" value="0">
-            @endif
-
-            
           </div>
         </div>
          <div class="col-12 col-md-3">

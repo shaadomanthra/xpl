@@ -362,6 +362,36 @@ class UserController extends Controller
 
 
 
+    public function changePassword(Request $r){
+
+        if($r->get('password')){
+            $password = $r->get('password');
+            $password_conf = $r->get('password_confirmation');
+
+
+            if($password != $password_conf){
+                flash('Password and Confirm-password mismatch...kindly re-enter password')->error();
+                 return redirect()->back()->withInput();
+            }if(strlen($password)<8){
+                flash('Kindly use a password of character length atleast 8')->error();
+                 return redirect()->back()->withInput();
+            }
+
+            else{
+                $u = \auth::user();
+                $u->password = bcrypt($password);
+                $u->save();
+                flash('Password succcessfully updated. Kindly relogin.')->success();
+                auth()->logout();
+
+                return redirect()->route('login');
+            }
+        }
+        
+        return view('auth.change');
+
+    }
+
     public function sendOTP(Request $r){
         $code = $r->get('code');
         $url = "https://2factor.in/API/V1/b2122bd6-9856-11ea-9fa5-0200cd936042/SMS/+91".$r->get('number')."/".$code;

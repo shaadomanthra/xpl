@@ -39,7 +39,7 @@
           @if($exam->slug!='psychometric-test')
           @if(\auth::user()->checkRole(['administrator']))
         <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
-        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
+        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 || \auth::user()->role ==13 || \auth::user()->role ==10 )
         <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
         @else
         @endif

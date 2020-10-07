@@ -104,6 +104,13 @@ class LoginController extends Controller
 
     }
 
+
+    public function changePassword(){
+        
+        return view('auth.change');
+
+    }
+
     public function sendPassword(Request $request){
         if(strlen($request->get('phone'))<10){
             flash('Phone number invalid (less than 10 digits)')->success();
