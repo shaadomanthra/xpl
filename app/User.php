@@ -404,13 +404,18 @@ class User extends Authenticatable
 
     public function getRole($role){
 
+        if(request()->get('order')){
+            $order = request()->get('order');
+        }else{
+            $order = 'name';
+        }
         if(subdomain()=='xplore')
-            return Role::where('slug',$role)->first()->users()->orderBy('name')->get();
+            return Role::where('slug',$role)->first()->users()->orderBy($order)->get();
         else{
             $r =Role::where('slug',$role)->first();
-            $users = $r->users()->orderBy('name')->where('client_slug',subdomain())->get()->keyBy('id');
+            $users = $r->users()->orderBy($order)->where('client_slug',subdomain())->get()->keyBy('id');
             if(!$users)
-                return $r->users()->orderBy('name')->get()->keyBy('id');
+                return $r->users()->orderBy($order)->get()->keyBy('id');
             else
             return  $users;
         }

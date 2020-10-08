@@ -47,11 +47,15 @@
             <INPUT type="checkbox" onchange="checkAll(this)" name="chk[]" /> Check All
              
             </small>
+
+            <span class="float-right">
+              Order By : <a href="{{ route('test.user_roles',$exam->slug)}}?order=name">Name</a> /  <a href="{{ route('test.user_roles',$exam->slug)}}?order=info">Info</a>
+            </span>
           </div>
             <div class="border p-3">
               <div class="row">
               @foreach($data['hr-managers'] as $hr)
-                 <div class="col-12 col-md-3">
+                 <div class="col-12 col-md-4">
                   <input  type="checkbox" name="viewers[]" value="{{$hr->id}}"
                    
                       @if($exam->evaluators)
@@ -61,7 +65,7 @@
                       @endif
                    
                   > 
-                  {{$hr->name }}
+                  {{$hr->name }} @if($hr->info)- <b>{{$hr->info }}</b> @endif
                 </div>
               @endforeach
             </div>
