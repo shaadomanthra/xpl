@@ -1420,6 +1420,11 @@ class ExamController extends Controller
         $item = $r->get('item');
         $data = $r->get('score');
 
+        if($r->get('refresh')){
+            Cache::forget('exam_sections_'.$exam->id);
+            flash('Reports refreshed')->success();
+        }
+
        
         if($code){
             if($data)
