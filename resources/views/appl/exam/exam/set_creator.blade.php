@@ -58,7 +58,11 @@
           <th scope="row">{{$m+1}}</th>
           <td>{{$sec->name}} [{{$sec->id}}]</td>
           <td>
-             <label for="formGroupExampleInput ">Description</label>
+
+            @foreach([1,2,3] as $k)
+              
+            @endforeach
+             <label for="formGroupExampleInput ">Algorithm</label>
 <textarea class="form-control summernote" name="{{$sec->id}}"  rows="5">@if($sec->instructions) {{$sec->instructions}} @endif
               </textarea>
           </td>

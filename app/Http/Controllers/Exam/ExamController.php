@@ -1221,6 +1221,12 @@ class ExamController extends Controller
 
 
          if($r->get('delete')){
+
+            foreach($exam->sections as $sec){
+                    $sec->instructions = '';
+                    $sec->save();
+            }
+
             for($i=0;$i<10;$i++){
                 $name = 'set_'.$exam->slug.'_'.$i;
                 //Storage::disk('s3')->delete('paper_set/'.$exam->id.'/'.$name.'.json');

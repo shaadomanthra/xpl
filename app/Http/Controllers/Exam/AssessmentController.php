@@ -4086,21 +4086,13 @@ class AssessmentController extends Controller
                 Storage::disk('s3')->delete('testlog/approvals/'.$test_id.'/'.$user->username.'.json');
             }
             
-            if(Storage::disk('s3')->exists('testlog/approvals/'.$test_id.'.json')){
-                $json = json_decode(Storage::disk('s3')->get('testlog/approvals/'.$test_id.'.json'),true);
-                unset($json[$user->username]);
-                Storage::disk('s3')->put('testlog/approvals/'.$test_id.'.json',json_encode($json),'public');
-
-            }
-            $name = 'testlog/pre-message/'.$exam->id.'/'.$user->username.'.json';
+            
+            $name = 'testlog/pre-message/'.$test_id.'/'.$user->username.'.json';
             if(Storage::disk('s3')->exists($name)){
                 Storage::disk('s3')->delete($name);
             }
 
-            $name = 'testlog/'.$exam->id.'/chats/'.$user->username.'.json';
-            if(Storage::disk('s3')->exists($name)){
-                Storage::disk('s3')->delete($name);
-            }
+            
 
 
             Cache::forget('attempt_'.$user_id.'_'.$test_id);
