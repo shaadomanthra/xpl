@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function () {
+Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::class]], function () {
 	
 	Route::get('/', 'HomeController@root')->name('root');
 	Route::post('/', 'Product\OrderController@callback');

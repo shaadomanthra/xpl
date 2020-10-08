@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'corporate' => \PacketPrep\Http\Middleware\Corporate::class,
         'cache' => \PacketPrep\Http\Middleware\cache::class,
+        'nocache' => \PacketPrep\Http\Middleware\nocache::class,
     ];
 }
