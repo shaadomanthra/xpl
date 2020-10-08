@@ -251,10 +251,10 @@ class TrainingController extends Controller
                     }
                     
                 }else{
-                    if(!$u->info){
-                       $u->info = $row[4];
-                       $u->save(); 
-                    }
+                    
+                    $u->info = $row[4];
+                    $u->save(); 
+                   
                     
                 }
 
