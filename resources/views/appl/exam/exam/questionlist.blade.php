@@ -18,7 +18,8 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-bars "></i> Questions ({{$qdata['total']}})
+          <p class="heading_two mb-2 f30" ><i class="fa fa-bars "></i> Questions ({{$qdata['total']}}) &nbsp;
+            <a href="{{ route('test.questionlist',$exam->slug)}}?fix_topic=1" class="btn  btn-outline-success btn-sm"> Fix Topics</a>
           </p>
         </div>
       </div>
@@ -41,14 +42,14 @@
             <h3> Level</h3>
             <hr>
             <dl class="row mb-0">
-              <dt class="col-sm-3">No Level</dt>
-              <dd class="col-sm-9">{{$qdata['no_level']}}</dd>
-              <dt class="col-sm-3">Level 1</dt>
-              <dd class="col-sm-9">{{$qdata['level1']}}</dd>
-              <dt class="col-sm-3">Level 2</dt>
-              <dd class="col-sm-9">{{$qdata['level2']}}</dd>
-              <dt class="col-sm-3">Level 3</dt>
-              <dd class="col-sm-9">{{$qdata['level3']}}</dd>
+              <dt class="col-sm-6">No Level</dt>
+              <dd class="col-sm-6">{{$qdata['no_level']}}</dd>
+              <dt class="col-sm-6">Level 1</dt>
+              <dd class="col-sm-6">{{$qdata['level1']}}</dd>
+              <dt class="col-sm-6">Level 2</dt>
+              <dd class="col-sm-6">{{$qdata['level2']}}</dd>
+              <dt class="col-sm-6">Level 3</dt>
+              <dd class="col-sm-6">{{$qdata['level3']}}</dd>
             </dl>
 
           </div>

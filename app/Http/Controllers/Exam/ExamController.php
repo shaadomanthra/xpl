@@ -906,13 +906,15 @@ class ExamController extends Controller
                     $id = $q->id;
                 }
 
-                $q->section_name = $section->name;
-                $questions[$i] = $q;
+
                 
                 if($r->get('fix_topic')){
                     $q->topic = str_replace(' ','',strtolower($q->topic));
                     $q->save();
                 }
+
+                $q->section_name = $section->name;
+                $questions[$i] = $q;
 
                 $i++;
             }
