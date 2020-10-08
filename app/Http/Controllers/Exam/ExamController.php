@@ -470,17 +470,17 @@ class ExamController extends Controller
                    }
 
 
-
+                   $count = intval(count($ques_set)/3);
                   
                    foreach($ques_set as $i => $q){
                         $question = Question::where('id',$q)->first();
 
                         if($request->get('rguktn')){
-                            if($i%3==0)
+                            if($i<$count)
                                 $question->level = 3;
-                            if($i%3==1)
+                            if($i>=$count && $i<($count*2))
                                 $question->level = 2;
-                            if($i%3==2)
+                            if($i>=($count*2))
                                 $question->level = 1;
 
                             if($i%6==0)
@@ -1279,9 +1279,12 @@ class ExamController extends Controller
                 foreach($exam->sections as $sec){
                         $formula = json_decode($r->get($sec->id));
                         $qset = $sec->questions;
+
                         $ques[$sec->id] = $exam->pool_qset($qset,$formula);
                         //     
                 }
+
+
                 $name = 'set_'.$exam->slug.'_'.$i;
                 //Storage::disk('s3')->put('paper_set/'.$exam->id.'/'.$name.'.json',json_encode($ques));
                 Cache::forever($name,$ques);

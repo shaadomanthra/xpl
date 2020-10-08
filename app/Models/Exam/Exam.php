@@ -226,18 +226,26 @@ class Exam extends Model
         $l2_ques = $qset->where('level','2');
         $l3_ques = $qset->where('level','3');
 
+
+
         $ques = [];
         if(isset($formula->level1)){
         $level1 = $formula->level1;
 
+
+
         foreach($level1 as $topic=>$qcount){
+
           $ques_temp = $l1_ques->where('topic',$topic)->pluck('id')->shuffle()->take($qcount);
+
+         
 
           foreach($ques_temp as $a=>$qid){
             array_push($ques, $qid);
           }
         }
         }
+
 
         if(!isset($formula->level1) && !isset($formula->level2) && !isset($formula->level3)){
           $ques = $qset->pluck('id')->toArray();
