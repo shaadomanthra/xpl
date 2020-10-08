@@ -1190,6 +1190,7 @@ class AssessmentController extends Controller
 
         $exam = Cache::get('test_'.$slug);
 
+        if(!\auth::user()->isAdmin())
         $this->authorize('view', $exam);
 
 
@@ -1358,9 +1359,16 @@ class AssessmentController extends Controller
                 $review = true;
             //$ques = Question::where('id',$q->id)->first();
             //dd($secs[$t->section_id]);
-            if(isset($ques_keys[$t->question_id]))
-            if($ques_keys[$t->question_id]['topic'])
+            if(isset($ques_keys[$t->question_id])){
+                if($ques_keys[$t->question_id]['topic'])
                 $topics = true;
+
+            }else{
+                 $ques_keys[$t->question_id]['topic'] = null;
+                 $ques_keys[$t->question_id]['section'] = null;
+                 $ques[$t->question_id] = $t->question;
+                 //$ques[$t->question_id]->type = $t->question->type;
+            }
 
             if($t->response){
                 $details['attempted'] = $details['attempted'] + 1;  
@@ -3830,6 +3838,8 @@ class AssessmentController extends Controller
                         ->with('chart',true);
         }
 
+             //dd($tests->pluck('question_id'));
+
         if(!request()->get('reference'))
         foreach($tests as $key=>$t){
 
@@ -3847,9 +3857,18 @@ class AssessmentController extends Controller
                 $review = true;
             //$ques = Question::where('id',$q->id)->first();
             //dd($secs[$t->section_id]);
-            if(isset($ques_keys))
-            if($ques_keys[$t->question_id]['topic'])
-                $topics = true;
+
+            if(isset($ques_keys[$t->question_id]['topic'])){
+               if($ques_keys[$t->question_id]['topic'])
+                $topics = true; 
+            }else{
+                 $ques_keys[$t->question_id]['topic'] = null;
+                 $ques_keys[$t->question_id]['section'] = null;
+                 $ques[$t->question_id] = $t->question;
+                 //$ques[$t->question_id]->type = $t->question->type;
+            }
+            
+
 
 
             if($t->response){

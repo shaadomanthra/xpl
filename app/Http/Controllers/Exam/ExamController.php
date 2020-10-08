@@ -866,6 +866,46 @@ class ExamController extends Controller
     }
 
 
+    public function questionlist($id, Request $r){
+        $exam= Exam::where('slug',$id)->first();
+        $this->authorize('create', $exam);
+
+        $questions = [];
+        $i=0;
+        foreach($exam->sections as $section){
+            if($r->get('set'))
+            $qset = $exam->getQuestionsSection($section->id,$r->get('set'));
+            else
+            $qset = $section->questions;
+
+
+            $k=0;
+            foreach( $qset as $q){
+                if($i==0){
+                    $id = $q->id;
+                }
+                $questions[$i] = $q;
+
+                if($r->get('fix_topic')){
+                    $q->topic = str_replace(' ','',strtolower($q->topic));
+                    $q->save();
+                }
+                $i++;
+            }
+        }
+
+
+        if($questions)
+         return view('appl.exam.exam.questionlist')
+                    ->with('exam',$exam)
+                    ->with('set',$r->get('set'))
+                    ->with('data',$questions);
+        else
+            abort('403','No questions created');
+
+
+    }
+
     public function candidatelist($id, Request $r){
         $exam= Exam::where('slug',$id)->first();
 

@@ -213,6 +213,10 @@ class QuestionController extends Controller
             $explanation = summernote_imageupload(\auth::user(),$request->explanation);
             $request->merge(['explanation'=>$explanation]);
 
+
+            $topic = str_replace(' ','',strtolower($request->get('topic')));
+            $request->merge(['topic'=>$topic]);
+
             $question = Question::create($request->except(['category','tag','sections']));
 
              if($request->get('in_1')){
@@ -1235,6 +1239,9 @@ class QuestionController extends Controller
         $tags = $request->get('tag');
         $sections = $request->get('sections');
 
+       
+
+
 
         try{
 
@@ -1261,8 +1268,8 @@ class QuestionController extends Controller
             $question->status = $request->status;
             $question->level = $request->level;
             $question->intest = $request->intest;
-            $question->topic = $request->topic;
             $question->mark = $request->mark;
+            $question->topic = str_replace(' ','',strtolower($request->get('topic')));
 
             if($request->get('in_1')){
                 $testcases = array();
@@ -1281,6 +1288,8 @@ class QuestionController extends Controller
                 $question->dynamic_code_save();
             }
 
+            
+         
 
             
 
@@ -1319,9 +1328,14 @@ class QuestionController extends Controller
                 
             } 
 
+            if($request->get('exam'))
+            $section_list =  Section::where('exam_id',$request->get('exam'))->orderBy('created_at','desc ')
+                        ->get()->pluck('id')->toArray();
+            else
             $section_list =  Section::orderBy('created_at','desc ')
                         ->get()->pluck('id')->toArray();
             //update exam sections
+
             if($sections)
             foreach($section_list as $section){
                 if(in_array($section, $sections)){
