@@ -805,6 +805,7 @@ $(function(){
           data:{'score':$score,'comment':$comment,'student':$student,'slug':$slug,'_token':$token},
           success:function(data){
             json = JSON.parse(data);
+            console.log(json);
             if(json.status==0){
               $('.under_review_main').hide();
               $('.score_main').html("<div class='display-4'>"+json.score+"</div>");

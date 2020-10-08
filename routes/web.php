@@ -583,6 +583,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class]], function
 	Route::get('admin/analysis','College\CollegeController@analysis')->middleware('auth')->name('admin.analysis');
 	
 
+	Route::post('exam/{exam}/section/copy','Exam\SectionController@copy')->middleware('auth')->name('section.copy');
+	Route::get('exam/{exam}/section/copy','Exam\SectionController@copy')->middleware('auth')->name('section.copy');
+	
 	Route::get('exam/psyreport','Exam\ExamController@psyreport')->middleware('auth')->name('exam.psyreport');
 	Route::post('exam/copy','Exam\ExamController@copy')->middleware('auth')->name('e.exam.copy');
 	Route::post('exam/owner','Exam\ExamController@owner')->middleware('auth')->name('e.exam.owner');

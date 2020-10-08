@@ -52,6 +52,27 @@ class SectionController extends Controller
                 ->with('exam',$exam);
     }
 
+
+
+    public function copy($exam,Request $r)
+    {
+        
+        $exam= Exam::where('slug',$exam)->first();
+        $section= Section::where('id',$r->get('id'))->first();
+
+        $snew = $section->replicate();
+        $snew->save();
+
+        //attach questions
+        foreach($section->questions as $q){
+            if(!$snew->questions->contains($q->id))
+                $snew->questions()->attach($q->id);
+        }
+
+        flash('Section('.$section->name.') is duplicated!')->success();
+        return redirect()->route('sections.index',$exam->slug);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

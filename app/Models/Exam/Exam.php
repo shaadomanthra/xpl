@@ -239,6 +239,10 @@ class Exam extends Model
         }
         }
 
+        if(!isset($formula->level1) && !isset($formula->level2) && !isset($formula->level3)){
+          $ques = $qset->pluck('id')->toArray();
+        }
+
 
         if(isset($formula->level2)){
         $level2 = $formula->level2;
@@ -530,6 +534,14 @@ class Exam extends Model
       
       $e_section->save();
       $e_overall->save();
+
+
+
+      if($flag || $e_overall->status ==0){
+
+            $e_overall = $this->score_best($tests);
+
+      }
       
 
       $user_id = $entry->user_id;
@@ -545,6 +557,57 @@ class Exam extends Model
       }
 
       return Test::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->get();
+    }
+
+    public function score_best($tests){
+        $exam = $this;
+
+        $sections = $exam->sections;
+        $best = array();
+        foreach($sections as $sec){
+          $settings = json_decode($sec->instructions);
+          if(isset($settings->score_best)){
+              $best[$sec->id]= $settings->score_best;
+          }else{
+              $best[$sec->id] = count($sec->questions);
+          }
+        }
+
+        $overall = 0;
+        foreach($best as $secid=>$counter){
+           
+              $items = $tests->where('section_id',$secid);
+              $newscore = 0;
+              $bestscore = [];
+
+              foreach($items as $t){
+                array_push($bestscore, $t->mark);
+              }
+
+              rsort($bestscore);
+              for($i=0;$i<$counter; $i++)
+                 $newscore = $newscore + $bestscore[$i];
+
+
+              $user_id = $t->user_id;
+              $test_id = $t->test_id;
+              
+              $e_section = Tests_Section::where('user_id',$user_id)->where('test_id',$test_id)->where('section_id',$secid)->first();
+              $e_section->score = $newscore;
+              $e_section->save();
+              $best[$secid] = $newscore;
+              $overall = $overall + $newscore;
+        }
+
+
+        //dd($overall);
+
+        $e_overall = Tests_Overall::where('user_id',$user_id)->where('test_id',$test_id)->first();
+        $e_overall->score = $overall;
+        $e_overall->save();
+
+        return $e_overall;
+
     }
 
 
