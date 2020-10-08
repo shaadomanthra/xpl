@@ -1,5 +1,5 @@
 @extends('layouts.nowrap-white')
-@section('title', 'Candidates')
+@section('title', 'Question List')
 @section('content')
 
 @include('appl.exam.exam.xp_css')
@@ -18,7 +18,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-bars "></i> Questions
+          <p class="heading_two mb-2 f30" ><i class="fa fa-bars "></i> Questions ({{$qdata['total']}})
           </p>
         </div>
       </div>
@@ -33,6 +33,62 @@
 <div  class="row py-4">
 
   <div class="col-md-12">
+
+    <div class="card  bg-light mb-3">
+      <div class="card-body">
+        <div class="row mb-0">
+          <div class="col-12 col-md-4">
+            <h3> Level</h3>
+            <hr>
+            <dl class="row mb-0">
+              <dt class="col-sm-3">No Level</dt>
+              <dd class="col-sm-9">{{$qdata['no_level']}}</dd>
+              <dt class="col-sm-3">Level 1</dt>
+              <dd class="col-sm-9">{{$qdata['level1']}}</dd>
+              <dt class="col-sm-3">Level 2</dt>
+              <dd class="col-sm-9">{{$qdata['level2']}}</dd>
+              <dt class="col-sm-3">Level 3</dt>
+              <dd class="col-sm-9">{{$qdata['level3']}}</dd>
+            </dl>
+
+          </div>
+          <div class="col-12 col-md-4">
+            <h3> Topic</h3>
+            <hr>
+            <dl class="row">
+            @foreach($qdata['topic'] as $k=>$t)
+              <dt class="col-sm-6">{{$k}}</dt>
+              <dd class="col-sm-6">{{$t}}</dd>
+
+            @endforeach
+            </dl>
+            
+
+          </div>
+
+          <div class="col-12 col-md-4">
+            <h3> Mark</h3>
+            <hr>
+            <dl class="row mb-0">
+              <dt class="col-sm-3">1 Mark</dt>
+              <dd class="col-sm-9">{{$qdata['mark_1']}}</dd>
+              <dt class="col-sm-3">2 Mark</dt>
+              <dd class="col-sm-9">{{$qdata['mark_2']}}</dd>
+              <dt class="col-sm-3">3 Mark</dt>
+              <dd class="col-sm-9">{{$qdata['mark_3']}}</dd>
+              <dt class="col-sm-3">4 Mark</dt>
+              <dd class="col-sm-9">{{$qdata['mark_4']}}</dd>
+              <dt class="col-sm-3">5 Mark</dt>
+              <dd class="col-sm-9">{{$qdata['mark_5']}}</dd>
+            </dl>
+            
+
+          </div>
+
+        </div>
+        
+      </div>
+    </div>
  
     <div class=" mb-3 mb-md-0">
       <div class="mb-0">
@@ -45,7 +101,7 @@
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{count($data)}})</th>
+                <th scope="col" width="8%">#({{count($data)}})</th>
                 <th scope="col">Question </th>
                 <th scope="col" width="10%">Topic </th>
                 <th scope="col" width="10%">Level</th>
@@ -66,7 +122,9 @@
                     @if($obj->e)<div class=""><div class="d-inline">(E)</div> <div class="d-inline">{!! $obj->e !!}</div> </div>@endif
 
                   </p>
-                  
+                  @if($obj->answer)<span class="text-primary">Answer : <b>{{$obj->answer}}</b> </span>@endif &nbsp; 
+
+                  @if($obj->section_name)<span class="text-danger">Section : <b>{{$obj->section_name}}</b> </span>@endif
                 </td>
                  <td> 
                  {{ $obj->topic }}

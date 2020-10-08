@@ -77,6 +77,13 @@
 			@endforeach
 		</div>
 		</div>
+
+
+
 	</div>
 </div>
+
+<div class="p-3 border rounded bg-white">
+		<a href="{{ route('test.questionlist',$exam->slug)}}"><h4 class="mb-0"><i class="fa fa-bars"></i> Question list</h4></a>
+		</div>
 

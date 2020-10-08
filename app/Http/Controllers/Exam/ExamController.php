@@ -9,6 +9,7 @@ use PacketPrep\User;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Examtype;
+use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Dataentry\Category;
@@ -891,6 +892,7 @@ class ExamController extends Controller
 
         $questions = [];
         $i=0;
+        $data = array("level1"=>0,"level2"=>0,"level3"=>0,'no_level'=>0,'total'=>0,"mark_1"=>0,"mark_2"=>0,"mark_3"=>0,"mark_4"=>0,"mark_5"=>0);
         foreach($exam->sections as $section){
             if($r->get('set'))
             $qset = $exam->getQuestionsSection($section->id,$r->get('set'));
@@ -903,20 +905,65 @@ class ExamController extends Controller
                 if($i==0){
                     $id = $q->id;
                 }
-                $questions[$i] = $q;
 
+                $q->section_name = $section->name;
+                $questions[$i] = $q;
+                
                 if($r->get('fix_topic')){
                     $q->topic = str_replace(' ','',strtolower($q->topic));
                     $q->save();
                 }
+
                 $i++;
             }
+        }
+
+
+        foreach($questions as $q){
+            if($q->level==3)
+                    $data['level3']++;
+                elseif($q->level==2)
+                    $data['level2']++;
+                elseif($q->level==1)
+                    $data['level1']++;
+                else
+                    $data['no_level']++;
+
+
+                if($q->mark==5)
+                    $data['mark_5']++;
+                 if($q->mark==4)
+                    $data['mark_4']++;
+                 if($q->mark==3)
+                    $data['mark_3']++;
+                 if($q->mark==2)
+                    $data['mark_2']++;
+                 if($q->mark==1)
+                    $data['mark_1']++;
+
+                
+
+                if(!isset($data['topic'][$q->topic])){
+                    $data['topic'][$q->topic] = 1;
+                }
+                else{
+                    $data['topic'][$q->topic]++;
+                }
+
+                if(!$q->topic){
+                    if(!isset($data['topic']['no_topic']))
+                    $data['topic']['no_topic'] =0;
+                    else
+                    $data['topic']['no_topic']++;  
+                }
+                $data['total']++;
         }
 
 
         if($questions)
          return view('appl.exam.exam.questionlist')
                     ->with('exam',$exam)
+                    ->with('qdata',$data)
                     ->with('set',$r->get('set'))
                     ->with('data',$questions);
         else
@@ -1861,13 +1908,77 @@ class ExamController extends Controller
     public function destroy($id)
     {
         $exam = Exam::where('id',$id)->first();
+
+        $this->authorize('update', $exam);
+
+        
+
+        $Tests_Overall = Tests_Overall::where('test_id',$id)->with('user')->get(); 
+        foreach($Tests_Overall as $t){
+            $user = $t->user;
+            $user_id = $user->id;
+            $username =$user->username;
+            $test_id = $id;
+
+
+            // $attempts = Test::where('test_id',$test_id)->where('user_id',$user_id)->get();
+            
+            // $jsonname = $slug.'_'.$user_id;
+            // $user = User::where('id',$user_id)->first();
+
+            // if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json')){
+            //     $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+
+            //     foreach($json as $q=>$ques){
+            //             foreach($ques as $filename=>$img){
+            //                 echo $filename.'<br>';
+            //                 Storage::disk('s3')->delete('urq/'.$filename);
+            //             }
+            //     }
+            //     Storage::disk('s3')->delete('urq/'.$jsonname.'.json');
+            // }
+
+            // if(Storage::disk('s3')->exists('testlog/'.$test_id.'/'.$user->username.'.json')){
+            //     Storage::disk('s3')->delete('testlog/'.$test_id.'/'.$user->username.'.json');
+            // }
+
+            //  if(Storage::disk('s3')->exists('testlog/'.$test_id.'/log/'.$user->username.'_log.json')){
+            //     Storage::disk('s3')->delete('testlog/'.$test_id.'/log/'.$user->username.'_log.json');
+            // }
+
+            // if(Storage::disk('s3')->exists('testlog/'.$test_id.'/chats/'.$user->username.'.json')){
+            //     Storage::disk('s3')->delete('testlog/'.$test_id.'/chats/'.$user->username.'.json');
+            // }
+
+            // if(Storage::disk('s3')->exists('testlog/approvals/'.$test_id.'/'.$user->username.'.json')){
+            //     Storage::disk('s3')->delete('testlog/approvals/'.$test_id.'/'.$user->username.'.json');
+            // }
+            
+            
+            // $name = 'testlog/pre-message/'.$exam->id.'/'.$user->username.'.json';
+            // if(Storage::disk('s3')->exists($name)){
+            //     Storage::disk('s3')->delete($name);
+            // }
+
+            
+
+
+            Cache::forget('attempt_'.$user_id.'_'.$test_id);
+            Cache::forget('attempts_'.$user_id);
+            Cache::forget('responses_'.$user_id.'_'.$test_id);    
+
+            Test::where('test_id',$test_id)->where('user_id',$user_id)->delete();
+            Tests_Section::where('test_id',$test_id)->where('user_id',$user_id)->delete();
+            Tests_Overall::where('test_id',$test_id)->where('user_id',$user_id)->delete(); 
+
+        }
+
         foreach($exam->sections as $section){
             $section->questions()->detach();
             $section->delete();
         }
 
-        $this->authorize('update', $exam);
-
+       
         
         $exam->delete();
 
