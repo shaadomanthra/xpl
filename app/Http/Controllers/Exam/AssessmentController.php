@@ -1347,12 +1347,12 @@ class AssessmentController extends Controller
                 $details['testdate'] = $t->created_at->diffForHumans(); 
             }
 
-            $qd = $ques[$t->question_id];
-
-            $qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
-
-
-            $ques[$t->question_id] = $this->option_swap2($qd,$t->dynamic);
+            if(isset($ques_keys[$t->question_id])){
+                $qd = $ques[$t->question_id];
+                $qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
+                $ques[$t->question_id] = $this->option_swap2($qd,$t->dynamic);
+            }
+            
             
             if($t->status==2)
                 $review = true;
