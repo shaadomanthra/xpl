@@ -94,6 +94,11 @@
             @endif
         </textarea>
       </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">RGUKTN</label>
+        <input type="text" class="form-control" name="rguktn" id="formGroupExampleInput" placeholder="Enter the section time" value="1" >
+        </div>
       
       <div class="form-group">
         <label for="formGroupExampleInput ">Examtype</label>

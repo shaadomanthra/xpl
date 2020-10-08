@@ -237,6 +237,8 @@ class ExamController extends Controller
        $result = array();
        $ques= array();
        $k=0;
+
+
        $category = Category::where('slug',$slug)->first();
        $siblings = $category->descendants()->withDepth()->having('depth', '=', 1)->get();
 
@@ -466,9 +468,40 @@ class ExamController extends Controller
                         $i++;
 
                    }
+
+
+
                   
                    foreach($ques_set as $i => $q){
                         $question = Question::where('id',$q)->first();
+
+                        if($request->get('rguktn')){
+                            if($i%3==0)
+                                $question->level = 3;
+                            if($i%3==1)
+                                $question->level = 2;
+                            if($i%3==2)
+                                $question->level = 1;
+
+                            if($i%6==0)
+                                $question->topic ='chapter-1';
+                            if($i%6==1)
+                                $question->topic ='chapter-2';
+                            if($i%6==2)
+                                $question->topic ='chapter-3';
+                            if($i%6==3)
+                                $question->topic ='chapter-4';
+                            if($i%6==4)
+                                $question->topic ='chapter-5';
+                            if($i%6==5)
+                                $question->topic ='chapter-6';
+
+
+                            $question->save();
+
+                        }
+
+
                         if(!$question->sections->contains($c->id))
                             $question->sections()->attach($c->id);
                    }

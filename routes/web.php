@@ -582,6 +582,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 
 	Route::get('admin/analysis','College\CollegeController@analysis')->middleware('auth')->name('admin.analysis');
 	
+	Route::get('exam/createexam','Exam\ExamController@createExam')->middleware('auth')->name('exam.createexam');
+	Route::post('exam/createexam','Exam\ExamController@storeExam')->middleware('auth')->name('exam.save');
+
 
 	Route::post('exam/{exam}/section/copy','Exam\SectionController@copy')->middleware('auth')->name('section.copy');
 	Route::get('exam/{exam}/section/copy','Exam\SectionController@copy')->middleware('auth')->name('section.copy');
@@ -593,9 +596,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::resource('examtype','Exam\ExamtypeController')->middleware('auth');
 	Route::resource('exam/{exam}/sections','Exam\SectionController')->middleware('auth');
 	Route::get('exam/{exam}/question','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.questions');
-	Route::get('exam/createexam','Exam\ExamController@createExam')->middleware('auth')->name('exam.createexam');
-	Route::post('exam/createexam','Exam\ExamController@storeExam')->middleware('auth')->name('exam.save');
-
+	
 	Route::get('exam/{exam}/question/{id}','Dataentry\QuestionController@exam')->middleware('auth')->name('exam.question');
 
 	Route::get('exam/{exam}/passage','Dataentry\PassageController@exam')->middleware('auth')->name('exam.passages');
