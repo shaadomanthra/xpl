@@ -339,8 +339,27 @@ class ExamController extends Controller
         $enew->user_id = $user_id;
         $enew->save();
 
+        
+        $section_sequence = $r->get('section_sequence');
+        if($section_sequence){
+            $seq = explode(',',$section_sequence);
+           
+
+            if(count($seq)!=count($exam->sections))
+            {
+                flash('Mismatch in the number of sections ')->success();
+                return redirect()->route('exam.show',$exam->slug);
+            }else{
+                foreach($seq as $a=>$sq)
+                    $sections[$a] =  $exam->sections[$sq];
+            }
+            
+        }else{
+            $sections = $exam->sections;
+        }
+        
         // create sections
-        foreach($exam->sections as $s)
+        foreach($sections as $s)
         {
             $snew = $s->replicate();
             $snew->user_id = $user_id;

@@ -648,6 +648,16 @@
           >
        
       </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput ">Section Sequence (Optional)</label>
+        <input type="text" class="form-control" name="section_sequence" id="formGroupExampleInput" placeholder="give values seperated by commas" 
+            value=''
+          >
+          <p class="bg-light p-3 rounded">
+         <small class=" ">The number of sections should match with original & the indexing starts from zero (like array indexing)  for eg: actual sequence - 0,1,2 & new sequence - 2,0,1 . This will make thrid section appear first and second section at the end</small></p>
+      </div>
+
         <div class="form-group">
         <label for="formGroupExampleInput "> Select the HR Manager to assign for</label>
         <select class="form-control" name="user_id">
