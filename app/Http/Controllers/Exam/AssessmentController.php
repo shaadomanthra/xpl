@@ -2817,7 +2817,7 @@ class AssessmentController extends Controller
 
         $json =[];
 
-        $userset = Cache::remember('candidates_'.$user->username, 240, function() use ($candidates){
+        $userset = Cache::remember('candidates_'.$exam->slug.'_'.$user->username, 240, function() use ($candidates){
             return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
         });
         
