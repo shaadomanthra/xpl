@@ -116,11 +116,40 @@
                 <td>
                   <h5 >{!! $obj->question !!} </h5>
                   <p>
-                    @if($obj->a)<div class=""><div class="d-inline">(A)</div> <div class="d-inline">{!! $obj->a !!}</div> </div>@endif
-                    @if($obj->b)<div class=""><div class="d-inline">(B)</div> <div class="d-inline">{!! $obj->b !!}</div> </div>@endif
-                    @if($obj->c)<div class=""><div class="d-inline">(C)</div> <div class="d-inline">{!! $obj->c !!}</div> </div>@endif
-                    @if($obj->d)<div class=""><div class="d-inline">(D)</div> <div class="d-inline">{!! $obj->d !!}</div> </div>@endif
-                    @if($obj->e)<div class=""><div class="d-inline">(E)</div> <div class="d-inline">{!! $obj->e !!}</div> </div>@endif
+                    @if($obj->a)
+                    <div class="row no-gutters">
+                      <div class="col-2 col-md-1">(A)</div>
+                      <div class="col-10 col-md-11">{!! $obj->a !!}</div>
+                    </div>
+                    @endif
+
+                    @if($obj->b)
+                    <div class="row no-gutters">
+                      <div class="col-2 col-md-1">(B)</div>
+                      <div class="col-10 col-md-11">{!! $obj->b !!}</div>
+                    </div>
+                    @endif
+
+                    @if($obj->c)
+                    <div class="row no-gutters">
+                      <div class="col-2 col-md-1">(C)</div>
+                      <div class="col-10 col-md-11">{!! $obj->c !!}</div>
+                    </div>
+                    @endif
+
+                    @if($obj->d)
+                    <div class="row no-gutters">
+                      <div class="col-2 col-md-1">(D)</div>
+                      <div class="col-10 col-md-11">{!! $obj->d !!}</div>
+                    </div>
+                    @endif
+
+                    @if($obj->e)
+                    <div class="row no-gutters">
+                      <div class="col-2 col-md-1">(E)</div>
+                      <div class="col-10 col-md-11">{!! $obj->e !!}</div>
+                    </div>
+                    @endif
 
                   </p>
                   @if($obj->answer)<span class="text-primary">Answer : <b>{{$obj->answer}}</b> </span>@endif &nbsp; 

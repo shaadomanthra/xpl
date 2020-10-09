@@ -997,6 +997,7 @@ class ExamController extends Controller
 
         if($questions)
          return view('appl.exam.exam.questionlist')
+                    ->with('mathjax',true)
                     ->with('exam',$exam)
                     ->with('qdata',$data)
                     ->with('set',$r->get('set'))
