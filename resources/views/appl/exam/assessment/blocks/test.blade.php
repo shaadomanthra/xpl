@@ -67,11 +67,11 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
     <div class="camera_holder d-inline d-md-none float-right">
 <div class="">
   <img id="photo3" style="position: absolute;right:31px;top:15px" src=""> 
-    <video id="video" class="video_small" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style="width:60px;height:60px;position: absolute;right:31px;top:15px">Video stream not available.</video>
+    <video id="video" class="video_small" data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="{{$c}}" data-cc="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" style="width:60px;height:60px;position: absolute;right:31px;top:15px">Video stream not available.</video>
     <canvas id="canvas" style='display: none'></canvas>
      <canvas id="canvas3" style='display: none' ></canvas>
     <div class="output">
-    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}" data-rollnumber="{{\auth::user()->roll_number}}" data-uname="{{\auth::user()->name}}" data-last_photo="" style='display: none'> 
+    <img id="photo" alt="The screen capture will appear in this box." data-token="{{ csrf_token() }}" data-hred="{{ route('img.post') }}" data-count="{{ ($time*60*1000)/20}}" data-c="{{$c}}"  data-cc="0" data-username="{{\auth::user()->username}}" data-test="{{$exam->id}}" data-bucket="{{ env('AWS_BUCKET')}}" data-region="{{ env('AWS_DEFAULT_REGION')}}" data-rollnumber="{{\auth::user()->roll_number}}" data-uname="{{\auth::user()->name}}" data-last_photo="" style='display: none'> 
   </div>
 </div>
 </div>

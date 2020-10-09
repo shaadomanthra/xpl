@@ -2,6 +2,13 @@
 $(document).ready(function(){
 	
 
+    /* enter disabled */
+  $('form').on('keydown', function(e) {
+    if (e.which === 13 && !$(e.target).is('textarea')) {
+      e.preventDefault();
+      console.log("ENTER-KEY PREVENTED ON NON-TEXTAREA ELEMENTS");
+    }
+  });
    
     /* fullscreen check */
     $('.fullscreen').on('click', () => {
@@ -371,7 +378,6 @@ $(document).ready(function(){
       $url = $('.url_approval').data('url')+'?time='+ new Date();
       $username = $('.assessment').data('username');
       
-      console.log($url);
       if(!$('.start_btn').hasClass('disabled'))
       $.ajax({
           type: "GET",
@@ -984,6 +990,8 @@ $(document).ready(function(){
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
         responses.last_photo = $('#photo').data('last_photo');
+        if($('#video').length)
+        responses.c = parseInt($('#video').data('c'));
 
         var seconds = new Date().getTime() / 1000;
         responses.last_updated = seconds;

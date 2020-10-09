@@ -376,6 +376,7 @@ class AssessmentController extends Controller
         }
 
 
+
         
         $responses = Cache::get('responses_'.$user->id.'_'.$exam->id);
 
@@ -405,6 +406,7 @@ class AssessmentController extends Controller
         $exam = Cache::get('test_'.$test);
         $data['branches'] = Cache::get('branches');
        $data['colleges'] = Cache::get('colleges');
+       $c = 0 ;
 
 
         if(!$exam)
@@ -441,10 +443,16 @@ class AssessmentController extends Controller
         }else{
             $user = \auth::user();
 
+
             if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/'.$user->username.'.json')){
                 $json = json_decode(Storage::disk('s3')->get('testlog/'.$exam->id.'/'.$user->username.'.json'),true);
 
                 $responses = $json['responses'];
+
+
+                if(isset($json['c']))
+                $c = $json['c'];
+                
                 if(is_array($responses))
                 {
                     $responses = collect($responses);
@@ -752,6 +760,10 @@ class AssessmentController extends Controller
             $item = array($user->username=>0);
             $item[$user->username] = ["approved"=> 1,"terminated"=>0];
             Storage::disk('s3')->put($approval_link_name,json_encode($item),'public');
+         }else if(!Storage::disk('s3')->exists($approval_link_name) && $settings['manual_approval']=='no'){
+            $item = array($user->username=>0);
+            $item[$user->username] = ["approved"=> 1,"terminated"=>0];
+            Storage::disk('s3')->put($approval_link_name,json_encode($item),'public');
          }
 
 
@@ -801,6 +813,7 @@ class AssessmentController extends Controller
                         ->with('highlight',true)
                         ->with('exam',$exam)
                         ->with('code',true)
+                        ->with('c',$c)
                         ->with('urls',$url)
                         ->with('urls2',$url2)
                         ->with('json_log',$json_log)
@@ -2025,6 +2038,8 @@ class AssessmentController extends Controller
             
         }
 
+       // dd($data);
+
         if(!$request->get('admin')){
             $tests_cache = new Test();
             $tests_cache = collect($d);
@@ -2068,7 +2083,7 @@ class AssessmentController extends Controller
             }
             else if($item['response'] && $item['accuracy']==0){
                 $sec[$item['section_id']]['incorrect']++;
-                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] - $item['mark'];
+                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] + $item['mark'];
             }
                 
             $sec[$item['section_id']]['time'] = $sec[$item['section_id']]['time'] + $item['time'];
@@ -2076,6 +2091,7 @@ class AssessmentController extends Controller
             $sec[$item['section_id']]['max'] = $sections_max[$item['section_id']];
 
         }
+
 
 
         //update tests overall
@@ -2199,6 +2215,7 @@ class AssessmentController extends Controller
             Cache::forget('attempt_'.$user_id.'_'.$test_id);
             Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
         }
+
 
         Test::insert($data); 
         Tests_Section::insert($sec);
@@ -2371,8 +2388,8 @@ class AssessmentController extends Controller
         // });
 
         //log file
-        $name = $username.'_log.json';
-        $filepath = 'testlog/'.$exam->id.'/log/'.$name;
+        $name = $username.'.json';
+        $filepath = 'testlog/'.$exam->id.'/'.$name;
 
         $content = null;
         if(Storage::disk('s3')->exists($filepath)){
@@ -2413,6 +2430,8 @@ class AssessmentController extends Controller
                     $nm ="00".$i;
                 else if(strlen($i)==2)
                     $nm ="0".$i;
+                else
+                    $nm = $i;
                 $pics[$i] = $imagepath.$nm.'.jpg';
 
             }
@@ -2427,7 +2446,7 @@ class AssessmentController extends Controller
             }
         }
 
-       
+        rsort($pics);
         
         $pg = $this->paginateAnswers($pics,18);
 
@@ -2512,8 +2531,8 @@ class AssessmentController extends Controller
 
             //$usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
             foreach($userset as $a=> $b){
-                $name = $b->username.'_log.json';
-                $pg[$b->username] = 'testlog/'.$exam->id.'/log/'.$name;
+                $name = $b->username.'.json';
+                $pg[$b->username] = 'testlog/'.$exam->id.'/'.$name;
             }
             
             $pg = $this->paginateAnswers($pg,count($pg));

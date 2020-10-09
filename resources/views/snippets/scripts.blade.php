@@ -2084,14 +2084,14 @@ $(function(){
   
 });
 
-$(document).on("keypress", 'form', function (e) {
-    var code = e.keyCode || e.which;
-    if (code == 13) {
-      console.log("Enter Pressed");
-        //e.preventDefault();
-        //return false;
-    }
-});
+// $(document).on("keypress", 'form', function (e) {
+//     var code = e.keyCode || e.which;
+//     if (code == 13) {
+//       console.log("Enter Pressed");
+//         //e.preventDefault();
+//         //return false;
+//     }
+// });
 
 
 if($('.timestamp').length)
@@ -2387,6 +2387,120 @@ $(function(){
   var startbutton = null;
 
 
+  function saveTestpic($sno=null,$live=null){
+        
+        if(!$('.ques_count').data('save'))
+          return 1;
+
+
+        if(!$sno)
+          $sno = $('.active').data('sno');
+
+        $ques_count = $('.ques_count').data('count');
+
+
+        $url = $('.ques_count').data('url');
+        $qno = 1;
+        var responses = {};
+        number =1;
+        
+        responses.test_id =  $('input[name=test_id]').val();
+        responses.user_id =  $('input[name=user_id]').val();
+        responses.token =  $('input[name=_token]').val();
+        responses.code =  $('input[name=code]').val();
+        responses.admin =  $('input[name=admin]').val();
+        responses.window_change =  $('input[name=window_change]').val();
+        responses.username = $('#photo').data('username');
+
+        if($('.os_details').length){
+          responses.os_details = $('.os_details').html();
+          responses.browser_details = $('.browser_details').html();
+          responses.js_details = $('.js_details').html();
+          responses.ip_details = $('.ip_details').html();
+        }
+        
+
+        responses.uname = $('#photo').data('uname');
+        responses.qno = $sno;
+        responses.last_photo = $('#photo').data('last_photo');
+        if($('#video').length)
+        responses.c = parseInt($('#video').data('c'));
+
+        var seconds = new Date().getTime() / 1000;
+        responses.last_updated = seconds;
+        responses.completed = 0;
+
+
+        var r = [];
+        while (number <= $ques_count) {  
+          var resp = {};
+          resp.question_id = $('input[name='+$qno+'_question_id]').val();
+          resp.section_id = $('input[name='+$qno+'_section_id]').val();
+          resp.time = $('input[name='+$qno+'_time]').val();
+          resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
+
+
+          if($('.code_'+$sno).length)
+            resp.code = $('.code_'+$sno).val();
+          if($('.input_'+$qno).is(':checkbox')){
+              var ans =[]
+              $.each($(".input_"+$qno+":checked"), function(){
+                  ans.push($(this).val());
+              });
+              resp.response = ans.join(",");
+          }
+          else if($('.input_'+$qno).is(':radio')){
+                resp.response = $(".input_"+$qno+":checked").val();
+          }else if($('.input_'+$qno).is("textarea")){
+                resp.response = $('.input_'+$qno).val();
+          }
+          else
+              resp.response = $('.input_'+$qno).val();
+          //console.log('selected='+resp.response);
+          r.push(resp);
+          number++; 
+          $qno++;            
+        }
+        responses.responses = r;
+
+        var all_data = JSON.stringify(responses);
+
+        if(!$live){
+            aws_cache_pic(all_data);
+        }else{
+
+          //   $.ajax({
+          //   type : 'post',
+          //   url : $url,
+          //   data:{'responses':all_data,'_token':responses.token},
+          //   success:function(data){
+          //     console.log('Live data updated');
+          //   }
+          // });
+
+        }
+        
+    }
+
+    function aws_cache_pic($data){
+      var $url = $('.url_testlog').data('url');
+      //console.log($url);
+
+      $.ajax({
+              method: "PUT",
+              headers: {"Content-Type": "application/json"},
+              processData: false,
+              data: $data,
+              url: $url
+      })
+      .done(function($url) {
+              console.log('cached');
+      });
+    }
+
+
+
+
   function dataURItoBlob(dataURI) {
     var binary = atob(dataURI.split(',')[1]);
     var array = [];
@@ -2422,6 +2536,8 @@ $(function(){
               console.log($last_photo_url);
 
               $('#photo').data('last_photo',$last_photo_url);
+
+              saveTestpic();
            }
             
         });
@@ -2598,12 +2714,14 @@ $(function(){
         // var url = $('#video').data('hred');
         // $token = $('#video').data('token');
         $c = parseInt($('#video').data('c'));
-        if(parseInt($('#video').data('c'))!=200000)
-         $c=0;
+        // if(parseInt($('#video').data('c'))!=200000)
+        //  $c=0;
         if($('.start_btn').hasClass('exam_started'))
         $c = parseInt($('#video').data('c'))+1;
 
-      
+
+        console.log($c);
+        console.log($('#video').data('cc'));
 
 
         $username = $('#video').data('username');
@@ -2709,7 +2827,9 @@ $(function(){
         if(Number.isInteger($c)){
 
           $('#video').data('c',$c);
-          if($c==0){
+          $cm = $('#video').data('cc');
+          if($cm==0){
+            $('#video').data('cc',1);
             $('.cam_spinner').hide();
             if(!$('#d').html())
               $('.start_btn').removeClass('disabled');
