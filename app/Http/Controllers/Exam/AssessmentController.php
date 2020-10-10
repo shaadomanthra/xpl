@@ -1968,7 +1968,7 @@ class AssessmentController extends Controller
                     else
                         $item['mark'] = 1;
                 }else{
-                    if($secs[$item['section_id']]->negative)
+                    if($secs[$item['section_id']]->negative && $item['response'])
                         $item['mark'] = 0 - $secs[$item['section_id']]->negative;
                     else
                         $item['mark'] = 0;
@@ -1992,7 +1992,7 @@ class AssessmentController extends Controller
                             else
                                 $item['mark'] = 1;
                         }else{
-                            if($secs[$item['section_id']]->negative)
+                            if($secs[$item['section_id']]->negative && $item['response'])
                                 $item['mark'] = 0 - $secs[$item['section_id']]->negative;
                             else
                                 $item['mark'] = 0;
@@ -2000,7 +2000,7 @@ class AssessmentController extends Controller
 
                     }else{
                         $item['accuracy'] =0;
-                        if($secs[$item['section_id']]->negative)
+                        if($secs[$item['section_id']]->negative && $item['response'])
                             $item['mark'] = 0 - $secs[$item['section_id']]->negative;
                         else
                             $item['mark'] = 0;
