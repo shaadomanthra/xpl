@@ -2531,8 +2531,9 @@ class AssessmentController extends Controller
 
             //$usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
             foreach($userset as $a=> $b){
-                $name = $b->username.'.json';
-                $pg[$b->username] = 'testlog/'.$exam->id.'/'.$name;
+
+                $name = $b->username.'_log.json';
+                $pg[$b->username] = 'testlog/'.$exam->id.'/log/'.$name;
             }
             
             $pg = $this->paginateAnswers($pg,count($pg));
@@ -2547,6 +2548,9 @@ class AssessmentController extends Controller
                    
                     $content = json_decode(Storage::disk('s3')->get($f),true);
                     $content['url'] = Storage::disk('s3')->url($f);
+
+                    $name = 'testlog/'.$exam->id.'/'.$usc.'.json';
+                    $content['url2'] = Storage::disk('s3')->url($name);
 
                     $chaturl = 'testlog/'.$exam->id.'/chats/'.$usc.'.json';
 
@@ -2671,6 +2675,9 @@ class AssessmentController extends Controller
 
                 $content = json_decode(Storage::disk('s3')->get($f),true);
                 $content['url'] = Storage::disk('s3')->url($f);
+
+                $name = 'testlog/'.$exam->id.'/'.$content['username'].'.json';
+                $content['url2'] = Storage::disk('s3')->url($name);
 
                 $content['selfie_url'] ='';
                 $content['idcard_url'] ='';

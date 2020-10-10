@@ -612,7 +612,10 @@ function image_refresh(){
           // $test= $(this).data('test');
           // $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/pre-message/'+$test+'/';
           // $aws2 = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/';
-          $url = $(this).data('url')+'?time='+new Date();
+          if($(this).data('url2').length)
+          $url = $(this).data('url2')+'?time='+new Date();
+          else
+          $url = $(this).data('url')+'?time='+new Date(); 
 
           $item = $(this);
 
