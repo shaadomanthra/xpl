@@ -594,6 +594,7 @@ class Exam extends Model
 
               rsort($bestscore);
               for($i=0;$i<$counter; $i++)
+                if(isset($bestscore[$i]))
                  $newscore = $newscore + $bestscore[$i];
 
 
