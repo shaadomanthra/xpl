@@ -83,9 +83,10 @@
   @if(isset($mathjax))
   <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
+      loader: {load: ['[tex]/physics']},
       extensions: ["tex2jax.js"],
       jax: ["input/TeX","output/HTML-CSS"],
-      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]],packages: {'[+]': ['physics']}}
   });
 </script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
