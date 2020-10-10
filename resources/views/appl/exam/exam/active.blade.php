@@ -98,7 +98,7 @@
                           <!--end::Svg Icon-->
                         </span>
                         <span class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 d-block">{{($data['total'])}}</span>
-                        <span class="font-weight-bold text-white font-size-sm">Live Participants</span>
+                        <span class="font-weight-bold text-white font-size-sm">Total Participants</span>
                       </div>
                       <!--end::Body-->
                     </div>

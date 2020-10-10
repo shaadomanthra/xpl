@@ -2510,6 +2510,7 @@ class AssessmentController extends Controller
         
         $pg=[];
         $chats = [];
+        $completed_list = [];
         if(count($candidates)){
             if(request()->get('forget')){
                 Cache::forget('candidates_'.$exam->slug.'_'.$user->username);
@@ -2538,6 +2539,10 @@ class AssessmentController extends Controller
                 $name = $b->username.'_log.json';
                 $pg[$b->username] = 'testlog/'.$exam->id.'/log/'.$name;
             }
+
+
+                $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('user_id')->toArray())->with('user')->get();
+                $completed_list = $this->updateCompleted($pg,$tests_overall,$exam);
             
             $pg = $this->paginateAnswers($pg,count($pg));
          
@@ -2669,10 +2674,11 @@ class AssessmentController extends Controller
             }else{
                 $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
 
-                $completed_count  = Tests_Overall::where('test_id',$exam->id)->count();
+                $tests_overall = Tests_Overall::where('test_id',$exam->id)->with('user')->get();
+                $completed_count  = count($tests_overall);
                 $sessions_count = count($files);
 
-                if($data['completed'] < $data['total'] ){
+                if($sessions_count> $completed_count ){
                     $data['total'] = $sessions_count; 
                     $data['completed'] = $completed_count; 
                     $data['live'] = $sessions_count - $completed_count; 
@@ -2681,8 +2687,8 @@ class AssessmentController extends Controller
                     $data['completed'] = $completed_count; 
                     $data['live'] = 0; 
                 }
-                
-                
+
+                $completed_list = $this->updateCompleted($files,$tests_overall,$exam);
                 $pg = $this->paginateAnswers($files,18);
             }
 
@@ -2758,11 +2764,18 @@ class AssessmentController extends Controller
                 }else{
                     $content['last_photo'] = '';
                 }
+
+                if($content['completed']){
+                    if($completed_list[$content['username']]==1)
+                        $content['completed'] = 1;
+                }
                 if(isset($content['username']))
                  $users[$content['username']] = $content;
                 //array_push($users, $content);
             }
         }
+
+
         
         
 
@@ -2823,6 +2836,29 @@ class AssessmentController extends Controller
         
         }
         
+    }
+
+
+    public function updateCompleted($files,$tests_overall,$exam){
+
+        $users = array();$completed=[];
+        foreach($tests_overall as $t){
+            $users[$t->user->username] = $t->user->username;
+            //array_push($users,$t->user->username);
+
+        }
+
+
+         foreach($files as $k=>$f){
+            $a = str_replace('testlog/'.$exam->id.'/log/', '', $f);
+            $username = str_replace('_log.json', '', $a);
+            $completed[$username] = 0;
+            if(isset($users[$username]))
+                $completed[$username] = 1;
+         }
+
+         return $completed;
+
     }
 
    
