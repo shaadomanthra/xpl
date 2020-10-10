@@ -2672,9 +2672,16 @@ class AssessmentController extends Controller
                 $completed_count  = Tests_Overall::where('test_id',$exam->id)->count();
                 $sessions_count = count($files);
 
-                $data['total'] = $sessions_count; 
-                $data['completed'] = $completed_count; 
-                $data['live'] = $sessions_count - $completed_count; 
+                if($data['completed'] < $data['total'] ){
+                    $data['total'] = $sessions_count; 
+                    $data['completed'] = $completed_count; 
+                    $data['live'] = $sessions_count - $completed_count; 
+                }else{
+                    $data['total'] = $completed_count; 
+                    $data['completed'] = $completed_count; 
+                    $data['live'] = 0; 
+                }
+                
                 
                 $pg = $this->paginateAnswers($files,18);
             }

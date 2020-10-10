@@ -78,6 +78,7 @@
 </div>
 
 
+@if($data['total'])
 <div class="container">
 <div class="row">
 <div class="col-6 col-md-4">
@@ -142,7 +143,7 @@
 </div>
 </div>
 
-
+@endif
 
 
 
