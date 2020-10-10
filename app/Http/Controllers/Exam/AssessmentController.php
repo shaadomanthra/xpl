@@ -2541,8 +2541,8 @@ class AssessmentController extends Controller
             }
 
 
-                $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('user_id')->toArray())->with('user')->get();
-                $completed_list = $this->updateCompleted($pg,$tests_overall,$exam);
+            $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('user_id')->toArray())->with('user')->get();
+            $completed_list = $this->updateCompleted($pg,$tests_overall,$exam);
             
             $pg = $this->paginateAnswers($pg,count($pg));
          
@@ -2637,11 +2637,11 @@ class AssessmentController extends Controller
                     }
                 }
                 
-                if($content['completed']){
+                if(isset($content['completed'])){
                     if($completed_list[$content['username']]==1)
                         $content['completed'] = 1;
                 }
-                
+
                 if(isset($content['username']))
                     $users[$content['username']] = $content;
 
