@@ -2504,6 +2504,9 @@ class AssessmentController extends Controller
 
         //dd($files);
         //dd($candidates);
+
+        $data = [];
+        $data['total'] = $data['live'] = $data['completed']=$data['inactive'] =0;
         
         $pg=[];
         $chats = [];
@@ -2665,6 +2668,14 @@ class AssessmentController extends Controller
 
             }else{
                 $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
+
+                $completed_count  = Tests_Overall::where('test_id',$exam->id)->count();
+                $sessions_count = count($files);
+
+                $data['total'] = $sessions_count; 
+                $data['completed'] = $completed_count; 
+                $data['live'] = $sessions_count - $completed_count; 
+                
                 $pg = $this->paginateAnswers($files,18);
             }
 
@@ -2748,9 +2759,7 @@ class AssessmentController extends Controller
         
         
 
-        $data = [];
-        $data['total'] = $data['live'] = $data['completed'] =  $data['inactive']=0;
-        $diff = 400;
+       
         // foreach($users as $a=>$b){
             
             
