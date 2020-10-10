@@ -185,7 +185,7 @@
             @if(isset($b['last_photo']))
             @if($b['last_photo'])
             <div class="selfie_container mt-4">
-              <img src="{{$b['last_photo']}}" class="w-100 image_refresh image_refresh_{{$a}}" data-url="{{$b['url']}}" data-url2="{{$b['url2']}}" data-username="{{$a}}" >
+              <img src="{{$b['last_photo']}}" class="w-100 image_refresh image_refresh_{{$a}}" data-url="{{$b['url']}}" data-url2="{{$b['url2']}}" data-username="{{$a}}" data-completed="{{$b['completed']}}">
             </div>
             @endif
             @endif

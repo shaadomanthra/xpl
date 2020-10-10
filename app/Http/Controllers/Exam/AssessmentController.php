@@ -2638,6 +2638,7 @@ class AssessmentController extends Controller
                 }
                 
                 if(isset($content['completed'])){
+                    if(!$content['completed'])
                     if($completed_list[$content['username']]==1)
                         $content['completed'] = 1;
                 }else{
@@ -2698,6 +2699,8 @@ class AssessmentController extends Controller
                 }
 
                 $completed_list = $this->updateCompleted($files,$tests_overall,$exam);
+
+               // dd($completed_list);
                 $pg = $this->paginateAnswers($files,18);
             }
 
@@ -2774,7 +2777,7 @@ class AssessmentController extends Controller
                     $content['last_photo'] = '';
                 }
 
-                if($content['completed']){
+                if(!$content['completed']){
                     if($completed_list[$content['username']]==1)
                         $content['completed'] = 1;
                 }

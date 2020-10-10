@@ -612,10 +612,12 @@ function image_refresh(){
           // $test= $(this).data('test');
           // $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/testlogs/pre-message/'+$test+'/';
           // $aws2 = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/';
-          if($(this).data('url2').length)
-          $url = $(this).data('url2')+'?time='+new Date();
-          else
+          // if($(this).data('url2').length)
+          // $url = $(this).data('url2')+'?time='+new Date();
+          // else
           $url = $(this).data('url')+'?time='+new Date(); 
+
+
 
           $item = $(this);
 
@@ -628,6 +630,8 @@ function image_refresh(){
                  last_photo = result.last_photo;
                  $username = result.username;
                  
+                 $completed = $('.image_refresh_'+$username).data('completed');
+
                  if($username){
                      $('.image_refresh_'+$username).attr('src',last_photo);
                  if(window_change){
@@ -636,9 +640,9 @@ function image_refresh(){
                     $('.window_change_'+$username).html(window_change);
                  }
 
-                 if(result.completed)
+                 if(result.completed && !$completed)
                   $('.card_'+$username).removeClass('bg-light-danger').removeClass('bg-light-warning');
-                 else if(result.last_updated){
+                 else if(result.last_updated && !$completed){
                     $('.card_'+$username).data('last',result.last_updated);
                     $time = new Date().getTime() ;
                     if(result.last_seconds){
