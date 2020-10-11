@@ -247,9 +247,9 @@ class Exam extends Model
         }
 
 
-        if(!isset($formula->level1) && !isset($formula->level2) && !isset($formula->level3)){
-          $ques = $qset->pluck('id')->toArray();
-        }
+        // if(!isset($formula->level1) && !isset($formula->level2) && !isset($formula->level3)){
+        //   $ques = $qset->pluck('id')->toArray();
+        // }
 
 
         if(isset($formula->level2)){
