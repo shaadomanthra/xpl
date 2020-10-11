@@ -36,7 +36,12 @@
 		<div class="p-3 border rounded bg-light mb-3" style="min-height: 130px">
 		<div class="bg-white p-3 float-right text-center border"><h5>Total Score</h5>
 			@if(!$test_overall->status)
-			<div class="display-4">{{ $test_overall->score }} </div>
+        @if($test->solutions==2)
+        <div class="display-4">Private </div>
+        @else
+        <div class="display-4">{{ $test_overall->score }} </div>
+        @endif
+			
 			@else
 			<div class="badge badge-primary px-2" style="line-height: 1.4">Under<br>Review</div>
 			@endif
