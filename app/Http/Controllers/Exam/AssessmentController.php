@@ -406,7 +406,7 @@ class AssessmentController extends Controller
         $exam = Cache::get('test_'.$test);
         $data['branches'] = Cache::get('branches');
        $data['colleges'] = Cache::get('colleges');
-       $c = 0 ;
+       $cc = 0 ;
 
 
         if(!$exam)
@@ -451,7 +451,9 @@ class AssessmentController extends Controller
 
 
                 if(isset($json['c']))
-                $c = $json['c'];
+                $cc = $json['c'];
+
+                
                 
                 if(is_array($responses))
                 {
@@ -813,7 +815,7 @@ class AssessmentController extends Controller
                         ->with('highlight',true)
                         ->with('exam',$exam)
                         ->with('code',true)
-                        ->with('c',$c)
+                        ->with('c',$cc)
                         ->with('urls',$url)
                         ->with('urls2',$url2)
                         ->with('json_log',$json_log)
