@@ -108,6 +108,11 @@
             @endif 
             </div>
           </div>
+
+          <div class="row mb-2">
+            <div class="col-md-4">Attached Users</div>
+            <div class="col-md-8"><h3><b>{{ count($product->users)}}</b></h3></div>
+          </div>
           
           
         

@@ -315,6 +315,101 @@ class UserController extends Controller
 
     }
 
+
+
+    function csvToArray($filename = '', $delimiter = ',')
+    {
+        if (!file_exists($filename) || !is_readable($filename))
+            return false;
+
+        $header = null;
+        $data = array();
+        if (($handle = fopen($filename, 'r')) !== false)
+        {
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
+            {
+                if (!$header)
+                    $header = $row;
+                else
+                    $data[] = array_combine($header, $row);
+            }
+            fclose($handle);
+        }
+
+        return $data;
+    }
+
+
+    public function upload_users(Request $request)
+    {
+
+
+        $data = [];
+        if(isset($request->all()['file'])){
+
+            $file      = $request->all()['file'];
+            if(strtolower($file->getClientOriginalExtension()) != 'csv'){
+                flash('Supports only .csv files')->error();
+                return redirect()->back()->withInput(); 
+            }
+
+            $data = $this->csvToArray($file);
+            
+            for ($i = 0; $i < count($data); $i ++)
+            {
+                $client_slug = $data[$i]['client_slug'];
+                $u = User::where('email',$data[$i]['email'])->where('client_slug',$client_slug)->first();
+                
+
+                if(!$u){
+                    $u = new User([
+                   'name'     => $data[$i]['name'],
+                   'email'    => $data[$i]['email'], 
+                   'username'    => $this->username($data[$i]['email']), 
+                   'client_slug' =>$client_slug,
+                   'phone'    => $data[$i]['phone'], 
+                   'roll_number'    => $data[$i]['roll_number'], 
+                   'branch_id' => $data[$i]['branch_id'],
+                   'college_id' => $data[$i]['college_id'],
+                   'year_of_passing' =>$data[$i]['year_of_passing'],
+                   'info'=>$data[$i]['info'],
+                   'password' => bcrypt($data[$i]['phone']),
+                   'status'   => 1,
+                    ]);
+
+                    $u->save();
+                    $data[$i]['exists'] = 0;
+                    
+                }else{
+                    $u->roll_number = $data[$i]['roll_number'];
+                    $u->branch_id = $data[$i]['branch_id'];
+                    $u->college_id = $data[$i]['college_id'];
+                    $u->year_of_passing = $data[$i]['year_of_passing'];
+                    $u->info = $data[$i]['info'];
+                    $data[$i]['exists'] = 1;
+                }
+                
+            }
+
+            flash('Successfully uploaded ('.count($data).') users.')->success();
+        }
+
+
+        
+
+        return view('appl.user.upload')
+                    ->with('data',$data); 
+    }
+
+    public function username($email){
+        $parts = explode("@", $email);
+        $username = $parts[0];
+        $u = User::where('username',$username)->first();
+        if($u){
+            $username = $username.'-'.rand(100,9999);
+        }
+        return $username;
+    }
   
 
     /**

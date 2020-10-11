@@ -15,7 +15,7 @@
       @if($stub=='Create')
       <form method="post" action="{{route('product.store')}}" >
       @else
-      <form method="post" action="{{route('product.update',$product->slug)}}" >
+      <form method="post" action="{{route('product.update',$product->slug)}}" enctype="multipart/form-data">
       @endif  
       <div class="form-group">
         <label for="formGroupExampleInput ">Product Name</label>
@@ -44,6 +44,14 @@
 
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       </div>
+
+
+      @if($stub=='Update')
+      <div class="form-group">
+            <label for="formGroupExampleInput ">Attach users  - <a href="{{ asset('product_format.csv')}}">product_format.csv</a></label>
+            <input type="file" class="form-control" name="file" id="formGroupExampleInput" >
+         </div>
+      @endif
 
 
       <div class="form-group">

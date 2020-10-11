@@ -515,6 +515,8 @@ class ProductController extends Controller
     {
         $product= Product::where('slug',$id)->first();
 
+
+
         
         $this->authorize('view', $product);
 
@@ -593,6 +595,28 @@ class ProductController extends Controller
             abort(404);
     }
 
+    function csvToArray($filename = '', $delimiter = ',')
+    {
+        if (!file_exists($filename) || !is_readable($filename))
+            return false;
+
+        $header = null;
+        $data = array();
+        if (($handle = fopen($filename, 'r')) !== false)
+        {
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
+            {
+                if (!$header)
+                    $header = $row;
+                else
+                    $data[] = array_combine($header, $row);
+            }
+            fclose($handle);
+        }
+
+        return $data;
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -616,8 +640,8 @@ class ProductController extends Controller
             $product->slug = $request->slug;
             $product->description = ($request->description) ? $request->description: null;
             $product->price = $request->price;
-             $product->validity = $request->validity;
-             $product->discount = $request->discount;
+            $product->validity = $request->validity;
+            $product->discount = $request->discount;
             $product->status = $request->status;
 
             if($exams){
@@ -640,6 +664,42 @@ class ProductController extends Controller
             }else{
                 $product->courses()->detach();
             }
+
+
+            if(isset($request->all()['file'])){
+
+            $file      = $request->all()['file'];
+            if(strtolower($file->getClientOriginalExtension()) != 'csv'){
+                flash('Supports only .csv files')->error();
+                return redirect()->back()->withInput(); 
+            }
+
+            $data = $this->csvToArray($file);
+            $not_found =[];
+            $found = [];
+            for ($i = 0; $i < count($data); $i ++)
+            {
+                $email = $data[$i]['email'];
+                $client_slug = $data[$i]['client_slug'];
+                $validity = $data[$i]['validity'];
+                $u = User::where('email',$email)->where('client_slug',$client_slug)->first();
+                $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($validity*31).' days'));
+
+
+                if($u){
+                  array_push($found, $email);
+                  if(!$u->products->contains($product->id))
+                   $u->products()->attach($product->id,['validity'=>$validity,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+
+                }else{
+                  array_push($not_found, $email);
+                }
+                
+            }
+
+            flash('Successfully attached products to ('.count($found).') users and not found users is ('.count($not_found).').')->success();
+        }
+
 
 
             $product->save(); 

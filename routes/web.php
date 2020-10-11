@@ -234,6 +234,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::post('admin/image','Product\AdminController@imageupload')->name('admin.image')->middleware('auth');
 	Route::get('admin/user','Product\AdminController@user')->name('admin.user')->middleware('auth');
 	Route::get('admin/user/list','Product\AdminController@listuser')->name('admin.listuser')->middleware('auth');
+
+	Route::post('admin/upload_users','User\UserController@upload_users')->name('upload.user')->middleware('auth');
+	Route::get('admin/upload_users','User\UserController@upload_users')->name('upload.users')->middleware('auth');
+
 	
 	Route::get('admin/adduser','Product\AdminController@adduser')->name('admin.user.create')->middleware('auth');
 	Route::post('admin/adduser','Product\AdminController@storeuser')->name('admin.user.store')->middleware('auth');
