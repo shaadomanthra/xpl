@@ -275,8 +275,44 @@
             </div>
           </div>
 
-          
 
+          @if(subdomain()=='rguktn' || subdomain()=='rguktrkv')
+           <h4 class="my-3"><i class="fa fa-angle-right"></i> Other Details</h4>
+          
+          <div class="row mb-0">
+            <div class="col-6"> <i class="fa fa-th"></i>&nbsp;Mid paper</div>
+            <div class="col-6">
+              @if(!$exam->mid)
+                <span class="badge badge-warning">No</span>
+              @elseif($exam->mid)
+                <span class="badge badge-success" >Yes</span>
+              @endif
+            </div>
+          </div>
+
+           <div class="row mb-0">
+            <div class="col-6"> <i class="fa fa-th"></i>&nbsp;Set Creation</div>
+            <div class="col-6">
+              @if(!$exam->sets)
+                <span class="badge badge-warning">No</span>
+              @elseif($exam->sets)
+                <span class="badge badge-success" >Yes</span> <span class="badge badge-danger">{{$exam->qcount}} questions</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row mb-0">
+            <div class="col-6"> <i class="fa fa-th"></i>&nbsp;Proctors Assigned</div>
+            <div class="col-6">
+              @if(!$exam->invigilation)
+                <span class="badge badge-warning">No</span>
+              @else
+                <span class="badge badge-success" >Yes</span> <span class="badge badge-info">{{$exam->viewers()->wherePivot('role','viewer')->count()}} proctors</span>
+              @endif
+            </div>
+          </div>
+
+          @endif
 
 
             </div>

@@ -779,6 +779,30 @@ class ExamController extends Controller
         else
             $exam->section_marking = 'no';
 
+        $set_name = 'set_'.$exam->slug.'_0';
+        $sets = Cache::get($set_name);
+
+        
+        if(count($exam->sections)==3)
+            $exam->mid = 1;
+        else
+            $exam->mid = 0;
+
+        if($sets){
+            $exam->qcount = 0;
+            foreach($sets as $s)
+                $exam->qcount = $exam->qcount + count($s);
+
+            $exam->sets = 1;
+        }
+        else
+            $exam->sets = 0;
+
+        if(isset($settings['invigilation']))
+            $exam->invigilation = 1;
+        else
+            $exam->invigilation = 0;
+
 
         if($exam)
             return view('appl.exam.exam.show')
@@ -1287,7 +1311,7 @@ class ExamController extends Controller
 
 
                 $name = 'set_'.$exam->slug.'_'.$i;
-                //Storage::disk('s3')->put('paper_set/'.$exam->id.'/'.$name.'.json',json_encode($ques));
+                Storage::disk('s3')->put('paper_set/'.$exam->id.'/'.$name.'.json',json_encode($ques));
                 Cache::forever($name,$ques);
             }
 

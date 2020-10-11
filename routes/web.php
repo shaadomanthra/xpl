@@ -167,7 +167,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 			->name('test.snaps')->middleware('auth');
 	Route::get('/test/{test}/accesscode', 'Exam\ExamController@accesscode')
 			->name('test.accesscode')->middleware('auth');
-	Route::get('/test/{test}/set_creator', 'Exam\ExamController@set_creator')
+	Route::get('/exam/{test}/set_creator', 'Exam\ExamController@set_creator')
 			->name('test.sets')->middleware('auth');
 	Route::post('/test/{test}/set_creator', 'Exam\ExamController@set_creator')
 			->name('test.sets')->middleware('auth');
