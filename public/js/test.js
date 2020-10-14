@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-	
+
 
     /* enter disabled */
   $('form').on('keydown', function(e) {
@@ -9,7 +9,7 @@ $(document).ready(function(){
       console.log("ENTER-KEY PREVENTED ON NON-TEXTAREA ELEMENTS");
     }
   });
-   
+
     /* fullscreen check */
     $('.fullscreen').on('click', () => {
       var browser = $('.browser_details').html();
@@ -21,10 +21,10 @@ $(document).ready(function(){
                 $('.testpage').show();
                 $('.fullscreen_container').hide();
                 $('#check').hide();
-                
+
                 $('.start_btn').addClass('exam_started');
               }
-                
+
         }else{
             if (screenfull.isEnabled && !$('.start_btn').hasClass('disabled')) {
                 screenfull.request();
@@ -33,13 +33,13 @@ $(document).ready(function(){
                 $('#check').hide();
                 $('.fullscreen').html('back to fullscreen');
                 $('.start_btn').addClass('exam_started');
-               
+
                 $('.full_screen_message').html('<span class="text-danger">You are not allowed to exit the fullscreen mode. Kindly click the below button to resume fullscreen.</span>');
             }
 
         }
         win_focus();
-        
+
     });
 
     if (screenfull.isEnabled) {
@@ -57,9 +57,9 @@ $(document).ready(function(){
                   $('.testpage').show();
               }
             }else{
-    
+
             }
-            
+
         });
     }
 
@@ -76,7 +76,7 @@ $(document).ready(function(){
           if(window_swap){
              user_test_log(new Date().getTime() / 1000, 'Window Swap - '+count);
              if(auto_terminate==0){
-                 var message = 'We have noticed a window swap ('+count+'). Kindly note that numerous swaps will lead to cancellation of the test.'; 
+                 var message = 'We have noticed a window swap ('+count+'). Kindly note that numerous swaps will lead to cancellation of the test.';
              }else{
                 if(count == auto_terminate)
                     var message = 'We have noticed '+auto_terminate+' window swaps. Next swap will lead to termination of the test.';
@@ -84,21 +84,21 @@ $(document).ready(function(){
                     var message = 'You have reached the '+auto_terminate+' swap limit. The test will be terminated here.';
                 else
                     var message = 'We have noticed a window swap ('+count+'). Kindly note that '+auto_terminate+' swaps will lead to cancellation of the test.';
-        
+
              }
 
           }
-      
+
           $('.swap-message').html(message);
           if($('.testpage').is(":visible"))
             $('#exampleModalCenter').modal();
-          
+
 
 
           // auto submit the test
           if(window_swap){
             if(count == auto_terminate){
-                setTimeout(function(){ 
+                setTimeout(function(){
                   $('#exampleModalCenter').modal('toggle');
                   $("form")[0].submit();
                 }, 3000);
@@ -124,14 +124,14 @@ $(document).ready(function(){
           });
         }
       }
-      
+
     }
 
     // // start window focus events after 5 seconds
     // setTimeout(win_focus,5000);
 
 
-    
+
 
     // /* check connectivity */
     // $('.connection_status').data('status',1);
@@ -162,7 +162,7 @@ $(document).ready(function(){
     //     $('.connection_status').data('status',0);
     //   }
     // }, 3000);
-    
+
 
 
 
@@ -183,13 +183,13 @@ $(document).ready(function(){
             $json = null;
 
           $time = Math.floor($time);
-         
+
           if(!$json){
 
-            
+
           }else{
             console.log('log  - '+$action);
-            
+
             let time = $time;
             var activity = $json.activity;
 
@@ -210,13 +210,13 @@ $(document).ready(function(){
               activity[time] = $action;
               $json.activity = activity;
             }
-            
+
             $json.window_change =  $('input[name=window_change]').val();
             $json.last_photo = $('#photo').data('last_photo');
             $json.last_updated = $time;
             $json.last_seconds = new Date().getTime();
 
-            
+
             $json.window_swap = parseInt($('.assessment').data('window_swap'));
             if($action && $action!='null')
             if(!$json.completed){
@@ -274,7 +274,7 @@ $(document).ready(function(){
               var agent = this.header.join(' '),
                   os = this.matchItem(agent, this.dataos),
                   browser = this.matchItem(agent, this.databrowser);
-              
+
               return { os: os, browser: browser };
           },
           matchItem: function (string, data) {
@@ -286,7 +286,7 @@ $(document).ready(function(){
                   match,
                   matches,
                   version;
-              
+
               for (i = 0; i < data.length; i += 1) {
                   regex = new RegExp(data[i].value, 'i');
                   match = regex.test(string);
@@ -316,21 +316,21 @@ $(document).ready(function(){
               return { name: 'unknown', version: 0 };
           }
       };
-      
+
       var e = module.init(),
           debug = '';
-      
+
       debug += 'os.name = ' + e.os.name + '<br/>';
       debug += 'os.version = ' + e.os.version + '<br/>';
       debug += 'browser.name = ' + e.browser.name + '<br/>';
       debug += 'browser.version = ' + e.browser.version + '<br/>';
-      
+
       debug += '<br/>';
       debug += 'navigator.userAgent = ' + navigator.userAgent + '<br/>';
       debug += 'navigator.appVersion = ' + navigator.appVersion + '<br/>';
       debug += 'navigator.platform = ' + navigator.platform + '<br/>';
       debug += 'navigator.vendor = ' + navigator.vendor + '<br/>';
-      
+
       if($('.os_details').length)
           $('.os_details').html(e.os.name+' v'+ Math.round(e.os.version));
 
@@ -342,18 +342,18 @@ $(document).ready(function(){
 
         $('.browser_details').html($msg);
       }
-          
+
       if($('.js_details').length){
           $('.js_details').html("enabled");
           $('.accesscode_btn_wrap').show();
-          
-          
-    
+
+
+
       }
-          
+
 
       if($('.ip_details').length){
-         $.getJSON("https://api.ipify.org?format=json", 
+         $.getJSON("https://api.ipify.org?format=json",
                                             function(data) {
           $('.ip_details').html(data.ip);
           setTimeout(function(){
@@ -362,11 +362,11 @@ $(document).ready(function(){
                 $('.start_btn').removeClass('disabled');
               }
             }
-           
+
          $('.cam_spinner').hide();
           },1000);
-          
-    
+
+
         });
       }
      }
@@ -377,7 +377,7 @@ $(document).ready(function(){
      function termination_check(){
       $url = $('.url_approval').data('url')+'?time='+ new Date();
       $username = $('.assessment').data('username');
-      
+
       if(!$('.start_btn').hasClass('disabled'))
       $.ajax({
           type: "GET",
@@ -390,19 +390,19 @@ $(document).ready(function(){
             clearInterval(tr);
              $('#terminated').modal();
              user_test_log(new Date().getTime() / 1000, 'Test terminated by proctor');
-             setTimeout(function(){ 
+             setTimeout(function(){
                   $("form")[0].submit();
                 }, 3000);
           }
-          
-             
-       
+
+
+
         }).fail(function () {
                       console.log("Sorry URL is not access able");
         });
-            
 
-        
+
+
       }
 
 
@@ -417,8 +417,8 @@ $(document).ready(function(){
     function toDateTime(secs) {
       var t = new Date(1970, 0, 1); // Epoch
       t.setSeconds(secs);
-      
-    t.setHours(t.getHours() + 5); 
+
+    t.setHours(t.getHours() + 5);
     t.setMinutes(t.getMinutes() + 30);
     datetext = t.toTimeString();
     datetext = datetext.split(' ')[0];
@@ -457,7 +457,7 @@ $(document).ready(function(){
                    }
 
                 }
-                
+
             }).fail(function () {
                 console.log("Sorry URL is not access able");
         });
@@ -488,10 +488,10 @@ $(document).ready(function(){
     if($p)
       $uname = $pname;
 
-    
+
     $('.chat_messages').animate({scrollTop: 10000},400);
-    const now = new Date()  
-    const $time = Math.round(now.getTime() / 1000) 
+    const now = new Date()
+    const $time = Math.round(now.getTime() / 1000)
 
     $('.message_proctor').data('time',$time);
 
@@ -505,7 +505,7 @@ $(document).ready(function(){
                 it.data('lastchat',item);
                 var $data = JSON.stringify(result);
                 $('.chat_messages').append("<div class='mt-2'><b>"+$uname+":</b><br>"+$message+"</div>");
-                
+
                 $('#message-text').val('');
                  $.ajax({
                       method: "PUT",
@@ -518,7 +518,7 @@ $(document).ready(function(){
                      $('.chat_messages').animate({scrollTop: 10000},400);
                       console.log('message sent');
               });
-                
+
             }).fail(function () {
                 console.log("Sorry URL is not access able");
         });
@@ -527,7 +527,7 @@ $(document).ready(function(){
 
     function chat_refresh(){
       if($('.m_student').length && !$('#chat').is(':visible')){
-          
+
         $url = $('.m_student').data('url')+"?time="+$.now();
         $username = $('.m_student').data('username');
         $lastchat = $('.m_student').data('lastchat');
@@ -574,23 +574,23 @@ $(document).ready(function(){
                               $('.chats').animate({scrollTop: 5000},400);
                               $('#chat').modal();
                             }
-                           
-                            
+
+
                             // if($('.send_chat').data('username')==$username){
                             //   $('.chat_messages').append("<div class='mt-2'><b>"+$uname+": <span class='badge badge-warning'>new</span></b><br>"+$message+"</div>");
                             // }
                         }else{
                            $('.m_'+ordered[k].username).removeClass('blink');
                            $('.chat_count_'+ordered[k].username).hide();
-                        } 
+                        }
                       }
 
-                      
+
 
                    }
                 }
 
-                
+
             }).fail(function () {
                 console.log("Sorry URL is not access able");
           });
@@ -633,18 +633,18 @@ $(document).ready(function(){
                             $('.chat_messages').animate({scrollTop: 10000},400);
                             $('.chats').animate({scrollTop: 5000},400);
                             item.data('lastchat',k);
-                           
+
                         }else{
 
-                        } 
+                        }
                       }
 
-                      
+
 
                    }
                 }
 
-                
+
             }).fail(function () {
                 console.log("Sorry URL is not access able");
           });
@@ -655,7 +655,7 @@ $(document).ready(function(){
 
     setInterval(chat_refresh,1000);
 
-      
+
 
 
 
@@ -672,16 +672,16 @@ $(document).ready(function(){
 
         // Get today's date and time
         var now = new Date().getTime();
-          
+
         // Find the distance between now and the count down date
         var distance = countDownDate - now;
-          
+
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          
+
         // Output the result in an element with id="demo"
         if(document.getElementById("d")){
           if(days){
@@ -699,7 +699,7 @@ $(document).ready(function(){
             }
           }
 
-        // If the count down is over, write some text 
+        // If the count down is over, write some text
         if (distance < 0) {
           clearInterval(w);
           if(document.getElementById("d"))
@@ -718,11 +718,11 @@ $(document).ready(function(){
     }
 
 
-     
+
     // exam timer
     function load_timer(){
             // Set the date we're counting down to
-        
+
         var t = parseInt($('.assessment').data('exam_time'));
         var countDownDate = addMinutes(new Date(),t);
 
@@ -743,7 +743,7 @@ $(document).ready(function(){
             // Display the result in the element with id="demo"
             document.getElementById("timer").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
             document.getElementById("timer2").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
-            
+
 
             if(hours==0 && minutes==5 && seconds==1)
               $('#timer_alert').modal();
@@ -753,14 +753,14 @@ $(document).ready(function(){
             // if(seconds==56)
             //   $('#timer_alert').modal();
 
-            // If the count down is finished, write some text 
+            // If the count down is finished, write some text
             if (distance < 0) {
               clearInterval(x);
               document.getElementById("timer").innerHTML = "EXPIRED";
               document.getElementById("timer2").innerHTML = "EXPIRED";
               alert('The Test time has expired. ');
               document.getElementById("assessment").submit();
-                
+
             }
           }
         }, 1000);
@@ -818,9 +818,9 @@ $(document).ready(function(){
     function myTimer() {
       $sno = $('.active').data('sno');
         var count = parseInt($('.'+$sno+'_time').val());
- 
+
         $('.'+$sno+'_time').val((count+1));
-      
+
     }
 
     function closeModals(){
@@ -832,7 +832,7 @@ $(document).ready(function(){
 
     function scroll($sno){
         /* scroll to */
-        $('.qset').scrollTop(0); 
+        $('.qset').scrollTop(0);
         var start = $('.start').offset().top;
         var qset = $('.qset').offset().top;
         var s = $('.s'+$sno).offset().top;
@@ -840,15 +840,12 @@ $(document).ready(function(){
         var scrollto = offset+start;
         if(offset!=0){
             if(start==qset)
-                $('.qset').scrollTop(offset); 
-            
+                $('.qset').scrollTop(offset);
+
         }
     }
 
     function make_visible($sno){
-
-      
-
       $('.active').removeClass('active');
         $('.s'+$sno).addClass('active');
         $('.question_block').hide();
@@ -859,10 +856,10 @@ $(document).ready(function(){
           saveTest($sno);
     }
     function update_sno($sno){
-      
+
       $('.left-qno').data('sno',$sno-1);
       $('.clear-qno').data('sno',$sno);
-      
+
       $('.right-qno').data('sno',$sno+1);
       update_mark($sno);
       hide_buttons($sno);
@@ -904,14 +901,14 @@ $(document).ready(function(){
       else
         resp.response = $('.input_'+$sno).val();
 
-   
+
 
       $('.final_response_'+$sno).html(resp.response);
     }
 
     function unanswered($sno){
       $('.s'+$sno).removeClass('qblue-border');
-      
+
       $('.input_'+$sno).prop('checked',false);
       if($('.input_fillup_'+$sno).length)
       $('.input_fillup_'+$sno).val('');
@@ -934,7 +931,7 @@ $(document).ready(function(){
         $('.mark-qno').html('Mark');
       }
 
-    
+
     }
 
 
@@ -955,7 +952,7 @@ $(document).ready(function(){
 
 
     function saveTest($sno=null,$live=null){
-        
+
         if(!$('.ques_count').data('save'))
           return 1;
 
@@ -970,7 +967,7 @@ $(document).ready(function(){
         $qno = 1;
         var responses = {};
         number =1;
-        
+
         responses.test_id =  $('input[name=test_id]').val();
         responses.user_id =  $('input[name=user_id]').val();
         responses.token =  $('input[name=_token]').val();
@@ -985,7 +982,7 @@ $(document).ready(function(){
           responses.js_details = $('.js_details').html();
           responses.ip_details = $('.ip_details').html();
         }
-        
+
 
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
@@ -999,7 +996,7 @@ $(document).ready(function(){
 
 
         var r = [];
-        while (number <= $ques_count) {  
+        while (number <= $ques_count) {
           var resp = {};
           resp.question_id = $('input[name='+$qno+'_question_id]').val();
           resp.section_id = $('input[name='+$qno+'_section_id]').val();
@@ -1025,8 +1022,8 @@ $(document).ready(function(){
               resp.response = $('.input_'+$qno).val();
           //console.log('selected='+resp.response);
           r.push(resp);
-          number++; 
-          $qno++;            
+          number++;
+          $qno++;
         }
         responses.responses = r;
 
@@ -1047,7 +1044,7 @@ $(document).ready(function(){
           // });
 
         }
-        
+
     }
 
     function aws_cache($data){
@@ -1068,7 +1065,7 @@ $(document).ready(function(){
 
 
     function saveLive($sno=null,$live=null){
-        
+
         if(!$('.ques_count').data('save'))
           return 1;
 
@@ -1083,7 +1080,7 @@ $(document).ready(function(){
         $qno = 1;
         var responses = {};
         number =1;
-        
+
         responses.test_id =  $('input[name=test_id]').val();
         responses.user_id =  $('input[name=user_id]').val();
         responses.token =  $('input[name=_token]').val();
@@ -1098,7 +1095,7 @@ $(document).ready(function(){
           responses.js_details = $('.js_details').html();
           responses.ip_details = $('.ip_details').html();
         }
-        
+
 
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
@@ -1110,7 +1107,7 @@ $(document).ready(function(){
 
 
         var r = [];
-        while (number <= $ques_count) {  
+        while (number <= $ques_count) {
           var resp = {};
           resp.question_id = $('input[name='+$qno+'_question_id]').val();
           resp.section_id = $('input[name='+$qno+'_section_id]').val();
@@ -1136,14 +1133,14 @@ $(document).ready(function(){
               resp.response = $('.input_'+$qno).val();
           //console.log('selected='+resp.response);
           r.push(resp);
-          number++; 
-          $qno++;            
+          number++;
+          $qno++;
         }
         responses.responses = r;
 
         var all_data = JSON.stringify(responses);
 
-        
+
 
           //   $.ajax({
           //   type : 'post',
@@ -1155,12 +1152,12 @@ $(document).ready(function(){
           //   }
           // });
 
-        
-        
+
+
     }
 
     setInterval(saveLive,60000);
 
-      
+
 
 });

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class TestReport2 implements FromCollection
 {
-   
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -29,14 +29,14 @@ class TestReport2 implements FromCollection
     		$result[$k]->Sno = $k+1;
             $result[$k]->uid = $res->user->id;
     		$result[$k]->Name = $res->user->name;
-            
+
             if($res->user->college_id==5 || $res->user->college_id==295)
                     $result[$k]->college =  $res->user->info;
                 else if(!$res->user->college_id)
                     $result[$k]->college  = '-';
                 else
                     $result[$k]->college  = $colleges[$res->user->college_id]->name;
-                   
+
 
                 if($res->user->branch_id)
                     $result[$k]->branch =  $branches[$res->user->branch_id]->name;
@@ -48,7 +48,7 @@ class TestReport2 implements FromCollection
             else
                 $result[$k]->YOP = '-';
 
-            
+
     		$result[$k]->Email = $res->user->email;
     		$result[$k]->Phone= $res->user->phone;
             $result[$k]->cheat_d = $res->window_change;
@@ -59,11 +59,11 @@ class TestReport2 implements FromCollection
             elseif($res->cheat_detect==3)
                 $result[$k]->cheating ='--';
             else
-              $result[$k]->cheating = 'No Cheating';  
+              $result[$k]->cheating = 'No Cheating';
 
             foreach($exam_sections as $m=>$sec){
                     $name = $exam_sections[$m]['name'];
-                     $result[$k]->$name = '-';  
+                     $result[$k]->$name = '-';
                 }
 
             if(isset($sections[$res->user->id]))
@@ -71,24 +71,24 @@ class TestReport2 implements FromCollection
                     if(isset($exam_sections[$m]['name'])){
                         $name = $exam_sections[$m]['name'];
                         if($sec->score)
-                        $result[$k]->$name = $sec->score;  
+                        $result[$k]->$name = $sec->score;
                         else
-                        $result[$k]->$name = 0; 
+                        $result[$k]->$name = 0;
                     }
-                    
-                }   
+
+                }
 
             if(isset($sections[$res->user->id])){
-        		
+
             }else{
-                
+
 
             }
-    		
+
             if($res->score)
     		  $result[$k]->Score = $res->score;
             else
-               $result[$k]->Score = 0; 
+               $result[$k]->Score = 0;
 
             if($res->user->fluency)
                 $result[$k]->f= $res->user->fluency;
@@ -109,15 +109,16 @@ class TestReport2 implements FromCollection
             unset($result[$k]->cheat_detect);
     		unset($result[$k]->time);
     		unset($result[$k]->max);
-    		unset($result[$k]->code);
+
     		unset($result[$k]->status);
     		unset($result[$k]->updated_at);
     	}
 
-    		
+
 
     	$ux = new Tests_Overall();
         $ux->created = "Timestamp";
+        $ux->code = "Access Code";
     	$ux->sno = "Sno";
         $ux->uid = "UID";
     	$ux->name = "Name";
@@ -134,8 +135,9 @@ class TestReport2 implements FromCollection
     			$ux->$name = $name;
     		}
     	$ux->Sc = "Score";
-        $ux->adm = "Admission Number";
-    	
+      $ux->adm = "Admission Number";
+
+
     	unset($ux->id);
     		unset($ux->user_id);
     		unset($ux->test_id);
@@ -148,7 +150,7 @@ class TestReport2 implements FromCollection
             unset($ux->window_change);
             unset($ux->face_detect);
             unset($ux->cheat_detect);
-    		unset($ux->code);
+
     		unset($ux->status);
     		unset($ux->created_at);
     		unset($ux->updated_at);
@@ -176,7 +178,8 @@ class TestReport2 implements FromCollection
             }
         $ux->Sc = "ABSENT";
         $ux->adm = "";
-        
+        $ux->code = "-";
+
         unset($ux->id);
             unset($ux->user_id);
             unset($ux->test_id);
@@ -189,7 +192,6 @@ class TestReport2 implements FromCollection
             unset($ux->window_change);
             unset($ux->face_detect);
             unset($ux->cheat_detect);
-            unset($ux->code);
             unset($ux->status);
             unset($ux->created_at);
             unset($ux->updated_at);

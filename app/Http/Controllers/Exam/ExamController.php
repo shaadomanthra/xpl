@@ -47,12 +47,12 @@ class ExamController extends Controller
 
         $search = $request->search;
         $item = $request->item;
-        
+
         if($request->get('refresh')){
             $objs = $exam->orderBy('created_at','desc')
-                        ->get();  
-            
-            foreach($objs as $obj){ 
+                        ->get();
+
+            foreach($objs as $obj){
                 //$filename = $obj->slug.'.json';
                 //$filepath = $this->cache_path.$filename;
                 $obj->sections = $obj->sections;
@@ -61,9 +61,9 @@ class ExamController extends Controller
                 foreach($obj->sections as $m=>$section){
                     $obj->sections->questions = $section->questions;
                     foreach($obj->sections->questions as $k=>$question){
-                       $obj->sections->questions[$k]->passage = $question->passage; 
+                       $obj->sections->questions[$k]->passage = $question->passage;
                     }
-                
+
                 }
                 //update redis cache
                 $obj->updateCache();
@@ -71,14 +71,14 @@ class ExamController extends Controller
                 //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
 
             }
-           
+
             flash('Exams Cache Updated')->success();
         }
 
         if(\auth::user()->isAdmin())
         $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
-        else  
-        $exams = $exam->where('user_id',\auth::user()->id)->where('name','LIKE',"%{$item}%")->with('user')->withCount('users')->orderBy('created_at','desc ')->paginate(config('global.no_of_records')); 
+        else
+        $exams = $exam->where('user_id',\auth::user()->id)->where('name','LIKE',"%{$item}%")->with('user')->withCount('users')->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
 
 
 
@@ -99,14 +99,14 @@ class ExamController extends Controller
         $examtypes = Examtype::where('client',subdomain())->get();
 
         $hr_managers = \auth::user()->getRole('hr-manager');
-  
+
         $courses = Course::all();
         $this->authorize('create', $exam);
         $slug = rand(10000,100000);
 
         $e = Exam::where('slug',$slug)->first();
 
-        
+
 
         if($e){
             $slug = rand(10000,100000);
@@ -152,7 +152,7 @@ class ExamController extends Controller
         $section->five = 80;$section->five_color = $green;
         $section->labels = ["Spelling","Vocabulary","Use of English","Idiomatic Expression","Sentence Structure"];
         $section->average = 65;
-        $section->suggestion = "- 
+        $section->suggestion = "-
         The candidate's communicative skills are by and large <b><span class='text-success'>Excellent</span></b>. <br>
         - The <b><span class='text-warning'>average score</span></b> indicates that the candidate can communicate comfortably in a wide variety of situations in all forms of communication.<br>
         - Advanced writing and communicating in detail about technical aspects of a particular domain might cause some <b><span class='text-danger'>difficulty</span></b>.";
@@ -181,8 +181,8 @@ class ExamController extends Controller
         $section->labels = ["Marketing","Tech Support","Frontdesk","Operations"];
         $secs['Domain Knowledge'] = $section;
 
-       
-     
+
+
 
 
         $section = new Exam;
@@ -196,7 +196,7 @@ class ExamController extends Controller
         $section->labels = ["Integrity","Commitment","Discipline","Time Management"];
         $secs['Attitude'] = $section;
         */
-        
+
 
 
         return view('appl.product.test.sample')->with('secs',$secs);
@@ -204,9 +204,9 @@ class ExamController extends Controller
 
     public function createExam()
     {
-        
+
         $examtypes = Examtype::all();
-       /* 
+       /*
        for($i=1;$i<4;$i++){
             $this->createExamLoop($i);
        }*/
@@ -216,13 +216,13 @@ class ExamController extends Controller
                 ->with('stub','Create')
                 ->with('jqueryui',true)
                 ->with('editor',true)->with('examtypes',$examtypes);
-       
+
 
     }
 
     public function storeExam(Request $request)
     {
-        
+
        for($i=$request->get('l_start');$i<$request->get('l_end');$i++){
             $this->createExamLoop($request,$i);
        }
@@ -250,7 +250,7 @@ class ExamController extends Controller
             $result[$s->name] = $s->questions->pluck('id')->toArray();
                 if(count($result[$s->name])!=0){
                    $id = array_rand($result[$s->name],1);
-                   $ques[++$k] = $result[$s->name][$id]; 
+                   $ques[++$k] = $result[$s->name][$id];
                 }
        }
 
@@ -264,7 +264,7 @@ class ExamController extends Controller
 
                 if(count($result[$in->name])!=0){
                    $id = array_rand($result[$in->name],1);
-                   $ques[++$k] = $result[$in->name][$id]; 
+                   $ques[++$k] = $result[$in->name][$id];
                 }
             }
        }
@@ -281,9 +281,9 @@ class ExamController extends Controller
 
             if(count($result[$s->name])!=0){
                $id = array_rand($result[$s->name],1);
-               $ques[++$k] = $result[$s->name][$id]; 
+               $ques[++$k] = $result[$s->name][$id];
             }
-            
+
        }
 
        foreach($ques as $id => $q){
@@ -292,7 +292,7 @@ class ExamController extends Controller
             if($q->type !='mcq'){
                 unset($ques[$id]);
             }
-          
+
        }
 
        return $ques;
@@ -301,19 +301,19 @@ class ExamController extends Controller
 
     public function owner(Request $r){
 
-       
+
         $exam_id = $r->exam_id;
         $exam = Exam::where('id',$exam_id)->first();
          $this->authorize('create', $exam);
         if($r->user_id){
-            $exam->user_id = $r->user_id; 
-            $exam->client = User::where('id',$r->user_id)->first()->client_slug; 
+            $exam->user_id = $r->user_id;
+            $exam->client = User::where('id',$r->user_id)->first()->client_slug;
             $exam->save();
             flash('Test Ownership changed')->success();
         }
-      
+
         return redirect()->route('exam.show',$exam->slug);
- 
+
 
     }
 
@@ -326,12 +326,12 @@ class ExamController extends Controller
         $this->authorize('create', $exam);
 
         $eslug = substr(time(),4);
-        
+
         while(1){
             $eslug = substr(time(),4);
             $e_exists = Exam::where('slug',$eslug)->first();
             if(!$e_exists){
-               break; 
+               break;
             }
         }
         // create exam
@@ -342,11 +342,11 @@ class ExamController extends Controller
         $enew->user_id = $user_id;
         $enew->save();
 
-        
+
         $section_sequence = $r->get('section_sequence');
         if($section_sequence){
             $seq = explode(',',$section_sequence);
-           
+
 
             if(count($seq)!=count($exam->sections))
             {
@@ -356,11 +356,11 @@ class ExamController extends Controller
                 foreach($seq as $a=>$sq)
                     $sections[$a] =  $exam->sections[$sq];
             }
-            
+
         }else{
             $sections = $exam->sections;
         }
-        
+
         // create sections
         foreach($sections as $s)
         {
@@ -387,20 +387,20 @@ class ExamController extends Controller
                 foreach($obj->sections as $m=>$section){
                     $obj->sections->questions = $section->questions;
                     foreach($obj->sections->questions as $k=>$question){
-                       $obj->sections->questions[$k]->passage = $question->passage; 
+                       $obj->sections->questions[$k]->passage = $question->passage;
                     }
                 }
-                
+
                 //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
             $obj->updateCache();
-           
+
             flash('Exams Successfully Replicated')->success();
-      
+
             return redirect()->route('exam.show',$enew->slug);
 
 
-        
-          
+
+
 
     }
 
@@ -448,7 +448,7 @@ class ExamController extends Controller
                    $count = $request->get('sec_count_'.$k);
                     // questions connect
                    $ques_set = array();
-               
+
                    $ques = $this->get_questions($topic);
                    if(count($ques) < $count)
                    {
@@ -471,7 +471,7 @@ class ExamController extends Controller
 
 
                    $count = intval(count($ques_set)/3);
-                  
+
                    foreach($ques_set as $i => $q){
                         $question = Question::where('id',$q)->first();
 
@@ -508,7 +508,7 @@ class ExamController extends Controller
 
                 }
             }
-            
+
         }
 
     }
@@ -528,7 +528,7 @@ class ExamController extends Controller
             $request->slug = strtolower(str_replace(' ', '-', $request->slug));
 
 
-            
+
              /* If image is given upload and store path */
             if(isset($request->all()['file_'])){
                 $file      = $request->all()['file_'];
@@ -628,7 +628,7 @@ class ExamController extends Controller
             $exam->code = strtoupper($request->code);
 
 
-            $exam->save(); 
+            $exam->save();
 
 
             //update cache
@@ -641,16 +641,16 @@ class ExamController extends Controller
                 foreach($obj->sections as $m=>$section){
                     $obj->sections->questions = $section->questions;
                     foreach($obj->sections->questions as $k=>$question){
-                       $obj->sections->questions[$k]->passage = $question->passage; 
+                       $obj->sections->questions[$k]->passage = $question->passage;
                     }
                 }
-                
+
                 //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
             //update redis cache
             $exam->updateCache();
-           
+
             flash('Exams Cache Updated')->success();
-      
+
 
             flash('A new exam('.$request->name.') is created!')->success();
             return redirect()->route('exam.show',$obj->slug);
@@ -676,7 +676,7 @@ class ExamController extends Controller
         $exam= Exam::where('slug',$id)->with('user')->with('sections')->withCount('users')->first();
 
         $exam->precheck_auto_activation();
-        
+
         if(!\auth::user()->checkRole(['administrator','hr-manager','tpo'])){
             return redirect()->route('assessment.show',$id);
         }
@@ -708,16 +708,16 @@ class ExamController extends Controller
         // if($exam->extra){
         //   $extra = json_decode($exam->extra,true);
         //   $exam->viewers = User::whereIn('id',$extra['viewers'])->get();
-        //   $exam->evaluators = User::whereIn('id',$extra['evaluators'])->get();  
+        //   $exam->evaluators = User::whereIn('id',$extra['evaluators'])->get();
         // }
-        
+
 
         $email_stack['total'] =[];
         if($exam->emails){
-            
+
             $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
              $inusers = array_unique($users->pluck('email')->toArray());
-           
+
             $email_stack['total'] = [];
             $email_stack['registered'] =$email_stack['not_registered'] =[];
             $count = $count2=0;
@@ -728,7 +728,7 @@ class ExamController extends Controller
                     array_push($email_stack['not_registered'], $e);
                 }
                 array_push($email_stack['total'], $e);
-                
+
             }
 
             // foreach($users as $ux)
@@ -747,12 +747,12 @@ class ExamController extends Controller
 
         $data['attempt_count'] = $exam->users_count;
         if($data['attempt_count'])
-            $data['users'] = $exam->latestUsers(); 
+            $data['users'] = $exam->latestUsers();
         else
             $data['users'] = 0;
 
         $data['hr-managers'] = \auth::user()->getRole('hr-manager');
-       
+
        $exam_cache = Cache::get('exam_cache_'.$exam->id);
 
        $settings = json_decode($exam->getOriginal('settings'),true);
@@ -782,7 +782,7 @@ class ExamController extends Controller
         $set_name = 'set_'.$exam->slug.'_0';
         $sets = Cache::get($set_name);
 
-        
+
         if(count($exam->sections)==3)
             $exam->mid = 1;
         else
@@ -816,7 +816,7 @@ class ExamController extends Controller
 
     public function accesscode($id,Request $r){
         $exam= Exam::where('slug',$id)->first();
-        
+
         $this->authorize('create', $exam);
 
         $codes = explode(',',$exam->code);
@@ -824,7 +824,7 @@ class ExamController extends Controller
         foreach($codes as $k=>$code){
             $users[$k] = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->count();
         }
-        
+
 
 
         if($exam)
@@ -838,7 +838,7 @@ class ExamController extends Controller
 
 
     public function mailer($emails){
-        
+
         foreach($emails as $i=>$email){
             $details['email'] = $email;
 
@@ -875,7 +875,7 @@ class ExamController extends Controller
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
             SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*3));
         }
-        
+
         dd('Email Queued - '.count($emails));
         return view('home');
     }
@@ -899,7 +899,7 @@ class ExamController extends Controller
             foreach($candidates as $id=>$e){
                 foreach($e as $em){
                     $it = explode('@',$em);
-                    $students[$it[0]] = $id; 
+                    $students[$it[0]] = $id;
                 }
             }
         }
@@ -917,7 +917,7 @@ class ExamController extends Controller
         else
             $viewers = $exam->viewers()->wherePivot('role','viewer')->get();
 
-        
+
 
         if(count($candidates))
         foreach($viewers as $m=>$u){
@@ -964,7 +964,7 @@ class ExamController extends Controller
                 }
 
 
-                
+
                 if($r->get('fix_topic')){
                     $q->topic = str_replace(' ','',strtolower($q->topic));
                     $q->save();
@@ -1000,7 +1000,7 @@ class ExamController extends Controller
                  if($q->mark==1)
                     $data['mark_1']++;
 
-                
+
 
                 if(!isset($data['topic'][$q->topic])){
                     $data['topic'][$q->topic] = 1;
@@ -1013,7 +1013,7 @@ class ExamController extends Controller
                     if(!isset($data['topic']['no_topic']))
                     $data['topic']['no_topic'] =0;
                     else
-                    $data['topic']['no_topic']++;  
+                    $data['topic']['no_topic']++;
                 }
                 $data['total']++;
         }
@@ -1049,7 +1049,7 @@ class ExamController extends Controller
                     ->with('message',"Candidates emails are not assigned");
         }
 
-            
+
 
         if($item)
         $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->where('username','LIKE',"%{$item}%")->get()->keyBy('username');
@@ -1073,34 +1073,34 @@ class ExamController extends Controller
         if($candidates)
         {
             foreach($candidates as $ids=>$emails){
-                
+
                 foreach($emails as $e){
                     $it = explode('@',$e);
                     $proctors[$e] = $ids;
 
                     //$users->$it = $ids;
-                    
+
                 }
-                
+
             }
-            
+
             //$proctors[]
         }
 
         $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
         $candidates = [];
-        
-        
+
+
 
         foreach($files as $f){
             $p = explode('/',$f);
             if(isset($p[3])){
                 $id_p = explode('_',$p[3]);
-                 
+
                 if(isset($id_p[0])){
                     $uid = $id_p[0];
                     $cache = Cache::get('exam_candidates_'.$exam->id.'_'.$uid);
-                    
+
 
                     $candidates[$uid] = $f;
                     if(!$cache){
@@ -1117,7 +1117,7 @@ class ExamController extends Controller
                             $item['time'] = date("m/d/Y h:i:s A T",$first_activity);
                             break;
                         }
-                        
+
 
                         $cache = Cache::remember('exam_candidates_'.$exam->id.'_'.$uid,240,function() use($item){
                             return $item;
@@ -1126,11 +1126,11 @@ class ExamController extends Controller
                     }else{
                         $candidates[$uid] = $cache;
                     }
-                    
+
                 }
             }
         }
-        
+
 
 
         if($users)
@@ -1182,8 +1182,8 @@ class ExamController extends Controller
                     else
                         $count = 0;
 
-                    
-                
+
+
 
                     $set = [];
                     foreach($viewers as $m=>$v){
@@ -1213,7 +1213,7 @@ class ExamController extends Controller
 
 
             $evaluators = $r->get('evaluators');
-          
+
             if($evaluators){
                 //dd($exam);
                 $exam->evaluators()->wherePivot('role','evaluator')->detach();
@@ -1240,7 +1240,7 @@ class ExamController extends Controller
         $exam_settings = json_decode($exam->settings,true);
         if(isset($exam_settings['invigilation']))
             $data['invigilation'] = $exam_settings['invigilation'];
-        
+
         if($exam->emails && !$candidates){
             $emails = implode(',',explode("\n", $exam->emails));
             $emails =str_replace("\r", '', $emails);
@@ -1294,7 +1294,7 @@ class ExamController extends Controller
 
         if($r->get('_token')){
 
-         
+
             foreach($exam->sections as $sec){
                     $sec->instructions = $r->get($sec->id);
                     $sec->save();
@@ -1306,7 +1306,7 @@ class ExamController extends Controller
                         $qset = $sec->questions;
 
                         $ques[$sec->id] = $exam->pool_qset($qset,$formula);
-                        //     
+                        //
                 }
 
 
@@ -1315,8 +1315,8 @@ class ExamController extends Controller
                 Cache::forever($name,$ques);
             }
 
-          
-            
+
+
         }
 
         $questions = [];$data = array('no_topic'=>0,'level'=>0,'qcount'=>0);
@@ -1346,7 +1346,7 @@ class ExamController extends Controller
             }
 
         }
-        
+
         if($exam)
             return view('appl.exam.exam.set_creator')
                     ->with('exam',$exam)
@@ -1358,8 +1358,8 @@ class ExamController extends Controller
     }
 
 
-   
-    
+
+
 
     public function psyreport(Request $r)
     {
@@ -1381,29 +1381,29 @@ class ExamController extends Controller
 
         $item = $r->get('item');
         $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userids)->orderby('id','desc')->get();
-              
+
         $users = $result->pluck('user_id');
         $exam_sections = Section::where('exam_id',$exam->id)->get();
-        
+
         $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
-        
+
 
         $search = $r->search;
         if($item){
             $users = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
-                    ->pluck('id');  
+                    ->pluck('id');
 
             $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$users)->orderby('score','desc')->get();
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
 
-            
-           
+
+
         }
-         
+
         $view = $search ? 'analytics_list': 'analytics_psy';
-        
+
 
 
         if($exam)
@@ -1440,7 +1440,7 @@ class ExamController extends Controller
         if(!$exam)
         $exam= Exam::where('slug',$id)->first();
         $this->authorize('create', $exam);
-        
+
         $code = $r->get('code');
         $item = $r->get('item');
         $data = $r->get('score');
@@ -1450,7 +1450,7 @@ class ExamController extends Controller
             flash('Reports refreshed')->success();
         }
 
-       
+
         if($code){
             if($data)
             $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
@@ -1460,7 +1460,7 @@ class ExamController extends Controller
             $res = $result;
             $users = $result->pluck('user_id');
             $result = $this->paginateAnswers($result->toArray(),30);
-              
+
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
 
@@ -1473,14 +1473,10 @@ class ExamController extends Controller
             $res =$result;
             $users = $result->pluck('user_id');
             $result = $this->paginateAnswers($result->toArray(),30);
-            
-              
-            
             $exam_sections = Cache::remember('exam_sections_'.$exam->id,240,function() use($exam){
                 return Section::where('exam_id',$exam->id)->get();
             });
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
-
         }
 
 
@@ -1489,30 +1485,29 @@ class ExamController extends Controller
         if($item){
             $users = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")->orWhere('roll_number','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
-                    ->pluck('id');  
+                    ->pluck('id');
 
             $result = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$users)->with('user')->orderby('score','desc')->paginate(30);
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
-
-
-
         }
 
         $ux = User::whereIn('id',$users)->get()->keyBy('id');
 
         $view = $search ? 'analytics_list': 'analytics';
-        
-
 
         $ename = str_replace('/', '-', $exam->name);
         $ename = str_replace(' ', '_', $ename);
         $ename = str_replace('\\', '-', $ename);
         $filename ="exports/Report_".$ename.".xlsx";
-            
+
         $email_stack = array();
         if(request()->get('export')){
-            
+
+            if($code)
+
+              $result = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->orderby('score','desc')->get();
+            else
             $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
             $usrs = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
@@ -1550,7 +1545,7 @@ class ExamController extends Controller
                         array_push($email_stack['not_registered'], $e);
                     }
                     array_push($email_stack['total'], $e);
-                    
+
                 }
 
                 // $uids = array_unique($users->pluck('id')->toArray());
@@ -1558,7 +1553,7 @@ class ExamController extends Controller
 
                 // $notattempted =  [];//array_diff($email_stack['registered'],$result_users);
                 // $nonusers = array_diff($emails,$email_stack['registered']);
-                
+
                 // foreach($email_stack['registered'] as $em){
                 //     if(!in_array($em, $result_users)){
                 //         array_push($notattempted,$em);
@@ -1570,9 +1565,9 @@ class ExamController extends Controller
 
                 $attemptedby = User::whereIn('email',$email_stack['registered'])->get()->pluck('id')->toArray();
 
-                
+
                 $res = $result->whereIn('user_id',$attemptedby);
-            
+
 
                 //dd($count);
                 foreach($attemptedby as $k=>$u){
@@ -1584,9 +1579,9 @@ class ExamController extends Controller
                         $rs->window_change = '-';
                         $rs->cheat_detect = 3;
                         $rs->score = 'ABSENT';
-                        $result->push($rs);  
+                        $result->push($rs);
                     }
-                    
+
                 }
 
 
@@ -1596,7 +1591,7 @@ class ExamController extends Controller
                 $email_stack['not_registered'] =  [];
             }
 
-            
+
 
 
 
@@ -1615,7 +1610,7 @@ class ExamController extends Controller
 
             //     if()
             // }
-            
+
 
             if(count($users)>0){
                 request()->session()->put('result',$result);
@@ -1624,11 +1619,11 @@ class ExamController extends Controller
                 request()->session()->put('email_stack',$email_stack);
 
                 ob_end_clean(); // this
-                ob_start(); 
+                ob_start();
                 $filename ="Report_".$ename.".xlsx";
                 return Excel::download(new TestReport2, $filename);
             }else{
-                
+
                 // request()->session()->put('result',$result);
                 // request()->session()->put('sections',$sections);
                 // request()->session()->put('exam_sections',$exam_sections);
@@ -1638,7 +1633,7 @@ class ExamController extends Controller
                 // flash('Export is queued, it will be ready for download in 5min.')->success();
                 // dd('Export is queued, it will be ready for download in 5min.');
             }
-            
+
         }
 
         if(request()->get('downloadexport')){
@@ -1648,7 +1643,7 @@ class ExamController extends Controller
                 $file = Storage::disk('s3')->get($filename);
 
                 $headers = [
-                    'Content-Type' => 'text/csv', 
+                    'Content-Type' => 'text/csv',
                     'Content-Description' => 'File Transfer',
                     'Content-Disposition' => "attachment; filename={$filename}",
                     'filename'=> $filename
@@ -1675,19 +1670,19 @@ class ExamController extends Controller
     {
         $exam= Exam::where('slug',$id)->first();
         $this->authorize('create', $exam);
-        
+
         $code = $r->get('code');
         $item = $r->get('item');
         $data = $r->get('score');
 
-       
+
         if($data)
             $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->paginate(100);
             else
             $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->paginate(100);
 
             $res = Tests_Overall::where('test_id',$exam->id)->get();
-              
+
             $users = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
@@ -1695,14 +1690,14 @@ class ExamController extends Controller
 
 
         $search = $r->search;
-       
+
 
         $ux = User::whereIn('id',$users)->get()->keyBy('id');
 
         $view = $search ? 'analytics_list2': 'analytics2';
-        
 
-       
+
+
 
 
 
@@ -1718,7 +1713,7 @@ class ExamController extends Controller
         else
             abort(404);
     }
-   
+
 
      public function analytics3($slug,Request $request)
     {
@@ -1726,10 +1721,10 @@ class ExamController extends Controller
         $search = $request->search;
         $item = $request->item;
         $obj = Exam::where('slug',$slug)->first();
-        
-        
+
+
         $this->authorize('view', $obj);
-        
+
         $u = $obj->users->pluck('user_id')->toArray();
 
         $users = User::whereIn('id',$u)->get();
@@ -1741,7 +1736,7 @@ class ExamController extends Controller
         $data['branches'] = Cache::remember('branche',240,function(){
                     return Branch::orderBy('name')->get()->keyBy('id');
                 });
-        $data['total'] = count($users); 
+        $data['total'] = count($users);
         $data['college_group'] = $users->groupBy('college_id');
         $data['branch_group'] = $users->groupBy('branch_id');
         $data['yop_group'] = $users->groupBy('year_of_passing');
@@ -1848,7 +1843,7 @@ class ExamController extends Controller
                 $path = Storage::disk('s3')->putFileAs('articles', $request->file('file_'),$filename,'public');
                 $request->merge(['image' => $path]);
             }
-           
+
            if(isset($request->all()['file2_'])){
                 Storage::disk('s3')->delete('articles/'.$exam->slug.'_banner.jpg');
                 Storage::disk('s3')->delete('articles/'.$exam->slug.'_banner.png');
@@ -1921,7 +1916,7 @@ class ExamController extends Controller
             $exam->save = $request->save;
             $exam->extra = $request->extra;
             $exam->settings = json_encode($settings);
-            
+
             if(!$request->camera)
                 $exam->capture_frequency = 0;
             else
@@ -1931,7 +1926,7 @@ class ExamController extends Controller
                 $exam->auto_terminate = 0;
             else
                 $exam->auto_terminate = $request->auto_terminate;
-            
+
             if($request->auto_activation)
                 $exam->auto_activation = \carbon\carbon::parse($request->auto_activation)->format('Y-m-d H:i:s');
             else
@@ -1941,7 +1936,7 @@ class ExamController extends Controller
             else
                 $exam->auto_deactivation = null;
             $exam->code = strtoupper($request->code);
-            $exam->save(); 
+            $exam->save();
 
             //update cache
             $obj = $exam;
@@ -1953,7 +1948,7 @@ class ExamController extends Controller
             foreach($obj->sections as $m=>$section){
                 $obj->sections->questions = $section->questions;
                 foreach($obj->sections->questions as $k=>$question){
-                   $obj->sections->questions[$k]->passage = $question->passage; 
+                   $obj->sections->questions[$k]->passage = $question->passage;
                 }
             }
 
@@ -1985,9 +1980,9 @@ class ExamController extends Controller
 
         $this->authorize('update', $exam);
 
-        
 
-        $Tests_Overall = Tests_Overall::where('test_id',$id)->with('user')->get(); 
+
+        $Tests_Overall = Tests_Overall::where('test_id',$id)->with('user')->get();
         foreach($Tests_Overall as $t){
             $user = $t->user;
             $user_id = $user->id;
@@ -1996,7 +1991,7 @@ class ExamController extends Controller
 
 
             // $attempts = Test::where('test_id',$test_id)->where('user_id',$user_id)->get();
-            
+
             // $jsonname = $slug.'_'.$user_id;
             // $user = User::where('id',$user_id)->first();
 
@@ -2027,23 +2022,23 @@ class ExamController extends Controller
             // if(Storage::disk('s3')->exists('testlog/approvals/'.$test_id.'/'.$user->username.'.json')){
             //     Storage::disk('s3')->delete('testlog/approvals/'.$test_id.'/'.$user->username.'.json');
             // }
-            
-            
+
+
             // $name = 'testlog/pre-message/'.$exam->id.'/'.$user->username.'.json';
             // if(Storage::disk('s3')->exists($name)){
             //     Storage::disk('s3')->delete($name);
             // }
 
-            
+
 
 
             Cache::forget('attempt_'.$user_id.'_'.$test_id);
             Cache::forget('attempts_'.$user_id);
-            Cache::forget('responses_'.$user_id.'_'.$test_id);    
+            Cache::forget('responses_'.$user_id.'_'.$test_id);
 
             Test::where('test_id',$test_id)->where('user_id',$user_id)->delete();
             Tests_Section::where('test_id',$test_id)->where('user_id',$user_id)->delete();
-            Tests_Overall::where('test_id',$test_id)->where('user_id',$user_id)->delete(); 
+            Tests_Overall::where('test_id',$test_id)->where('user_id',$user_id)->delete();
 
         }
 
@@ -2052,8 +2047,8 @@ class ExamController extends Controller
             $section->delete();
         }
 
-       
-        
+
+
         $exam->delete();
 
         flash('Exam Successfully deleted!')->success();
