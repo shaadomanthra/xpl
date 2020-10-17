@@ -620,7 +620,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::post('deleteimage/{test}','Exam\AssessmentController@delete_image')->name('assessment.delete.image');
 	Route::post('savetest/{test}','Exam\AssessmentController@savetest')->name('assessment.savetest');
 	//Route::get('uploadimage/{test}','Exam\AssessmentController@upload_image')->name('assessment.uploadget');
-	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis2')->name('assessment.analysis')->middleware('auth');
+	//Route::get('test/{test}/analysis','Exam\AssessmentController@analysis2')->name('assessment.analysis')->middleware('auth');
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
 
 	Route::get('test/{test}/responses','Exam\AssessmentController@responses')->name('assessment.responses')->middleware('auth');
