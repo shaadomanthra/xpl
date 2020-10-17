@@ -665,6 +665,8 @@ class CampusController extends Controller
         }
 
         
+        $this->authorize('create', $exam);
+        
         if(request()->session()->get('college')){
             $col = request()->session()->get('college')['id'];
             $college =  College::where('id',$col)->first();
