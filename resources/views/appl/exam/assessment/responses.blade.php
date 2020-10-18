@@ -102,24 +102,24 @@ pre, code {
 		<div class="card mb-3">
 			<div class="card-body">
         <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
-				<p class="d-inline {{ $question = $questions[$t->question_id]}} mb-3">{!! $questions[$t->question_id]->question !!}</p>
+				<p class="d-inline {{ $question = $t->question}} mb-3">{!! $questions[$t->question_id]->question !!}</p>
 
         @if($questions[$t->question_id]->type=='mcq')
         <div class="mt-3">
           @if($question->option_a)
-          <div class=""><span class=" @if($questions[$t->question_id]->answer=='A') text-success font-weight-bold @endif">(A)</span><div class="pt-1 d-inline "> {!! $question->option_a!!}</div></div>
+          <div class=""><span class=" @if($t->answer=='A') text-success font-weight-bold @endif">(A)</span><div class="pt-1 d-inline "> {!! $question->option_a!!}</div></div>
           @endif
           @if($question->option_b)
-          <div class=""><span class=" @if($questions[$t->question_id]->answer=='B') text-success font-weight-bold @endif">(B)</span><div class="pt-1 d-inline "> {!! $question->option_b!!}</div></div>
+          <div class=""><span class=" @if($t->answer=='B') text-success font-weight-bold @endif">(B)</span><div class="pt-1 d-inline "> {!! $question->option_b!!}</div></div>
           @endif
           @if($question->option_c)
-          <div class=""><span class=" @if($questions[$t->question_id]->answer=='C') text-success font-weight-bold @endif">(C)</span><div class="pt-1 d-inline "> {!! $question->option_c!!}</div></div>
+          <div class=""><span class=" @if($t->answer=='C') text-success font-weight-bold @endif">(C)</span><div class="pt-1 d-inline "> {!! $question->option_c!!}</div></div>
           @endif
           @if($question->option_d)
-          <div class=""><span class=" @if($questions[$t->question_id]->answer=='D') text-success font-weight-bold @endif">(D)</span><div class="pt-1 d-inline "> {!! $question->option_d!!}</div></div>
+          <div class=""><span class=" @if($t->answer=='D') text-success font-weight-bold @endif">(D)</span><div class="pt-1 d-inline "> {!! $question->option_d!!}</div></div>
           @endif
           @if($question->option_e)
-          <div class=""><span class=" @if($questions[$t->question_id]->answer=='E') text-success font-weight-bold @endif">(E)</span><div class="pt-1 d-inline "> {!! $question->option_e!!}</div></div>
+          <div class=""><span class=" @if($t->answer=='E') text-success font-weight-bold @endif">(E)</span><div class="pt-1 d-inline "> {!! $question->option_e!!}</div></div>
           @endif
         </div>
         @endif

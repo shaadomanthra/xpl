@@ -1278,6 +1278,8 @@ class AssessmentController extends Controller
 
 
 
+
+
         //dd($tests->where('status',1));
         $evaluation = $tests->where('status',2);
         if(count($evaluation))
@@ -1351,6 +1353,7 @@ class AssessmentController extends Controller
 
         foreach($tests as $key=>$t){
 
+
             //dd($t->section->negative);
             if(isset($t)){
                 $sum = $sum + $t->time;
@@ -1365,6 +1368,9 @@ class AssessmentController extends Controller
                 $qd = $ques[$t->question_id];
                 $qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
                 $ques[$t->question_id] = $this->option_swap2($qd,$t->dynamic);
+                $tests[$key]->question = $ques[$t->question_id];
+
+                //dd($tests[$key]);
             }
 
 
@@ -1474,7 +1480,7 @@ class AssessmentController extends Controller
         //dd($sections);
         $mathjax = false;
         $view = 'responses';
-
+       
 
 
         return view('appl.exam.assessment.'.$view)

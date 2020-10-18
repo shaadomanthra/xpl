@@ -10,20 +10,20 @@
     <nav class="mb-0">
           <ol class="breadcrumb  p-0 pt-3 " style="background: transparent;" >
             <li class="breadcrumb-item"><a href="{{ url('/home')}}">Home</a></li>
-            
+
             <li class="breadcrumb-item"><a href="{{ route('exam.show',$exam->slug) }}">{{$exam->name}}</a></li>
             <li class="breadcrumb-item">Set Creator </li>
           </ol>
         </nav>
     <div class="row">
       <div class="col-12 col-md-8">
-        
+
         <div class=' pb-1'>
           <p class="heading_two mb-2 f30" ><i class="fa fa-bars "></i> Set Creator
           </p>
         </div>
       </div>
-      
+
     </div>
   </div>
 </div>
@@ -59,16 +59,12 @@
           <td>{{$sec->name}} [{{$sec->id}}]</td>
           <td>
 
-            @foreach([1,2,3] as $k)
-              
-            @endforeach
-             <label for="formGroupExampleInput ">Algorithm</label>
-<textarea class="form-control summernote" name="{{$sec->id}}"  rows="5">@if($sec->instructions) {{$sec->instructions}} @endif
-              </textarea>
+            
+             <label for="formGroupExampleInput ">Algorithm</label><textarea class="form-control summernote" name="{{$sec->id}}"  rows="5">@if($sec->instructions) {{json_encode(json_decode($sec->instructions), JSON_PRETTY_PRINT)}} @endif</textarea>
           </td>
         </tr>
         @endforeach
-        
+
       </tbody>
     </table>
      <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -99,7 +95,7 @@
           <td><pre><code class="text-light">  {{ json_encode($set,JSON_PRETTY_PRINT) }}</code></pre></td>
         </tr>
         @endforeach
-        
+
       </tbody>
     </table>
 
@@ -117,5 +113,3 @@
 
 
 @endsection
-
-

@@ -1438,7 +1438,7 @@ class ExamController extends Controller
 
         $exam = Cache::get('test_'.$id);
         if(!$exam)
-        $exam= Exam::where('slug',$id)->first();
+         $exam= Exam::where('slug',$id)->first();
         $this->authorize('create', $exam);
 
         $code = $r->get('code');
@@ -1447,6 +1447,9 @@ class ExamController extends Controller
 
         if($r->get('refresh')){
             Cache::forget('exam_sections_'.$exam->id);
+            Cache::forget('tests_overall_'.$exam->id.'_'.$data);
+            Cache::forget('sections_'.$exam->id.'_data');
+            Cache::forget('users_'.$exam->id.'_data');
             flash('Reports refreshed')->success();
         }
 
@@ -1465,10 +1468,17 @@ class ExamController extends Controller
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
 
         }else{
+
+          $result =  Cache::get('tests_overall_'.$exam->id.'_'.$data);
+
+          if(!$result){
             if($data)
             $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
             else
             $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->get();
+            Cache::put('tests_overall_'.$exam->id.'_'.$data,$result,120);
+          }
+
 
             $res =$result;
             $users = $result->pluck('user_id');
@@ -1476,7 +1486,14 @@ class ExamController extends Controller
             $exam_sections = Cache::remember('exam_sections_'.$exam->id,240,function() use($exam){
                 return Section::where('exam_id',$exam->id)->get();
             });
-            $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+
+            $sections =  Cache::get('sections_'.$exam->id.'_data');
+            if(!$sections){
+                $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+                Cache::put('sections_'.$exam->id.'_data',$sections,120);
+            }
+
+
         }
 
 
@@ -1492,7 +1509,12 @@ class ExamController extends Controller
             $sections = Tests_Section::whereIn('user_id',$users)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
         }
 
-        $ux = User::whereIn('id',$users)->get()->keyBy('id');
+        $ux =  Cache::get('users_'.$exam->id.'_data');
+        if(!$ux){
+          $ux = User::whereIn('id',$users)->get()->keyBy('id');
+          Cache::put('users_'.$exam->id.'_data',$ux,120);
+        }
+
 
         $view = $search ? 'analytics_list': 'analytics';
 
@@ -1652,7 +1674,12 @@ class ExamController extends Controller
             }
         }
 
-
+        // return view('appl.pages.about')->with('url',1)->with('report',$result)
+        // ->with('r',$res)
+        // ->with('exam_sections',$exam_sections)
+        // ->with('sections',$sections)
+        // ->with('exam',$exam)
+        // ->with('users',$ux);
         if($exam)
             return view('appl.exam.exam.'.$view)
                     ->with('report',$result)

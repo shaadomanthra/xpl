@@ -17,7 +17,7 @@
                   <th scope="col"><a href="" data-toggle="tooltip" title="{{$sec->name}}">{{first_letters($sec->name)}}</a></th>
                   @endif
                 @endforeach
-                  
+
                    @if($sec->name=='typing')
                     <th scope="col">WPM Score</th>
                     @else
@@ -29,23 +29,20 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($report as $key=>$r)  
+              @foreach($report as $key=>$r)
               <tr @if($r['cheat_detect']==1)
-                  style='background: #fff3f3' 
+                  style='background: #fff3f3'
                 @elseif($r['cheat_detect']==2)
-                  style='background: #ffffed' 
+                  style='background: #ffffed'
                 @else
-                  
+
                 @endif >
                 <th scope="row">{{$key+1 }}</th>
                 <td>
                   <a href="#" class="showuser"  data-url="{{route('profile','@'.$users[$r['user_id']]->username)}}" >
-                  {{ $users[$r['user_id']]->name }}</a> 
+                  {{ $users[$r['user_id']]->name }}</a>
 
-                  @if($users[$r['user_id']]->roll_number) {{$users[$r['user_id']]->roll_number}} @endif
-                   @if($users[$r['user_id']]->profile_complete()==100)<i class="fa fa-check-circle text-success"  data-toggle="tooltip" title="Profile Completed"></i>@endif
-                  @if($users[$r['user_id']]->video)<i class="fa fa-vcard-o text-secondary"  data-toggle="tooltip" title="Profile Video"></i>@endif
-
+                    
                 </td>
                 <td>
                 @if($r['cheat_detect']==1)
@@ -59,10 +56,10 @@
                 @if($exam->slug!='psychometric-test')
                 @foreach($sections[$users[$r['user_id']]->id] as $s)
                 <td>
-                  {{ $s->score }} @if($sec->name=='typing')% @endif 
+                  {{ $s->score }} @if($sec->name=='typing')% @endif
                 </td>
                 @endforeach
-                
+
                 <td>
                   @if(!$r['status'])
                   {{ $r['score'] }}
@@ -76,7 +73,7 @@
                 </td>
                 <td>
                 <form method="post" class='form-inline' action="{{ route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" >
-                  
+
                   <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$users[$r['user_id']]->username}}">
                     <i class='fa fa-bar-chart'></i> Report
                   </a>&nbsp;&nbsp;&nbsp;
@@ -89,7 +86,7 @@
                   <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r['user_id']]->username}}&admin=1&code={{$r['code']}}" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
                   @endcan
                   @endif
-                  
+
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="user_id" value="{{ $users[$r['user_id']]->id}}">
@@ -97,11 +94,11 @@
                     <button class="btn btn-link  p-0" type="submit"><i class='fa fa-trash'></i> delete</button>
                   @endif
                 </form>
-                  
+
                 </td>
-                
+
               </tr>
-              @endforeach      
+              @endforeach
             </tbody>
           </table>
         </div>
@@ -109,7 +106,7 @@
         <div class="card card-body bg-light">
           No Reports listed
         </div>
-        @endif  
+        @endif
 <nav aria-label="Page navigation  " class="card-nav @if($report->total() > 30)mt-3 @endif">
         {{$report->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
       </nav>
