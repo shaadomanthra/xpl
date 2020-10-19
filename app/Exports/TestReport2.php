@@ -161,6 +161,7 @@ class TestReport2 implements FromCollection
         foreach($email_stack['not_registered'] as $e){
             $ux = new Tests_Overall();
         $ux->created = "-";
+         $ux->code = "-";
         $ux->sno = "-";
         $ux->uid = "-";
         $ux->name = "-";

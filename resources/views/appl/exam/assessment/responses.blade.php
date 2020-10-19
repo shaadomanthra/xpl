@@ -22,6 +22,7 @@ pre, code {
 }
 </style>
 
+<div id="content">
 <div id="pdf">
 <div class="dblue" >
   <div class="container">
@@ -287,8 +288,11 @@ pre, code {
     </div>
   </div>
 </div>
+</div>
+
 
 <script src="{{ asset('js/html2pdf.bundle.min.js') }}"></script>
+
 <script>
 
   // function downloadpdf(){

@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Cache;
 use Log;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-
+use PDF;
 
 class AssessmentController extends Controller
 {
@@ -1266,13 +1266,30 @@ class AssessmentController extends Controller
         $sum = 0;
         $c=0; $i=0; $u=0;
 
+        if($request->get('forget')){
+            Cache::forget('resp_'.$user_id.'_'.$test_id);
+            Cache::forget('attempt_'.$user_id.'_'.$test_id);
+        }
+
         $tests = Cache::remember('resp_'.$user_id.'_'.$test_id,240,function() use ($exam,$student){
             return Test::where('test_id',$exam->id)
-                        ->where('user_id',$student->id)->get();
+                        ->where('user_id',$student->id)->with('question')->get();
         });
         $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
+
+        if($request->get('pdf2')){
+            $test_overall = $tests_overall;
+        
+            ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+            $view = 'responses-pdf';
+             $pdf = PDF::loadView('appl.exam.assessment.'.$view,compact('tests','student','exam','test_overall'));
+             $pdf->save('sample.pdf');
+           
+             // 
+           
+        }
 
         $tests_keys = $tests->keyBy('question_id');
 
@@ -1475,15 +1492,19 @@ class AssessmentController extends Controller
 
         if(!$topics)
         unset($details['c']);
+        
         //dd($details);
 
         //dd($sections);
         $mathjax = false;
         $view = 'responses';
-       
 
-
-        return view('appl.exam.assessment.'.$view)
+        if($request->get('pdf2')){
+            ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+            $view = 'responses-pdf';
+             $pdf = PDF::loadView('appl.exam.assessment.'.$view,compact('tests','student','exam','test_overall','questions'));
+             $pdf->save('sample.pdf');
+             return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
                         ->with('questions',$ques)
                         ->with('sections',$sections)
@@ -1498,6 +1519,30 @@ class AssessmentController extends Controller
                         ->with('count',$count)
                         ->with('highlight',true)
                         ->with('chart',false);
+             // 
+           
+        }else{
+            return view('appl.exam.assessment.'.$view)
+                        ->with('exam',$exam)
+                        ->with('questions',$ques)
+                        ->with('sections',$sections)
+                        ->with('details',$details)
+                        ->with('student',$student)
+                        ->with('user',$student)
+                        ->with('tests',$tests)
+                        ->with('test_overall',$tests_overall)
+                        ->with('review',true)
+                        ->with('mathjax',$mathjax)
+                        ->with('sketchpad',1)
+                        ->with('count',$count)
+                        ->with('highlight',true)
+                        ->with('chart',false);
+
+        }
+       
+
+
+        
     }
 
 
