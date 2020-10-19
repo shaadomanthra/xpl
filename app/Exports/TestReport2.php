@@ -65,17 +65,17 @@ class TestReport2 implements FromCollection
 
             foreach($exam_sections as $m=>$sec){
                     $name = $exam_sections[$m]['name'];
-                     $result[$k]->$name = '-';
+                     $result[$k]->$name = '- ';
                 }
 
             if(isset($sections[$res->user->id]))
             foreach($sections[$res->user->id] as $m=>$sec){
                     if(isset($exam_sections[$m]['name'])){
                         $name = $exam_sections[$m]['name'];
-                        if(intval(trim($sec->score)))
+                        if(intval(trim($sec->score))!=0)
                         $result[$k]->$name = $sec->score;
                         else
-                        $result[$k]->$name = 0;
+                        $result[$k]->$name = '0';
                     }
 
                 }
@@ -89,10 +89,10 @@ class TestReport2 implements FromCollection
 
             
 
-            if($res->score)
+            if(intval(trim($res->score))!=0)
     		  $result[$k]->Score = $res->score;
             else
-               $result[$k]->Score = 0;
+               $result[$k]->Score = '0';
 
             if($res->user->fluency)
                 $result[$k]->f= $res->user->fluency;
