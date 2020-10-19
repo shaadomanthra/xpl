@@ -25,6 +25,8 @@ class TestReport2 implements FromCollection
 
     	foreach($result as $k=>$res){
 
+            if(!$res->code)
+              $result[$k]->code = '---';
 
     		$result[$k]->Sno = $k+1;
             $result[$k]->uid = $res->user->id;
@@ -70,7 +72,7 @@ class TestReport2 implements FromCollection
             foreach($sections[$res->user->id] as $m=>$sec){
                     if(isset($exam_sections[$m]['name'])){
                         $name = $exam_sections[$m]['name'];
-                        if($sec->score)
+                        if(intval(trim($sec->score)))
                         $result[$k]->$name = $sec->score;
                         else
                         $result[$k]->$name = 0;
@@ -84,6 +86,8 @@ class TestReport2 implements FromCollection
 
 
             }
+
+            
 
             if($res->score)
     		  $result[$k]->Score = $res->score;
@@ -179,7 +183,6 @@ class TestReport2 implements FromCollection
             }
         $ux->Sc = "ABSENT";
         $ux->adm = "";
-        $ux->code = "-";
 
         unset($ux->id);
             unset($ux->user_id);

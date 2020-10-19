@@ -1545,7 +1545,7 @@ class ExamController extends Controller
            // dd($sections);
 
             if($exam->emails){
-                $emails = implode(',',explode("\n", $exam->emails));
+                $emails = implode(',',explode("\n", strtolower($exam->emails)));
                 $emails =str_replace("\r", '', $emails);
                 $emails = array_unique(explode(',',$emails));
 
