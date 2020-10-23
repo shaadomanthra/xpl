@@ -582,7 +582,7 @@
             <div class="f18 mb-0">
               <a href="#" class="showuser"  data-url="{{route('profile','@'.$t->user->username)}}"><b>{{$t->user->name}}</b></a>
 
-              @if($t->status || $exam->slug=='psychometric-test')
+              @if($t->status || $exam->slug=='psychometric-test' || $exam->examtype->slug=='psychometric-test')
               has attempted the test
               @else
                has scored <b class="text-primary">
@@ -596,7 +596,7 @@
               <small class="mr-2">
               <a href="{{ route('assessment.analysis',[$exam->slug]) }}?student={{$t->user->username}}" ><i class="fa fa-bar-chart"></i> Report</a></small>
 
-              @if($exam->slug!='psychometric-test')
+              @if($exam->slug!='psychometric-test' && $exam->examtype->slug!='psychometric-test')
               <small class="mr-2">
               <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$t->user->username}}" ><i class="fa fa-commenting-o"></i> Responses</a></small>
               @endif
