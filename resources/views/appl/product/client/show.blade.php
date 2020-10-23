@@ -72,6 +72,62 @@
               @endif
             </div>
           </div>
+
+          <div class="bg-light p-3 rounded border mt-3">
+            <h4><i class="fa fa-th"></i> Settings</h4>
+            <hr>
+              <div class="row ">
+            <div class="col-md-6">
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Register Button</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->register==0)
+                  <span class="badge badge-secondary">Disabled</span>
+                  @elseif($client->settings->register==1)
+                  <span class="badge badge-success">Enabled</span>
+                  @endif
+                </dd>
+              </dl>
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Change Password</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->change_password==0)
+                  <span class="badge badge-secondary">Disabled</span>
+                  @elseif($client->settings->change_password==1)
+                  <span class="badge badge-success">Enabled</span>
+                  @endif
+                </dd>
+              </dl>
+               <dl class="row mb-0">
+                <dt class="col-sm-4">Add Users</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->add_users==0)
+                  <span class="badge badge-secondary">Disabled</span>
+                  @elseif($client->settings->add_users==1)
+                  <span class="badge badge-success">Enabled</span>
+                  @endif
+                </dd>
+              </dl>
+               <dl class="row mb-0">
+                <dt class="col-sm-4">Add Tests</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->add_tests==0)
+                  <span class="badge badge-secondary">Disabled</span>
+                  @elseif($client->settings->add_tests==1)
+                  <span class="badge badge-success">Enabled</span>
+                  @endif
+                </dd>
+              </dl>
+              
+            </div>
+            <div class="col-md-6">
+             
+            </div>
+          </div> 
+          </div>
+
+        
+
           <!--
           <div class="row mb-0">
             <div class="col-md-4">Courses </div>

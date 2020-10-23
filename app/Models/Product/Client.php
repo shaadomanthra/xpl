@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use PacketPrep\User;
 use PacketPrep\Models\User\Role;
+use PacketPrep\Models\Exam\Tests_Overall;
+use Carbon\Carbon;
 
 class Client extends Model
 {
@@ -16,6 +18,8 @@ class Client extends Model
         'user_id_owner',
         'user_id_manager',
         'status',
+        'contact',
+        'settings',
         // add all other fields
     ];
 
@@ -56,6 +60,23 @@ class Client extends Model
                 ->where('client_id', $client_id)
                 ->update(['visible' => $visible]);
 
+    }
+
+    public function getAttemptCount($month=null,$test_ids,$code=null)
+    {
+        if($code)
+        return Tests_Overall::where('code',$code)->whereIn('test_id',$test_ids)->count();
+        else{
+          
+          if($month=='thismonth')
+            return Tests_Overall::whereIn('test_id',$test_ids)->whereMonth('created_at', Carbon::now()->month)->count();
+          elseif($month=='lastmonth')
+            return Tests_Overall::whereIn('test_id',$test_ids)->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
+          elseif($month=='lastbeforemonth')
+            return Tests_Overall::whereIn('test_id',$test_ids)->whereMonth('created_at', '=', Carbon::now()->subMonth(2)->month)->count();
+          else
+            return Tests_Overall::whereIn('test_id',$test_ids)->count();
+        }
     }
 
 

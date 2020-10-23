@@ -58,7 +58,7 @@
 	@else
 
 
-	@if($exam->slug =='psychometric-test')
+	@if($exam->slug =='psychometric-test' || $exam->examtype->slug=='psychometric-test')
 
 	<div class="card"  style="background: #FFF;border: 0px solid #EEE;">
 		<div class="card-body">

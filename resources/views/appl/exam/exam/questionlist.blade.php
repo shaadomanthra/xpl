@@ -18,7 +18,7 @@
       <div class="col-12 col-md-8">
         
         <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-bars "></i> Questions ({{$qdata['total']}}) &nbsp;
+          <p class="heading_two mb-2 f30" ><i class="fa fa-bars "></i> Questions ({{$qdata['total']}}) @if(request()->get('set')!=null) - Set {{request()->get('set')}} @endif &nbsp;
             <a href="{{ route('test.questionlist',$exam->slug)}}?fix_topic=1" class="btn  btn-outline-success btn-sm"> Fix Topics</a>
           </p>
         </div>

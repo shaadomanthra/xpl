@@ -3345,7 +3345,7 @@ class AssessmentController extends Controller
             foreach($exam->sections as $m=>$section){
                 $exam->sections->questions = $section->questions;
             }
-            file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
+            //file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
         }
 
         //precheck for auto activation
@@ -3893,7 +3893,7 @@ class AssessmentController extends Controller
         $review=false;
 
         $i=0;
-        if($exam->slug=='psychometric-test')
+        if($exam->slug=='psychometric-test' || $exam->examtype->slug=='psychometric-test')
         {
             $d['extroversion'] = 20;
             $d['agreeableness'] = 14;

@@ -68,12 +68,29 @@ class ClientController extends Controller
         $courses = Course::all();
 
         $this->authorize('create', $client);
+        if(!$client->settings){
+            $settings['register'] = NULL;
+            $settings['change_password'] = NULL;
+            $settings['add_users'] = NULL;
+            $settings['add_tests'] = NULL;
+            $settings['camera'] = NULL;
+            $settings['face_detection'] = NULL;
+            $settings['proctoring'] = NULL;
+            $settings['set_creator'] = NULL;
+            $settings['message_d'] = NULL;
+            $settings['timer_d'] = NULL;
+            $settings['message_l'] = NULL;
+            $settings['timer_l'] = NULL;
+            $client->settings = json_decode(json_encode($settings));
+        }
+
 
         $users = array();
 
         return view('appl.product.client.createedit')
                 ->with('stub','Create')
                 ->with('jqueryui',true)
+                ->with('editor',true)
                 ->with('client',$client)
                 ->with('courses',$courses)
                 ->with('users',$users);
@@ -108,6 +125,19 @@ class ClientController extends Controller
             $client->user_id_manager = null;
             $client->status = $request->status;
             $client->contact = $request->contact;
+            $settings['register'] = $request->get('register');
+            $settings['change_password'] = $request->get('change_password');
+            $settings['add_users'] = $request->get('add_users');
+            $settings['add_tests'] = $request->get('add_tests');
+            $settings['camera'] = $request->get('camera');
+            $settings['face_detection'] = $request->get('face_detection');
+            $settings['proctoring'] = $request->get('proctoring');
+            $settings['set_creator'] = $request->get('set_creator');
+            $settings['message_d'] = $request->get('message_d');
+            $settings['timer_d'] = $request->get('timer_d');
+            $settings['message_l'] = $request->get('message_l');
+            $settings['timer_l'] = $request->get('timer_l');
+            $client->settings = json_encode($settings);
 
             $client->save(); 
 
@@ -223,6 +253,24 @@ class ClientController extends Controller
     {
         $client = client::where('slug',$id)->first();
 
+          if(!$client->settings){
+            $settings['register'] = NULL;
+            $settings['change_password'] = NULL;
+            $settings['add_users'] = NULL;
+            $settings['add_tests'] = NULL;
+            $settings['camera'] = NULL;
+            $settings['face_detection'] = NULL;
+            $settings['proctoring'] = NULL;
+            $settings['set_creator'] = NULL;
+            $settings['message_d'] = NULL;
+            $settings['timer_d'] = NULL;
+            $settings['message_l'] = NULL;
+            $settings['timer_l'] = NULL;
+             $client->settings = json_decode(json_encode($settings));
+        }else{
+            $client->settings = json_decode( $client->settings);
+        }
+
         $this->authorize('edit', $client);
 
         if(request()->get('delete')=='logo'){
@@ -269,13 +317,11 @@ class ClientController extends Controller
         
         $u =['attempts_all'=>0,'attempts_thismonth'=>0,'attempts_lastmonth'=>0];
 
-        $exams  =$client->exams;
+        $test_ids  =$client->exams->pluck('id')->toArray();
 
-        foreach($exams as $exam){
-            $u['attempts_all'] = $u['attempts_all'] + $exam->getAttemptCount();
-            $u['attempts_lastmonth'] = $u['attempts_lastmonth']+ $exam->getAttemptCount(null,'lastmonth');
-            $u['attempts_thismonth'] = $u['attempts_thismonth'] + $exam->getAttemptCount(null,'thismonth');
-        }
+        $u['attempts_all'] =  $client->getAttemptCount(null,$test_ids);
+        $u['attempts_lastmonth'] =$client->getAttemptCount('lastmonth',$test_ids);
+        $u['attempts_thismonth'] = $client->getAttemptCount('thismonth',$test_ids);
 
 
         $ucount = [];
@@ -312,10 +358,30 @@ class ClientController extends Controller
         $users['client_owner'] = Role::getUsers('client-owner');
         $users['client_manager'] = Role::getUsers('client-manager');
 
+        $client->settings = json_decode($client->settings);
+
+        if(!$client->settings){
+            $settings['register'] = NULL;
+            $settings['change_password'] = NULL;
+            $settings['add_users'] = NULL;
+            $settings['add_tests'] = NULL;
+            $settings['camera'] = NULL;
+            $settings['face_detection'] = NULL;
+            $settings['proctoring'] = NULL;
+            $settings['set_creator'] = NULL;
+            $settings['message_d'] = NULL;
+            $settings['timer_d'] = NULL;
+            $settings['message_l'] = NULL;
+            $settings['timer_l'] = NULL;
+             $client->settings = json_decode(json_encode($settings));
+        }
+        
+
         if($client)
             return view('appl.product.client.createedit')
                 ->with('stub','Update')
                 ->with('jqueryui',true)
+                ->with('editor',true)
                 ->with('users',$users)
                 ->with('courses',$courses)
                 ->with('client',$client);
@@ -347,6 +413,21 @@ class ClientController extends Controller
             $client->slug = strtolower($request->slug);
             $client->status = $request->status;
             $client->contact = htmlentities($request->contact);
+
+            $settings['register'] = $request->get('register');
+            $settings['change_password'] = $request->get('change_password');
+            $settings['add_users'] = $request->get('add_users');
+            $settings['add_tests'] = $request->get('add_tests');
+            $settings['camera'] = $request->get('camera');
+            $settings['face_detection'] = $request->get('face_detection');
+            $settings['proctoring'] = $request->get('proctoring');
+            $settings['set_creator'] = $request->get('set_creator');
+            $settings['message_d'] = $request->get('message_d');
+            $settings['timer_d'] = $request->get('timer_d');
+            $settings['message_l'] = $request->get('message_l');
+            $settings['timer_l'] = $request->get('timer_l');
+            $client->settings = json_encode($settings);
+
             $client->save(); 
 
              /* If image is given upload and store path */

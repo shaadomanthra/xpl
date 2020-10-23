@@ -684,6 +684,7 @@ class ExamController extends Controller
 
         if(request()->get('refresh')){
             flash('Cache Updated. And image urls updated to AWS S3.')->success();
+            Cache::forget('users_'.$exam->slug.'_'.subdomain());
             $exam->changeImageUrls();
             //update redis cache
             $exam->updateCache();
@@ -715,7 +716,9 @@ class ExamController extends Controller
         $email_stack['total'] =[];
         if($exam->emails){
 
-            $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
+            $users = Cache::remember('users_'.$exam->slug.'_'.subdomain(),240, function() use($emails){
+                return User::where('client_slug',subdomain())->whereIn('email',$emails)->get();
+            });
              $inusers = array_unique($users->pluck('email')->toArray());
 
             $email_stack['total'] = [];
@@ -885,6 +888,8 @@ class ExamController extends Controller
         $exam= Exam::where('slug',$id)->first();
 
 
+         $this->authorize('update', $exam);
+         
         $item = $r->get('item');
 
         $settings = $exam->getOriginal('settings');
@@ -919,9 +924,13 @@ class ExamController extends Controller
 
 
 
+
         if(count($candidates))
         foreach($viewers as $m=>$u){
             $viewers[$m]->candidates = $candidates[$u->id];
+
+            if(request()->get('refresh'))
+            Cache::forget('candidates_'.$exam->slug.'_'.$viewers[$m]->username);
 
             if(isset($viewers[$m]->username))
                 Cache::forget('candidates_'.$exam->slug.'_'.$viewers[$m]->username);
@@ -951,7 +960,10 @@ class ExamController extends Controller
         $i=0;
         $data = array("level1"=>0,"level2"=>0,"level3"=>0,'no_level'=>0,'total'=>0,"mark_1"=>0,"mark_2"=>0,"mark_3"=>0,"mark_4"=>0,"mark_5"=>0);
         foreach($exam->sections as $section){
+            
             if($r->get('set'))
+            $qset = $exam->getQuestionsSection($section->id,$r->get('set'));
+            else if( $r->get('set')!=null)
             $qset = $exam->getQuestionsSection($section->id,$r->get('set'));
             else
             $qset = $section->questions;
@@ -1153,6 +1165,8 @@ class ExamController extends Controller
         $exam= Exam::where('slug',$id)->with('sections')->first();
         $candidates = null;
 
+         $this->authorize('update', $exam);
+
         if($r->get('_token')){
 
             Cache::forget('test_'.$exam->slug);
@@ -1287,7 +1301,7 @@ class ExamController extends Controller
 
             for($i=0;$i<10;$i++){
                 $name = 'set_'.$exam->slug.'_'.$i;
-                //Storage::disk('s3')->delete('paper_set/'.$exam->id.'/'.$name.'.json');
+                Storage::disk('s3')->delete('paper_set/'.$exam->id.'/'.$name.'.json');
                 Cache::forget($name);
             }
         }
@@ -1335,7 +1349,7 @@ class ExamController extends Controller
         $paper_sets = [];$paper_count= [];
         for($i=0;$i<10;$i++){
             $name = 'set_'.$exam->slug.'_'.$i;
-
+            $s3 = 'paper_set/'.$exam->id.'/'.$name.'.json';
             if(Cache::get($name)){
                 $paper_sets[$i] = Cache::get($name);
                 $paper_count[$i] = 0;
@@ -1343,6 +1357,13 @@ class ExamController extends Controller
                     $paper_count[$i] = $paper_count[$i] + count($qid);
                 }
 
+            }else if(Storage::disk('s3')->exists($s3)){
+                $paper_sets[$i] = json_decode(Storage::disk('s3')->get($s3),true);
+                Cache::forever($name,$paper_sets[$i]);
+                $paper_count[$i] = 0;
+                foreach($paper_sets[$i] as $s=>$qid){
+                    $paper_count[$i] = $paper_count[$i] + count($qid);
+                }
             }
 
         }
