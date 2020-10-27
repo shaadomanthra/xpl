@@ -5,6 +5,7 @@ namespace PacketPrep\Http\Controllers\Product;
 use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Product\Client;
+use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\User\Role;
 use PacketPrep\User;
@@ -66,6 +67,7 @@ class ClientController extends Controller
     {
         $client = new client();
         $courses = Course::all();
+        $products = Product::all();
 
         $this->authorize('create', $client);
         if(!$client->settings){
@@ -93,6 +95,7 @@ class ClientController extends Controller
                 ->with('editor',true)
                 ->with('client',$client)
                 ->with('courses',$courses)
+                ->with('products',$products)
                 ->with('users',$users);
     }
 
@@ -158,7 +161,6 @@ class ClientController extends Controller
             }
 
             $course_list =  Course::all()->pluck('id')->toArray();
-            //update tags
             if($courses)
             foreach($course_list as $course){
                 if(in_array($course, $courses)){
@@ -171,12 +173,26 @@ class ClientController extends Controller
                 
             } 
 
-            unset($client->courses);
 
-            $param = "?";
-            foreach($client->toArray() as $key=>$value){
-                    $param = $param.$key."=".$value."&";
-            }
+            $products = $request->get('product');
+            $product_list =  Product::all()->pluck('id')->toArray();
+            if($products)
+            foreach($product_list as $product){
+                if(in_array($product, $products)){
+                    if(!$client->products->contains($product))
+                        $client->products()->attach($product);
+                }else{
+                    if($client->products->contains($product))
+                        $client->products()->detach($product);
+                }
+                
+            } 
+
+
+            // $param = "?";
+            // foreach($client->toArray() as $key=>$value){
+            //         $param = $param.$key."=".$value."&";
+            // }
             Cache::forever('client_'.$client->slug,$client);
 
 
@@ -352,6 +368,7 @@ class ClientController extends Controller
     {
         $client = client::where('slug',$id)->first();
         $courses = Course::all();
+        $products = Product::all();
         $this->authorize('edit', $client);
 
         $users = array();
@@ -384,6 +401,7 @@ class ClientController extends Controller
                 ->with('editor',true)
                 ->with('users',$users)
                 ->with('courses',$courses)
+                ->with('products',$products)
                 ->with('client',$client);
         else
             abort(404);
@@ -401,6 +419,8 @@ class ClientController extends Controller
         
         $engineers = $request->get('engineers');
         $courses = $request->get('course');
+
+        Cache::forget('client_'.subdomain());
 
         try{
             $request->slug = str_replace(' ', '-', $request->slug);
@@ -463,13 +483,29 @@ class ClientController extends Controller
                 $client->courses()->detach();
             }
 
+            $products = $request->get('product');
+            $product_list =  Product::all()->pluck('id')->toArray();
+            if($products)
+            foreach($product_list as $product){
+                if(in_array($product, $products)){
+                    if(!$client->products->contains($product))
+                        $client->products()->attach($product);
+                }else{
+                    if($client->products->contains($product))
+                        $client->products()->detach($product);
+                }
+                
+            }else{
+                 $client->products()->detach();
+            }
+
 
             unset($client->courses);
-            
-            $param = "?";
-            foreach($client->toArray() as $key=>$value){
-                    $param = $param.$key."=".$value."&";
-            }
+            unset($client->products);
+            // $param = "?";
+            // foreach($client->toArray() as $key=>$value){
+            //         $param = $param.$key."=".$value."&";
+            // }
 
             Cache::forget('client_'.$client->slug);
             Cache::forever('client_'.$client->slug,$client);

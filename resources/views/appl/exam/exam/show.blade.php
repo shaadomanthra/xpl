@@ -42,7 +42,6 @@
           @can('update',$exam)
             <span class="btn-group float-md-right btn-group-sm mt-2 mt-md-0" role="group" aria-label="Basic example">
               <a href="{{ route('exam.edit',$exam->slug) }}" class="btn btn-outline-light" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i> edit</a>
-              <a href="{{ route('exam.show',$exam->slug) }}?refresh=1" class="btn btn-outline-light" data-tooltip="tooltip" data-placement="top" title="Update Cache"><i class="fa fa-database"></i> Cache</a>
               @if(\Auth::user()->checkRole(['administrator','editor']))
               <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal2" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-retweet"></i> copy</a>
               <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal3" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-user"></i> change owner</a>
@@ -56,6 +55,14 @@
 
 
 <div class="container ">
+
+  <div class="alert alert-important alert-info mt-3">
+    Data is cached for faster access. Refresh Cache to load the updated data.
+    <a href="{{request()->url()}}?refresh=1">
+    <span class="float-right"><i class="fa fa-retweet"></i> Refresh Now</span>
+    </a>
+  </div>
+
   @include('flash::message')
   <div class="row mt-4">
     <div class="col-12 col-md-6 col-lg-7">
@@ -112,7 +119,7 @@
           <div class="row mb-2">
             <div class="col-6"><i class="fa fa-bars"></i>&nbsp; Testtype</div>
             <div class="col-6">
-              {{$exam->examtype->name}}
+              {{$data['examtype']->name}}
             </div>
           </div>
 
@@ -396,7 +403,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($exam->sections as $w=>$section)
+                  @foreach($data['sections'] as $w=>$section)
                   <tr>
                     <th scope="row">{{($w+1)}}</th>
                     <td><a href="{{ route('sections.show',[$exam->slug,$section->id]) }}">{{$section->name}}({{ count($section->questions)}})</a></td>
@@ -427,7 +434,7 @@
       <div class="">
       @foreach(explode(',',$exam->code) as $code)
               @if($code)
-              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-2 ">{{ $code}}({{ $exam->getAttemptCount($code)}})</a>
+              <a href="{{ route('test.report',$exam->slug)}}?code={{$code}}" class="btn btn-outline-primary mb-2 ">{{ $code}}({{ $data['code_'.$code]}})</a>
               @else
               <span class="text-secondary"> - No access codes defined</span>
               @endif &nbsp;&nbsp;
@@ -582,7 +589,7 @@
             <div class="f18 mb-0">
               <a href="#" class="showuser"  data-url="{{route('profile','@'.$t->user->username)}}"><b>{{$t->user->name}}</b></a>
 
-              @if($t->status || $exam->slug=='psychometric-test' || $exam->examtype->slug=='psychometric-test')
+              @if($t->status || $exam->slug=='psychometric-test' || $data['examtype']->slug=='psychometric-test')
               has attempted the test
               @else
                has scored <b class="text-primary">
@@ -596,7 +603,7 @@
               <small class="mr-2">
               <a href="{{ route('assessment.analysis',[$exam->slug]) }}?student={{$t->user->username}}" ><i class="fa fa-bar-chart"></i> Report</a></small>
 
-              @if($exam->slug!='psychometric-test' && $exam->examtype->slug!='psychometric-test')
+              @if($exam->slug!='psychometric-test' && $data['examtype']->slug!='psychometric-test')
               <small class="mr-2">
               <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$t->user->username}}" ><i class="fa fa-commenting-o"></i> Responses</a></small>
               @endif

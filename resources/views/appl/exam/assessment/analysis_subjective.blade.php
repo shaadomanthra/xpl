@@ -48,8 +48,8 @@
 		</div>
 		<div class="  display-4  mb-1 d-none d-md-block"><b> {{$student->name}} - Report</b></div>
 		@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
-    @if($student->branch_id)<span class="badge badge-danger">{{$student->branch->name}}</span>@endif
-      @if($student->college_id)<span class="badge badge-info">{{$student->college->name}}</span><br>@endif
+    @if($student->branch_id)<span class="badge badge-danger">{{$data['branches'][$student->branch_id]->name}}</span>@endif
+      @if($student->college_id)<span class="badge badge-info">{{$data['colleges'][$student->college_id]->name}}</span><br>@endif
 		<p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><br>
       
 			

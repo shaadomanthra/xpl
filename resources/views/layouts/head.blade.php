@@ -51,7 +51,7 @@
   @if(isset($highlight))
   <link href="{{ asset('css/styles2.css') }}?new=16" rel="stylesheet">
   @elseif(domain()=='piofx')
-  @if(request()->segment(1)=='dashboard' || request()->segment(1)=='training')
+  @if(request()->segment(1)=='dashboard' || request()->segment(1)=='training' || subdomain()=='iidt')
   <link href="{{ asset('css/styles.css') }}?new=14" rel="stylesheet">
   <!--begin::Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />

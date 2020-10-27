@@ -155,6 +155,9 @@ class User extends Authenticatable
 
     public function myproducts(){
         $user = $this;
+        if(request()->get('refresh'))
+            Cache::forget('myproducts_'.$user->id);
+
         $products = Cache::remember('myproducts_'.$user->id, 240, function() use ($user) {
           return $user->products()->with('courses')->with('exams')->get();
         });

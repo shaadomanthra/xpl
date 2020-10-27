@@ -73,6 +73,7 @@ class Corporate
                         elseif($client->status==3)
                             abort(403,'Site services are terminated');
                         $request->session()->put('client',$client);
+                        $request->session()->put('settings',json_decode($client->settings));
                 }else{
                     abort(404,'Site not found - '.subdomain());
                 } 

@@ -51,6 +51,10 @@
 
     @if(subdomain() == 'rguktn' || subdomain() == 'rguktrkv' )
     <a href="{{ route('password.change')}}" class="btn btn-primary">Change Password</a>
+    @elseif(request()->session()->get('settings'))
+      @if(request()->session()->get('settings')->change_password)
+      <a href="{{ route('password.change')}}" class="btn btn-primary">Change Password</a>
+      @endif
     @endif
       <a class="btn border border-success text-success " href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();" role="button">Logout</a>
@@ -90,28 +94,22 @@
 
 @if(isset(request()->session()->get('client')->slug))
 @if(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_banner.png'))
-              <img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_banner.png')}}" class=" w-100 mb-3" />
-              @elseif(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_banner.jpg'))
-              <img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_banner.jpg')}}" class=" w-100 mb-3" />
-             
-              @endif
+<img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_banner.png')}}" class=" w-100 mb-3" />
+@elseif(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_banner.jpg'))
+<img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_banner.jpg')}}" class=" w-100 mb-3" />
+@endif
 @endif
 
-<!-- @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
-          <div class="alert alert-warning alert-important mt-3">
-          <div class=" h4 ">The mock test link will be activated on 19th July 2020, 9:00 am.</div>
-          
-        <p id="d" class="my-2 text-danger blink"></p>
-        </div>
-@endif -->
-
-@if($_SERVER['HTTP_HOST'] == 'vaagdevi.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.vaagdevi.xplore.co.in')
-          <div class="alert alert-warning alert-important mt-3">
-          <div class=" h4 ">The mock test link will be activated on 7th Sept 2020, 9:00 am.</div>
-          
-        <p id="d" class="my-2 text-danger blink"></p>
-        </div>
-@endif 
+@if(request()->session()->get('settings'))
+@if(request()->session()->get('settings')->message_d)
+<div class="alert alert-warning alert-important mt-3  ">
+  <div class=" h5 mt-2">{{request()->session()->get('settings')->message_d}}</div>
+  @if(request()->session()->get('settings')->timer_d)
+  <p id="d" class="my-2 text-danger blink countdown_timer" data-timer="{{request()->session()->get('settings')->timer_d}}"></p>
+  @endif
+</div>
+@endif
+@endif
 
 
 @if(count(\auth::user()->newtests())!=0)
@@ -244,6 +242,58 @@
         @endif
 
 
+
+ @if(count(auth::user()->myproducts())!=0)
+  <div class="rounded table-responsive ">
+            <table class="table table-bordered ">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Products</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Valid till</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach(auth::user()->myproducts() as $k=>$product)
+                 <tr>
+                  <th scope="row">{{ $k+1}}</th>
+                  <td>
+                    <a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a><br>
+                    @foreach($product->courses as $c)
+                         - <a href="{{ route('course.show',$c->slug)}}">{{$c->name}}</a> <span class="badge badge-primary">course</span><br>
+                    @endforeach
+                    @foreach($product->exams as $e)
+                         - <a href="{{ route('assessment.details',$e->slug)}}">{{$e->name}}</a> <span class="badge badge-secondary">Test</span><br>
+                    @endforeach
+                  </td>
+                  <td>
+                    @if($product->price==0)
+                      <span class="badge badge-warning">Free</span>
+                      @else
+                      <span class="badge badge-info">Premium</span>
+                      @endif
+                  </td>
+                  <td>{{date('d M Y', strtotime($product->pivot->valid_till))}}</td>
+                  <td> 
+                    @if(strtotime($product->pivot->valid_till) > strtotime(date('Y-m-d')))
+                      @if($product->pivot->status==1)
+                      <span class="badge badge-success">Active</span>
+                      @else
+                      <span class="badge badge-secondary">Disabled</span>
+                      @endif
+                    @else
+                        <span class="badge badge-danger">Expired</span>
+                    @endif
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+            </div>
+
+        @endif
 
   
 

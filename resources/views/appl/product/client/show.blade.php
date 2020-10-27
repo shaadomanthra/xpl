@@ -72,6 +72,21 @@
               @endif
             </div>
           </div>
+          <div class="row mb-2">
+            <div class="col-md-4">Contact</div>
+            <div class="col-md-8">
+              {!! $client->contact !!}
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-md-4">Products</div>
+            <div class="col-md-8">
+              @foreach($client->products as $p)
+                <div>{{$p->name}}</div>
+              @endforeach
+            </div>
+          </div>
 
           <div class="bg-light p-3 rounded border mt-3">
             <h4><i class="fa fa-th"></i> Settings</h4>
@@ -118,9 +133,73 @@
                   @endif
                 </dd>
               </dl>
+              <dl class="row mb-0">
+                <dt class="col-sm-6">Countdown loginpage</dt>
+                <dd class="col-sm-6">
+                  {{$client->settings->timer_l}}
+                </dd>
+              </dl>
+              <dl class="row mb-0">
+                <dt class="col-sm-6">Message loginpage</dt>
+                <dd class="col-sm-6">
+                  {{$client->settings->message_l}}
+                </dd>
+              </dl>
               
             </div>
             <div class="col-md-6">
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Camera</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->camera==0)
+                  <span class="badge badge-secondary">Disabled</span>
+                  @elseif($client->settings->camera==1)
+                  <span class="badge badge-success">Enabled</span>
+                  @endif
+                </dd>
+              </dl>
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Face Detection</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->face_detection==0)
+                  <span class="badge badge-secondary">Disabled</span>
+                  @elseif($client->settings->face_detection==1)
+                  <span class="badge badge-success">Enabled</span>
+                  @endif
+                </dd>
+              </dl>
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Proctoring</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->proctoring==0)
+                  <span class="badge badge-secondary">Disabled</span>
+                  @elseif($client->settings->proctoring==1)
+                  <span class="badge badge-success">Enabled</span>
+                  @endif
+                </dd>
+              </dl>
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Set Creator</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->set_creator==0)
+                  <span class="badge badge-secondary">Disabled</span>
+                  @elseif($client->settings->set_creator==1)
+                  <span class="badge badge-success">Enabled</span>
+                  @endif
+                </dd>
+              </dl>
+              <dl class="row mb-0">
+                <dt class="col-sm-6">Countdown dashboard</dt>
+                <dd class="col-sm-6">
+                  {{$client->settings->timer_d}}
+                </dd>
+              </dl>
+              <dl class="row mb-0">
+                <dt class="col-sm-6">Message dashboard</dt>
+                <dd class="col-sm-6">
+                  {{$client->settings->message_d}}
+                </dd>
+              </dl>
              
             </div>
           </div> 

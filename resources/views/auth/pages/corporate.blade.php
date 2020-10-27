@@ -116,67 +116,13 @@
 
     </div>
     
-     <div class="row">
-        <div class="col-12 col-md-4">
-            <div class="form-group{{ $errors->has('video') ? ' has-error' : '' }}">
-                <label for="video" class="col-md-8 control-label">Inter/Diploma College Name</label>
-
-                <div class="col-md-12">
-                    <input id="video" type="text" class="form-control" name="video" value="{{ old('video') }}" required autofocus placeholder="">
-
-                    @if ($errors->has('video'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('video') }}</strong>
-                    </span>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="form-group{{ $errors->has('personality') ? ' has-error' : '' }}">
-                <label for="personality" class="col-md-8 control-label">Course</label>
-
-                <div class="col-md-12">
-                    <select class="form-control" name="personality">
-                      <option value="MPC"  >M.P.C</option>
-                      <option value="BiPC"  > Bi.P.C</option>
-                      <option value="CSE"  > CSE</option>
-                      <option value="ECE"  > ECE</option>
-                      <option value="EEE"  > EEE</option>
-                      <option value="IT"  > IT</option>
-                      <option value="MECH"  > MECH</option>
-                      <option value="CIVIL"  > CIVIL</option>
-                      <option value="OTHER"  > OTHER</option>
-                    </select>
-                </div>
-            </div>
-
-        </div>
-
-         <div class="col-12 col-md-4">
-            <div class="form-group{{ $errors->has('confidence') ? ' has-error' : '' }}">
-                <label for="confidence" class="col-md-8 control-label">Secured Marks in First Year</label>
-
-                <div class="col-md-12">
-                    <input id="confidence" type="text" class="form-control" name="confidence" value="{{ old('confidence') }}" required autofocus>
-
-                    @if ($errors->has('confidence'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('confidence') }}</strong>
-                    </span>
-                    @endif
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+     
 
     
 
     <div class="row">
 
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
              <div class="form-group">
         <label for="dob" class="col-md-12 control-label">Date of birth (eg: 25-08-2005) </label>
 
@@ -185,7 +131,7 @@
         </div>
     </div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
              <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
         <label for="email" class="col-md-12 control-label">E-Mail Address </label>
 
@@ -202,23 +148,7 @@
 
         </div>
 
-        <div class="col-12 col-md-4">
-             <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-        <label for="email" class="col-md-12 control-label">Student Phone Number </label>
-
-        <div class="col-md-12">
-            <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
-            <input id="otp" type="hidden" class="form-control" name="otp" value="{{$code}}" >
-
-            @if ($errors->has('phone'))
-            <span class="help-block">
-                <strong>{{ $errors->first('phone') }}</strong>
-            </span>
-            @endif
-        </div>
-    </div>
-
-        </div>
+       
 
     </div>
 
@@ -251,37 +181,7 @@
 
     </div>
 
-    <div class="row">
-        <div class="col-12 col-md-4">
-            <div class="form-group{{ $errors->has('fluency') ? ' has-error' : '' }}">
-                <label for="phone" class="col-md-8 control-label">Admission Number</label>
-                <div class="col-md-12">
-                    <input id="address" type="text" class="form-control" name="fluency" value="{{ old('fluency') }}" required>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                <label for="phone" class="col-md-8 control-label">District</label>
-                <div class="col-md-12">
-                    <input id="address" type="text" class="form-control" name="hometown" value="{{ old('hometown') }}" required>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                <label for="phone" class="col-md-8 control-label">Address</label>
-                <div class="col-md-12">
-                    <input id="address" type="text" class="form-control" name="current_city" value="{{ old('current_city') }}" required>
-                    
-                </div>
-            </div>
 
-        </div>
-
-    </div>
     
 
 

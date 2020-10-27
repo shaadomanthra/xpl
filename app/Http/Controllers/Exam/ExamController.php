@@ -673,7 +673,10 @@ class ExamController extends Controller
     public function show($id)
     {
 
-        $exam= Exam::where('slug',$id)->with('user')->with('sections')->withCount('users')->first();
+
+        $exam= Cache::remember('exam_admin_'.$id,30, function() use ($id){
+            return Exam::where('slug',$id)->with('user')->with('sections')->withCount('users')->first();
+        });
 
         $exam->precheck_auto_activation();
 
@@ -683,8 +686,15 @@ class ExamController extends Controller
         $this->authorize('view', $exam);
 
         if(request()->get('refresh')){
-            flash('Cache Updated. And image urls updated to AWS S3.')->success();
+            flash('Cache data refreshed.')->success();
             Cache::forget('users_'.$exam->slug.'_'.subdomain());
+            Cache::forget('latest_users_admin'.$id);
+            Cache::forget('hr_managers_'.$id);
+            Cache::forget('examtype_obj_'.$id);
+            Cache::forget('exam_sections_'.$id);
+            foreach(explode(',',$exam->code) as $code)
+                Cache::forget('exam_code_'.$code);
+
             $exam->changeImageUrls();
             //update redis cache
             $exam->updateCache();
@@ -750,11 +760,27 @@ class ExamController extends Controller
 
         $data['attempt_count'] = $exam->users_count;
         if($data['attempt_count'])
-            $data['users'] = $exam->latestUsers();
+            $data['users'] = Cache::remember('latest_users_admin'.$id, 60, function() use ($exam) {
+                return $exam->latestUsers();
+            });
         else
             $data['users'] = 0;
 
-        $data['hr-managers'] = \auth::user()->getRole('hr-manager');
+        $data['hr-managers'] = Cache::remember('hr_managers_'.$id, 60, function()  {
+                return \auth::user()->getRole('hr-manager');
+            });
+
+        $data['examtype'] = Cache::remember('examtype_obj_'.$id, 60, function()use ($exam)   {
+                return $exam->examtype;
+            });
+
+        $data['sections'] = Cache::remember('exam_sections_'.$id, 60, function()use ($exam)   {
+                return $exam->sections()->with('questions')->get();
+            });
+        foreach(explode(',',$exam->code) as $code)
+            $data['code_'.$code] = Cache::remember('exam_code_'.$code, 60, function()use ($exam,$code)   {
+                return $exam->getAttemptCount($code);
+            });
 
        $exam_cache = Cache::get('exam_cache_'.$exam->id);
 

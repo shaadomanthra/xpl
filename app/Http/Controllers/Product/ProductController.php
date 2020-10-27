@@ -198,7 +198,7 @@ class ProductController extends Controller
       $data['branches'] = Cache::get('branches');
       $data['colleges'] = Cache::get('colleges');
 
-
+      
 
       $username = $user->username;
       $user->image = $user->getImage();

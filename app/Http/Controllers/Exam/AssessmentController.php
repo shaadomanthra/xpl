@@ -268,9 +268,16 @@ class AssessmentController extends Controller
         $user = \auth::user();
         if(isset($exam->product_ids))
         $products = $exam->product_ids;
-        else
-            $products = null;
+        else{
+            //dd(count($exam->products));
+            if(count($exam->products)){
+                 $products = $exam->products->pluck('id')->toArray();
+            }else
+                $products = null;
+        }
         $product = null;
+
+        
 
         $test_taken = $user->attempted_test($exam->id);//Test::where('test_id',$exam->id)->where('user_id',$user->id)->first();
 
@@ -283,10 +290,12 @@ class AssessmentController extends Controller
             $entry=null;
             if($user){
                 if($products){
-                    $entry = DB::table('product_user')
+                    $entry = Cache::remember('entry_'.$exam->id.'_'.$user->id, 240, function() use($products,$user){
+                        return DB::table('product_user')
                     ->whereIn('product_id', $products)
                     ->where('user_id', $user->id)
                     ->first();
+                    });
                     $product = $exam->products[0];
                 }
             }
@@ -506,10 +515,12 @@ class AssessmentController extends Controller
             $entry=null;
             if($user){
                 if($products){
-                    $entry = DB::table('product_user')
+                     $entry = Cache::remember('entry_'.$exam->id.'_'.$user->id, 240, function() use($products,$user){
+                        return DB::table('product_user')
                     ->whereIn('product_id', $products)
                     ->where('user_id', $user->id)
                     ->first();
+                    });
                     $product = $exam->products[0];
                 }
             }
@@ -856,10 +867,12 @@ class AssessmentController extends Controller
             foreach($exam->products as $product)
             {
                 if($product->users()->find($user->id)){
-                    $entry = DB::table('product_user')
-                        ->where('product_id', $product->id)
-                        ->where('user_id', $user->id)
-                        ->first();
+                     $entry = Cache::remember('entry_'.$exam->id.'_'.$user->id, 240, function() use($products,$user){
+                        return DB::table('product_user')
+                    ->whereIn('product_id', $products)
+                    ->where('user_id', $user->id)
+                    ->first();
+                    });
                      $p = $product;
                 }
 
@@ -3378,10 +3391,12 @@ class AssessmentController extends Controller
         }
         if($user){
             if($products){
-                $entry = DB::table('product_user')
+                 $entry = Cache::remember('entry_'.$exam->id.'_'.$user->id, 240, function() use($products,$user){
+                        return DB::table('product_user')
                     ->whereIn('product_id', $products)
                     ->where('user_id', $user->id)
                     ->first();
+                    });
                 $product = $exam->products[0];
 
             }
@@ -3681,6 +3696,9 @@ class AssessmentController extends Controller
         //                 ->with('exam',$exam);
         // }
 
+        $d['branches'] = Cache::get('branches');
+       $d['colleges'] = Cache::get('colleges');
+
 
         $questions = array();
 
@@ -3893,7 +3911,10 @@ class AssessmentController extends Controller
         $review=false;
 
         $i=0;
-        if($exam->slug=='psychometric-test' || $exam->examtype->slug=='psychometric-test')
+        $typeslug= Cache::remember('exam_type_'.$exam->slug, 240, function() use($exam) {
+            return $exam->examtype->slug;
+        });
+        if($exam->slug=='psychometric-test' || $typeslug=='psychometric-test')
         {
             $d['extroversion'] = 20;
             $d['agreeableness'] = 14;
@@ -4005,6 +4026,7 @@ class AssessmentController extends Controller
             }else{
                  $ques_keys[$t->question_id]['topic'] = null;
                  $ques_keys[$t->question_id]['section'] = null;
+                 if(!$ques[$t->question_id])
                  $ques[$t->question_id] = $t->question;
                  //$ques[$t->question_id]->type = $t->question->type;
             }
@@ -4121,12 +4143,14 @@ class AssessmentController extends Controller
 
         return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
+                        ->with('data',$d)
                         ->with('questions',$ques)
                         ->with('sections',$sections)
                         ->with('details',$details)
                         ->with('student',$student)
                         ->with('user',$student)
                         ->with('tests',$tests)
+                        ->with('typeslug',$typeslug)
                         ->with('test_overall',$tests_overall)
                         ->with('review',true)
                         ->with('mathjax',$mathjax)

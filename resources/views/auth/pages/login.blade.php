@@ -76,18 +76,30 @@
               @elseif($_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'smec.xplore.co.in' ||$_SERVER['HTTP_HOST'] == 'fks.xplore.co.in' )
 
               @elseif( $_SERVER['HTTP_HOST'] == 'rguktn.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'rguktrkv.xplore.co.in')
-              @else
+              @elseif(request()->session()->get('settings'))
+                                @if(request()->session()->get('settings')->register)
                  <a class="btn btn-success" href="{{ route('register') }}">
                                     Register
                                 </a>
                                 <br>
+                                @endif
               @endif
                                 
+                                @if(request()->session()->get('settings'))
+                                @if(request()->session()->get('settings')->change_password)
                                 <div class="mt-4">
-                                <a class="" href="{{ route('password.request') }}">
-                                     Reset password via email
-                                </a>
-                            </div>
+                                    <a class="" href="{{ route('password.request') }}">
+                                         Reset password via email
+                                    </a>
+                                </div>
+                                @endif
+                                @else
+                                <div class="mt-4">
+                                    <a class="" href="{{ route('password.request') }}">
+                                         Reset password via email
+                                    </a>
+                                </div>
+                                @endif
                            
                                 <!--
                                 <a class="btn btn-link" href="{{ route('password.forgot') }}">

@@ -26,8 +26,8 @@
 		<div class="p-3 border rounded bg-light mb-4">
 		<div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Report</b></div>
 		@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
-		@if($student->branch_id)<span class="badge badge-danger">{{$student->branch->name}}</span>@endif
-      @if($student->college_id)<span class="badge badge-info">{{$student->college->name}}</span><br>@endif
+		@if($student->branch_id)<span class="badge badge-danger">{{$data['branches'][$student->branch_id]->name}}</span>@endif
+      @if($student->college_id)<span class="badge badge-info">{{$data['colleges'][$student->college_id]->name}}</span><br>@endif
 		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
 			
 			
@@ -58,7 +58,7 @@
 	@else
 
 
-	@if($exam->slug =='psychometric-test' || $exam->examtype->slug=='psychometric-test')
+	@if($exam->slug =='psychometric-test' || $typeslug=='psychometric-test')
 
 	<div class="card"  style="background: #FFF;border: 0px solid #EEE;">
 		<div class="card-body">

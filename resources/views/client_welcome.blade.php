@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,47 +16,22 @@
     <div class="container-fluid">
       <div class="row">
 
-        @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
-        <div class="col-sm-6 ">
-          <div class="brand-wrapper">
-            <img 
-        src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
-          </div>
-
-          <div class="login-section-wrapper my-auto">
-            @if($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
-          <div class="alert alert-warning alert-important mt-3">
-          <div class=" h4 ">Mock Test results are out. </div>
-          
-        <p id="d" class="my-2 text-danger blink"></p>
-        </div>
-          @endif
-             @include('auth.pages.login')
-             <div class="mt-5">
-              <div class="p-2"></div>
-             <hr >
-             Incase of any query you can reach out to our resource person, details in the <a href="{{ route('contactpage')}}">contact page</a>
-           </div>
-          </div>
-        </div>
-        @else
+        
         <div class="col-sm-6 login-section-wrapper ">
           <div class="brand-wrapper">
-            <img 
-        src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
+            <img  src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
           </div>
-          @if($_SERVER['HTTP_HOST'] == 'vaagdevi.xplore.co.in'  || $_SERVER['HTTP_HOST'] == 'demo.onlinelibrary.test')
-          <div class="alert alert-warning alert-important mt-3">
-          <div class=" h4 ">Next mock test is scheduled for 7th Sept 2020.</div>
-           <p id="d" class="my-2 text-danger blink"></p>
-        </div>
-          @elseif($_SERVER['HTTP_HOST'] == 'eamcet.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'www.eamcet.xplore.co.in')
-          <div class="alert alert-warning alert-important mt-3">
-          <div class=" h4 ">The mock test link will be active on 19th July 2020, 9:00 Am.</div>
-          
-        <p id="d" class="my-2"></p>
-        </div>
+          @if(request()->session()->get('settings'))
+            @if(request()->session()->get('settings')->message_l)
+              <div class="alert alert-warning alert-important mt-3">
+                <div class=" h5 mt-2">{{request()->session()->get('settings')->message_l}}</div>
+                @if(request()->session()->get('settings')->timer_l)
+                 <p id="d" class="my-2 text-danger blink countdown_timer" data-timer="{{request()->session()->get('settings')->timer_l}}"></p>
+                @endif
+              </div>
+            @endif
           @endif
+          
           <div class=" my-auto">
              @include('auth.pages.login')
              <div class="mt-5">
@@ -68,77 +41,24 @@
            </div>
           </div>
         </div>
-        @endif
+       
+
         <div class="col-sm-6 px-0 d-none d-sm-block">
           @if(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_header.png'))
-              <img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_header.png')}}?time={{ microtime()}}" alt="login image" class="login-img" />
-              @elseif(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_header.jpg'))
-              <img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_header.jpg')}}?time={{ microtime()}}" alt="login image" class="login-img" />
-              @else
-              <img src="{{ asset('img/bg_login.jpg') }}?time={{ microtime()}}" alt="login image" class="login-img">
-              @endif
-          
+          <img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_header.png')}}?time={{ microtime()}}" alt="login image" class="login-img" />
+          @elseif(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_header.jpg'))
+          <img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_header.jpg')}}?time={{ microtime()}}" alt="login image" class="login-img" />
+          @else
+          <img src="{{ asset('img/bg_login.jpg') }}?time={{ microtime()}}" alt="login image" class="login-img">
+          @endif
         </div>
       </div>
     </div>
   </main>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script>
-    function blink_text() {
-      if($('.blink').length){
-        $('.blink').fadeOut(500);
-    $('.blink').fadeIn(500);
-      }
-    
-}
-setInterval(blink_text, 1000);
-
-
-
-// Set the date we're counting down to
-var countDownDate = new Date("September, 7 2020 09:00:00").getTime();
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-
-  // Get today's date and time
-  var now = new Date().getTime();
-    
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
-
-
-    
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-  // Output the result in an element with id="demo"
-  if(document.getElementById("d"))
-  document.getElementById("d").innerHTML = days + "days " + hours + "hours "
-  + minutes + "min " + seconds + "sec ";
-    
-  // If the count down is over, write some text 
-  if (distance < 0) {
-    clearInterval(x);
-    if(document.getElementById("d"))
-    document.getElementById("d").innerHTML = "";
-  }
-}, 1000);
-
-  </script>
+  <script src="{{ asset('js/client.js')}}"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-
-
-
-
- <?php
-    session()->put( 'redirect.url',request()->url().'/dashboard');
-  ?>
- 
+<?php session()->put( 'redirect.url',request()->url().'/dashboard'); ?>

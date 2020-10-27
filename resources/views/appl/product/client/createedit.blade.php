@@ -91,7 +91,7 @@
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">
-        <label for="formGroupExampleInput ">Client Header Image</label>
+        <label for="formGroupExampleInput ">Loginpage Image</label>
         <input type="file" class="form-control" name="file_" id="formGroupExampleInput" placeholder="Enter the image path" 
           >
       </div>
@@ -99,7 +99,7 @@
         </div>
         <div class="col-12 col-md-6">
            <div class="form-group">
-        <label for="formGroupExampleInput ">Dashboard Image</label>
+        <label for="formGroupExampleInput ">Dashboard Banner Image</label>
         <input type="file" class="form-control" name="file2_" id="formGroupExampleInput" placeholder="Enter the image path" 
           >
       </div>
@@ -237,22 +237,26 @@
 
       
 
-      <!--
-      <div class="form-group">
-        <label for="formGroupExampleInput">Courses</label>
+      
+      <div class="form-group mt-4">
+        <label for="formGroupExampleInput">Products</label>
          <div class=" card p-3">
-          @foreach($courses as $course)
-          @if($course->status==1)
+          <div class="row">
+          @foreach($products as $product)
+          @if($product->status==1)
+          <div class="col-12 col-md-4">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="course[]" value="{{$course->id}}" id="defaultCheck1" @if($client->courses->contains($course->id))) checked @endif>
+            <input class="form-check-input" type="checkbox" name="product[]" value="{{$product->id}}" id="defaultCheck1" @if($client->products->contains($product->id))) checked @endif>
             <label class="form-check-label" for="defaultCheck1">
-              {{ $course->name }}
+              {{ $product->name }}
             </label>
           </div>
+        </div>
           @endif
           @endforeach
+          </div>
          </div>
-      </div>-->
+      </div>
 
 
 

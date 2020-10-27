@@ -94,6 +94,8 @@ class Exam extends Model
     public function updateCache(){
             //add owner
         $exam = $this;
+        $exam->product_ids = $exam->products->pluck('id')->toArray();
+        $exam->examtype = $exam->examtype;
         $exam->settings = json_decode($exam->settings);
         
         if(!$exam->viewers->contains($exam->user_id))
@@ -210,7 +212,10 @@ class Exam extends Model
           $qids = $set[$id];
           return $sec->questions()->whereIn('question_id',$qids)->get();
        }else{
-          return $sec->questions;
+        $questions = Cache::remember('exam_ques_'.$sec->id,240,function() use ($sec){
+            return $sec->questions;
+        });
+          return $questions;
        }
     }
 
