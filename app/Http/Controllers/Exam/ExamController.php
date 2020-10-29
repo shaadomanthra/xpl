@@ -694,6 +694,8 @@ class ExamController extends Controller
             Cache::forget('exam_sections_'.$id);
             foreach(explode(',',$exam->code) as $code)
                 Cache::forget('exam_code_'.$code);
+            foreach($exam->sections as $section)
+                Cache::forget('exam_ques_'.$section->id);
 
             $exam->changeImageUrls();
             //update redis cache

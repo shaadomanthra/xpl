@@ -22,8 +22,9 @@ pre, code {
 }
 </style>
 
-<div id="content">
+
 <div id="pdf">
+  <div id="content">
 <div class="dblue" >
   <div class="container">
 
@@ -295,31 +296,31 @@ pre, code {
 
 <script>
 
-  // function downloadpdf(){
-  //     var element = document.getElementById('pdf');
-  //     var pdfbtn = document.getElementById('pdfbtn');
-  //     var name = pdfbtn.getAttribute('data-name');
-  //     //alert(name);
-  //     html2pdf().from(element).save(name+'.pdf');;
-  // }
-
-  function downloadpdf() {
+  function downloadpdf(){
       var element = document.getElementById('pdf');
       var pdfbtn = document.getElementById('pdfbtn');
-      var name = pdfbtn.getAttribute('data-name')+'.pdf';
-        var opt = {
-            margin: 1,
-            pagespilt: true,
-            filename: name,
-            image: { type: "jpg", quality: 0.95 },
-            html2canvas: {scale: 2},
-            useCORS: true,
-            // jsPDF:{ unit: 'in', format: 'letter', orientation: 'portrait' }
-        }
-        // var input = document.getElementById("pdfContainer");
-        // console.log(input)
-        html2pdf(element, opt)
-    }
+      var name = pdfbtn.getAttribute('data-name');
+      //alert(name);
+      html2pdf().from(element).save(name+'.pdf');;
+  }
+
+  // function downloadpdf() {
+  //     var element = document.getElementById('pdf');
+  //     var pdfbtn = document.getElementById('pdfbtn');
+  //     var name = pdfbtn.getAttribute('data-name')+'.pdf';
+  //       var opt = {
+  //           margin: 1,
+  //           pagespilt: true,
+  //           filename: name,
+  //           image: { type: "jpg", quality: 0.95 },
+  //           html2canvas: {scale: 2},
+  //           useCORS: true,
+  //           jsPDF:{ unit: 'in', format: 'letter', orientation: 'portrait' }
+  //       }
+  //       // var input = document.getElementById("pdfContainer");
+  //       // console.log(input)
+  //       html2pdf(element, opt)
+  //   }
 
   
 

@@ -1288,21 +1288,22 @@ class AssessmentController extends Controller
             return Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->with('question')->get();
         });
-        $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
+        $test_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
 
         if($request->get('pdf2')){
-            $test_overall = $tests_overall;
+            
         
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
             $view = 'responses-pdf';
-             $pdf = PDF::loadView('appl.exam.assessment.'.$view,compact('tests','student','exam','test_overall'));
-             $pdf->save('sample.pdf');
+             //$pdf = PDF::loadView('appl.exam.assessment.'.$view,compact('tests','student','exam','test_overall'));
+             //     $pdf->save('sample.pdf');
            
              // 
            
         }
+        $tests_overall = $test_overall;
 
         $tests_keys = $tests->keyBy('question_id');
 
