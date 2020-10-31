@@ -1209,15 +1209,16 @@ class AssessmentController extends Controller
         return $new_ans;
     }
 
-    public function responses($slug,$id=null,Request $request)
+    public function responses($slug,$id=null,$student=null,$pdf2=null,Request $request)
     {
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
 
         $exam = Cache::get('test_'.$slug);
 
+        if(!$pdf2)
         if(!\auth::user()->isAdmin())
-        $this->authorize('view', $exam);
+         $this->authorize('view', $exam);
 
 
         if(!$exam)
@@ -1236,6 +1237,8 @@ class AssessmentController extends Controller
 
         if($request->get('student'))
             $student = User::where('username',$request->get('student'))->first();
+        else if($student)
+            $student = User::where('username',$student)->first();
         else
             $student = \auth::user();
 
@@ -1513,11 +1516,20 @@ class AssessmentController extends Controller
         $mathjax = false;
         $view = 'responses';
 
-        if($request->get('pdf2')){
+        if($request->get('pdf2') || $pdf2){
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
             $view = 'responses-pdf';
-             $pdf = PDF::loadView('appl.exam.assessment.'.$view,compact('tests','student','exam','test_overall','questions'));
-             $pdf->save('sample.pdf');
+
+            $data['tests'] = $tests;
+            $data['student'] = $student;
+            $data['exam'] = $exam;
+            $data['test_overall'] = $test_overall;
+            $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
+            // $pdf->save('sample.pdf');
+            $folder = 'testlog/'.$exam->id.'/pdf/';
+            $name = $folder.\auth::user()->username.'_'.$exam->slug.'.pdf';
+            Storage::disk('s3')->put($name, $pdf->output(), 'public');
+
              return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
                         ->with('questions',$ques)

@@ -23,6 +23,7 @@ use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\College\College;
 
 use PacketPrep\Jobs\SendEmail;
+use PacketPrep\Jobs\PdfDownload;
 use PacketPrep\Mail\EmailForQueuing;
 
 use Illuminate\Support\Facades\Input;
@@ -1503,6 +1504,7 @@ class ExamController extends Controller
         }
 
 
+
         if($code){
             if($data)
             $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
@@ -1522,9 +1524,9 @@ class ExamController extends Controller
 
           if(!$result){
             if($data)
-            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
             else
-            $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->get();
+            $result = Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('id','desc')->get();
             Cache::put('tests_overall_'.$exam->id.'_'.$data,$result,120);
           }
 
@@ -1545,6 +1547,13 @@ class ExamController extends Controller
 
         }
 
+        if($r->get('pdf')){
+            foreach($res as $m=>$rx){
+                PdfDownload::dispatch($exam->slug,$rx->user->username)->delay(now()->addSeconds(20));
+                if($m==2)
+                    break;
+            }
+        }
 
 
         $search = $r->search;

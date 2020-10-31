@@ -104,9 +104,17 @@ class Exam extends Model
         Cache::forget('test_'.$exam->slug);
         Cache::forever('test_'.$exam->slug,$exam);
 
+        Cache::forget('exam_admin_'.$exam->slug);
+        $id = $exam->slug;
+        $exam= Cache::remember('exam_admin_'.$id,30, function() use ($id){
+            return Exam::where('slug',$id)->with('user')->with('sections')->withCount('users')->first();
+        });
+
         Cache::forget('tests_'.$exam->client);
         $exams = Exam::where('client',$exam->client)->with('examtype')->get();
         Cache::forever('tests_'.$exam->client,$exams);
+
+        
     }
 
 
