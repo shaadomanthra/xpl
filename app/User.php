@@ -412,7 +412,7 @@ class User extends Authenticatable
         }else{
             $order = 'name';
         }
-        if(subdomain()=='xplore')
+        if(subdomain()=='xplore' || subdomain()=='piofx' )
             return Role::where('slug',$role)->first()->users()->orderBy($order)->get();
         else{
             $r =Role::where('slug',$role)->first();
