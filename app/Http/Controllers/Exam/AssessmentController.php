@@ -4015,7 +4015,7 @@ class AssessmentController extends Controller
 
              //dd($tests->pluck('question_id'));
 
-        if(!request()->get('reference'))
+        if(!request()->get('reference') && $typeslug!='api')
         foreach($tests as $key=>$t){
 
             //dd($t->section->negative);
@@ -4040,7 +4040,10 @@ class AssessmentController extends Controller
                  $ques_keys[$t->question_id]['topic'] = null;
                  $ques_keys[$t->question_id]['section'] = null;
                  if(!$ques[$t->question_id])
-                 $ques[$t->question_id] = $t->question;
+                    if(isset($t->question))
+                        $ques[$t->question_id] = $t->question;
+                    else
+                        $ques[$t->question_id] = null;
                  //$ques[$t->question_id]->type = $t->question->type;
             }
 
@@ -4145,7 +4148,7 @@ class AssessmentController extends Controller
             $mathjax = true;
             $view = "analysis_subjective";
         }
-        else if(request()->get('reference'))
+        else if(request()->get('reference') ||  $typeslug=='api')
             $view = 'analysis_api';
         else if($exam->status==2)
             $view = "analysis_private";
