@@ -48,6 +48,13 @@
         @endif
         @endif
 
+        @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+        <li class="mr-3"><a class="nav-link" href="{{ route('admin.index') }}" aria-label="exams page"
+            ><i class="fa fa-gg"></i>
+            Admin
+        </a></li>
+        @endif
+
         <li class="mr-3"><a class="nav-link" href="{{ route('logout') }}" aria-label="Logout page" onclick="event.preventDefault();
     document.getElementById('logout-form').submit();"
             ><i class="fa fas fa-sign-out-alt fa-sign-out"></i>

@@ -35,6 +35,8 @@
       <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
   @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' )
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || domain() == 'piofx')
+    <link rel="shortcut icon" href="{{asset('/favicon_piofx.ico')}}" />
   @else
      <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
   @endif
@@ -51,28 +53,8 @@
   @if(isset($highlight))
   <link href="{{ asset('css/styles2.css') }}?new=16" rel="stylesheet">
   @elseif(domain()=='piofx')
-  @if(request()->segment(1)=='dashboard' || request()->segment(1)=='training' || subdomain()=='iidt')
-  <link href="{{ asset('css/styles.css') }}?new=14" rel="stylesheet">
-  <!--begin::Fonts-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
-    <!--end::Fonts-->
-    <!--begin::Page Vendors Styles(used by this page)-->
-    <link href="{{asset('css/bfs.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
-    <!--end::Page Vendors Styles-->
-    <!--begin::Global Theme Styles(used by all pages)-->
-    <link href="{{asset('assets/plugins/global/plugins.bundle.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/plugins/custom/prismjs/prismjs.bundle.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/css/style.bundle.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
-    <!--end::Global Theme Styles-->
-    <!--begin::Layout Themes(used by all pages)-->
-    <link href="{{asset('assets/css/themes/layout/header/base/light.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/css/themes/layout/header/menu/light.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/css/themes/layout/brand/light.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/css/themes/layout/aside/light.css?v=7.0.4')}}" rel="stylesheet" type="text/css" />
-  @else
-    <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
-  @endif
+  
+  <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   @else
   <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   @endif
