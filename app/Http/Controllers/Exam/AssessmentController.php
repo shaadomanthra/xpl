@@ -3818,7 +3818,7 @@ class AssessmentController extends Controller
 
 
 
-        //dd($tests[0]->time);
+        // api
         if(!count($tests)){
             if($request->get('reference')){
                 $id = explode('_',$request->get('reference'))[1];
@@ -3833,6 +3833,8 @@ class AssessmentController extends Controller
                 $tests->status = 1;
                 $tests->save();
 
+                if(!$score)
+                    $score  = 0;
 
                 $tests_section = new Tests_Section();
                 $tests_section->test_id = $exam->id;
@@ -3846,7 +3848,7 @@ class AssessmentController extends Controller
                 $tests_overall = new Tests_Overall();
                 $tests_overall->test_id = $exam->id;
                 $tests_overall->user_id = $student->id;
-                $tests_section->score = $score;
+                $tests_overall->score = $score;
                 $tests_overall->time = 1;
                 $tests_overall->max = 100;
                 $tests_overall->save();
