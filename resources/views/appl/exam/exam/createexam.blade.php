@@ -1,4 +1,5 @@
-@extends('layouts.nowrap-white')
+@extends('layouts.app')
+@section('title', 'Generate Exam ')
 @section('content')
 
 @include('flash::message')
@@ -6,43 +7,55 @@
     <div class="card-body">
       <h1 class="p-3 border bg-light mb-3">
         @if($stub=='Create')
-          Create Exam Loop
+          Generate Exam Paper
         @endif  
        </h1>
       
       @if($stub=='Create')
       <form method="post" action="{{route('exam.save')}}" >
       @endif  
-      <div class="form-group">
+
+      <div class="row ">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
         <label for="formGroupExampleInput ">Test Name</label>
-        <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the Test Name" value="{{ (old('name')) ? old('name') : 'Cocubes Aptitude Practice Test #' }}" >
+        <input type="text" class="form-control" name="name" id="formGroupExampleInput" placeholder="Enter the Test Name" value="{{ (old('name')) ? old('name') : 'Aptitude Test #' }}" >
        
       </div>
-      <div class="form-group">
+
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-group  ">
         <label for="formGroupExampleInput2">Test Slug</label>
-        <input type="text" class="form-control" name="slug" id="formGroupExampleInput2" placeholder="Unique Identifier" value="{{ (old('slug')) ? old('slug') : 'cocubes-aptitude-' }}" >
+        <input type="text" class="form-control" name="slug" id="formGroupExampleInput2" placeholder="Unique Identifier" value="{{ (old('slug')) ? old('slug') : 'aptitude-' }}" >
 
         <input type="hidden" name="user_id" value="{{ auth::user()->id }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
       </div>
-      <div class="row">
+        </div>
+      </div>
+
+      
+      
+      <div class="row  d-none">
         <div class="col-6">
           <div class="form-group">
             <label for="formGroupExampleInput ">Exam Loop Start</label>
-            <input type="text" class="form-control" name="l_start" id="formGroupExampleInput" placeholder="Enter the loop i start" value="{{ (old('l_start')) ? old('l_start') : '1' }}" >
+            <input type="hidden" class="form-control" name="l_start" id="formGroupExampleInput" placeholder="Enter the loop i start" value="1" >
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
         <label for="formGroupExampleInput ">Exam Loop End</label>
-        <input type="text" class="form-control" name="l_end" id="formGroupExampleInput" placeholder="Enter the loop i end" value="{{ (old('l_end')) ? old('l_end') : '5' }}" >
+        <input type="hidden" class="form-control" name="l_end" id="formGroupExampleInput" placeholder="Enter the loop i end" value="2" >
         </div>
         </div>
       </div>
       
-      <hr>
+      
 
-      @for($i=1;$i<5;$i++)
+      @for($i=1;$i<6;$i++)
+      <div class="bg-light border p-3 mb-3">
       <div class="row">
         <div class="col-4">
           <div class="form-group">
@@ -52,8 +65,15 @@
         </div>
         <div class="col-4">
           <div class="form-group">
-        <label for="formGroupExampleInput ">Section Slug</label>
-        <input type="text" class="form-control" name="sec_slug_{{$i}}" id="formGroupExampleInput" placeholder="Enter the section slug" value="{{ (old('sec_slug_'.$i)) ? old('sec_slug_'.$i) : '' }}" >
+        <label for="formGroupExampleInput ">Question Bank</label>
+        <select class="form-control" name="sec_slug_{{$i}}">
+          <option value="" >-None-</option>
+          <option value="quantitative-aptitude" >Quantitative Aptitude</option>
+          <option value="verbal-ability-1" >Verbal Ability</option>
+          <option value="mental-ability" >Mental Ability</option>
+          <option value="programming-concepts-2" >C Programming</option>
+          <option value="data-structures" >Data Structures & Algorithms</option>
+        </select>
         </div>
         </div>
         <div class="col-4">
@@ -81,10 +101,22 @@
         </div>
         </div>
       </div>
-      <hr>
+      </div>
       @endfor
 
-      <div class="form-group">
+      <div class="row ">
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+        <label for="formGroupExampleInput ">Description</label>
+        <textarea class="form-control summernote" name="description"  rows="5">
+            
+            <p>Xplore Aptitude tests will test your ability to perform tasks and react to situations at work. This includes problem-solving, prioritisation and numerical skills, amongst other things.</p>
+            
+        </textarea>
+      </div>
+        </div>
+        <div class="col-12 col-md-6">
+           <div class="form-group">
         <label for="formGroupExampleInput ">Instructions</label>
         <textarea class="form-control summernote" name="instructions"  rows="5">
             @if($stub=='Create')
@@ -94,12 +126,13 @@
             @endif
         </textarea>
       </div>
-
-      <div class="form-group">
-        <label for="formGroupExampleInput ">RGUKTN</label>
-        <input type="text" class="form-control" name="rguktn" id="formGroupExampleInput" placeholder="Enter the section time" value="1" >
         </div>
-      
+      </div>
+
+
+       <div class="row ">
+        <div class="col-12 col-md-6">
+
       <div class="form-group">
         <label for="formGroupExampleInput ">Examtype</label>
         <select class="form-control" name="examtype_id">
@@ -108,8 +141,9 @@
           @endforeach
         </select>
       </div>
-
-      <div class="form-group">
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-group">
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
           <option value="0" @if(isset($exam)) @if($exam->status==0) selected @endif @endif >Draft</option>
@@ -117,8 +151,11 @@
           <option value="2" @if(isset($exam)) @if($exam->status==2) selected @endif @endif >Premium</option>
         </select>
       </div>
+        </div>
+      </div>
 
-      <button type="submit" class="btn btn-info">Save</button>
+      
+      <button type="submit" class="btn btn-info">Generate Exam</button>
     </form>
     </div>
   </div>

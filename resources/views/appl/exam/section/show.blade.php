@@ -28,6 +28,7 @@
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route('sections.edit',[$exam->slug,$section->id]) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
                <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2" data-tooltip="tooltip" data-placement="top" title="Duplicate" ><i class="fa fa-retweet"></i></a>
+               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal3" data-tooltip="tooltip" data-placement="top" title="Cache" ><i class="fa fa-database"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
             @endcan
@@ -119,6 +120,32 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Save Session</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This following action will save the section to session, so as to pick questions from question bank.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <form method="post" action="{{route('section.save',$exam->slug)}}">
+        
+         <input type="hidden" name="id" value="{{$section->id}}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-danger">Save session</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

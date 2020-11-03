@@ -1527,7 +1527,7 @@ class AssessmentController extends Controller
             $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
             // $pdf->save('sample.pdf');
             $folder = 'testlog/'.$exam->id.'/pdf/';
-            $name = $folder.\auth::user()->username.'_'.$exam->slug.'.pdf';
+            $name = $folder.$student->username.'_'.$exam->slug.'.pdf';
             Storage::disk('s3')->put($name, $pdf->output(), 'public');
 
              return view('appl.exam.assessment.'.$view)

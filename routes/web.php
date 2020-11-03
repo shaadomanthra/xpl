@@ -67,6 +67,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::post('face_detect_image','HomeController@face_detect_image')->name('img.post');
 
 
+	//piofx
+	Route::get('/schools',function(){ return view('piofx.schools'); })->name('schools');
+
+
 	Route::get('/front',function(){ return view('layouts.front'); })->name('front')->middleware('auth');
 	Route::get('/crt-aptitude',function(){ return view('appl.pages.crt_aptitude'); })->name('crt.aptitude');
 	
@@ -589,7 +593,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::get('exam/createexam','Exam\ExamController@createExam')->middleware('auth')->name('exam.createexam');
 	Route::post('exam/createexam','Exam\ExamController@storeExam')->middleware('auth')->name('exam.save');
 
-
+	Route::post('exam/{exam}/section/save','Exam\SectionController@save')->middleware('auth')->name('section.save');
 	Route::post('exam/{exam}/section/copy','Exam\SectionController@copy')->middleware('auth')->name('section.copy');
 	Route::get('exam/{exam}/section/copy','Exam\SectionController@copy')->middleware('auth')->name('section.copy');
 	

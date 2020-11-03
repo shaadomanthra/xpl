@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Section;
+use Illuminate\Support\Facades\Cache;
 
 class SectionController extends Controller
 {
@@ -70,6 +71,21 @@ class SectionController extends Controller
         }
 
         flash('Section('.$section->name.') is duplicated!')->success();
+        return redirect()->route('sections.index',$exam->slug);
+    }
+
+    public function save($exam,Request $r)
+    {
+        
+        $exam= Exam::where('slug',$exam)->first();
+        $section= Section::where('id',$r->get('id'))->first();
+
+        $r->session()->put('session_section_name',$section->name);
+        $r->session()->put('session_section_id',$section->id);
+        $r->session()->put('session_exam_name',$exam->name);
+        $r->session()->put('session_exam_id',$exam->id);
+
+        flash('Section('.$section->name.') is saved!')->success();
         return redirect()->route('sections.index',$exam->slug);
     }
 

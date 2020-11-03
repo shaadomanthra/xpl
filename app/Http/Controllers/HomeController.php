@@ -58,7 +58,7 @@ class HomeController extends Controller
         return redirect('/dashboard');
       }else{
           if( $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'p24.in')
-          return view('layouts.front')->with('welcome',1);
+          return view('piofx.front')->with('welcome',1);
          elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' )
             return view('welcome3')->with('welcome3',1);
          else

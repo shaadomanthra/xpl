@@ -244,7 +244,7 @@ class ExamController extends Controller
        $siblings = $category->descendants()->withDepth()->having('depth', '=', 1)->get();
 
 
-       if($slug == 'general-english' )
+       if($slug == 'general-english' || $slug =='programming-concepts-2' || $slug=='data-structures')
        foreach($siblings as $s){
             $inner = $s->descendants()->get();
 
@@ -255,7 +255,7 @@ class ExamController extends Controller
                 }
        }
 
-       if($slug == 'logical-reasoning' || $slug == 'mental-ability')
+       if($slug == 'logical-reasoning' || $slug == 'mental-ability' || $slug == 'verbal-ability-1'  )
        foreach($siblings as $s){
             $inner = $s->descendants()->get();
 
@@ -409,10 +409,13 @@ class ExamController extends Controller
     {
         //create exam
         $exam = new Exam();
-        $exam->name = $request->name.$n;
-        $exam->slug = $request->slug.$n;
+        $exam->name = $request->name;
+
+        $random = substr(md5(mt_rand()), 0, 7);
+        $exam->slug = $request->slug.$random;
         $exam->user_id = \auth::user()->id;
         $exam->instructions = $request->instructions;
+        $exam->description= $request->description;
         $exam->status = $request->status;
         $exam->examtype_id = $request->examtype_id;//general
         $count = 15;
@@ -475,34 +478,6 @@ class ExamController extends Controller
 
                    foreach($ques_set as $i => $q){
                         $question = Question::where('id',$q)->first();
-
-                        if($request->get('rguktn')){
-                            if($i<$count)
-                                $question->level = 3;
-                            if($i>=$count && $i<($count*2))
-                                $question->level = 2;
-                            if($i>=($count*2))
-                                $question->level = 1;
-
-                            if($i%6==0)
-                                $question->topic ='chapter-1';
-                            if($i%6==1)
-                                $question->topic ='chapter-2';
-                            if($i%6==2)
-                                $question->topic ='chapter-3';
-                            if($i%6==3)
-                                $question->topic ='chapter-4';
-                            if($i%6==4)
-                                $question->topic ='chapter-5';
-                            if($i%6==5)
-                                $question->topic ='chapter-6';
-
-
-                            $question->save();
-
-                        }
-
-
                         if(!$question->sections->contains($c->id))
                             $question->sections()->attach($c->id);
                    }
@@ -1549,9 +1524,9 @@ class ExamController extends Controller
 
         if($r->get('pdf')){
             foreach($res as $m=>$rx){
-                PdfDownload::dispatch($exam->slug,$rx->user->username)->delay(now()->addSeconds(20));
-                if($m==2)
-                    break;
+
+                PdfDownload::dispatch($exam->slug,$rx->user->username)->delay(now()->addSeconds($m+2));
+                
             }
         }
 

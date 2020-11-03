@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Questions | PacketPrep')
+@section('title', 'Questions ')
 @section('content')
 
 @include('appl.dataentry.snippets.breadcrumbs')
@@ -12,10 +12,6 @@
       <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" id="question-tab" data-toggle="tab" href="#question" role="tab" aria-controls="question" aria-selected="true">Question</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="exams-tab" data-toggle="tab" href="#exams" role="tab" aria-controls="exams" aria-selected="false">Exams</a>
-        
       </li>
       <li class="nav-item">
         <a class="nav-link" id="category-tab" data-toggle="tab" href="#category" role="tab" aria-controls="a" aria-selected="false">Category</a>
@@ -194,9 +190,7 @@
         
       </div>
 
-      <div class="tab-pane fade  " id="exams" role="tabpanel" aria-labelledby="exams-tab">
-          @include('appl.dataentry.snippets.exam')
-      </div>
+      
       <div class="tab-pane fade " id="category" role="tabpanel" aria-labelledby="category-tab">
         @if(isset($list))
         @if(count($list)!=0)
@@ -307,22 +301,21 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Copy Question</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Question</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <h3 >Topic Name : {{ request()->session()->get('topic_name') }}</h3>
-        <p> Module Name : {{ request()->session()->get('module_name') }}<br>
-         Course Name : {{ request()->session()->get('course_name') }}</p>
+        <h3 >Exam Name : {{ request()->session()->get('session_exam_name') }}</h3>
+        <p> Section Name : {{ request()->session()->get('session_section_name') }}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         
         <a href="{{ route('question.copy',$question->id)}}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <button type="submit" class="btn btn-danger">Copy </button>
+          <button type="submit" class="btn btn-danger">Add </button>
         </a>
       </div>
     </div>
