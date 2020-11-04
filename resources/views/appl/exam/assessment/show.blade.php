@@ -102,7 +102,7 @@
 				@endif
 
 
-				@if($exam->status!=1 && !$attempt)
+				@if($exam->status!=1 && !$attempt && !$entry)
 				
 					@if(trim(strip_tags($exam->emails)))
 
@@ -141,7 +141,7 @@
 
 				@else
 
-					@if($exam->status!=1)
+					@if($exam->status!=1 && !$entry)
 					   @auth
 				       <a href="{{route('assessment.access',$exam->slug)}}">
 				       @else

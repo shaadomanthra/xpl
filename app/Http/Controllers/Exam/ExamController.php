@@ -428,7 +428,7 @@ class ExamController extends Controller
 
 
         //create sections
-        for($k=1;$k<5;$k++){
+        for($k=1;$k<6;$k++){
 
             if($request->get('sec_'.$k)){
                 $section = new Section();

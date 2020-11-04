@@ -329,7 +329,6 @@ class QuestionController extends Controller
             $question->sections()->attach($section_id);
 
         flash('Question (<b>'.$question->slug.'</b>) Successfully Copied to '.$section_name.'!')->success();
-
         return redirect()->back();
         // $topic_id = $r->session()->get('topic_id');
 

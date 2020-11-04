@@ -3374,6 +3374,8 @@ class AssessmentController extends Controller
             //file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
         }
 
+
+
         //precheck for auto activation
         $exam = $this->precheck_auto_activation($exam);
         //dd($exam);
@@ -3398,6 +3400,7 @@ class AssessmentController extends Controller
         }else if($exam->status==0){
             abort(403,'Test is in draft state');
         }
+
 
         if($products){
             $product = $exam->products[0];
