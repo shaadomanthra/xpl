@@ -815,15 +815,26 @@ class AssessmentController extends Controller
         if(!$request->get('student') && !$request->get('admin'))
             $time = round(($time * 60 - $time_used)/60,2);
 
+        $section_timer =  false;
+
+        if(isset($exam->settings->section_timer))
+            if($exam->settings->section_timer=='yes')
+                $section_timer = true;
 
         if(!count($questions))
             abort(403,'No questions found');
 
-        return view('appl.exam.assessment.blocks.test')
+        if($section_timer)
+            $view = 'test_sections';
+        else
+            $view = 'test';
+
+        return view('appl.exam.assessment.blocks.'.$view)
                         ->with('mathjax',true)
                         ->with('highlight',true)
                         ->with('exam',$exam)
                         ->with('code',true)
+                        ->with('test_section',$section_timer)
                         ->with('c',$cc)
                         ->with('urls',$url)
                         ->with('urls2',$url2)
@@ -2442,6 +2453,54 @@ class AssessmentController extends Controller
     }
 
 
+     public function logs($id,Request $r){
+
+        $exam = Cache::get('test_'.$id,function() use($id){
+            return Exam::where('slug',$id)->first();
+        });
+
+        $username = $r->get('username');
+        $type = $r->get('type');
+        $folder = 'webcam/'.$exam->id.'/';
+        $user = User::where('username',$username)->first();
+
+        $this->authorize('create', $exam);
+
+        //log file
+        $name = $username.'_log.json';
+        $filepath = 'testlog/'.$exam->id.'/log/'.$name;
+
+
+
+        $content = null;
+        if(Storage::disk('s3')->exists($filepath)){
+            $content = json_decode(Storage::disk('s3')->get($filepath),true);
+
+            
+
+        }
+
+        
+        //dd($content);
+
+        if($content)
+            return view('appl.exam.exam.logs')
+                    ->with('content',$content)
+                    ->with('exam',$exam)
+                    ->with('active',1)
+                    ->with('proctor',1)
+                    ->with('user',$user);
+        else
+             return view('appl.exam.exam.nofile')
+                    ->with('exam',$exam)
+                    ->with('user',$user)
+                    ->with('active',1)
+                    ->with('message','No log recorded');
+
+
+    }
+
+
     public function snaps($id,Request $r){
 
         $exam = Cache::get('test_'.$id,function() use($id){
@@ -3713,7 +3772,7 @@ class AssessmentController extends Controller
         // }
 
         $d['branches'] = Cache::get('branches');
-       $d['colleges'] = Cache::get('colleges');
+        $d['colleges'] = Cache::get('colleges');
 
 
         $questions = array();
@@ -3742,6 +3801,7 @@ class AssessmentController extends Controller
             $images = [];
 
 
+
         // images
         $username = $student->username;
         $folder = 'webcam/'.$exam->id.'/';
@@ -3753,6 +3813,31 @@ class AssessmentController extends Controller
         // });
 
         $image_files = [];
+        $one1 = $username.'_'.$exam->id.'_000.jpg';
+
+        if(Storage::disk('s3')->exists($folder.$one1)){
+             $selfie = $username.'_'.$exam->id.'_selfie.jpg';
+            $image_files['selfie_url'] = $folder.$selfie;
+
+            $idcard = $username.'_'.$exam->id.'_idcard.jpg';
+            $image_files['idcard_url'] = $folder.$idcard;
+
+            $one1 = $username.'_'.$exam->id.'_000.jpg';
+            $image_files['0'] = $folder.$one1;
+
+            $one = $username.'_'.$exam->id.'_001.jpg';
+            $image_files['1'] = $folder.$one;
+            $two = $username.'_'.$exam->id.'_002.jpg';
+            $image_files['2'] = $folder.$two;
+            $three = $username.'_'.$exam->id.'_003.jpg';
+            $image_files['3'] = $folder.$three;
+            $four = $username.'_'.$exam->id.'_004.jpg';
+            $image_files['4'] = $folder.$four;
+        }
+       
+       
+
+       
 
         $images = [];
         foreach($image_files as $j=>$im){
@@ -3770,6 +3855,8 @@ class AssessmentController extends Controller
 
         }
 
+       
+
 
         $count = array('webcam'=>0,'screenshot'=>0);
 
@@ -3781,6 +3868,7 @@ class AssessmentController extends Controller
                 $count['screenshot']  = 0;
         }
 
+
         // if(request()->get('images')){
         //     if(request()->get('images')=='webcam'){
         //         $count = $count['webcam'];
@@ -3791,6 +3879,7 @@ class AssessmentController extends Controller
         //     }
         //     return view('appl.exam.assessment.images')->with('exam',$exam)->with('user',$student)->with('count',$count)->with('images',$images);
         // }
+
 
 
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0,'evaluation'=>1];

@@ -2015,7 +2015,11 @@ $(function(){
 @if(isset($timer2))
 
 <script src="{{ asset('js/screenfull.min.js')}}"></script>
+@if(!$test_section)
 <script src="{{ asset('js/test.js')}}?new=12"></script>
+@else
+<script src="{{ asset('js/test_section.js')}}?new=12"></script>
+@endif
 <script type="text/javascript">
 $(function(){
 
