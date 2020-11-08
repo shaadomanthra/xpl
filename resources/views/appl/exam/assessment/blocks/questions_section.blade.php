@@ -266,7 +266,7 @@
       <button type="button" class="btn  btn-secondary clear-qno cursor" data-sno="1">Clear <span class="d-none d-md-inline">Response</span>
       </button>
      
-      <a href="#" data-toggle="modal" data-target="#exampleModal">
+      <a href="#" data-toggle="modal" data-target="#exampleModalSec">
         <button type="button" id="s_button" class="btn  btn-success qno-sub cursor float-right" data-sno="{{$question->id}}" data-section="{{ 'a'}}" data-tooltip="tooltip"  data-placement="top" >
           Submit <span class="d-none d-md-inline">Section</span>
         </button>

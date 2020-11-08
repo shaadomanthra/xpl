@@ -717,17 +717,21 @@ $(document).ready(function(){
       win_focus();
     }
 
+    var x;
 
 
     // exam timer
-    function load_timer(){
+    function load_timer($sno=null){
             // Set the date we're counting down to
 
-        var t = parseInt($('.assessment').data('exam_time'));
+        if($sno)
+          var t = parseInt($('.section_block_'+$snext).data('time'));
+        else
+          var t = parseInt($('.assessment').data('exam_time'));
         var countDownDate = addMinutes(new Date(),t);
 
         // Update the count down every 1 second
-        var x = setInterval(function() {
+        window.x = setInterval(function() {
 
          if(parseInt($('.connection_status').data('status'))){
             // Get todays date and time
@@ -755,11 +759,11 @@ $(document).ready(function(){
 
             // If the count down is finished, write some text
             if (distance < 0) {
-              clearInterval(x);
+              clearInterval(window.x);
               document.getElementById("timer").innerHTML = "EXPIRED";
               document.getElementById("timer2").innerHTML = "EXPIRED";
-              alert('The Test time has expired. ');
-              document.getElementById("assessment").submit();
+              alert('The section time has expired. ');
+              auto_submit_section();
 
             }
           }
@@ -772,7 +776,7 @@ $(document).ready(function(){
     }
 
     function stopTimer() {
-      clearInterval(x);
+      clearInterval(window.x);
     }
 
 
@@ -803,6 +807,24 @@ $(document).ready(function(){
         mark($sno);
     });
 
+    $(document).on('click','.btn-sub-section', function() {
+        $snext = parseInt($(this).data('section_next'));
+        $sno = $('.section_block_'+$snext).data('sno');
+        $section_next = parseInt($('.section_block_'+$snext).data('section_next'));
+        make_visible_section($snext,$sno);
+        $(this).data('section_next',$section_next);
+    });
+
+    function auto_submit_section(){
+        $snext = parseInt($('.btn-sub-section').data('section_next'));
+        $sno = $('.section_block_'+$snext).data('sno');
+        $section_next = parseInt($('.section_block_'+$snext).data('section_next'));
+        make_visible_section($snext,$sno);
+        $('.btn-sub-section').data('section_next',$section_next);
+    }
+
+    
+
     $('.input').on('input',function(e){
 
       $sno = $(this).data('sno');
@@ -828,6 +850,8 @@ $(document).ready(function(){
       $("#questions").modal('hide');
       if($("#exampleModal").is(":visible"))
       $("#exampleModal").modal('hide');
+     if($("#exampleModalSec").is(":visible"))
+      $("#exampleModalSec").modal('hide');
     }
 
     function scroll($sno){
@@ -843,6 +867,29 @@ $(document).ready(function(){
                 $('.qset').scrollTop(offset);
 
         }
+    }
+
+    function make_visible_section($snext,$sno){
+
+      if($snext){
+        $('.section_block').hide();
+        $('.section_block_'+$snext).show();
+        $sno = parseInt($sno) +1;
+
+        $('.sec_qcount').html($('.section_block_'+$snext).data('qcount'));
+        make_visible($sno);
+
+        //change timer
+        stopTimer();
+        load_timer($sno);
+
+        closeModals();
+
+      }else{
+        //end test
+        document.getElementById("assessment").submit();
+      }
+      
     }
 
     function make_visible($sno){
@@ -936,18 +983,33 @@ $(document).ready(function(){
 
 
     function hide_buttons($sno){
-      if(($sno-1)==0){
+
+      $pos = $('.s'+$sno).data('pos').trim();
+
+      if($pos=='start'){
         $('.left-qno').hide();
       }else{
         $('.left-qno').show();
       }
 
-      if(!$('.s'+($sno+1)).length)
+      // if(($sno-1)==0){
+      //   $('.left-qno').hide();
+      // }else{
+      //   $('.left-qno').show();
+      // }
+
+      if($pos=='end')
       {
         $('.right-qno').hide();
       }else{
         $('.right-qno').show();
       }
+      // if(!$('.s'+($sno+1)).length)
+      // {
+      //   $('.right-qno').hide();
+      // }else{
+      //   $('.right-qno').show();
+      // }
     }
 
 

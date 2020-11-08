@@ -114,7 +114,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         <div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""  style="display:none"><i class="fa fa-angle-double-left"data-testname="{{$exam->slug}}" ></i></div>
       </div>
 
-      <div class="col-6"> <div class="mt-1 text-center ques_count cursor" data-count="{{count($questions)}}" data-url="{{route('assessment.savetest',$exam->slug)}}" data-save="@if(isset($exam->save)) @if($exam->save) 1 @else 0 @endif @else 0 @endif">Q({{ count($questions) }})</div></div>
+      <div class="col-6"> <div class="mt-1 text-center ques_count cursor" data-count="{{count($questions)}}" data-url="{{route('assessment.savetest',$exam->slug)}}" data-save="@if(isset($exam->save)) @if($exam->save) 1 @else 0 @endif @else 0 @endif">Q(<span class="sec_qcount">{{ count($exam->sections[0]->questions) }}</span>)</div></div>
       <div class="col-3"> 
         <div class="right-qno cursor w100 p-1 text-center mr-3 " data-sno="2" data-testname="{{$exam->slug}}" ><i class="fa fa-angle-double-right" ></i></div>
       </div>
@@ -127,7 +127,8 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
     <div class="qsset" style="display:none">
     <div class="qset" style="max-height: 170px;overflow-y: auto;" data-url="{{ URL::current() }}" data-lastsno="{{ count($questions)  }}" data-counter="0" data-user="{{ \auth::user()->id }}" data-sno="{{ $i=0 }}" >
       <div class="start"></div> 
-      @foreach($exam->sections as $section)
+      @foreach($exam->sections as $k=>$section)
+      <div class="section_block section_block_{{$section->id}}" data-time="{{$section->time}}" data-qno="{{ $section_questions[$section->id][0]->id }}" data-sno="{{ ($i) }}" data-section_next="{{ ($section->next) }}" data-qcount="{{count($section->questions)}}" @if($k!=0) style="display: none" @endif >
         @if(count($exam->sections)!=1)
         <div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
         @endif
@@ -136,13 +137,14 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         @foreach($section_questions[$section->id] as $key=> $q)
           <div class="col-3 mb-1">
             <div class="pr-1">
-            <div class="w100 p-1 test2qno s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" 
+            <div class="w100 p-1 test2qno s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" data-section="{{ $section->id }}"  data-pos="@if($key==0) start @elseif(end($section_questions[$section->id])->id == $q->id) end @else between @endif"
                 >{{ ($i ) }}</div>
             </div>
           </div>
         @endforeach
         @endif
         </div>
+      </div>
       @endforeach
     </div>
   </div>
@@ -157,7 +159,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         @if(isset($section_questions[$section->id][0]))
          @foreach($section_questions[$section->id] as $key=> $q)
          @if($key==0)
-        <span class="cursor bg-white border p-1 px-2 rounded test2qno " id="q{{ ($section_questions[$section->id][0]->id )}}" data-qno="{{$section_questions[$section->id][0]->id}}"  data-sno="{{($i+1)}}"  style="line-height: 30px">{{$section->name}} <span class="badge badge-light border">{{count($section_questions[$section->id])}}</span></span>
+        <span class=" bg-white border p-1 px-2 rounded  " id="q{{ ($section_questions[$section->id][0]->id )}}" data-qno="{{$section_questions[$section->id][0]->id}}"  data-sno="{{($i+1)}}"  style="line-height: 30px">{{$section->name}} <span class="badge badge-light border">{{count($section_questions[$section->id])}}</span></span>
         @endif
         <span class="d-none">{{$i=$i+1}}</span>
         @endforeach
@@ -176,6 +178,36 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
     </div>
   </div> 
 
+
+<div class="modal fade" id="exampleModalSec" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Confirm Submission</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+
+        <div class="alert alert-warning alert-important mb-3">
+          The following action will save the responses and submits the current section. Kindly note that once  the section is submitted you
+          cannot change the responses.
+        </div>
+        
+   
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No, I will solve questions</button>
+        <button type="button" class="btn  btn-warning btn-sub-section" data-section_next="{{$exam->section_next}}">
+           I confirm, Submit Section
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

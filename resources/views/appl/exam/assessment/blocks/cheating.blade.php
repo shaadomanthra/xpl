@@ -1,5 +1,5 @@
 @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
-		<div class="card mb-3 bg-light"  style="background: #FFF;border: 2px solid #EEE;">
+		<div class="card mb-0 bg-light"  style="background: #FFF;border: 2px solid #EEE;">
 			<div class="card-header">
 				Cheating Detection
 			</div>
@@ -76,7 +76,7 @@
 				
 			</div>
 			@if($count['webcam'])
-			<div class="my-4"><b>View :</b> <a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$user->username}}" class="">Webcam images </a>| <a href="{{ route('test.snaps',$exam->slug)}}?type=screens&username={{$user->username}}" class=""> Screenshot images</a> | <a href="{{ route('test.logs',$exam->slug)}}?username={{$user->username}}" class=""> Detailed Logs</a></div>
+			<div class="mt-4"><b>View :</b> <a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$user->username}}" class="">Webcam images </a>| <a href="{{ route('test.snaps',$exam->slug)}}?type=screens&username={{$user->username}}" class=""> Screenshot images</a> | <a href="{{ route('test.logs',$exam->slug)}}?username={{$user->username}}" class=""> Detailed Logs</a></div>
 			
 			@endif
 			@endif

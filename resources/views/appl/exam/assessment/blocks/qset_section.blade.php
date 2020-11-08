@@ -85,7 +85,7 @@ video ,#photo3{
 			<div class="col-3">
 				<div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""  style="display:none"><i class="fa fa-angle-double-left" ></i></div>
 			</div>
-			<div class="col-6"> <div class="mt-1 text-center">Q({{ count($exam->sections[0]->questions) }})</div></div>
+			<div class="col-6"> <div class="mt-1 text-center">Q(<span class="sec_qcount">{{ count($exam->sections[0]->questions) }}</span>)</div></div>
 			<div class="col-3"> 
 				<div class="right-qno cursor w100 p-1 text-center mr-3 " data-sno="2" ><i class="fa fa-angle-double-right" ></i></div>
 			</div>
@@ -94,17 +94,17 @@ video ,#photo3{
 		<div class="qset" style="max-height: 170px;overflow-y: auto;" data-url="{{ URL::current() }}" data-lastsno="{{ count($questions)  }}" data-counter="0" data-user="{{ \auth::user()->id }}" data-sno="{{ $i=0 }}" >
 			<div class="start"></div> 
 			@foreach($exam->sections as $k=>$section)
-			<div class="section_block section_block_{{$section->id}}" data-qcount="{{count($section->questions)}}" @if($k!=0) style="display: none" @endif >
+			<div class="section_block section_block_{{$section->id}}" data-time="{{$section->time}}" data-qno="{{ $section_questions[$section->id][0]->id }}" data-sno="{{ ($i) }}" data-section_next="{{ ($section->next) }}" data-qcount="{{count($section->questions)}}" @if($k!=0) style="display: none" @endif >
 				@if(count($exam->sections)!=1)
 				
-				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}}</div></div>
+				<div class="mb-1 " style="background:#b91427; color:white;border: 1px solid #ab0014;padding:3px;border-radius:4px;"><div class="p-1 ">{{$section->name}} </div></div>
 				@endif
 				<div class="row no-gutters ">
 				@if(isset($section_questions[$section->id]))
 				@foreach($section_questions[$section->id] as $key=> $q)
 					<div class="col-3 mb-1">
 						<div class="pr-1">
-						<div class="w100 p-1 test2qno  s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" data-section="{{ $section->id }}" 
+						<div class="w100 p-1 test2qno  s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" data-section="{{ $section->id }}"  data-pos="@if($key==0) start @elseif(end($section_questions[$section->id])->id == $q->id) end @else between @endif"
 						    >{{ ($i ) }}</div>
 						</div>
 					</div>

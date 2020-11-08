@@ -672,8 +672,19 @@ class AssessmentController extends Controller
 
 
         // time
-        foreach($exam->sections as $section){
+        foreach($exam->sections as $k=>$section){
             $time = $time + $section->time;
+
+            if($k==1)
+                $exam->section_next = $section->id;
+
+           
+            if(count($exam->sections) == ($k+1))
+            {
+                $section->next =null;
+            }else{
+                $section->next = $exam->sections[$k+1]->id;
+            }
         }
 
 
@@ -684,7 +695,6 @@ class AssessmentController extends Controller
         if(isset($settings['timer']))
         foreach($settings['timer'] as $cd=>$tm){
             if(strtoupper($cd)==strtoupper($code)){
-
                 $time = $tm;
             }
         }
@@ -824,10 +834,14 @@ class AssessmentController extends Controller
         if(!count($questions))
             abort(403,'No questions found');
 
-        if($section_timer)
+        if($section_timer){
             $view = 'test_sections';
+            $time = $exam->sections[0]->time;
+        }
         else
             $view = 'test';
+
+        
 
         return view('appl.exam.assessment.blocks.'.$view)
                         ->with('mathjax',true)
@@ -2251,45 +2265,45 @@ class AssessmentController extends Controller
         }
 
 
-        if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/json/'.$jsonname)){
-            $json = json_decode(Storage::disk('s3')->get('webcam/'.$exam->id.'/json/'.$jsonname));
+        // if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/json/'.$jsonname)){
+        //     $json = json_decode(Storage::disk('s3')->get('webcam/'.$exam->id.'/json/'.$jsonname));
 
-            $zero =$one = $two =$three = $total = $snaps = 0;
-            foreach($json as $i => $j){
-                $j = intval($j);
-                if($j==0)
-                    $zero++;
-                if($j==1)
-                    $one++;
-                if($j==2)
-                    $two++;
-                if($j>2)
-                    $three++;
-                $snaps++;
-                $total = $total + $j;
-            }
+        //     $zero =$one = $two =$three = $total = $snaps = 0;
+        //     foreach($json as $i => $j){
+        //         $j = intval($j);
+        //         if($j==0)
+        //             $zero++;
+        //         if($j==1)
+        //             $one++;
+        //         if($j==2)
+        //             $two++;
+        //         if($j>2)
+        //             $three++;
+        //         $snaps++;
+        //         $total = $total + $j;
+        //     }
 
-            if($three){
-                    $test_overall['face_detect'] = 3;
-                }else if($two)
-                    $test_overall['face_detect'] = 2;
-                else if($one)
-                    $test_overall['face_detect'] = 1;
-                else
-                    $test_overall['face_detect'] = 0;
+        //     if($three){
+        //             $test_overall['face_detect'] = 3;
+        //         }else if($two)
+        //             $test_overall['face_detect'] = 2;
+        //         else if($one)
+        //             $test_overall['face_detect'] = 1;
+        //         else
+        //             $test_overall['face_detect'] = 0;
 
-            $test_overall_cache->face_detect = $test_overall['face_detect'];
+        //     $test_overall_cache->face_detect = $test_overall['face_detect'];
 
-            if($total==$snaps){
-                $test_overall['cheat_detect'] = 0;
-            }else if( $total < $snaps)
-            {
-                $test_overall['cheat_detect'] = 2;
-            }else{
-                $test_overall['cheat_detect'] = 1;
-            }
+        //     if($total==$snaps){
+        //         $test_overall['cheat_detect'] = 0;
+        //     }else if( $total < $snaps)
+        //     {
+        //         $test_overall['cheat_detect'] = 2;
+        //     }else{
+        //         $test_overall['cheat_detect'] = 1;
+        //     }
 
-        }
+        // }
 
         if($test_overall['window_change']>3)
             $test_overall['cheat_detect'] = 1;
@@ -3831,8 +3845,7 @@ class AssessmentController extends Controller
             $image_files['2'] = $folder.$two;
             $three = $username.'_'.$exam->id.'_003.jpg';
             $image_files['3'] = $folder.$three;
-            $four = $username.'_'.$exam->id.'_004.jpg';
-            $image_files['4'] = $folder.$four;
+            
         }
        
        
