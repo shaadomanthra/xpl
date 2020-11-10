@@ -206,6 +206,54 @@ pre, code {
       		@endif
       	@endif
       	@endif
+
+
+        @if($questions[$t->question_id]->type=='code')
+        <p class="mt-3"><b>Testcases:</b></p>
+        
+        <table>
+        <thead style="background: #eee">
+      <tr>
+        <th></th>
+        <th>Status</th>
+        <th>Correct Output</th>
+        <th>User Output</th>
+        <th>Execution Time (ms)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>#1</td>
+        <td>@if(json_decode($t->comment,true)['pass_1']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
+        <td>{{ json_decode($question->a)->out_1 }}</td>
+        <td>@if(json_decode($t->comment,true)['response_1']['error']) {{ json_decode($t->comment,true)['response_1']['stderr']}} @else
+          {!! nl2br(json_decode($t->comment,true)['response_1']['stdout']) !!}
+        @endif</td>
+        <td>{{ json_decode($t->comment,true)['response_1']['time']}}</td>
+      </tr>
+      <tr>
+        <td>#2</td>
+        <td>@if(json_decode($t->comment,true)['pass_2']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
+        <td>{{ json_decode($question->a)->out_2 }}</td>
+        <td>@if(json_decode($t->comment,true)['response_2']['error']) {{ json_decode($t->comment,true)['response_2']['stderr']}} @else
+          {!! nl2br(json_decode($t->comment,true)['response_2']['stdout']) !!}
+        @endif</td>
+        <td>{{ json_decode($t->comment,true)['response_2']['time']}}</td>
+      </tr>
+      <tr>
+        <td>#3</td>
+        <td>@if(json_decode($t->comment,true)['pass_3']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
+        <td>{{ json_decode($question->a)->out_3 }}</td>
+        <td>@if(json_decode($t->comment,true)['response_3']['error']) {{ json_decode($t->comment,true)['response_3']['stderr']}} @else
+          {!! nl2br(json_decode($t->comment,true)['response_3']['stdout']) !!}
+        @endif</td>
+        <td>{{ json_decode($t->comment,true)['response_3']['time']}}</td>
+      </tr>
+      
+    </tbody>
+  </table>
+
+        @endif
 			</div>
 		</div>
 	</div>
@@ -245,8 +293,11 @@ pre, code {
 
        @if(isset($t->comment))
          @if($t->comment)
+         @if($questions[$t->question_id]->type!='code')
          <div class="my-2"><b>Feedback</b></div>
          <p>{{$t->comment}}</p>
+         @endif
+
          @endif
        @endif
      

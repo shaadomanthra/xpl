@@ -281,7 +281,7 @@
 
    <div class="p-5  m-3 m-md-1"></div>
 
-   <div class=" border  p-3 bg-light" style="margin-top: -5px; position: fixed; bottom:0;left:0;right:0">
+   <div class=" border  p-3 bg-light" style="margin-top: -5px; position: fixed; bottom:0;left:0;right:0;z-index:10">
     <h5 class="mb-0">Support&nbsp;&nbsp; <span class=" text-info"><b><i class="fa fa-phone-square"></i> @if(env('CONTACT_PHONE')) {{env('CONTACT_PHONE')}} @else 1800 890 1324 @endif</b></span> | <span class=" text-info"><b><i class="fa fa-inbox"></i> @if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else info@xplore.co.in @endif</b></span> 
 
       <span class=" text-secondary float-md-right timestamp"></span>

@@ -178,10 +178,12 @@ th{ border:1px solid silver; }
     <option value="cpp" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='CPP') selected @endif @endif >cpp</option>
     <option value="java" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='JAVA') selected @endif @endif >java</option>
     <option value="python" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='PYTHON') selected @endif @endif >python</option>
-    <option value="perl" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='PERL') selected @endif @endif >perl</option>
     <option value="csharp" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='CSHARP') selected @endif @endif >c#</option>
     <option value="javascript" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='JAVASCRIPT') selected @endif @endif >javascript</option>
-     
+     <option value="php" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='PHP') selected @endif @endif >php</option>
+     <option value="ruby" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='RUBY') selected @endif @endif >ruby</option>
+     <option value="swift" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='SWIFT') selected @endif @endif >swift</option>
+     <option value="bash" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='BASH') selected @endif @endif >bash</option>
   </select>
       </div>
       </div>

@@ -43,7 +43,16 @@
     <a class="nav-link" id="javascript-tab" data-toggle="tab" href="#javascript" role="tab" aria-controls="javascript" aria-selected="false">Javascript</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="perl-tab" data-toggle="tab" href="#perl" role="tab" aria-controls="perl" aria-selected="false">Perl</a>
+    <a class="nav-link" id="php-tab" data-toggle="tab" href="#php" role="tab" aria-controls="php" aria-selected="false">PHP</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="ruby-tab" data-toggle="tab" href="#ruby" role="tab" aria-controls="ruby" aria-selected="false">Ruby</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="bash-tab" data-toggle="tab" href="#bash" role="tab" aria-controls="bash" aria-selected="false">Bash</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="swift-tab" data-toggle="tab" href="#swift" role="tab" aria-controls="swift" aria-selected="false">Swift</a>
   </li>
   
 </ul>
@@ -113,11 +122,40 @@ console.log(process.argv[2]);
 // second input
 console.log(process.argv[3]);</code></pre>
   </div>
-   <div class="tab-pane fade " id="perl" role="tabpanel" aria-labelledby="perl-tab">
-    <p class="mt-3">The testcase input is passed as command line arguments. In Perl, you can access the inputs using $ARGV. </p>
+   <div class="tab-pane fade " id="php" role="tabpanel" aria-labelledby="php-tab">
+    <p class="mt-3">The testcase input is passed as command line arguments. In PHP, you can access the inputs using $argv. </p>
    
-    <pre><code>$first_input=$ARGV[0];  
-$second_input =$ARGV[1]; </code></pre>
+    <pre><code>&lt;?php  
+echo $argv[1];  
+echo $argv[2]; 
+?&gt;</code></pre>
+  </div>
+
+  <div class="tab-pane fade " id="ruby" role="tabpanel" aria-labelledby="ruby-tab">
+    <p class="mt-3">The testcase input is passed as command line arguments. In Ruby, you can access the inputs using ARGV. </p>
+   
+    <pre><code>
+puts ARGV[0] 
+puts ARGV[1]
+    </code></pre>
+  </div>
+
+<div class="tab-pane fade " id="bash" role="tabpanel" aria-labelledby="bash-tab">
+    <p class="mt-3">The testcase input is passed as command line arguments. In Bash, you can access the inputs using $1,$2. </p>
+   
+    <pre><code>
+echo $1;
+echo $2;
+    </code></pre>
+  </div>
+
+  <div class="tab-pane fade " id="swift" role="tabpanel" aria-labelledby="swift-tab">
+    <p class="mt-3">The testcase input is passed as command line arguments. In Swift, you can access the inputs using CommandLine.arguments. </p>
+   
+    <pre><code>
+print(CommandLine.arguments[1])
+print(CommandLine.arguments[2])
+    </code></pre>
   </div>
   <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>

@@ -141,10 +141,43 @@
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 border rounded bg-light w100  " >
-                @if($question->type=='code') Input @else A @endif</div>
+                @if($question->type=='code') Testcases @else A @endif</div>
         		</div>
         	</div>
-        	<div class="col-9 col-md-10"><div class="pt-1 a">{!! $question->a!!}</div></div>
+        	<div class="col-9 col-md-10"><div class="pt-1 a ">
+            @if($question->type=='code')
+            @if(isset(json_decode($question->a)->in_1))
+              <table class="table table-bordered bg-light">
+    <thead style="background: #eee">
+      <tr>
+        <th></th>
+        <th>Input</th>
+        <th>Output</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>#1</td>
+        <td>{{ json_decode($question->a)->in_1 }}</td>
+        <td>{{ json_decode($question->a)->out_1 }}</td>
+      </tr>
+      <tr>
+        <td>#2</td>
+        <td>{{ json_decode($question->a)->in_2 }}</td>
+        <td>{{ json_decode($question->a)->out_2 }}</td>
+      </tr>
+      <tr>
+        <td>#3</td>
+        <td>{{ json_decode($question->a)->in_3 }}</td>
+        <td>{{ json_decode($question->a)->out_3}}</td>
+      </tr>
+    </tbody>
+  </table>
+      
+              @endif
+            @else {!! $question->a!!}
+            @endif
+          </div></div>
         </div>
         @endif
 

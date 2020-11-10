@@ -11,7 +11,7 @@
     <label class="input-group-text bg-light border  rounded mr-3" for="inputGroupSelect01">Language</label>
   </div>
   <select class="w-25 lang" id="inputGroupSelect01_{{($i+1)}}" data-qno="{{($i+1)}}">
-    @foreach(['c','cpp','java','python','perl','csharp','javascript'] as $lang)
+    @foreach(['c','cpp','java','python','csharp','javascript','php','ruby','bash','swift'] as $lang)
     <option value="{{$lang}}">{{$lang}}</option>
     @endforeach
   </select>

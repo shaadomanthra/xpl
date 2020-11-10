@@ -312,7 +312,15 @@ class EditorController extends Controller
       {
         $input = $testcases['in_1'];
         $data['pass_1'] = 0;
+        
+        //$code =trim(preg_replace('/\s\s+/', ' ', $code));
+        //$code=str_replace("\r\n","\\\r\n",$code);
+        
+        //$code = addslashes(addslashes($code)); 
+        //dd($code);
+        
         $data['response_1'] = json_decode($this->curl_req($c,$lang,$code,$name,$input),true);
+        
         if($data['response_1']['stdout'] == $testcases['out_1']){
           $data['pass_1'] = 1;
         }
