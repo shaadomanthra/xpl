@@ -2759,6 +2759,8 @@ $(function(){
               $last_photo_url = $aws_url+$name+'.jpg';
 
               $('#photo').data('last_photo',$last_photo_url);
+
+
           }else{
             return 1;
           }
@@ -2774,15 +2776,20 @@ $(function(){
           //$('#photo3').attr('src', data3);
 
 
-
-        $counnt = 6;
+          console.log('c-'+$c);
+        $counnt = 2;
         if($c!='idcard')
         if($c % $counnt == 0){
            var url = $('#photo').data('hred');
-          // if($('.start_btn').hasClass('exam_started'))
-          //  $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
-          //       console.log('Face Detect:' + data);
-          // });
+           console.log('here='+url);
+          if($('.start_btn').hasClass('exam_started')){
+            console.log('h2'+url);
+            $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
+                console.log('Face Detect:' + data);
+          });
+          }
+
+           
         }
        
 

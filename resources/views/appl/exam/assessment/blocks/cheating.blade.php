@@ -46,20 +46,7 @@
 			@if($count['webcam'])
 			<div class="row mb-4 {{$m=0}}">
 				@if(isset($images['webcam']))
-				@foreach($images['selfie'] as $k=>$f)
-				@if(Storage::disk('s3')->exists($f))
-				<div class='col-6 col-md-2 {{$m=$m+1}}'>
-						<img src="{{ Storage::disk('s3')->url($f) }}" class="w-100 mb-2" />
-					</div>
-				@endif
-				@endforeach
-				@foreach($images['idcard'] as $k=>$f)
-				@if(Storage::disk('s3')->exists($f))
-				<div class='col-6 col-md-2 {{$m=$m+1}}'>
-						<img src="{{ Storage::disk('s3')->url($f) }}" class="w-100 mb-2" />
-					</div>
-				@endif
-				@endforeach
+				
 
 				@foreach($images['webcam'] as $k=>$f)
 				@if(Storage::disk('s3')->exists($f))

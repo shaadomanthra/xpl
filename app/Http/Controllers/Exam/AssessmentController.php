@@ -3830,14 +3830,14 @@ class AssessmentController extends Controller
         $one1 = $username.'_'.$exam->id.'_000.jpg';
 
         if(Storage::disk('s3')->exists($folder.$one1)){
-             $selfie = $username.'_'.$exam->id.'_selfie.jpg';
-            $image_files['selfie_url'] = $folder.$selfie;
+            //  $selfie = $username.'_'.$exam->id.'_selfie.jpg';
+            // $image_files['selfie_url'] = $folder.$selfie;
 
-            $idcard = $username.'_'.$exam->id.'_idcard.jpg';
-            $image_files['idcard_url'] = $folder.$idcard;
+            // $idcard = $username.'_'.$exam->id.'_idcard.jpg';
+            // $image_files['idcard_url'] = $folder.$idcard;
 
-            $one1 = $username.'_'.$exam->id.'_000.jpg';
-            $image_files['0'] = $folder.$one1;
+            // $one1 = $username.'_'.$exam->id.'_000.jpg';
+            // $image_files['0'] = $folder.$one1;
 
             $one = $username.'_'.$exam->id.'_001.jpg';
             $image_files['1'] = $folder.$one;
@@ -3845,6 +3845,14 @@ class AssessmentController extends Controller
             $image_files['2'] = $folder.$two;
             $three = $username.'_'.$exam->id.'_003.jpg';
             $image_files['3'] = $folder.$three;
+
+            $three = $username.'_'.$exam->id.'_004.jpg';
+            $image_files['4'] = $folder.$three;
+
+            $three = $username.'_'.$exam->id.'_005.jpg';
+            $image_files['5'] = $folder.$three;
+            $three = $username.'_'.$exam->id.'_006.jpg';
+            $image_files['6'] = $folder.$three;
             
         }
        
