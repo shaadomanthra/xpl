@@ -148,7 +148,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
 
      public function process_image(Request $request){
         
-        $name = 'pranithadasari123_356_3';
+        $name = 'krishnateja_815_020';
          $p = explode('_', $name);
 
         $user = User::where('username',$p[0])->first();
@@ -157,7 +157,8 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
         //$t = Tests_Overall::where('user_id',$user->id)->where('test_id',$exam->id)->first();
 
         $filename = $name.'.jpg';
-        $image = Storage::disk('s3')->get('webcam/'.$filename);
+        $filename_2 = $name.'_n.jpg';
+        $image = Storage::disk('s3')->get('webcam/815/'.$filename);
 
         $b64_image =base64_encode($image);
 
@@ -192,6 +193,7 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
           curl_close($curl);
 
           $jsondata = json_decode($j,true);
+          dd($jsondata);
         
         
         // $f_name = $p[2];
@@ -220,8 +222,12 @@ Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link wi
 
       
         $data = $jsondata['image'];
+        
+        
         $data = base64_decode($data);
-        Storage::disk('s3')->put('webcam/'.$filename,$data,'public');
+
+
+        Storage::disk('s3')->put('webcam/815/'.$filename_2,$data,'public');
         
         return 1;
 

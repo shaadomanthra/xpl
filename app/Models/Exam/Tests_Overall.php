@@ -23,6 +23,7 @@ class Tests_Overall extends Model
         'status',
         'window_change',
         'face_detect',
+        'mobile_detect',
         'cheat_detect'
     ];
 
@@ -91,10 +92,19 @@ class Tests_Overall extends Model
         }
 
         $count = intval($jsondata['count']);
+        $cell_phone =intval($jsondata['cell_phone']);
 
         if(isset($t->face_detect))
         if($t->face_detect<$count){
             $t->face_detect = $count;
+            $t->mobile_detect = $cell_phone;
+
+            if($count>1)
+              $t->cheat_detect  = 1;
+
+            if($cell_phone)
+               $t->cheat_detect  = 1;
+
             $t->save();
         }
         
@@ -102,6 +112,10 @@ class Tests_Overall extends Model
             $json->$f_name = $count;
         else
              $json->$f_name = 0;
+           
+        if($cell_phone)
+            $json->mobile = $cell_phone;
+
         Storage::disk('s3')->put('webcam/'.$exam->id.'/json/'.$json_file,json_encode($json),'public');
 
       

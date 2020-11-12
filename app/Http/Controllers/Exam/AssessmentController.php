@@ -2212,6 +2212,7 @@ class AssessmentController extends Controller
         $test_overall['status'] =0;
         $test_overall['window_change'] =$request->get('window_change');
         $test_overall['face_detect'] = 0;
+        $test_overall['mobile_detect'] = 0;
         $test_overall['cheat_detect'] = 0;
         $test_overall_cache = new Tests_Overall();
         $test_overall_cache->user_id = $details['user_id'];
@@ -2223,6 +2224,7 @@ class AssessmentController extends Controller
         $test_overall_cache->status = 0;
         $test_overall_cache->face_detect = 0;
         $test_overall_cache->cheat_detect = 0;
+        $test_overall_cache->mobile_detect = 0;
 
         if($code_ques_flag){
             $test_overall['status'] = 1;
@@ -2265,45 +2267,62 @@ class AssessmentController extends Controller
         }
 
 
-        // if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/json/'.$jsonname)){
-        //     $json = json_decode(Storage::disk('s3')->get('webcam/'.$exam->id.'/json/'.$jsonname));
+        if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/json/'.$jsonname)){
+            $json = json_decode(Storage::disk('s3')->get('webcam/'.$exam->id.'/json/'.$jsonname));
 
-        //     $zero =$one = $two =$three = $total = $snaps = 0;
-        //     foreach($json as $i => $j){
-        //         $j = intval($j);
-        //         if($j==0)
-        //             $zero++;
-        //         if($j==1)
-        //             $one++;
-        //         if($j==2)
-        //             $two++;
-        //         if($j>2)
-        //             $three++;
-        //         $snaps++;
-        //         $total = $total + $j;
-        //     }
+            $zero =$one = $two =$three = $total = $snaps = $mobile=0;
+            foreach($json as $i => $j){
+                if($i!=='mobile'){
+                     $j = intval($j);
+                    if($j==0)
+                        $zero++;
+                    if($j==1)
+                        $one++;
+                    if($j==2)
+                        $two++;
+                    if($j>2)
+                        $three++;
+                    $snaps++;
+                    $total = $total + $j;
+                }else{
+                    $mobile= intval($j);
+                    $test_overall['mobile_detect'] = $mobile;
+                    
+                }
+               
+            }
 
-        //     if($three){
-        //             $test_overall['face_detect'] = 3;
-        //         }else if($two)
-        //             $test_overall['face_detect'] = 2;
-        //         else if($one)
-        //             $test_overall['face_detect'] = 1;
-        //         else
-        //             $test_overall['face_detect'] = 0;
+            if($three){
+                    $test_overall['face_detect'] = 3;
+                }else if($two)
+                    $test_overall['face_detect'] = 2;
+                else if($one)
+                    $test_overall['face_detect'] = 1;
+                else
+                    $test_overall['face_detect'] = 0;
 
-        //     $test_overall_cache->face_detect = $test_overall['face_detect'];
+            $test_overall_cache->face_detect = $test_overall['face_detect'];
 
-        //     if($total==$snaps){
-        //         $test_overall['cheat_detect'] = 0;
-        //     }else if( $total < $snaps)
-        //     {
-        //         $test_overall['cheat_detect'] = 2;
-        //     }else{
-        //         $test_overall['cheat_detect'] = 1;
-        //     }
+            if($total==$snaps){
+                $test_overall['cheat_detect'] = 0;
+            }else if( $total < $snaps)
+            {
+                $test_overall['cheat_detect'] = 2;
+            }else{
+                $test_overall['cheat_detect'] = 1;
+            }
 
-        // }
+            if($three){
+                    $test_overall['face_detect'] = 3;
+            }
+
+            if($mobile){
+                $test_overall['cheat_detect'] = 1;
+            }
+
+
+
+        }
 
         if($test_overall['window_change']>3)
             $test_overall['cheat_detect'] = 1;
