@@ -111,6 +111,7 @@ class TestReport2 implements FromCollection
             unset($result[$k]->window_change);
             unset($result[$k]->face_detect);
             unset($result[$k]->cheat_detect);
+            unset($result[$k]->mobile_detect);
     		unset($result[$k]->time);
     		unset($result[$k]->max);
 
