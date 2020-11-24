@@ -69,6 +69,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 
 	//piofx
 	Route::get('/schools',function(){ return view('piofx.schools'); })->name('schools');
+	Route::get('/oet',function(){ return view('piofx.oet')->with('menudark',1); })->name('oet');
 
 
 	Route::get('/front',function(){ return view('layouts.front'); })->name('front')->middleware('auth');
