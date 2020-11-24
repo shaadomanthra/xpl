@@ -34,7 +34,7 @@
 
 <div class="container">
   <div  class="  mb-4 mt-4">
-    @if($data['level'] != 0 || $data['no_topic'] != 0)
+    @if(($data['level'] != 0 || $data['no_topic'] != 0) && !request()->get('admin'))
      <div class="alert alert-important alert-warning">
        <h3><span class="badge badge-warning">Important !</span></h3>
        <div>To create question paper set, it is mandatory to assign topic & level for every question. </div>
