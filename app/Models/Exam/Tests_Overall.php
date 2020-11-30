@@ -62,7 +62,7 @@ class Tests_Overall extends Model
 
         curl_setopt_array($curl, [
           CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => 'https://api.p24.in/python',
+          CURLOPT_URL => 'https://fd.p24.in/python',
           CURLOPT_POST => 1,
           CURLOPT_TIMEOUT => 30,
         ]);

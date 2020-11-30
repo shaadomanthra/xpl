@@ -1530,6 +1530,12 @@ class ExamController extends Controller
             }
         }
 
+        if($r->get('refresh')){
+            foreach($res as $m=>$rx){
+                Cache::forget('resp_'.$rx->user->id.'_'.$exam->id);
+            }
+        }
+
 
         $search = $r->search;
         if($item){

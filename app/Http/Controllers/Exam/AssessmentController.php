@@ -1312,10 +1312,15 @@ class AssessmentController extends Controller
             Cache::forget('attempt_'.$user_id.'_'.$test_id);
         }
 
+        
         $tests = Cache::remember('resp_'.$user_id.'_'.$test_id,240,function() use ($exam,$student){
             return Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->with('question')->get();
         });
+       
+
+        
+
         $test_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
@@ -1552,7 +1557,9 @@ class AssessmentController extends Controller
             $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
             // $pdf->save('sample.pdf');
             $folder = 'testlog/'.$exam->id.'/pdf/';
-            $name = $folder.$student->username.'_'.$exam->slug.'.pdf';
+
+            $uuname = str_replace(' ', '-', $student->name);
+            $name = $folder.$uuname.'_'.$student->roll_number.'.pdf';
             Storage::disk('s3')->put($name, $pdf->output(), 'public');
 
              return view('appl.exam.assessment.'.$view)

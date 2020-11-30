@@ -12,7 +12,7 @@ class PdfDownload implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $tries = 5;
+    public $tries = 1;
     public $timeout = 20;
     protected $slug;
     protected $student;
