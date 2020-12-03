@@ -1697,6 +1697,15 @@ class ExamController extends Controller
 
         }
 
+
+        if(request()->get('downloadsection')){
+            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+            $usrs = $result->pluck('user_id');
+
+            $exam_sections = Tests::whereIn('user_id',$usrs)->where('exam_id',$exam->id)->get();
+            dd($exam_sections);
+        }
+
         if(request()->get('downloadexport')){
             if(!Storage::disk('s3')->exists($filename))
                 flash('Report is not available. Re-queue the data after 5 mins.')->success();
