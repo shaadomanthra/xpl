@@ -1700,7 +1700,11 @@ class ExamController extends Controller
 
 
         if(request()->get('downloadsection')){
-            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+            if($code)
+              $result = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->orderby('score','desc')->get();
+            else
+              $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+          
             $usrs = $result->pluck('user_id');
             $exam_sections = Test::whereIn('user_id',$usrs)->where('test_id',$exam->id)->where('section_id',request()->get('downloadsection'))->with('user')->get();  
 
