@@ -24,6 +24,10 @@ class Test extends Model
         // add all other fields
     ];
 
+    public function user(){
+        return $this->belongsTo('PacketPrep\User');
+    }
+
     public function section()
     {
         return $this->belongsTo('PacketPrep\Models\Exam\Section');

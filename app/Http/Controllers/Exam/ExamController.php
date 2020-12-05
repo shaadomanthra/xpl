@@ -17,6 +17,7 @@ use PacketPrep\Models\Dataentry\Question;
 use Illuminate\Support\Facades\Storage;
 //use PacketPrep\Exports\TestReport;
 use PacketPrep\Exports\TestReport2;
+use PacketPrep\Exports\SectionExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
 use PacketPrep\Models\College\Branch;
@@ -1701,9 +1702,20 @@ class ExamController extends Controller
         if(request()->get('downloadsection')){
             $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
             $usrs = $result->pluck('user_id');
+            $exam_sections = Test::whereIn('user_id',$usrs)->where('test_id',$exam->id)->where('section_id',request()->get('downloadsection'))->with('user')->get();  
 
-            $exam_sections = Tests::whereIn('user_id',$usrs)->where('exam_id',$exam->id)->get();
-            dd($exam_sections);
+
+
+            $q = $exam_sections->pluck('question_id');
+            $ques = Question::whereIn('id',$q)->get()->keyBy('id');
+
+            request()->session()->put('sections',$exam_sections);
+            request()->session()->put('questions',$ques);
+
+            ob_end_clean(); // this
+            ob_start();
+            $filename ="section_".request()->get('downloadsection')."_".$ename.".xlsx";
+            return Excel::download(new SectionExport, $filename);
         }
 
         if(request()->get('downloadexport')){
