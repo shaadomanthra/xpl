@@ -1480,7 +1480,6 @@ class ExamController extends Controller
         }
 
 
-
         if($code){
             if($data)
             $result = Tests_Overall::where('code',$code)->where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
@@ -1550,7 +1549,7 @@ class ExamController extends Controller
         }
 
         $ux =  Cache::get('users_'.$exam->id.'_data');
-        if(!$ux){
+        if(!isset($ux[0])){
           $ux = User::whereIn('id',$users)->get()->keyBy('id');
           Cache::put('users_'.$exam->id.'_data',$ux,120);
         }
@@ -1704,7 +1703,7 @@ class ExamController extends Controller
               $result = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->orderby('score','desc')->get();
             else
               $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
-          
+
             $usrs = $result->pluck('user_id');
             $exam_sections = Test::whereIn('user_id',$usrs)->where('test_id',$exam->id)->where('section_id',request()->get('downloadsection'))->with('user')->get();  
 
