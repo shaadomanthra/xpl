@@ -231,11 +231,11 @@ pre, code {
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_1']['time']}}</td>
       </tr>
-      @if(isset(isset(json_decode($t->comment,true)['pass_2']))
+      @if(isset(json_decode($t->comment,true)['pass_2']))
       <tr>
 
         <td>#2</td>
-        <td>@if(isset(isset(json_decode($t->comment,true)['pass_2'])) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
+        <td>@if(isset(json_decode($t->comment,true)['pass_2'])) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
         <td>{{ json_decode($question->a)->out_2 }}</td>
         <td>@if(isset(json_decode($t->comment,true)['response_2']['error'])) {{ json_decode($t->comment,true)['response_2']['stderr']}} @else
           {!! nl2br(json_decode($t->comment,true)['response_2']['stdout']) !!}
