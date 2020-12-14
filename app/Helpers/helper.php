@@ -234,7 +234,7 @@ if(strpos($string,"200"))
 if (! function_exists('youtube_video_exists')) {
 function youtube_video_exists($url) {
 
-    if(is_numeric($url)){
+    if(is_numeric($url)){   
         return false;
     }
     $videoUrl = "http://www.youtube.com/watch?v=".$url;

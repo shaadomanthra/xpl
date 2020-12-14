@@ -35,6 +35,7 @@
 
   <div class="col-md-12">
 
+    @if(!request()->get('simple'))
     <div class="card  bg-light mb-3">
       <div class="card-body">
         <div class="row mb-0">
@@ -90,6 +91,7 @@
         
       </div>
     </div>
+    @endif
  
     <div class=" mb-3 mb-md-0">
       <div class="mb-0">
@@ -104,9 +106,11 @@
               <tr>
                 <th scope="col" width="8%">#({{count($data)}})</th>
                 <th scope="col">Question </th>
+                @if(!request()->get('simple'))
                 <th scope="col" width="10%">Topic </th>
                 <th scope="col" width="10%">Level</th>
                 <th scope="col">Mark</th>
+                @endif
               </tr>
             </thead>
             <tbody>
@@ -156,12 +160,11 @@
 
                   @if($obj->section_name)<span class="text-danger">Section : <b>{{$obj->section_name}}</b> </span>@endif
                 </td>
-                 <td> 
-                 {{ $obj->topic }}
-                </td>
-                
-                <td>@if($obj->level)  Level {{ $obj->level }} @else '-' @endif</td>
-                <td>{{ $obj->mark }}</td>
+                @if(!request()->get('simple'))
+                   <td> {{ $obj->topic }}</td>
+                  <td>@if($obj->level)  Level {{ $obj->level }} @else '-' @endif</td>
+                  <td>{{ $obj->mark }}</td>
+                @endif
               </tr>
               @endforeach      
             </tbody>
