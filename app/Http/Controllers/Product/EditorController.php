@@ -325,6 +325,7 @@ class EditorController extends Controller
           dd($data);
         }
         
+        if(isset($data['response_1']['stdout']))
         if($data['response_1']['stdout'] == $testcases['out_1']){
           $data['pass_1'] = 1;
         }
@@ -332,28 +333,38 @@ class EditorController extends Controller
         $input = $testcases['in_1'];
         $data['pass_1'] = 0;
         $data['response_1'] = json_decode($this->curl_req($c,$lang,$code,$name.'_1',$input),true);
-        $resp = trim(str_replace(array("\n", "\r"), '', $data['response_1']['stdout']));
-        $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_1']));
-        if($resp == $output){
-          $data['pass_1'] = 1;
+
+        if(isset($data['response_1']['stdout'])){
+          $resp = trim(str_replace(array("\n", "\r"), '', $data['response_1']['stdout']));
+          $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_1']));
+          if($resp == $output){
+            $data['pass_1'] = 1;
+          }
         }
+        
 
         $input = $testcases['in_2'];
         $data['pass_2'] = 0;
         $data['response_2'] = json_decode($this->curl_req($c,$lang,$code,$name.'_2',$input),true);
-        $resp = trim(str_replace(array("\n", "\r"), '', $data['response_2']['stdout']));
-        $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_2']));
-        if($resp == $output){
-          $data['pass_2'] = 1;
+
+        if(isset($data['response_2']['stdout'])){
+          $resp = trim(str_replace(array("\n", "\r"), '', $data['response_2']['stdout']));
+          $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_2']));
+          if($resp == $output){
+            $data['pass_2'] = 1;
+          }
         }
 
         $input = $testcases['in_3'];
         $data['pass_3'] = 0;
+
         $data['response_3'] = json_decode($this->curl_req($c,$lang,$code,$name.'_3',$input),true);
-        $resp = trim(str_replace(array("\n", "\r"), '', $data['response_3']['stdout']));
-        $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_3']));
-        if($resp == $output){
-          $data['pass_3'] = 1;
+        if(isset($data['response_3']['stdout'])){
+          $resp = trim(str_replace(array("\n", "\r"), '', $data['response_3']['stdout']));
+          $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_3']));
+          if($resp == $output){
+            $data['pass_3'] = 1;
+          }
         }
 
         
