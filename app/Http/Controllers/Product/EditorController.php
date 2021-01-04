@@ -323,9 +323,7 @@ class EditorController extends Controller
         
         $data['response_1'] = json_decode($this->curl_req($c,$lang,$code,$name,$input),true);
 
-        if($_SERVER['HTTP_HOST'] == 'xplore.in.net'){
-          dd($data);
-        }
+        
         
         if(isset($data['response_1']['stdout']))
         if($data['response_1']['stdout'] == $testcases['out_1']){
@@ -399,6 +397,9 @@ class EditorController extends Controller
       $form = array('hash'=>'krishnateja','c'=>$c,'docker'=>'1','lang'=>$lang,'form'=>'1','code'=>$code,'input'=>$input,'name'=>$name);
     
       
+      if($_SERVER['HTTP_HOST'] == 'xplore.in.net'){
+          dd(json_encode($form));
+        }
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
       
       curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($form));
