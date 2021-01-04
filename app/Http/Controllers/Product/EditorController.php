@@ -320,6 +320,10 @@ class EditorController extends Controller
         //dd($code);
         
         $data['response_1'] = json_decode($this->curl_req($c,$lang,$code,$name,$input),true);
+
+        if($_SERVER['HTTP_HOST'] == 'xplore.in.net'){
+          dd($data);
+        }
         
         if($data['response_1']['stdout'] == $testcases['out_1']){
           $data['pass_1'] = 1;
