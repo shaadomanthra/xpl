@@ -1262,10 +1262,10 @@ $(document).ready(function() {
                 }
                 
               }else{
-                $('.output_'+$qno).html("No Result - Code execution time exceeded - Retry.");
+                $('.output_'+$qno).html("Invalid Code - ERO101 - Retry.");
               }
             }else{
-                $('.output_'+$qno).html("No Data - Code execution time exceeded - Retry.");
+                $('.output_'+$qno).html("Invalid Code - ERD102 - Retry.");
             }
             $('.loading').hide();
             $('.loading_'+$qno).hide();
@@ -1273,9 +1273,9 @@ $(document).ready(function() {
           error: function(jqXHR, textStatus, errorThrown) {
              $('.runcode_'+$qno).removeClass('disabled');
               if(textStatus==="timeout") {  
-                $('.output_'+$qno).html("Timeout(10s) - Code execution time exceeded - Retry.");
+                $('.output_'+$qno).html("Invalid Code - ERT103 - Retry.");
               } else {
-                $('.output_'+$qno).html("Server Error - Code execution time exceeded - Retry.");
+                $('.output_'+$qno).html("Invalid Code - ERX104 - Retry.");
               }
               $('.loading').hide();
           }
