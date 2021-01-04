@@ -294,6 +294,8 @@ class EditorController extends Controller
         $name = substr(md5(time()), 0,7);
       }
 
+      $name = $name.'_'.substr(md5(time()), 0,7);
+
       $questions = [];
       foreach($exam->sections as $section){
             foreach($section->questions as $q){
