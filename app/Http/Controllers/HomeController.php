@@ -102,7 +102,7 @@ mail one day before the exam. <br></div><div><br></div><div>Last date to apply :
 ';
 
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
-            SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*3));
+            SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*1));
         }
         
         dd('Email Queued');
