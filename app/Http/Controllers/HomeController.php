@@ -70,43 +70,33 @@ class HomeController extends Controller
     {
         //s3_upload();
         $email1 = ['name'=>'Krishna Teja', 'email'=>'packetcode@gmail.com'];
-        $email6 = ['name'=>'KT', 'email'=>'shaadomanthra@gmail.com'];
-        $email3 = ['name'=>'Akhil', 'email'=>'akhil@xplore.co.in'];
-        $email4= ['name'=>'Akhil', 'email'=>'modheakhil@gmail.com'];
-        $email5= ['name'=>'Abhinav', 'email'=>'abhinavgoud.thippani@gmail.com'];
-        $email2 =['name'=>'Sunil', 'email'=>'sunil@acelinetech.com '];
+        // $email6 = ['name'=>'KT', 'email'=>'shaadomanthra@gmail.com'];
+        // $email3 = ['name'=>'Akhil', 'email'=>'akhil@xplore.co.in'];
+        // $email4= ['name'=>'Akhil', 'email'=>'modheakhil@gmail.com'];
+        // $email5= ['name'=>'Abhinav', 'email'=>'abhinavgoud.thippani@gmail.com'];
+        // $email2 =['name'=>'Sunil', 'email'=>'sunil@acelinetech.com '];
 
-        $emails = [$email1,$email2,$email3,$email4,$email5,$email6];
+        $emails = [$email1];
         foreach($emails as $i=>$e){
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
 
-            $subject = 'ZenQ Test Link';
-            $content = '<p>ZenQ is conducting an online recruitment  test for the position of Software - Intern  </p>
-              <p>Your application for participating in the assessment is approved. Below are the details of the online assessment </p>
-              <p><div>Test URL: <a href="https://xplore.co.in/test/057480">https://xplore.co.in/test/057480</a> <br>
-Access Code: KLU123 <br>
-
-Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link will be activated at 2PM)</div></p>
-<div class="default-style">
-    <br>Note : 1)You can take test only in<strong>&nbsp;Laptop/desktop&nbsp;.</strong>
-   </div>
-   <div class="default-style">
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2) Please register at&nbsp;<a href="https://xplore.co.in/register">Xplore.co.in/register&nbsp;</a>&nbsp;before taking the test
-   </div>
-   <div class="default-style">
-    <br>&nbsp; &nbsp; &nbsp;
-    <br>Instructions:
-    <ul>
-     <li>Each question carries 1 mark and no negative marking</li>
-     <li><strong>Mandatory</strong>: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected</li>
-     <li>The test should be taken only from&nbsp;<strong>desktop/laptop with webcam</strong>&nbsp;facilities. Mobile Phones and Tabs are restricted</li>
-     <li>Please make sure that you&nbsp;<strong>disable all desktop notifications</strong>. Else, the test will be terminated in between</li>
-     <li>Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)</li>
-     <li>Please make sure that your camera is switched on and you are facing the light source</li>
-    </ul>For step by step process of Xplore assessment please click the below link
-    <br>
-    <br><a href="https://xplore.co.in/files/User_Manual_ZenQ_Assessment.pdf">https://xplore.co.in/files/User_Manual_ZenQ_Assessment.pdf</a>
+            $subject = 'Requirement for Java Full Stack Developers';
+            $content = '<div dir=3D"ltr">
+<br>We have openings for 150 java fullstack developers with 14 clients. Details are as follows<br><br>1. Designation - Java Full Stack Developer<br>2.
+ Year of Passing - 2018, 2019, 2020<br>3. Qualification - BTech (Any Branch
+)<br>4. Academic Percentage - 60% (10th, 12th, Graduation) <br>5. Skills Required - Excellent Communication, Core Java, Adv Java, Spring MVC, AWS, Git
+<br>6. Work Location - Pan India<br></div>7. CTC - 4.5 LPA to 6.5 LPA<br><d
+iv><br>Selection Process<br></div><div>1. Pre-assessment on Aptitude, Verbal and Java Programming - 100Q/100min</div><div>2. Internship &amp; Training
+ on Full stack java</div><div>3. Technical Test (Client Location)<br></div>
+<div><br>Selected
+ students will be recruited as Interns with Packetprep and will be 
+trained in full-stack java (adv java, spring framework and aws 
+deployment) for 3 months. <br><br>Note:<br><ul><li>For the candidates
+ with pre-assessment score of 85+/100, PacketPrep will sponsor the complete
+ training cost of Rs.30,000. </li><li>For the candidates with pre-assessment scores of 60 to 85 can avail 70% fee waiver on the training cost. <br></l
+i><li>95% attendance is mandatory to sit for the technical test.</li><li>Technical Internship letter will be awarded to students with 95% attendance only.</li></ul>If you have not applied, then you can apply for the pre-assessment (Online Test) using the following link</div><div><a href="https://forms.gle/mHW71asQUcdo4bzW6" target="_blank">https://forms.gle/mHW71asQUcdo4bzW6</a></div><div><br></div><div>The test link will be shared on e
+mail one day before the exam. <br></div><div><br></div><div>Last date to apply : 8th Jan 2021<font color=3D"#888888">, 8PM</font></div><br clear=3D"all">
     <br>
     <br>
 ';

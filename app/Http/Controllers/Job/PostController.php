@@ -417,55 +417,75 @@ class PostController extends Controller
             $details['email'] = $u->email;
             $details['name'] = $u->name;
 
-            $subject = 'Test Link for Tech/voice-support role 24[7]';
-            $content = '
-  <div class="io-ox-signature">
-   <div class="default-style">
-    <div class="default-style">
-     24 seven is conducting an online recruitment&nbsp; test for the position of Tech/Voice - support
-     <br>&nbsp;
-     <br>Below are the details of the online assessment
-     <br>
-     <br>Test URL:<a href="https://xplore.co.in/test/566962">&nbsp;</a><a class="f20 text-white" href="https://xplore.co.in/test/566962 ">https://xplore.co.in/test/566962</a>
-     <br>
-    </div>
-    <div class="default-style">
-     <br>
-    </div>
-    <div class="default-style">
-     Access Code: XPLORE123
-    </div>
-    <div class="default-style">
-     <br>
-    </div>
-    <div class="default-style">
-     <br><strong>Date &amp; Time of Assessment</strong>: 09rd Sep 2020 i.e Wednesday; 10AM IST (The test link will be activated at 10AM and will be open till 2PM)
-    </div>
-    <div class="default-style">
-     <br>
-    </div>
-    <div class="default-style">
-     <br>Note : 1)You can take test only in<strong>&nbsp;Laptop/desktop&nbsp;.</strong>
-    </div>
-    <div class="default-style">
-     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2) Please register at&nbsp;<a href="https://xplore.co.in/register">Xplore.co.in/register&nbsp;</a>&nbsp;before taking the test
-    </div>
-    <div class="default-style">
-     <br>&nbsp; &nbsp; &nbsp;
-     <br>Instructions:
-     <ul>
-      <li>Each question carries 1 mark and no negative marking</li>
-      <li><strong>Mandatory</strong>: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected</li>
-      <li>The test should be taken&nbsp; from <strong>desktop/laptop/mobile/tablet with webcam</strong> facilities.</li>
-      <li>Please make sure that you&nbsp;<strong>disable all&nbsp; notifications</strong>. Else, the test will be terminated in between</li>
-      <li>Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)</li>
-      <li>Please make sure that your camera is switched on and you are facing the light source and camera</li>
-     </ul>
-     <br>
-    </div>
-   </div>
-  </div>
+             $subject = 'Requirement for Java Full Stack Developers';
+            $content = '<div dir=3D"ltr">
+<br>We have openings for 150 java fullstack developers with 14 clients. Details are as follows<br><br>1. Designation - Java Full Stack Developer<br>2.
+ Year of Passing - 2018, 2019, 2020<br>3. Qualification - BTech (Any Branch
+)<br>4. Academic Percentage - 60% (10th, 12th, Graduation) <br>5. Skills Required - Excellent Communication, Core Java, Adv Java, Spring MVC, AWS, Git
+<br>6. Work Location - Pan India<br></div>7. CTC - 4.5 LPA to 6.5 LPA<br><d
+iv><br>Selection Process<br></div><div>1. Pre-assessment on Aptitude, Verbal and Java Programming - 100Q/100min</div><div>2. Internship &amp; Training
+ on Full stack java</div><div>3. Technical Test (Client Location)<br></div>
+<div><br>Selected
+ students will be recruited as Interns with Packetprep and will be 
+trained in full-stack java (adv java, spring framework and aws 
+deployment) for 3 months. <br><br>Note:<br><ul><li>For the candidates
+ with pre-assessment score of 85+/100, PacketPrep will sponsor the complete
+ training cost of Rs.30,000. </li><li>For the candidates with pre-assessment scores of 60 to 85 can avail 70% fee waiver on the training cost. <br></l
+i><li>95% attendance is mandatory to sit for the technical test.</li><li>Technical Internship letter will be awarded to students with 95% attendance only.</li></ul>If you have not applied, then you can apply for the pre-assessment (Online Test) using the following link</div><div><a href="https://forms.gle/mHW71asQUcdo4bzW6" target="_blank">https://forms.gle/mHW71asQUcdo4bzW6</a></div><div><br></div><div>The test link will be shared on e
+mail one day before the exam. <br></div><div><br></div><div>Last date to apply : 8th Jan 2021<font color=3D"#888888">, 8PM</font></div><br clear=3D"all">
+    <br>
+    <br>
 ';
+
+//             $subject = 'Test Link for Tech/voice-support role 24[7]';
+//             $content = '
+//   <div class="io-ox-signature">
+//    <div class="default-style">
+//     <div class="default-style">
+//      24 seven is conducting an online recruitment&nbsp; test for the position of Tech/Voice - support
+//      <br>&nbsp;
+//      <br>Below are the details of the online assessment
+//      <br>
+//      <br>Test URL:<a href="https://xplore.co.in/test/566962">&nbsp;</a><a class="f20 text-white" href="https://xplore.co.in/test/566962 ">https://xplore.co.in/test/566962</a>
+//      <br>
+//     </div>
+//     <div class="default-style">
+//      <br>
+//     </div>
+//     <div class="default-style">
+//      Access Code: XPLORE123
+//     </div>
+//     <div class="default-style">
+//      <br>
+//     </div>
+//     <div class="default-style">
+//      <br><strong>Date &amp; Time of Assessment</strong>: 09rd Sep 2020 i.e Wednesday; 10AM IST (The test link will be activated at 10AM and will be open till 2PM)
+//     </div>
+//     <div class="default-style">
+//      <br>
+//     </div>
+//     <div class="default-style">
+//      <br>Note : 1)You can take test only in<strong>&nbsp;Laptop/desktop&nbsp;.</strong>
+//     </div>
+//     <div class="default-style">
+//      &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2) Please register at&nbsp;<a href="https://xplore.co.in/register">Xplore.co.in/register&nbsp;</a>&nbsp;before taking the test
+//     </div>
+//     <div class="default-style">
+//      <br>&nbsp; &nbsp; &nbsp;
+//      <br>Instructions:
+//      <ul>
+//       <li>Each question carries 1 mark and no negative marking</li>
+//       <li><strong>Mandatory</strong>: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected</li>
+//       <li>The test should be taken&nbsp; from <strong>desktop/laptop/mobile/tablet with webcam</strong> facilities.</li>
+//       <li>Please make sure that you&nbsp;<strong>disable all&nbsp; notifications</strong>. Else, the test will be terminated in between</li>
+//       <li>Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)</li>
+//       <li>Please make sure that your camera is switched on and you are facing the light source and camera</li>
+//      </ul>
+//      <br>
+//     </div>
+//    </div>
+//   </div>
+// ';
 
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
             SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*3));
