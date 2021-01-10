@@ -81,22 +81,10 @@ class HomeController extends Controller
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
 
-            $subject = 'Requirement for Java Full Stack Developers';
-            $content = '<div dir=3D"ltr">
-<br>We have openings for 150 java fullstack developers with 14 clients. Details are as follows<br><br>1. Designation - Java Full Stack Developer<br>2.
- Year of Passing - 2018, 2019, 2020<br>3. Qualification - BTech (Any Branch
-)<br>4. Academic Percentage - 60% (10th, 12th, Graduation) <br>5. Skills Required - Excellent Communication, Core Java, Adv Java, Spring MVC, AWS, Git
-<br>6. Work Location - Pan India<br></div>7. CTC - 4.5 LPA to 6.5 LPA<br><d
-iv><br>Selection Process<br></div><div>1. Pre-assessment on Aptitude, Verbal and Java Programming - 100Q/100min</div><div>2. Internship &amp; Training
- on Full stack java</div><div>3. Technical Test (Client Location)<br></div>
-<div><br>Selected
- students will be recruited as Interns with Packetprep and will be 
-trained in full-stack java (adv java, spring framework and aws 
-deployment) for 3 months. <br><br>Note:<br><ul><li>For the candidates
- with pre-assessment score of 85+/100, PacketPrep will sponsor the complete
- training cost of Rs.30,000. </li><li>For the candidates with pre-assessment scores of 60 to 85 can avail 70% fee waiver on the training cost. <br></l
-i><li>95% attendance is mandatory to sit for the technical test.</li><li>Technical Internship letter will be awarded to students with 95% attendance only.</li></ul>If you have not applied, then you can apply for the pre-assessment (Online Test) using the following link</div><div><a href="https://forms.gle/mHW71asQUcdo4bzW6" target="_blank">https://forms.gle/mHW71asQUcdo4bzW6</a></div><div><br></div><div>The test link will be shared on e
-mail one day before the exam. <br></div><div><br></div><div>Last date to apply : 8th Jan 2021<font color=3D"#888888">, 8PM</font></div><br clear=3D"all">
+            $subject = 'Java Full Stack Developer - Test Link';
+            $content = '<div dir=3D"ltr"><div id=3D"gmail-:n3" class=3D"gmail-a3s gmail-aiL"><div dir=3D"ltr"><div>If
+ you have not attempted the &#39;JAVA Fullstack Developer&#39; pre-assessment,you can use the following link to complete the test before 11th jan, 11am. <br></div><br>Test Link - <a href="https://xplore.co.in/test/84316" 
+target=3D"_blank">https://xplore.co.in/test/84316</a><br>Test closes by: 11th Jan, 11 am<br>Access Code - PPM21<br><br>Instructions:<br>- The test contains 100 questions to be answered in 100 minutes<br>- Syllabus: Aptitude 30Q, Verbal 35Q and Technical 35Q<br>- Each question carries 1 mark and no negative marking<br>-Mandatory: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected<br>- The test should be taken only from desktop/laptop with webcam facilities. Mobile Phones and Tabs are restricted<br>- Please make sure that you disable all desktop/Laptop notifications. Else, the test will be terminated in between<br>- Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)<br>- Please make sure that your camera is switched on and you are facing the light source<br>
     <br>
     <br>
 ';
