@@ -222,6 +222,7 @@ pre, code {
       </tr>
     </thead>
     <tbody>
+      @if(isset(json_decode($question->a)->out_1))
       <tr>
         <td>#1</td>
         <td>@if(json_decode($t->comment,true)['pass_1']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
@@ -251,6 +252,9 @@ pre, code {
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_3']['time']}}</td>
       </tr>
+
+      @endif
+
       @endif
       
     </tbody>
