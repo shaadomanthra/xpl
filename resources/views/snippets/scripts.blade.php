@@ -1201,7 +1201,9 @@ $(document).ready(function() {
 
       var code = editor_.getValue();
       $('.code_'+$qno).val(code);
-      //console.log($('.code_'+$qno).val());
+      $('.codefragment_'+$qno).val(code);
+      if(!$('.s'+$qno).hasClass('qblue-border'))
+      $('.s'+$qno).addClass('qblue-border');
       
       $('.loading_'+$qno).show();
       // setTimeout(function(){

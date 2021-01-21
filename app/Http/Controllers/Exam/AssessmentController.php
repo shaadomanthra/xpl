@@ -438,6 +438,8 @@ class AssessmentController extends Controller
 
 
 
+        
+
         if($exam->active){
             if(!$responses)
                 return view('appl.exam.assessment.inactive')->with('exam',$exam);
@@ -459,6 +461,7 @@ class AssessmentController extends Controller
 
                 $responses = $json['responses'];
 
+                
 
                 if(isset($json['c']))
                 $cc = $json['c'];
@@ -477,6 +480,8 @@ class AssessmentController extends Controller
 
 
         }
+
+
 
 
         $jsonname = $test.'_'.$user->id;
@@ -580,6 +585,9 @@ class AssessmentController extends Controller
 
                     }else{
                         $keys = $responses->keyBy('question_id');
+
+                        if($request->get('dump'))
+                            dd($keys);
                         if(is_array($keys[$q->id])){
                             $q->dynamic = $keys[$q->id]['dynamic'];
                             //dd($keys[$q->id]['response']);
@@ -589,6 +597,8 @@ class AssessmentController extends Controller
 
                             $q->response = $keys[$q->id]['response'];
                             $q->time = $keys[$q->id]['time'];
+                            if(isset($keys[$q->id]['code']))
+                            $q->code = $keys[$q->id]['code'];
 
                             $time_used = $time_used + intval($q->time);
                         }else{
@@ -598,6 +608,8 @@ class AssessmentController extends Controller
                             else
                                 $q->response = $keys[$q->id]->response;
                             $q->time = $keys[$q->id]->time;
+                            if(isset($keys[$q->id]->code))
+                            $q->code = $keys[$q->id]->code;
 
                             $time_used = $time_used + intval($q->time);
 

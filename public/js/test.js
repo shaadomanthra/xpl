@@ -1004,8 +1004,9 @@ $(document).ready(function(){
           resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
 
 
-          if($('.code_'+$sno).length)
-            resp.code = $('.code_'+$sno).val();
+          if($('.code_'+$sno).length){
+            resp.code = $('.codefragment_'+$qno).val();
+          }
           if($('.input_'+$qno).is(':checkbox')){
               var ans =[]
               $.each($(".input_"+$qno+":checked"), function(){
