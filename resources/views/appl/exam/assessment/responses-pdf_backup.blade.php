@@ -179,16 +179,108 @@
            <div class="">
            @foreach($tests as $k=>$t)
           
-            <div class="mb-3" style="padding:20px; margin:5px;background: #f8f8f8;border:1px solid silver;">
-               @if($t->question->type=='code')
-                <pre class="mb-3" style="">
+
+           <table class="table ">
+              <tbody>
+                <tr>
+                  <th scope="row" width="10%">{{($k+1)}}</th>
+                  <th>{!! $t->question->question !!}</th>
+                </tr>
+                @if($t->question->option_a)
+                <tr>
+                  <td scope="row" class=""><span class=" @if($t->answer=='A') text-success font-weight-bold @endif">(A) </span></td>
+                  <td>{!! $t->question->option_a!!}</td>
+                </tr>
+                @endif
+
+                @if($t->question->option_b)
+                <tr>
+                   <td scope="row" class=""><span class=" @if($t->answer=='B') text-success font-weight-bold @endif">(B) </span></td>
+                  <td>{!! $t->question->option_b!!}</td>
+                </tr>
+                @endif
+
+                @if($t->question->option_c)
+                <tr>
+                   <td scope="row" class=""><span class=" @if($t->answer=='C') text-success font-weight-bold @endif">(C) </span></td>
+                  <td>{!! $t->question->option_c!!}</td>
+                </tr>
+                @endif
+
+                @if($t->question->option_d)
+                <tr>
+                  <td scope="row" class=""><span class=" @if($t->answer=='D') text-success font-weight-bold @endif">(D) </span></td>
+                  <td>{!! $t->question->option_d!!}</td>
+                </tr>
+                @endif
+
+                @if($t->question->option_e)
+                <tr>
+                   <td scope="row" class=""><span class=" @if($t->answer=='E') text-success font-weight-bold @endif">(E) </span></td>
+                  <td>{!! $t->question->option_e!!}</td>
+                </tr>
+                @endif
+
+                @if($t->question->type=='code')
+                <tr>
+                  <td scope="row" class="">User Code</td>
+                  <td><pre class="mb-3" style="">
                       <code style="overflow-wrap: break-word;word-wrap: break-word">
                         {!! htmlentities($t->code) !!}
                       </code>
                     </pre>
+                  </td>
+                </tr>
+                
 
                 @endif
-            </div>
+
+                
+                <tr>
+                  <td scope="row" class="">User<br><small> Response</small></td>
+                  <td>
+                     @if(trim(strip_tags($t->response)))
+                      {!! nl2br($t->response) !!} 
+                      @else
+                      -
+                      @endif
+
+                      @if($t->accuracy)
+                      @if($t->question->type=='mcq' || $t->question->type=='maq' || $t->question->type=='fillup')
+
+                        @if($t->mark==0)
+                        <sapn class="fa fa-times-circle text-danger"> incorrect </span>
+                        @else
+                        <span class="fa fa-check-circle text-success"> correct</span>
+                        @endif
+                      @else
+                      <i class="fa fa-check-circle text-success"></i>
+                      @endif
+                    @else
+
+                      @if($t->question->type=='mcq' || $t->question->type=='maq' || $t->question->type=='fillup')
+                      <i class="fa fa-times-circle text-danger">incorrect</i>
+                      @else
+                        @if($t->mark==0 && $t->question->type!='urq' && $t->question->type!='sq')
+                        <i class="fa fa-times-circle text-danger"> correct</i>
+                        @endif
+                      @endif
+                    @endif
+                  </td>
+                </tr>
+                 <tr>
+                  <td scope="row" class="">Marks<br><small>Awarded</small></td>
+                  <td>
+                    {{$t->mark}}
+                  </td>
+                </tr>
+                
+                
+              </tbody>
+            </table>
+
+      
+
 
 
 @endforeach
