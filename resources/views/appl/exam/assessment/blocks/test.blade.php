@@ -17,6 +17,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
   50% {
     opacity: 0;
   }
+  
 }
 </style>
 

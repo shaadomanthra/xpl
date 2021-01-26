@@ -626,11 +626,16 @@ class AssessmentController extends Controller
                     }else{
                         $keys = $responses->keyBy('question_id');
 
-                        if(!isset($keys[$q->id]->response))
-                                $q->response = null;
-                        else
+                          
+
+                         $q->response = null;
+                        if(isset($keys[$q->id]->response))
                                 $q->response = $keys[$q->id]->response;
 
+                        if(isset($keys[$q->id]['response']))
+                                $q->response = $keys[$q->id]['response'];
+
+                            
                         if(isset($keys[$q->id]->time))
                         $q->time = $keys[$q->id]->time;
                         else
