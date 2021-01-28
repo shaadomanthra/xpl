@@ -653,7 +653,7 @@
           <option value="{{\auth::user()->id}}"  >{{ \auth::user()->username }}</option>
           @foreach($data['hr-managers'] as $u)
 
-          <option value="{{$u->id}}"  >{{ $u->username }}</option>
+          <option value="{{$u->id}}"  >{{ $u->name }} ({{ $u->client_slug }})</option>
           @endforeach
         </select>
       </div>
