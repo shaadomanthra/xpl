@@ -4,6 +4,8 @@
 @section('keywords', $obj->keywords)
 @section('image', asset('/storage/company/'.$obj->slug.'_1200.jpg'))
 @section('content')
+
+ @include('snippets.adsense')
 <div class="p-3 p-md-4 p-lg-5 bg-white company">
           
           @include('flash::message')
@@ -55,6 +57,7 @@
             </div>
             <div class="col-12 col-md-4 ">
               <div class="sticky-top pt-3">
+                @include('snippets.adsense')
                 
               @if(isset($obj->related1))
               @if(count($obj->related1)!=0)
@@ -74,7 +77,7 @@
               @endif
               @endif
 
-              @include('snippets.adsense')
+              
               </div>
             </div>
           </div>
@@ -112,6 +115,7 @@
               @endif
       
     </div>
+
   
     </div>
       </div>

@@ -1,7 +1,4 @@
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-9550642194256443"
-     data-ad-slot="5416437506"></ins>
 
+<a href="">
+	<img src="https://i.imgur.com/f5b8Jrg.jpg" class="w-100 my-3" />
+</a>
