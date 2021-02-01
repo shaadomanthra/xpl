@@ -201,6 +201,7 @@
             <select class="form-control" name="solutions">
               <option value="1" @if(isset($exam)) @if($exam->solutions==1) selected @endif @endif >Yes without solutions</option>
               <option value="0" @if(isset($exam)) @if($exam->solutions==0) selected @endif @endif >Yes with solutions</option>
+              <option value="3" @if(isset($exam)) @if($exam->solutions==3) selected @endif @endif >Yes with only comments</option>
               <option value="2" @if(isset($exam)) @if($exam->solutions==2) selected @endif @endif >No report</option>
             </select>
           </div>

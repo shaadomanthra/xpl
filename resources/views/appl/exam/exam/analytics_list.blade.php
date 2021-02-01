@@ -63,6 +63,9 @@
                 <td>
                   @if(!$r['status'])
                   {{ $r['score'] }}
+                    @if($r['comment'])
+                      <br><span class="text-warning"><i class="fa fa-commenting-o" ></i> Added</span>
+                    @endif
                   @else
                   <span class="badge badge-warning">Under Review</span>
                   @endif

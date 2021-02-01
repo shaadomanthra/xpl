@@ -39,7 +39,9 @@
     </div>
     </div>
 </div>
-
+  
+  
+    
     <div class="question_block">
 
       @if($passage)

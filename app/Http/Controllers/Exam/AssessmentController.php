@@ -4385,6 +4385,22 @@ class AssessmentController extends Controller
 
     }
 
+    public function comment(Request $request)
+    {
+        $id = $request->get('test_overall');
+
+
+        $item= Tests_Overall::where('id',$id)->first();
+        $item->comment = $request->comment;
+        $item->save();
+
+        Cache::forget('responses_'.$request->user_id.'_'.$request->test_id);
+        flash('Comment Added')->success();
+
+        return redirect()->route('assessment.responses',['slug'=>$request->slug,'student'=>$request->username,'forget'=>1]);
+
+    }
+
 
     public function delete($slug,Request $request){
 

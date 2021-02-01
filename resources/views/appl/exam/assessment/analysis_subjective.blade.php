@@ -34,6 +34,7 @@
 <div class="mb-md-2">
 	<div class="">
 		<div class="p-3 border rounded bg-light mb-3" style="min-height: 130px">
+    @if($exam->solutions !=3 )
 		<div class="bg-white p-3 float-right text-center border"><h5>Total Score</h5>
 			@if(!$test_overall->status)
         @if($exam->solutions==2)
@@ -46,6 +47,7 @@
 			<div class="badge badge-primary px-2" style="line-height: 1.4">Under<br>Review</div>
 			@endif
 		</div>
+    @endif
 		<div class="  display-4  mb-1 d-none d-md-block"><b> {{$student->name}} - Report</b></div>
 		@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
     @if($student->branch_id)<span class="badge badge-danger">{{$data['branches'][$student->branch_id]->name}}</span>@endif
@@ -58,6 +60,9 @@
 
 
 
+
+
+ 
 @if($exam->solutions ==2 && !request()->get('student'))
 
   <div class="card mb-3"  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
@@ -74,8 +79,13 @@
 
   @include('appl.exam.assessment.blocks.banner')
 
-
+   
 @else
+
+<div class="card mb-3 p-3" style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
+    <h3>Comments</h3>
+    <p>{{$test_overall->comment}}</p>
+  </div>  
 	<div class="table-responsive">
 		<table class="table table-bordered bg-white">
   <thead>
@@ -84,7 +94,9 @@
       <th scope="col">Question</th>
       <th scope="col">Response</th>
       @if($test_overall->status)
+      @if($exam->solutions !=3 )
       <th scope="col">Score</th>
+      @endif
       <th scope="col">Feedback</th>
       @endif
     </tr>
@@ -138,7 +150,9 @@
         @endif
       	@endif
       </td>
+     
       @if($test_overall->status)
+      @if($exam->solutions !=3 )
       <td>
       	@if($t->mark)
       			{{$t->mark }}
@@ -154,8 +168,10 @@
       		@endif
       	@endif
       </td>
+      @endif
       <td>{{ (isset($t->comment))?$t->comment:'-' }}</td>
       @endif
+
     </tr>
     @endforeach
   </tbody>

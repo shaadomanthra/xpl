@@ -64,11 +64,14 @@ pre, code {
           <p class="heading_two mb-1 f30" ><i class="fa fa-user "></i> {{$student->name}}
 
             <button id="pdfbtn" class="btn btn-outline-primary btn-sm pdfbtn" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}">Download PDF</button>
+            <button  class="btn btn-outline-success btn-sm " data-toggle="modal" data-target="#exampleModal2">Add Comment</button>
+             
           </p>
           @if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
            @if($student->branch_id)<span class="badge badge-danger ">{{$student->branch->name}}</span>@endif
       @if($student->college_id)<span class="badge badge-info">{{$student->college->name}}</span><br>@endif
-      <p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><br>
+      <p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><p>
+        @if($test_overall->comment)<p class="pt-0">Comment : <b><span class="text-dark">{{$test_overall->comment }}</span></b></p>@endif
         </div>
       </div>
       <div class="col-12 col-md-4 col-lg-2">
@@ -97,7 +100,9 @@ pre, code {
 
 
 
+
 <div class="px-5  my-3" id="wrapper">
+
 @foreach($tests as $k=>$t)
 <div class="row no-gutters" id="item{{($k+1)}}">
 	<div class="col-12 col-md-10 col-lg-9">
@@ -347,6 +352,38 @@ pre, code {
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Add Comment</h1>
+        <button type="button" class="btn btn-danger  float-right d-inline">close</button>
+      </div>
+      <div class="modal-body">
+          <div >
+      <form method="POST" action="{{route('assessment.comment',$exam->slug)}}" >
+  <div class="form-group">
+    <label for="exampleInputPassword1">Enter your comment</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="comment">@if(trim($test_overall->comment)!='') {{$test_overall->comment}}@endif</textarea>
+    
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="user_id" value="{{ $student->id }}">
+        <input type="hidden" name="username" value="{{ $student->username }}">
+        <input type="hidden" name="test_id" value="{{ $exam->id }}">
+        <input type="hidden" name="slug" value="{{ $exam->slug }}">
+        <input type="hidden" name="test_overall" value="{{ $test_overall->id }}">
+
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+  </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>
 
 
