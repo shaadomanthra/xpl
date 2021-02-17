@@ -28,7 +28,7 @@
         <h1 > <i class="fa fa-rupee"></i>  3,500 </h1>
        
 
-        <div class=""><div class="card-body" style="background:yellow;border:0px;">
+        <div class=""><div class="card-body" style="background:yellow;border:0px;">s
           Reserve your seat now to avail Rs. 2000 discount. Call us at <b>+91 90000 45750</b> to block your seat.
         </div></div>
 

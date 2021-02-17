@@ -227,7 +227,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         </div>
    -->   
 
-       <div class="attempted" >
+       <div class="attempted @if(isset($code_ques)) d-none @endif"  >
         <table class="table table-bordered">
           <thead>
             <tr>
