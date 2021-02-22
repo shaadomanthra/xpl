@@ -302,7 +302,7 @@ th{ border:1px solid silver; }
           <div class="card mb-3 bg-light border">
             <div class="card-body">Category</div>
           </div>
-        @if(request()->get('default'))
+        @if(!request()->get('default'))
          @if($categories)
           <div class="dd">
           {!! $categories !!}
