@@ -19,6 +19,7 @@ class Corporate
     public function handle($request, Closure $next)
     {
         if(subdomain()){
+            
 
             if(subdomain() == 'www'){
                 $url = url()->full();
