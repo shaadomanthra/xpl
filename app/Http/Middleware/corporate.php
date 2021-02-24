@@ -19,7 +19,7 @@ class Corporate
     public function handle($request, Closure $next)
     {
         if(subdomain()){
-            
+
 
             if(subdomain() == 'www'){
                 $url = url()->full();
@@ -30,7 +30,7 @@ class Corporate
 
                 return redirect()->to('https://'.$new_url);
             }
-            elseif($_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'p24.in' ){
+            elseif($_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.in' || $_SERVER['HTTP_HOST'] == 'p24.in' ){
                 $filename = 'corporate.json';
                 $client = json_decode(file_get_contents($filename));
                 $client->name = 'Piofx';
