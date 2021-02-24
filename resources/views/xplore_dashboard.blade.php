@@ -187,7 +187,7 @@ programming & Interview Skills</li>
                   <td>
 
                     @if(!$test->attempt_status)
-                      @if($test->solutions==2)
+                      @if($test->solutions==2 || $test->solutions==4 )
                       <span class="badge badge-secondary">private</span>
                       @elseif($test->slug!='psychometric-test')
                       {{$test->score}} / {{$test->max}}

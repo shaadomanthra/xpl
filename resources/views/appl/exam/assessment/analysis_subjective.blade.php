@@ -34,7 +34,7 @@
 <div class="mb-md-2">
 	<div class="">
 		<div class="p-3 border rounded bg-light mb-3" style="min-height: 130px">
-    @if($exam->solutions !=3 )
+    @if($exam->solutions !=4 )
 		<div class="bg-white p-3 float-right text-center border"><h5>Total Score</h5>
 			@if(!$test_overall->status)
         @if($exam->solutions==2)
@@ -94,7 +94,7 @@
       <th scope="col">Question</th>
       <th scope="col">Response</th>
       @if($test_overall->status)
-      @if($exam->solutions !=3 )
+      @if($exam->solutions !=3 && $exam->solutions !=4 )
       <th scope="col">Score</th>
       @endif
       <th scope="col">Feedback</th>
@@ -152,7 +152,7 @@
       </td>
      
       @if($test_overall->status)
-      @if($exam->solutions !=3 )
+      @if($exam->solutions !=3 && $exam->solutions !=4 )
       <td>
       	@if($t->mark)
       			{{$t->mark }}
