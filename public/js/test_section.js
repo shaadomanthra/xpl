@@ -803,8 +803,8 @@ $(document).ready(function(){
 
     /* globals MediaRecorder */
 
-    let mediaRecorder;
-    let recordedBlobs;
+    var mediaRecorder;
+    var recordedBlobs;
 
     const errorMsgElement = document.querySelector('span#errorMsg');
     const recordedVideo = document.querySelector('video#recorded');
@@ -850,6 +850,9 @@ $(document).ready(function(){
 
       try {
         mediaRecorder = new MediaRecorder(window.stream, options);
+        $sno = $('.clear-qno').data('sno');
+        $qno = $('.s'+$sno).data('qno');
+        $('#curr-qno').data('qno',$qno);
       } catch (e) {
         console.error('Exception while creating MediaRecorder:', e);
         errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(e)}`;
@@ -858,6 +861,21 @@ $(document).ready(function(){
 
       console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
       
+      mediaRecorder.ondataavailable = handleDataAvailable;
+      mediaRecorder.start();
+      console.log('MediaRecorder started', mediaRecorder);
+    }
+
+    function stopRecording() {
+
+      $sno = $('.clear-qno').data('sno');
+      $qno = $('.s'+$sno).data('qno');
+      if($('#gum_'+$qno).length){
+        $('.recording').hide();
+        try {
+         mediaRecorder.stop();
+
+
       mediaRecorder.onstop = (event) => {
         $('.recording').hide();
         console.log('Recorder stopped: ', event);
@@ -897,19 +915,7 @@ $(document).ready(function(){
         // }, 100);
 
       };
-      mediaRecorder.ondataavailable = handleDataAvailable;
-      mediaRecorder.start();
-      console.log('MediaRecorder started', mediaRecorder);
-    }
 
-    function stopRecording() {
-
-      $sno = $('.clear-qno').data('sno');
-      $qno = $('.s'+$sno).data('qno');
-      if($('#gum_'+$qno).length){
-        $('.recording').hide();
-        try {
-         mediaRecorder.stop();
         } catch (e) {
           console.error('navigator.getUserMedia error:', e);
         }
@@ -930,9 +936,8 @@ $(document).ready(function(){
       if($('#gum_'+qno).length){
         console.log('video#gum_'+qno);
         const gumVideo = document.querySelector('video#gum_'+qno);
-        $('#curr-qno').data('qno',$qno);
         gumVideo.srcObject = stream;
-        setTimeout(startRecording,8000);
+        setTimeout(startRecording,5000);
       }
       
     
@@ -952,7 +957,6 @@ $(document).ready(function(){
 
         $sno = $('.clear-qno').data('sno');
         $qno = $('.s'+$sno).data('qno');
-        
         const constraints = {
         audio: {
           echoCancellation: {exact: true}
@@ -1002,8 +1006,7 @@ $(document).ready(function(){
         $sno = $('.section_block_'+$snext).data('sno');
         $section_next = parseInt($('.section_block_'+$snext).data('section_next'));
 
-        //stop recording if any
-        stopRecording();
+        
 
         make_visible_section($snext,$sno);
         $(this).data('section_next',$section_next);
@@ -1083,7 +1086,9 @@ $(document).ready(function(){
         closeModals();
 
       }else{
-
+        $sno = parseInt($sno) +1;
+        //stop recording if any
+        stopRecording();
         //end test
         document.getElementById("assessment").submit();
       }
