@@ -93,6 +93,7 @@
       <th scope="col">#</th>
       <th scope="col">Question</th>
       <th scope="col">Response</th>
+      <th scope="col">Answer</th>
       @if($test_overall->status)
       @if($exam->solutions !=3 && $exam->solutions !=4 )
       <th scope="col">Score</th>
@@ -151,6 +152,13 @@
       	@endif
       </td>
      
+      <td>
+        @if(trim($questions[$t->question_id]->answer))
+            {{$questions[$t->question_id]->answer}}
+        @else
+        -
+        @endif
+      </td>
       @if($test_overall->status)
       @if($exam->solutions !=3 && $exam->solutions !=4 )
       <td>

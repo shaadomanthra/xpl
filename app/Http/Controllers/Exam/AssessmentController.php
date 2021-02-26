@@ -684,6 +684,11 @@ class AssessmentController extends Controller
                     $code_ques[$i]=1;
                     //$window_change = false;
                 }
+                elseif($q->type=='vq'){
+                    $folder = 'webcam/'.$exam->id.'/';
+                    $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
+                    $url3['video_'.$q->id] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_'.$q->id.'.webm']);
+                }
             }
         }
 
@@ -738,6 +743,7 @@ class AssessmentController extends Controller
                 $url[$nm] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.$nm.'.jpg']);
                 $url2[$nm] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix2.$nm.'.jpg']);
             }
+            
 
 
             $folder = 'testlog/'.$exam->id.'/';
@@ -869,6 +875,7 @@ class AssessmentController extends Controller
                         ->with('c',$cc)
                         ->with('urls',$url)
                         ->with('urls2',$url2)
+                        ->with('urls3',$url3)
                         ->with('json_log',$json_log)
                         ->with('user',$user)
                         ->with('code_ques',$code_ques)

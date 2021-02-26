@@ -776,6 +776,10 @@ $(document).ready(function(){
     }
 
 
+
+   
+
+
   // new test
     $(document).on('click','.test2qno', function() {
         $sno = $(this).data('sno');

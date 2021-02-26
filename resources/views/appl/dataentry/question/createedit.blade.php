@@ -376,6 +376,7 @@ th{ border:1px solid silver; }
             <option value="maq" @if(isset($question)) @if($question->type=='maq') selected @endif @endif >Multi Answer Question</option>
             <option value="eq" @if(isset($question)) @if($question->type=='eq') selected @endif @endif >Explanation Question</option>
             <option value="code" @if(isset($question)) @if($question->type=='code') selected @endif @endif >Code Question</option>
+            <option value="vq" @if(isset($question)) @if($question->type=='vq') selected @endif @endif >Video Question</option>
             <option value="fillup" @if(isset($question)) @if($question->type=='fillup') selected @endif @endif >Fillup Question</option>
             <option value="sq" @if(isset($question)) @if($question->type=='sq') selected @endif @endif >Subjective Question</option>
             <option value="urq" @if(isset($question)) @if($question->type=='urq') selected @endif @endif >Upload Response Question</option>
@@ -388,6 +389,7 @@ th{ border:1px solid silver; }
             <option value="maq" @if($type =='maq') selected @endif  >Multi Answer Question</option>
             <option value="eq" @if($type =='eq') selected @endif  >Explanation Question</option>
             <option value="code" @if($type =='code') selected @endif  >Code Question</option>
+            <option value="vq" @if($type =='vq') selected @endif  >Video Question</option>
             <option value="fillup" @if($type =='fillup')  selected  @endif >Fillup Question</option>
             <option value="sq" @if($type =='sq')  selected  @endif >Subjective Question</option>
             <option value="urq" @if($type =='urq')  selected  @endif >Upload Response Question</option>

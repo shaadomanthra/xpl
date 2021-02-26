@@ -14,6 +14,15 @@
 }
 
 
+.blink_me {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 
 .f18{font-size: 18px;}
 .cc {
@@ -425,7 +434,7 @@ p.article{line-height: 1.6em;}
     border:2px solid #bb061c;
 }
 .qgreen-border{
-    
+    border:2px solid #c8f7c5;
 }
 .qred-border{
     border:2px solid #ff0c0c;

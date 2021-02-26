@@ -3,7 +3,6 @@
 @if(!$question->b)
 
 
-
 <div class="p-3 mt-4" style="background: #eee">
   <h5 class="mb-2"> Enter code in any one of your preferred language</h5>
 <div class="input-group ">

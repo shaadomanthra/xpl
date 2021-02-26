@@ -196,6 +196,8 @@
         @endif
           @if($question->type=='code')
             @include('appl.exam.assessment.blocks.code')
+          @elseif($question->type=='vq')
+            @include('appl.exam.assessment.blocks.video')
           @endif
 
           @if($question->type=='fillup')

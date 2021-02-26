@@ -730,6 +730,9 @@ $(document).ready(function(){
           var t = parseInt($('.assessment').data('exam_time'));
         var countDownDate = addMinutes(new Date(),t);
 
+        //start video if any
+        startvideo();
+
         // Update the count down every 1 second
         window.x = setInterval(function() {
 
@@ -780,6 +783,179 @@ $(document).ready(function(){
     }
 
 
+     // video
+
+
+    /*
+    *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+    *
+    *  Use of this source code is governed by a BSD-style license
+    *  that can be found in the LICENSE file in the root of the source
+    *  tree.
+    */
+
+    // This code is adapted from
+    // https://rawgit.com/Miguelao/demos/master/mediarecorder.html
+
+    'use strict';
+
+    /* globals MediaRecorder */
+
+    let mediaRecorder;
+    let recordedBlobs;
+
+    const errorMsgElement = document.querySelector('span#errorMsg');
+    const recordedVideo = document.querySelector('video#recorded');
+    const recordButton = document.querySelector('button#record');
+    recordButton.addEventListener('click', () => {
+      if (recordButton.textContent === 'Start Recording') {
+        startRecording();
+      } else {
+        stopRecording();
+        recordButton.textContent = 'Start Recording';
+        playButton.disabled = false;
+        downloadButton.disabled = false;
+      }
+    });
+
+    
+
+
+
+    function handleDataAvailable(event) {
+      console.log('handleDataAvailable', event);
+      if (event.data && event.data.size > 0) {
+        recordedBlobs.push(event.data);
+      }
+    }
+
+    function startRecording() {
+      recordedBlobs = [];
+      $('.recording').show();
+      let options = {mimeType: 'video/webm;codecs=vp9,opus'};
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        console.error(`${options.mimeType} is not supported`);
+        options = {mimeType: 'video/webm;codecs=vp8,opus'};
+        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+          console.error(`${options.mimeType} is not supported`);
+          options = {mimeType: 'video/webm'};
+          if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+            console.error(`${options.mimeType} is not supported`);
+            options = {mimeType: ''};
+          }
+        }
+      }
+
+      try {
+        mediaRecorder = new MediaRecorder(window.stream, options);
+      } catch (e) {
+        console.error('Exception while creating MediaRecorder:', e);
+        errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(e)}`;
+        return;
+      }
+
+      console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
+      
+      mediaRecorder.onstop = (event) => {
+        $('.recording').hide();
+        console.log('Recorder stopped: ', event);
+        console.log('Recorded Blobs: ', recordedBlobs);
+        const blob = new Blob(recordedBlobs, {type: 'video/webm'});
+        const url = window.URL.createObjectURL(blob);
+
+        $sno = $('.clear-qno').data('sno');
+        $qno = $('.s'+$sno).data('qno');
+        $url = $('.url_video_'+$qno).data('url');
+        console.log($url);
+        if($url){
+            $.ajax({
+                    method: "PUT",
+                    headers: {"Content-Type": "video/webm"},
+                    processData: false,
+                    data: blob,
+                    url: $url
+            })
+            .done(function($url) {
+
+                console.log('video uploaded');
+                
+            });
+        }
+
+        // const a = document.createElement('a');
+        // a.style.display = 'none';
+        // a.href = url;
+        // a.download = 'test.webm';
+        // document.body.appendChild(a);
+        // a.click();
+        // setTimeout(() => {
+        //   document.body.removeChild(a);
+        //   window.URL.revokeObjectURL(url);
+        // }, 100);
+
+      };
+      mediaRecorder.ondataavailable = handleDataAvailable;
+      mediaRecorder.start();
+      console.log('MediaRecorder started', mediaRecorder);
+    }
+
+    function stopRecording() {
+      $sno = $('.clear-qno').data('sno');
+      $qno = $('.s'+$sno).data('qno');
+      if($('#gum_'+$qno).length){
+        $('.recording').hide();
+        mediaRecorder.stop();
+      }
+
+    }
+
+
+
+    function handleSuccess(stream,qno) {
+      recordButton.disabled = false;
+      console.log('getUserMedia() got stream:', stream);
+      window.stream = stream;
+
+      if($('#gum_'+qno).length){
+        const gumVideo = document.querySelector('video#gum_'+qno);
+        gumVideo.srcObject = stream;
+        setTimeout(startRecording,5000);
+      }
+      
+    
+    }
+
+    async function init(constraints,qno) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleSuccess(stream,qno);
+      } catch (e) {
+        console.error('navigator.getUserMedia error:', e);
+        errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+      }
+    }
+
+    function startvideo(){
+
+        $sno = $('.clear-qno').data('sno');
+        $qno = $('.s'+$sno).data('qno');
+        const constraints = {
+        audio: {
+          echoCancellation: {exact: true}
+        },
+        video: {
+          width: 768, height: 432
+        }
+      };
+      console.log('Using media constraints:', constraints);
+      init(constraints,$qno);
+    }
+
+
+    //end video
+
+
+
   // new test
     $(document).on('click','.test2qno', function() {
         $sno = $(this).data('sno');
@@ -816,6 +992,8 @@ $(document).ready(function(){
     });
 
     function auto_submit_section(){
+        
+
         $snext = parseInt($('.btn-sub-section').data('section_next'));
         $sno = $('.section_block_'+$snext).data('sno');
         $section_next = parseInt($('.section_block_'+$snext).data('section_next'));
@@ -879,6 +1057,9 @@ $(document).ready(function(){
         $('.sec_qcount').html($('.section_block_'+$snext).data('qcount'));
         make_visible($sno);
 
+        //stop recording if any
+        stopRecording();
+
         //change timer
         stopTimer();
         load_timer($sno);
@@ -886,6 +1067,9 @@ $(document).ready(function(){
         closeModals();
 
       }else{
+        //stop recording if any
+        stopRecording();
+
         //end test
         document.getElementById("assessment").submit();
       }

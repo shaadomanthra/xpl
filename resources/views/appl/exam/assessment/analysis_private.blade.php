@@ -90,6 +90,14 @@
 
 
 		@elseif($details['evaluation'])
+
+		@if($test_overall->comment)
+			<div class="card mb-3 p-3" style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
+		    <h3>Comments</h3>
+		    <p>{{$test_overall->comment}}</p>
+		  </div>  
+		  @endif
+
 		<div class="row">
 			<div class="col-12 col-md-4 mb-3">
 				<div class="card p-3" style="background: #F9FCE5;border: 2px solid #D1D3C5;color: #9D9792;">
@@ -116,9 +124,10 @@
 					<div class="">
 						<h2> Test Performance</h2>
 						<dl class="row">
-
+						  @if($exam->solutions !=3 && $exam->solutions !=4 )
 						  <dt class="col-sm-6">Score </dt>
 						  <dd class="col-sm-6">{{ $details['marks']}} / {{ $details['total'] }} </dd>
+						  @endif
 
 						  <dt class="col-sm-6">Attempted</dt>
 						  <dd class="col-sm-6">{{ $details['attempted']}} /  {{ ($details['unattempted']+$details['attempted'])}} Ques</dd>
@@ -140,7 +149,7 @@
 		</div>
 
 		@if($exam->slug != 'proficiency-test')
-		@if(!$exam->solutions)
+		@if($exam->solutions!=1)
 		<div class="card mb-3 "  style="background: #E6F5FF;border: 2px solid #B1D2E7;">
 			<div class="card-body">
 				<p>
