@@ -142,6 +142,21 @@ pre, code {
         </pre>
 
         @endif
+
+        @if($questions[$t->question_id]->type=='vq')
+        
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm'))
+        <p><b>User Video Response:</b></p>
+        <video controls width="500">
+          <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm')}}"
+                  type="video/webm">
+
+            Sorry, your browser doesn't support embedded videos.
+        </video>
+        @endif
+
+        @endif
+
 				<p><b>User Response:</b></p>
 					@if($questions[$t->question_id]->type=='urq')
           <div class="{{$w=0}}">

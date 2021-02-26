@@ -765,6 +765,8 @@ $(document).ready(function(){
               clearInterval(window.x);
               document.getElementById("timer").innerHTML = "EXPIRED";
               document.getElementById("timer2").innerHTML = "EXPIRED";
+              //stop recording if any
+              stopRecording();
               alert('The section time has expired. ');
               auto_submit_section();
 
@@ -900,12 +902,15 @@ $(document).ready(function(){
     }
 
     function stopRecording() {
+
       $sno = $('.clear-qno').data('sno');
       $qno = $('.s'+$sno).data('qno');
       if($('#gum_'+$qno).length){
         $('.recording').hide();
         mediaRecorder.stop();
       }
+
+
 
     }
 
@@ -987,6 +992,10 @@ $(document).ready(function(){
         $snext = parseInt($(this).data('section_next'));
         $sno = $('.section_block_'+$snext).data('sno');
         $section_next = parseInt($('.section_block_'+$snext).data('section_next'));
+
+        //stop recording if any
+        stopRecording();
+
         make_visible_section($snext,$sno);
         $(this).data('section_next',$section_next);
     });
@@ -1067,9 +1076,7 @@ $(document).ready(function(){
         closeModals();
 
       }else{
-        //stop recording if any
-        stopRecording();
-
+        
         //end test
         document.getElementById("assessment").submit();
       }

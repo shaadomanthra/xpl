@@ -560,7 +560,7 @@ class AssessmentController extends Controller
         $i = 0; $time = 0;
 
         $question = new Question();
-
+        $url3 = null;
         $time_used = 0;
         $code_ques =[];
         $passages = array();
@@ -722,7 +722,7 @@ class AssessmentController extends Controller
         }
 
 
-        $url =$url2= $images = null;
+        $url =$url2=  $images = null;
         if($exam->camera){
             $folder = 'webcam/'.$exam->id.'/';
             $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
