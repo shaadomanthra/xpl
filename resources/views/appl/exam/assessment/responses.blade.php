@@ -143,19 +143,7 @@ pre, code {
 
         @endif
 
-        @if($questions[$t->question_id]->type=='vq')
         
-        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm'))
-        <p><b>User Video Response:</b></p>
-        <video controls width="500">
-          <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm')}}"
-                  type="video/webm">
-
-            Sorry, your browser doesn't support embedded videos.
-        </video>
-        @endif
-
-        @endif
 
 				<p><b>User Response:</b></p>
 					@if($questions[$t->question_id]->type=='urq')
@@ -198,33 +186,44 @@ pre, code {
           </div>
        
       	@else
+
+        @if($questions[$t->question_id]->type!='vq')
           @if(trim(strip_tags($t->response)))
         	{!! nl2br($t->response) !!} 
           @else
           -
           @endif
-      	@if($t->accuracy)
-      		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
+        	@if($t->accuracy)
+        		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
 
-	      		@if(!$t->mark)
-	      		<i class="fa fa-times-circle text-danger"></i>
-	      		@else
-	      		<i class="fa fa-check-circle text-success"></i>
-	      		@endif
-      		@else
-      		<i class="fa fa-check-circle text-success"></i>
-      		@endif
-      	@else
+  	      		@if(!$t->mark)
+  	      		<i class="fa fa-times-circle text-danger"></i>
+  	      		@else
+  	      		<i class="fa fa-check-circle text-success"></i>
+  	      		@endif
+        		@else
+        		<i class="fa fa-check-circle text-success"></i>
+        		@endif
+        	@else
 
-      		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
-      		<i class="fa fa-times-circle text-danger"></i>
-      		@else
-      			@if($t->mark==0 && $questions[$t->question_id]->type!='urq' && $questions[$t->question_id]->type!='sq')
+        		@if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
+        		<i class="fa fa-times-circle text-danger"></i>
+        		@else
+        			@if($t->mark==0 && $questions[$t->question_id]->type!='urq' && $questions[$t->question_id]->type!='sq')
 
-	      		<i class="fa fa-times-circle text-danger"></i>
-	      		@endif
-      		@endif
-      	@endif
+  	      		<i class="fa fa-times-circle text-danger"></i>
+  	      		@endif
+        		@endif
+        	@endif
+        @else
+
+        @if($questions[$t->question_id]->type=='vq')
+         @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm'))
+        <video id="video" preload="auto" width="400px" src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm')}}" controls></video>
+        @endif
+        @endif
+        
+          @endif
       	@endif
 
 
@@ -440,6 +439,14 @@ pre, code {
 
   
 
+</script>
+<script>
+  video.addEventListener('loadedmetadata', function() {
+    if (video.buffered.length === 0) return;
+
+    const bufferedSeconds = video.buffered.end(0) - video.buffered.start(0);
+    console.log(`${bufferedSeconds} seconds of video are ready to play.`);
+  });
 </script>
 
 

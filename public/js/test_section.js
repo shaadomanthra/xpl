@@ -865,9 +865,10 @@ $(document).ready(function(){
         const blob = new Blob(recordedBlobs, {type: 'video/webm'});
         const url = window.URL.createObjectURL(blob);
 
-        $sno = $('.clear-qno').data('sno');
-        $qno = $('.s'+$sno).data('qno');
+        
+        $qno = $('#curr-qno').data('qno');
         $url = $('.url_video_'+$qno).data('url');
+        console.log($qno);
         console.log($url);
         if($url){
             $.ajax({
@@ -907,7 +908,12 @@ $(document).ready(function(){
       $qno = $('.s'+$sno).data('qno');
       if($('#gum_'+$qno).length){
         $('.recording').hide();
-        mediaRecorder.stop();
+        try {
+         mediaRecorder.stop();
+        } catch (e) {
+          console.error('navigator.getUserMedia error:', e);
+        }
+       
       }
 
 
@@ -922,9 +928,11 @@ $(document).ready(function(){
       window.stream = stream;
 
       if($('#gum_'+qno).length){
+        console.log('video#gum_'+qno);
         const gumVideo = document.querySelector('video#gum_'+qno);
+        $('#curr-qno').data('qno',$qno);
         gumVideo.srcObject = stream;
-        setTimeout(startRecording,5000);
+        setTimeout(startRecording,8000);
       }
       
     
@@ -944,6 +952,7 @@ $(document).ready(function(){
 
         $sno = $('.clear-qno').data('sno');
         $qno = $('.s'+$sno).data('qno');
+        
         const constraints = {
         audio: {
           echoCancellation: {exact: true}
@@ -1001,8 +1010,6 @@ $(document).ready(function(){
     });
 
     function auto_submit_section(){
-        
-
         $snext = parseInt($('.btn-sub-section').data('section_next'));
         $sno = $('.section_block_'+$snext).data('sno');
         $section_next = parseInt($('.section_block_'+$snext).data('section_next'));
@@ -1076,7 +1083,7 @@ $(document).ready(function(){
         closeModals();
 
       }else{
-        
+
         //end test
         document.getElementById("assessment").submit();
       }

@@ -20,7 +20,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
 }
 </style>
 
-  <div class="row">
+  <div class="row" id="curr-qno" data-qno="0">
     <div class="col-md-9">
 
       <div class=" rounded p-3 mb-3 h4 d-none d-md-block  sample" style="border:#dad6b5;background:#f8efba;">
