@@ -809,16 +809,16 @@ $(document).ready(function(){
     const errorMsgElement = document.querySelector('span#errorMsg');
     const recordedVideo = document.querySelector('video#recorded');
     const recordButton = document.querySelector('button#record');
-    recordButton.addEventListener('click', () => {
-      if (recordButton.textContent === 'Start Recording') {
-        startRecording();
-      } else {
-        stopRecording();
-        recordButton.textContent = 'Start Recording';
-        playButton.disabled = false;
-        downloadButton.disabled = false;
-      }
-    });
+    // recordButton.addEventListener('click', () => {
+    //   if (recordButton.textContent === 'Start Recording') {
+    //     startRecording();
+    //   } else {
+    //     stopRecording();
+    //     recordButton.textContent = 'Start Recording';
+    //     playButton.disabled = false;
+    //     downloadButton.disabled = false;
+    //   }
+    // });
 
     
 
@@ -834,6 +834,7 @@ $(document).ready(function(){
     function startRecording() {
       recordedBlobs = [];
       $('.recording').show();
+      
       let options = {mimeType: 'video/webm;codecs=vp9,opus'};
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.error(`${options.mimeType} is not supported`);
@@ -852,6 +853,7 @@ $(document).ready(function(){
         mediaRecorder = new MediaRecorder(window.stream, options);
         $sno = $('.clear-qno').data('sno');
         $qno = $('.s'+$sno).data('qno');
+        $('#gum_'+$qno).show();
         $('#curr-qno').data('qno',$qno);
       } catch (e) {
         console.error('Exception while creating MediaRecorder:', e);
@@ -871,6 +873,7 @@ $(document).ready(function(){
       $sno = $('.clear-qno').data('sno');
       $qno = $('.s'+$sno).data('qno');
       if($('#gum_'+$qno).length){
+        $('#gum_'+$qno).hide();
         $('.recording').hide();
         try {
          mediaRecorder.stop();
@@ -949,7 +952,7 @@ $(document).ready(function(){
         handleSuccess(stream,qno);
       } catch (e) {
         console.error('navigator.getUserMedia error:', e);
-        errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+        //errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
       }
     }
 
@@ -982,12 +985,15 @@ $(document).ready(function(){
     });
 
     $(document).on('click','.right-qno', function() {
-        $sno = $(this).data('sno');
-        make_visible($sno);
+        $sno = parseInt($(this).data('sno'))-1;
+        $qcount = $('.s'+$sno).data('qcount');
+        if($qcount>1)
+          make_visible($sno);
     });
 
     $(document).on('click','.left-qno', function() {
         $sno = $(this).data('sno');
+
         make_visible($sno);
     });
 
@@ -1096,6 +1102,7 @@ $(document).ready(function(){
     }
 
     function make_visible($sno){
+
       $('.active').removeClass('active');
         $('.s'+$sno).addClass('active');
         $('.question_block').hide();
