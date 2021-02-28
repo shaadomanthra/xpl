@@ -81,7 +81,7 @@ class HomeController extends Controller
           array_push($emails, $email1);
         }
 
-        dd($emails);
+        //dd($emails);
 
         
         // $email6 = ['name'=>'KT', 'email'=>'shaadomanthra@gmail.com'];
