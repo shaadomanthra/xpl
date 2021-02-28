@@ -70,7 +70,7 @@ class HomeController extends Controller
     {
         //s3_upload();
         $yop = request()->get('year_of_passing');
-        $users = \Auth::user()->select(['name'],'email')->where('year_of_passing',$yop)->get();
+        $users = \Auth::user()->select(['name','email'])->where('year_of_passing',$yop)->get();
 
         if(!$yop)
           dd('yop not given');
@@ -81,7 +81,7 @@ class HomeController extends Controller
           array_push($emails, $email1);
         }
 
-        //dd($emails);
+        dd($emails);
 
         
         // $email6 = ['name'=>'KT', 'email'=>'shaadomanthra@gmail.com'];
