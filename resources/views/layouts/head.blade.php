@@ -42,7 +42,7 @@
   @endif
 
   @if(isset($editor))
-  <link href="{{asset('js/summernote/summernote-bs4.css')}}" rel="stylesheet">
+  <link href="{{asset('js/summernote/summernote.min.css')}}" rel="stylesheet">
   @endif
   @if(isset($code))
   <link href="{{asset('js/codemirror/lib/codemirror.css')}}" rel="stylesheet">

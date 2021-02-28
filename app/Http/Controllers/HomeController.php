@@ -69,31 +69,52 @@ class HomeController extends Controller
     public function testemail()
     {
         //s3_upload();
-        $email1 = ['name'=>'Krishna Teja', 'email'=>'packetcode@gmail.com'];
+        $yop = request()->get('year_of_passing');
+        $users = \Auth::user()->select(['name'],'email')->where('year_of_passing',$yop)->get();
+
+        if(!$yop)
+          dd('yop not given');
+
+        $emails = [];
+        foreach($users as $u){
+          $email1 = ['name'=>$u->name, 'email'=>$u->email];
+          array_push($emails, $email1);
+        }
+
+        //dd($emails);
+
+        
         // $email6 = ['name'=>'KT', 'email'=>'shaadomanthra@gmail.com'];
         // $email3 = ['name'=>'Akhil', 'email'=>'akhil@xplore.co.in'];
         // $email4= ['name'=>'Akhil', 'email'=>'modheakhil@gmail.com'];
         // $email5= ['name'=>'Abhinav', 'email'=>'abhinavgoud.thippani@gmail.com'];
         // $email2 =['name'=>'Sunil', 'email'=>'sunil@acelinetech.com '];
 
-        $emails = [$email1];
+        //$emails = [$email1];
         foreach($emails as $i=>$e){
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
 
-            $subject = 'Java Full Stack Developer - Test Link';
-            $content = '<div dir=3D"ltr"><div id=3D"gmail-:n3" class=3D"gmail-a3s gmail-aiL"><div dir=3D"ltr"><div>If
- you have not attempted the &#39;JAVA Fullstack Developer&#39; pre-assessment,you can use the following link to complete the test before 11th jan, 11am. <br></div><br>Test Link - <a href="https://xplore.co.in/test/84316" 
-target=3D"_blank">https://xplore.co.in/test/84316</a><br>Test closes by: 11th Jan, 11 am<br>Access Code - PPM21<br><br>Instructions:<br>- The test contains 100 questions to be answered in 100 minutes<br>- Syllabus: Aptitude 30Q, Verbal 35Q and Technical 35Q<br>- Each question carries 1 mark and no negative marking<br>-Mandatory: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected<br>- The test should be taken only from desktop/laptop with webcam facilities. Mobile Phones and Tabs are restricted<br>- Please make sure that you disable all desktop/Laptop notifications. Else, the test will be terminated in between<br>- Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)<br>- Please make sure that your camera is switched on and you are facing the light source<br>
-    <br>
-    <br>
+            $subject = 'Requirement Java Full Stack - Pay after placement';
+            $content = '
+
+<p>Our training partner ‘PacketPrep’ has launched a job guaranteed training program with pay after placement model to full-fill the 150+ opening in java full stack in 14 of its clients.</p>
+
+<p>Recent placement drives include Machint solutions, Netenrich, Volksoft, ZenQ, Qualitlabs, purpletalk, Magnaquest, Invesco, Innominds, Vitech and more..</p>
+<p>Program Cost: Rs. 35,000</p>
+<p>The training fee of Rs. 30,000 can be paid after securing a job. And the study material cost of Rs. 5000 to be paid on the day of joining.</p>
+
+<p>Interested candidates can apply here: <br>
+<a href="https://forms.gle/YakNNQ62seNiaV8T9" >https://forms.gle/YakNNQ62seNiaV8T9</a> </p>
+
+<p>For more details you can talk to the counsellors at +91 99590 45750 & +91 9000045750 </p>
 ';
 
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
             SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*1));
         }
         
-        dd('Email Queued');
+        dd('Email Queued - year '.$yop.' - '. count($users) . ' mails Queued') ;
         return view('home');
     }
 
