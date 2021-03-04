@@ -69,11 +69,30 @@ class HomeController extends Controller
     public function testemail()
     {
         //s3_upload();
-        $yop = request()->get('year_of_passing');
-        $users = \Auth::user()->select(['name','email'])->where('year_of_passing',$yop)->get();
+        $yop = request()->get('yop');
 
         if(!$yop)
           dd('yop not given');
+
+        $start = request()->get('start');
+        if(!$start)
+          dd('start id not given');
+
+        $end = request()->get('end');
+        if(!$end)
+          dd('end id not given');
+
+        
+
+        $users = \Auth::user()->select(['name','email'])
+                ->where('year_of_passing',$yop)
+                ->where('id','>',$start)
+                ->where('id','<',$end)
+                ->get();
+
+        $count = request()->get('count');
+        if($count)
+          dd(count($users));
 
         $emails = [];
         foreach($users as $u){
@@ -85,12 +104,14 @@ class HomeController extends Controller
 
         
         // $email6 = ['name'=>'KT', 'email'=>'shaadomanthra@gmail.com'];
+        // $emails = [$email6];
+
         // $email3 = ['name'=>'Akhil', 'email'=>'akhil@xplore.co.in'];
         // $email4= ['name'=>'Akhil', 'email'=>'modheakhil@gmail.com'];
         // $email5= ['name'=>'Abhinav', 'email'=>'abhinavgoud.thippani@gmail.com'];
         // $email2 =['name'=>'Sunil', 'email'=>'sunil@acelinetech.com '];
 
-        //$emails = [$email1];
+        
         foreach($emails as $i=>$e){
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
@@ -100,14 +121,15 @@ class HomeController extends Controller
 
 <p>Our training partner ‘PacketPrep’ has launched a job guaranteed training program with pay after placement model to full-fill the 150+ opening in java full stack in 14 of its clients.</p>
 
-<p>Recent placement drives include Machint solutions, Netenrich, Volksoft, ZenQ, Qualitlabs, purpletalk, Magnaquest, Invesco, Innominds, Vitech and more..</p>
-<p>Program Cost: Rs. 35,000</p>
-<p>The training fee of Rs. 30,000 can be paid after securing a job. And the study material cost of Rs. 5000 to be paid on the day of joining.</p>
+<p>Their recent placement drives include Machint solutions, Netenrich, Volksoft, ZenQ, Qualitlabs, purpletalk, Magnaquest, Invesco, Innominds, Vitech and more..</p>
 
+<p><b>The training fee can be paid after securing a job.</b></p>
+
+<p> It is mandatory to attend the classroom training at Madhapur office</p>
 <p>Interested candidates can apply here: <br>
-<a href="https://forms.gle/YakNNQ62seNiaV8T9" >https://forms.gle/YakNNQ62seNiaV8T9</a> </p>
+<a href="http://bit.ly/fsdpp" >http://bit.ly/fsdpp</a> </p>
 
-<p>For more details you can talk to the counsellors at +91 99590 45750 & +91 9000045750 </p>
+<p>For more details you can visit our website <a href="https://tech.packetprep.com" > https://tech.packetprep.com</a></p>
 ';
 
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
