@@ -71,6 +71,7 @@ class HomeController extends Controller
         //s3_upload();
         $yop = request()->get('yop');
 
+
         if(!$yop)
           dd('yop not given');
 
