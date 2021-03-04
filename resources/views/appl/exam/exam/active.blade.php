@@ -49,7 +49,12 @@
                 <circle fill="#000000" cx="12" cy="12" r="2"/>
             </g>
         </svg><!--end::Svg Icon--></span>
-           Proctoring</p>
+           Proctoring 
+           @if(request()->get('open'))
+           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#terminateall">
+  Terminate open participants
+</button>@endif
+</p>
         </div>
 
        
@@ -97,7 +102,8 @@
                           </svg>
                           <!--end::Svg Icon-->
                         </span>
-                        <span class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 d-block">{{($data['total'])}}</span>
+                        <span class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 d-block">
+                         <a href="{{ route('test.active',$exam->slug)}}" class="text-white">{{($data['total'])}}</a></span>
                         <span class="font-weight-bold text-white font-size-sm">Total Participants</span>
                       </div>
                       <!--end::Body-->
@@ -110,9 +116,10 @@
                     <div class="card card-custom bg-light-warning card-stretch gutter-b">
                       <!--begin::Body-->
                       <div class="card-body my-4">
-                        <a href="#" class="card-title font-weight-bolder text-warning font-size-h6 mb-4 text-hover-state-dark d-block">Open Participants ({{round((($data['total']-$data['completed'])*100/$data['total']))}}%)</a>
+                        <a href="{{ route('test.active',$exam->slug)}}?open=1" class="card-title font-weight-bolder text-warning font-size-h6 mb-4 text-hover-state-dark d-block">Open Participants ({{round((($data['total']-$data['completed'])*100/$data['total']))}}%)</a>
                         <div class="font-weight-bold text-muted font-size-sm">
-                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{($data['total']-$data['completed'])}}</span></div>
+                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">
+                          <a href="{{ route('test.active',$exam->slug)}}?open=1">{{($data['total']-$data['completed'])}}</a></span></div>
                         <div class="progress progress-xs mt-7 bg-warning-o-60">
                           <div class="progress-bar bg-warning" role="progressbar" style="width: {{(($data['total']-$data['completed'])*100/$data['total'])}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -127,9 +134,9 @@
                     <div class="card card-custom bgi-no-repeat card-stretch gutter-b" style="background-position: right top; background-size: 30% auto; background-image: url({{asset('assets/media/svg/shapes/abstract-3.svg') }})">
                       <!--begin::Body-->
                       <div class="card-body my-4">
-                        <a href="#" class="card-title font-weight-bolder text-primary font-size-h6 mb-4 text-hover-state-dark d-block">Completed ({{round((($data['completed'])*100/$data['total']))}}%)</a>
+                        <a href="{{ route('test.active',$exam->slug)}}?completed=1" class="card-title font-weight-bolder text-primary font-size-h6 mb-4 text-hover-state-dark d-block">Completed ({{round((($data['completed'])*100/$data['total']))}}%)</a>
                         <div class="font-weight-bold text-muted font-size-sm">
-                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">{{($data['completed'])}}</span></div>
+                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2"><a href="{{ route('test.active',$exam->slug)}}?completed=1">{{($data['completed'])}}</a></span></div>
                         <div class="progress progress-xs mt-7 bg-info-o-60">
                           <div class="progress-bar bg-primary" role="progressbar" style="width: {{(($data['completed'])*100/$data['total'])}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -351,6 +358,29 @@ div.chats {
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary termination_confirm" data-username="">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="terminateall" tabindex="-1" role="dialog" aria-labelledby="instructions" aria-hidden="true">
+  <div class="modal-dialog  " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-danger" id="exampleModalLongTitle"><i class="fa fa-window-close text-danger "></i> Terminate Open Participants</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        
+        I confirm, the test termination of all the open participants.
+       
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+        <a href="{{ route('test.active',$exam->slug)}}?terminate_all=1" class="btn btn-primary " data-username="">Confirm</a>
       </div>
     </div>
   </div>

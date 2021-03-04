@@ -1952,11 +1952,14 @@ class AssessmentController extends Controller
 
         $code_ques_flag =0;
         $test = $slug;
-        if($request->get('admin')){
+        if($request->get('admin') || $request->get('api_submit')){
             $user = User::where('id',$request->get('user_id'))->first();
         }else{
             $user = \auth::user();
         }
+
+        if(!$user)
+        return 1;
 
         $user_id = $request->get('user_id');
         $test_id = $request->get('test_id');
@@ -1977,9 +1980,11 @@ class AssessmentController extends Controller
         }
 
         if(!$request->get('admin')){
-            $test_taken = $user->attempted_test($exam->id);
 
-            if($test_taken)
+            $test_taken = $user->attempted_test($exam->id);
+            if($test_taken && request()->get('api_submit'))
+                return 1;
+            else if($test_taken)
                 return redirect()->route('assessment.analysis',$slug);
         }else{
 
@@ -2383,6 +2388,9 @@ class AssessmentController extends Controller
             Cache::forget('attempts_'.$user_id);
         }
 
+         if($request->get('api_submit'))
+            return 1;
+
         //$this->dispatch(new ProcessAttempts($data,$sec,$test_overall));
 
         if(!$request->get('admin'))
@@ -2706,7 +2714,7 @@ class AssessmentController extends Controller
         //dd($candidates);
 
         $data = [];
-        $data['total'] = $data['live'] = $data['completed']=$data['inactive'] =0;
+        $data['total'] = $data['live'] = $data['completed']= $data['inactive'] =0;
 
         $pg=[];
         $chats = [];
@@ -2720,22 +2728,16 @@ class AssessmentController extends Controller
                     return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
                 });
             else{
-
-
                 $userset = User::whereIn('username',[$search])->where('client_slug',subdomain())->get()->keyBy('username');
             }
 
             foreach($userset as $u=>$usr){
-
                 $users[$u] = 1;
                 $chats[$u] = 1;
-
-
             }
 
             //$usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
             foreach($userset as $a=> $b){
-
                 $name = $b->username.'_log.json';
                 $pg[$b->username] = 'testlog/'.$exam->id.'/log/'.$name;
             }
@@ -2885,6 +2887,8 @@ class AssessmentController extends Controller
                 $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
 
                 $tests_overall = Tests_Overall::where('test_id',$exam->id)->with('user')->get();
+
+
                 $completed_count  = count($tests_overall);
                 $sessions_count = count($files);
 
@@ -2899,9 +2903,95 @@ class AssessmentController extends Controller
                 }
 
                 $completed_list = $this->updateCompleted($files,$tests_overall,$exam);
+                $f2=[];
+                
+                if(request()->get('completed')){
+                    foreach($completed_list as $c=>$flag){
+                        if($flag)
+                        {
+                            if (($key = array_search('testlog/'.$exam->id.'/log/'.$c.'_log.json', $files)) !== false) {
+                                    array_push($f2, 'testlog/'.$exam->id.'/log/'.$c.'_log.json');
+                                   
+                                }
+                          
 
-               // dd($completed_list);
-                $pg = $this->paginateAnswers($files,18);
+                        }
+
+                    }
+                    $pg = $this->paginateAnswers($f2,18);
+                }
+                elseif(request()->get('open')){
+                    foreach($completed_list as $c=>$flag){
+                        if(!$flag)
+                        {
+                            if (($key = array_search('testlog/'.$exam->id.'/log/'.$c.'_log.json', $files)) !== false) {
+                                    array_push($f2, 'testlog/'.$exam->id.'/log/'.$c.'_log.json');
+                                   
+                                }
+                          
+
+                        }
+
+                    }
+                    $pg = $this->paginateAnswers($f2,18);
+                }else if(request()->get('terminate_all')){
+                    $data = null;
+
+                    foreach($completed_list as $c=>$flag){
+                        $url = 'testlog/'.$exam->id.'/'.$c.'.json';
+                        if(!$flag && Storage::disk('s3')->exists($url))
+                        {
+                            //submit the response
+                            
+                            $json = json_decode(Storage::disk('s3')->get($url),true);
+                            //dd($json);
+                            request()->merge(['api_submit'=>1]);
+                            request()->merge(['user_id'=>$json['user_id']]);
+                            request()->merge(['test_id'=>$json['test_id']]);
+                            request()->merge(['code'=>$json['code']]);
+                            request()->merge(['window_change'=>$json['window_change']]);
+                            foreach($json['responses'] as $d=>$v){
+                                $i=$d+1;
+
+                                request()->merge([$i.'_question_id'=>$v['question_id']]);
+                                request()->merge([$i.'_section_id'=>$v['section_id']]);
+                                request()->merge([$i.'_time'=>intval($v['time'])]);
+                                request()->merge([$i.'_dynamic'=>$v['dynamic']]);
+                                if(isset($v['response'])){
+                                    $data[$i] = $v['response'];
+                                    request()->merge([$i=>$v['response']]);
+                                }
+                                
+
+                                else{
+                                    request()->merge([$i=>null]);
+                                    $data[$i] =null;
+                                }
+
+                            }
+
+                            //dd(request()->all());
+
+                            $result = $this->submission($exam->slug,$r);
+                            //dd($result);
+                        }else if(!$flag && !Storage::disk('s3')->exists($url)){
+                             $url = 'testlog/'.$exam->id.'/log/'.$c.'_log.json';
+                             Storage::disk('s3')->delete($url);
+                        }   
+                        
+                    }
+                    // print("All the responses submitted <br>");
+                    // dd();
+                    return redirect()->route('test.active',$exam->slug);
+
+                    $pg = $this->paginateAnswers($files,18);
+                }
+                else{
+                    $pg = $this->paginateAnswers($files,18);
+                }
+                
+                
+
             }
 
 
@@ -2986,7 +3076,6 @@ class AssessmentController extends Controller
                 //array_push($users, $content);
             }
         }
-
 
 
 
