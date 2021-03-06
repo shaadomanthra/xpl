@@ -121,18 +121,7 @@
 @endif
 
 
-<!--
-<div class="rounded p-4 mb-4" style="background: #d5fff6; border:1px solid #b1e4d9;">
-  <h3>Virtual Career Fair - Apply for the Jobs  <span class="badge badge-warning">Active</span></h3>
-  <p>Last Date : 09th Aug 2020, 9pm</p><a href="https://xplore.co.in/jobs" class="btn btn-primary mt-3">Open Jobs Page</a><hr>
-  <p><b>Note:</b> Only the candidates who have attempted the career fair pre-assessment can apply for the jobs.  For queries, mail us at info@xplore.co.in</p>
-</div>
 
-<div class="rounded p-4 mb-4" style="background: #fff3d5; border:1px solid #ffe298;">
-  <h3>Virtual Career Fair Pre-assessment  <span class="badge badge-warning">Active</span></h3>
-  <p>Last Date : 5th Aug 2020, 9pm</p><a href="https://xplore.co.in/test/34781" class="btn btn-success mt-3">Open Test Page</a><hr>
-  <p><b>Note:</b> @if(!$user->video)You are required to update your <a href="{{ route('video.upload')}}">profile video</a> before 5th Aug, 9pm. @endif Kindly ensure your profile details are up to date. Any discrepancies will lead to cancellation of the application. For queries, mail us at info@xplore.co.in</p>
-</div> -->
 @if(count(\auth::user()->newtests())!=0)
   <div class="row ">
             
@@ -147,19 +136,21 @@
 @endif
 
 <div class="rounded p-4 mb-4" style="background: #dfecff; border:1px solid #98c3ff;">
-  <a href="{{ route('launch-offer')}}">
-<button class="btn btn-primary float-right mt-md-2">more details</button>
-</a>
-  <h1>Worried about Campus Placements?</h1>
-<p>An inaugural offer, now at  Rs 100 only  (Buy now and get 2 months access to the portal)</p>
+  
+  <h1>Worried about cracking a job?</h1>
+<p>Enroll for Fullstack Java Developer program conducted by our partner company 'PacketPrep' </p>
  <ul>
-  <li> Access to exclusive online video content on aptitude, logical, mental ability,
-programming & Interview Skills</li>
-<li>Timeline Mock & Practice Tests of Top MNCs with graphical reports of your performance analysis</li>
-<li>Verifiable e-certificate that counts as first level interview for some of our client organizations</li>
-<li>Utilize this service to get an advantage in India’s first, largest  and Free Virtual Career fair being organized by Xplore during this pandemic with 40+ top Companies and around 2,000+ Job openings </li>
+  <li>Attend company drives from day One of training</li>
+  <li> 120 hours of classroom training on Java and softskills</li>
+<li>Extensively researched Study material</li>
+<li>Access to company specific online mock tests</li>
+<li>You could choose to pay training fee after getting a job or opt for scholarship with pre-payment</li>
 
 </ul>
+
+<a href="https://tech.packetprep.com/contact">
+<button class="btn btn-primary  mt-md-2">Apply Now</button>
+</a>
 
 </div>
 

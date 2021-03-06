@@ -14,6 +14,7 @@ class TestReport2 implements FromCollection
     */
     public function collection()
     {
+        $exam = request()->session()->get('exam');
     	$users = request()->session()->get('users');
     	//$usr = User::whereIn('id',$users)->get();
    		$result = request()->session()->get('result');
@@ -114,7 +115,7 @@ class TestReport2 implements FromCollection
             unset($result[$k]->mobile_detect);
     		unset($result[$k]->time);
     		unset($result[$k]->max);
-
+            unset($result[$k]->comment);
     		unset($result[$k]->status);
     		unset($result[$k]->updated_at);
     	}
@@ -137,9 +138,9 @@ class TestReport2 implements FromCollection
         $ux->window = "Cheating";
     	foreach($exam_sections as $m=>$sec){
     			$name = $exam_sections[$m]['name'];
-    			$ux->$name = $name;
+    			$ux->$name = $name. '('.$exam_sections[$m]['total'].')';
     		}
-    	$ux->Sc = "Score";
+    	$ux->Sc = "Score (".$exam->total.")";
       $ux->adm = "Admission Number";
 
 

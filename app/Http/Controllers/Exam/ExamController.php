@@ -1523,6 +1523,10 @@ class ExamController extends Controller
 
         }
 
+
+       
+
+
         if($r->get('pdf')){
             foreach($res as $m=>$rx){
 
@@ -1675,6 +1679,23 @@ class ExamController extends Controller
 
 
             if(count($users)>0){
+                $exam->total = 0;
+                foreach($exam_sections as $k=>$s){
+                    $exam_sections[$k]->total = 0;
+                }
+
+                foreach($exam_sections as $k=>$s){
+                    if($exam->settings->section_marking=='no'){
+                        foreach($s->questions as $q)
+                            $exam_sections[$k]->total = $exam_sections[$k]->total + intval($q->mark);
+                        $exam->total = $exam->total + $exam_sections[$k]->total;
+                    }else{
+                        $exam_sections[$k]->total = count($s->questions) * $s->mark;
+                        $exam->total = $exam->total + $exam_sections[$k]->total;
+                    } 
+                }
+
+                request()->session()->put('exam',$exam);
                 request()->session()->put('result',$result);
                 request()->session()->put('sections',$sections);
                 request()->session()->put('exam_sections',$exam_sections);
