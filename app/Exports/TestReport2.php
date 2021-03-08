@@ -102,6 +102,12 @@ class TestReport2 implements FromCollection
             else
                 $result[$k]->f = $res->user->roll_number;
 
+            if(request()->get('all')){
+                $result[$k]->tenth = $res->user->tenth;
+                $result[$k]->twelveth = $res->user->twelveth;
+                $result[$k]->graduation = $res->user->bachelors;
+            }
+
     		unset($result[$k]->id);
     		unset($result[$k]->user_id);
     		unset($result[$k]->test_id);
@@ -143,7 +149,11 @@ class TestReport2 implements FromCollection
     	$ux->Sc = "Score (".$exam->total.")";
       $ux->adm = "Admission Number";
 
-
+      if(request()->get('all')){
+        $ux->tenth = 'Class 10th';
+        $ux->twelveth = 'Class 12th';
+        $ux->graduation = 'Graduation';
+      }
     	unset($ux->id);
     		unset($ux->user_id);
     		unset($ux->test_id);
