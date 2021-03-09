@@ -117,7 +117,7 @@ class HomeController extends Controller
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
 
-            $subject = 'Requirement Java Full Stack - Pay after placement';
+            $subject = 'Requirement Java Full Stack - Pay after placement (Remainder)';
             $content = '
 
 <p>Our training partner ‘PacketPrep’ has launched a job guaranteed training program with pay after placement model to full-fill the 150+ opening in java full stack in 14 of its clients.</p>
@@ -130,7 +130,7 @@ class HomeController extends Controller
 <p>Interested candidates can apply here: <br>
 <a href="http://bit.ly/fsdpp" >http://bit.ly/fsdpp</a> </p>
 
-<p>For more details you can visit our website <a href="https://tech.packetprep.com" > https://tech.packetprep.com</a></p>
+<p>For more details you can visit the website <a href="https://tech.packetprep.com" > https://tech.packetprep.com</a></p>
 ';
 
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
