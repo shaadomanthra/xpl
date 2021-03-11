@@ -111,7 +111,7 @@
       <td>
       	@if($questions[$t->question_id]->type=='urq')
           <div class="">
-
+          
           @if(isset($questions[$t->question_id]->images))
 
           @foreach(array_reverse($questions[$t->question_id]->images) as $k=>$url)

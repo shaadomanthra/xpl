@@ -3947,13 +3947,14 @@ class AssessmentController extends Controller
         $user = $student;
 
         $jsonname = $slug.'_'.$user_id;
-
+        $images = [];
         if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json'))
             $images = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
         else
             $images = [];
 
 
+       
 
         // images
         $username = $student->username;
@@ -3999,7 +4000,7 @@ class AssessmentController extends Controller
 
        
 
-        $images = [];
+        
         foreach($image_files as $j=>$im){
            if (strpos($im, 'screen') !== false) {
                 $images['screens'][$j] =$im ;

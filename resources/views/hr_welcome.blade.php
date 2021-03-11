@@ -170,7 +170,6 @@
                 @endif  
                   {{ $e->name }}
                 </a>
-
               </h2>
               <div>
                 <a href="{{route('assessment.show',$e->slug)}}" class=""><i class="fa fa-external-link" ></i> {{ route('assessment.show',$e->slug) }}</a>
@@ -180,14 +179,9 @@
                   <span class=" badge badge-success">Active</span>
                 @endif
                 <br>
-
                 <div class="text-muted mt-1">This test is included for free in all packages</div>
               </div>
-              
             </div>
-
-            
-
           </div>
     </div>
   </div>
