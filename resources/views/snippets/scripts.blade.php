@@ -1500,7 +1500,9 @@ new Chart(ctxOne, optionsOne);
 
 
 @if(isset($sections))
+
 @foreach($sections as $sec => $section)
+@if(isset($section->section_id))
 <script type="text/javascript">
   var options_{{$section->section_id}} = {
   type: 'horizontalBar',
@@ -1549,15 +1551,18 @@ new Chart(ctx_{{$section->section_id}},options_{{$section->section_id}});
 }
 
 </script>
-@endforeach
 @endif
+@endforeach
 
+@endif
 @endif
 
 
 
 @if(isset($secs))
+
 @foreach($secs as $sec => $section)
+@if(isset($section->section_id))
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
 <script type="text/javascript">
   var options_{{$section->section_id}} = {
@@ -1594,6 +1599,7 @@ var ctx_{{$section->section_id}} = document.getElementById({{$section->section_i
 new Chart(ctx_{{$section->section_id}},options_{{$section->section_id}});
 
 </script>
+@endif
 @endforeach
 @endif
 
