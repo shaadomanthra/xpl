@@ -986,9 +986,11 @@ $(document).ready(function(){
 
     $(document).on('click','.right-qno', function() {
         $sno = parseInt($(this).data('sno'))-1;
-        $qcount = $('.s'+$sno).data('qcount');
-        if($qcount>1)
+        $qcount = parseInt($('.s'+$sno).data('qcount'));
+        if($qcount>1){
+          $sno = $sno+1;
           make_visible($sno);
+        }
     });
 
     $(document).on('click','.left-qno', function() {

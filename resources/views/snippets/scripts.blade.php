@@ -2503,7 +2503,7 @@ $(function(){
               $aws_url = 'https://'+$bucket+'.s3.'+$region+'.amazonaws.com/webcam/'+$test+'/';
                    
               $last_photo_url = $aws_url+$name+'.jpg';
-              console.log($last_photo_url);
+              //console.log($last_photo_url);
 
               $('#photo').data('last_photo',$last_photo_url);
 
@@ -2791,9 +2791,10 @@ $(function(){
            
           if($('.start_btn').hasClass('exam_started')){
             
-            $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
+            if(parseInt($('.start_btn').data('face_detect')))
+              $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
                 console.log('Face Detect:' + data);
-          });
+              });
           }
 
            
@@ -3092,6 +3093,7 @@ var width = 600;    // We will scale the photo width to this
       $counnt = 2;
       if($c % $counnt == 0){
          var url = $('#photo').data('hred');
+         if(parseInt($('.start_btn').data('face_detect')))
          $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
               console.log('Face Detect:' + data);
         });
