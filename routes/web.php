@@ -554,6 +554,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::get('video', 'VideoController@get')->name('video.upload')->middleware('auth');
 	Route::post('video', 'VideoController@save')->name('video.upload');
 
+	Route::get('resume', 'User\UserController@resume')->name('resume.upload')->middleware('auth');
+	Route::post('resume', 'User\UserController@resumesave')->name('resume.upload');
+
 	Route::get('/proficiency-test', 'Product\TestController@proficiency_test')->name('proficiency_test');
 	Route::get('/updates', 'System\UpdateController@public_updates')->name('updates');
 	Route::get('/updates/{id}', 'System\UpdateController@public_view')->name('updates.view');

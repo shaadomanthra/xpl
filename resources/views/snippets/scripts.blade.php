@@ -576,9 +576,10 @@ function image_refresh(){
                 type: "GET",
                 url: $url
             }).done(function (result) {
-                 
+
                  window_change = result.window_change;
                  last_photo = result.last_photo;
+                 
                  $username = result.username;
                  
                  $completed = $('.image_refresh_'+$username).data('completed');
@@ -621,7 +622,8 @@ function image_refresh(){
   }
 }
 
-setInterval(image_refresh,1000);
+if($('.proctoring').data('active')=='0')
+  setInterval(image_refresh,3000);
 
 
 });

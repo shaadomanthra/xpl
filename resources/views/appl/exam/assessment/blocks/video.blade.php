@@ -1,7 +1,7 @@
 <div id="container">
 
     
-    <div class='alert alert-warning alert-important'>The recording automatically starts after 5 secs and ends upon completion of timer or manual submission of test.</div>
+    <div class='alert alert-warning alert-important mt-3'>The recording automatically starts after 5 secs and ends upon completion of timer or manual submission of test.</div>
 
     <video id="gum_{{$question->id}}" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="recorded" playsinline loop></video>

@@ -37,7 +37,7 @@
   </ol>
 </nav>
 
-    <div class="row">
+    <div class="row proctoring" data-active="{{$exam->active}}">
       <div class="col-12  col-md-5">
 
         <div class=' pb-3'>

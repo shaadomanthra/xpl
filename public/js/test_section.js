@@ -722,7 +722,21 @@ $(document).ready(function(){
 
     // exam timer
     function load_timer($sno=null){
-            // Set the date we're counting down to
+
+        //show or hide controls based on question count
+        if($sno)
+        $qcount = parseInt($('.s'+$sno).data('qcount'));
+        else
+        $qcount = parseInt($('.s1').data('qcount'));
+
+        if($qcount!=1){
+          $('.left-qno').show();
+          $('.right-qno').show();
+        }else{
+          $('.left-qno').hide();
+          $('.right-qno').hide();
+        }
+        // Set the date we're counting down to
 
         if($sno)
           var t = parseInt($('.section_block_'+$snext).data('time'));
@@ -766,15 +780,22 @@ $(document).ready(function(){
               document.getElementById("timer").innerHTML = "EXPIRED";
               document.getElementById("timer2").innerHTML = "EXPIRED";
               //stop recording if any
-              stopRecording();
-              alert('The section time has expired. ');
-              auto_submit_section();
+              //stopRecording();
+              //alert('The section time has expired. ');
+              $('#timer_complete').modal();
+              
+              
 
             }
           }
         }, 1000);
     }
 
+    $('#timer_complete').on('hidden.bs.modal', function (e) {
+      clearInterval(window.x);
+        console.log('Auto Submit section fired')
+        auto_submit_section();
+    });
 
     function addMinutes(date, minutes) {
         return new Date(date.getTime() + minutes*60000);
@@ -825,7 +846,7 @@ $(document).ready(function(){
 
 
     function handleDataAvailable(event) {
-      console.log('handleDataAvailable', event);
+      //console.log('handleDataAvailable', event);
       if (event.data && event.data.size > 0) {
         recordedBlobs.push(event.data);
       }
@@ -861,14 +882,15 @@ $(document).ready(function(){
         return;
       }
 
-      console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
+      //console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
       
       mediaRecorder.ondataavailable = handleDataAvailable;
       mediaRecorder.start();
-      console.log('MediaRecorder started', mediaRecorder);
+      console.log('MediaRecorder started');
+      //console.log('MediaRecorder started', mediaRecorder);
     }
 
-    function stopRecording() {
+    function stopRecording($final=null) {
 
       $sno = $('.clear-qno').data('sno');
       $qno = $('.s'+$sno).data('qno');
@@ -881,16 +903,16 @@ $(document).ready(function(){
 
       mediaRecorder.onstop = (event) => {
         $('.recording').hide();
-        console.log('Recorder stopped: ', event);
-        console.log('Recorded Blobs: ', recordedBlobs);
+        console.log('Recorder stopped ');
+        //console.log('Recorded Blobs: ', recordedBlobs);
         const blob = new Blob(recordedBlobs, {type: 'video/webm'});
         const url = window.URL.createObjectURL(blob);
 
         
         $qno = $('#curr-qno').data('qno');
         $url = $('.url_video_'+$qno).data('url');
-        console.log($qno);
-        console.log($url);
+        //console.log($qno);
+        //console.log($url);
         if($url){
             $.ajax({
                     method: "PUT",
@@ -902,6 +924,10 @@ $(document).ready(function(){
             .done(function($url) {
 
                 console.log('video uploaded');
+                 if($final){
+                    console.log(' --- reached final ----');
+                    document.getElementById("assessment").submit();
+                 }
                 
             });
         }
@@ -933,11 +959,11 @@ $(document).ready(function(){
 
     function handleSuccess(stream,qno) {
       recordButton.disabled = false;
-      console.log('getUserMedia() got stream:', stream);
+      //console.log('getUserMedia() got stream:', stream);
       window.stream = stream;
 
       if($('#gum_'+qno).length){
-        console.log('video#gum_'+qno);
+        //console.log('video#gum_'+qno);
         const gumVideo = document.querySelector('video#gum_'+qno);
         gumVideo.srcObject = stream;
         setTimeout(startRecording,5000);
@@ -968,7 +994,7 @@ $(document).ready(function(){
           width: 768, height: 432
         }
       };
-      console.log('Using media constraints:', constraints);
+      //console.log('Using media constraints:', constraints);
       init(constraints,$qno);
     }
 
@@ -1074,8 +1100,9 @@ $(document).ready(function(){
         }
     }
 
-    function make_visible_section($snext,$sno){
 
+    function make_visible_section($snext,$sno){
+      $type = $('.s'+$sno).data('type');
       if($snext){
         $('.section_block').hide();
         $('.section_block_'+$snext).show();
@@ -1094,11 +1121,22 @@ $(document).ready(function(){
         closeModals();
 
       }else{
+        if (typeof $sno === "undefined"){
+          $sn = 1; 
+          $type = $('.s'+$sn).data('type');
+        }
+        closeModals();
         $sno = parseInt($sno) +1;
         //stop recording if any
-        stopRecording();
+        stopRecording(1);
         //end test
-        document.getElementById("assessment").submit();
+        if($type!='vq'){
+          document.getElementById("assessment").submit();
+        }
+        else
+        {
+          $('#video_upload').modal();
+        }
       }
       
     }

@@ -567,6 +567,48 @@ div.chats {
 </div>
 
 
+
+
+
+<div class="modal fade" id="video_upload" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-primary" id="exampleModalLongTitle"><i class="fa fa-check-circle"></i> Saving the responses</h3>
+      
+      </div>
+      <div class="modal-body ">
+        <div class="spinner-border" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+       <p>We are processing the responses, video responses may take a few extra minutes. Do not refresh this page, it will be auto redirected in few seconds.</p>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="timer_complete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-primary" id="exampleModalLongTitle"><i class="fa fa-check-circle"></i> Section time has expired</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        You will be redirected to the next section or completion page if this is the last section.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="modal fade" id="no_connectivity" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

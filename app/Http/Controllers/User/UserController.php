@@ -30,8 +30,7 @@ class UserController extends Controller
      */
     public function index($username)
     {
-        
-        
+    
 
         if(strpos($username,'@')===0)
         {
@@ -106,6 +105,74 @@ class UserController extends Controller
         }
         else
             abort(404);
+       
+    }
+
+    public function resume(Request $request)
+    {
+         if($request->get('delete')){
+            $username = \auth::user()->username;
+            $filepath = '/resume/resume_'.$username.'.pdf';
+            
+            if(Storage::disk('s3')->exists($filepath)){
+                Storage::disk('s3')->delete($filepath);
+            }
+
+            flash('PDF item removed from server')->success();
+            return redirect()->route('resume.upload');
+
+        }
+        return view('appl.user.resume');
+    }
+
+    public function resumesave(Request $request)
+    {
+
+        if($request->get('delete')){
+            $username = \auth::user()->username;
+            $filepath = '/resume/resume_'.$username.'.pdf';
+            
+            if(Storage::disk('s3')->exists($filepath)){
+                Storage::disk('s3')->delete($filepath);
+            }
+
+            flash('PDF item removed from server')->success();
+            return redirect()->route('resume.upload');
+
+        }
+         /* If image is given upload and store path */
+            if(isset($request->all()['file'])){
+
+                $file      = $request->all()['file'];
+                $username = \auth::user()->username;
+                if($file->getClientOriginalExtension()=='pdf')
+                {
+                    $filepath = '/resume/resume_'.$username.'.pdf';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
+
+
+                    
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+
+                    flash('PDF Successfully updated')->success();
+                    return redirect()->route('resume.upload');
+                    
+                }else{
+                    flash('Only pdf format supported')->error();
+                    return redirect()->back();
+                }   
+
+                
+
+            }else{
+                $request->merge(['image' => '']);
+            }
+
+            flash('Unknown error in uploading the pdf file')->danger();
+            return redirect()->route('resume.upload');
        
     }
 
