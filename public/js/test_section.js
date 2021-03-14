@@ -724,11 +724,12 @@ $(document).ready(function(){
     function load_timer($sno=null){
 
         //show or hide controls based on question count
-        if($sno)
+        if($sno != null)
         $qcount = parseInt($('.s'+$sno).data('qcount'));
         else
         $qcount = parseInt($('.s1').data('qcount'));
 
+        console.log($qcount+' ---- '+$sno);
         if($qcount!=1){
           $('.left-qno').show();
           $('.right-qno').show();

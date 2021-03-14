@@ -272,7 +272,7 @@
         </button>
       </a>
       @if(count($questions)!=1)
-        <button type="button" class="btn  btn-outline-primary  cursor right-qno" data-sno="2" data-testname="{{$exam->slug}}" >
+        <button type="button" class="btn  btn-outline-primary  cursor right-qno" data-sno="2" data-testname="{{$exam->slug}}" data-d="sampe">
          Next <i class="fa fa-angle-double-right"></i>
        </button>
       @endif
