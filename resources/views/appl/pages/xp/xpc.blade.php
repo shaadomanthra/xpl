@@ -12,7 +12,7 @@
                 <h1 class="display-4 mb-3">Xplore placement club</h1>
                 <p class="lead">Our team aims to deliver the most outstanding work in every pixel.</p>
             </div>
-            <a class="js-go-to position-static btn btn-primary btn-wide transition-3d-hover" href="javascript:;"
+            <a class="js-go-to position-static btn btn-primary btn-wide transition-3d-hover" href="contact"
                 data-hs-go-to-options='{
                 "targetSelector": "#caseStudies",
                 "offsetTop": 0,

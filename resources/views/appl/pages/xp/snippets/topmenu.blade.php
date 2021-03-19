@@ -10,7 +10,7 @@
         </a>
         <!-- End Logo -->
         <div>
-          <a class="signup_btn ml-3 d-lg-none" href="#">Request a Demo</a>
+          <a class="signup_btn ml-3 d-lg-none" href="contact">Request a Demo</a>
 
           <!-- Responsive Toggle Button -->
           <button type="button" class="navbar-toggler btn btn-icon btn-ghost-dark" aria-label="Toggle navigation"
