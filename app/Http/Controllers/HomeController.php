@@ -60,7 +60,7 @@ class HomeController extends Controller
           if( $_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'p24.in')
           return view('piofx.front')->with('welcome',1);
          elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' )
-            return view('welcome3')->with('welcome3',1);
+            return view('appl.pages.xp.index')->with('welcome3',1);
          else
              return view('client_welcome')->with('welcome3',1);
       }

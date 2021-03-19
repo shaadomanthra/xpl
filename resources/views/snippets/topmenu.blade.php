@@ -28,30 +28,37 @@
     <ul class="navbar-nav ml-auto mt-4 mt-lg-0">
         @guest
 
-        <li class="mr-3 "><a class="nav-link @if(request()->route('/')) active @endif" href="{{ url('/') }}" aria-label="Hir"><i class="fa efas fa-angle-right"></i> For student</a></li>
-
-        <li class="mr-3 "><a class="nav-link " href="{{ url('hire') }}" aria-label="Hir"><i class="fa efas fa-angle-right"></i> For companies</a></li>
-
         <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 <i class="fa efas fa-angle-right"></i> Services <span class="caret"></span>
+                 <i class="fa efas fa-angle-right"></i> Products <span class="caret"></span>
              </a>
              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item"  href="{{ url('course') }}"
+                <a class="dropdown-item"  href="hiring"
                     >
-                    <i class="fa fas fa-youtube-play"></i> Courses
+                    <i class="fa fas fa-youtube-play"></i> Hiring Assessments 
                 </a>
-                <a class="dropdown-item"  href="{{ url('test') }}"
+                <a class="dropdown-item"  href="jobboard"
                     >
-                    <i class="fa fa-ravelry"></i> Tests
+                    <i class="fa fa-ravelry"></i> Job Board
                 </a>
-                <a class="dropdown-item"  href="{{ url('job') }}"
+                <a class="dropdown-item"  href="xpc"
                     >
-                   <i class="fa fa-bars"></i> Jobs</a>
+                   <i class="fa fa-bars"></i> Xplore Placement Club</a>
                 </a>
 
 
             </div>
+
+
+
+        <li class="mr-3 "><a class="nav-link " href="course" aria-label="Hir"><i class="fa efas fa-angle-right"></i> Courses</a></li>
+
+        <li class="mr-3 "><a class="nav-link " href="test" aria-label="Hir"><i class="fa efas fa-angle-right"></i> Tests</a></li>
+
+        <li class="mr-3 "><a class="nav-link " href="job" aria-label="Hir"><i class="fa efas fa-angle-right"></i> Jobs</a></li>
+
+       
+               
 
 
         

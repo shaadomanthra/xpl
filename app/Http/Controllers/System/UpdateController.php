@@ -168,38 +168,39 @@ class UpdateController extends Controller
 
 
     public function contact(){
-        if(!request()->get('name') || !request()->get('email') || !request()->get('subject') || !request()->get('message')){
+        if(!request()->get('name') || !request()->get('email') || !request()->get('phone') || !request()->get('message')){
             flash('Input fields cannot be empty !')->error();
             return redirect()->back()->withInput();
         }
-        $captcha = $_POST['g-recaptcha-response'];
-        if(!$captcha){
-            flash('Please verify using recaptcha !')->error();
-            return redirect()->back()->withInput();
-        }
-        $secretKey = "6Lc9yFAUAAAAACg-A58P_L7IlpHjTB69xkA2Xt65";
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+        // $captcha = $_POST['g-recaptcha-response'];
+        // if(!$captcha){
+        //     flash('Please verify using recaptcha !')->error();
+        //     return redirect()->back()->withInput();
+        // }
+        // $secretKey = "6Lc9yFAUAAAAACg-A58P_L7IlpHjTB69xkA2Xt65";
+        // $ip = $_SERVER['REMOTE_ADDR'];
+        // $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
 
-        $responseKeys = json_decode($response,true);
-        if(intval($responseKeys["success"]) !== 1) {
-            flash('Recaptcha error kindly retry')->error();
-            return redirect()->back()->withInput();
-        } else {
+        // $responseKeys = json_decode($response,true);
+        // if(intval($responseKeys["success"]) !== 1) {
+        //     flash('Recaptcha error kindly retry')->error();
+        //     return redirect()->back()->withInput();
+        // } else {
 
-            $contact['subject'] = request()->subject;
+            $contact['subject'] = 'Contact Form from '.request()->name;
             $contact['message'] = request()->message;
             $contact['email'] = request()->email;
             $contact['name'] = request()->name;
+            $contact['phone'] = request()->phone;
             $contact['subj'] = 'Message from '.$contact['name'];
             Mail::to(config('mail.report'))->send(new ContactMessage($contact));
-            $contact['subj'] = 'Message Delivered to Packetprep Team';
-            Mail::to($contact['email'])->send(new ContactMessage($contact));
+            $contact['subj'] = 'Message from '.$contact['name'].' backup';
+            Mail::to(config('mail.report_backup'))->send(new ContactMessage($contact));
 
             
-            flash('Successfully sent your message to packetprep team !')->success()->important();
+            flash('Successfully sent your message to xplore team !')->success()->important();
             return redirect()->back();
-        }
+        //}
     }
     /**
      * Update the specified resource in storage.

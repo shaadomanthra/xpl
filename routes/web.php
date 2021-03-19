@@ -69,6 +69,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 
 	//piofx
 	Route::get('/schools',function(){ return view('piofx.schools'); })->name('schools');
+	Route::get('/xpc',function(){ return view('appl.pages.xp.xpc'); })->name('xpc');
+	Route::get('/jobboard',function(){ return view('appl.pages.xp.jobboard'); })->name('jobboard');
+	Route::get('/hiring',function(){ return view('appl.pages.xp.hiring'); })->name('hiring');
 	Route::get('/oet',function(){ return view('piofx.oet')->with('menudark',1); })->name('oet');
 
 
@@ -311,7 +314,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 
 	Route::get('/terms-corporate',function(){ return view('appl.product.pages.terms'); })->name('terms-corporate');
 
-	Route::get('/contact',function(){ return view('appl.product.pages.contact'); })->name('contact');
+	Route::get('/contact',function(){ return view('appl.pages.xp.general.contact'); })->name('contact');
 	Route::get('/contactpage',function(){ return view('appl.pages.contact'); })->name('contactpage');
 
 	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads');

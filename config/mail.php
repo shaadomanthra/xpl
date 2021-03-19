@@ -63,6 +63,7 @@ return [
 
 
     'report' => env('MAIL_REPORT_ADDRESS','packetcode@gmail.com'),
+    'report_backup' => env('MAIL_REPORT_BACKUP','packetcode@gmail.com'),
 
     /*
     |--------------------------------------------------------------------------

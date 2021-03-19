@@ -1,0 +1,96 @@
+body {
+  overflow-x: hidden;
+}
+/* oet buttons */
+.oet_start_now1 {
+  padding: 12px;
+  background: transparent;
+  border: 2px solid black;
+  letter-spacing: 1px;
+  color: black;
+}
+.oet_start_now1:hover {
+  color: #fff;
+  background: #000;
+  border-radius: 15px;
+  transition: 0.3s ease-in;
+}
+.oet_start_now2 {
+  padding: 12px;
+  background: transparent;
+  border: 2px solid #fff;
+  letter-spacing: 1px;
+  color: #fff;
+}
+.oet_start_now2:hover {
+  color: #fff;
+  background: #000;
+  border-radius: 12px;
+  transition: 0.3s ease-in;
+  border: 2px solid #000;
+}
+
+/* Change image from black and white to original colour on hover */
+.color_img {
+  cursor: pointer;
+  filter: grayscale(100%);
+  margin: 0.5rem 0rem;
+}
+
+.color_img:hover {
+  filter: grayscale(0%);
+  transition: 0.5s ease;
+  margin-top: 0rem;
+}
+/* Smaller Btn */
+.signup_btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid #e24d4b;
+  border-radius: 0.5rem;
+  background-color: #e24d4b;
+  color: #fff;
+}
+
+.signup_btn:hover {
+  background-color: #fff;
+  border: 2px solid #e24d4b;
+  transition: 0.5s ease;
+  color: #e24d4b;
+}
+/* corporates btn styling */
+.corporates_btn1 {
+  padding: 12px;
+  background: transparent;
+  border: 2px solid black;
+  letter-spacing: 1px;
+  color: black;
+}
+.corporates_btn1:hover {
+  color: #fff;
+  background: #000;
+  border-radius: 15px;
+  transition: 0.3s ease-in;
+}
+.corporates_btn2 {
+  padding: 12px;
+  background: transparent;
+  border: 2px solid black;
+  letter-spacing: 1px;
+  color: black;
+  color: #000;
+}
+.corporates_btn2:hover {
+  color: #fff;
+  background: #000;
+  border-radius: 15px;
+  transition: 0.3s ease-in;
+}
+/* header spacing */
+.navbar-expand-lg .navbar-nav {
+  margin-top: 0rem !important;
+  margin-bottom: 0rem !important;
+}
+/* bolg stylings*/
+.category1 {
+  background-color: antiquewhite;
+}
