@@ -132,7 +132,10 @@
           </div>
 
 
-
+          <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-map-marker"></i>&nbsp; Access Codes</div>
+            <div class="col-6">{{$obj->extra}}</div>
+          </div>
           
 
           

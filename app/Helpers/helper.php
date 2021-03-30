@@ -275,7 +275,7 @@ if (! function_exists('subdomain')) {
 function subdomain() {
     $url = url()->full();
 
-    if($_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'p24.in'  || $_SERVER['HTTP_HOST'] == 'onlinelibrary.test')
+    if($_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.in'  || $_SERVER['HTTP_HOST'] == 'onlinelibrary.test')
             return 'piofx';
     if($_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' )
             return 'rguktn';

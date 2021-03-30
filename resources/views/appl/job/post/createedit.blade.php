@@ -295,6 +295,20 @@
 
         </div>
 
+        <div class="col-12 ">
+          <div class="form-group">
+        <label for="formGroupExampleInput ">Access Codes</label>
+        <input type="text" class="form-control" name="extra" id="formGroupExampleInput" placeholder="" 
+            @if($stub=='Create')
+            value="{{ (old('extra')) ? old('extra') : '' }}"
+            @else
+            value = "{{ $obj->extra }}"
+            @endif
+          >
+        <small class="text-secondary">You can add more than one access code seperated by commas</small>
+      </div>
+
+        </div>
       </div>
      </div>
      @endif
