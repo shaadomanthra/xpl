@@ -117,7 +117,7 @@ class HomeController extends Controller
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
 
-            $subject = 'Requirement Java Full Stack - Pay after placement';
+            $subject = 'Requirement Java Developers - Pay after placement (Online Sessions)';
             $content = '
 
 <p>Our training partner ‘PacketPrep’ has launched a job guaranteed training program with pay after placement model to full-fill the 150+ opening in java full stack in 14 of its clients.</p>
