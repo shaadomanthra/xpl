@@ -32,6 +32,7 @@ class User_Details extends Model
         // add all other fields
     ];
     
+    
     /**
      * Indicates if the model should be timestamped.
      *
