@@ -492,11 +492,13 @@ class UserController extends Controller
         $user = User::where('username',$username)->with('college')->with('branch')->first();
 
         $this->authorize($user);
-        $user_details = User_Details::where('user_id',$user->id)->first();
-        if(!$user_details)
-            $user_details = new User_Details();
+        
+            $user_details = null;
+        // $user_details = User_Details::where('user_id',$user->id)->first();
+        // if(!$user_details)
+        //     $user_details = new User_Details();
             
-        $user_details->countries = $user_details->getCountry();
+        // $user_details->countries = $user_details->getCountry();
 
         $colleges = College::orderby('name','asc')->get();
         $branches = Branch::all();
