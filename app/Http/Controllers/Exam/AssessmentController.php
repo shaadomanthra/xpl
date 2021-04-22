@@ -2007,7 +2007,7 @@ class AssessmentController extends Controller
                 if(!isset($sections_max[$section->id]))
                     $sections_max[$section->id] = 0;
                 if($q->mark)
-                $sections_max[$section->id] = $sections_max[$section->id] + $q->mark;
+                $sections_max[$section->id] = $sections_max[$section->id] + (int)$q->mark;
                 else
                 $sections_max[$section->id] = $sections_max[$section->id] + $section->mark;
                 $qcount++;
