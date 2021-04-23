@@ -42,6 +42,10 @@
                   <a href="#" class="showuser"  data-url="{{route('profile','@'.$users[$r['user_id']]->username)}}" >
                   {{ $users[$r['user_id']]->name }}</a>
 
+                  @if(isset($users[$r['user_id']]->phone))
+                    <div>{{$users[$r['user_id']]->email}}<br>{{$users[$r['user_id']]->phone}}</div>
+                  @endif
+
                     
                 </td>
                 <td>

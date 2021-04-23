@@ -67,9 +67,11 @@ pre, code {
             <button  class="btn btn-outline-success btn-sm " data-toggle="modal" data-target="#exampleModal2">Add Comment</button>
              
           </p>
-          @if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
+          @if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif<br>
+            @if($student->email)<span class="badge badge-info ">Email : {{$student->email}}</span> <br>@endif
+          @if($student->phone)<span class="badge badge-info ">Phone : {{$student->phone}}</span> <br>@endif
            @if($student->branch_id)<span class="badge badge-danger ">{{$student->branch->name}}</span>@endif
-      @if($student->college_id)<span class="badge badge-info">{{$student->college->name}}</span><br>@endif
+      @if($student->college_id)<span class="badge badge-success">{{$student->college->name}}</span><br>@endif
       <p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><p>
         @if($test_overall->comment)<p class="pt-0">Comment : <b><span class="text-dark">{{$test_overall->comment }}</span></b></p>@endif
         </div>

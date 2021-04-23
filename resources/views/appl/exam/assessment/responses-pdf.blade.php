@@ -167,8 +167,11 @@
 
           </p>
           @if($student->roll_number)<span class="badge badge-warning ">Roll Number : {{$student->roll_number}}</span> <br>@endif
-           @if($student->branch_id)<span class="badge badge-danger ">Branch : {{$student->branch->name}}</span><br>@endif
-      @if($student->college_id)<span class="badge badge-info">College : {{$student->college->name}}</span><br>@endif
+          @if($student->email)<span class="badge badge-info ">Email : {{$student->email}}</span> <br>@endif
+          @if($student->phone)<span class="badge badge-info ">Phone : {{$student->phone}}</span> <br>@endif
+          @if($student->roll_number)<span class="badge badge-warning ">Roll Number : {{$student->roll_number}}</span> <br>@endif
+          @if($student->branch_id)<span class="badge badge-danger ">Branch : {{$student->branch->name}}</span><br>@endif
+      @if($student->college_id)<span class="badge badge-success">College : {{$student->college->name}}</span><br>@endif
       <p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span></p>
       <p class="pt-3"><b>Score : @if(!$test_overall->status)
       <span class="">{{ $test_overall->score }} </span>
