@@ -120,6 +120,7 @@ class User extends Authenticatable
     public function clientexams()
     {
         
+        
         return $this->belongsToMany('PacketPrep\Models\Exam\Exam')->withPivot('role');
     }
 

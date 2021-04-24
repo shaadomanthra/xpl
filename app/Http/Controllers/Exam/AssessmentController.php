@@ -1263,7 +1263,10 @@ class AssessmentController extends Controller
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
 
+
         $exam = Cache::get('test_'.$slug);
+
+
 
         if(!$pdf2)
         if(!\auth::user()->isAdmin())
@@ -1348,6 +1351,8 @@ class AssessmentController extends Controller
         $test_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
+
+        
 
         if($request->get('pdf2')){
             
@@ -1434,6 +1439,8 @@ class AssessmentController extends Controller
         $details['correct_time'] =0;
         $details['incorrect_time']=0;
         $details['unattempted_time']=0;
+        $details['review'] = 0;
+        $details['auto_max'] = 0;
         $topics = false;
         $review=false;
 
@@ -1462,8 +1469,12 @@ class AssessmentController extends Controller
             }
 
 
-            if($t->status==2)
-                $review = true;
+             if($t->status==2){
+                    $details['review'] = $details['review'] + 1; 
+                    $review = true;
+            }else{
+                $details['auto_max'] = $details['auto_max'] + $t->mark;
+            }
             //$ques = Question::where('id',$q->id)->first();
             //dd($secs[$t->section_id]);
             if(isset($ques_keys[$t->question_id])){
@@ -1518,6 +1529,8 @@ class AssessmentController extends Controller
                 if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq')
                         $details['marks'] = $details['marks'] + $t->mark;
             }
+
+
 
             $details['total'] = $details['total'] + $secs[$t->section_id]->mark;
             //dd();
@@ -2006,7 +2019,7 @@ class AssessmentController extends Controller
                 $answers[$q->id] = $q->answer;
                 if(!isset($sections_max[$section->id]))
                     $sections_max[$section->id] = 0;
-                if($q->mark)
+                if($q->mark!=null)
                 $sections_max[$section->id] = $sections_max[$section->id] + (int)$q->mark;
                 else
                 $sections_max[$section->id] = $sections_max[$section->id] + $section->mark;
