@@ -1677,7 +1677,7 @@ class ExamController extends Controller
             //     if()
             // }
 
-
+            $usr = \auth::user();
             if(count($users)>0){
                 $exam->total = 0;
                 foreach($exam_sections as $k=>$s){
@@ -1685,8 +1685,9 @@ class ExamController extends Controller
                 }
 
                 foreach($exam_sections as $k=>$s){
+                    $qset = $exam->getQuestionsSection($s->id,$usr->id);
                     if($exam->settings->section_marking=='no'){
-                        foreach($s->questions as $q)
+                        foreach($qset as $q)
                             $exam_sections[$k]->total = $exam_sections[$k]->total + intval($q->mark);
                         $exam->total = $exam->total + $exam_sections[$k]->total;
                     }else{

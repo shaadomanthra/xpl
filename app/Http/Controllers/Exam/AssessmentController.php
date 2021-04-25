@@ -563,6 +563,7 @@ class AssessmentController extends Controller
         $url3 = null;
         $time_used = 0;
         $code_ques =[];
+        $csq=0;
         $passages = array();
         $dynamic =array();
         $section_questions = array();
@@ -680,9 +681,11 @@ class AssessmentController extends Controller
                     $dynamic[$i] =1;
                 $section_questions[$section->id][$k]= $q;
                 $i++;$k++;
-                if($q->type=='code'){
+                if($q->type=='code' || $q->type=='csq'){
                     $code_ques[$i]=1;
                     //$window_change = false;
+                    if($q->type=='csq')
+                        $csq=1;
                 }
                 elseif($q->type=='vq'){
                     $folder = 'webcam/'.$exam->id.'/';
@@ -871,6 +874,7 @@ class AssessmentController extends Controller
                         ->with('highlight',true)
                         ->with('exam',$exam)
                         ->with('code',true)
+                        ->with('csq',$csq)
                         ->with('test_section',$section_timer)
                         ->with('c',$cc)
                         ->with('urls',$url)
@@ -1352,7 +1356,7 @@ class AssessmentController extends Controller
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
 
-        
+
 
         if($request->get('pdf2')){
             
@@ -1424,7 +1428,7 @@ class AssessmentController extends Controller
                 $ques_keys[$q->id]['section'] = $section->name;
                 $i++;
 
-                if($q->type=='sq' || $q->type=='urq')
+                if($q->type=='sq' || $q->type=='urq' || $q->type=='csq')
                     $subjective= true;
             }
 
@@ -1444,7 +1448,7 @@ class AssessmentController extends Controller
         $topics = false;
         $review=false;
 
-        $i=0;
+        $i=0;$cx=0;
 
         foreach($tests as $key=>$t){
 
@@ -1473,7 +1477,8 @@ class AssessmentController extends Controller
                     $details['review'] = $details['review'] + 1; 
                     $review = true;
             }else{
-                $details['auto_max'] = $details['auto_max'] + $t->mark;
+                $cx = $cx+$ques[$t->question_id]->mark;
+                
             }
             //$ques = Question::where('id',$q->id)->first();
             //dd($secs[$t->section_id]);
@@ -1496,7 +1501,7 @@ class AssessmentController extends Controller
                     $c++;
                     $details['correct'] = $details['correct'] + 1;
                     $details['correct_time'] = $details['correct_time'] + $t->time;
-                    if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq')
+                    if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq'||$ques[$t->question_id]->type=='csq')
                         $details['marks'] = $details['marks'] + $t->mark;
                     else
                         $details['marks'] = $details['marks'] + $secs[$t->section_id]->mark;
@@ -1526,7 +1531,7 @@ class AssessmentController extends Controller
                 $u++;
                 $details['unattempted'] = $details['unattempted'] + 1;
                 $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
-                if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq')
+                if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq' || $ques[$t->question_id]->type=='csq')
                         $details['marks'] = $details['marks'] + $t->mark;
             }
 
@@ -1536,6 +1541,9 @@ class AssessmentController extends Controller
             //dd();
 
         }
+
+        $details['auto_max'] = $cx;
+
         $success_rate = $details['correct']/count($questions);
         if($success_rate > 0.7)
             $details['performance'] = 'Excellent';
@@ -1577,7 +1585,7 @@ class AssessmentController extends Controller
         if(!$topics)
         unset($details['c']);
         
-        //dd($details);
+       // dd($details);
 
         //dd($sections);
         $mathjax = false;
@@ -2043,7 +2051,7 @@ class AssessmentController extends Controller
                 if(is_array($request->get($i))){
                     $item['response'] = strtoupper(implode(',',$request->get($i)));
                 }else{
-                    if($questions[$request->get($i.'_question_id')]->type=='sq')
+                    if($questions[$request->get($i.'_question_id')]->type=='sq' || $questions[$request->get($i.'_question_id')]->type=='csq')
                         $item['response'] = $request->get($i);
                     else
                     $item['response'] = strtoupper($request->get($i));
@@ -2171,7 +2179,7 @@ class AssessmentController extends Controller
                     $item['accuracy'] = 1;
                 }
 
-                if($type=='sq' || $type=='urq'){
+                if($type=='sq' || $type=='urq' || $type=='csq'){
                     $code_ques_flag =1;
                     $item['status'] = 2;
                 }
@@ -4157,7 +4165,7 @@ class AssessmentController extends Controller
                 $ques_keys[$q->id]['section'] = $section->name;
                 $i++;
 
-                if($q->type=='sq' || $q->type=='urq')
+                if($q->type=='sq' || $q->type=='urq' || $q->type=='csq')
                     $subjective= true;
             }
 
@@ -4326,7 +4334,7 @@ class AssessmentController extends Controller
                     $c++;
                     $details['correct'] = $details['correct'] + 1;
                     $details['correct_time'] = $details['correct_time'] + $t->time;
-                    if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq')
+                    if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq' ||$ques[$t->question_id]->type=='csq')
                         $details['marks'] = $details['marks'] + $t->mark;
                     else
                         $details['marks'] = $details['marks'] + $secs[$t->section_id]->mark;
@@ -4356,7 +4364,7 @@ class AssessmentController extends Controller
                 $u++;
                 $details['unattempted'] = $details['unattempted'] + 1;
                 $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
-                if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq')
+                if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq' || $ques[$t->question_id]->type=='csq')
                         $details['marks'] = $details['marks'] + $t->mark;
             }
 

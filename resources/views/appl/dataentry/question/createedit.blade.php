@@ -379,6 +379,7 @@ th{ border:1px solid silver; }
             <option value="vq" @if(isset($question)) @if($question->type=='vq') selected @endif @endif >Video Question</option>
             <option value="fillup" @if(isset($question)) @if($question->type=='fillup') selected @endif @endif >Fillup Question</option>
             <option value="sq" @if(isset($question)) @if($question->type=='sq') selected @endif @endif >Subjective Question</option>
+            <option value="csq" @if(isset($question)) @if($question->type=='csq') selected @endif @endif >Code Submission Question</option>
             <option value="urq" @if(isset($question)) @if($question->type=='urq') selected @endif @endif >Upload Response Question</option>
             <option value="typing" @if(isset($question)) @if($question->type=='typing') selected @endif @endif >Typing Question</option>
           </select>
@@ -392,6 +393,7 @@ th{ border:1px solid silver; }
             <option value="vq" @if($type =='vq') selected @endif  >Video Question</option>
             <option value="fillup" @if($type =='fillup')  selected  @endif >Fillup Question</option>
             <option value="sq" @if($type =='sq')  selected  @endif >Subjective Question</option>
+            <option value="csq" @if($type =='csq')  selected  @endif >Code Submission Question</option>
             <option value="urq" @if($type =='urq')  selected  @endif >Upload Response Question</option>
             <option value="typing" @if($type =='typing')  selected  @endif >Typing Question</option>
           </select>

@@ -45,6 +45,7 @@
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=maq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Multi Answer Question</a>
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=fillup&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Fillup Question</a>
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=sq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Subjective Question</a>
+      	<a class="dropdown-item" href="{{ route('question.create','default')}}?type=csq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Code Submission Question</a>
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=urq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">User Response Question</a>
       <a class="dropdown-item" href="{{ route('question.create','default')}}?type=vq&default=1&exam={{$exam->id}}&section={{$section->id}}&url={{url()->current()}}">Video Question</a>
       @if(\auth::user()->checkRole(['administrator']))

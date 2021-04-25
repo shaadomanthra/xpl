@@ -34,7 +34,7 @@ pre, code {
       <div class="col-12 col-md-8 col-lg-10">
 
       	    @if(auth::user()->checkRole(['hr-manager','admin']))
-<nav class="mb-0">
+<nav class="mb-0" data-html2canvas-ignore="true">
   <ol class="breadcrumb p-0 pt-3" style="background: transparent;">
     <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
     <li class="breadcrumb-item"><a class="white-link" href="{{ route('test.report',$exam->slug)}}">{{ ucfirst($exam->name) }} - Reports </a></li>
@@ -63,8 +63,8 @@ pre, code {
         <div class=' pb-1'>
           <p class="heading_two mb-1 f30" ><i class="fa fa-user "></i> {{$student->name}}
 
-            <button id="pdfbtn" class="btn btn-outline-primary btn-sm pdfbtn" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}">Download PDF</button>
-            <button  class="btn btn-outline-success btn-sm " data-toggle="modal" data-target="#exampleModal2">Add Comment</button>
+            <button id="pdfbtn" class="btn btn-outline-primary btn-sm pdfbtn" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}" data-html2canvas-ignore="true">Download PDF</button>
+            <button  class="btn btn-outline-success btn-sm " data-toggle="modal" data-target="#exampleModal2" data-html2canvas-ignore="true">Add Comment</button>
              
           </p>
           @if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
@@ -73,7 +73,7 @@ pre, code {
            @if($student->branch_id)<span class="badge badge-danger ">{{$student->branch->name}}</span>@endif
       @if($student->college_id)<span class="badge badge-success">{{$student->college->name}}</span><br>@endif
         @if($test_overall->status)
-          <span class="badge badge-secondary ">Auto Evaluation Score: {{$test_overall['score']}} / {{$test_overall['max']}}</span> 
+          <span class="badge badge-secondary ">Auto Evaluation Score: {{$test_overall['score']}} / {{$details['auto_max']}}</span> 
             <span class="badge badge-warning ">Responses under review: {{$details['review']}}</span> 
         @endif
       <p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><p>
@@ -96,7 +96,7 @@ pre, code {
   </div>
 </div>
 <div class='p-1  ddblue' ></div>
-<div class="p-3 text-center bg-light sticky-top" id="item" style="margin-top:-2px;">
+<div class="p-3 text-center bg-light sticky-top" id="item" style="margin-top:-2px;" data-html2canvas-ignore="true">
 
   @foreach($tests as $i=>$t)
 <span class="border spanitem rounded p-1 px-2 @if($t->status!=2)qgreen @else qyellow @endif cursor qno_{{$t->question_id}}" href="#item{{($i+1)}}">{{($i+1)}}</span>
@@ -107,11 +107,11 @@ pre, code {
 
 
 
-<div class="px-5  my-3" id="wrapper">
+<div class="px-3  my-3" id="wrapper">
 
 @foreach($tests as $k=>$t)
 <div class="row no-gutters" id="item{{($k+1)}}">
-	<div class="col-12 col-md-10 col-lg-9">
+	<div class="col-12 col-md col-lg">
 		<div class="card mb-3">
 			<div class="card-body">
         <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
@@ -139,7 +139,7 @@ pre, code {
 				<hr>
 
 
-        @if($questions[$t->question_id]->type=='code')
+        @if($questions[$t->question_id]->type=='code' || $questions[$t->question_id]->type=='csq')
         <p><b>User Code:</b></p>
         <pre class="mb-3" style="">
           <code style="overflow-wrap: break-word;word-wrap: break-word">
@@ -290,7 +290,7 @@ pre, code {
 		</div>
 	</div>
 
-	<div class="col-12 col-md-2 col-lg-3">
+	<div class="col-12 col-md-2 col-lg-3" data-html2canvas-ignore="true">
     <div class="mt-1 ml-2">
 		<div class=" rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 box_{{$t->question_id}}">
 			<div class="card-body ">
@@ -427,7 +427,6 @@ pre, code {
         var opt = {
             margin: 0 ,
             dpi: 96,
-            pagespilt: true,
             filename: name,
             image: { type: 'jpeg', quality: 1 },
       html2canvas: {
@@ -436,7 +435,8 @@ pre, code {
         letterRendering: true,
         useCORS: true
       },
-            jsPDF:{ unit: 'in', format: 'letter', orientation: 'portrait' }
+            jsPDF:{ unit: 'in', format: 'letter', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         }
         // var input = document.getElementById("pdfContainer");
         // console.log(input)

@@ -29,6 +29,7 @@
   <a href="{{ route('question.create','default')}}?type=maq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-warning"> Multi Answer Question (MAQ) </a>
   <a href="{{ route('question.create','default')}}?type=fillup&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-light"> Fillup Question (FQ)</a>
   <a href="{{ route('question.create','default')}}?type=sq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-success"> Subjective Question (SQ)</a>
+  <a href="{{ route('question.create','default')}}?type=csq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-primary"> Code Submission Question (CSQ)</a>
   <a href="{{ route('question.create','default')}}?type=urq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-dark"> Upload Response Question (URQ)</a>
 
   <a href="{{ route('question.create','default')}}?type=vq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-info"> Video Question(VQ)</a>

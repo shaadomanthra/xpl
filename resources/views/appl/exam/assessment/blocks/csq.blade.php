@@ -1,0 +1,1 @@
+<textarea id="code_{{($i+1)}}" class="form-control  coder code_{{($i+1)}} mt-3 rounded" name="dynamic_{{($i+1)}}"  rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}}@else //enter code here @endif @endif</textarea>

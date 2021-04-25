@@ -198,6 +198,10 @@
             @include('appl.exam.assessment.blocks.video')
           @endif
 
+          @if($question->type=='csq')
+            @include('appl.exam.assessment.blocks.csq')
+          @endif
+
           @if($question->type=='fillup')
           <div class="bg-light border p-3 rounded mt-3">
           <h5>Enter your answer</h5>
