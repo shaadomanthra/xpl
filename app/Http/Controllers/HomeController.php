@@ -117,19 +117,53 @@ class HomeController extends Controller
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
 
-            $subject = 'Requirement .net & java developers - Pay after placement (Online Sessions)';
+//             $subject = 'Requirement .net & java developers - Pay after placement (Online Sessions)';
+//             $content = '
+
+// <p>Our training partner ‘PacketPrep’ has launched a job guaranteed training program with pay after placement model to full-fill the 150+ opening in java full stack in 14 of its clients.</p>
+
+// <p>Their recent placement drives include Machint solutions, Netenrich, Volksoft, ZenQ, Qualitlabs, Purpletalk, Magnaquest, Invesco, Innominds, Vitech and more..</p>
+
+// <p><b>The training fee can be paid after securing a job.</b></p>
+
+// <p>Interested candidates can apply here: <br>
+// <a href="http://bit.ly/fsdpp" >http://bit.ly/fsdpp</a> </p>
+
+// <p>For more details you can visit the website <a href="https://tech.packetprep.com" > https://tech.packetprep.com</a></p>
+// ';
+
+            $subject = 'Requirement for .net & angular & react developers - JNET Hyderabad';
             $content = '
 
-<p>Our training partner ‘PacketPrep’ has launched a job guaranteed training program with pay after placement model to full-fill the 150+ opening in java full stack in 14 of its clients.</p>
+<p>Our client JNET has an immediate requirement for dotnet developers with exposure to angular or react.</p>
 
-<p>Their recent placement drives include Machint solutions, Netenrich, Volksoft, ZenQ, Qualitlabs, Purpletalk, Magnaquest, Invesco, Innominds, Vitech and more..</p>
+<p><b>Requirement:</b></p>
+<p>Year of Graduation : 2021<br>
 
-<p><b>The training fee can be paid after securing a job.</b></p>
+Qualification (Streams) : B.Tech (CSE/IT) / MCA<br>
+
+Percentage Criteria : Minimum 70% through out academics<br>
+
+Primary Skills :  <br>
+
+Angular, .NET, C#, Web API, SQL<br>
+
+(OR)<br>
+
+React JS, .NET, C#, Web API, SQL<br>
+
+Role : Trainee Software Engineer<br>
+
+Internship Duration : 3 – 6 months for those who haven’t graduated. Can differ from case to case<br>
+
+Stipend during the internship: 15K<br>
+
+Compensation post-confirmation as FTE: 4-4.5 LPA; we are however open in case of freshers with good niche technical skills we can offer more</p>
+
 
 <p>Interested candidates can apply here: <br>
-<a href="http://bit.ly/fsdpp" >http://bit.ly/fsdpp</a> </p>
+<a href="https://xplore.co.in/jobs/15669" >https://xplore.co.in/jobs/15669</a> </p>
 
-<p>For more details you can visit the website <a href="https://tech.packetprep.com" > https://tech.packetprep.com</a></p>
 ';
 
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
