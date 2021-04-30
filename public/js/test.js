@@ -807,6 +807,12 @@ $(document).ready(function(){
         mark($sno);
     });
 
+    $(document).on('click','.runcode', function() {
+      $sno = $(this).data('sno');
+        if(parseInt($('.save_test').val()))
+          saveTest($sno);
+    });
+
     $('.input').on('input',function(e){
 
       $sno = $(this).data('sno');

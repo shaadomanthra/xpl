@@ -1190,7 +1190,7 @@ $(document).ready(function() {
   //   }); 
 
  $('.runcode').on('click',function(){
-      $qno = $(this).data('qno');
+      $qn = $qno = $(this).data('qno');
       $lang = $(this).data('lang');
       $name = $(this).data('name');
       $test = $(this).data('test');
@@ -1202,7 +1202,7 @@ $(document).ready(function() {
       $url= $(this).data('url');
       $stop= $(this).data('stop');
 
-      console.log($qslug);
+      console.log($qn);
       
 
       var editor_ = editor_array[$name];
@@ -1226,11 +1226,11 @@ $(document).ready(function() {
         $.ajax({
           type : 'get',
           url : $url+'?time='+ new Date().getTime(),
-          data:{'testcase':'1','code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug},
+          data:{'code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug},
           timeout: 120000, 
           success:function(data){
-            $('.runcode_'+$qno).removeClass('disabled');
-            //console.log(data);
+            $('.runcode_'+$qn).removeClass('disabled');
+            console.log($qn);
             //console.log(data);
             var jso = data;
             dat = JSON.parse(data);
@@ -1240,17 +1240,15 @@ $(document).ready(function() {
             console.log(data);
             if(data){
               if(data.stderr){
-                $('.output_'+$qno).html(data.stderr);
-                $('.output_testcase_'+$qno).html('');
-              }else if(data.stdout){
-                $('.output_'+$qno).html(data.stdout);
-                $('.input_'+$qno).attr('value',data.stdout);
-                $('.out_'+$qno).attr('value',jso);
-                if($testcase==3){
-                  if(!$('.s'+$qno).hasClass('qblue-border'))
-                    $('.s'+$qno).addClass('qblue-border');
-                  if(!$('.s'+$qno).hasClass('active'))
-                        $('.s'+$qno).removeClass('active');
+                console.log("At error place - " + $qn);
+                $('.output_'+$qn).html(data.stderr);
+                $('.output_testcase_'+$qn).html('');
+
+                 if($testcase==3){
+                  if(!$('.s'+$qn).hasClass('qblue-border'))
+                    $('.s'+$qn).addClass('qblue-border');
+                  if(!$('.s'+$qn).hasClass('active'))
+                        $('.s'+$qn).removeClass('active');
 
                   if(dat.pass_1 == "1")
                     $test1 = '<p><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
@@ -1267,25 +1265,60 @@ $(document).ready(function() {
                   else
                     $test3 = '<p class="mb-0"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
 
-                  $('.output_testcase_'+$qno).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+'</div>');
-                  $('.final_response_'+$qno).html(data.stdout);
+                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+'</div>');
+                  $('.final_response_'+$qn).html(data.stdout);
+                }else{
+                   $('.output_testcase_'+$qn).html('');
+                }
+
+              }else if(data.stdout){
+                console.log("At output place");
+                $('.output_'+$qn).html(data.stdout);
+                $('.input_'+$qn).attr('value',data.stdout);
+                $('.out_'+$qn).attr('value',jso);
+                if($testcase==3){
+                  if(!$('.s'+$qn).hasClass('qblue-border'))
+                    $('.s'+$qn).addClass('qblue-border');
+                  if(!$('.s'+$qn).hasClass('active'))
+                        $('.s'+$qn).removeClass('active');
+
+                  if(dat.pass_1 == "1")
+                    $test1 = '<p><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test1 = '<p><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_2 == "1")
+                    $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_3 == "1")
+                    $test3 = '<p class="mb-0"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test3 = '<p class="mb-0"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+'</div>');
+                  $('.final_response_'+$qn).html(data.stdout);
+                }else{
+                   $('.output_testcase_'+$qn).html('');
                 }
                 
               }else{
-                $('.output_'+$qno).html("Invalid Code - ERO101 - Retry.");
+                console.log("No stdout no stderr");
+                $('.output_'+$qn).html("Invalid Code - ERO101 - Retry.");
               }
             }else{
-                $('.output_'+$qno).html("Invalid Code - ERD102 - Retry.");
+                $('.output_'+$qn).html("Invalid Code - ERD102 - Retry.");
             }
             $('.loading').hide();
-            $('.loading_'+$qno).hide();
+            $('.loading_'+$qn).hide();
           },
           error: function(jqXHR, textStatus, errorThrown) {
              $('.runcode_'+$qno).removeClass('disabled');
               if(textStatus==="timeout") {  
-                $('.output_'+$qno).html("Invalid Code - ERT103 - Retry.");
+                $('.output_'+$qn).html("Invalid Code - ERT103 - Retry.");
               } else {
-                $('.output_'+$qno).html("Invalid Code - ERX104 - Retry.");
+                $('.output_'+$qn).html("Invalid Code - ERX104 - Retry.");
               }
               $('.loading').hide();
           }
