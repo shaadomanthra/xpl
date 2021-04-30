@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Storage;
 if (! function_exists('s3_upload')) {
     function s3_upload($name,$path)
     {
-
         Storage::disk('s3')->put('summernote/'.$name,file_get_contents($path),'public'); 
         return  Storage::disk('s3')->url('summernote/'.$name);
     }

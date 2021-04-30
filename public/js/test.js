@@ -809,6 +809,7 @@ $(document).ready(function(){
 
     $(document).on('click','.runcode', function() {
       $sno = $(this).data('sno');
+      console.log('saving code response '+$sno);
         if(parseInt($('.save_test').val()))
           saveTest($sno);
     });
