@@ -627,23 +627,34 @@ class AssessmentController extends Controller
                     }else{
                         $keys = $responses->keyBy('question_id');
 
-                          
+                        if($request->get('dump'))
+                            dd($keys);
+                        if(is_array($keys[$q->id])){
+                            $q->dynamic = $keys[$q->id]['dynamic'];
+                            //dd($keys[$q->id]['response']);
+                            if(!isset($keys[$q->id]['response']))
+                                $q->response = null;
+                            else
 
-                         $q->response = null;
-                        if(isset($keys[$q->id]->response))
+                            $q->response = $keys[$q->id]['response'];
+                            $q->time = $keys[$q->id]['time'];
+                            if(isset($keys[$q->id]['code']))
+                            $q->code = $keys[$q->id]['code'];
+
+                            $time_used = $time_used + intval($q->time);
+                        }else{
+                            $q->dynamic = $keys[$q->id]->dynamic;
+                            if(!isset($keys[$q->id]->response))
+                                $q->response = null;
+                            else
                                 $q->response = $keys[$q->id]->response;
+                            $q->time = $keys[$q->id]->time;
+                            if(isset($keys[$q->id]->code))
+                            $q->code = $keys[$q->id]->code;
 
-                        if(isset($keys[$q->id]['response']))
-                                $q->response = $keys[$q->id]['response'];
+                            $time_used = $time_used + intval($q->time);
 
-                            
-                        if(isset($keys[$q->id]->time))
-                        $q->time = $keys[$q->id]->time;
-                        else
-                            $q->time = 0;
-
-
-                         $time_used = $time_used + intval($q->time);
+                        }
 
                     }
                 }
