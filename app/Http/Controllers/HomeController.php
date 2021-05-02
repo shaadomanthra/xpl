@@ -138,7 +138,7 @@ class HomeController extends Controller
 <p>Our client JNET has an immediate requirement for dotnet developers with exposure to angular or react.</p>
 
 <p><b>Requirement:</b></p>
-<p>Year of Graduation : 2021<br>
+<p>Year of Graduation : 2020, 2021<br>
 
 Qualification (Streams) : B.Tech (CSE/IT) / MCA<br>
 

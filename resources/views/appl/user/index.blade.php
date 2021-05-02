@@ -210,6 +210,59 @@
     @endif
 @endauth
  
+
+@can('update',$user)
+ @if(count($user->tests())!=0)
+  <div class="rounded table-responsive mt-4">
+            <table class="table table-bordered {{$i=0}}">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Tests</th>
+                  <th scope="col">Score</th>
+                  <th scope="col">Attempted</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($user->tests() as $k=>$test)
+                 <tr>
+                  <th scope="row">{{ $i=$i+1}}</th>
+                  <td>
+                    <a href="{{ route('assessment.analysis',$test->slug) }}?student={{$user->username}}">{{$test->name}}</a>
+                  </td>
+
+                  <td>
+
+                    @if(!$test->attempt_status)
+                      @if($test->solutions==2 || $test->solutions==4 )
+                      <span class="badge badge-secondary">private</span>
+                      @elseif($test->slug!='psychometric-test')
+                      {{$test->score}} / {{$test->max}}
+                      @else
+                      -
+                      @endif
+                    @else
+                     -
+                    @endif
+                  </td>
+                  <td>{{date('d M Y', strtotime($test->attempt_at))}}</td>
+                  <td> 
+                      @if(!$test->attempt_status)
+                      <span class="badge badge-success">Completed</span>
+                      @else
+                      <span class="badge badge-warning">Under Review</span>
+                      @endif
+                    
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+            </div>
+  
+        @endif
+        @endcan
             </div>
 
           </div>

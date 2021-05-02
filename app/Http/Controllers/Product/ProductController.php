@@ -245,7 +245,7 @@ class ProductController extends Controller
           //$user->exams()->withCount('users')->orderBy('id','desc');
 
 
-          $count = 0;//Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->count();
+          $count = Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->count();
           //$count = count($alltests);
 
          
