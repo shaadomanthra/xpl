@@ -12,12 +12,12 @@
 <div class='pb-4 dblue' >
   <div class='container'>
      <nav class="mb-0">
-      @if(\auth::user()->checkRole(['administrator']))
-        
+        @if(\auth::user()->checkRole(['administrator']))
         <a href="{{ request()->url() }}?downloadexport=1" class="btn btn-sm btn-outline-success float-md-right mt-3 mr-3">Download </a>
-        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
-        
-        <a href="{{ request()->url() }}?downloadexport=1" class="btn btn-sm btn-outline-success float-md-right mt-3 mr-3">Download </a>
+        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 || \auth::user()->role ==13)
+        <a href="{{ route('performance') }}" class="btn btn-sm btn-outline-info float-md-right mt-3 mr-3">Performance</a>
+          <a href="{{ route('upload.users') }}" class="btn btn-sm btn-outline-success float-md-right mt-3 mr-3">Upload</a>
+        <a href="{{ request()->url() }}?downloadexport=1" class="btn btn-sm btn-outline-primary float-md-right mt-3 mr-3">Download </a>
         @else
         @endif
       
@@ -69,11 +69,12 @@
 
  @include('flash::message')
 
-  <div class="mt-4 mb-4">
-    @if($users->total()!=0)
+  <div class="row">
+    <div class="col-12 col-md-10">
+   @if($users->total()!=0)
         <div class="table-responsive">
           <div class="bg-light p-3 border-top border-left border-right " >Filter : <span class="badge badge-warning"> 
-            @if(request()->get('month')) {{request()->get('month')}} @elseif(request()->get('role')) {{request()->get('role')}}@else All users @endif</span>
+            @if(request()->get('month')) {{request()->get('month')}} @elseif(request()->get('role')) {{request()->get('role')}} @elseif(request()->get('info')) {{request()->get('info')}} @else All users @endif</span>
             <span class="badge badge-info float-right"> 
             {{$user->name}}</span>
           </div>
@@ -83,6 +84,7 @@
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
                 <th scope="col">Role </th>
+                <th scope="col">Info </th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Created</th>
@@ -111,6 +113,9 @@
                   @else
                     student
                   @endif
+                  </td>
+                  <td>
+                   {{$u->info}}
                   </td>
                   <td>
                    {{$u->email}}
@@ -146,6 +151,9 @@
                 @endif
                 </td>
                 <td>
+                 {{$u->info}}
+                </td>
+                <td>
                  {{$u->email}}
                 </td>
                 <td>
@@ -169,8 +177,30 @@
         <nav aria-label="Page navigation  " class="card-nav @if($users->total() > config('global.no_of_records'))mt-3 @endif">
         {{$users->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
       </nav>
+     </div>
+
+
+     <div class="col-12 col-md-2">
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action bg-light disabled">
+              Groups
+            </a>
+            @foreach($user_info as $k=>$ui)
+            @if($k)
+            <a href="{{route('user.list')}}?info={{$k}}" class="list-group-item list-group-item-action @if(request()->get('info')==$k) active @endif">
+              {{$k}} ({{count($ui)}})
+            </a>
+            @else
+            <a href="#" class="list-group-item list-group-item-action ">
+              Null ({{count($ui)}})
+            </a>
+            @endif
+            @endforeach
+          </div>
+      </div>
 
   </div>
+
 
 </div>
 

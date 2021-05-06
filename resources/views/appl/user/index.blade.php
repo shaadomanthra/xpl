@@ -211,7 +211,8 @@
 @endauth
  
 
-@can('update',$user)
+ @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
+
  @if(count($user->tests())!=0)
   <div class="rounded table-responsive mt-4">
             <table class="table table-bordered {{$i=0}}">
@@ -235,13 +236,9 @@
                   <td>
 
                     @if(!$test->attempt_status)
-                      @if($test->solutions==2 || $test->solutions==4 )
-                      <span class="badge badge-secondary">private</span>
-                      @elseif($test->slug!='psychometric-test')
+                      
                       {{$test->score}} / {{$test->max}}
-                      @else
-                      -
-                      @endif
+                     
                     @else
                      -
                     @endif
@@ -262,7 +259,8 @@
             </div>
   
         @endif
-        @endcan
+        @endif
+      
             </div>
 
           </div>

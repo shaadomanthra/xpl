@@ -30,6 +30,7 @@ class UExport2 implements FromCollection, WithHeadings
             'Custom Field 3',
             'Custom Field 4',
             'Custom Field 5',
+            'info',
         ];
     }
 
@@ -59,7 +60,7 @@ class UExport2 implements FromCollection, WithHeadings
                 unset($users[$k]->branch_id);
                 unset($users[$k]->user_id);
                 unset($users[$k]->aadhar);
-                unset($users[$k]->info);
+              
             
         } 
 

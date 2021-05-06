@@ -88,6 +88,15 @@
             </div>
           </div>
 
+           <div class="row mb-2">
+            <div class="col-md-4">Exams</div>
+            <div class="col-md-8">
+              @if($client->settings->exams)
+                <div>{{$client->settings->exams}}</div>
+              @endif
+            </div>
+          </div>
+
           <div class="bg-light p-3 rounded border mt-3">
             <h4><i class="fa fa-th"></i> Settings</h4>
             <hr>

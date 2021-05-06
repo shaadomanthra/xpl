@@ -140,6 +140,7 @@ class ClientController extends Controller
             $settings['timer_d'] = $request->get('timer_d');
             $settings['message_l'] = $request->get('message_l');
             $settings['timer_l'] = $request->get('timer_l');
+            $settings['exams'] = $request->get('exams');
             $client->settings = json_encode($settings);
 
             $client->save(); 
@@ -282,6 +283,7 @@ class ClientController extends Controller
             $settings['timer_d'] = NULL;
             $settings['message_l'] = NULL;
             $settings['timer_l'] = NULL;
+            $settings['exams'] = NULL;
              $client->settings = json_decode(json_encode($settings));
         }else{
             $client->settings = json_decode( $client->settings);
@@ -446,6 +448,7 @@ class ClientController extends Controller
             $settings['timer_d'] = $request->get('timer_d');
             $settings['message_l'] = $request->get('message_l');
             $settings['timer_l'] = $request->get('timer_l');
+            $settings['exams'] = $request->get('exams');
             $client->settings = json_encode($settings);
 
             $client->save(); 

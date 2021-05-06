@@ -8,6 +8,9 @@ use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\College\Branch;
+use PacketPrep\Models\Product\Client;
+use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\User\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -321,25 +324,31 @@ class UserController extends Controller
     elseif($month=='lastbeforemonth')
         $users = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month);
     else
-        $users = User::where('client_slug',subdomain())->with('roles');
+        $users = User::where('client_slug',subdomain());
 
-     if($r->get('role')){
-        $rol = $r->get('role');
-        $role = Role::where('slug',$rol)->first();
-        if($rol=='student' || !$rol)
-            $uids = User::pluck('id')->toArray();  
-        elseif($role)
-            $uids = $role->users->pluck('id')->toArray();
-        else
-            $uids = null;  
+    if($r->get('info')){
+        $users = $users->where('info',$r->get('info'));
+
+    }
+    $uids = null;
+    //  if($r->get('role')){
+    //     $rol = $r->get('role');
+    //     $role = Role::where('slug',$rol)->first();
+    //     if($rol=='student' || !$rol)
+    //         $uids = User::pluck('id')->toArray();  
+    //     elseif($role)
+    //         $uids = $role->users->pluck('id')->toArray();
+    //     else
+    //         $uids = null;  
         
-    }else{
-        $uids = null;
-    }
+    // }else{
+    //     $uids = null;
+    // }
+
     
-    if($uids){
-        $users = $users->whereIn('id',$uids);
-    }
+    // if($uids){
+    //     $users = $users->whereIn('id',$uids);
+    // }
 
     $users = $users->orderBy('id','desc')->with('roles')->paginate(30);
 
@@ -370,14 +379,12 @@ class UserController extends Controller
     else    
         $user = \auth::user();
 
-
-    
-
-
+    $user_info = User::where('client_slug',subdomain())->get()->groupBy('info');
 
     
       return view('appl.user.userlist')
                     ->with('count',$count)
+                    ->with('user_info',$user_info)
                     ->with('users',$users)->with('data',$data)->with('user',$user);
 
     }
@@ -427,7 +434,6 @@ class UserController extends Controller
                 $client_slug = $data[$i]['client_slug'];
                 $u = User::where('email',$data[$i]['email'])->where('client_slug',$client_slug)->first();
                 
-
                 if(!$u){
                     $u = new User([
                    'name'     => $data[$i]['name'],
@@ -453,6 +459,7 @@ class UserController extends Controller
                     $u->college_id = $data[$i]['college_id'];
                     $u->year_of_passing = $data[$i]['year_of_passing'];
                     $u->info = $data[$i]['info'];
+                    $u->save();
                     $data[$i]['exists'] = 1;
                 }
                 
@@ -943,6 +950,73 @@ class UserController extends Controller
             }
         }
     }
+
+
+
+    public function performance(Request $request){
+        $client_slug = \Auth::user()->client_slug;
+        $client = Client::where('slug',$client_slug)->first();
+
+        $settings = json_decode($client->settings);
+        $exam_slugs = explode(',',$settings->exams);
+
+        $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
+        $exam_ids =[];
+        $user_ids = [];
+        foreach($exams as $id=>$e){
+            array_push($exam_ids,$id);
+        }
+
+        if($request->get('info')){
+            $users = User::where('client_slug',$client_slug)->where('info',$request->get('info'))->get()->keyBy('id');
+            $users_paginate = User::where('client_slug',$client_slug)->where('info',$request->get('info'))->paginate(30);
+        }else{
+            $users = User::where('client_slug',$client_slug)->get()->keyBy('id');
+            $users_paginate = User::where('client_slug',$client_slug)->paginate(30);
+        }
+        
+        $allusers = User::where('client_slug',$client_slug)->get();
+        $totalusers = $allusers->count();
+        $user_info = $allusers->groupBy('info');
+        
+
+        foreach($users as $id=>$u){
+            array_push($user_ids,$id);
+        }
+        $tests_overall = Tests_Overall::whereIn('test_id',$exam_ids)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
+
+        $data = [];
+
+
+        foreach($users as $id=>$u){
+            $count =0;
+            $total =0;
+            $max=0;
+            $cgpa=0;
+            $data[$id]['user'] = $u;
+            foreach($exams as $eid=>$e){
+                $data[$id]['test'][$eid] = null;
+            }
+            if(isset($tests_overall[$id]))
+            foreach($tests_overall[$id] as $a=>$b){
+                $data[$id]['test'][$b->test_id] = $b->score;
+                $total +=$b->score;
+                $max += $b->max;
+                $count++;
+             
+            }
+
+            if($count)
+            $cgpa = round($total/$max*10,2);
+        
+            $data[$id]['cgpa'] = $cgpa;
+            $data[$id]['count'] = $count;
+        }
+        
+         return view('appl.user.performance')->with('data',$data)->with('exams',$exams)->with('user_info',$user_info)->with('users',$users_paginate)->with('totalusers',$totalusers);
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *

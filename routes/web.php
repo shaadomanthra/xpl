@@ -471,6 +471,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::get('stats','Product\ProductController@statistics')->name('statistics');
 	Route::get('productpage/{product}','Product\ProductController@page')->name('productpage');
 	Route::get('users','User\UserController@userlist')->name('user.list');
+	Route::get('performance','User\UserController@performance')->name('performance');
+
 	Route::resource('client','Product\ClientController')->middleware('auth');
 	Route::resource('client/{client}/clientuser','Product\ClientuserController')->middleware('auth');
 

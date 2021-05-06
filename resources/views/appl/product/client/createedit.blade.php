@@ -228,8 +228,19 @@
             <input id="datetimepicker2" class="form-control" type="text" value="{{isset($client->settings->timer_l)? $client->settings->timer_l:''}}"  name="timer_l"></input>
           </div>
 
+
         </div>
+
+
     </div>
+    <div class="row">
+          <div class="col-12">
+          <div class="form-group">
+            <label for="formGroupExampleInput ">Exams slugs (for consolidated performance reports)</label>
+            <input id="datetimepicker2" class="form-control" type="text" value="{{isset($client->settings->exams)? $client->settings->exams:''}}"  name="exams"></input>
+          </div>
+        </div>
+        </div>
       
     </div>
 
