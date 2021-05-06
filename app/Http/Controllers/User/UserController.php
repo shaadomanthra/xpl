@@ -433,7 +433,17 @@ class UserController extends Controller
             {
                 $client_slug = $data[$i]['client_slug'];
                 $u = User::where('email',$data[$i]['email'])->where('client_slug',$client_slug)->first();
-                
+                $br =["CSE"=>"9","IT"=>10,"ECE"=>11,"EEE"=>12,"MECH"=>13,"CIVIL"=>14,"OTHER"=>15];
+
+                if(!is_numeric($data[$i]['branch_id'])){
+                    if(isset($br[$data[$i]['branch_id']]))
+                        $bid = $br[$data[$i]['branch_id']];
+                    else
+                        $bid=15;
+                }else{
+                    $bid = $data[$i]['branch_id'];
+                }
+
                 if(!$u){
                     $u = new User([
                    'name'     => $data[$i]['name'],
@@ -442,22 +452,40 @@ class UserController extends Controller
                    'client_slug' =>$client_slug,
                    'phone'    => $data[$i]['phone'], 
                    'roll_number'    => $data[$i]['roll_number'], 
-                   'branch_id' => $data[$i]['branch_id'],
+                   'branch_id' => $bid,
                    'college_id' => $data[$i]['college_id'],
                    'year_of_passing' =>$data[$i]['year_of_passing'],
+                   'tenth' =>$data[$i]['tenth'],
+                   'twelveth' =>$data[$i]['twelveth'],
+                   'bachelors' =>$data[$i]['bachelors'],
+                   'current_city' =>$data[$i]['current_city'],
+                   'hometown' =>$data[$i]['hometown'],
                    'info'=>$data[$i]['info'],
                    'password' => bcrypt($data[$i]['phone']),
                    'status'   => 1,
                     ]);
+
+                    $u->year_of_passing = $data[$i]['year_of_passing'];
+                    $u->tenth = $data[$i]['tenth'];
+                    $u->twelveth = $data[$i]['twelveth'];
+                    $u->bachelors = $data[$i]['bachelors'];
+                    $u->current_city = $data[$i]['current_city'];
+                    $u->hometown = $data[$i]['hometown'];
+                    $u->info = $data[$i]['info'];
 
                     $u->save();
                     $data[$i]['exists'] = 0;
                     
                 }else{
                     $u->roll_number = $data[$i]['roll_number'];
-                    $u->branch_id = $data[$i]['branch_id'];
+                    $u->branch_id = $bid;
                     $u->college_id = $data[$i]['college_id'];
                     $u->year_of_passing = $data[$i]['year_of_passing'];
+                    $u->tenth = $data[$i]['tenth'];
+                    $u->twelveth = $data[$i]['twelveth'];
+                    $u->bachelors = $data[$i]['bachelors'];
+                    $u->current_city = $data[$i]['current_city'];
+                    $u->hometown = $data[$i]['hometown'];
                     $u->info = $data[$i]['info'];
                     $u->save();
                     $data[$i]['exists'] = 1;

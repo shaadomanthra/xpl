@@ -39,79 +39,79 @@
 
              @if(count($colleges))
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-building'></i> &nbsp; College</dt>
-                <dd class="col-sm-9">@if($user->college_id) @if($user->college_id==5 || $user->college_id==295) {{$user->info}} @else {{ $colleges[$user->college_id]->name }} @endif @else {{$user->info}} @endif</dd>
+                <dt class="col-sm-5"><i class='fa fa-building'></i> &nbsp; College</dt>
+                <dd class="col-sm-7">@if($user->college_id) @if($user->college_id==5 || $user->college_id==295) {{$user->info}} @else {{ $colleges[$user->college_id]->name }} @endif @else {{$user->info}} @endif</dd>
               </dl>
              @endif
 
              @if($branches)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-bookmark-o'></i> &nbsp; Branch</dt>
-                <dd class="col-sm-9">@if($user->branch_id) {{  $branches[$user->branch_id]->name  }} @endif</dd>
+                <dt class="col-sm-5"><i class='fa fa-bookmark-o'></i> &nbsp; Branch</dt>
+                <dd class="col-sm-7">@if($user->branch_id) {{  $branches[$user->branch_id]->name  }} @endif</dd>
               </dl>
              @endif
 
              @if($user->roll_number)
 
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-address-book-o'></i> &nbsp; 
+                <dt class="col-sm-5"><i class='fa fa-address-book-o'></i> &nbsp; 
                 @if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
               Roll Number
                 @else
-                Fathers or Mothers Name
+                Fathers or Mothers Name / Roll number
                 @endif</dt>
-                <dd class="col-sm-9">{{$user->roll_number}}</dd>
+                <dd class="col-sm-7">{{$user->roll_number}}</dd>
               </dl>
              @endif
 
              @if($user->year_of_passing)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-tint'></i> &nbsp; Year of Passing</dt>
-                <dd class="col-sm-9">{{$user->year_of_passing}}</dd>
+                <dt class="col-sm-5"><i class='fa fa-tint'></i> &nbsp; Year of Passing</dt>
+                <dd class="col-sm-7">{{$user->year_of_passing}}</dd>
               </dl>
              @endif
 
              @if($user->Phone)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; Candidate Phone</dt>
-                <dd class="col-sm-9">{{$user->phone}}</dd>
+                <dt class="col-sm-5"><i class='fa fa-venus'></i> &nbsp; Candidate Phone</dt>
+                <dd class="col-sm-7">{{$user->phone}}</dd>
               </dl>
              @endif
 
              @if($user->gender)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-venus'></i> &nbsp; 
+                <dt class="col-sm-5"><i class='fa fa-venus'></i> &nbsp; 
                   @if(strlen($user->gender)<9) Gender @else Fathers Phone @endif</dt>
-                <dd class="col-sm-9">{{ucfirst($user->gender)}}</dd>
+                <dd class="col-sm-7">{{ucfirst($user->gender)}}</dd>
               </dl>
              @endif
 
              @if($user->dob)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-calendar'></i> &nbsp; Date of Birth</dt>
-                <dd class="col-sm-9">{{$user->dob}}</dd>
+                <dt class="col-sm-5"><i class='fa fa-calendar'></i> &nbsp; Date of Birth</dt>
+                <dd class="col-sm-7">{{$user->dob}}</dd>
               </dl>
              @endif
 
              @if($user->current_city)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-address-card-o'></i> &nbsp; Current City (or) Address</dt>
-                <dd class="col-sm-9">@if(strip_tags(trim($user->current_city))) {{$user->current_city}} @else - @endif</dd>
+                <dt class="col-sm-5"><i class='fa fa-address-card-o'></i> &nbsp; Current City (or) Address</dt>
+                <dd class="col-sm-7">@if(strip_tags(trim($user->current_city))) {{$user->current_city}} @else - @endif</dd>
               </dl>
              @endif
 
              @if($user->hometown)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-home'></i> &nbsp; Hometown (or) District</dt>
-                <dd class="col-sm-9">{{$user->hometown}}</dd>
+                <dt class="col-sm-5"><i class='fa fa-home'></i> &nbsp; Hometown (or) District</dt>
+                <dd class="col-sm-7">{{$user->hometown}}</dd>
               </dl>
              @endif
 
              @if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
              @if($user->metrics)
              <dl class="row mb-0">
-                <dt class="col-sm-3"><i class='fa fa-gg'></i> &nbsp; Trained In</dt>
-                <dd class="col-sm-9">{{implode(', ',$user->metrics->pluck('name')->toArray())}}</dd>
+                <dt class="col-sm-5"><i class='fa fa-gg'></i> &nbsp; Trained In</dt>
+                <dd class="col-sm-7">{{implode(', ',$user->metrics->pluck('name')->toArray())}}</dd>
               </dl>
              @endif
              @endif
@@ -207,6 +207,67 @@
 
         
       </div>
+
+    @elseif(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
+     <div class="row mr-2 ml-2">
+        <div class="col-12 col-md ">
+          <h3 class=" p-3 mb-0 bg-white border border-bottom-0"><i class='fa fa-university'></i> Academic Scores</h3>
+         
+          <div class="table-responsive">
+            <table class="table table-bordered bg-light">
+  <thead>
+    <tr class="">
+      <th scope="col">Board</th>
+      <th scope="col">CGPA / Percentage </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Class 10</td>
+      <td>
+        @if($user->tenth)
+        {{$user->tenth}}
+        @else
+          - 
+        @endif
+      </td>
+    </tr>
+    <tr>
+      <td>Class 12</td>
+      <td>
+        @if($user->twelveth)
+        {{$user->twelveth}}
+        @else
+          - 
+        @endif
+      </td>
+    </tr>
+    <tr>
+      <td>Graduation</td>
+      <td>
+        @if($user->bachelors)
+        {{$user->bachelors}}
+        @else
+          - 
+        @endif
+      </td>
+    </tr>
+    <tr>
+      <td>Masters</td>
+      <td>
+        @if($user->masters)
+        {{$user->masters}}
+        @else
+          - 
+        @endif
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+          </div>
+        </div>
+
     @endif
 @endauth
  
