@@ -2,6 +2,9 @@
 @section('title', $user->name.' ')
 @section('content')
 
+@auth
+
+@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']) || \Auth::user()->id == $user->id)
 <div  class="row ">
   <div class="col">
     @include('flash::message')  
@@ -331,7 +334,14 @@
      </div>
    </div>
 
+   @else
+    <h1>Account is private</h1>
+   @endif
 
+@else
+
+  <h1>Account is private</h1>
+@endauth
 
 
 
