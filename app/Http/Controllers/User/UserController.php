@@ -477,15 +477,34 @@ class UserController extends Controller
                     $data[$i]['exists'] = 0;
                     
                 }else{
+                    if($data[$i]['roll_number'])
                     $u->roll_number = $data[$i]['roll_number'];
+
+                    if($bid)
                     $u->branch_id = $bid;
+
+                    if($data[$i]['college_id'])
                     $u->college_id = $data[$i]['college_id'];
+
+                    if($data[$i]['year_of_passing'])
                     $u->year_of_passing = $data[$i]['year_of_passing'];
+
+                    if($data[$i]['tenth'])
                     $u->tenth = $data[$i]['tenth'];
+
+                    if($data[$i]['twelveth'])
                     $u->twelveth = $data[$i]['twelveth'];
+
+                    if($data[$i]['bachelors'])
                     $u->bachelors = $data[$i]['bachelors'];
+
+                    if($data[$i]['current_city'])
                     $u->current_city = $data[$i]['current_city'];
+
+                    if($data[$i]['hometown'])
                     $u->hometown = $data[$i]['hometown'];
+
+                    if($data[$i]['info'])
                     $u->info = $data[$i]['info'];
                     $u->save();
                     $data[$i]['exists'] = 1;
