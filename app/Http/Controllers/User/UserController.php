@@ -960,19 +960,28 @@ class UserController extends Controller
         $settings = json_decode($client->settings);
         $exam_slugs = explode(',',$settings->exams);
 
-        $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
+        if($request->get('exam')){
+            $exams = Exam::where('slug',$request->get('exam'))->get()->keyBy('id');
+        }else
+         $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
+
         $exam_ids =[];
         $user_ids = [];
         foreach($exams as $id=>$e){
-            array_push($exam_ids,$id);
+            if($request->get('exam')){
+                if($request->get('exam')==$e->slug)
+                    array_push($exam_ids,$id);
+            }else{
+               array_push($exam_ids,$id); 
+            }
+            
         }
+
 
         if($request->get('info')){
             $users = User::where('client_slug',$client_slug)->where('info',$request->get('info'))->get()->keyBy('id');
-            $users_paginate = User::where('client_slug',$client_slug)->where('info',$request->get('info'))->paginate(30);
         }else{
             $users = User::where('client_slug',$client_slug)->get()->keyBy('id');
-            $users_paginate = User::where('client_slug',$client_slug)->paginate(30);
         }
         
         $allusers = User::where('client_slug',$client_slug)->get();
@@ -986,6 +995,9 @@ class UserController extends Controller
         $tests_overall = Tests_Overall::whereIn('test_id',$exam_ids)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
 
         $data = [];
+
+        $data_sorted = [];
+        $data_unsorted=[];
 
 
         foreach($users as $id=>$u){
@@ -1003,6 +1015,9 @@ class UserController extends Controller
                 $total +=$b->score;
                 $max += $b->max;
                 $count++;
+                if($b->max)
+                $exams[$b->test_id]->max = $b->max;
+
              
             }
 
@@ -1010,10 +1025,21 @@ class UserController extends Controller
             $cgpa = round($total/$max*10,2);
         
             $data[$id]['cgpa'] = $cgpa;
+            $data_unsorted[$id] = $cgpa;
             $data[$id]['count'] = $count;
         }
+
         
-         return view('appl.user.performance')->with('data',$data)->with('exams',$exams)->with('user_info',$user_info)->with('users',$users_paginate)->with('totalusers',$totalusers);
+        arsort($data_unsorted);
+        foreach($data_unsorted as $k=>$v){
+            $data_sorted[$k]['user'] = $data[$k]['user'];
+            $data_sorted[$k]['test'] = $data[$k]['test'];
+            $data_sorted[$k]['cgpa'] = $data[$k]['cgpa'];
+            $data_sorted[$k]['count'] = $data[$k]['count'];
+        }
+        
+            
+         return view('appl.user.performance')->with('data',$data_sorted)->with('exams',$exams)->with('user_info',$user_info)->with('totalusers',$totalusers);
 
     }
 

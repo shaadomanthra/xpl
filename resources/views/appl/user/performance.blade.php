@@ -59,9 +59,19 @@
 
  @include('flash::message')
 
+ @if(request()->get('exam'))
+ <div class="rounded border p-4 my-3">
+    @foreach($exams as $e)
+                
+                <h1 class="mt-0 mb-0">{{$e->name}}</h1>
+                  <a href="">{{route('assessment.show',$e->slug)}}</a>
+                @endforeach
+ </div>
+ @endif
+
   <div class="row">
     <div class="col-12 col-md-12">
-   @if($users->total()!=0)
+   @if(count($data)!=0)
         <div class="table-responsive">
           <div class="bg-light p-3 border-top border-left border-right " >Filter : <span class="badge badge-warning"> 
             @if(request()->get('month')) {{request()->get('month')}} @elseif(request()->get('role')) {{request()->get('role')}} @elseif(request()->get('info')) {{request()->get('info')}} @else All users @endif</span>
@@ -70,51 +80,63 @@
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{$users->total()}})</th>
+                <th scope="col">#({{count($data)}})</th>
                 <th scope="col">Name </th>
-                <th scope="col">Info </th>
+                <th scope="col" class="{{$i=1}}">Group</th>
                 @foreach($exams as $e)
-                <th scope="col">{{$e->name}}</th>
+                <th scope="col">{{$e->name}}({{$e->max}})<br><span class="badge badge-primary">{{$e->slug}}</span></th>
                 @endforeach
-                <th scope="col">CGPA</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($users as $key=>$u) 
 
-                @if(!$u->roles()->first()) 
+                @if(!request()->get('status'))
+                <th scope="col" class="">CGPA</th>
+                @endif
+              </tr>
+            </thead >
+            <tbody>
+              @foreach($data as $key=>$u) 
+
 
                  <tr>
-                  <th scope="row">{{ $users->currentpage() ? ($users->currentpage()-1) * $users->perpage() + ( $key + 1) : $key+1 }}</th>
+                  <th scope="row">{{ $i++ }}</th>
                   <td>
-                    <a href="{{ route('profile','@'.$u->username)}}">
-                    {{ $u->name }}
+                    <a href="{{ route('profile','@'.$u['user']->username)}}">
+                    {{ $u['user']->name }}
                   </a>
                    
                  
                   </td>
                   <td>
-                   {{$u->info}}
+                   {{$u['user']->info}}
                   </td>
                    @foreach($exams as $id=>$e)
                   <td>
-                    @if($data[$u->id]['test'][$id])
-                    {{$data[$u->id]['test'][$id]}}
-                    @elseif($data[$u->id]['test'][$id]=="0")
-                    0
+                    @if(isset($data[$u['user']->id]['test'][$id]))
+                       @if(!request()->get('status'))
+                          @if($data[$u['user']->id]['test'][$id]=="0")
+                            0
+                          @else
+                            {{$data[$u['user']->id]['test'][$id]}}
+                          @endif
+                        @else
+                        <span class="badge badge-success">Attempted</span>
+                        @endif
                     @else
-                    -
+                      @if(!request()->get('status'))
+                      -
+                      @else
+                      <span class="badge badge-secondary">Unattempted</span>
+                      @endif
+
                     @endif
                   </td>
                   @endforeach
                   
+                   @if(!request()->get('status'))
                   <td>
-                   {{$data[$u->id]['cgpa']}}
+                   {{$data[$u['user']->id]['cgpa']}}
                   </td>
+                  @endif
                 </tr>
-                @else
-
-                @endif
               
               @endforeach      
             </tbody>
@@ -125,9 +147,6 @@
           No Users listed
         </div>
         @endif
-        <nav aria-label="Page navigation  " class="card-nav @if($users->total() > config('global.no_of_records'))mt-3 @endif">
-        {{$users->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
-      </nav>
      </div>
 
 
