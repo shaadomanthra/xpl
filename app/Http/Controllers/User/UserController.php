@@ -326,10 +326,19 @@ class UserController extends Controller
     else
         $users = User::where('client_slug',subdomain());
 
+    $users = $users->where('status','<>','2');
     if($r->get('info')){
         $users = $users->where('info',$r->get('info'));
-
     }
+
+    $item = $r->get('item');
+    if(is_numeric($item)){
+        $users = $users->where('phone','LIKE',"%$item%");
+    }
+    elseif($r->get('item')){
+        $users = $users->where('name','LIKE',"%$item%")->orWhere('email',"%$item%");
+    }
+
     $uids = null;
     //  if($r->get('role')){
     //     $rol = $r->get('role');
@@ -354,16 +363,16 @@ class UserController extends Controller
 
 
     if($uids){
-    $data['users_all'] =  User::where('client_slug',subdomain())->whereIn('id',$uids)->count();
-    $data['users_lastmonth'] = User::where('client_slug',subdomain())->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
-    $data['users_thismonth'] = User::where('client_slug',subdomain())->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->month)->count();
-    $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
+    $data['users_all'] =  User::where('client_slug',subdomain())->where('status','<>','2')->whereIn('id',$uids)->count();
+    $data['users_lastmonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
+    $data['users_thismonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->month)->count();
+    $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
 
     }else{
-        $data['users_all'] =  User::where('client_slug',subdomain())->count();
-    $data['users_lastmonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
-    $data['users_thismonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->month)->count();
-    $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
+        $data['users_all'] =  User::where('client_slug',subdomain())->where('status','<>','2')->count();
+    $data['users_lastmonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
+    $data['users_thismonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereMonth('created_at', Carbon::now()->month)->count();
+    $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
 
     }
     
@@ -472,6 +481,7 @@ class UserController extends Controller
                     $u->current_city = $data[$i]['current_city'];
                     $u->hometown = $data[$i]['hometown'];
                     $u->info = $data[$i]['info'];
+                    $u->status = $data[$i]['status'];
 
                     $u->save();
                     $data[$i]['exists'] = 0;
@@ -506,6 +516,10 @@ class UserController extends Controller
 
                     if($data[$i]['info'])
                     $u->info = $data[$i]['info'];
+
+                    if($data[$i]['status'])
+                    $u->status = $data[$i]['status'];
+
                     $u->save();
                     $data[$i]['exists'] = 1;
                 }
@@ -1026,12 +1040,12 @@ class UserController extends Controller
 
 
         if($request->get('info')){
-            $users = User::where('client_slug',$client_slug)->where('info',$request->get('info'))->get()->keyBy('id');
+            $users = User::where('client_slug',$client_slug)->where('status','<>','2')->where('info',$request->get('info'))->get()->keyBy('id');
         }else{
-            $users = User::where('client_slug',$client_slug)->get()->keyBy('id');
+            $users = User::where('client_slug',$client_slug)->where('status','<>','2')->get()->keyBy('id');
         }
         
-        $allusers = User::where('client_slug',$client_slug)->get();
+        $allusers = User::where('client_slug',$client_slug)->where('status','<>','2')->get();
         $totalusers = $allusers->count();
         $user_info = $allusers->groupBy('info');
         

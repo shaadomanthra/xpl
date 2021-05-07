@@ -417,10 +417,10 @@ class PostController extends Controller
             $details['email'] = $u->email;
             $details['name'] = $u->name;
 
-              $subject = 'Java Full Stack Developer - Test Link';
+              $subject = 'Global Edge Associate Analyst - Test Link';
             $content = '<div dir=3D"ltr"><div id=3D"gmail-:n3" class=3D"gmail-a3s gmail-aiL"><div dir=3D"ltr"><div>If
- you have not attempted the &#39;JAVA Fullstack Developer&#39; pre-assessment,you can use the following link to complete the test before 11th jan, 11am. <br></div><br>Test Link - <a href="https://xplore.co.in/test/84316" 
-target=3D"_blank">https://xplore.co.in/test/84316</a><br>Test closes by: 11th Jan, 11 am<br>Access Code - PPM21<br><br>Instructions:<br>- The test contains 100 questions to be answered in 100 minutes<br>- Syllabus: Aptitude 30Q, Verbal 35Q and Technical 35Q<br>- Each question carries 1 mark and no negative marking<br>-Mandatory: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected<br>- The test should be taken only from desktop/laptop with webcam facilities. Mobile Phones and Tabs are restricted<br>- Please make sure that you disable all desktop/Laptop notifications. Else, the test will be terminated in between<br>- Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)<br>- Please make sure that your camera is switched on and you are facing the light source<br>
+ you have not attempted the &#39;Global Edge Associate Analyst&#39; pre-assessment,you can use the following link to complete the test before 8th May, 4pm. <br></div><br>Test Link - <a href="https://xplore.co.in/test/388411" 
+target=3D"_blank">https://xplore.co.in/test/388411</a><br>Test closes by: 8th May, 4pm<br>Access Code - GLOBAL0805<br><br>Instructions:<br>- The test contains 60 questions to be answered in 60 minutes<br>- Syllabus: Quant 20Q, Reasoning 20Q and Verbal 20Q <br>- Each question carries 1 mark and no negative marking<br>-Mandatory: This is a AI proctored examination and you are required to keep your web-camera on in the entire duration of the examination failing which, you might not get selected<br>- The test should be taken only from desktop/laptop with webcam facilities. Mobile Phones and Tabs are restricted<br>- Please make sure that you disable all desktop/Laptop notifications. Else, the test will be terminated in between<br>- Please make sure that you have uninterrupted power and internet facility (minimum 2 MBPS required)<br>- Please make sure that your camera is switched on and you are facing the light source<br>
     <br>
     <br>
 ';
@@ -476,7 +476,7 @@ target=3D"_blank">https://xplore.co.in/test/84316</a><br>Test closes by: 11th Ja
 // ';
 
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
-            SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*3));
+            SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*1));
         }
         
         dd('Email Queued - '.count($users));

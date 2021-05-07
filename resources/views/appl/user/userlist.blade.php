@@ -102,6 +102,9 @@
                     <a href="{{ route('profile','@'.$u->username)}}">
                     {{ $u->name }}
                   </a>
+                  @if($u->status!=1)
+                  <span class="badge-info">{{$u->status}}</span>
+                  @endif
                    
                  
                   </td>
@@ -138,6 +141,12 @@
                   <a href="{{ route('profile','@'.$u->username)}}">
                   {{ $u->name }}
                 </a>
+                @if($u->status==0)
+                  <span class="badge-info badge">Inactive</span>
+                  @elseif($u->status==2)
+                    <span class="badge-warning badge">Blocked</span>
+                  @endif
+                   
                  
                
                 </td>
@@ -197,7 +206,23 @@
             @endif
             @endforeach
           </div>
+
+           <div class="my-3">
+        <form class="w-100" method="GET" action="{{ route('user.list') }}">
+            
+            <div class="input-group ">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-search"></i></div>
+              </div>
+              <input class="form-control " id="search" name="item" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
+              value="{{Request::get('item')?Request::get('item'):'' }}">
+            </div>
+            
+          </form>
       </div>
+      </div>
+
+
 
   </div>
 
