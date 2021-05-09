@@ -88,12 +88,14 @@ class TestReport2 implements FromCollection
 
             }
 
-            
+           
 
             if(intval(trim($res->score))!=0)
     		  $result[$k]->Score = $res->score;
             else
                $result[$k]->Score = '0';
+
+            $result[$k]->timer = round($result[$k]->time/60,2).' min';
 
             if($res->user->fluency)
                 $result[$k]->f= $res->user->fluency;
@@ -101,6 +103,7 @@ class TestReport2 implements FromCollection
                 $result[$k]->f = $res->user->confidence;
             else
                 $result[$k]->f = $res->user->roll_number;
+
 
             if(request()->get('all')){
                 $result[$k]->tenth = $res->user->tenth;
@@ -146,7 +149,9 @@ class TestReport2 implements FromCollection
     			$name = $exam_sections[$m]['name'];
     			$ux->$name = $name. '('.$exam_sections[$m]['total'].')';
     		}
+
     	$ux->Sc = "Score (".$exam->total.")";
+         $ux->Timer = "Time spent";
       $ux->adm = "Admission Number";
 
       if(request()->get('all')){
@@ -194,6 +199,7 @@ class TestReport2 implements FromCollection
                 $ux->$name = "-";
             }
         $ux->Sc = "ABSENT";
+        $ux->Timer = "-";
         $ux->adm = "";
 
         unset($ux->id);
