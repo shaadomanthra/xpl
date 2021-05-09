@@ -1019,22 +1019,29 @@ class UserController extends Controller
         $client = Client::where('slug',$client_slug)->first();
 
         $settings = json_decode($client->settings);
+        $exam_slugs = [];
+        if($settings->exams)
         $exam_slugs = explode(',',$settings->exams);
 
         if($request->get('exam')){
-            $exams = Exam::where('slug',$request->get('exam'))->get()->keyBy('id');
+            if(strpos($request->get('exam'),',')!==false){
+                $exam_slugs = explode(',',$request->get('exam'));
+                $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
+            }else
+                $exams = Exam::where('slug',$request->get('exam'))->get()->keyBy('id');
         }else
          $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
 
         $exam_ids =[];
         $user_ids = [];
         foreach($exams as $id=>$e){
-            if($request->get('exam')){
-                if($request->get('exam')==$e->slug)
-                    array_push($exam_ids,$id);
-            }else{
-               array_push($exam_ids,$id); 
-            }
+            array_push($exam_ids,$id); 
+            // if($request->get('exam')){
+            //     if($request->get('exam')==$e->slug)
+            //         array_push($exam_ids,$id);
+            // }else{
+               
+            // }
             
         }
 

@@ -55,7 +55,31 @@
 <div class='p-1  ddblue' >
 </div>
 
+
 <div class="container mt-4 mb-4">
+  <div class="bg-light p-4 rounded border">
+  <h4>Filters</h4>
+  <form class="form-inline" action="{{route('performance')}}" method="get">
+  <label class="sr-only" for="inlineFormInputName2">Exams</label>
+
+  <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" name="exam" placeholder="Enter exam slugs " value="{{request()->get('exam')}}">
+  
+
+  <label class="sr-only" for="inlineFormInputGroupUsername2">Group</label>
+  <div class="input-group mb-2 mr-sm-2">
+    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="info" placeholder="Enter group name" value="{{request()->get('group')}}">
+  </div>
+
+  <div class="form-check mb-2 mr-sm-2">
+    <input class="form-check-input" type="checkbox" name="status" id="inlineFormCheck" @if(request()->get('status')=='on') checked @endif
+    <label class="form-check-label" for="inlineFormCheck">
+      Attendance
+    </label>
+  </div>
+
+  <button type="submit" class="btn btn-primary mb-2">Submit</button>
+</form>
+</div>
 
  @include('flash::message')
 
@@ -88,7 +112,7 @@
                 @endforeach
 
                 @if(!request()->get('status'))
-                <th scope="col" class="">CGPA</th>
+                <th scope="col" class="">CGPA(10)</th>
                 @endif
               </tr>
             </thead >
