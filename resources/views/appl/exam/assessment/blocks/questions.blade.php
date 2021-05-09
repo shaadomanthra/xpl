@@ -13,7 +13,8 @@
 </style>
 
 @foreach($questions as $i=> $question)
-<div class="question_block qblock_{{$i+1}}" @if($i!=0) style="display:none;" @endif>
+<div class="question_block qblock_{{$i+1}}  " @if($i!=0) style="display:none;" @endif>
+   
   @if($question->passage)
   <div class="card my-3" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
     <div class="card-body">
@@ -25,7 +26,22 @@
   </div>
   @endif
   <div class="card  mb-3">
-    <div class="card-body ">
+    <div class="card-body mt-3 textcontainer">
+      <div class="textcontainerbackground">
+            {{'UX010'.$user->id}}
+        </div>
+        <div class="textcontainerbackground2">
+            {{'UX010'.$user->id}}
+        </div>
+        <div class="textcontainerbackground3">
+            {{'UX010'.$user->id}}
+        </div>
+        <div class="textcontainerbackground4">
+            {{'UX010'.$user->id}}
+        </div>
+        <div class="textcontainerbackground5">
+            <b>{{'UX010'.$user->id}}</b> - {{$user->name}} @if($user->roll_number)- {{$user->roll_number}} @endif  @if(isset($data['colleges'][auth::user()->college_id])) - {{ $data['colleges'][$user->college_id]->name}}   @endif
+        </div>
       @if($question->type!='typing')
       <div class="row no-gutters">
         <div class="col-2 col-md-2">
@@ -36,6 +52,7 @@
           </div>
         </div>
         <div class="col-10 col-md-10">
+          
           <div class="pt-1  disable-select">{!! $question->question!!}</div>
         </div>
       </div>
