@@ -1027,7 +1027,7 @@ class UserController extends Controller
 
         $settings = json_decode($client->settings);
         $exam_slugs = [];
-        if($settings->exams)
+        if(isset($settings->exams))
         $exam_slugs = explode(',',$settings->exams);
 
         if($request->get('exam')){
