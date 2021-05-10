@@ -84,7 +84,7 @@
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
                 <th scope="col">Role </th>
-                <th scope="col">Info </th>
+                <th scope="col">Group </th>
                 <th scope="col">Email</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Created</th>
