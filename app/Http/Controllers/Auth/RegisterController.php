@@ -4,6 +4,7 @@ namespace PacketPrep\Http\Controllers\Auth;
 
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
+use PacketPrep\Models\Product\Client;
 use PacketPrep\Mail\ActivateUser2;
 use PacketPrep\Rules\Otp;
 use PacketPrep\Rules\EmailExists;
@@ -53,6 +54,19 @@ class RegisterController extends Controller
         }else{
             $code = request()->session()->get('code');
         }
+
+        $client = Client::where('slug',subdomain())->first();
+        if($client){
+            $settings = json_decode($client->settings);
+            if(isset($settings->register))
+            if($settings->register==0){
+                echo ('User registration is disabled for this account. Kindly reach out to <a href="/contactpage">administrator</a> for help.');
+                exit();
+            }
+
+        }
+
+
         return view('auth.register')->with('register',$register)->with('code',$code);
     }
 
