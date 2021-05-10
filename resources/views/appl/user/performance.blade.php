@@ -56,7 +56,7 @@
   </div>
 
   <button type="submit" class="btn btn-primary mb-2">Submit</button>
-  <a href="{{route('performance')}}?export=1 @if(request()->get('info'))&info={{request()->get('info')}} @endif @if(request()->get('exam'))&exam={{request()->get('exam')}} @endif"  class="btn btn-success float-right mb-2 ml-4">Download</a>
+  <a href="{{route('performance')}}?export=1 @if(request()->get('info'))&info={{request()->get('info')}} @endif @if(request()->get('exam'))&exam={{request()->get('exam')}} @endif  @if(request()->get('status'))&status={{request()->get('status')}} @endif"  class="btn btn-success float-right mb-2 ml-4">Download</a>
 </form>
 </div>
 

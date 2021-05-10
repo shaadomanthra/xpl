@@ -1,2 +1,2 @@
-﻿Sno,name,email,phone,client_slug,college_id,branch_id,info,roll_number,year_of_passing,tenth,twelveth,bachelors,current_city,hometown
-1,Krishna Teja,packetcode@gmail.com,8688079590,xplore,35,9,,,,,,,,
+﻿Sno,name,email,phone,client_slug,college_id,branch_id,info,roll_number,year_of_passing,tenth,twelveth,bachelors,current_city,hometown,status
+1,Krishna Teja,packetcode@gmail.com,8688079590,xplore,35,9,,,,,,,,,1

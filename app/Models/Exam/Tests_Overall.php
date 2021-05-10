@@ -158,14 +158,18 @@ class Tests_Overall extends Model
                         else
                           array_push($row,'-');  
                   }else{
-                     if($f)
+                    if($f)
                         array_push($row,'Attempted');
-                    else if($f==0 || $f=='0' )
-                         array_push($row,'Attempted');  
+                    elseif($f=="0"){
+                        array_push($row,'Attempted');
+                    }
+                         
                     else
-                         array_push($row,'Unattempted'); 
+                         array_push($row,'-'); 
+                 
                   }
                 }
+
                 if(!request()->get('status')){
                     array_push($row,$r['cgpa']);
                 }
