@@ -136,7 +136,9 @@ class Tests_Overall extends Model
                 array_push($columnNames,str_replace(' ','_',$e['name'].'('.$e['max'].')'));
         
             }
-            array_push($columnNames,'CGPA(10)');
+            if(!request()->get('status')){
+                array_push($columnNames,'CGPA(10)');
+            }
 
             $rows=[];
             $i=1;
@@ -148,14 +150,25 @@ class Tests_Overall extends Model
                 
                 //dd($data);
                 foreach($r['test'] as $ef=>$f){
-                    if($f)
-                    array_push($row,$f);
+                    if(!request()->get('status')){
+                        if($f)
+                        array_push($row,$f);
+                        else if($f==0 || $f=='0' )
+                           array_push($row,'0');   
+                        else
+                          array_push($row,'-');  
+                  }else{
+                     if($f)
+                        array_push($row,'Attempted');
                     else if($f==0 || $f=='0' )
-                       array_push($row,'0');   
+                         array_push($row,'Attempted');  
                     else
-                      array_push($row,'-');  
+                         array_push($row,'Unattempted'); 
+                  }
                 }
-                array_push($row,$r['cgpa']);
+                if(!request()->get('status')){
+                    array_push($row,$r['cgpa']);
+                }
                 array_push($rows,$row);
             }
 
