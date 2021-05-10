@@ -45,7 +45,7 @@
 
   <label class="sr-only" for="inlineFormInputGroupUsername2">Group</label>
   <div class="input-group mb-2 mr-sm-2">
-    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="info" placeholder="Enter group name" value="{{request()->get('group')}}">
+    <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="info" placeholder="Enter group name" value="{{request()->get('info')}}">
   </div>
 
   <div class="form-check mb-2 mr-sm-2">
@@ -56,6 +56,7 @@
   </div>
 
   <button type="submit" class="btn btn-primary mb-2">Submit</button>
+  <a href="{{route('performance')}}?export=1 @if(request()->get('info'))&info={{request()->get('info')}} @endif @if(request()->get('exam'))&exam={{request()->get('exam')}} @endif"  class="btn btn-success float-right mb-2 ml-4">Download</a>
 </form>
 </div>
 
