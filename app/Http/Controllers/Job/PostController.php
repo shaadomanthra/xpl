@@ -482,6 +482,7 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
         dd('Email Queued - '.count($users));
         return view('home');
     }
+    
 
     
     public function updateApplicant(Request $request){
