@@ -1,15 +1,15 @@
 @extends('layouts.nowrap-white')
 
-@section('title', 'Users ')
+@section('title', 'Performance ')
 
-@section('description', 'Know you users')
+@section('description', 'Know you users performance')
 
 @section('content')
 
 @include('appl.exam.exam.xp_css')
 
 
-<div class='pb-4 dblue' >
+<div class='pb-1 dblue' >
   <div class='container'>
      <nav class="mb-0">
         
@@ -23,29 +23,7 @@
 
         </nav>
 
-        <table class="table table-bordered mb-0">
-            <thead>
-              <tr>
-                <th>
-                  <a href="{{route('performance')}}" class="">
-              All ({{$totalusers}})
-            </a>
-                </th>
-        @foreach($user_info as $k=>$ui)
-
-
-            @if($k)
-            <th>
-            <a href="{{route('performance')}}?info={{$k}}" class=" ">
-              {{$k}} ({{count($ui)}})
-            </a>
-          </th>
-            @else
-            @endif
-            @endforeach
-          </tr>
-        </thead>
-      </table>
+      
 
         
     
@@ -57,7 +35,7 @@
 
 
 <div class="container mt-4 mb-4">
-  <div class="bg-light p-4 rounded border">
+  <div class="bg-light p-4 rounded border mb-3">
   <h4>Filters</h4>
   <form class="form-inline" action="{{route('performance')}}" method="get">
   <label class="sr-only" for="inlineFormInputName2">Exams</label>
@@ -95,7 +73,7 @@
 
   <div class="row">
     <div class="col-12 col-md-12">
-   @if(count($data)!=0)
+   @if(count($exams)!=0)
         <div class="table-responsive">
           <div class="bg-light p-3 border-top border-left border-right " >Filter : <span class="badge badge-warning"> 
             @if(request()->get('month')) {{request()->get('month')}} @elseif(request()->get('role')) {{request()->get('role')}} @elseif(request()->get('info')) {{request()->get('info')}} @else All users @endif</span>
@@ -167,8 +145,8 @@
           </table>
         </div>
         @else
-        <div class="card card-body bg-light">
-          No Users listed
+        <div class="card card-body bg-light text-secondary">
+          Enter exams slugs seperated by commas to extract the candidates performance
         </div>
         @endif
      </div>

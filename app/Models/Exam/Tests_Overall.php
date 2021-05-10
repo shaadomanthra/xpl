@@ -126,4 +126,76 @@ class Tests_Overall extends Model
         return 1;
     }
 
+    public static function export($data,$exams){
+         
+            //default columns names
+            $columnNames =['sno','name','email','phone','group'];
+            $jsonNames = [];
+            //load new form fileds as columns
+            foreach($exams as $e){
+                array_push($columnNames,str_replace(' ','_',$e['name'].'('.$e['max'].')'));
+        
+            }
+            array_push($columnNames,'CGPA(10)');
+
+            $rows=[];
+            $i=1;
+            //dd($data);
+            foreach($data as $k=>$r){
+
+                //load the data
+                $row=[($i++),$r['user']->name,$r['user']->email,$r['user']->phone,$r['user']->info];
+                
+                //dd($data);
+                foreach($r['test'] as $ef=>$f){
+                    if($f)
+                    array_push($row,$f);
+                    else if($f==0 || $f=='0' )
+                       array_push($row,'0');   
+                    else
+                      array_push($row,'-');  
+                }
+                array_push($row,$r['cgpa']);
+                array_push($rows,$row);
+            }
+
+            //name the excel sheet based on tag/category/status/datefilter/user name
+            $name_suffix = '';
+            if(request()->get('exam'))
+                $name_suffix = str_replace(',','-',request()->get('exam'));
+            if(request()->get('info'))
+                $name_suffix = $name_suffix.'_'.request()->get('info');
+            if(request()->get('status')){
+                $status =['0'=>'Attempts','1'=>'Attendance','on'=>'Attendance'];
+                $name_suffix = $name_suffix.'_'.$status[request()->get('status')];
+            }
+            if(request()->get('user_id')){
+                $username = User::where('id',request()->get('user_id'))->first()->name;
+                $name_suffix = $name_suffix.'_'.$username;
+            }
+
+
+            return self::getCsv($columnNames, $rows,'data_'.strtotime("now").'_'.$name_suffix.'.csv');
+    }
+
+
+     public static function getCsv($columnNames, $rows, $fileName = 'file.csv') {
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=" . $fileName,
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
+        ];
+        $callback = function() use ($columnNames, $rows ) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columnNames);
+            foreach ($rows as $row) {
+                fputcsv($file, $row);
+            }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+    }
+
 }

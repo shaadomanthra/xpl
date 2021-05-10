@@ -1015,6 +1015,13 @@ class UserController extends Controller
 
 
     public function performance(Request $request){
+
+        if(!\auth::user())
+        abort('403','Unauthorized Access');
+
+        if(!\auth::user()->checkRole(['hr-manager','administrator']))
+        abort('403','Unauthorized Access');
+
         $client_slug = \Auth::user()->client_slug;
         $client = Client::where('slug',$client_slug)->first();
 
@@ -1074,6 +1081,7 @@ class UserController extends Controller
             $max=0;
             $cgpa=0;
             $data[$id]['user'] = $u;
+            $data[$id]['test'] = [];
             foreach($exams as $eid=>$e){
                 $data[$id]['test'][$eid] = null;
             }
@@ -1105,9 +1113,17 @@ class UserController extends Controller
             $data_sorted[$k]['cgpa'] = $data[$k]['cgpa'];
             $data_sorted[$k]['count'] = $data[$k]['count'];
         }
+
         
+        if(request('export')){
+            if (ob_get_level()) ob_end_clean();
+            return  Tests_overall::export($data_sorted,$exams);
             
-         return view('appl.user.performance')->with('data',$data_sorted)->with('exams',$exams)->with('user_info',$user_info)->with('totalusers',$totalusers);
+            
+        }else{
+            return view('appl.user.performance')->with('data',$data_sorted)->with('exams',$exams)->with('user_info',$user_info)->with('totalusers',$totalusers);
+        } 
+         
 
     }
 

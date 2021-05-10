@@ -91,7 +91,7 @@
            <div class="row mb-2">
             <div class="col-md-4">Exams</div>
             <div class="col-md-8">
-              @if($client->settings->exams)
+              @if(isset($client->settings->exams))
                 <div>{{$client->settings->exams}}</div>
               @endif
             </div>
