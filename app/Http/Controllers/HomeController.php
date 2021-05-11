@@ -117,59 +117,59 @@ class HomeController extends Controller
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
 
-//             $subject = 'Requirement .net & java developers - Pay after placement (Online Sessions)';
-//             $content = '
-
-// <p>Our training partner ‘PacketPrep’ has launched a job guaranteed training program with pay after placement model to full-fill the 150+ opening in java full stack in 14 of its clients.</p>
-
-// <p>Their recent placement drives include Machint solutions, Netenrich, Volksoft, ZenQ, Qualitlabs, Purpletalk, Magnaquest, Invesco, Innominds, Vitech and more..</p>
-
-// <p><b>The training fee can be paid after securing a job.</b></p>
-
-// <p>Interested candidates can apply here: <br>
-// <a href="http://bit.ly/fsdpp" >http://bit.ly/fsdpp</a> </p>
-
-// <p>For more details you can visit the website <a href="https://tech.packetprep.com" > https://tech.packetprep.com</a></p>
-// ';
-
-            $subject = 'Immediate Requirement for Global Logic & Netenrich';
+            $subject = 'Requirement for java developers - Pay after placement (Online Sessions)';
             $content = '
 
-<p>Our clients Global Logic & Netenrich has an immediate requirement for 2018,2019 & 2020 graduates.</p>
+<p>Our training partner ‘PacketPrep’ has launched a job guaranteed training program with pay after placement model to full-fill the 150+ opening in java full stack in 14 of its clients.</p>
 
-<p><b>Global Logic Requirement:</b></p>
-<p>Qualification:  Any Graduate<br>
-Year of Graduation: 2018-2020<br>
-Percentage Criteria: NA<br>
-Primary skills: Good Communication Skills<br>
-Role: Associate Analyst<br>
-Any Bond (Yes / No): No<br>
-Compensation: 1.85 LPA + Benefits (Two way cab + Food)<br>
-Work location: Hyderabad (Work From Home – Till the pandemic ends)<br>
-Shifts: Two Shifts (6 AM - 3 PM/3 PM - 12 AM)</p>
+<p>Their recent placement drives include Machint solutions, Netenrich, Volksoft, ZenQ, Qualitlabs, Purpletalk, Magnaquest, Invesco, Innominds, Vitech and more..</p>
 
+<p><b>The training fee can be paid after securing a job.</b></p>
 
 <p>Interested candidates can apply here: <br>
-<a href="https://xplore.co.in/jobs/29457" >https://xplore.co.in/jobs/29457</a> </p>
+<a href="http://bit.ly/fsdpp" >http://bit.ly/fsdpp</a> </p>
 
-<p><b>Netenrich Requirement:</b></p>
-<p>Qualification : B.Tech – CSE/ECE/EEE/IT<br>
-Year of Graduation : 2020<br>
-Percentage Criterion : 70% Above<br>
-Primary skills : Python Knowledge or Trained candidates and should be interested to work on Automation Testing role.<br>
-Role : QA Automation<br>
-Any Bond (Yes / No ): NA<bR>
-Compensation : 2.5 LPA - 3.5 LPA<br>
-Work location : Hyderabad<br>
-Interview Location : Online – Teams meetings<br>
-
-Interview Process : 3 Levels of Discussion<br></p>
-
-
-<p>Interested candidates can apply here: <br>
-<a href="https://xplore.co.in/jobs/20307" >https://xplore.co.in/jobs/20307</a> </p>
-
+<p>For more details you can visit the website <a href="https://tech.packetprep.com" > https://tech.packetprep.com</a></p>
 ';
+
+//             $subject = 'Immediate Requirement for Global Logic & Netenrich';
+//             $content = '
+
+// <p>Our clients Global Logic & Netenrich has an immediate requirement for 2018,2019 & 2020 graduates.</p>
+
+// <p><b>Global Logic Requirement:</b></p>
+// <p>Qualification:  Any Graduate<br>
+// Year of Graduation: 2018-2020<br>
+// Percentage Criteria: NA<br>
+// Primary skills: Good Communication Skills<br>
+// Role: Associate Analyst<br>
+// Any Bond (Yes / No): No<br>
+// Compensation: 1.85 LPA + Benefits (Two way cab + Food)<br>
+// Work location: Hyderabad (Work From Home – Till the pandemic ends)<br>
+// Shifts: Two Shifts (6 AM - 3 PM/3 PM - 12 AM)</p>
+
+
+// <p>Interested candidates can apply here: <br>
+// <a href="https://xplore.co.in/jobs/29457" >https://xplore.co.in/jobs/29457</a> </p>
+
+// <p><b>Netenrich Requirement:</b></p>
+// <p>Qualification : B.Tech – CSE/ECE/EEE/IT<br>
+// Year of Graduation : 2020<br>
+// Percentage Criterion : 70% Above<br>
+// Primary skills : Python Knowledge or Trained candidates and should be interested to work on Automation Testing role.<br>
+// Role : QA Automation<br>
+// Any Bond (Yes / No ): NA<bR>
+// Compensation : 2.5 LPA - 3.5 LPA<br>
+// Work location : Hyderabad<br>
+// Interview Location : Online – Teams meetings<br>
+
+// Interview Process : 3 Levels of Discussion<br></p>
+
+
+// <p>Interested candidates can apply here: <br>
+// <a href="https://xplore.co.in/jobs/20307" >https://xplore.co.in/jobs/20307</a> </p>
+
+// ';
 
             //Mail::to($details['email'])->send(new EmailForQueuing($details,$subject,$content));
             SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*1));
