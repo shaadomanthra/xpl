@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use PacketPrep\Mail\EmailForQueuing;
 use Mail;
+use PacketPrep\Models\Mailer\MailLog;
 
 class SendEmail implements ShouldQueue
 {
@@ -44,7 +45,13 @@ class SendEmail implements ShouldQueue
      * @return void
      */
     public function handle()
+
     {
+         if($this->details['maillog']){
+            $m = MailLog::where('id',$this->details['maillog'])->first();
+            $m->status = 1;
+            $m->save();
+       }
         Mail::to($this->details['email'])->send(new EmailForQueuing($this->details,$this->subject,$this->content));
     }
 }
