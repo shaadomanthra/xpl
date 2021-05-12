@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClubTable extends Migration
+class UpdateTOTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateClubTable extends Migration
      */
     public function up()
     {
-        Schema::create('club', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+         Schema::table('tests_overall', function (Blueprint $table) {
+            $table->Integer('shortlist')->nullable();
+            $table->longText('params')->nullable();
         });
     }
 
@@ -26,6 +26,6 @@ class CreateClubTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('club');
+        //
     }
 }

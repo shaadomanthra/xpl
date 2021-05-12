@@ -23,13 +23,14 @@
 
            @if($exam->slug!='psychometric-test')
            @if(!request()->get('score'))
-           <a href="{{ route('test.report',$exam->slug)}}?score=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-success btn-sm "> sort by score</a>
+           <a href="{{ route('test.report',$exam->slug)}}?score=1&refresh=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-success btn-sm "> sort by score</a>
            @else
-           <a href="{{ route('test.report',$exam->slug)}}?score=0 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-success btn-sm   "> sort by date</a>
+           <a href="{{ route('test.report',$exam->slug)}}?score=0&refresh=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-success btn-sm   "> sort by date</a>
            @endif
            @endif
 
            <a href="{{ route('test.analytics',$exam->slug)}}?all=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-primary btn-sm   "> <i class="fa fa-pie-chart"></i> Performance</a>
+            <a href="#" class="btn  btn-outline-secondary btn-sm   " data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-check-square-o"></i> Shortlist</a>
 
           </p>
         </div>
@@ -127,6 +128,8 @@
           </div>
         </div>
       </div>
+      
+
   </div>
 
   <div id="search-items">
@@ -137,6 +140,28 @@
 
  </div>
 
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Shortlist Tools</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning alert-important" role="alert">
+          This is a warning alert—check it out!
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal fade " id="user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

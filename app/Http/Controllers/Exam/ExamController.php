@@ -850,13 +850,17 @@ class ExamController extends Controller
         foreach($emails as $i=>$email){
             $details['email'] = $email;
 
-            $subject = 'ZenQ Test Link';
-            $content = '<p>ZenQ is conducting an online recruitment  test for the position of Software - Intern  </p>
-              <p>Your application for participating in the assessment is approved. Below are the details of the online assessment </p>
-              <p><div>Test URL: <a href="https://xplore.co.in/test/057480">https://xplore.co.in/test/057480</a> <br>
-                Access Code: KLU123 <br>
+            $subject = 'JNET Round 1 Result & Round 2 Test Link';
+            $content = '<p>The cut off for Round 1 is 53 marks. You can check your score at <a href="https://xplore.co.in/test/084682/analysis">https://xplore.co.in/test/084682/analysis</a> </p>
+              <p>Students who have crossed cut off can attempt any one of the following tests </p>
+              <p><div>.NET & React Test URL: <a href="https://xplore.co.in/test/481567 ">https://xplore.co.in/test/481567</a> <br>
+                Access Code: JNETRJFSD <br>
 
-                Date & Time of Assessment: 03rd Sep 2020 i.e Thursday; 2PM IST( The test link will be activated at 2PM)</div></p>
+                Link Expires on : 13th May 2021, 10AM </div></p>
+                <p><div>.NET & Angular Test URL: <a href="https://xplore.co.in/test/481567 ">https://xplore.co.in/test/481567</a> <br>
+                Access Code: JNETRJFSD <br>
+
+                Link Expires on : 13th May 2021, 10AM </div></p>
                 <div class="default-style">
                     <br>Note : 1)You can take test only in<strong>&nbsp;Laptop/desktop&nbsp;.</strong>
                    </div>

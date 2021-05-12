@@ -656,6 +656,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	
 	Route::post('test/{test}/delete','Exam\AssessmentController@delete')->name('assessment.delete');
 	
+	Route::resource('/mail', 'Mailer\MailController')->middleware('auth');
+
+
 	Route::resource('/coupon', 'Product\CouponController')->middleware('auth');
 	Route::get('/coupon/getamount/{amount}/{code}/{product}', 'Product\CouponController@getamount');
 	

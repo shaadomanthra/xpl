@@ -88,6 +88,8 @@ class AuthServiceProvider extends ServiceProvider
         \PacketPrep\Models\Training\Training::class => \PacketPrep\Policies\Training\TrainingPolicy::class,
         \PacketPrep\Models\Training\Schedule::class => \PacketPrep\Policies\Training\SchedulePolicy::class,
         \PacketPrep\Models\Training\Resource::class => \PacketPrep\Policies\Training\ResourcePolicy::class,
+
+        \PacketPrep\Models\Mailer\MailEvent::class => \PacketPrep\Policies\Mailer\MailPolicy::class,
     ];
 
     /**

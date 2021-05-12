@@ -79,6 +79,8 @@ class TestReport implements FromCollection, ShouldQueue
             unset($result[$k]->window_change);
             unset($result[$k]->face_detect);
             unset($result[$k]->cheat_detect);
+            unset($result[$k]->params);
+            unset($result[$k]->shortlist);
             unset($result[$k]->time);
             unset($result[$k]->max);
             unset($result[$k]->code);
@@ -119,6 +121,8 @@ class TestReport implements FromCollection, ShouldQueue
             unset($ux->window_change);
             unset($ux->face_detect);
             unset($ux->cheat_detect);
+            unset($ux->params);
+            unset($ux->shortlist);
             unset($ux->code);
             unset($ux->status);
             unset($ux->created_at);

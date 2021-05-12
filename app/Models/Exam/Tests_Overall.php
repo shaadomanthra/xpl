@@ -24,7 +24,9 @@ class Tests_Overall extends Model
         'window_change',
         'face_detect',
         'mobile_detect',
-        'cheat_detect'
+        'cheat_detect',
+        'shortlist',
+        'params',
     ];
 
     public function user(){
