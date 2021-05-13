@@ -357,8 +357,7 @@
                         <p>Greetings!</p>
                         
                         {!!$content!!}
-                        <p>Good luck! </p><br>
-                        <p>regards,<br>Xplore Team</p><br>
+                        <p>regards,<br>Xplore Team - {{$user['maillog']}} -</p><br>
                        
                        	<p >Join our Telegram group <a href="https://bit.ly/xplorejobstelegram">Xplore Jobs</a> for latest updates on job openings</p>
                       </td>
