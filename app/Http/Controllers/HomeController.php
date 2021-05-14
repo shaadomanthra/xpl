@@ -117,14 +117,17 @@ class HomeController extends Controller
             $details['email'] = $e['email'];
             $details['name'] = $e['name'];
 
-            $subject = 'Requirement for java developers - Pay after placement (Online Sessions)';
+            $subject = 'Requirement for angular & react developers - Pay after placement ';
             $content = '
 
-<p>Our training partner ‘PacketPrep’ has launched a job guaranteed training program with pay after placement model to full-fill the 150+ opening in java full stack in 14 of its clients.</p>
+<p>Our training partner ‘PacketPrep’ is doing job guaranteed training program with pay after placement model to full-fill the  requirements in angular & react technology at its partnered compaines.</p>
 
 <p>Their recent placement drives include Machint solutions, Netenrich, Volksoft, ZenQ, Qualitlabs, Purpletalk, Magnaquest, Invesco, Innominds, Vitech and more..</p>
 
-<p><b>The training fee can be paid after securing a job.</b></p>
+<p><b>The majority of the training fee can be paid after securing a job.</b></p>
+
+<p>Watch the video promo for program: <br>
+<a href="http://bit.ly/promofsd" >http://bit.ly/promofsd</a> </p>
 
 <p>Interested candidates can apply here: <br>
 <a href="http://bit.ly/fsdpp" >http://bit.ly/fsdpp</a> </p>
