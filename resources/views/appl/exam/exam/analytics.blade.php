@@ -30,7 +30,7 @@
            @endif
 
            <a href="{{ route('test.analytics',$exam->slug)}}?all=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-primary btn-sm   "> <i class="fa fa-pie-chart"></i> Performance</a>
-            <a href="#" class="btn  btn-outline-secondary btn-sm   " data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-check-square-o"></i> Shortlist</a>
+            
 
           </p>
         </div>
