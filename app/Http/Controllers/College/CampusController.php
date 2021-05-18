@@ -722,7 +722,7 @@ class CampusController extends Controller
             if($college)
                 $branches = $college->branches()->orderBy('id')->get();
             else
-                $branches = Branch::whereIn('name',['CSE','ECE','EEE','IT','CIVIL','MECH','OTHER'])->get();
+                $branches = Branch::whereIn('name',['CSE','ECE','EEE','IT','CIVIL','MECH','AERO','BE-AGRICULTURE','BIOMEDICAL','BT','OTHER'])->get();
 
             foreach($branches as $branch){
             $details['items'][$branch->id] = $campus->analytics_test($college,$branch,null,$r,null,null,$exam->id);
