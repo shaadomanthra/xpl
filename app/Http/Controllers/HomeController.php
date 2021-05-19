@@ -39,6 +39,21 @@ class HomeController extends Controller
 
     }
 
+    public function phpword(){
+
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+
+        $source = "hello.docx";
+
+
+echo date('H:i:s'), " Reading contents from `{$source}`";
+$phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
+$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
+$objWriter->save('doc.html');
+dd('completed');
+
+    }
+
     /**
      * Show the application dashboard.
      *

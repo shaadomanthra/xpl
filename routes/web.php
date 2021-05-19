@@ -30,6 +30,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 
 	Route::get('testemail','HomeController@testemail')->middleware('auth');
 	Route::get('aws','HomeController@aws')->middleware('auth');
+	Route::get('phpword','HomeController@phpword')->middleware('auth');
 
 
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
