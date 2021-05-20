@@ -118,19 +118,19 @@ class Section extends Model
 
     public function saveQuestion($exam_id,$question){
 
-        $ques = null;
-        $ques = Question:where('reference',$question['qno'])->first();
-        if(!$ques){
-            $ques = new Question();
-        }
-        $ques->reference = $question['qno'];
-        $ques->user_id = \Auth::user()->id;
-        $ques->question = $question['qno'];
-        $sec->mark = intval($section['mark']);
-        $sec->time = intval($section['time']);
-        $sec->mark = intval($section['negative']);
-        $sec->instructions = null;
-        $sec->save();
+        // $ques = null;
+        // $ques = Question:where('reference',$question['qno'])->first();
+        // if(!$ques){
+        //     $ques = new Question();
+        // }
+        // $ques->reference = $question['qno'];
+        // $ques->user_id = \Auth::user()->id;
+        // $ques->question = $question['qno'];
+        // $sec->mark = intval($section['mark']);
+        // $sec->time = intval($section['time']);
+        // $sec->mark = intval($section['negative']);
+        // $sec->instructions = null;
+        // $sec->save();
 
     }
 
