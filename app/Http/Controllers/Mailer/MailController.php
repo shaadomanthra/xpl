@@ -30,7 +30,7 @@ class MailController extends Controller
         $search = $request->search;
         $item = $request->item;
         
-        $objs = $obj->select(['name','status','created_at'])->where('name','LIKE',"%{$item}%")->with('maillog')
+        $objs = $obj->select(['name','id','status','created_at'])->where('name','LIKE',"%{$item}%")->with('maillog')
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records'));   
         $view = $search ? 'list': 'index';
