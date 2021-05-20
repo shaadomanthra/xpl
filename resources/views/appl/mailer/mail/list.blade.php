@@ -6,7 +6,6 @@
               <tr>
                 <th scope="col">#({{$objs->total()}})</th>
                 <th scope="col">Name </th>
-                <th scope="col">Count </th>
                 <th scope="col">Status</th>
                 <th scope="col">Created at</th>
               </tr>
@@ -20,9 +19,7 @@
                   {{ $obj->name }}
                   </a>
                 </td>
-                 <td>
-                  {{ $obj->maillog->count() }}
-                </td>
+                 
                 <td>
                   @if($obj->status==0)
                     <span class="badge badge-warning">Inactive</span>
