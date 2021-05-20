@@ -8,6 +8,7 @@ use PacketPrep\Jobs\SendEmail;
 use PacketPrep\Jobs\FaceDetect;
 use PacketPrep\Mail\EmailForQueuing;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\User;
 use Google\Cloud\Core\ServiceBuilder;  
@@ -41,18 +42,17 @@ class HomeController extends Controller
 
     public function phpword(){
 
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $sec = new Section();
+        $source = "Exam.docx";
+        $name = 'docs/doc_'.\Auth::user()->id.'.html';
+        $sec->wordToHtml($source,$name);
 
-        $source = "hello.docx";
+        $data = $sec->readHtmlTables(file_get_contents($name));
 
-
-echo date('H:i:s'), " Reading contents from `{$source}`";
-$phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
-$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-$objWriter->save('doc.html');
-dd('completed');
+        dd($data);
 
     }
+
 
     /**
      * Show the application dashboard.

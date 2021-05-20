@@ -93,7 +93,7 @@ class MailController extends Controller
             $m->save();
             $details['maillog'] = $m->id;
 
-            SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*5));
+            SendEmail::dispatch($details,$subject,$content)->delay(now()->addSeconds($i*2));
 
         }
 
