@@ -9,6 +9,7 @@ use PacketPrep\Models\Mailer\MailLog;
 use PacketPrep\Jobs\SendEmail;
 use PacketPrep\Jobs\PdfDownload;
 use PacketPrep\Mail\EmailForQueuing;
+use PacketPrep\User;
 
 class MailController extends Controller
 {
@@ -66,6 +67,11 @@ class MailController extends Controller
                 if ($data['event'] === 'delivered') {
                     $m->status = 2;
                 }else if($data['event'] === 'failed'){
+                    $usrs = User::where('email',$m->email)->get();
+                    foreach($usrs as $u){
+                        $u->status = 3;
+                        $u->save();
+                    }
                     $m->status = 3;
                 }
                 $m->save();
