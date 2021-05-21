@@ -33,7 +33,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::get('phpword','HomeController@phpword')->middleware('auth');
 
 
-Route::post('/mail/delivery', 'HomeController@phpword')->middleware('mailgun');
+Route::post('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
 	Route::post('/mail/delivery2', 'Mailer\MailController@deliveryStatus');
 	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus');
 
