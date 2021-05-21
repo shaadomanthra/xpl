@@ -68,6 +68,7 @@ class MailController extends Controller
                     $m->status = 2;
                 }else if($data['event'] === 'failed'){
                     $usrs = User::where('email',$m->email)->get();
+                    if(count($usrs)>0)
                     foreach($usrs as $u){
                         $u->status = 3;
                         $u->save();
