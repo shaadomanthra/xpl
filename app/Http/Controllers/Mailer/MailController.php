@@ -53,6 +53,7 @@ class MailController extends Controller
     {
         $data = $request->get('event-data');
 
+        dd($request);
         $message_id = $data['message']['headers']['message-id'];
 
         dd($message_id);
