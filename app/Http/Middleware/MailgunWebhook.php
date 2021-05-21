@@ -16,6 +16,7 @@ class MailgunWebhook
      */
     public function handle($request, Closure $next)
     {
+        dd($request);
         if (!$request->isMethod('post')) {
             abort(Response::HTTP_FORBIDDEN, 'Only POST requests are allowed.');
         }
