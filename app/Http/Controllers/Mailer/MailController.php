@@ -53,22 +53,28 @@ class MailController extends Controller
     {
         
         $data = $request->get('event-data');
-        $message_id = $data['message']['headers']['message-id'];
-        $m = MailLog::where('message_id',$message_id)->first();
-     
+        if($data){
+            $message_id = $data['message']['headers']['message-id'];
+            $m = MailLog::where('message_id',$message_id)->first();
+         
 
-        if ($m) {
-            // if ($data['event'] === 'opened' || $data['event'] === 'clicked') {
-             
-            // }
+            if ($m) {
+                // if ($data['event'] === 'opened' || $data['event'] === 'clicked') {
+                 
+                // }
 
-            if ($data['event'] === 'delivered') {
-                $m->status = 2;
-            }else if($data['event'] === 'failed'){
-                $m->status = 3;
+                if ($data['event'] === 'delivered') {
+                    $m->status = 2;
+                }else if($data['event'] === 'failed'){
+                    $m->status = 3;
+                }
+                $m->save();
             }
-            $m->save();
+        }else{
+            echo "no data";
+            exit();
         }
+        
 
     }
 
