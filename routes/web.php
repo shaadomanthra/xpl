@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Storage;
 
 
 
+Route::post('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
+	Route::post('/mail/delivery2', 'Mailer\MailController@deliveryStatus');
+	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus');
+	
 Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::class]], function () {
 	
 	Route::get('/', 'HomeController@root')->name('root');
@@ -33,9 +37,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::get('phpword','HomeController@phpword')->middleware('auth');
 
 
-Route::post('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
-	Route::post('/mail/delivery2', 'Mailer\MailController@deliveryStatus');
-	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus');
+
 
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
 
