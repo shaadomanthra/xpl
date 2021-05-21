@@ -34,8 +34,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 
 
 Route::post('/mail/delivery', 'HomeController@phpword')->middleware('mailgun');
-	Route::post('/mail/delivery2', 'HomeController@phpword');
-	Route::get('/mail/delivery', 'HomeController@phpword');
+	Route::post('/mail/delivery2', 'Mailer\MailController@deliveryStatus');
+	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus');
 
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
 

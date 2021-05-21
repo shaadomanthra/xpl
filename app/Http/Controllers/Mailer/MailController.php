@@ -52,8 +52,8 @@ class MailController extends Controller
     public function deliveryStatus(Request $request)
     {
         
-
-        dd($request);
+        echo "here in delivery status";
+        exit();
         $message_id = $data['message']['headers']['message-id'];
 
         dd($message_id);
