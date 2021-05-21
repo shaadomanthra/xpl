@@ -33,6 +33,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::get('phpword','HomeController@phpword')->middleware('auth');
 
 
+Route::post('/mail/delivery', 'HomeController@phpword')->middleware('mailgun');
+	Route::post('/mail/delivery2', 'HomeController@phpword');
+	Route::get('/mail/delivery', 'HomeController@phpword');
+
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
 
 	Route::get('/participants','Product\ProductController@participants')->name('participants')->middleware('auth');
@@ -657,9 +661,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	
 	Route::post('test/{test}/delete','Exam\AssessmentController@delete')->name('assessment.delete');
 	
-	Route::post('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
-	Route::post('/mail/delivery2', 'Mailer\MailController@deliveryStatus');
-	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
+
 	Route::resource('/mail', 'Mailer\MailController')->middleware('auth');
 
 
