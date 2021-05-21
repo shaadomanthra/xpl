@@ -52,11 +52,10 @@ class MailController extends Controller
     public function deliveryStatus(Request $request)
     {
         
-        echo "here in delivery status";
-        exit();
+        $data = $request->get('event-data');
         $message_id = $data['message']['headers']['message-id'];
 
-        dd($message_id);
+        dd($data);
 
         // if ($email = Message::whereMessageId($message_id)->first()) {
         //     if ($data['event'] === 'opened' || $data['event'] === 'clicked') {
