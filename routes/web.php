@@ -658,7 +658,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::post('test/{test}/delete','Exam\AssessmentController@delete')->name('assessment.delete');
 	
 	Route::post('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
-	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus');
+	Route::post('/mail/delivery2', 'Mailer\MailController@deliveryStatus');
+	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
 	Route::resource('/mail', 'Mailer\MailController')->middleware('auth');
 
 
