@@ -5,6 +5,7 @@ namespace PacketPrep\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use PacketPrep\Models\Mailer\MailLog;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -34,7 +35,13 @@ class EmailForQueuing extends Mailable
      */
     public function build()
     {
-
+        $this->withSwiftMessage(function ($message) {
+            $m = MailLog::where('id',$this->user['maillog'])->first();
+            $m->message_id = $message->getId();
+            $m->status = 1;
+            $m->save();
+            
+        });
       
        return $this->from('no-reply@xplore.co.in', 'Xplore')
             ->subject($this->subject)

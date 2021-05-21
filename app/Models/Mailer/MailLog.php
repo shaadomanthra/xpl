@@ -13,6 +13,7 @@ class MailLog extends Model
         'email',
         'status',
         'mailevent_id',
+        'message_id',
         // add all other fields
     ];
 }

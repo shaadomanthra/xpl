@@ -48,9 +48,7 @@ class SendEmail implements ShouldQueue
 
     {
          //if($this->details['maillog']){
-            $m = MailLog::where('id',$this->details['maillog'])->first();
-            $m->status = 1;
-            $m->save();
+            
        //}
         Mail::to($this->details['email'])->send(new EmailForQueuing($this->details,$this->subject,$this->content));
     }
