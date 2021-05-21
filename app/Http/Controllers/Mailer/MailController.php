@@ -145,6 +145,33 @@ class MailController extends Controller
     }
 
 
+    public function freeze($obj)
+    {
+        
+
+        $emails = implode(',',explode("\n", $obj->emails));
+        $emails =str_replace("\r", '', $emails);
+        $emails = array_unique(explode(',',$emails));
+
+        $users = User::whereIn('email',$emails)->get();
+            if($users)
+            foreach($users as $u){
+                $u->status=4;
+                $u->save();
+            }
+
+        // foreach($emails as $i=>$email){
+        //     $details['email'] = $email;
+            
+
+            
+
+
+        // }
+
+        return count($users);
+
+    }
     
 
    
@@ -185,6 +212,12 @@ class MailController extends Controller
         if(request()->get('sendmail')){
             $count = $this->sendmail($obj);
             flash('Successfully queued '.$count.' emails')->success();
+            return redirect()->route($this->module.'.show',$id);
+        }
+
+        if(request()->get('freeze')){
+            $count = $this->freeze($obj);
+            flash('Successfully frozen  '.$count.' user accounts')->success();
             return redirect()->route($this->module.'.show',$id);
         }
 
