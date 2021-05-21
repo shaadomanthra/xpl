@@ -42,6 +42,32 @@ class MailController extends Controller
     }
 
 
+    /**
+     * Handles the Stripe Webhook call.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return mixed
+     */
+    public function deliveryStatus(Request $request)
+    {
+        $data = $request->get('event-data');
+
+        $message_id = $data['message']['headers']['message-id'];
+
+        dd($message_id);
+
+        // if ($email = Message::whereMessageId($message_id)->first()) {
+        //     if ($data['event'] === 'opened' || $data['event'] === 'clicked') {
+        //         $email->increment($data['event']);
+        //     }
+
+        //     if ($data['event'] === 'delivered' || $data['event'] === 'failed') {
+        //         $email->update(["{$data['event']}_at" => now()]);
+        //     }
+        // }
+    }
+
     
     
     /**

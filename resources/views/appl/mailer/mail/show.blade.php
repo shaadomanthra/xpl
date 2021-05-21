@@ -32,21 +32,8 @@
      
       <div class="card mb-4">
         <div class="card-body">
-          @foreach($obj->getAttributes() as $key=>$item)
-          <div class="row mb-2">
-            <div class="col-md-4">{{ $key }}</div>
-            <div class="col-md-8">{!! $item !!}</div>
-          </div>
-          @endforeach
-          
-          @if(!isset($logs[1]))
-          <div class="row mb-2">
-            <div class="col-md-4"> </div>
-            <div class="col-md-8"><a href="{{route('mail.show',$obj->id)}}?sendmail=1" class="btn btn-outline-secondary my-4"  >Queue Email Now</a></div>
-          </div>
-          @endif
 
-          <hr>
+
           <div class="row mb-2">
             <div class="col-md-4">Mails Queued</div>
             @if(isset($logs[0]))
@@ -74,6 +61,23 @@
             <div class="col-md-8"> 0 </div>
             @endif
           </div>
+
+          <hr>
+          @foreach($obj->getAttributes() as $key=>$item)
+          <div class="row mb-2">
+            <div class="col-md-4">{{ $key }}</div>
+            <div class="col-md-8">{!! $item !!}</div>
+          </div>
+          @endforeach
+          
+          @if(!isset($logs[1]))
+          <div class="row mb-2">
+            <div class="col-md-4"> </div>
+            <div class="col-md-8"><a href="{{route('mail.show',$obj->id)}}?sendmail=1" class="btn btn-outline-secondary my-4"  >Queue Email Now</a></div>
+          </div>
+          @endif
+
+          
 
         </div>
       </div>
