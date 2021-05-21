@@ -67,8 +67,9 @@ class MailController extends Controller
             }else if($data['event'] === 'failed'){
                 $m->status = 3;
             }
+            $m->save();
         }
-        $m->save();
+
     }
 
     
