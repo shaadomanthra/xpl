@@ -85,6 +85,7 @@ class UsersExport implements FromCollection,ShouldAutoSize
                 $d = json_decode($users[$k]->pivot->data);
                 $ax="-";
                 foreach($data as $m=>$ex){
+                    $ex = str_replace(" ","_",$ex);
                     $name = 'e_'.$m;
                     if($d){
                         $dt = $d->questions;
@@ -105,7 +106,7 @@ class UsersExport implements FromCollection,ShouldAutoSize
                 if(request()->get('resume')){
                     $users[$k]->resume = '-';
                     if(Storage::disk('s3')->exists('resume/resume_'.$username.'.pdf')){
-                        $users[$k]->resume = Storage::disk('s3')->exists('resume/resume_'.$username.'.pdf');
+                        $users[$k]->resume = Storage::disk('s3')->url('resume/resume_'.$username.'.pdf');
                     }
                 
                 }

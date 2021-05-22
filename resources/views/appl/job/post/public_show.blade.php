@@ -45,7 +45,7 @@
           @include('flash::message')
 
         @if(trim($status_message))
-        <div class="alert alert-success alert-important mt-3">
+        <div class="alert alert-primary alert-important mt-3">
           <h4>Important Note:</h4>
         {!! $status_message !!}
         </div>
