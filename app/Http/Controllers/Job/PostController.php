@@ -806,6 +806,7 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
 
         //$user = \Auth::user();
         $userdata = null;
+        if($user)
         $userdata = $obj->users->find($user->id);
         
         
