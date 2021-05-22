@@ -763,7 +763,7 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
                         if(isset($data->accesscodes)){
                             $acodes = explode(',',strtoupper($data->accesscodes));
                             if(!in_array($v,$acodes)){
-                                flash('Accesscode not valid')->success();
+                                flash('Accesscode not valid')->error();
                                 return redirect()->back();
                             }   
                                 

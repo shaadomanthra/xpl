@@ -38,14 +38,14 @@
               @endif
             </div>
 
-        @include('flash::message')
+        
 
         <h1 class="mb-4 mt-3">{{$obj->title}}</h1>
         
-
+          @include('flash::message')
 
         @if(trim($status_message))
-        <div class="alert alert-success alert-important">
+        <div class="alert alert-success alert-important mt-3">
           <h4>Important Note:</h4>
         {!! $status_message !!}
         </div>
