@@ -14,6 +14,7 @@
     <div class="form-group ">
         <label for="exampleInputVideo">Resume (Only PDF Supported)</label>
         <input type="file" class="form-control" name="file" id="formGroupExampleInput" >
+         <input type="hidden" name="redirect" value="{{ request()->get('redirect') }}">
     </div>
     {{ csrf_field() }}
     <button type="submit" class="btn btn-primary">Submit</button>

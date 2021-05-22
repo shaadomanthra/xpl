@@ -32,7 +32,7 @@
 					</div>
 					@elseif(!Storage::disk('s3')->exists('resume/resume_'.\auth::user()->username.'.pdf'))
 					 <div class="alert alert-info alert-important" role="alert">
-					<p class="mb-0" >Your resume is not uploaded to xplore platform. You can update it here <a href="{{route('resume.upload')}}">Update Resume</a> </p>
+					<p class="mb-0" >Your resume is not uploaded to xplore platform. You can update it here <a href="{{route('resume.upload')}}?redirect={{request()->url()}}">Update Resume</a> </p>
 					</div>
 					@elseif(!in_array(auth::user()->branch->name,explode(',',$obj->education)))
 

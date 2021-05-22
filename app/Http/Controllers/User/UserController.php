@@ -122,6 +122,9 @@ class UserController extends Controller
             }
 
             flash('PDF item removed from server')->success();
+            if(request()->get('redirect'))
+            return redirect()->to(request()->get('redirect'));
+            else
             return redirect()->route('resume.upload');
 
         }
@@ -140,9 +143,14 @@ class UserController extends Controller
             }
 
             flash('PDF item removed from server')->success();
+            if(request()->get('redirect'))
+            return redirect()->to(request()->get('redirect'));
+            else
             return redirect()->route('resume.upload');
 
         }
+
+
          /* If image is given upload and store path */
             if(isset($request->all()['file'])){
 
@@ -161,6 +169,9 @@ class UserController extends Controller
                     Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
 
                     flash('PDF Successfully updated')->success();
+                    if(request()->get('redirect'))
+                    return redirect()->to(request()->get('redirect'));
+                    else
                     return redirect()->route('resume.upload');
                     
                 }else{
@@ -175,6 +186,9 @@ class UserController extends Controller
             }
 
             flash('Unknown error in uploading the pdf file')->danger();
+            if(request()->get('redirect'))
+            return redirect()->to(request()->get('redirect'));
+            else
             return redirect()->route('resume.upload');
        
     }
