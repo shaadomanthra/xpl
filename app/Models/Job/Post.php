@@ -43,7 +43,7 @@ class Post extends Model
 
     public function updateApplicant($post_id,$user_id,$score,$shortlisted,$return=false){
         $entry = DB::table('post_user')->where('post_id', $post_id)->where('user_id',$user_id)
-                ->update(['score' => $score,'shortlisted'=>$shortlisted]);
+                ->update(['score' => $score,'shortlisted'=>strtoupper(str_replace(' ','',$shortlisted))]);
         if($return)
             return 1;
         echo $entry;

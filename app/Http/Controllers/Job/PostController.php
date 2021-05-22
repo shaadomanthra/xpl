@@ -181,6 +181,9 @@ class PostController extends Controller
         });
 
          if($request->get('refresh')==1){
+            if($request->get('uploaded'))
+                flash('Data updated!')->success();
+            else
             flash('Cache is Refreshed!')->success();
             Cache::forget('post_appl_'.$slug);
             Cache::forget('post_users_'.$slug);
@@ -199,6 +202,10 @@ class PostController extends Controller
             Cache::forget('filter_'.$slug.'_YES');
             Cache::forget('filter_'.$slug.'_NO');
             Cache::forget('filter_'.$slug.'_MAYBE');
+            Cache::forget('filter_'.$slug.'__');
+            Cache::forget('filter_'.$slug.'__YES');
+            Cache::forget('filter_'.$slug.'__NO');
+            Cache::forget('filter_'.$slug.'__MAYBE');
             
         }
 
@@ -224,7 +231,7 @@ class PostController extends Controller
                     
                 }
 
-                return redirect()->route('job.applicants',$slug)->with('refresh',1);
+                return redirect()->route('job.applicants',["slug"=>$slug,"refresh"=>1,"uploaded"=>1])->with('refresh',1);
             }
         }
 
@@ -286,10 +293,10 @@ class PostController extends Controller
                 request()->session()->put('exam_data',$exam_data);
                 request()->session()->put('exams',$exms);
                 request()->session()->put('data',$data);
-                $name = "Applicants_job_".$obj->slug.".xlsx";
+                $name = "Applicants_job_".$obj->slug.".csv";
                 ob_end_clean(); // this
                 ob_start(); 
-                return Excel::download(new UsersExport, $name);
+                return Excel::download(new UsersExport, $name,\Maatwebsite\Excel\Excel::CSV);
 
             // if($objs->total() <= 500){
                 
@@ -366,7 +373,7 @@ class PostController extends Controller
 
                 $shortlisted = $request->get('shortlisted');
 
-                $st = str_replace(' ', '', $request->get('shortlisted'));
+                $st = strtoupper(str_replace(' ', '', $request->get('shortlisted')));
 
                 if(!$shortlisted){
                     $shortlisted = ['YES','NO','MAYBE'];
@@ -400,7 +407,7 @@ class PostController extends Controller
                 //dd($obj->users()->wherePivot('created_at','')->get());
 
 
-
+               
                 $objs_cache_filter = Cache::remember('filter_'.$slug.'_'.$profile.'_'.$st,240, function() use($obj,$shortlisted,$p_uids){
 
                     
