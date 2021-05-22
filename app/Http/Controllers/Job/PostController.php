@@ -117,6 +117,8 @@ class PostController extends Controller
         
         $users = $obj->users;
 
+
+
         $data['colleges'] = Cache::remember('college',240,function(){
                     return College::orderBy('name')->get()->keyBy('id');
                 });
@@ -130,8 +132,21 @@ class PostController extends Controller
         $data['yop_group'] = $users->groupBy('year_of_passing');
         $data['no_video'] = count($users->where('video',''));
         $data['video'] = $data['total'] - $data['no_video'];
+        $data['codes'] = [];
+        $codes = [];
+
+        foreach($users as $u){
+            $extra = json_decode($u->pivot->data);
 
 
+            if(isset($extra->accesscode)){
+                if(!isset($codes[$extra->accesscode]))
+                    $codes[$extra->accesscode] = 0;
+                $codes[$extra->accesscode] = $codes[$extra->accesscode] +1;
+            }
+        }
+        $data['codes'] = $codes;
+        
 
         if(request()->get('sendmail')){
             //$users = $obj->users()->whereIn('year_of_passing',[2018,2019,2020])->get();
@@ -694,6 +709,7 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
     {
 
         $user = \auth::user();
+        
 
         if($request->get('refresh')){
             Cache::forget('post_'.$id);
@@ -739,14 +755,16 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
                         
                     }
                     if (strpos($k, 'accesscode') !== false){
-                        $json['accesscode'] = $v;
+                        $v = strtoupper($v);
+                        $json['accesscode'] = strtoupper($v);
+
 
                         if($data->accesscodes)
                         if(isset($data->accesscodes)){
-                            $acodes = explode(',',$data->accesscodes);
+                            $acodes = explode(',',strtoupper($data->accesscodes));
                             if(!in_array($v,$acodes)){
-                                flash('Accesscode not valid')->error();
-                                return redirect()->back()->withInput();
+                                flash('Accesscode not valid')->success();
+                                return redirect()->back();
                             }   
                                 
                         }

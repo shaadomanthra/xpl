@@ -30,7 +30,16 @@
       <div class="col-12 col-md-4">
         <div class="mt-2 ">
         
-        <a href="{{ route('job.applicants',$obj->slug)}}?export=1" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
+        
+        <div class="dropdown float-right">
+  <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Excel
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="{{ route('job.applicants',$obj->slug)}}?export=1">Data</a><hr>
+    <a class="dropdown-item" href="{{ route('job.applicants',$obj->slug)}}?export=1&resume=1">Data + Resume Link <br>(more processing time) </a>
+  </div>
+</div>
         
 
           <form class="form-inline mr-3 " method="GET" action="{{ route('job.applicants',$obj->slug) }}">

@@ -8,6 +8,7 @@ use PacketPrep\Models\College\College;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UsersExport implements FromCollection,ShouldAutoSize
 {
@@ -24,6 +25,7 @@ class UsersExport implements FromCollection,ShouldAutoSize
        $data = request()->session()->get('data');
         foreach($users as $k=>$u){
                 $id = $users[$k]->id;
+                $username = $users[$k]->username;
                 unset($users[$k]->id);
                 unset($users[$k]->created_at);
                 unset($users[$k]->updated_at);
@@ -81,11 +83,13 @@ class UsersExport implements FromCollection,ShouldAutoSize
 
 
                 $d = json_decode($users[$k]->pivot->data);
-
+                $ax="-";
                 foreach($data as $m=>$ex){
                     $name = 'e_'.$m;
                     if($d){
                         $dt = $d->questions;
+                        if($d->accesscode!='true')
+                            $ax = $d->accesscode;
                        
                     }
                     if(isset($d->questions->$ex)){
@@ -97,11 +101,19 @@ class UsersExport implements FromCollection,ShouldAutoSize
                     }
 
                 }
+                $users[$k]->access = $ax;
+                if(request()->get('resume')){
+                    $users[$k]->resume = '-';
+                    if(Storage::disk('s3')->exists('resume/resume_'.$username.'.pdf')){
+                        $users[$k]->resume = Storage::disk('s3')->exists('resume/resume_'.$username.'.pdf');
+                    }
+                
+                }
+                
                 $users[$k]->uid = $id;
                 $users[$k]->created_at = $users[$k]->pivot->created_at;
             
         } 
-
 
 
         $ux = new User();
@@ -142,6 +154,10 @@ class UsersExport implements FromCollection,ShouldAutoSize
 
         }
 
+        $ux->accesscode = "Access Code";
+         if(request()->get('resume')){
+        $ux->resume = "Resume";
+        }
         $ux->c11 = "UID";
         $ux->c12 = "timestamp";
 

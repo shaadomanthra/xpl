@@ -37,8 +37,11 @@
                 </div>
               @endif
             </div>
-        <h1 class="mb-4">{{$obj->title}}</h1>
+
         @include('flash::message')
+
+        <h1 class="mb-4 mt-3">{{$obj->title}}</h1>
+        
 
 
         @if(trim($status_message))

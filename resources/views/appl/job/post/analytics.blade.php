@@ -101,6 +101,26 @@
   </tbody>
 </table>
 
+<table class="table table-bordered">
+  <thead class='thead-light'>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Access Codes</th>
+      <th scope="col">Count</th>
+    </tr>
+  </thead>
+  <tbody class="{{$j=0}}">
+    @foreach($data['codes'] as $key=>$c)
+    <tr>
+      <th scope="row">{{($j+1)}}</th>
+      <td>{{$key}}</td>
+      <td>{{$c}}</td>
+    </tr>
+    @endforeach
+   
+  </tbody>
+</table>
+
     </div>
     <div class="col-12 col-md-6">
       <table class="table table-bordered">
