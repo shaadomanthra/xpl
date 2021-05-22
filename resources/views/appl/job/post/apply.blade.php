@@ -8,7 +8,7 @@
 		  <hr>
 		  @if($userdata->pivot->shortlisted=="YES")
 		  <h2>Status : <span class="badge badge-primary">Shortlisted</span></h2>
-		  @elseif($userdata->pivot->shortlisted=="MAY BE")
+		  @elseif($userdata->pivot->shortlisted=="MAYBE")
 		  <h2>Status : <span class="badge badge-secondary ">Under Review</span></h2>
 		  @elseif($userdata->pivot->shortlisted=="NO")
 		  <h2>Status : <span class="badge badge-danger">Rejected</span></h2>
