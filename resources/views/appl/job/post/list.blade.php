@@ -29,9 +29,13 @@
                 </td>
                 <td>
                   @if($obj->status==0)
-                    <span class="badge badge-warning">Draft</span>
+                    <span class="badge badge-secondary">Draft</span>
                   @elseif($obj->status==1)
-                    <span class="badge badge-success">Active</span>
+                    <span class="badge badge-success">Public</span>
+                    @elseif($obj->status==2)
+                <span class="badge badge-warning">Unlisted</span>
+              @else
+                <span class="badge badge-info">Priavte</span>
                   @endif
                 </td>
                 <td>{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</td>

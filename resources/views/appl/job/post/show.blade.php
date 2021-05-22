@@ -33,7 +33,7 @@
     <a href="{{route('job.show',$obj->slug)}}" class="f20 text-white" > <i class="fa fa-external-link" ></i> {{route('job.show',$obj->slug)}}</a>&nbsp; @if($obj->status==0)
                 <span class="badge badge-secondary">Draft</span>
                 @elseif($obj->status==1)
-                <span class="badge badge-success">Active</span>
+                <span class="badge badge-success">Public</span>
                 @elseif($obj->status==2)
                 <span class="badge badge-warning">Unlisted</span>
               @else
