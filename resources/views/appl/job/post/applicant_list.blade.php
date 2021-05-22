@@ -19,7 +19,7 @@
               @foreach($objs as $key=>$obj)  
               <tr id="tr{{$obj['id']}}" @if($obj['pivot']['shortlisted']=="YES")
                   style='background: #dffbe2' 
-                @elseif($obj['pivot']['shortlisted']=="MAY BE")
+                @elseif($obj['pivot']['shortlisted']=="MAYBE")
                   style='background: #ffffed' 
                 @elseif($obj['pivot']['shortlisted']=="NO")
                   style='background: #fff3f3'
