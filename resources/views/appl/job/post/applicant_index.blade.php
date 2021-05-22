@@ -86,7 +86,7 @@
       </div>
       <div class="col-6 col-md-3 ">
         <div class=" p-3 rounded " style="background: #fffdf6;border:1px solid #ece8d5">
-          <h5 class="text-warning"><i class="fa fa-ban"></i> Shortlisted (MAYBE)</h5>
+          <h5 class="text-warning"><i class="fa fa-ban"></i> Shortlisted (MAY BE)</h5>
           <div class="display-3"><a href="{{ route('job.applicants',$obj->slug)}}?filter=1&shortlisted=MAYBE">{{$app->maybe}}</a>
           </div>
         </div>

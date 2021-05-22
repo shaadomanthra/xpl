@@ -342,7 +342,7 @@ class PostController extends Controller
                     $this->yes++;
                 elseif($usx['pivot']['shortlisted']=='NO')
                     $this->no++; 
-                elseif($usx['pivot']['shortlisted']=='MAY BE')
+                elseif($usx['pivot']['shortlisted']=='MAYBE')
                     $this->maybe++; 
                 else
                     $this->none++;
@@ -369,7 +369,7 @@ class PostController extends Controller
                 $st = str_replace(' ', '', $request->get('shortlisted'));
 
                 if(!$shortlisted){
-                    $shortlisted = ['YES','NO','MAY BE'];
+                    $shortlisted = ['YES','NO','MAYBE'];
                 }else{
                     $filter = 'Shortlisted - '.$shortlisted;
                     $shortlisted = [$shortlisted];
