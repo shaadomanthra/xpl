@@ -244,8 +244,9 @@
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
           <option value="0" @if(isset($obj)) @if($obj->status==0) selected @endif @endif >Draft</option>
-          <option value="1" @if(isset($obj)) @if($obj->status==1) selected @endif @endif >Active</option>
-          <option value="2" @if(isset($obj)) @if($obj->status==2) selected @endif @endif >Private</option>
+          <option value="1" @if(isset($obj)) @if($obj->status==1) selected @endif @endif >Public (visible to all)</option>
+          <option value="3" @if(isset($obj)) @if($obj->status==3) selected @endif @endif >Private (Logged in users)</option>
+          <option value="2" @if(isset($obj)) @if($obj->status==2) selected @endif @endif >Unlisted (Not listed in the jobs page)</option>
         </select>
       </div>
 
@@ -298,11 +299,11 @@
         <div class="col-12 ">
           <div class="form-group">
         <label for="formGroupExampleInput ">Access Codes</label>
-        <input type="text" class="form-control" name="extra" id="formGroupExampleInput" placeholder="" 
+        <input type="text" class="form-control" name="accesscodes" id="formGroupExampleInput" placeholder="" 
             @if($stub=='Create')
-            value="{{ (old('extra')) ? old('extra') : '' }}"
+            value="{{ (old('accesscodes')) ? old('accesscodes') : '' }}"
             @else
-            value = "{{ $obj->extra }}"
+            value = "{{ $obj->accesscodes }}"
             @endif
           >
         <small class="text-secondary">You can add more than one access code seperated by commas</small>
@@ -317,7 +318,13 @@
         <label for="formGroupExampleInput ">Shortlisting Conditions</label><textarea class="form-control " name="conditions"  rows="5">@if($stub=='Create'){{ (old('conditions')) ? old('conditions') : '' }}@else {{ $obj->conditions }} @endif</textarea>
       </div>
       
+      <div class="form-group ">
+        <label for="formGroupExampleInput ">Questions</label><textarea class="form-control " name="questions"  rows="5">@if($stub=='Create'){{ (old('questions')) ? old('questions') : '' }}@else {{ $obj->questions }} @endif</textarea>
+      </div>
 
+      <div class="form-group ">
+        <label for="formGroupExampleInput ">Imporant Note (this will be displayed on the job posting page)</label><textarea class="form-control " name="status_message"  rows="5">@if($stub=='Create'){{ (old('status_message')) ? old('status_message') : '' }}@else {{ $obj->status_message }} @endif</textarea>
+      </div>
      
 
       

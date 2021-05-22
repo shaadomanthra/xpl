@@ -186,6 +186,33 @@ class PostController extends Controller
             Cache::forget('filter_'.$slug.'_MAYBE');
             
         }
+
+        if($request->get('upload')){
+           $data = [];
+            if(isset($request->all()['file'])){
+
+                $file      = $request->all()['file'];
+
+                if(strtolower($file->getClientOriginalExtension()) != 'csv'){
+                    flash('Supports only .csv files')->error();
+                    return redirect()->back()->withInput(); 
+                }
+
+                $data = $obj->csvToArray($file);
+
+                
+                for ($i = 0; $i < count($data); $i ++)
+                {
+                    $uid = $data[$i]['UID'];
+                    $s = $data[$i]['Shortlisted'];
+                    $obj->updateApplicant($obj->id,$uid,null,$s,true);
+                    
+                }
+
+                return redirect()->route('job.applicants',$slug)->with('refresh',1);
+            }
+        }
+
         
         $colleges = Cache::remember('colleges',240, function(){
 
@@ -224,6 +251,12 @@ class PostController extends Controller
         $this->maybe = 0;
         $this->total = 0;
         $this->none = 0;
+
+        $data = [];
+        $extra = json_decode($obj->extra);
+        if(isset($extra->questions)){
+            $data = $obj->questions($extra->questions);
+        }
         
         if($request->get('export')){
             //$users = $obj->users->pluck('id')->toArray();
@@ -237,6 +270,7 @@ class PostController extends Controller
                 request()->session()->put('branches',$branches);
                 request()->session()->put('exam_data',$exam_data);
                 request()->session()->put('exams',$exms);
+                request()->session()->put('data',$data);
                 $name = "Applicants_job_".$obj->slug.".xlsx";
                 ob_end_clean(); // this
                 ob_start(); 
@@ -520,7 +554,7 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
         $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BSC','BCA','BBA','MBA','BPHARM','MPHARM','MCOM','MCA','MSC','OTHER'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA', '1.8LPA to 13LPA'];
         $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI','NCR REGION','SURAT','KOTA','AHMEDABAD','CHANDIGARH','COIMBATORE','GURGAON','GOA','OTHER' ];
-        $this->yop = ['2016','2017','2018','2019','2020','2021'];
+        $this->yop = ['2016','2017','2018','2019','2020','2021','2022','2023'];
         $this->academic = ['55','60','65','70','75'];
 
         $data['hr-managers'] = \auth::user()->getRole('hr-manager');
@@ -587,6 +621,26 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
                 $request->merge(['last_date' => $last_date]);
             }
 
+            $json = new PostController;
+            $json->accesscodes = '';
+            /* access code */
+            if($request->get('accesscodes')){
+                $json->accesscodes=$request->get('accesscodes');
+            }
+
+            $json->questions = '';
+            /* questions */
+            if($request->get('questions')){
+                $json->questions=$request->get('questions');
+            }
+
+            /* status message */
+            if($request->get('status_message')){
+                $json->status_message = $request->get('status_message');
+            }
+
+            $request->request->add(['extra' => json_encode($json)]);
+
             $details = summernote_imageupload(\auth::user(),$request->details);
             $request->merge(['details' => $details]);
 
@@ -640,18 +694,71 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
     {
 
         $user = \auth::user();
+
+        if($request->get('refresh')){
+            Cache::forget('post_'.$id);
+        }
+        
         $obj = Cache::remember('post_'.$id,240,function() use($id){
-            return Obj::where('slug',$id)->first();
+                return Obj::where('slug',$id)->first();
         });
 
-        // if(!$obj->status)
-        //     abort('403','Unauthorized Access');
+        if($obj->status==3 && !\auth::user()){
+            return redirect()->route('login');
+        }
+
+        //dd(json_decode($obj->extra));
+        if(!$obj->status)
+            abort('403','Unauthorized Access - Draft mode');
+
+        $json = [];
+        //load the form elements if its defined in the settings i.e. stored in aws
+        $form = null;
+        $data = json_decode(($obj->extra));
+        $accesscode = null;
+        $status_message = null;
 
         if($request->get('apply')==1){
-          
+            foreach($request->all() as $k=>$v){
+                    if (strpos($k, 'questions_') !== false){
+                        //check for files and upload to aws
+                        if($request->hasFile($k)){
+                            $pieces = explode('questions_',$k);
+                            $file =  $request->all()[$k];
+                            //upload
+                            $file_data = $obj->uploadFile($file);
+                            //link the file url
+                            $json['questions'][$pieces[1]] = '<a href="'.$file_data[0].'">'.$file_data[1].'</a>';
+                        }else{
+                           $pieces = explode('questions_',$k);
+                            if(is_array($v)){
+                                $v = implode(',',$v);
+                            }
+                            $json['questions'][$pieces[1]] = $v;
+                        }
+                        
+                    }
+                    if (strpos($k, 'accesscode') !== false){
+                        $json['accesscode'] = $v;
+
+                        if($data->accesscodes)
+                        if(isset($data->accesscodes)){
+                            $acodes = explode(',',$data->accesscodes);
+                            if(!in_array($v,$acodes)){
+                                flash('Accesscode not valid')->error();
+                                return redirect()->back()->withInput();
+                            }   
+                                
+                        }
+
+                    }
+                }
+                // store the form fileds data in json, inorder to used in excel download
+                $json = json_encode($json);
+            
             if($user){
                 if(!$obj->users->contains($user->id)){
-                    $obj->users()->attach($user->id,['created_at'=>date("Y-m-d H:i:s")]);
+                    $obj->users()->attach($user->id,['created_at'=>date("Y-m-d H:i:s"),'data'=>$json]);
                     flash('Successfully applied the job')->success(); 
                 }
                 
@@ -660,9 +767,29 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
         }
 
         
+        if(isset($data->questions)){
+            $form = $obj->processForm($data->questions);
+        }
 
+        if(isset($data->accesscodes)){
+            $accesscode = $data->accesscodes;
+        }
+        
+        if(isset($data->status_message)){
+            $status_message = $data->status_message;
+        }
+
+        //$user = \Auth::user();
+        $userdata = null;
+        $userdata = $obj->users->find($user->id);
+        
+        
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.public_show')
+                    ->with('form',$form)
+                    ->with('accesscode',$accesscode)
+                    ->with('status_message',$status_message)
+                    ->with('userdata',$userdata)
                     ->with('obj',$obj)->with('app',$this);
         else
             abort(404);
@@ -682,8 +809,24 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
         $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BCA','BSC','BBA','MBA','BPHARM','MPHARM','MCOM','MCA','MSC','OTHER'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA','1.8LPA to 13LPA'];
         $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI','NCR REGION','SURAT','KOTA','AHMEDABAD','CHANDIGARH','COIMBATORE','GURGAON','GOA','OTHER' ];
-        $this->yop = ['2016','2017','2018','2019','2020','2021'];
+        $this->yop = ['2016','2017','2018','2019','2020','2021','2022','2023'];
         $this->academic = ['55','60','65','70','75'];
+
+        $obj->accesscodes = "";
+        $obj->questions = "";
+        $obj->status_message = "";
+        $dat= json_decode($obj->extra);
+        if(isset($dat->accesscodes)){
+            $obj->accesscodes = $dat->accesscodes;
+        }
+
+        if(isset($dat->questions)){
+            $obj->questions = $dat->questions;
+        }
+         $obj->status_message = "";
+        if(isset($dat->status_message)){
+            $obj->status_message = $dat->status_message;
+        }
 
         $data['hr-managers'] = \auth::user()->getRole('hr-manager');
 
@@ -728,6 +871,29 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
 
                 $request->request->add(['yop' => $yop]);
             }
+
+            $json = new PostController;
+            $json->accesscodes = '';
+            /* access code */
+            if($request->get('accesscodes')){
+                $json->accesscodes=$request->get('accesscodes');
+            }
+
+            $json->questions = '';
+            /* questions */
+            if($request->get('questions')){
+                $json->questions=$request->get('questions');
+            }
+
+            $json->status_message = '';
+            /* questions */
+            if($request->get('status_message')){
+                $json->status_message = $request->get('status_message');
+            }
+
+            $request->request->add(['extra' => json_encode($json)]);
+
+
 
              /* If image is given upload and store path */
             if(isset($request->all()['file_'])){

@@ -30,10 +30,14 @@
 
 <div class='p-3 mb-3 ddblue' >
   <div class='container'>
-    <a href="{{route('job.show',$obj->slug)}}" class="f20 text-white" > <i class="fa fa-external-link" ></i> {{route('job.show',$obj->slug)}}</a>&nbsp; @if($obj->status!=1)
+    <a href="{{route('job.show',$obj->slug)}}" class="f20 text-white" > <i class="fa fa-external-link" ></i> {{route('job.show',$obj->slug)}}</a>&nbsp; @if($obj->status==0)
                 <span class="badge badge-secondary">Draft</span>
-              @else
+                @elseif($obj->status==1)
                 <span class="badge badge-success">Active</span>
+                @elseif($obj->status==2)
+                <span class="badge badge-warning">Unlisted</span>
+              @else
+                <span class="badge badge-info">Priavte</span>
               @endif
           @can('update',$obj)
             <span class="btn-group float-md-right btn-group-sm mt-2 mt-md-0" role="group" aria-label="Basic example">
@@ -131,15 +135,11 @@
             <div class="col-6">@if($obj->viewer) {{$obj->viewer->name}} @else - @endif</div>
           </div>
 
-
           <div class="row mb-2">
-            <div class="col-6"><i class="fa fa-map-marker"></i>&nbsp; Access Codes</div>
+            <div class="col-6"><i class="fa fa-map-marker"></i>&nbsp; Extra Details</div>
             <div class="col-6">{{$obj->extra}}</div>
           </div>
           
-
-          
-
             </div>
             </div>
         </div>

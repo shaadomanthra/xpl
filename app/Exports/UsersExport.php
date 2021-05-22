@@ -21,6 +21,7 @@ class UsersExport implements FromCollection,ShouldAutoSize
        $branches= request()->session()->get('branches');
        $exam_data = request()->session()->get('exam_data');
        $exams = request()->session()->get('exams');
+       $data = request()->session()->get('data');
         foreach($users as $k=>$u){
                 $id = $users[$k]->id;
                 unset($users[$k]->id);
@@ -74,9 +75,30 @@ class UsersExport implements FromCollection,ShouldAutoSize
 
                 }
 
+                
                 $users[$k]->profile_score = $users[$k]->pivot->score;
                 $users[$k]->shortlisted = $users[$k]->pivot->shortlisted;
-            
+
+
+                $d = json_decode($users[$k]->pivot->data);
+
+                foreach($data as $m=>$ex){
+                    $name = 'e_'.$m;
+                    if($d){
+                        $dt = $d->questions;
+                       
+                    }
+                    if(isset($d->questions->$ex)){
+                        $users[$k]->$name = $d->questions->$ex;
+                    }
+                    else
+                    {
+                        $users[$k]->$name = '-';
+                    }
+
+                }
+                $users[$k]->uid = $id;
+                $users[$k]->created_at = $users[$k]->pivot->created_at;
             
         } 
 
@@ -113,6 +135,15 @@ class UsersExport implements FromCollection,ShouldAutoSize
         $ux->c9 = "Profile Score";
         $ux->c10 = "Shortlisted";
 
+
+        foreach($data as $m=>$ex){
+            $name = 'e_'.$m;
+            $ux->$name = $ex;
+
+        }
+
+        $ux->c11 = "UID";
+        $ux->c12 = "timestamp";
 
         $users->prepend($ux);
     

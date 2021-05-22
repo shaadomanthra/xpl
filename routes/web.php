@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Storage;
 Route::post('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
 	Route::post('/mail/delivery2', 'Mailer\MailController@deliveryStatus');
 	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus');
-	
+
 Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::class]], function () {
 	
 	Route::get('/', 'HomeController@root')->name('root');
@@ -464,7 +464,9 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 
 	Route::get('post/{slug}/analytics','Job\PostController@analytics')->name('job.analytics');
 	Route::get('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');
+	Route::post('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');
 	Route::post('post/updateapplicant','Job\PostController@updateApplicant')->name('update.applicant');
+	Route::post('jobs/{slug}','Job\PostController@public_show')->name('post.apply');
 	Route::resource('post','Job\PostController')->middleware('auth');
 
 	Route::get('/job', function(){

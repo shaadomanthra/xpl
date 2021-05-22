@@ -4,7 +4,7 @@
  @if($objs->total()!=0)
 
   @foreach($objs as $key=>$obj) 
-  @if($obj->status==1)
+  @if($obj->status==1 || $obj->status==3)
  <div class="bg-white p-4 p-md-5 mb-4">  
               <div class="media ">
               <div class="mr-4 d-none d-md-block" style="width:100px">

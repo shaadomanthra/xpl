@@ -20,12 +20,16 @@
         
         <div class=' pb-1'>
           <p class="heading_two mb-2 f30" ><i class="fa fa-user "></i> Applicants ({{$app->total}})
+            <a href="#" data-toggle="modal" class="btn btn-info" data-target="#upload"  >
+          Upload
+        </a>
           </p>
+
         </div>
       </div>
       <div class="col-12 col-md-4">
         <div class="mt-2 ">
-          
+        
         <a href="{{ route('job.applicants',$obj->slug)}}?export=1" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
         
 
@@ -111,6 +115,30 @@
   </div>
 </div>
 @endsection
+
+
+<div class="modal fade bd-example-modal-lg" id="upload"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true">
+  <div class="modal-dialog ">
+    <form action="{{ route('job.applicants',$obj->slug) }}" method="post" enctype="multipart/form-data">
+    <div class="modal-content">
+      <div class="modal-header h4">
+        Upload CSV File
+      </div>
+      <div class="modal-body">
+        <input type="file" class="form-control-file" name="file" id="exampleFormControlFile1">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="upload" value="1">
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
+       
+          <button type="submit" class="btn btn-primary">Upload</button>
+     
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
 
 <div class="modal fade " id="user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
