@@ -776,21 +776,21 @@ class UserController extends Controller
         
         $username = substr($username, 1);
         $user = User::where('username',$username)->first();
-        $user_details = User_Details::where('user_id',$user->id)->first();
+        // $user_details = User_Details::where('user_id',$user->id)->first();
 
 
         $this->authorize($user);
 
         /* create user details if not defined */
-        if(!$user_details)
-        {
-            $user_details_new = new User_Details;
-            $user_details_new->user_id = $user->id;
-            $user_details_new->country = 'IN';
-            $user_details_new->city = '';
-            $user_details_new->save();
-            $user_details = User_Details::where('user_id',$user->id)->first();
-        }
+        // if(!$user_details)
+        // {
+        //     $user_details_new = new User_Details;
+        //     $user_details_new->user_id = $user->id;
+        //     $user_details_new->country = 'IN';
+        //     $user_details_new->city = '';
+        //     $user_details_new->save();
+        //     $user_details = User_Details::where('user_id',$user->id)->first();
+        // }
 
         // update basic data
         $user->name = $request->name;
@@ -896,9 +896,9 @@ class UserController extends Controller
         $user->save();
 
         //update user details
-        $user_details->user_id = $user->id;
+        // $user_details->user_id = $user->id;
 
-        $user_details->bio = scriptStripper(summernote_imageupload($user,$request->bio));
+        // $user_details->bio = scriptStripper(summernote_imageupload($user,$request->bio));
         // //dd($user_details->bio);
         // $user_details->country = $request->country;
         // $user_details->city = ($request->city)?$request->city:' ';
@@ -909,7 +909,7 @@ class UserController extends Controller
 
         
     
-        $user_details->save();
+        // $user_details->save();
 
         $metrics = $request->get('metrics');
 
