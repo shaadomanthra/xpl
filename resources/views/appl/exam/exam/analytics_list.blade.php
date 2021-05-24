@@ -10,6 +10,7 @@
                 <th scope="col" style="width:10%">Name</th>
                 <th scope="col">Cheating</th>
                 @if($exam->slug!='psychometric-test' && $exam->examtype->slug!='psychometric-test')
+
                 @foreach($exam_sections as $sec)
                   @if($sec->name=='typing')
                   <th scope="col">Accuracy</th>
@@ -57,7 +58,8 @@
                   <span class="text-success"><i class="fa fa-check-circle"></i> No Cheating  </span>
                 @endif
                 </td>
-                @if($exam->slug!='psychometric-test')
+                @if(strtolower(str_replace(" ","",$exam->examtype->name))!='psychometrictest')
+               
                 @foreach($sections[$users[$r['user_id']]->id] as $s)
                 <td>
                   {{ $s->score }} @if($sec->name=='typing')% @endif

@@ -4289,13 +4289,16 @@ class AssessmentController extends Controller
                     $d[$a] = 40 - $d[$a];
             }
 
+
             return view('appl.exam.assessment.analysis')
                         ->with('exam',$exam)
                         ->with('sections',$sections)
                         ->with('details',$details)
                         ->with('d',$d)
+                        ->with('data',$d)
                         ->with('m',$mc)
                         ->with('c',$cc)
+                        ->with('typeslug',$typeslug)
                         ->with('student',$student)
                         ->with('chart',true);
         }

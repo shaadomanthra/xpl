@@ -28,8 +28,10 @@
 		@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif<br>
 			@if($student->email)<span class="badge badge-info ">Email : {{$student->email}}</span> <br>@endif
           @if($student->phone)<span class="badge badge-info ">Phone : {{$student->phone}}</span> <br>@endif
+  @if(isset($data['branches'][$student->branch_id]->name))
 		@if($student->branch_id)<span class="badge badge-danger">{{$data['branches'][$student->branch_id]->name}}</span>@endif
       @if($student->college_id)<span class="badge badge-info">{{$data['colleges'][$student->college_id]->name}}</span><br>@endif
+  @endif
 		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
 			
 			
@@ -66,6 +68,7 @@
 		<div class="card-body">
 			<div class="mt-2 mb-3">
 				@foreach($d as $i=>$j)
+				@if($i!=='branches' && $i!='colleges')
 				<div class="cc c_{{$i}}">
 					<div class="pp p_{{$i}}" style="width:{{($j*2.5)}}%;"></div>
 					<div class="content text-left">
@@ -76,6 +79,7 @@
 
 					</div>
 				</div>
+				@endif
 				@endforeach
 			</div>
 		</div>
