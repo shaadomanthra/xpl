@@ -39,8 +39,11 @@
         <div class="textcontainerbackground4">
             {{'UX010'.$user->id}}
         </div>
-        <div class="textcontainerbackground5">
+        <div class="textcontainerbackground5 d-none d-md-block">
             <b>{{'UX010'.$user->id}}</b> - {{$user->name}} @if($user->roll_number)- {{$user->roll_number}} @endif  @if(isset($data['colleges'][auth::user()->college_id])) - {{ $data['colleges'][$user->college_id]->name}}   @endif
+        </div>
+        <div class="textcontainerbackground5 d-block d-md-none">
+            <b>{{'UX010'.$user->id}}</b> - {{$user->name}} 
         </div>
       @if($question->type!='typing')
       <div class="row no-gutters">
