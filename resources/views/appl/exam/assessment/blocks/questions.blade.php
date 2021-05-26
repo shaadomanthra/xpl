@@ -30,7 +30,7 @@
       <div class="textcontainerbackground">
             {{'UX010'.$user->id}}
         </div>
-        <div class="textcontainerbackground2">
+        <div class="textcontainerbackground2 d-none d-md-block">
             {{'UX010'.$user->id}}
         </div>
         <div class="textcontainerbackground3">
