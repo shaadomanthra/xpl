@@ -14,9 +14,11 @@ $(document).ready(function(){
     $('.fullscreen').on('click', () => {
       var browser = $('.browser_details').html();
       var safari = browser.includes("Safari");
+      var fullscreen = $('.assessment').data('fullscreen');
+      console.log(fullscreen);
       if(!$('.start_btn').hasClass('disabled'))
         user_test_log(new Date().getTime() / 1000, 'Fullscreen - Enabled');
-        if(safari){
+        if(safari || fullscreen.trim() =='no'){
               if(!$('.start_btn').hasClass('disabled')){
                 $('.testpage').show();
                 $('.fullscreen_container').hide();

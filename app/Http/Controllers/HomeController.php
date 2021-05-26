@@ -42,8 +42,7 @@ class HomeController extends Controller
 
     public function phpword(){
 
-        echo "sample";
-        exit();
+      
         $sec = new Section();
         $source = "Exam.docx";
         $name = 'docs/doc_'.\Auth::user()->id.'.html';

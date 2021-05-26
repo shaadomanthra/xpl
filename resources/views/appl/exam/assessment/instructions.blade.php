@@ -238,7 +238,7 @@
 	@endif
 		
 	</div>
-	<p class="bg-light border rounded p-3" style="margin-top:-5px;">Incase of any query, write to us at <span class="text-info">@if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else info@xplore.co.in @endif</span> or call us at <span class="text-info">@if(env('CONTACT_PHONE')) {{env('CONTACT_PHONE')}} @else 1800 890 1324 @endif</span></p>
+	<p class="bg-light border rounded p-3" style="margin-top:-5px;">Incase of any query, write to us at <span class="text-info">@if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif</span> or call us at <span class="text-info">@if(env('CONTACT_PHONE')) {{env('CONTACT_PHONE')}} @else 9515125110 @endif</span></p>
 	</div>
 </div>
 

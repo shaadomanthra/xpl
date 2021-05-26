@@ -35,6 +35,7 @@ class SectionController extends Controller
         ->with('sections',$sections)->with('exam',$exam);
     }
 
+
     /**
      * Show the form for creating a new resource.
      *

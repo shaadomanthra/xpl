@@ -360,6 +360,17 @@
       </div>
         </div>
 
+         <div class="col-12 col-md-6">
+           <div class="form-group mt-3">
+        <label for="formGroupExampleInput ">Fullscreen mode</label>
+        <select class="form-control" name="fullscreen">
+
+          <option value="yes" @if(isset($exam)) @if($exam->fullscreen=="yes") selected @endif @endif >Yes</option>
+          <option value="no" @if(isset($exam)) @if($exam->fullscreen=="no") selected @endif @endif >No</option>
+        </select>
+      </div>
+        </div>
+
 
 
       </div>

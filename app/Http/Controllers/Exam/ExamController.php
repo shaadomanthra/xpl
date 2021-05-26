@@ -591,6 +591,7 @@ class ExamController extends Controller
             $settings['manual_approval'] = $request->get('manual_approval');
             $settings['section_timer'] = $request->get('section_timer');
             $settings['section_marking'] = $request->get('section_marking');
+            $settings['fullscreen'] = $request->get('fullscreen');
 
             $exam->settings = json_encode($settings);
             if($request->auto_activation)
@@ -1913,6 +1914,11 @@ class ExamController extends Controller
         else
             $exam->section_marking = 'no';
 
+         if(isset($settings['fullscreen']))
+            $exam->fullscreen = $settings['fullscreen'];
+        else
+            $exam->fullscreen = 'no';
+
         // if($exam->extra){
         //     $exam->viewers = json_decode($exam->extra,true)['viewers'];
         //     $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
@@ -2008,6 +2014,7 @@ class ExamController extends Controller
             $settings['manual_approval'] = $request->get('manual_approval');
             $settings['section_timer'] = $request->get('section_timer');
             $settings['section_marking'] = $request->get('section_marking');
+            $settings['fullscreen'] = $request->get('fullscreen');
 
 
 
