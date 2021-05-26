@@ -5,7 +5,7 @@
 
 <div class="testpage_wrap">
 <div class="p-2 p-md-3 testpage " style="display: none">
-<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif " data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif "
+<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif" data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif "
 
 action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
   <style>
