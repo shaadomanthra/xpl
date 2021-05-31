@@ -161,9 +161,9 @@
      
       <td>
         @if(trim($questions[$t->question_id]->answer))
-            {{$questions[$t->question_id]->answer}}
+            {!!$questions[$t->question_id]->answer!!}
         @elseif(trim($questions[$t->question_id]->explanation))
-            {{$questions[$t->question_id]->explanation}}
+            {!!$questions[$t->question_id]->explanation!!}
         @else
         -
         @endif
