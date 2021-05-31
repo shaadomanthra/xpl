@@ -635,7 +635,7 @@ class Exam extends Model
 
 
     public function getDimensions($url){
-      $s3 = 'https://s3-xplore.s3.ap-south-1.amazonaws.com/';
+      $s3 = 'https://'.env('AWS_BUCKET').'.s3.ap-south-1.amazonaws.com/';
       $name = str_replace($s3, '', $url);
 
       if(!Storage::disk('s3')->exists($name)){
