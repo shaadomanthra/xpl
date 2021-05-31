@@ -31,6 +31,63 @@ class Section extends Model
         $objWriter->save($name);
     }
 
+    public function dataToHtml($exam){
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
+        $objWriter->save($name);
+    }
+
+    public function dataToWord($data){
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+            //libxml_use_internal_errors(true); 
+
+        // $doc = new \DOMDocument();
+        // $doc->loadHTML($data);
+        // $doc->saveHTML();
+     
+
+        // \PhpOffice\PhpWord\Shared\Html::addHtml($section, $doc->saveHtml(),true);
+        // //\PhpOffice\PhpWord\Shared\Html::addHtml($section, trim($data));
+        $header = array('size' => 16, 'bold' => true);
+        $rows = 10;
+        $cols = 5;
+
+        $section->addTextBreak(1);
+$section->addText(htmlspecialchars('Fancy table'), $header);
+
+$styleTable = array('borderSize' => 6, 'borderColor' => '006699', 'cellMargin' => 80);
+$styleFirstRow = array('borderBottomSize' => 18, 'borderBottomColor' => '0000FF', 'bgColor' => '66BBFF');
+$styleCell = array('valign' => 'center');
+$styleCellBTLR = array('valign' => 'center', 'textDirection' => \PhpOffice\PhpWord\Style\Cell::TEXT_DIR_BTLR);
+$fontStyle = array('bold' => true, 'align' => 'center');
+$phpWord->addTableStyle('Fancy Table', $styleTable, $styleFirstRow);
+$table = $section->addTable('Fancy Table');
+$table->addRow(900);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Row 1'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Row 2'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Row 3'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Row 4'), $fontStyle);
+$table->addCell(500, $styleCellBTLR)->addText(htmlspecialchars('Row 5'), $fontStyle);
+for ($i = 1; $i <= 8; $i++) {
+    $table->addRow();
+    $cell="";
+    if($i==2)
+     {
+        $cell = $data;
+     }
+    $table->addCell(2000)->addText(htmlspecialchars("Cell {$i}"));
+    $table->addCell(2000)->addText(htmlspecialchars("Cell {$i}".$cell));
+    $table->addCell(2000)->addText(htmlspecialchars("Cell {$i}"));
+    $table->addCell(2000)->addText(htmlspecialchars("Cell {$i}"));
+    $text = (0== $i % 2) ? 'X' : '';
+    $table->addCell(500)->addText(htmlspecialchars($text));
+}
+        $phpWord->save('test.docx', 'Word2007', true);
+
+    }
+
     public function readHtmlTables($html){
         //defaults
         $data = ["sections"=>[],"questions"=>[]];
@@ -42,14 +99,19 @@ class Section extends Model
         //dom parser
         $dom = new \DomDocument();
        /*** load the html into the object ***/ 
-       $dom->loadHTML($html); 
        
+       $dom->loadHTML($html); 
+
+
+
        /*** discard white space ***/ 
        $dom->preserveWhiteSpace = false; 
        $dom->formatOutput       = true;
        
        /*** the table by its tag name ***/ 
        $tables = $dom->getElementsByTagName('table'); 
+
+
        
        foreach($tables as $table){
             /*** get all rows from the table ***/ 
@@ -63,6 +125,33 @@ class Section extends Model
                 $cols = $row->getElementsByTagName('td'); 
                 $key = strtolower(trim(strip_tags($cols->item(0)->nodeValue)));
                 $value = trim($cols->item(1)->nodeValue); 
+                if($cols->item(1)->hasChildNodes()){
+                    $images = $cols->item(1)->getElementsByTagName('img'); 
+                 
+                    foreach($images as $k=>$img)
+                    if($img->getAttribute('src')){
+                        echo "image found<br>";
+
+                        $src = $img->getAttribute('src');
+                        if(strpos($src, 'http') !== false){
+
+                        }else{
+                           $url = word_imageupload(\auth::user(),$k,$img->getAttribute('src'));
+                            $img->removeAttribute('src');
+                            $img->setAttribute('src', $url);
+                            $img->setAttribute('class', 'image');   
+                        }
+                                              
+                    }
+                    foreach($images as $k=>$img)
+                    if($img->getAttribute('src')){
+                        $value = static::DOMinnerHTML($cols->item(1));
+                        dd($value);
+                    }
+                }
+
+                
+
                 
 
                 if($c1=='SNO')
@@ -77,6 +166,7 @@ class Section extends Model
                    // echo static::DOMinnerHTML($cols->item(1)); 
                    // echo "img here<br>";
                }
+
             }
 
             if($c1=='SNO'){
@@ -92,10 +182,23 @@ class Section extends Model
            
        }
 
+
        return $data;
        
     }
 
+    public static function DOMinnerHTML(\DOMElement $element) 
+    { 
+        $innerHTML = ""; 
+        $children  = $element->childNodes;
+
+        foreach ($children as $child) 
+        { 
+            $innerHTML .= $element->ownerDocument->saveHTML($child);
+        }
+
+        return $innerHTML; 
+    } 
 
     public function saveSection($exam_id,$section){
 

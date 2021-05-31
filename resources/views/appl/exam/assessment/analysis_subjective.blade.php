@@ -97,15 +97,15 @@
 		<table class="table table-bordered bg-white">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Question</th>
+      <th scope="col" style="width:5%">#</th>
+      <th scope="col" style="width:30%">Question</th>
       <th scope="col">Response</th>
-      <th scope="col">Answer</th>
-      @if($test_overall->status)
+      <th scope="col" style="width:25%">Answer</th>
+      @if(!$test_overall->status)
       @if($exam->solutions !=3 && $exam->solutions !=4 )
       <th scope="col">Score</th>
       @endif
-      <th scope="col">Feedback</th>
+      <th scope="col" style="width:15%">Feedback</th>
       @endif
     </tr>
   </thead>
@@ -162,11 +162,13 @@
       <td>
         @if(trim($questions[$t->question_id]->answer))
             {{$questions[$t->question_id]->answer}}
+        @elseif(trim($questions[$t->question_id]->explanation))
+            {{$questions[$t->question_id]->explanation}}
         @else
         -
         @endif
       </td>
-      @if($test_overall->status)
+      @if(!$test_overall->status)
       @if($exam->solutions !=3 && $exam->solutions !=4 )
       <td>
       	@if($t->mark)

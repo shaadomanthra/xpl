@@ -43,6 +43,7 @@
             <span class="btn-group float-md-right btn-group-sm mt-2 mt-md-0" role="group" aria-label="Basic example">
               <a href="{{ route('exam.edit',$exam->slug) }}" class="btn btn-outline-light" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i> edit</a>
               @if(\Auth::user()->checkRole(['administrator','editor']))
+               <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal4" data-tooltip="tooltip" data-placement="top" title="Download"><i class="fa fa-cloud-download"></i> Download</a>
               <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal2" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-retweet"></i> copy</a>
               <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal3" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-user"></i> change owner</a>
               @endif
@@ -724,6 +725,51 @@
       </div>
     </div>
     </form>
+  </div>
+</div>
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Download & Upload - Question Paper</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <div class="alert alert-warning alert-important">Download the <a href="{{ route('test.download',$exam->slug)}}?template=1">word tempate</a> for uploading</div>
+       <h4>Download </h4>
+       <a href="{{ route('test.download',$exam->slug)}}" class="btn btn-outline-primary">Word Format</a>
+       <a href="{{ route('test.download',$exam->slug)}}?html=1" class="btn btn-outline-success">Html Format</a>
+       @if(Storage::disk('s3')->exists('docs/'.$exam->slug.'.docx'))
+       <a href="{{Storage::disk('s3')->url('docs/'.$exam->slug.'.docx')}}" class="btn btn-outline-secondary">Backup file</a>
+       @endif
+       <h4 class="my-4">Upload</h4>
+       <form method="post" action="{{route('test.upload',$exam->slug)}}" enctype="multipart/form-data">
+        <div class="form-group bg-light p-3 rounded">
+        <label for="formGroupExampleInput ">File</label>
+        <input type="file" class="form-control" name="file_" id="formGroupExampleInput" placeholder="Enter the document path" 
+          >
+          <div class="form-check form-check-inline mt-2">
+  <input class="form-check-input" type="radio" name="type" id="inlineRadio1" value="word" checked>
+  <label class="form-check-label" for="inlineRadio1">word</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="type" id="inlineRadio2" value="html">
+  <label class="form-check-label" for="inlineRadio2">Html</label>
+</div>
+<div>
+    <button type="submit" class="btn btn-primary mt-3">Upload</button></div>
+      </div>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+           </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         
+      </div>
+    </div>
   </div>
 </div>
   <!-- Modal -->

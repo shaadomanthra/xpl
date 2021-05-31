@@ -119,6 +119,43 @@ function random_color() {
 }
 }
 
+
+if (! function_exists('word_imageupload')) {
+    function word_imageupload($user,$k,$data)
+    {
+       
+                if(strpos($data, ';'))
+                {
+                    $d = $data;
+                
+                    list($type, $data) = explode(';', $data);
+                    list(, $data)      = explode(',', $data);
+                    $data = trim(base64_decode($data));
+
+                    
+                    $base_folder = '/app/public/';
+                    $web_path = env('APP_URL').'/storage/';
+                    $image_name=  $user->username.'_'. time().'_'.$k.'_'.rand().'.png';
+
+                    $temp_path = storage_path() . $base_folder . 'temp_' . $image_name;
+                    //$path = storage_path() . $base_folder . $image_name;
+                    file_put_contents($temp_path, $data);
+                    //resize
+                    $imgr = Image::make($temp_path);
+                    $imgr->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+                    $imgr->save($temp_path);
+
+                    $url = s3_upload($image_name,$temp_path);
+                    unlink(trim($temp_path));
+
+                    return $url;
+                }
+    }
+}
+
 if (! function_exists('summernote_imageupload')) {
     function summernote_imageupload($user,$editor_data)
     {
@@ -134,12 +171,17 @@ if (! function_exists('summernote_imageupload')) {
 
                 $data = $img->getAttribute('src');
 
+
+
                 if(strpos($data, ';'))
                 {
+                    $d = $data;
+                
                     list($type, $data) = explode(';', $data);
                     list(, $data)      = explode(',', $data);
-                    $data = base64_decode($data);
+                    $data = trim(base64_decode($data));
 
+                    
                     $base_folder = '/app/public/';
                     $web_path = env('APP_URL').'/storage/';
                     $image_name=  $user->username.'_'. time().'_'.$k.'_'.rand().'.png';

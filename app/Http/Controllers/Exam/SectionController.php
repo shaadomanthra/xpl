@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use PacketPrep\Http\Controllers\Controller;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Section;
+use PacketPrep\Models\Exam\Tests_Section;
+use PacketPrep\Models\Dataentry\Question;
+use PacketPrep\Models\Dataentry\Category;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class SectionController extends Controller
 {
@@ -139,6 +143,197 @@ class SectionController extends Controller
                  return redirect()->back()->withInput();;
             }
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function download($exam,Request $r)
+    {
+        $exam= Exam::where('slug',$exam)->first();
+        $this->authorize('update', $exam);
+
+        $data =null;
+        $ts = new Tests_Section;
+        foreach($exam->sections as $key=>$section)
+        $data = $data.$ts->tableSection($key+1,$section);
+
+        $data = $ts->htmlWrapper($data,$exam);
+
+        $doc = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $doc->loadHTML($data);
+        Storage::disk('public')->put('docs/'.$exam->slug.'.html',$doc->saveHTML());
+        $d = Storage::disk('public')->get('docs/'.$exam->slug.'.html');
+        $ts->createDoc($d, $exam->slug);
+        $r->merge(['export'=>1]);
+        $name = str_replace(" ","_",$exam->name);
+
+        if($r->get('html')){
+            $headers = array(
+              'Content-Type: application/html',
+            );
+            $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix();
+            $path = $storagePath.'/docs/'.$exam->slug.'.html';
+            return response()->download($path,$name.'.html',$headers);
+
+        }elseif($r->get('backup')){
+
+        }elseif($r->get('template')){
+            $headers = [
+              'Content-Type' => 'application/docx',
+           ];
+
+           
+            return response()->download('template.docx', 'template.docx', $headers);
+        }else{
+            $headers = [
+              'Content-Type' => 'application/doc',
+           ];
+
+           
+            return response()->download($exam->slug.'.doc', $name.'.doc', $headers);
+        }
+        
+        
+       
+    }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function upload($exam,Request $r)
+    {
+        $exam= Exam::where('slug',$exam)->first();
+
+        $this->authorize('update', $exam);
+        $request = $r;
+        /* If image is given upload and store path */
+        if(isset($request->all()['file_'])){
+            $file      = $request->all()['file_'];
+
+            $extension = $file->getClientOriginalExtension();
+            if(strtolower($file->getClientOriginalExtension()) != 'docx' && strtolower($file->getClientOriginalExtension()) != 'html'){
+                flash('Only docx or html format are allowed')->error();
+                return redirect()->back()->withInput();
+            }
+
+            $filename = $exam->slug.'.'.$extension;
+            $path = Storage::disk('s3')->putFileAs('docs', $request->file('file_'),$filename,'public');
+            $path = Storage::disk('public')->putFileAs('docs', $request->file('file_'),$filename,'public');
+        }else{
+            flash('File not selected!')->error();
+            return redirect()->back()->withInput();
+        }
+
+        $sec = new Section();
+        $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix();
+        $path = $storagePath.'docs/'.$exam->slug.'.'.$extension;
+        $source = $path;
+        
+
+        if($r->get('type')=='html' && $extension=='html'){
+            $data = $sec->readHtmlTables(file_get_contents($source));
+        }elseif($extension=='docx'){
+            $name = $storagePath.'docs/'.$exam->slug.'.html';
+            $sec->wordToHtml($source,$name);
+            $data = $sec->readHtmlTables(file_get_contents($name));
+        }else{
+            flash('Invalid File!')->error();
+            return redirect()->back()->withInput();
+        }
+
+        
+        
+        foreach($data['sections'] as $key=>$value){
+
+            $value['name'] = trim(strip_tags($value['name']));
+         
+            $s1 = Section::where('name',$value['name'])->where('exam_id',$exam->id)->first();
+            if(!$s1)
+                $s1 = new Section;
+
+
+            $sno = intval($value['sno']);
+            $s1->name = $value['name'];
+            $s1->time = intval($value['time']);
+            $s1->negative = intval($value['negative']);
+            $s1->mark = intval($value['mark']);
+            $s1->user_id = \auth::user()->id;
+            $s1->exam_id = $exam->id;
+            $s1->instructions = '';
+            $s1->save();
+
+            foreach($value['qset'] as $qno =>$qdata){
+                $qno = trim(strip_tags($qno));
+              
+                $ref = strtoupper($exam->id.'_'.$sno.'_'.$qno);
+                $q = Question::where('reference',$ref)->first();
+
+                if(!$q){
+                         $q= new Question;
+                         $q->slug = $qdata['slug'];
+                }
+                   
+
+                 try{
+
+                    // keep the reference in capitals
+                    $q->reference = $ref;
+                    $q->question = $qdata['question'];
+                    $q->a = static::is_empty($qdata['a']);
+                    $q->b = static::is_empty($qdata['b']);
+                    $q->c = static::is_empty($qdata['c']);
+                    $q->d = static::is_empty($qdata['d']);
+                    $q->e = static::is_empty($qdata['e']);
+                    $q->answer = static::is_empty($qdata['answer']);
+                    $q->explanation = static::is_empty($qdata['explanation']);
+                
+                    
+                    $t=trim(str_replace(" ","",strip_tags($qdata['topic'])),"\xA0\xC2");
+                    if($t!="" && $t!=" " ){
+                        $q->topic = str_replace(' ','',strip_tags(strtolower($qdata['topic'])));
+                    }
+                    
+                    $q->project_id =78;
+                    $q->user_id = \auth::user()->id;
+                    $q->status =1;
+                    $q->level = intval($qdata['level']);
+                    $q->mark = $qdata['mark'];
+                    $q->type = str_replace(' ','',strtolower($qdata['type']));
+                    $passage = trim(str_replace(" ","",strip_tags($qdata['passage'])),"\xA0\xC2");
+                    if($passage!='')
+                    $q->passage = trim($qdata['passage']);
+                    $q->save();
+
+                    //attach section
+                        if(!$q->sections->contains($s1->id))
+                            $q->sections()->attach($s1->id);
+                    
+                }
+                catch (QueryException $e){
+                   flash('There is some error in storing the data...kindly retry.')->error();
+                    return redirect()->back()->withInput();
+                }
+
+            }
+        }
+        flash('Question paper uploaded!')->success();
+         return redirect()->back()->withInput();
+    }
+
+    public function is_empty($item){
+        $t=trim(str_replace(" ","",strip_tags($item)),"\xA0\xC2");
+        if($t!="" && $t!=" " ){
+            return trim($item);
+        }
+        return null;
     }
 
     /**

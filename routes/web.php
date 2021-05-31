@@ -192,7 +192,12 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 			->name('test.user_roles')->middleware('auth'); 
 	Route::get('/test/{test}/user_roles', 'Exam\ExamController@user_roles')
 			->name('test.user_roles')->middleware('auth'); 
-
+	Route::get('/exam/{test}/upload', 'Exam\SectionController@upload')
+			->name('test.upload')->middleware('auth'); 
+	Route::post('/exam/{test}/upload', 'Exam\SectionController@upload')
+			->name('test.upload')->middleware('auth'); 
+	Route::get('/exam/{test}/download', 'Exam\SectionController@download')
+			->name('test.download')->middleware('auth'); 
 
 	Route::get('/campus/tests/{test}/{student}', 'College\CampusController@test_student')
 			->name('campus.tests.student.show')->middleware('auth');
