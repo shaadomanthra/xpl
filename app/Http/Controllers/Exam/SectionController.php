@@ -194,8 +194,9 @@ class SectionController extends Controller
               'Content-Type' => 'application/doc',
            ];
 
-           
-            return response()->download($exam->slug.'.doc', $name.'.doc', $headers);
+            $storagePath  = Storage::disk('public')->getDriver()->getAdapter()->getPathPrefix();
+            $path = $storagePath.'/doc/word/'.$exam->slug.'.doc';
+            return response()->download($path, $name.'.doc', $headers);
         }
         
         

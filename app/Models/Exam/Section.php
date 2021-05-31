@@ -130,7 +130,6 @@ for ($i = 1; $i <= 8; $i++) {
                  
                     foreach($images as $k=>$img)
                     if($img->getAttribute('src')){
-                        echo "image found<br>";
 
                         $src = $img->getAttribute('src');
                         if(strpos($src, 'http') !== false){
@@ -146,7 +145,7 @@ for ($i = 1; $i <= 8; $i++) {
                     foreach($images as $k=>$img)
                     if($img->getAttribute('src')){
                         $value = static::DOMinnerHTML($cols->item(1));
-                        dd($value);
+                        
                     }
                 }
 
