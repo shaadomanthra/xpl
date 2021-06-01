@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		</div>
-		<div class="qset" style="height: 230px;overflow-y: auto;">
+		<div class="qset" style="height: 280px;overflow-y: auto;">
 		<div class="{{ $i=1}}">
 
 			
