@@ -14,9 +14,12 @@ $(document).ready(function(){
     $('.fullscreen').on('click', () => {
       var browser = $('.browser_details').html();
       var safari = browser.includes("Safari");
+      var fullscreen = $('.assessment').data('fullscreen');
+      console.log(fullscreen.trim());
+      console.log("clicked fullscreen");
       if(!$('.start_btn').hasClass('disabled'))
         user_test_log(new Date().getTime() / 1000, 'Fullscreen - Enabled');
-        if(safari){
+        if(safari || fullscreen.trim() =='no'){
               if(!$('.start_btn').hasClass('disabled')){
                 $('.testpage').show();
                 $('.fullscreen_container').hide();
@@ -119,8 +122,12 @@ $(document).ready(function(){
                 window_focus = true;
                 console.log("Focused");
             }).blur(function() {
-              if(parseInt($('.timer_count').data('value'))>5)
-                swapDetected();
+              if(parseInt($('.timer_count').data('value'))>5){
+                var window_swap = parseInt($('.assessment').data('window_swap'));
+                if(window_swap)
+                  swapDetected();
+              }
+               
           });
         }
       }
@@ -130,6 +137,16 @@ $(document).ready(function(){
     // // start window focus events after 5 seconds
     // setTimeout(win_focus,5000);
 
+    function stop_focus(){
+      $('.assessment').data('window_swap',0);
+      $('.upload_image_box').show();
+      console.log('disabled swap');
+    }
+
+    var stopswap = parseFloat($('.assessment').data('stopswap'));
+   // console.log('stopped - '+stopswap);
+    if(stopswap)
+      setTimeout(stop_focus,stopswap*60*1000);
 
 
 
@@ -729,10 +746,22 @@ $(document).ready(function(){
         else
         $qcount = parseInt($('.s1').data('qcount'));
 
+        $first = parseInt($('.assessment').data('first'));
+        $last = parseInt($('.assessment').data('last'));
+        console.log($first+' ---- '+$last);
         console.log($qcount+' ---- '+$sno);
         if($qcount!=1){
-          $('.left-qno').show();
-          $('.right-qno').show();
+          if($first){
+            $('.left-qno').hide();
+            $('.right-qno').show();
+          }else if($last){
+            $('.left-qno').show();
+            $('.right-qno').hide();
+          }else{
+            $('.left-qno').show();
+            $('.right-qno').show();
+          }
+          
         }else{
           $('.left-qno').hide();
           $('.right-qno').hide();
@@ -740,9 +769,10 @@ $(document).ready(function(){
         // Set the date we're counting down to
 
         if($sno)
-          var t = parseInt($('.section_block_'+$snext).data('time'));
+          var t = parseFloat($('.section_block_'+$snext).data('time'));
         else
-          var t = parseInt($('.assessment').data('exam_time'));
+        var t = parseFloat($('.assessment').data('exam_time'));
+      
         var countDownDate = addMinutes(new Date(),t);
 
         //start video if any
@@ -1299,6 +1329,7 @@ $(document).ready(function(){
 
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
+        responses.qid = $('.s'+$sno).data('qno');
         responses.last_photo = $('#photo').data('last_photo');
         if($('#video').length)
         responses.c = parseInt($('#video').data('c'));
@@ -1412,6 +1443,7 @@ $(document).ready(function(){
 
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
+        responses.qid = $('.s'+$sno).data('qno');
         responses.last_photo = $('#photo').data('last_photo');
 
         var seconds = new Date().getTime() / 1000;

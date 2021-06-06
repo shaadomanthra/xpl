@@ -13,7 +13,7 @@
 </style>
 
 @foreach($questions as $i=> $question)
-<div class="question_block qblock_{{$i+1}}" @if($i!=0) style="display:none;" @endif>
+<div class="question_block qblock_{{$i+1}}" @if(!$data['qid'])@if($i!=0) style="display:none;" @endif @else @if($question->id!=$data['qid']) style="display:none;" @endif @endif>
   @if($question->passage)
   <div class="card my-3" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
     <div class="card-body">
@@ -216,7 +216,9 @@
           @endif
 
           @if($question->type=='urq')
-          <div class="bg-light border p-3 rounded mt-3">
+
+
+        <div class="bg-light border p-3 rounded mt-3 upload_image_box" style="@if(isset($settings['upload_time'])) @if($settings['upload_time']) display:none @endif @endif">
           <h5>Upload your response (image format)</h5>
 
           <input type="file" class="form-control w-100 input input_{{($i+1)}} input_urq_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-name="{{($i+1)}}" data-type="urq" data-sno="{{($i+1)}}" value="" 
@@ -224,8 +226,8 @@
           <button type="button" class="mt-3 btn btn-primary btn-urq btn_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ $user->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.upload',$exam->slug)}}">Upload</button>
 
           <div class="spinner-border spinner-border-sm float-right mt-3 spinner_{{$i+1}}" role="status" style="display:none">
-  <span class="sr-only">Loading...</span>
-</div>
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
         <div class="img_container_{{$i+1}} pt-3" >
           <div class="img_status img_status_{{$i+1}} py-2"></div>
@@ -260,25 +262,29 @@
 
    <div class="card mb-0">
      <div class="card-body p-2 p-md-3">
-      <button type="button" class="btn  btn-outline-primary  cursor left-qno" data-sno="" data-testname="{{$exam->slug}}" style="display:none">
-        <i class="fa fa-angle-double-left"></i> <span class="d-none d-md-inline">Previous</span>
+     
+      <button type="button" class="btn  btn-outline-primary  cursor left-qno" @if($data['sno']==1) data-sno="" @else data-sno="{{($data['sno']-1)}}" @endif data-testname="{{$exam->slug}}" >
+        <i class="fa fa-angle-double-left"></i> <span class="d-none d-md-inline">Previous </span>
       </button>
 
-      <button type="button" class="btn  btn-primary mark-qno cursor" data-sno="1">Mark 
+
+      <button type="button" class="btn  btn-primary mark-qno cursor" data-sno="{{$data['sno']}}">Mark 
       </button>
 
-      <button type="button" class="btn  btn-secondary clear-qno cursor" data-sno="1">Clear <span class="d-none d-md-inline">Response</span>
+      <button type="button" class="btn  btn-secondary clear-qno cursor" data-sno="{{$data['sno']}}">Clear <span class="d-none d-md-inline">Response</span>
       </button>
      
       <a href="#" data-toggle="modal" data-target="#exampleModalSec">
-        <button type="button" id="s_button" class="btn  btn-success qno-sub cursor float-right" data-sno="{{$question->id}}" data-section="{{ 'a'}}" data-tooltip="tooltip"  data-placement="top" >
+        <button type="button" id="s_button" class="btn  btn-success qno-sub cursor float-right" data-sno="{{$question->id}}" data-section="{{ $data['sid'] }}" data-tooltip="tooltip"  data-placement="top" >
           Submit <span class="d-none d-md-inline">Section</span>
         </button>
       </a>
       @if(count($questions)!=1)
-        <button type="button" class="btn  btn-outline-primary  cursor right-qno" data-sno="2" data-testname="{{$exam->slug}}" data-d="sampe">
+     
+        <button type="button" class="btn  btn-outline-primary  cursor right-qno" data-sno="{{($data['sno']+1)}}" data-testname="{{$exam->slug}}" data-d="sampe" >
          Next <i class="fa fa-angle-double-right"></i>
        </button>
+    
       @endif
      </div>
    </div>

@@ -412,10 +412,18 @@ class AssessmentController extends Controller
 
 
 
-        $exam = Cache::get('test_'.$test);
-        $data['branches'] = Cache::get('branches');
+       $exam = Cache::get('test_'.$test);
+       $data['branches'] = Cache::get('branches');
        $data['colleges'] = Cache::get('colleges');
+       $data['sid'] = null;
+       $data['qid'] = null;
+       $data['sno'] = 1;
+       $data['last'] = null;
+       $data['first'] = null;
+       $data['stopswap'] = 0;
        $cc = 0 ;
+
+
 
 
         if(!$exam)
@@ -437,7 +445,11 @@ class AssessmentController extends Controller
             $responses = null;
 
 
+        $section_timer =  false;
 
+        if(isset($exam->settings->section_timer))
+            if($exam->settings->section_timer=='yes')
+                $section_timer = true;
         
 
         if($exam->active){
@@ -461,7 +473,10 @@ class AssessmentController extends Controller
 
                 $responses = $json['responses'];
 
-                
+                if(isset($json['qid'])){
+                    $data['qid'] = $json['qid'];
+                    $data['sno'] = $json['qno'];
+                }
 
                 if(isset($json['c']))
                 $cc = $json['c'];
@@ -482,6 +497,9 @@ class AssessmentController extends Controller
         }
 
 
+        if($request->get('dump')){
+            dd($json);
+        }
 
 
         $jsonname = $test.'_'.$user->id;
@@ -567,17 +585,40 @@ class AssessmentController extends Controller
         $passages = array();
         $dynamic =array();
         $section_questions = array();
+
         foreach($exam->sections as $section){
             $qset = $exam->getQuestionsSection($section->id,$user->id);//$section->questions;
 
-            //dd($qset);
-
             //shuffle($qset);
-            if($exam->shuffle)
-                $qset = $qset->shuffle();
+            if($exam->shuffle){
+                if(!$responses){
+                    $qset = $qset->shuffle();
+                }else{
+                    
+                    $ids = array_keys($responses->keyBy('question_id')->toArray());
+                    $ids_ordered = implode(',', $ids);
+                    
+                    $qset = $section->questions()->whereIn('id', $ids)
+                         ->orderByRaw("FIELD(id, $ids_ordered)")
+                         ->get();
+                }
+            }
 
             $k=0;
-            foreach( $qset as $q){
+            foreach($qset as $e=>$q){
+
+                if($data['qid']){
+                    if($q->id == $data['qid']){
+                        $data['sid'] = $section->id; 
+                        $data['stime'] = $section->time;
+                        if(count($qset)==$e+1){
+                            $data['last'] = 1;
+                        }else if($e==0){
+                            $data['first'] = 1;
+
+                        }
+                    } 
+                }
                 if($exam->shuffle){
                     if(!$responses){
                         $q->dynamic = rand(1,4);
@@ -585,6 +626,7 @@ class AssessmentController extends Controller
                         $q->time = 0;
 
                     }else{
+
                         $keys = $responses->keyBy('question_id');
 
                         if($request->get('dump'))
@@ -599,9 +641,9 @@ class AssessmentController extends Controller
                             $q->response = $keys[$q->id]['response'];
                             $q->time = $keys[$q->id]['time'];
                             if(isset($keys[$q->id]['code']))
-                            $q->code = $keys[$q->id]['code'];
+                                $q->code = $keys[$q->id]['code'];
 
-                            $time_used = $time_used + intval($q->time);
+                            
                         }else{
                             $q->dynamic = $keys[$q->id]->dynamic;
                             if(!isset($keys[$q->id]->response))
@@ -612,8 +654,14 @@ class AssessmentController extends Controller
                             if(isset($keys[$q->id]->code))
                             $q->code = $keys[$q->id]->code;
 
-                            $time_used = $time_used + intval($q->time);
 
+                        }
+
+                        if(!$section_timer)
+                         $time_used = $time_used + intval($q->time);
+                        else{
+                            if($data['sid']==$section->id)
+                                $time_used = $time_used + intval($q->time);
                         }
 
 
@@ -704,7 +752,9 @@ class AssessmentController extends Controller
                     $url3['video_'.$q->id] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_'.$q->id.'.webm']);
                 }
             }
+
         }
+
 
 
         // time
@@ -859,14 +909,16 @@ class AssessmentController extends Controller
          $url['testlog_log_get'] = Storage::disk('s3')->url($name_log);
 
 
-        if(!$request->get('student') && !$request->get('admin'))
+         if($settings['upload_time']){
+            $data['stopswap'] = $time - $settings['upload_time'];
+         }
+
+        if(!$request->get('student') && !$request->get('admin')){
             $time = round(($time * 60 - $time_used)/60,2);
+            $data['stopswap'] = $time - $settings['upload_time'];
+        }
 
-        $section_timer =  false;
-
-        if(isset($exam->settings->section_timer))
-            if($exam->settings->section_timer=='yes')
-                $section_timer = true;
+       
 
         if(!count($questions))
             abort(403,'No questions found');
@@ -874,11 +926,15 @@ class AssessmentController extends Controller
         if($section_timer){
             $view = 'test_sections';
             $time = $exam->sections[0]->time;
+            if(!$data['sid'])
+                $time = round(($time * 60 - $time_used)/60,2);
+            else
+                $time = round(($data['stime'] * 60 - $time_used)/60,2);
         }
         else
             $view = 'test';
 
-        
+
 
         return view('appl.exam.assessment.blocks.'.$view)
                         ->with('mathjax',true)
@@ -4089,6 +4145,9 @@ class AssessmentController extends Controller
         });
 
 
+        if(!$tests_overall){
+            abort('403','Test not attempted');
+        }
 
         //dd($tests->where('status',1));
         $evaluation = $tests->where('status',2);

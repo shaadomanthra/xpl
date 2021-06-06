@@ -66,6 +66,7 @@ $(document).ready(function(){
     }
 
 
+
     /* windowswap detection */
     function swapDetected() {
           var count = parseInt(document.getElementById("window_change").value) +1;
@@ -121,8 +122,11 @@ $(document).ready(function(){
                 window_focus = true;
                 console.log("Focused");
             }).blur(function() {
-              if(parseInt($('.timer_count').data('value'))>5)
-                swapDetected();
+              if(parseInt($('.timer_count').data('value'))>5){
+                var window_swap = parseInt($('.assessment').data('window_swap'));
+                if(window_swap)
+                  swapDetected();
+              }
           });
         }
       }
@@ -131,6 +135,16 @@ $(document).ready(function(){
 
     // // start window focus events after 5 seconds
     // setTimeout(win_focus,5000);
+
+    function stop_focus(){
+      $('.assessment').data('window_swap',0);
+      $('.upload_image_box').show();
+      console.log('disabled swap');
+    }
+
+    var stopswap = parseFloat($('.assessment').data('stopswap'));
+    if(stopswap)
+      setTimeout(stop_focus,stopswap*60*1000);
 
 
 
@@ -724,8 +738,31 @@ $(document).ready(function(){
     // exam timer
     function load_timer(){
             // Set the date we're counting down to
+        //show or hide controls based on question count
+       
 
-        var t = parseInt($('.assessment').data('exam_time'));
+        $first = parseInt($('.assessment').data('first'));
+        $last = parseInt($('.assessment').data('last'));
+        
+          if($first){
+            $('.left-qno').hide();
+            $('.right-qno').show();
+          }else if($last){
+            $('.left-qno').show();
+            $('.right-qno').hide();
+          }else if(!$first && !$last){
+            $('.left-qno').hide();
+            $('.right-qno').show();
+          }
+          else{
+            $('.left-qno').show();
+            $('.right-qno').show();
+          }
+          
+        
+        // Set the date we're counting down to
+
+        var t = parseFloat($('.assessment').data('exam_time'));
         var countDownDate = addMinutes(new Date(),t);
 
         // Update the count down every 1 second
@@ -999,6 +1036,7 @@ $(document).ready(function(){
 
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
+        responses.qid = $('.s'+$sno).data('qno');
         responses.last_photo = $('#photo').data('last_photo');
         if($('#video').length)
         responses.c = parseInt($('#video').data('c'));
@@ -1113,6 +1151,7 @@ $(document).ready(function(){
 
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
+        responses.qid = $('.s'+$sno).data('qno');
         responses.last_photo = $('#photo').data('last_photo');
 
         var seconds = new Date().getTime() / 1000;

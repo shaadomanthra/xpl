@@ -250,6 +250,8 @@
             <label for="formGroupExampleInput ">Photo Capture Frequency</label>
             <select class="form-control" name="capture_frequency">
               <option value="0" @if(isset($exam)) @if($exam->capture_frequencys==0) selected @endif @endif >None</option>
+              <option value="5" @if(isset($exam)) @if($exam->capture_frequency==5) selected @endif @endif >Every 5 secs</option>
+              <option value="10" @if(isset($exam)) @if($exam->capture_frequency==10) selected @endif @endif >Every 10 secs</option>
               <option value="20" @if(isset($exam)) @if($exam->capture_frequency==20) selected @endif @endif >Every 20 secs</option>
               <option value="30" @if(isset($exam)) @if($exam->capture_frequency==30) selected @endif @endif >Every 30 secs</option>
               <option value="60" @if(isset($exam)) @if($exam->capture_frequency==60) selected @endif @endif >Every 1 min</option>
@@ -360,14 +362,32 @@
       </div>
         </div>
 
-         <div class="col-12 col-md-6">
+         <div class="col-12 col-md-3">
            <div class="form-group mt-3">
         <label for="formGroupExampleInput ">Fullscreen mode</label>
         <select class="form-control" name="fullscreen">
 
           
-          <option value="no" @if(isset($exam)) @if($exam->fullscreen=="no") selected @endif @endif >No</option>
           <option value="yes" @if(isset($exam)) @if($exam->fullscreen=="yes") selected @endif @endif >Yes</option>
+          <option value="no" @if(isset($exam)) @if($exam->fullscreen=="no") selected @endif @endif >No</option>
+        </select>
+      </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+        <label for="formGroupExampleInput ">Upload Time (Descriptive Paper)</label>
+        <select class="form-control" name="upload_time">
+
+          <option value="0" @if(isset($exam)) @if($exam->upload_time==0) selected @endif @endif >None</option>
+          <option value="1" @if(isset($exam)) @if($exam->upload_time==1) selected @endif @endif >last 1 minute</option>
+          <option value="2" @if(isset($exam)) @if($exam->upload_time==2) selected @endif @endif >last 2 minutes</option>
+          <option value="3" @if(isset($exam)) @if($exam->upload_time==3) selected @endif @endif >last 3 minutes</option>
+          <option value="4" @if(isset($exam)) @if($exam->upload_time==4) selected @endif @endif >last 4 minutes</option>
+          <option value="5" @if(isset($exam)) @if($exam->upload_time==5) selected @endif @endif >last 5 minutes</option>
+          <option value="8" @if(isset($exam)) @if($exam->upload_time==8) selected @endif @endif >last 8 minutes</option>
+          <option value="10" @if(isset($exam)) @if($exam->upload_time==10) selected @endif @endif >last 10 minutes</option>
+          <option value="15" @if(isset($exam)) @if($exam->upload_time==15) selected @endif @endif >last 15 minutes</option>
         </select>
       </div>
         </div>

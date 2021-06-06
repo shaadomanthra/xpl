@@ -83,11 +83,11 @@ video ,#photo3{
 		<div class=" p-2 mb-2 rounded mt-3" style="border:2px solid #bb061c">
 		<div class="row ">
 			<div class="col-3">
-				<div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""  style="display:none"><i class="fa fa-angle-double-left" ></i></div>
+				<div class="left-qno cursor w100 p-1 text-center pl-2 " @if($data['sno']==1) data-sno="" @else data-sno="{{($data['sno']-1)}}" @endif  style="display:none"><i class="fa fa-angle-double-left" ></i></div>
 			</div>
 			<div class="col-6"> <div class="mt-1 text-center">Q({{ count($questions) }})</div></div>
 			<div class="col-3"> 
-				<div class="right-qno cursor w100 p-1 text-center mr-3 " data-sno="2" ><i class="fa fa-angle-double-right" ></i></div>
+				<div class="right-qno cursor w100 p-1 text-center mr-3 " data-sno="{{($data['sno']+1)}}" ><i class="fa fa-angle-double-right" ></i></div>
 			</div>
 		</div>
 		</div>
@@ -102,7 +102,7 @@ video ,#photo3{
 				@foreach($section_questions[$section->id] as $key=> $q)
 					<div class="col-3 mb-1">
 						<div class="pr-1">
-						<div class="w100 p-1 test2qno  s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" 
+						<div class="w100 p-1 test2qno  s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if(!$data['qid']) @if($i==1) active @endif @else @if($q->id==$data['qid']) active @endif @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" 
 						    >{{ ($i ) }}</div>
 						</div>
 					</div>

@@ -59,6 +59,36 @@ if (! function_exists('image_resize')) {
     }
 }
 
+if (! function_exists('image_resize')) {
+    function image_resize($image_path,$size)
+    {
+        $base_folder = '/app/public/';
+        $path = storage_path() . $base_folder . $image_path;
+        $explode= explode('.', $image_path);
+        $new_path = storage_path() . $base_folder .$explode[0];
+        $imgr = Image::make($path)->save(storage_path('app/public/' . $filename));
+
+        //$imgr = Image::make($path)->encode('webp', 100);
+       
+        // $imgr->resize($size, null, function ($constraint) {
+        //                 $constraint->aspectRatio();
+        //                 $constraint->upsize();
+        // });
+        // $imgr->save($new_path.'_'.$size.'.webp');  
+        // Storage::disk('s3')->put('resized_images/'.$name.'_'.$size.'.webp', (string)$imgr,'public');
+
+        $imgr2 = Image::make($path)->encode('jpg', 100);
+        $imgr2->resize($size, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+        });
+        $imgr2->save($new_path.'_'.$size.'.jpg');      
+        Storage::disk('s3')->put('resized_images/'.$name.'_'.$size.'.jpg', (string)$imgr2,'public');
+        return true;
+    }
+}
+
+
 if (! function_exists('jpg_resize')) {
     function jpg_resize($name,$path,$size)
     {
@@ -67,10 +97,7 @@ if (! function_exists('jpg_resize')) {
         $new_path = storage_path() . $base_folder . $name.'.jpg';
         $npath = $storagePath.$path;
 
-            
-
         $imgr = Image::make($npath)->encode('jpg', 100);
-
 
         $imgr->resize($size, null, function ($constraint) {
                         $constraint->aspectRatio();
@@ -78,8 +105,6 @@ if (! function_exists('jpg_resize')) {
         });
         $imgr->save($new_path);      
         
-
-
         return $imgr;
     }
 }

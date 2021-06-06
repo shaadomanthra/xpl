@@ -227,6 +227,11 @@ class Exam extends Model
        }
     }
 
+    public function shuffle($qset,$responses){
+
+      return $qset;
+    }
+
 
 
     public function pool_qset($qset,$formula){

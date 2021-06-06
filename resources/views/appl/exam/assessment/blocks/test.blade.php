@@ -5,7 +5,7 @@
 
 <div class="testpage_wrap">
 <div class="p-2 p-md-3 testpage " style="display: none">
-<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif" data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif "
+<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif" data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif" data-upload_time="@if(isset($settings['upload_time'])) {{$settings['upload_time']}} @endif" data-first="{{$data['first']}}" data-last="{{$data['last']}}" data-stopswap="{{$data['stopswap']}}"
 
 action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
   <style>
@@ -114,12 +114,12 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
     <div class="p-2 mb-2 rounded" style="border:2px solid #bb061c">
     <div class="row ">
       <div class="col-3">
-        <div class="left-qno cursor w100 p-1 text-center pl-2 " data-sno=""  style="display:none"><i class="fa fa-angle-double-left"data-testname="{{$exam->slug}}" ></i></div>
+        <div class="left-qno cursor w100 p-1 text-center pl-2 " @if($data['sno']==1) data-sno="" @else data-sno="{{($data['sno']-1)}}" @endif  style="display:none"><i class="fa fa-angle-double-left"data-testname="{{$exam->slug}}" ></i></div>
       </div>
 
       <div class="col-6"> <div class="mt-1 text-center ques_count cursor" data-count="{{count($questions)}}" data-url="{{route('assessment.savetest',$exam->slug)}}" data-save="@if(isset($exam->save)) @if($exam->save) 1 @else 0 @endif @else 0 @endif">Q({{ count($questions) }})</div></div>
       <div class="col-3"> 
-        <div class="right-qno cursor w100 p-1 text-center mr-3 " data-sno="2" data-testname="{{$exam->slug}}" ><i class="fa fa-angle-double-right" ></i></div>
+        <div class="right-qno cursor w100 p-1 text-center mr-3 " data-sno="{{($data['sno']+1)}}" data-testname="{{$exam->slug}}" ><i class="fa fa-angle-double-right" ></i></div>
       </div>
 
 
@@ -139,7 +139,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         @foreach($section_questions[$section->id] as $key=> $q)
           <div class="col-3 mb-1">
             <div class="pr-1">
-            <div class="w100 p-1 test2qno s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if($i==1) active @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" 
+            <div class="w100 p-1 test2qno s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if(!$data['qid']) @if($i==1) active @endif @else @if($q->id==$data['qid']) active @endif @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" 
                 >{{ ($i ) }}</div>
             </div>
           </div>
