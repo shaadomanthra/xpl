@@ -100,9 +100,8 @@
   <thead>
     <tr>
       <th scope="col" style="width:5%">#</th>
-      <th scope="col" style="width:40%">Question</th>
+      <th scope="col" style="width:50%">Question</th>
       <th scope="col">Response</th>
-      <th scope="col" style="width:25%">Answer</th>
       @if(!$test_overall->status)
       @if($exam->solutions !=3 && $exam->solutions !=4 )
       <th scope="col">Score</th>
@@ -144,6 +143,12 @@
           <div class=""><span class=" @if($t->answer=='E') text-success font-weight-bold @endif">(E)</span><div class="pt-1 d-inline "> {!! $question->option_e!!}</div></div>
           @endif
         </div>
+        @endif
+        @if(trim($t->answer))
+            <div class=""><hr>Answer: <b class="text-success">{!!$t->answer!!}</b></div>
+        @elseif(trim($questions[$t->question_id]->explanation))
+            <div class=""><hr>Explanation: {!!$questions[$t->question_id]->explanation!!}</div>
+        @else
         @endif
       </td>
       <td>
@@ -190,15 +195,7 @@
       	@endif
       </td>
      
-      <td>
-        @if(trim($t->answer))
-            {!!$t->answer!!}
-        @elseif(trim($questions[$t->question_id]->explanation))
-            {!!$questions[$t->question_id]->explanation!!}
-        @else
-        -
-        @endif
-      </td>
+      
       @if(!$test_overall->status)
       @if($exam->solutions !=3 && $exam->solutions !=4 )
       <td>
