@@ -4140,6 +4140,10 @@ class AssessmentController extends Controller
             return Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
         });
+
+        $test_keys = $tests->keyBy('question_id');
+
+
         $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
@@ -4229,7 +4233,13 @@ class AssessmentController extends Controller
                     $q->images = [];
                 }
 
+                if(isset($test_keys[$q->id]->dynamic)){
+                    $dynamic = $test_keys[$q->id]->dynamic;
+                    $q = $this->option_swap2($q,$dynamic);
+                }
+
                 $questions[$i] = $q;
+                
                 $ques[$q->id] = $q;
                 $ques_keys[$q->id]['topic'] = $q->topic;
                 $ques_keys[$q->id]['section'] = $section->name;

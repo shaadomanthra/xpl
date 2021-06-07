@@ -42,8 +42,9 @@
           @can('update',$exam)
             <span class="btn-group float-md-right btn-group-sm mt-2 mt-md-0" role="group" aria-label="Basic example">
               <a href="{{ route('exam.edit',$exam->slug) }}" class="btn btn-outline-light" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i> edit</a>
+                <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal4" data-tooltip="tooltip" data-placement="top" title="Download"><i class="fa fa-cloud-download"></i> Download</a>
               @if(\Auth::user()->checkRole(['administrator','editor']))
-               <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal4" data-tooltip="tooltip" data-placement="top" title="Download"><i class="fa fa-cloud-download"></i> Download</a>
+               
               <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal2" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-retweet"></i> copy</a>
               <a href="" class="btn btn-outline-light" data-toggle="modal" data-target="#exampleModal3" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-user"></i> change owner</a>
               @endif

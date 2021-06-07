@@ -89,16 +89,18 @@
    
 @else
 
+@if(trim($test_overall->comment))
 <div class="card mb-3 p-3" style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
     <h3>Comments</h3>
     <p>{{$test_overall->comment}}</p>
   </div>  
+@endif
 	<div class="table-responsive">
 		<table class="table table-bordered bg-white">
   <thead>
     <tr>
       <th scope="col" style="width:5%">#</th>
-      <th scope="col" style="width:30%">Question</th>
+      <th scope="col" style="width:40%">Question</th>
       <th scope="col">Response</th>
       <th scope="col" style="width:25%">Answer</th>
       @if(!$test_overall->status)
@@ -114,7 +116,36 @@
 
     <tr>
       <th scope="row">{{($k+1)}}</th>
-      <td>{!! $questions[$t->question_id]->question !!}</td>
+      <td class="{{ $question = $questions[$t->question_id]}}">{!! $questions[$t->question_id]->question !!}
+         @if($questions[$t->question_id]->type=='mcq')
+        <div class="mt-3">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              @if($question->option_a)
+          <div class=""><span class=" @if($t->answer=='A') text-success font-weight-bold @endif">(A)</span><div class="pt-1 d-inline "> {!! $question->option_a!!}</div></div>
+          @endif
+          @if($question->option_b)
+          <div class=""><span class=" @if($t->answer=='B') text-success font-weight-bold @endif">(B)</span><div class="pt-1 d-inline "> {!! $question->option_b!!}</div></div>
+          @endif
+
+            </div>
+            <div class="col-12 col-md-6">
+              @if($question->option_c)
+          <div class=""><span class=" @if($t->answer=='C') text-success font-weight-bold @endif">(C)</span><div class="pt-1 d-inline "> {!! $question->option_c!!}</div></div>
+          @endif
+          @if($question->option_d)
+          <div class=""><span class=" @if($t->answer=='D') text-success font-weight-bold @endif">(D)</span><div class="pt-1 d-inline "> {!! $question->option_d!!}</div></div>
+          @endif
+            </div>
+          </div>
+          
+          
+          @if($question->option_e)
+          <div class=""><span class=" @if($t->answer=='E') text-success font-weight-bold @endif">(E)</span><div class="pt-1 d-inline "> {!! $question->option_e!!}</div></div>
+          @endif
+        </div>
+        @endif
+      </td>
       <td>
       	@if($questions[$t->question_id]->type=='urq')
           <div class="">
@@ -160,8 +191,8 @@
       </td>
      
       <td>
-        @if(trim($questions[$t->question_id]->answer))
-            {!!$questions[$t->question_id]->answer!!}
+        @if(trim($t->answer))
+            {!!$t->answer!!}
         @elseif(trim($questions[$t->question_id]->explanation))
             {!!$questions[$t->question_id]->explanation!!}
         @else
