@@ -227,10 +227,10 @@ class Exam extends Model
        }
     }
 
-    public function shuffle($qset,$responses){
+    // public function shuffle($qset,$responses){
 
-      return $qset;
-    }
+    //   return $qset;
+    // }
 
 
 
