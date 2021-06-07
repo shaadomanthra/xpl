@@ -905,8 +905,13 @@ $(document).ready(function(){
         mediaRecorder = new MediaRecorder(window.stream, options);
         $sno = $('.clear-qno').data('sno');
         $qno = $('.s'+$sno).data('qno');
+        console.log($qno);
+        $('.assessment').data('vques',$qno);
         $('#gum_'+$qno).show();
         $('#curr-qno').data('qno',$qno);
+        $('.qid'+$qno).data('vq',1);
+        console.log('vq-'+$('.qid'+$qno).data('vq'));
+
       } catch (e) {
         console.error('Exception while creating MediaRecorder:', e);
         errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(e)}`;
@@ -922,14 +927,19 @@ $(document).ready(function(){
     }
 
     function stopRecording($final=null) {
-
-      $sno = $('.clear-qno').data('sno');
-      $qno = $('.s'+$sno).data('qno');
+      console.log('stop recording invoked');
+      //$sno = $('.clear-qno').data('sno');
+      $qno = $('.assessment').data('vques');
+      console.log($qno+" - qno stopvideo");
       if($('#gum_'+$qno).length){
+        $('.qid'+$qno).data('vq',2);
         $('#gum_'+$qno).hide();
         $('.recording').hide();
         try {
-         mediaRecorder.stop();
+          if(mediaRecorder){
+            console.log('mediaRecorder found - trying to stop it');
+            if(mediaRecorder.state!='inactive')
+              mediaRecorder.stop();
 
 
       mediaRecorder.onstop = (event) => {
@@ -941,9 +951,10 @@ $(document).ready(function(){
 
         
         $qno = $('#curr-qno').data('qno');
+
         $url = $('.url_video_'+$qno).data('url');
-        //console.log($qno);
-        //console.log($url);
+        console.log($qno);
+        console.log($url);
         if($url){
             $.ajax({
                     method: "PUT",
@@ -954,7 +965,7 @@ $(document).ready(function(){
             })
             .done(function($url) {
 
-                console.log('video uploaded');
+                console.log('video uploaded - '+$qno);
                  if($final){
                     console.log(' --- reached final ----');
                     document.getElementById("assessment").submit();
@@ -976,11 +987,18 @@ $(document).ready(function(){
 
       };
 
+          }else{
+            
+          }
+        
+
         } catch (e) {
           console.error('navigator.getUserMedia error:', e);
         }
        
       }
+
+      
 
 
 
@@ -1134,6 +1152,7 @@ $(document).ready(function(){
 
     function make_visible_section($snext,$sno){
       $type = $('.s'+$sno).data('type');
+     
       if($snext){
         $('.section_block').hide();
         $('.section_block_'+$snext).show();
@@ -1154,8 +1173,9 @@ $(document).ready(function(){
       }else{
         if (typeof $sno === "undefined"){
           $sn = 1; 
-          $type = $('.s'+$sn).data('type');
+          $type = $('.assessment').data('slast');
         }
+        
         closeModals();
         $sno = parseInt($sno) +1;
         //stop recording if any
@@ -1166,10 +1186,30 @@ $(document).ready(function(){
         }
         else
         {
+          poolVideoCompletion();
           $('#video_upload').modal();
+
         }
       }
       
+    }
+
+    function poolVideoCompletion(){
+      var uploaded = 0;
+      $(".vq").get().forEach(function(entry, index, array) {
+        console.log($(entry).data('vq')+ ' -data vq');
+        console.log(array.length+ ' -length');
+        console.log(index+' -index');
+        if(parseInt($(entry).data('vq'))==0 || parseInt($(entry).data('vq'))==2){
+          uploaded++;
+          var vcount = $('.assessment').data('vcount');
+          if(uploaded==vcount){
+                  console.log(' --- all videos uploaded - reached final ----');
+                  document.getElementById("assessment").submit();
+          }
+        }
+      });
+
     }
 
     function make_visible($sno){

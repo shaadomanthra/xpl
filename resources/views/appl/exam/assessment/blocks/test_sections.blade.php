@@ -4,7 +4,7 @@
 
 <div class="testpage_wrap">
 <div class="p-2 p-md-3 testpage " style="display: none">
-<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif" data-section="{{ $exam->sections[0]->id }}" data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif" data-upload_time="@if(isset($settings['upload_time'])) {{$settings['upload_time']}} @endif" data-sid="{{$data['sid']}}" data-qid="{{$data['qid']}}" data-first="{{$data['first']}}" data-last="{{$data['last']}}" data-stopswap="{{$data['stopswap']}}"
+<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif" data-section="{{ $exam->sections[0]->id }}" data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif" data-upload_time="@if(isset($settings['upload_time'])) {{$settings['upload_time']}} @endif" data-sid="{{$data['sid']}}" data-qid="{{$data['qid']}}" data-first="{{$data['first']}}" data-last="{{$data['last']}}" data-stopswap="{{$data['stopswap']}}" data-slast="{{$data['slast']}}" data-vques="0" data-vcount="{{$data['vcount']}}"
 
 action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
   <style>
@@ -19,6 +19,8 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
   }
 }
 </style>
+
+
 
   <div class="row" id="curr-qno" data-qno="0">
     <div class="col-md-9" id="curl" data-url=''>
@@ -533,6 +535,7 @@ div.chats {
     <div class="url2_{{$k}} d-none " data-url="{{$url2}}" ></div>
   @endforeach
   @endif
+
   @if($urls3)
   @foreach($urls3 as $k=> $url3)
     <div class="url_{{$k}} d-none " data-url="{{$url3}}" ></div>

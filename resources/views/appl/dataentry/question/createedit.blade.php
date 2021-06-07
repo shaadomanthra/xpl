@@ -164,6 +164,16 @@ th{ border:1px solid silver; }
       <td><input class="form-control " type="text" name="in_3" value="@if($stub=='Create'){{ (old('in_3')) ? old('in_3') : '' }}@else{{ $testcases['in_3'] }}@endif"  ></td>
       <td><textarea class="form-control " name="out_3"  rows="3">@if($stub=='Create'){{ (old('out_3')) ? old('out_3') : '' }}@else {{ $testcases['out_3'] }}@endif</textarea></td>
     </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td><input class="form-control " type="text" name="in_4" value="@if($stub=='Create'){{ (old('in_4')) ? old('in_4') : '' }}@else{{ $testcases['in_4'] }}@endif"  ></td>
+      <td><textarea class="form-control " name="out_4"  rows="3">@if($stub=='Create'){{ (old('out_4')) ? old('out_4') : '' }}@else {{ $testcases['out_4'] }}@endif</textarea></td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td><input class="form-control " type="text" name="in_5" value="@if($stub=='Create'){{ (old('in_5')) ? old('in_5') : '' }}@else{{ $testcases['in_5'] }}@endif"  ></td>
+      <td><textarea class="form-control " name="out_5"  rows="3">@if($stub=='Create'){{ (old('out_5')) ? old('out_5') : '' }}@else {{ $testcases['out_5'] }}@endif</textarea></td>
+    </tr>
   </tbody>
 </table>
          

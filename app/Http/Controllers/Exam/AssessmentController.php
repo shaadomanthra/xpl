@@ -421,6 +421,9 @@ class AssessmentController extends Controller
        $data['last'] = null;
        $data['first'] = null;
        $data['stopswap'] = 0;
+       $data['slast'] = 'mcq';
+       $data['vcount'] = 0;
+       $data['upload_urls'] = [];
        $cc = 0 ;
 
 
@@ -504,10 +507,14 @@ class AssessmentController extends Controller
 
         $jsonname = $test.'_'.$user->id;
 
+
         if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json'))
             $images = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
-        else
+
+        else{
             $images = [];
+            Storage::disk('s3')->put('urq/'.$jsonname.'.json',json_encode($images),'public');
+        }
 
         $window_change = true;
 
@@ -585,7 +592,7 @@ class AssessmentController extends Controller
         $passages = array();
         $dynamic =array();
         $section_questions = array();
-
+        $imgs=[];
         foreach($exam->sections as $section){
             $qset = $exam->getQuestionsSection($section->id,$user->id);//$section->questions;
 
@@ -603,6 +610,7 @@ class AssessmentController extends Controller
                          ->get();
                 }
             }
+
 
             $k=0;
             foreach($qset as $e=>$q){
@@ -709,8 +717,12 @@ class AssessmentController extends Controller
 
 
                 if(isset($images)){
-                    if(isset($images[$q->id]))
+                    if(isset($images[$q->id])){
                         $q->images = $images[$q->id];
+                        foreach($q->images as $ids=>$qe){
+                            $imgs[$q->id]['c'] = str_replace('a','',$ids);
+                        }
+                    }
                     else
                         $q->images = [];
                 }else{
@@ -750,12 +762,34 @@ class AssessmentController extends Controller
                     $folder = 'webcam/'.$exam->id.'/';
                     $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
                     $url3['video_'.$q->id] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_'.$q->id.'.webm']);
+                    $data['slast'] = $q->type;
+                    $data['vcount']++;
+                }elseif($q->type=='urq'){
+                    $folder = 'urq/';
+                    for($k=1;$k<6;$k++){
+                        $name = $folder.$exam->slug.'_'.\auth::user()->id.'_'.$q->id.'_'.$k;
+                        $filename_ = $name.'.jpg';
+                        $url3['urq_'.$q->id.'_'.$k] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$filename_]);
+                        
+                    }
+
+                    if(!isset($images[$q->id])){
+                        $images[$q->id] =[];
+                    }
+                    
                 }
+
+                
             }
 
         }
 
+        if($images){
+             Storage::disk('s3')->put('urq/'.$jsonname.'.json',json_encode($images),'public');
+        }
 
+        $url3['urq_user'] = Storage::disk('s3')->url('urq/'.$jsonname.'.json');
+        $url3['urq_userpost'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',['urq/'.$jsonname.'.json']);
 
         // time
         foreach($exam->sections as $k=>$section){
@@ -935,11 +969,13 @@ class AssessmentController extends Controller
             $view = 'test';
 
 
+      
 
         return view('appl.exam.assessment.blocks.'.$view)
                         ->with('mathjax',true)
                         ->with('highlight',true)
                         ->with('exam',$exam)
+                        ->with('imgs',$imgs)
                         ->with('code',true)
                         ->with('csq',$csq)
                         ->with('test_section',$section_timer)
@@ -3603,6 +3639,7 @@ class AssessmentController extends Controller
                     $extension = strtolower($request->file->getClientOriginalExtension());
 
                 $name = $slug.'_'.$user_id.'_'.$qid.'_'.$k;
+                $filename = $name.'.'.$extension;
                 $jsonname = $slug.'_'.$user_id;
                 $jsonfile = $jsonname.'.json';
 
@@ -4239,7 +4276,7 @@ class AssessmentController extends Controller
                 }
 
                 $questions[$i] = $q;
-                
+
                 $ques[$q->id] = $q;
                 $ques_keys[$q->id]['topic'] = $q->topic;
                 $ques_keys[$q->id]['section'] = $section->name;

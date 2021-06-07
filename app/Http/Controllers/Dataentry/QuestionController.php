@@ -224,9 +224,13 @@ class QuestionController extends Controller
                 $testcases['in_1'] = $request->get('in_1');
                 $testcases['in_2'] = $request->get('in_2');
                 $testcases['in_3'] = $request->get('in_3');
+                $testcases['in_4'] = $request->get('in_4');
+                $testcases['in_5'] = $request->get('in_5');
                 $testcases['out_1'] = $request->get('out_1');
                 $testcases['out_2'] = $request->get('out_2');
                 $testcases['out_3'] = $request->get('out_3');
+                $testcases['out_4'] = $request->get('out_4');
+                $testcases['out_5'] = $request->get('out_5');
                 $question->a = json_encode($testcases);
 
             }
@@ -1181,7 +1185,7 @@ class QuestionController extends Controller
         else
             $categories =null;
 
-        $testcases = array("in_1"=>"","in_2"=>"","in_3"=>"","out_1"=>"","out_2"=>"","out_3"=>"");
+        $testcases = array("in_1"=>"","in_2"=>"","in_3"=>"","in_4"=>"","in_5"=>"","out_1"=>"","out_2"=>"","out_3"=>"","out_4"=>"","out_5"=>"");
 
         //tags
         $tags =  Tag::where('project_id',$this->project->id)
@@ -1284,9 +1288,13 @@ class QuestionController extends Controller
                 $testcases['in_1'] = $request->get('in_1');
                 $testcases['in_2'] = $request->get('in_2');
                 $testcases['in_3'] = $request->get('in_3');
+                $testcases['in_4'] = $request->get('in_4');
+                $testcases['in_5'] = $request->get('in_5');
                 $testcases['out_1'] = $request->get('out_1');
                 $testcases['out_2'] = $request->get('out_2');
                 $testcases['out_3'] = $request->get('out_3');
+                $testcases['out_4'] = $request->get('out_4');
+                $testcases['out_5'] = $request->get('out_5');
                 $question->a = json_encode($testcases);
             }
 

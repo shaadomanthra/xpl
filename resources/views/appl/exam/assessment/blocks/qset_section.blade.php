@@ -106,8 +106,8 @@ video ,#photo3{
 				@foreach($section_questions[$section->id] as $key=> $q)
 					<div class="col-3 mb-1">
 						<div class="pr-1">
-						<div class="w100 p-1 test2qno  s{{ (++$i ) }} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if(!$data['qid']) @if($i==1) active @endif @else @if($q->id==$data['qid']) active @endif @endif" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" data-section="{{ $section->id }}"  data-pos="@if($key==0) start @elseif(end($section_questions[$section->id])->id == $q->id) end @else between @endif "  data-qcount="{{count($section->questions)}}" data-type="{{$q->type}}"
-						    >{{ ($i ) }}</div>
+						<div class="w100 p-1 test2qno  s{{ (++$i ) }} qid{{ ($q->id )}} cursor text-center rounded qborder  @if($q->response) qblue-border @endif @if(count($q->images)) qblue-border @endif @if(!$data['qid']) @if($i==1) active @endif @else @if($q->id==$data['qid']) active @endif @endif {{$q->type}}" id="q{{ ($q->id )}}" data-qno="{{$q->id}}"  data-sno="{{ ($i) }}" data-section="{{ $section->id }}"  data-pos="@if($key==0) start @elseif(end($section_questions[$section->id])->id == $q->id) end @else between @endif "  data-qcount="{{count($section->questions)}}" data-type="{{$q->type}}" data-vq="0"
+						    >{{ ($i ) }} </div>
 						</div>
 					</div>
 				@endforeach

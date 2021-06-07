@@ -223,7 +223,7 @@
 
           <input type="file" class="form-control w-100 input input_{{($i+1)}} input_urq_{{($i+1)}}" type="text"  name="{{($i+1)}}" data-name="{{($i+1)}}" data-type="urq" data-sno="{{($i+1)}}" value="" 
           >
-          <button type="button" class="mt-3 btn btn-primary btn-urq btn_urq_{{($i+1)}}" data-name="{{($i+1)}}" data-user_id="{{ $user->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.upload',$exam->slug)}}">Upload</button>
+          <button type="button" class="mt-3 btn btn-primary btn-urq btn_urq_{{($i+1)}}" data-iname="{{($exam->slug.'_'.$user->id.'_'.$question->id)}}" data-name="{{($i+1)}}" data-user_id="{{ $user->id }}" data-qid="{{ $question->id }}" data-token="{{ csrf_token() }}" data-url="{{ route('assessment.upload',$exam->slug)}}">Upload</button>
 
           <div class="spinner-border spinner-border-sm float-right mt-3 spinner_{{$i+1}}" role="status" style="display:none">
             <span class="sr-only">Loading...</span>

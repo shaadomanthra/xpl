@@ -12,11 +12,21 @@ class AwsController extends Controller
 		$client = $s3->getDriver()->getAdapter()->getClient();
 		$expiry = "+240 minutes";
 
-		$command = $client->getCommand('PutObject', [
+		$get = request()->get('get');
+		if($get)
+		$command = $client->getCommand('GetObjectAcl', [
 		    'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
 		    'ACL'=> 'public-read',
 		    'Key'    => $key
 		]);
+		else
+		$command = $client->getCommand('PutObject', [
+		    'Bucket' => \Config::get('filesystems.disks.s3.bucket'),
+		    'ACL'=> 'public-read',
+		    'Key'    => $key
+		]);	
+
+
 
 		$request = $client->createPresignedRequest($command, $expiry);
 

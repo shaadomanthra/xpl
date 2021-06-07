@@ -2123,10 +2123,18 @@ function timestramp(){
    // upload user responses
 $(function(){
   $(document).on('click','.btn-urq',function(e){
+    if($(this).prop('disabled',false)){
       $name = $(this).data('name');
-      $url = $(this).data('url');
+      $iname = $(this).data('iname');
+      console.log($iname);
+      
       $user_id = $(this).data('user_id');
+      $c = parseInt($(this).data('c'));
       $qid = $(this).data('qid');
+      $url = $('.url_urq_'+$qid+'_'+$c).data('url');
+
+      
+      
       $token = $(this).data('token');
 
       i = $qid+'_'+Math.floor(Math.random() * 1000);
@@ -2148,6 +2156,7 @@ $(function(){
         }
 
        console.log('.input_urq_'+$name);
+       $(this).prop('disabled', true);
         fd.append('file',files);
         fd.append('user_id',$user_id);
         fd.append('qid',$qid);
@@ -2155,21 +2164,110 @@ $(function(){
         fd.append('i',i);
         // Display the values
         $('.spinner_'+$name).show();
-        $.ajax({
-          type : 'POST',
-          url : $url,
-          data:fd,
-          cache: false,
-          processData: false,
-          contentType: false,
-          beforeSend: function (request) {
-              return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+
+        console.log("url1 "+$url);
+        resizeUpload(files,$url,$name,$c,$iname);
+        // $.ajax({
+        //   type : 'POST',
+        //   url : $url,
+        //   data:fd,
+        //   cache: false,
+        //   processData: false,
+        //   contentType: false,
+        //   beforeSend: function (request) {
+        //       return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+        //   },
+        //   success:function(response){
+        //     if(response != 0){
+        //           $(".img_c_"+$name).prepend($('<img class="w-100 py-2 "/>').attr('src',response));
+        //           $(".img_container_"+$name).show(); // Display 
+        //           $('.spinner_'+$name).hide();
+        //           $('.img_status_'+$name).html('<span class="text-success"><i class="fa fa-check-circle"></i> Image upload successfully.</span>');
+        //           $('.btn_delete_urq_'+$name).show();
+        //           $(".input_urq_"+$name).val(null);
+
+        //           if(!$('.s'+$name).hasClass('qblue-border'))
+        //             $('.s'+$name).addClass('qblue-border');
+        //           if(!$('.s'+$name).hasClass('active'))
+        //                 $('.s'+$name).removeClass('active');
+
+
+        //         }else{
+        //           console.log('error');
+        //           $('.img_status').text('Image upload failed. Kindly retry.');
+        //         }
+        //   },
+          
+        // });
+    }
+      
+
+        
+      
+  });
+
+
+  function resizeUpload(file,url,qno,i,name){
+    console.log(i+ " i");
+    const MAX_WIDTH = 1200;
+    const MAX_HEIGHT = 2000;
+    const MIME_TYPE = "image/jpeg";
+    const QUALITY = 0.8;
+
+    const blobURL = URL.createObjectURL(file);
+    const img = new Image();
+    img.src = blobURL;
+    img.onerror = function () {
+      URL.revokeObjectURL(this.src);
+        // Handle the failure properly
+        console.log("Cannot load image");
+      };
+      img.onload = function () {
+        URL.revokeObjectURL(this.src);
+        const [newWidth, newHeight] = calculateSize(img, MAX_WIDTH, MAX_HEIGHT);
+        const canvas = document.createElement("canvas");
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+        
+        canvas.toBlob(
+          (blob) => {
+            // Handle the compressed image. es. upload or save in local state
+            awsuploadcompressed(blob,url,qno,i,name);
           },
-          success:function(response){
-            if(response != 0){
-                  $(".img_c_"+$name).prepend($('<img class="w-100 py-2 "/>').attr('src',response));
+          MIME_TYPE,
+          QUALITY
+          );
+        //document.getElementById("root").append(canvas);
+      };
+  }
+
+  function awsuploadcompressed(blob,$url,qno,i,name){
+    console.log(i+ " i");
+    $name = qno;
+    if($url){
+        $.ajax({
+                method: "PUT",
+                headers: {"Content-Type": "image/jpeg"},
+                processData: false,
+                data: blob,
+                url: $url
+        })
+        .done(function($u) {
+          console.log('completed '+qno); 
+          $c = parseInt($('.btn_urq_'+qno).data('c'));
+          $('.btn_urq_'+qno).data('c',($c+1));
+          $('.btn_urq_'+qno).prop('disabled', false);
+          $('.spinner_'+qno).hide();
+
+          $random = Math.random().toString(36).substring(7);
+          $src = getPathFromUrl($url)+"?"+$random;
+          
+          console.log($('.btn_urq_'+qno).data('c'));
+           $(".img_c_"+$name).prepend($('<img class="w-100 py-2 "/>').attr('src',$src));
                   $(".img_container_"+$name).show(); // Display 
-                  $('.spinner_'+$name).hide();
+                
                   $('.img_status_'+$name).html('<span class="text-success"><i class="fa fa-check-circle"></i> Image upload successfully.</span>');
                   $('.btn_delete_urq_'+$name).show();
                   $(".input_urq_"+$name).val(null);
@@ -2179,37 +2277,84 @@ $(function(){
                   if(!$('.s'+$name).hasClass('active'))
                         $('.s'+$name).removeClass('active');
 
-
-                }else{
-                  console.log('error');
-                  $('.img_status').text('Image upload failed. Kindly retry.');
+          $urqurl = $('.url_urq_user').data('url')+'?'+$random;
+          $urqurlpost = $('.url_urq_userpost').data('url');
+          $qid = $('.btn_urq_'+qno).data('qid');
+          $.ajax({
+                type: "GET",
+                url: $urqurl
+            }).done(function (result) {
+                Object.entries(result)
+                 console.log(result[$qid]);
+                if(i in result[$qid]){
+                  console.log('there');
+                  result[$qid][i] = $src;
                 }
-          },
-          
-        });
+                else{
+                  console.log('there -'+i);
+                  if(i==1){
 
-        // $.ajax({
-        //     url: $url,
-        //     type: 'GET',
-        //     data: fd,
-        //     contentType: false,
-        //     processData: false,
-        //     success: function(response){
-        //         if(response != 0){
-        //           console.log('done'+response);
-        //             $(".img_".$name).attr("src",response); 
-        //             $(".img_container_".$name).show(); // Display image element
-        //         }else{
-        //           console.log('error');
-        //             //alert('file not uploaded');
-        //         }
-        //     },
-        //     error: function(e){
-        //       console.log(e)
-        //     },
-        // });
-      
-  });
+                   result[$qid] = {'a1':$src};
+                  }
+                  if(i==2)
+                   result[$qid].a2 = $src;
+                 if(i==3)
+                   result[$qid].a3 = $src;
+                 if(i==4)
+                   result[$qid].a4 = $src;
+                 if(i==5)
+                   result[$qid].a5 = $src;
+                }
+                 var $data = JSON.stringify(result);
+                 console.log($data);
+
+                $.ajax({
+                        method: "PUT",
+                        headers: {"Content-Type": "application/json"},
+                        processData: false,
+                        data: $data,
+                        url: $urqurlpost
+                })
+                .done(function($url) {
+                        console.log('done updating --');
+                });
+                  
+              }).fail(function () {
+                  console.log("Sorry URL is not access able");
+          });
+        });
+    }
+  }
+
+  function getPathFromUrl(url) {
+    return url.split("?")[0];
+  }
+
+  function calculateSize(img, maxWidth, maxHeight) {
+      let width = img.width;
+      let height = img.height;
+
+      // calculate the width and height, constraining the proportions
+      if (width > height) {
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+      } else {
+        if (height > maxHeight) {
+          width = Math.round((width * maxHeight) / height);
+          height = maxHeight;
+        }
+      }
+      return [width, height];
+    }
+
+    function readableBytes(bytes) {
+      const i = Math.floor(Math.log(bytes) / Math.log(1024)),
+        sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+      return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
+    }
 
 
 
@@ -2250,6 +2395,7 @@ $(function(){
                   $('.btn_delete_urq_'+$name).hide();
                   $('.s'+$name).removeClass('qblue-border');
                   $(".input_urq_"+$name).val(null);
+                  $('.btn_urq_'+$name).data('c',(1));
 
                 }else{
                   console.log('error');
