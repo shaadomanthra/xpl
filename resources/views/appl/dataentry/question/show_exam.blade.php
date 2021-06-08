@@ -161,26 +161,34 @@
         <td>{{ json_decode($question->a)->in_1 }}</td>
         <td>{{ json_decode($question->a)->out_1 }}</td>
       </tr>
+      @if(isset(json_decode($question->a)->in_2))
       <tr>
         <td>#2</td>
         <td>{{ json_decode($question->a)->in_2 }}</td>
         <td>{{ json_decode($question->a)->out_2 }}</td>
       </tr>
+      @endif
+      @if(isset(json_decode($question->a)->in_3))
       <tr>
         <td>#3</td>
         <td>{{ json_decode($question->a)->in_3 }}</td>
         <td>{{ json_decode($question->a)->out_3}}</td>
       </tr>
+      @endif
+      @if(isset(json_decode($question->a)->in_4))
        <tr>
         <td>#4</td>
         <td>{{ json_decode($question->a)->in_4 }}</td>
         <td>{{ json_decode($question->a)->out_4}}</td>
       </tr>
+      @endif
+      @if(isset(json_decode($question->a)->in_5))
        <tr>
         <td>#5</td>
         <td>{{ json_decode($question->a)->in_5 }}</td>
         <td>{{ json_decode($question->a)->out_5}}</td>
       </tr>
+      @endif
     </tbody>
   </table>
       
