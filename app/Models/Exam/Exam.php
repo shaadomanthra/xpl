@@ -644,7 +644,7 @@ class Exam extends Model
       $name = str_replace($s3, '', $url);
 
       if(!Storage::disk('s3')->exists($name)){
-          return '0-0 $name';
+          return '0-0 '.$name;
       }
       if (!ini_get('allow_url_fopen') && function_exists('curl_version')) {
 
