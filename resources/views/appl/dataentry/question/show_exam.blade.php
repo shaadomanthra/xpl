@@ -171,6 +171,16 @@
         <td>{{ json_decode($question->a)->in_3 }}</td>
         <td>{{ json_decode($question->a)->out_3}}</td>
       </tr>
+       <tr>
+        <td>#4</td>
+        <td>{{ json_decode($question->a)->in_4 }}</td>
+        <td>{{ json_decode($question->a)->out_4}}</td>
+      </tr>
+       <tr>
+        <td>#5</td>
+        <td>{{ json_decode($question->a)->in_5 }}</td>
+        <td>{{ json_decode($question->a)->out_5}}</td>
+      </tr>
     </tbody>
   </table>
       

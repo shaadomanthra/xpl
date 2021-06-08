@@ -943,12 +943,14 @@ class AssessmentController extends Controller
          $url['testlog_log_get'] = Storage::disk('s3')->url($name_log);
 
 
+         if(isset($settings['upload_time']))
          if($settings['upload_time']){
             $data['stopswap'] = $time - $settings['upload_time'];
          }
 
         if(!$request->get('student') && !$request->get('admin')){
             $time = round(($time * 60 - $time_used)/60,2);
+            if(isset($settings['upload_time']))
             $data['stopswap'] = $time - $settings['upload_time'];
         }
 
