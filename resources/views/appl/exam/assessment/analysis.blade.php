@@ -161,7 +161,7 @@
 						<dl class="row">
 
 						  <dt class="col-sm-6">Score </dt>
-						  <dd class="col-sm-6">{{ $details['marks']}} / {{ $details['total'] }} </dd>
+						  <dd class="col-sm-6">{{ $test_overall->score }} / {{ $test_overall->max  }} </dd>
 
 						  <dt class="col-sm-6">Attempted</dt>
 						  <dd class="col-sm-6">{{ $details['attempted']}} /  {{ ($details['unattempted']+$details['attempted'])}} Ques</dd>

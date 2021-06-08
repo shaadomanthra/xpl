@@ -99,7 +99,7 @@ pre, code {
 <div class="p-3 text-center bg-light sticky-top" id="item" style="margin-top:-2px;" data-html2canvas-ignore="true">
 
   @foreach($tests as $i=>$t)
-<span class="border spanitem rounded p-1 px-2 @if($t->status!=2)qgreen @else qyellow @endif cursor qno_{{$t->question_id}}" href="#item{{($i+1)}}">{{($i+1)}}</span>
+<span class="border spanitem rounded p-1 px-2 @if($t->status!=2)qgreen @else qred @endif cursor qno_{{$t->question_id}}" href="#item{{($i+1)}}">{{($i+1)}}</span>
 @endforeach
 </div>
 

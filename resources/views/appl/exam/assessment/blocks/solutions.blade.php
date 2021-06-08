@@ -170,12 +170,74 @@
           <div class="col-2 col-md-2">
             <div class="pr-3 mb-2 " >
           <div class="text-center p-1 rounded bg-light w100 border" > 
-                Input
+                Testcases
               </div>
             </div>
           </div>
           <div class="col-10 col-md-10"><div class="pt-1 a">
-            {!! $question->a!!}</div></div>
+             @if($question->type=='code')
+            @if(isset(json_decode($question->a)->in_1))
+              <table class="table table-bordered bg-light">
+    <thead style="background: #eee">
+      <tr>
+        <th></th>
+        <th>Input</th>
+        <th>Output</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>#1</td>
+        <td>{{ json_decode($question->a)->in_1 }}</td>
+        <td>{{ json_decode($question->a)->out_1 }}</td>
+      </tr>
+      <tr>
+        <td>#2</td>
+        @if(json_decode($question->a)->in_2)
+        <td>{{ json_decode($question->a)->in_2 }}</td>
+        <td>{{ json_decode($question->a)->out_2 }}</td>
+        @else
+        <td>{{ json_decode($question->a)->in_1 }}</td>
+        <td>{{ json_decode($question->a)->out_1 }}</td>
+        @endif
+      </tr>
+      <tr>
+        <td>#3</td>
+        @if(json_decode($question->a)->in_3)
+        <td>{{ json_decode($question->a)->in_3 }}</td>
+        <td>{{ json_decode($question->a)->out_3 }}</td>
+        @else
+        <td>{{ json_decode($question->a)->in_1 }}</td>
+        <td>{{ json_decode($question->a)->out_1 }}</td>
+        @endif
+      </tr>
+       <tr>
+        <td>#4</td>
+        @if(json_decode($question->a)->in_4)
+        <td>{{ json_decode($question->a)->in_4 }}</td>
+        <td>{{ json_decode($question->a)->out_4 }}</td>
+        @else
+        <td>{{ json_decode($question->a)->in_1 }}</td>
+        <td>{{ json_decode($question->a)->out_1 }}</td>
+        @endif
+      </tr>
+       <tr>
+        <td>#5</td>
+        @if(json_decode($question->a)->in_5)
+        <td>{{ json_decode($question->a)->in_5 }}</td>
+        <td>{{ json_decode($question->a)->out_5 }}</td>
+        @else
+        <td>{{ json_decode($question->a)->in_1 }}</td>
+        <td>{{ json_decode($question->a)->out_1 }}</td>
+        @endif
+      </tr>
+    </tbody>
+  </table>
+      
+              @endif
+            @else {!! $question->a!!}
+            @endif
+            </div></div>
         </div>
         @endif
 
@@ -214,12 +276,65 @@
           <div class="col-2 col-md-2">
             <div class="pr-3 mb-2 " >
           <div class="text-center p-1 rounded bg-light w100 border" > 
-                User Code
+                Your Code
               </div>
             </div>
           </div>
           <div class="col-10 col-md-10"><div class="pt-1 code"><pre class='p-3'><code class="text-light">{!! htmlentities($details['code'])!!}
           </code></pre></div></div>
+        </div>
+        @endif
+
+        @if($details['coder'])
+         <div class="row no-gutters">
+          <div class="col-2 col-md-2">
+            <div class="pr-3 mb-2 " >
+          <div class="text-center p-1 rounded bg-light w100 border" > 
+                Compilation
+              </div>
+            </div>
+          </div>
+          <div class="col-10 col-md-10">
+            <table>
+        <thead style="background: #eee">
+      <tr>
+        <th></th>
+        <th>Status</th>
+        <th>Correct Output</th>
+        <th>User Output</th>
+        <th>Execution Time (ms)</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if(isset($details['coder']['response_1']))
+      <tr>
+        <td>#1</td>
+        <td>@if($details['coder']['pass_1']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
+        <td>{{ json_decode($question->a)->out_1 }}</td>
+        <td>@if($details['coder']['response_1']['error']) {{ $details['coder']['response_1']['stderr']}} @else
+          {!! nl2br($details['coder']['response_1']['stdout']) !!}
+        @endif</td>
+        <td>{{ $details['coder']['response_1']['time']}}</td>
+      </tr>
+      @endif
+
+      @for($j=2;$j<6;$j++)
+      @if(isset($details['coder']['response_'.$j]))
+      <tr>
+        <td class="i {{ $out ='out_'.$j}} a_{{json_decode($question->a)->$out}}">#{{$j}}</td>
+        <td>@if($details['coder']['pass_'.$j]) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger "></i> Fail @endif</td>
+        <td>@if(trim(json_decode($question->a)->$out)) {{ json_decode($question->a)->$out }} @else  {{ json_decode($question->a)->out_1 }}@endif</td>
+        <td>@if($details['coder']['response_'.$j]['error']) {{ $details['coder']['response_'.$j]['stderr']}} @else
+          {!! nl2br($details['coder']['response_'.$j]['stdout']) !!}
+        @endif</td>
+        <td>{{ $details['coder']['response_'.$j]['time']}}</td>
+      </tr>
+      @endif
+      @endfor
+      
+    </tbody>
+  </table>
+          </div>
         </div>
         @endif
 
@@ -300,7 +415,7 @@
             <div class="col-12 col-md-6 mb-3">
               <div class="bg-light p-3 border rounded mb-3 mb-md-0">
                 <h3><i class="fa fa-lightbulb-o"></i> Expected Output</h3>
-                <div class="answer">{!! $question->answer !!}</div>
+                <div class="answer">@if($question->answer){!! $question->answer !!} @else - @endif</div>
               </div>
             </div>
             
@@ -328,47 +443,7 @@
 
       @endif
 
-      @if(auth::user()->checkRole(['hr-manager']))
-      @if(auth::user()->checkExamRole($exam,['evaluator','owner']))
-      <div class="card mb-3">
-        <div class="card-body">
-          <h3>Faculty Input</h3>
-          <form id="award_score" action="{{ request()->url()}}" method="post">
-  @if($question->type=='sq' || $question->type=='urq')
-  <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label">Score</label>
-    <div class="col-sm-10">
-      @foreach(range(0,$question->mark,0.5) as $r)
-        <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="score" id="inlineRadio1" value="{{$r}}" @if($details['mark']==$r)checked @endif>
-        <label class="form-check-label" for="inlineRadio1">{{$r}}</label>
-      </div>
-      @endforeach
-    </div>
-  </div>
-  @else
-    <input class="form-check-input" type="hidden" name="score" id="inlineRadio1" value="{{$details['mark']}}">
-  @endif
-  <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Feedback</label>
-    <div class="col-sm-10">
-      <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="4">@if(@details['comment']){{$details['comment']}}@endif</textarea>
-      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-      <input type="hidden" name="student" value="{{ request()->get('student') }}">
-      <input type="hidden" name="slug" value="{{ $exam->slug }}">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label"></label>
-    <div class="col-sm-10">
-      <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-  </div>
-</form>
-        </div>
-      </div>
-      @endif
-@endif
+     
 
       @if($question->explanation )
       <div class="card mb-3 mb-md-0">

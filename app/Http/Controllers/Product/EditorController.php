@@ -342,30 +342,110 @@ class EditorController extends Controller
           }
         }
         
+        if(!isset($testcases['in_2'])){
+          $data['pass_2'] = $data['pass_1'];
+          $data['response_2'] = $data['response_1'];
+        }else{
+          
 
-        $input = $testcases['in_2'];
-        $data['pass_2'] = 0;
-        $data['response_2'] = json_decode($this->curl_req($c,$lang,$code,$name.'_2',$input),true);
+          if(!(trim($testcases['in_2']))){
+            $data['pass_2'] = $data['pass_1'];
+            $data['response_2'] = $data['response_1'];
+          }else{
+            
+            $input = $testcases['in_2'];
+            $data['pass_2'] = 0;
 
-        if(isset($data['response_2']['stdout'])){
-          $resp = trim(str_replace(array("\n", "\r"), '', $data['response_2']['stdout']));
-          $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_2']));
-          if($resp == $output){
-            $data['pass_2'] = 1;
+            $data['response_2'] = json_decode($this->curl_req($c,$lang,$code,$name.'_2',$input),true);
+            if(isset($data['response_2']['stdout'])){
+              $resp = trim(str_replace(array("\n", "\r"), '', $data['response_2']['stdout']));
+              $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_2']));
+              if($resp == $output){
+                $data['pass_2'] = 1;
+              }
+            }
           }
         }
+        
+        if(!isset($testcases['in_3'])){
+          $data['pass_3'] = $data['pass_1'];
+          $data['response_3'] = $data['response_1'];
+        }else{
 
-        $input = $testcases['in_3'];
-        $data['pass_3'] = 0;
+          
 
-        $data['response_3'] = json_decode($this->curl_req($c,$lang,$code,$name.'_3',$input),true);
-        if(isset($data['response_3']['stdout'])){
-          $resp = trim(str_replace(array("\n", "\r"), '', $data['response_3']['stdout']));
-          $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_3']));
-          if($resp == $output){
-            $data['pass_3'] = 1;
+          if(!(trim($testcases['in_3']))){
+            $data['pass_3'] = $data['pass_1'];
+            $data['response_3'] = $data['response_1'];
+          }else{
+            
+            $input = $testcases['in_3'];
+            $data['pass_3'] = 0;
+
+            $data['response_3'] = json_decode($this->curl_req($c,$lang,$code,$name.'_3',$input),true);
+            if(isset($data['response_3']['stdout'])){
+              $resp = trim(str_replace(array("\n", "\r"), '', $data['response_3']['stdout']));
+              $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_3']));
+              if($resp == $output){
+                $data['pass_3'] = 1;
+              }
+            }
           }
+
+
         }
+
+        if(!isset($testcases['in_4'])){
+          $data['pass_4'] = $data['pass_1'];
+          $data['response_4'] = $data['response_1'];
+        }else{
+
+          if(!(trim($testcases['in_4']))){
+            $data['pass_4'] = $data['pass_1'];
+            $data['response_4'] = $data['response_1'];
+          }else{
+            
+            $input = $testcases['in_4'];
+            $data['pass_4'] = 0;
+
+            $data['response_4'] = json_decode($this->curl_req($c,$lang,$code,$name.'_4',$input),true);
+            if(isset($data['response_4']['stdout'])){
+              $resp = trim(str_replace(array("\n", "\r"), '', $data['response_4']['stdout']));
+              $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_4']));
+              if($resp == $output){
+                $data['pass_4'] = 1;
+              }
+            }
+          }
+
+            
+
+        }
+
+        if(!isset($testcases['in_5'])){
+          $data['pass_5'] = $data['pass_1'];
+          $data['response_5'] = $data['response_1'];
+        }else{
+
+          if(!(trim($testcases['in_5']))){
+            $data['pass_5'] = $data['pass_1'];
+            $data['response_5'] = $data['response_1'];
+          }else{
+            $input = $testcases['in_5'];
+            $data['pass_5'] = 0;
+
+            $data['response_5'] = json_decode($this->curl_req($c,$lang,$code,$name.'_5',$input),true);
+            if(isset($data['response_5']['stdout'])){
+              $resp = trim(str_replace(array("\n", "\r"), '', $data['response_5']['stdout']));
+              $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_5']));
+              if($resp == $output){
+                $data['pass_5'] = 1;
+              }
+            }
+          }
+          
+        }
+        
 
         
 
@@ -378,6 +458,8 @@ class EditorController extends Controller
 
 
     }
+
+   
 
 
     public function curl_req($c,$lang,$code,$name,$input){

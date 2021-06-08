@@ -1921,7 +1921,8 @@ class AssessmentController extends Controller
                 else
                     $images = [];
 
-
+                $details['coder'] = json_decode($details['comment'],true);
+               
 
                 return view('appl.exam.assessment.'.$view)
                         ->with('mathjax',true)
@@ -2140,6 +2141,7 @@ class AssessmentController extends Controller
             }
         }
 
+
         $date_time = new \DateTime();
         $data = array();
         $d =array();
@@ -2244,32 +2246,43 @@ class AssessmentController extends Controller
                 $item['code'] = $request->get('dynamic_'.$i);
                 $item['comment'] = $request->get('out_'.$i);
 
+
                 if(strip_tags(trim($item['code']))){
                     $testcases = json_decode($item['comment'],true);
-                    if($testcases['pass_1']=='1' && $testcases['pass_2']=='1' && $testcases['pass_3']=='1'){
-                        $item['accuracy'] =1;
-                        if($item['accuracy']==1){
-                            if($questions[$item['question_id']]->mark)
-                                $item['mark'] = $questions[$item['question_id']]->mark;
-                            elseif($secs[$item['section_id']]->mark)
-                                $item['mark'] = $secs[$item['section_id']]->mark;
-                            else
-                                $item['mark'] = 1;
-                        }else{
-                            if($secs[$item['section_id']]->negative && $item['response'])
-                                $item['mark'] = 0 - $secs[$item['section_id']]->negative;
-                            else
-                                $item['mark'] = 0;
-                        }
+                    $partialmark = 0.2;
+                    if($questions[$item['question_id']]->mark)
+                        $partialmark = round($questions[$item['question_id']]->mark/5,2);
+                    elseif($secs[$item['section_id']]->mark)
+                        $partialmark = round($secs[$item['section_id']]->mark/5,2);
+                   
+                   $partial_awarded  = 0;
+                   if($testcases['pass_1']=='1'){
+                        $partial_awarded = $partial_awarded +$partialmark;
+                   }
 
+                   if($testcases['pass_2']=='1'){
+                        $partial_awarded = $partial_awarded +$partialmark;
+                   }
+
+                   if($testcases['pass_3']=='1'){
+                        $partial_awarded = $partial_awarded +$partialmark;
+                   }
+
+                   if($testcases['pass_4']=='1'){
+                        $partial_awarded = $partial_awarded +$partialmark;
+                   }
+
+                   if($testcases['pass_5']=='1'){
+                        $partial_awarded = $partial_awarded +$partialmark;
+                   }
+                   $item['mark'] = $partial_awarded;
+
+                    if($testcases['pass_1']=='1' && $testcases['pass_2']=='1' && $testcases['pass_3']=='1' && $testcases['pass_4']=='1' && $testcases['pass_5']=='1'){
+                        $item['accuracy'] =1;
                     }else{
                         $item['accuracy'] =0;
-                        if($secs[$item['section_id']]->negative && $item['response'])
-                            $item['mark'] = 0 - $secs[$item['section_id']]->negative;
-                        else
-                            $item['mark'] = 0;
-
                     }
+                        
                     // $code_ques_flag =1;
                     // $item['status'] = 2;
                 }
@@ -2302,7 +2315,6 @@ class AssessmentController extends Controller
 
         }
 
-       // dd($data);
 
         if(!$request->get('admin')){
             $tests_cache = new Test();
@@ -2485,6 +2497,7 @@ class AssessmentController extends Controller
 
 
         }
+
 
         if($test_overall['window_change']>3)
             $test_overall['cheat_detect'] = 1;
@@ -4182,6 +4195,12 @@ class AssessmentController extends Controller
 
         $test_keys = $tests->keyBy('question_id');
 
+        if(request()->get('refresh')){
+            Cache::forget('attempt_'.$user_id.'_'.$test_id);
+             Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
+             Cache::forget('exam_type_'.$exam->slug);
+
+        }
 
         $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();

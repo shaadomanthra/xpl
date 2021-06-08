@@ -1244,6 +1244,9 @@ $(document).ready(function() {
                 $('.output_'+$qn).html(data.stderr);
                 $('.output_testcase_'+$qn).html('');
 
+                $('.input_'+$qn).attr('value',data.stdout);
+                $('.out_'+$qn).attr('value',jso);
+
                  if($testcase==3){
                   if(!$('.s'+$qn).hasClass('qblue-border'))
                     $('.s'+$qn).addClass('qblue-border');
@@ -1261,11 +1264,21 @@ $(document).ready(function() {
                     $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
 
                   if(dat.pass_3 == "1")
-                    $test3 = '<p class="mb-0"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
                   else
-                    $test3 = '<p class="mb-0"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
 
-                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+'</div>');
+                  if(dat.pass_4 == "1")
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_5 == "1")
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
                   $('.final_response_'+$qn).html(data.stdout);
                 }else{
                    $('.output_testcase_'+$qn).html('');
@@ -1293,11 +1306,21 @@ $(document).ready(function() {
                     $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
 
                   if(dat.pass_3 == "1")
-                    $test3 = '<p class="mb-0"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
                   else
-                    $test3 = '<p class="mb-0"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                  if(dat.pass_4 == "1")
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
 
-                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+'</div>');
+                  if(dat.pass_5 == "1")
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
+
                   $('.final_response_'+$qn).html(data.stdout);
                 }else{
                    $('.output_testcase_'+$qn).html('');
