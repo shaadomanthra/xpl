@@ -95,7 +95,7 @@ class TestReport2 implements FromCollection
             else
                $result[$k]->Score = '0';
 
-            $result[$k]->timer = round($result[$k]->time/60,2).' min';
+            $result[$k]->timer = round($result[$k]->time/60,2);
 
             if($res->user->fluency)
                 $result[$k]->f= $res->user->fluency;

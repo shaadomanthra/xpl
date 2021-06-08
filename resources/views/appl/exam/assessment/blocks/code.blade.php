@@ -19,7 +19,9 @@
 </div>
 
 </div>
-<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}"  rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}}@endif @endif</textarea>
+<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}"  rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}}@endif//Note: The testcase inputs are taken from command line arguments
+// click on the I/O instructions button to learn about the language specific input options
+// The output string has to exactly match with the execpted output  @endif</textarea>
 
   @if($question->a)
   <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-testcase="1" data-qslug="{{$question->slug}}" data-qno="{{($i+1)}}" data-url="{{ route('runcode') }}" data-lang="clang" data-sno="{{($i+1)}}" data-name="code_{{($i+1)}}" data-test="{{$exam->slug}}" data-c="1">Save & Compile</button>

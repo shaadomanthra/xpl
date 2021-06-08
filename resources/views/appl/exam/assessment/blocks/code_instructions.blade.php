@@ -60,11 +60,14 @@
   <div class="tab-pane fade show active" id="c" role="tabpanel" aria-labelledby="c-tab">
     <p class="mt-3">The testcase input is passed as command line arguments. In C programming, you can access the inputs using argv. </p>
     <pre><code>#include &lt;stdio.h>
+#include &lt;stdlib.h>
 int main (int argc, char *argv[]){
-  // first input
+  // first input in string format
   printf("%s",argv[1]);
-  // second input
-  printf("%s",argv[2]);
+  // second input in interger format
+  int arg2 = atoi(argv[2])
+  printf("%d",arg2);
+  // if there are 5 inputs, each can be accessed via argv[1] to argv[5]
 }</code></pre>
   </div>
   <div class="tab-pane fade " id="cpp" role="tabpanel" aria-labelledby="cpp-tab">
@@ -98,10 +101,12 @@ class Hello {
     <div class="alert alert-important alert-danger">In java programming, the classname has to be named Main only.</div>
     <pre><code>class Main {
    public static void main(String args[]) {
-      // first input
+      // first input in string format
       System.out.println(args[0]);
-      // second input
-      System.out.println(args[1]);
+      // second input in integer format
+      int arg2 = Integer.parseInt(args[1]);
+      System.out.println(arg2);
+      // if there are 5 inputs, each can be accessed via args[0] to args[4]
    }
 } </code></pre>
   </div>
@@ -109,10 +114,12 @@ class Hello {
     <p class="mt-3">The testcase input is passed as command line arguments. In Python, you can access the inputs using sys.argv. </p>
    
     <pre><code>import sys
-# first input
+# first input in string format
 print(sys.argv[1])
-# second input
-print(sys.argv[2]) </code></pre>
+# second input in integer format
+arg2 = int(sys.argv[2])
+print(arg2) 
+# if there are 5 inputs, each can be accessed via sys.argv[1] to sys.argv[5]</code></pre>
   </div>
    <div class="tab-pane fade " id="javascript" role="tabpanel" aria-labelledby="javascript-tab">
     <p class="mt-3">The testcase input is passed as command line arguments. In Javascript, you can access the inputs using process.argv. </p>

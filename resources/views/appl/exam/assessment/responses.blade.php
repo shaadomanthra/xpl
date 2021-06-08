@@ -20,6 +20,7 @@ pre, code {
 .spanitem{
   line-height: 35px;
 }
+
 </style>
 
 
@@ -67,7 +68,7 @@ pre, code {
             <button  class="btn btn-outline-success btn-sm " data-toggle="modal" data-target="#exampleModal2" data-html2canvas-ignore="true">Add Comment</button>
              
           </p>
-          @if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif
+          @if($student->roll_number)<span class="badge badge-info ">{{$student->roll_number}}</span>@endif
             @if($student->email)<span class="badge badge-info ">Email : {{$student->email}}</span> @endif
           @if($student->phone)<span class="badge badge-info ">Phone : {{$student->phone}}</span> @endif
            @if($student->branch_id)<span class="badge badge-danger ">{{$student->branch->name}}</span>@endif
@@ -151,8 +152,7 @@ pre, code {
         @if($questions[$t->question_id]->type=='code' || $questions[$t->question_id]->type=='csq')
         <p><b>User Code:</b></p>
         <pre class="mb-3" style="">
-          <code style="overflow-wrap: break-word;word-wrap: break-word">
-            {!! htmlentities($t->code) !!}
+          <code style="overflow-wrap: break-word;word-wrap: break-word">{!! htmlentities($t->code) !!}
           </code>
         </pre>
 
@@ -160,7 +160,7 @@ pre, code {
 
         
 
-				<p><b>User Response:</b></p>
+				<p><b>User Response: </b> <span class="float-right"><b><i class="fa fa-clock-o"></i> Time spent:</b> {{$t->time}} sec</span></p>
 					@if($questions[$t->question_id]->type=='urq')
           <div class="{{$w=0}}">
 
@@ -261,7 +261,7 @@ pre, code {
         <td>#1</td>
         <td>@if(json_decode($t->comment,true)['pass_1']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
         <td>{{ json_decode($question->a)->out_1 }}</td>
-        <td>@if(isset(json_decode($t->comment,true)['response_1']['error'])) {{ json_decode($t->comment,true)['response_1']['stderr']}} @else
+        <td>@if(trim(json_decode($t->comment,true)['response_1']['error'])) {{ json_decode($t->comment,true)['response_1']['stderr']}} @else
           {!! nl2br(json_decode($t->comment,true)['response_1']['stdout']) !!}
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_1']['time']}}</td>
@@ -271,8 +271,8 @@ pre, code {
 
         <td>#2</td>
         <td>@if(json_decode($t->comment,true)['pass_2']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
-        <td>{{ json_decode($question->a)->out_2 }}</td>
-        <td>@if(isset(json_decode($t->comment,true)['response_2']['error'])) {{ json_decode($t->comment,true)['response_2']['stderr']}} @else
+        <td>@if(json_decode($question->a)->out_2){{ json_decode($question->a)->out_2 }} @else {{json_decode($question->a)->out_1}} @endif</td>
+        <td>@if(trim(json_decode($t->comment,true)['response_2']['error'])) {{ json_decode($t->comment,true)['response_2']['stderr']}} @else
           {!! nl2br(json_decode($t->comment,true)['response_2']['stdout']) !!}
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_2']['time']}}</td>
@@ -280,11 +280,37 @@ pre, code {
       <tr>
         <td>#3</td>
         <td>@if(json_decode($t->comment,true)['pass_3']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
-        <td>{{ json_decode($question->a)->out_3 }}</td>
-        <td>@if(isset(json_decode($t->comment,true)['response_3']['error'])) {{ json_decode($t->comment,true)['response_3']['stderr']}} @else
+        <td>@if(json_decode($question->a)->out_3){{ json_decode($question->a)->out_3 }} @else {{json_decode($question->a)->out_1}} @endif</td>
+        <td>@if(trim(json_decode($t->comment,true)['response_3']['error'])) {{ json_decode($t->comment,true)['response_3']['stderr']}} @else
           {!! nl2br(json_decode($t->comment,true)['response_3']['stdout']) !!}
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_3']['time']}}</td>
+      </tr>
+
+      @endif
+
+      @if(isset(json_decode($t->comment,true)['pass_4']))
+      <tr>
+        <td>#4</td>
+        <td>@if(json_decode($t->comment,true)['pass_4']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
+        <td>@if(json_decode($question->a)->out_4){{ json_decode($question->a)->out_4 }} @else {{json_decode($question->a)->out_1}} @endif</td>
+        <td>@if(trim(json_decode($t->comment,true)['response_4']['error'])) {{ json_decode($t->comment,true)['response_4']['stderr']}} @else
+          {!! nl2br(json_decode($t->comment,true)['response_4']['stdout']) !!}
+        @endif</td>
+        <td>{{ json_decode($t->comment,true)['response_4']['time']}}</td>
+      </tr>
+
+      @endif
+
+        @if(isset(json_decode($t->comment,true)['pass_5']))
+      <tr>
+        <td>#5</td>
+        <td>@if(json_decode($t->comment,true)['pass_5']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
+        <td>@if(json_decode($question->a)->out_5){{ json_decode($question->a)->out_5 }} @else {{json_decode($question->a)->out_1}} @endif</td>
+        <td>@if(trim(json_decode($t->comment,true)['response_5']['error'])) {{ json_decode($t->comment,true)['response_5']['stderr']}} @else
+          {!! nl2br(json_decode($t->comment,true)['response_5']['stdout']) !!}
+        @endif</td>
+        <td>{{ json_decode($t->comment,true)['response_5']['time']}}</td>
       </tr>
 
       @endif
@@ -299,9 +325,9 @@ pre, code {
 		</div>
 	</div>
 
-	<div class="col-12 col-md-2 col-lg-3" data-html2canvas-ignore="true">
+	<div class="col-12 col-md-2 col-lg-3 "  data-html2canvas-ignore="true">
     <div class="mt-1 ml-2">
-		<div class=" rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 box_{{$t->question_id}}">
+		<div class="sticky rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 mt-md-0 box_{{$t->question_id}}">
 			<div class="card-body ">
 
 				<p>Status: @if($t->status==2)<span class="badge badge-warning review_{{$t->question_id}}">under review</span>
