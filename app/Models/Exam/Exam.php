@@ -641,10 +641,11 @@ class Exam extends Model
 
     public function getDimensions($url){
       $s3 = 'https://'.env('AWS_BUCKET').'.s3.ap-south-1.amazonaws.com/';
+      $url = preg_replace('/\?.*/', '', $url);
       $name = str_replace($s3, '', $url);
 
       if(!Storage::disk('s3')->exists($name)){
-          return '0-0 '.$name;
+          return '0-0';
       }
       if (!ini_get('allow_url_fopen') && function_exists('curl_version')) {
 
