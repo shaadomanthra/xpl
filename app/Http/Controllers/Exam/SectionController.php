@@ -308,7 +308,10 @@ class SectionController extends Controller
                     $q->level = intval($qdata['level']);
                     $q->mark = $qdata['mark'];
                     $q->type = str_replace(' ','',strtolower($qdata['type']));
+                    if(isset($qdata['passage']))
                     $passage = trim(str_replace(" ","",strip_tags($qdata['passage'])),"\xA0\xC2");
+                    else
+                        $passage='';
                     if($passage!='')
                     $q->passage = trim($qdata['passage']);
                     $q->save();
