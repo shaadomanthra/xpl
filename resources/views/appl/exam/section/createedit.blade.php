@@ -52,7 +52,7 @@
             @else
             value = "{{ $section->mark }}"
             @endif
-          >
+          required>
       </div>
         </div>
         <div class="col-12 col-md-4">
@@ -60,11 +60,11 @@
         <label for="formGroupsectionspleInput ">Negative Marks <i class="fa fa-question-circle" data-toggle="tooltip" title="Do not include negative sign, enter only the value. Enter 0 for no negative marking."></i></label>
         <input type="text" class="form-control" name="negative" id="formGroupsectionspleInput" placeholder="Enter the negative mark per question" 
             @if($stub=='Create')
-            value="{{ (old('negative')) ? old('negative') : '' }}"
+            value="{{ (old('negative')) ? old('negative') : '0' }}"
             @else
             value = "{{ $section->negative }}"
             @endif
-          >
+          required>
       </div>
         </div>
         <div class="col-12 col-md-4">
@@ -76,7 +76,7 @@
             @else
             value = "{{ $section->time }}"
             @endif
-          >
+          required>
       </div>
         </div>
       </div>

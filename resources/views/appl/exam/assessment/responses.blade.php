@@ -22,6 +22,7 @@ pre, code {
 }
 
 </style>
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
 
 
 <div id="pdf">
@@ -234,7 +235,23 @@ pre, code {
 
         @if($questions[$t->question_id]->type=='vq')
          @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm'))
-        <video id="video" preload="auto" width="400px" src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm')}}" controls></video>
+        <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="400"
+    data-setup="{}"
+  >
+    <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm')}}" type="video/webm" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </video>
         @endif
         @endif
         
@@ -490,6 +507,7 @@ pre, code {
   });
 </script>
 
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 
 
 @endsection           

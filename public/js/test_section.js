@@ -930,9 +930,10 @@ $(document).ready(function(){
       console.log('stop recording invoked');
       //$sno = $('.clear-qno').data('sno');
       $qno = $('.assessment').data('vques');
+      $q=$qno;
       console.log($qno+" - qno stopvideo");
       if($('#gum_'+$qno).length){
-        $('.qid'+$qno).data('vq',2);
+        
         $('#gum_'+$qno).hide();
         $('.recording').hide();
         try {
@@ -965,7 +966,8 @@ $(document).ready(function(){
             })
             .done(function($url) {
 
-                console.log('video uploaded - '+$qno);
+                $('.qid'+$q).data('vq',2);
+                console.log('video uploaded - '+$q);
                  if($final){
                     console.log(' --- reached final ----');
                     document.getElementById("assessment").submit();
@@ -1186,7 +1188,7 @@ $(document).ready(function(){
         }
         else
         {
-          poolVideoCompletion();
+          checkUpload();
           $('#video_upload').modal();
 
         }
@@ -1194,7 +1196,12 @@ $(document).ready(function(){
       
     }
 
+    function checkUpload(){
+      setInterval(poolVideoCompletion,3000);
+    }
+
     function poolVideoCompletion(){
+
       var uploaded = 0;
       $(".vq").get().forEach(function(entry, index, array) {
         console.log($(entry).data('vq')+ ' -data vq');
@@ -1203,6 +1210,7 @@ $(document).ready(function(){
         if(parseInt($(entry).data('vq'))==0 || parseInt($(entry).data('vq'))==2){
           uploaded++;
           var vcount = $('.assessment').data('vcount');
+
           if(uploaded==vcount){
                   console.log(' --- all videos uploaded - reached final ----');
                   document.getElementById("assessment").submit();
