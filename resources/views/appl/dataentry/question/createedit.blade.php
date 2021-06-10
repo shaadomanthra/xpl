@@ -138,12 +138,13 @@ th{ border:1px solid silver; }
       @if($type=='code')
        <div class="tab-pane fade" id="a" role="tabpanel" aria-labelledby="a-tab">
         <div class="form-group mt-3">
+          <p>Minimum one testcase is required for the compiler to work. If no testcases are provided, then the questions is considered as code submission question where the compiler button is disabled.</p>
           <table class="table">
   <thead>
     <tr class="bg-light">
       <th scope="col" width="10%">#</th>
       <th scope="col" width="45%">Input<br>
-      <small>Input arguments have to be seperated by spaces only.</small></th>
+      <small>Input arguments have to be seperated by spaces only. For multi string input you have to warp the string with single quotes. <br>eg: 'apple' 'we are good' 'open house'</small></th>
       <th scope="col" width="45%">Output<br>
        <small>Output supports multiple lines.</small></th>
     </tr>
@@ -195,14 +196,43 @@ th{ border:1px solid silver; }
      <option value="swift" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='SWIFT') selected @endif @endif >swift</option>
      <option value="bash" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='BASH') selected @endif @endif >bash</option>
   </select>
+  <p class="mt-4"><b>Note:</b><br> if -NA- is selected, user will have the choice to select his desired language to write the code. And if a specific language is selected, user has to program only in the specified language.</p>
       </div>
       </div>
 
        <div class="tab-pane fade" id="c" role="tabpanel" aria-labelledby="c-tab">
         <div class="form-group mt-3">
-        <label for="formGroupExampleInput2">Preset Code (Use this only if, language is fixed)</label><br>
-        <textarea class="form-control " name="c"  rows="5">@if($stub=='Create'){{ (old('c')) ? old('c') : '' }}@else{{ $question->c }}@endif
-        </textarea>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p><b>C Programming</b></p>
+<textarea class="form-control " name="preset_c"  rows="5">@if($stub=='Create'){{ (old('preset_c')) ? old('preset_c') : '' }}@else{{ $code->preset_c }}@endif</textarea>
+          </div>
+          <div class="col-12 col-md-6">
+<p><b>C++</b></p>
+<textarea class="form-control " name="preset_cpp"  rows="5">@if($stub=='Create'){{ (old('preset_cpp')) ? old('preset_cpp') : '' }}@else{{ $code->preset_cpp }}@endif</textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p><b>Python</b></p>
+<textarea class="form-control " name="preset_python"  rows="5">@if($stub=='Create'){{ (old('preset_python')) ? old('preset_python') : '' }}@else{{ $code->preset_python }}@endif</textarea>
+          </div>
+          <div class="col-12 col-md-6">
+<p><b>Java</b></p>
+<textarea class="form-control " name="preset_java"  rows="5">@if($stub=='Create'){{ (old('preset_java')) ? old('preset_java') : '' }}@else{{ $code->preset_java }}@endif</textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <p class="mt-4"><b>C#</b></p>
+<textarea class="form-control " name="preset_csharp"  rows="5">@if($stub=='Create'){{ (old('preset_csharp')) ? old('preset_csharp') : '' }}@else{{ $code->preset_csharp }}@endif</textarea>
+          </div>
+          <div class="col-12 col-md-6">
+<p class="mt-4"><b>Javascript</b></p>
+<textarea class="form-control " name="preset_javascript"  rows="5">@if($stub=='Create'){{ (old('preset_javascript')) ? old('preset_javascript') : '' }}@else{{ $code->preset_javascript }}@endif</textarea>
+          </div>
+        </div>
+
       </div>
       </div>
 

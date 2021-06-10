@@ -2257,37 +2257,36 @@ class AssessmentController extends Controller
                         $partialmark = round($secs[$item['section_id']]->mark/5,2);
                    
                    $partial_awarded  = 0;
-                   if($testcases['pass_1']=='1'){
-                        $partial_awarded = $partial_awarded +$partialmark;
-                   }
 
-                   if($testcases['pass_2']=='1'){
-                        $partial_awarded = $partial_awarded +$partialmark;
-                   }
+                   if(isset($testcases['pass_1'])){
+                       if($testcases['pass_1']=='1'){
+                            $partial_awarded = $partial_awarded +$partialmark;
+                       }
 
-                   if($testcases['pass_3']=='1'){
-                        $partial_awarded = $partial_awarded +$partialmark;
-                   }
+                       if($testcases['pass_2']=='1'){
+                            $partial_awarded = $partial_awarded +$partialmark;
+                       }
 
-                   if($testcases['pass_4']=='1'){
-                        $partial_awarded = $partial_awarded +$partialmark;
-                   }
+                       if($testcases['pass_3']=='1'){
+                            $partial_awarded = $partial_awarded +$partialmark;
+                       }
 
-                   if($testcases['pass_5']=='1'){
-                        $partial_awarded = $partial_awarded +$partialmark;
-                   }
-                   $item['mark'] = $partial_awarded;
+                       if($testcases['pass_4']=='1'){
+                            $partial_awarded = $partial_awarded +$partialmark;
+                       }
 
-                    if($testcases['pass_1']=='1' && $testcases['pass_2']=='1' && $testcases['pass_3']=='1' && $testcases['pass_4']=='1' && $testcases['pass_5']=='1'){
-                        $item['accuracy'] =1;
-                    }else{
-                        $item['accuracy'] =0;
-                    }
-                        
-                    // $code_ques_flag =1;
-                    // $item['status'] = 2;
+                       if($testcases['pass_5']=='1'){
+                            $partial_awarded = $partial_awarded +$partialmark;
+                       }
+                       $item['mark'] = $partial_awarded;
+
+                        if($testcases['pass_1']=='1' && $testcases['pass_2']=='1' && $testcases['pass_3']=='1' && $testcases['pass_4']=='1' && $testcases['pass_5']=='1'){
+                            $item['accuracy'] =1;
+                        }else{
+                            $item['accuracy'] =0;
+                        }
+                   }
                 }
-
 
                 $type = $questions[$item['question_id']]->type;
 
