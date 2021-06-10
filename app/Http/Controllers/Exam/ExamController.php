@@ -1487,6 +1487,11 @@ class ExamController extends Controller
             flash('Reports refreshed')->success();
         }
 
+        if($r->get('removeduplicates')){
+
+            $exam->removeDuplicates();
+            return redirect()->back();
+        }
 
         if($code){
             if($data)

@@ -118,6 +118,80 @@ class Exam extends Model
     }
 
 
+    public function removeDuplicates(){
+        $exam = $this;
+        $sset = array_keys($exam->sections()->select('id')->get()->keyBy('id')->toArray());
+
+        $qset=[];
+        foreach($exam->sections as $s){
+          foreach($s->questions as $q)
+            array_push($qset,$q->id);
+        }
+        $qcount = $exam->questionCount();
+        $users = array_keys(Tests_Overall::select('user_id')->where('test_id',$exam->id)->get()->keyBy('user_id')->toArray());
+        
+        $to = Tests_Overall::where('test_id',$exam->id)->get();
+        $t = Test::where('test_id',$exam->id)->get();
+        $ts = Tests_Section::where('test_id',$exam->id)->get();
+
+        //echo "users - ".count($users)."<br><br>";
+        $count =0;
+        foreach($users as $u){
+            $tests = $to->where('user_id',$u)->count();
+            if($tests!=1){
+              $items = $to->where('user_id',$u);
+              $dontDeleteThisRow = $items->first();
+
+              $ids =array_keys($to->where('user_id',$u)->where('id', '!=', $dontDeleteThisRow->id)->keyBy('id')->toArray());
+              Tests_Overall::whereIn('id',$ids)->delete();
+              
+            }
+            $count = $count + $tests;
+          //echo $u.' - '.$tests."<bR>";
+        }
+
+        //echo "total -".$count."<br><br>";
+
+$count =0;
+        foreach($users as $u){
+            $tests = $ts->where('user_id',$u)->count();
+            if($tests>count($sset)){
+              // Get the row you don't want to delete.
+              foreach($sset as $s){
+                  $dontDeleteThisRow = $ts->where('section_id', $s)->where('user_id',$u)->first();
+                  //dd($dontDeleteThisRow->id);
+                  
+                  $ids = Tests_Section::where('test_id',$exam->id)->where('user_id',$u)->where('section_id', $s)->where('id', '!=', $dontDeleteThisRow->id)->delete();
+                
+              }
+              
+
+            }
+             $count = $count + $tests;
+           // echo $u.' - '.$tests."<bR>";
+        }
+        
+        $count =0;
+        foreach($users as $u){
+            $tests =$t->where('user_id',$u)->count();
+            if($tests > count($qset)){
+                foreach($qset as $s){
+                  $dontDeleteThisRow = $t->where('question_id', $s)->where('user_id',$u)->first();
+                  //echo $dontDeleteThisRow->id;
+                  Test::where('test_id',$exam->id)->where('question_id', $s)->where('user_id',$u)->where('id', '!=', $dontDeleteThisRow->id)->delete();
+                  //dd($ids);
+                  //$ts::where('question_id', $s)->where('id', '!=', $dontDeleteThisRow->id)->delete();
+
+              }
+            }
+            $count = $count + $tests;
+           // echo $u.' - '.$tests."<bR>";
+        }
+        //echo "total -".$count."<br><br>";
+        
+;    }
+
+
      public function getScore($id){
         $curl = curl_init();
       // Set some options - we are passing in a useragent too here
