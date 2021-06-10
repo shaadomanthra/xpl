@@ -2352,17 +2352,17 @@ class AssessmentController extends Controller
 
             if($item['accuracy']){
                 $sec[$item['section_id']]['correct']++;
-                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] + $item['mark'];
+                $sec[$item['section_id']]['score'] = intval($sec[$item['section_id']]['score']) + intval($item['mark']);
 
                 if($typing_accuracy)
                     $sec[$item['section_id']]['score'] = $typing_accuracy;
             }
             else if($item['response'] && $item['accuracy']==0){
                 $sec[$item['section_id']]['incorrect']++;
-                $sec[$item['section_id']]['score'] = $sec[$item['section_id']]['score'] + $item['mark'];
+                $sec[$item['section_id']]['score'] = intval($sec[$item['section_id']]['score']) + intval($item['mark']);
             }
 
-            $sec[$item['section_id']]['time'] = $sec[$item['section_id']]['time'] + $item['time'];
+            $sec[$item['section_id']]['time'] = intval($sec[$item['section_id']]['time']) + intval($item['time']);
 
             $sec[$item['section_id']]['max'] = $sections_max[$item['section_id']];
 
