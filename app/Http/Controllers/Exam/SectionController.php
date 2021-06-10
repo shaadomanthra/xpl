@@ -263,9 +263,9 @@ class SectionController extends Controller
 
             $sno = intval($value['sno']);
             $s1->name = $value['name'];
-            $s1->time = intval($value['time']);
-            $s1->negative = intval($value['negative']);
-            $s1->mark = intval($value['mark']);
+            $s1->time = intval(trim(str_replace(" ","",strip_tags($value['time'])),"\xA0\xC2"));
+            $s1->negative = intval(trim(str_replace(" ","",strip_tags($value['negative'])),"\xA0\xC2"));
+            $s1->mark = intval(trim(str_replace(" ","",strip_tags($value['mark'])),"\xA0\xC2"));
             $s1->user_id = \auth::user()->id;
             $s1->exam_id = $exam->id;
             $s1->instructions = '';
@@ -305,8 +305,10 @@ class SectionController extends Controller
                     $q->project_id =78;
                     $q->user_id = \auth::user()->id;
                     $q->status =1;
-                    $q->level = intval($qdata['level']);
-                    $q->mark = $qdata['mark'];
+                    $q->level = intval(trim(str_replace(" ","",strip_tags($qdata['level'])),"\xA0\xC2"));
+
+                    $q->mark = intval(trim(str_replace(" ","",strip_tags($qdata['mark'])),"\xA0\xC2"));
+                   
                     $q->type = str_replace(' ','',strtolower($qdata['type']));
                     if(isset($qdata['passage']))
                     $passage = trim(str_replace(" ","",strip_tags($qdata['passage'])),"\xA0\xC2");
