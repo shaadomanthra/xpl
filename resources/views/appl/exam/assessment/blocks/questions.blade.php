@@ -41,7 +41,7 @@
         <div class="textcontainerbackground4">
             {{'UX010'.$user->id}}
         </div>
-        @if(auth::user()->college_id)
+        @if($user->college_id)
         <div class="textcontainerbackground5 d-none d-md-block">
             <b>{{'UX010'.$user->id}}</b> - {{$user->name}} @if($user->roll_number)- {{$user->roll_number}} @endif  @if(isset($data['colleges'][auth::user()->college_id])) - {{ $data['colleges'][$user->college_id]->name}}   @endif
         </div>
