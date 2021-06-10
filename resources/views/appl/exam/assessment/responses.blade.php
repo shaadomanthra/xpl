@@ -283,7 +283,7 @@ pre, code {
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_1']['time']}}</td>
       </tr>
-      @if(isset(json_decode($t->comment,true)['pass_2']))
+      @if(isset(json_decode($question->a)->out_2))
       <tr>
 
         <td>#2</td>
