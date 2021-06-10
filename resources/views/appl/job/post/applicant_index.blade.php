@@ -62,29 +62,7 @@
 </div>
 <div class='p-1  ddblue' ></div>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 @include('flash::message')
 <div class="container">
@@ -99,12 +77,7 @@
         <div class=" p-3 rounded" style="background: #fff;border:1px solid #d7d1e8">
           <h5>Open Applicants</h5>
           <div class="display-3"><a href="{{ route('job.applicants',$obj->slug)}}">{{$app->none}}</a></div>
-            <hr>
-            <div>
-              <a href="#" class="" data-bs-toggle="modal" data-bs-target="#exampleModalO1">
-  Send mail <span class="float-right">25</span>
-</a>
-            </div>
+           
         </div>
       </div>
       <div class="col-6 col-md-3 mb-3 mb-md-0">
