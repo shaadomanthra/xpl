@@ -97,11 +97,13 @@ th{ border:1px solid silver; }
       @endif
        
        <li class="nav-item">
-        <a class="nav-link" id="explanation-tab" data-toggle="tab" href="#explanation" role="tab" aria-controls="explanation" aria-selected="false">Expl</a>
+        <a class="nav-link" id="explanation-tab" data-toggle="tab" href="#explanation" role="tab" aria-controls="explanation" aria-selected="false">@if($type=='code') Solution @else Expl @endif</a>
       </li>
+      @if($type!='code')
       <li class="nav-item">
         <a class="nav-link" id="passage-tab" data-toggle="tab" href="#passage" role="tab" aria-controls="passage" aria-selected="false">Passage</a>
       </li>
+      @endif
       <li class="nav-item">
         <a class="nav-link" id="tag-tab" data-toggle="tab" href="#exam" role="tab" aria-controls="exam" aria-selected="false">Exam</a>
       </li>
@@ -204,32 +206,32 @@ th{ border:1px solid silver; }
         <div class="form-group mt-3">
         <div class="row">
           <div class="col-12 col-md-6">
-            <p><b>C Programming</b></p>
-<textarea class="form-control " name="preset_c"  rows="5">@if($stub=='Create'){{ (old('preset_c')) ? old('preset_c') : '' }}@else{{ $code->preset_c }}@endif</textarea>
+            <p class="mt-4"><b>C Programming</b></p>
+<textarea class="form-control " name="preset_c"  rows="5">@if($stub=='Create'){{ (old('preset_c')) ? old('preset_c') : '' }}@else{{ $codes->preset_c }}@endif</textarea>
           </div>
           <div class="col-12 col-md-6">
-<p><b>C++</b></p>
-<textarea class="form-control " name="preset_cpp"  rows="5">@if($stub=='Create'){{ (old('preset_cpp')) ? old('preset_cpp') : '' }}@else{{ $code->preset_cpp }}@endif</textarea>
+<p class="mt-4"><b>C++</b></p>
+<textarea class="form-control " name="preset_cpp"  rows="5">@if($stub=='Create'){{ (old('preset_cpp')) ? old('preset_cpp') : '' }}@else{{ $codes->preset_cpp }}@endif</textarea>
           </div>
         </div>
         <div class="row">
           <div class="col-12 col-md-6">
-            <p><b>Python</b></p>
-<textarea class="form-control " name="preset_python"  rows="5">@if($stub=='Create'){{ (old('preset_python')) ? old('preset_python') : '' }}@else{{ $code->preset_python }}@endif</textarea>
+            <p class="mt-4"><b>Python</b></p>
+<textarea class="form-control " name="preset_python"  rows="5">@if($stub=='Create'){{ (old('preset_python')) ? old('preset_python') : '' }}@else{{ $codes->preset_python }}@endif</textarea>
           </div>
           <div class="col-12 col-md-6">
-<p><b>Java</b></p>
-<textarea class="form-control " name="preset_java"  rows="5">@if($stub=='Create'){{ (old('preset_java')) ? old('preset_java') : '' }}@else{{ $code->preset_java }}@endif</textarea>
+<p class="mt-4"><b>Java</b></p>
+<textarea class="form-control " name="preset_java"  rows="5">@if($stub=='Create'){{ (old('preset_java')) ? old('preset_java') : '' }}@else{{ $codes->preset_java }}@endif</textarea>
           </div>
         </div>
         <div class="row">
           <div class="col-12 col-md-6">
             <p class="mt-4"><b>C#</b></p>
-<textarea class="form-control " name="preset_csharp"  rows="5">@if($stub=='Create'){{ (old('preset_csharp')) ? old('preset_csharp') : '' }}@else{{ $code->preset_csharp }}@endif</textarea>
+<textarea class="form-control " name="preset_csharp"  rows="5">@if($stub=='Create'){{ (old('preset_csharp')) ? old('preset_csharp') : '' }}@else{{ $codes->preset_csharp }}@endif</textarea>
           </div>
           <div class="col-12 col-md-6">
 <p class="mt-4"><b>Javascript</b></p>
-<textarea class="form-control " name="preset_javascript"  rows="5">@if($stub=='Create'){{ (old('preset_javascript')) ? old('preset_javascript') : '' }}@else{{ $code->preset_javascript }}@endif</textarea>
+<textarea class="form-control " name="preset_javascript"  rows="5">@if($stub=='Create'){{ (old('preset_javascript')) ? old('preset_javascript') : '' }}@else{{ $codes->preset_javascript }}@endif</textarea>
           </div>
         </div>
 
@@ -305,6 +307,7 @@ th{ border:1px solid silver; }
       </div>
       <div class="tab-pane fade" id="explanation" role="tabpanel" aria-labelledby="explanation-tab">
        <div class="form-group mt-3">
+        @if($type!='code')
         <label for="formGroupExampleInput2">Explanation / Solution (Visible to candidates only if solutions are enabled for the test report)</label>
          <textarea class="form-control summernote" name="explanation"  rows="5">
             @if($stub=='Create')
@@ -313,6 +316,11 @@ th{ border:1px solid silver; }
             {{ $question->explanation }}
             @endif
         </textarea>
+       @else
+           
+           @include('appl.dataentry.question.code_compiler')
+
+       @endif
       </div>
       </div>
       <div class="tab-pane fade" id="dynamic" role="tabpanel" aria-labelledby="dynamic-tab">

@@ -1065,6 +1065,9 @@ class QuestionController extends Controller
         if($id){
             $question = Question::where('id',$id)->first();
 
+
+            $codes = json_decode($question->c);
+
             if(request()->get('remove'))
             {
 
@@ -1127,12 +1130,16 @@ class QuestionController extends Controller
                     }
                 } 
 
+                
+
                 return view('appl.dataentry.question.show_exam')
                         ->with('mathjax',true)
                         ->with('question',$question)
                         ->with('passage',$passage)
                         ->with('details',$details)
                         ->with('exam',$exam)
+                        ->with('codes',$codes)
+                        ->with('editor',true)
                         ->with('exams',$exams)
                         ->with('highlight',true)
                         ->with('questions',$questions);
@@ -1187,6 +1194,20 @@ class QuestionController extends Controller
 
         $testcases = array("in_1"=>"","in_2"=>"","in_3"=>"","in_4"=>"","in_5"=>"","out_1"=>"","out_2"=>"","out_3"=>"","out_4"=>"","out_5"=>"");
 
+        $cds = (object)["preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>""];
+        if($question->c){
+            $codes = json_decode($question->c);
+            foreach($cds as $cdr=>$cd){
+                if(!isset($codes->$cdr))
+                    $codes->$cdr = "";
+            }
+            if(!$codes)
+                $codes = (object)["preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>""];
+        }else{
+            $codes = (object)["preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>""];
+        }
+        
+
         //tags
         $tags =  Tag::where('project_id',$this->project->id)
                         ->orderBy('created_at','desc ')
@@ -1208,8 +1229,8 @@ class QuestionController extends Controller
                     $testcases[$key] = $tc[$key];
             }
         }
-        
 
+        $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b"];
         $question->tags = $question->tags->pluck('id')->toArray();         
 
         if($question)
@@ -1220,10 +1241,12 @@ class QuestionController extends Controller
                     ->with('passage',$passage)
                     ->with('categories',$categories)
                     ->with('tags',$tags)
+                    ->with('codes',$codes)
                     ->with('exams',$exams)
                     ->with('testcases',$testcases)
                     ->with('type',$question->type)
                     ->with('code',true)
+                    ->with('code_ques',$code_ques)
                     ->with('editor',true)
                     ->with('stub','Update');
         else
@@ -1251,13 +1274,9 @@ class QuestionController extends Controller
         $tags = $request->get('tag');
         $sections = $request->get('sections');
 
-       
-
-
+     
 
         try{
-
-
 
             $question = Question::where('id',$id)->first();
             $question->reference = strtoupper($request->reference);
@@ -1296,6 +1315,32 @@ class QuestionController extends Controller
                 $testcases['out_4'] = $request->get('out_4');
                 $testcases['out_5'] = $request->get('out_5');
                 $question->a = json_encode($testcases);
+            }
+
+            if($request->get('preset_c') || $request->get('preset_java') || $request->get('preset_python')){
+                $ps = array();
+                $ps['preset_c'] = $request->get('preset_c');
+                $ps['preset_cpp'] = $request->get('preset_cpp');
+                $ps['preset_csharp'] = $request->get('preset_csharp');
+                $ps['preset_java'] = $request->get('preset_java');
+                $ps['preset_javascript'] = $request->get('preset_javascript');
+                $ps['preset_python'] = $request->get('preset_python');
+
+                $ps['codefragment_1'] = $request->get('codefragment_1');
+                $ps['codefragment_2'] = $request->get('codefragment_2');
+                $ps['codefragment_3'] = $request->get('codefragment_3');
+                $ps['codefragment_4'] = $request->get('codefragment_4');
+                $ps['codefragment_5'] = $request->get('codefragment_5');
+                $ps['codefragment_6'] = $request->get('codefragment_6');
+                
+                $ps['output_1'] = $request->get('1');
+                $ps['output_2'] = $request->get('2');
+                $ps['output_3'] = $request->get('3');
+                $ps['output_4'] = $request->get('4');
+                $ps['output_5'] = $request->get('5');
+                $ps['output_6'] = $request->get('6');
+
+                $question->c = json_encode($ps);
             }
 
             $question->save(); 

@@ -216,13 +216,55 @@
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
         			<div class="text-center p-1 border rounded bg-light w100 " >
-               @if($question->type=='code') Preset Code @else C @endif</div>
+               @if($question->type=='code') Preset  @else C @endif</div>
         		</div>
         	</div>
         	<div class="col-9 col-md-10"><div class="pt-1 c">
            @if($question->type=='code')
-            <pre class="p-3"><code class="text-light ">{!! htmlentities($question->c) !!}
-          </code></pre>
+              @if($codes)
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#c" role="tab" aria-controls="home" aria-selected="true">C</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#cpp" role="tab" aria-controls="profile" aria-selected="false">C++</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#csharp" role="tab" aria-controls="contact" aria-selected="false">C#</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " id="java-tab" data-toggle="tab" href="#java" role="tab" aria-controls="java" aria-selected="false">Java</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="javascript-tab" data-toggle="tab" href="#javascript" role="tab" aria-controls="javascript" aria-selected="false">Javascript</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="python-tab" data-toggle="tab" href="#python" role="tab" aria-controls="python" aria-selected="false">Python</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="c" role="tabpanel" aria-labelledby="home-tab">
+                      <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_c) !!}</code></pre>
+                    </div>
+                    <div class="tab-pane fade" id="cpp" role="tabpanel" aria-labelledby="profile-tab">
+                      <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_cpp) !!}</code></pre>
+                    </div>
+                    <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="contact-tab">
+                      <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_csharp) !!}</code></pre>
+                    </div>
+                     <div class="tab-pane fade" id="java" role="tabpanel" aria-labelledby="java-tab">
+                       <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_java) !!}</code></pre>
+                     </div>
+                      <div class="tab-pane fade" id="javascript" role="tabpanel" aria-labelledby="javascript-tab">
+                        <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_javascript) !!}</code></pre>
+                      </div>
+                       <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="python-tab">
+                         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_python) !!}</code></pre>
+                       </div>
+                  </div>
+              @else
+               <pre class="p-3"><code class="text-light ">{!! htmlentities($question->c) !!}</code></pre>
+              @endif
             @else
             {!! $question->c!!}
             @endif 
@@ -261,7 +303,7 @@
 
 
 
-      @if($question->type!='sq' && $question->type!='urq')
+      @if($question->type!='sq' && $question->type!='urq' && $question->type!='code' )
       <div class="card mb-3 ">
       	<div class="card-body">
       		<h3>@if($question->type=='code') Output @else Answer @endif</h3>
@@ -270,13 +312,85 @@
       </div>
       @endif
       
-
+      @if($question->type!='code' )
       <div class="card mb-3 mb-md-0">
       	<div class="card-body">
       		<h3>Explanation</h3>
       		<div class="explanation">@if($question->explanation) {!! $question->explanation !!} @else - @endif</div>
       	</div>
       </div>
+
+      @else
+      <div class="card mb-3 mb-md-0">
+        <div class="card-body">
+          <h3 class="mb-3">Code Solution</h3>
+           @if($codes)
+               
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="chome-tab" data-toggle="tab" href="#cc" role="tab" aria-controls="chome" aria-selected="true">C</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="cprofile-tab" data-toggle="tab" href="#ccpp" role="tab" aria-controls="cprofile" aria-selected="false">C++</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="ccontact-tab" data-toggle="tab" href="#ccsharp" role="tab" aria-controls="ccontact" aria-selected="false">C#</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " id="cjava-tab" data-toggle="tab" href="#cjava" role="tab" aria-controls="cjava" aria-selected="false">Java</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="cjavascript-tab" data-toggle="tab" href="#cjavascript" role="tab" aria-controls="cjavascript" aria-selected="false">Javascript</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="cpython-tab" data-toggle="tab" href="#cpython" role="tab" aria-controls="cpython" aria-selected="false">Python</a>
+                    </li>
+                  </ul>
+
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="cc" role="tabpanel" aria-labelledby="chome-tab">
+
+     <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_1) !!}</code></pre>
+      <div class="card"><div class="card-body"><h5 class="text-secondary">Output</h5><hr>{!! htmlentities($codes->output_1) !!}</div></div>
+
+  </div>
+  <div class="tab-pane fade" id="ccpp" role="tabpanel" aria-labelledby="cprofile-tab">
+
+     <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_2) !!}</code></pre>
+      <div class="card"><div class="card-body">{!! htmlentities($codes->output_2) !!}</div></div>
+
+  </div>
+    <div class="tab-pane fade" id="ccsharp" role="tabpanel" aria-labelledby="ccontact-tab">
+       <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_3) !!}</code></pre>
+        <div class="card"><div class="card-body">{!! htmlentities($codes->output_3) !!}</div></div>
+      </div>
+      <div class="tab-pane fade" id="cjava" role="tabpanel" aria-labelledby="cjava-tab">
+        <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_4) !!}</code></pre>
+          <div class="card"><div class="card-body">{!! htmlentities($codes->output_4) !!}</div></div>
+       </div>
+       <div class="tab-pane fade" id="cjavascript" role="tabpanel" aria-labelledby="cjavascript-tab">
+         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_5) !!}</code></pre>
+          <div class="card"><div class="card-body">{!! htmlentities($codes->output_5) !!}</div></div>
+        </div>
+        <div class="tab-pane fade" id="cpython" role="tabpanel" aria-labelledby="cpython-tab">
+         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_6) !!}</code></pre>
+          <div class="card"><div class="card-body">{!! htmlentities($codes->output_6) !!}</div></div>
+        </div>
+</div>
+
+
+
+  
+
+
+
+                  
+              @else
+              <div class="solution">@if($question->explanation) {!! $question->explanation !!} @else - @endif</div>
+            @endif
+        </div>
+      </div>
+      @endif
 
      
 

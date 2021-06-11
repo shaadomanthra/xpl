@@ -1237,7 +1237,6 @@ $(document).ready(function() {
             console.log(dat);
             
             data = dat.response_1;
-            console.log(data);
             if(data){
               if(data.stderr){
                 console.log("At error place - " + $qn);

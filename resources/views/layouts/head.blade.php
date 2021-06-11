@@ -34,8 +34,8 @@
   @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
       <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
   @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' )
-    <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
-  @elseif($_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || domain() == 'piofx')
+    <link rel="shortcut icon" href="{{asset('/favicon_xplore.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || domain() == 'piofx' || $_SERVER['HTTP_HOST'] == 'piofx.in')
     <link rel="shortcut icon" href="{{asset('/favicon_piofx.ico')}}" />
   @else
      <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
@@ -47,6 +47,7 @@
   @if(isset($code))
   <link href="{{asset('js/codemirror/lib/codemirror.css')}}" rel="stylesheet">
   <link href="{{asset('js/codemirror/theme/abcdef.css')}}" rel="stylesheet">
+    <link href="{{asset('js/codemirror/theme/monokai.css')}}" rel="stylesheet">
   <link href="{{asset('js/highlight/styles/default.css')}}" rel="stylesheet">
   <link href="{{asset('js/highlight/styles/tomorrow.css')}}" rel="stylesheet">
   @endif

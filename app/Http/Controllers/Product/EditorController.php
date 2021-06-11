@@ -8,6 +8,7 @@ use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Dataentry\Question;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Cache;
@@ -288,6 +289,10 @@ class EditorController extends Controller
 
       if(!$exam){
         $exam = Exam::where('slug',$test)->with('sections')->first();
+        if(!$exam){
+          $q = Question::where('slug',$qslug)->first();
+          $testcases = json_decode($q->a,true);
+        }
       }
 
       if(!$name){
@@ -297,6 +302,7 @@ class EditorController extends Controller
       $name = $name.'_'.substr(md5(time()), 0,7);
 
       $questions = [];
+      if($exam)
       foreach($exam->sections as $section){
             foreach($section->questions as $q){
 
@@ -309,7 +315,6 @@ class EditorController extends Controller
 
       }
 
-      
       if($testcase =="1")
       {
         $input = $testcases['in_1'];
