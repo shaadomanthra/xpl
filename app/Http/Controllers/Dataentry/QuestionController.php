@@ -101,6 +101,7 @@ class QuestionController extends Controller
     {
 
         $question->project_id = $this->project->id;
+
         if($this->project->slug!='default')
         $this->authorize('create', $question);
 
@@ -138,6 +139,7 @@ class QuestionController extends Controller
         else
             $type='mcq';             
 
+        $codes = $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
         return view('appl.dataentry.question.createedit')
                 ->with('project',$this->project)
                 ->with('passages',$passages)
@@ -148,6 +150,7 @@ class QuestionController extends Controller
                 ->with('categories',$categories)
                 ->with('exams',$exams)
                 ->with('code',true)
+                ->with('codes',$codes)
                 ->with('editor',true)
                 ->with('stub','Create');
     }
@@ -1047,6 +1050,8 @@ class QuestionController extends Controller
         $exam = Exam::where('slug',$exam_slug)->first();
         $exams =  Exam::orderBy('name','desc ')->get();
 
+
+
         if($id == null)
         if(count($exam->sections)!=0)
         foreach($exam->sections as $section){
@@ -1194,17 +1199,21 @@ class QuestionController extends Controller
 
         $testcases = array("in_1"=>"","in_2"=>"","in_3"=>"","in_4"=>"","in_5"=>"","out_1"=>"","out_2"=>"","out_3"=>"","out_4"=>"","out_5"=>"");
 
-        $cds = (object)["preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>""];
+        $cds = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
         if($question->c){
             $codes = json_decode($question->c);
+
+            if(!$codes)
+                $codes = (object)[];
             foreach($cds as $cdr=>$cd){
-                if(!isset($codes->$cdr))
+                if(!isset($codes->$cdr)){
                     $codes->$cdr = "";
+                }
             }
             if(!$codes)
-                $codes = (object)["preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>""];
+                $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
         }else{
-            $codes = (object)["preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>""];
+            $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
         }
         
 
@@ -1319,6 +1328,7 @@ class QuestionController extends Controller
 
             if($request->get('preset_c') || $request->get('preset_java') || $request->get('preset_python')){
                 $ps = array();
+                $ps['preset_generic'] = $request->get('preset_generic');
                 $ps['preset_c'] = $request->get('preset_c');
                 $ps['preset_cpp'] = $request->get('preset_cpp');
                 $ps['preset_csharp'] = $request->get('preset_csharp');
@@ -1340,8 +1350,12 @@ class QuestionController extends Controller
                 $ps['output_5'] = $request->get('5');
                 $ps['output_6'] = $request->get('6');
 
-                $question->c = json_encode($ps);
+                 $question->c = json_encode($ps);
+                
             }
+
+            if(trim($request->get('preset_generic')))
+                $question->c = $request->get('preset_generic');
 
             $question->save(); 
 

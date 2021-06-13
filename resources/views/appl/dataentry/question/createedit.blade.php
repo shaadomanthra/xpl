@@ -205,6 +205,10 @@ th{ border:1px solid silver; }
        <div class="tab-pane fade" id="c" role="tabpanel" aria-labelledby="c-tab">
         <div class="form-group mt-3">
         <div class="row">
+          <div class="col-12 ">
+            <p class="mt-4"><b>Generic</b></p>
+<textarea class="form-control " name="preset_generic"  rows="5">@if($stub=='Create'){{ (old('preset_generic')) ? old('preset_generic') : '' }}@else{{ $question->c }}@endif</textarea>
+          </div>
           <div class="col-12 col-md-6">
             <p class="mt-4"><b>C Programming</b></p>
 <textarea class="form-control " name="preset_c"  rows="5">@if($stub=='Create'){{ (old('preset_c')) ? old('preset_c') : '' }}@else{{ $codes->preset_c }}@endif</textarea>
