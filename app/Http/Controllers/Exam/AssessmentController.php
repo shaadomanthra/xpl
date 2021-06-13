@@ -2271,6 +2271,7 @@ class AssessmentController extends Controller
                    $partial_awarded  = 0;
 
 
+
                    if(isset($testcases['pass_1'])){
                        if($testcases['pass_1']=='1'){
                             $partial_awarded = $partial_awarded +$partialmark;
