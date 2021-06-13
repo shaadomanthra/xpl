@@ -1071,7 +1071,7 @@ class QuestionController extends Controller
             $question = Question::where('id',$id)->first();
 
 
-            $codes = json_decode($question->c);
+            $codes = json_decode($question->d);
 
             if(request()->get('remove'))
             {
@@ -1200,9 +1200,9 @@ class QuestionController extends Controller
         $testcases = array("in_1"=>"","in_2"=>"","in_3"=>"","in_4"=>"","in_5"=>"","out_1"=>"","out_2"=>"","out_3"=>"","out_4"=>"","out_5"=>"");
 
         $cds = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
-        if($question->c){
-            $codes = json_decode($question->c);
-
+        if($question->d){
+            $codes = json_decode($question->d);
+        
             if(!$codes)
                 $codes = (object)[];
             foreach($cds as $cdr=>$cd){
@@ -1326,37 +1326,36 @@ class QuestionController extends Controller
                 $question->a = json_encode($testcases);
             }
 
-            if($request->get('preset_c') || $request->get('preset_java') || $request->get('preset_python')){
-                $ps = array();
-                $ps['preset_generic'] = $request->get('preset_generic');
-                $ps['preset_c'] = $request->get('preset_c');
-                $ps['preset_cpp'] = $request->get('preset_cpp');
-                $ps['preset_csharp'] = $request->get('preset_csharp');
-                $ps['preset_java'] = $request->get('preset_java');
-                $ps['preset_javascript'] = $request->get('preset_javascript');
-                $ps['preset_python'] = $request->get('preset_python');
-
-                $ps['codefragment_1'] = $request->get('codefragment_1');
-                $ps['codefragment_2'] = $request->get('codefragment_2');
-                $ps['codefragment_3'] = $request->get('codefragment_3');
-                $ps['codefragment_4'] = $request->get('codefragment_4');
-                $ps['codefragment_5'] = $request->get('codefragment_5');
-                $ps['codefragment_6'] = $request->get('codefragment_6');
+            $ps = array();
                 
-                $ps['output_1'] = $request->get('1');
-                $ps['output_2'] = $request->get('2');
-                $ps['output_3'] = $request->get('3');
-                $ps['output_4'] = $request->get('4');
-                $ps['output_5'] = $request->get('5');
-                $ps['output_6'] = $request->get('6');
+            $ps['preset_generic'] = $request->get('preset_generic');
+            $ps['preset_c'] = $request->get('preset_c');
+            $ps['preset_cpp'] = $request->get('preset_cpp');
+            $ps['preset_csharp'] = $request->get('preset_csharp');
+            $ps['preset_java'] = $request->get('preset_java');
+            $ps['preset_javascript'] = $request->get('preset_javascript');
+            $ps['preset_python'] = $request->get('preset_python');
+            
 
-                 $question->c = json_encode($ps);
-                
-            }
+            $ps['codefragment_1'] = $request->get('codefragment_1');
+            $ps['codefragment_2'] = $request->get('codefragment_2');
+            $ps['codefragment_3'] = $request->get('codefragment_3');
+            $ps['codefragment_4'] = $request->get('codefragment_4');
+            $ps['codefragment_5'] = $request->get('codefragment_5');
+            $ps['codefragment_6'] = $request->get('codefragment_6');
+
+            $ps['output_1'] = $request->get('1');
+            $ps['output_2'] = $request->get('2');
+            $ps['output_3'] = $request->get('3');
+            $ps['output_4'] = $request->get('4');
+            $ps['output_5'] = $request->get('5');
+            $ps['output_6'] = $request->get('6');
 
             if(trim($request->get('preset_generic')))
                 $question->c = $request->get('preset_generic');
 
+            $question->d = json_encode($ps);
+                
             $question->save(); 
 
             if($request->dynamic){

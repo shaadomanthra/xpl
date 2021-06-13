@@ -330,10 +330,14 @@ class EditorController extends Controller
 
         
         
-        if(isset($data['response_1']['stdout']))
-        if($data['response_1']['stdout'] == $testcases['out_1']){
-          $data['pass_1'] = 1;
+        if(isset($data['response_1']['stdout'])){
+          $resp = trim(str_replace(array("\n", "\r"), '', $data['response_1']['stdout']));
+          $output = trim(str_replace(array("\n", "\r"), '', $testcases['out_1']));
+          if($resp == $output){
+            $data['pass_1'] = 1;
+          }
         }
+        
       }else{
         $input = $testcases['in_1'];
         $data['pass_1'] = 0;

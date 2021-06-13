@@ -735,6 +735,17 @@ class AssessmentController extends Controller
                 //$q = $question->dynamic_variable_replacement($q->dynamic,$q);
                 $q = $this->option_swap2($q,$q->dynamic);
 
+                if($q->type=='code'){
+                    $q->d = json_decode($q->d);
+                    $testcases = json_decode($q->a,true);
+                    if(!$testcases)
+                        $testcases['out_1'] = '';
+
+                    if($q->d)
+                        $q->d->output = $testcases['out_1'];
+                    else
+                        $q->d = (object)['output'=>$testcases['out_1']];
+                }
 
                 if($i==0){
                     $id = $q->id;
@@ -757,6 +768,7 @@ class AssessmentController extends Controller
                     //$window_change = false;
                     if($q->type=='csq')
                         $csq=1;
+                    
                 }
                 elseif($q->type=='vq'){
                     $folder = 'webcam/'.$exam->id.'/';
@@ -2258,26 +2270,31 @@ class AssessmentController extends Controller
                    
                    $partial_awarded  = 0;
 
+
                    if(isset($testcases['pass_1'])){
                        if($testcases['pass_1']=='1'){
                             $partial_awarded = $partial_awarded +$partialmark;
                        }
 
-                       if($testcases['pass_2']=='1'){
-                            $partial_awarded = $partial_awarded +$partialmark;
-                       }
+                       if(isset($testcases['pass_2'])){
+                            if($testcases['pass_2']=='1'){
+                                $partial_awarded = $partial_awarded +$partialmark;
+                           }
 
-                       if($testcases['pass_3']=='1'){
-                            $partial_awarded = $partial_awarded +$partialmark;
-                       }
+                           if($testcases['pass_3']=='1'){
+                                $partial_awarded = $partial_awarded +$partialmark;
+                           }
 
-                       if($testcases['pass_4']=='1'){
-                            $partial_awarded = $partial_awarded +$partialmark;
-                       }
+                           if($testcases['pass_4']=='1'){
+                                $partial_awarded = $partial_awarded +$partialmark;
+                           }
 
-                       if($testcases['pass_5']=='1'){
-                            $partial_awarded = $partial_awarded +$partialmark;
+                           if($testcases['pass_5']=='1'){
+                                $partial_awarded = $partial_awarded +$partialmark;
+                           }
+
                        }
+                       
                        $item['mark'] = $partial_awarded;
 
                         if($testcases['pass_1']=='1' && $testcases['pass_2']=='1' && $testcases['pass_3']=='1' && $testcases['pass_4']=='1' && $testcases['pass_5']=='1'){

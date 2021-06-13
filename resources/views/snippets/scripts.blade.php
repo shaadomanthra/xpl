@@ -1100,6 +1100,14 @@ $(function(){
 @if(isset($code))
 <!-- Codemirror-->
 <script src="{{asset('js/codemirror/lib/codemirror.js')}}"></script>  
+  <script src="{{asset('js/codemirror/addon/fold/foldcode.js')}}"></script>  
+    <script src="{{asset('js/codemirror/addon/fold/foldgutter.js')}}"></script>  
+      <script src="{{asset('js/codemirror/addon/fold/indent-fold.js')}}"></script>  
+        <script src="{{asset('js/codemirror/addon/fold/comment-fold.js')}}"></script>  
+  <script src="{{asset('js/codemirror/addon/fold/brace-fold.js')}}"></script>  
+    <script src="{{asset('js/codemirror/addon/edit/closebrackets.js')}}"></script>  
+      <script src="{{asset('js/codemirror/addon/search/search.js')}}"></script>  
+        <script src="{{asset('js/codemirror/addon/search/searchcursor.js')}}"></script>  
 <script src="{{asset('js/codemirror/mode/xml/xml.js')}}"></script>  
 <script src="{{asset('js/codemirror/mode/javascript/javascript.js')}}"></script> 
 <script src="{{asset('js/codemirror/mode/clike/clike.js')}}"></script>  
@@ -1115,6 +1123,11 @@ $(document).ready(function() {
           autoRefresh:true,
           mode: "text/x-c++src",
           theme: "monokai",
+    lineWrapping: true,
+    extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); },"Alt-F": "findPersistent"},
+    foldGutter: true,
+    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+    autoCloseBrackets: true,
           indentUnit: 4
         };
   if(document.getElementById("code"))
@@ -1188,6 +1201,27 @@ $(document).ready(function() {
         
 
   //   }); 
+  $('.lang').on('focusin', function(){
+    $qno = $(this).data('qno');
+    $n = '.preset_'+$(this).val()+'_'+$qno;
+    $name='code_'+$qno;
+    var editor_ = editor_array[$name];
+    var code = editor_.getValue();
+    $($n).data('code',code);
+    console.log("Saving value " + code);
+    console.log($(this).val());
+  
+  });
+  $('.lang').on('change',function(e){
+    $qno = $(this).data('qno');
+    $n = '.preset_'+$(this).val()+'_'+$qno;
+    $code = $($n).data('code');
+    $name='code_'+$qno;
+    var editor_ = editor_array[$name];
+    editor_.getDoc().setValue($code);
+    console.log("Set value " + $code + ' - '+$n);
+    console.log($(this).val());
+  });
 
  $('.runcode').on('click',function(){
       $qn = $qno = $(this).data('qno');
@@ -1246,21 +1280,23 @@ $(document).ready(function() {
                 $('.input_'+$qn).attr('value',data.stdout);
                 $('.out_'+$qn).attr('value',jso);
 
+                if(dat.pass_1 == "1")
+                    $test1 = '<h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test1 = '<p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
                  if($testcase==3){
                   if(!$('.s'+$qn).hasClass('qblue-border'))
                     $('.s'+$qn).addClass('qblue-border');
                   if(!$('.s'+$qn).hasClass('active'))
                         $('.s'+$qn).removeClass('active');
 
-                  if(dat.pass_1 == "1")
-                    $test1 = '<p><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test1 = '<p><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                  
 
                   if(dat.pass_2 == "1")
-                    $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
                   else
-                    $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
 
                   if(dat.pass_3 == "1")
                     $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
@@ -1288,21 +1324,24 @@ $(document).ready(function() {
                 $('.output_'+$qn).html(data.stdout);
                 $('.input_'+$qn).attr('value',data.stdout);
                 $('.out_'+$qn).attr('value',jso);
+
+                if(dat.pass_1 == "1")
+                    $test1 = '<h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test1 = '<p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
                 if($testcase==3){
                   if(!$('.s'+$qn).hasClass('qblue-border'))
                     $('.s'+$qn).addClass('qblue-border');
                   if(!$('.s'+$qn).hasClass('active'))
                         $('.s'+$qn).removeClass('active');
 
-                  if(dat.pass_1 == "1")
-                    $test1 = '<p><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test1 = '<p><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                  
 
                   if(dat.pass_2 == "1")
-                    $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
                   else
-                    $test2 = '<p><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
 
                   if(dat.pass_3 == "1")
                     $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';

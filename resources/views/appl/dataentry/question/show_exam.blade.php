@@ -211,7 +211,8 @@
         </div>
         @endif
 
-        @if($question->c)
+        
+        @if($question->c || $codes)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >
@@ -220,7 +221,10 @@
         		</div>
         	</div>
         	<div class="col-9 col-md-10"><div class="pt-1 c">
-           @if($question->type=='code')
+            @if($question->c)
+          <pre class="p-3"><code class="text-light ">{!! htmlentities($question->c) !!}</code></pre>
+           @elseif($question->type=='code')
+
               @if($codes)
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -262,8 +266,6 @@
                          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_python) !!}</code></pre>
                        </div>
                   </div>
-              @else
-               <pre class="p-3"><code class="text-light ">{!! htmlentities($question->c) !!}</code></pre>
               @endif
             @else
             {!! $question->c!!}
@@ -271,7 +273,7 @@
           </div></div>
         </div>
         @endif
-        
+        @if($question->type!='code')
         @if($question->d)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
@@ -282,6 +284,7 @@
         	</div>
         	<div class="col-9 col-md-10"><div class="pt-1 d">{!! $question->d!!}</div></div>
         </div>
+        @endif
         @endif
 
         @if($question->e)

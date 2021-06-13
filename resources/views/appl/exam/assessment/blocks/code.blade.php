@@ -11,7 +11,7 @@
   </div>
   <select class="w-25 lang" id="inputGroupSelect01_{{($i+1)}}" data-qno="{{($i+1)}}">
     @foreach(['c','cpp','java','python','csharp','javascript','php','bash','ruby','swift'] as $lang)
-    <option value="{{$lang}}">{{$lang}}</option>
+    <option value="{{$lang}}" class="{{$preset = 'preset_'.$lang}} {{'preset_'.$lang}}_{{($i+1)}}" data-code="@if(isset($question->d->$preset)){{$question->d->$preset}}@endif" data-qno="{{($i+1)}}" >{{$lang}}</option>
     @endforeach
   </select>
   <a href="#" class="ml-3 btn  btn-outline-primary" data-toggle="modal" data-target="#io_code">I/O Instructions</a>
@@ -19,9 +19,9 @@
 </div>
 
 </div>
-<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}"  rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}}@endif//Note: The testcase inputs are taken from command line arguments
+<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}"  rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}} @elseif(isset($question->d->preset_c)){{$question->d->preset_c}} @else //Note: The testcase inputs are taken from command line arguments
 // click on the I/O instructions button to learn about the language specific input options
-// The output string has to exactly match with the execpted output  @endif</textarea>
+// The output string has to exactly match with the execpted output @endif @endif</textarea>
 
   @if($question->a)
   <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-testcase="1" data-qslug="{{$question->slug}}" data-qno="{{($i+1)}}" data-url="{{ route('runcode') }}" data-lang="clang" data-sno="{{($i+1)}}" data-name="code_{{($i+1)}}" data-test="{{$exam->slug}}" data-c="1">Save & Compile</button>
@@ -30,9 +30,11 @@
   @endif
 @else
 
-<div class="p-3 mt-4" style="background: #eee">Language : <span class="badge badge-warning">{{$question->b}}</span> <a href="#" class="ml-3 btn  btn-outline-primary btn-sm" data-toggle="modal" data-target="#io_code">I/O Instructions</a></div>
+<div class="p-3 mt-4" style="background: #eee">Language : <span class="badge badge-warning {{$lang = 'preset_'.$question->b}}">{{$question->b}}</span> <a href="#" class="ml-3 btn  btn-outline-primary btn-sm" data-toggle="modal" data-target="#io_code">I/O Instructions</a></div>
 
-<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}"  rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}}@endif @endif</textarea>
+<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}"  rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}} @elseif(isset($question->d->$lang)){{$question->d->$lang}} @else //Note: The testcase inputs are taken from command line arguments
+// click on the I/O instructions button to learn about the language specific input options
+// The output string has to exactly match with the execpted output @endif @endif</textarea>
 
   @if($question->a)
   <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-qslug="{{$question->slug}}" data-test="{{$exam->slug}}" data-testcase="1" data-qno="{{($i+1)}}" data-sno="{{($i+1)}}"  data-url="{{ route('runcode') }}" data-stop="{{ route('stopcode') }}" data-lang="@if($question->b=='c' || $question->b=='cpp')clang @else {{$question->b}}@endif" data-name="code_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-c="@if($question->b=='c') 1 @else 0 @endif" data-input="">Save & Compile </button>
@@ -53,8 +55,19 @@
 </ul>
 </div>
 
-<h5 class="mt-3">Output</h5>
-<pre class="border rounded bg-light"><code class="output_{{($i+1)}} ">@if($question->response){{$question->response}} @else-@endif</code></pre>
+<div class="row">
+  <div class="col-12 col-md-6">
+    <h5 class="mt-3">Your Code Output</h5>
+<pre class="rounded"><code class="rounded p-2 output_{{($i+1)}} ">@if($question->response){{$question->response}} @else-@endif</code></pre>
+    
+  </div>
+  <div class="col-12 col-md-6">
+    <h5 class="mt-3">Expected Output (Testcase #1)</h5>
+<pre class=" rounded"><code class="rounded p-2 ex_output_{{($i+1)}} ">@if(isset($question->d->output)){{$question->d->output}} @else-@endif</code></pre>
+    
+  </div>
+</div>
+
 <div class="output_testcase_{{($i+1)}}"></div>
 <input class="form-control w-50 input input_{{($i+1)}}" type="hidden"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="@if($question->response){{$question->response}}@endif" >
 <input class="form-control w-50 out out_{{($i+1)}}" type="hidden"  name="out_{{($i+1)}}" data-sno="{{($i+1)}}" value="" >
