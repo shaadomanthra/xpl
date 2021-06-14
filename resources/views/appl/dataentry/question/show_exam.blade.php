@@ -221,8 +221,8 @@
         		</div>
         	</div>
         	<div class="col-9 col-md-10"><div class="pt-1 c">
-            @if($question->c)
-          <pre class="p-3"><code class="text-light ">{!! htmlentities($question->c) !!}</code></pre>
+           @if($question->c)
+            <div>{!! $question->c !!}</div>
            @elseif($question->type=='code')
 
               @if($codes)
@@ -274,7 +274,7 @@
         </div>
         @endif
         @if($question->type!='code')
-        @if($question->d)
+        @if(trim($question->d))
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
         		<div class="pr-3 pb-2" >

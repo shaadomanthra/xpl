@@ -50,7 +50,7 @@
 <ul>
   <li>Kindly submit the code for each question to validate the testcases.</li>
   <li>Mark is awarded only to the question which pass all the test cases.</li>
-  <li>If the compiler is frozen, you can refresh the page.</li>
+  <li>If the compiler is frozen, you can refresh the page. </li>
   <li> In java programming, the classname has to be named Main only.</li>
 </ul>
 </div>

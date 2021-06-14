@@ -1354,6 +1354,8 @@ class QuestionController extends Controller
             if(trim($request->get('preset_generic')))
                 $question->c = $request->get('preset_generic');
 
+           
+            if($request->type=='code')
             $question->d = json_encode($ps);
                 
             $question->save(); 
