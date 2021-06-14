@@ -129,7 +129,7 @@ class QuestionController extends Controller
         if(request()->get('exam'))
             $exams =  Exam::where('id',request()->get('exam'))->orderBy('name','desc ')->get();
         else
-        $exams =  Exam::orderBy('name','desc ')->get();
+        $exams =  [];
 
         // Question Types
         $allowed_types = ['mcq','naq','maq','eq','code','fillup','sq','urq','vq','csq'];
@@ -137,22 +137,26 @@ class QuestionController extends Controller
             $type = request()->get('type');
         }
         else
-            $type='mcq';             
+            $type='mcq';  
 
-        $codes = $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
-        return view('appl.dataentry.question.createedit')
-                ->with('project',$this->project)
-                ->with('passages',$passages)
-                ->with('passage','')
-                ->with('type',$type)
-                ->with('tags',$tags)
-                ->with('question',$question)
-                ->with('categories',$categories)
-                ->with('exams',$exams)
-                ->with('code',true)
-                ->with('codes',$codes)
-                ->with('editor',true)
-                ->with('stub','Create');
+        $testcases =null;           
+
+        $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
+         $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b"];
+
+         return view('appl.dataentry.question.createedit')
+                    ->with('project',$this->project)
+                    ->with('question',$question)
+                    ->with('categories',$categories)
+                    ->with('tags',$tags)
+                    ->with('codes',$codes)
+                    ->with('exams',$exams)
+                    ->with('testcases',$testcases)
+                    ->with('type',request()->get('type'))
+                    ->with('code',true)
+                    ->with('code_ques',$code_ques)
+                    ->with('editor',true)
+                    ->with('stub','Create');
     }
 
     /**
@@ -477,6 +481,8 @@ class QuestionController extends Controller
                 $question->save();
             }
 
+            $codes = json_decode($question->d);
+
             $passage = Passage::where('id',$question->passage_id)->first();
             $questions = Question::select('id','status')
                                 ->where('project_id',$this->project->id)
@@ -507,6 +513,8 @@ class QuestionController extends Controller
                     ->with('question',$question)
                     ->with('passage',$passage)
                     ->with('details',$details)
+                    ->with('codes',$codes)
+                    ->with('highlight',true)
                     ->with('exams',$exams)
                     ->with('questions',$questions);
             
@@ -1228,7 +1236,7 @@ class QuestionController extends Controller
          if(request()->get('exam'))
             $exams =  Exam::where('id',request()->get('exam'))->orderBy('name','desc ')->get();
         else
-        $exams =  Exam::orderBy('name','desc ')->get();
+            $exams =  [];
 
         if($question->type=='code' && $question->a){
             $tc = json_decode($question->a,true);
@@ -1354,7 +1362,7 @@ class QuestionController extends Controller
             if(trim($request->get('preset_generic')))
                 $question->c = $request->get('preset_generic');
 
-           
+
             if($request->type=='code')
             $question->d = json_encode($ps);
                 

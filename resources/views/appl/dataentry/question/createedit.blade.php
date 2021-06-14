@@ -104,9 +104,12 @@ th{ border:1px solid silver; }
         <a class="nav-link" id="passage-tab" data-toggle="tab" href="#passage" role="tab" aria-controls="passage" aria-selected="false">Passage</a>
       </li>
       @endif
+
+      @if(request()->get('exam'))
       <li class="nav-item">
         <a class="nav-link" id="tag-tab" data-toggle="tab" href="#exam" role="tab" aria-controls="exam" aria-selected="false">Exam</a>
       </li>
+      @endif
       <li class="nav-item">
         <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">Details</a>
       </li>
@@ -373,9 +376,11 @@ th{ border:1px solid silver; }
         @include('appl.dataentry.snippets.tag')
       </div>
 
+      @if(request()->get('exam'))
       <div class="tab-pane fade" id="exam" role="tabpanel" aria-labelledby="tag-tab">
         @include('appl.dataentry.snippets.exam')
       </div>
+      @endif
       <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
         
         <div class="form-group mt-3">
