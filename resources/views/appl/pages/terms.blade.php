@@ -11,7 +11,7 @@
 <p id="demo"></p>
 
 <script>
-var url = "https://staging.cmplr.in/run";
+var url = "https://staging.cmplr.in/api/run";
 
 var xhr = new XMLHttpRequest();
 xhr.open("GET", url);
