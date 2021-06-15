@@ -31,5 +31,7 @@ class cors
         foreach ($headers as $key => $value)
             $response->header($key, $value);
         return $response;
+
+        
     }
 }

@@ -7,6 +7,24 @@
 <div class="card-body p-4 ">
 <h1>Terms of Service</h1>
 
+<button type="button" onclick="loadDoc()">Request data</button>
+<p id="demo"></p>
+
+<script>
+var url = "https://staging.cmplr.in/run";
+
+var xhr = new XMLHttpRequest();
+xhr.open("GET", url);
+
+xhr.onreadystatechange = function () {
+   if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      console.log(xhr.responseText);
+   }};
+
+xhr.send();
+
+</script>
 <p>The Website is owned and operated by {{ subdomain_name() }}. The Website is offered subject to your acceptance without modification of all of the terms and conditions contained herein and all other operating rules, policies and procedures that may be published from time to time on this Site by {{subdomain_name()}} (collectively, the "Agreement"). Please read this Agreement carefully before accessing or using the Website. By accessing or using any part of the web site, you agree to become bound by the terms and conditions of this agreement. If you do not agree to all the terms and conditions of this agreement, then you may not access the Website or use any services. If these terms and conditions are considered an offer by {{subdomain_name()}}, acceptance is expressly limited to these terms. The Website is available only to individuals who are at least 13 years old.</p>
 
 
