@@ -17,6 +17,7 @@ use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Course\Practices_Course;
 use PacketPrep\Models\Course\Practices_Topic;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 
 use DOMDocument;
@@ -242,6 +243,8 @@ class QuestionController extends Controller
 
             }
 
+
+
             if($request->dynamic){
                 $question->dynamic_code_save();
             }
@@ -268,6 +271,11 @@ class QuestionController extends Controller
             }
 
             $question->save();
+
+            if($request->get('type')=='code'){
+                $jsonfile = 'codeques/'.$question->slug.'.json';
+                Storage::disk('s3')->put($jsonfile, json_encode($question),'public');   
+            }
 
             flash('A new question is created!')->success();
             
@@ -1374,7 +1382,10 @@ class QuestionController extends Controller
 
             
          
-
+            if($request->get('type')=='code'){
+                $jsonfile = 'codeques/'.$question->slug.'.json';
+                Storage::disk('s3')->put($jsonfile, json_encode($question),'public');   
+            }
             
 
             // Categories

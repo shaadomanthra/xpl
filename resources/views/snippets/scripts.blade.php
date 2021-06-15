@@ -1223,7 +1223,8 @@ $(document).ready(function() {
     console.log($(this).val());
   });
 
- $('.runcode').on('click',function(){
+
+   $('.runcode2').on('click',function(){
       $qn = $qno = $(this).data('qno');
       $lang = $(this).data('lang');
       $name = $(this).data('name');
@@ -1233,7 +1234,7 @@ $(document).ready(function() {
       $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
       $c = ($(this).data('c'))?$(this).data('c'):null;
       $input = $(this).data('input');
-      $url= $(this).data('url');
+      $url= 'https://staging.cmplr.in/run';
       $stop= $(this).data('stop');
 
       console.log($qn);
@@ -1254,6 +1255,8 @@ $(document).ready(function() {
       //   console.log('Code execution stopped');
       //   });
       // }, 5000);
+
+
 
       if(!$('.runcode_'+$qno).hasClass('disabled')){
         $(this).addClass('disabled');
@@ -1386,9 +1389,172 @@ $(document).ready(function() {
         });
       }
 
+    }); 
+
+ $('.runcode').on('click',function(){
+      $qn = $qno = $(this).data('qno');
+      $lang = $(this).data('lang');
+      $name = $(this).data('name');
+      $test = $(this).data('test');
+      $qslug = $(this).data('qslug');
+      $testcase = $(this).data('testcase');
+      $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
+      $c = ($(this).data('c'))?$(this).data('c'):null;
+      $input = $(this).data('input');
+      $url= $(this).data('url');
+      $stop= $(this).data('stop');
+
+      console.log($qn);
+      
+
+      var editor_ = editor_array[$name];
+
+      var code = editor_.getValue();
+      $('.code_'+$qno).val(code);
+      $('.codefragment_'+$qno).val(code);
+      if(!$('.s'+$qno).hasClass('qblue-border'))
+      $('.s'+$qno).addClass('qblue-border');
+      
+      $('.loading_'+$qno).show();
+      // setTimeout(function(){
+      //   $.get($stop,{'name':$namec}, function(data, status){
+      //   console.log(data);
+      //   console.log('Code execution stopped');
+      //   });
+      // }, 5000);
 
 
-        
+
+      if(!$('.runcode_'+$qno).hasClass('disabled')){
+        $(this).addClass('disabled');
+        $.ajax({
+          type : 'get',
+          url : $url+'?time='+ new Date().getTime(),
+          data:{'code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug},
+          timeout: 120000, 
+          success:function(data){
+            $('.runcode_'+$qn).removeClass('disabled');
+            console.log($qn);
+            //console.log(data);
+            var jso = data;
+            dat = JSON.parse(data);
+            console.log(dat);
+            
+            data = dat.response_1;
+            if(data){
+              if(data.stderr){
+                console.log("At error place - " + $qn);
+                $('.output_'+$qn).html(data.stderr);
+                $('.output_testcase_'+$qn).html('');
+
+                $('.input_'+$qn).attr('value',data.stdout);
+                $('.out_'+$qn).attr('value',jso);
+
+                if(dat.pass_1 == "1")
+                    $test1 = '<h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test1 = '<p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                 if($testcase==3){
+                  if(!$('.s'+$qn).hasClass('qblue-border'))
+                    $('.s'+$qn).addClass('qblue-border');
+                  if(!$('.s'+$qn).hasClass('active'))
+                        $('.s'+$qn).removeClass('active');
+
+                  
+
+                  if(dat.pass_2 == "1")
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_3 == "1")
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_4 == "1")
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_5 == "1")
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
+                  $('.final_response_'+$qn).html(data.stdout);
+                }else{
+                   $('.output_testcase_'+$qn).html('');
+                }
+
+              }else if(data.stdout){
+                console.log("At output place");
+                $('.output_'+$qn).html(data.stdout);
+                $('.input_'+$qn).attr('value',data.stdout);
+                $('.out_'+$qn).attr('value',jso);
+
+                if(dat.pass_1 == "1")
+                    $test1 = '<h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test1 = '<p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                if($testcase==3){
+                  if(!$('.s'+$qn).hasClass('qblue-border'))
+                    $('.s'+$qn).addClass('qblue-border');
+                  if(!$('.s'+$qn).hasClass('active'))
+                        $('.s'+$qn).removeClass('active');
+
+                  
+
+                  if(dat.pass_2 == "1")
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_3 == "1")
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                  if(dat.pass_4 == "1")
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_5 == "1")
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
+
+                  $('.final_response_'+$qn).html(data.stdout);
+                }else{
+                   $('.output_testcase_'+$qn).html('');
+                }
+                
+              }else{
+                console.log("No stdout no stderr");
+                $('.output_'+$qn).html("Invalid Code - ERO101 - Retry.");
+              }
+            }else{
+                $('.output_'+$qn).html("Invalid Code - ERD102 - Retry.");
+            }
+            $('.loading').hide();
+            $('.loading_'+$qn).hide();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+             $('.runcode_'+$qno).removeClass('disabled');
+              if(textStatus==="timeout") {  
+                $('.output_'+$qn).html("Invalid Code - ERT103 - Retry.");
+              } else {
+                $('.output_'+$qn).html("Invalid Code - ERX104 - Retry.");
+              }
+              $('.loading').hide();
+          }
+        });
+      }
 
     }); 
 

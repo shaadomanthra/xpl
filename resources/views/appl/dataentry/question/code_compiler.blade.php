@@ -24,7 +24,7 @@
   <div class="tab-pane fade show active" id="cc" role="tabpanel" aria-labelledby="chome-tab">
 
     <textarea id="code_1" class="form-control code code_1" name="code_c"  rows="5">@if($codes->codefragment_1){{$codes->codefragment_1}} @endif </textarea>
-    <button type="button" class="btn btn-lg btn-warning btn-sm mt-4 runcode runcode_1" data-qslug="{{$question->slug}}" data-test="random" data-testcase="3" data-qno="1"  data-sno="1"  data-url="{{ route('runcode') }}" data-stop="{{ route('stopcode') }}" data-lang="clang" data-name="code_1" data-namec="{{\auth::user()->username}}_random_1" data-c="1" data-input="">Submit Code</button>
+    <button type="button" class="btn btn-lg btn-warning btn-sm mt-4 runcode2 runcode_1" data-qslug="{{$question->slug}}" data-test="random" data-testcase="3" data-qno="1"  data-sno="1"  data-url="{{ route('runcode') }}" data-stop="{{ route('stopcode') }}" data-lang="clang" data-name="code_1" data-namec="{{\auth::user()->username}}_random_1" data-c="1" data-input="">Submit Code</button>
     <img class="loading loading_1" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
     <h5 class="mt-3">Output</h5>
     <div class="card mb-3"><div class="card-body"><div class="output_1 ">@if($codes->output_1){{$codes->output_1}}@else-@endif</div></div></div>
