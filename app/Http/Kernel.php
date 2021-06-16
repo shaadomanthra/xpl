@@ -63,6 +63,5 @@ class Kernel extends HttpKernel
         'corporate' => \PacketPrep\Http\Middleware\Corporate::class,
         'cache' => \PacketPrep\Http\Middleware\cache::class,
         'nocache' => \PacketPrep\Http\Middleware\nocache::class,
-        'cors' => \PacketPrep\Http\Middleware\cors::class,
     ];
 }
