@@ -286,6 +286,7 @@ pre, code {
       @if(isset(json_decode($question->a)->out_2))
       <tr>
 
+        @if(isset(json_decode($t->comment,true)['pass_2']))
         <td>#2</td>
         <td>@if(json_decode($t->comment,true)['pass_2']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
         <td>@if(json_decode($question->a)->out_2){{ json_decode($question->a)->out_2 }} @else {{json_decode($question->a)->out_1}} @endif</td>
@@ -303,6 +304,7 @@ pre, code {
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_3']['time']}}</td>
       </tr>
+      @endif
 
       @endif
 

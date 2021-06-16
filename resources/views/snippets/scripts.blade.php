@@ -1234,7 +1234,7 @@ $(document).ready(function() {
       $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
       $c = ($(this).data('c'))?$(this).data('c'):null;
       $input = $(this).data('input');
-      $url= 'https://staging.cmplr.in/run';
+      $url= 'https://cmplr.in/hero4';
       $stop= $(this).data('stop');
 
       console.log($qn);
@@ -1273,7 +1273,10 @@ $(document).ready(function() {
             dat = JSON.parse(data);
             console.log(dat);
             
-            data = dat.response_1;
+            if(dat.response_1){
+              data = dat.response_1;
+            }
+            
             if(data){
               if(data.stderr){
                 console.log("At error place - " + $qn);

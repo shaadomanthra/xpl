@@ -23,7 +23,7 @@ Route::post('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middlewar
 	Route::post('/mail/delivery2', 'Mailer\MailController@deliveryStatus');
 	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus');
 
-Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::class,cors::class]], function () {
+Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::class]], function () {
 	
 	Route::get('/', 'HomeController@root')->name('root');
 	Route::post('/', 'Product\OrderController@callback');
