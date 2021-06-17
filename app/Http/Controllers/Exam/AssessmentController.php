@@ -1460,6 +1460,7 @@ class AssessmentController extends Controller
         //reevaluate
         if(request()->get('reevaluate')){
             $exam->reEvaluate($student);
+            dd('completed');
         }
 
         if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){
