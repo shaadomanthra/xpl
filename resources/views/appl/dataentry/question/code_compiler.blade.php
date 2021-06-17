@@ -176,7 +176,7 @@
       <div class="col-12 col-md-6">
         <h5 class="mt-3">Code Output</h5>
         <div class="">
-          <pre class="rounded"><code><div class="output_4 ">@if($codes->output_6){{$codes->output_6}}@else-@endif</div></code></pre>
+          <pre class="rounded"><code><div class="output_6 ">@if($codes->output_6){{$codes->output_6}}@else-@endif</div></code></pre>
         </div>
       </div>
       <div class="col-12 col-md-6">
