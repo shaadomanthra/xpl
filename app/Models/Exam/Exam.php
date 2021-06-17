@@ -586,6 +586,95 @@ $count =0;
 
     }
 
+    public function reEvaluate($user){
+        $exam  = $this;
+        $user_id = $user->id;
+        
+        $settings = $exam->settings;
+        if($settings)
+            $section_marking = ($settings->section_marking=='yes')? 1 : 0;
+        else
+            $section_marking = 0;
+
+        $tests = Test::where('user_id',$user_id)->where('test_id',$exam->id)->get()->keyBy('question_id');
+        $tsection = Tests_Section::where('user_id',$user_id)->where('test_id',$exam->id)->get()->keyBy('section_id');
+        $toverall = Tests_Overall::where('user_id',$user_id)->where('test_id',$exam->id)->first();
+
+        $qcount =0;
+        $ototal = 0;
+        $otm=0;
+        foreach($exam->sections as $section){
+            //$qset = $section->questions;
+            $qset = $exam->getQuestionsSection($section->id,$user->id);
+
+            $sitem = $tsection[$section->id];
+
+            $stotal = 0;
+            $stm =0;
+
+            foreach($qset as $q){
+                $flag = 0; 
+                $id = $q->id;
+                $e = $tests[$id];
+
+                if($section_marking){
+                  $mark = $section->mark;
+                  $neg = $section->negative;
+                  $stm = $stm + $mark;
+
+                  if($e->accuracy==1){
+                    if($e->mark!=$mark){
+                      $e->mark = $mark;
+                      $flag=1;
+                    }
+                    $stotal = $stotal + $e->mark;
+                  }else{
+                    if($e->response && $neg){
+                      $e->mark = 0 - $neg;
+                      $flag =1;
+                    }
+
+                    $stotal = $stotal + $e->mark;
+                  }
+
+                }else{
+                  $mark = $q->mark;
+                  $stm = $stm + $mark;
+                  if($e->accuracy==1){
+                    if($e->mark!=$mark){
+                      $e->mark = $mark;
+                      $flag=1;
+                    }
+                  }
+                  $stotal = $stotal + $e->mark;
+
+                }
+
+                if($flag){
+                  $e->save();
+                }
+            }
+
+            $sitem->score = $stotal;
+            $sitem->max = $stm;
+            $sitem->save();
+
+            $ototal = $ototal + $stotal;
+            $otm = $otm + $stm;
+
+        }
+
+        $toverall->score = $ototal;
+        $toverall->max = $otm;
+        $toverall->save();
+
+
+    }
+
+    public function validateAnswer($key,$answer){
+
+
+    }
     public function updateScore($tests,$entry){
       
       $e = Test::where('user_id',$entry->user_id)->where('test_id',$entry->test_id)->where('question_id',$entry->question_id)->first();

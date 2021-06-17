@@ -1457,6 +1457,10 @@ class AssessmentController extends Controller
 
 
 
+        //reevaluate
+        if(request()->get('reevaluate')){
+            $exam->reEvaluate($student);
+        }
 
         if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){
             $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$student->username.'_'.$exam->id.'.json'),true);
@@ -2143,6 +2147,12 @@ class AssessmentController extends Controller
             $exam = Exam::where('slug',$test)->first();
         }
 
+        $settings = $exam->settings;
+        if($settings)
+            $section_marking = ($settings->section_marking=='yes')? 1 : 0;
+        else
+            $section_marking = 0;
+
         if(!$request->get('admin')){
 
             $test_taken = $user->attempted_test($exam->id);
@@ -2170,7 +2180,7 @@ class AssessmentController extends Controller
                 $answers[$q->id] = $q->answer;
                 if(!isset($sections_max[$section->id]))
                     $sections_max[$section->id] = 0;
-                if($q->mark!=null)
+                if(!$section_marking)
                 $sections_max[$section->id] = $sections_max[$section->id] + (int)$q->mark;
                 else
                 $sections_max[$section->id] = $sections_max[$section->id] + $section->mark;
@@ -2264,7 +2274,7 @@ class AssessmentController extends Controller
                 }
 
                 if($item['accuracy']==1){
-                    if($questions[$item['question_id']]->mark)
+                    if(!$section_marking)
                         $item['mark'] = $questions[$item['question_id']]->mark;
                     elseif($secs[$item['section_id']]->mark)
                         $item['mark'] = $secs[$item['section_id']]->mark;

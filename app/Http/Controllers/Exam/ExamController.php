@@ -658,6 +658,8 @@ class ExamController extends Controller
             return Exam::where('slug',$id)->with('user')->with('sections')->withCount('users')->first();
         });
 
+        
+
         $exam->precheck_auto_activation();
 
         if(!\auth::user()->checkRole(['administrator','hr-manager','tpo'])){
