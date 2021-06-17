@@ -1218,10 +1218,15 @@ class QuestionController extends Controller
         $cds = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
         $codes = (object)[];
         if($question->d){
-            $codes = json_decode($question->d);
+            if(strpos('{', $question->d) !== false){
+                 $codes = json_decode($question->d);
+            }
+               
         
+
             if(!$codes)
                 $codes = (object)[];
+
             foreach($cds as $cdr=>$cd){
                 if(!isset($codes->$cdr)){
                     $codes->$cdr = "";
