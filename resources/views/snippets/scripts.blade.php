@@ -1324,8 +1324,11 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
                 $('.output_testcase_'+$qn+'_t'+$t).html($test1);
 
               }else if(data.stdout){
-                if($t==1)
-                $('.output_'+$qn).html(data.stdout);
+                
+                if($t==1){
+                  $('.output_'+$qn).html(data.stdout.replace(/\n/g, "<br />"));
+                }
+                
                 $('.input_'+$qn).attr('value',data.stdout);
                 $('.out_'+$qn).attr('value',jso);
 
