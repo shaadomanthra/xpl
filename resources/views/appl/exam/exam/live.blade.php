@@ -278,7 +278,7 @@
           @endif
 
       @elseif($question->type=='fillup')
-         @if($question->a)
+       
         <div class="row no-gutters">
           <div class="col-3 col-md-1">
             <div class="pr-3 pb-2" >
@@ -296,7 +296,7 @@
                   </div>
             </div></div>
           </div>
-          @endif
+         
 
       @endif
     </div>
