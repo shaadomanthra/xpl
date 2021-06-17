@@ -1297,7 +1297,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
             }
             data.time = parseFloat(data.time).toFixed(2);
             if(data){
-              if(data.stderr && $t==1 && $k==1){
+              if(data.stderr && $t==1 ){
                 console.log("At error place - " + $qn);
                 $('.output_'+$qn).html(data.stderr);
 
