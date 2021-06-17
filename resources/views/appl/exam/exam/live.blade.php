@@ -277,6 +277,27 @@
           </div>
           @endif
 
+      @elseif($question->type=='fillup')
+         @if($question->a)
+        <div class="row no-gutters">
+          <div class="col-3 col-md-1">
+            <div class="pr-3 pb-2" >
+              <div class="text-center p-1 rounded  w100  @if($question->answer=='A') qgreen-border qgreen @else bg-light border @endif" > A </div>
+              </div>
+            </div>
+
+            <div class="col-9 col-md-11"><div class=" ">
+              <div class="progress " style="height:32px;margin-top:1px;color:red">
+                    <div class="progress-bar" role="progressbar" style="width: {{$question->opt_a}}%;height:50px;color:black;background: #c8d5de" aria-valuenow="{{$question->opt_a}}" aria-valuemin="0" aria-valuemax="100"> 
+
+                    </div>
+                    <span class="fleft" >{{$question->opt_a}}% [{{floor($question->opt_a/100*$question->attempted)}}]</span>
+                    <span class="fright" >{!! $question->answer  !!}</span>
+                  </div>
+            </div></div>
+          </div>
+          @endif
+
       @endif
     </div>
   </div>

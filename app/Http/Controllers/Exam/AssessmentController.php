@@ -1460,7 +1460,6 @@ class AssessmentController extends Controller
         //reevaluate
         if(request()->get('reevaluate')){
             $exam->reEvaluate($student);
-            dd('completed');
         }
 
         if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){
@@ -2681,6 +2680,13 @@ class AssessmentController extends Controller
                         $questions[$w->question_id]->opt_d++;
                     if(strtoupper($w->response)=='E')
                         $questions[$w->question_id]->opt_e++;
+
+                    if($questions[$w->question_id]->type=='fillup'){
+                        if(strtoupper($questions[$w->question_id]->answer)==strtoupper($w->response))
+                            $questions[$w->question_id]->opt_a++;
+                    }
+
+
                 }
                 }
 
