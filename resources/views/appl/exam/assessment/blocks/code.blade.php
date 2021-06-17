@@ -1,5 +1,6 @@
 
 
+
 @if(!$question->b)
 
 
@@ -7,11 +8,11 @@
   <h5 class="mb-2"> Enter code in any one of your preferred language</h5>
 <div class="input-group ">
   <div class="input-group-prepend">
-    <label class="input-group-text bg-light border  rounded mr-3" for="inputGroupSelect01">Language</label>
+    <label class="input-group-text bg-light border  rounded mr-3" for="inputGroupSelect01">Language </label>
   </div>
-  <select class="w-25 lang" id="inputGroupSelect01_{{($i+1)}}" data-qno="{{($i+1)}}">
+  <select class="w-25 lang lang_{{($i+1)}}" id="inputGroupSelect01_{{($i+1)}}" data-qno="{{($i+1)}}">
     @foreach(['c','cpp','java','python','csharp','javascript','php','bash','ruby','swift'] as $lang)
-    <option value="{{$lang}}" class="{{$preset = 'preset_'.$lang}} {{'preset_'.$lang}}_{{($i+1)}}" data-code="@if(isset($question->d->$preset)){{$question->d->$preset}}@endif" data-qno="{{($i+1)}}" >{{$lang}}</option>
+    <option value="{{$lang}}" class="{{$preset = 'preset_'.$lang}} {{'preset_'.$lang}}_{{($i+1)}}" data-code="@if(isset($question->d->$preset)){{$question->d->$preset}}@endif" data-qno="{{($i+1)}}" @if(isset($question->lang))@if($question->lang==$lang) selected @endif @endif>{{$lang}}</option>
     @endforeach
   </select>
   <a href="#" class="ml-3 btn  btn-outline-primary" data-toggle="modal" data-target="#io_code">I/O Instructions</a>
@@ -68,7 +69,13 @@
   </div>
 </div>
 
-<div class="output_testcase_{{($i+1)}}"></div>
+<div class="output_testcase_{{($i+1)}}">
+      <div class="output_testcase_{{($i+1)}}_t1"></div>
+      <div class="output_testcase_{{($i+1)}}_t2"></div>
+      <div class="output_testcase_{{($i+1)}}_t3"></div>
+      <div class="output_testcase_{{($i+1)}}_t4"></div>
+      <div class="output_testcase_{{($i+1)}}_t5"></div>
+</div>
 <input class="form-control w-50 input input_{{($i+1)}}" type="hidden"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="@if($question->response){{$question->response}}@endif" >
 <input class="form-control w-50 out out_{{($i+1)}}" type="hidden"  name="out_{{($i+1)}}" data-sno="{{($i+1)}}" value="" >
 <input class="form-control w-50 codefragment_{{($i+1)}}" type="hidden"  name="codefragment_{{($i+1)}}" data-sno="{{($i+1)}}" value="@if($question->code){{$question->code}}@endif" >

@@ -1217,20 +1217,33 @@ $(document).ready(function() {
     $n = '.preset_'+$(this).val()+'_'+$qno;
     $code = $($n).data('code');
     $name='code_'+$qno;
+
+        $('.runcode_'+$qno).data('lang',$(this).val());
+      if($(this).val()=='c'){
+        $('.runcode_'+$qno).data('lang','clang');
+        $('.runcode_'+$qno).data('c',1);
+      }else if($(this).val()=='cpp'){
+        $('.runcode_'+$qno).data('lang','clang');
+        $('.runcode_'+$qno).data('c',0);
+      }
+
+    
     var editor_ = editor_array[$name];
     editor_.getDoc().setValue($code);
     console.log("Set value " + $code + ' - '+$n);
     console.log($(this).val());
+    console.log($('.runcode_'+$qno).data('lang'));
   });
 
 
    $('body').on('click','.runcode2',function(){
       $qn = $qno = $(this).data('qno');
       $lang = $(this).data('lang');
+      console.log($lang);
       $name = $(this).data('name');
       $test = $(this).data('test');
       $qslug = $(this).data('qslug');
-      $testcase = parseInt($(this).data('testcase'));
+      i = $testcase = parseInt($(this).data('testcase'));
       $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
       $c = ($(this).data('c'))?$(this).data('c'):null;
       $input = $(this).data('input');
@@ -1260,10 +1273,12 @@ $(document).ready(function() {
 
     }); 
 
-function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t){
+function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,$k=0){
+
   $.ajax({
           type : 'get',
           url : $url+'?time='+ new Date().getTime(),
+          cache: false,
           data:{'code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug},
           timeout: 12000, 
           success:function(data){
@@ -1274,6 +1289,9 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t)
             dat = JSON.parse(data);
             console.log(dat);
             
+            if($k==1){
+              $('.output_testcase_'+$qn).html('<div class="output_testcase_'+$qn+'_t1"></div><div class="output_testcase_'+$qn+'_t2"></div><div class="output_testcase_'+$qn+'_t3"></div><div class="output_testcase_'+$qn+'_t4"></div><div class="output_testcase_'+$qn+'_t5"></div>');
+            }
             if(dat.response){
               data = dat.response;
             }
@@ -1345,43 +1363,8 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t)
         });
 }
 
- $('.runcode').on('click',function(){
-      $qn = $qno = $(this).data('qno');
-      $lang = $(this).data('lang');
-      $name = $(this).data('name');
-      $test = $(this).data('test');
-      $qslug = $(this).data('qslug');
-      $testcase = $(this).data('testcase');
-      $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
-      $c = ($(this).data('c'))?$(this).data('c'):null;
-      $input = $(this).data('input');
-      $url= $(this).data('url');
-      $stop= $(this).data('stop');
-
-      console.log($qn);
-      
-
-      var editor_ = editor_array[$name];
-
-      var code = editor_.getValue();
-      $('.code_'+$qno).val(code);
-      $('.codefragment_'+$qno).val(code);
-      if(!$('.s'+$qno).hasClass('qblue-border'))
-      $('.s'+$qno).addClass('qblue-border');
-      
-      $('.loading_'+$qno).show();
-      // setTimeout(function(){
-      //   $.get($stop,{'name':$namec}, function(data, status){
-      //   console.log(data);
-      //   console.log('Code execution stopped');
-      //   });
-      // }, 5000);
-
-
-
-      if(!$('.runcode_'+$qno).hasClass('disabled')){
-        $(this).addClass('disabled');
-        $.ajax({
+function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
+ $.ajax({
           type : 'get',
           url : $url+'?time='+ new Date().getTime(),
           data:{'code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug},
@@ -1440,7 +1423,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t)
                   $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
                   $('.final_response_'+$qn).html(data.stdout);
                 }else{
-                   $('.output_testcase_'+$qn).html('');
+                   $('.output_testcase_'+$qn).html('<div class="output_testcase_'+$qn+'_t1"></div><div class="output_testcase_'+$qn+'_t2"></div><div class="output_testcase_'+$qn+'_t3"></div><div class="output_testcase_'+$qn+'_t4"></div><div class="output_testcase_'+$qn+'_t5"></div>');
                 }
 
               }else if(data.stdout){
@@ -1450,9 +1433,9 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t)
                 $('.out_'+$qn).attr('value',jso);
 
                 if(dat.pass_1 == "1")
-                    $test1 = '<h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                    $test1 = '<div class="output_testcase_'+$qn+'_t1"><h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
                   else
-                    $test1 = '<p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                    $test1 = '<div class="output_testcase_'+$qn+'_t1"><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
 
                 if($testcase==3){
                   if(!$('.s'+$qn).hasClass('qblue-border'))
@@ -1463,23 +1446,23 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t)
                   
 
                   if(dat.pass_2 == "1")
-                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                    $test2 = '<div class="output_testcase_'+$qn+'_t2"><p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
                   else
-                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                    $test2 = '<div class="output_testcase_'+$qn+'_t2"><p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
 
                   if(dat.pass_3 == "1")
-                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                    $test3 = '<div class="output_testcase_'+$qn+'_t3"><p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
                   else
-                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                    $test3 = '<div class="output_testcase_'+$qn+'_t3"><p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
                   if(dat.pass_4 == "1")
-                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                    $test4 = '<div class="output_testcase_'+$qn+'_t4"><p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
                   else
-                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                    $test4 = '<div class="output_testcase_'+$qn+'_t4"><p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
 
                   if(dat.pass_5 == "1")
-                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                    $test5 = '<div class="output_testcase_'+$qn+'_t5"><p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
                   else
-                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                    $test5 = '<div class="output_testcase_'+$qn+'_t5"><p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
 
                   $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
 
@@ -1508,6 +1491,65 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t)
               $('.loading').hide();
           }
         });
+            
+}
+ $('body').on('click','.runcode',function(){
+      $qn = $qno = $(this).data('qno');
+      $lang = $(this).data('lang');
+      console.log($lang);
+      $name = $(this).data('name');
+      $test = $(this).data('test');
+      $qslug = $(this).data('qslug');
+      $testcase = parseInt($(this).data('testcase'));
+      $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
+      $c = ($(this).data('c'))?$(this).data('c'):null;
+      $input = $(this).data('input');
+      $url= $(this).data('url');
+      $stop= $(this).data('stop');
+
+      console.log($qn);
+      
+
+      var editor_ = editor_array[$name];
+
+      var code = editor_.getValue();
+      $('.code_'+$qno).val(code);
+      $('.codefragment_'+$qno).val(code);
+      if(!$('.s'+$qno).hasClass('qblue-border'))
+      $('.s'+$qno).addClass('qblue-border');
+      
+      $('.loading_'+$qno).show();
+      // setTimeout(function(){
+      //   $.get($stop,{'name':$namec}, function(data, status){
+      //   console.log(data);
+      //   console.log('Code execution stopped');
+      //   });
+      // }, 5000);
+
+
+
+      if(!$('.runcode_'+$qno).hasClass('disabled')){
+        $(this).addClass('disabled');
+
+       
+        if($lang=='clang' || $lang=='csharp' ||$lang=='java' || $lang=='python' || $lang=='javascript')
+        {
+
+          console.log('sent - '+$lang);
+          $url= 'https://cmplr.in/run';
+          if($testcase==3){
+
+            for(i=1;i<=5;i++){
+              ajaxrun($url,code,$lang,$c,$input,$namec,i,$test,$qslug,$qn,i,0);
+            }
+          }else{
+            ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,1,1);
+          }
+        }else{
+          ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn);
+        }
+        
+        
       }
 
     }); 

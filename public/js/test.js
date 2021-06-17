@@ -1036,6 +1036,7 @@ $(document).ready(function(){
 
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
+        
         responses.qid = $('.s'+$sno).data('qno');
         responses.last_photo = $('#photo').data('last_photo');
         if($('#video').length)
@@ -1057,6 +1058,20 @@ $(document).ready(function(){
 
           if($('.code_'+$sno).length){
             resp.code = $('.codefragment_'+$qno).val();
+
+            if($('.preset_c_'+$qno).length){
+              resp.preset_c = $('.preset_c_'+$qno).data('code');
+              resp.preset_cpp = $('.preset_cpp_'+$qno).data('code');
+              resp.preset_csharp = $('.preset_csharp_'+$qno).data('code');
+              resp.preset_java = $('.preset_java_'+$qno).data('code');
+              resp.preset_python = $('.preset_python_'+$qno).data('code');
+              resp.preset_javascript = $('.preset_javascript_'+$qno).data('code');
+
+            }
+            if($('.lang_'+$sno).length)
+              resp.lang = $('.lang_'+$sno).find(":selected").text();
+
+            console.log(resp.lang);
           }
           if($('.input_'+$qno).is(':checkbox')){
               var ans =[]
@@ -1078,6 +1093,7 @@ $(document).ready(function(){
           $qno++;
         }
         responses.responses = r;
+
 
         var all_data = JSON.stringify(responses);
 

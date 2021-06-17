@@ -500,6 +500,8 @@ class AssessmentController extends Controller
         }
 
 
+
+
         if($request->get('dump')){
             dd($json);
         }
@@ -651,6 +653,8 @@ class AssessmentController extends Controller
                             if(isset($keys[$q->id]['code']))
                                 $q->code = $keys[$q->id]['code'];
 
+
+
                             
                         }else{
                             $q->dynamic = $keys[$q->id]->dynamic;
@@ -745,6 +749,21 @@ class AssessmentController extends Controller
                         $q->d->output = $testcases['out_1'];
                     else
                         $q->d = (object)['output'=>$testcases['out_1']];
+
+
+                    if(is_array($keys[$q->id])){
+                            $q->lang = $keys[$q->id]['lang'];
+                            $q->preset_c= $keys[$q->id]['preset_c'];
+                            $q->preset_cpp= $keys[$q->id]['preset_cpp'];
+                            $q->preset_csharp= $keys[$q->id]['preset_csharp'];
+                            $q->preset_java= $keys[$q->id]['preset_java'];
+                            $q->preset_javascript= $keys[$q->id]['preset_javascript'];
+                            $q->preset_python= $keys[$q->id]['preset_python'];
+                            
+                    }else{
+                            
+
+                    }
                 }
 
                 if($i==0){
@@ -795,6 +814,7 @@ class AssessmentController extends Controller
             }
 
         }
+
 
         if($images){
              Storage::disk('s3')->put('urq/'.$jsonname.'.json',json_encode($images),'public');
