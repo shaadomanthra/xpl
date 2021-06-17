@@ -1068,9 +1068,9 @@ $(document).ready(function(){
               resp.preset_javascript = $('.preset_javascript_'+$qno).data('code');
 
             }
-            if($('.lang_'+$sno).length)
-              resp.lang = $('.lang_'+$sno).find(":selected").text();
-
+            if($('.lang_'+$qno).length)
+              resp.lang = $('.lang_'+$qno).find(":selected").text();
+            console.log($qno);
             console.log(resp.lang);
           }
           if($('.input_'+$qno).is(':checkbox')){
