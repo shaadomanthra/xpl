@@ -889,7 +889,6 @@ class UserController extends Controller
         $user->masters = $request->masters;
         $user->year_of_passing = $request->year_of_passing;
         $user->aadhar = $request->aadhar;
-        $user->info = $request->info;
         $user->client_slug = $request->client_slug;
         
 

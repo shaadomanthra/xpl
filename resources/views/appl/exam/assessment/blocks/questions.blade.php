@@ -7,7 +7,50 @@
    -moz-user-select: none; /* Firefox */
    -ms-user-select: none; /* Internet Explorer/Edge */
 }
-
+.fsmall{
+  font-size: 16px;
+}
+.pbox{
+  max-width:420px
+}
+@media (max-width: 1200px) { 
+.fsmall{
+  font-size: 12px;
+}
+.pbox{
+  max-width:900px;
+}
+.pbox{
+  min-width:450px;
+}
+}
+@media (max-width: 720px) { 
+.fsmall{
+  font-size: 12px;
+}
+.pbox{
+  max-width:900px;
+}
+.pbox{
+  min-width:450px;
+}
+}
+@media (max-width: 400px) { 
+.fsmall{
+  font-size: 12px;
+}
+.pbox{
+  max-width:900px;
+}
+.pbox{
+  min-width:300px;
+}
+}
+@media (max-width: 330px) { 
+.fsmall{
+  font-size: 10px;
+}
+}
 
 
 </style>
@@ -15,17 +58,23 @@
 @foreach($questions as $i=> $question)
 <div class="question_block qblock_{{$i+1}}  " @if(!$data['qid'])@if($i!=0) style="display:none;" @endif @else @if($question->id!=$data['qid']) style="display:none;" @endif @endif>
    
-  @if($question->passage)
-  <div class="card my-3" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
+<div class="row no-gutters">
+  @if(trim($question->passage))
+  <div class="col-12 col-md-12 col-lg pbox" >
+  <div class="card my-3 " style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;max-height:300px; overflow: scroll;">
     <div class="card-body">
-      <b>Passage</b> <span class="btn view badge badge-warning cursor" data-item="passage" data-pno="{{$i}}">view</span><br>
-      <div class="passage pt-2 passage_{{$i}}" style="display: none;">
+      <b>Passage</b> 
+      <div class="passage pt-2 passage_{{$i}} fsmall" style="">
         {!! $question->passage !!}
       </div>
     </div>
   </div>
+  </div>
   @endif
-  <div class="card  mb-3">
+
+
+  <div class="col">
+  <div class="card  mb-3 @if(trim($question->passage)) mt-3 ml-3 @endif">
     <div class="card-body mt-3 textcontainer">
 
 
@@ -275,7 +324,10 @@
           <input  class="form-input " type="hidden" name="{{($i+1)}}_section_id"  value="{{$sections[$i]->id}}">
         </div>
       </div>
-   </div>
+    </div>
+
+</div>
+</div>
 @endforeach
 
    <div class="card mb-0">

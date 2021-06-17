@@ -31,7 +31,7 @@
     <p>and will be deactivated by <span class="text-info">{{\carbon\carbon::parse($exam->auto_deactivation)->toDayDateTimeString()}}</span></p>
     <p><b> Note:</b> You are required to start the test within the above mentioned test window. </p>
     @endif
-    <p>  For queries, kindly write to us at <span class="text-primary">info@xplore.co.in</span> </p>
+    <p>  For queries, kindly write to us at <span class="text-primary"><span class="text-info">@if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif</span> </p>
     <p>
     </p>
     <a href="{{ url('/') }}"><button class="btn btn-success">Home</button></a>

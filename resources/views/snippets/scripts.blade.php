@@ -1224,22 +1224,18 @@ $(document).ready(function() {
   });
 
 
-   $('.runcode2').on('click',function(){
+   $('body').on('click','.runcode2',function(){
       $qn = $qno = $(this).data('qno');
       $lang = $(this).data('lang');
       $name = $(this).data('name');
       $test = $(this).data('test');
       $qslug = $(this).data('qslug');
-      $testcase = $(this).data('testcase');
+      $testcase = parseInt($(this).data('testcase'));
       $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
       $c = ($(this).data('c'))?$(this).data('c'):null;
       $input = $(this).data('input');
-      $url= 'https://cmplr.in/hero4';
+      $url= 'https://cmplr.in/run';
       $stop= $(this).data('stop');
-
-      console.log($qn);
-      
-
       var editor_ = editor_array[$name];
 
       var code = editor_.getValue();
@@ -1249,22 +1245,27 @@ $(document).ready(function() {
       $('.s'+$qno).addClass('qblue-border');
       
       $('.loading_'+$qno).show();
-      // setTimeout(function(){
-      //   $.get($stop,{'name':$namec}, function(data, status){
-      //   console.log(data);
-      //   console.log('Code execution stopped');
-      //   });
-      // }, 5000);
-
-
 
       if(!$('.runcode_'+$qno).hasClass('disabled')){
         $(this).addClass('disabled');
-        $.ajax({
+        if($testcase==3){
+          for(i=1;i<=5;i++){
+            ajaxrun($url,code,$lang,$c,$input,$namec,i,$test,$qslug,$qn,i);
+          }
+        }else{
+          ajaxrun($url,code,$lang,$c,$input,$namec,i,$test,$qslug,$qn,1);
+        }
+        
+      }
+
+    }); 
+
+function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t){
+  $.ajax({
           type : 'get',
           url : $url+'?time='+ new Date().getTime(),
           data:{'code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug},
-          timeout: 120000, 
+          timeout: 12000, 
           success:function(data){
             $('.runcode_'+$qn).removeClass('disabled');
             console.log($qn);
@@ -1273,109 +1274,61 @@ $(document).ready(function() {
             dat = JSON.parse(data);
             console.log(dat);
             
-            if(dat.response_1){
-              data = dat.response_1;
+            if(dat.response){
+              data = dat.response;
             }
-            
+            data.time = parseFloat(data.time).toFixed(2);
             if(data){
-              if(data.stderr){
+              if(data.stderr && $t==1){
                 console.log("At error place - " + $qn);
                 $('.output_'+$qn).html(data.stderr);
-                $('.output_testcase_'+$qn).html('');
 
                 $('.input_'+$qn).attr('value',data.stdout);
                 $('.out_'+$qn).attr('value',jso);
 
-                if(dat.pass_1 == "1")
-                    $test1 = '<h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test1 = '<p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                
 
-                 if($testcase==3){
-                  if(!$('.s'+$qn).hasClass('qblue-border'))
-                    $('.s'+$qn).addClass('qblue-border');
-                  if(!$('.s'+$qn).hasClass('active'))
-                        $('.s'+$qn).removeClass('active');
+                if(dat.pass == "1")
+                    $test1 = '<b>Testcase '+$t+':</b> <i class="fa fa-check-circle text-success"></i> Pass ('+data.time+' ms)</p>';
+                else
+                    $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-times-circle text-danger"></i> Fail ('+data.time+' ms)</p>';
 
-                  
+                $('.output_testcase_'+$qn+'_t'+$t).html($test1);
+               
 
-                  if(dat.pass_2 == "1")
-                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+              }else if(data.stderr && $t!=1){
 
-                  if(dat.pass_3 == "1")
-                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                if(dat.pass == "1")
+                    $test1 = '<b>Testcase '+$t+':</b> <i class="fa fa-check-circle text-success"></i> Pass ('+data.time+' ms)</p>';
+                else
+                    $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-times-circle text-danger"></i> Fail ('+data.time+' ms)</p>';
 
-                  if(dat.pass_4 == "1")
-                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
-
-                  if(dat.pass_5 == "1")
-                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
-
-                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
-                  $('.final_response_'+$qn).html(data.stdout);
-                }else{
-                   $('.output_testcase_'+$qn).html('');
-                }
+                $('.output_testcase_'+$qn+'_t'+$t).html($test1);
 
               }else if(data.stdout){
-                console.log("At output place");
+                
                 $('.output_'+$qn).html(data.stdout);
                 $('.input_'+$qn).attr('value',data.stdout);
                 $('.out_'+$qn).attr('value',jso);
 
-                if(dat.pass_1 == "1")
-                    $test1 = '<h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test1 = '<p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+                 if(dat.pass == "1")
+                    $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-check-circle text-success"></i> Pass ('+data.time+' ms)</p>';
+                else
+                    $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-times-circle text-danger"></i> Fail ('+data.time+' ms)</p>';
+                  console.log("At output place - "+$t);
 
-                if($testcase==3){
-                  if(!$('.s'+$qn).hasClass('qblue-border'))
+                $('.output_testcase_'+$qn+'_t'+$t).html($test1);
+
+                if(!$('.s'+$qn).hasClass('qblue-border'))
                     $('.s'+$qn).addClass('qblue-border');
-                  if(!$('.s'+$qn).hasClass('active'))
-                        $('.s'+$qn).removeClass('active');
+                if(!$('.s'+$qn).hasClass('active'))
+                    $('.s'+$qn).removeClass('active');
 
-                  
-
-                  if(dat.pass_2 == "1")
-                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
-
-                  if(dat.pass_3 == "1")
-                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
-                  if(dat.pass_4 == "1")
-                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
-
-                  if(dat.pass_5 == "1")
-                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
-                  else
-                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
-
-                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
-
-                  $('.final_response_'+$qn).html(data.stdout);
-                }else{
-                   $('.output_testcase_'+$qn).html('');
-                }
-                
               }else{
                 console.log("No stdout no stderr");
-                $('.output_'+$qn).html("Invalid Code - ERO101 - Retry.");
               }
             }else{
-                $('.output_'+$qn).html("Invalid Code - ERD102 - Retry.");
+                $('.output_'+$qn).html("Invalid Code - ERD102 - Retry. (Testcase-"+$qn+")");
             }
             $('.loading').hide();
             $('.loading_'+$qn).hide();
@@ -1383,16 +1336,14 @@ $(document).ready(function() {
           error: function(jqXHR, textStatus, errorThrown) {
              $('.runcode_'+$qno).removeClass('disabled');
               if(textStatus==="timeout") {  
-                $('.output_'+$qn).html("Invalid Code - ERT103 - Retry.");
+                $('.output_'+$qn).html("Invalid Code - ERT103 - Retry. (Testcase-"+$qn+")");
               } else {
-                $('.output_'+$qn).html("Invalid Code - ERX104 - Retry.");
+                $('.output_'+$qn).html("Invalid Code - ERX104 - Retry. (Testcase-"+$qn+")");
               }
               $('.loading').hide();
           }
         });
-      }
-
-    }); 
+}
 
  $('.runcode').on('click',function(){
       $qn = $qno = $(this).data('qno');
