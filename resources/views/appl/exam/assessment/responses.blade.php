@@ -273,7 +273,7 @@ pre, code {
       </tr>
     </thead>
     <tbody>
-      @if(isset(json_decode($question->a)->out_1) && isset(json_decode($question->a)->out_1)))
+      @if(isset(json_decode($question->a)->out_1) && isset(json_decode($question->a)->out_1))
       <tr>
         <td>#1</td>
         <td>@if(json_decode($t->comment,true)['pass_1']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
@@ -283,7 +283,7 @@ pre, code {
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_1']['time']}}</td>
       </tr>
-      @if(isset(json_decode($question->a)->out_2) && isset(json_decode($question->a)->out_2)))
+      @if(isset(json_decode($question->a)->out_2) && isset(json_decode($question->a)->out_2))
       <tr>
 
         @if(isset(json_decode($t->comment,true)['pass_2']))
@@ -308,7 +308,7 @@ pre, code {
 
       @endif
 
-      @if(isset(json_decode($t->comment,true)['pass_4']) && isset(json_decode($question->a)->out_4)))
+      @if(isset(json_decode($t->comment,true)['pass_4']) && isset(json_decode($question->a)->out_4))
       <tr>
         <td>#4</td>
         <td>@if(json_decode($t->comment,true)['pass_4']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
@@ -321,7 +321,7 @@ pre, code {
 
       @endif
 
-        @if(isset(json_decode($t->comment,true)['pass_5']) && isset(json_decode($question->a)->out_5)))
+        @if(isset(json_decode($t->comment,true)['pass_5']) && isset(json_decode($question->a)->out_5))
       <tr>
         <td>#5</td>
         <td>@if(json_decode($t->comment,true)['pass_5']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
@@ -380,8 +380,10 @@ pre, code {
        @if(isset($t->comment))
          @if($t->comment)
          @if($questions[$t->question_id]->type!='code')
+         @if(!isset(json_decode($t->comment,true)['response_1'])) @if(json_decode($t->comment,true)['response_1'])
          <div class="my-2"><b>Feedback</b></div>
-         <p>{{$t->comment}}</p>
+         <p> {{$t->comment}} </p>
+          @endif @endif
          @endif
 
          @endif
