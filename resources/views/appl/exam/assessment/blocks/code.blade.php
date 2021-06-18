@@ -12,7 +12,7 @@
   </div>
   <select class="w-25 lang lang_{{($i+1)}}" id="inputGroupSelect01_{{($i+1)}}" data-qno="{{($i+1)}}">
     @foreach(['c','cpp','java','python','csharp','javascript','php','bash','ruby','swift'] as $lang)
-    <option value="{{$lang}}" class="{{$preset = 'preset_'.$lang}} {{'preset_'.$lang}}_{{($i+1)}}" data-code="@if(isset($question->d->$preset)){{$question->d->$preset}}@endif" data-qno="{{($i+1)}}" @if(isset($question->lang))@if($question->lang==$lang) selected @endif @endif>{{$lang}}</option>
+    <option value="{{$lang}}" class="{{$preset = 'preset_'.$lang}} {{'preset_'.$lang}}_{{($i+1)}}" data-code="@if(isset($question->d->$preset)){{$question->d->$preset}} @elseif(isset($question->$preset)){{$question->$preset}} @endif" data-qno="{{($i+1)}}" @if(isset($question->lang))@if($question->lang==$lang) selected data-dlang="{{$dlang=$lang}}"@endif @endif>{{$lang}}</option>
     @endforeach
   </select>
   <a href="#" class="ml-3 btn  btn-outline-primary" data-toggle="modal" data-target="#io_code">I/O Instructions</a>
@@ -25,8 +25,8 @@
 // The output string has to exactly match with the execpted output @endif @endif</textarea>
 
   @if($question->a)
-  <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-testcase="1" data-qslug="{{$question->slug}}" data-qno="{{($i+1)}}" data-url="{{ route('runcode') }}" data-lang="clang" data-sno="{{($i+1)}}" data-name="code_{{($i+1)}}" data-test="{{$exam->slug}}" data-c="1">Save & Compile</button>
-  <button type="button" class="btn btn-lg btn-warning btn-sm mt-4 runcode runcode_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-testcase="3" data-qslug="{{$question->slug}}" data-qno="{{($i+1)}}" data-url="{{ route('runcode') }}" data-lang="clang" data-sno="{{($i+1)}}" data-name="code_{{($i+1)}}" data-test="{{$exam->slug}}" data-c="1">Submit Code</button>
+  <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-testcase="1" data-qslug="{{$question->slug}}" data-qno="{{($i+1)}}" data-url="{{ route('runcode') }}" data-lang="@if(isset($dlang)){{$dlang}}@else clang @endif" data-sno="{{($i+1)}}" data-name="code_{{($i+1)}}" data-test="{{$exam->slug}}" data-c="1">Save & Compile</button>
+  <button type="button" class="btn btn-lg btn-warning btn-sm mt-4 runcode runcode_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-testcase="3" data-qslug="{{$question->slug}}" data-qno="{{($i+1)}}" data-url="{{ route('runcode') }}" data-lang="@if(isset($dlang)){{$dlang}}@else clang @endif" data-sno="{{($i+1)}}" data-name="code_{{($i+1)}}" data-test="{{$exam->slug}}" data-c="1">Submit Code</button>
   <img class="loading loading_{{($i+1)}}" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
   @endif
 @else
@@ -70,14 +70,42 @@
 </div>
 
 <div class="output_testcase_{{($i+1)}}">
-      <div class="output_testcase_{{($i+1)}}_t1"></div>
-      <div class="output_testcase_{{($i+1)}}_t2"></div>
-      <div class="output_testcase_{{($i+1)}}_t3"></div>
-      <div class="output_testcase_{{($i+1)}}_t4"></div>
-      <div class="output_testcase_{{($i+1)}}_t5"></div>
+      <div class="output_testcase_{{($i+1)}}_t1 {{$out='out_1'}}">
+        @if(isset($question->$out)) @if($question->$out)
+        <p class="mb-2"><span class=" {{$t = 1}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
+        <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{ round($time,2) }} ms </p>
+        @endif @endif
+      </div>
+      <div class="output_testcase_{{($i+1)}}_t2 {{$out='out_2'}}">
+        @if(isset($question->$out))@if($question->$out)
+        <p class="mb-2"><span class=" {{$t = 2}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
+        <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{round($time,2)}} ms</p>
+        @endif @endif
+      </div>
+      <div class="output_testcase_{{($i+1)}}_t3 {{$out='out_3'}}">
+        @if(isset($question->$out))@if($question->$out)
+        <p class="mb-2"><span class=" {{$t = 3}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
+        <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{round($time,2)}} ms</p>
+        @endif @endif
+      </div>
+      <div class="output_testcase_{{($i+1)}}_t4 {{$out='out_4'}}">
+        @if(isset($question->$out))@if($question->$out)
+        <p class="mb-2"><span class=" {{$t = 4}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
+        <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{round($time,2)}} ms</p>
+        @endif @endif
+      </div>
+      <div class="output_testcase_{{($i+1)}}_t5 {{$out='out_5'}}">
+        @if(isset($question->$out))@if($question->$out)
+        <span class=" {{$t = 5}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
+        <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{round($time,2)}} ms
+        @endif @endif
+      </div>
 </div>
 <input class="form-control w-50 input input_{{($i+1)}}" type="hidden"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="@if($question->response){{$question->response}}@endif" >
-<input class="form-control w-50 out out_{{($i+1)}}" type="hidden"  name="out_{{($i+1)}}" data-sno="{{($i+1)}}" value="" >
+<input class="form-control w-50 out out_{{($i+1)}}" type="hidden"  name="out_{{($i+1)}}" data-sno="{{($i+1)}}" value="@if(isset($question->out))@if($question->out){{$question->out}} @endif @endif" >
+@for($k=1;$k<6;$k++)
+<input class="form-control w-50 out out_{{($i+1)}}_{{$k}} {{$out='out_'.$k}}" type="hidden"  name="out_{{($i+1)}}_{{$k}}" data-sno="{{($i+1)}}" value="@if(isset($question->$out))@if($question->$out){{$question->$out}} @endif @endif" >
+@endfor
 <input class="form-control w-50 codefragment_{{($i+1)}}" type="hidden"  name="codefragment_{{($i+1)}}" data-sno="{{($i+1)}}" value="@if($question->code){{$question->code}}@endif" >
 @else
 

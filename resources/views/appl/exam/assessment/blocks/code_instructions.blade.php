@@ -65,7 +65,7 @@ int main (int argc, char *argv[]){
   // first input in string format
   printf("%s",argv[1]);
   // second input in interger format
-  int arg2 = atoi(argv[2])
+  int arg2 = atoi(argv[2]);
   printf("%d",arg2);
   // if there are 5 inputs, each can be accessed via argv[1] to argv[5]
 }</code></pre>

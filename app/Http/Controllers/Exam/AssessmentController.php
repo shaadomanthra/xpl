@@ -755,6 +755,13 @@ class AssessmentController extends Controller
 
                         if(isset($keys[$q->id]['lang'])){
                             $q->lang = $keys[$q->id]['lang'];
+                            $q->out = isset($keys[$q->id]['out'])?$keys[$q->id]['out']:'';
+                            $q->out_1 = isset($keys[$q->id]['out_1'])?$keys[$q->id]['out_1']:'';
+                            $q->out_2 = isset($keys[$q->id]['out_2'])?$keys[$q->id]['out_2']:'';
+                            $q->out_3 = isset($keys[$q->id]['out_3'])?$keys[$q->id]['out_3']:'';
+                            $q->out_4 = isset($keys[$q->id]['out_4'])?$keys[$q->id]['out_4']:'';
+                            $q->out_5 = isset($keys[$q->id]['out_5'])?$keys[$q->id]['out_5']:'';
+
                             $q->preset_c= $keys[$q->id]['preset_c'];
                             $q->preset_cpp= $keys[$q->id]['preset_cpp'];
                             $q->preset_csharp= $keys[$q->id]['preset_csharp'];
@@ -819,6 +826,7 @@ class AssessmentController extends Controller
 
         }
 
+        //dd($questions);
 
         if($images){
              Storage::disk('s3')->put('urq/'.$jsonname.'.json',json_encode($images),'public');
@@ -2291,11 +2299,26 @@ class AssessmentController extends Controller
                 $item['status'] = 1;
                 $item['dynamic'] = $request->get($i.'_dynamic');
                 $item['code'] = $request->get('dynamic_'.$i);
-                $item['comment'] = $request->get('out_'.$i);
+              
+                if(isset(json_decode($request->get('out_'.$i),true)['response_1']['error'])){
+                   $item['comment'] = $request->get('out_'.$i);     
+                }else{
+                    for($m=1;$m<6;$m++){
+                        $mjson = json_decode($request->get('out_'.$i.'_'.$m),true);
+                        $mdata['response_'.$m] = $mjson['response']; 
+                        $mdata['pass_'.$m] = $mjson['pass']; 
+                    }
+
+                    $item['comment'] = json_encode($mdata);
+                }
+                
 
 
-                if(strip_tags(trim($item['code']))){
+
+                if(trim($item['code'])){
                     $testcases = json_decode($item['comment'],true);
+
+                    
                     $partialmark = 0.2;
                     if($questions[$item['question_id']]->mark)
                         $partialmark = round($questions[$item['question_id']]->mark/5,2);
@@ -2339,6 +2362,7 @@ class AssessmentController extends Controller
                         }
                    }
                 }
+               
 
                 $type = $questions[$item['question_id']]->type;
 

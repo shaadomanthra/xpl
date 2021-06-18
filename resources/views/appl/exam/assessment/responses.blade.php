@@ -273,24 +273,24 @@ pre, code {
       </tr>
     </thead>
     <tbody>
-      @if(isset(json_decode($question->a)->out_1))
+      @if(isset(json_decode($question->a)->out_1) && isset(json_decode($question->a)->out_1)))
       <tr>
         <td>#1</td>
         <td>@if(json_decode($t->comment,true)['pass_1']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
         <td>{{ json_decode($question->a)->out_1 }}</td>
-        <td>@if(trim(json_decode($t->comment,true)['response_1']['error'])) {{ json_decode($t->comment,true)['response_1']['stderr']}} @else
+        <td>@if(trim(json_decode($t->comment,true)['response_1']['stderr'])) {{ json_decode($t->comment,true)['response_1']['stderr']}} @else
           {!! nl2br(json_decode($t->comment,true)['response_1']['stdout']) !!}
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_1']['time']}}</td>
       </tr>
-      @if(isset(json_decode($question->a)->out_2))
+      @if(isset(json_decode($question->a)->out_2) && isset(json_decode($question->a)->out_2)))
       <tr>
 
         @if(isset(json_decode($t->comment,true)['pass_2']))
         <td>#2</td>
         <td>@if(json_decode($t->comment,true)['pass_2']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
         <td>@if(json_decode($question->a)->out_2){{ json_decode($question->a)->out_2 }} @else {{json_decode($question->a)->out_1}} @endif</td>
-        <td>@if(trim(json_decode($t->comment,true)['response_2']['error'])) {{ json_decode($t->comment,true)['response_2']['stderr']}} @else
+        <td>@if(trim(json_decode($t->comment,true)['response_2']['stderr'])) {{ json_decode($t->comment,true)['response_2']['stderr']}} @else
           {!! nl2br(json_decode($t->comment,true)['response_2']['stdout']) !!}
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_2']['time']}}</td>
@@ -299,7 +299,7 @@ pre, code {
         <td>#3</td>
         <td>@if(json_decode($t->comment,true)['pass_3']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
         <td>@if(json_decode($question->a)->out_3){{ json_decode($question->a)->out_3 }} @else {{json_decode($question->a)->out_1}} @endif</td>
-        <td>@if(trim(json_decode($t->comment,true)['response_3']['error'])) {{ json_decode($t->comment,true)['response_3']['stderr']}} @else
+        <td>@if(trim(json_decode($t->comment,true)['response_3']['stderr'])) {{ json_decode($t->comment,true)['response_3']['stderr']}} @else
           {!! nl2br(json_decode($t->comment,true)['response_3']['stdout']) !!}
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_3']['time']}}</td>
@@ -308,12 +308,12 @@ pre, code {
 
       @endif
 
-      @if(isset(json_decode($t->comment,true)['pass_4']))
+      @if(isset(json_decode($t->comment,true)['pass_4']) && isset(json_decode($question->a)->out_4)))
       <tr>
         <td>#4</td>
         <td>@if(json_decode($t->comment,true)['pass_4']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
         <td>@if(json_decode($question->a)->out_4){{ json_decode($question->a)->out_4 }} @else {{json_decode($question->a)->out_1}} @endif</td>
-        <td>@if(trim(json_decode($t->comment,true)['response_4']['error'])) {{ json_decode($t->comment,true)['response_4']['stderr']}} @else
+        <td>@if(trim(json_decode($t->comment,true)['response_4']['stderr'])) {{ json_decode($t->comment,true)['response_4']['stderr']}} @else
           {!! nl2br(json_decode($t->comment,true)['response_4']['stdout']) !!}
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_4']['time']}}</td>
@@ -321,12 +321,12 @@ pre, code {
 
       @endif
 
-        @if(isset(json_decode($t->comment,true)['pass_5']))
+        @if(isset(json_decode($t->comment,true)['pass_5']) && isset(json_decode($question->a)->out_5)))
       <tr>
         <td>#5</td>
         <td>@if(json_decode($t->comment,true)['pass_5']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
         <td>@if(json_decode($question->a)->out_5){{ json_decode($question->a)->out_5 }} @else {{json_decode($question->a)->out_1}} @endif</td>
-        <td>@if(trim(json_decode($t->comment,true)['response_5']['error'])) {{ json_decode($t->comment,true)['response_5']['stderr']}} @else
+        <td>@if(trim(json_decode($t->comment,true)['response_5']['stderr'])) {{ json_decode($t->comment,true)['response_5']['stderr']}} @else
           {!! nl2br(json_decode($t->comment,true)['response_5']['stdout']) !!}
         @endif</td>
         <td>{{ json_decode($t->comment,true)['response_5']['time']}}</td>

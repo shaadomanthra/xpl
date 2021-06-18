@@ -1283,12 +1283,12 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
           timeout: 12000, 
           success:function(data){
             $('.runcode_'+$qn).removeClass('disabled');
-            console.log($qn);
-            //console.log(data);
+            console.log('qn'+$qn);
+           
             var jso = data;
             dat = JSON.parse(data);
-            console.log(dat);
-            
+
+                        
             if($k==1){
               $('.output_testcase_'+$qn).html('<div class="output_testcase_'+$qn+'_t1"></div><div class="output_testcase_'+$qn+'_t2"></div><div class="output_testcase_'+$qn+'_t3"></div><div class="output_testcase_'+$qn+'_t4"></div><div class="output_testcase_'+$qn+'_t5"></div>');
             }
@@ -1303,6 +1303,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
 
                 $('.input_'+$qn).attr('value',data.stdout);
                 $('.out_'+$qn).attr('value',jso);
+                $('.out_'+$qn+'_'+$t).attr('value',jso);
 
                 
 
@@ -1322,15 +1323,18 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
                     $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-times-circle text-danger"></i> Fail ('+data.time+' ms)</p>';
 
                 $('.output_testcase_'+$qn+'_t'+$t).html($test1);
+                $('.out_'+$qn+'_'+$t).attr('value',jso);
 
               }else if(data.stdout){
                 
                 if($t==1){
                   $('.output_'+$qn).html(data.stdout);
+                  $('.out_'+$qn).attr('value',jso);
+                  $('.input_'+$qn).attr('value',data.stdout);
                 }
                 
-                $('.input_'+$qn).attr('value',data.stdout);
-                $('.out_'+$qn).attr('value',jso);
+                
+                $('.out_'+$qn+'_'+$t).attr('value',jso);
 
                  if(dat.pass == "1")
                     $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-check-circle text-success"></i> Pass ('+data.time+' ms)</p>';
@@ -1534,10 +1538,12 @@ function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
       if(!$('.runcode_'+$qno).hasClass('disabled')){
         $(this).addClass('disabled');
 
-       
-        if($lang=='clang' || $lang=='csharp' ||$lang=='java' || $lang=='python' || $lang=='javascript')
+        $lang = $lang.trim();
+       console.log('sent-'+$lang);
+        if($lang=='c'|| $lang=='cpp'|| $lang=='clang' || $lang=='csharp' || $lang=='java' || $lang=='python' || $lang=='javascript')
         {
-
+          if($lang=='c' || $lang=='cpp')
+            $lang ='clang';
           console.log('sent - '+$lang);
           $url= 'https://cmplr.in/run';
           if($testcase==3){
