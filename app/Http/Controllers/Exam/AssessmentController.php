@@ -1759,8 +1759,9 @@ class AssessmentController extends Controller
             $data['exam'] = $exam;
             $data['test_overall'] = $test_overall;
             $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
-            //return $pdf->download('sample.pdf');
-           
+
+            //
+            if($request->get('screen'))
              return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
                         ->with('questions',$ques)
@@ -1776,7 +1777,10 @@ class AssessmentController extends Controller
                         ->with('count',$count)
                         ->with('highlight',true)
                         ->with('chart',false);
-             // 
+            else{
+
+             return $pdf->download($student->name.'_'.$exam->name.'.pdf');
+            }
            
         }
 
