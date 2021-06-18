@@ -1419,8 +1419,6 @@ class AssessmentController extends Controller
 
         $exam = Cache::get('test_'.$slug);
 
-
-
         if(!$pdf2)
         if(!\auth::user()->isAdmin())
          $this->authorize('view', $exam);
@@ -1453,6 +1451,13 @@ class AssessmentController extends Controller
         $user_id = $student->id;
         $test_id = $exam->id;
         $user = $student;
+
+        if($request->get('refresh')){
+            Cache::forget('resp_'.$user_id.'_'.$test_id);
+            Cache::forget('attempt_'.$user_id.'_'.$test_id);
+            Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
+            Cache::forget('ranked_'.$user_id.'_'.$test_id);
+        }
 
         $jsonname = $slug.'_'.$user_id;
 
@@ -1491,10 +1496,7 @@ class AssessmentController extends Controller
         $sum = 0;
         $c=0; $i=0; $u=0;
 
-        if($request->get('forget')){
-            Cache::forget('resp_'.$user_id.'_'.$test_id);
-            Cache::forget('attempt_'.$user_id.'_'.$test_id);
-        }
+        
 
         
         $tests = Cache::remember('resp_'.$user_id.'_'.$test_id,240,function() use ($exam,$student){
@@ -1510,18 +1512,9 @@ class AssessmentController extends Controller
         });
 
 
-
-        if($request->get('pdf2')){
-            
         
-            ini_set('max_execution_time', 300); //300 seconds = 5 minutes
-            $view = 'responses-pdf';
-             //$pdf = PDF::loadView('appl.exam.assessment.'.$view,compact('tests','student','exam','test_overall'));
-             //     $pdf->save('sample.pdf');
-           
-             // 
-           
-        }
+
+        
         $tests_overall = $test_overall;
 
         $tests_keys = $tests->keyBy('question_id');
@@ -1600,6 +1593,17 @@ class AssessmentController extends Controller
         $details['auto_max'] = 0;
         $topics = false;
         $review=false;
+        $details['rank'] = Cache::remember('ranked_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
+            $all = Tests_Overall::where('test_id',$exam->id)->orderBy('score','desc')->get();
+            foreach($all as $k=>$a){
+                if($a->user_id ==$student->id)
+                    $rank = $k+1;
+
+            }
+            $d['rank'] =$rank;
+            $d['participants'] = count($all);
+            return $d;
+        });
 
         $i=0;$cx=0;
 
@@ -1745,9 +1749,40 @@ class AssessmentController extends Controller
         $mathjax = false;
         $view = 'responses';
 
+        if($request->get('pdf3')){
+            
+        
+            ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+            $view = 'responses-pdf_backup';
+            $data['tests'] = $tests;
+            $data['student'] = $student;
+            $data['exam'] = $exam;
+            $data['test_overall'] = $test_overall;
+            $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
+            //return $pdf->download('sample.pdf');
+           
+             return view('appl.exam.assessment.'.$view)
+                        ->with('exam',$exam)
+                        ->with('questions',$ques)
+                        ->with('sections',$sections)
+                        ->with('details',$details)
+                        ->with('student',$student)
+                        ->with('user',$student)
+                        ->with('tests',$tests)
+                        ->with('test_overall',$tests_overall)
+                        ->with('review',true)
+                        ->with('mathjax',$mathjax)
+                        ->with('sketchpad',1)
+                        ->with('count',$count)
+                        ->with('highlight',true)
+                        ->with('chart',false);
+             // 
+           
+        }
+
         if($request->get('pdf2') || $pdf2){
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
-            $view = 'responses-pdf';
+            $view = 'responses-pdf_backup';
 
             $data['tests'] = $tests;
             $data['student'] = $student;

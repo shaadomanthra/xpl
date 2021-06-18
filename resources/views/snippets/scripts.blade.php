@@ -1312,6 +1312,8 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
                 else
                     $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-times-circle text-danger"></i> Fail ('+data.time+' ms)</p>';
 
+                if($k==1)
+                  $test1 = $test1+'<p class="text-primary">Note that you are required to <b>submit the code</b> for each question to validate all testcases for fullmarks</p>';
                 $('.output_testcase_'+$qn+'_t'+$t).html($test1);
                
 
@@ -2009,7 +2011,7 @@ $(document).ready(function() {
         v.number = {{ $question['number'] }};
       @endif
 
-      console.log('number :'+v.number);
+      //console.log('number :'+v.number);
       {!! $question['dynamic'] !!}
 
       items.forEach(function(element) {

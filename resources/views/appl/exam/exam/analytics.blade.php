@@ -36,17 +36,26 @@
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="mt-2 ">
+        <div class="mt-2 mb-3 mb-md-0">
+        <div class="row">
+          <div class="col-4 col-md-4">
           @if($exam->slug!='psychometric-test')
-          @if(\auth::user()->checkRole(['administrator']))
-        <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
-        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 || \auth::user()->role ==13 || \auth::user()->role ==10 )
-        <a href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-success float-right  "><i class="fa fa-download"></i>&nbsp; Excel</a>
-        @else
-        @endif
+          @if(\auth::user()->checkRole(['administrator']) || \auth::user()->role==11 || \auth::user()->role ==12 || \auth::user()->role ==13 || \auth::user()->role ==10 )
+          <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <i class="fa fa-download"></i>&nbsp; Excel
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif">Scores</a>
+              <a class="dropdown-item" href="{{ route('test.report',$exam->slug)}}?export=1&all=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif">Scores + Academic Percentage</a>
+            </div>
+          </div>
 
-
+       
+          @endif
          @endif
+       </div>
+       <div class="col-8 col-md-8">
           <form class="form-inline mr-3 " method="GET" action="{{ route('test.report',$exam->slug) }}">
 
             <div class="input-group ">
@@ -57,6 +66,8 @@
               value="{{Request::get('item')?Request::get('item'):'' }}">
             </div>
           </form>
+        </div>
+      </div>
 
 
 

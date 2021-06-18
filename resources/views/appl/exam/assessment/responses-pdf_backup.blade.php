@@ -162,7 +162,8 @@
         <!-- Define header and footer blocks before your content -->
         <!-- Wrap the content of your PDF inside a main tag -->
         <main class="bcontainer">
-          <div class=' ' style=" padding-bottom: 30px; ">
+          <div id="pdf" style="padding:20px ;">
+          <div class=' ' style=" padding-bottom: 30px;  ">
           <p class="heading_two mb-1 f30" ><h4> {{$student->name}}</h4>
 
           </p>
@@ -186,6 +187,7 @@
                   <th scope="row" width="10%">{{($k+1)}}</th>
                   <th>{!! $t->question->question !!}</th>
                 </tr>
+                @if($t->question->type!='code')
                 @if($t->question->option_a)
                 <tr>
                   <td scope="row" class=""><span class=" @if($t->answer=='A') text-success font-weight-bold @endif">(A) </span></td>
@@ -220,13 +222,12 @@
                   <td>{!! $t->question->option_e!!}</td>
                 </tr>
                 @endif
+                @endif
 
                 @if($t->question->type=='code')
                 <tr>
                   <td scope="row" class="">User Code</td>
-                  <td><pre class="mb-3" style="">
-                      <code style="overflow-wrap: break-word;word-wrap: break-word">
-                        {!! htmlentities($t->code) !!}
+                  <td><pre class="mb-3" style=""><code style="overflow-wrap: break-word;word-wrap: break-word">{!! htmlentities($t->code) !!}
                       </code>
                     </pre>
                   </td>
@@ -284,6 +285,54 @@
 
 
 @endforeach
+</div>
+<button id="pdfbtn" class="btn btn-outline-dark btn-sm pdfbtn d-none" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}" data-html2canvas-ignore="true" data-url="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}">Download PDF</button>
+
+<script src="{{ asset('js/html2pdf.bundle.min.js') }}"></script>
+
+<script>
+
+    // function downloadpdf(){
+    //     var element = document.getElementById('pdf');
+    //     var pdfbtn = document.getElementById('pdfbtn');
+    //     var name = pdfbtn.getAttribute('data-name');
+    //     //alert(name);
+    //     html2pdf().from(element).save(name+'.pdf');
+
+    // }
+
+  downloadpdf();
+  function downloadpdf() {
+      var element = document.getElementById('pdf');
+      var pdfbtn = document.getElementById('pdfbtn');
+      var name = pdfbtn.getAttribute('data-name')+'.pdf';
+      var url = pdfbtn.getAttribute('data-url');
+        var opt = {
+            margin: 0 ,
+            dpi: 96,
+            filename: name,
+            image: { type: 'jpeg', quality: 1 },
+      html2canvas: {
+        dpi: 130,
+        scale:1,
+        letterRendering: true,
+        useCORS: true
+      },
+            jsPDF:{ unit: 'in', format: 'letter', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        }
+        // var input = document.getElementById("pdfContainer");
+        // console.log(input)
+        html2pdf(element, opt)
+        setTimeout(function(){
+          window.location.href = url;
+        },4000);
+        
+    }
+
+  
+
+</script>
 </div>
         </main>
     </body>

@@ -33,7 +33,7 @@ pre, code {
 
 
     <div class="row">
-      <div class="col-12 col-md-8 col-lg-10">
+      <div class="col-12 ">
 
       	    @if(auth::user()->checkRole(['hr-manager','admin']))
 <nav class="mb-0" data-html2canvas-ignore="true">
@@ -62,38 +62,120 @@ pre, code {
 </nav>
 @endif
         
-        <div class=' pb-1'>
-          <p class="heading_two mb-1 f30" ><i class="fa fa-user "></i> {{$student->name}}
-
-            <button id="pdfbtn" class="btn btn-outline-primary btn-sm pdfbtn" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}" data-html2canvas-ignore="true">Download PDF</button>
-            <button  class="btn btn-outline-success btn-sm " data-toggle="modal" data-target="#exampleModal2" data-html2canvas-ignore="true">Add Comment</button>
-             
-          </p>
-          @if($student->roll_number)<span class="badge badge-info ">{{$student->roll_number}}</span>@endif
-            @if($student->email)<span class="badge badge-info ">Email : {{$student->email}}</span> @endif
-          @if($student->phone)<span class="badge badge-info ">Phone : {{$student->phone}}</span> @endif
-           @if($student->branch_id)<span class="badge badge-danger ">{{$student->branch->name}}</span>@endif
-      @if($student->college_id)<span class="badge badge-success">{{$student->college->name}}</span><br>@endif
-        @if($test_overall->status)
-          <span class="badge badge-secondary ">Auto Evaluation Score: {{$test_overall['score']}} / {{$details['auto_max']}}</span> 
-            <span class="badge badge-warning ">Responses under review: {{$details['review']}}</span> 
-        @endif
-      <p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><p>
-        @if($test_overall->comment)<p class="pt-0">Comment : <b><span class="text-dark">{{$test_overall->comment }}</span></b></p>@endif
-        </div>
-      </div>
-      <div class="col-12 col-md-4 col-lg-2">
-        <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
-          <div class="h6">Total Score</div>
-          <div class="score_main" >
-          	@if(!$test_overall->status)
-			<div class="">{{ $test_overall->score }} </div>
-			@else
-			<div class="badge badge-primary under_review_main" >Under <br>Review</div>
-			@endif
+        <div class="row mb-4">
+          @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_selfie.jpg'))
+          <div class="col-4 col-md-2">
+            <img src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_selfie.jpg')}}" class="w-100 rounded " />
           </div>
+          @endif
+          <div class="col-12 col-md">
+            <h1 class="mb-0">{{$student->name}}</h1>
+              <p><i class="fa fa-bars"></i> {{$exam->name}}</p>
+            <div class="row mb-0">
+              <div class="col-4"> Email:</div>
+              <div class="col-8">{{$student->email}}</div>
+            </div>
+            <div class="row mb-0">
+              <div class="col-4"> Phone:</div>
+              <div class="col-8">{{$student->phone}}</div>
+            </div>
+            @if($student->college_id)
+            <div class="row mb-0">
+              <div class="col-4"> College:</div>
+              <div class="col-8">{{$student->college->name}}</div>
+            </div>
+            @endif
+            @if($student->branch_id)
+            <div class="row mb-0">
+              <div class="col-4"> Branch:</div>
+              <div class="col-8">{{$student->branch->name}}</div>
+            </div>
+            @endif
+            @if($student->roll_number)
+            <div class="row mb-0">
+              <div class="col-4"> Roll Number:</div>
+              <div class="col-8">{{$student->roll_number}}</div>
+            </div>
+            @endif
+            <br>
+            
+            @if($test_overall->status)
+            <div class="row mb-0">
+              <div class="col-4"> Auto Evaluation Score:</div>
+              <div class="col-8">{{$test_overall['score']}} / {{$details['auto_max']}}</div>
+            </div>
+            <div class="row mb-0">
+              <div class="col-4"> Responses under review:</div>
+              <div class="col-8">{{$details['review']}}</div>
+            </div>
+            @endif
+
+            @if($test_overall->comment)
+            <div class="row mb-0">
+              <div class="col-4"> Comment:</div>
+              <div class="col-8"><b><span class="text-dark">{{$test_overall->comment }}</span></b></div>
+            </div>
+            @endif
+          </div>
+          <div class="col-12 col-md-6">
+           
+            <div class="row">
+              <div class="col-6 col-md-4">
+                <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
+                  <div class="h6">Score Secured</div>
+                  <div class="score_main" >
+                    @if(!$test_overall->status)
+                    <div class="display-3 text-primary">{{ $test_overall->score }} </div>
+                    <div class=" mt-2">out of {{$test_overall->max}}</div>
+                    @else
+                    <div class="badge badge-primary under_review_main" >Under <br>Review</div>
+                    @endif
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
+                  <div class="h6">Percentage</div>
+                  <div class="score_main" >
+                    @if(!$test_overall->status)
+                    <div class="display-3 text-primary">{{ round($test_overall->score/$test_overall->max*100) }}% </div>
+                    <div class="mt-2">out of 100</div>
+                    @else
+                    <div class="badge badge-primary under_review_main" >Under <br>Review</div>
+                    @endif
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-4">
+                <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
+                  <div class="h6">Rank</div>
+                  <div class="score_main" >
+                    @if(!$test_overall->status)
+                    <div class="display-3 text-primary">#{{ $details['rank']['rank']}} </div>
+                    <div class=" mt-2">out of {{$details['rank']['participants']}}</div>
+                    @else
+                    <div class="badge badge-primary under_review_main" >Under <br>Review</div>
+                    @endif
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <h4 class="mt-4">Tools</h4>
+              <button id="pdfbtn" class="btn btn-outline-dark btn-sm pdfbtn mb-2" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}" data-html2canvas-ignore="true">Download PDF - Format 1</button>
+                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&pdf3=1"  class="btn btn-outline-dark btn-sm ml-2 mb-2" >Download PDF - Format 2</a>
+              <button  class="btn btn-outline-dark btn-sm ml-2" data-toggle="modal" data-target="#exampleModal2" data-html2canvas-ignore="true">Add Comment</button>
+              <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1"  class="btn btn-outline-dark btn-sm " >Refresh Cache</a>
+            </div>
+            
+
+          </div>
+
         </div>
+       
       </div>
+      
     </div>
   </div>
 </div>
@@ -109,7 +191,7 @@ pre, code {
 
 
 
-<div class="px-3  my-3" id="wrapper">
+<div class="px-3  my-3 " id="wrapper">
 
 @foreach($tests as $k=>$t)
 <div class="row no-gutters" id="item{{($k+1)}}">
@@ -503,12 +585,15 @@ pre, code {
 
 </script>
 <script>
-  video.addEventListener('loadedmetadata', function() {
+  if(typeof video !== 'undefined'){
+      video.addEventListener('loadedmetadata', function() {
     if (video.buffered.length === 0) return;
 
     const bufferedSeconds = video.buffered.end(0) - video.buffered.start(0);
     console.log(`${bufferedSeconds} seconds of video are ready to play.`);
   });
+  }
+
 </script>
 
 <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>

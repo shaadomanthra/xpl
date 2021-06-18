@@ -95,6 +95,7 @@ class TestReport2 implements FromCollection
             else
                $result[$k]->Score = '0';
 
+           $result[$k]->Percentage = round($res->score/$res->max*100);
             $result[$k]->timer = round($result[$k]->time/60,2);
 
             if($res->user->fluency)
@@ -153,7 +154,8 @@ class TestReport2 implements FromCollection
     		}
 
     	$ux->Sc = "Score (".$exam->total.")";
-         $ux->Timer = "Time spent";
+        $ux->Percentage = "Percentage";
+         $ux->Timer = "Time spent (Minutes)";
       $ux->adm = "Admission Number";
 
       if(request()->get('all')){
