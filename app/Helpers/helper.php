@@ -347,6 +347,8 @@ function subdomain() {
             return 'rguktn';
     if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.in.net')
             return 'xplore';
+    if($_SERVER['HTTP_HOST'] == 'demo.xp.test' )
+            return 'fks';
 
     $parsed = parse_url($url);
     $exploded = explode('.', $parsed["host"]);

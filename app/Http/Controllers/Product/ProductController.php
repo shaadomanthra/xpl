@@ -238,18 +238,18 @@ class ProductController extends Controller
 
           
              
-          $usertests = $user->clientexams()->orderBy('id','desc')->withCount('users');
+          $usertests = $user->clientexams()->orderBy('id','desc');//->withCount('users');
           
 
           //dd($user->clientexams->pluck('id'));
           //$user->exams()->withCount('users')->orderBy('id','desc');
 
 
-          $count = 0;//count(Tests_Overall::select('id')->whereIn('test_id',$usertests->pluck('id')->toArray())->get());
+          $count = (Tests_Overall::select('id')->whereIn('test_id',$usertests->pluck('id')->toArray())->count());
           //$count = count($alltests);
 
          
-          $usercount = 0;//count(User::select('id')->where('client_slug',subdomain())->where('status','<>','2')->get());
+          $usercount =(User::select('id')->where('client_slug',subdomain())->where('status','<>','2')->count());
           // foreach($user->exams as $exam){
           //   $count = $count + $exam->getAttemptCount();           
           // }
@@ -261,6 +261,9 @@ class ProductController extends Controller
             $exams = $usertests->paginate(8);
 
 
+          foreach($exams as $k=>$e){
+            $exams[$k]->users_count = Tests_Overall::select('id')->where('test_id',$e->id)->count();
+          }
 
           $exam = null;
           $ids =array();
