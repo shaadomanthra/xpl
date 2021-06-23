@@ -245,11 +245,11 @@ class ProductController extends Controller
           //$user->exams()->withCount('users')->orderBy('id','desc');
 
 
-          $count = count(Tests_Overall::select('id')->whereIn('test_id',$usertests->pluck('id')->toArray())->get());
+          $count = 0;//count(Tests_Overall::select('id')->whereIn('test_id',$usertests->pluck('id')->toArray())->get());
           //$count = count($alltests);
 
          
-          $usercount = count(User::select('id')->where('client_slug',subdomain())->where('status','<>','2')->get());
+          $usercount = 0;//count(User::select('id')->where('client_slug',subdomain())->where('status','<>','2')->get());
           // foreach($user->exams as $exam){
           //   $count = $count + $exam->getAttemptCount();           
           // }
