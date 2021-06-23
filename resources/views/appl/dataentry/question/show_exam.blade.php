@@ -2,6 +2,7 @@
 @section('title', 'Test '.$exam->name.' | Xplore')
 @section('content')
 
+<div class="">
 <div class="d-none d-md-block">
   <nav aria-label="breadcrumb ">
     <ol class="breadcrumb">
@@ -44,27 +45,23 @@
 
   <div class="row">
 
-    <div class="col-md-8">
+    <div class="col-md-8 col-lg-9">
 
-      @if($passage)
-      <div class="card mb-3">
-        <div class="card-body">
-          <b>Passage</b> <span class="btn view badge badge-warning" data-item="passage">view</span><br>
-          <div class="passage" style="display: none;">
-          {!! $passage->passage !!}
-          </div>
-        </div>
+<div class="row no-gutters">
+        @if(trim($question->passage))
+  <div class="col-12 col-md-12 col-lg-7 pbox" >
+  <div class="card my-0" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;max-height:300px; overflow: scroll;">
+    <div class="card-body">
+      <b>Passage</b> 
+      <div class="passage pt-2 fsmall" style="">
+        {!! $question->passage !!}
       </div>
-      @elseif($question->passage)
-      <div class="card mb-3">
-        <div class="card-body">
-          <b>Passage</b> <span class="btn view badge badge-warning" data-item="passage">view</span><br>
-          <div class="passage" style="display: none;">
-          {!! $question->passage !!}
-          </div>
-        </div>
-      </div>
-      @endif
+    </div>
+  </div>
+  </div>
+  @endif
+
+    <div class="col12 col-md col-lg">
       <div class="card  mb-3">
         <div class="card-header ">
           @can('update',$question)
@@ -303,7 +300,8 @@
          
         </div>
       </div>
-
+</div>
+</div>
 
 
       @if($question->type!='sq' && $question->type!='urq' && $question->type!='code' )
@@ -399,13 +397,13 @@
 
     </div>
 
-     <div class="col-md-4 pl-md-0">
+     <div class="col-md-4 col-lg-3 pl-md-0">
       @include('appl.dataentry.snippets.qset-exam')
     </div>
 
   </div> 
 
-
+</div>
 
   <!-- Modal 3-->
 <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
