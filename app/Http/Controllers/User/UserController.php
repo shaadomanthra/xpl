@@ -501,6 +501,13 @@ class UserController extends Controller
                     $data[$i]['exists'] = 0;
                     
                 }else{
+                    if($data[$i]['name'])
+                    $u->name = $data[$i]['name'];
+
+
+                    if($data[$i]['phone'])
+                    $u->phone = $data[$i]['phone'];
+
                     if($data[$i]['roll_number'])
                     $u->roll_number = $data[$i]['roll_number'];
 
