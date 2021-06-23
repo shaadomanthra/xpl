@@ -61,7 +61,8 @@
           <div class="col-12 ">
             <div class=" p-3 mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
           <div class="h6">Total Users</div>
-          <div class="h2" ><a href="{{ route('user.list')}}" data-toggle="tooltip" title="View Users">{{ $user->where('client_slug',subdomain())->where('status','<>','2')->count() }} </a></div>
+          <div class="h2" ><a href="{{ route('user.list')}}" data-toggle="tooltip" title="View Users">
+            @if(isset($usercount)) {{$usercount}}@else{{ $user->where('client_slug',subdomain())->where('status','<>','2')->count() }}@endif </a></div>
         </div>
           </div>
         </div>
