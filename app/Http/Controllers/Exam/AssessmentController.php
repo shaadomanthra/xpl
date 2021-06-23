@@ -4313,6 +4313,7 @@ class AssessmentController extends Controller
 
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0,'evaluation'=>1];
         $details['course'] = $exam->name;
+          $sectiondetails = null;
         $sum = 0;
         $c=0; $i=0; $u=0;
 
@@ -4350,6 +4351,17 @@ class AssessmentController extends Controller
         $secs = $tests_section->groupBy('section_id');
 
 
+
+        if($secs)
+        foreach($secs as $sd=>$id){
+               
+              $sectiondetails[$id[0]->section_id]['percent'] = round($id[0]->score/$id[0]->max*100,2);
+              $sectiondetails[$id[0]->section_id]['id'] = $id[0]->section_id;
+              $sectiondetails[$id[0]->section_id]['max'] = $id[0]->max;
+              $sectiondetails[$id[0]->section_id]['score'] = $id[0]->score;
+        }
+       
+      
 
 
         // api
@@ -4406,6 +4418,9 @@ class AssessmentController extends Controller
                 $sections[$section->name] = $secs[$section->id][0];
                 else
                 $sections[$section->name] ='';
+
+            if($sectiondetails)
+                $sectiondetails[$section->id]['name'] = $section->name;
             $secs[$section->id] = $section;
             $qset = $exam->getQuestionsSection($section->id,$user->id);
             foreach($qset as $q){
@@ -4437,6 +4452,10 @@ class AssessmentController extends Controller
 
         }
 
+       
+
+        
+
 
 
         if(isset($section))
@@ -4454,7 +4473,6 @@ class AssessmentController extends Controller
         }
 
 
-
         if(count($sections)==1)
             $sections = null;
 
@@ -4462,6 +4480,7 @@ class AssessmentController extends Controller
         $details['correct_time'] =0;
         $details['incorrect_time']=0;
         $details['unattempted_time']=0;
+      
         $topics = false;
         $review=false;
         $details['rank'] = Cache::remember('ranked_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
@@ -4721,6 +4740,7 @@ class AssessmentController extends Controller
                         ->with('data',$d)
                         ->with('questions',$ques)
                         ->with('sections',$sections)
+                        ->with('sectiondetails',$sectiondetails)
                         ->with('details',$details)
                         ->with('student',$student)
                         ->with('user',$student)

@@ -1774,7 +1774,71 @@ new Chart(ctxOne, optionsOne);
 
 
 
+
 @if(isset($sections))
+
+
+<script type="text/javascript">
+  var options_sections_container = {
+  type: 'horizontalBar',
+  data: {
+    labels: [ @foreach($sectiondetails as $k=> $sd) "{{$sd['name']}} ({{$sd['score']}}/{{$sd['max']}})", @endforeach],
+    datasets: [{
+      label:'',
+      data: [@foreach($sectiondetails as $k=>$sd) "{{$sd['percent']}}", @endforeach],
+      backgroundColor: [
+              @foreach($sectiondetails as $k=> $sd) 
+                @if($sd['percent']<30)
+                  'rgba(255, 99, 132, 0.8)',
+                @elseif($sd['percent']>=30 && $sd['percent']>=70)
+                    'rgba(255, 206, 86, 0.8)'
+                @else
+                'rgba(75, 192, 192, 0.8)',
+                @endif
+              @endforeach
+                
+            ],
+            borderColor: [
+                @foreach($sectiondetails as $k=> $sd) 
+                @if($sd['percent']<30)
+                  'rgba(255, 99, 132, 0.8)',
+                @elseif($sd['percent']>=30 && $sd['percent']>=70)
+                    'rgba(255, 206, 86, 0.8)'
+                @else
+                'rgba(75, 192, 192, 0.8)',
+                @endif
+              @endforeach
+            ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    legend: {
+        display: false
+    },
+        title: {
+            display: true,
+            text: 'Sectional Report '
+          },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    steps: 10,
+                    stepValue: 5,
+                    max: 100
+                }
+            }]
+        }
+    }
+}
+
+if(document.getElementById('SectionContainer')){
+var ctx_section_container = document.getElementById('SectionContainer').getContext('2d');
+new Chart(ctx_section_container,options_sections_container);
+}
+
+</script>
 
 @foreach($sections as $sec => $section)
 @if(isset($section->section_id))

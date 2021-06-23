@@ -6,7 +6,7 @@
 
  <style>.baseline{padding-top:3px;background:silver;border-radius: 5px;margin:5px 0px 15px;width:30%;}
 .cardgreen{background-image: linear-gradient(to bottom right, #fff, white);border:2px solid #eee;margin-bottom: 15px;}
-.dblue2{ background: #f2fff9; }</style>
+.dblue2{ background: #f2fff9;border-bottom:2px solid #beedd6; }</style>
 <div class="dblue2">
 <div class="container py-4 ">
   @include('appl.exam.assessment.blocks.breadcrumbs')
@@ -188,28 +188,13 @@
   </div>
 </div>
 
-@if(isset($sections))
-    <div class=" card mb-3 "  style="background: #FFF;border: 1px solid #EEE;">
-      <div class="card-header">
-        Section Analysis
-      </div>
-      <div class="card-body">
-      <div class="row">
-        @foreach($sections as $sec =>$section)
-        @if(isset($section->section_id))
-        <div class="col-12 col-md-6">
-          
-            <div class="p-2 " height="200px">
-            <canvas id="{{$section->section_id}}Container" width="600" height="200px"></canvas>
-          </div>
-          
-        </div>
-        @endif
-        @endforeach
-      </div>
-    </div>
-    </div>
-    @endif
+<div class="pb-4">
+<div class="p-2 " height="200px">
+            <canvas id="SectionContainer" width="600" height="200px"></canvas>
+</div>
+</div>
+
+
 
 </div>
 
