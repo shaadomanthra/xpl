@@ -96,7 +96,7 @@ class TestReport2 implements FromCollection
                $result[$k]->Score = '0';
 
            if(floatval($res->max)==0)
-                $res->max) =1;
+                $res->max =1;
            $result[$k]->Percentage = round(floatval($res->score)/floatval($res->max)*100);
             $result[$k]->timer = round($result[$k]->time/60,2);
 
