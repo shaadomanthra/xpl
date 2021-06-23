@@ -1695,17 +1695,17 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ["Correct",  "Incorrect", "Unattempted"],
         datasets: [{
-            label: 'Responses',
+            label: ["Responses"],
             data: [{{ $details['correct']}}, {{ $details['incorrect']}}, {{ $details['unattempted']}}],
             backgroundColor: [
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 167, 89, 0.7)',
+                'rgba(243, 40, 60, 0.7)',
                 'rgba(255, 206, 86, 0.2)'
             ],
             borderColor: [
 
-                'rgba(75, 192, 192, 1)',
-                'rgba(255,99,132,1)',
+                'rgba(54, 167, 89, 1)',
+                'rgba(243, 40, 60, 1)',
                 'rgba(255, 206, 86, 1)'
             ],
             borderWidth: 1

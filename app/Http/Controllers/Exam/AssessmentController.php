@@ -2338,14 +2338,20 @@ class AssessmentController extends Controller
                 $item['status'] = 1;
                 $item['dynamic'] = $request->get($i.'_dynamic');
                 $item['code'] = $request->get('dynamic_'.$i);
+
               
                 if(isset(json_decode($request->get('out_'.$i),true)['response_1']['error'])){
                    $item['comment'] = $request->get('out_'.$i);     
                 }else{
                     for($m=1;$m<6;$m++){
                         $mjson = json_decode($request->get('out_'.$i.'_'.$m),true);
-                        $mdata['response_'.$m] = $mjson['response']; 
-                        $mdata['pass_'.$m] = $mjson['pass']; 
+                        if($mjson){
+                            $mdata['response_'.$m] = $mjson['response']; 
+                            $mdata['pass_'.$m] = $mjson['pass']; 
+                        }else{
+                            $mdata = null;
+                        }
+                        
                     }
 
                     $item['comment'] = json_encode($mdata);
@@ -4458,6 +4464,17 @@ class AssessmentController extends Controller
         $details['unattempted_time']=0;
         $topics = false;
         $review=false;
+        $details['rank'] = Cache::remember('ranked_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
+            $all = Tests_Overall::where('test_id',$exam->id)->orderBy('score','desc')->get();
+            foreach($all as $k=>$a){
+                if($a->user_id ==$student->id)
+                    $rank = $k+1;
+
+            }
+            $d['rank'] =$rank;
+            $d['participants'] = count($all);
+            return $d;
+        });
 
         $i=0;
         $typeslug= Cache::remember('exam_type_'.$exam->slug, 240, function() use($exam) {
@@ -4694,6 +4711,9 @@ class AssessmentController extends Controller
 
         else
             $view = "analysis";
+
+        if(request()->get('student'))
+            $view = 'blocks.student';
 
 
         return view('appl.exam.assessment.'.$view)

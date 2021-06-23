@@ -2,31 +2,31 @@
 @section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' ')
 @section('content')
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb border">
-    <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
-    <li class="breadcrumb-item">{{ ucfirst($exam->name) }} - Analysis  </li>
-  </ol>
-</nav>
 
+@include('appl.exam.assessment.blocks.breadcrumbs')
 
 
 <div class="mb-md-2">
 	<div class="">
-		<div class="p-3 border rounded bg-light mb-4">
-		<div class="  display-4  mb-1"><b>{{ ucfirst($exam->name) }} - Report</b></div>
-		@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif<br>
-			@if($student->email)<span class="badge badge-info ">Email : {{$student->email}}</span> <br>@endif
-        @if($student->phone)<span class="badge badge-info ">Phone : {{$student->phone}}</span> <br>@endif
-		@if(isset($data['branches'][$student->branch_id]->name))
-		@if($student->branch_id)<span class="badge badge-danger">{{$data['branches'][$student->branch_id]->name}}</span>@endif
-      @if($student->college_id)<span class="badge badge-info">{{$data['colleges'][$student->college_id]->name}}</span><br>@endif
-     @endif
-		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
 
+		@if(request()->get('student'))
 			
-		</p>
-	</div>
+		@else
+			<div class="p-3 border rounded bg-light mb-4">
+			<div class="  display-4  mb-1"><b>{{ ucfirst($exam->name) }} - Report</b></div>
+			@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif<br>
+				@if($student->email)<span class="badge badge-info ">Email : {{$student->email}}</span> <br>@endif
+	        @if($student->phone)<span class="badge badge-info ">Phone : {{$student->phone}}</span> <br>@endif
+			@if(isset($data['branches'][$student->branch_id]->name))
+			@if($student->branch_id)<span class="badge badge-danger">{{$data['branches'][$student->branch_id]->name}}</span>@endif
+	      @if($student->college_id)<span class="badge badge-info">{{$data['colleges'][$student->college_id]->name}}</span><br>@endif
+	     @endif
+			<p>Name : <span class="text-primary">{{$student->name}}</span><br>
+
+				
+			</p>
+			</div>
+		@endif
 	@if($exam->solutions ==2 && !\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
 
@@ -102,6 +102,8 @@
 		  </div>  
 		  @endif
 
+		  
+
 		<div class="row">
 			<div class="col-12 col-md-4 mb-3">
 				<div class="card p-3" style="background: #F9FCE5;border: 2px solid #D1D3C5;color: #9D9792;">
@@ -166,6 +168,7 @@
 		</div>
 		@endif
 		@endif
+
 
 
 		@include('appl.exam.assessment.blocks.banner')

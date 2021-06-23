@@ -21,6 +21,8 @@
 @endif
 
 
+
+
 <div class="mb-md-2">
 	<div class="">
 		<div class="p-3 border rounded bg-light mb-4">
@@ -60,6 +62,8 @@
 	
 
 	@else
+
+
 
 
 	@if($exam->slug =='psychometric-test' || $typeslug=='psychometric-test')
@@ -132,6 +136,7 @@
 
 	@else
 
+
 		@if($details['evaluation'])
 		<div class="row">
 			<div class="col-12 col-md-4 mb-3">
@@ -196,6 +201,7 @@
 		</div>
 		@endif
 		@endif
+
 
 
 		@include('appl.exam.assessment.blocks.banner')
