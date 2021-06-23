@@ -2,9 +2,11 @@
 @section('title', $exam->name)
 @section('content')
 
+
 @include('appl.exam.exam.xp_css')
 
 
+$sectiondetails
 <div class="dblue" >
   <div class="container">
     <div class="row">
