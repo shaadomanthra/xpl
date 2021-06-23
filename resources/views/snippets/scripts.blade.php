@@ -1793,7 +1793,7 @@ new Chart(ctxOne, optionsOne);
                 @if($sd['percent']<30)
                   'rgba(255, 99, 132, 0.8)',
                 @elseif($sd['percent']>=30 && $sd['percent']>=70)
-                    'rgba(255, 206, 86, 0.8)'
+                    'rgba(255, 206, 86, 0.8)',
                 @else
                 'rgba(75, 192, 192, 0.8)',
                 @endif
@@ -1805,7 +1805,7 @@ new Chart(ctxOne, optionsOne);
                 @if($sd['percent']<30)
                   'rgba(255, 99, 132, 0.8)',
                 @elseif($sd['percent']>=30 && $sd['percent']>=70)
-                    'rgba(255, 206, 86, 0.8)'
+                    'rgba(255, 206, 86, 0.8)',
                 @else
                 'rgba(75, 192, 192, 0.8)',
                 @endif
