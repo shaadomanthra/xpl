@@ -1778,6 +1778,7 @@ new Chart(ctxOne, optionsOne);
 @if(isset($sections))
 
 
+@if(isset($sectiondetails))
 @if($sectiondetails)
 <script type="text/javascript">
   var options_sections_container = {
@@ -1840,6 +1841,7 @@ new Chart(ctx_section_container,options_sections_container);
 }
 
 </script>
+@endif
 @endif
 
 @foreach($sections as $sec => $section)
