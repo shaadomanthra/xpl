@@ -897,6 +897,31 @@ $(document).ready(function(){
                 $('.qset').scrollTop(offset);
 
         }
+
+       $('.qsset').scrollTop(0);
+       setTimeout(function(){
+        console.log($('.pbox').offset().top);
+        console.log($('.qs'+$sno).offset());
+        console.log('qs'+$sno);
+          console.log($('.qs1').offset().top);
+          if($('.qs'+$sno).length){
+            var qsset = 160;
+            var qs = $('.qs'+$sno).offset().top;
+            console.log(qsset +' - '+ qs)
+            var offset =  qs - qsset-120;
+            console.log(offset);
+            if(offset!=0.75){
+              $('.qsset').scrollTop(offset);
+            }
+            
+          }
+
+       },50);
+        
+        
+        
+        
+
     }
 
     function make_visible($sno){

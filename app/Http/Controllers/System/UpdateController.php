@@ -167,9 +167,19 @@ class UpdateController extends Controller
     }
 
 
-    public function contact(){
-        if(!request()->get('name') || !request()->get('email') || !request()->get('phone') || !request()->get('message')){
+    public function contact(Request $request){
+
+        
+
+        if(!request()->get('name') || !request()->get('email') || !request()->get('phone') || !request()->get('message') || !request()->get('sum')){
             flash('Input fields cannot be empty !')->error();
+            return redirect()->back()->withInput();
+        }
+        $sum = intval(request()->get('sum'));
+
+        $num = [6,7,8];
+        if(!in_array($sum,$num)){
+            flash('Invalid sum result. Kindly retry !')->error();
             return redirect()->back()->withInput();
         }
         // $captcha = $_POST['g-recaptcha-response'];
@@ -192,6 +202,7 @@ class UpdateController extends Controller
             $contact['email'] = request()->email;
             $contact['name'] = request()->name;
             $contact['phone'] = request()->phone;
+            $contact['iama'] = request()->iama;
             $contact['subj'] = 'Message from '.$contact['name'];
             Mail::to(config('mail.report'))->send(new ContactMessage($contact));
             $contact['subj'] = 'Message from '.$contact['name'].' backup';

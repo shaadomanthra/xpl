@@ -199,6 +199,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::get('/exam/{test}/download', 'Exam\SectionController@download')
 			->name('test.download')->middleware('auth'); 
 
+	Route::resource('/exam/{test}/mail', 'Exam\ExamMailController')->middleware('auth'); 
+
 	Route::get('/campus/tests/{test}/{student}', 'College\CampusController@test_student')
 			->name('campus.tests.student.show')->middleware('auth');
 

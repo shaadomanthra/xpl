@@ -1324,6 +1324,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
                 else
                     $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-times-circle text-danger"></i> Fail ('+data.time+' ms)</p>';
 
+
                 $('.output_testcase_'+$qn+'_t'+$t).html($test1);
                 $('.out_'+$qn+'_'+$t).attr('value',jso);
 
@@ -1342,6 +1343,9 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
                     $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-check-circle text-success"></i> Pass ('+data.time+' ms)</p>';
                 else
                     $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-times-circle text-danger"></i> Fail ('+data.time+' ms)</p>';
+                 if($k==1)
+                  $test1 = $test1+'<p class="text-primary">Note that you are required to <b>submit the code</b> for each question to validate all testcases for fullmarks</p>';
+                
                   console.log("At output place - "+$t);
 
                 $('.output_testcase_'+$qn+'_t'+$t).html($test1);

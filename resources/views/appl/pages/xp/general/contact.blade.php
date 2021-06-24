@@ -41,6 +41,15 @@ src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJRVrg9V6RyzsRfJ3Qw
 
     <div class="col-lg-6">
     	@include('flash::message')
+
+      @if ($errors->any())
+          <div class="alert alert-danger">
+                  @foreach ($errors->all() as $error)
+                      {{ $error }}
+                  @endforeach
+            
+          </div>
+      @endif
       <div class="ml-lg-5">
         <!-- Form -->
         <form class="js-validate card shadow-lg mb-4" method="post" action="{{ route('contactform')}}">
@@ -83,6 +92,20 @@ src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJRVrg9V6RyzsRfJ3Qw
               <div class="col-sm-12">
                 <!-- Form Group -->
                 <div class="js-form-message form-group">
+                  <label for="emailAddressExample1" class="input-label">I am a</label>
+                  <select class="form-control" id="exampleFormControlSelect1" name="iama">
+                    <option value="student">Student</option>
+                    <option value="college">School/College Representative</option>
+                    <option value="hr-manager">HR Manager</option>
+                    <option value="business">Business</option>
+                  </select>
+                </div>
+                <!-- End Form Group -->
+              </div>
+
+              <div class="col-sm-12">
+                <!-- Form Group -->
+                <div class="js-form-message form-group">
                   <label for="message" class="input-label">Message</label>
                   <div class="input-group">
                     <textarea class="form-control" rows="4" name="message" id="message" placeholder="Hi there, I would like to ..." aria-label="Hi there, I would like to ..." required
@@ -91,6 +114,26 @@ src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJRVrg9V6RyzsRfJ3Qw
                 </div>
                 <!-- End Form Group -->
               </div>
+
+
+               <div class="col-sm-12">
+                <!-- Form Group -->
+                <div class="js-form-message form-group">
+                   <div class="captcha">
+
+                          <div class="h4 mb-2"> {{rand(4,5)}} + {{rand(2,3)}} = </div>
+
+
+                          </div>
+
+                          <input id="captcha" type="text" class="form-control" placeholder="Enter the summation" name="sum">
+
+                          
+
+                </div>
+                <!-- End Form Group -->
+              </div>
+
             </div>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <button type="submit" class="btn btn-block  transition-3d-hover" style="background-color: #e24d4b; color: #fff;">Submit</button>
