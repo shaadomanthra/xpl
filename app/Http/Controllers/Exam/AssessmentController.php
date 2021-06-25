@@ -2289,7 +2289,26 @@ class AssessmentController extends Controller
                         $item['accuracy'] =1;
                 }else{
 
-                    if(strpos($item['answer'],'/')!==false){
+                    $itemanswer = strtolower($item['answer']);
+                    if(strpos($itemanswer,'or')!==false){
+                        $an = str_replace(' ', '', $itemanswer);
+                        $rp = str_replace(' ', '', $item['response']);
+
+                        if(trim($an)==trim($rp)){
+                            $item['accuracy'] =1;
+                        }else{
+                            $ans = explode('or',$itemanswer);
+                            $flag = false;
+                            $item['accuracy'] =0;
+                            foreach($ans as $an){
+                                $an = str_replace(' ', '', $an);
+                                if($an==trim(str_replace(' ','',$item['response'])))
+                                    $item['accuracy'] =1;
+                            }
+
+                        }
+                    }
+                    else if(strpos($item['answer'],'/')!==false){
                         $an = str_replace(' ', '', $item['answer']);
                         $rp = str_replace(' ', '', $item['response']);
 

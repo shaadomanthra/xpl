@@ -203,9 +203,9 @@ class UpdateController extends Controller
             $contact['name'] = request()->name;
             $contact['phone'] = request()->phone;
             $contact['iama'] = request()->iama;
-            $contact['subj'] = 'Message from '.$contact['name'];
+            $contact['subj'] = 'Message from '.$contact['name'].' (' .$contact['iama'].')';
             Mail::to(config('mail.report'))->send(new ContactMessage($contact));
-            $contact['subj'] = 'Message from '.$contact['name'].' backup';
+            $contact['subj'] = 'Message from '.$contact['name'].' ('.$contact['iama'].') backup';
             Mail::to(config('mail.report_backup'))->send(new ContactMessage($contact));
 
             

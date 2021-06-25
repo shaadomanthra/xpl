@@ -11,71 +11,42 @@
 
 @include('flash::message')
 
-  <div class="row">
-
-    <div class="col-md-12">
-      <div class="card bg-light mb-3">
+ <div class="card bg-light mb-3">
         <div class="card-body text-secondary">
           <p class="h2 mb-0"><i class="fa fa-th "></i> {{ $obj->name }} 
 
           @can('update',$obj)
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route($app->module.'.edit',$obj->id) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-             
+              <a href="{{route('mail.show',$obj->id)}}?sendmail=1" class="btn btn-outline-secondary"  >
+                <i class="fa fa-paper-plane"></i> Queue 
+              </a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
             @endcan
           </p>
         </div>
       </div>
+  <div class="row">
+
+    <div class="col-12 col-md-8">
+     
 
      
       <div class="card mb-4">
         <div class="card-body">
-
-
-          <div class="row mb-2">
-            <div class="col-md-4">Mails Queued</div>
-            @if(isset($logs[0]))
-            <div class="col-md-8">{{ (count($logs[0]))}} / {{count($emails)}}</div>
-            @else
-            <div class="col-md-8"> 0 </div>
-            @endif
-          </div>
-           
-
-           <div class="row mb-2">
-            <div class="col-md-4">Mails Sent</div>
-            @if(isset($logs[1]))
-            <div class="col-md-8">{{ (count($logs[1]))}} / {{count($emails)}}</div>
-            @else
-            <div class="col-md-8"> 0 </div>
-            @endif
-          </div>
-
-           <div class="row mb-2">
-            <div class="col-md-4">Mails Delivered</div>
-            @if(isset($logs[2]))
-            <div class="col-md-8">{{ (count($logs[2]))}}</div>
-            @else
-            <div class="col-md-8"> 0 </div>
-            @endif
-          </div>
-
+          <div class=""><b>Subject:</b> {{$obj->subject}}</div>
           <hr>
-          @foreach($obj->getAttributes() as $key=>$item)
-          <div class="row mb-2">
-            <div class="col-md-4">{{ $key }}</div>
-            <div class="col-md-8">{!! $item !!}</div>
-          </div>
-          @endforeach
-          
-          @if(!isset($logs[1]))
-          <div class="row mb-2">
-            <div class="col-md-4"> </div>
-            <div class="col-md-8"><a href="{{route('mail.show',$obj->id)}}?sendmail=1" class="btn btn-outline-secondary my-4"  >Queue Email Now</a></div>
-          </div>
-          @endif
+          <p>Hi <b>@if(isset($user['name'])){{$user['name']}} @else Candidate @endif</b>,</p>
+                        <p>Greetings!</p>
+          {!!$obj->message !!}
+
+            <p>regards,<br>Xplore Team </p><br>
+                       
+                        <p >Join our Telegram group <a href="https://bit.ly/xplorejobstelegram">Xplore Jobs</a> for latest updates on job openings</p>
+         
+
+         
 
           
 
@@ -84,6 +55,60 @@
 
     </div>
 
+    <div class="col-12 col-md-4">
+      <div class="card mt-4 mt-md-0">
+        <div class="card-body">
+          <h3>Status</h3>
+          <hr>
+           <div class="row mb-2">
+            <div class="col-6">Queued</div>
+            @if(isset($logs[0]))
+            <div class="col-6">{{ (count($logs[0]))}} / {{count($emails)}}</div>
+            @else
+            <div class="col-6"> 0 </div>
+            @endif
+          </div>
+           
+
+           <div class="row mb-2">
+            <div class="col-6">Sent</div>
+            @if(isset($logs[1]))
+            <div class="col-6">{{ (count($logs[1]) + count($logs[2]))}} / {{count($emails)}}</div>
+            @else
+            <div class="col-6"> 0 </div>
+            @endif
+          </div>
+
+           <div class="row mb-2">
+            <div class="col-6">Delivered</div>
+            @if(isset($logs[2]))
+            <div class="col-6">{{ (count($logs[2]))}}</div>
+            @else
+            <div class="col-6"> 0 </div>
+            @endif
+          </div>
+
+          <div class="row mb-2">
+            <div class="col-6">Failed</div>
+            @if(isset($logs[1]))
+            <div class="col-6">{{ (count($logs[1] - count($logs[2])))}}</div>
+            @else
+            <div class="col-6"> 0 </div>
+            @endif
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header" ><h1>Emails ({{count($emails)}})</h1></div>
+        <div class="card-body" style="height:300px;text;overflow: scroll;">
+          @foreach($emails as $e)
+          {{$e}}<br>
+            @endforeach
+          
+        </div>
+      </div>
+    </div>
      
 
   </div> 

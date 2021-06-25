@@ -206,7 +206,7 @@ class MailController extends Controller
      */
     public function show($id)
     {
-        $obj = Obj::where('id',$id)->with('maillog')->first();
+        $obj = Obj::where('id',$id)->first();
         $this->authorize('view', $obj);
 
         if(request()->get('sendmail')){
@@ -232,7 +232,6 @@ class MailController extends Controller
             $emails = array_unique(explode(',',$emails));
 
         }
-       
 
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
