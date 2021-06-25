@@ -18,9 +18,11 @@
           @can('update',$obj)
             <span class="btn-group float-right" role="group" aria-label="Basic example">
               <a href="{{ route($app->module.'.edit',$obj->id) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+              @if(count($logs[2])==0 && count($logs[1])==0)
               <a href="{{route('mail.show',$obj->id)}}?sendmail=1" class="btn btn-outline-secondary"  >
                 <i class="fa fa-paper-plane"></i> Queue 
               </a>
+              @endif
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
             </span>
             @endcan
