@@ -614,7 +614,7 @@ class AssessmentController extends Controller
             }
 
 
-            $k=0;
+            $k=0;$g=0;
             foreach($qset as $e=>$q){
 
                 if($data['qid']){
@@ -791,8 +791,8 @@ class AssessmentController extends Controller
                 $dynamic[$i] = $q->dynamic;
                 else
                     $dynamic[$i] =1;
-                $section_questions[$section->id][$k]= $q;
-                $i++;$k++;
+                $section_questions[$section->id][$g]= $q;
+                $i++;$k++;$g++;
                 if($q->type=='code' || $q->type=='csq'){
                     $code_ques[$i]=1;
                     //$window_change = false;
