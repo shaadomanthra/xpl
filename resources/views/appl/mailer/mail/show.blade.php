@@ -93,12 +93,30 @@
       </div>
 
       <div class="card mt-4">
-        <div class="card-header" ><h1>Emails ({{count($emails)}})</h1></div>
-        <div class="card-body" style="height:300px;text;overflow: scroll;">
+        <div class="card-header" ><h1 class="mb-0">All Emails ({{count($emails)}})</h1></div>
+        <div class="card-body" style="height:200px;text;overflow: scroll;">
           @foreach($emails as $e)
-            
-            {{$e}} @if(!in_array($e,$failed))<i class="fa fa-check-circle text-success"></i>
-            @endif <br>  
+            {{$e}} <br>  
+          @endforeach
+          
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header" ><h1 class="mb-0">Processing ({{count($failed)}})</h1></div>
+        <div class="card-body" style="height:200px;text;overflow: scroll;">
+          @foreach($failed as $e)
+            {{$e}} <br>  
+          @endforeach
+          
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header" ><h1 class="mb-0">Delivered ({{count($success)}})</h1></div>
+        <div class="card-body" style="height:200px;text;overflow: scroll;">
+          @foreach($success as $e)
+            {{$e}} <br>  
           @endforeach
           
         </div>
