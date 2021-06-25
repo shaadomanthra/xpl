@@ -237,11 +237,18 @@ class MailController extends Controller
             if(!isset($logs[$k]))
                 $logs[$k] = [];
         }
+
+        $failed = [];
+        foreach($logs[1] as $e){
+            array_push($failed,$e->email);
+        }
+
        
 
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
                     ->with('emails',$emails)
+                    ->with('failed',$failed)
                     ->with('obj',$obj)->with('logs',$logs)->with('app',$this);
         else
             abort(404);

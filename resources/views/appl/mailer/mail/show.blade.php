@@ -88,14 +88,7 @@
             @endif
           </div>
 
-          <div class="row mb-2">
-            <div class="col-6">Failed</div>
-            @if(isset($logs[1]))
-            <div class="col-6">{{ (count($logs[1]) - count($logs[2]))}}</div>
-            @else
-            <div class="col-6"> 0 </div>
-            @endif
-          </div>
+          
         </div>
       </div>
 
@@ -103,8 +96,10 @@
         <div class="card-header" ><h1>Emails ({{count($emails)}})</h1></div>
         <div class="card-body" style="height:300px;text;overflow: scroll;">
           @foreach($emails as $e)
-          {{$e}}<br>
-            @endforeach
+            
+            {{$e}} @if(!in_array($e,$failed))<i class="fa fa-check-circle text-success"></i>
+            @endif <br>  
+          @endforeach
           
         </div>
       </div>
