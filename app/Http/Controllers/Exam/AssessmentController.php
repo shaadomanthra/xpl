@@ -4355,6 +4355,8 @@ class AssessmentController extends Controller
         if($secs)
         foreach($secs as $sd=>$id){
                
+             if($id[0]->max==0)
+                $id[0]->max = 1;
               $sectiondetails[$id[0]->section_id]['percent'] = round($id[0]->score/$id[0]->max*100,2);
               $sectiondetails[$id[0]->section_id]['id'] = $id[0]->section_id;
               $sectiondetails[$id[0]->section_id]['max'] = $id[0]->max;
