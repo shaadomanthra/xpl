@@ -91,7 +91,7 @@
           <div class="row mb-2">
             <div class="col-6">Failed</div>
             @if(isset($logs[1]))
-            <div class="col-6">{{ (count($logs[1] - count($logs[2])))}}</div>
+            <div class="col-6">{{ (count($logs[1]) - count($logs[2]))}}</div>
             @else
             <div class="col-6"> 0 </div>
             @endif

@@ -233,6 +233,12 @@ class MailController extends Controller
 
         }
 
+        foreach([0,1,2] as $k){
+            if(!isset($logs[$k]))
+                $logs[$k] = [];
+        }
+       
+
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
                     ->with('emails',$emails)
