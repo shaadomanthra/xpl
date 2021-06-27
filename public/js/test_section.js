@@ -1396,8 +1396,30 @@ $(document).ready(function(){
           resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
 
 
-          if($('.code_'+$sno).length)
-            resp.code = $('.code_'+$sno).val();
+          if($('.code_'+$sno).length){
+            resp.code = $('.codefragment_'+$qno).val();
+            console.log($qno+' - '+resp.code);
+            resp.out = $('.out_'+$qno).val();
+            console.log('out - '+resp.out);
+            resp.out_1 = $('.out_'+$qno+'_1').val();
+            resp.out_2 = $('.out_'+$qno+'_2').val();
+            resp.out_3 = $('.out_'+$qno+'_3').val();
+            resp.out_4 = $('.out_'+$qno+'_4').val();
+            resp.out_5 = $('.out_'+$qno+'_5').val();
+
+            if($('.preset_c_'+$qno).length){
+              resp.preset_c = $('.preset_c_'+$qno).data('code');
+              resp.preset_cpp = $('.preset_cpp_'+$qno).data('code');
+              resp.preset_csharp = $('.preset_csharp_'+$qno).data('code');
+              resp.preset_java = $('.preset_java_'+$qno).data('code');
+              resp.preset_python = $('.preset_python_'+$qno).data('code');
+              resp.preset_javascript = $('.preset_javascript_'+$qno).data('code');
+
+            }
+            if($('.lang_'+$qno).length)
+              resp.lang = $('.lang_'+$qno).find(":selected").text();
+           
+          }
           if($('.input_'+$qno).is(':checkbox')){
               var ans =[]
               $.each($(".input_"+$qno+":checked"), function(){
