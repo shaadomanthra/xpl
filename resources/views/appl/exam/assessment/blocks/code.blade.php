@@ -31,9 +31,14 @@
   @endif
 @else
 
-<div class="p-3 mt-4" style="background: #eee">Language : <span class="badge badge-warning {{$lang = 'preset_'.$question->b}}">{{$question->b}}</span> <a href="#" class="ml-3 btn  btn-outline-primary btn-sm" data-toggle="modal" data-target="#io_code">I/O Instructions</a></div>
+<div class="p-3 mt-4" style="background: #eee">Language : <span class="badge badge-warning {{$lang = $question->b}}">{{$question->b}}</span>
+<select class="w-25 lang lang_{{($i+1)}} d-none" id="inputGroupSelect01_{{($i+1)}}" data-qno="{{($i+1)}}">
 
-<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}"  rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}} @elseif(isset($question->d->$lang)){{$question->d->$lang}} @else //Note: The testcase inputs are taken from command line arguments
+    <option value="{{$lang}}" class="{{$preset = 'preset_'.$lang}} {{'preset_'.$lang}}_{{($i+1)}}" data-code="@if(isset($question->d->$preset)){{$question->d->$preset}} @elseif(isset($question->$preset)){{$question->$preset}} @endif" data-qno="{{($i+1)}}" @if(isset($question->lang))@if($question->lang==$lang) selected data-dlang="{{$dlang=$lang}}"@endif @endif>{{$lang}}</option>
+  </select>
+ <a href="#" class="ml-3 btn  btn-outline-primary btn-sm" data-toggle="modal" data-target="#io_code">I/O Instructions</a></div>
+
+<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}" data-dalang="{{$lang = 'preset_'.$question->b}}" rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}} @elseif(isset($question->d->$lang)){{$question->d->$lang}} @else //Note: The testcase inputs are taken from command line arguments
 // click on the I/O instructions button to learn about the language specific input options
 // The output string has to exactly match with the execpted output @endif @endif</textarea>
 
@@ -70,31 +75,31 @@
 </div>
 
 <div class="output_testcase_{{($i+1)}}">
-      <div class="output_testcase_{{($i+1)}}_t1 {{$out='out_1'}}">
+      <div class="output_testcase_{{($i+1)}}_t1 " data-nh="{{$out='out_1'}}" >
         @if(isset($question->$out)) @if($question->$out)
         <p class="mb-2"><span class=" {{$t = 1}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
         <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{ round($time,2) }} ms </p>
         @endif @endif
       </div>
-      <div class="output_testcase_{{($i+1)}}_t2 {{$out='out_2'}}">
+      <div class="output_testcase_{{($i+1)}}_t2 " data-nh="{{$out='out_2'}}" >
         @if(isset($question->$out))@if($question->$out)
         <p class="mb-2"><span class=" {{$t = 2}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
         <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{round($time,2)}} ms</p>
         @endif @endif
       </div>
-      <div class="output_testcase_{{($i+1)}}_t3 {{$out='out_3'}}">
+      <div class="output_testcase_{{($i+1)}}_t3 " data-nh="{{$out='out_3'}}" >
         @if(isset($question->$out))@if($question->$out)
         <p class="mb-2"><span class=" {{$t = 3}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
         <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{round($time,2)}} ms</p>
         @endif @endif
       </div>
-      <div class="output_testcase_{{($i+1)}}_t4 {{$out='out_4'}}">
+      <div class="output_testcase_{{($i+1)}}_t4 " data-nh="{{$out='out_4'}}" >
         @if(isset($question->$out))@if($question->$out)
         <p class="mb-2"><span class=" {{$t = 4}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
         <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{round($time,2)}} ms</p>
         @endif @endif
       </div>
-      <div class="output_testcase_{{($i+1)}}_t5 {{$out='out_5'}}">
+      <div class="output_testcase_{{($i+1)}}_t5 " data-nh="{{$out='out_5'}}" >
         @if(isset($question->$out))@if($question->$out)
         <span class=" {{$t = 5}} {{$time = json_decode($question->$out,true)['response']['time']}} {{$pass=intval(json_decode($question->$out,true)['pass'])}}"></span>
         <b>Testcase {{$t}}:</b> @if($pass)<i class="fa fa-check-circle text-success"></i> Pass @else <i class="fa fa-times-circle text-danger"></i> Fail @endif {{round($time,2)}} ms
@@ -104,7 +109,7 @@
 <input class="form-control w-50 input input_{{($i+1)}}" type="hidden"  name="{{($i+1)}}" data-sno="{{($i+1)}}" value="@if($question->response){{$question->response}}@endif" >
 <input class="form-control w-50 out out_{{($i+1)}}" type="hidden"  name="out_{{($i+1)}}" data-sno="{{($i+1)}}" value="@if(isset($question->out))@if($question->out){{$question->out}} @endif @endif" >
 @for($k=1;$k<6;$k++)
-<input class="form-control w-50 out out_{{($i+1)}}_{{$k}} {{$out='out_'.$k}}" type="hidden"  name="out_{{($i+1)}}_{{$k}}" data-sno="{{($i+1)}}" value="@if(isset($question->$out))@if($question->$out){{$question->$out}} @endif @endif" >
+<input class="form-control w-50 out out_{{($i+1)}}_{{$k}} " type="hidden"  data-nh="{{$out='out_'.$k}}" name="out_{{($i+1)}}_{{$k}}" data-sno="{{($i+1)}}" value="@if(isset($question->$out))@if($question->$out){{$question->$out}} @endif @endif" >
 @endfor
 <input class="form-control w-50 codefragment_{{($i+1)}}" type="hidden"  name="codefragment_{{($i+1)}}" data-sno="{{($i+1)}}" value="@if($question->code){{$question->code}}@endif" >
 @else

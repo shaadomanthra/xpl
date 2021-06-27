@@ -1239,7 +1239,6 @@ $(document).ready(function() {
    $('body').on('click','.runcode2',function(){
       $qn = $qno = $(this).data('qno');
       $lang = $(this).data('lang');
-      console.log($lang);
       $name = $(this).data('name');
       $test = $(this).data('test');
       $qslug = $(this).data('qslug');
@@ -1280,7 +1279,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
           url : $url+'?time='+ new Date().getTime(),
           cache: false,
           data:{'code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug},
-          timeout: 12000, 
+          timeout: 8000, 
           success:function(data){
             $('.runcode_'+$qn).removeClass('disabled');
             console.log('qn'+$qn);
@@ -1288,7 +1287,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
             var jso = data;
             dat = JSON.parse(data);
 
-            console.log(dat);
+            console.log(jso);
 
                         
             if($k==1){
@@ -1305,6 +1304,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
 
                 $('.input_'+$qn).attr('value',data.stdout);
                 $('.out_'+$qn).attr('value',jso);
+
                 $('.out_'+$qn+'_'+$t).attr('value',jso);
 
                 
@@ -1342,6 +1342,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
                 
                 
                 $('.out_'+$qn+'_'+$t).attr('value',jso);
+                console.log('.out_'+$qn+'_'+$t);
 
                  if(dat.pass == "1")
                     $test1 = '<p class="mb-2"><b>Testcase '+$t+':</b> <i class="fa fa-check-circle text-success"></i> Pass ('+data.time+' ms)</p>';
@@ -1369,9 +1370,9 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
             $('.loading_'+$qn).hide();
           },
           error: function(jqXHR, textStatus, errorThrown) {
-             $('.runcode_'+$qno).removeClass('disabled');
+             $('.runcode_'+$qn).removeClass('disabled');
               if(textStatus==="timeout") {  
-                $('.output_'+$qn).html("Invalid Code - ERT103 - Retry. (Testcase-"+$qn+")");
+                $('.output_'+$qn).html("Timeout - Code execution timelimit crossed. Retry.");
               } else {
                 $('.output_'+$qn).html("Invalid Code - ERX104 - Retry. (Testcase-"+$qn+")");
               }
@@ -1524,8 +1525,6 @@ function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
       $url= $(this).data('url');
       $stop= $(this).data('stop');
 
-      console.log($qn);
-      
 
       var editor_ = editor_array[$name];
 
@@ -1597,96 +1596,96 @@ function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
   
 
 
-  $('.btn-run').on('click',function(){
-      $token = $(this).data('token');
-      $url= $(this).data('url');
-      var code = editor.getValue();
-      var random = Math.random().toString(36).substring(7);
-      $('.loading').show();
-      $('.codeerror').hide();
+  // $('.btn-run').on('click',function(){
+  //     $token = $(this).data('token');
+  //     $url= $(this).data('url');
+  //     var code = editor.getValue();
+  //     var random = Math.random().toString(36).substring(7);
+  //     $('.loading').show();
+  //     $('.codeerror').hide();
       
-        $.ajax({
-          type : 'post',
-          url : $url,
-          data:{'testcase':'1','code':code,'_token':$token,'name':random+'_1'},
-          success:function(data){
-            console.log(data);
-            if($('.output').length){
-              $('.output').append('<p>'+data+'</p>');
-            }
+  //       $.ajax({
+  //         type : 'post',
+  //         url : $url,
+  //         data:{'testcase':'1','code':code,'_token':$token,'name':random+'_1'},
+  //         success:function(data){
+  //           console.log(data);
+  //           if($('.output').length){
+  //             $('.output').append('<p>'+data+'</p>');
+  //           }
 
-            data = JSON.parse(data);
+  //           data = JSON.parse(data);
             
-            if(data.stderr){
-              $('.codeerror').show();
-              $('.codeerror').html("<pre><code class='text-light' >"+data.stderr+"</code></pre>");
-              $('.in1').html('-');
-              $('.in1-message').html('<span class="badge badge-danger">failure</span>');
-            }else{
-              if(data.success==1){
-                $('.in1').html(data.stdout);
-                $('.in1-message').html('<span class="badge badge-success">success</span>');
-              }else{
-                $('.in1').html(data.stdout);
-                $('.in1-message').html('<span class="badge badge-danger">failure</span>');
-              }
+  //           if(data.stderr){
+  //             $('.codeerror').show();
+  //             $('.codeerror').html("<pre><code class='text-light' >"+data.stderr+"</code></pre>");
+  //             $('.in1').html('-');
+  //             $('.in1-message').html('<span class="badge badge-danger">failure</span>');
+  //           }else{
+  //             if(data.success==1){
+  //               $('.in1').html(data.stdout);
+  //               $('.in1-message').html('<span class="badge badge-success">success</span>');
+  //             }else{
+  //               $('.in1').html(data.stdout);
+  //               $('.in1-message').html('<span class="badge badge-danger">failure</span>');
+  //             }
               
-            }
+  //           }
 
 
             
-          }
-        });
-        $.ajax({
-          type : 'post',
-           url : $url,
-          data:{'testcase':'2','code':code,'_token':$token,'name':random+'_2'},
-          success:function(data){
-            console.log(data);
+  //         }
+  //       });
+  //       $.ajax({
+  //         type : 'post',
+  //          url : $url,
+  //         data:{'testcase':'2','code':code,'_token':$token,'name':random+'_2'},
+  //         success:function(data){
+  //           console.log(data);
 
-            if($('.output').length){
-              $('.output').append('<p>'+data+'</p>');
-            }
-            data = JSON.parse(data);
-            if(data.stderr){
-              $('.in2').html('-');
-              $('.in2-message').html('<span class="badge badge-danger">failure</span>');
-            }else{
-              if(data.success==1){
-                $('.in2-message').html('<span class="badge badge-success">success</span>');
-              }else{
-                $('.in2-message').html('<span class="badge badge-danger">failure</span>');
-              }
-            }
-          }
-        });
-        $.ajax({
-          type : 'post',
-           url : $url,
-          data:{'testcase':3,'code':code,'_token':$token,'name':random+'_3'},
-          success:function(data){
-            console.log(data);
-            if($('.output').length){
-              $('.output').append('<p>'+data+'</p>');
-            }
-            data = JSON.parse(data);
-            if(data.stderr){
-              $('.in3').html('-');
-              $('.in3-message').html('<span class="badge badge-danger">failure</span>');
-              $('.loading').hide();
-            }else{
-              if(data.success==1){
-                $('.in3-message').html('<span class="badge badge-success">success</span>');
-              }else{
-                $('.in3-message').html('<span class="badge badge-danger">failure</span>');
-              }
-              $('.loading').hide();
-            }
-          }
-        });
+  //           if($('.output').length){
+  //             $('.output').append('<p>'+data+'</p>');
+  //           }
+  //           data = JSON.parse(data);
+  //           if(data.stderr){
+  //             $('.in2').html('-');
+  //             $('.in2-message').html('<span class="badge badge-danger">failure</span>');
+  //           }else{
+  //             if(data.success==1){
+  //               $('.in2-message').html('<span class="badge badge-success">success</span>');
+  //             }else{
+  //               $('.in2-message').html('<span class="badge badge-danger">failure</span>');
+  //             }
+  //           }
+  //         }
+  //       });
+  //       $.ajax({
+  //         type : 'post',
+  //          url : $url,
+  //         data:{'testcase':3,'code':code,'_token':$token,'name':random+'_3'},
+  //         success:function(data){
+  //           console.log(data);
+  //           if($('.output').length){
+  //             $('.output').append('<p>'+data+'</p>');
+  //           }
+  //           data = JSON.parse(data);
+  //           if(data.stderr){
+  //             $('.in3').html('-');
+  //             $('.in3-message').html('<span class="badge badge-danger">failure</span>');
+  //             $('.loading').hide();
+  //           }else{
+  //             if(data.success==1){
+  //               $('.in3-message').html('<span class="badge badge-success">success</span>');
+  //             }else{
+  //               $('.in3-message').html('<span class="badge badge-danger">failure</span>');
+  //             }
+  //             $('.loading').hide();
+  //           }
+  //         }
+  //       });
       
 
-    });  
+  //   });  
 });
 </script>
 @endif
@@ -2875,6 +2874,7 @@ $(function(){
         responses.user_id =  $('input[name=user_id]').val();
         responses.token =  $('input[name=_token]').val();
         responses.code =  $('input[name=code]').val();
+        responses.old ="olds";
         responses.admin =  $('input[name=admin]').val();
         responses.window_change =  $('input[name=window_change]').val();
         responses.username = $('#photo').data('username');
@@ -2889,6 +2889,8 @@ $(function(){
 
         responses.uname = $('#photo').data('uname');
         responses.qno = $sno;
+        
+        responses.qid = $('.s'+$sno).data('qno');
         responses.last_photo = $('#photo').data('last_photo');
         if($('#video').length)
         responses.c = parseInt($('#video').data('c'));
@@ -2907,8 +2909,30 @@ $(function(){
           resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
 
 
-          if($('.code_'+$sno).length)
-            resp.code = $('.code_'+$sno).val();
+          if($('.code_'+$sno).length){
+            resp.code = $('.codefragment_'+$qno).val();
+            console.log($qno+' - '+resp.code);
+            resp.out = $('.out_'+$qno).val();
+            console.log('out - '+resp.out);
+            resp.out_1 = $('.out_'+$qno+'_1').val();
+            resp.out_2 = $('.out_'+$qno+'_2').val();
+            resp.out_3 = $('.out_'+$qno+'_3').val();
+            resp.out_4 = $('.out_'+$qno+'_4').val();
+            resp.out_5 = $('.out_'+$qno+'_5').val();
+
+            if($('.preset_c_'+$qno).length){
+              resp.preset_c = $('.preset_c_'+$qno).data('code');
+              resp.preset_cpp = $('.preset_cpp_'+$qno).data('code');
+              resp.preset_csharp = $('.preset_csharp_'+$qno).data('code');
+              resp.preset_java = $('.preset_java_'+$qno).data('code');
+              resp.preset_python = $('.preset_python_'+$qno).data('code');
+              resp.preset_javascript = $('.preset_javascript_'+$qno).data('code');
+
+            }
+            if($('.lang_'+$qno).length)
+              resp.lang = $('.lang_'+$qno).find(":selected").text();
+           
+          }
           if($('.input_'+$qno).is(':checkbox')){
               var ans =[]
               $.each($(".input_"+$qno+":checked"), function(){

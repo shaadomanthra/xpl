@@ -499,8 +499,7 @@ class AssessmentController extends Controller
 
         }
 
-
-
+        //dd($json);
 
         if($request->get('dump')){
             dd($json);
@@ -517,6 +516,8 @@ class AssessmentController extends Controller
             $images = [];
             Storage::disk('s3')->put('urq/'.$jsonname.'.json',json_encode($images),'public');
         }
+
+
 
         $window_change = true;
 
@@ -753,6 +754,7 @@ class AssessmentController extends Controller
                     if(isset($keys))
                     if(is_array($keys[$q->id])){
 
+                        //dd($keys[$q->id]);
                         if(isset($keys[$q->id]['lang'])){
                             $q->lang = $keys[$q->id]['lang'];
                             $q->out = isset($keys[$q->id]['out'])?$keys[$q->id]['out']:'';
@@ -762,14 +764,25 @@ class AssessmentController extends Controller
                             $q->out_4 = isset($keys[$q->id]['out_4'])?$keys[$q->id]['out_4']:'';
                             $q->out_5 = isset($keys[$q->id]['out_5'])?$keys[$q->id]['out_5']:'';
 
-                            $q->preset_c= $keys[$q->id]['preset_c'];
+                            if(isset($keys[$q->id]['preset_c']))
+                             $q->preset_c= $keys[$q->id]['preset_c'];
+
+                            if(isset($keys[$q->id]['preset_cpp']))
                             $q->preset_cpp= $keys[$q->id]['preset_cpp'];
+
+                            if(isset($keys[$q->id]['preset_csharp']))
                             $q->preset_csharp= $keys[$q->id]['preset_csharp'];
+
+                            if(isset($keys[$q->id]['preset_java']))
                             $q->preset_java= $keys[$q->id]['preset_java'];
+
+                            if(isset($keys[$q->id]['preset_javascript']))
                             $q->preset_javascript= $keys[$q->id]['preset_javascript'];
+
+                            if(isset($keys[$q->id]['preset_python']))
                             $q->preset_python= $keys[$q->id]['preset_python']; 
                         }
-                            
+                            //dd($q);
                             
                     }else{
                             
@@ -781,6 +794,7 @@ class AssessmentController extends Controller
                     $id = $q->id;
                 }
                 $questions[$i] = $q;
+                //dd($questions);
                 $ques[$i] = $ques;
                 if(isset($q->passage))
                 $passages[$i] = $q->passage;
@@ -2186,6 +2200,7 @@ class AssessmentController extends Controller
         $filepath = $this->cache_path.$filename;
 
 
+
         if(!$exam)
         if(file_exists($filepath))
         {
@@ -2362,22 +2377,35 @@ class AssessmentController extends Controller
                 if(isset(json_decode($request->get('out_'.$i),true)['response_1']['error'])){
                    $item['comment'] = $request->get('out_'.$i);     
                 }else{
-                    for($m=1;$m<6;$m++){
-                        $mjson = json_decode($request->get('out_'.$i.'_'.$m),true);
+                    if(!$request->get('out_'.$i.'_2') && $request->get('out_'.$i.'_1'))
+                    {
+                        $mjson = json_decode($request->get('out_'.$i.'_1'),true);
+
                         if($mjson){
-                            $mdata['response_'.$m] = $mjson['response']; 
-                            $mdata['pass_'.$m] = $mjson['pass']; 
+                            $mdata['response_1'] = $mjson['response']; 
+                            $mdata['pass_1'] = $mjson['pass']; 
                         }else{
                             $mdata = null;
                         }
-                        
+                    }else{
+                        for($m=1;$m<6;$m++){
+                            $mjson = json_decode($request->get('out_'.$i.'_'.$m),true);
+
+                            if($mjson){
+                                $mdata['response_'.$m] = $mjson['response']; 
+                                $mdata['pass_'.$m] = $mjson['pass']; 
+                            }else{
+                                $mdata = null;
+                            }
+                        }
+
                     }
+                   
 
                     $item['comment'] = json_encode($mdata);
                 }
                 
-
-
+                
 
                 if(trim($item['code'])){
                     $testcases = json_decode($item['comment'],true);
@@ -2454,6 +2482,7 @@ class AssessmentController extends Controller
 
 
         }
+        //dd($d);
 
 
         if(!$request->get('admin')){
@@ -2492,17 +2521,17 @@ class AssessmentController extends Controller
 
             if($item['accuracy']){
                 $sec[$item['section_id']]['correct']++;
-                $sec[$item['section_id']]['score'] = intval($sec[$item['section_id']]['score']) + intval($item['mark']);
+                $sec[$item['section_id']]['score'] = floatval($sec[$item['section_id']]['score']) + floatval($item['mark']);
 
                 if($typing_accuracy)
                     $sec[$item['section_id']]['score'] = $typing_accuracy;
             }
             else if($item['response'] && $item['accuracy']==0){
                 $sec[$item['section_id']]['incorrect']++;
-                $sec[$item['section_id']]['score'] = intval($sec[$item['section_id']]['score']) + intval($item['mark']);
+                $sec[$item['section_id']]['score'] = floatval($sec[$item['section_id']]['score']) + floatval($item['mark']);
             }
 
-            $sec[$item['section_id']]['time'] = intval($sec[$item['section_id']]['time']) + intval($item['time']);
+            $sec[$item['section_id']]['time'] = floatval($sec[$item['section_id']]['time']) + floatval($item['time']);
 
             $sec[$item['section_id']]['max'] = $sections_max[$item['section_id']];
 

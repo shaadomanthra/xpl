@@ -1039,13 +1039,14 @@ $(document).ready(function(){
 
 
         $url = $('.ques_count').data('url');
-        $qno = 1;
+        $qno = parseInt("1");
         var responses = {};
         number =1;
 
         responses.test_id =  $('input[name=test_id]').val();
         responses.user_id =  $('input[name=user_id]').val();
         responses.token =  $('input[name=_token]').val();
+        responses.new =  "news";
         responses.code =  $('input[name=code]').val();
         responses.admin =  $('input[name=admin]').val();
         responses.window_change =  $('input[name=window_change]').val();
@@ -1072,6 +1073,7 @@ $(document).ready(function(){
         responses.completed = 0;
 
 
+        console.log('qno - '+$qno);
         var r = [];
         while (number <= $ques_count) {
           var resp = {};
@@ -1083,8 +1085,9 @@ $(document).ready(function(){
 
           if($('.code_'+$sno).length){
             resp.code = $('.codefragment_'+$qno).val();
+            console.log($qno+' - '+resp.code);
             resp.out = $('.out_'+$qno).val();
-            
+            console.log('out - '+resp.out);
             resp.out_1 = $('.out_'+$qno+'_1').val();
             resp.out_2 = $('.out_'+$qno+'_2').val();
             resp.out_3 = $('.out_'+$qno+'_3').val();
@@ -1148,7 +1151,7 @@ $(document).ready(function(){
 
     function aws_cache($data){
       var $url = $('.url_testlog').data('url');
-      //console.log($url);
+      console.log($url);
 
       $.ajax({
               method: "PUT",
@@ -1163,100 +1166,122 @@ $(document).ready(function(){
     }
 
 
-    function saveLive($sno=null,$live=null){
+    // function saveLive($sno=null,$live=null){
 
-        if(!$('.ques_count').data('save'))
-          return 1;
-
-
-        if(!$sno)
-          $sno = $('.active').data('sno');
-
-        $ques_count = $('.ques_count').data('count');
+    //     if(!$('.ques_count').data('save'))
+    //       return 1;
 
 
-        $url = $('.ques_count').data('url');
-        $qno = 1;
-        var responses = {};
-        number =1;
+    //     if(!$sno)
+    //       $sno = $('.active').data('sno');
 
-        responses.test_id =  $('input[name=test_id]').val();
-        responses.user_id =  $('input[name=user_id]').val();
-        responses.token =  $('input[name=_token]').val();
-        responses.code =  $('input[name=code]').val();
-        responses.admin =  $('input[name=admin]').val();
-        responses.window_change =  $('input[name=window_change]').val();
-        responses.username = $('#photo').data('username');
-
-        if($('.os_details').length){
-          responses.os_details = $('.os_details').html();
-          responses.browser_details = $('.browser_details').html();
-          responses.js_details = $('.js_details').html();
-          responses.ip_details = $('.ip_details').html();
-        }
+    //     $ques_count = $('.ques_count').data('count');
 
 
-        responses.uname = $('#photo').data('uname');
-        responses.qno = $sno;
-        responses.qid = $('.s'+$sno).data('qno');
-        responses.last_photo = $('#photo').data('last_photo');
+    //     $url = $('.ques_count').data('url');
+    //     $qno = 1;
+    //     var responses = {};
+    //     number =1;
 
-        var seconds = new Date().getTime() / 1000;
-        responses.last_updated = seconds;
-        responses.completed = 0;
+    //     responses.test_id =  $('input[name=test_id]').val();
+    //     responses.user_id =  $('input[name=user_id]').val();
+    //     responses.token =  $('input[name=_token]').val();
+    //     responses.code =  $('input[name=code]').val();
+    //     responses.admin =  $('input[name=admin]').val();
+    //     responses.window_change =  $('input[name=window_change]').val();
+    //     responses.username = $('#photo').data('username');
 
-
-        var r = [];
-        while (number <= $ques_count) {
-          var resp = {};
-          resp.question_id = $('input[name='+$qno+'_question_id]').val();
-          resp.section_id = $('input[name='+$qno+'_section_id]').val();
-          resp.time = $('input[name='+$qno+'_time]').val();
-          resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
-
-
-          if($('.code_'+$sno).length)
-            resp.code = $('.code_'+$sno).val();
-          if($('.input_'+$qno).is(':checkbox')){
-              var ans =[]
-              $.each($(".input_"+$qno+":checked"), function(){
-                  ans.push($(this).val());
-              });
-              resp.response = ans.join(",");
-          }
-          else if($('.input_'+$qno).is(':radio')){
-                resp.response = $(".input_"+$qno+":checked").val();
-          }else if($('.input_'+$qno).is("textarea")){
-                resp.response = $('.input_'+$qno).val();
-          }
-          else
-              resp.response = $('.input_'+$qno).val();
-          //console.log('selected='+resp.response);
-          r.push(resp);
-          number++;
-          $qno++;
-        }
-        responses.responses = r;
-
-        var all_data = JSON.stringify(responses);
+    //     if($('.os_details').length){
+    //       responses.os_details = $('.os_details').html();
+    //       responses.browser_details = $('.browser_details').html();
+    //       responses.js_details = $('.js_details').html();
+    //       responses.ip_details = $('.ip_details').html();
+    //     }
 
 
+    //     responses.uname = $('#photo').data('uname');
+    //     responses.qno = $sno;
+    //     responses.qid = $('.s'+$sno).data('qno');
+    //     responses.last_photo = $('#photo').data('last_photo');
 
-          //   $.ajax({
-          //   type : 'post',
-          //   url : $url,
-          //   data:{'responses':all_data,'_token':responses.token},
-          //   success:function(data){
-          //     console.log('Live data updated');
-          //     console.log(data);
-          //   }
-          // });
+    //     var seconds = new Date().getTime() / 1000;
+    //     responses.last_updated = seconds;
+    //     responses.completed = 0;
 
 
+    //     var r = [];
+    //     while (number <= $ques_count) {
+    //       var resp = {};
+    //       resp.question_id = $('input[name='+$qno+'_question_id]').val();
+    //       resp.section_id = $('input[name='+$qno+'_section_id]').val();
+    //       resp.time = $('input[name='+$qno+'_time]').val();
+    //       resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
 
-    }
 
-    setInterval(saveLive,60000);
+    //        if($('.code_'+$sno).length){
+    //         resp.code = $('.codefragment_'+$qno).val();
+    //         console.log($qno+' - '+resp.code);
+    //         resp.out = $('.out_'+$qno).val();
+    //         console.log('out - '+resp.out);
+    //         resp.out_1 = $('.out_'+$qno+'_1').val();
+    //         resp.out_2 = $('.out_'+$qno+'_2').val();
+    //         resp.out_3 = $('.out_'+$qno+'_3').val();
+    //         resp.out_4 = $('.out_'+$qno+'_4').val();
+    //         resp.out_5 = $('.out_'+$qno+'_5').val();
+
+    //         if($('.preset_c_'+$qno).length){
+    //           resp.preset_c = $('.preset_c_'+$qno).data('code');
+    //           resp.preset_cpp = $('.preset_cpp_'+$qno).data('code');
+    //           resp.preset_csharp = $('.preset_csharp_'+$qno).data('code');
+    //           resp.preset_java = $('.preset_java_'+$qno).data('code');
+    //           resp.preset_python = $('.preset_python_'+$qno).data('code');
+    //           resp.preset_javascript = $('.preset_javascript_'+$qno).data('code');
+
+    //         }
+    //         if($('.lang_'+$qno).length)
+    //           resp.lang = $('.lang_'+$qno).find(":selected").text();
+           
+    //       }
+    //       if($('.input_'+$qno).is(':checkbox')){
+    //           var ans =[]
+    //           $.each($(".input_"+$qno+":checked"), function(){
+    //               ans.push($(this).val());
+    //           });
+    //           resp.response = ans.join(",");
+    //       }
+    //       else if($('.input_'+$qno).is(':radio')){
+    //             resp.response = $(".input_"+$qno+":checked").val();
+    //       }else if($('.input_'+$qno).is("textarea")){
+    //             resp.response = $('.input_'+$qno).val();
+    //       }
+    //       else
+    //           resp.response = $('.input_'+$qno).val();
+    //       //console.log('selected='+resp.response);
+    //       r.push(resp);
+    //       number++;
+    //       $qno++;
+    //     }
+    //     responses.responses = r;
+
+    //     var all_data = JSON.stringify(responses);
+
+
+
+    //       //   $.ajax({
+    //       //   type : 'post',
+    //       //   url : $url,
+    //       //   data:{'responses':all_data,'_token':responses.token},
+    //       //   success:function(data){
+    //       //     console.log('Live data updated');
+    //       //     console.log(data);
+    //       //   }
+    //       // });
+
+
+
+    // }
+
+    //setInterval(saveLive,60000);
 
 
 
