@@ -1102,7 +1102,7 @@ $(document).ready(function(){
             }
             if($('.lang_'+$qno).length)
               resp.lang = $('.lang_'+$qno).find(":selected").text();
-            console.log(resp);
+           
           }
           if($('.input_'+$qno).is(':checkbox')){
               var ans =[]

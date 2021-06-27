@@ -1288,6 +1288,8 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
             var jso = data;
             dat = JSON.parse(data);
 
+            console.log(dat);
+
                         
             if($k==1){
               $('.output_testcase_'+$qn).html('<div class="output_testcase_'+$qn+'_t1"></div><div class="output_testcase_'+$qn+'_t2"></div><div class="output_testcase_'+$qn+'_t3"></div><div class="output_testcase_'+$qn+'_t4"></div><div class="output_testcase_'+$qn+'_t5"></div>');
@@ -1330,7 +1332,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
 
               }else if(data.stdout){
 
-                console.log(data.stdout);
+
                 
                 if($t==1){
                   $('.output_'+$qn).html(data.stdout);
