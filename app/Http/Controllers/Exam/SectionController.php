@@ -241,6 +241,7 @@ class SectionController extends Controller
 
         if($r->get('type')=='html' && $extension=='html'){
             $data = $sec->readHtmlTables(file_get_contents($source));
+
         }elseif($extension=='docx'){
             $name = $storagePath.'docs/'.$exam->slug.'.html';
             $sec->wordToHtml($source,$name);

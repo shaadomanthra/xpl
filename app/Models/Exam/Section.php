@@ -99,6 +99,8 @@ for ($i = 1; $i <= 8; $i++) {
         //dom parser
         $dom = new \DomDocument();
        /*** load the html into the object ***/ 
+
+    
        
        $dom->loadHTML($html); 
 

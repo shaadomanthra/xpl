@@ -1329,6 +1329,8 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
                 $('.out_'+$qn+'_'+$t).attr('value',jso);
 
               }else if(data.stdout){
+
+                console.log(data.stdout);
                 
                 if($t==1){
                   $('.output_'+$qn).html(data.stdout);
