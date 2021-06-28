@@ -1799,10 +1799,10 @@ new Chart(ctxOne, optionsOne);
               @foreach($sectiondetails as $k=> $sd) 
                 @if($sd['percent']<30)
                   'rgba(255, 99, 132, 0.8)',
-                @elseif($sd['percent']>=30 && $sd['percent']>=70)
-                    'rgba(255, 206, 86, 0.8)',
+                @elseif($sd['percent']>=30 && $sd['percent']<=70)
+                    'rgba(255, 159, 67,0.7)',
                 @else
-                'rgba(75, 192, 192, 0.8)',
+                'rgba(10, 189, 227,0.7)',
                 @endif
               @endforeach
                 
@@ -1810,11 +1810,11 @@ new Chart(ctxOne, optionsOne);
             borderColor: [
                 @foreach($sectiondetails as $k=> $sd) 
                 @if($sd['percent']<30)
-                  'rgba(255, 99, 132, 0.8)',
-                @elseif($sd['percent']>=30 && $sd['percent']>=70)
-                    'rgba(255, 206, 86, 0.8)',
+                  'rgba(255, 99, 132, 1)',
+                @elseif($sd['percent']>=30 && $sd['percent']<=70)
+                    'rgba(255, 159, 67,1.0)',
                 @else
-                'rgba(75, 192, 192, 0.8)',
+                'rgba(10, 189, 227,1.0)',
                 @endif
               @endforeach
             ],

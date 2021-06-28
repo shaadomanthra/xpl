@@ -2,9 +2,7 @@
 @section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' ')
 @section('content')
 
-
 @include('appl.exam.assessment.blocks.breadcrumbs')
-
 
 <div class="mb-md-2">
 	<div class="">
@@ -14,9 +12,7 @@
 		@else
 			<div class="p-3 border rounded bg-light mb-4">
 			<div class="  display-4  mb-1"><b>{{ ucfirst($exam->name) }} - Report</b></div>
-			@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif<br>
-				@if($student->email)<span class="badge badge-info ">Email : {{$student->email}}</span> <br>@endif
-	        @if($student->phone)<span class="badge badge-info ">Phone : {{$student->phone}}</span> <br>@endif
+			
 			@if(isset($data['branches'][$student->branch_id]->name))
 			@if($student->branch_id)<span class="badge badge-danger">{{$data['branches'][$student->branch_id]->name}}</span>@endif
 	      @if($student->college_id)<span class="badge badge-info">{{$data['colleges'][$student->college_id]->name}}</span><br>@endif
