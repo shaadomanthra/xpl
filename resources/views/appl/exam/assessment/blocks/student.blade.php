@@ -48,6 +48,7 @@
             <br>
             
             @if($test_overall->status)
+            @if(isset($details['auto_max']))
             <div class="row mb-0">
               <div class="col-4"> Auto Evaluation Score:</div>
               <div class="col-8">{{$test_overall['score']}} / {{$details['auto_max']}}</div>
@@ -56,6 +57,7 @@
               <div class="col-4"> Responses under review:</div>
               <div class="col-8">{{$details['review']}}</div>
             </div>
+            @endif
             @endif
 
             @if($test_overall->comment)

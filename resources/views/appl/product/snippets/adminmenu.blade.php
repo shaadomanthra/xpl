@@ -27,6 +27,8 @@
 	<a href="{{ route('branch.index')}}" class="list-group-item list-group-item-action {{ request()->is('branch') ? 'active' : ''}}"><i class="fa fa-bars"></i> Branch</a>
 	<a href="{{ route('metric.index')}}" class="list-group-item list-group-item-action {{ request()->is('metric') ? 'active' : ''}}"><i class="fa fa-bars"></i> Metric</a>
 	<a href="{{ url('job')}}" class="list-group-item list-group-item-action {{ request()->is('job') ? 'active' : ''}}"><i class="fa fa-bars"></i> Jobs</a>
+		<a href="{{ url('mail')}}" class="list-group-item list-group-item-action {{ request()->is('mail') ? 'active' : ''}}"><i class="fa fa-bars"></i> Mailer</a>
+	
 	
 
 
