@@ -6,9 +6,12 @@
 		    <tr>
 		      <th scope="col">#</th>
 		      <th scope="col">Name</th>
+		      @if(!request()->get('none'))
 		      <th scope="col" >Branch</th>
 		      @if($colleges)
 		      <th scope="col" >College</th>
+		      @endif
+
 		      @endif
 		      @if(isset($sections))
 		      @foreach($sections as $s)
@@ -36,10 +39,13 @@
 		      	@endif
 		      	</a> 
 		      </td>
+		      @if(!request()->get('none'))
 		      <td>@if(isset($branches[$user['branch']])){{  $branches[$user['branch']] }}@endif</td>
 
 		      @if($colleges)
 		      <td>@if(isset($user['college'])){{  $colleges[$user['college']][0]->name }}@endif</td>
+		      @endif
+
 		      @endif
 
 		      @if(isset($sections))

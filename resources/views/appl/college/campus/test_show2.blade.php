@@ -109,7 +109,7 @@
 		@endif
 
 
-		@if($details['college_users'])
+		@if($details['college_users'] && !request()->get('none'))
 		 <div class="rounded table-responsive">
 		 <table class="table mt-4  table-bordered bg-white" >
 		  <thead>
@@ -142,7 +142,7 @@
 		</div>
 		@endif
 
-		@if(isset($details['items']))
+		@if(isset($details['items']) && !request()->get('none'))
 		 <div class="rounded table-responsive">
 		 @if(count($details['items']))
 		 <table class="table mt-4  table-bordered bg-white" >
