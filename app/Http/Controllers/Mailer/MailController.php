@@ -317,6 +317,11 @@ class MailController extends Controller
     {
         $obj = Obj::where('id',$id)->first();
         $this->authorize('update', $obj);
+        //mailogs
+        $logs = MailLog::where('mailevent_id',$obj->id)->get();
+        foreach($logs as $l)
+            $l->delete();
+
         $obj->delete();
 
         flash('('.$this->app.'/'.$this->module.') item  Successfully deleted!')->success();
