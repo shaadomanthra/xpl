@@ -48,7 +48,7 @@ class EmailForQueuing extends Mailable
             ->subject($this->subject)
             ->view('mail.email')->with('user',$this->user)->with('content',$this->content);
         else
-            return $this->from('no-reply@mg.customerka.com', 'PacketPrep')
+            return $this->from('no-reply@mail.packetprep.com', 'PacketPrep')
             ->subject($this->subject)
             ->view('mail.emailpp')->with('user',$this->user)->with('content',$this->content);
 
