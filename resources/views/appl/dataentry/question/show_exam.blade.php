@@ -45,7 +45,7 @@
 
   <div class="row">
 
-    <div class="col-md-8 col-lg-9">
+    <div class="col-md-8 col-lg-8">
 
 <div class="row no-gutters">
         @if(trim($question->passage))
@@ -72,6 +72,8 @@
             <a href="#"  data-toggle="modal" data-target="#exampleModal3">
          <i class="fa fa-unlink"></i> remove</a>
                 
+          <a href="#"  data-toggle="modal" data-target="#exampleModal4">
+         <i class="fa fa-retweet ml-2"></i> copy</a>
           @endcan
           @if($question->level)<span class="badge badge-info float-right mt-1  ml-2">Level {{$question->level}}</span>@endif
           <span class="badge badge-success float-right mt-1  ml-2">{{$question->mark}}M</span>
@@ -397,7 +399,7 @@
 
     </div>
 
-     <div class="col-md-4 col-lg-3 pl-md-0">
+     <div class="col-md-4 col-lg-4 pl-md-0">
       @include('appl.dataentry.snippets.qset-exam')
     </div>
 
@@ -430,4 +432,29 @@
   </div>
 </div>
 
+  <!-- Modal 3-->
+<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Question</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3 >Exam Name : {{ request()->session()->get('session_exam_name') }}</h3>
+        <p> Section Name : {{ request()->session()->get('session_section_name') }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <a href="{{ route('question.copy',$question->id)}}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-danger">Add </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
