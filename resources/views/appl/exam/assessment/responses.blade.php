@@ -473,7 +473,7 @@ pre, code {
        @if(isset($t->comment))
          @if($t->comment)
          @if($questions[$t->question_id]->type!='code')
-         @if(!isset(json_decode($t->comment,true)['response_1']))
+         @if(!isset(json_decode($t->comment,true)['response_1']) && $t->comment!='null')
          <div class="my-2"><b>Feedback</b></div>
          <p> {{$t->comment}} </p>
            @endif
