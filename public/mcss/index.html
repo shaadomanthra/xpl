@@ -29,7 +29,7 @@
             <tr>
                 <td align="right"><a href="https://www.microsoft.com/cognitive-services/sign-up"
                         target="_blank">Subscription</a>:</td>
-                <td><input id="key" type="text" size="60" value="b77da90db8214c6daacfcc3be7c8599d" placeholder="required: speech subscription key"></td>
+                <td><input id="key" type="text" size="60" value="f58ff31def134cfd969be47cfecdbeb8" placeholder="required: speech subscription key"></td>
             </tr>
             <tr>
                 <td align="right">Region:</td>
@@ -37,7 +37,8 @@
                     <select id="regionOptions">
                         <option value="westus" >West US</option>
                         <option value="westus2">West US 2</option>
-                        <option value="eastus" selected>East US</option>
+                        <option value="eastus" >East US</option>
+                        <option value="centralindia" selected>Central India</option>
                         <option value="eastus2">East US 2</option>
                         <option value="eastasia">East Asia</option>
                         <option value="southeastasia">South East Asia</option>
@@ -100,7 +101,7 @@
                         value="File"/>
                     <label id="inputSourceFileLabel" for="inputSourceFileRadio">Audio file</label>
                     <button id="inputSourceChooseFileButton" disabled="true">...</button>
-                    <input type="file" id="filePicker" accept=".wav" style="display:none" />
+                    <input type="file" id="filePicker" accept=".wav" style="display:none" value="sample.wav" />
                 </td>
             </tr>
             <tr>
@@ -534,6 +535,7 @@
             // Depending on browser security settings, the user may be prompted to allow microphone use. Using
             // continuous recognition allows multiple phrases to be recognized from a single use authorization.
             if (audioFile) {
+                console.log(audioFile);
                 return SpeechSDK.AudioConfig.fromWavFileInput(audioFile);
             } else if (inputSourceFileRadio.checked) {
                 alert('Please choose a file when selecting file input as your audio source.');
@@ -544,6 +546,8 @@
                 return SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
             }
         }
+
+         
 
         function getSpeechConfig(sdkConfigType) {
             var speechConfig;
