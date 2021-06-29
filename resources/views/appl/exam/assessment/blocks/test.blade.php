@@ -5,7 +5,7 @@
 
 <div class="testpage_wrap">
 <div class="p-2 p-md-3 testpage " style="display: none">
-<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif" data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif" data-upload_time="@if(isset($settings['upload_time'])) {{$settings['upload_time']}} @endif" data-first="{{$data['first']}}" data-last="{{$data['last']}}" data-stopswap="{{$data['stopswap']}}" data-slast="{{$data['slast']}}" data-vques="0"
+<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif" data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif" data-upload_time="@if(isset($settings['upload_time'])) {{$settings['upload_time']}} @endif" data-camera360="@if(isset($cam360)) {{$cam360}} @endif" data-videosnaps="@if(isset($settings['videosnaps'])) {{$settings['videosnaps']}}@else 0 @endif" data-first="{{$data['first']}}" data-last="{{$data['last']}}" data-stopswap="{{$data['stopswap']}}" data-slast="{{$data['slast']}}" data-vques="0"
 
 action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
   <style>
@@ -571,6 +571,42 @@ div.chats {
 
 </div>
 
+
+<div class="modal fade" id="vsc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-primary" id="exampleModalLongTitle"><i class="fa fa-check"></i> 360<sup>o</sup> Screening</h3>
+      
+      </div>
+      <div class="modal-body ">
+        <p class="alert alert-info alert-important"><span class="">For the next 20 seconds you are required to turn your device in all directions to show the room, desk space and walls. This screening is validated by administrators for any potential cheating. </span></p>
+       <div id="">
+
+    
+
+    <video id="gum_1000" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2001" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2002" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2003" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2004" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="recorded" playsinline loop></video>
+    <div class="recording text-danger " style="display: none"><span class="blink"><i class="fa fa-circle"></i></span> Recording</div>
+
+    <div>
+        <button id="start" type="button" class='d-none'>Start camera</button>
+        <button id="record" type="button" class="btn btn-outline-danger d-none" disabled>Start Recording</button>
+        <button id="play"  type="button" class='d-none' disabled>Play</button>
+        <button id="download" type="button" class='d-none' disabled>Download</button>
+    </div>
+
+
+</div>
+      </div>
+      
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="no_connectivity" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-dialog-centered" role="document">

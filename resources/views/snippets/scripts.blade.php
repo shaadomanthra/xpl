@@ -1791,7 +1791,7 @@ new Chart(ctxOne, optionsOne);
   var options_sections_container = {
   type: 'horizontalBar',
   data: {
-    labels: [ @foreach($sectiondetails as $k=> $sd) "{{$sd['name']}} ({{$sd['score']}}/{{$sd['max']}})", @endforeach],
+    labels: [ @foreach($sectiondetails as $k=> $sd) "{{$sd['name']}} @if(isset($sd['score']))({{$sd['score']}}/{{$sd['max']}}) @endif", @endforeach],
     datasets: [{
       label:'',
       data: [@foreach($sectiondetails as $k=>$sd) "{{$sd['percent']}}", @endforeach],
@@ -2911,9 +2911,7 @@ $(function(){
 
           if($('.code_'+$sno).length){
             resp.code = $('.codefragment_'+$qno).val();
-            console.log($qno+' - '+resp.code);
             resp.out = $('.out_'+$qno).val();
-            console.log('out - '+resp.out);
             resp.out_1 = $('.out_'+$qno+'_1').val();
             resp.out_2 = $('.out_'+$qno+'_2').val();
             resp.out_3 = $('.out_'+$qno+'_3').val();
@@ -3211,7 +3209,7 @@ $(function(){
         $c = parseInt($('#video').data('c'))+1;
 
 
-        console.log($c);
+        console.log($c+' at this point');
         console.log($('#video').data('cc'));
 
 
@@ -3275,7 +3273,7 @@ $(function(){
         }else{
           if($('.start_btn').hasClass('exam_started') || !$('#photo').data('last_photo'))
           if($('.url_'+$cc).length){
-
+              console.log('c is'+$c);
               $url = $('.url_'+$cc).data('url');
               $name = $username+'_'+$test+'_'+$cc;
               uploadaws(image,$url,false,$name);
@@ -3291,7 +3289,7 @@ $(function(){
 
 
           }else{
-            return 1;
+            //return 1;
           }
          
         }
@@ -3321,7 +3319,6 @@ $(function(){
            
         }
        
-
         if(Number.isInteger($c)){
 
           $('#video').data('c',$c);

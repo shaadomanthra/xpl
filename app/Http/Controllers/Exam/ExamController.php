@@ -593,6 +593,8 @@ class ExamController extends Controller
             $settings['section_marking'] = $request->get('section_marking');
             $settings['fullscreen'] = $request->get('fullscreen');
             $settings['upload_time'] = $request->get('upload_time');
+            $settings['camera360'] = $request->get('camera360');
+            $settings['videosnaps'] = $request->get('videosnaps');
             
 
             $exam->settings = json_encode($settings);
@@ -1932,6 +1934,15 @@ class ExamController extends Controller
             $exam->upload_time = $settings['upload_time'];
         else
             $exam->upload_time = 0;
+         if(isset($settings['camera360']))
+            $exam->camera360 = $settings['camera360'];
+        else
+            $exam->camera360 = 0;
+        if(isset($settings['videosnaps']))
+            $exam->videosnaps = $settings['videosnaps'];
+        else
+            $exam->videosnaps = 0;
+
         // if($exam->extra){
         //     $exam->viewers = json_decode($exam->extra,true)['viewers'];
         //     $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
@@ -2029,6 +2040,8 @@ class ExamController extends Controller
             $settings['section_marking'] = $request->get('section_marking');
             $settings['fullscreen'] = $request->get('fullscreen');
             $settings['upload_time'] = $request->get('upload_time');
+            $settings['camera360'] = $request->get('camera360');
+            $settings['videosnaps'] = $request->get('videosnaps');
 
 
 

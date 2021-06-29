@@ -840,7 +840,36 @@ class AssessmentController extends Controller
 
         }
 
-        //dd($questions);
+        $cam360=0;
+        if(isset($exam->settings->camera360)){
+            $folder = 'webcam/'.$exam->id.'/';
+                    $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
+            
+            if($exam->settings->camera360){
+                    
+                    $url3['video_1000'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_1000.webm']);
+                    $data['slast'] = 'vq';
+                    $data['vcount']++;
+                    $cam360 = $exam->settings->camera360;
+            }
+            if(Storage::disk('s3')->exists($name_prefix.'video_1000.webm')){
+                $cam360 = 0;
+            }
+        }
+
+        if(isset($exam->settings->videosnaps)){
+            $folder = 'webcam/'.$exam->id.'/';
+            $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
+            
+            if($exam->settings->videosnaps){
+                $url3['video_2001'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_2001.webm']);
+                $url3['video_2002'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_2002.webm']);
+                $url3['video_2003'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_2003.webm']);
+                $url3['video_2004'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_2004.webm']);
+            }
+            
+        }
+       
 
         if($images){
              Storage::disk('s3')->put('urq/'.$jsonname.'.json',json_encode($images),'public');
@@ -1058,6 +1087,7 @@ class AssessmentController extends Controller
                         ->with('images',$images)
                         ->with('data',$data)
                         ->with('noback',1)
+                        ->with('cam360',$cam360)
                         ->with('section_questions',$section_questions);
     }
 
@@ -2482,7 +2512,7 @@ class AssessmentController extends Controller
 
 
         }
-        //dd($d);
+       
 
 
         if(!$request->get('admin')){
@@ -3431,6 +3461,8 @@ class AssessmentController extends Controller
                     ->with('active',1)
                     ->with('message','No user found');
         }
+
+
 
         else if(count($users))
             return view('appl.exam.exam.active')
@@ -4469,8 +4501,14 @@ class AssessmentController extends Controller
                 else
                 $sections[$section->name] ='';
 
-            if($sectiondetails)
+            if($sectiondetails){
+
                 $sectiondetails[$section->id]['name'] = $section->name;
+                $sectiondetails[$section->id]['percent'] = 0;
+                $sectiondetails[$section->id]['score'] = 0;
+                $sectiondetails[$section->id]['id'] = $section->id;
+                $sectiondetails[$section->id]['max'] = 0;
+            }
             $secs[$section->id] = $section;
             $qset = $exam->getQuestionsSection($section->id,$user->id);
             foreach($qset as $q){
@@ -4624,6 +4662,7 @@ class AssessmentController extends Controller
                     $d[$a] = 40 - $d[$a];
             }
 
+            
 
             return view('appl.exam.assessment.analysis')
                         ->with('exam',$exam)
@@ -4784,6 +4823,8 @@ class AssessmentController extends Controller
         if(request()->get('student'))
             $view = 'blocks.student';
 
+
+        //dd($sectiondetails);
 
         return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)

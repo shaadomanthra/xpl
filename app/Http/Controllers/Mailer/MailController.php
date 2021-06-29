@@ -225,7 +225,7 @@ class MailController extends Controller
         if($obj->maillog)
         $logs = $obj->maillog->groupBy('status');
 
-        $emails = 0;
+        $emails = [];
         if($obj->emails){
             $emails = implode(',',explode("\n", $obj->emails));
             $emails =str_replace("\r", '', $emails);
@@ -248,6 +248,7 @@ class MailController extends Controller
             array_push($success,$e->email);
         }
        
+
 
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')

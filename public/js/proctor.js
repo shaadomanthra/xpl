@@ -88,6 +88,21 @@ $(function(){
 
      });
 
+
+    $('.camera360').on('click',function(e){
+        
+        $url = $(this).data('url')+"?time="+$.now();
+        console.log($url);
+        var video = videojs("my-video");
+        video.src({
+  type: 'video/webm',
+  src: $url
+});
+        $('#camera360').modal();
+
+     });
+
+
    
 
     

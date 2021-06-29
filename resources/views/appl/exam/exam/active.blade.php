@@ -209,6 +209,10 @@
               @endif
               @endif
               <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}" data-selfie_url="{{$b['selfie_url']}}" data-idcard_url="{{$b['idcard_url']}}"></i> 
+                @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$b['username'].'_'.$exam->id.'_video_1000.webm'))
+                <i class="fas fa-street-view text-primary mr-4 cursor camera360 " data-url=" {{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$b['username'].'_'.$exam->id.'_video_1000.webm')}}" ></i> 
+                  @endif
+
 
               @if(!$candidates)
               @if(isset($b['uname']))
@@ -220,6 +224,11 @@
             <p class="mb-0 mt-3">
              <span class="text-success float-right"><b><i class="fa fa-check-circle text-success"></i> completed</b></span>
              <i class="far fa-list-alt text-info mr-4 cursor user_log " data-url="{{$b['url']}}" data-selfie_url="{{$b['selfie_url']}}" data-idcard_url="{{$b['idcard_url']}}"></i> 
+              @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$b['username'].'_'.$exam->id.'_video_1000.webm'))
+                <i class="fas fa-street-view text-primary mr-4 cursor camera360 " data-url=" {{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$b['username'].'_'.$exam->id.'_video_1000.webm')}}" ></i> 
+              @endif
+
+
             </p>
             @endif
 
@@ -411,6 +420,43 @@ div.chats {
   </div>
 </div>
 
+<div class="modal fade" id="camera360" tabindex="-1" role="dialog" aria-labelledby="instructions" aria-hidden="true">
+  <div class="modal-dialog  " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-info" id="exampleModalLongTitle"><i class="fa  fa-camera text-info"></i> 360<sup>o</sup> Screening </h3>
+      </div>
+      <div class="modal-body ">
+              <div class="">
+        <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="400"
+    data-setup="{}"
+  >
+    <source class="vcam360"  src="" type="video/webm" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </video>
+</div>
+  
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="logs" tabindex="-1" role="dialog" aria-labelledby="instructions" aria-hidden="true">
   <div class="modal-dialog  " role="document">
     <div class="modal-content">
@@ -422,7 +468,7 @@ div.chats {
       </div>
       <div class="modal-body ">
        <div class="pb-4">
-        <div class="p-3 border float-right">Lastest Capture<br>
+        <div class="p-3 border float-right @if(!$exam->camera) d-none @endif">Lastest Capture<br>
         <img src="" class=" log_pic border" height="100px" style="display:none" /></div>
         <div class="">Name: <b><span class="log_name text-success"></span></b></div>
         <div>Roll Number: <b><span class="log_rollnumber text-primary"></span></b></div>
@@ -434,8 +480,8 @@ div.chats {
 
       
 
-      <div class="pb-4">
-      <a href="" class="btn btn-primary link_snaps" data-url="{{ route('test.snaps',$exam->slug)}}" target="_blank"><i class="fa fa-camera text-white"></i> Selfie</a> &nbsp;&nbsp;&nbsp;<a href="" data-url="{{ route('test.snaps',$exam->slug)}}" class="btn btn-success link_screens" target="_blank"><i class="fa fa-image text-white"></i> Screens</a> 
+      <div class="pb-4 @if(!$exam->camera) d-none @endif">
+      <a href="" class="btn btn-primary link_snaps " data-url="{{ route('test.snaps',$exam->slug)}}" target="_blank"><i class="fa fa-camera text-white"></i> Selfie</a> &nbsp;&nbsp;&nbsp;<a href="" data-url="{{ route('test.snaps',$exam->slug)}}" class="btn btn-success link_screens" target="_blank"><i class="fa fa-image text-white"></i> Screens</a> 
     </div>
     
         <div class="chats mb-3">
@@ -449,12 +495,13 @@ div.chats {
           </div>
         </div>
 
-        <div class="pt-4">
+        <div class="pt-4 @if(!$exam->camera) d-none @endif">
         <div class="row">
           <div class="col-6">
             <div class="border p-2 bg-light">Selfie<br><img src="w-100" class="log_selfie_pic border rounded " width="200px"  /></div></div>
           <div class="col-6">
             <div class="border p-2 bg-light">ID Card<br><img src="w-100" class=" log_idcard_pic border rounded " width="200px"  /></div></div>
+
         </div>
       </div>
 

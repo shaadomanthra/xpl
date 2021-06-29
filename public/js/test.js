@@ -816,8 +816,262 @@ $(document).ready(function(){
 
 
 
-   
+// video
 
+
+    'use strict';
+
+    /* globals MediaRecorder */
+
+    var mediaRecorder;
+    var recordedBlobs;
+
+    const errorMsgElement = document.querySelector('span#errorMsg');
+    const recordedVideo = document.querySelector('video#recorded');
+    const recordButton = document.querySelector('button#record');
+
+
+    function handleDataAvailable(event) {
+      //console.log('handleDataAvailable', event);
+      if (event.data && event.data.size > 0) {
+        recordedBlobs.push(event.data);
+      }
+    }
+
+    function startRecording($qno) {
+      recordedBlobs = [];
+      $('.recording').show();
+      
+      let options = {mimeType: 'video/webm;codecs=vp9,opus'};
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        console.error(`${options.mimeType} is not supported`);
+        options = {mimeType: 'video/webm;codecs=vp8,opus'};
+        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+          console.error(`${options.mimeType} is not supported`);
+          options = {mimeType: 'video/webm'};
+          if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+            console.error(`${options.mimeType} is not supported`);
+            options = {mimeType: ''};
+          }
+        }
+      }
+
+      try {
+        mediaRecorder = new MediaRecorder(window.stream, options);
+        $sno = 1;//$('.clear-qno').data('sno');
+        console.log($qno);
+        $('.assessment').data('vques',$qno);
+        $('#gum_'+$qno).show();
+        $('#curr-qno').data('qno',$qno);
+        $('.qid'+$qno).data('vq',1);
+        console.log('vq-'+$('.qid'+$qno).data('vq'));
+
+      } catch (e) {
+        console.error('Exception while creating MediaRecorder:', e);
+        errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(e)}`;
+        return;
+      }
+
+      //console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
+      
+      mediaRecorder.ondataavailable = handleDataAvailable;
+      mediaRecorder.start();
+      console.log('MediaRecorder started');
+      //console.log('MediaRecorder started', mediaRecorder);
+    }
+
+    function stopRecording($qno) {
+      console.log('stop recording invoked');
+      //$sno = $('.clear-qno').data('sno');
+      $q=$qno;
+      console.log($qno+" - qno stopvideo");
+
+      if($('#gum_'+$qno).length){
+        
+        $('#gum_'+$qno).hide();
+        $('.recording').hide();
+        try {
+          if(mediaRecorder){
+            console.log('mediaRecorder found - trying to stop it');
+            if(mediaRecorder.state!='inactive')
+              mediaRecorder.stop();
+
+
+      mediaRecorder.onstop = (event) => {
+        $('.recording').hide();
+        console.log('Recorder stopped ');
+        //console.log('Recorded Blobs: ', recordedBlobs);
+        const blob = new Blob(recordedBlobs, {type: 'video/webm'});
+        const url = window.URL.createObjectURL(blob);
+
+        
+       // $qno = $('#curr-qno').data('qno');
+
+        $url = $('.url_video_'+$qno).data('url');
+        console.log('vqno - '+$qno);
+        console.log('vurl -'+$url);
+        if($url){
+            $.ajax({
+                    method: "PUT",
+                    headers: {"Content-Type": "video/webm"},
+                    processData: false,
+                    data: blob,
+                    url: $url
+            })
+            .done(function($url) {
+
+                console.log('video uploaded - '+$q);
+                
+                 
+                
+            });
+        }
+
+      };
+
+          }else{
+            
+          }
+        
+
+        } catch (e) {
+          console.error('navigator.getUserMedia error:', e);
+        }
+       
+      }
+
+      
+
+
+
+    }
+
+
+
+    function handleSuccess(stream,qno) {
+      recordButton.disabled = false;
+      //console.log('getUserMedia() got stream:', stream);
+      window.stream = stream;
+
+      if($('#gum_'+qno).length){
+        //console.log('video#gum_'+qno);
+        const gumVideo = document.querySelector('video#gum_'+qno);
+        gumVideo.srcObject = stream;
+        setTimeout(startRecording,5000);
+      }
+      
+    
+    }
+
+    async function init(constraints,qno) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        handleSuccess(stream,qno);
+      } catch (e) {
+        console.error('navigator.getUserMedia error:', e);
+        //errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+      }
+    }
+
+    function startvideo($qno){
+
+        $sno = $('.clear-qno').data('sno');
+        const constraints = {
+        audio: {
+          echoCancellation: {exact: true}
+        },
+        video: {
+          width: 768, height: 432
+        }
+      };
+      //console.log('Using media constraints:', constraints);
+      init(constraints,$qno);
+    }
+
+
+    //end video
+   
+   // 360 camera test
+   var camera = parseInt($('.assessment').data('camera'));
+   if(parseInt($('.assessment').data('camera360')) && camera)
+   {
+      $time360 = parseInt($('.assessment').data('camera360'));
+      setTimeout(function(){
+        $('#vsc').modal();
+        console.log("Hello all - start");
+        startvideo(1000);
+      },$time360 * 60* 1000);
+      setTimeout(function(){
+        console.log("Hello all - end");
+        stopRecording(1000);
+      },$time360 * 85* 1000);
+
+      setTimeout(function(){
+        $('#vsc').modal('hide');
+        console.log("Hello all - end");
+      },$time360 * 86* 1000);
+      
+   }
+
+   if(parseInt($('.assessment').data('videosnaps')) && camera)
+   {
+      $vcount= parseInt($('.assessment').data('videosnaps'));
+      $times = [0,25,180,720,1020];
+
+         setTimeout(function(){
+            a = 1;
+            $id = parseInt("200"+a);
+            console.log("videosnaps - start - "+a);
+            startvideo($id);
+          },$times[1] * 1000);
+          setTimeout(function(){
+            a = 1;
+            $id = parseInt("200"+a);
+            console.log("videsnaps - end - "+a);
+            stopRecording($id);
+          },($times[1]+21) * 1000);
+
+        setTimeout(function(){
+            a = 2;
+            $id = parseInt("200"+a);
+            console.log("videosnaps - start - "+a);
+            startvideo($id);
+          },$times[2] * 1000);
+          setTimeout(function(){
+            a = 2;
+            $id = parseInt("200"+a);
+            console.log("videsnaps - end - "+a);
+            stopRecording($id);
+          },($times[2]+21) * 1000);
+
+          setTimeout(function(){
+            a = 3;
+            $id = parseInt("200"+a);
+            console.log("videosnaps - start - "+a);
+            startvideo($id);
+          },$times[3] * 1000);
+          setTimeout(function(){
+            a = 3;
+            $id = parseInt("200"+a);
+            console.log("videsnaps - end - "+a);
+            stopRecording($id);
+          },($times[3]+21) * 1000);
+
+          setTimeout(function(){
+            a = 4;
+            $id = parseInt("200"+a);
+            console.log("videosnaps - start - "+a);
+            startvideo($id);
+          },$times[4] * 1000);
+          setTimeout(function(){
+            a = 4;
+            $id = parseInt("200"+a);
+            console.log("videsnaps - end - "+a);
+            stopRecording($id);
+          },($times[4]+21) * 1000);
+
+      
+   }
 
   // new test
     $(document).on('click','.test2qno', function() {
@@ -1085,9 +1339,9 @@ $(document).ready(function(){
 
           if($('.code_'+$sno).length){
             resp.code = $('.codefragment_'+$qno).val();
-            console.log($qno+' - '+resp.code);
+            //console.log($qno+' - '+resp.code);
             resp.out = $('.out_'+$qno).val();
-            console.log('out - '+resp.out);
+           // console.log('out - '+resp.out);
             resp.out_1 = $('.out_'+$qno+'_1').val();
             resp.out_2 = $('.out_'+$qno+'_2').val();
             resp.out_3 = $('.out_'+$qno+'_3').val();
@@ -1151,7 +1405,7 @@ $(document).ready(function(){
 
     function aws_cache($data){
       var $url = $('.url_testlog').data('url');
-      console.log($url);
+      //console.log($url);
 
       $.ajax({
               method: "PUT",

@@ -208,7 +208,7 @@
 <div class="container">
       @if($count['webcam'])
     <div class="rounded  py-4 ">
-    <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Captures</h3>
+    <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Webcam Captures</h3>
     
           <div class="row mb-0 {{$m=0}}">
             @if(isset($images['webcam']))
@@ -236,6 +236,102 @@
       </div>
   
     @endif
+
+    @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_2001.webm'))
+     <div class="pb-4">
+      <h3 class="mb-3"><i class="fa fa-angle-double-right"></i>  Video Snaps</h3>
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_2001.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+        </div>
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_2002.webm'))
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_2002.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+        </div>
+        @endif
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_2003.webm'))
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_2003.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+        </div>
+        @endif
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_2004.webm'))
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_2004.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+        </div>
+        @endif
+        
+      </div>
+      
+        
+    </div>
+  
+    @endif
+
+     @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_1000.webm'))
+     <div class="pb-4">
+      <h3 class="mb-3"><i class="fa fa-angle-double-right"></i> 360<sup>o</sup> Video Screening</h3>
+        <video id="my-video" class="video-js" controls preload="auto" width="500" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_1000.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+    </div>
+        @endif
+
+        <script>
+  if(typeof video !== 'undefined'){
+      video.addEventListener('loadedmetadata', function() {
+    if (video.buffered.length === 0) return;
+
+    const bufferedSeconds = video.buffered.end(0) - video.buffered.start(0);
+    console.log(`${bufferedSeconds} seconds of video are ready to play.`);
+  });
+  }
+
+</script>
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
   </div>
 </div>
 @endsection

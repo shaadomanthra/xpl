@@ -393,6 +393,33 @@
         </div>
 
 
+        <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">360<sup>o</sup> Camera Test</label>
+            <select class="form-control" name="camera360">
+              <option value="0" @if(isset($exam)) @if($exam->camera360==0) selected @endif @endif >-NA-</option>
+              <option value="1" @if(isset($exam)) @if($exam->camera360==1) selected @endif @endif >After 1 min</option>
+              <option value="5" @if(isset($exam)) @if($exam->camera360==5) selected @endif @endif >After 5 min</option>
+              <option value="10" @if(isset($exam)) @if($exam->camera360==10) selected @endif @endif >After 10 min</option>
+              <option value="15" @if(isset($exam)) @if($exam->camera360==15) selected @endif @endif >After 15 min</option>
+            </select>
+
+          <small class='text-secondary'>Enable it only if required, as it consumes more bandwidth.</small>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">Video Snaps </label>
+            <select class="form-control" name="videosnaps">
+              <option value="0" @if(isset($exam)) @if($exam->videosnaps==0) selected @endif @endif >None</option>
+              <option value="4" @if(isset($exam)) @if($exam->videosnaps==4) selected @endif @endif >Enable</option>
+            </select>
+
+          <small class='text-secondary'>4 videosnaps are recorded in the background at random intervals</small>
+          </div>
+        </div>
+
 
       </div>
     </div>
