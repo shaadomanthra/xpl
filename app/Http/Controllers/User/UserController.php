@@ -514,6 +514,14 @@ class UserController extends Controller
                     if($bid)
                     $u->branch_id = $bid;
 
+                    if(isset($data[$i]['role'])){
+                        $u->role = $data[$i]['role'];
+                        if($u->role==10 || $u->user==11)
+                        if(!$u->roles->contains(28))
+                            $u->roles()->attach(28);
+                    }
+                    
+
                     if($data[$i]['college_id'])
                     $u->college_id = $data[$i]['college_id'];
 
