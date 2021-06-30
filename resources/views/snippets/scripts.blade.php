@@ -3666,6 +3666,7 @@ function camera_test(){
       var context = canvas.getContext('2d');
 
         video.srcObject = stream;
+        video.muted = true
           video.play();
 
           video.addEventListener('canplay', function(ev){
@@ -3727,8 +3728,9 @@ function camera_test(){
 //     console.log(e);
 // });
 
+  
     
-    navigator.mediaDevices.getUserMedia({video: true, audio: false})
+    navigator.mediaDevices.getUserMedia({video: true, audio: true})
     .then(successCallback, errorCallback);
 
     }
