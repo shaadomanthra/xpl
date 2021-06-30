@@ -139,6 +139,7 @@ $(document).ready(function(){
     function stop_focus(){
       $('.assessment').data('window_swap',0);
       $('.upload_image_box').show();
+      $('.upload_helptext').hide();
       console.log('disabled swap');
     }
 
@@ -862,6 +863,7 @@ $(document).ready(function(){
         console.log($qno);
         $('.assessment').data('vques',$qno);
         $('#gum_'+$qno).show();
+        console.log('#gum_'+$qno+' - showing video');
         $('#curr-qno').data('qno',$qno);
         $('.qid'+$qno).data('vq',1);
         console.log('vq-'+$('.qid'+$qno).data('vq'));
@@ -903,13 +905,8 @@ $(document).ready(function(){
         //console.log('Recorded Blobs: ', recordedBlobs);
         const blob = new Blob(recordedBlobs, {type: 'video/webm'});
         const url = window.URL.createObjectURL(blob);
-
-        
        // $qno = $('#curr-qno').data('qno');
-
         $url = $('.url_video_'+$qno).data('url');
-        console.log('vqno - '+$qno);
-        console.log('vurl -'+$url);
         if($url){
             $.ajax({
                     method: "PUT",
@@ -957,7 +954,9 @@ $(document).ready(function(){
         //console.log('video#gum_'+qno);
         const gumVideo = document.querySelector('video#gum_'+qno);
         gumVideo.srcObject = stream;
-        setTimeout(startRecording,5000);
+        setTimeout(function(){
+          startRecording(qno);
+        },5000);
       }
       
     

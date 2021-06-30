@@ -287,6 +287,10 @@
           @endif
 
           @if($question->type=='urq')
+          @if(isset($settings['upload_time'])) @if($settings['upload_time'])
+          <div class="alert alert-important alert-warning upload_helptext"> Write the answer for the above question in a white paper. And the upload option will be enabled during the last ({{$settings['upload_time']}} min) of the test.</div>
+          @endif @endif
+
           <div class="bg-light border p-3 rounded mt-3 upload_image_box" style="@if(isset($settings['upload_time'])) @if($settings['upload_time']) display:none @endif @endif">
           <h5>Upload your response (image format)</h5>
 
