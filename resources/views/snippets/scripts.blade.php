@@ -3052,7 +3052,7 @@ $(function(){
 
 
     try {
-    navigator.mediaDevices.getUserMedia({video: true, audio: true})
+    navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
       video.srcObject = stream;
       video.play();
