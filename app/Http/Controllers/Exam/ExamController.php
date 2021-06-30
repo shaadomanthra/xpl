@@ -655,12 +655,9 @@ class ExamController extends Controller
     public function show($id)
     {
 
-
         $exam= Cache::remember('exam_admin_'.$id,30, function() use ($id){
             return Exam::where('slug',$id)->with('user')->with('sections')->withCount('users')->first();
         });
-
-        
 
         $exam->precheck_auto_activation();
 
