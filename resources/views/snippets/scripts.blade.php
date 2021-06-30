@@ -3728,7 +3728,7 @@ function camera_test(){
 // });
 
     
-    navigator.mediaDevices.getUserMedia({video: true, audio: true})
+    navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(successCallback, errorCallback);
 
     }
