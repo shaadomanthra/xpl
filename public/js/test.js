@@ -859,7 +859,7 @@ $(document).ready(function(){
 
       try {
         mediaRecorder = new MediaRecorder(window.stream, options);
-        mediaRecorder.muted = true
+       
         $sno = 1;//$('.clear-qno').data('sno');
         console.log($qno);
         $('.assessment').data('vques',$qno);
