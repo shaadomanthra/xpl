@@ -87,6 +87,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	
 	Route::get('/java-language-exam',function(){ return view('appl.pages.java_certification'); })->name('java.l.c');
 	Route::get('/launch-offer',function(){ return view('appl.pages.launch_offer'); })->name('launch-offer');
+	Route::get('/dxcmocks',function(){ return view('appl.dxc'); })->name('dxc');
 	Route::get('/email-template',function(){ return view('mail.email'); })->name('email.template');
 	Route::get('/versant',function(){ return view('appl.pages.verscent'); })->name('pages.verscent');
 	Route::get('/frame',function(){ return view('appl.pages.frame'); })->name('pages.frame');
