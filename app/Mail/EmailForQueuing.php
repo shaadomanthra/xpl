@@ -42,15 +42,10 @@ class EmailForQueuing extends Mailable
             $m->save();
             
         });
-      
-      if(domain()=='xplore')
-       return $this->from('no-reply@xplore.co.in', 'Xplore')
+
+        return $this->from('no-reply@xplore.co.in', 'Xplore')
             ->subject($this->subject)
             ->view('mail.email')->with('user',$this->user)->with('content',$this->content);
-        else
-            return $this->from('no-reply@mail.packetprep.com', 'PacketPrep')
-            ->subject($this->subject)
-            ->view('mail.emailpp')->with('user',$this->user)->with('content',$this->content);
 
     }
 }
