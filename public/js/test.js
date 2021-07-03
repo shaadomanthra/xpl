@@ -385,6 +385,11 @@ $(document).ready(function(){
 
 
         });
+
+        setTimeout(function(){
+          if(!$('.ip_details').text())
+            $('.ip_details').html('192.168.0.1');
+          },6000);
       }
      }
 
