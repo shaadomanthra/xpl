@@ -75,6 +75,7 @@ class CategoryController extends Controller
         return view('appl.dataentry.category.createedit')
                 ->with('project',$this->project)
                 ->with('exams',$exams)
+                ->with('editor','true')
                 ->with('select_options',$select_options)
                 ->with('stub','Create');
     }
@@ -257,6 +258,7 @@ class CategoryController extends Controller
                     ->with('exams',$exams)
                     ->with('category',$node)
                     ->with('parent',$parent)
+                    ->with('editor','true')
                     ->with('select_options',$select_options)
                     ->with('stub','Update');
         else
