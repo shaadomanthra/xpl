@@ -152,6 +152,13 @@ class CourseController extends Controller
 
         $course = Cache::get('course_'.$id);
 
+         if(request()->get('refresh'))
+            {
+
+                $course->updatecache(null,$course);
+                flash('Article Pages Cache Updated')->success();
+            }
+
         if(!$course){
             
             $course = Course::where('slug',$id)->first();
@@ -165,6 +172,7 @@ class CourseController extends Controller
         }
 
 
+        
 
         if(!$course)
             abort('404','Course Not Found');
@@ -304,6 +312,8 @@ class CourseController extends Controller
         if(!$course)
             abort('404','Course Not Found');
         
+
+
 
         $p = Product::where('slug',$course->slug)->first();
         if(!$p)

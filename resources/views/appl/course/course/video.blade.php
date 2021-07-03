@@ -37,7 +37,7 @@
     <h2><i class="fa fa-angle-double-left "></i>&nbsp; {{ $parent->name }}</h2>
   </a>
   @foreach($parent->descendants as $k => $item)
-  @if($item->video_link || $item->pdf_link)
+  @if($item->video_link || $item->pdf_link || $item->video_desc)
   <a href="{{ route('course.category.video',[$course->slug,$item->slug])}} " class="list-group-item list-group-item-action @if($item->slug == $category->slug) active @endif">
     @if(youtube_video_exists($videos[0]))
     <i class="fa fa-circle-o" aria-hidden="true"></i>
@@ -63,7 +63,7 @@
       @elseif($category->test_link)
       <i class="fa fa-external-link"></i> &nbsp;
       @else
-      <i class="fa fa-youtube-play"></i> &nbsp;
+      <i class="fa fa-th"></i> &nbsp;
       @endif
       {{ $category->name }} </div></h1>
 
@@ -102,6 +102,12 @@
         @endif  
       @endif
 
+
+@if($category->video_desc && !$category->video_link && !$category->exam_id)
+  <div class="p-4 mt-3 bg-white border">
+    {!! $category->video_desc !!}
+  </div>
+  @endif
 @if($category->pdf_link)
 <div class="p-4 bg-white">
   <div class="row">
@@ -141,6 +147,8 @@
 
 
 @endif    
+
+
 
 @if($category->exam_id)
 <div class="p-4 p-md-5 bg-white">
@@ -242,6 +250,8 @@
     {!! $category->video_desc !!}
   </div>
   @endif
+
+
 
 
   <div class=" mt-3 border p-4 rounded mb-3">

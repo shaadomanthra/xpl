@@ -123,7 +123,7 @@
 			@if(count($n->children))
 				<ul class="list2">
 					@foreach($n->children as $c)
-					@if($c->video_link || $c->pdf_link || $c->exam_id)
+					@if($c->video_link || $c->pdf_link || $c->exam_id || $c->video_desc)
 						<li class="item {{ $cid = $c->id }}" id="{{ $c->slug }}"> 
 						@include('appl.course.course.blocks.video_link')
 
@@ -139,11 +139,7 @@
                      		@include('appl.course.course.blocks.progress')
                      	@endif
 
-						@if($c->video_desc)
-                     	<div class="pt-1 pb-2 title-normal">
-                     		{!! $c->video_desc !!}
-                     	</div>
-                     	@endif
+						
                      	</li>
                      @endif	
                      @endforeach
