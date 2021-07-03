@@ -105,6 +105,7 @@ for ($i = 1; $i <= 8; $i++) {
        $dom->loadHTML($html); 
 
 
+       dd($html);
 
        /*** discard white space ***/ 
        $dom->preserveWhiteSpace = false; 
@@ -125,24 +126,38 @@ for ($i = 1; $i <= 8; $i++) {
             foreach ($rows as $row) {
                 /*** get each column by tag name ***/ 
                 $cols = $row->getElementsByTagName('td'); 
+
                 $key = strtolower(trim(strip_tags($cols->item(0)->nodeValue)));
                 $value = trim($cols->item(1)->nodeValue); 
+
+                
                 if($cols->item(1)->hasChildNodes()){
                     $images = $cols->item(1)->getElementsByTagName('img'); 
-                 
-                    foreach($images as $k=>$img)
-                    if($img->getAttribute('src')){
 
-                        $src = $img->getAttribute('src');
-                        if(strpos($src, 'http') !== false){
 
-                        }else{
-                           $url = word_imageupload(\auth::user(),$k,$img->getAttribute('src'));
-                            $img->removeAttribute('src');
-                            $img->setAttribute('src', $url);
-                            $img->setAttribute('class', 'image');   
+                    if($key=="a"){
+                       echo $key. ' - '.$value.'<br>';
+                    echo ($cols->item(1)->nodeValue);
+                    echo "<br><br>";  
+                    }
+                    
+
+                    foreach($images as $k=>$img){
+                        
+
+                        if($img->getAttribute('src')){
+
+                            $src = $img->getAttribute('src');
+                            if(strpos($src, 'http') !== false){
+
+                            }else{
+                               $url = word_imageupload(\auth::user(),$k,$img->getAttribute('src'));
+                                $img->removeAttribute('src');
+                                $img->setAttribute('src', $url);
+                                $img->setAttribute('class', 'image');   
+                            }
+                                                  
                         }
-                                              
                     }
                     foreach($images as $k=>$img)
                     if($img->getAttribute('src')){
@@ -151,10 +166,6 @@ for ($i = 1; $i <= 8; $i++) {
                     }
                 }
 
-                
-
-                
-
                 if($c1=='SNO')
                 {
                     $section[$key] = $value;
@@ -162,11 +173,10 @@ for ($i = 1; $i <= 8; $i++) {
                     $question[$key] = $value;
                 }
 
-                if($cols->item(1)->getElementsByTagName('img')){
-
-                   // echo static::DOMinnerHTML($cols->item(1)); 
-                   // echo "img here<br>";
-               }
+               //  if($cols->item(1)->getElementsByTagName('img')){
+               //     echo static::DOMinnerHTML($cols->item(1)); 
+               //      echo "img here<br>";
+               // }
 
             }
 
@@ -182,6 +192,7 @@ for ($i = 1; $i <= 8; $i++) {
             }
            
        }
+       dd($data);
 
 
        return $data;
