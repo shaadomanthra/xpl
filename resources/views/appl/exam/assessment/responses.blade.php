@@ -350,6 +350,39 @@ pre, code {
       	@endif
 
 
+        @if($questions[$t->question_id]->type=='sq')
+        @if($d=json_decode($t->comment))
+        
+        <div class="row" >
+            <div class="col-6 col-md-3">
+              <div class="p-3 bg-light rounded my-3 border" >
+                <h5>Engagement</h5>
+                <div class="display-3">{{$d->Engagement}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-3 bg-light rounded my-3 border">
+                <h5>Tone</h5>
+                <div class="display-3">{{$d->Tone}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-3 bg-light rounded my-3 border">
+                <h5>Correctness</h5>
+                <div class="display-3">{{$d->Correctness}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="p-3 bg-light rounded my-3 border">
+                <h5>Clarity</h5>
+                <div class="display-3">{{$d->Clarity}}</div>
+              </div>
+            </div>
+        </div>
+
+        @endif
+        @endif
+
         @if($questions[$t->question_id]->type=='code')
        @if(isset(json_decode($t->comment,true)['pass_1']))
         <p class="mt-3"><b>Testcases:</b></p>
@@ -473,10 +506,12 @@ pre, code {
        @if(isset($t->comment))
          @if($t->comment)
          @if($questions[$t->question_id]->type!='code')
-         @if(!isset(json_decode($t->comment,true)['response_1']) && $t->comment!='null')
-         <div class="my-2"><b>Feedback</b></div>
-         <p> {{$t->comment}} </p>
-           @endif
+          @if(!isset(json_decode($t->comment,true)['response_1']) && $t->comment!='null')
+          @if(!json_decode($t->comment))
+          <div class="my-2"><b>Feedback</b></div>
+          <p> {{$t->comment}} </p>
+          @endif
+          @endif
          @endif
 
          @endif
@@ -491,10 +526,6 @@ pre, code {
 </div>
 @endforeach
 
-
-
-    
-	
 
 </div>
 

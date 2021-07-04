@@ -83,6 +83,8 @@ class AssessmentController extends Controller
             }
         }
 
+    
+
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0];
         $details['course'] = $exam->name;
         $sum = 0;
@@ -1517,6 +1519,11 @@ class AssessmentController extends Controller
         //reevaluate
         if(request()->get('reevaluate')){
             $exam->reEvaluate($student);
+        }
+
+        //writing correction
+        if(request()->get('writing')){
+            $exam->grammarly($student);
         }
 
         if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){

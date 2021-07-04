@@ -739,8 +739,8 @@ $(function(){
     $id = $(this).data('id');
     $('.review_'+$id).removeClass('badge-success').html('under review').addClass('badge-warning');
     $('.score_save_'+$id).show();
-    $('.qno_'+$id).removeClass('qgreen').addClass('qyellow');
-    $('.box_'+$id).removeClass('qgreen').addClass('qyellow');
+    $('.qno_'+$id).removeClass('qgreen').addClass('qred');
+    $('.box_'+$id).removeClass('qgreen').addClass('qred');
     $('.score_entry_'+$id).show();
     $('.score_entry_val_'+$id).remove();
 
@@ -780,7 +780,7 @@ $(function(){
             $('<div class="score_entry_val_'+$id+'"><div>'+$score+' <i class="fa fa-edit text-primary cursor score_edit" data-id="'+$id+'"></i></div></div>').insertAfter('.score_entry_'+$id);
             $('.score_save_'+$id).hide();
             $('.loading_'+$id).hide();
-            $('.qno_'+$id).removeClass('qyellow').addClass('qgreen');
+            $('.qno_'+$id).removeClass('qred').addClass('qgreen');
             
             
           }

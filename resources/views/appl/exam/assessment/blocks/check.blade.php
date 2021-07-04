@@ -14,7 +14,7 @@
             <dt class="col-sm-5">Javascript</dt>
             <dd class="col-sm-7 js_details"> disabled</dd>
             <dt class="col-sm-5">IP Address</dt>
-            <dd class="col-sm-7 ip_details"> -</dd>
+            <dd class="col-sm-7 ip_details" data-ip="192.168.0.1"> 192.168.0.1 </dd>
           </dl>
       </div>
   </div>

@@ -586,6 +586,165 @@ $count =0;
 
     }
 
+
+    public function grammarly($user){
+        $exam  = $this;
+        $user_id = $user->id;
+        
+        $settings = $exam->settings;
+        if($settings){
+            if(json_decode($settings))
+            {
+              $settings = json_decode($settings);
+              $section_marking = ($settings->section_marking=='yes')? 1 : 0;
+
+            }else
+            $section_marking = ($settings->section_marking=='yes')? 1 : 0;
+        }
+        else
+            $section_marking = 0;
+
+        $tests = Test::where('user_id',$user_id)->where('test_id',$exam->id)->get()->keyBy('question_id');
+        $tsection = Tests_Section::where('user_id',$user_id)->where('test_id',$exam->id)->get()->keyBy('section_id');
+        $toverall = Tests_Overall::where('user_id',$user_id)->where('test_id',$exam->id)->first();
+
+        $questions = [];
+        foreach($exam->sections as $section){
+            //$qset = $section->questions;
+            $qset = $exam->getQuestionsSection($section->id,$user->id);
+            foreach($qset as $q)
+            {
+              if($q->type=='sq')
+                $questions[$q->id] = $q;
+             
+            }
+            
+
+
+        }
+
+
+        foreach($tests as $s=>$t){
+          if(array_key_exists($t->question_id, $questions))
+          {
+            $response = $t->response;
+            // create curl resource
+
+              $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
+              if(isset($output['score']['generalScore']))
+                $score = $output['score']['generalScore'];
+              else
+                $score = 10;
+
+              $t->mark= round($questions[$t->question_id]->mark/100 * $score,2);
+              $t->accuracy =1;
+              $t->status =1;
+              if(isset($output['score']['outcomeScores']))
+              $t->comment = json_encode($output['score']['outcomeScores']);
+              $t->save();
+
+              $tests[$s] = $t;
+
+
+          }
+        }
+
+        $qcount =0;
+        $ototal = 0;
+        $otm=0;
+        foreach($exam->sections as $section){
+            //$qset = $section->questions;
+            $qset = $exam->getQuestionsSection($section->id,$user->id);
+
+            $sitem = $tsection[$section->id];
+
+            $stotal = 0;
+            $stm =0;
+
+            foreach($qset as $q){
+                $flag = 0; 
+                $id = $q->id;
+                $e = $tests[$id];
+
+                if($section_marking){
+                  $mark = $section->mark;
+                  $neg = $section->negative;
+                  $stm = $stm + $mark;
+
+                  if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
+                    if($e->mark!=$mark){
+                      $e->mark = $mark;
+                      $flag=1;
+                    }
+                    $stotal = $stotal + $e->mark;
+                  }else{
+                    if($e->response && $neg){
+                      $e->mark = 0 - $neg;
+                      $flag =1;
+                    }
+
+                    $stotal = $stotal + $e->mark;
+                  }
+
+                }else{
+                  $mark = $q->mark;
+                  $stm = $stm + $mark;
+                  if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
+                    if($e->mark!=$mark){
+                      $e->mark = $mark;
+                      $flag=1;
+                    }
+                  }
+
+                  $stotal = $stotal + $e->mark;
+
+                }
+
+                if($flag){
+                  $e->save();
+                }
+            }
+
+            $sitem->score = $stotal;
+            $sitem->max = $stm;
+            $sitem->save();
+
+            $ototal = $ototal + $stotal;
+            $otm = $otm + $stm;
+
+        }
+
+        $toverall->score = $ototal;
+        $toverall->max = $otm;
+        $toverall->save();
+
+
+    }
+
+    public function curlPost($url, $data=NULL, $headers = NULL) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    if(!empty($data)){
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    }
+
+    if (!empty($headers)) {
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    }
+
+    $response = curl_exec($ch);
+
+
+    if (curl_error($ch)) {
+        trigger_error('Curl Error:' . curl_error($ch));
+    }
+
+
+    curl_close($ch);
+    return $response;
+}
+
     public function reEvaluate($user){
         $exam  = $this;
         $user_id = $user->id;

@@ -24,6 +24,7 @@ use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\College\College;
 
 use PacketPrep\Jobs\SendEmail;
+use PacketPrep\Jobs\writing;
 use PacketPrep\Jobs\PdfDownload;
 use PacketPrep\Mail\EmailForQueuing;
 
@@ -1492,6 +1493,16 @@ class ExamController extends Controller
 
             $exam->removeDuplicates();
             return redirect()->back();
+        }
+
+        if($r->get('writing')){
+            $rep =  Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
+            foreach($rep as $rx){
+               
+                writing::dispatch($rx->user,$exam);
+                flash('Wrting Evaluation is queued! Will be completed in sometime!')->success();
+
+            }
         }
 
         if($code){

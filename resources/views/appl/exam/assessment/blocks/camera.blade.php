@@ -11,7 +11,7 @@
 	@else
 
 	<div class="bg-light border rounded p-3 camera_fail mb-3" style="display:none">
-	<p><i class="fa fa-times-circle text-danger "></i> <span class="camera_message">This test requires access to the webcamera. Kindly activate camera before proceeding. Incase of any query, write to us at <span class="text-info">info@xplore.co.in</span> or call us at <span class="text-info">1800-890-1324</span>.</span></p>
+	<p><i class="fa fa-times-circle text-danger "></i>  <span class="camera_message">This test requires access to the webcamera. Kindly activate camera before proceeding. Incase of any query, write to us at <span class="text-info">@if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif</span> or call us at <span class="text-info">@if(env('CONTACT_PHONE')) {{env('CONTACT_PHONE')}} @else 9515125110 @endif</span>.</span></p>
 </div>
 	@endif
 

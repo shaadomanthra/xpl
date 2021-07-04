@@ -105,7 +105,7 @@ for ($i = 1; $i <= 8; $i++) {
        $dom->loadHTML($html); 
 
 
-       dd($html);
+       //dd($html);
 
        /*** discard white space ***/ 
        $dom->preserveWhiteSpace = false; 
@@ -192,7 +192,7 @@ for ($i = 1; $i <= 8; $i++) {
             }
            
        }
-       dd($data);
+       //dd($data);
 
 
        return $data;

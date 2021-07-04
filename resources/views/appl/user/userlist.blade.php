@@ -83,11 +83,8 @@
               <tr>
                 <th scope="col">#({{$users->total()}})</th>
                 <th scope="col">Name </th>
-                <th scope="col">Role </th>
-                <th scope="col">Group </th>
-                <th scope="col">Email</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Created</th>
+                <th scope="col">Email / Phone</th>
+                <th scope="col">Created / Lastlogin</th>
               </tr>
             </thead>
             <tbody>
@@ -106,25 +103,28 @@
                   <span class="badge-info">{{$u->status}}</span>
                   @endif
                    
-                 
-                  </td>
-                  <td>
-                  @if(count($u->roles))
+                    <div class="text-secondary">   
+                    @if($u->info)
+                    <span class="mr-2"><i class="fa fa-graduation-cap"></i> {{$u->info}}</span>
+                    @endif
+                   
+                    @if(count($u->roles))
                     @foreach($u->roles as $r)
                       {{$r->name}}
                     @endforeach
-                  @else
-                    student
-                  @endif
+                    @else
+                     <span class="fa fa-user-circle"> student</span>
+                    @endif
+                  </div>
+                 
+                  </td>
+                  
+                  <td>
+                   <h5>{{$u->email}}</h5>
+                    {{$u->phone}}
                   </td>
                   <td>
-                   {{$u->info}}
-                  </td>
-                  <td>
-                   {{$u->email}}
-                  </td>
-                  <td>
-                   {{$u->phone}}
+                   
                   </td>
                   <td>
                     {{$u->created_at->format('d-m-Y')}}
@@ -139,7 +139,7 @@
                 <th scope="row">{{ $users->currentpage() ? ($users->currentpage()-1) * $users->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
                   <a href="{{ route('profile','@'.$u->username)}}">
-                  {{ $u->name }}
+                  <h4 class="mb-1">{{ $u->name }}</h4>
                 </a>
                 @if($u->status==0)
                   <span class="badge-info badge">Inactive</span>
@@ -147,29 +147,28 @@
                     <span class="badge-warning badge">Blocked</span>
                   @endif
                    
-                 
-               
+                  <div class="text-secondary">   
+                    @if($u->info)
+                    <span class="mr-2"><i class="fa fa-graduation-cap"></i> {{$u->info}}</span>
+                    @endif
+                   
+                    @if(count($u->roles))
+                    @foreach($u->roles as $r)
+                      {{$r->name}}
+                    @endforeach
+                    @else
+                     <span class="fa fa-user-circle"> student</span>
+                    @endif
+                  </div>
                 </td>
+              
                 <td>
-                @if(count($u->roles))
-                  @foreach($u->roles as $r)
-                    {{$r->name}}
-                  @endforeach
-                @else
-                  student
-                @endif
-                </td>
-                <td>
-                 {{$u->info}}
-                </td>
-                <td>
-                 {{$u->email}}
-                </td>
-                <td>
-                 {{$u->phone}}
+                 <h4>{{$u->email}}</h4>
+                  <div class="text-secondary">{{$u->phone}}</div>
                 </td>
                 <td>
                   {{$u->created_at->format('d-m-Y')}}
+                    <div class="text-secondary"><small><i class="fa fa-clock-o"></i> {{$u->updated_at->diffForHumans()}}</small></div>
                 </td>
                
               </tr>
