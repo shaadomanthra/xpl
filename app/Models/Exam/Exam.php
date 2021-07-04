@@ -717,7 +717,7 @@ $count =0;
         $toverall->score = $ototal;
         $toverall->max = $otm;
         if($final)
-          $toverall = 1;
+          $toverall->status = 1;
         $toverall->save();
 
 
