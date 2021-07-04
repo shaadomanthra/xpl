@@ -587,7 +587,7 @@ $count =0;
     }
 
 
-    public function grammarly($user){
+    public function grammarly($user,$final=null){
         $exam  = $this;
         $user_id = $user->id;
         
@@ -716,6 +716,8 @@ $count =0;
 
         $toverall->score = $ototal;
         $toverall->max = $otm;
+        if($final)
+          $toverall = 1;
         $toverall->save();
 
 

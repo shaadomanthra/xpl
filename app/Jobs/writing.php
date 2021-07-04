@@ -36,6 +36,6 @@ class writing implements ShouldQueue
      */
     public function handle()
     {
-        $this->exam->grammarly($this->user);
+        $this->exam->grammarly($this->user,1);
     }
 }
