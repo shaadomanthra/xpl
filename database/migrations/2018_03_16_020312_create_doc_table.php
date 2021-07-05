@@ -20,6 +20,7 @@ class CreateDocTable extends Migration
             $table->integer('author_id')->unsigned();
             $table->integer('status');
             $table->integer('privacy');
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->foreign('author_id')->references('id')->on('users');
         });

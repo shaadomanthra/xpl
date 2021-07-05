@@ -14,7 +14,7 @@ class UpdateDocsTable extends Migration
     public function up()
     {
         Schema::table('docs', function (Blueprint $table) {
-            $table->string('image')->nullable();
+            
         });
     }
 

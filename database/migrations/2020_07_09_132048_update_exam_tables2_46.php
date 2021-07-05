@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateCategoriesTablesdas extends Migration
+class UpdateExamTables246 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateCategoriesTablesdas extends Migration
      */
     public function up()
     {
-         Schema::table('category_question', function (Blueprint $table) {
-            $table->integer('intest');
+        Schema::table('exams', function (Blueprint $table) {
+            $table->string('client')->nullable();
         });
     }
 

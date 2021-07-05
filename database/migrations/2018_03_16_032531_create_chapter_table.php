@@ -19,6 +19,8 @@ class CreateChapterTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('content')->nullable();
+            $table->string('description');
+            $table->string('keywords');
             $table->timestamps();
             NestedSet::columns($table);
         });
