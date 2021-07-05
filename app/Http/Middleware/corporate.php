@@ -38,7 +38,7 @@ class Corporate
 
                 $request->session()->put('client',$client);
             }
-            elseif($_SERVER['HTTP_HOST'] == 'gradable.in' ){
+            elseif($_SERVER['HTTP_HOST'] == 'gradable.in' || $_SERVER['HTTP_HOST'] == 'gradable.test'){
                 $filename = 'corporate.json';
                 $client = json_decode(file_get_contents($filename));
                 $client->name = 'Gradable';
