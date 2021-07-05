@@ -386,6 +386,8 @@ function domain() {
 
     if($domain == 'piofx' || $domain == 'p24' || $domain == 'onlinelibrary' )
             $domain  = 'piofx';
+    if($_SERVER['HTTP_HOST'] == 'gradable')
+            return 'gradable';
     if($domain == 'xplore' || $domain == 'xp' )
             $domain =  'xplore';
 
