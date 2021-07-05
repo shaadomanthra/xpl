@@ -38,6 +38,14 @@ class Corporate
 
                 $request->session()->put('client',$client);
             }
+            elseif($_SERVER['HTTP_HOST'] == 'gradable.in' ){
+                $filename = 'corporate.json';
+                $client = json_decode(file_get_contents($filename));
+                $client->name = 'Gradable';
+                $client->logo = url('/').'/img/gradable.png';
+
+                $request->session()->put('client',$client);
+            }
             elseif( subdomain()!='xplore' && subdomain()!='bfs'){
 
                 $client = Cache::remember('client_'.subdomain(),2400,function() {
