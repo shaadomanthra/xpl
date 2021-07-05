@@ -20,8 +20,6 @@ class Corporate
     {
         if(subdomain()){
 
-            dd(subdomain());
-
 
             if(subdomain() == 'www'){
                 $url = url()->full();
