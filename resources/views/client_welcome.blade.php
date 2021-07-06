@@ -30,7 +30,9 @@
         
         <div class="col-sm-6 login-section-wrapper ">
           <div class="brand-wrapper">
-            <img  src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-50 mb-5"  alt=" logo " type="image/png" style="">
+            
+            <img  src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 @if(domain()=='gradable') w-50 @else w-100 @endif mb-5"  alt=" logo " type="image/png" style="">
+
           </div>
           @if(request()->session()->get('settings'))
             @if(request()->session()->get('settings')->message_l)
