@@ -49,9 +49,7 @@
     <a href="{{ route('profile','@'.\auth::user()->username)}}" class="btn btn-primary">Profile</a>
     @endif
 
-    @if(subdomain() == 'rguktn' || subdomain() == 'rguktrkv' )
-    <a href="{{ route('password.change')}}" class="btn btn-primary">Change Password</a>
-    @elseif(request()->session()->get('settings'))
+    @if(request()->session()->get('settings'))
       @if(request()->session()->get('settings')->change_password)
       <a href="{{ route('password.change')}}" class="btn btn-primary">Change Password</a>
       @endif
