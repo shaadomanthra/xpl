@@ -47,9 +47,9 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         <div class="float-right d-inline">
           <a href="#" data-toggle="modal" data-target="#instructions">
             <i class="fa fa-info-circle ml-2 cursor" data-toggle="tooltip"  title="View Instructions" ></i></a>
-
-            @if(isset($settings['question_list']))
-          @if(strtolower($settings['question_list'])=='yes')
+          
+            @if(isset($settings['upload_time']))
+          @if($settings['upload_time']!=0)
           <a href="#" data-toggle="modal" data-target="#questions">
             <i class="fa fa-question-circle ml-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
             @endif
@@ -390,7 +390,7 @@ div.chats {
   <div class="modal-dialog  modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title text-info" id="exampleModalLongTitle"><i class="fa fa-question-circle"></i> Questions</h3>
+        <h3 class="modal-title text-info" id="exampleModalLongTitle"><i class="fa fa-question-circle"></i> Question List</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -400,7 +400,7 @@ div.chats {
           <thead>
             <tr>
               <th scope="col" width="10%" style="text-align: center;">Qno</th>
-              <th scope="col">Response</th>
+              <th scope="col">Questions</th>
             </tr>
           </thead>
           <tbody>

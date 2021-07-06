@@ -127,7 +127,9 @@
                    
                   </td>
                   <td>
+                    @if($u->created_at)
                     {{$u->created_at->format('d-m-Y')}}
+                    @endif
                   </td>
                  
                 </tr>
@@ -167,8 +169,10 @@
                   <div class="text-secondary">{{$u->phone}}</div>
                 </td>
                 <td>
-                  {{$u->created_at->format('d-m-Y')}}
+                  @if($u->created_at)
+                    {{$u->created_at->format('d-m-Y')}}
                     <div class="text-secondary"><small><i class="fa fa-clock-o"></i> {{$u->updated_at->diffForHumans()}}</small></div>
+                  @endif
                 </td>
                
               </tr>

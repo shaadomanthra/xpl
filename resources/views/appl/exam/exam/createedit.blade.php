@@ -67,7 +67,13 @@
     <div class="col-12 col-md-3">
       <label for="formGroupExampleInput ">Test type</label>
       <select class="form-control" name="examtype_id">
+        @if(subdomain()=='xplore')
         <option value="6" @if(isset($exam)) @if($exam->examtype_id==6) selected @endif @endif >General</option>
+        @endif
+
+        @if(count($examtypes)==0)
+        <option value="1" @if(isset($exam)) @if($exam->examtype_id==1) selected @endif @endif >General</option>
+        @endif
         @foreach($examtypes as $et)
           <option value="{{$et->id}}" @if(isset($exam)) @if($exam->examtype_id==$et->id) selected @endif @endif >{{$et->name}}</option>
         @endforeach

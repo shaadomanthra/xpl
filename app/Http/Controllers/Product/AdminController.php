@@ -536,6 +536,7 @@ class AdminController extends Controller
         $user_details->user_id = $user->id;
         $user_details->bio = $request->get('bio');
         $user_details->country = 'IN';
+        $user_details->city = 'HYDERABAD';
         $user_details->phone = $request->get('phone');
         $user_details->phone_2 = $request->get('phone_2');
         $user_details->year_of_passing = $request->get('year_of_passing');
@@ -784,6 +785,7 @@ class AdminController extends Controller
         $user_details->user_id = $user->id;
         $user_details->bio = $request->get('bio');
         $user_details->country = 'IN';
+        $user_details->city = 'HYDERABAD';
         $user_details->phone = $request->get('phone');
         $user_details->phone_2 = $request->get('phone_2');
         $user_details->year_of_passing = $request->get('year_of_passing');
@@ -939,6 +941,9 @@ class AdminController extends Controller
         }
 
         $col = College::where('id',$college_id)->first();
+
+        $zone_id = 1;
+        if($col)
         $zone_id = $col->zones->first()->id;
 
         if($zone_id){
