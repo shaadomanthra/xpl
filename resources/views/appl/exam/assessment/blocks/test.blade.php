@@ -412,15 +412,19 @@ div.chats {
                 </th>
                 <td>
                   <div class="">
+                    @if(isset($question->passage))
                     @if($question->passage)
                     <div class="p-4 mb-3" style="background-color: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
                       {!!$question->passage!!}
                     </div>
                     @endif
+                    @endif
                     <p>
                     {!! $question->question !!}
                     </p>
+                    @if(isset($question->a))
                     @if($question->a)
+                    @if(!is_object($question->d))
                     <div class="row">
                       <div class="col-1">(A)</div>
                       <div class="col-5">{{$question->a}}</div>
@@ -431,6 +435,8 @@ div.chats {
                       <div class="col-1">(D)</div>
                       <div class="col-5">{{$question->d}}</div>
                     </div>
+                    @endif
+                    @endif
                     @endif
                   </div>
                 </td>
