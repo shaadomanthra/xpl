@@ -735,6 +735,16 @@ class UserController extends Controller
         }
 
 
+        $usx = Cache::get('uid_1');
+
+        if(!$usx){
+
+            $usx = User::where('email','packetcode@gmail.com')->first();
+            Cache::forever('uid_1',$usx);
+        }
+
+
+
         $user = User::create([
             'name' => $request->name,
             'username' => strtolower($username),
@@ -742,7 +752,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
             'activation_token' => str_random(20),
             'client_slug' => $subdomain,
-            'user_id' =>1,
+            'user_id' =>$usx->id,
             'status'=>1,
         ]);
 
