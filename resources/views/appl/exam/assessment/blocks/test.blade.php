@@ -608,6 +608,7 @@ div.chats {
     
 
     <video id="gum_1000" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2000" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="gum_2001" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="gum_2002" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="gum_2003" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
