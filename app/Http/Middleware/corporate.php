@@ -59,10 +59,7 @@ class Corporate
                     else if(Storage::disk('s3')->exists('companies/'.subdomain().'.jpg'))
                         $client->logo = Storage::disk('s3')->url('companies/'.subdomain().'.jpg');
                     else{
-                        if(domain()=='piofx')
-                            $client->logo = url('/').'/img/piofx.png';
-                        else
-                            $client->logo = url('/').'/img/xplore.png';
+                        $client->logo = url('/').'/img/default_logo.png';
                     } 
                         
 
