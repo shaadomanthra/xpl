@@ -10,9 +10,9 @@
 
 <div class="row">
   <div class="col-12 ">
-<div class="p-0 mb-4" style="border:1px solid #eee;box-shadow: 2px 2px 2px 1px #e7e7e7">
-  <div class="p-2 bg-light"> </div>
-<div class="  p-3 pt-5 bg-white" >
+<div class="p-0 mb-4" @if(env('APP_NAME')=='Gradable') style="border:1px solid #8ec5d4;box-shadow: 2px 2px 2px 1px #e2e6e7" @else style="border:1px solid #eee;box-shadow: 2px 2px 2px 1px #e7e7e7" @endif>
+  <div class="p-2 " @if(env('APP_NAME')=='Gradable')  style="background: #bee0e9;" @else style="background: #eee;"@endif> </div>
+<div class="  p-3 pt-5 " @if(env('APP_NAME')=='Gradable')  style="background: #d6eef3;" @else style="background: white;" @endif>
 
 
   <div class="row ">
@@ -22,15 +22,14 @@
         <div class="col-12 col-md-3">
 
 
-          <img class="img-thumbnail rounded-circle mb-3" src="@if(\auth::user()->getImage()) {{ (\auth::user()->getImage())}}@else {{ Gravatar::src(\auth::user()->email, 150) }}@endif">
+          <img class="img-thumbnail rounded-circle mb-3 d-none d-md-block" src="@if(\auth::user()->getImage()) {{ (\auth::user()->getImage())}}@else {{ Gravatar::src(\auth::user()->email, 150) }}@endif">
         </div>
         <div class="col-12 col-md-9">
 
           <h2>Hi, {{  \auth::user()->name}}</h2>
       <p> 
         @if(auth::user()->roll_number)
-        <span class="badge badge-info">{{auth::user()->roll_number}}</span>
-
+        <span class="badge badge-warning">{{auth::user()->roll_number}}</span><br>
         @endif
         @if(auth::user()->branch_id)
           @if(isset($data['branches'][auth::user()->branch_id])) <span class="badge badge-primary"> {{ $data['branches'][auth::user()->branch_id]->name}}</span>@else Welcome aboard @endif
@@ -44,17 +43,12 @@
             Anthony J Dangelo</p>
 
 
-
-    @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test')
-    <a href="{{ route('profile','@'.\auth::user()->username)}}" class="btn btn-primary">Profile</a>
-    @endif
-
     @if(request()->session()->get('settings'))
       @if(request()->session()->get('settings')->change_password)
       <a href="{{ route('password.change')}}" class="btn btn-primary">Change Password</a>
       @endif
     @endif
-      <a class="btn border border-success text-success " href="{{ route('logout') }}" onclick="event.preventDefault();
+      <a class="btn btn-info " href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();" role="button">Logout</a>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
@@ -80,7 +74,7 @@
 
     </div>
     
-    <div class="col-12 col-md-3  ">
+    <div class="col-12 col-md-3  @if(env('APP_NAME')=='Gradable')  d-none @endif ">
       <div class="float-right ">
                 <img src="{{ asset('/img/student_front.png')}}" class="w-100 p-3 pt-0"/>
                 
