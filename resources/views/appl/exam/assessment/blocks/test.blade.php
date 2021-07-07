@@ -88,10 +88,10 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
           <a href="#" class="text-light" data-toggle="modal" data-target="#instructions">
             <i class="fa fa-info-circle  mr-4 cursor" data-toggle="tooltip"  title="View Instructions" ></i></a>
 
-            @if(isset($settings['question_list']))
-          @if(strtolower($settings['question_list'])=='yes')
-          <a href="#" class="text-light" data-toggle="modal" data-target="#questions">
-            <i class="fa fa-question-circle mr-4 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
+           @if(isset($settings['upload_time']))
+          @if($settings['upload_time']!=0)
+          <a href="#" data-toggle="modal" data-target="#questions">
+            <i class="fa fa-question-circle ml-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
             @endif
             @endif
 
@@ -462,14 +462,17 @@ div.chats {
       <h4>{{ auth::user()->name}}</h4>
       <p class="mb-0">
         {{ auth::user()->roll_number}}<br>
+          {{ auth::user()->email}}<br>
         @if(isset($data['branches'][auth::user()->branch_id])) {{ $data['branches'][auth::user()->branch_id]->name}} <br>@endif
         <span class="badge badge-warning connection_status" data-status=1></span>
       </p>
 
     </div>
     <div class="col-6">
+      @if($user->getImage())
         <img 
       src="{{ $user->getImage() }}  " class="rounded d-inline float-right" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Profile Picture">
+      @endif
       @if(isset($exam->settings))
       @if(isset($exam->settings->signature))
           @if(strtolower($exam->settings->signature)=='yes')
