@@ -43,6 +43,65 @@ class HomeController extends Controller
     public function phpword(){
 
       
+        //curl -v -X GET "https://westcentralus.api.cognitive.microsoft.com/vision/v3.2/read/analyzeResults/{operationId}" -H "Ocp-Apim-Subscription-Key: {subscription key}" --data-ascii "{body}" 
+
+        if(!request()->get('url')){
+            // set post fields
+            //[img]https://i.imgur.com/kQLl0Or.jpg[/img]
+            //[img]https://i.imgur.com/s1dxMw6.jpg[/img]
+            //[img]https://i.imgur.com/PmPS7Iq.jpg[/img]
+            $post = [
+                'url' => 'https://i.imgur.com/PmPS7Iq.jpg'
+            ];
+            $payload = json_encode( $post );
+
+            $ch = curl_init('https://centralindia.api.cognitive.microsoft.com/vision/v3.2/read/analyze');
+
+            curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Ocp-Apim-Subscription-Key:b0d522e12fb74962a8d829e0f3368fdb'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+            curl_setopt($ch, CURLOPT_HEADERFUNCTION,
+                function ($curl, $header) use (&$headers) {
+                    $len = strlen($header);
+                    $header = explode(':', $header, 2);
+                    if (count($header) < 2) // ignore invalid headers
+                        return $len;
+
+                    $headers[strtolower(trim($header[0]))][] = trim($header[1]);
+
+                    return $len;
+                }
+            );
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $url = $headers['operation-location'][0];
+            dd($url);
+        }else{
+            $url = request()->get('url');
+
+
+
+            $ch = curl_init($url);
+
+            curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Ocp-Apim-Subscription-Key:b0d522e12fb74962a8d829e0f3368fdb'));
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+           
+            $response = json_decode(curl_exec($ch),true);
+
+            $text ='';
+            $lines = $response['analyzeResult']['readResults'][0]['lines'];
+            foreach($lines as $l)
+            {
+                $text = $text.'<br>'.$l['text'];
+            }
+            echo ($text);
+            curl_close($ch);
+        }
+        
+
+       
+
+        dd('none');
         $sec = new Section();
         $source = "Exam.docx";
         $name = 'docs/doc_'.\Auth::user()->id.'.html';

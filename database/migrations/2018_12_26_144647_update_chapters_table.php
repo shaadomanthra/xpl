@@ -14,8 +14,7 @@ class UpdateChaptersTable extends Migration
     public function up()
     {
         Schema::table('chapters', function (Blueprint $table) {
-            $table->string('description');
-            $table->string('keywords');
+            
         });
     }
 

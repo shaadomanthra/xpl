@@ -47,9 +47,9 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         <div class="float-right d-inline">
           <a href="#" data-toggle="modal" data-target="#instructions">
             <i class="fa fa-info-circle ml-2 cursor" data-toggle="tooltip"  title="View Instructions" ></i></a>
-
-            @if(isset($settings['question_list']))
-          @if(strtolower($settings['question_list'])=='yes')
+          
+            @if(isset($settings['upload_time']))
+          @if($settings['upload_time']!=0)
           <a href="#" data-toggle="modal" data-target="#questions">
             <i class="fa fa-question-circle ml-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
             @endif
@@ -88,8 +88,8 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
           <a href="#" class="text-light" data-toggle="modal" data-target="#instructions">
             <i class="fa fa-info-circle  mr-4 cursor" data-toggle="tooltip"  title="View Instructions" ></i></a>
 
-            @if(isset($settings['question_list']))
-          @if(strtolower($settings['question_list'])=='yes')
+           @if(isset($settings['upload_time']))
+          @if($settings['upload_time']!=0)
           <a href="#" class="text-light" data-toggle="modal" data-target="#questions">
             <i class="fa fa-question-circle mr-4 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
             @endif
@@ -390,7 +390,7 @@ div.chats {
   <div class="modal-dialog  modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title text-info" id="exampleModalLongTitle"><i class="fa fa-question-circle"></i> Questions</h3>
+        <h3 class="modal-title text-info" id="exampleModalLongTitle"><i class="fa fa-question-circle"></i> Question List</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -400,7 +400,7 @@ div.chats {
           <thead>
             <tr>
               <th scope="col" width="10%" style="text-align: center;">Qno</th>
-              <th scope="col">Response</th>
+              <th scope="col">Questions</th>
             </tr>
           </thead>
           <tbody>
@@ -412,7 +412,26 @@ div.chats {
                 </th>
                 <td>
                   <div class="">
+                    @if($question->passage)
+                    <div class="p-4 mb-3" style="background-color: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
+                      {!!$question->passage!!}
+                    </div>
+                    @endif
+                    <p>
                     {!! $question->question !!}
+                    </p>
+                    @if($question->a)
+                    <div class="row">
+                      <div class="col-1">(A)</div>
+                      <div class="col-5">{{$question->a}}</div>
+                      <div class="col-1">(B)</div>
+                      <div class="col-5">{{$question->b}}</div>
+                      <div class="col-1">(C)</div>
+                      <div class="col-5">{{$question->c}}</div>
+                      <div class="col-1">(D)</div>
+                      <div class="col-5">{{$question->d}}</div>
+                    </div>
+                    @endif
                   </div>
                 </td>
               </tr>
@@ -443,14 +462,17 @@ div.chats {
       <h4>{{ auth::user()->name}}</h4>
       <p class="mb-0">
         {{ auth::user()->roll_number}}<br>
+          {{ auth::user()->email}}<br>
         @if(isset($data['branches'][auth::user()->branch_id])) {{ $data['branches'][auth::user()->branch_id]->name}} <br>@endif
         <span class="badge badge-warning connection_status" data-status=1></span>
       </p>
 
     </div>
     <div class="col-6">
+      @if($user->getImage())
         <img 
       src="{{ $user->getImage() }}  " class="rounded d-inline float-right" alt="{{  $exam->name }}" style='max-width:60px;' data-toggle="tooltip"  title="Profile Picture">
+      @endif
       @if(isset($exam->settings))
       @if(isset($exam->settings->signature))
           @if(strtolower($exam->settings->signature)=='yes')
@@ -586,6 +608,7 @@ div.chats {
     
 
     <video id="gum_1000" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2000" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="gum_2001" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="gum_2002" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="gum_2003" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>

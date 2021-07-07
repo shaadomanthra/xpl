@@ -10,6 +10,17 @@
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+   @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+      <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' )
+    <link rel="shortcut icon" href="{{asset('/favicon_xplore.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || domain() == 'piofx' || $_SERVER['HTTP_HOST'] == 'piofx.in')
+    <link rel="shortcut icon" href="{{asset('/favicon_piofx.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'gradable.test' || env('APP_NAME') =='Gradable')
+    <link rel="shortcut icon" href="{{asset('/favicon_gradable.ico')}}" />
+  @else
+     <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
+  @endif
 </head>
 <body>
   <main>
@@ -19,7 +30,9 @@
         
         <div class="col-sm-6 login-section-wrapper ">
           <div class="brand-wrapper">
-            <img  src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 w-100"  alt=" logo " type="image/png" style="">
+            
+            <img  src="{{ request()->session()->get('client')->logo }} "  class="ml-md-0 @if(domain()=='gradable') w-50 @else w-100 @endif mb-5"  alt=" logo " type="image/png" style="">
+
           </div>
           @if(request()->session()->get('settings'))
             @if(request()->session()->get('settings')->message_l)
@@ -52,6 +65,8 @@
 
             @if(domain()=='piofx')
             <img src="{{ asset('img/bg_login_piofx.jpg') }}?time={{ microtime()}}" alt="login image" class="login-img">
+            @elseif(domain()=='gradable')
+            <img src="{{ asset('img/bg_login_gradable.jpg') }}?time={{ microtime()}}" alt="login image" class="login-img">
             @else
             <img src="{{ asset('img/bg_login.jpg') }}?time={{ microtime()}}" alt="login image" class="login-img">
             @endif

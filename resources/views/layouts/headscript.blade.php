@@ -27,12 +27,14 @@
     @endif
   <title>@yield('title')</title>
   
- @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+  @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
       <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
   @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' )
     <link rel="shortcut icon" href="{{asset('/favicon_xplore.ico')}}" />
   @elseif($_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || domain() == 'piofx' || $_SERVER['HTTP_HOST'] == 'piofx.in')
     <link rel="shortcut icon" href="{{asset('/favicon_piofx.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'gradable.test' || env('APP_NAME') =='Gradable')
+    <link rel="shortcut icon" href="{{asset('/favicon_gradable.ico')}}" />
   @else
      <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
   @endif

@@ -11,6 +11,7 @@ use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Dataentry\Category;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use PacketPrep\Models\Dataentry\Project;
 
 class SectionController extends Controller
 {
@@ -303,6 +304,10 @@ class SectionController extends Controller
                         $q->topic = str_replace(' ','',strip_tags(strtolower($qdata['topic'])));
                     }
                     
+                    $project = Project::where('slug','default')->first();
+                    if($project)
+                        $q->project_id = $project->id;
+                    else
                     $q->project_id =78;
                     $q->user_id = \auth::user()->id;
                     $q->status =1;

@@ -61,14 +61,14 @@ class AdminController extends Controller
         $users = new AdminController;
         $extension = 'json';
 
-        $filename  = 'https://s3-xplore.s3.ap-south-1.amazonaws.com/analytics_xplore.co.in.json';
+        $filename  = 'https://s3-xplore.s3.ap-south-1.amazonaws.com/analytics_'.subdomain().'.co.in.json';
        
 
         
         
 
         if(!$request->get('refresh')){
-            $data =   json_decode(Storage::disk('s3')->get('analytics_xplore.co.in.json'),true);
+            $data =   json_decode(Storage::disk('s3')->get('analytics_'.subdomain().'.co.in.json'),true);
             
 
 
@@ -114,7 +114,7 @@ class AdminController extends Controller
 
         if($request->get('refresh')){
             
-            Storage::disk('s3')->put('analytics_xplore.co.in.json',json_encode($data));
+            Storage::disk('s3')->put('analytics_'.subdomain().'.co.in.json',json_encode($data));
         }    
 
         return view('appl.product.admin.index')
@@ -536,6 +536,7 @@ class AdminController extends Controller
         $user_details->user_id = $user->id;
         $user_details->bio = $request->get('bio');
         $user_details->country = 'IN';
+        $user_details->city = 'HYDERABAD';
         $user_details->phone = $request->get('phone');
         $user_details->phone_2 = $request->get('phone_2');
         $user_details->year_of_passing = $request->get('year_of_passing');
@@ -784,6 +785,7 @@ class AdminController extends Controller
         $user_details->user_id = $user->id;
         $user_details->bio = $request->get('bio');
         $user_details->country = 'IN';
+        $user_details->city = 'HYDERABAD';
         $user_details->phone = $request->get('phone');
         $user_details->phone_2 = $request->get('phone_2');
         $user_details->year_of_passing = $request->get('year_of_passing');
@@ -939,6 +941,9 @@ class AdminController extends Controller
         }
 
         $col = College::where('id',$college_id)->first();
+
+        $zone_id = 1;
+        if($col)
         $zone_id = $col->zones->first()->id;
 
         if($zone_id){
@@ -1084,6 +1089,7 @@ class AdminController extends Controller
         }
         $user_details->user_id = $user->id;
         $user_details->country = 'IN';
+        $user_details->city = 'HYD';
         $user_details->phone = $request->get('phone');
         $user_details->phone_2 = $request->get('phone_2');
         $user_details->year_of_passing = $request->get('year_of_passing');
@@ -1241,6 +1247,8 @@ class AdminController extends Controller
         }
 
         $col = College::where('id',$college_id)->first();
+        $zone_id = null;
+        if($col)
         $zone_id = $col->zones->first()->id;
         
         if($zone_id){

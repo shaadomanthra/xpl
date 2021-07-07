@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateExamsTablesad extends Migration
+class UpdateCategoriesTable23 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateExamsTablesad extends Migration
      */
     public function up()
     {
-        Schema::table('exams', function (Blueprint $table) {
-            $table->string('code')->nullable();
+         Schema::table('categories', function (Blueprint $table) {
+            $table->longText('video_keywords')->nullable();
         });
     }
 

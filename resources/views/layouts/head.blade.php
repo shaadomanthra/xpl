@@ -37,6 +37,8 @@
     <link rel="shortcut icon" href="{{asset('/favicon_xplore.ico')}}" />
   @elseif($_SERVER['HTTP_HOST'] == 'onlinelibrary.test' || $_SERVER['HTTP_HOST'] == 'piofx.com' || domain() == 'piofx' || $_SERVER['HTTP_HOST'] == 'piofx.in')
     <link rel="shortcut icon" href="{{asset('/favicon_piofx.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'gradable.test' || env('APP_NAME') =='Gradable')
+    <link rel="shortcut icon" href="{{asset('/favicon_gradable.ico')}}" />
   @else
      <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
   @endif

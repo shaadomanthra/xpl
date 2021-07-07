@@ -343,6 +343,8 @@ function subdomain() {
 
     if($_SERVER['HTTP_HOST'] == 'piofx.com' || $_SERVER['HTTP_HOST'] == 'piofx.in'  || $_SERVER['HTTP_HOST'] == 'onlinelibrary.test')
             return 'piofx';
+    if($_SERVER['HTTP_HOST'] == 'gradable.test' || $_SERVER['HTTP_HOST'] == 'gradable.in' )
+            return 'gradable';
     if($_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' )
             return 'rguktn';
     if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.in.net')
@@ -384,6 +386,8 @@ function domain() {
 
     if($domain == 'piofx' || $domain == 'p24' || $domain == 'onlinelibrary' )
             $domain  = 'piofx';
+    if($_SERVER['HTTP_HOST'] == 'gradable')
+            return 'gradable';
     if($domain == 'xplore' || $domain == 'xp' )
             $domain =  'xplore';
 

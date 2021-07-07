@@ -51,13 +51,8 @@
 
     
 		<div class="  display-4  mb-1 d-none d-md-block"><b> {{$student->name}} - Report</b></div>
-		@if($student->roll_number)<span class="badge badge-warning ">{{$student->roll_number}}</span>@endif<br>
-      @if($student->email)<span class="badge badge-info ">Email : {{$student->email}}</span> <br>@endif
-        @if($student->phone)<span class="badge badge-info ">Phone : {{$student->phone}}</span> <br>@endif
-      @if(isset($data['branches'][$student->branch_id]->name))
-    @if($student->branch_id)<span class="badge badge-danger">{{$data['branches'][$student->branch_id]->name}}</span>@endif
-      @if($student->college_id)<span class="badge badge-info">{{$data['colleges'][$student->college_id]->name}}</span><br>@endif
-        @endif
+	
+   
 		<p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span><br>
       
 			
@@ -72,7 +67,7 @@
  
 @if($exam->solutions ==2 && !request()->get('student'))
 
-  <div class="card mb-3"  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
+  <div class="card mb-3"  style="background: #ffceb8;border: 2px solid #e0a889;color: #b55422;">
     @if($exam->message)
     <div class="card-body">
       {{$exam->message}}

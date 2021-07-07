@@ -109,7 +109,8 @@
   <dd class="col-sm-7"><span class="badge badge-danger">Administrator</span></dd>
   @endif
   <dt class="col-sm-5">Created </dt>
-  <dd class="col-sm-7">{{ $user->created_at->diffforHumans()}}</dd>
+
+  <dd class="col-sm-7">@if($user->created_at) {{ $user->created_at->diffforHumans()}} @endif</dd>
   <dt class="col-sm-5">Status</dt>
   <dd class="col-sm-7">
      @if($user->status==0)

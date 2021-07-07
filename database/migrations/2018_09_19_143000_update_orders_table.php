@@ -14,8 +14,6 @@ class UpdateOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->integer('credit_count')->nullable();
-            $table->integer('credit_rate')->nullable();
         });
     }
 

@@ -19,7 +19,9 @@
         
         <div class=' pb-1'>
           <p class="heading_two mb-2 f30" ><i class="fa fa-bars "></i> Questions ({{$qdata['total']}}) @if(request()->get('set')!=null) - Set {{request()->get('set')}} @endif &nbsp;
+            @if(request()->get('all'))
             <a href="{{ route('test.questionlist',$exam->slug)}}?fix_topic=1" class="btn  btn-outline-success btn-sm"> Fix Topics</a>
+            @endif
           </p>
         </div>
       </div>
@@ -35,7 +37,7 @@
 
   <div class="col-md-12">
 
-    @if(!request()->get('simple'))
+    @if(request()->get('all'))
     <div class="card  bg-light mb-3">
       <div class="card-body">
         <div class="row mb-0">
@@ -106,7 +108,7 @@
               <tr>
                 <th scope="col" width="8%">#({{count($data)}})</th>
                 <th scope="col">Question </th>
-                @if(!request()->get('simple'))
+                @if(request()->get('all'))
                 <th scope="col" width="10%">Topic </th>
                 <th scope="col" width="10%">Level</th>
                 <th scope="col">Mark</th>
@@ -118,6 +120,11 @@
               <tr>
                 <th scope="row">{{ ($key+1) }}</th>
                 <td>
+                  @if($obj->passage)
+                    <div class="p-4 mb-3" style="background-color: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
+                      {!!$obj->passage!!}
+                    </div>
+                  @endif
                   <h5 >{!! $obj->question !!} </h5>
                   <p>
                     @if($obj->a)
@@ -159,8 +166,14 @@
                   @if($obj->answer)<span class="text-primary">Answer : <b>{{$obj->answer}}</b> </span>@endif &nbsp; 
 
                   @if($obj->section_name)<span class="text-danger">Section : <b>{{$obj->section_name}}</b> </span>@endif
+                    &nbsp;
+                  @if($obj->type)<span class="text-info">Type : <b>{{$obj->type}}</b> </span>@endif &nbsp;
+
+                  @if(json_decode($exam->settings,true)['section_marking']=='no')
+                    @if($obj->mark)<span class="text-secondary">Mark : <b>{{$obj->mark}}</b> </span>@endif &nbsp;
+                  @endif
                 </td>
-                @if(!request()->get('simple'))
+                @if(request()->get('all'))
                    <td> {{ $obj->topic }}</td>
                   <td>@if($obj->level)  Level {{ $obj->level }} @else '-' @endif</td>
                   <td>{{ $obj->mark }}</td>

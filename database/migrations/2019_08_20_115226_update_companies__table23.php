@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateExamTables46 extends Migration
+class UpdateCompaniesTable23 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class UpdateExamTables46 extends Migration
      */
     public function up()
     {
-        Schema::table('exams', function (Blueprint $table) {
-            $table->string('client')->nullable();
+        Schema::table('companies', function (Blueprint $table) {
+            $table->string('slug')->nullable();
+            $table->longText('details')->nullable();
+            $table->longText('keywords')->nullable();
+            $table->dropColumn(['website']);
         });
     }
 

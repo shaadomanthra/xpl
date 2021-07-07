@@ -66,6 +66,17 @@ $(document).ready(function(){
     }
 
 
+    if($('.passage').length){
+      var w  = screen.width;
+      var h  = screen.height - 350;
+
+      if(w>900){
+        $('.pcard').css('max-height',h+'px');
+      }
+      console.log(w);
+    }
+
+
 
     /* windowswap detection */
     function swapDetected() {
@@ -1015,6 +1026,19 @@ $(document).ready(function(){
         $('#vsc').modal('hide');
         console.log("Hello all - end");
       },$time360 * 86* 1000);
+
+      setTimeout(function(){
+            a = 0;
+            $id = parseInt("200"+a);
+            console.log("videosnaps - start - "+a);
+            startvideo($id);
+          },500);
+          setTimeout(function(){
+            a = 1;
+            $id = parseInt("200"+a);
+            console.log("videsnaps - end - "+a);
+            stopRecording($id);
+        }, 2000);
       
    }
 
@@ -1022,6 +1046,8 @@ $(document).ready(function(){
    {
       $vcount= parseInt($('.assessment').data('videosnaps'));
       $times = [0,25,180,720,1020];
+
+        
 
          setTimeout(function(){
             a = 1;

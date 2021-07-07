@@ -15,7 +15,7 @@
 }
 @media (max-width: 1200px) { 
 .fsmall{
-  font-size: 12px;
+  font-size: 16px;
 }
 .pbox{
   max-width:900px;
@@ -26,7 +26,7 @@
 }
 @media (max-width: 720px) { 
 .fsmall{
-  font-size: 12px;
+  font-size: 16px;
 }
 .pbox{
   max-width:900px;
@@ -37,7 +37,7 @@
 }
 @media (max-width: 400px) { 
 .fsmall{
-  font-size: 12px;
+  font-size: 16px;
 }
 .pbox{
   max-width:900px;
@@ -48,7 +48,7 @@
 }
 @media (max-width: 330px) { 
 .fsmall{
-  font-size: 10px;
+  font-size: 16px;
 }
 }
 
@@ -62,7 +62,7 @@
   @if(trim($question->passage))
   <div class="col-12 col-md-12 col-lg pbox" >
     <div class="qstart"></div> 
-  <div class="card my-3 qsset" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;max-height:300px; overflow: scroll;">
+  <div class="card pcard my-3 qsset" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;max-height:300px; overflow: scroll;">
 
     <div class="card-body">
       <b>Passage</b> 
@@ -364,7 +364,7 @@
    <div class="p-5  m-3 m-md-1"></div>
 
    <div class=" border  p-3 bg-light" style="margin-top: -5px; position: fixed; bottom:0;left:0;right:0;z-index:10">
-    <h5 class="mb-0">Support&nbsp;&nbsp; <span class=" text-info"><b><i class="fa fa-phone-square"></i> @if(env('CONTACT_PHONE')) {{env('CONTACT_PHONE')}} @else 1800 890 1324 @endif</b></span> | <span class=" text-info"><b><i class="fa fa-inbox"></i> @if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else info@xplore.co.in @endif</b></span> 
+    <h5 class="mb-0">Support&nbsp;&nbsp; <span class=" text-info"><b><i class="fa fa-phone-square"></i> @if(env('CONTACT_PHONE')) {{env('CONTACT_PHONE')}} @else 9515125110 @endif</b></span> | <span class=" text-info"><b><i class="fa fa-inbox"></i> @if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif</b></span> 
 
       <span class=" text-secondary float-md-right timestamp"></span>
 

@@ -42,7 +42,7 @@
 	@if($exam->solutions ==2 && !\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','hr-manager']))
 
 
-	<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
+	<div class="card "  style="background: #ffceb8;border: 2px solid #e0a889;color: #b55422;">
 		@if($exam->message)
 		<div class="card-body">
 			{{$exam->message}}
