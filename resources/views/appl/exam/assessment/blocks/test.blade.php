@@ -417,7 +417,21 @@ div.chats {
                       {!!$question->passage!!}
                     </div>
                     @endif
+                    <p>
                     {!! $question->question !!}
+                    </p>
+                    @if($question->a)
+                    <div class="row">
+                      <div class="col-1">(A)</div>
+                      <div class="col-5">{{$question->a}}</div>
+                      <div class="col-1">(B)</div>
+                      <div class="col-5">{{$question->b}}</div>
+                      <div class="col-1">(C)</div>
+                      <div class="col-5">{{$question->c}}</div>
+                      <div class="col-1">(D)</div>
+                      <div class="col-5">{{$question->d}}</div>
+                    </div>
+                    @endif
                   </div>
                 </td>
               </tr>

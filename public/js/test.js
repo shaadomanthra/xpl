@@ -68,7 +68,7 @@ $(document).ready(function(){
 
     if($('.passage').length){
       var w  = screen.width;
-      var h  = screen.height - 250;
+      var h  = screen.height - 350;
 
       if(w>900){
         $('.pcard').css('max-height',h+'px');
