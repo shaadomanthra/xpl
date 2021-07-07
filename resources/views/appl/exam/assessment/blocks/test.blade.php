@@ -412,6 +412,11 @@ div.chats {
                 </th>
                 <td>
                   <div class="">
+                    @if($question->passage)
+                    <div class="p-4 mb-3" style="background-color: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
+                      {!!$question->passage!!}
+                    </div>
+                    @endif
                     {!! $question->question !!}
                   </div>
                 </td>

@@ -62,7 +62,7 @@
   @if(trim($question->passage))
   <div class="col-12 col-md-12 col-lg pbox" >
     <div class="qstart"></div> 
-  <div class="card my-3 qsset" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;max-height:300px; overflow: scroll;">
+  <div class="card pcard my-3 qsset" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;max-height:300px; overflow: scroll;">
 
     <div class="card-body">
       <b>Passage</b> 

@@ -66,6 +66,17 @@ $(document).ready(function(){
     }
 
 
+    if($('.passage').length){
+      var w  = screen.width;
+      var h  = screen.height - 250;
+
+      if(w>900){
+        $('.pcard').css('max-height',h+'px');
+      }
+      console.log(w);
+    }
+
+
 
     /* windowswap detection */
     function swapDetected() {
