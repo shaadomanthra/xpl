@@ -15,7 +15,7 @@
 }
 @media (max-width: 1200px) { 
 .fsmall{
-  font-size: 12px;
+  font-size: 16px;
 }
 .pbox{
   max-width:900px;
@@ -26,7 +26,7 @@
 }
 @media (max-width: 720px) { 
 .fsmall{
-  font-size: 12px;
+  font-size: 16px;
 }
 .pbox{
   max-width:900px;
@@ -37,7 +37,7 @@
 }
 @media (max-width: 400px) { 
 .fsmall{
-  font-size: 12px;
+  font-size: 16px;
 }
 .pbox{
   max-width:900px;
@@ -48,7 +48,7 @@
 }
 @media (max-width: 330px) { 
 .fsmall{
-  font-size: 10px;
+  font-size: 16px;
 }
 }
 
