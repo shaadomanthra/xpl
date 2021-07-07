@@ -90,8 +90,8 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
 
            @if(isset($settings['upload_time']))
           @if($settings['upload_time']!=0)
-          <a href="#" data-toggle="modal" data-target="#questions">
-            <i class="fa fa-question-circle ml-2 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
+          <a href="#" class="text-light" data-toggle="modal" data-target="#questions">
+            <i class="fa fa-question-circle mr-4 cursor" data-toggle="tooltip"  title="View Questions"></i></a>
             @endif
             @endif
 
