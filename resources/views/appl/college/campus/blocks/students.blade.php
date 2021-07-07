@@ -11,7 +11,6 @@
 		      @if($colleges)
 		      <th scope="col" >College</th>
 		      @endif
-
 		      @endif
 		      @if(isset($sections))
 		      @foreach($sections as $s)
