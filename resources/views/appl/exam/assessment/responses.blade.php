@@ -86,10 +86,12 @@ pre, code {
             </div>
             @endif
             @if($student->branch_id)
+            @if($student->branch)
             <div class="row mb-0">
               <div class="col-4"> Branch:</div>
               <div class="col-8">{{$student->branch->name}}</div>
             </div>
+            @endif
             @endif
             @if($student->roll_number)
             <div class="row mb-0">
