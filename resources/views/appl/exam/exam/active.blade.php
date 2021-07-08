@@ -174,7 +174,7 @@
   <div class="card   mb-2 mx-1  @if($b['completed']==1) complted @else bg-light-warning @endif card_{{$a}}" data-last="">
     <div class="p-4 ">
       <div class="">
-        <div class="action_{{$a}} d-inline float-right">
+        <div class="action_{{$a}} d-inline float-right dd_response_images" data-url="{{ route('assessment.response_images',$exam->slug)}}">
           </div>
               <h6 class="mb-3 d-inline"> 
                  @if(isset($b['window_change']))
@@ -481,7 +481,7 @@ div.chats {
       
 
       <div class="pb-4 @if(!$exam->camera) d-none @endif">
-      <a href="" class="btn btn-primary link_snaps " data-url="{{ route('test.snaps',$exam->slug)}}" target="_blank"><i class="fa fa-camera text-white"></i> Selfie</a> &nbsp;&nbsp;&nbsp;<a href="" data-url="{{ route('test.snaps',$exam->slug)}}" class="btn btn-success link_screens" target="_blank"><i class="fa fa-image text-white"></i> Screens</a> 
+      <a href="" class="btn btn-primary link_snaps " data-url="{{ route('test.snaps',$exam->slug)}}" target="_blank"><i class="fa fa-camera text-white"></i> Selfie</a> &nbsp;&nbsp;<a href="" data-url="{{ route('test.snaps',$exam->slug)}}" class="btn btn-success link_screens" target="_blank"><i class="fa fa-image text-white"></i> Screens</a> &nbsp;&nbsp;<a href="" data-url="{{ route('assessment.response_images',$exam->slug)}}" class="btn btn-info link_uploads" target="_blank">Uploads</a> 
     </div>
     
         <div class="chats mb-3">

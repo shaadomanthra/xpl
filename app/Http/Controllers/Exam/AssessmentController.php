@@ -1457,6 +1457,83 @@ class AssessmentController extends Controller
         return $new_ans;
     }
 
+
+    public function response_images($slug,Request $request){
+        //load the exam
+        $exam = Cache::get('test_'.$slug);
+        if(!$exam)
+            $exam = Exam::where('slug',$slug)->with('examtype')->first();
+
+        // authorize the link
+        if(!\auth::user()->isAdmin()){
+            
+            $this->authorize('update', $exam);
+        }
+
+        $questions = array();
+        $i=0;
+
+        if($request->get('student'))
+            $student = User::where('username',$request->get('student'))->first();
+        else
+            $student = \auth::user();
+
+        $user_id = $student->id;
+        $jsonname = $slug.'_'.$user_id;
+
+        if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json'))
+            $images = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+        else
+            $images = [];
+
+        $sections = array();
+        foreach($exam->sections as $section){
+            if(isset($secs[$section->id][0]))
+                $sections[$section->name] = $secs[$section->id][0];
+            else
+                $sections[$section->name] ='';
+
+            $secs[$section->id] = $section;
+
+            $qset = $exam->getQuestionsSection($section->id,$student->id);
+            foreach($qset as $q){
+
+                if(isset($images)){
+                    if(isset($images[$q->id]))
+                        $q->images = $images[$q->id];
+                    else
+                        $q->images = [];
+                }else{
+                    $q->images = [];
+                }
+
+
+                if(isset($keys[$q->id]['dynamic'])){
+                    $dynamic = $keys[$q->id]['dynamic'];
+                    $q = $this->option_swap2($q,$dynamic);
+                }
+
+                $questions[$i] = $q;
+                $ques[$q->id] = $q;
+                $ques_keys[$q->id]['topic'] = $q->topic;
+                $ques_keys[$q->id]['section'] = $section->name;
+                $i++;
+
+                if($q->type=='sq' || $q->type=='urq' || $q->type=='csq')
+                    $subjective= true;
+            }
+
+        }
+
+        return view('appl.exam.assessment.response_images')
+                    ->with('student',$student)
+                    ->with('questions',$questions)
+                    ->with('exam',$exam)
+                    ->with('images',$images);
+        
+
+    }
+
     public function responses($slug,$id=null,$student=null,$pdf2=null,Request $request)
     {
         $filename = $slug.'.json';
@@ -1465,9 +1542,14 @@ class AssessmentController extends Controller
 
         $exam = Cache::get('test_'.$slug);
 
+
         if(!$pdf2)
-        if(!\auth::user()->isAdmin())
-         $this->authorize('view', $exam);
+        if(!\auth::user()->isAdmin()){
+            $ex = Exam::where('slug',$slug)->with('examtype')->first();
+
+            $this->authorize('update', $ex);
+            //$this->authorize('view', $exam);
+        }
 
 
         if(!$exam)

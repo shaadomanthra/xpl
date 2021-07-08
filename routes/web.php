@@ -659,6 +659,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
 
 	Route::get('test/{test}/responses','Exam\AssessmentController@responses')->name('assessment.responses')->middleware('auth');
+	Route::get('test/{test}/response_images','Exam\AssessmentController@response_images')->name('assessment.response_images')->middleware('auth');
+	
 	Route::post('test/{test}/comment','Exam\AssessmentController@comment')->name('assessment.comment')->middleware('auth');
 	Route::post('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions.post')->middleware('auth');
 	Route::get('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q')->middleware('auth');

@@ -1,0 +1,131 @@
+ @extends('layouts.nowrap-white')
+@section('title', 'Performance Analysis - '.$exam->name.' - '.\auth::user()->name.' ')
+@section('content')
+
+@include('appl.exam.exam.xp_css')
+
+ <style>.baseline{padding-top:3px;background:silver;border-radius: 5px;margin:5px 0px 15px;width:30%;}
+.cardgreen{background-image: linear-gradient(to bottom right, #fff, white);border:2px solid #eee;margin-bottom: 15px;}
+.dblue2{ background: #f2fff9;border-bottom:2px solid #beedd6; }</style>
+<div class="dblue2">
+<div class="container py-4 ">
+  @include('appl.exam.assessment.blocks.breadcrumbs')
+ <div class="row mb-4">
+          @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_selfie.jpg'))
+          <div class="col-4 col-md-2">
+            <img src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_selfie.jpg')}}" class="w-100 rounded " />
+          </div>
+          @endif
+          <div class="col-12 col-md">
+            <h1 class="mb-0">{{$student->name}}</h1>
+              <p><i class="fa fa-bars"></i> {{$exam->name}}</p>
+            <div class="row mb-0">
+              <div class="col-4"> Email:</div>
+              <div class="col-8">{{$student->email}}</div>
+            </div>
+            <div class="row mb-0">
+              <div class="col-4"> Phone:</div>
+              <div class="col-8">{{$student->phone}}</div>
+            </div>
+            @if($student->college_id)
+            <div class="row mb-0">
+              <div class="col-4"> College:</div>
+              <div class="col-8">{{$student->college->name}}</div>
+            </div>
+            @endif
+            @if($student->branch_id)
+            @if($student->branch)
+            <div class="row mb-0">
+              <div class="col-4"> Branch:</div>
+              <div class="col-8">{{$student->branch->name}}</div>
+            </div>
+            @endif
+            @endif
+            @if($student->roll_number)
+            <div class="row mb-0">
+              <div class="col-4"> Roll Number:</div>
+              <div class="col-8">{{$student->roll_number}}</div>
+            </div>
+            @endif
+            <br>
+            
+          
+
+           
+          </div>
+         
+
+        </div>
+</div>
+</div>
+
+<div class="container my-4">
+  @foreach($questions as $k=>$question)
+  <div class="card my-2">
+    <div class="card-body">
+      <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
+        <p class="d-inline {{ $t= $question}} mb-3">{!! $question->question !!}</p>
+
+        @if($question->type=='mcq')
+        <div class="mt-3">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              @if($question->a)
+          <div class=""><span class=" @if($t->answer=='A') text-success font-weight-bold @endif">(A)</span><div class="pt-1 d-inline "> {!! $question->a!!}</div></div>
+          @endif
+          @if($question->b)
+          <div class=""><span class=" @if($t->answer=='B') text-success font-weight-bold @endif">(B)</span><div class="pt-1 d-inline "> {!! $question->b!!}</div></div>
+          @endif
+
+            </div>
+            <div class="col-12 col-md-6">
+              @if($question->c)
+          <div class=""><span class=" @if($t->answer=='C') text-success font-weight-bold @endif">(C)</span><div class="pt-1 d-inline "> {!! $question->c!!}</div></div>
+          @endif
+          @if($question->d)
+          <div class=""><span class=" @if($t->answer=='D') text-success font-weight-bold @endif">(D)</span><div class="pt-1 d-inline "> {!! $question->d!!}</div></div>
+          @endif
+            </div>
+          </div>
+          
+          
+          @if($question->e)
+          <div class=""><span class=" @if($t->answer=='E') text-success font-weight-bold @endif">(E)</span><div class="pt-1 d-inline "> {!! $question->e!!}</div></div>
+          @endif
+        </div>
+        @endif
+        <hr>
+
+          <p><b>User Response: </b> </p>
+          @if($question->type=='urq')
+          <div class="{{$w=0}}">
+
+          @if(isset($images[$question->id]))
+
+          @if(count($images[$question->id]))
+          @foreach(array_reverse($images[$question->id]) as $k=>$url)
+
+             <div class=" {{$w=$w+1}}">
+             <img src="{{$url }}"  class=" p-1  my-1 w-100 img_{{$t->id}}_{{$w}}" data-name="{{$k}}"  />
+              
+             
+          </div>
+
+          @endforeach
+          @else
+            -
+          @endif
+
+          @else
+          -
+
+          @endif
+
+         
+          </div>
+       @endif 
+    </div>
+  </div>
+  @endforeach
+</div>
+@endsection

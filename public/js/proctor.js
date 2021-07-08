@@ -29,6 +29,8 @@ $(function(){
             	console.log(result);
             	var username = result.username;
             	var link = $('.link_snaps').data('url');
+                var link_upl = $('.dd_response_images').data('url');
+                console.log(link_upl);
                 $('.timeline').html('');
                 $('.log_name').html(result.uname);
                 $('.log_rollnumber').html(result.rollnumber);
@@ -38,6 +40,7 @@ $(function(){
                 $('.log_swaps').html(result.window_change);
                 $('.link_snaps').attr('href',link+'?username='+username+'&type=snaps');
                 $('.link_screens').attr('href',link+'?username='+username+'&type=screens');
+                $('.link_uploads').attr('href',link_upl+'?student='+username);
               
                 if(result.last_photo){
                 	$('.log_pic').show();
