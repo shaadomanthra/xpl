@@ -86,7 +86,7 @@ class Corporate
                 $filename = 'corporate.json';
                 $client = json_decode(file_get_contents($filename));
                 $client->name = 'Xplore';
-                $client->logo = url('/').'/img/default_logo.png';
+                $client->logo = url('/').'/img/xplore.png';
                 $request->session()->put('client',$client);
                 return $next($request);
 
