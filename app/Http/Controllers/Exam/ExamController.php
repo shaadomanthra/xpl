@@ -754,6 +754,8 @@ class ExamController extends Controller
                 return \auth::user()->getRole('hr-manager');
             });
 
+     
+
         $data['examtype'] = Cache::remember('examtype_obj_'.$id, 60, function()use ($exam)   {
                 return $exam->examtype;
             });
