@@ -1547,7 +1547,7 @@ class AssessmentController extends Controller
         if(!\auth::user()->isAdmin()){
             $ex = Exam::where('slug',$slug)->with('examtype')->first();
 
-            $this->authorize('update', $ex);
+            $this->authorize('view', $ex);
             //$this->authorize('view', $exam);
         }
 
