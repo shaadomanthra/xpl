@@ -47,11 +47,13 @@
               </dl>
              @endif
 
-             @if($branches)
+             @if($branches )
+             @if(isset($branches[$user->branch_id]))
              <dl class="row mb-0">
                 <dt class="col-sm-5"><i class='fa fa-bookmark-o'></i> &nbsp; Branch</dt>
                 <dd class="col-sm-7">@if($user->branch_id) {{  $branches[$user->branch_id]->name  }} @endif</dd>
               </dl>
+            @endif
              @endif
 
              @if($user->roll_number)

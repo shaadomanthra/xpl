@@ -515,8 +515,8 @@ class UserController extends Controller
                     $u->branch_id = $bid;
 
                     if(isset($data[$i]['role'])){
-                        $u->role = $data[$i]['role'];
-                        if($u->role==10 || $u->user==11)
+                        $u->role = intval($data[$i]['role']);
+                        if($u->role==10 || $u->role==11)
                         if(!$u->roles->contains(28))
                             $u->roles()->attach(28);
                     }

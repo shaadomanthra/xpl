@@ -1467,7 +1467,7 @@ class AssessmentController extends Controller
         // authorize the link
         if(!\auth::user()->isAdmin()){
             
-            $this->authorize('update', $exam);
+            $this->authorize('view', $exam);
         }
 
         $questions = array();
@@ -3122,6 +3122,7 @@ class AssessmentController extends Controller
         $users = array();
         $userset = [];
 
+
         $this->authorize('view', $exam);
         //$fl = collect($files);
 
@@ -3302,7 +3303,7 @@ class AssessmentController extends Controller
         }else{
 
 
-            if($user->role==11)
+            if($user->role==10)
                 return view('appl.exam.exam.nofile')->with('message','You are not authorized to access this data.')
                     ->with('exam',$exam)
                     ->with('user',$user)
