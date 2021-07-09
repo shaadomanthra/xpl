@@ -575,7 +575,7 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
 
         $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BSC','BCA','BBA','MBA','BPHARM','MPHARM','MCOM','MCA','MSC','OTHER'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA', '1.8LPA to 13LPA'];
-        $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI','NCR REGION','SURAT','KOTA','AHMEDABAD','CHANDIGARH','COIMBATORE','GURGAON','GOA','OTHER' ];
+        $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI','NCR REGION','SURAT','KOTA','AHMEDABAD','CHANDIGARH','COIMBATORE','GURGAON','GOA','NOIDA','OTHER' ];
         $this->yop = ['2016','2017','2018','2019','2020','2021','2022','2023'];
         $this->academic = ['55','60','65','70','75'];
 
@@ -834,7 +834,7 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
 
         $this->education = ['BTECH','MTECH','DEGREE','CSE','IT','EEE','MECH','ECE','CIVIL','BCOM','BCA','BSC','BBA','MBA','BPHARM','MPHARM','MCOM','MCA','MSC','OTHER'];
         $this->salary =['NOT DISCLOSED','0 to 3LPA', '3 to 6LPA','6 to 9LPA','1.8LPA to 13LPA'];
-        $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI','NCR REGION','SURAT','KOTA','AHMEDABAD','CHANDIGARH','COIMBATORE','GURGAON','GOA','OTHER' ];
+        $this->location = ['ALL INDIA','HYDERABAD','BENGALURE','CHENNAI','MUMBAI','PUNE','DELHI','NCR REGION','SURAT','KOTA','AHMEDABAD','CHANDIGARH','COIMBATORE','GURGAON','GOA','NOIDA','OTHER' ];
         $this->yop = ['2016','2017','2018','2019','2020','2021','2022','2023'];
         $this->academic = ['55','60','65','70','75'];
 

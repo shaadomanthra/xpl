@@ -7,27 +7,35 @@
 
 <div class="bg-white">
 <div class="card-body p-4 ">
-<h1>Refund and Cancellation Policy</h1>
+<h1>Refund/Returns Policy</h1>
 
 <p>
-Our focus is complete customer satisfaction. In the event, if you are displeased with the services provided, we will refund back the money, provided the reasons are genuine and proved after investigation. Please read the fine prints of each deal before buying it, it provides all the details about the services or the product you purchase.</p>
 
-<p>In case of dissatisfaction from our services, clients have the liberty to cancel their projects and request a refund from us. Our Policy for the cancellation and refund will be as follows:</p>
+- Organizations: Please refer to the service agreement signed between your organization and Xplore
+</p>
+<p>
+- Individuals: No refunds are provided. Please read the details of the product/service that you are signing up for and pay accordingly. If you have any queries or support on the usage of the product, you can contact our call centre at 1800-890-1324
+</p>
 
-<h2>Cancellation Policy</h2>
+<h3>Cancellation Policy:</h3>
 
-<p>For Cancellations please contact the us via <a href="{{ route('contact') }}">contact us</a> link.</p> 
+<p>- Organizations: Cancellation of services and related activities will be implied as per the agreement signed between your organization and Xplore</p>
 
-<p>Requests received later than 30 business days prior to the end of the current service period will be treated as cancellation of services for the next service period.</p>
+<p>- Individuals: You can cancel your membership and delete you account any time. However, No refunds are provided. Please read the details of the product/service that you are signing up for and pay accordingly. If you have any queries or support on the usage of the product, you can contact our call centre at 1800-890-1324. </p>
 
-<h2>Refund Policy</h2>
+<h3>Membership Policy:</h3>
 
-<p>We will try our best to create the best value for our clients.</p>
+<p>Your Membership is non-transferable. You must not share your username and password with anyone else or allow anyone else to access the Site using your username and password.</p>
 
-<p>In case any user is not completely satisfied with our services we can provide a complete refund, only when 
-the user sends a request within 5 days of the payment.  </p>
+<p>You are responsible for every use of the Site that occurs in conjunction with use of your username and password. You must use reasonable efforts to keep your username and password confidential. You must notify us as soon as you become aware of any unauthorised use of your membership, username or password.
+</p>
+<p>
+Premium Membership is based on periodic subscription fees which are detailed on the Site’s product and offering pages. Your premium membership, or access to Content and areas of the Site, will be suspended or cancelled if we do not receive the fees for your subscription type.</p>
 
-<p>If paid by credit card, refunds will be issued to the original credit card provided at the time of purchase and in case of payment gateway name payments refund will be made to the same account.</p>
+<p>
+
+In case your institution sponsors for your premium membership, you will be entitled to receive the subscription benefits as per the agreement with your institution. Upon expiry of the agreement, your premium benefits will expire and you will retain the normal membership. You will have an option to purchase any existing membership plans if you wish to.
+</p>
 
 
 
