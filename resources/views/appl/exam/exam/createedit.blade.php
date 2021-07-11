@@ -398,6 +398,10 @@
           <option value="30" @if(isset($exam)) @if($exam->upload_time==30) selected @endif @endif >last 30 minutes</option>
           <option value="45" @if(isset($exam)) @if($exam->upload_time==45) selected @endif @endif >last 45 minutes</option>
           <option value="60" @if(isset($exam)) @if($exam->upload_time==60) selected @endif @endif >last 60 minutes</option>
+          <option value="75" @if(isset($exam)) @if($exam->upload_time==75) selected @endif @endif >last 75 minutes</option>
+          <option value="90" @if(isset($exam)) @if($exam->upload_time==90) selected @endif @endif >last 90 minutes</option>
+          <option value="120" @if(isset($exam)) @if($exam->upload_time==120) selected @endif @endif >last 120 minutes</option>
+
         </select>
       </div>
         </div>
