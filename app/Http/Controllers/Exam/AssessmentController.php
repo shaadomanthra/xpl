@@ -1528,10 +1528,450 @@ class AssessmentController extends Controller
         return view('appl.exam.assessment.response_images')
                     ->with('student',$student)
                     ->with('questions',$questions)
+                    ->with('sketch',1)
                     ->with('exam',$exam)
                     ->with('images',$images);
         
 
+    }
+    public function responses2($slug,$id=null,$student=null,$pdf2=null,Request $request)
+    {
+        $filename = $slug.'.json';
+        $filepath = $this->cache_path.$filename;
+
+
+        $exam = Cache::get('test_'.$slug);
+
+
+        if(!$pdf2)
+        if(!\auth::user()->isAdmin()){
+            $ex = Exam::where('slug',$slug)->with('examtype')->first();
+
+            $this->authorize('view', $ex);
+            //$this->authorize('view', $exam);
+        }
+
+
+        if(!$exam)
+        if(file_exists($filepath))
+        {
+            $exam = json_decode(file_get_contents($filepath));
+        }else{
+            if(is_int($slug))
+                $exam = Exam::where('id',$slug)->first();
+            else
+                $exam = Exam::where('slug',$slug)->first();
+        }
+
+        $questions = array();
+        $i=0;
+
+        if($request->get('student'))
+            $student = User::where('username',$request->get('student'))->first();
+        else if($student)
+            $student = User::where('username',$student)->first();
+        else
+            $student = \auth::user();
+
+        if(!$student)
+            $student = \auth::user();
+
+        $user_id = $student->id;
+        $test_id = $exam->id;
+        $user = $student;
+
+        if($request->get('refresh')){
+            Cache::forget('resp_'.$user_id.'_'.$test_id);
+            Cache::forget('attempt_'.$user_id.'_'.$test_id);
+            Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
+            Cache::forget('ranked_'.$user_id.'_'.$test_id);
+        }
+
+        $jsonname = $slug.'_'.$user_id;
+
+        if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json'))
+            $images = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+        else
+            $images = [];
+
+        $keys = [];
+
+
+
+        //reevaluate
+        if(request()->get('reevaluate')){
+            $exam->reEvaluate($student);
+        }
+
+        //writing correction
+        if(request()->get('writing')){
+            $exam->grammarly($student);
+        }
+
+        if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){
+            $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$student->username.'_'.$exam->id.'.json'),true);
+            $count = count($json);
+        }
+        else{
+            $json = null;
+            $count = 0;
+        }
+
+        if(request()->get('images')){
+            $json = json_decode(Storage::disk('s3')->get('webcam/json/'.$student->username.'_'.$exam->id.'.json'),true);
+
+            return view('appl.exam.assessment.images')->with('exam',$exam)->with('user',$student)->with('count',$count);
+        }
+
+
+        $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0,'evaluation'=>1];
+        $details['course'] = $exam->name;
+        $sum = 0;
+        $c=0; $i=0; $u=0;
+
+        
+
+        
+        $tests = Cache::remember('resp_'.$user_id.'_'.$test_id,240,function() use ($exam,$student){
+            return Test::where('test_id',$exam->id)
+                        ->where('user_id',$student->id)->with('question')->get();
+        });
+       
+
+        
+
+        $test_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
+            return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
+        });
+
+
+        
+
+        
+        $tests_overall = $test_overall;
+
+        $tests_keys = $tests->keyBy('question_id');
+
+
+
+
+
+        //dd($tests->where('status',1));
+        $evaluation = $tests->where('status',2);
+        if(count($evaluation))
+            $details['evaluation'] = 0;
+
+        $tests_section = Cache::remember('attempt_section_'.$user_id.'_'.$test_id,60,function() use($exam,$student){
+            return Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
+        });
+        $secs = $tests_section->groupBy('section_id');
+
+
+
+        //dd($secs);
+
+        //dd($tests[0]->time);
+        if(!count($tests))
+            abort('404','Test not attempted');
+        $subjective = false;
+        $sections = array();
+        foreach($exam->sections as $section){
+            if(isset($secs[$section->id][0]))
+                $sections[$section->name] = $secs[$section->id][0];
+            else
+                $sections[$section->name] ='';
+
+            $secs[$section->id] = $section;
+
+            $qset = $exam->getQuestionsSection($section->id,$user->id);
+            foreach($qset as $q){
+
+                if(isset($images)){
+                    if(isset($images[$q->id]))
+                        $q->images = $images[$q->id];
+                    else
+                        $q->images = [];
+                }else{
+                    $q->images = [];
+                }
+
+
+                if(isset($keys[$q->id]['dynamic'])){
+                    $dynamic = $keys[$q->id]['dynamic'];
+                    $q = $this->option_swap2($q,$dynamic);
+                }
+
+                $questions[$i] = $q;
+                $ques[$q->id] = $q;
+                $ques_keys[$q->id]['topic'] = $q->topic;
+                $ques_keys[$q->id]['section'] = $section->name;
+                $i++;
+
+                if($q->type=='sq' || $q->type=='urq' || $q->type=='csq')
+                    $subjective= true;
+            }
+
+        }
+
+
+
+        if(count($sections)==1)
+            $sections = null;
+
+
+        $details['correct_time'] =0;
+        $details['incorrect_time']=0;
+        $details['unattempted_time']=0;
+        $details['review'] = 0;
+        $details['auto_max'] = 0;
+        $topics = false;
+        $review=false;
+        $details['rank'] = Cache::remember('ranked_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
+            $all = Tests_Overall::where('test_id',$exam->id)->orderBy('score','desc')->get();
+            foreach($all as $k=>$a){
+                if($a->user_id ==$student->id)
+                    $rank = $k+1;
+
+            }
+            $d['rank'] =$rank;
+            $d['participants'] = count($all);
+            return $d;
+        });
+
+        $i=0;$cx=0;
+
+        foreach($tests as $key=>$t){
+
+
+            //dd($t->section->negative);
+            if(isset($t)){
+                $sum = $sum + $t->time;
+
+                if(isset($t->created_at->date))
+                $details['testdate'] = \carbon\carbon::parse($t->created_at->date)->diffForHumans();
+                else
+                $details['testdate'] = $t->created_at->diffForHumans();
+            }
+
+            if(isset($ques[$t->question_id])){
+                $qd = $ques[$t->question_id];
+                $qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
+                $ques[$t->question_id] = $this->option_swap2($qd,$t->dynamic);
+                $tests[$key]->question = $ques[$t->question_id];
+
+                //dd($tests[$key]);
+            }
+
+
+             if($t->status==2){
+                    $details['review'] = $details['review'] + 1; 
+                    $review = true;
+            }else{
+
+                $cx = $cx+intval($ques[$t->question_id]->mark);
+                
+            }
+            //$ques = Question::where('id',$q->id)->first();
+            //dd($secs[$t->section_id]);
+            if(isset($ques_keys[$t->question_id])){
+                if($ques_keys[$t->question_id]['topic'])
+                $topics = true;
+
+            }else{
+                 $ques_keys[$t->question_id]['topic'] = null;
+                 $ques_keys[$t->question_id]['section'] = null;
+                 $ques[$t->question_id] = $t->question;
+                 //$ques[$t->question_id]->type = $t->question->type;
+            }
+
+            if($t->response){
+                $details['attempted'] = $details['attempted'] + 1;
+                if($t->accuracy==1){
+                    $details['c'][$c]['topic'] = $ques_keys[$t->question_id]['topic'];
+                    $details['c'][$c]['section'] = $ques_keys[$t->question_id]['section'];
+                    $c++;
+                    $details['correct'] = $details['correct'] + 1;
+                    $details['correct_time'] = $details['correct_time'] + $t->time;
+                    if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq'||$ques[$t->question_id]->type=='csq')
+                        $details['marks'] = $details['marks'] + $t->mark;
+                    else
+                        $details['marks'] = $details['marks'] + $secs[$t->section_id]->mark;
+                }
+                else{
+                    $details['i'][$i]['topic'] = $ques_keys[$t->question_id]['topic'];
+                    $details['i'][$i]['section'] = $ques_keys[$t->question_id]['section'];
+                    $i++;
+                    $details['incorrect'] = $details['incorrect'] + 1;
+                    $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
+                    $details['marks'] = $details['marks'] - $secs[$t->section_id]->negative;
+                }
+
+
+            }else if($t->code){
+                    $details['attempted'] = $details['attempted'] + 1;
+                    $details['i'][$i]['topic'] = $ques_keys[$t->question_id]['topic'];
+                    $details['i'][$i]['section'] = $ques_keys[$t->question_id]['section'];
+                    $i++;
+                    $details['incorrect'] = $details['incorrect'] + 1;
+                    $details['incorrect_time'] = $details['incorrect_time'] + $t->time;
+                    $details['marks'] = $details['marks'] - $secs[$t->section_id]->negative;
+            }
+            else{
+                $details['u'][$u]['topic'] = $ques_keys[$t->question_id]['topic'];
+                $details['u'][$u]['section'] = $ques_keys[$t->question_id]['section'];
+                $u++;
+                $details['unattempted'] = $details['unattempted'] + 1;
+                $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
+                if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq' || $ques[$t->question_id]->type=='csq')
+                        $details['marks'] = $details['marks'] + $t->mark;
+            }
+
+
+
+            $details['total'] = $details['total'] + $secs[$t->section_id]->mark;
+            //dd();
+
+        }
+
+        $details['auto_max'] = $cx;
+
+        $success_rate = $details['correct']/count($questions);
+        if($success_rate > 0.7)
+            $details['performance'] = 'Excellent';
+        elseif(0.3 < $success_rate && $success_rate <= 0.7)
+            $details['performance'] = 'Average';
+        else
+            $details['performance'] = 'Need to Improve';
+
+        $details['avgpace'] = round($sum / count($questions),2);
+
+        if($details['correct_time'] && $details['correct_time']>59)
+            $details['correct_time'] =round($details['correct_time']/60,2).' min';
+        else
+            $details['correct_time'] = $details['correct_time'].' sec';
+
+
+        if($details['incorrect_time'] && $details['incorrect_time'] > 59)
+            $details['incorrect_time'] =round($details['incorrect_time']/60,2).' min';
+        else
+            $details['incorrect_time'] = $details['incorrect_time'].' sec';
+
+
+        if($details['unattempted_time'] && $details['unattempted_time']>59)
+            $details['unattempted_time'] =round($details['unattempted_time']/60,2).' min';
+        else
+            $details['unattempted_time'] = $details['unattempted_time'].' sec';
+
+
+
+        if($request->get('cheat_detect')){
+            $tests_overall = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
+            if($request->get('cheat_detect')==3)
+                $tests_overall->cheat_detect = 0;
+            else
+                $tests_overall->cheat_detect = $request->get('cheat_detect');
+            $tests_overall->save();
+        }
+
+        if(!$topics)
+        unset($details['c']);
+        
+       // dd($details);
+
+        //dd($sections);
+        $mathjax = false;
+        $view = 'responses2';
+
+        if($request->get('pdf3')){
+            
+        
+            ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+            $view = 'responses-pdf_backup';
+            $data['tests'] = $tests;
+            $data['student'] = $student;
+            $data['exam'] = $exam;
+            $data['test_overall'] = $test_overall;
+            $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
+
+            //
+            if($request->get('screen'))
+             return view('appl.exam.assessment.'.$view)
+                        ->with('exam',$exam)
+                        ->with('questions',$ques)
+                        ->with('sections',$sections)
+                        ->with('details',$details)
+                        ->with('student',$student)
+                        ->with('user',$student)
+                        ->with('tests',$tests)
+                        ->with('test_overall',$tests_overall)
+                        ->with('review',true)
+                        ->with('mathjax',$mathjax)
+                        ->with('sketchpad',1)
+                        ->with('count',$count)
+                        ->with('highlight',true)
+                        ->with('chart',false);
+            else{
+
+             return $pdf->download($student->name.'_'.$exam->name.'.pdf');
+            }
+           
+        }
+
+        if($request->get('pdf2') || $pdf2){
+            ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+            $view = 'responses-pdf_backup';
+
+            $data['tests'] = $tests;
+            $data['student'] = $student;
+            $data['exam'] = $exam;
+            $data['test_overall'] = $test_overall;
+            $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
+            // $pdf->save('sample.pdf');
+            $folder = 'testlog/'.$exam->id.'/pdf/';
+
+            $uuname = str_replace(' ', '-', $student->name);
+            $name = $folder.$uuname.'_'.$student->roll_number.'.pdf';
+            Storage::disk('s3')->put($name, $pdf->output(), 'public');
+
+             return view('appl.exam.assessment.'.$view)
+                        ->with('exam',$exam)
+                        ->with('questions',$ques)
+                        ->with('sections',$sections)
+                        ->with('details',$details)
+                        ->with('student',$student)
+                        ->with('user',$student)
+                        ->with('tests',$tests)
+                        ->with('test_overall',$tests_overall)
+                        ->with('review',true)
+                        ->with('mathjax',$mathjax)
+                        ->with('sketchpad',1)
+                        ->with('count',$count)
+                        ->with('highlight',true)
+                        ->with('chart',false);
+             // 
+           
+        }else{
+            return view('appl.exam.assessment.'.$view)
+                        ->with('exam',$exam)
+                        ->with('questions',$ques)
+                        ->with('sections',$sections)
+                        ->with('details',$details)
+                        ->with('student',$student)
+                        ->with('user',$student)
+                        ->with('tests',$tests)
+                        ->with('test_overall',$tests_overall)
+                        ->with('review',true)
+                        ->with('mathjax',$mathjax)
+                        ->with('sketchpad',1)
+                        ->with('count',$count)
+                        ->with('highlight',true)
+                        ->with('chart',false);
+
+        }
+       
+
+
+        
     }
 
     public function responses($slug,$id=null,$student=null,$pdf2=null,Request $request)
@@ -3852,7 +4292,17 @@ class AssessmentController extends Controller
         $qid = intval($r->get('qid'));
 
 
-        $bg = \Image::make($imgurl)->rotate($angle)->encode('jpg',100);
+        if(intval($angle)==100){
+            $nam = str_replace('urq/', '',$r->get('name'));
+            echo $name;
+            exit();
+            if(Storage::disk('s3')->exists('urq/original_'.$nam)){
+                $imgurl = Storage::disk('s3')->url('urq/original_'.$nam);
+            }
+            $bg = \Image::make($imgurl)->encode('jpg',100);
+        }else
+            $bg = \Image::make($imgurl)->rotate($angle)->encode('jpg',100); 
+        
         $new_name = rand(10,100).'_'.$name;
         Storage::disk('s3')->put('urq/'.$new_name, (string)$bg,'public');
 
@@ -3881,22 +4331,22 @@ class AssessmentController extends Controller
     }
 
     public function update_image($r){
+
         $name = str_replace('urq/', '',$r->get('name'));
         $slug = $r->get('slug');
         $imgurl = $r->get('imgurl');
         $user_id = $r->get('user_id');
         $qid = $r->get('qid');
-        $width = intval($r->get('width'));
-        $height = intval($r->get('height'));
+        $width = intval($r->get('width'))*1.17;
+        $height = intval($r->get('height'))*1.17;
+
 
 
         $bg = \Image::make($imgurl)->resize($width,$height);
         $b =$bg->encode('jpg',100);
 
         if(!Storage::disk('s3')->exists('urq/original_'.$name)){
-
             Storage::disk('s3')->put('urq/original_'.$name, (string)$b,'public');
-
         }
 
         $img = \Image::make($r->get('image'))->resize($width,$height);

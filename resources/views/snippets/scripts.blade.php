@@ -830,6 +830,48 @@ $(function(){
      
   });
 
+   $(document).on('click','.rotate_save2',function(e){
+      e.preventDefault();
+
+      $url = $(this).data('url');
+      $id = $(this).data('id');
+      $imgurl = $(".img_"+$id).attr('src');
+  
+
+      $('.img_loading_'+$id).show();
+      $.ajax({
+          type : 'get',
+          url : $url,
+          data:{'imgurl':$imgurl},
+          success:function(data){
+            //console.log(data);
+            $(".img_"+$id).attr("src", data);
+            location.reload();
+            //console.log(".img_"+$id);
+            //console.log($(".img_"+$id).attr("src"));
+            $('.img_loading_'+$id).hide();
+            // json = JSON.parse(data);
+            // if(json.status==0){
+            //   $('.under_review_main').hide();
+            //   $('.score_main').html("<div class='display-4'>"+json.score+"</div>");
+            // }
+            
+            // $('.review_'+$id).removeClass('badge-warning').html('evaluated').addClass('badge-success');
+            // $('.box_'+$id).removeClass('qyellow').addClass('qgreen');
+            // if($comment)
+            // $('.score_entry_'+$id).html('<div>'+$score+'</div><div class="my-2"><b>Feedback</b></div><p>'+$comment+'</p>');
+            // else
+            // $('.score_entry_'+$id).html('<div>'+$score+'</div>');
+            // $('.score_save_'+$id).hide();
+            // $('.loading_'+$id).hide();
+            // $('.qno_'+$id).removeClass('qyellow').addClass('qgreen');
+            
+            
+          }
+        });
+     
+  });
+
 
   $('.typed_answer').on('keyup',function(){
       $question  = $('.typed_question').text();
@@ -901,6 +943,10 @@ $(function(){
 
   </script>
 
+@if(isset($sketch))
+
+
+@endif
 @if(isset($sketchpad))
 <script src="{{asset('js/sketchpad.js')}}"></script>    
 
@@ -973,7 +1019,65 @@ $(function(){
 
   $(document).on('click','.clear_image',function(e){
     clearCanvas(canvas,ctx);
+
   });
+
+  $(document).on('click','.save_image2',function(e){
+    e.preventDefault();
+    url = $(this).data('url');
+
+    data = [];
+    data['name'] = $(this).data('name');
+    data['named'] = $(this).data('named');
+    $id = $(this).data('id');
+    data['imgurl'] = $(this).data('imgurl');
+    data['width'] = $(this).data('width');
+    data['height'] = $(this).data('height');
+    data['user_id'] = $(this).data('user_id');
+    data['slug'] = $(this).data('slug');
+    data['qid'] = $(this).data('qid'); 
+    data['_token'] = $(this).data('token');
+
+    data['student'] = $(this).data('student');
+    canvas = document.getElementById(data['named']);
+    data['image'] = canvas.toDataURL("image/png");
+    //redirectPost(url,data);
+
+
+    $('.img_loading_'+$id).show();
+      $.ajax({
+          type : 'post',
+          url : url,
+          data:{'imgurl':data['imgurl'],'name':data['name'],'width':data['width'],'height':data['height'],'user_id':data['user_id'],'slug':data['slug'],'qid':data['qid'],'_token':data['_token'],'student':data['student'],'image':data['image'],'ajax':1},
+          success:function(data){
+            console.log(data);
+            //$(".img_"+$id).attr("src", data);
+            //console.log(".img_"+$id);
+            //console.log($(".img_"+$id).attr("src"));
+            $('.img_loading_'+$id).hide();
+            // json = JSON.parse(data);
+            // if(json.status==0){
+            //   $('.under_review_main').hide();
+            //   $('.score_main').html("<div class='display-4'>"+json.score+"</div>");
+            // }
+            
+            // $('.review_'+$id).removeClass('badge-warning').html('evaluated').addClass('badge-success');
+            // $('.box_'+$id).removeClass('qyellow').addClass('qgreen');
+            // if($comment)
+            // $('.score_entry_'+$id).html('<div>'+$score+'</div><div class="my-2"><b>Feedback</b></div><p>'+$comment+'</p>');
+            // else
+            // $('.score_entry_'+$id).html('<div>'+$score+'</div>');
+            // $('.score_save_'+$id).hide();
+            // $('.loading_'+$id).hide();
+            // $('.qno_'+$id).removeClass('qyellow').addClass('qgreen');
+            
+            
+          }
+        });
+    
+  });
+
+
   $(document).on('click','.save_image',function(e){
     e.preventDefault();
     url = $(this).data('url');
@@ -2115,6 +2219,7 @@ $(document).ready(function() {
  </script>
 @endif
 @if(isset($jqueryui))
+
  <script type="text/javascript"
          src="{{asset('jquery-ui/jquery-ui.min.js')}}">
   </script>

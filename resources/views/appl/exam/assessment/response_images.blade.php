@@ -59,13 +59,44 @@
 </div>
 </div>
 
+<style>
+.main-ct {
+  width: 1000px;
+  height:600px;
+  border: 1px solid #000;
+  position:relative;
+}
+.fixed-ct {
+  position: sticky;
+  width:100px;
+  height:20px;
+  background: red;
+  top:10px;
+}
+.like-body {
+  width: 100%;
+  height:1300px;
+}
+.item {
+  position: sticky;
+}
+
+
+.fixed {
+  top: 0;
+  background: white;
+}
+</style>
+
 <div class="container my-4">
   @foreach($questions as $k=>$question)
   <div class="card my-2">
     <div class="card-body">
-      <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
-        <p class="d-inline {{ $t= $question}} mb-3">{!! $question->question !!}</p>
 
+      <div class="item fixed py-3">
+        <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
+        <p class="d-inline {{ $t= $question}} mb-3">{!! $question->question !!}</p>
+      </div> 
         @if($question->type=='mcq')
         <div class="mt-3">
           <div class="row">
@@ -106,7 +137,9 @@
           @foreach(array_reverse($images[$question->id]) as $k=>$url)
 
              <div class=" {{$w=$w+1}}">
-             <img src="{{$url }}"  class=" p-1  my-1 w-100 img_{{$t->id}}_{{$w}}" data-name="{{$k}}"  />
+              
+
+              <canvas  id="sketchpad_{{$question->id}}_{{$k}}" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}" data-id="{{$t->question_id}}_{{$w}}" data-eurl="{{ route('assessment.solutions.q.post',[$exam->slug,$t->question_id])}}?student={{request()->get('student')}}" data-qid="{{$t->question_id}}" style="background: url('{{$url}}');width:{{$exam->getDimensions2($url,1,0.89)}}px;height:{{$exam->getDimensions2($url,2,0.89)}}px;background-size: {{$exam->getDimensions2($url,1,0.89)}}px {{$exam->getDimensions2($url,2,0.89)}}px;"><canvas>
               
              
           </div>
@@ -123,9 +156,10 @@
 
          
           </div>
-       @endif 
+         @endif 
     </div>
   </div>
   @endforeach
 </div>
+
 @endsection

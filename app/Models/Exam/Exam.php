@@ -962,11 +962,30 @@ $count =0;
     }
 
 
-
-    public function getDimensions($url){
+     public function getDimensions2($url,$w=null,$percent=null){
       $s3 = 'https://'.env('AWS_BUCKET').'.s3.ap-south-1.amazonaws.com/';
       $url = preg_replace('/\?.*/', '', $url);
       $name = str_replace($s3, '', $url);
+
+
+
+      if(!$percent)
+        $percent = 1;
+      $height= Cache::get($url.'-height');
+      $width= Cache::get($url.'-width');
+
+  
+
+
+      if($w==1){
+        if($width)
+          return $width*$percent;
+      }elseif($w==2){
+        if($height)
+          return $height*$percent;
+      }else{
+        return $width*$percent.'-'.$height*$percent;
+      }
 
       if(!Storage::disk('s3')->exists($name)){
           return '0-0';
@@ -994,6 +1013,79 @@ $count =0;
       }
       $height = \Image::make($content)->height();
       $width = \Image::make($content)->width();
+
+      Cache::put($url.'-height', $height, 10);
+      Cache::put($url.'-width', $width, 10);
+
+      if($w==1){
+        if($width)
+          return $width*$percent;
+      }elseif($w==2){
+        if($height)
+          return $height*$percent;
+      }else{
+        return $width*$percent.'-'.$height*$percent;
+      }
+    }
+
+    public function getDimensions($url,$w=null){
+      $s3 = 'https://'.env('AWS_BUCKET').'.s3.ap-south-1.amazonaws.com/';
+      $url = preg_replace('/\?.*/', '', $url);
+      $name = str_replace($s3, '', $url);
+
+
+      $height= Cache::get($url.'-height');
+      $width= Cache::get($url.'-width');
+
+      if($w==1){
+        if($width)
+          return $width;
+      }elseif($w==2){
+        if($height)
+          return $height;
+      }else{
+        return $width.'-'.$height;
+      }
+
+      if(!Storage::disk('s3')->exists($name)){
+          return '0-0';
+      }
+      if (!ini_get('allow_url_fopen') && function_exists('curl_version')) {
+
+          $curl = curl_init();
+          curl_setopt($curl, CURLOPT_URL, $url);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+          $content = curl_exec($curl);
+          curl_close($curl);
+
+      } else if (ini_get('allow_url_fopen')) {
+          $context = stream_context_create(
+              array(
+                  "http" => array(
+                      "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+                  )
+              )
+          );
+
+          $content = file_get_contents($url,false, $context);
+      } else {
+          echo 'No dice.';
+      }
+      $height = \Image::make($content)->height();
+      $width = \Image::make($content)->width();
+
+      Cache::put('height', $height, 10);
+      Cache::put('width', $width, 10);
+
+      if($w==1){
+        if($width)
+          return $width;
+      }elseif($w==2){
+        if($height)
+          return $height;
+      }else{
+        return $width.'-'.$height;
+      }
       return $width.'-'.$height;
     }
 
