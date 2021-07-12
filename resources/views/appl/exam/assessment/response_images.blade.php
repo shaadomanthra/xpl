@@ -98,36 +98,19 @@
         <p class="d-inline {{ $t= $question}} mb-3">{!! $question->question !!}</p>
       </div> 
         @if($question->type=='mcq')
-        <div class="mt-3">
-          <div class="row">
-            <div class="col-12 col-md-6">
-              @if($question->a)
-          <div class=""><span class=" @if($t->answer=='A') text-success font-weight-bold @endif">(A)</span><div class="pt-1 d-inline "> {!! $question->a!!}</div></div>
-          @endif
-          @if($question->b)
-          <div class=""><span class=" @if($t->answer=='B') text-success font-weight-bold @endif">(B)</span><div class="pt-1 d-inline "> {!! $question->b!!}</div></div>
-          @endif
-
-            </div>
-            <div class="col-12 col-md-6">
-              @if($question->c)
-          <div class=""><span class=" @if($t->answer=='C') text-success font-weight-bold @endif">(C)</span><div class="pt-1 d-inline "> {!! $question->c!!}</div></div>
-          @endif
-          @if($question->d)
-          <div class=""><span class=" @if($t->answer=='D') text-success font-weight-bold @endif">(D)</span><div class="pt-1 d-inline "> {!! $question->d!!}</div></div>
-          @endif
-            </div>
-          </div>
-          
-          
-          @if($question->e)
-          <div class=""><span class=" @if($t->answer=='E') text-success font-weight-bold @endif">(E)</span><div class="pt-1 d-inline "> {!! $question->e!!}</div></div>
-          @endif
-        </div>
+        
+          <span class="badge badge-primary h4">MCQ</span>
+        @elseif($question->type=='fillup')
+          <span class="badge badge-primary h4">Fillup</span>
+        @elseif($question->type=='maq')
+          <span class="badge badge-primary h4">Multi Answer</span>
+        @elseif($question->type=='urq')
+       
+          <span class="badge badge-success h5">Image Upload Question</span>
+     
         @endif
-        <hr>
+       
 
-          <p><b>User Response: </b> </p>
           @if($question->type=='urq')
           <div class="{{$w=0}}">
 
@@ -146,11 +129,11 @@
 
           @endforeach
           @else
-            -
+            
           @endif
 
           @else
-          -
+          
 
           @endif
 
