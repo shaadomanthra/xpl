@@ -291,6 +291,7 @@
           <div class="alert alert-important alert-warning upload_helptext"> Write the answer for the above question in a white paper. And the upload option will be enabled during the last ({{$settings['upload_time']}} min) of the test.</div>
           @endif @endif
 
+          <div class="img_status img_status_{{$i+1}} py-2"></div>
           <div class="bg-light border p-3 rounded mt-3 upload_image_box" style="@if(isset($settings['upload_time'])) @if($settings['upload_time']) display:none @endif @endif">
           <h5>Upload your response (image format)</h5>
 
@@ -303,7 +304,7 @@
 </div>
         </div>
         <div class="img_container_{{$i+1}} pt-3" >
-          <div class="img_status img_status_{{$i+1}} py-2"></div>
+          <div class="img_status img_status2_{{$i+1}} py-2"></div>
           <div class="img_c img_c_{{$i+1}} {{$m=0}}">
 
             @if($question->images)

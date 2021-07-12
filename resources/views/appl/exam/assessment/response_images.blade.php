@@ -137,9 +137,9 @@
           @foreach(array_reverse($images[$question->id]) as $k=>$url)
 
              <div class=" {{$w=$w+1}}">
-              
+              <img src="{{$url}}" class="w-100" />
 
-              <canvas  id="sketchpad_{{$question->id}}_{{$k}}" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}" data-id="{{$t->question_id}}_{{$w}}" data-eurl="{{ route('assessment.solutions.q.post',[$exam->slug,$t->question_id])}}?student={{request()->get('student')}}" data-qid="{{$t->question_id}}" style="background: url('{{$url}}');width:{{$exam->getDimensions2($url,1,0.89)}}px;height:{{$exam->getDimensions2($url,2,0.89)}}px;background-size: {{$exam->getDimensions2($url,1,0.89)}}px {{$exam->getDimensions2($url,2,0.89)}}px;"><canvas>
+             
               
              
           </div>

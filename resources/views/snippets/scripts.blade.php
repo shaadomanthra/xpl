@@ -2560,13 +2560,13 @@ $(function(){
 
        var ext = $('.input_urq_'+$name).val().split('.').pop().toLowerCase();
         if($.inArray(ext, ['jfif','png','jpg','jpeg']) == -1) {
-            $('.img_status_'+$name).html('<span class="text-danger"><i class="fa fa-times-circle"></i> Only images with extension jpg,jpeg,png are supported. File uploaded is '+ext+'.</span>');
+            $('.img_status_'+$name).html('<span class="text-danger h3"><i class="fa fa-times-circle"></i> Only images with extension jpg,jpeg,png are supported. File uploaded is '+ext+'.</span>');
                 return 1;
         }
 
        if (files.size > 20971520) { 
                 $size = Math.round(files.size / Math.pow(1024,2));
-                $('.img_status_'+$name).html('<span class="text-danger"><i class="fa fa-times-circle"></i> Image size cannot be more than 20MB. File uploaded '+$size+'MB.</span>');
+                $('.img_status_'+$name).html('<span class="text-danger h3"><i class="fa fa-times-circle"></i> Image size cannot be more than 20MB. File uploaded '+$size+'MB.</span>');
                 return 1;
         }
 
@@ -2683,7 +2683,8 @@ $(function(){
            $(".img_c_"+$name).prepend($('<img class="w-100 py-2 "/>').attr('src',$src));
                   $(".img_container_"+$name).show(); // Display 
                 
-                  $('.img_status_'+$name).html('<span class="text-success"><i class="fa fa-check-circle"></i> Image upload successfully.</span>');
+                  $('.img_status_'+$name).html('<span class="text-success h4"><i class="fa fa-check-circle"></i> Image upload successfully. You can upload more images or proceed to the next question</span>');
+                  $('.img_status2_'+$name).html('<span class="text-primary h5"><i class="fa fa-chevron-circle-down"></i>  Scroll down to see the uploaded images.</span>');
                   $('.btn_delete_urq_'+$name).show();
                   $(".input_urq_"+$name).val(null);
 
@@ -2806,11 +2807,12 @@ $(function(){
                   $(".img_c_"+$name).html('');
                   $(".img_container_"+$name).show(); // Display 
                   $('.spinner_'+$name).hide();
-                  $('.img_status_'+$name).html('<span class="text-danger"><i class="fa fa-trash"></i> Images deleted successfully.</span>');
+                  $('.img_status_'+$name).html('<span class="text-danger h4"><i class="fa fa-trash"></i> Images deleted successfully. Now the page will refresh.</span>');
                   $('.btn_delete_urq_'+$name).hide();
                   $('.s'+$name).removeClass('qblue-border');
                   $(".input_urq_"+$name).val(null);
                   $('.btn_urq_'+$name).data('c',(1));
+                  location.reload();
 
                 }else{
                   console.log('error');

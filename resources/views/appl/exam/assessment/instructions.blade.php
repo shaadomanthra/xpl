@@ -3,6 +3,31 @@
 @section('content')
 
 
+<style>
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+  padding: 10px;
+}
+
+/* Might want to wrap a span around your checkbox text */
+.checkboxtext
+{
+  /* Checkbox text */
+  font-size: 110%;
+  display: inline;
+  padding-left: 5px;
+  margin-left: 5px;
+}
+
+</style>
+
 <div class="mb-md-5 mb-2 mt-3 testpage " data-startup="0">
 	<div class="">
 
@@ -154,7 +179,7 @@
 		<div class="form-check">
 			<h5 class="text-info">Kindly accept the terms to start the test</h5>
 		    <input type="checkbox" class="form-check-input" id="terms">
-		    <label class="form-check-label" for="terms">I have read and understood the instructions. I declare that I am not in possession of any prohibited material with me. I agree that in case of not adhering to the instructions, I shall be liable to be debarred from this Test and/or to disciplinary action, which may include ban from future Tests / Examinations.</label>
+		    <label class="form-check-label checkboxtext pl-2" for="terms">I have read and understood the instructions. I declare that I am not in possession of any prohibited material with me.<br> I agree that in case of not adhering to the instructions, I shall be liable to be debarred from this Test and/or to disciplinary action, which may include ban from future Tests / Examinations.</label>
 		 </div>
 		&nbsp;&nbsp;&nbsp;&nbsp;<br>
 
@@ -214,7 +239,7 @@
 		<div class="form-check">
 			<h5 class="text-info">Kindly accept the terms to start the test</h5>
 		    <input type="checkbox" class="form-check-input" id="terms">
-		    <label class="form-check-label" for="terms">I have read and understood the instructions. I declare that I am not in possession of any prohibited material with me. I agree that in case of not adhering to the instructions, I shall be liable to be debarred from this Test and/or to disciplinary action, which may include ban from future Tests / Examinations.</label>
+		     <label class="form-check-label checkboxtext pl-2" for="terms">I have read and understood the instructions. I declare that I am not in possession of any prohibited material with me. I agree that in case of not adhering to the instructions, I shall be liable to be debarred from this Test and/or to disciplinary action, which may include ban from future Tests / Examinations.</label>
 		 </div>
 		&nbsp;&nbsp;&nbsp;&nbsp;<br>
 

@@ -1534,6 +1534,8 @@ class AssessmentController extends Controller
         
 
     }
+
+    
     public function responses2($slug,$id=null,$student=null,$pdf2=null,Request $request)
     {
         $filename = $slug.'.json';
