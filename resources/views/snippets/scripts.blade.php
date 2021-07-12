@@ -2809,6 +2809,7 @@ $(function(){
                   $('.spinner_'+$name).hide();
                   $('.img_status_'+$name).html('<span class="text-danger h4"><i class="fa fa-trash"></i> Images deleted successfully. Now the page will refresh.</span>');
                   $('.btn_delete_urq_'+$name).hide();
+                  $('.img_status2_'+$name).hide();
                   $('.s'+$name).removeClass('qblue-border');
                   $(".input_urq_"+$name).val(null);
                   $('.btn_urq_'+$name).data('c',(1));
