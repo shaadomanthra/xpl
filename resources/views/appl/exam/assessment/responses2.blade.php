@@ -165,12 +165,12 @@ pre, code {
               <div class="col-6 col-md-4">
                 <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
                   <div class="h6">Percentage</div>
-                  <div class="score_main" >
+                  <div class="" >
                     @if(!$test_overall->status)
                     <div class="display-3 text-primary">{{ round($test_overall->score/$test_overall->max*100) }}% </div>
                     <div class="mt-2">out of 100</div>
                     @else
-                    <div class="badge badge-primary under_review_main" >Under <br>Review</div>
+                    <div class="badge badge-primary " >Under <br>Review</div>
                     @endif
                   </div>
                 </div>
@@ -178,12 +178,12 @@ pre, code {
               <div class="col-6 col-md-4">
                 <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox bg-white" style=''>
                   <div class="h6">Rank</div>
-                  <div class="score_main" >
+                  <div class="" >
                     @if(!$test_overall->status)
                     <div class="display-3 text-primary">#{{ $details['rank']['rank']}} </div>
                     <div class=" mt-2">out of {{$details['rank']['participants']}}</div>
                     @else
-                    <div class="badge badge-primary under_review_main" >Under <br>Review</div>
+                    <div class="badge badge-primary " >Under <br>Review</div>
                     @endif
                   </div>
                 </div>
@@ -536,6 +536,7 @@ pre, code {
         <label class="form-check-label" for="inlineRadio1">{{$r}}</label>
       </div>
       @endforeach
+      
       <div class="my-2"><b>Feedback</b></div>
       <textarea class="form-control comment_{{$t->question_id}}" name="comment" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
@@ -558,8 +559,10 @@ pre, code {
          @if($questions[$t->question_id]->type!='code')
           @if(!isset(json_decode($t->comment,true)['response_1']) && $t->comment!='null')
           @if(!json_decode($t->comment))
+          <div class="feedback_{{$t->question_id}}">
           <div class="my-2"><b>Feedback</b></div>
           <p> {{$t->comment}} </p>
+          </div>
           @endif
           @endif
          @endif
@@ -636,6 +639,7 @@ pre, code {
         <input type="hidden" name="username" value="{{ $student->username }}">
         <input type="hidden" name="test_id" value="{{ $exam->id }}">
         <input type="hidden" name="slug" value="{{ $exam->slug }}">
+          <input type="hidden" name="refresh" value="1">
         <input type="hidden" name="test_overall" value="{{ $test_overall->id }}">
 
   </div>

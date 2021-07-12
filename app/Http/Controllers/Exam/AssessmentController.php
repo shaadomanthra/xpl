@@ -5449,7 +5449,7 @@ class AssessmentController extends Controller
         Cache::forget('responses_'.$request->user_id.'_'.$request->test_id);
         flash('Comment Added')->success();
 
-        return redirect()->route('assessment.responses',['slug'=>$request->slug,'student'=>$request->username,'forget'=>1]);
+        return redirect()->route('assessment.responses',['slug'=>$request->slug,'student'=>$request->username,'refresh'=>1]);
 
     }
 

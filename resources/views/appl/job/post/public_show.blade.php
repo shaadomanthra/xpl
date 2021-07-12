@@ -74,12 +74,12 @@
       <h3>Information</h3>
       <div class="row mb-2">
             <div class="col-6"><i class="fa fa-map-marker"></i>&nbsp; Locations</div>
-            <div class="col-6">{{str_replace(',',', ',$obj->location)}}</div>
+            <div class="col-6">{{str_replace(',',', ',ucfirst(strtolower($obj->location)))}}</div>
           </div>
 
           <div class="row mb-2">
             <div class="col-6"><i class="fa fa-university"></i>&nbsp; Eligibility</div>
-            <div class="col-6">{{str_replace(',',', ',$obj->education)}}</div>
+            <div class="col-6">{{str_replace(',',', ',ucfirst(strtolower($obj->education)))}}</div>
           </div>
 
           <div class="row mb-2">

@@ -107,7 +107,7 @@
                 @endif
               @endif
             > 
-            {{$location }}
+            {{ucfirst(strtolower($location)) }}
           </div>
         @endforeach
           </div>
@@ -120,7 +120,7 @@
         
         <div class="border rounded">
           <div class="bg-light p-3 border-bottom rounded">
-            <label class="mb-0"><b>Education</b></label>
+            <label class="mb-0"><b>Education </b></label>
           <label class="mb-0 float-right">
               <input type="checkbox" class="check" id="checkAll" data-name="education"> Check All &nbsp;&nbsp;
             </label>
@@ -143,7 +143,7 @@
                 @endif
               @endif
             > 
-            {{$location }}
+            {{ ucfirst(strtolower($location)) }} 
           </div>
         @endforeach
           </div>

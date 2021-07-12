@@ -742,6 +742,7 @@ $(function(){
     $('.qno_'+$id).removeClass('qgreen').addClass('qred');
     $('.box_'+$id).removeClass('qgreen').addClass('qred');
     $('.score_entry_'+$id).show();
+    $('.feedback_'+$id).remove();
     $('.score_entry_val_'+$id).remove();
 
  });
@@ -772,10 +773,10 @@ $(function(){
             }
             
             $('.review_'+$id).removeClass('badge-warning').html('evaluated').addClass('badge-success');
-            $('.box_'+$id).removeClass('qyellow').addClass('qgreen');
+            $('.box_'+$id).removeClass('qred').addClass('qgreen');
             $('.score_entry_'+$id).hide();
             if($comment)
-            $('<div class="score_entry_val_'+$id+'"><div>'+$score+'</div><div class="my-2"><b>Feedback</b></div><p>'+$comment+'</p></div>').insertAfter('.score_entry_'+$id);
+            $('<div class="score_entry_val_'+$id+'"><div>'+$score+' <i class="fa fa-edit text-primary cursor score_edit" data-id="'+$id+'"></i></div><div class="feedback_'+$id+'"><div class="my-2"><b>Feedback</b></div><p>'+$comment+'</p></div></div>').insertAfter('.score_entry_'+$id);
             else
             $('<div class="score_entry_val_'+$id+'"><div>'+$score+' <i class="fa fa-edit text-primary cursor score_edit" data-id="'+$id+'"></i></div></div>').insertAfter('.score_entry_'+$id);
             $('.score_save_'+$id).hide();
