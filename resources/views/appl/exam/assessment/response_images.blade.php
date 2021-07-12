@@ -93,7 +93,7 @@
   <div class="card my-2">
     <div class="card-body">
 
-      <div class="item fixed py-3">
+      <div class=" py-3">
         <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
         <p class="d-inline {{ $t= $question}} mb-3">{!! $question->question !!}</p>
       </div> 
