@@ -474,7 +474,7 @@ class UserController extends Controller
                    'username'    => $this->username($data[$i]['email']), 
                    'client_slug' =>$client_slug,
                    'phone'    => $data[$i]['phone'], 
-                   'roll_number'    => $data[$i]['roll_number'], 
+                   'roll_number'    => trim(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data[$i]['roll_number'])), 
                    'branch_id' => $bid,
                    'college_id' => $data[$i]['college_id'],
                    'year_of_passing' =>$data[$i]['year_of_passing'],
@@ -508,9 +508,11 @@ class UserController extends Controller
                     if($data[$i]['phone'])
                     $u->phone = $data[$i]['phone'];
 
-                    if($data[$i]['roll_number'])
-                    $u->roll_number = $data[$i]['roll_number'];
 
+                    if($data[$i]['roll_number'])
+                    $u->roll_number = trim(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data[$i]['roll_number']));
+
+                  
                     if($bid)
                     $u->branch_id = $bid;
 

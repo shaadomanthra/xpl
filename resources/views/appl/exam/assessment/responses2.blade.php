@@ -298,7 +298,7 @@ pre, code {
            @if(isset($questions[$t->question_id]->images))
 
           @if(count($questions[$t->question_id]->images))
-          @foreach(array_reverse($questions[$t->question_id]->images) as $k=>$url)
+          @foreach($questions[$t->question_id]->images as $k=>$url)
 
              <div class=" {{$w=$w+1}}">
               
