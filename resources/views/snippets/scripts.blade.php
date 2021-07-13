@@ -2545,6 +2545,12 @@ $(function(){
       
       $user_id = $(this).data('user_id');
       $c = parseInt($(this).data('c'));
+      console.log('cis-'+$c);
+
+      if($c==6){
+        $('.img_status_'+$name).html('<span class="text-danger h3"><i class="fa fa-times-circle"></i> You can upload maximum 5 images per question only.</span>');
+        return 1;
+      }
       $qid = $(this).data('qid');
       $url = $('.url_urq_'+$qid+'_'+$c).data('url');
 
