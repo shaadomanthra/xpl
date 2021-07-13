@@ -205,6 +205,12 @@ pre, code {
              
               <button  class="btn btn-outline-dark btn-sm ml-2" data-toggle="modal" data-target="#exampleModal2" data-html2canvas-ignore="true">Add Comment</button>
               <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1"  class="btn btn-outline-dark btn-sm " >Refresh Cache</a>
+
+              @if(request()->get('mode')!=2)
+                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&mode=2"  class="btn btn-outline-dark btn-sm " >Mobile Mode</a>
+              @else
+                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}"  class="btn btn-outline-dark btn-sm " >Desktop Mode</a>
+              @endif
             </div>
             
 
@@ -238,7 +244,7 @@ pre, code {
 			<div class="card-body">
 
         <div class="row">
-          <div class="col-9">
+          <div class="@if(request()->get('mode')==2) col-12 @else col-9 @endif">
 
                 <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
         <p class="d-inline {{ $question = $t->question}} mb-3">{!! $questions[$t->question_id]->question !!}</p>
@@ -517,11 +523,11 @@ pre, code {
         @endif
 
           </div>
-          <div class="col-3">
+          <div class=" @if(request()->get('mode')==2) col-12 @else col-3 @endif">
             <div class="item fixed sticky rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 mt-md-0 box_{{$t->question_id}}">
       <div class="card-body ">
 
-        <p>Status: @if($t->status==2)<span class="badge badge-warning review_{{$t->question_id}}">under review</span>
+        <p>Status: @if($t->status==2)<span class="badge badge-warning review_{{$t->question_id}}">Q{{(intval($k)+1)}} - under review</span>
         @else
         <span class="badge badge-success review_{{$t->question_id}}">evaluated</span>
         @endif</p>

@@ -115,19 +115,12 @@
           <div class="{{$w=0}}">
 
           @if(isset($images[$question->id]))
-
           @if(count($images[$question->id]))
-          @foreach(array_reverse($images[$question->id]) as $k=>$url)
-
-             <div class=" {{$w=$w+1}}">
-              <img src="{{$url}}" class="w-100" />
-
-             
-              
-             
-          </div>
-
-          @endforeach
+            @foreach(array_reverse($images[$question->id]) as $k=>$url)
+            <div class=" {{$w=$w+1}}">
+                <img src="{{$url}}" class="w-100 mb-2" />
+            </div>
+            @endforeach
           @else
             
           @endif
