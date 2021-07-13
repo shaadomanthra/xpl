@@ -162,7 +162,7 @@ class TestReport2 implements FromCollection
     	$ux->Sc = "Score (".$exam->total.")";
         $ux->Percentage = "Percentage";
          $ux->Timer = "Time spent (Minutes)";
-      $ux->adm = "Admission Number";
+      $ux->adm = "Roll Number";
 
       if(request()->get('all')){
         $ux->tenth = 'Class 10th';
