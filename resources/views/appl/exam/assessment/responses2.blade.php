@@ -304,7 +304,7 @@ pre, code {
               
               <a href="#" id="{{$k}}" class="d-none" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}" data-id="{{$t->question_id}}_{{$w}}" data-eurl="{{ route('assessment.solutions.q.post',[$exam->slug,$t->question_id])}}?student={{request()->get('student')}}" data-qid="{{$t->question_id}}"><img src="{{$url }}"  class=" p-1  my-1 w-100 img_{{$t->question_id}}_{{$k}}" data-name="{{$k}}"  /></a>
                 
-               <div class="request()->get('mode')==2) pr-4 @endif" style="width:{{$exam->getDimensions2($url,1,0.70)}}px;height:{{$exam->getDimensions2($url,2,0.7)}}px;"> 
+               <div class="@if(request()->get('mode')==2) pr-4 @endif" style="width:{{$exam->getDimensions2($url,1,0.70)}}px;height:{{$exam->getDimensions2($url,2,0.7)}}px;"> 
               <canvas  id="sketchpad_{{$t->question_id}}_{{$k}}" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}" data-id="{{$t->question_id}}_{{$w}}" data-eurl="{{ route('assessment.solutions.q.post',[$exam->slug,$t->question_id])}}?student={{request()->get('student')}}" data-qid="{{$t->question_id}}" style="background: url('{{$url}}');width:{{$exam->getDimensions2($url,1,0.70)}}px;height:{{$exam->getDimensions2($url,2,0.70)}}px;background-size: {{$exam->getDimensions2($url,1,0.70)}}px {{$exam->getDimensions2($url,2,0.70)}}px;"><canvas>
               
              </div>
