@@ -1046,6 +1046,7 @@ $(function(){
     data['user_id'] = $(this).data('user_id');
     data['slug'] = $(this).data('slug');
     data['qid'] = $(this).data('qid'); 
+    data['id'] = $(this).data('id'); 
     data['_token'] = $(this).data('token');
 
     data['student'] = $(this).data('student');
@@ -1058,7 +1059,7 @@ $(function(){
       $.ajax({
           type : 'post',
           url : url,
-          data:{'imgurl':data['imgurl'],'name':data['name'],'width':data['width'],'height':data['height'],'user_id':data['user_id'],'slug':data['slug'],'qid':data['qid'],'_token':data['_token'],'student':data['student'],'image':data['image'],'ajax':1},
+          data:{'imgurl':data['imgurl'],'name':data['name'],'width':data['width'],'height':data['height'],'user_id':data['user_id'],'slug':data['slug'],'qid':data['qid'],'id':data['id'],'_token':data['_token'],'student':data['student'],'image':data['image'],'ajax':1},
           success:function(data){
             console.log(data);
             //$(".img_"+$id).attr("src", data);
@@ -1102,6 +1103,7 @@ $(function(){
     data['slug'] = $(this).data('slug');
     data['qid'] = $(this).data('qid'); 
     data['_token'] = $(this).data('token');
+    data['id'] = $(this).data('id'); 
 
     data['student'] = $(this).data('student');
     canvas = document.getElementById('sketchpad');
@@ -1114,7 +1116,7 @@ $(function(){
       $.ajax({
           type : 'post',
           url : url,
-          data:{'imgurl':data['imgurl'],'name':data['name'],'width':data['width'],'height':data['height'],'user_id':data['user_id'],'slug':data['slug'],'qid':data['qid'],'_token':data['_token'],'student':data['student'],'image':data['image'],'ajax':1},
+          data:{'imgurl':data['imgurl'],'name':data['name'],'width':data['width'],'height':data['height'],'user_id':data['user_id'],'slug':data['slug'],'qid':data['qid'],'id':data['id'],'_token':data['_token'],'student':data['student'],'image':data['image'],'ajax':1},
           success:function(data){
             console.log(data);
             $(".img_"+$id).attr("src", data);

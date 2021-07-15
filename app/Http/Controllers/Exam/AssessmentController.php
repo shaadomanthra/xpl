@@ -1589,6 +1589,9 @@ class AssessmentController extends Controller
             Cache::forget('ranked_'.$user_id.'_'.$test_id);
         }
 
+
+        
+
         $jsonname = $slug.'_'.$user_id;
 
         if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json'))
@@ -1596,9 +1599,12 @@ class AssessmentController extends Controller
         else
             $images = [];
 
+        if($images)
+        if($request->get('imagerollback')){
+            $exam->image_rollback($images,$jsonname,$student);
+        }
+
         $keys = [];
-
-
 
         //reevaluate
         if(request()->get('reevaluate')){
@@ -4334,27 +4340,31 @@ class AssessmentController extends Controller
 
     public function update_image($r){
 
+
         $name = str_replace('urq/', '',$r->get('name'));
         $slug = $r->get('slug');
         $imgurl = $r->get('imgurl');
         $user_id = $r->get('user_id');
         $qid = $r->get('qid');
+        $id = $r->get('id');
         $width = intval($r->get('width'))*1.17;
         $height = intval($r->get('height'))*1.17;
 
+
+        $name2 = $slug.'_'.$user_id.'_'.$id.'.jpg';
 
 
         $bg = \Image::make($imgurl)->resize($width,$height);
         $b =$bg->encode('jpg',100);
 
-        if(!Storage::disk('s3')->exists('urq/original_'.$name)){
-            Storage::disk('s3')->put('urq/original_'.$name, (string)$b,'public');
+        if(!Storage::disk('s3')->exists('urq/original_'.$name2)){
+            Storage::disk('s3')->put('urq/original_'.$name2, (string)$b,'public');
         }
 
         $img = \Image::make($r->get('image'))->resize($width,$height);
         $bg->insert($img)->encode('jpg',100);
 
-        $new_name = rand(10,100).'_'.$name;
+        $new_name = rand(10,100).'_'.$name2;
         Storage::disk('s3')->put('urq/'.$new_name, (string)$bg,'public');
 
 
@@ -4373,7 +4383,7 @@ class AssessmentController extends Controller
 
         $json[$qid][$name] = $path;
         Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
-        Storage::disk('s3')->delete('urq/'.$name);
+        //Storage::disk('s3')->delete('urq/'.$name);
 
         if($r->get('ajax')){
            // echo json_encode($jsonfile);
@@ -4843,7 +4853,7 @@ class AssessmentController extends Controller
         else
             $images = [];
 
-
+        
        
 
         // images

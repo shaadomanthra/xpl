@@ -1498,6 +1498,25 @@ class ExamController extends Controller
             return redirect()->back();
         }
 
+        if($r->get('imagerollback')){
+            $rep =  Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
+            
+            foreach($rep as $rx){
+                $student = $rx->user;
+                $user_id = $student->id;
+                $jsonname = $exam->slug.'_'.$user_id;
+
+                if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json'))
+                    $images = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+                else
+                    $images = [];
+                $exam->image_rollback($images,$jsonname,$student);
+                
+
+            }
+            return redirect()->back();
+        }
+
         if($r->get('writing')){
             $rep =  Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
             foreach($rep as $rx){

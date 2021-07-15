@@ -310,9 +310,9 @@ pre, code {
              </div>
 
           <div class=" pt-2 pb-4">
-              <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=90&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$k}}" >Rotate Left</a>
+              <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=90&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}" >Rotate Left</a>
 
-              <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=-90&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$k}}">Rotate Right </a> 
+              <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=-90&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}">Rotate Right </a> 
               <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2 d-none" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=100&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$k}}">Load Original </a> 
                 &nbsp;&nbsp;
 
@@ -320,11 +320,11 @@ pre, code {
             <button type="button" class="btn btn-outline-dark  @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif   d-inline" data-item='sketchpad_{{$t->question_id}}_{{$k}}' onclick="undo_{{$t->question_id}}_{{$k}}()">Undo</button>
           <button type="button" class="btn btn-outline-dark  @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif  d-inline" data-item='sketchpad_{{$t->question_id}}_{{$k}}' onclick="redo_{{$t->question_id}}_{{$k}}()">Redo</button>
               
-          <button type="button" class="btn btn-success save_image2 @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif d-inline " data-url="{{ route('assessment.solutions.q.post',[$exam->slug,$t->question_id])}}?student={{request()->get('student')}}" data-name="{{$k}}"  data-named="sketchpad_{{$t->question_id}}_{{$k}}" data-imgurl="{{$url}}" data-student="{{request()->get('student')}}" data-token="{{ csrf_token() }}" data-user_id="{{ $student->id }}" data-slug="{{$exam->slug}}"  data-qid="{{$t->question_id}}" data-id="{{$t->question_id}}_{{$k}}"  data-width="{{$exam->getDimensions2($url,1,0.83)}}" data-height="{{$exam->getDimensions2($url,2,0.83)}}">
+          <button type="button" class="btn btn-success save_image2 @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif d-inline " data-url="{{ route('assessment.solutions.q.post',[$exam->slug,$t->question_id])}}?student={{request()->get('student')}}" data-name="{{$k}}"  data-named="sketchpad_{{$t->question_id}}_{{$k}}" data-imgurl="{{$url}}" data-student="{{request()->get('student')}}" data-token="{{ csrf_token() }}" data-user_id="{{ $student->id }}" data-slug="{{$exam->slug}}"  data-qid="{{$t->question_id}}" data-id="{{$t->question_id}}_{{$w}}"  data-width="{{$exam->getDimensions2($url,1,0.83)}}" data-height="{{$exam->getDimensions2($url,2,0.83)}}">
               Save Image
             </button>
 
-            <div class="spinner-border  spinner-border-sm mt-1 ml-3  img_loading_{{$t->question_id}}_{{$k}}"  style="display:none" role="status">
+            <div class="spinner-border  spinner-border-sm mt-1 ml-3  img_loading_{{$t->question_id}}_{{$w}}"  style="display:none" role="status">
                     <span class="sr-only">Loading...</span> 
                   </div>
                 <div>

@@ -91,6 +91,27 @@ class Exam extends Model
         return 'primary';
     }
 
+
+    public function image_rollback($images,$jsonname,$student){
+
+  // dd($images);
+      foreach($images as $i =>$img){
+        if(count($img)>0){
+          foreach($img as $k=>$r){
+            $p = explode('urq/',$r);
+            $id = str_replace('a','',$k);
+            $name2 = $this->slug.'_'.$student->id.'_'.$i.'_'.$id.'.jpg?abcd';
+            $url = $p[0].'urq/'.$name2;
+            $images[$i][$k]   = $url;
+          }
+            
+        }
+       
+      }
+      Storage::disk('s3')->put('urq/'.$jsonname.'.json',json_encode($images));
+
+    }
+
     public function updateCache(){
             //add owner
         $exam = $this;
