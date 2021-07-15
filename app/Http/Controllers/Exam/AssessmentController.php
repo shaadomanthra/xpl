@@ -4853,7 +4853,7 @@ class AssessmentController extends Controller
         else
             $images = [];
 
-        
+
        
 
         // images
