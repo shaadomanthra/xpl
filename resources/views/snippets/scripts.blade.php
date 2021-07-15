@@ -20,6 +20,7 @@
     <!--end::Global Theme Bundle-->
     <!--begin::Page Scripts(used by this page)-->
     <script src="{{ asset('assets/js/pages/widgets.js?v=7.0.4')}}"></script>
+      
 @endif
 
 <script>
@@ -46,6 +47,14 @@ $menu.on("click","span", function(){
 </script>
 
 
+@if(isset($select))
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+$('select').select2({
+    theme: 'bootstrap4',
+});
+</script>
+@endif
 
   <script>
 $(function(){

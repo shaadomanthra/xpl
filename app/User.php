@@ -413,8 +413,11 @@ class User extends Authenticatable
             $order = 'name';
         }
         if(subdomain()=='xplore' || subdomain()=='piofx' || subdomain() =='gradable' ){
-            $users = Role::where('slug',$role)->first()->users;
-            $d = $users->whereIn('role',[2,12,13]);
+            $users = Role::where('slug',$role)->first()->users()->orderBy('name');
+            if($users)
+                $d = $users->whereIn('role',[2,12,13]);
+            else
+                $d = $users;
             return $d;
         }
         else{

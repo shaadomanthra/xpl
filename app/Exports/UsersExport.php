@@ -91,6 +91,7 @@ class UsersExport implements FromCollection,ShouldAutoSize
                 }
                 foreach($data as $m=>$ex){
                     $ex = str_replace(" ","_",$ex);
+                    $ex = str_replace(".","_",$ex);
                     $name = 'e_'.$m;
                     
                     if(isset($d->questions->$ex)){

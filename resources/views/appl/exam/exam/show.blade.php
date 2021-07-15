@@ -5,7 +5,8 @@
 
 @include('appl.exam.exam.xp_css')
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css">
 <div class="dblue" >
   <div class="container">
     <div class="row">
@@ -884,6 +885,7 @@
     </div>
   </div>
 </div>
+
 
 
 @endsection

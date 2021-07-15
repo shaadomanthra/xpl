@@ -824,6 +824,7 @@ class ExamController extends Controller
                     ->with('exam',$exam)
                     ->with('cache',$exam_cache)
                     ->with('data',$data)
+                    ->with('select',1)
                     ->with('email_stack',$email_stack);
         else
             abort(404);
