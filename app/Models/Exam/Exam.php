@@ -801,15 +801,37 @@ $count =0;
                 }else{
                   $mark = $q->mark;
                   $stm = $stm + $mark;
-                  if($e->accuracy==1){
-                    if($e->mark!=$mark){
+                  // if($e->accuracy==1){
+                  //   if($e->mark!=$mark){
+                  //     $e->mark = $mark;
+                  //     $flag=1;
+                  //   }
+                  // }
+
+                  if($q->type=='mcq'){
+
+                    
+
+                    if($e->response==$q->answer){
+                      $e->answer = $q->answer;
                       $e->mark = $mark;
-                      $flag=1;
+                      $e->accuracy =1;
+                    }else{
+                      $e->answer = $q->answer;
+                      $e->mark = 0;
+                      $e->accuracy = 0;
                     }
+
+                    $flag=1;
                   }
+
                   $stotal = $stotal + $e->mark;
 
                 }
+
+                
+
+
 
                 if($flag){
                   $e->save();
