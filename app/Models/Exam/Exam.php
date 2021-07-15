@@ -809,9 +809,6 @@ $count =0;
                   // }
 
                   if($q->type=='mcq'){
-
-                    
-
                     if($e->response==$q->answer){
                       $e->answer = $q->answer;
                       $e->mark = $mark;
