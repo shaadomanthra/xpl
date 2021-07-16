@@ -163,7 +163,10 @@
                     @endif
 
                   </p>
-                  @if($obj->answer)<span class="text-primary">Answer : <b>{{$obj->answer}}</b> </span>@endif &nbsp; 
+                  @if($obj->answer)<span class="text-primary">Answer : <b>{{$obj->answer}}</b> </span>
+                  @elseif($obj->answer==0)
+                  <span class="text-primary">Answer : <b>{{$obj->answer}}</b> </span>
+                  @endif &nbsp; 
 
                   @if($obj->section_name)<span class="text-danger">Section : <b>{{$obj->section_name}}</b> </span>@endif
                     &nbsp;
