@@ -70,14 +70,59 @@
   <div class="card mb-3"  style="background: #ffceb8;border: 2px solid #e0a889;color: #b55422;">
     @if($exam->message)
     <div class="card-body">
-      {{$exam->message}}
+      {{$exam->message}} 
     </div>
     @else
     <div class="card-body">
-      Your responses are recorded for internal evaluation.
+      Your responses are recorded for internal evaluation. 
     </div>
     @endif
   </div>
+
+    <div class="table-responsive">
+    <table class="table table-bordered bg-white">
+  <thead>
+    <tr>
+      <th scope="col" style="width:5%">Qno</th>
+      <th scope="col">Your Response</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($tests as $k=>$t)
+
+    <tr>
+      <th scope="row">{{($k+1)}}</th>
+
+      <td>
+        @if($questions[$t->question_id]->type=='urq')
+          <div class="">
+          
+          @if(isset($questions[$t->question_id]->images))
+
+          @foreach(array_reverse($questions[$t->question_id]->images) as $k=>$url)
+
+            <a href="#" id="{{$k}}" class="show_image" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" >
+             <img src="{{$url }}" style="width:150px;" class="border border-secondary p-1  my-1" />
+           </a>
+          @endforeach
+          @endif
+          </div>
+        
+        @else
+        {!! $t->response !!}
+       
+        @endif
+      </td>
+     
+    </tr>
+    @endforeach
+  </tbody>
+</table>
+
+  </div>
+
+
 
   @include('appl.exam.assessment.blocks.banner')
 
@@ -233,9 +278,10 @@
         <h1 class="modal-title" id="exampleModalLabel">Image</h1>
       </div>
       <div class="modal-body">
-        <div class="canvas">
+        <div class="canvas d-none">
         
         </div>
+        <img src="" class="img_resp w-100"/>
       </div>
     </div>
   </div>

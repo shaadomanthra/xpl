@@ -1486,6 +1486,16 @@ class AssessmentController extends Controller
         else
             $images = [];
 
+        $responses=[];$resp=[];
+        if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/'.$student->username.'.json')){
+                $json = json_decode(Storage::disk('s3')->get('testlog/'.$exam->id.'/'.$student->username.'.json'),true);
+                $responses = $json['responses'];
+                foreach($responses as $r){
+                    $resp[$r['question_id']] = $r;
+                }
+        }
+
+
         $sections = array();
         foreach($exam->sections as $section){
             if(isset($secs[$section->id][0]))
@@ -1525,14 +1535,23 @@ class AssessmentController extends Controller
 
         }
 
+        $images_count = 0;
+        foreach($images as $imgs){
+            foreach($imgs as $im){
+                $images_count++;
+            }
+        }
+
+
+
         return view('appl.exam.assessment.response_images')
                     ->with('student',$student)
                     ->with('questions',$questions)
                     ->with('sketch',1)
                     ->with('exam',$exam)
+                    ->with('images_count',$images_count)
+                    ->with('resp',$resp)
                     ->with('images',$images);
-        
-
     }
 
     

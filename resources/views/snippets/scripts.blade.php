@@ -739,6 +739,10 @@ $(function(){
           $('.canvas').html('<canvas id="sketchpad" width="1100px" height="1100px" style="background:#f8f8f8 ;background-image:url('+url+');background-repeat: no-repeat;background-size:100%"></canvas>').promise().done(function(){
           $('#exampleModal').modal();
       });
+
+          if($('.img_resp').length){
+            $('.img_resp').attr('src',imgurl);
+          }
      
       
   });

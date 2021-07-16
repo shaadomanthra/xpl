@@ -253,7 +253,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
                   <div class="img_c img_c_{{$i+1}} {{$m=0}}" style="width:150px;">
                     @if($question->images)
                       @foreach(array_reverse($question->images) as $img)
-                        <img id="" class="img_{{$i+1}} w-100 {{$m=1}} py-2" src="{{$img}}" style="max-width:150px"/>
+                        <img id="" class="img_{{$i+1}} w-100 {{$m=1}} my-2 border" src="{{$img}}" style="max-width:150px"/>
                       @endforeach
                     @endif
                   </div>

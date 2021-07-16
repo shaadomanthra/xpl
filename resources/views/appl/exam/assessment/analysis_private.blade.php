@@ -33,7 +33,7 @@
 		</div>
 		@else
 		<div class="card-body">
-			Your responses are recorded for internal evaluation.
+			Your responses are recorded for internal evaluation. 
 		</div>
 		@endif
 	</div>
