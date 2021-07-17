@@ -65,7 +65,7 @@
 
 
  
-@if($exam->solutions ==2 && !request()->get('student'))
+@if(($exam->solutions ==2 || $exam->solutions ==5) && !request()->get('student'))
 
   <div class="card mb-3"  style="background: #ffceb8;border: 2px solid #e0a889;color: #b55422;">
     @if($exam->message)
@@ -79,6 +79,7 @@
     @endif
   </div>
 
+  @if($exam->solutions==5)
     <div class="table-responsive">
     <table class="table table-bordered bg-white">
   <thead>
@@ -122,7 +123,7 @@
 
   </div>
 
-
+@endif
 
   @include('appl.exam.assessment.blocks.banner')
 
