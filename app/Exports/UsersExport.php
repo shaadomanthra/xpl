@@ -111,6 +111,11 @@ class UsersExport implements FromCollection,ShouldAutoSize
                     }
                 
                 }
+
+                // if(request()->get('location')){
+                //     $users[$k]->location = 
+
+                // }
                 
                 $users[$k]->uid = $id;
                 $users[$k]->created_at = $users[$k]->pivot->created_at;

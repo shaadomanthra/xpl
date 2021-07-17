@@ -116,7 +116,10 @@ class TestReport2 implements FromCollection
                 $result[$k]->tenth = $res->user->tenth;
                 $result[$k]->twelveth = $res->user->twelveth;
                 $result[$k]->graduation = $res->user->bachelors;
+                $result[$k]->hometown = $res->user->hometown;
+                $result[$k]->current_city = $res->user->current_city;
             }
+
 
     		unset($result[$k]->id);
     		unset($result[$k]->user_id);
@@ -168,6 +171,8 @@ class TestReport2 implements FromCollection
         $ux->tenth = 'Class 10th';
         $ux->twelveth = 'Class 12th';
         $ux->graduation = 'Graduation';
+        $ux->hometown = 'Hometown';
+        $ux->current_city = 'Current City';
       }
     	unset($ux->id);
     		unset($ux->user_id);
