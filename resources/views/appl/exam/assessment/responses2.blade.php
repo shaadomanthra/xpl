@@ -314,7 +314,7 @@ pre, code {
 
               <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=-90&name={{$k}}&url={{$url}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}">Rotate Right </a> 
               <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2 d-none" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=100&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$k}}">Load Original </a> 
-                <a href="{{ route('assessment.responses',[$exam->slug])}}?k={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&imageback=1" class="btn btn-outline-info @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2   " data-url="" data-id="{{$t->question_id}}_{{$k}}">Refresh Image </a> 
+                <a href="{{ route('assessment.responses',[$exam->slug])}}?k={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&imageback=1 @if(request()->get('mode')==2)) &mode=2 @endif" class="btn btn-outline-info @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2   " data-url="" data-id="{{$t->question_id}}_{{$k}}">Refresh Image </a> 
                 &nbsp;&nbsp;
 
           <button type="button" class="btn btn-outline-dark  @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif   d-inline" data-item='sketchpad_{{$t->question_id}}_{{$k}}' onclick="clear_{{$t->question_id}}_{{$k}}()">Clear</button>

@@ -1647,10 +1647,18 @@ class ExamController extends Controller
         if(request()->get('export')){
 
             if($code)
-
-              $result = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->orderby('score','desc')->get();
+                $result = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->orderby('score','desc')->get();
             else
-            $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->get();
+                $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->with('user')->get();
+
+            foreach($result as $g => $f){
+                $result[$g]['rollnumber'] = $result[$g]->user->roll_number;
+            }
+            $result = $result->sortBy(function($it)
+                    {
+                      return $it->roll_number;
+                    });
+           
             $usrs = $result->pluck('user_id');
             $exam_sections = Section::where('exam_id',$exam->id)->get();
             $sections = Tests_Section::whereIn('user_id',$usrs)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');

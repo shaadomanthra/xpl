@@ -104,7 +104,8 @@ class Exam extends Model
       $images[$qid][$k]   = $url;
       Storage::disk('s3')->put('urq/'.$jsonname.'.json',json_encode($images));
 
-      return redirect()->route('assessment.responses',['slug'=>$this->slug,'refresh'=>1,'student'=>$student->username]);
+      $mode = request()->get('mode');
+      return redirect()->route('assessment.responses',['slug'=>$this->slug,'refresh'=>1,'mode'=>$mode,'student'=>$student->username]);
       
     }else{
       foreach($images as $i =>$img){
