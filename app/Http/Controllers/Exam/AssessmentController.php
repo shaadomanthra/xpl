@@ -4323,7 +4323,7 @@ class AssessmentController extends Controller
         $name = str_replace('urq/', '',$r->get('name'));
         $url = $r->get('url');
         $p = explode('urq/',$url);
-        $name2 = str_replace('urq/', '',$p[1]);
+        $name2 = strtok(str_replace('urq/', '',$p[1]), '?');
         $imgurl = $r->get('imgurl');
         $id = $name2;
 
