@@ -47,6 +47,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="{{ route('test.report',$exam->slug)}}?export=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif">Scores</a>
+              <a class="dropdown-item" href="{{ route('test.report',$exam->slug)}}?export=1&rollnumber=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif">Scores (sort by rollnumber)</a>
               <a class="dropdown-item" href="{{ route('test.report',$exam->slug)}}?export=1&all=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif">Scores + Academic Percentage</a>
             </div>
           </div>

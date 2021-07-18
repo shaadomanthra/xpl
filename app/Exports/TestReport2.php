@@ -139,6 +139,8 @@ class TestReport2 implements FromCollection
             unset($result[$k]->comment);
     		unset($result[$k]->status);
     		unset($result[$k]->updated_at);
+            if(isset($result[$k]->rollnumber))
+             unset($result[$k]->rollnumber);
     	}
 
 

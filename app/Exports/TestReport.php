@@ -86,6 +86,8 @@ class TestReport implements FromCollection, ShouldQueue
             unset($result[$k]->code);
             unset($result[$k]->status);
             unset($result[$k]->updated_at);
+            if(isset($result[$k]->roll_number))
+             unset($result[$k]->roll_number);
         }
 
             
