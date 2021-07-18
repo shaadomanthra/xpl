@@ -1057,6 +1057,7 @@ $(function(){
     canvas = document.getElementById(data['named']);
     data['image'] = canvas.toDataURL("image/png");
     //redirectPost(url,data);
+    $('.saved_'+$id).hide();
 
 
     $('.img_loading_'+$id).show();
@@ -1070,6 +1071,7 @@ $(function(){
             //console.log(".img_"+$id);
             //console.log($(".img_"+$id).attr("src"));
             $('.img_loading_'+$id).hide();
+            $('.saved_'+$id).show();
             // json = JSON.parse(data);
             // if(json.status==0){
             //   $('.under_review_main').hide();

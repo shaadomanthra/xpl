@@ -1623,6 +1623,16 @@ class AssessmentController extends Controller
             $exam->image_rollback($images,$jsonname,$student);
         }
 
+
+        if($images){
+            if($request->get('imageback') && $request->get('qid') && $request->get('k')){
+              
+                 return $exam->image_rollback($images,$jsonname,$student,$request->get('qid'),$request->get('k'));
+
+            }
+        }
+        
+
         $keys = [];
 
         //reevaluate

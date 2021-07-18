@@ -156,8 +156,10 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::get('/user_details_update', 'College\CampusController@user_details_update')
 			->name('user.details.update');
 
-        Route::get('/test/{test}/analytics', 'College\CampusController@test_analytics')
+    Route::get('/test/{test}/analytics', 'College\CampusController@test_analytics')
 	 ->name('test.analytics')->middleware('auth');
+	Route::get('/test/{test}/pdfupload', 'Exam\ExamController@pdfupload')
+			->name('test.pdfupload')->middleware('auth');
 	Route::get('/test/{test}/report', 'Exam\ExamController@analytics')
 			->name('test.report')->middleware('auth');
 	Route::get('/test/{test}/analytics3', 'Exam\ExamController@analytics3')

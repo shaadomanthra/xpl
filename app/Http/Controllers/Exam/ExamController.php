@@ -647,6 +647,34 @@ class ExamController extends Controller
         }
     }
 
+
+
+    public function pdfupload($id,Request $request){
+
+        $exam= Cache::remember('exam_'.$id,30, function() use ($id){
+            return Exam::where('slug',$id)->with('user')->with('sections')->first();
+        });
+        $user = \auth::user();
+
+        $filepath = 'pdfuploads/'.$exam->slug.'/'.$exam->slug.'_'.$user->id.'.pdf';
+
+        $file = 0;
+        if(Storage::disk('s3')->exists($filepath)){
+            $file = Storage::disk('s3')->url($filepath);
+        }
+
+        $url  = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$filepath]);
+
+
+        if($exam)
+            return view('appl.exam.exam.pdfupload')
+                    ->with('file',$file)
+                    ->with('url',$url)
+                    ->with('exam',$exam);
+        else
+            abort(404);
+    }
+
     /**
      * Display the specified resource.
      *
