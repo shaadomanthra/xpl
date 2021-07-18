@@ -302,7 +302,7 @@ pre, code {
 
              <div class=" {{$w=$w+1}}">
               
-              <a href="#" id="{{$k}}" class="d-none" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}" data-id="{{$t->question_id}}_{{$w}}" data-eurl="{{ route('assessment.solutions.q.post',[$exam->slug,$t->question_id])}}?student={{request()->get('student')}}" data-qid="{{$t->question_id}}"><img src="{{$url }}"  class=" p-1  my-1 w-100 img_{{$t->question_id}}_{{$w}}" data-name="{{$k}}"  /></a>
+              <a href="#" id="{{$k}}" class="d-none" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}" data-id="{{$t->question_id}}_{{$w}}" data-eurl="{{ route('assessment.solutions.q.post',[$exam->slug,$t->question_id])}}?student={{request()->get('student')}}" data-qid="{{$t->question_id}}"><img src="{{$url}}"  class=" p-1  my-1 w-100 img_{{$t->question_id}}_{{$w}}" data-name="{{$k}}"  /></a>
                 
                <div class="@if(request()->get('mode')==2) pr-4 @endif" style="width:{{$exam->getDimensions2($url,1,0.70)}}px;height:{{$exam->getDimensions2($url,2,0.7)}}px;"> 
               <canvas  id="sketchpad_{{$t->question_id}}_{{$k}}" class="@if(request()->get('mode')==2))  ml-4 @endif border" data-url="{{$url}}?time={{strtotime('now')}}" data-name="{{$k}}" data-imgurl="{{$url}}" data-dimensions="{{$exam->getDimensions($url)}}" data-id="{{$t->question_id}}_{{$w}}" data-eurl="{{ route('assessment.solutions.q.post',[$exam->slug,$t->question_id])}}?student={{request()->get('student')}}" data-qid="{{$t->question_id}}" style="background: url('{{$url}}');width:{{$exam->getDimensions2($url,1,0.70)}}px;height:{{$exam->getDimensions2($url,2,0.70)}}px;background-size: {{$exam->getDimensions2($url,1,0.70)}}px {{$exam->getDimensions2($url,2,0.70)}}px;"><canvas>
@@ -310,9 +310,9 @@ pre, code {
              </div>
 
           <div class=" pt-2 pb-4">
-              <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=90&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}" >Rotate Left</a>
+              <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=90&name={{$k}}&url={{$url}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}" >Rotate Left</a>
 
-              <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=-90&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}">Rotate Right </a> 
+              <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=-90&name={{$k}}&url={{$url}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}">Rotate Right </a> 
               <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2 d-none" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=100&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$k}}">Load Original </a> 
                 <a href="{{ route('assessment.responses',[$exam->slug])}}?k={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&imageback=1" class="btn btn-outline-info @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2   " data-url="" data-id="{{$t->question_id}}_{{$k}}">Refresh Image </a> 
                 &nbsp;&nbsp;

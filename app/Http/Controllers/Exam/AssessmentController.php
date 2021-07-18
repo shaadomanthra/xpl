@@ -4321,8 +4321,11 @@ class AssessmentController extends Controller
 
     public function rotate_image($slug,$user_id,$r){
         $name = str_replace('urq/', '',$r->get('name'));
+        $url = $r->get('url');
+        $p = explode('urq/',$url);
+        $name2 = str_replace('urq/', '',$p[1]);
         $imgurl = $r->get('imgurl');
-
+        $id = $name2;
 
 
         $angle = $r->get('rotate');
@@ -4340,7 +4343,8 @@ class AssessmentController extends Controller
         }else
             $bg = \Image::make($imgurl)->rotate($angle)->encode('jpg',100); 
         
-        $new_name = rand(10,100).'_'.$name;
+        //$name2 = $slug.'_'.$user_id.'_'.$qid.'_'.$id.'.jpg';
+        $new_name = rand(10,100).'_'.$name2;
         Storage::disk('s3')->put('urq/'.$new_name, (string)$bg,'public');
 
         $jsonname = $slug.'_'.$user_id;
@@ -4355,7 +4359,7 @@ class AssessmentController extends Controller
         $path = Storage::disk('s3')->url('urq/'.$new_name);
         $json[$qid][$name] = $path;
         Storage::disk('s3')->put('urq/'.$jsonfile, json_encode($json));
-        Storage::disk('s3')->delete('urq/'.$name);
+        //Storage::disk('s3')->delete('urq/'.$name);
 
         if($r->get('ajax')){
             echo $path;

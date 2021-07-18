@@ -1020,8 +1020,8 @@ $count =0;
       $s3 = 'https://'.env('AWS_BUCKET').'.s3.ap-south-1.amazonaws.com/';
       $url = preg_replace('/\?.*/', '', $url);
       $name = str_replace($s3, '', $url);
-
-
+      $name = str_replace("%", '?', $name);
+      //return $name;
 
       if(!$percent)
         $percent = 1;
