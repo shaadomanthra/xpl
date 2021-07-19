@@ -63,11 +63,14 @@
 
     <div class="card">
       <div class="card-body">
-        <h3 class="mb-3">Exam: <span class="text-primary">{{$exam->name}}</span></h3>
+        <h3 class="mb-4">Exam: <span class="text-primary">{{$exam->name}}</span>
+          <span class="float-right">Completed: <span class="text-primary">{{$data['completed']}}</span> &nbsp; | &nbsp; Ongoing: <span class="text-primary">{{(count($users)-$data['completed'])}}</span></span>
+        </h3>
+
         <table class="table table-bordered ">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">#({{count($users)}})</th>
                 <th scope="col">Name</th>
                 <th scope="col">Upload Images</th>
                 <th scope="col">Answersheet PDF</th>

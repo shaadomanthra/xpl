@@ -3632,9 +3632,10 @@ class AssessmentController extends Controller
                 $users[$u->username]['imagecount'] = 0;
             }
         }
-
+        $users['completed'] = 0;
         foreach($tests_overall as $t){
             $users[$t->user->username]['completed'] =1;
+            $users['completed']++;
         }
 
         //foreach()
