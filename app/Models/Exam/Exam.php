@@ -672,8 +672,15 @@ $count =0;
               else
                 $score = 10;
 
-              $t->mark= round($questions[$t->question_id]->mark/100 * $score,2);
-              $t->accuracy =1;
+              if(str_word_count($response)>50){
+                $t->accuracy =1;
+                $t->mark= round($questions[$t->question_id]->mark/100 * $score,2);
+              }
+              else{
+                $t->accuracy =0;
+                $t->mark = 0;
+              }
+              
               $t->status =1;
               if(isset($output['score']['outcomeScores']))
               $t->comment = json_encode($output['score']['outcomeScores']);

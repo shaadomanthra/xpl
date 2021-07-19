@@ -575,10 +575,11 @@
 
         </div>
 
+        @if($_SERVER['HTTP_HOST'] == 'gradable.test' || env('APP_NAME') =='Gradable')
         <div class="col-6">
           <div class="h5 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.status',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Status  </a> </div>
-
         </div>
+        @endif
 
       </div>
       
