@@ -32,8 +32,15 @@
         </a></li>
 
         @if($_SERVER['HTTP_HOST'] != 'rguktn.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'rguktrkv.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'corporate.onlinelibrary.test')
-        <li class="mr-3"><a class="nav-link" href="{{ url('test') }}" aria-label="Tests"
-            ><i class="fa fa-ravelry"></i> Tests
+        <li class="mr-3">
+            @if(\auth::user()->role == 12 || \auth::user()->role == 10 || \auth::user()->role == 13 || \auth::user()->role == 14)
+            <a class="nav-link" href="{{ url('exam') }}" aria-label="Tests"
+            >
+            @else
+            <a class="nav-link" href="{{ url('test') }}" aria-label="Tests"
+            >
+            @endif
+            <i class="fa fa-ravelry"></i> Tests
         </a></li>
         @endif
 
