@@ -181,6 +181,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 			->name('test.proctor')->middleware('auth');
 	Route::get('/test/{test}/active', 'Exam\AssessmentController@active')
 			->name('test.active')->middleware('auth');
+	Route::get('/test/{test}/status', 'Exam\AssessmentController@status')
+			->name('test.status')->middleware('auth');
 	Route::get('/test/{test}/snaps', 'Exam\AssessmentController@snaps')
 			->name('test.snaps')->middleware('auth');
 	Route::get('/test/{test}/logs', 'Exam\AssessmentController@logs')
@@ -670,6 +672,7 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 	Route::post('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q')->middleware('auth');
 	Route::post('test/{test}/solutions/{question}','Exam\AssessmentController@solutions')->name('assessment.solutions.q.post')->middleware('auth');
 	Route::get('test/{test}/try','Exam\AssessmentController@try2')->middleware('auth')->name('assessment.try');
+	Route::get('test/{test}/view','Exam\AssessmentController@view')->middleware('auth')->name('assessment.view');
 	Route::get('test/{test}','Exam\AssessmentController@show')->name('assessment.show');
 	Route::get('test/{test}/details','Exam\AssessmentController@show')->name('assessment.details');
 	Route::get('test/{test}/access','Exam\AssessmentController@access')->name('assessment.access')->middleware('auth');

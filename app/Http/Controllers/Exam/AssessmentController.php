@@ -3588,6 +3588,60 @@ class AssessmentController extends Controller
 
     }
 
+    public function status($id,Request $r){
+        $exam = Cache::get('test_'.$id,function() use($id){
+            return Exam::where('slug',$id)->first();
+        });
+
+        $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
+        $tests_overall = Tests_Overall::where('test_id',$exam->id)->with('user')->get();
+        $pg = $this->paginateAnswers($files,50);
+
+        $users = [];
+        foreach($pg as $k=>$f){
+            $p = explode('/',$f);
+            $u = explode('.',$p[2]);
+
+            $content = json_decode(Storage::disk('s3')->get($f),true);
+            $content['url'] = Storage::disk('s3')->url($f);
+            if(isset($content['username']))
+                 $users[$content['username']] = $content;
+
+        }
+
+   
+
+        $usernames = array_keys($users);
+        $ux = User::whereIn('username',$usernames)->orderBy('name')->get();
+        foreach($ux as $u){
+            $jsonname = $exam->slug.'_'.$u->id;
+            if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json')){
+                $users[$u->username]['images'] = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+                $count = 0;
+                foreach($users[$u->username]['images'] as $imgs){
+                    $count = $count + count($imgs);
+                }
+                $users[$u->username]['imagecount'] = $count;
+            }
+            else{
+                $users[$u->username]['images'] = [];
+                $users[$u->username]['imagecount'] = 0;
+            }
+        }
+
+        //foreach()
+        
+
+      
+
+        return view('appl.exam.exam.status')
+                    ->with('users',$users)
+                    ->with('pg',$pg)
+                    ->with('exam',$exam)
+                    ->with('proctor',1)
+                    ->with('active',1);
+    }
+
     public function active($id,Request $r){
 
         $exam = Cache::get('test_'.$id,function() use($id){
@@ -3619,6 +3673,12 @@ class AssessmentController extends Controller
                     $candidates = $emails;
                 }
             }
+        }
+
+        if(request()->get('status')){
+            $paginatecount = 50;
+        }else{
+            $paginatecount = 18;
         }
 
 
@@ -3793,7 +3853,7 @@ class AssessmentController extends Controller
                 $files = [];
                 if(Storage::disk('s3')->exists($file))
                     $files = [$file];
-                $pg = $this->paginateAnswers($files,18);
+                $pg = $this->paginateAnswers($files,$paginatecount );
 
             }else{
                 $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
@@ -3830,7 +3890,7 @@ class AssessmentController extends Controller
                         }
 
                     }
-                    $pg = $this->paginateAnswers($f2,18);
+                    $pg = $this->paginateAnswers($f2,$paginatecount );
                 }
                 elseif(request()->get('open')){
                     foreach($completed_list as $c=>$flag){
@@ -3845,7 +3905,7 @@ class AssessmentController extends Controller
                         }
 
                     }
-                    $pg = $this->paginateAnswers($f2,18);
+                    $pg = $this->paginateAnswers($f2,$paginatecount );
                 }else if(request()->get('terminate_all')){
                     $data = null;
 
@@ -3896,10 +3956,10 @@ class AssessmentController extends Controller
                     // dd();
                     return redirect()->route('test.active',$exam->slug);
 
-                    $pg = $this->paginateAnswers($files,18);
+                    $pg = $this->paginateAnswers($files,$paginatecount );
                 }
                 else{
-                    $pg = $this->paginateAnswers($files,18);
+                    $pg = $this->paginateAnswers($files,$paginatecount );
                 }
                 
                 
@@ -4028,9 +4088,19 @@ class AssessmentController extends Controller
                     ->with('active',1)
                     ->with('message','No user found');
         }
-
-
-
+        else if(request()->get('status')==1){
+            return view('appl.exam.exam.status')
+                    ->with('data',$data)
+                    ->with('users',$users)
+                    ->with('pg',$pg)
+                    ->with('exam',$exam)
+                    ->with('userset',$userset)
+                    ->with('settings',$exam_settings)
+                    ->with('candidates',$candidates)
+                    ->with('proctor',1)
+                    ->with('active',1)
+                    ->with('chats',$chats);
+        }
         else if(count($users))
             return view('appl.exam.exam.active')
                     ->with('data',$data)
@@ -4704,6 +4774,16 @@ class AssessmentController extends Controller
             $tests_section->save();
             $tests_overall->save();
         }
+
+    }
+
+    public function view($test,Request $request){
+        $exam = Cache::get('test_'.$test);
+        $student = \auth::user();
+
+        return view('appl.exam.exam.testpdf')
+                        ->with('exam',$exam)
+                        ->with('user',$student);
 
     }
 

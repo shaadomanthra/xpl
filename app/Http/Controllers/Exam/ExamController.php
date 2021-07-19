@@ -655,8 +655,13 @@ class ExamController extends Controller
             return Exam::where('slug',$id)->with('user')->with('sections')->first();
         });
         $user = \auth::user();
+        if(request()->get('student')){
+            $this->authorize('view', $exam);
+            $user = User::where('username',request()->get('student'))->first();
+        }
+        
 
-        $filepath = 'pdfuploads/'.$exam->slug.'/'.$exam->slug.'_'.$user->id.'.pdf';
+        $filepath = 'pdfuploads/'.$exam->slug.'/'.$exam->slug.'_'.$user->username.'.pdf';
 
         $file = 0;
         if(Storage::disk('s3')->exists($filepath)){
@@ -665,11 +670,14 @@ class ExamController extends Controller
 
         $url  = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$filepath]);
 
+        $ua = strtolower($_SERVER['HTTP_USER_AGENT']);
+        $isMob = is_numeric(strpos($ua, "mobile"));
 
         if($exam)
             return view('appl.exam.exam.pdfupload')
                     ->with('file',$file)
                     ->with('url',$url)
+                    ->with('ismob',$isMob)
                     ->with('exam',$exam);
         else
             abort(404);

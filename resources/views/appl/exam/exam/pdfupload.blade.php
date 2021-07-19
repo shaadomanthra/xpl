@@ -8,41 +8,44 @@
 @if(!$file)
 
 <h1 class="url" > Upload Answersheet PDF </h1>
-	<p>
-		<ul>
-			<li>Record one single selfie video of 1 to 2 minutes. The video should consist of the following
-				<ul>
-					<li> about 30 secs - Talk about Name, college, branch, academic percentage, experience (if any)</li>
-					<li> about 40 secs - Share the most happiest moment in your life</li>
-					<li> about 40 secs - Why should we hire you?</li>
-				</ul>
-			</li>
-			<li>Upload the selfie video to youtube</li>
-			<li>If you want to hide the video from public then mark the privacy for the video as 'unlisted' or you can leave the privacy as public. Dont make it private as it cannot be embedded into xplore platform.</li>
-			<li>Copy the url of the uploaded video</li>
-			<li>Enter the copied url in the below form and submit.</li>
-		</ul>
-	</p>
-<div class="border bg-light p-3 rounded">
+<h4>Exam Name: <br class="d-block d-md-none"><span class="text-primary">{{$exam->name}}</span></h4>
+<h4>Candidate Name: <br class="d-block d-md-none"><span class="text-primary">{{\auth::user()->name}}</span></h4>
+
+<div class="border bg-light p-3 mt-4 rounded">
 <form id="uploadForm" method='post' enctype="multipart/form-data">
 	<h3>Upload File</h3><br/>
 	<input id="fileupload" type="file" name="fileupload" /><bR>
+	<div id="uploading" class="uploading mt-2 text-success" style="display: none;" >
+		<div class="spinner-border spinner-border-sm" role="status">
+  <span class="sr-only">Loading...</span>
+</div> uploading
+	</div>
 	<button type="button" id="upload-button" class="btn btn-primary mt-4" onclick="uploadFile(this)" data-url="{{$url}}"> Upload </button>
 </form>	
 </div>
 @else
-	<h3 class="mb-4"> My Answersheet PDF</h3>
+	<h1 class="mb-1"> My Answersheet PDF </h1>
+	<p class="mb-4"><a href="/dashboard"><i class="fa fa-angle-double-left"></i> back to dashboard</a></p>
+<h4>Exam Name: <br class="d-block d-md-none"><span class="text-primary">{{$exam->name}}</span></h4>
+<h4>Candidate Name: <br class="d-block d-md-none"><span class="text-primary">{{\auth::user()->name}}</span></h4>
+	<h4 class="mt-4 text-success"><i class="fa fa-check-circle"></i> PDF File uploaded</h4>
 	<object
         data='{{$file}}'
         type="application/pdf"
-        width="500"
-        height="678"
+        @if($ismob) 
+        	width="300" height="478"
+        @else
+        	width="700" height="678"
+        @endif
       >
 
         <iframe
           src='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
-          width="500"
-          height="678"
+           @if($ismob) 
+        	width="300" height="478"
+        @else
+        	width="700" height="678"
+        @endif
         >
         <p>This browser does not support PDF!</p>
         </iframe>
@@ -53,17 +56,42 @@
 <script>
 async function uploadFile(obj) {
 	$url = $(obj).attr('data-url');
-	console.log($url);
 	
-    let formData = new FormData();           
-    formData.append("file", fileupload.files[0]);
-    await fetch($url, {
-    	method: "PUT",
-                headers: {"Content-Type": "application/pdf"},
-      body: formData
-    });    
-    alert('The file has been uploaded successfully.');
-    return false;
+	var fileInput = 
+                document.getElementById('fileupload');
+             
+
+            var filePath = fileInput.value;
+          
+            // Allowing file type
+            var allowedExtensions = 
+                    /(\.pdf)$/i;
+              
+            if (!allowedExtensions.exec(filePath)) {
+                alert('Only PDF files are allowed. (Invalid file type)');
+                fileInput.value = '';
+                return false;
+            } 
+            else 
+            {
+            	var x = document.getElementById("uploading");
+			     x.style.display = "block";
+            	let formData = new FormData();           
+			    formData.append("file", fileupload.files[0]);
+			    await fetch($url, {
+			    	method: "PUT",
+			                headers: {"Content-Type": "application/pdf"},
+			      body: formData
+			    });    
+			     var x = document.getElementById("uploading");
+			     x.style.display = "none";
+			    alert('The file has been uploaded successfully.');
+			    location.reload();
+			    return false;
+              
+            }
+	
+    
 }
 </script>
 @endsection

@@ -204,14 +204,22 @@ pre, code {
           </div>
              
               <button  class="btn btn-outline-dark btn-sm ml-2" data-toggle="modal" data-target="#exampleModal2" data-html2canvas-ignore="true">Add Comment</button>
-              <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1"  class="btn btn-outline-dark btn-sm " >Refresh Cache</a>
+              <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1"  class="btn btn-outline-dark btn-sm mt-2 mt-md-0" >Refresh Cache</a>
 
               @if(request()->get('mode')!=2)
-                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&mode=2"  class="btn btn-outline-dark btn-sm " >Mobile Mode</a>
+                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&mode=2"  class="btn btn-outline-dark btn-sm  mt-2 mt-md-0" >Mobile Mode</a>
               @else
-                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}"  class="btn btn-outline-dark btn-sm " >Desktop Mode</a>
+                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}"  class="btn btn-outline-dark btn-sm  mt-2 mt-md-0" >Desktop Mode</a>
+              @endif
+
+              @if(Storage::disk('s3')->exists('pdfuploads/'.$exam->slug.'/'.$exam->slug.'_'.$student->username.'.pdf'))
+               <div class="mt-3">
+                <a href="{{ route('test.pdfupload',$exam->slug)}}?student={{$student->username}}"  class="btn btn-outline-primary  btn-lg  mt-2 mt-md-0" ><i class="fa fa-file-pdf-o"></i> &nbsp;Answersheet PDF</a>
+              </div>
               @endif
             </div>
+
+
             
 
           </div>
