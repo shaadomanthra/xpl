@@ -3602,18 +3602,22 @@ class AssessmentController extends Controller
             $p = explode('/',$f);
             $u = explode('.',$p[2]);
 
-            $content = json_decode(Storage::disk('s3')->get($f),true);
-            $content['url'] = Storage::disk('s3')->url($f);
-            if(isset($content['username']))
-                 $users[$content['username']] = $content;
+            $name = str_replace('_log.json',"",$f);
+            $pieces = explode('/',$name);
+            $users[$pieces[3]] = [$pieces[3]];
+            // $content = json_decode(Storage::disk('s3')->get($f),true);
+            // $content['url'] = Storage::disk('s3')->url($f);
+            // if(isset($content['username']))
+            //      $users[$content['username']] = $content;
 
         }
 
-   
+
 
         $usernames = array_keys($users);
         $ux = User::whereIn('username',$usernames)->orderBy('name')->get();
         foreach($ux as $u){
+            $users[$u->username]['completed']  =0;
             $jsonname = $exam->slug.'_'.$u->id;
             if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json')){
                 $users[$u->username]['images'] = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
@@ -3629,14 +3633,18 @@ class AssessmentController extends Controller
             }
         }
 
+        foreach($tests_overall as $t){
+            $users[$t->user->username]['completed'] =1;
+        }
+
         //foreach()
         
 
       
 
         return view('appl.exam.exam.status')
-                    ->with('users',$users)
-                    ->with('pg',$pg)
+                    ->with('data',$users)
+                    ->with('users',$ux)
                     ->with('exam',$exam)
                     ->with('proctor',1)
                     ->with('active',1);

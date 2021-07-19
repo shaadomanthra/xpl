@@ -75,15 +75,13 @@
               </tr>
             </thead>
             <tbody class="{{$m=0}}">
-              @foreach($users as $ud=>$ux)
-              <tr class="{{$m=$m+1}}">
+              @foreach($users as $ux)
+              <tr class="{{$m=$m+1}} {{$ud=$ux->username}}">
                 <th scope="row">{{$m}}</th>
                 <td>
-                  <div class="d-flex align-items-center">   
-                  <div class="symbol symbol-40 symbol-sm flex-shrink-0">                <img class="" src="{{$ux['last_photo']}}" alt="photo">              </div>
-                    <div class="ml-4">                <a href="#" class="text-dark-75 text-hover-primary font-weight-bolder font-size-lg mb-0">{{$ux['uname']}}</a>                <div class="text-muted font-weight-bold">{{$ux['os_details']}}</div>              </div>            </div>
+                  {{$ux['name']}}
                 </td>
-                <td><h4><a href="{{ route('assessment.response_images',$exam->slug)}}?student={{$ud}}" target="_blank">{{ $ux['imagecount']}}</a></h4></td>
+                <td><h4><a href="{{ route('assessment.response_images',$exam->slug)}}?student={{$ud}}" target="_blank">{{ $data[$ud]['imagecount']}}</a></h4></td>
                 <td>
                   @if(Storage::disk('s3')->exists('pdfuploads/'.$exam->slug.'/'.$exam->slug.'_'.$ud.'.pdf'))
                <div class="">
@@ -93,7 +91,7 @@
               - 
               @endif
                 </td>
-                <td>@if($ux['completed']!=1) <span class="text-secondary"> <i class="fa fa-ellipsis-h text-secondary" aria-hidden="true"></i> ongoing</span>  @else <span class="text-success"> <i class="fa fa-check-circle text-success"></i> completed</span> @endif</td>
+                <td>@if($data[$ud]['completed']!=1) <span class="text-secondary"> <i class="fa fa-ellipsis-h text-secondary" aria-hidden="true"></i> ongoing</span>  @else <span class="text-success"> <i class="fa fa-check-circle text-success"></i> completed</span> @endif</td>
               </tr>
               @endforeach
            
