@@ -55,7 +55,11 @@
               
             </div>
             <div class='col-2 col-md-2'>
-              <div class="heading_one float-right f30">{{ $exam->users_count }}</div>
+              <div class="heading_one float-right f30">
+                <a href="{{ route('test.report',$exam->slug)}}" data-toggle="tooltip" title="Attempts">
+                  {{ $exam->users_count }}
+                </a>
+                  </div>
             </div>
           </div>
         </div>
