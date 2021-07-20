@@ -371,6 +371,7 @@ class PostController extends Controller
                     $branch = $branches->pluck('id')->toArray();
                 }
 
+
                 $shortlisted = $request->get('shortlisted');
 
                 $st = strtoupper(str_replace(' ', '', $request->get('shortlisted')));
@@ -705,9 +706,12 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
             if(Storage::disk('public')->exists('post/job_b_'.$obj->slug.'.png'))
                     Storage::disk('public')->delete('post/job_b_'.$obj->slug.'.png');
         }
+        $extra = json_decode($obj->extra);
+       
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
-                    ->with('obj',$obj)->with('latest',$latest)->with('app',$this)->with('branches',$branches);
+                    ->with('obj',$obj)->with('latest',$latest)->with('app',$this)->with('branches',$branches)
+                    ->with('extra',$extra);
         else
             abort(404);
     }
