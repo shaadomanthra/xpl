@@ -146,6 +146,7 @@
   .bcol-90{ width:90%; }
   .bcol-95{ width:94.5%; }
   .bcol-100{ width:99.5%; }
+  .w-100{width: 70%;padding-top: 20px;}
 
   .brow:after {content: "";display: table;clear: both;margin-bottom: 5px;}
   /*[class*='bcol-'] { float: left; }  */
@@ -243,7 +244,21 @@
                      @if(trim(strip_tags($t->response)))
                       {!! nl2br($t->response) !!} 
                       @else
-                      -
+                        @if($t->question->type=='urq')
+                             @if(isset($questions[$t->question_id]->images))
+                                @if(count($questions[$t->question_id]->images))
+                                @foreach(array_reverse($questions[$t->question_id]->images) as $k=>$url)
+                                  <br><br>
+                                   <img src="{{$url }}"  class="w-100"/>
+                                
+                                @endforeach
+                                @endif
+                              @endif
+
+                        @else
+                          -
+                        @endif
+                      
                       @endif
 
                       @if($t->accuracy)
@@ -286,53 +301,9 @@
 
 @endforeach
 </div>
-<button id="pdfbtn" class="btn btn-outline-dark btn-sm pdfbtn d-none" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}" data-html2canvas-ignore="true" data-url="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}">Download PDF</button>
 
-<script src="{{ asset('js/html2pdf.bundle.min.js') }}"></script>
 
-<script>
 
-    // function downloadpdf(){
-    //     var element = document.getElementById('pdf');
-    //     var pdfbtn = document.getElementById('pdfbtn');
-    //     var name = pdfbtn.getAttribute('data-name');
-    //     //alert(name);
-    //     html2pdf().from(element).save(name+'.pdf');
-
-    // }
-
-  downloadpdf();
-  function downloadpdf() {
-      var element = document.getElementById('pdf');
-      var pdfbtn = document.getElementById('pdfbtn');
-      var name = pdfbtn.getAttribute('data-name')+'.pdf';
-      var url = pdfbtn.getAttribute('data-url');
-        var opt = {
-            margin: 0 ,
-            dpi: 96,
-            filename: name,
-            image: { type: 'jpeg', quality: 1 },
-      html2canvas: {
-        dpi: 130,
-        scale:1,
-        letterRendering: true,
-        useCORS: true
-      },
-            jsPDF:{ unit: 'in', format: 'letter', orientation: 'portrait' },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-        }
-        // var input = document.getElementById("pdfContainer");
-        // console.log(input)
-        html2pdf(element, opt)
-        setTimeout(function(){
-          window.location.href = url;
-        },4000);
-        
-    }
-
-  
-
-</script>
 </div>
         </main>
     </body>
