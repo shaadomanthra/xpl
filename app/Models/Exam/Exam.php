@@ -99,7 +99,7 @@ class Exam extends Model
       $r = $images[$qid][$k];
       $p = explode('urq/',$r);
       $id = str_replace('a','',$k);
-      $name2 = $this->slug.'_'.$student->id.'_'.$qid.'_'.$id.'.jpg?abcd';
+      $name2 = 'abcd_'.$this->slug.'_'.$student->id.'_'.$qid.'_'.$id.'.jpg';
       $url = $p[0].'urq/'.$name2;
       $images[$qid][$k]   = $url;
       Storage::disk('s3')->put('urq/'.$jsonname.'.json',json_encode($images));
@@ -113,7 +113,7 @@ class Exam extends Model
           foreach($img as $k=>$r){
             $p = explode('urq/',$r);
             $id = str_replace('a','',$k);
-            $name2 = $this->slug.'_'.$student->id.'_'.$i.'_'.$id.'.jpg?abcd';
+            $name2 = 'abcd_'.$this->slug.'_'.$student->id.'_'.$i.'_'.$id.'.jpg';
             $url = $p[0].'urq/'.$name2;
             $images[$i][$k]   = $url;
           }
