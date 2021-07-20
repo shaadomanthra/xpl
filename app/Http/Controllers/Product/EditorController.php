@@ -592,5 +592,8 @@ class EditorController extends Controller
       curl_close($curl);
 
     }
+
+
+    
   
 }

@@ -1,7 +1,11 @@
 @extends('layouts.nowrap-white')
 @section('title', 'Question List')
 @section('content')
-
+<style>
+h4{
+  line-height: 30px;
+}
+</style>
 @include('appl.exam.exam.xp_css')
 <div class="dblue d-print-none">
   <div class="container">
@@ -17,13 +21,6 @@
     <div class="row">
       <div class="col-12 col-md-8">
         
-        <div class=' pb-1'>
-          <p class="heading_two mb-2 f30" ><i class="fa fa-bars "></i> Questions ({{$qdata['total']}}) @if(request()->get('set')!=null) - Set {{request()->get('set')}} @endif &nbsp;
-            @if(request()->get('all'))
-            <a href="{{ route('test.questionlist',$exam->slug)}}?fix_topic=1" class="btn  btn-outline-success btn-sm"> Fix Topics</a>
-            @endif
-          </p>
-        </div>
       </div>
      
     </div>
@@ -133,7 +130,7 @@
                       {!!$obj->passage!!}
                     </div>
                   @endif
-                  <h5 ><span class="float-left">({{ ($key+1) }}) &nbsp;</span> {!! $obj->question !!} </h5>
+                  <h4 ><span class="float-left">(Q{{ ($key+1) }}) &nbsp;</span> {!! $obj->question !!} </h4>
                   <p>
                     <div class="row">
                       <div class="col-6">
@@ -187,7 +184,7 @@
                     @endif
 
                   </p>
-                  <h4>Your Answer: ________________________</h4>
+                  <div>(A{{($key+1)}}) Your Answer: ________________________</div>
               </tr>
               @endforeach      
             </tbody>
