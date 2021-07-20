@@ -596,6 +596,7 @@ class ExamController extends Controller
             $settings['upload_time'] = $request->get('upload_time');
             $settings['camera360'] = $request->get('camera360');
             $settings['videosnaps'] = $request->get('videosnaps');
+            $settings['totalmarks'] = $request->get('totalmarks');
             
 
             $exam->settings = json_encode($settings);
@@ -2025,6 +2026,11 @@ class ExamController extends Controller
         else
             $exam->videosnaps = 0;
 
+        if(isset($settings['totalmarks']))
+            $exam->totalmarks = $settings['totalmarks'];
+        else
+            $exam->totalmarks = null;
+
         // if($exam->extra){
         //     $exam->viewers = json_decode($exam->extra,true)['viewers'];
         //     $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
@@ -2124,6 +2130,7 @@ class ExamController extends Controller
             $settings['upload_time'] = $request->get('upload_time');
             $settings['camera360'] = $request->get('camera360');
             $settings['videosnaps'] = $request->get('videosnaps');
+            $settings['totalmarks'] = $request->get('totalmarks');
 
 
 

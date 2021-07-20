@@ -793,6 +793,17 @@ class CampusController extends Controller
             return Excel::download(new ExamExport2, $name.".xlsx");
 
         }
+
+        $exam->settings = json_decode($exam->settings);
+        //dd($exam);
+        if(isset($exam->settings->totalmarks)){
+            if($exam->settings->totalmarks){
+                foreach($details['users'] as $a=>$b){
+                    $details['users'] [$a]['max'] = $exam->settings->totalmarks;
+                }
+            }
+           
+        }
         
 
         return view('appl.college.campus.test_show2')

@@ -1910,6 +1910,12 @@ class AssessmentController extends Controller
             $tests_overall->save();
         }
 
+
+        if(isset($exam->settings->totalmarks)){
+            if($exam->settings->totalmarks)
+            $test_overall->max = $exam->settings->totalmarks;
+        }
+
         if(!$topics)
         unset($details['c']);
         
@@ -5336,6 +5342,8 @@ class AssessmentController extends Controller
                     $d[$a] = 40 - $d[$a];
             }
 
+
+
             
 
             return view('appl.exam.assessment.analysis')
@@ -5497,6 +5505,11 @@ class AssessmentController extends Controller
         if(request()->get('student'))
             $view = 'blocks.student';
 
+
+        if(isset($exam->settings->totalmarks)){
+            if($exam->settings->totalmarks)
+            $tests_overall->max = $exam->settings->totalmarks;
+        }
 
         //dd($sectiondetails);
 

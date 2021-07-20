@@ -20,17 +20,28 @@
 
         <div class=' pb-1'>
           <p class="heading_two mb-2 f30" ><i class="fa fa-area-chart "></i> Attempts (@if(request()->get('code'))  {{request()->get('code')}} @else All @endif)
+          
+
+           
+          <div class="dropdown d-inline mr-2">
+            <button class="btn btn-outline-primary  btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Performance
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="{{ route('test.analytics',$exam->slug)}}?all=1&none=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif">Report</a>
+              <a class="dropdown-item" href="{{ route('test.analytics',$exam->slug)}}?all=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif">Report (All details)</a>
+            </div>
+          </div>
 
            @if($exam->slug!='psychometric-test')
            @if(!request()->get('score'))
-           <a href="{{ route('test.report',$exam->slug)}}?score=1&refresh=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-success btn-sm "> sort by score</a>
+           <a href="{{ route('test.report',$exam->slug)}}?score=1&refresh=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-success btn-sm mr-2"> sort by score</a>
            @else
-           <a href="{{ route('test.report',$exam->slug)}}?score=0&refresh=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-success btn-sm   "> sort by date</a>
+           <a href="{{ route('test.report',$exam->slug)}}?score=0&refresh=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-success btn-sm   mr-2"> sort by date</a>
            @endif
            @endif
 
-           <a href="{{ route('test.analytics',$exam->slug)}}?all=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-primary btn-sm   "> <i class="fa fa-pie-chart"></i> Performance</a>
-            
+           <a href="{{ route('test.report',$exam->slug)}}?removeduplicates=1&refresh=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-secondary btn-sm "> Remove Duplicates</a>
 
           </p>
         </div>

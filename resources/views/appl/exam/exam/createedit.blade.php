@@ -438,6 +438,21 @@
           </div>
         </div>
 
+         <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">Total Marks (optional)</label>
+            <input type="text" class="form-control" name="totalmarks" id="formGroupExampleInput" placeholder="" 
+            @if($stub=='Create')
+            value="{{ (old('totalmarks')) ? old('totalmarks') : '' }}"
+            @else
+            value = "{{ $exam->totalmarks }}"
+            @endif
+          >
+
+          <small class='text-secondary'>If the exam has questions choice, you can enter the total marks </small>
+          </div>
+        </div>
+
 
       </div>
     </div>
