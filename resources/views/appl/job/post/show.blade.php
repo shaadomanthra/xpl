@@ -135,10 +135,25 @@
             <div class="col-6">@if($obj->viewer) {{$obj->viewer->name}} @else - @endif</div>
           </div>
 
+
+          @if(isset($extra->accesscodes))
           <div class="row mb-2">
-            <div class="col-6"><i class="fa fa-map-marker"></i>&nbsp; Extra Details</div>
-            <div class="col-6">{{$obj->extra}}</div>
+            <div class="col-6"><i class="fa fa-bars"></i>&nbsp; Access Codes</div>
+            <div class="col-6">
+              
+              {{$extra->accesscodes}}
+            </div>
           </div>
+          @endif
+
+          @if(isset($extra->questions))
+          <div class="row mb-2">
+            <div class="col-6"><i class="fa fa-question-circle"></i>&nbsp; Questions</div>
+            <div class="col-6">
+              {{$extra->questions}}
+            </div>
+          </div>
+          @endif
           
             </div>
             </div>

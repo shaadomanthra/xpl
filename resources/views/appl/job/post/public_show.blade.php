@@ -62,7 +62,7 @@
       <div class="mt-4">
       <div class="alert alert-warning alert-important" role="alert">
         <h5>Last date for application </h5>
-        <div class="display-5 h3">{{\carbon\carbon::parse($obj->last_date)->format('M d, Y')}}</div>
+        <div class="display-5 h3">{{\carbon\carbon::parse($obj->last_date)->format('M d, Y h:i a' )}}</div>
       </div>
 
 
@@ -74,12 +74,12 @@
       <h3>Information</h3>
       <div class="row mb-2">
             <div class="col-6"><i class="fa fa-map-marker"></i>&nbsp; Locations</div>
-            <div class="col-6">{{str_replace(',',', ',ucfirst(strtolower($obj->location)))}}</div>
+            <div class="col-6">{{ucwords(str_replace(',',', ',ucwords(strtolower($obj->location))))}}</div>
           </div>
 
           <div class="row mb-2">
             <div class="col-6"><i class="fa fa-university"></i>&nbsp; Eligibility</div>
-            <div class="col-6">{{str_replace(',',', ',ucfirst(strtolower($obj->education)))}}</div>
+            <div class="col-6">{{ucwords(str_replace(',',', ',ucwords(strtolower($obj->education))))}}</div>
           </div>
 
           <div class="row mb-2">
