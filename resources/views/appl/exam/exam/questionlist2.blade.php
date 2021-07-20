@@ -184,7 +184,7 @@ h4{
                     @endif
 
                   </p>
-                  <div>(A{{($key+1)}}) Your Answer: ________________________</div>
+                  <div>Your Answer: ________________________</div>
               </tr>
               @endforeach      
             </tbody>
