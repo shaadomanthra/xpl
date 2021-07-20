@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row d-print-none">
 	<div class="col-12 col-md-6">
 		Copyright &copy; {{ date('Y') }} | {{ request()->session()->get('client')->name }}
 	</div>
