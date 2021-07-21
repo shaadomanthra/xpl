@@ -23,6 +23,9 @@
          </div>
       <div class="form-group">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          @if(request()->get('college'))
+           <input type="hidden" name="college" value="1">
+          @endif
       </div>
       <button type="submit" class="btn btn-info">Upload</button>
     </form>
