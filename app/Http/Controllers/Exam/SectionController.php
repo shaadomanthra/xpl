@@ -43,38 +43,51 @@ class SectionController extends Controller
 
     public function processocr($url){
 
-
+        $user = \auth::user();
           $post = [
                 'url' => $url
             ];
             $payload = json_encode( $post );
 
-            $ch = curl_init('https://centralindia.api.cognitive.microsoft.com/vision/v3.2/read/analyze');
+            if(!Cache::get('url2_'.$user->username)){
+                $ch = curl_init('https://centralindia.api.cognitive.microsoft.com/vision/v3.2/read/analyze');
 
-            curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Ocp-Apim-Subscription-Key:b0d522e12fb74962a8d829e0f3368fdb'));
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-            curl_setopt($ch, CURLOPT_HEADERFUNCTION,
-                function ($curl, $header) use (&$headers) {
-                    $len = strlen($header);
-                    $header = explode(':', $header, 2);
-                    if (count($header) < 2) // ignore invalid headers
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Ocp-Apim-Subscription-Key:b0d522e12fb74962a8d829e0f3368fdb'));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                curl_setopt($ch, CURLOPT_HEADERFUNCTION,
+                    function ($curl, $header) use (&$headers) {
+                        $len = strlen($header);
+                        $header = explode(':', $header, 2);
+                        if (count($header) < 2) // ignore invalid headers
+                            return $len;
+
+                        $headers[strtolower(trim($header[0]))][] = trim($header[1]);
+
                         return $len;
+                    }
+                );
+                $response = curl_exec($ch);
+                 if(isset($headers['operation-location'][0])){
+                    $eurl = $headers['operation-location'][0];
+                    Cache::put('url2_'.$user->username, $eurl,3);
+                }else{
+                    echo "Not able to process! try again!";
+                    dd($headers);
+                    exit();
 
-                    $headers[strtolower(trim($header[0]))][] = trim($header[1]);
-
-                    return $len;
                 }
-            );
-            $response = curl_exec($ch);
+                
+                curl_close($ch);
+            }else{
+                $eurl = Cache::get('url2_'.$user->username);
+            }
+
             
-            curl_close($ch);
-            if(isset($headers['operation-location'][0])){
-                sleep(4);
-                $url = $headers['operation-location'][0];
+           
             
 
-                $ch = curl_init($url);
+                $ch = curl_init($eurl);
 
                 curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Ocp-Apim-Subscription-Key:b0d522e12fb74962a8d829e0f3368fdb'));
                 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -87,8 +100,7 @@ class SectionController extends Controller
                     $lines = $response['analyzeResult']['readResults'][0]['lines'];
                 }else{
                     if($response['status']=='running'){
-                        sleep(4);
-                        $ch = curl_init($url);
+                        $ch = curl_init($eurl);
 
                         curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Ocp-Apim-Subscription-Key:b0d522e12fb74962a8d829e0f3368fdb'));
                         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -100,20 +112,15 @@ class SectionController extends Controller
                     if(isset($response['analyzeResult'])){
                         echo "Not able to process now! try again! ";
                         exit();
-                    }else{
+                    }else if($response){
+                        dd($response);
                         $lines = $response['analyzeResult']['readResults'][0]['lines'];
                     }
                 }
                 
-             
-                
                 curl_close($ch);
                 return $lines;
-            }else{
-                echo "Not able to process! try again!";
-                dd($headers);
-                exit();
-            }
+           
             
     }
 
@@ -212,7 +219,9 @@ class SectionController extends Controller
 
         $filename = rand().'.'.$extension;
         $path = Storage::disk('s3')->putFileAs('testocr', $file,$filename,'public');
+
         $url = Storage::disk('s3')->url($path);
+      
         $data = $this->processocr($url);
          $result = $this->extractData($exam,$data);
        
