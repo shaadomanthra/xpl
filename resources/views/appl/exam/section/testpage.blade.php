@@ -21,7 +21,6 @@
 </div>
 @else
 	<h1 class="mb-1"> Result </h1>
-	<p class="mb-4"><a href="{{ request()->back()}}><i class="fa fa-angle-double-left"></i> back to dashboard</a></p>
 <h4>Exam Name: <br class="d-block d-md-none"><span class="text-primary">{{$exam->name}}</span></h4>
 <h4>Candidate Name: <br class="d-block d-md-none"><span class="text-primary">{{\auth::user()->name}}</span></h4>
 	<h4>Your Score: <br class="d-block d-md-none"><span class="text-primary">{{$result['score']}}</span></h4><br><br>
