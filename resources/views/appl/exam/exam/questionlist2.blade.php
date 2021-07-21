@@ -103,7 +103,10 @@ h4{
           <div class="mb-4">
           <h1 class="text-primary">{{$exam->name}}</h1>
             <p> {{$exam->questionCount()}} Questions | {{$qdata['time']}} min </p>
-            <p>{!! $exam->description !!}</p>
+            <hr>
+            <p>Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________________________________________________________</p>
+                <p>Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;___________________________________________________________</p>
+                <p>Phone: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_________________________________________</p>
               <h5 class="text-success">Instructions</h5>
               <p>{!! $exam->instructions !!}
               </p>
@@ -114,11 +117,7 @@ h4{
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                @if(request()->get('all'))
-                <th scope="col" width="10%">Topic </th>
-                <th scope="col" width="10%">Level</th>
-                <th scope="col">Mark</th>
-                @endif
+                
               </tr>
             </thead>
             <tbody>

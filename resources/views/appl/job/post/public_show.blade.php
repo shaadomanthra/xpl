@@ -79,7 +79,7 @@
 
           <div class="row mb-2">
             <div class="col-6"><i class="fa fa-university"></i>&nbsp; Eligibility</div>
-            <div class="col-6">{{ucwords(str_replace(',',', ',ucwords(strtolower($obj->education))))}}</div>
+            <div class="col-6">{{ucwords(str_replace(',',', ',ucwords(strtoupper($obj->education))))}}</div>
           </div>
 
           <div class="row mb-2">
