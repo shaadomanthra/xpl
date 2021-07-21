@@ -22,7 +22,7 @@
 @else
 	<h1 class="mb-1"> Result </h1>
 <h4>Exam Name: <br class="d-block d-md-none"><span class="text-primary">{{$exam->name}}</span></h4>
-<h4>Candidate Name: <br class="d-block d-md-none"><span class="text-primary">{{\auth::user()->name}}</span></h4>
+<h4>Candidate Name: <br class="d-block d-md-none"><span class="text-primary">{{$result['name']}}</span></h4>
 	<h4>Your Score: <br class="d-block d-md-none"><span class="text-primary">{{$result['score']}}</span></h4><br><br>
 
 		<h5>Data </h5>
