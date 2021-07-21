@@ -127,6 +127,8 @@ class ExamController extends Controller
                 ->with('examtypes',$examtypes);
     }
 
+    
+
 
     public function sample(){
         $green = "rgba(60, 120, 40, 0.8)";
@@ -1086,7 +1088,7 @@ class ExamController extends Controller
                 $data['total']++;
         }
 
-       
+
         if(request()->get('paper'))
             return view('appl.exam.exam.questionlist2')
                     ->with('mathjax',true)

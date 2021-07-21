@@ -76,6 +76,8 @@ use Illuminate\Support\Facades\Storage;
 
 	//piofx
 	Route::get('/schools',function(){ return view('piofx.schools'); })->name('schools');
+	Route::get('/ocrupload','Exam\SectionController@ocrupload')->name('ocrupload');
+	Route::post('/ocrupload','Exam\SectionController@ocrupload')->name('ocrupload');
 	Route::get('/xpc',function(){ return view('appl.pages.xp.xpc'); })->name('xpc');
 	Route::get('/jobboard',function(){ return view('appl.pages.xp.jobboard'); })->name('jobboard');
 	Route::get('/hiring',function(){ return view('appl.pages.xp.hiring'); })->name('hiring');

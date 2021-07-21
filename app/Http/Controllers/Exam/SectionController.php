@@ -41,6 +41,202 @@ class SectionController extends Controller
     }
 
 
+    public function processocr($url){
+
+
+          $post = [
+                'url' => $url
+            ];
+            $payload = json_encode( $post );
+
+            $ch = curl_init('https://centralindia.api.cognitive.microsoft.com/vision/v3.2/read/analyze');
+
+            curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Ocp-Apim-Subscription-Key:b0d522e12fb74962a8d829e0f3368fdb'));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+            curl_setopt($ch, CURLOPT_HEADERFUNCTION,
+                function ($curl, $header) use (&$headers) {
+                    $len = strlen($header);
+                    $header = explode(':', $header, 2);
+                    if (count($header) < 2) // ignore invalid headers
+                        return $len;
+
+                    $headers[strtolower(trim($header[0]))][] = trim($header[1]);
+
+                    return $len;
+                }
+            );
+            $response = curl_exec($ch);
+            
+            curl_close($ch);
+            if(isset($headers['operation-location'][0])){
+                sleep(4);
+                $url = $headers['operation-location'][0];
+            
+
+                $ch = curl_init($url);
+
+                curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Ocp-Apim-Subscription-Key:b0d522e12fb74962a8d829e0f3368fdb'));
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+               
+                $response = json_decode(curl_exec($ch),true);
+
+                $text ='';
+                $lines=[];
+                if(isset($response['analyzeResult'])){
+                    $lines = $response['analyzeResult']['readResults'][0]['lines'];
+                }else{
+                    if($response['status']=='running'){
+                        sleep(4);
+                        $ch = curl_init($url);
+
+                        curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Ocp-Apim-Subscription-Key:b0d522e12fb74962a8d829e0f3368fdb'));
+                        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+                       
+                        $response = json_decode(curl_exec($ch),true);
+
+                    }
+
+                    if(isset($response['analyzeResult'])){
+                        echo "Not able to process now! try again! ";
+                        exit();
+                    }else{
+                        $lines = $response['analyzeResult']['readResults'][0]['lines'];
+                    }
+                }
+                
+             
+                
+                curl_close($ch);
+                return $lines;
+            }else{
+                echo "Not able to process! try again!";
+                dd($headers);
+                exit();
+            }
+            
+    }
+
+    public function extractData($exam,$text){
+        $r=request();
+        $i=0;
+        $data=array("time"=>0,"name"=>"","email"=>"","phone"=>"","score"=>0);
+
+        foreach($exam->sections as $section){
+            
+            if($r->get('set'))
+            $qset = $exam->getQuestionsSection($section->id,$r->get('set'));
+            else if( $r->get('set')!=null)
+            $qset = $exam->getQuestionsSection($section->id,$r->get('set'));
+            else
+            $qset = $section->questions;
+
+            $k=0;
+            foreach( $qset as $q){
+                if($i==0){
+                    $id = $q->id;
+                }
+                $q->section_name = $section->name;
+                $questions[$i] = $q;
+                $data['time'] = $data['time'] + $section->time;
+                $i++;
+            }
+        }
+
+        $i=0;
+         foreach($text as $key=> $l)
+            {
+                if(trim($l['text'])=='Name:')
+                {
+                    $data['name'] = $text[$key+1]['text'];
+                       
+                }
+
+                if(trim($l['text'])=='Email:')
+                {
+                    $data['email'] = $text[$key+1]['text'];
+                       
+                }
+
+                if(trim($l['text'])=='Phone:')
+                {
+                    $data['phone'] = $text[$key+1]['text'];
+                       
+                }
+
+                if(trim($l['text'])=='Your Answer:')
+                {
+                    $q =null;
+                    if(isset($text[$key+2]['text'])){
+                        $q = $text[$key+2]['text'];
+                        $q = substr(str_replace('(Q','',$q),0,1);
+                        $i = intval($q)-1;
+                    }
+                    
+                    if(!trim($q)){
+                        $i = rand();
+                    }
+                    $data[$i] = $text[$key+1]['text'];
+                    $data['score']++;
+                       
+                }
+            }
+
+        return $data;
+
+
+        // foreach($text as $l)
+        // {
+        //         $l['text'];
+        // }
+
+        //dd($questions);
+
+    }
+
+    
+    public function ocrupload(Request $request){
+         $exam = Exam::where('slug','29199')->first();
+         $url = "https://i.imgur.com/QLsbILi.jpg";
+
+        
+            $result=0;
+        if(isset($request->all()['_file'])){
+            $file = $request->all()['_file'];
+            $result=1;
+
+             if(strtolower($file->getClientOriginalExtension()) == 'jpeg')
+                    $extension = 'jpg';
+             else
+                    $extension = strtolower($file->getClientOriginalExtension());
+
+        $filename = rand().'.'.$extension;
+        $path = Storage::disk('s3')->putFileAs('testocr', $file,$filename,'public');
+        $url = Storage::disk('s3')->url($path);
+        $data = $this->processocr($url);
+         $result = $this->extractData($exam,$data);
+       
+        }
+
+       
+
+        if($exam)
+            return view('appl.exam.section.testpage')
+                     ->with('result',$result)
+                    ->with('url',$url)
+                    ->with('exam',$exam);
+        else
+            abort(404);
+
+         
+
+         dd($extractData);
+
+       
+         
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
