@@ -443,7 +443,7 @@ class UserController extends Controller
         if(request()->get('college') && isset($request->all()['file'])){
             $file      = $request->all()['file'];
             $data = $this->csvToArray($file);
-            dd(count($data));
+         
             for ($i = 0; $i < count($data); $i ++)
             {
                 $name = $data[$i]['college'];
