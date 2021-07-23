@@ -128,7 +128,7 @@
 						<dl class="row">
 						  @if($exam->solutions !=3 && $exam->solutions !=4 )
 						  <dt class="col-sm-6">Score </dt>
-						  <dd class="col-sm-6">{{ $details['marks']}} / {{ $details['total'] }} </dd>
+						  <dd class="col-sm-6">{{ $test_overall->score }} / {{ $test_overall->max  }} </dd>
 						  @endif
 
 						  <dt class="col-sm-6">Attempted</dt>
