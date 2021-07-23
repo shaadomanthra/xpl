@@ -19,11 +19,11 @@ use Illuminate\Support\Facades\Storage;
 
 
 
-Route::post('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
+	Route::post('/mail/delivery', 'Mailer\MailController@deliveryStatus')->middleware('mailgun');
 	Route::post('/mail/delivery2', 'Mailer\MailController@deliveryStatus');
 	Route::get('/mail/delivery', 'Mailer\MailController@deliveryStatus');
 
-Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::class]], function () {
+	Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::class]], function () {
 	
 	Route::get('/', 'HomeController@root')->name('root');
 	Route::post('/', 'Product\OrderController@callback');
@@ -76,6 +76,8 @@ Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::cl
 
 	//piofx
 	Route::get('/schools',function(){ return view('piofx.schools'); })->name('schools');
+	Route::get('/ocrupload','Exam\SectionController@ocrupload')->name('ocrupload');
+	Route::post('/ocrupload','Exam\SectionController@ocrupload')->name('ocrupload');
 	Route::get('/xpc',function(){ return view('appl.pages.xp.xpc'); })->name('xpc');
 	Route::get('/jobboard',function(){ return view('appl.pages.xp.jobboard'); })->name('jobboard');
 	Route::get('/hiring',function(){ return view('appl.pages.xp.hiring'); })->name('hiring');

@@ -127,6 +127,8 @@ class ExamController extends Controller
                 ->with('examtypes',$examtypes);
     }
 
+    
+
 
     public function sample(){
         $green = "rgba(60, 120, 40, 0.8)";
@@ -1013,6 +1015,7 @@ class ExamController extends Controller
         $questions = [];
         $i=0;
         $data = array("level1"=>0,"level2"=>0,"level3"=>0,'no_level'=>0,'total'=>0,"mark_1"=>0,"mark_2"=>0,"mark_3"=>0,"mark_4"=>0,"mark_5"=>0);
+        $data['time'] = 0;
         foreach($exam->sections as $section){
             
             if($r->get('set'))
@@ -1038,6 +1041,7 @@ class ExamController extends Controller
 
                 $q->section_name = $section->name;
                 $questions[$i] = $q;
+                $data['time'] = $data['time'] + $section->time;
 
                 $i++;
             }
@@ -1085,7 +1089,16 @@ class ExamController extends Controller
         }
 
 
-        if($questions)
+        if(request()->get('paper'))
+            return view('appl.exam.exam.questionlist2')
+                    ->with('mathjax',true)
+                    ->with('highlight',true)
+                    ->with('exam',$exam)
+                    ->with('qdata',$data)
+                    ->with('set',$r->get('set'))
+                    ->with('data',$questions);
+
+        else if($questions)
          return view('appl.exam.exam.questionlist')
                     ->with('mathjax',true)
                     ->with('highlight',true)

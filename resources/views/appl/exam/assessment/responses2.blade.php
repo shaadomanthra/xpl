@@ -192,22 +192,15 @@ pre, code {
 
             <div class="col-12">
               <h4 class="mt-4">Tools</h4>
-              <div class="dropdown d-inline mb-3">
-            <button class="btn btn-outline-dark btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             <i class="fa fa-download"></i>&nbsp; Download PDF
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="z-index:2000">
-              <a id="pdfbtn" class="dropdown-item pdfbtn cursor" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}" data-html2canvas-ignore="true">Format #1</a>
-              <a class="dropdown-item" href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&pdf3=1&screen=1">Format #2</a>
-                <a class="dropdown-item" href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&pdf3=1">Format #3</a>
-            </div>
-          </div>
+               <a id="pdfbtn" class="btn btn-outline-dark btn-sm pdfbtn cursor" onclick="downloadpdf()" data-name="{{$student->roll_number}}_{{$student->name}}_{{$exam->name}}" data-html2canvas-ignore="true">PDF Format#1</a>
+               <a class="btn btn-outline-dark btn-sm " href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&pdf3=1">PDF Format#2</a>
+             
              
               <button  class="btn btn-outline-dark btn-sm ml-2" data-toggle="modal" data-target="#exampleModal2" data-html2canvas-ignore="true">Add Comment</button>
               <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1"  class="btn btn-outline-dark btn-sm mt-2 mt-md-0" >Refresh Cache</a>
 
               @if(request()->get('mode')!=2)
-                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&mode=2"  class="btn btn-outline-dark btn-sm  mt-2 mt-md-0" >Mobile Mode</a>
+                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&mode=2"  class="btn btn-outline-dark btn-sm  mt-2 " >Mobile Mode</a>
               @else
                 <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}"  class="btn btn-outline-dark btn-sm  mt-2 mt-md-0" >Desktop Mode</a>
               @endif

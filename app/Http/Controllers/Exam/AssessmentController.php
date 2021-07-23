@@ -1933,6 +1933,7 @@ class AssessmentController extends Controller
             $data['tests'] = $tests;
             $data['student'] = $student;
             $data['exam'] = $exam;
+            $data['questions'] = $ques;
             $data['test_overall'] = $test_overall;
             $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
 

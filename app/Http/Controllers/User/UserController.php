@@ -440,6 +440,27 @@ class UserController extends Controller
     public function upload_users(Request $request)
     {
 
+        if(request()->get('college') && isset($request->all()['file'])){
+            $file      = $request->all()['file'];
+            $data = $this->csvToArray($file);
+         
+            for ($i = 0; $i < count($data); $i ++)
+            {
+                $name = $data[$i]['college'];
+                $c = College::where('name',$name)->first();
+                if(!$c){
+                    $c = new College();
+                    $c->name = $name;
+                    $c->save();
+                     echo $data[$i]['college']." - added<br>";
+                }else
+                echo $data[$i]['college']." - exists <br>";
+            }
+            //dd($data);
+            return 1;
+            exit();
+        }
+
 
         $data = [];
         if(isset($request->all()['file'])){

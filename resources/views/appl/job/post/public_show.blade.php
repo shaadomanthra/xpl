@@ -79,7 +79,7 @@
 
           <div class="row mb-2">
             <div class="col-6"><i class="fa fa-university"></i>&nbsp; Eligibility</div>
-            <div class="col-6">{{ucwords(str_replace(',',', ',ucwords(strtolower($obj->education))))}}</div>
+            <div class="col-6">{{ucwords(str_replace(',',', ',ucwords(strtoupper($obj->education))))}}</div>
           </div>
 
           <div class="row mb-2">
@@ -184,12 +184,16 @@
           </div>
           <div class="row mb-2">
             <div class="col-4">College</div>
+            @if(isset(\auth::user()->college->name))
             <div class="col-8">{{\auth::user()->college->name}}
             </div>
+            @endif
           </div>
           <div class="row mb-2">
+             @if(isset(\auth::user()->branch->name))
             <div class="col-4">Branch</div>
             <div class="col-8">{{\auth::user()->branch->name}}</div>
+            @endif
           </div>
           <div class="row mb-2">
             <div class="col-4">Year of passing</div>
