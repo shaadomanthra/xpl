@@ -539,11 +539,17 @@ class UserController extends Controller
 
                     if(isset($data[$i]['role'])){
                         $u->role = intval($data[$i]['role']);
-                        if($u->role==10 || $u->role==11)
-                        if(!$u->roles->contains(28))
+                        if($u->role==10 || $u->role==11){
+                            if(!$u->roles->contains(28))
                             $u->roles()->attach(28);
+                        }elseif($u->role==1){
+                            $u->roles()->detach(28);
+                        }
+                        
                     }
                     
+                    if($data[$i]['password'])
+                    $u->password = bcrypt($data[$i]['password']);
 
                     if($data[$i]['college_id'])
                     $u->college_id = $data[$i]['college_id'];
