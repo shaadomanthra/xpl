@@ -1486,6 +1486,19 @@ class AssessmentController extends Controller
         else
             $images = [];
 
+         $images_count = 0;
+        foreach($images as $imgs){
+            foreach($imgs as $im){
+                $images_count++;
+            }
+        }
+
+        if($request->get('api'))
+        {
+            echo $images_count;
+            exit();
+        }
+
         $responses=[];$resp=[];
         if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/'.$student->username.'.json')){
                 $json = json_decode(Storage::disk('s3')->get('testlog/'.$exam->id.'/'.$student->username.'.json'),true);
@@ -1535,12 +1548,7 @@ class AssessmentController extends Controller
 
         }
 
-        $images_count = 0;
-        foreach($images as $imgs){
-            foreach($imgs as $im){
-                $images_count++;
-            }
-        }
+       
 
 
 
@@ -3655,6 +3663,7 @@ class AssessmentController extends Controller
                     ->with('users',$ux)
                     ->with('exam',$exam)
                     ->with('proctor',1)
+                    ->with('status',1)
                     ->with('active',1);
     }
 

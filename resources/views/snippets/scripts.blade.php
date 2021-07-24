@@ -46,6 +46,26 @@ $menu.on("click","span", function(){
 
 </script>
 
+@if(isset($status))
+
+<script>
+$(function(){
+    $(document).on('click','.refresh',function(e){
+
+      e.preventDefault();
+      $username = $(this).data('username');
+      $url = $(this).data('url');
+      $('.loading_'+$username).show();
+      $.get( $url, function( data ) {
+        $('.student_'+$username).html(data);
+        $('.loading_'+$username).hide();
+        console.log(data);
+      });
+      
+    });
+});
+</script>
+@endif
 
 @if(isset($select))
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>

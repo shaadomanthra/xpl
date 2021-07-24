@@ -61,18 +61,23 @@
       </div>
     </div>
 
+    <div class="alert alert-important alert-warning d-block d-md-none my-5">
+          In mobile view you have to scroll the table horizontally to see all the columns.
+        </div>
     <div class="card">
       <div class="card-body">
         <h3 class="mb-4">Exam: <span class="text-primary">{{$exam->name}}</span>
           <span class="float-right">Completed: <span class="text-primary">{{$data['completed']}}</span> &nbsp; | &nbsp; Ongoing: <span class="text-primary">{{(count($users)-$data['completed'])}}</span></span>
         </h3>
 
+        
+        <div class="table-responsive">
         <table class="table table-bordered ">
             <thead>
               <tr>
                 <th scope="col">#({{count($users)}})</th>
                 <th scope="col">Name</th>
-                <th scope="col">Upload Images</th>
+                <th scope="col">Image Counter</th>
                 <th scope="col">Answersheet PDF</th>
                 <th scope="col">Status</th>
               </tr>
@@ -82,9 +87,14 @@
               <tr class="{{$m=$m+1}} {{$ud=$ux->username}}">
                 <th scope="row">{{$m}}</th>
                 <td>
-                  {{$ux['name']}}
+                  {{$ux['name']}} <a href="#" class="refresh" data-username="{{$ud}}" data-url="{{ route('assessment.response_images',$exam->slug)}}?student={{$ud}}&api=1"">refresh image counter </a>
                 </td>
-                <td><h4><a href="{{ route('assessment.response_images',$exam->slug)}}?student={{$ud}}" target="_blank">{{ $data[$ud]['imagecount']}}</a></h4></td>
+                <td><h4><a href="{{ route('assessment.response_images',$exam->slug)}}?student={{$ud}}" target="_blank" class=" student_{{$ud}} mt-2">{{ $data[$ud]['imagecount']}}</a> 
+
+                  <div class="spinner-border spinner-border-sm loading_{{$ud}}" role="status" style="display: none;">
+  <span class="sr-only">Loading...</span>
+</div>
+                </h4></td>
                 <td>
                   @if(Storage::disk('s3')->exists('pdfuploads/'.$exam->slug.'/'.$exam->slug.'_'.$ud.'.pdf'))
                <div class="">
@@ -100,11 +110,13 @@
            
             </tbody>
           </table>
+        </div>
       </div>
     </div>
      
   </div>
 </div>
+
 
 
 
