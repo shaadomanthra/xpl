@@ -315,7 +315,7 @@ pre, code {
 
               <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=-90&name={{$k}}&url={{$url}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$w}}">Rotate Right </a> 
               <a href="#" class="btn btn-outline-primary @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2  rotate_save2 d-none" data-url="{{ route('assessment.solutions.q',[$exam->slug,$t->question_id])}}?rotate=100&name={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&ajax=1" data-id="{{$t->question_id}}_{{$k}}">Load Original </a> 
-                <a href="{{ route('assessment.responses',[$exam->slug])}}?k={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&imageback=1 @if(request()->get('mode')==2)) &mode=2 @endif" class="btn btn-outline-info @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2   " data-url="" data-id="{{$t->question_id}}_{{$k}}">Refresh Image </a> 
+                <a href="{{ route('assessment.responses',[$exam->slug])}}?k={{$k}}&qid={{$t->question_id}}&student={{$student->username}}&imageback=1 @if(request()->get('mode')==2)) &mode=2 @endif" class="btn btn-outline-info @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif my-2   refresh_image" data-url="" data-id="{{$t->question_id}}_{{$k}}">Refresh Image </a> 
                 &nbsp;&nbsp;
 
           <button type="button" class="btn btn-outline-dark  @if(request()->get('mode')==2)) btn-lg @else btn-sm @endif   d-inline" data-item='sketchpad_{{$t->question_id}}_{{$k}}' onclick="clear_{{$t->question_id}}_{{$k}}()">Clear</button>
@@ -634,7 +634,7 @@ pre, code {
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title" id="exampleModalLabel">Add Comment</h1>
-        <button type="button" class="btn btn-danger  float-right d-inline">close</button>
+        <button type="button" class="btn btn-danger  float-right d-inline" data-dismiss="modal">close</button>
       </div>
       <div class="modal-body">
           <div >
@@ -654,6 +654,28 @@ pre, code {
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+  </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="exampleModalLabel">Refresh Image (Load Original)</h1>
+      </div>
+      <div class="modal-body">
+          <div >
+  <div class="form-group">
+    Kindly note that refreshing the image will load the original image by which any annotations made will be lost. Use this option only when you want to discard all the changes made and revert back the original image.
+  </div>
+  <button type="button" class="btn btn-danger  d-inline dclose">No, close this tab</button>
+  <a href="#"  class="btn btn-primary refresh_image_url mt-2 mt-md-0">Yes, I confirm to load the original image</a>
+
 
   </div>
       </div>
@@ -754,6 +776,19 @@ function redo_{{$t->question_id}}_{{$k}}(){
     console.log(`${bufferedSeconds} seconds of video are ready to play.`);
   });
   }
+
+  $(function(){
+    $(document).on('click','.refresh_image',function(e){
+      $url = $(this).attr('href');
+      $('.refresh_image_url').attr('href',$url);
+      e.preventDefault();
+      $('#exampleModal3').modal();
+    });
+
+    $(document).on('click','.dclose',function(e){
+      $('#exampleModal3').modal('hide');
+    });
+  });
 
 </script>
 

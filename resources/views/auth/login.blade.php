@@ -70,23 +70,37 @@
                                     Login
                                 </button>
 
-                                @if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+                                @if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'gradable.in' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
                   <a class="btn btn-success" href="{{ route('register') }}">
                                     Register
                                 </a>
                                 <br>
                                 @elseif($_SERVER['HTTP_HOST'] == 'fks.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'rguktn.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'rguktrkv.xplore.co.in')
               @else
-                 <a class="btn btn-success" href="{{ route('register') }}">
-                                    Register
+                                @if(request()->session()->get('settings'))
+                                @if(request()->session()->get('settings')->register)
+                                 <a class="btn btn-success" href="{{ route('register') }}">
+                                                    Register
                                 </a>
+                                @endif
+                                @endif
                                 <br>
               @endif
                                 
                                  <div class="mt-4">
+                                @if(request()->session()->get('settings'))
+                                @if(request()->session()->get('settings')->change_password)
                                 <a class="" href="{{ route('password.request') }}">
                                      Reset password via email
                                 </a>
+                                @endif
+                                @endif
+
+                                @if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'gradable.in' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+                                <a class="" href="{{ route('password.request') }}">
+                                     Reset password via email
+                                </a>
+                                @endif
                                 </div>
                              
                                 <!--
