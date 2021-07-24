@@ -193,7 +193,15 @@
         <a href="{{ route('login')}}">
         <button type="button" class="btn btn-success">Login</button>
     	</a>
+    	@if(request()->session()->get('settings'))
     	@if(request()->session()->get('settings')->register)
+    	<a href="{{ route('student.eregister')}}">
+        <button type="button" class="btn btn-primary">Register</button>
+    	</a>
+    	@endif
+    	@endif
+
+    	@if(subdomain()=='xplore' || subdomain()=='gradable')
     	<a href="{{ route('student.eregister')}}">
         <button type="button" class="btn btn-primary">Register</button>
     	</a>
