@@ -75,6 +75,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 	//piofx
+	Route::get('/mcss',function(){ return view('piofx.mcss'); })->name('mcss');
 	Route::get('/schools',function(){ return view('piofx.schools'); })->name('schools');
 	Route::get('/ocrupload','Exam\SectionController@ocrupload')->name('ocrupload');
 	Route::post('/ocrupload','Exam\SectionController@ocrupload')->name('ocrupload');

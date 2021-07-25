@@ -548,6 +548,7 @@ class UserController extends Controller
                         
                     }
                     
+                    if(isset($data[$i]['password']))
                     if($data[$i]['password'])
                     $u->password = bcrypt($data[$i]['password']);
 
