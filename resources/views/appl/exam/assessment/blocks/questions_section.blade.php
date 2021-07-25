@@ -49,6 +49,36 @@
 
       @endif
 
+   @elseif($question->type=='mbfq')
+  <div class="bg-light border p-3 rounded mt-3">
+    <h5>Enter your answers</h5>
+    @foreach(explode(',',$question->answer) as $l=>$m)
+    <div class="row">
+      <div class="col-3 col-md-1">({{($l+1)}})</div>
+      <div class="col-9 col-md-10"><input class="form-control w-100 input input_{{($i+1)}} input_fillup_{{($i+1)}} mb-1" type="text"  name="{{($i+1)}}[]" data-sno="{{($i+1)}}" value="" ></div>
+    </div>
+    @endforeach
+
+  </div>
+  @elseif($question->type=='mbdq')
+  <div class="bg-light border p-3 rounded mt-3">
+    <h5>Select the answers</h5>
+    @foreach(explode('/',$question->a) as $l=>$m)
+    <div class="row">
+      <div class="col-3 col-md-1">({{($l+1)}})</div>
+      <div class="col-9 col-md-10">
+        <select class="form-control w-100 input input_{{($i+1)}}  mb-1" name="{{($i+1)}}[]" data-sno="{{($i+1)}}">
+          <option value="" selected ></option>
+          @foreach(explode(',',$m) as $n)
+          <option value="{{$n}}"  >{{$n}}</option>
+          @endforeach
+            
+          </select>
+      </div>
+    </div>
+    @endforeach
+
+  </div>
   @if($question->type=='maq')
     <div class="alert alert-info alert-important">Select one or more choices from the given options.</div>
     @if($question->a)
