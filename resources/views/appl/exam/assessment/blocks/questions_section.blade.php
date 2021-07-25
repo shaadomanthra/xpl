@@ -49,7 +49,7 @@
 
       @endif
 
-   @elseif($question->type=='mbfq')
+   @if($question->type=='mbfq')
   <div class="bg-light border p-3 rounded mt-3">
     <h5>Enter your answers</h5>
     @foreach(explode(',',$question->answer) as $l=>$m)
@@ -79,7 +79,7 @@
     @endforeach
 
   </div>
-  @if($question->type=='maq')
+  @elseif($question->type=='maq')
     <div class="alert alert-info alert-important">Select one or more choices from the given options.</div>
     @if($question->a)
     <div class="row no-gutters">
