@@ -133,12 +133,14 @@ class QuestionController extends Controller
         $exams =  [];
 
         // Question Types
-        $allowed_types = ['mcq','naq','maq','eq','code','fillup','sq','urq','vq','csq'];
+        $allowed_types = ['mcq','naq','maq','eq','code','fillup','sq','urq','vq','csq','mbdq','mbfq'];
         if(in_array(request()->get('type'), $allowed_types)){
             $type = request()->get('type');
         }
         else
             $type='mcq';  
+
+        
 
         $testcases =null;           
 

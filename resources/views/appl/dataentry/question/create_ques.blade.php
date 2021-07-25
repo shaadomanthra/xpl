@@ -24,26 +24,23 @@
       <h3 class="mb-3"><u>Sections - Create Question</u></h3>
       @foreach($exam->sections as $sec)
       <h4 class="mb-2">{{$sec->name}}</h4>
-      <div class="btn-group mb-4" role="group" aria-label="Basic example">
-  <a href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-primary"> Multi Choice Question (MCQ)</a>
-  <a href="{{ route('question.create','default')}}?type=maq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-warning"> Multi Answer Question (MAQ) </a>
-  <a href="{{ route('question.create','default')}}?type=fillup&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-light"> Fillup Question (FQ)</a>
-  <a href="{{ route('question.create','default')}}?type=sq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-success"> Subjective Question (SQ)</a>
-  <a href="{{ route('question.create','default')}}?type=csq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-primary"> Code Submission Question (CSQ)</a>
-  <a href="{{ route('question.create','default')}}?type=urq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-dark"> Upload Response Question (URQ)</a>
-
-  <a href="{{ route('question.create','default')}}?type=vq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-info"> Video Question(VQ)</a>
-
-  @if(\auth::user()->checkRole(['administrator']))
-       <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-secondary"> Code Question (CQ)</a>
+        <a href="{{ route('question.create','default')}}?type=mcq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Multi Choice Question (MCQ)</a>
+        <a href="{{ route('question.create','default')}}?type=maq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Multi Answer Question (MAQ) </a>
+        <a href="{{ route('question.create','default')}}?type=fillup&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Fillup Question (FQ)</a>
+        <a href="{{ route('question.create','default')}}?type=mbfq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Multiblank Fillup Question(MBFQ)</a>
+        <a href="{{ route('question.create','default')}}?type=mbdq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Multiblank Dropdown Question(MBFQ)</a>
+        <a href="{{ route('question.create','default')}}?type=sq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Subjective Question (SQ)</a>
+        <a href="{{ route('question.create','default')}}?type=urq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Upload Response Question (URQ)</a>
+        <a href="{{ route('question.create','default')}}?type=vq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Video Question(VQ)</a>
+        @if(\auth::user()->checkRole(['administrator']))
+       <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Code Question (CQ)</a>
         @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
-       <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-secondary"> Code Question (CQ)</a>
+       <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Code Question (CQ)</a>
         @else
         @endif
-        
-  
 
-</div>
+        <a href="{{ route('question.create','default')}}?type=csq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Code Submission Question (CSQ)</a>
+        <hr>
     @endforeach
       
     @endif

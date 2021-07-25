@@ -58,7 +58,7 @@ th{ border:1px solid silver; }
         <a class="nav-link active" id="question-tab" data-toggle="tab" href="#question" role="tab" aria-controls="question" aria-selected="true">Ques</a>
       </li>
 
-      @if($type=='mcq' || $type=='maq' )
+      @if($type=='mcq' || $type=='maq' || $type=='mbdq')
       <li class="nav-item">
         <a class="nav-link" id="a-tab" data-toggle="tab" href="#a" role="tab" aria-controls="a" aria-selected="false">A</a>
       </li>
@@ -90,7 +90,7 @@ th{ border:1px solid silver; }
         <a class="nav-link" id="c-tab" data-toggle="tab" href="#c" role="tab" aria-controls="c" aria-selected="false">Preset Code</a>
       </li>
       @endif
-      @if($type=='fillup')
+      @if($type=='fillup' || $type=='mbfq' )
       <li class="nav-item">
         <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Ans</a>
       </li>
@@ -246,7 +246,8 @@ th{ border:1px solid silver; }
       </div>
 
       @endif
-      @if($type=='mcq' || $type=='maq')
+
+      @if($type=='mcq' || $type=='maq' || $type=='mbdq')
       <div class="tab-pane fade" id="a" role="tabpanel" aria-labelledby="a-tab">
         <div class="form-group mt-3">
         <label for="formGroupExampleInput2">Option A</label>
@@ -435,10 +436,13 @@ th{ border:1px solid silver; }
             <option value="code" @if(isset($question)) @if($question->type=='code') selected @endif @endif >Code Question</option>
             <option value="vq" @if(isset($question)) @if($question->type=='vq') selected @endif @endif >Video Question</option>
             <option value="fillup" @if(isset($question)) @if($question->type=='fillup') selected @endif @endif >Fillup Question</option>
+            <option value="mbfq" @if(isset($question)) @if($question->type=='mbfq') selected @endif @endif >Multiblank Fillup Question</option>
+            <option value="mbdq" @if(isset($question)) @if($question->type=='mbdq') selected @endif @endif >Multiblank Dropdown Question</option>
             <option value="sq" @if(isset($question)) @if($question->type=='sq') selected @endif @endif >Subjective Question</option>
             <option value="csq" @if(isset($question)) @if($question->type=='csq') selected @endif @endif >Code Submission Question</option>
             <option value="urq" @if(isset($question)) @if($question->type=='urq') selected @endif @endif >Upload Response Question</option>
             <option value="typing" @if(isset($question)) @if($question->type=='typing') selected @endif @endif >Typing Question</option>
+            
           </select>
           @else
           <select class="form-control" name="type" >
@@ -449,6 +453,9 @@ th{ border:1px solid silver; }
             <option value="code" @if($type =='code') selected @endif  >Code Question</option>
             <option value="vq" @if($type =='vq') selected @endif  >Video Question</option>
             <option value="fillup" @if($type =='fillup')  selected  @endif >Fillup Question</option>
+
+            <option value="mbfq" @if($type =='mbfq')  selected  @endif >Multiblank Fillup Question</option>
+            <option value="mbdq" @if($type =='mbdq')  selected  @endif >Multiblank Dropdown Question</option>
             <option value="sq" @if($type =='sq')  selected  @endif >Subjective Question</option>
             <option value="csq" @if($type =='csq')  selected  @endif >Code Submission Question</option>
             <option value="urq" @if($type =='urq')  selected  @endif >Upload Response Question</option>

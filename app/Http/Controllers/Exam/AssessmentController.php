@@ -2801,6 +2801,7 @@ class AssessmentController extends Controller
         if(!$user)
         return 1;
 
+
         $user_id = $request->get('user_id');
         $test_id = $request->get('test_id');
         $code = $request->get('code');
@@ -2867,6 +2868,7 @@ class AssessmentController extends Controller
         $d =array();
         $typing_accuracy =  $typing_score =0;
         for($i=1;$i<=$qcount;$i++){
+            $type = $questions[$request->get($i.'_question_id')]->type;
             $item = array();
             if($request->exists($i.'_time')){
                 $item['question_id'] = $request->get($i.'_question_id');
@@ -2894,25 +2896,54 @@ class AssessmentController extends Controller
                 }elseif(strpos($item['answer'],',')!==false){
 
                     $ans = explode(',',$item['response']);
-                    $flag = false;
-                    foreach($ans as $an)
-                    if($an)
-                    if(strpos($item['answer'],$an)!==false){
+                    
+                    if($type=='mbfq' || $type=='mbdq'){
+                        $partialmark = 0.2;
+                        if($questions[$item['question_id']]->mark)
+                            $partialmark = round($questions[$item['question_id']]->mark/count($ans),2);
+                        elseif($secs[$item['section_id']]->mark)
+                            $partialmark = round($secs[$item['section_id']]->mark/count($ans),2);
+                       
+                       $partial_awarded  = 0;
+                        $actual_ans = explode(',',$item['answer']);
+                        foreach($ans as $g=>$an){
+                            if($an)
+                            if($an==$actual_ans[$g]){
+                                $partial_awarded = $partial_awarded  + $partialmark;
+                            }
+                        }
 
+                        $item['mark'] = $partial_awarded;
+
+                        if(!$partial_awarded)
+                            $item['accuracy'] =0;
+                        else
+                            $item['accuracy'] =1;
+                   
                     }else{
-                        $flag = true;
-                        break;
-                    }
+                        $flag = false;
+                        foreach($ans as $an){
+                            if($an)
+                            if(strpos($item['answer'],$an)!==false){
 
-                    if(!$flag){
-                        if(strlen($item['response']) != strlen($item['answer']))
-                            $flag = true;
-                    }
+                            }else{
+                                $flag = true;
+                                break;
+                            }
+                        }
 
-                    if($flag)
-                        $item['accuracy'] =0;
-                    else
-                        $item['accuracy'] =1;
+                        if(!$flag){
+                            if(strlen($item['response']) != strlen($item['answer']))
+                                $flag = true;
+                        }
+
+                        if($flag)
+                            $item['accuracy'] =0;
+                        else
+                            $item['accuracy'] =1;
+
+                    }
+                    
                 }else{
 
                     $itemanswer = strtolower($item['answer']);
@@ -2964,20 +2995,22 @@ class AssessmentController extends Controller
 
 
                 }
-
-                if($item['accuracy']==1){
-                    if(!$section_marking)
-                        $item['mark'] = $questions[$item['question_id']]->mark;
-                    elseif($secs[$item['section_id']]->mark)
-                        $item['mark'] = $secs[$item['section_id']]->mark;
-                    else
-                        $item['mark'] = 1;
-                }else{
-                    if($secs[$item['section_id']]->negative && $item['response'])
-                        $item['mark'] = 0 - $secs[$item['section_id']]->negative;
-                    else
-                        $item['mark'] = 0;
+                if($type!='mbfq' || $type=='mbdq'){
+                    if($item['accuracy']==1){
+                        if(!$section_marking)
+                            $item['mark'] = $questions[$item['question_id']]->mark;
+                        elseif($secs[$item['section_id']]->mark)
+                            $item['mark'] = $secs[$item['section_id']]->mark;
+                        else
+                            $item['mark'] = 1;
+                    }else{
+                        if($secs[$item['section_id']]->negative && $item['response'])
+                            $item['mark'] = 0 - $secs[$item['section_id']]->negative;
+                        else
+                            $item['mark'] = 0;
+                    } 
                 }
+               
 
 
                 $item['status'] = 1;
@@ -3067,7 +3100,7 @@ class AssessmentController extends Controller
                 }
                
 
-                $type = $questions[$item['question_id']]->type;
+                
 
                 if($type=='typing'){
                     $item['mark'] = $request->get($i.'_wpm');
