@@ -816,7 +816,10 @@ class UserController extends Controller
     public function update_self(){
         $user = \auth::user();
         request()->request->add(['complete_profile' => '1']);
-        return $this->edit('@'.$user->username);
+        if(isset($user->username))
+            return $this->edit('@'.$user->username);
+        else
+            abort('403','Username not Found.Kindly reach out to administrator');
     }
 
     /**

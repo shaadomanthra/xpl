@@ -3559,6 +3559,7 @@ class AssessmentController extends Controller
         $filepath = 'testlog/'.$exam->id.'/'.$name;
 
         $content = null;
+        $last_number = null;
         if(Storage::disk('s3')->exists($filepath)){
             $content = json_decode(Storage::disk('s3')->get($filepath),true);
 
@@ -4977,6 +4978,7 @@ class AssessmentController extends Controller
 
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
+        $rank=0;
 
         $exam = Cache::get('test_'.$slug);
         if(!$exam)
@@ -5284,6 +5286,7 @@ class AssessmentController extends Controller
         }
 
 
+
         if(count($sections)==1)
             $sections = null;
 
@@ -5294,6 +5297,7 @@ class AssessmentController extends Controller
       
         $topics = false;
         $review=false;
+
         $details['rank'] = Cache::remember('ranked_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
             $all = Tests_Overall::where('test_id',$exam->id)->orderBy('score','desc')->get();
             foreach($all as $k=>$a){
