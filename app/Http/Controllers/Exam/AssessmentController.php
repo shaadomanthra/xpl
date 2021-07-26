@@ -164,7 +164,16 @@ class AssessmentController extends Controller
         // else
         //     $user = User::where('username','krishnateja')->first();
 
-        $examtypes = Examtype::where('client',subdomain())->withCount('exams')->get();
+        if($request->Get('refresh')){
+            Cache::forget('examtypes_'.subdomain());
+        }
+        $examtypes = Cache::get('examtypes_'.subdomain());
+    
+        if(!$examtypes){
+            $examtypes = Examtype::where('client',subdomain())->withCount('exams')->get();
+            Cache::forever('examtypes_'.subdomain(),$examtypes);
+        }
+        
 
         $filter = $request->get('filter');
         $search = $request->search;
@@ -184,8 +193,21 @@ class AssessmentController extends Controller
 
 
         }
-        else
-            $exams = $exam->where('name','LIKE',"%{$item}%")->where('client',$client)->with('sections')->paginate(config('global.no_of_records'));
+        else{
+            $exams = Cache::get('exams_'.subdomain());
+            if($request->get('page')){
+                $exams = $exam->where('name','LIKE',"%{$item}%")->where('client',$client)->with('sections')->paginate(config('global.no_of_records'));
+
+
+            }else if($exams){
+
+            }
+            else{
+                $exams = $exam->where('name','LIKE',"%{$item}%")->where('client',$client)->with('sections')->paginate(config('global.no_of_records'));
+                Cache::forever('exams_'.subdomain(),$exams);
+            }
+            
+        }
 
         $view = $search ? 'list': 'index';
 
@@ -272,10 +294,14 @@ class AssessmentController extends Controller
         $products = $exam->product_ids;
         else{
             //dd(count($exam->products));
-            if(count($exam->products)){
+            if(subdomain()=='xplore' || subdomain()=='gradable'){
+                if(count($exam->products)){
                  $products = $exam->products->pluck('id')->toArray();
+                }else
+                $products = null;
             }else
                 $products = null;
+            
         }
         $product = null;
 
@@ -507,6 +533,27 @@ class AssessmentController extends Controller
             dd($json);
         }
 
+        $jsonfile = 'testlog/approvals/'.$exam->id.'/'.$user->username.'.json';
+        if(isset($exam->settings->manual_approval)){
+            if($exam->settings->manual_approval=='yes'){
+                if(Storage::disk('s3')->exists($jsonfile)){
+                  $candidate  = json_decode(Storage::disk('s3')->get($jsonfile),true);
+
+                  }else{
+                    $candidate = [];
+                    $candidate['approved'] = 0;
+                    $candidate['terminated'] = 0;
+                    $candidate['status'] = 0;
+                    $candidate['message']='';
+                }
+
+                if($candidate['approved']==0){
+                    return redirect()->route('assessment.show',$exam->slug);
+                }
+
+            }
+        }
+        
 
         $jsonname = $test.'_'.$user->id;
 
@@ -610,6 +657,7 @@ class AssessmentController extends Controller
                     $ids = array_keys($responses->keyBy('question_id')->toArray());
                     $ids_ordered = implode(',', $ids);
                     
+                    if(subdomain()!='rguktnuzvid' && subdomain()!='rguktrkvalley' && subdomain()!='demo')
                     $qset = $section->questions()->whereIn('id', $ids)
                          ->orderByRaw("FIELD(id, $ids_ordered)")
                          ->get();
@@ -1003,7 +1051,12 @@ class AssessmentController extends Controller
          if($invigilation){
 
          }else{
-            $proctor = $exam->user;
+            $proctor = Cache::get('proctor_default_'.$exam->id);
+            if(!$proctor){
+                $proctor = $exam->user;
+                Cache::forever('proctor_default_'.$exam->id,$proctor);
+            }
+          
          }
          $chatname = 'testlog/'.$exam->id.'/chats/'.$user->username.'.json';
          $url['chat'] = Storage::disk('s3')->url($chatname);
@@ -2822,8 +2875,12 @@ class AssessmentController extends Controller
         }
 
         $settings = $exam->settings;
-        if($settings)
+        if($settings){
+            if(isset($settings->section_marking))
             $section_marking = ($settings->section_marking=='yes')? 1 : 0;
+            else
+            $section_marking = 0;  
+        }
         else
             $section_marking = 0;
 
@@ -3751,7 +3808,7 @@ class AssessmentController extends Controller
         $chats = [];
         $completed_list = [];
         if(count($candidates)){
-            if(request()->get('forget')){
+            if(request()->get('refresh')){
                 Cache::forget('candidates_'.$exam->slug.'_'.$user->username);
             }
             if(!$search)
@@ -4639,6 +4696,9 @@ class AssessmentController extends Controller
 
         }else{
             $exam = Exam::where('slug',$id)->first();
+
+            if(!$exam)
+                abort('403','Test not found');
             $exam->sections = $exam->sections;
             $exam->products = $exam->products;
             $exam->product_ids = $exam->products->pluck('id')->toArray();
@@ -4752,7 +4812,9 @@ class AssessmentController extends Controller
 
     public function access($id)
     {
-        $exam= Exam::where('slug',$id)->first();
+        $exam = Cache::get('test_'.$id,function() use($id){
+            return Exam::where('slug',$id)->first();
+        });
 
         if($exam)
             return view('appl.exam.assessment.access')

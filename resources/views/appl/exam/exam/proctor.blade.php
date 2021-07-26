@@ -212,7 +212,7 @@
           <dt class="col-5 col-sm-4">College Name</dt>
           <dd class="col-7 col-sm-8">{{ ($userset[$a]->college_id)?$data['colleges'][$userset[$a]->college_id]->name:''}}</dd>
           <dt class="col-5 col-sm-4">Branch</dt>
-          <dd class="col-7 col-sm-8">{{ ($userset[$a]->branch_id)?$data['branch'][$userset[$a]->branch_id]->name:""}}</dd>
+          <dd class="col-7 col-sm-8">@if(isset($data['branch'][$userset[$a]->branch_id]->name)) {{($userset[$a]->branch_id)?$data['branch'][$userset[$a]->branch_id]->name:""}} @endif</dd>
           <dt class="col-5 col-sm-4">Roll Number</dt>
           <dd class="col-7 col-sm-8">{{ $userset[$a]->roll_number}}</dd>
       </dl>

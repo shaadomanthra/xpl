@@ -245,25 +245,43 @@ class ProductController extends Controller
           //$user->exams()->withCount('users')->orderBy('id','desc');
 
 
-          $count = (Tests_Overall::select('id')->whereIn('test_id',$usertests->pluck('id')->toArray())->count());
+          if($user->role==10 || $user->role==11){
+            $count =0;
+            $usercount = 0;
+          }else{
+            $count = (Tests_Overall::select('id')->whereIn('test_id',$usertests->pluck('id')->toArray())->count());
+            $usercount =(User::select('id')->where('client_slug',subdomain())->where('status','<>','2')->count());
+          }
           //$count = count($alltests);
 
          
-          $usercount =(User::select('id')->where('client_slug',subdomain())->where('status','<>','2')->count());
           // foreach($user->exams as $exam){
           //   $count = $count + $exam->getAttemptCount();           
           // }
 
+          if(request()->get('refresh')){
+            Cache::forget('my_usertests_'.$user->id);
+          }
+
           if($search)
             $exams = $user->clientexams()->where('name','LIKE',"%{$item}%")->orderBy('id','desc')
                     ->paginate(8);
-          else
-            $exams = $usertests->paginate(8);
-
-
-          foreach($exams as $k=>$e){
-            $exams[$k]->users_count = Tests_Overall::select('id')->where('test_id',$e->id)->count();
+          else{
+            $exams = Cache::remember('my_usertests_'.$user->id,60, function() use($usertests){
+              return $usertests->paginate(8);
+            });
           }
+
+          if($user->role==10 || $user->role==11){
+            foreach($exams as $k=>$e){
+              $exams[$k]->users_count =null;
+            }
+          }else{
+            foreach($exams as $k=>$e){
+              $exams[$k]->users_count = Tests_Overall::select('id')->where('test_id',$e->id)->count();
+            }
+          }
+          
 
           $exam = null;
           $ids =array();

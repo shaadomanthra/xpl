@@ -730,6 +730,9 @@ target=3D"_blank">https://xplore.co.in/test/084682</a><br>Test closes by: 11th M
                 return Obj::where('slug',$id)->first();
         });
 
+        if(!$obj)
+            abort('403','Page not found');
+        
         if($obj->status==3 && !\auth::user()){
             return redirect()->route('login');
         }
