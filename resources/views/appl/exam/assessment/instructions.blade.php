@@ -223,9 +223,12 @@ input[type=checkbox]
 		@endif
 		@endif
 
+		
 			@if(subdomain()=='xplore' || subdomain()=='gradable')
 				@if($exam->examtype->name=='api')
 				<a href="{{ env('API_URL').$exam->slug.'/try?id='.auth::user()->id.'&source='.env('APP_NAME').'&username='.auth::user()->username.'&private=1&uri='.route('assessment.analysis',$exam->slug) }}" class='btn btn-lg btn-primary mt-3 btn-accept d-none test_link'>
+				@else
+				<a href="{{route('assessment.try',$exam->slug)}}@if(request()->get('code'))?code={{ request()->get('code') }}@endif" class='btn btn-lg btn-primary mt-3 btn-accept d-none test_link'>
 				@endif
 			@else
 			<a href="{{route('assessment.try',$exam->slug)}}@if(request()->get('code'))?code={{ request()->get('code') }}@endif" class='btn btn-lg btn-primary mt-3 btn-accept d-none test_link'>
