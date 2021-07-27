@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 use Closure;
 
-class Corporate
+class corporate
 {
     /**
      * Handle an incoming request.
@@ -19,6 +19,7 @@ class Corporate
     public function handle($request, Closure $next)
     {
         if(subdomain()){
+
 
 
             if(subdomain() == 'www'){
