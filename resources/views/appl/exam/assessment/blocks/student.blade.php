@@ -194,9 +194,10 @@
 
 @if(isset($sectiondetails))
 @if(count($sectiondetails)>1)
+
 <div class="pb-4">
 <div class="p-2 " height="200px">
-            <canvas id="SectionContainer" width="600" height="200px"></canvas>
+  <canvas id="SectionContainer" width="600" height="200px"></canvas>
 </div>
 </div>
 @endif

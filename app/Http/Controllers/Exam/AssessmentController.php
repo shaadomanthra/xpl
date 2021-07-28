@@ -1119,7 +1119,7 @@ class AssessmentController extends Controller
         else
             $view = 'test';
 
-        
+
       
 
         return view('appl.exam.assessment.blocks.'.$view)
@@ -5297,13 +5297,16 @@ class AssessmentController extends Controller
                 $sections[$section->name] ='';
 
             if($sectiondetails){
-
+                $sectiondetails[$section->id]['name'] = $section->name;
+                
+            }else{
                 $sectiondetails[$section->id]['name'] = $section->name;
                 $sectiondetails[$section->id]['percent'] = 0;
                 $sectiondetails[$section->id]['score'] = 0;
                 $sectiondetails[$section->id]['id'] = $section->id;
                 $sectiondetails[$section->id]['max'] = 0;
             }
+
             $secs[$section->id] = $section;
             $qset = $exam->getQuestionsSection($section->id,$user->id);
             foreach($qset as $q){
@@ -5337,6 +5340,7 @@ class AssessmentController extends Controller
 
        
 
+           //dd($sectiondetails);
         
 
 

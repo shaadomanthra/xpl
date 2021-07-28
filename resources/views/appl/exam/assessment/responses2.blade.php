@@ -352,7 +352,7 @@ pre, code {
 
         @else
 
-        @if($questions[$t->question_id]->type!='vq')
+        @if($questions[$t->question_id]->type!='vq' && $questions[$t->question_id]->type!='aq')
           @if(trim(strip_tags($t->response)))
           {!! nl2br($t->response) !!} 
           @else
@@ -436,6 +436,35 @@ pre, code {
                 <div class="display-3">{{$d->Clarity}}</div>
               </div>
             </div>
+        </div>
+
+        @endif
+        @endif
+
+
+         @if($questions[$t->question_id]->type=='aq')
+        @if($d=json_decode($t->comment))
+        
+        <div class="row" >
+            <div class="col-6 col-md-4">
+              <div class="p-3 bg-light rounded my-3 border" >
+                <h5>Accuracy</h5>
+                <div class="display-3">{{$d->Accuracy}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <div class="p-3 bg-light rounded my-3 border">
+                <h5>Fluency</h5>
+                <div class="display-3">{{$d->Fluency}}</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-4">
+              <div class="p-3 bg-light rounded my-3 border">
+                <h5>Completeness</h5>
+                <div class="display-3">{{$d->Completeness}}</div>
+              </div>
+            </div>
+           
         </div>
 
         @endif
