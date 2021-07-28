@@ -177,6 +177,11 @@ class User extends Authenticatable
                 {
                     $user->image = Storage::disk('s3')->url('articles/'.strtolower($user->roll_number).'.jpg');
                 }
+
+        if(Storage::disk('s3')->exists('articles/'.$user->username.'.jpg'))
+                {
+                    $user->image = Storage::disk('s3')->url('articles/'.$user->username.'.jpg');
+                }
         if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpg'))
                 {
                     $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpg');
@@ -190,10 +195,7 @@ class User extends Authenticatable
                 {
                     $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg');
                 }
-                if(Storage::disk('s3')->exists('articles/'.$user->username.'.jpg'))
-                {
-                    $user->image = Storage::disk('s3')->url('articles/'.$user->username.'.jpg');
-                }
+                
 
                 
 
