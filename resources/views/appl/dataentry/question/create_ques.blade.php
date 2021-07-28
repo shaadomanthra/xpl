@@ -32,6 +32,7 @@
         <a href="{{ route('question.create','default')}}?type=sq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Subjective Question (SQ)</a>
         <a href="{{ route('question.create','default')}}?type=urq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Upload Response Question (URQ)</a>
         <a href="{{ route('question.create','default')}}?type=vq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Video Question(VQ)</a>
+        <a href="{{ route('question.create','default')}}?type=aq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Audio Question(AQ)</a>
         @if(\auth::user()->checkRole(['administrator']))
        <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Code Question (CQ)</a>
         @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )

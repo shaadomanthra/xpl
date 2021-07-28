@@ -17,7 +17,7 @@
 	<input id="fileupload" type="file" name="fileupload" /><bR>
 	<div id="uploading" class="uploading mt-2 text-success" style="display: none;" >
 		<div class="spinner-border spinner-border-sm" role="status">
-  <span class="sr-only">Loading...</span>
+  <span class="sr-only">Loading... (if the upload time takes more than 2mins then you can mail the pdf to @if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif)</span>
 </div> uploading
 	</div>
 	<button type="button" id="upload-button" class="btn btn-primary mt-4" onclick="uploadFile(this)" data-url="{{$url}}"> Upload </button>
@@ -40,7 +40,7 @@
       >
 
         <iframe
-          src='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
+          src='{{$file}}'
            @if($ismob) 
         	width="300" height="478"
         @else

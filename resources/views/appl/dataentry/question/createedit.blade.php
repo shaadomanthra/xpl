@@ -435,6 +435,7 @@ th{ border:1px solid silver; }
             <option value="eq" @if(isset($question)) @if($question->type=='eq') selected @endif @endif >Explanation Question</option>
             <option value="code" @if(isset($question)) @if($question->type=='code') selected @endif @endif >Code Question</option>
             <option value="vq" @if(isset($question)) @if($question->type=='vq') selected @endif @endif >Video Question</option>
+            <option value="aq" @if(isset($question)) @if($question->type=='aq') selected @endif @endif >Audio Question</option>
             <option value="fillup" @if(isset($question)) @if($question->type=='fillup') selected @endif @endif >Fillup Question</option>
             <option value="mbfq" @if(isset($question)) @if($question->type=='mbfq') selected @endif @endif >Multiblank Fillup Question</option>
             <option value="mbdq" @if(isset($question)) @if($question->type=='mbdq') selected @endif @endif >Multiblank Dropdown Question</option>
@@ -452,6 +453,7 @@ th{ border:1px solid silver; }
             <option value="eq" @if($type =='eq') selected @endif  >Explanation Question</option>
             <option value="code" @if($type =='code') selected @endif  >Code Question</option>
             <option value="vq" @if($type =='vq') selected @endif  >Video Question</option>
+             <option value="aq" @if($type =='aq') selected @endif  >Audio Question</option>
             <option value="fillup" @if($type =='fillup')  selected  @endif >Fillup Question</option>
 
             <option value="mbfq" @if($type =='mbfq')  selected  @endif >Multiblank Fillup Question</option>

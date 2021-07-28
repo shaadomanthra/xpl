@@ -559,6 +559,7 @@ div.chats {
     @endif
   @endforeach
   @endif
+  
   @if($urls2)
   @foreach($urls2 as $k=> $url2)
     <div class="url2_{{$k}} d-none " data-url="{{$url2}}" ></div>

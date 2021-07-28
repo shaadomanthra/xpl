@@ -629,7 +629,7 @@ class AssessmentController extends Controller
 
         }
 
-
+        $audio=0;
         $completed = 0;
         $questions = array();
         $ques = [];
@@ -870,7 +870,14 @@ class AssessmentController extends Controller
                     $url3['video_'.$q->id] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_'.$q->id.'.webm']);
                     $data['slast'] = $q->type;
                     $data['vcount']++;
-                }elseif($q->type=='urq'){
+                }
+                elseif($q->type=='aq'){
+                    $folder = 'webcam/'.$exam->id.'/';
+                    $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
+                    $url3['audio_'.$q->id] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'audio_'.$q->id.'.wav']);
+                    $audio=1;
+                }
+                elseif($q->type=='urq'){
                     $folder = 'urq/';
                     for($k=1;$k<6;$k++){
                         $name = $folder.$exam->slug.'_'.\auth::user()->id.'_'.$q->id.'_'.$k;
@@ -1112,7 +1119,7 @@ class AssessmentController extends Controller
         else
             $view = 'test';
 
-
+        
       
 
         return view('appl.exam.assessment.blocks.'.$view)
@@ -1121,6 +1128,7 @@ class AssessmentController extends Controller
                         ->with('exam',$exam)
                         ->with('imgs',$imgs)
                         ->with('code',true)
+                        ->with('audio',$audio)
                         ->with('csq',$csq)
                         ->with('test_section',$section_timer)
                         ->with('c',$cc)
