@@ -1059,7 +1059,7 @@ $(document).ready(function(){
 
 //set up basic variables for app
 
-
+if ($(".visualizer")[0]){
 const soundClips = document.querySelector('.sound-clips');
 const canvas = document.querySelector('.visualizer');
 const mainSection = document.querySelector('.main-controls');
@@ -1220,6 +1220,9 @@ function visualize(stream) {
     canvasCtx.stroke();
 
   }
+}
+
+
 }
 
    // audio end
