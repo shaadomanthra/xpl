@@ -2976,14 +2976,7 @@ $(window).keyup(function(e){
 
 @auth
 
-@if(isset($audio))
-@if($audio)
-<script>
 
-
-  </script>
-@endif
-@endif
 @if(isset($camera))
 @if($camera)
 <script src="{{ asset('js/html2canvas.min.js')}}?new=09"></script>

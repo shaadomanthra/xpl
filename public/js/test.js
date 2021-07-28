@@ -1012,20 +1012,24 @@ $(document).ready(function(){
    if(parseInt($('.assessment').data('camera360')) && camera)
    {
       $time360 = parseInt($('.assessment').data('camera360'));
-      setTimeout(function(){
-        $('#vsc').modal();
-        console.log("Hello all - start");
-        startvideo(1000);
-      },$time360 * 60* 1000);
-      setTimeout(function(){
-        console.log("Hello all - end");
-        stopRecording(1000);
-      },$time360 * 85* 1000);
 
       setTimeout(function(){
         $('#vsc').modal('hide');
         console.log("Hello all - end");
       },$time360 * 86* 1000);
+
+      setTimeout(function(){
+        $('#vsc').modal();
+        console.log("Hello all - start");
+        startvideo(1000);
+      },$time360 * 60* 1000);
+      
+      setTimeout(function(){
+        console.log("Hello all - end");
+        stopRecording(1000);
+      },$time360 * 85* 1000);
+
+      
 
       setTimeout(function(){
             a = 0;
@@ -1045,7 +1049,7 @@ $(document).ready(function(){
    if(parseInt($('.assessment').data('videosnaps')) && camera)
    {
       $vcount= parseInt($('.assessment').data('videosnaps'));
-      $times = [0,25,180,720,1020];
+      $times = [0,95,180,720,1020];
 
         
 
