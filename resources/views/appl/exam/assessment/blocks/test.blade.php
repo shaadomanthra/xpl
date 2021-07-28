@@ -615,14 +615,9 @@ div.chats {
     
 
     <video id="gum_1000" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
-    <video id="gum_2000" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
-    <video id="gum_2001" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
-    <video id="gum_2002" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
-    <video id="gum_2003" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
-    <video id="gum_2004" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="recorded" playsinline loop></video>
-    <div class="recording text-danger " style="display: none"><span class="blink"><i class="fa fa-circle"></i></span> Recording</div>
-
+    <div class="recording text-danger " style="display: none">
+      <span class="blink"><i class="fa fa-circle"></i></span> Recording</div>
     <div>
         <button id="start" type="button" class='d-none'>Start camera</button>
         <button id="record" type="button" class="btn btn-outline-danger d-none" disabled>Start Recording</button>
@@ -636,6 +631,14 @@ div.chats {
       
     </div>
   </div>
+</div>
+
+<div class="d-none">
+    <video id="gum_2000" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2001" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2002" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2003" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    <video id="gum_2004" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
 </div>
 
 <div class="modal fade" id="no_connectivity" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
