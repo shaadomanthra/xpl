@@ -403,6 +403,16 @@ pre, code {
   </video>
         @endif
         @endif
+
+        @if($questions[$t->question_id]->type=='aq')
+         @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_audio_'.$t->question_id.'.wav'))
+       <audio controls="" src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_audio_'.$t->question_id.'.wav')}}">
+            Your browser does not support the
+            <code>audio</code> element.
+    </audio>
+        @endif
+        @endif
+
         
           @endif
         @endif
