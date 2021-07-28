@@ -2953,7 +2953,7 @@ class AssessmentController extends Controller
 
 
                 $item['answer'] = $this->new_answer(strtoupper($answers[$request->get($i.'_question_id')]),$request->get($i.'_dynamic'));
-
+                 $item['mark']=0;
 
                 if(strlen($item['answer'])==1){
                    if($item['response'] == $item['answer'])
@@ -2990,6 +2990,7 @@ class AssessmentController extends Controller
                             $item['accuracy'] =1;
                     
                         $item['response'] = str_replace(',','<br>',$item['response']);
+                        $item['answer'] = str_replace(',','<br>',$item['answer']);
 
                     }else{
                         $flag = false;
