@@ -2951,7 +2951,9 @@ class AssessmentController extends Controller
                     $item['response'] = strtoupper($request->get($i));
                 }
 
+
                 $item['answer'] = $this->new_answer(strtoupper($answers[$request->get($i.'_question_id')]),$request->get($i.'_dynamic'));
+
 
                 if(strlen($item['answer'])==1){
                    if($item['response'] == $item['answer'])
@@ -2961,7 +2963,9 @@ class AssessmentController extends Controller
                 }elseif(strpos($item['answer'],',')!==false){
 
                     $ans = explode(',',$item['response']);
-                    
+                    $item['accuracy']=0;
+                    $item['mark']=0;
+
                     if($type=='mbfq' || $type=='mbdq'){
                         $partialmark = 0.2;
                         if($questions[$item['question_id']]->mark)
@@ -2984,7 +2988,9 @@ class AssessmentController extends Controller
                             $item['accuracy'] =0;
                         else
                             $item['accuracy'] =1;
-                   
+                    
+                        $item['response'] = str_replace(',','<br>',$item['response']);
+
                     }else{
                         $flag = false;
                         foreach($ans as $an){
@@ -3060,7 +3066,7 @@ class AssessmentController extends Controller
 
 
                 }
-                if($type!='mbfq' || $type=='mbdq'){
+                if($type!='mbfq' && $type!='mbdq'){
                     if($item['accuracy']==1){
                         if(!$section_marking)
                             $item['mark'] = $questions[$item['question_id']]->mark;
