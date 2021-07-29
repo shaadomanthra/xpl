@@ -3944,10 +3944,12 @@ class AssessmentController extends Controller
 
                 if(isset($content['completed'])){
                     if(!$content['completed'])
+                    if(isset($completed_list[$content['username']]))
                     if($completed_list[$content['username']]==1)
                         $content['completed'] = 1;
                 }else{
                     if(isset($content['username']))
+                    if(isset($completed_list[$content['username']]))
                     if($completed_list[$content['username']]==1)
                         $content['completed'] = 1;
                 }
