@@ -3995,6 +3995,232 @@ class AssessmentController extends Controller
 
 
          
+        }else{
+
+
+            if($user->role==10)
+                return view('appl.exam.exam.nofile')->with('message','You are not authorized to access this data.')
+                    ->with('exam',$exam)
+                    ->with('user',$user)
+                    ->with('active',1);
+
+
+
+            if($search){
+                $file = 'testlog/'.$exam->id.'/log/'.$search.'_log.json';
+                $files = [];
+                if(Storage::disk('s3')->exists($file))
+                    $files = [$file];
+                $pg = $this->paginateAnswers($files,$paginatecount );
+
+            }else{
+
+                $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
+
+
+                $tests_overall = Tests_Overall::where('test_id',$exam->id)->with('user')->get();
+
+
+                $completed_count  = count($tests_overall);
+                $sessions_count = count($files);
+
+                if($sessions_count> $completed_count ){
+                    $data['total'] = $sessions_count;
+                    $data['completed'] = $completed_count;
+                    $data['live'] = $sessions_count - $completed_count;
+                }else{
+                    $data['total'] = $completed_count;
+                    $data['completed'] = $completed_count;
+                    $data['live'] = 0;
+                }
+
+                $completed_list = $this->updateCompleted($files,$tests_overall,$exam);
+                $f2=[];
+                
+                if(request()->get('completed')){
+                    foreach($completed_list as $c=>$flag){
+                        if($flag)
+                        {
+                            if (($key = array_search('testlog/'.$exam->id.'/log/'.$c.'_log.json', $files)) !== false) {
+                                    array_push($f2, 'testlog/'.$exam->id.'/log/'.$c.'_log.json');
+                                   
+                                }
+                          
+
+                        }
+
+                    }
+                    $pg = $this->paginateAnswers($f2,$paginatecount );
+                }
+                elseif(request()->get('open')){
+                    foreach($completed_list as $c=>$flag){
+                        if(!$flag)
+                        {
+                            if (($key = array_search('testlog/'.$exam->id.'/log/'.$c.'_log.json', $files)) !== false) {
+                                    array_push($f2, 'testlog/'.$exam->id.'/log/'.$c.'_log.json');
+                                   
+                                }
+                          
+
+                        }
+
+                    }
+                    $pg = $this->paginateAnswers($f2,$paginatecount );
+                }else if(request()->get('terminate_all')){
+                    $data = null;
+
+                    foreach($completed_list as $c=>$flag){
+                        $url = 'testlog/'.$exam->id.'/'.$c.'.json';
+                        if(!$flag && Storage::disk('s3')->exists($url))
+                        {
+                            //submit the response
+                            
+                            $json = json_decode(Storage::disk('s3')->get($url),true);
+                            //dd($json);
+                            request()->merge(['api_submit'=>1]);
+                            request()->merge(['user_id'=>$json['user_id']]);
+                            request()->merge(['test_id'=>$json['test_id']]);
+                            request()->merge(['code'=>$json['code']]);
+                            request()->merge(['window_change'=>$json['window_change']]);
+                            foreach($json['responses'] as $d=>$v){
+                                $i=$d+1;
+
+                                request()->merge([$i.'_question_id'=>$v['question_id']]);
+                                request()->merge([$i.'_section_id'=>$v['section_id']]);
+                                request()->merge([$i.'_time'=>intval($v['time'])]);
+                                request()->merge([$i.'_dynamic'=>$v['dynamic']]);
+                                if(isset($v['response'])){
+                                    $data[$i] = $v['response'];
+                                    request()->merge([$i=>$v['response']]);
+                                }
+                                
+
+                                else{
+                                    request()->merge([$i=>null]);
+                                    $data[$i] =null;
+                                }
+
+                            }
+
+                            //dd(request()->all());
+
+                            $result = $this->submission($exam->slug,$r);
+                            //dd($result);
+                        }else if(!$flag && !Storage::disk('s3')->exists($url)){
+                             $url = 'testlog/'.$exam->id.'/log/'.$c.'_log.json';
+                             Storage::disk('s3')->delete($url);
+                        }   
+                        
+                    }
+                    // print("All the responses submitted <br>");
+                    // dd();
+                    return redirect()->route('test.active',$exam->slug);
+
+                    $pg = $this->paginateAnswers($files,$paginatecount );
+                }
+                else{
+                    $pg = $this->paginateAnswers($files,$paginatecount );
+                }
+                
+                
+
+            }
+
+
+            foreach($pg as $f){
+                $p = explode('/',$f);
+                $u = explode('.',$p[2]);
+
+
+                $content = [];//json_decode(Storage::disk('s3')->get($f),true);
+                $content['url'] = Storage::disk('s3')->url($f);
+
+                $a = explode('/log/',$f);
+                $b = explode('_log',$a[1]);
+                $usc = $content['username'] = $b[0];
+
+                $name = 'testlog/'.$exam->id.'/'.$content['username'].'.json';
+                $content['url2'] = Storage::disk('s3')->url($name);
+
+                $content['uname'] = 'candidate';//$userset[$usc]->name;
+                    $content['username'] = $usc;
+                    $content['rollnumber'] = null;//$userset[$usc]->roll_number;
+                    $content['completed'] = 0;
+                    $content['activity'] = null;
+                    $content['last_photo'] = null;
+                    $content['window_change'] = null;
+                    $content['window_swap'] = null;
+                    $content['last_updated'] = null;
+                    $content['last_seconds'] = null;
+                    $content['os_details'] = null;
+                    $content['browser_details'] = null;
+                    $content['js_details'] = null;
+                    $content['ip_details'] = null;
+
+
+
+                if(isset($content['username'])){
+                        $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
+                        $content['selfie_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+
+                        $idcard = $content['username'].'_'.$exam->id.'_idcard.jpg';
+                        $content['idcard_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$idcard);
+
+                        $name = 'testlog/approvals/'.$exam->id.'/'.$content['username'].'.json';
+                        $content['approval'] = Storage::disk('s3')->url($name);
+                         $content['approval_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+
+                        $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
+                        $content['chat'] = Storage::disk('s3')->url($chatname);
+
+                        $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
+                        $content['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
+
+
+
+                }
+
+                $content['last_photo'] = '';
+                // if(isset($content['last_photo'])){
+                //     if(!$content['last_photo']){
+
+                //     }else{
+                //         $url_pieces = explode('_',$content['last_photo']);
+                //         $name = explode('/', $url_pieces[0]);
+                //         if(is_array($name))
+                //             $name = $name[5];
+
+                //         if(isset($url_pieces[2])){
+                //              $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
+                //             if(!Storage::disk('s3')->exists($filepath)){
+                //                 $counter = explode('.',$url_pieces[2]);
+                //                 $nm = intval($counter[0])-1;
+                //                 if(strlen($nm)==1)
+                //                     $nm ="00".$nm;
+                //                 else if(strlen($nm)==2)
+                //                     $nm ="0".$nm;
+                //                 $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.($nm).'.jpg';
+                //                 $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.($nm).'.jpg';
+                //                 if(Storage::disk('s3')->exists($filepath)){
+                //                     $content['last_photo'] = $last_before_url .'?time='.strtotime(now());
+                //                 }else{
+                //                 }
+                //             }
+                //         }
+
+                //     }
+                // }else{
+                //     $content['last_photo'] = '';
+                // }
+
+                if(!$content['completed']){
+                    if($completed_list[$content['username']]==1)
+                        $content['completed'] = 1;
+                }
+                if(isset($content['username']))
+                 $users[$content['username']] = $content;
+                //array_push($users, $content);
+            }
         }
 
 

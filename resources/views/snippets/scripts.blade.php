@@ -581,7 +581,7 @@ function chat_refresh(){
 setInterval(chat_refresh,1000);
 
 
-function image_refresh(){
+function image_refresh($i=null){
   if($('.image_refresh').length){
 
       $('.image_refresh').each(function(i, obj) {
@@ -613,7 +613,13 @@ function image_refresh(){
                  
                  $completed = $('.image_refresh_'+$username).data('completed');
                 
-
+                var u1 = $('.uname').html().split(' ').join('') ;
+                var u2 = (result.uname).split(' ').join('');
+                
+                if($i){
+                    $('.uname').html(result.uname);
+                }
+                 
                  if($username){
                      $('.image_refresh_'+$username).attr('src',last_photo);
                  if(window_change){
@@ -659,7 +665,7 @@ function image_refresh(){
   }
 }
 
-image_refresh();
+image_refresh(1);
 if($('.proctoring').data('active')=='0')
   setInterval(image_refresh,3000);
 

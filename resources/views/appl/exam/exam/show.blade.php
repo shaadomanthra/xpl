@@ -557,7 +557,7 @@
 
         </div>
         <div class="col-6">
-          <div class="h5 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.active',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Live Tracker  </a> </div>
+          <div class="h5 mb-3 alert alert-important alert-warning" ><a href="{{ route('test.actives3',$exam->slug)}}" class="  mt-3 mt-lg-0"><i class="fa fa-circle-o"></i> Live Tracker  </a> </div>
 
         </div>
 

@@ -65,7 +65,7 @@
       </div>
       <div class="col-12  col-md-3">
          <!--begin::Form-->
-         <form class="w-100" method="GET" action="{{ route('test.active',$exam->slug) }}">
+         <form class="w-100" method="GET" action="{{ route('test.actives3',$exam->slug) }}">
            <div class="form-group mt-2">
             <div class="input-icon">
              <input type="text" class="form-control" name="search" placeholder="Search by rollnumber..."/>
@@ -103,7 +103,7 @@
                           <!--end::Svg Icon-->
                         </span>
                         <span class="card-title font-weight-bolder text-white font-size-h2 mb-0 mt-6 d-block">
-                         <a href="{{ route('test.active',$exam->slug)}}" class="text-white">{{($data['total'])}}</a></span>
+                         <a href="{{ route('test.actives3',$exam->slug)}}" class="text-white">{{($data['total'])}}</a></span>
                         <span class="font-weight-bold text-white font-size-sm">Total Participants</span>
                       </div>
                       <!--end::Body-->
@@ -116,10 +116,10 @@
                     <div class="card card-custom bg-light-warning card-stretch gutter-b">
                       <!--begin::Body-->
                       <div class="card-body my-4">
-                        <a href="{{ route('test.active',$exam->slug)}}?open=1" class="card-title font-weight-bolder text-warning font-size-h6 mb-4 text-hover-state-dark d-block">Open Participants ({{round((($data['total']-$data['completed'])*100/$data['total']))}}%)</a>
+                        <a href="{{ route('test.actives3',$exam->slug)}}?open=1" class="card-title font-weight-bolder text-warning font-size-h6 mb-4 text-hover-state-dark d-block">Open Participants ({{round((($data['total']-$data['completed'])*100/$data['total']))}}%)</a>
                         <div class="font-weight-bold text-muted font-size-sm">
                         <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2">
-                          <a href="{{ route('test.active',$exam->slug)}}?open=1">{{($data['total']-$data['completed'])}}</a></span></div>
+                          <a href="{{ route('test.actives3',$exam->slug)}}?open=1">{{($data['total']-$data['completed'])}}</a></span></div>
                         <div class="progress progress-xs mt-7 bg-warning-o-60">
                           <div class="progress-bar bg-warning" role="progressbar" style="width: {{(($data['total']-$data['completed'])*100/$data['total'])}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -134,9 +134,9 @@
                     <div class="card card-custom bgi-no-repeat card-stretch gutter-b" style="background-position: right top; background-size: 30% auto; background-image: url({{asset('assets/media/svg/shapes/abstract-3.svg') }})">
                       <!--begin::Body-->
                       <div class="card-body my-4">
-                        <a href="{{ route('test.active',$exam->slug)}}?completed=1" class="card-title font-weight-bolder text-primary font-size-h6 mb-4 text-hover-state-dark d-block">Completed ({{round((($data['completed'])*100/$data['total']))}}%)</a>
+                        <a href="{{ route('test.actives3',$exam->slug)}}?completed=1" class="card-title font-weight-bolder text-primary font-size-h6 mb-4 text-hover-state-dark d-block">Completed ({{round((($data['completed'])*100/$data['total']))}}%)</a>
                         <div class="font-weight-bold text-muted font-size-sm">
-                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2"><a href="{{ route('test.active',$exam->slug)}}?completed=1">{{($data['completed'])}}</a></span></div>
+                        <span class="text-dark-75 font-weight-bolder font-size-h2 mr-2"><a href="{{ route('test.actives3',$exam->slug)}}?completed=1">{{($data['completed'])}}</a></span></div>
                         <div class="progress progress-xs mt-7 bg-info-o-60">
                           <div class="progress-bar bg-primary" role="progressbar" style="width: {{(($data['completed'])*100/$data['total'])}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
@@ -180,7 +180,7 @@
                  
                 <small><span class="badge badge-danger float-right window_change window_change_{{$a}}">{{$b['window_change']}}</span></small>
                
-                @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif<br>
+                <div class="uname">@if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif</div><br>
                 <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
 
 
@@ -378,7 +378,7 @@ div.chats {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-        <a href="{{ route('test.active',$exam->slug)}}?terminate_all=1" class="btn btn-primary " data-username="">Confirm</a>
+        <a href="{{ route('test.actives3',$exam->slug)}}?terminate_all=1" class="btn btn-primary " data-username="">Confirm</a>
       </div>
     </div>
   </div>
