@@ -403,7 +403,7 @@
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" name="delete" value="1">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <button type="submit" class="btn btn-danger">PUT Permanently</button>
+          <button type="submit" class="btn btn-danger">Delete Permanently</button>
         </form>
       </div>
     </div>
