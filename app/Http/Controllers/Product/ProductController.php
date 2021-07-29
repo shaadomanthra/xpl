@@ -232,6 +232,7 @@ class ProductController extends Controller
       if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role!=13){
 
           $search = $request->search;
+          $page = $request->get('page');
           $item = $request->item;
 
           $count = 0;
@@ -263,7 +264,7 @@ class ProductController extends Controller
             Cache::forget('my_usertests_'.$user->id);
           }
 
-          if($search)
+          if($search || $page)
             $exams = $user->clientexams()->where('name','LIKE',"%{$item}%")->orderBy('id','desc')
                     ->paginate(8);
           else{
@@ -313,6 +314,7 @@ class ProductController extends Controller
       }else if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role==13){
 
           $search = $request->search;
+          $page = $request->get('page');
           $item = $request->item;
 
           $count = 0;
