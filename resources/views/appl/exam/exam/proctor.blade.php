@@ -125,12 +125,12 @@
       <img src="{{$b['image']}}" class="rounded float-right" width="50px"/>
 
       <dl class="row">
-          <dt class="col-5 col-sm-4">Full Name</dt>
+          <dt class="col-5 col-sm-4">Full Name </dt>
           <dd class="col-7 col-sm-8"><h3>{{ $b['name']}}</h3></dd>
           <dt class="col-5 col-sm-4">College Name</dt>
           <dd class="col-7 col-sm-8">{{ $b['college']}}</dd>
           <dt class="col-5 col-sm-4">Branch</dt>
-          <dd class="col-7 col-sm-8">{{ $b['branch']}}</dd>
+          <dd class="col-7 col-sm-8">@if(isset($data['branch'][$userset[$a]->branch_id]->name)) {{($userset[$a]->branch_id)?$data['branch'][$userset[$a]->branch_id]->name:""}} @endif</dd>
           <dt class="col-5 col-sm-4">Roll Number</dt>
           <dd class="col-7 col-sm-8">@if(isset($userset[$a])) {{ $userset[$a]->roll_number }} @endif</dd>
       </dl>
@@ -162,31 +162,31 @@
 
 @if($b['approved']==0 ||$b['approved']==2 )
       <div class="pt-3 action_{{$a}}">
-      <a href="#" class="btn btn-success btn-approve" data-username="{{$a}}" data-approved="1" data-alert="0" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Approve</a>
-      <a href="#" class="btn btn-danger btn-approve" data-username="{{$a}}" data-approved="2" data-alert="0" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Reject</a>
+        <a href="#" class="btn btn-success btn-approve" data-username="{{$a}}" data-approved="1" data-alert="0" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Approve</a>
+        <a href="#" class="btn btn-danger btn-approve" data-username="{{$a}}" data-approved="2" data-alert="0" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Reject</a>
 
-      <div class="spinner-border text-primary ml-3 mt-2 spinner_{{$a}}" role="status" style="display: none">
-  <span class="sr-only">Loading...</span>
-</div>
+        <div class="spinner-border text-primary ml-3 mt-2 spinner_{{$a}}" role="status" style="display: none">
+    <span class="sr-only">Loading...</span>
+  </div>
 
-      <div class="dropdown float-right">
-    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Alert 
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item btn-approve" href="#" data-username="{{$a}}" data-approved="0" data-alert="1" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Re-capture Selfie</a>
-        <a class="dropdown-item btn-approve" href="#" data-username="{{$a}}" data-approved="0" data-alert="2" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Re-capture ID Card</a>
-        <a class="dropdown-item btn-approve" href="#" data-username="{{$a}}" data-approved="0" data-alert="3" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Invalid ID Card</a>
-    </div>
-</div>
-
-
+        <div class="dropdown float-right">
+      <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Alert 
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item btn-approve" href="#" data-username="{{$a}}" data-approved="0" data-alert="1" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Re-capture Selfie</a>
+          <a class="dropdown-item btn-approve" href="#" data-username="{{$a}}" data-approved="0" data-alert="2" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Re-capture ID Card</a>
+          <a class="dropdown-item btn-approve" href="#" data-username="{{$a}}" data-approved="0" data-alert="3" data-url="{{ route('test.proctor',$exam->slug)}}" data-token="{{csrf_token()}}">Invalid ID Card</a>
       </div>
-      @if($b['approved']==2)
-        <div class="status_{{$a}}"><div class='h3 text-danger mt-3'><i class='fa fa-times-circle text-danger'></i> Rejected</div></div>
-      @else
-      <div class="status_{{$a}}"></div>
-      @endif
+  </div>
+
+
+        </div>
+        @if($b['approved']==2)
+          <div class="status_{{$a}}"><div class='h3 text-danger mt-3'><i class='fa fa-times-circle text-danger'></i> Rejected</div></div>
+        @else
+        <div class="status_{{$a}}"></div>
+        @endif
 
       @else
       <div class="status_{{$a}}">
@@ -207,7 +207,7 @@
       <img src="{{ $userset[$a]->getImage()}}" class="rounded float-right" width="50px"/>
 
       <dl class="row">
-          <dt class="col-5 col-sm-4">Full Name</dt>
+          <dt class="col-5 col-sm-4">Full Name </dt>
           <dd class="col-7 col-sm-8"><h3>{{ $userset[$a]->name}}</h3></dd>
           <dt class="col-5 col-sm-4">College Name</dt>
           <dd class="col-7 col-sm-8">{{ ($userset[$a]->college_id)?$data['colleges'][$userset[$a]->college_id]->name:''}}</dd>
@@ -232,6 +232,7 @@
 
  
 </div>
+
 
 <script>
 setTimeout(function(){

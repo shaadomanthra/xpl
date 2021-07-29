@@ -174,7 +174,12 @@ class User extends Authenticatable
 
         $user = $this;
         $username = $this->username;
-        $user->image = null;
+
+
+        $user->image = Cache::get('userimage_'.$username);
+
+        if($user->image)
+            return $user->image;
         if(Storage::disk('s3')->exists('articles/'.strtolower($user->roll_number).'.jpg'))
                 {
                     $user->image = Storage::disk('s3')->url('articles/'.strtolower($user->roll_number).'.jpg');
@@ -198,7 +203,7 @@ class User extends Authenticatable
                     $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg');
                 }
                 
-
+        Cache::forever('userimage_'.$username,$user->image);
                 
 
         return $user->image;

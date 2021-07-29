@@ -260,7 +260,7 @@ class AssessmentController extends Controller
 
         if($exam->client!=subdomain())
             abort('404','Test not found');
-        
+
         $data['branches'] = Cache::get('branches');
        $data['colleges'] = Cache::get('colleges');
 
@@ -3835,11 +3835,16 @@ class AssessmentController extends Controller
             if(request()->get('refresh')){
                 Cache::forget('candidates_'.$exam->slug.'_'.$user->username);
             }
-            if(!$search)
+            if(!$search){
                 $userset = Cache::remember('candidates_'.$exam->slug.'_'.$user->username,240, function() use($candidates) {
                     return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
                 });
-            else{
+
+                $usersetids = Cache::remember('candidates_ids_'.$exam->slug.'_'.$user->username,240, function() use($candidates) {
+                    return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('id');
+                });
+
+            }else{
                 $userset = User::whereIn('username',[$search])->where('client_slug',subdomain())->get()->keyBy('username');
             }
 
@@ -3855,9 +3860,14 @@ class AssessmentController extends Controller
             }
 
 
-            $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('id')->toArray())->with('user')->get();
+            $set = $userset->pluck('id')->toArray();
+            $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$set)->get();
+            foreach($tests_overall as $f=>$h){
+                $tests_overall[$f]->user = $usersetids[$h->user_id];
+            }
            
-            $completed_list = $this->updateCompleted($pg,$tests_overall,$exam);
+
+            $completed_list = $this->updateCompleted($pg,$tests_overall,$exam,$usersetids);
 
             $pg = $this->paginateAnswers($pg,count($pg));
 
@@ -4756,10 +4766,13 @@ class AssessmentController extends Controller
     }
 
 
-    public function updateCompleted($files,$tests_overall,$exam){
+    public function updateCompleted($files,$tests_overall,$exam,$usersetids=null){
 
         $users = array();$completed=[];
         foreach($tests_overall as $t){
+            if($usersetids){
+                $users[$usersetids[$t->user_id]->username] = $usersetids[$t->user_id]->username;
+            }else
             $users[$t->user->username] = $t->user->username;
             //array_push($users,$t->user->username);
 
@@ -4816,11 +4829,18 @@ class AssessmentController extends Controller
             return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
         });
 
+
         if($candidates){
             foreach($userset as $ux=>$sx){
                 $file = 'testlog/approvals/'.$exam->id.'/'.$ux.'.json';
+                //$urls[$ux] = Storage::disk('s3')->url($file);
+                 $json[$ux] = Cache::get('approval_'.$ux);
+                 if(!$json[$ux])
                 if(Storage::disk('s3')->exists($file)){
-                    $json[$ux] = json_decode(Storage::disk('s3')->get($file),true);
+                    $jx = $json[$ux] = json_decode(Storage::disk('s3')->get($file),true);
+                    Cache::remember('approval_'.$ux,240,function() use($jx){
+                        return $jx;
+                    });
                 }else{
                     $json[$ux] = null;
                 }
@@ -4842,12 +4862,14 @@ class AssessmentController extends Controller
         //     $json = [];
         // }
 
+
         if($r->get('api')){
             $username = $r->get('username');
             $message = ['status'=>0,'message'=>''];
             if($r->get('approved')==1){
                 $json[$username]['approved']=1;
                 $message['status'] = 1;
+
 
             }
             else if($r->get('approved')==2){
@@ -4909,8 +4931,6 @@ class AssessmentController extends Controller
         $data['branch'] = Cache::remember('branches_'.$exam->id, 240,function(){
             return Branch::get()->keyBy('id');
         });
-
-
 
         if($json)
             return view('appl.exam.exam.proctor')

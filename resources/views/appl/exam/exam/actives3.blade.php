@@ -180,7 +180,7 @@
                  
                 <small><span class="badge badge-danger float-right window_change window_change_{{$a}}">{{$b['window_change']}}</span></small>
                
-                <div class="uname">@if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif</div><br>
+                <div class="uname_{{$a}}">@if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif</div><br>
                 <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
 
 

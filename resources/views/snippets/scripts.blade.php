@@ -613,7 +613,7 @@ function image_refresh($i=null){
                  
                  $completed = $('.image_refresh_'+$username).data('completed');
                 
-                var u1 = $('.uname').html().split(' ').join('') ;
+                var u1 = $('.uname_'+$username).html().split(' ').join('') ;
                 var u2 = (result.uname).split(' ').join('');
                 
                 if($i){
