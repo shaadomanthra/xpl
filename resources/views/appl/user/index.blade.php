@@ -215,6 +215,13 @@
 
     @elseif(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
     
+     
+
+    @endif
+@endauth
+ 
+ @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
+    
       <div class="card bg-white ">
         <div class="card-body">
           <h3>Admin Tools</h3>
@@ -226,8 +233,6 @@
       </div>
 
     @endif
-@endauth
- 
 
  @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
 
