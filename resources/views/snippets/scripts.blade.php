@@ -641,11 +641,7 @@ function image_refresh(){
 
                  }
 
-                 if(result.completed && $completed){
-                  if($('.completed_msg').length){
-                    $('.completed_msg').html('<b><i class="fa fa-check-circle text-success"></i> completed</b>');
-                  }
-                 }
+                 
                   
 
                 //window.location.href = backendUrl;
