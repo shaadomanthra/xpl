@@ -255,7 +255,17 @@
       	@endif
       </td>
       @endif
-      <td>{{ (isset($t->comment))?$t->comment:'-' }}</td>
+      <td>
+        @if(isset($t->comment))
+          @if($t->comment!='null')
+            {{$t->comment}}
+          @else
+            -
+          @endif
+        @else
+          -
+        @endif
+      </td>
       @endif
 
     </tr>
