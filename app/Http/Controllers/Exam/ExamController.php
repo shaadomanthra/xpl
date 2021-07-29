@@ -1331,8 +1331,8 @@ class ExamController extends Controller
         }
 
         //dd($data);
-        $data['viewers'] = $exam->viewers()->wherePivot('role','viewer')->pluck('id')->toArray();
-        $data['evaluators'] = $exam->viewers()->wherePivot('role','evaluator')->pluck('id')->toArray();
+        $data['viewers'] = $exam->viewers()->wherePivot('role','viewer')->where('status','<>',2)->pluck('id')->toArray();
+        $data['evaluators'] = $exam->viewers()->wherePivot('role','evaluator')->where('status','<>',2)->pluck('id')->toArray();
 
 
 
