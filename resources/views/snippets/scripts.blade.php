@@ -1,4 +1,4 @@
-<script src="{{ asset('js/script.js')}}?new=35"></script>
+<script src="{{ asset('js/script.js')}}?new=36"></script>
 <script src="{{ asset('js/jquery.ui.min.js')}}?new=09"></script>
 <script src="{{ asset('js/osc.js')}}?new=09"></script>
 @if(subdomain())
@@ -2517,9 +2517,9 @@ $(function(){
 
 <script src="{{ asset('js/screenfull.min.js')}}"></script>
 @if(!$test_section)
-<script src="{{ asset('js/test.js')}}?new=14"></script>
+<script src="{{ asset('js/test.js')}}?new=15"></script>
 @else
-<script src="{{ asset('js/test_section.js')}}?new=14"></script>
+<script src="{{ asset('js/test_section.js')}}?new=15"></script>
 @endif
 <script type="text/javascript">
 $(function(){
