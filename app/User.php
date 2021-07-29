@@ -422,14 +422,14 @@ class User extends Authenticatable
         }
         if(subdomain()=='xplore' || subdomain()=='piofx' || subdomain() =='gradable' ){
             $users = Role::where('slug',$role)->first()->users()->orderBy('name');
-            $d = $users->whereIn('role',[2,12,13])->get();
+            $d = $users->whereIn('role',[2,12,13])->where('status','<>',2)->get();
             return $d;
         }
         else{
             $r =Role::where('slug',$role)->first();
-            $users = $r->users()->orderBy($order)->where('client_slug',subdomain())->get()->keyBy('id');
+            $users = $r->users()->orderBy($order)->where('client_slug',subdomain())->where('status','<>',2)->get()->keyBy('id');
             if(!$users)
-                return $r->users()->orderBy($order)->get()->keyBy('id');
+                return $r->users()->orderBy($order)->where('status','<>',2)->get()->keyBy('id');
             else
             return  $users;
         }

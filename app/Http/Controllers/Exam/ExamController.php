@@ -1335,8 +1335,10 @@ class ExamController extends Controller
         $data['evaluators'] = $exam->viewers()->wherePivot('role','evaluator')->where('status','<>',2)->pluck('id')->toArray();
 
 
-
         $data['hr-managers'] = \auth::user()->getRole('hr-manager');
+
+         dd($data);
+
 
         $data['candidates'] = $candidates;
 
