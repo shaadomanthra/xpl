@@ -41,7 +41,7 @@ class UserPolicy
      */
     public function update(User $user, User $u)
     { 
-        if($user->id === $u->id)
+        if($user->id === $u->id || $user->role==13)
             return true;
         else
             false;

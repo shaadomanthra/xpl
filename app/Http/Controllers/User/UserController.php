@@ -11,6 +11,8 @@ use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Tests_Overall;
+use PacketPrep\Models\Exam\Tests_Section;
+use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\User\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -833,7 +835,7 @@ class UserController extends Controller
     {
         
         $username = substr($username, 1);
-        $user = User::where('username',$username)->first();
+        $obj=$user = User::where('username',$username)->first();
         // $user_details = User_Details::where('user_id',$user->id)->first();
 
 
@@ -849,6 +851,36 @@ class UserController extends Controller
         //     $user_details_new->save();
         //     $user_details = User_Details::where('user_id',$user->id)->first();
         // }
+
+        if($request->get('newpassword'))
+        {
+            $user->password = Hash::make($request->get('newpassword'));
+           $user->save();
+           flash('Password updated')->success();
+                 return redirect()->back()->withInput();
+
+        }
+
+        if($request->get('delete')==1)
+        {
+             if($obj->details)
+            $obj->details->delete();
+        $obj->roles()->detach();
+        $obj->colleges()->detach();
+        $obj->branches()->detach();
+        $obj->zones()->detach();
+        if($obj->exams)
+            $obj->exams()->delete();
+        Test::where('user_id',$user->id)->delete();
+        Tests_Overall::where('user_id',$user->id)->delete();
+        Tests_Section::where('user_id',$user->id)->delete();
+        if($obj->products)
+            $obj->products()->detach();
+        $obj->delete();
+           flash('user deleted')->success();
+            return redirect()->route('dashboard');
+
+        }
 
         // update basic data
         $user->name = $request->name;

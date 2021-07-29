@@ -93,6 +93,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('PacketPrep\Models\Exam\Exam');
     }
+
+    
      public function batches()
     {
         return $this->belongsToMany('PacketPrep\Models\College\Batch');

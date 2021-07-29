@@ -26,7 +26,7 @@
             <div class="mt-3 mt-md-5 ">
              <h2 class="mb-md-2  heading_two mr-md-4 ml-4" >{{ $user->name }} @if(auth::user()->profile_complete($user->username)==100)<i class="fa fa-check-circle text-success"></i>@endif
 
-              
+               
              </h2>
              
               <div>
@@ -214,64 +214,16 @@
       </div>
 
     @elseif(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
-     <div class="row mr-2 ml-2">
-        <div class="col-12 col-md ">
-          <h3 class=" p-3 mb-0 bg-white border border-bottom-0"><i class='fa fa-university'></i> Academic Scores</h3>
-         
-          <div class="table-responsive">
-            <table class="table table-bordered bg-light">
-  <thead>
-    <tr class="">
-      <th scope="col">Board</th>
-      <th scope="col">CGPA / Percentage </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Class 10</td>
-      <td>
-        @if($user->tenth)
-        {{$user->tenth}}
-        @else
-          - 
-        @endif
-      </td>
-    </tr>
-    <tr>
-      <td>Class 12</td>
-      <td>
-        @if($user->twelveth)
-        {{$user->twelveth}}
-        @else
-          - 
-        @endif
-      </td>
-    </tr>
-    <tr>
-      <td>Graduation</td>
-      <td>
-        @if($user->bachelors)
-        {{$user->bachelors}}
-        @else
-          - 
-        @endif
-      </td>
-    </tr>
-    <tr>
-      <td>Masters</td>
-      <td>
-        @if($user->masters)
-        {{$user->masters}}
-        @else
-          - 
-        @endif
-      </td>
-    </tr>
-
-  </tbody>
-</table>
-          </div>
+    
+      <div class="card bg-white ">
+        <div class="card-body">
+          <h3>Admin Tools</h3>
+          <button class="btn btn-outline-dark" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Reset password to 12345</button>
+          <button class="btn btn-outline-dark" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2">Reset password to abcde</button>
+          <button class="btn btn-outline-dark" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal3">Reset password to dd@809</button>
+          <button class="btn btn-outline-danger" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal4">Delete Account</button>
         </div>
+      </div>
 
     @endif
 @endauth
@@ -347,7 +299,116 @@
 
 
 
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Password update to 12345</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This following action is permanent and it cannot be reverted.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <form method="post" action="{{route('profile.update','@'.$user->username)}}">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="newpassword" value="12345">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-success">Confirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Password update to abcde</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This following action is permanent and it cannot be reverted.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <form method="post" action="{{route('profile.update','@'.$user->username)}}">
+        <input type="hidden" name="_method" value="PUT">
+
+        <input type="hidden" name="newpassword" value="abcde">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-success">Confirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">        <h5 class="modal-title" id="exampleModalLabel">Confirm Password update to dd@809</h5>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This following action is permanent and it cannot be reverted.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <form method="post" action="{{route('profile.update','@'.$user->username)}}">
+        <input type="hidden" name="_method" value="PUT">
+
+        <input type="hidden" name="newpassword" value="dd@809">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-success">Confirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This following action is permanent and it cannot be reverted.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+        <form method="post" action="{{route('profile.update','@'.$user->username)}}">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="delete" value="1">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-danger">PUT Permanently</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 @endsection
