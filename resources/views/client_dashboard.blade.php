@@ -208,7 +208,7 @@
                       @if($test->solutions==2 || $test->solutions==4 )
                       <span class="badge badge-secondary">private</span>
                       @elseif($test->slug!='psychometric-test')
-                      {{$test->score}} / {{$test->max}}
+                      {{$test->score}} @if(env('APP_NAME')!='Gradable')/ {{$test->max}} @endif
                       @else
                       -
                       @endif
