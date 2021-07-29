@@ -1698,15 +1698,19 @@ class ExamController extends Controller
            // dd($sections);
 
             if($exam->emails){
-                $emails = implode(',',explode("\n", strtolower($exam->emails)));
+                $emails = implode(',',explode("\n", $exam->emails));
                 $emails =str_replace("\r", '', $emails);
                 $emails = array_unique(explode(',',$emails));
+               
 
                 $users_result = User::whereIn('id',$usrs->toArray())->get()->keyBy('id');
                 $result_users = $users_result->pluck('email')->toArray();
                 $result_users_ids = $users_result->pluck('id')->toArray();
 
-                $users = User::where('client_slug',subdomain())->whereIn('email',$emails)->get()->keyBy('id');
+                $subdomain = $exam->client;
+
+                $users = User::where('client_slug',$subdomain)->whereIn('email',$emails)->get()->keyBy('id');
+
                 $inusers = array_unique($users->pluck('email')->toArray());
                 // $email_stack['registered'] = array_unique($users->pluck('email')->toArray());
 
@@ -1714,7 +1718,8 @@ class ExamController extends Controller
                 $email_stack['registered'] =$email_stack['not_registered'] =[];
                 $count = $count2=0;
                 foreach($emails as $e){
-                    if(in_array($e, $inusers)){
+
+                    if(in_array($e ,$inusers)){
                         array_push($email_stack['registered'], $e);
                     }else{
                         array_push($email_stack['not_registered'], $e);
@@ -1722,6 +1727,8 @@ class ExamController extends Controller
                     array_push($email_stack['total'], $e);
 
                 }
+
+
 
                 // $uids = array_unique($users->pluck('id')->toArray());
                 // $attempted = [];//array_unique($result->pluck('user_id')->toArray());
@@ -1765,7 +1772,6 @@ class ExamController extends Controller
                 $email_stack['registered'] = [];
                 $email_stack['not_registered'] =  [];
             }
-
 
 
 
