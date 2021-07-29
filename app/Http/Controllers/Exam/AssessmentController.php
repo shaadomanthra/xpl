@@ -3773,6 +3773,266 @@ class AssessmentController extends Controller
                     ->with('active',1);
     }
 
+    public function actives3($id,Request $r){
+        $exam = Cache::get('test_'.$id,function() use($id){
+            return Exam::where('slug',$id)->first();
+        });
+
+        $search = trim($r->get('search'));
+
+        $users = array();
+        $userset = [];
+
+
+        $this->authorize('view', $exam);
+        //$fl = collect($files);
+
+        $user = \auth::user();
+
+        //dd($exam->settings);
+        if(!isset($exam->getOriginal('settings')->invigilation))
+            $exam_settings = json_decode($exam->getOriginal('settings'),true);
+        else
+            $exam_settings = json_decode(json_encode($exam->getOriginal('settings')),true);
+
+        $candidates = [];
+
+        if(isset($exam_settings['invigilation'])){
+            foreach($exam_settings['invigilation'] as $in=>$emails){
+                if($user->id==$in){
+                    $candidates = $emails;
+                }
+            }
+        }
+
+        if(request()->get('status')){
+            $paginatecount = 50;
+        }else{
+            $paginatecount = 18;
+        }
+
+
+        //dd($files);
+        //dd($candidates);
+
+        $data = [];
+        $data['total'] = $data['live'] = $data['completed']= $data['inactive'] =0;
+
+        $pg=[];
+        $chats = [];
+        $completed_list = [];
+
+        
+        if(count($candidates)){
+            if(request()->get('refresh')){
+                Cache::forget('candidates_'.$exam->slug.'_'.$user->username);
+            }
+            if(!$search)
+                $userset = Cache::remember('candidates_'.$exam->slug.'_'.$user->username,240, function() use($candidates) {
+                    return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+                });
+            else{
+                $userset = User::whereIn('username',[$search])->where('client_slug',subdomain())->get()->keyBy('username');
+            }
+
+            foreach($userset as $u=>$usr){
+                $users[$u] = 1;
+                $chats[$u] = 1;
+            }
+
+            //$usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
+            foreach($userset as $a=> $b){
+                $name = $b->username.'_log.json';
+                $pg[$b->username] = 'testlog/'.$exam->id.'/log/'.$name;
+            }
+
+
+            $tests_overall = [];//Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('user_id')->toArray())->with('user')->get();
+            $completed_list = [];//$this->updateCompleted($pg,$tests_overall,$exam);
+
+            $pg = $this->paginateAnswers($pg,count($pg));
+
+             foreach($pg as $usc=>$f){
+                $p = explode('/',$f);
+                $u = explode('.',$p[2]);
+
+                $content = [];
+                //echo $f."<br>";
+                if(1){
+
+                    $content = [];//json_decode(Storage::disk('s3')->get($f),true);
+                    //dd($content);
+                    $content['uname'] = $userset[$usc]->name;
+                    $content['username'] = $usc;
+                    $content['rollnumber'] = $userset[$usc]->roll_number;
+                    $content['completed'] = 0;
+                    $content['activity'] = null;
+                    $content['last_photo'] = null;
+                    $content['window_change'] = null;
+                    $content['window_swap'] = null;
+                    $content['last_updated'] = null;
+                    $content['last_seconds'] = null;
+                    $content['os_details'] = null;
+                    $content['browser_details'] = null;
+                    $content['js_details'] = null;
+                    $content['ip_details'] = null;
+
+                  
+                    $content['url'] = Storage::disk('s3')->url($f);
+
+                    $name = 'testlog/'.$exam->id.'/'.$usc.'.json';
+                    $content['url2'] = Storage::disk('s3')->url($name);
+
+                    $chaturl = 'testlog/'.$exam->id.'/chats/'.$usc.'.json';
+
+                    if(1){
+                        $chat_messages = [];//json_decode(Storage::disk('s3')->get($chaturl),true);
+                       
+                        $chats[$usc] = $chat_messages;
+                        $end = end($chats[$usc]);
+                        $chats[$usc]['last_message'] = $end['message'];
+                        $chats[$usc]['last_time'] = key($chats[$usc]);
+                        $chats[$usc]['last_user'] = $end['name'];
+
+                    }
+
+
+                    $content['selfie_url'] ='';
+                    $content['idcard_url'] ='';
+                    $content['approval'] ='';
+                    $content['chat'] ='';
+                    $content['chat_post'] ='';
+                    $content['approval_post'] = '';
+
+                    if(1){
+                            $selfie = $content['username'].'_'.$exam->id.'_selfie.jpg';
+                            $content['selfie_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$selfie);
+
+                            $idcard = $content['username'].'_'.$exam->id.'_idcard.jpg';
+                            $content['idcard_url'] = Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$idcard);
+
+                            $name = 'testlog/approvals/'.$exam->id.'/'.$content['username'].'.json';
+                            $content['approval'] = Storage::disk('s3')->url($name);
+
+                            $content['approval_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+
+                            $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
+                            $content['chat'] = Storage::disk('s3')->url($chatname);
+
+                            $chatname = 'testlog/'.$exam->id.'/chats/'.$content['username'].'.json';
+                            $content['chat_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$chatname]);
+
+                            //$name = 'testlog/approvals/'.$exam->id.'.json';
+                            //$content['approval_post'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+                    }
+
+
+                    $content['last_photo'] = '';
+                    // if(isset($content['last_photo'])){
+                    //     if(!$content['last_photo']){
+
+                    //     }else{
+                    //         $url_pieces = explode('_',$content['last_photo']);
+                    //         $name = explode('/', $url_pieces[0]);
+                    //         if(is_array($name))
+                    //             $name = $name[5];
+
+                    //         $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.$url_pieces[2];
+                    //         if(!Storage::disk('s3')->exists($filepath)){
+                    //             $counter = explode('.',$url_pieces[2]);
+                    //             $nm = intval($counter[0])-1;
+                    //             if(strlen($nm)==1)
+                    //                 $nm ="00".$nm;
+                    //             else if(strlen($nm)==2)
+                    //                 $nm ="0".$nm;
+
+
+                    //             $filepath =  $filepath = 'webcam/'.$exam->id.'/'.$name.'_'.$exam->id.'_'.($nm).'.jpg';
+                    //             $last_before_url = $url_pieces[0].'_'.$url_pieces[1].'_'.($nm).'.jpg';
+                    //             if(Storage::disk('s3')->exists($filepath)){
+                    //                 $content['last_photo'] = $last_before_url .'?time='.strtotime(now());
+                    //             }else{
+
+                    //             }
+                    //         }
+                    //     }
+                    // }else{
+                    //     $content['last_photo'] = '';
+                    // }
+                }
+
+                if(isset($content['completed'])){
+                    if(!$content['completed'])
+                    if(isset($completed_list[$content['username']]))
+                    if($completed_list[$content['username']]==1)
+                        $content['completed'] = 1;
+                }else{
+                    if(isset($content['username']))
+                    if(isset($completed_list[$content['username']]))
+                    if($completed_list[$content['username']]==1)
+                        $content['completed'] = 1;
+                }
+
+                if(isset($content['username']))
+                    $users[$content['username']] = $content;
+
+                if(!isset($content['username']) && isset($content['url'])){
+                    $url = $content['url'];
+                    $pc = explode('/',$url);
+                    $pc2 = explode('_',$pc[6]);
+
+
+                    if(isset($pc2[0]))
+                        $users[$pc2[0]] = $content;
+                }
+                //array_push($users, $content);
+            }
+
+         
+        }
+
+         if(count($users)==0 && $search){
+                return view('appl.exam.exam.nofile')
+                    ->with('exam',$exam)
+                    ->with('active',1)
+                    ->with('message','No user found');
+        }
+        else if(request()->get('status')==1){
+            return view('appl.exam.exam.status')
+                    ->with('data',$data)
+                    ->with('users',$users)
+                    ->with('pg',$pg)
+                    ->with('exam',$exam)
+                    ->with('userset',$userset)
+                    ->with('settings',$exam_settings)
+                    ->with('candidates',$candidates)
+                    ->with('proctor',1)
+                    ->with('active',1)
+                    ->with('chats',$chats);
+        }
+        else if(count($users))
+            return view('appl.exam.exam.actives3')
+                    ->with('data',$data)
+                    ->with('users',$users)
+                    ->with('pg',$pg)
+                    ->with('exam',$exam)
+                    ->with('userset',$userset)
+                    ->with('settings',$exam_settings)
+                    ->with('candidates',$candidates)
+                    ->with('proctor',1)
+                    ->with('active',1)
+                    ->with('chats',$chats);
+        else{
+                return view('appl.exam.exam.nofile')
+                        ->with('exam',$exam)
+                        ->with('active',1)
+                        ->with('message',"No data available yet. Atleast one candidate has to start the exam.");
+
+        }
+
+
+    }
+
     public function active($id,Request $r){
 
         $exam = Cache::get('test_'.$id,function() use($id){
@@ -3876,8 +4136,6 @@ class AssessmentController extends Controller
                         $chats[$usc]['last_user'] = $end['name'];
 
                     }
-
-
 
                     $content['selfie_url'] ='';
                     $content['idcard_url'] ='';

@@ -184,6 +184,8 @@ use Illuminate\Support\Facades\Storage;
 			->name('test.proctor')->middleware('auth');
 	Route::get('/test/{test}/active', 'Exam\AssessmentController@active')
 			->name('test.active')->middleware('auth');
+	Route::get('/test/{test}/actives3', 'Exam\AssessmentController@actives3')
+			->name('test.actives3')->middleware('auth');
 	Route::get('/test/{test}/status', 'Exam\AssessmentController@status')
 			->name('test.status')->middleware('auth');
 	Route::get('/test/{test}/snaps', 'Exam\AssessmentController@snaps')
