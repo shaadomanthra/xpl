@@ -27,10 +27,7 @@
 	<div class="">
 		<div class="p-3 border rounded bg-light mb-4">
 		<div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Report</b></div>
- 
 		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
-			
-			
 		</p>
 	</div>
 
