@@ -68,7 +68,7 @@
          <form class="w-100" method="GET" action="{{ route('test.actives3',$exam->slug) }}">
            <div class="form-group mt-2">
             <div class="input-icon">
-             <input type="text" class="form-control" name="search" placeholder="Search by rollnumber..."/>
+             <input type="text" class="form-control" name="search" placeholder="Search by name..." value="@if(Request()->get('search')) {{Request()->get('search')}} @endif"/>
              <span><i class="flaticon2-search-1 icon-md"></i></span>
             </div>
            </div>
@@ -191,7 +191,6 @@
               <img src="" class="w-100 image_refresh image_refresh_{{$a}}" data-url="{{$b['url']}}" data-url2="{{$b['url2']}}" data-username="{{$a}}" data-completed="{{$b['completed']}}">
             </div>
           
-
             @if($b['completed']!=1)
             <p class="mb-0 mt-3">
               <span class="text-success float-right completed_msg"></span>
@@ -225,22 +224,17 @@
 
     </div>
     @if($b['completed']!=1)
-    @if(isset($chats[$a]['last_message']))
-    @if(count($chats))
+ 
     <div class="bg-light p-3"><b><span class="text-primary student_name_{{$a}}">{{ $chats[$a]['last_user'] }} </span></b>
-        @if(isset($chats[$a]['last_time']))
-        <span class="time time_{{$a}} text-primary float-right">{{ date("h:i:s ",$chats[$a]['last_time'])  }}</span>
-        @endif
+   
+        <span class="time time_{{$a}} text-primary float-right"></span>
+   
 
 
-        @if(isset($chats[$a]['last_message']))
-        <p class="student_message student_message_{{$a}}">{{ $chats[$a]['last_message']}}</p> 
-        @else
-        <span class="student_message student_message_{{$a}}"> - </span> 
-        @endif
+        <span class="student_message student_message_{{$a}}">  </span> 
+     
     </div>
-    @endif
-    @endif
+ 
     @endif
   </div>
 </div>

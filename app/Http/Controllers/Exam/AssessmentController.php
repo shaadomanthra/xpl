@@ -3819,7 +3819,6 @@ class AssessmentController extends Controller
             $paginatecount = 18;
         }
 
-
         //dd($files);
         //dd($candidates);
 
@@ -3845,7 +3844,13 @@ class AssessmentController extends Controller
                 });
 
             }else{
-                $userset = User::whereIn('username',[$search])->where('client_slug',subdomain())->get()->keyBy('username');
+                $userset = User::where('name','like','%'.$search.'%')->whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
+                if(!count($userset))
+                     return view('appl.exam.exam.nofile')
+                        ->with('exam',$exam)
+                        ->with('active',1)
+                        ->with('message',"No search results...");
+                $usersetids = User::whereIn('username',[$search])->where('client_slug',subdomain())->get()->keyBy('id');
             }
 
             foreach($userset as $u=>$usr){
