@@ -3181,7 +3181,7 @@ class AssessmentController extends Controller
                     $item['accuracy'] = 1;
                 }
 
-                if($type=='sq' || $type=='urq' || $type=='csq'){
+                if($type=='sq' || $type=='urq' || $type=='csq' || $type=='aq'){
                     $code_ques_flag =1;
                     $item['status'] = 2;
                 }

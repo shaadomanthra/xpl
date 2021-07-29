@@ -67,6 +67,45 @@ $(document).ready(function(){
     }
 
 
+     if($('.passage').length){
+      var w  = screen.width;
+      var h  = screen.height - 350;
+
+      if(w>900){
+        $('.pcard').css('max-height',h+'px');
+      }
+      console.log(w);
+    }
+
+    $('.tcounter').on('keyup propertychange paste', function(){ 
+            var words = $(this).val().replace(/(\r\n|\n|\r)/g,"  ");
+            
+            var sno  =$(this).data('sno');
+  
+            // Initialize the word counter
+            var count = 0;
+  
+            // Split the words on each
+            // space character 
+            var split = words.split(' ');
+  
+            // Loop through the words and 
+            // increase the counter when 
+            // each split word is not empty
+            for (var i = 0; i < split.length; i++) {
+                if (split[i] != "") {
+                    count += 1;
+                }
+            }
+  
+            // Display it as output
+            $('#input_'+sno).html(count);
+    });
+    
+    
+      
+
+
     /* windowswap detection */
     function swapDetected() {
           var count = parseInt(document.getElementById("window_change").value) +1;
@@ -1094,7 +1133,7 @@ if (navigator.mediaDevices.getUserMedia) {
 
     $(document).on('click','.record-stop-btn',function(){
         $sno = $('.clear-qno').data('sno');
-        $(this).hide();
+        $( this).replaceWith( "<h4 class='text-success '><i class='fa fa-check-circle'></i> recording saved</h4>" );
         audio_stop($sno);
     });
 

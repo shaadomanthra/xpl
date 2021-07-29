@@ -612,8 +612,6 @@ div.chats {
         <p class="alert alert-info alert-important"><span class="">For the next 20 seconds you are required to turn your device in all directions to show the room, desk space and walls. This screening is validated by administrators for any potential cheating. </span></p>
        <div id="">
 
-    
-
     <video id="gum_1000" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="recorded" playsinline loop></video>
     <div class="recording text-danger " style="display: none">
