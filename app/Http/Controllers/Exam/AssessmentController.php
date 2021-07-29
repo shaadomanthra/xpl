@@ -3847,10 +3847,12 @@ class AssessmentController extends Controller
             }
 
 
-            $tests_overall = [];//Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('user_id')->toArray())->with('user')->get();
-            $completed_list = [];//$this->updateCompleted($pg,$tests_overall,$exam);
+            $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('id')->toArray())->with('user')->get();
+           
+            $completed_list = $this->updateCompleted($pg,$tests_overall,$exam);
 
             $pg = $this->paginateAnswers($pg,count($pg));
+
 
              foreach($pg as $usc=>$f){
                 $p = explode('/',$f);
@@ -3973,6 +3975,7 @@ class AssessmentController extends Controller
                         $content['completed'] = 1;
                 }
 
+
                 if(isset($content['username']))
                     $users[$content['username']] = $content;
 
@@ -3985,11 +3988,15 @@ class AssessmentController extends Controller
                     if(isset($pc2[0]))
                         $users[$pc2[0]] = $content;
                 }
+
+
                 //array_push($users, $content);
             }
 
+
          
         }
+
 
          if(count($users)==0 && $search){
                 return view('appl.exam.exam.nofile')
