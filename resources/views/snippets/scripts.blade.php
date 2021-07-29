@@ -621,8 +621,13 @@ function image_refresh(){
                     $('.window_change_'+$username).html(window_change);
                  }
 
-                 if(result.completed && !$completed)
+                 if(result.completed && !$completed){
+
                   $('.card_'+$username).removeClass('bg-light-danger').removeClass('bg-light-warning');
+                  if($('.completed_msg').length){
+                    $('.completed_msg').html('<b><i class="fa fa-check-circle text-success"></i> completed</b>');
+                  }
+                 }
                  else if(result.last_updated && !$completed){
                     $('.card_'+$username).data('last',result.last_updated);
                     $time = new Date().getTime() ;

@@ -177,11 +177,9 @@
         <div class="action_{{$a}} d-inline float-right dd_response_images" data-url="{{ route('assessment.response_images',$exam->slug)}}">
           </div>
               <h6 class="mb-3 d-inline"> 
-                 @if(isset($b['window_change']))
-                @if($b['window_change'])
+                 
                 <small><span class="badge badge-danger float-right window_change window_change_{{$a}}">{{$b['window_change']}}</span></small>
-                @endif
-                @endif
+               
                 @if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif<br>
                 <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
 
@@ -196,15 +194,9 @@
 
             @if($b['completed']!=1)
             <p class="mb-0 mt-3">
-              @if(isset($settings['chat']))
-              @if(strtolower($settings['chat'])=='yes')
-              @if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/chats/'.$a.'.json'))
-              @if(isset($b['uname']))
+              <span class="text-success float-right completed_msg"></span>
               <span class="mr-4"><i class="fa fa-comment-alt text-success  cursor message_student message_{{$a}}" data-urlpost="{{$b['chat_post']}}" data-username="{{$a}}" data-name="{{$b['uname']}}"data-url="{{$b['chat']}}" data-proctor="{{\auth::user()->name}}"  data-p="1" data-lastchat=""></i> <span class="badge badge-warning p-1 text-white chat_count chat-count_{{$a}} d-none"></span></span>
-              @endif
-              @endif
-              @endif
-              @endif
+             
               <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}" data-selfie_url="{{$b['selfie_url']}}" data-idcard_url="{{$b['idcard_url']}}"></i> 
                 @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$b['username'].'_'.$exam->id.'_video_1000.webm'))
                 <i class="fas fa-street-view text-primary mr-4 cursor camera360 " data-url=" {{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$b['username'].'_'.$exam->id.'_video_1000.webm')}}" ></i> 
