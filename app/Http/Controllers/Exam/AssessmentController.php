@@ -3846,7 +3846,7 @@ class AssessmentController extends Controller
             }
 
 
-            $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('user_id')->toArray())->with('user')->get();
+            $tests_overall = [];//Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('user_id')->toArray())->with('user')->get();
             $completed_list = $this->updateCompleted($pg,$tests_overall,$exam);
 
             $pg = $this->paginateAnswers($pg,count($pg));
@@ -3989,7 +3989,7 @@ class AssessmentController extends Controller
             }else{
                 $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
 
-                $tests_overall = Tests_Overall::where('test_id',$exam->id)->with('user')->get();
+                $tests_overall = [];//Tests_Overall::where('test_id',$exam->id)->with('user')->get();
 
 
                 $completed_count  = count($tests_overall);
