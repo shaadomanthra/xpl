@@ -335,7 +335,7 @@
 	  @else
 	  	<div class="card "  style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
 				<div class="card-body">
-				The test has coding questions which are submitted for evaluation. Kindly check back after 24 hours to know your result. <br>In case of any query, kindly contact the web administrator.
+				Your responses are recorded for internal evaluation.
 			</div>
 		</div>
 
