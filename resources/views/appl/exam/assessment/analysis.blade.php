@@ -27,10 +27,7 @@
 	<div class="">
 		<div class="p-3 border rounded bg-light mb-4">
 		<div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Report</b></div>
-  @if(isset($data['branches'][$student->branch_id]->name))
-		@if($student->branch_id)<span class="badge badge-danger">{{$data['branches'][$student->branch_id]->name}}</span>@endif
-      @if($student->college_id)<span class="badge badge-info">{{$data['colleges'][$student->college_id]->name}}</span><br>@endif
-  @endif
+ 
 		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
 			
 			
