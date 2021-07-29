@@ -1337,7 +1337,6 @@ class ExamController extends Controller
 
         $data['hr-managers'] = \auth::user()->getRole('hr-manager');
 
-         dd($data);
 
 
         $data['candidates'] = $candidates;
