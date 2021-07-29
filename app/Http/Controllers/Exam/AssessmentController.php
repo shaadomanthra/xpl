@@ -258,6 +258,9 @@ class AssessmentController extends Controller
 
         $user = \auth::user();
 
+        if($exam->client!=subdomain())
+            abort('404','Test not found');
+        
         $data['branches'] = Cache::get('branches');
        $data['colleges'] = Cache::get('colleges');
 
@@ -278,6 +281,8 @@ class AssessmentController extends Controller
         }
         $exam->time = $time;
 
+
+        
 
         if(!trim(strip_tags($exam->instructions)))
         {
@@ -466,6 +471,9 @@ class AssessmentController extends Controller
         }
 
         if(!$exam)
+            abort('404','Test not found');
+
+        if($exam->client!=subdomain())
             abort('404','Test not found');
 
         $user = \auth::user();
@@ -5235,6 +5243,8 @@ class AssessmentController extends Controller
             $responses = null;
 
 
+        if($exam->client!=subdomain())
+            abort('404','Test not found');
 
         if($exam->active){
             if(!$responses)
@@ -5242,6 +5252,7 @@ class AssessmentController extends Controller
         }else if($exam->status==0){
             abort(403,'Test is in draft state');
         }
+
 
 
         if($products){
