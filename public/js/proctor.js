@@ -26,11 +26,11 @@ $(function(){
                 type: "GET",
                 url: $url
             }).done(function (result) {
-            	console.log(result);
+            	//console.log(result);
             	var username = result.username;
             	var link = $('.link_snaps').data('url');
                 var link_upl = $('.dd_response_images').data('url');
-                console.log(link_upl);
+               // console.log(link_upl);
                 $('.timeline').html('');
                 $('.log_name').html(result.uname);
                 $('.log_rollnumber').html(result.rollnumber);

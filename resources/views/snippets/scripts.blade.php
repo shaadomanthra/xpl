@@ -523,7 +523,7 @@ function chat_refresh(){
                       
                         
 
-                      console.log($lastestchat+' - '+$lastchat+' - '+ordered[k].username);
+                      //console.log($lastestchat+' - '+$lastchat+' - '+ordered[k].username);
                      
                       if(!$lastchat){
                         $('.message_'+ordered[k].username).data('lastchat',k);
@@ -612,6 +612,7 @@ function image_refresh(){
                  $username = result.username;
                  
                  $completed = $('.image_refresh_'+$username).data('completed');
+                
 
                  if($username){
                      $('.image_refresh_'+$username).attr('src',last_photo);
@@ -624,9 +625,7 @@ function image_refresh(){
                  if(result.completed && !$completed){
 
                   $('.card_'+$username).removeClass('bg-light-danger').removeClass('bg-light-warning');
-                  if($('.completed_msg').length){
-                    $('.completed_msg').html('<b><i class="fa fa-check-circle text-success"></i> completed</b>');
-                  }
+
                  }
                  else if(result.last_updated && !$completed){
                     $('.card_'+$username).data('last',result.last_updated);
@@ -638,6 +637,14 @@ function image_refresh(){
                     else
                       $('.card_'+$username).addClass('bg-light-warning').removeClass('bg-light-danger');
                     }
+                 }else{
+
+                 }
+
+                 if(result.completed){
+                  if($('.completed_msg').length){
+                    $('.completed_msg').html('<b><i class="fa fa-check-circle text-success"></i> completed</b>');
+                  }
                  }
                   
 
@@ -656,6 +663,7 @@ function image_refresh(){
   }
 }
 
+image_refresh();
 if($('.proctoring').data('active')=='0')
   setInterval(image_refresh,3000);
 
