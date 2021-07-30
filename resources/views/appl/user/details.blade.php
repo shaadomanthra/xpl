@@ -166,6 +166,21 @@
                         <option value="Warangal (urban)" @if($user->hometown=='Warangal (urban)') selected @endif>Warangal (urban)</option>
                         <option value="Warangal (rural)" @if($user->hometown=='Warangal (rural)') selected @endif>Warangal (rural)</option>
                         <option value="Yadadri Bhuvanagiri" @if($user->hometown=='Yadadri Bhuvanagiri') selected @endif>Yadadri Bhuvanagiri</option>
+
+                        <option value="Anantapur" @if($user->hometown=='Anantapur') selected @endif>Anantapur</option>
+                        <option value="Chittoor" @if($user->hometown=='Chittoor') selected @endif>Chittoor</option>
+                        <option value="East Godavari" @if($user->hometown=='East Godavari') selected @endif>East Godavari</option>
+                        <option value="Guntur" @if($user->hometown=='Guntur') selected @endif>Guntur</option>
+                        <option value="Krishna" @if($user->hometown=='Krishna') selected @endif>Krishna</option>
+                        <option value="Kurnool" @if($user->hometown=='Kurnool') selected @endif>Kurnool</option>
+                        <option value="Prakasam" @if($user->hometown=='Prakasam') selected @endif>Prakasam</option>
+                        <option value="Srikakulam" @if($user->hometown=='Srikakulam') selected @endif>Srikakulam</option>
+                        <option value="Sri Potti Sriramulu Nellore" @if($user->hometown=='Sri Potti Sriramulu Nellore') selected @endif>Sri Potti Sriramulu Nellore</option>
+                        <option value="Visakhapatnam" @if($user->hometown=='Visakhapatnam') selected @endif>Visakhapatnam</option>
+                        <option value="Vizianagaram" @if($user->hometown=='Vizianagaram') selected @endif>Vizianagaram</option>
+                        <option value="West Godavari" @if($user->hometown=='West Godavari') selected @endif>West Godavari</option>
+                        <option value="YSR District, Kadapa" @if($user->hometown=='YSR District, Kadapa') selected @endif>YSR District, Kadapa</option>
+
                         <option value="OTHER" @if($user->hometown=='OTHER') selected @endif>Other</option>
                     </select>
    
