@@ -225,7 +225,7 @@
     </div>
     @if($b['completed']!=1)
  
-    @if(isset($a))
+    @if(isset($chats[$a]['last_user']))
     <div class="bg-light p-3"><b><span class="text-primary student_name_{{$a}}">{{ $chats[$a]['last_user'] }} </span></b>
    
         <span class="time time_{{$a}} text-primary float-right"></span>
