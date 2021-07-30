@@ -258,6 +258,7 @@ class AssessmentController extends Controller
 
         $user = \auth::user();
 
+        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley')
         if($exam->client!=subdomain())
             abort('404','Test not found');
 
@@ -473,6 +474,7 @@ class AssessmentController extends Controller
         if(!$exam)
             abort('404','Test not found');
 
+        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley')
         if($exam->client!=subdomain())
             abort('404','Test not found');
 
@@ -5268,7 +5270,7 @@ class AssessmentController extends Controller
         else
             $responses = null;
 
-
+        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley')
         if($exam->client!=subdomain())
             abort('404','Test not found');
 
