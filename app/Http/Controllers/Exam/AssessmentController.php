@@ -4839,11 +4839,12 @@ class AssessmentController extends Controller
             foreach($userset as $ux=>$sx){
                 $file = 'testlog/approvals/'.$exam->id.'/'.$ux.'.json';
                 //$urls[$ux] = Storage::disk('s3')->url($file);
-                 $json[$ux] = Cache::get('approval_'.$ux);
+                 $json[$ux] = Cache::get('approvals_'.$ux);
                  if(!$json[$ux])
                 if(Storage::disk('s3')->exists($file)){
                     $jx = $json[$ux] = json_decode(Storage::disk('s3')->get($file),true);
-                    Cache::remember('approval_'.$ux,240,function() use($jx){
+                    if($json[$ux]['approved']==1)
+                    Cache::remember('approvals_'.$ux,240,function() use($jx){
                         return $jx;
                     });
                 }else{
