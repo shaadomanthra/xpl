@@ -95,7 +95,7 @@
 @if(request()->session()->get('settings'))
 @if(request()->session()->get('settings')->message_d)
 <div class="alert alert-warning alert-important mt-3  ">
-  <div class=" h5 mt-2">{{request()->session()->get('settings')->message_d}}</div>
+  <div class=" h5 mt-2">{!! request()->session()->get('settings')->message_d !!}</div>
   @if(request()->session()->get('settings')->timer_d)
   <p id="d" class="my-2 text-danger blink countdown_timer" data-timer="{{request()->session()->get('settings')->timer_d}}"></p>
   @endif

@@ -113,6 +113,34 @@ class UserController extends Controller
        
     }
 
+
+    public function details(Request $request)
+    {
+        $user = \auth::user();
+         if($request->get('update')){
+            $user->phone = $request->get('phone');
+            $user->name= $request->get('name');
+        $user->roll_number = $request->get('roll_number');
+        $user->hometown = $request->get('hometown');
+        $user->current_city = $request->get('current_city');
+        $user->dob = $request->get('dob');
+        $user->gender = $request->get('gender');
+        $user->video = $request->get('video');
+        $user->personality = $request->get('personality');
+        $user->confidence = $request->get('confidence');
+        $user->fluency = $request->get('fluency');
+        $user->language = $request->get('language');
+        $user->save();
+        Cache::forget('id-' . $user->id);
+        Cache::forget('user_'.$user->id);
+
+        flash('Details Successfully updated')->success();
+        return redirect()->route('profile.details');
+
+        }
+        return view('appl.user.details')->with('user',$user);
+    }
+
     public function resume(Request $request)
     {
          if($request->get('delete')){
