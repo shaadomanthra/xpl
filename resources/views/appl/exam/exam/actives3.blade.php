@@ -190,7 +190,7 @@
             <div class="selfie_container mt-4">
               <img src="" class="w-100 image_refresh image_refresh_{{$a}}" data-url="{{$b['url']}}" data-url2="{{$b['url2']}}" data-username="{{$a}}" data-completed="{{$b['completed']}}">
             </div>
-          
+
             @if($b['completed']!=1)
             <p class="mb-0 mt-3">
               <span class="text-success float-right completed_msg"></span>
@@ -225,6 +225,7 @@
     </div>
     @if($b['completed']!=1)
  
+    @if(isset($a))
     <div class="bg-light p-3"><b><span class="text-primary student_name_{{$a}}">{{ $chats[$a]['last_user'] }} </span></b>
    
         <span class="time time_{{$a}} text-primary float-right"></span>
@@ -234,7 +235,7 @@
         <span class="student_message student_message_{{$a}}">  </span> 
      
     </div>
- 
+    @endif
     @endif
   </div>
 </div>
