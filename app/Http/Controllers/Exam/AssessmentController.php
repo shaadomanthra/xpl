@@ -4046,6 +4046,7 @@ class AssessmentController extends Controller
                 $tests_overall = Tests_Overall::where('test_id',$exam->id)->with('user')->get();
 
 
+
                 $completed_count  = count($tests_overall);
                 $sessions_count = count($files);
 
@@ -4168,6 +4169,8 @@ class AssessmentController extends Controller
                 $content['url2'] = Storage::disk('s3')->url($name);
 
                 $content['uname'] = 'candidate';//$userset[$usc]->name;
+
+                
                     $content['username'] = $usc;
                     $content['rollnumber'] = null;//$userset[$usc]->roll_number;
                     $content['completed'] = 0;

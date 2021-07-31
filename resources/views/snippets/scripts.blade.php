@@ -617,9 +617,10 @@ function image_refresh($i=null){
                 var u2 = (result.uname).split(' ').join('');
                 
                 if($i){
-                    $('.uname').html(result.uname);
+                    $('.uname_'+$username).html(result.uname);
                 }
                  
+
                  if($username){
                      $('.image_refresh_'+$username).attr('src',last_photo);
                  if(window_change){
