@@ -402,8 +402,7 @@ $(document).ready(function(){
             $('.ip_details').html('192.168.0.1');
           if($('.ip_details').text()=='192.168.0.1')
              $('.start_btn').removeClass('disabled');
-
-          },6000);
+          },4000);
       }
      }
 
