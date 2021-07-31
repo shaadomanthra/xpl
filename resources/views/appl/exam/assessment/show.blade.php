@@ -46,6 +46,18 @@
 				{!! $exam->description  !!}
 				</p>
 
+				@if(\auth::user())
+				@if(!\auth::user()->hometown)
+				@if(subdomain()=='exam' || subdomain()=='devshala')
+				<div class="bg-light border p-3 my-3 rounded">
+						<h3>My Details <span class="badge badge-success">Mandatory</span></h3>
+						<b class="text-primary">Your details are incomplete, kindly update your profile before attempting the test</b>
+						<a href="{{ route('profile.details')}}" class="btn btn-dark mt-3"> Update Profile  Now</a>
+				</div>
+				@endif
+				@endif
+				@endif
+
 				@include('appl.exam.assessment.blocks.camera')
 
 				@if($entry)

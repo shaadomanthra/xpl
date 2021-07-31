@@ -664,6 +664,7 @@ class ExamController extends Controller
         }
         
 
+
         $filepath = 'pdfuploads/'.$exam->slug.'/'.$exam->slug.'_'.$user->username.'.pdf';
 
         $file = 0;
@@ -680,6 +681,7 @@ class ExamController extends Controller
             return view('appl.exam.exam.pdfupload')
                     ->with('file',$file)
                     ->with('url',$url)
+                    ->with('user',$user)
                     ->with('ismob',$isMob)
                     ->with('exam',$exam);
         else

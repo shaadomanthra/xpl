@@ -9,7 +9,7 @@
 
 <h1 class="url" > Upload Answersheet PDF </h1>
 <h4>Exam Name: <br class="d-block d-md-none"><span class="text-primary">{{$exam->name}}</span></h4>
-<h4>Candidate Name: <br class="d-block d-md-none"><span class="text-primary">{{\auth::user()->name}}</span></h4>
+<h4>Candidate Name: <br class="d-block d-md-none"><span class="text-primary">{{$user->name}}</span></h4>
 
 <div class="border bg-light p-3 mt-4 rounded">
 <form id="uploadForm" method='post' enctype="multipart/form-data">
@@ -27,7 +27,7 @@
 	<h1 class="mb-1"> My Answersheet PDF </h1>
 	<p class="mb-4"><a href="/dashboard"><i class="fa fa-angle-double-left"></i> back to dashboard</a></p>
 <h4>Exam Name: <br class="d-block d-md-none"><span class="text-primary">{{$exam->name}}</span></h4>
-<h4>Candidate Name: <br class="d-block d-md-none"><span class="text-primary">{{\auth::user()->name}}</span></h4>
+<h4>Candidate Name: <br class="d-block d-md-none"><span class="text-primary">{{$user->name}}</span></h4>
 	<h4 class="mt-4 text-success"><i class="fa fa-check-circle"></i> PDF File uploaded</h4>
 	<object
         data='{{$file}}'
