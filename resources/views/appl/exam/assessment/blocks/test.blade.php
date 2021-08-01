@@ -581,7 +581,7 @@ div.chats {
     
     <p><div class="spinner-border spinner-border-sm cam_spinner " role="status">
   <span class="sr-only">Loading...</span>
-</div> @if($exam->camera) <span class="cam_message">checking for webcam access ...</span> @endif</p>
+</div> @if($exam->camera) <span class="cam_message">checking for webcam access ...</span> <span class="cam_message2 mt-1"></span> @endif</p>
 
 
 

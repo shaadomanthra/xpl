@@ -381,28 +381,33 @@ $(document).ready(function(){
 
 
       if($('.ip_details').length){
-         $.getJSON("https://api.ipify.org?format=json",
-                                            function(data) {
-          $('.ip_details').html(data.ip);
-          setTimeout(function(){
-            if(!camera){
-              if(!$('#d').length){
-                $('.start_btn').removeClass('disabled');
-              }
-            }
+        //  $.getJSON("https://api.ipify.org?format=json",
+        //                                     function(data) {
+        //   $('.ip_details').html(data.ip);
+        //   setTimeout(function(){
+        //     if(!camera){
+        //       if(!$('#d').length){
+        //         $('.start_btn').removeClass('disabled');
+        //       }
+        //     }
 
-         $('.cam_spinner').hide();
-          },1000);
+        //  $('.cam_spinner').hide();
+        //   },1000);
 
 
-        });
+        // });
 
         setTimeout(function(){
-          if(!$('.ip_details').text())
-            $('.ip_details').html('192.168.0.1');
-          if($('.ip_details').text()=='192.168.0.1')
-             $('.start_btn').removeClass('disabled');
-          },4000);
+            if(!camera){
+              console.log('logging 4000 '+$('.ip_details').text());
+              if(!$('.ip_details').text())
+                $('.ip_details').html('192.168.0.1');
+              if(($('.ip_details').text()).trim()=='192.168.0.1'){
+                $('.cam_spinner').hide();
+                 $('.start_btn').removeClass('disabled');
+              }
+            }
+          },3000);
       }
      }
 
@@ -1388,8 +1393,14 @@ $(document).ready(function(){
         $('.qblock_'+$sno).show();
         update_sno($sno);
         scroll($sno);
-        if(parseInt($('.save_test').val()))
-          saveTest($sno);
+        
+          if(parseInt($('.save_test').val())){
+            setTimeout(function(){
+            saveTest($sno);
+             },1000);
+          }
+       
+        
     }
     function update_sno($sno){
 

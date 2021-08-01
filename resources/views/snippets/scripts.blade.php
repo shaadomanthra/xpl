@@ -3238,6 +3238,7 @@ $(function(){
                $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
               
           console.log(e);
+          $('.cam_message2').html('<div class="text-primary"><i class="fa fa-times-circle"></i> Camera Issue: '+e+'</div>');
       });
     }
     catch(err) {
