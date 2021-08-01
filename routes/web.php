@@ -841,6 +841,9 @@ use Illuminate\Support\Facades\Storage;
         }
 	})->name('page');
 
+	Route::get('user/mydetails', 'User\UserController@mydetails')->name('profile.mydetails')->middleware('auth');
+	Route::post('user/mydetails', 'User\UserController@mydetails')->name('profile.mydetails')->middleware('auth');
+
 	Route::get('user/details', 'User\UserController@details')->name('profile.details')->middleware('auth');
 	Route::post('user/details', 'User\UserController@details')->name('profile.details')->middleware('auth');
     Route::get('user/{username}', 'User\UserController@index')->name('profile');

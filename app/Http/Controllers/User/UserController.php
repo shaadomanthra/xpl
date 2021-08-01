@@ -114,6 +114,26 @@ class UserController extends Controller
     }
 
 
+    public function mydetails(Request $request)
+    {
+        $user = \auth::user();
+         if($request->get('update')){
+            $user->phone = $request->get('phone');
+            $user->name= $request->get('name');
+        $user->roll_number = $request->get('roll_number');
+        $user->info = $request->get('info');
+        $user->save();
+        Cache::forget('id-' . $user->id);
+        Cache::forget('user_'.$user->id);
+
+        flash('Details Successfully updated')->success();
+        return redirect()->route('profile.mydetails');
+
+        }
+        return view('appl.user.mydetails')->with('user',$user);
+    }
+
+
     public function details(Request $request)
     {
         $user = \auth::user();
