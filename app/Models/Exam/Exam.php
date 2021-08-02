@@ -623,6 +623,7 @@ $count =0;
     }
 
     public function audio($user,$final=null){
+      ini_set('max_execution_time', '600');
         $exam  = $this;
         $user_id = $user->id;
         
@@ -704,6 +705,7 @@ $count =0;
               $t->comment = json_encode($output);
 
 
+
              
               $t->save();
 
@@ -737,6 +739,8 @@ $count =0;
               $t->comment = json_encode($output['score']['outcomeScores']);
               $t->save();
               $tests[$s] = $t;
+
+              dd($output);
 
           }
 
