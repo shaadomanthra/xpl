@@ -833,23 +833,32 @@ $count =0;
             $response = $t->response;
             // create curl resource
 
+
              $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
 
+             
               
               if(isset($output['score']['generalScore']))
-                $score = $output['score']['generalScore'];
+                $score = intval($output['score']['generalScore']);
               else
                 $score = 10;
 
               if(str_word_count($response)>50){
-                $t->accuracy =1;
+                if($score==-1){
+                  $t->accuracy =1;
+                  $t->mark= round($questions[$t->question_id]->mark/100 * 30,2);
+                }else{
+                  $t->accuracy =1;
                 $t->mark= round($questions[$t->question_id]->mark/100 * $score,2);
+                }
+                
               }
               else{
                 $t->accuracy =0;
                 $t->mark = 0;
               }
               
+
               $t->status =1;
               if(isset($output['score']['outcomeScores']))
               $t->comment = json_encode($output['score']['outcomeScores']);
