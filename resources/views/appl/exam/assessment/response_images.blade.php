@@ -198,6 +198,21 @@
           -
           @endif
 
+        @elseif($question->type=='sq')
+          <span class="badge badge-primary h4">SQ</span>
+
+           <hr>
+          <h3>User Response</h3>
+          @if(isset($resp[$question->id]['response']))
+          @if(trim($resp[$question->id]['response'])!='')
+          <div class=""><div class="pt-1 d-inline "> {!!$resp[$question->id]['response'] !!}</div></div>
+          @else
+          - 
+          @endif
+          @else
+          -
+          @endif
+
         @elseif($question->type=='fillup')
           <span class="badge badge-primary h4">Fillup</span>
 
@@ -238,7 +253,7 @@
           <h3>User Response</h3>
           @if(isset($resp[$question->id]['response']))
           @if(trim($resp[$question->id]['response'])!='')
-          <div class=""><div class="pt-1 d-inline "> {!!$resp[$question->id]['response'] !!}</div></div>
+          <div class=""><div class="pt-1 d-inline "> {!!$resp[$question->id]['response']!!}</div></div>
           @else
           - 
           @endif

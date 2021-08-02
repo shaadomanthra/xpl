@@ -1628,6 +1628,7 @@ class AssessmentController extends Controller
                     ->with('questions',$questions)
                     ->with('sketch',1)
                     ->with('exam',$exam)
+                    ->with('mathjax',1)
                     ->with('images_count',$images_count)
                     ->with('resp',$resp)
                     ->with('images',$images);
@@ -4170,7 +4171,7 @@ class AssessmentController extends Controller
 
                 $content['uname'] = 'candidate';//$userset[$usc]->name;
 
-                
+
                     $content['username'] = $usc;
                     $content['rollnumber'] = null;//$userset[$usc]->roll_number;
                     $content['completed'] = 0;
