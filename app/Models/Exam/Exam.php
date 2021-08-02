@@ -667,7 +667,8 @@ $count =0;
           {
              $filename = $name_prefix.'audio_'.$t->question_id.'.wav';
             
-            if(!$t->comment){
+            if(!$t->comment || trim($t->comment)=='null'){
+        
               $url = Storage::disk('s3')->url($filename);
              $text = urlencode(strip_tags(trim(str_replace('Read aloud the below passage and record it, note that you can record only once.','',$questions[$t->question_id]->question))));
             // create curl resource
@@ -675,9 +676,11 @@ $count =0;
              //dd($curl);
               $output = json_decode($this->curlPost($curl),true);
             }else{
+          
               return 1;
             }
              
+           
         
               $t->accuracy =0;
               $t->mark = 0;
@@ -829,7 +832,7 @@ $count =0;
             $response = $t->response;
             // create curl resource
 
-             if(!$t->comment){
+             if(!$t->comment || trim($t->comment)=='null'){
               $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
 
              }else{
