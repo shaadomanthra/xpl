@@ -657,8 +657,6 @@ $count =0;
             {
               if($q->type=='aq')
                 $questions[$q->id] = $q;
-              if($q->type=='sq')
-                $questions2[$q->id] = $q;
              
             }
         }
@@ -712,35 +710,7 @@ $count =0;
               $tests[$s] = $t;
           }
 
-          if(array_key_exists($t->question_id, $questions2))
-          {
-            $response = $t->response;
-            // create curl resource
-
-              $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
-
-             
-              if(isset($output['score']['generalScore']))
-                $score = $output['score']['generalScore'];
-              else
-                $score = 10;
-
-              if(str_word_count($response)>50){
-                $t->accuracy =1;
-                $t->mark= round($questions2[$t->question_id]->mark/100 * $score,2);
-              }
-              else{
-                $t->accuracy =0;
-                $t->mark = 0;
-              }
-              
-              $t->status =1;
-              if(isset($output['score']['outcomeScores']))
-              $t->comment = json_encode($output['score']['outcomeScores']);
-              $t->save();
-              $tests[$s] = $t;
-
-          }
+          
 
         }
 
@@ -784,12 +754,12 @@ $count =0;
                 }else{
                   $mark = $q->mark;
                   $stm = $stm + $mark;
-                  if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
-                    if($e->mark!=$mark){
-                      $e->mark = $mark;
-                      $flag=1;
-                    }
-                  }
+                  // if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
+                  //   if($e->mark!=$mark){
+                  //     $e->mark = $mark;
+                  //     $flag=1;
+                  //   }
+                  // }
 
                   $stotal = $stotal + $e->mark;
 
@@ -856,18 +826,15 @@ $count =0;
         }
 
 
+
         foreach($tests as $s=>$t){
           if(array_key_exists($t->question_id, $questions))
           {
             $response = $t->response;
             // create curl resource
 
-             if(!$t->comment || trim($t->comment)=='null'){
-              $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
+             $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
 
-             }else{
-              return 1;
-             }
               
               if(isset($output['score']['generalScore']))
                 $score = $output['score']['generalScore'];
@@ -893,6 +860,7 @@ $count =0;
 
           }
         }
+
 
         $qcount =0;
         $ototal = 0;
@@ -934,20 +902,23 @@ $count =0;
                 }else{
                   $mark = $q->mark;
                   $stm = $stm + $mark;
-                  if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
-                    if($e->mark!=$mark){
-                      $e->mark = $mark;
-                      $flag=1;
-                    }
-                  }
+                  // if(array_key_exists($q->id, $questions)){
+
+                  // }
+                  // if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
+                  //   if($e->mark!=$mark){
+                  //     $e->mark = $mark;
+                  //     $flag=1;
+                  //   }
+                  // }
 
                   $stotal = $stotal + $e->mark;
 
                 }
 
-                if($flag){
-                  $e->save();
-                }
+                // if($flag){
+                //   $e->save();
+                // }
             }
 
             $sitem->score = $stotal;
