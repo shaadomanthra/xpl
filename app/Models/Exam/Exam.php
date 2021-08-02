@@ -648,6 +648,7 @@ $count =0;
         $toverall = Tests_Overall::where('user_id',$user_id)->where('test_id',$exam->id)->first();
 
         $questions = [];
+        $questions2= [];
         foreach($exam->sections as $section){
             //$qset = $section->questions;
             $qset = $exam->getQuestionsSection($section->id,$user->id);
@@ -655,6 +656,8 @@ $count =0;
             {
               if($q->type=='aq')
                 $questions[$q->id] = $q;
+              if($q->type=='sq')
+                $questions2[$q->id] = $q;
              
             }
         }
@@ -680,6 +683,14 @@ $count =0;
               return 1;
             }
              
+             if(request()->get('compulsory')){
+              $url = Storage::disk('s3')->url($filename);
+               $text = urlencode(strip_tags(trim(str_replace('Read aloud the below passage and record it, note that you can record only once.','',$questions[$t->question_id]->question))));
+              // create curl resource
+               $curl = 'https://speech.p24.in/?file='.$url.'&text='.$text;
+               //dd($curl);
+                $output = json_decode($this->curlPost($curl),true);
+             }
            
         
               $t->accuracy =0;
@@ -687,10 +698,11 @@ $count =0;
               if(isset($output['fluency']))
                 $score = $output['fluency'];
               else
-                $score = 10;
+                $score = 0;
 
               if($output=="0"  || $output=='-1')
               {
+                
                 $output = ['accuracy'=>0,'completeness'=>0,'fluency'=>0];
 
               }else{
@@ -709,9 +721,46 @@ $count =0;
               $t->save();
 
               $tests[$s] = $t;
+          }
 
+          if(array_key_exists($t->question_id, $questions2))
+          {
+            $response = $t->response;
+            // create curl resource
+
+             if(!$t->comment || trim($t->comment)=='null'){
+              $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
+
+             }else{
+              return 1;
+             }
+
+             if(request()->get('compulsory')){
+              $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
+             }
+              
+              if(isset($output['score']['generalScore']))
+                $score = $output['score']['generalScore'];
+              else
+                $score = 10;
+
+              if(str_word_count($response)>50){
+                $t->accuracy =1;
+                $t->mark= round($questions[$t->question_id]->mark/100 * $score,2);
+              }
+              else{
+                $t->accuracy =0;
+                $t->mark = 0;
+              }
+              
+              $t->status =1;
+              if(isset($output['score']['outcomeScores']))
+              $t->comment = json_encode($output['score']['outcomeScores']);
+              $t->save();
+              $tests[$s] = $t;
 
           }
+
         }
 
         $qcount =0;
