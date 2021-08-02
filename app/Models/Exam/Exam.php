@@ -727,7 +727,7 @@ $count =0;
 
               if(str_word_count($response)>50){
                 $t->accuracy =1;
-                $t->mark= round($questions[$t->question_id]->mark/100 * $score,2);
+                $t->mark= round($questions2[$t->question_id]->mark/100 * $score,2);
               }
               else{
                 $t->accuracy =0;
@@ -739,8 +739,6 @@ $count =0;
               $t->comment = json_encode($output['score']['outcomeScores']);
               $t->save();
               $tests[$s] = $t;
-
-              dd($output);
 
           }
 
