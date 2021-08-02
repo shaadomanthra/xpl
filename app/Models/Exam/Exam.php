@@ -669,11 +669,12 @@ $count =0;
             
             
              $url = Storage::disk('s3')->url($filename);
-             $text = trim(str_replace('Read aloud the below passage and record it, note that you can record only once.','',$questions[$t->question_id]->question));
+             $text = urlencode(strip_tags(trim(str_replace('Read aloud the below passage and record it, note that you can record only once.','',$questions[$t->question_id]->question))));
             // create curl resource
              $curl = 'https://speech.p24.in/?file='.$url.'&text='.$text;
              //dd($curl);
               $output = json_decode($this->curlPost($curl),true);
+        
               $t->accuracy =0;
               $t->mark = 0;
               if(isset($output['fluency']))
@@ -695,6 +696,7 @@ $count =0;
               $t->status =1;
               if(isset($output))
               $t->comment = json_encode($output);
+
 
              
               $t->save();

@@ -1573,9 +1573,18 @@ class ExamController extends Controller
         if($r->get('writing')){
             $rep =  Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
             foreach($rep as $rx){
-                writing::dispatch($rx->user,$exam);
+                writing::dispatch($rx->user,$exam,'writing');
             }
             flash('Wrting Evaluation is queued! Will be completed in sometime!')->success();
+            return redirect()->back();
+        }
+
+        if($r->get('audio')){
+            $rep =  Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
+            foreach($rep as $rx){
+                writing::dispatch($rx->user,$exam,'audio');
+            }
+            flash('Audio Evaluation is queued! Will be completed in sometime!')->success();
             return redirect()->back();
         }
 
