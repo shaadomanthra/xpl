@@ -670,27 +670,14 @@ $count =0;
           {
              $filename = $name_prefix.'audio_'.$t->question_id.'.wav';
             
-            if(!$t->comment || trim($t->comment)=='null'){
-        
-              $url = Storage::disk('s3')->url($filename);
+            $url = Storage::disk('s3')->url($filename);
              $text = urlencode(strip_tags(trim(str_replace('Read aloud the below passage and record it, note that you can record only once.','',$questions[$t->question_id]->question))));
             // create curl resource
              $curl = 'https://speech.p24.in/?file='.$url.'&text='.$text;
              //dd($curl);
               $output = json_decode($this->curlPost($curl),true);
-            }else{
-          
-              return 1;
-            }
              
-             if(request()->get('compulsory')){
-              $url = Storage::disk('s3')->url($filename);
-               $text = urlencode(strip_tags(trim(str_replace('Read aloud the below passage and record it, note that you can record only once.','',$questions[$t->question_id]->question))));
-              // create curl resource
-               $curl = 'https://speech.p24.in/?file='.$url.'&text='.$text;
-               //dd($curl);
-                $output = json_decode($this->curlPost($curl),true);
-             }
+            
            
         
               $t->accuracy =0;
@@ -702,7 +689,7 @@ $count =0;
 
               if($output=="0"  || $output=='-1')
               {
-                
+
                 $output = ['accuracy'=>0,'completeness'=>0,'fluency'=>0];
 
               }else{
@@ -728,17 +715,9 @@ $count =0;
             $response = $t->response;
             // create curl resource
 
-             if(!$t->comment || trim($t->comment)=='null'){
               $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
 
-             }else{
-              return 1;
-             }
-
-             if(request()->get('compulsory')){
-              $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
-             }
-              
+             
               if(isset($output['score']['generalScore']))
                 $score = $output['score']['generalScore'];
               else
