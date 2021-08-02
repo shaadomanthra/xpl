@@ -17,8 +17,8 @@ class writing implements ShouldQueue
     public $user;
     public $exam;
     public $type;
-    public $tries = 5;
-    public $timeout = 120;
+    public $tries = 3;
+    public $timeout = 300;
     /**
      * Create a new job instance.
      *
