@@ -452,26 +452,43 @@ pre, code {
         @endif
 
 
-         @if($questions[$t->question_id]->type=='aq')
+        @if($questions[$t->question_id]->type=='aq')
         @if($d=json_decode($t->comment))
-        
         <div class="row" >
             <div class="col-6 col-md-4">
               <div class="p-3 bg-light rounded my-3 border" >
                 <h5>Accuracy</h5>
+                @if(isset($d->Accuracy))
                 <div class="display-3">{{$d->Accuracy}}</div>
+                @elseif(isset($d->accuracy))
+                <div class="display-3">{{$d->accuracy}}</div>
+                @else
+                <div class="display-3">-</div>
+                @endif
               </div>
             </div>
             <div class="col-6 col-md-4">
               <div class="p-3 bg-light rounded my-3 border">
                 <h5>Fluency</h5>
+                @if(isset($d->Fluency))
                 <div class="display-3">{{$d->Fluency}}</div>
+                @elseif(isset($d->fluency))
+                <div class="display-3">{{$d->fluency}}</div>
+                @else
+                <div class="display-3">-</div>
+                @endif
               </div>
             </div>
             <div class="col-6 col-md-4">
               <div class="p-3 bg-light rounded my-3 border">
                 <h5>Completeness</h5>
+                @if(isset($d->Completeness))
                 <div class="display-3">{{$d->Completeness}}</div>
+                @elseif(isset($d->completeness))
+                <div class="display-3">{{$d->completeness}}</div>
+                @else
+                <div class="display-3">-</div>
+                @endif
               </div>
             </div>
            

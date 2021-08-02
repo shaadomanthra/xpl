@@ -1619,10 +1619,6 @@ class AssessmentController extends Controller
 
         }
 
-       
-
-
-
         return view('appl.exam.assessment.response_images')
                     ->with('student',$student)
                     ->with('questions',$questions)
@@ -1723,6 +1719,10 @@ class AssessmentController extends Controller
         //writing correction
         if(request()->get('writing')){
             $exam->grammarly($student);
+        }
+
+        if(request()->get('audio')){
+            $exam->audio($student);
         }
 
         if(Storage::disk('s3')->exists('webcam/json/'.$student->username.'_'.$exam->id.'.json')){
