@@ -9,6 +9,7 @@ use PacketPrep\Models\User\User_Details;
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\Product\Client;
+use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
@@ -601,6 +602,22 @@ class UserController extends Controller
                     if(isset($data[$i]['password']))
                     if($data[$i]['password'])
                     $u->password = bcrypt($data[$i]['password']);
+
+
+                    if(isset($data[$i]['products']))
+                    if($data[$i]['products']){
+                        $p = explode(',',$data[$i]['products']);
+                        foreach($p as $pt){
+                            if(isset($data[$i]['validity']))
+                                $validity = $data[$i]['validity'];
+                            else
+                                $validity = 12;
+                            $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($validity*31).' days'));
+                            $product = Product::where('slug',$pt)->first();
+                            if(!$u->products->contains($product->id))
+                            $u->products()->attach($product->id,['validity'=>$validity,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                        }
+                    }
 
                     if($data[$i]['college_id'])
                     $u->college_id = $data[$i]['college_id'];

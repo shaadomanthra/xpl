@@ -17,6 +17,7 @@ class writing implements ShouldQueue
     public $user;
     public $exam;
     public $type;
+    public $qid;
     public $tries = 3;
     public $timeout = 300;
     /**
@@ -24,11 +25,12 @@ class writing implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($user,$exam,$type)
+    public function __construct($user,$exam,$type,$qid)
     {
         $this->user = $user;
         $this->exam = $exam;
         $this->type = $type;
+        $this->qid = $qid;
     }
 
     /**
@@ -39,8 +41,8 @@ class writing implements ShouldQueue
     public function handle()
     {
         if($this->type=='writing')
-            $this->exam->grammarly($this->user,1);
+            $this->exam->grammarly($this->user,null,1);
         else
-            $this->exam->audio($this->user,1);
+            $this->exam->audio($this->user,$this->qid,1);
     }
 }

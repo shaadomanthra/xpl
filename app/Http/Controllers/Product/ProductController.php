@@ -205,31 +205,7 @@ class ProductController extends Controller
       $user->image = $user->getImage();
       $users = [];
 
-      if($_SERVER['HTTP_HOST'] == 'bfs.piofx.com' ){
-        $trainings = null;
-        $exams = null;
-          if($user->checkRole(['administrator'])){
-            $trainings = Training::get();
-            $exams = $user->exams()->orderBy('id','desc')->limit(5)->get();
-            $count = 0;
-            foreach($user->exams as $exam){
-              $count = $count + $exam->getAttemptCount();           
-            }
-            $user->attempts = $count;
-            $view = 'appl.pages.bfs.superadmin';
-          }elseif($user->checkRole(['hr-manager'])){
-            $view = 'appl.pages.bfs.trainer';
-          }elseif($user->checkRole(['tpo'])){
-            $view = 'appl.pages.bfs.college';
-          }else{
-            $view = 'appl.pages.bfs.student';
-          }
-          return view($view)
-              ->with('user',$user)
-              ->with('data',$data)
-              ->with('trainings',$trainings)
-              ->with('exams',$exams);
-      }
+     
       if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role!=13){
 
           $search = $request->search;
@@ -424,14 +400,15 @@ class ProductController extends Controller
               ->with('exams',$exams);
       }
 
-      $mytests = \auth::user()->tests();
+      $mytests = \auth::user()->tests(1);
+
 
       if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
         $view = 'xplore_dashboard';
       else
         $view = 'client_dashboard';
         
-      return view($view)->with('user',$user)->with('data',$data);
+      return view($view)->with('user',$user)->with('data',$data)->with('mytests',$mytests);
 
     }
 

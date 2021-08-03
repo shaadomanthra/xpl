@@ -211,6 +211,10 @@ class User extends Authenticatable
 
     public function attempted_test($id){
         $user = \auth::user();
+
+        
+
+
         $test = Cache::remember('attempt_'.$user->id.'_'.$id, 240, function() use ($user,$id) {
                 $test = DB::table('tests_overall')
                     ->where('user_id', $user->id)
@@ -317,18 +321,26 @@ class User extends Authenticatable
 
     }
 
-    public function tests(){
+    public function tests($all=null){
         
-
         $user = $this;
+        if(request()->get('refresh')){
+            Cache::forget('attempts_'.$user->id);
+        }
+
+
+        
         //Cache::forget('attempts_'.$user->id);
         $attempts = Cache::remember('attempts_'.$user->id, 240, function() use ($user) {
           return DB::table('tests_overall')
                 ->where('user_id', $user->id)
                 ->orderBy('id','desc')
-                ->get();
+                ->get()->keyBy('test_id');
         });
 
+
+        if($all)
+            return $attempts;
         // Cache::remember('attempts_'.$this->id, 40, function() use ($this) {
         //   return DB::table('tests_overall')
         //         ->where('user_id', $this->id)
@@ -346,12 +358,14 @@ class User extends Authenticatable
                 $test_ids = [$attempts['test_id']];
             }
             
+
             //Cache::forget('tests_'.$user->id);
             $alltests = Cache::get('tests_'.subdomain());
+
             if($alltests)
-            $tests = $alltests->whereIn('id',$test_ids);
+                $tests = $alltests->whereIn('id',$test_ids);
             else
-            $tests = [];
+                $tests = [];
         
         }else{
             $tests = [];
@@ -363,6 +377,7 @@ class User extends Authenticatable
             $tests[$k]->max = $test_idgroup[$t->id][0]->max;
             $tests[$k]->attempt_status = $test_idgroup[$t->id][0]->status;
         }
+
         return $tests;
     }
 

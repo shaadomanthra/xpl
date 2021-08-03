@@ -181,7 +181,7 @@
         <label for="formGroupExampleInput ">Status</label>
         <select class="form-control" name="status">
           <option value="0" @if(isset($exam)) @if($exam->status==0) selected @endif @endif >Draft</option>
-          <option value="1" @if(isset($exam)) @if($exam->status==1) selected @endif @endif >Free Access</option>
+          <option value="1" @if(isset($exam)) @if($exam->status==1) selected @endif @endif >Public (Free Access)</option>
           <option value="2" @if(isset($exam)) @if($exam->status==2) selected @endif @endif >Private</option>
         </select>
       </div>
@@ -403,6 +403,7 @@
           <option value="75" @if(isset($exam)) @if($exam->upload_time==75) selected @endif @endif >last 75 minutes</option>
           <option value="90" @if(isset($exam)) @if($exam->upload_time==90) selected @endif @endif >last 90 minutes</option>
           <option value="120" @if(isset($exam)) @if($exam->upload_time==120) selected @endif @endif >last 120 minutes</option>
+          <option value="135" @if(isset($exam)) @if($exam->upload_time==135) selected @endif @endif >last 135 minutes</option>
           <option value="150" @if(isset($exam)) @if($exam->upload_time==150) selected @endif @endif >last 150 minutes</option>
           <option value="180" @if(isset($exam)) @if($exam->upload_time==180) selected @endif @endif >last 180 minutes</option>
           <option value="300" @if(isset($exam)) @if($exam->upload_time==300) selected @endif @endif >last 300 minutes</option>
@@ -454,6 +455,19 @@
           <small class='text-secondary'>If the exam has questions choice, you can enter the total marks </small>
           </div>
         </div>
+        <!--
+        <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">Re-attempt </label>
+            <select class="form-control" name="reattempt">
+              <option value="0" @if(isset($exam)) @if($exam->reattempt==0) selected @endif @endif >No</option>
+              <option value="1" @if(isset($exam)) @if($exam->reattempt==1) selected @endif @endif >Yes</option>
+            </select>
+
+          <small class='text-secondary'>User can delete his response and retry the test </small>
+          </div>
+        </div>
+      -->
 
 
       </div>

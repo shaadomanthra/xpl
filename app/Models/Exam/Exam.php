@@ -622,7 +622,7 @@ $count =0;
 
     }
 
-    public function audio($user,$final=null){
+    public function audio($user,$qid=null,$final=null){
       ini_set('max_execution_time', '600');
         $exam  = $this;
         $user_id = $user->id;
@@ -655,8 +655,14 @@ $count =0;
             $qset = $exam->getQuestionsSection($section->id,$user->id);
             foreach($qset as $q)
             {
-              if($q->type=='aq')
-                $questions[$q->id] = $q;
+              if($qid){
+                if($qid==$q->id && $q->type=='aq')
+                  $questions[$q->id] = $q;
+              }else{
+                if($q->type=='aq')
+                  $questions[$q->id] = $q;
+              }
+              
              
             }
         }
@@ -674,15 +680,26 @@ $count =0;
             // create curl resource
              $curl = 'https://speech.p24.in/?file='.$url.'&text='.$text;
              //dd($curl);
+             $exists = false;
+             $output = json_decode($t->comment,true);
+             if(!isset($comment['fluency']))
               $output = json_decode($this->curlPost($curl),true);
+
              
-            
-           
-        
               $t->accuracy =0;
               $t->mark = 0;
-              if(isset($output['fluency']))
-                $score = $output['fluency'];
+              $scale=0.6;
+              if(isset($output['fluency'])){
+
+                  if($output['fluency']>90 && $output['accuracy']>90 && $output['completeness']>90)
+                    $scale=0.9;
+                  elseif(($output['fluency']>80 && $output['fluency']<90 ) || ($output['accuracy']>80  && $output['accuracy']<90) || ( $output['completeness']>80 && $output['completeness']<90))
+                    $scale=0.7;
+                   elseif(($output['fluency']>70 && $output['fluency']<80 ) || ($output['accuracy']>70  && $output['accuracy']<80) || ( $output['completeness']>70 && $output['completeness']<80))
+                    $scale=0.5;
+
+                $score = (0.35*$output['fluency'] + 0.45 *$output['accuracy'] + 0.2*$output['completeness'])*$scale;
+              }
               else
                 $score = 0;
 
@@ -695,16 +712,11 @@ $count =0;
                   $t->accuracy =1;
                   $t->mark= round($questions[$t->question_id]->mark/100 * $score,2);
               }
-              
-              
-              
+
               $t->status =1;
               if(isset($output))
               $t->comment = json_encode($output);
 
-
-
-             
               $t->save();
 
               $tests[$s] = $t;
@@ -786,6 +798,8 @@ $count =0;
         $toverall->save();
     }
 
+
+    
     public function grammarly($user,$final=null){
         $exam  = $this;
         $user_id = $user->id;
@@ -821,8 +835,6 @@ $count =0;
              
             }
             
-
-
         }
 
 
@@ -846,7 +858,7 @@ $count =0;
               if(str_word_count($response)>50){
                 if($score==-1){
                   $t->accuracy =1;
-                  $t->mark= round($questions[$t->question_id]->mark/100 * 30,2);
+                  $t->mark= round($questions[$t->question_id]->mark/100 * 40,2);
                 }else{
                   $t->accuracy =1;
                 $t->mark= round($questions[$t->question_id]->mark/100 * $score,2);

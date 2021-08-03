@@ -599,6 +599,7 @@ class ExamController extends Controller
             $settings['camera360'] = $request->get('camera360');
             $settings['videosnaps'] = $request->get('videosnaps');
             $settings['totalmarks'] = $request->get('totalmarks');
+            $settings['reattempt'] = $request->get('reattempt');
             
 
             $exam->settings = json_encode($settings);
@@ -1573,7 +1574,7 @@ class ExamController extends Controller
        if($r->get('writing')){
             $rep =  Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
             foreach($rep as $rx){
-                writing::dispatch($rx->user,$exam,'writing')->delay(now()->addMinutes(1));
+                writing::dispatch($rx->user,$exam,'writing',null)->delay(now()->addMinutes(1));
             }
             flash('Wrting Evaluation is queued! Will be completed in sometime!')->success();
             return redirect()->back();
@@ -1582,7 +1583,17 @@ class ExamController extends Controller
         if($r->get('audio')){
             $rep =  Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
             foreach($rep as $rx){
-                writing::dispatch($rx->user,$exam,'audio') ->delay(now()->addMinutes(3));
+                foreach($exam->sections as $section){
+                    //$qset = $section->questions;
+                    $qset = $exam->getQuestionsSection($section->id,$rx->user->id);
+                    foreach($qset as $q)
+                    {
+                        if($q->type=='aq')
+                          writing::dispatch($rx->user,$exam,'audio',$q->id);
+                      
+                    }
+                }
+                
             }
             flash('Audio Evaluation is queued! Will be completed in sometime!')->success();
             return redirect()->back();
@@ -2059,6 +2070,11 @@ class ExamController extends Controller
         else
             $exam->totalmarks = null;
 
+         if(isset($settings['reattempt']))
+            $exam->reattempt = $settings['reattempt'];
+        else
+            $exam->reattempt = null;
+
         // if($exam->extra){
         //     $exam->viewers = json_decode($exam->extra,true)['viewers'];
         //     $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
@@ -2159,6 +2175,8 @@ class ExamController extends Controller
             $settings['camera360'] = $request->get('camera360');
             $settings['videosnaps'] = $request->get('videosnaps');
             $settings['totalmarks'] = $request->get('totalmarks');
+            $settings['reattempt'] = $request->get('reattempt');
+
 
 
 

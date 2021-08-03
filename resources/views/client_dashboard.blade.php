@@ -188,7 +188,7 @@
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">My Tests</th>
+                  <th scope="col">My Tests </th>
                   <th scope="col">Score</th>
                   <th scope="col">Attempted</th>
                   <th scope="col">Status</th>
@@ -254,10 +254,13 @@
                   <td>
                     <a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a><br>
                     @foreach($product->courses as $c)
-                         - <a href="{{ route('course.show',$c->slug)}}">{{$c->name}}</a> <span class="badge badge-primary">course</span><br>
+                         <i class="fa fa-angle-right"></i>  <a href="{{ route('course.show',$c->slug)}}">{{$c->name}}</a> <span class="badge badge-primary">course</span><br>
                     @endforeach
                     @foreach($product->exams as $e)
-                         - <a href="{{ route('assessment.details',$e->slug)}}">{{$e->name}}</a> <span class="badge badge-secondary">Test</span><br>
+                         <i class="fa fa-angle-right"></i> <a href="{{ route('assessment.details',$e->slug)}}">{{$e->name}}</a> 
+                          @if($t=$mytests->where('test_id',$e->id)->first())
+                          <span class="badge badge-dark">{{$t->score}} / {{$t->max}}</span>
+                          @endif <br>
                     @endforeach
                   </td>
                   <td>

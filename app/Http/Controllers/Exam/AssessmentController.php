@@ -282,9 +282,6 @@ class AssessmentController extends Controller
         }
         $exam->time = $time;
 
-
-        
-
         if(!trim(strip_tags($exam->instructions)))
         {
             $url = route('assessment.try',$test);
@@ -296,17 +293,28 @@ class AssessmentController extends Controller
 
         $code = $r->get('code');
         $user = \auth::user();
+
+
         if(isset($exam->product_ids))
         $products = $exam->product_ids;
         else{
             //dd(count($exam->products));
-            if(subdomain()=='xplore' || subdomain()=='gradable'){
+            if(subdomain()==strtolower(env('APP_NAME'))){
                 if(count($exam->products)){
                  $products = $exam->products->pluck('id')->toArray();
                 }else
-                $products = null;
-            }else
-                $products = null;
+                    $products = null;
+
+            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley'){
+                 $products = null;
+            }else{
+                $client = Cache::get('client_'.subdomain());
+
+                if(!$client->products)
+                    $products = null;
+                else
+                    $products = $client->products;
+            }
             
         }
         $product = null;
@@ -590,9 +598,25 @@ class AssessmentController extends Controller
             }
         }
         if(isset($exam->product_ids))
-        $products = $exam->product_ids;
-        else
-            $products = null;
+            $products = $exam->product_ids;
+        else{
+            if(subdomain()==strtolower(env('APP_NAME'))){
+                if(count($exam->products)){
+                 $products = $exam->products->pluck('id')->toArray();
+                }else
+                    $products = null;
+
+            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley'){
+                 $products = null;
+            }else{
+                $client = Cache::get('client_'.subdomain());
+
+                if(!$client->products)
+                    $products = null;
+                else
+                    $products = $client->products;
+            }
+        }
         $code = $request->get('code');
 
         $test_taken = false;
