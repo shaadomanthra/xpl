@@ -22,6 +22,7 @@ use PacketPrep\Models\College\College;
 use PacketPrep\Models\College\Zone;
 use PacketPrep\Models\College\Metric;
 use PacketPrep\Models\College\Branch;
+use PacketPrep\Models\Product\Client;
 
 use Illuminate\Support\Facades\Mail;
 use PacketPrep\Mail\OrderSuccess;
@@ -557,10 +558,27 @@ class ProductController extends Controller
 
         $search = $request->search;
         $item = $request->item;
+
+       
+
+
         
-        $products = $product->where('name','LIKE',"%{$item}%")->where('status',1)
+        if(subdomain()==strtolower(env('APP_NAME')))
+         $products = $product->where('name','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
-                    ->paginate(config('global.no_of_records'));   
+                    ->paginate(config('global.no_of_records'));  
+        else{
+          $client = client::where('slug',subdomain())->first();
+          $products = $client->products()->paginate(config('global.no_of_records')); 
+
+
+          // $products = $product->where('name','LIKE',"%{$item}%")
+          //           ->orderBy('created_at','desc ')
+          //           ->paginate(config('global.no_of_records'));  
+        }
+        // $products = $product->where('name','LIKE',"%{$item}%")->where('status',1)
+        //             ->orderBy('created_at','desc ')
+        //             ->paginate(config('global.no_of_records'));   
         $view = $search ? 'list2': 'index2';
 
         return view('appl.product.product.'.$view)

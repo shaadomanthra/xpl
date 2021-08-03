@@ -45,15 +45,45 @@ class OrderController extends Controller
     }
 
 
-    public function instamojo(Request $request){
-    $api = new Instamojo\Instamojo('b782a798506818377c826fd1e0c4874a', '595a9fdf328fd742fd04ff5863b43866');
+    public function getApi(){
+      $data['key'] = env('INSTAMOJO_KEY');
+      $data['token'] = env('INSTAMOJO_TOKEN');
+      $data['return'] = env('INSTAMOJO_DOMAIN').'/order_payment';
+
+      $fullurl = url()->full();
+      $parsed = parse_url($fullurl);
+      $url = $parsed["host"];
+
+      if(subdomain()!=strtolower(env('APP_NAME'))){
+        $client = Client::where('slug',subdomain())->first();
+        $settings = json_decode($client->settings);
+        if(isset($settings->key))
+          $data['key'] = $settings->key;
+
+        if(isset($settings->token))
+          $data['token'] = $settings->key;
+
+        $data['return'] = 'https://'.$url.'/order_payment';
+
+      }
+
+      return $data;
+    }
+
+
+    // public function instamojo(Request $request){
+      
+      
+      
+    // $api = new Instamojo\Instamojo('b782a798506818377c826fd1e0c4874a', '595a9fdf328fd742fd04ff5863b43866');
 
       
 
-    }
+    // }
 
     public function instamojo_return(Request $request){
-      $api = new Instamojo\Instamojo('b782a798506818377c826fd1e0c4874a', '595a9fdf328fd742fd04ff5863b43866');
+      $data = $this->getApi();
+      $api = new Instamojo\Instamojo($data['key'], $data['token']);
       try {
             $id = $request->get('payment_request_id');
             //dd($id);
@@ -131,7 +161,8 @@ class OrderController extends Controller
           header('Location: '.url('/').'/pgRedirect.php?'.$data); */
           if($request->type=='instamojo' && $request->txn_amount!=0){
 
-          $api = new Instamojo\Instamojo('b782a798506818377c826fd1e0c4874a', '595a9fdf328fd742fd04ff5863b43866');
+          $data = $this->getApi();
+          $api = new Instamojo\Instamojo($data['key'], $data['token']);
           try {
             
 
@@ -164,7 +195,7 @@ class OrderController extends Controller
                   "amount" =>  $request->txn_amount,
                   "send_email" => false,
                   "email" => $user->email,
-                  "redirect_url" => "https://xplore.co.in/order_payment"
+                  "redirect_url" => $data['return']
                   ));
 
               //dd($response);
@@ -179,7 +210,7 @@ class OrderController extends Controller
                   "amount" =>  $request->txn_amount,
                   "send_email" => false,
                   "email" => $user->email,
-                  "redirect_url" => "https://xplore.co.in/order_payment"
+                  "redirect_url" => $data['return']
                   ));
                 $order->order_id = $response->id;
                 $o_check = Order::where('order_id',$order->order_id)->first();
@@ -221,7 +252,8 @@ class OrderController extends Controller
 
           
         }else{
-          $api = new Instamojo\Instamojo('b782a798506818377c826fd1e0c4874a', '595a9fdf328fd742fd04ff5863b43866');
+          $data = $this->getApi();
+          $api = new Instamojo\Instamojo($data['key'], $data['token']);
 
           try {
             

@@ -211,6 +211,11 @@
             <input id="datetimepicker" class="form-control" type="text" value="{{isset($client->settings->timer_d)? $client->settings->timer_d:''}}"  name="timer_d"></input>
           </div>
 
+            <div class="form-group">
+            <label for="formGroupExampleInput ">Instamojo Key</label>
+            <input class="form-control" type="text" value="{{isset($client->settings->key)? $client->settings->key:''}}"  name="key"></input>
+          </div>
+
         </div>
         <div class="col-12 col-md-6">
           <div class="form-group">
@@ -226,6 +231,11 @@
           <div class="form-group">
             <label for="formGroupExampleInput ">Loginpage Countdown timer</label>
             <input id="datetimepicker2" class="form-control" type="text" value="{{isset($client->settings->timer_l)? $client->settings->timer_l:''}}"  name="timer_l"></input>
+          </div>
+
+            <div class="form-group">
+            <label for="formGroupExampleInput ">Instamojo Token</label>
+            <input class="form-control" type="text" value="{{isset($client->settings->token)? $client->settings->token:''}}"  name="token"></input>
           </div>
 
 

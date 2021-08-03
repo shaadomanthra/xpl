@@ -69,6 +69,7 @@
             <div class="col-md-4">Contact</div>
             <div class="col-md-8">
               {!! $client->contact !!}
+           
             </div>
           </div>
 
@@ -135,6 +136,18 @@
                   @endif
                 </dd>
               </dl>
+               @if(isset($client->settings->key))
+               <dl class="row mb-0">
+                <dt class="col-sm-4">Instamojo Key</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->key)
+                    {{$client->settings->key}}
+                  @else
+                    -
+                  @endif
+                </dd>
+              </dl>
+              @endif
               <dl class="row mb-0">
                 <dt class="col-sm-6">Countdown loginpage</dt>
                 <dd class="col-sm-6">
@@ -190,6 +203,18 @@
                   @endif
                 </dd>
               </dl>
+              @if(isset($client->settings->token))
+               <dl class="row mb-0">
+                <dt class="col-sm-4">Instamojo Token</dt>
+                <dd class="col-sm-8">
+                  @if($client->settings->token)
+                    {{$client->settings->token}}
+                  @else
+                    -
+                  @endif
+                </dd>
+              </dl>
+              @endif
               <dl class="row mb-0">
                 <dt class="col-sm-6">Countdown dashboard</dt>
                 <dd class="col-sm-6">
