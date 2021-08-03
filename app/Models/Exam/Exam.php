@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Exam extends Model
 {
-	protected $fillable = [
+  protected $fillable = [
         'name',
         'slug',
         'user_id',
@@ -623,6 +623,7 @@ $count =0;
     }
 
     public function audio($user,$final=null){
+      ini_set('max_execution_time', '600');
         $exam  = $this;
         $user_id = $user->id;
         
@@ -648,6 +649,7 @@ $count =0;
         $toverall = Tests_Overall::where('user_id',$user_id)->where('test_id',$exam->id)->first();
 
         $questions = [];
+        $questions2= [];
         foreach($exam->sections as $section){
             //$qset = $section->questions;
             $qset = $exam->getQuestionsSection($section->id,$user->id);
@@ -667,22 +669,26 @@ $count =0;
           {
              $filename = $name_prefix.'audio_'.$t->question_id.'.wav';
             
-            
-             $url = Storage::disk('s3')->url($filename);
-             $text = trim(str_replace('Read aloud the below passage and record it, note that you can record only once.','',$questions[$t->question_id]->question));
+            $url = Storage::disk('s3')->url($filename);
+             $text = urlencode(strip_tags(trim(str_replace('Read aloud the below passage and record it, note that you can record only once.','',$questions[$t->question_id]->question))));
             // create curl resource
              $curl = 'https://speech.p24.in/?file='.$url.'&text='.$text;
              //dd($curl);
               $output = json_decode($this->curlPost($curl),true);
+             
+            
+           
+        
               $t->accuracy =0;
               $t->mark = 0;
               if(isset($output['fluency']))
                 $score = $output['fluency'];
               else
-                $score = 10;
+                $score = 0;
 
               if($output=="0"  || $output=='-1')
               {
+
                 $output = ['accuracy'=>0,'completeness'=>0,'fluency'=>0];
 
               }else{
@@ -696,13 +702,16 @@ $count =0;
               if(isset($output))
               $t->comment = json_encode($output);
 
+
+
              
               $t->save();
 
               $tests[$s] = $t;
-
-
           }
+
+          
+
         }
 
         $qcount =0;
@@ -745,12 +754,12 @@ $count =0;
                 }else{
                   $mark = $q->mark;
                   $stm = $stm + $mark;
-                  if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
-                    if($e->mark!=$mark){
-                      $e->mark = $mark;
-                      $flag=1;
-                    }
-                  }
+                  // if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
+                  //   if($e->mark!=$mark){
+                  //     $e->mark = $mark;
+                  //     $flag=1;
+                  //   }
+                  // }
 
                   $stotal = $stotal + $e->mark;
 
@@ -817,27 +826,39 @@ $count =0;
         }
 
 
+
         foreach($tests as $s=>$t){
           if(array_key_exists($t->question_id, $questions))
           {
             $response = $t->response;
             // create curl resource
 
-              $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
+
+             $output = json_decode($this->curlPost('https://grammar.p24.in/api/v1/check?text='.urlEncode($response)),true);
+
+             
+              
               if(isset($output['score']['generalScore']))
-                $score = $output['score']['generalScore'];
+                $score = intval($output['score']['generalScore']);
               else
                 $score = 10;
 
               if(str_word_count($response)>50){
-                $t->accuracy =1;
+                if($score==-1){
+                  $t->accuracy =1;
+                  $t->mark= round($questions[$t->question_id]->mark/100 * 30,2);
+                }else{
+                  $t->accuracy =1;
                 $t->mark= round($questions[$t->question_id]->mark/100 * $score,2);
+                }
+                
               }
               else{
                 $t->accuracy =0;
                 $t->mark = 0;
               }
               
+
               $t->status =1;
               if(isset($output['score']['outcomeScores']))
               $t->comment = json_encode($output['score']['outcomeScores']);
@@ -848,6 +869,7 @@ $count =0;
 
           }
         }
+
 
         $qcount =0;
         $ototal = 0;
@@ -889,20 +911,23 @@ $count =0;
                 }else{
                   $mark = $q->mark;
                   $stm = $stm + $mark;
-                  if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
-                    if($e->mark!=$mark){
-                      $e->mark = $mark;
-                      $flag=1;
-                    }
-                  }
+                  // if(array_key_exists($q->id, $questions)){
+
+                  // }
+                  // if($e->accuracy==1 && !array_key_exists($q->id, $questions)){
+                  //   if($e->mark!=$mark){
+                  //     $e->mark = $mark;
+                  //     $flag=1;
+                  //   }
+                  // }
 
                   $stotal = $stotal + $e->mark;
 
                 }
 
-                if($flag){
-                  $e->save();
-                }
+                // if($flag){
+                //   $e->save();
+                // }
             }
 
             $sitem->score = $stotal;
