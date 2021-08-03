@@ -158,12 +158,12 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
 </div>
  
 <div class="p-3 border rounded bg-light {{ $i=0 }}" style="margin-bottom: -5px;"> <h5 class="mb-1">Sections: &nbsp;&nbsp;
-  @foreach($exam->sections as $section)
-        
+  @foreach($exam->sections as $ts=>$section)
+
         @if(isset($section_questions[$section->id][0]))
          @foreach($section_questions[$section->id] as $key=> $q)
          @if($key==0)
-        <span class=" bg-white border p-1 px-2 rounded  " id="q{{ ($section_questions[$section->id][0]->id )}}" data-qno="{{$section_questions[$section->id][0]->id}}"  data-sno="{{($i+1)}}"  style="line-height: 30px">{{$section->name}} <span class="badge badge-light border">{{count($section_questions[$section->id])}}</span></span>
+        <span class=" border p-1 px-2 rounded  secs_all sec_{{$section->id}} @if($ts==0) bg-dark text-light @endif" id="q{{ ($section_questions[$section->id][0]->id )}}" data-qno="{{$section_questions[$section->id][0]->id}}"  data-sno="{{($i+1)}}"  style="line-height: 30px">{{$section->name}} <span class="badge badge-light border">{{count($section_questions[$section->id])}}</span></span>
         @endif
         <span class="d-none">{{$i=$i+1}}</span>
         @endforeach

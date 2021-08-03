@@ -2533,9 +2533,9 @@ $(function(){
 
 <script src="{{ asset('js/screenfull.min.js')}}"></script>
 @if(!$test_section)
-<script src="{{ asset('js/test.js')}}?new=15"></script>
+<script src="{{ asset('js/test.js')}}?new=16"></script>
 @else
-<script src="{{ asset('js/test_section.js')}}?new=15"></script>
+<script src="{{ asset('js/test_section.js')}}?new=16"></script>
 @endif
 <script type="text/javascript">
 $(function(){
@@ -2600,14 +2600,14 @@ $(function(){
       $c = parseInt($(this).data('c'));
       console.log('cis-'+$c);
 
-      if($c==6){
-        $('.img_status_'+$name).html('<span class="text-danger h3"><i class="fa fa-times-circle"></i> You can upload maximum 5 images per question only.</span>');
+      if($c==11){
+        $('.img_status_'+$name).html('<span class="text-danger h3"><i class="fa fa-times-circle"></i> You can upload maximum 10 images per question only.</span>');
         return 1;
       }
       $qid = $(this).data('qid');
       $url = $('.url_urq_'+$qid+'_'+$c).data('url');
 
-      
+      console.log('.url_urq_'+$qid+'_'+$c);
       
       $token = $(this).data('token');
 
@@ -2779,6 +2779,17 @@ $(function(){
                    result[$qid].a4 = $src;
                  if(i==5)
                    result[$qid].a5 = $src;
+                 if(i==6)
+                   result[$qid].a6 = $src;
+                 if(i==7)
+                   result[$qid].a7 = $src;
+                 if(i==8)
+                   result[$qid].a8 = $src;
+                 if(i==9)
+                   result[$qid].a9 = $src;
+                 if(i==10)
+                   result[$qid].a10 = $src;
+
                 }
                  var $data = JSON.stringify(result);
                  console.log($data);
@@ -3235,7 +3246,7 @@ $(function(){
 
     }).catch(e => {
       //$('#camera_test').modal();
-               $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
+          $('.testpage').html('<div class="container"><div class="border border-secondary rounded p-5 m-5">You are not allowed to take the test as the camera is not accessible.</div></div>');
               
           console.log(e);
           $('.cam_message2').html('<div class="text-primary"><i class="fa fa-times-circle"></i> Camera Issue: '+e+'</div>');
