@@ -424,6 +424,19 @@ $(document).ready(function(){
 
 
         });
+
+         setTimeout(function(){
+            if(!camera){
+              console.log('logging 4000 '+$('.ip_details').text());
+              if(!$('.ip_details').text())
+                $('.ip_details').html('192.168.0.1');
+              if(($('.ip_details').text()).trim()=='192.168.0.1'){
+                $('.cam_spinner').hide();
+                 $('.start_btn').removeClass('disabled');
+              }
+            }
+          },3000);
+
       }
      }
 
@@ -1369,10 +1382,13 @@ function visualize(stream) {
     function make_visible_section($snext,$sno){
       $type = $('.s'+$sno).data('type');
      
+      $('.secs_all').removeClass('bg-dark').removeClass('text-light');
       if($snext){
         $('.section_block').hide();
         $('.section_block_'+$snext).show();
         $sno = parseInt($sno) +1;
+        console.log($sno+' '+$snext);
+        $('.sec_'+$snext).addClass('bg-dark').addClass('text-light');
 
         $('.sec_qcount').html($('.section_block_'+$snext).data('qcount'));
         make_visible($sno);

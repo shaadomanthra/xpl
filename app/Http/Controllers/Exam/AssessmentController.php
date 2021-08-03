@@ -889,7 +889,7 @@ class AssessmentController extends Controller
                 }
                 elseif($q->type=='urq'){
                     $folder = 'urq/';
-                    for($k=1;$k<6;$k++){
+                    for($k=1;$k<11;$k++){
                         $name = $folder.$exam->slug.'_'.\auth::user()->id.'_'.$q->id.'_'.$k;
                         $filename_ = $name.'.jpg';
                         $url3['urq_'.$q->id.'_'.$k] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$filename_]);

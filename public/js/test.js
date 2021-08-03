@@ -381,21 +381,21 @@ $(document).ready(function(){
 
 
       if($('.ip_details').length){
-        //  $.getJSON("https://api.ipify.org?format=json",
-        //                                     function(data) {
-        //   $('.ip_details').html(data.ip);
-        //   setTimeout(function(){
-        //     if(!camera){
-        //       if(!$('#d').length){
-        //         $('.start_btn').removeClass('disabled');
-        //       }
-        //     }
+         $.getJSON("https://api.ipify.org?format=json",
+                                            function(data) {
+          $('.ip_details').html(data.ip);
+          setTimeout(function(){
+            if(!camera){
+              if(!$('#d').length){
+                $('.start_btn').removeClass('disabled');
+              }
+            }
 
-        //  $('.cam_spinner').hide();
-        //   },1000);
+         $('.cam_spinner').hide();
+          },1000);
 
 
-        // });
+        });
 
         setTimeout(function(){
             if(!camera){

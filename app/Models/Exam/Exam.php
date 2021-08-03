@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Exam extends Model
 {
-	protected $fillable = [
+  protected $fillable = [
         'name',
         'slug',
         'user_id',

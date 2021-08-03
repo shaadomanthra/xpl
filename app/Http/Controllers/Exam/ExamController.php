@@ -1570,7 +1570,7 @@ class ExamController extends Controller
             return redirect()->back();
         }
 
-        if($r->get('writing')){
+       if($r->get('writing')){
             $rep =  Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
             foreach($rep as $rx){
                 writing::dispatch($rx->user,$exam,'writing')->delay(now()->addMinutes(1));
