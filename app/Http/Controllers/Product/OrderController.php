@@ -54,14 +54,18 @@ class OrderController extends Controller
       $parsed = parse_url($fullurl);
       $url = $parsed["host"];
 
+
+
       if(subdomain()!=strtolower(env('APP_NAME'))){
         $client = Client::where('slug',subdomain())->first();
         $settings = json_decode($client->settings);
         if(isset($settings->key))
-          $data['key'] = $settings->key;
+          if($settings->key)
+            $data['key'] = $settings->key;
 
         if(isset($settings->token))
-          $data['token'] = $settings->key;
+          if($settings->token)
+            $data['token'] = $settings->key;
 
         $data['return'] = 'https://'.$url.'/order_payment';
 
@@ -162,6 +166,8 @@ class OrderController extends Controller
           if($request->type=='instamojo' && $request->txn_amount!=0){
 
           $data = $this->getApi();
+
+        
           $api = new Instamojo\Instamojo($data['key'], $data['token']);
           try {
             
