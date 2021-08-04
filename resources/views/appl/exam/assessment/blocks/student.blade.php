@@ -180,17 +180,83 @@
     </div>
     
   </div>
+     
+
+ 
+    
 
   </div>
 
   <div class="col-12 col-md-4">
+   
     <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Report</h3>
     <canvas id="myChart" width="295" height="270"></canvas>
+
+    
 
 
 
   </div>
+
+  <div class="col-12 col-md-8">
+     <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Academic Scores</h3>
+  <div class="row mb-4">
+    <div class="col-6 col-md-4 ">
+      <div class="rounded p-4 cardgreen" style="">
+      <div><i class="fa fa-check-square-o"></i>  <span class="">Class 10</span></div>
+      <div class="baseline"></div>
+      <div class="display-3 text-primary"> @if($student->tenth)
+              {{$student->tenth}} %
+              @else
+              -
+            @endif </div>
+      </div>
+    </div>
+     <div class="col-6 col-md-4 ">
+      <div class="rounded cardgreen p-4">
+      <div><i class="fa fa-circle-o-notch"></i> <span class="">Class 12</span></div>
+      <div class="baseline"></div>
+      <div class="display-3 text-primary">@if($student->twelveth)
+              {{$student->twelveth}} %
+              @else
+              -
+            @endif </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 ">
+      <div class="rounded cardgreen p-4">
+      <div><i class="fa fa-window-restore"></i> <span class="">Graduation</span></div>
+      <div class="baseline"></div>
+      <div class="display-3 text-primary">@if($student->bachelors)
+              {{$student->bachelors}} %
+              @else
+              -
+            @endif </div>
+          </div>
+    </div>
+  </div>
+
 </div>
+
+<div class="col-12 col-md-4">
+ @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$video.'.webm'))
+     <div class="pb-4">
+      <h3 class="mb-3"><i class="fa fa-angle-double-right"></i> Video Question</h3>
+        <video id="my-video" class="video-js" controls preload="auto" width="350" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$video.'.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+    </div>
+    @endif
+  </div>
+</div>
+
 
 @if(isset($sectiondetails))
 @if(count($sectiondetails)>1)
@@ -209,9 +275,14 @@
 
 <div class="" style="background: #f9f9f1;">
 <div class="container">
-      @if($count['webcam'])
-    <div class="rounded  py-4 ">
-    <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Webcam Captures</h3>
+
+  <div class="row  py-4 ">
+    <div class="col-12 col-md-8">
+
+       @if($count['webcam'])
+    <div class="rounded   ">
+
+    <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Webcam Captures  <small><a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$user->username}}" class="">view all</a></small></h3>
     
           <div class="row mb-0 {{$m=0}}">
             @if(isset($images['webcam']))
@@ -219,7 +290,7 @@
 
             @foreach($images['webcam'] as $k=>$f)
             @if(Storage::disk('s3')->exists($f))
-            <div class='col-2 {{$m=$m+1}}'>
+            <div class='col-3 {{$m=$m+1}}'>
                 <img src="{{ Storage::disk('s3')->url($f) }}" class="w-100 mb-3 rounded" />
               </div>
             @endif
@@ -230,15 +301,62 @@
             @endforeach
             @endif
             
+           
           </div>
-          @if($count['webcam'])
-          <div class="mt-1"><span>View: </span> <a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$user->username}}" class="">Captures </a> | <a href="{{ route('test.snaps',$exam->slug)}}?type=screens&username={{$user->username}}" class=""> Screenshots</a> | <a href="{{ route('test.logs',$exam->slug)}}?username={{$user->username}}" class=""> Logs</a></div>
-          
-          @endif
+           <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Screen Captures <small><a href="{{ route('test.snaps',$exam->slug)}}?type=screens&username={{$user->username}}" class=""> view all</a> </small></h3>
+          <div class="row mb-0 {{$m=0}}">
+
+             @if(isset($images['screens']))
+            
+
+            @foreach($images['screens'] as $k=>$f)
+            @if(Storage::disk('s3')->exists($f))
+            <div class='col-3 {{$m=$m+1}}'>
+                <img src="{{ Storage::disk('s3')->url($f) }}" class="w-100 mb-3 rounded" />
+              </div>
+            @endif
+            @if($m==4)
+              @break
+            @endif
+
+            @endforeach
+            @endif
+          </div>
+        
          
       </div>
   
     @endif
+
+    </div>
+    <div class="col-12 col-md">
+      <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Logs </h3>
+      <div class="timeline timeline-5 mt-3 border rounded p-3">
+        <div style="max-height: 260px;overflow: auto;">
+            <div class="">Name: <b><span class="log_name text-success">{{$content['uname']}}</span></b></div>
+        <div>Roll Number: <b><span class="log_rollnumber text-primary">{{$content['rollnumber']}}</span></b></div>
+        <div>OS details: <b><span class="log_os text-muted">{{$content['os_details']}}</span></b></div>
+        <div>Browser details: <b><span class="log_browser text-muted">{{$content['browser_details']}}</span></b></div>
+        <div>IP Address: <b><span class="log_ip text-muted">{{$content['ip_details']}}</span></b></div>
+        <div>Window Swaps: <b><span class="log_swaps text-danger">{{$content['window_change']}}</span></b></div>
+        <div>Date: <b><span class="log_swaps text-primary">{{date("jS F, Y", $content['last_updated'])}}</span></b></div>
+        <hr>
+        
+         @foreach($content['activity'] as $a => $b)
+         <div class="row">
+            <div class="col-3">{{date(' h:i:s ', $a)}}</div>
+            <div class="col-1">-</div>
+            <div class="col-7"> {{$b}}</div>
+          </div> 
+          @endforeach
+          
+          </div>
+      </div>
+
+    </div>
+
+  </div>
+     
 
     @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_2001.webm'))
      <div class="pb-4">

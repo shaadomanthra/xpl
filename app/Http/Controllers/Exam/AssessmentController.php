@@ -5497,6 +5497,8 @@ class AssessmentController extends Controller
             $student = \auth::user();
 
 
+
+
         $details = ['correct'=>0,'incorrect'=>'0','unattempted'=>0,'attempted'=>0,'avgpace'=>'0','testdate'=>null,'marks'=>0,'total'=>0];
         $details['course'] = $exam->name;
         $sum = 0;
@@ -5629,6 +5631,7 @@ class AssessmentController extends Controller
                 $exam = Exam::where('slug',$slug)->first();
         }
 
+
         // if($slug=='tcsnqt' || $slug=='56865'){
         //     return view('appl.exam.assessment.completed')
         //                 ->with('exam',$exam);
@@ -5703,6 +5706,15 @@ class AssessmentController extends Controller
             $image_files['5'] = $folder.$three;
             $three = $username.'_'.$exam->id.'_006.jpg';
             $image_files['6'] = $folder.$three;
+
+            $three = $username.'_'.$exam->id.'_001.jpg';
+            $image_files['7'] = $folder.'screens/'.$three;
+            $three = $username.'_'.$exam->id.'_002.jpg';
+            $image_files['8'] = $folder.'screens/'.$three;
+            $three = $username.'_'.$exam->id.'_003.jpg';
+            $image_files['9'] = $folder.'screens/'.$three;
+            $three = $username.'_'.$exam->id.'_004.jpg';
+            $image_files['10'] = $folder.'screens/'.$three;
             
         }
        
@@ -5726,7 +5738,23 @@ class AssessmentController extends Controller
 
         }
 
+
+         //log file
+        $name = $student->username.'_log.json';
+        $filepath = 'testlog/'.$exam->id.'/log/'.$name;
+
+
+
+        $content = null;
+        if(Storage::disk('s3')->exists($filepath)){
+            $content = json_decode(Storage::disk('s3')->get($filepath),true);
+
+            
+
+        }
+
        
+
 
 
         $count = array('webcam'=>0,'screenshot'=>0);
@@ -5740,6 +5768,7 @@ class AssessmentController extends Controller
         }
 
 
+       // dd($images);
         // if(request()->get('images')){
         //     if(request()->get('images')=='webcam'){
         //         $count = $count['webcam'];
@@ -5856,6 +5885,7 @@ class AssessmentController extends Controller
                 abort('404','Test not attempted');
         }
         $subjective = false;
+        $video=false;
         $sections = array();
         foreach($exam->sections as $section){
             if(isset($secs[$section->id][0]))
@@ -5901,6 +5931,8 @@ class AssessmentController extends Controller
 
                 if($q->type=='sq' || $q->type=='urq' || $q->type=='csq')
                     $subjective= true;
+                if($q->type=='vq')
+                    $video= $q->id;
             }
 
         }
@@ -6215,6 +6247,8 @@ class AssessmentController extends Controller
                         ->with('test_overall',$tests_overall)
                         ->with('review',true)
                         ->with('mathjax',$mathjax)
+                         ->with('video',$video)
+                         ->with('content',$content)
                         ->with('count',$count)
                         ->with('images',$images)
                         ->with('noback',1)
