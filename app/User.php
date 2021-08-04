@@ -176,6 +176,9 @@ class User extends Authenticatable
         $username = $this->username;
 
 
+        if(request()->get('refresh')){
+            Cache::forget('userimage_'.$username);
+        }
         $user->image = Cache::get('userimage_'.$username);
 
         if($user->image)
