@@ -41,7 +41,7 @@ class writing implements ShouldQueue
     public function handle()
     {
         if($this->type=='writing')
-            $this->exam->grammarly($this->user,null,1);
+            $this->exam->grammarly($this->user,1);
         else
             $this->exam->audio($this->user,$this->qid,1);
     }
