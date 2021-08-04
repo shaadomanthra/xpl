@@ -82,6 +82,11 @@
           @endif
               </b></div>
             </div>
+
+            <div class="row mt-1">
+              <div class="col-4"> Answersheet:</div>
+              <div class="col-8"><a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}">view responses</a></div>
+            </div>
        
 
 

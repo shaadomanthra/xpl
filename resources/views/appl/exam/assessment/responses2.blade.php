@@ -145,6 +145,12 @@ pre, code {
               <div class="col-8"><b><span class="text-dark">{{$test_overall->comment }}</span></b></div>
             </div>
             @endif
+
+             <div class="row mt-1">
+              <div class="col-4"> Performance:</div>
+              <div class="col-8"><a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$student->username}}">view report</a></div>
+            </div>
+
           </div>
           <div class="col-12 col-md-6">
            
