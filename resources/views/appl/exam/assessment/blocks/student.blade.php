@@ -68,6 +68,23 @@
               <div class="col-8"><b><span class="text-dark">{{$test_overall->comment }}</span></b></div>
             </div>
             @endif
+
+            <div class="row mb-0">
+              <div class="col-4"> Cheating:</div>
+              <div class="col-8"><b>
+                 @if($test_overall->cheat_detect==0)
+          <span class="text-success"><i class="fa fa-check-circle"></i> Potentially No</span>
+          @elseif($test_overall->cheat_detect==1)
+          <span class="text-danger"><i class="fa fa-times-circle"></i>  Potentially YES</span>
+          @elseif($test_overall->cheat_detect==2)
+          <span class="text-info"><i class="fa fa-ban"></i>  Not Clear</span>
+
+          @endif
+              </b></div>
+            </div>
+       
+
+
           </div>
           <div class="col-12 col-md-6">
            
@@ -276,8 +293,25 @@
 <div class="" style="background: #f9f9f1;">
 <div class="container">
 
+   <div class="pt-5">
+        <h2 class="mb-4"><i class="fa fa-angle-double-right"></i> Cheating Status : 
+          @if($test_overall->cheat_detect==0)
+          <span class="text-success">Potentially No</span>
+          @elseif($test_overall->cheat_detect==1)
+          <span class="text-danger">Potentially YES</span>
+          @elseif($test_overall->cheat_detect==2)
+          <span class="text-info">Not Clear</span>
+
+          @endif
+
+        </h2>
+
+        
+      </div>
   <div class="row  py-4 ">
     <div class="col-12 col-md-8">
+
+     
 
        @if($count['webcam'])
     <div class="rounded   ">
@@ -439,6 +473,36 @@
       </video>
     </div>
         @endif
+
+
+         @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+      <div class="border rounded  mt-3">
+        <div class="p-4">
+          <h5><i class="fa fa-th"></i> Admin Tools (visible for super amdin only)</h5>
+          <hr>
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <h4>Update Cheating Status</h4>
+            </div>
+            <div class="col-12 col-md-9">
+              <form action="{{ request()->fullUrl()}}" method="get">
+              <div class="form-group w-100">
+                  <select class="form-control w-100" name="cheat_detect">
+                    <option value ="3" @if($test_overall->cheat_detect==0) selected @endif>Potentially No</option>
+                    <option value ="1" @if($test_overall->cheat_detect==1) selected @endif>Potentially YES</option>
+                    <option value ="2" @if($test_overall->cheat_detect==2) selected @endif>Not clear</option>
+                  </select>
+                  <input type="hidden" name="student" value="{{request()->get('student')}}" />
+               </div>
+               <button class="btn btn-primary" type="submit">save</button>
+               </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    @endif
+    <br><br><br>
+
 
         <script>
   if(typeof video !== 'undefined'){
