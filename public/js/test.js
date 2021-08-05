@@ -1044,7 +1044,7 @@ $(document).ready(function(){
             console.log("videosnaps - start - "+a);
             startvideo($id);
           },500);
-          setTimeout(function(){
+      setTimeout(function(){
             a = 1;
             $id = parseInt("200"+a);
             console.log("videsnaps - end - "+a);

@@ -1133,6 +1133,11 @@ class AssessmentController extends Controller
 
         if(!$request->get('student') && !$request->get('admin')){
             $time = round(($time * 60 - $time_used)/60,2);
+
+            if($time_used>360){
+                $cam360 = 0;
+            }
+            
             if(isset($settings['upload_time']))
             $data['stopswap'] = $time - $settings['upload_time'];
         }
