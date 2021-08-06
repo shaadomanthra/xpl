@@ -705,7 +705,11 @@ class AdminController extends Controller
         }
 
         $col = College::where('id',$college_id)->first();
-        $zone_id = $col->zones->first()->id;
+        $zone_id = null;
+        if($col){
+            $zone_id = $col->zones->first()->id;
+        }
+        
 
         if($zone_id){
             $user->zones()->detach();
@@ -942,9 +946,10 @@ class AdminController extends Controller
 
         $col = College::where('id',$college_id)->first();
 
-        $zone_id = 1;
-        if($col)
-        $zone_id = $col->zones->first()->id;
+        $zone_id = null;
+        if($col){
+            $zone_id = $col->zones->first()->id;
+        }
 
         if($zone_id){
             $user->zones()->detach();
@@ -1247,9 +1252,11 @@ class AdminController extends Controller
         }
 
         $col = College::where('id',$college_id)->first();
+      
         $zone_id = null;
-        if($col)
-        $zone_id = $col->zones->first()->id;
+        if($col){
+            $zone_id = $col->zones->first()->id;
+        }
         
         if($zone_id){
             $user->zones()->detach();
