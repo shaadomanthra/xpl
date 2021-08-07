@@ -51,6 +51,18 @@ class ExamController extends Controller
         $search = $request->search;
         $item = $request->item;
         $user = \auth::user();
+        $testtype = $request->get('testtype');
+
+        $examtype = Examtype::where('slug',$testtype)->first();
+        if($request->Get('refresh')){
+            Cache::forget('examtypes_'.subdomain());
+        }
+        $examtypes = Cache::get('examtypes_'.subdomain());
+    
+        if(!$examtypes){
+            $examtypes = Examtype::where('client',subdomain())->withCount('exams')->get();
+            Cache::forever('examtypes_'.subdomain(),$examtypes);
+        }
 
         if($request->get('refresh')){
             $objs = $exam->orderBy('created_at','desc')
@@ -79,20 +91,34 @@ class ExamController extends Controller
             flash('Exams Cache Updated')->success();
         }
 
-        if(\auth::user()->isAdmin())
-        $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
-        elseif($user->role==10 || $user->role==11 || $user->role==12 || $user->role==13){
-        $exams = $exam->where('name','LIKE',"%{$item}%")->where('client',subdomain())->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
+        if($examtype){
+             if(\auth::user()->isAdmin())
+            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
+            elseif($user->role==10 || $user->role==11 || $user->role==12 || $user->role==13){
+            $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->where('client',subdomain())->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
+            }
+            else
+            $exams = $exam->where('user_id',\auth::user()->id)->where('examtype_id',$examtype->id)->where('name','LIKE',"%{$item}%")->with('user')->withCount('users')->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+
+        }else{
+
+            if(\auth::user()->isAdmin())
+            $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
+            elseif($user->role==10 || $user->role==11 || $user->role==12 || $user->role==13){
+            $exams = $exam->where('name','LIKE',"%{$item}%")->where('client',subdomain())->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
+            }
+            else
+            $exams = $exam->where('user_id',\auth::user()->id)->where('name','LIKE',"%{$item}%")->with('user')->withCount('users')->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
         }
-        else
-        $exams = $exam->where('user_id',\auth::user()->id)->where('name','LIKE',"%{$item}%")->with('user')->withCount('users')->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
+
+        
 
 
 
         $view = $search ? 'list': 'index';
 
         return view('appl.exam.exam.'.$view)
-        ->with('exams',$exams)->with('exam',$exam);
+        ->with('exams',$exams)->with('exam',$exam)->with('examtypes',$examtypes);
     }
 
     /**

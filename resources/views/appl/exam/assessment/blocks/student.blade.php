@@ -381,6 +381,7 @@
         <div>Date: <b><span class="log_swaps text-primary">{{date("jS F, Y", $content['last_updated'])}}</span></b></div>
         <hr>
         
+         @if(isset($content['activity']))
          @foreach($content['activity'] as $a => $b)
          <div class="row">
             <div class="col-3">{{date(' h:i:s ', $a)}}</div>
@@ -388,6 +389,7 @@
             <div class="col-7"> {{$b}}</div>
           </div> 
           @endforeach
+          @endif
           
           </div>
       </div>
