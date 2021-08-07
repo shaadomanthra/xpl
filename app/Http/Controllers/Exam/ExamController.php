@@ -50,6 +50,7 @@ class ExamController extends Controller
 
         $search = $request->search;
         $item = $request->item;
+        $user = \auth::user();
 
         if($request->get('refresh')){
             $objs = $exam->orderBy('created_at','desc')
@@ -80,6 +81,9 @@ class ExamController extends Controller
 
         if(\auth::user()->isAdmin())
         $exams = $exam->where('name','LIKE',"%{$item}%")->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
+        elseif($user->role==10 || $user->role==11 || $user->role==12 || $user->role==13){
+        $exams = $exam->where('name','LIKE',"%{$item}%")->where('client',subdomain())->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
+        }
         else
         $exams = $exam->where('user_id',\auth::user()->id)->where('name','LIKE',"%{$item}%")->with('user')->withCount('users')->orderBy('created_at','desc ')->paginate(config('global.no_of_records'));
 

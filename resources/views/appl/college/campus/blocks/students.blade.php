@@ -30,11 +30,11 @@
 		      <th scope="row">{{++$m}}</th>
 		      <td>
 		      	@if(!request()->get('none'))
-			      	@if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$user['username'].'_'.$exam->id.'_selfie.jpg'))
-			      		<img src="{{ Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$user['username'].'_'.$exam->id.'_selfie.jpg')}}" width="100px" class="rounded" /><br>{{$user['name']}}  
+			      	@if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$user['username'].'_'.$exam->id.'_001.jpg'))
+			      		<img src="{{ Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$user['username'].'_'.$exam->id.'_001.jpg')}}" width="100px" class="rounded" /><br>{{$user['name']}}  
 			      
 			      	@else
-			      		{$user['name']}}  
+			      		{{$user['name']}}  
 			      	@endif
 		      	@else
 		      		{{$user['name']}}  
