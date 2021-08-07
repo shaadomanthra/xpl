@@ -27,13 +27,14 @@
             </a>
             @endcan
 
+            <a href="{{route('exam.index')}}?refresh=1">
+              <button type="button" class="btn btn-secondary my-2 my-sm-2 ">Refresh Cache</button>
+            </a>
             @if(\auth::user()->isAdmin())
             <a href="{{route('examtype.index')}}">
               <button type="button" class="btn btn-outline-primary my-2 my-sm-2 mr-sm-3">Testtypes</button>
             </a>
-            <a href="{{route('exam.index')}}?refresh=1">
-              <button type="button" class="btn btn-secondary my-2 my-sm-2 ">Refresh Cache</button>
-            </a>
+            
             <a href="{{route('exam.createexam')}}">
               <button type="button" class="btn btn-primary float-right my-2 mr-sm-2 ">Generate </button>
             </a>

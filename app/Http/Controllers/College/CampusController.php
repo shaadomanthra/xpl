@@ -638,6 +638,7 @@ class CampusController extends Controller
             $details['item_name'] = 'Branch';
         }
         
+
       $branches = array(1=>"BCOM",2=>"",3=>"",4=>"",5=>"",6=>"",7=>"",8=>"",9=>"CSE",10=>"IT",11=>"ECE",12=>"EEE",13=>"MECH",14=>"CIVIL",15=>"OTHER");
 
 
@@ -656,6 +657,7 @@ class CampusController extends Controller
         $code  = $r->get('code');
         $filename = $exam_slug.'.json';
         $filepath = $this->cache_path.$filename;
+
 
         if(file_exists($filepath))
         {
