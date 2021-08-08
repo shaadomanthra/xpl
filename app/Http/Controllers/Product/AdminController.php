@@ -947,7 +947,7 @@ class AdminController extends Controller
         $col = College::where('id',$college_id)->first();
 
         $zone_id = null;
-        if($col){
+        if($col->zones->first()){
             $zone_id = $col->zones->first()->id;
         }
 
@@ -1254,7 +1254,7 @@ class AdminController extends Controller
         $col = College::where('id',$college_id)->first();
       
         $zone_id = null;
-        if($col){
+        if($col->zones->first()){
             $zone_id = $col->zones->first()->id;
         }
         
