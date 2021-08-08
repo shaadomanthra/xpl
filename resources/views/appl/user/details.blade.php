@@ -52,6 +52,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('father-name') ? ' has-error' : '' }}">
                 <label for="name" class="col-md-8 control-label">Parent Name</label>

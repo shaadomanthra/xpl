@@ -118,6 +118,13 @@ class TestReport2 implements FromCollection
                 $result[$k]->graduation = $res->user->bachelors;
                 $result[$k]->hometown = $res->user->hometown;
                 $result[$k]->current_city = $res->user->current_city;
+                $result[$k]->fluency = $res->user->fluency;
+                $result[$k]->gender = $res->user->gender;
+                $result[$k]->video= $res->user->video;
+                $result[$k]->personality = $res->user->personality;
+                $result[$k]->confidence= $res->user->confidence;
+                $result[$k]->dob= $res->user->dob;
+                 
             }
 
 
@@ -175,6 +182,12 @@ class TestReport2 implements FromCollection
         $ux->graduation = 'Graduation';
         $ux->hometown = 'Hometown';
         $ux->current_city = 'Current City';
+        $ux->fluency = 'Custom Field #1';
+        $ux->gender = 'Custom Field #2';
+        $ux->video= 'Custom Field #3';
+        $ux->personality = 'Custom Field #4';
+        $ux->confidence = 'Custom Field #5';
+        $ux->dob = 'Custom Field #6';
       }
     	unset($ux->id);
     		unset($ux->user_id);

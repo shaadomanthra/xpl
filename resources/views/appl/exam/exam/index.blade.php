@@ -71,14 +71,15 @@
     <div class="pt-4 pb-4 mb-3 mb-md-0">
       <div class="row mb-0 no-gutters">
 
-      <div class="col-12 col-md-10">
+      <div class="col-12 col-md">
          <div id="search-items">
          @include('appl.exam.exam.list')
        </div>
 
       </div>  
-      <div class="col-12 col-md-2">
+      
          @if(subdomain() != strtolower(env('APP_NAME')))
+         <div class="col-12 col-md-2">
      
           <div class="list-group mt-4 mt-md-0 ml-0 ml-md-3">
             <a href="#" class="list-group-item list-group-item-action  disabled">
@@ -93,10 +94,10 @@
             </a>
             @endforeach
           </div>
-   
+           </div>  
         @endif
 
-      </div>  
+   
        
 
      </div>

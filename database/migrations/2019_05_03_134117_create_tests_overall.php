@@ -20,7 +20,7 @@ class CreateTestsOverall extends Migration
             $table->integer('unattempted')->nullable();
             $table->integer('correct')->nullable();
             $table->integer('incorrect')->nullable();
-            $table->integer('score')->nullable();
+            $table->float('score')->nullable();
             $table->bigInteger('time')->nullable();
             $table->timestamps();
         });
