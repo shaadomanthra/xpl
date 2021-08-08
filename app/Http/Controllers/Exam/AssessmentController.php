@@ -3220,9 +3220,21 @@ class AssessmentController extends Controller
                 
 
                 if($type=='typing'){
-                    $item['mark'] = $request->get($i.'_wpm');
-                    $typing_score = $request->get($i.'_wpm');
+                    
+                    $typing_wpm = $request->get($i.'_wpm');
                     $typing_accuracy = $request->get($i.'_accuracy');
+
+                    $mdata['accuracy'] = $typing_accuracy;
+                    $mdata['wpm'] = $typing_wpm;
+                    $item['comment'] = json_encode($mdata);
+
+                    if($questions[$item['question_id']]->mark)
+                        $partialmark = $questions[$item['question_id']]->mark;
+                    elseif($secs[$item['section_id']]->mark)
+                        $partialmark = $secs[$item['section_id']]->mark;
+
+                    $item['mark'] = round(($typing_wpm/50)*$partialmark*($typing_accuracy/100),2);
+                    $typing_score = $item['mark'];
                     $item['accuracy'] = 1;
                 }
 
@@ -5919,6 +5931,9 @@ class AssessmentController extends Controller
 
             if($sectiondetails){
                 $sectiondetails[$section->id]['name'] = $section->name;
+                if(!isset( $sectiondetails[$section->id]['percent']))
+                     $sectiondetails[$section->id]['percent']=0;
+                
                 
             }else{
                 $sectiondetails[$section->id]['name'] = $section->name;

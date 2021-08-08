@@ -163,6 +163,14 @@
           <input id="{{($i+1)}}_wpm" class="form-input {{($i+1)}}_wpm" type="hidden" name="{{($i+1)}}_wpm"  value="0">
           <input id="{{($i+1)}}_accuracy" class="form-input {{($i+1)}}_accuracy" type="hidden" name="{{($i+1)}}_accuracy"  value="0">
 
+            <div class="mt-4">
+      
+      <span class="badge badge-dark">Total word Count - <span class="word_total"></span></span>
+      <span class="badge badge-primary">Typed Word Count - <span class="word_typed"></span></span>
+      <span class="badge badge-warning">Pending Word Count - <span class="word_pending"></span></span>
+      <span class="badge badge-danger border">Error Count - <span class="word_error"></span></span>
+    </div>
+
         </div>
 
   @elseif($question->type=='mcq')
