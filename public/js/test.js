@@ -1437,6 +1437,13 @@ $(document).ready(function(){
         });
         resp.response = ans.join(",");
       }
+      else if($('.input_'+$sno).is('select')){
+        var ans =[];
+        $.each($(".input_"+$sno+" option:selected"), function(){
+          ans.push($(this).val());
+        });
+        resp.response = ans.join(",");
+      }
       else if($('.input_'+$sno).is(':radio')){
         $(".input_"+$sno+"_"+$val).prop('checked',true);
         $(".input_"+$sno+"_"+$val).val($val);

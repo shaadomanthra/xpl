@@ -19,6 +19,7 @@ use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Jobs\ProcessAttempts;
+use PacketPrep\Jobs\writing;
 
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
@@ -2949,6 +2950,7 @@ class AssessmentController extends Controller
 
 
         $qcount =0;
+        $audio=0;
         foreach($exam->sections as $section){
             //$qset = $section->questions;
             $qset = $exam->getQuestionsSection($section->id,$user->id);
@@ -2964,6 +2966,9 @@ class AssessmentController extends Controller
                 else
                 $sections_max[$section->id] = $sections_max[$section->id] + $section->mark;
                 $qcount++;
+
+                if($q->type=='aq')
+                    $audio=1;
             }
         }
 
@@ -3446,7 +3451,21 @@ class AssessmentController extends Controller
             $test_oa = Tests_Overall::where('user_id', $user->id)
                     ->orderBy('id','desc')
                     ->get();
-
+            if($audio){
+                //writing correction
+                writing::dispatch($user,$exam,'writing',null)->delay(now()->addMinutes(1));
+                //speaking correction
+                foreach($exam->sections as $section){
+                    //$qset = $section->questions;
+                    $qset = $exam->getQuestionsSection($section->id,$user->id);
+                    foreach($qset as $q)
+                    {
+                        if($q->type=='aq')
+                          writing::dispatch($user,$exam,'audio',$q->id);
+                      
+                    }
+                }
+            }
             Cache::put('attempts_'.$user_id,$test_oa, 240);
         }else{
             Cache::forget('attempts_'.$user_id);

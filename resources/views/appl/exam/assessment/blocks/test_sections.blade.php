@@ -199,6 +199,53 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
           The following action will save the responses and submits the current section. Kindly note that once  the section is submitted you
           cannot change the responses.
         </div>
+
+        <div class="attempted {{$i=0}}" >
+        
+          
+            @foreach($exam->sections as $k=>$section)
+            <div class="section_block section_block_{{$section->id}}" data-time="{{$section->time}}" data-qno="{{ $section_questions[$section->id][0]->id }}" data-sno="{{ ($i) }}" data-section_next="{{ ($section->next) }}" data-qcount="{{count($section->questions)}}" @if(!$data['sid']) @if($k!=0) style="display: none" @endif @else @if($section->id!=$data['sid']) style="display: none" @endif  @endif >
+              <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" width="20%" style="text-align: center;">Qno</th>
+              <th scope="col">Response</th>
+            </tr>
+          </thead>
+              <tbody>
+              @if(isset($section_questions[$section->id]))
+              @foreach($section_questions[$section->id] as $key=> $question)
+             <tr>
+                <th scope="row">
+                  <div class="w100 p-1 test2qno s{{ ($i+1 ) }} cursor text-center rounded qborder  @if($question->response) qblue-border text-white @endif @if(count($question->images)) qblue-border text-white @endif active " id="q{{ ($question->id )}}" data-qno="{{$question->id}}"  data-sno="{{ ($i+1) }}" 
+                >{{ ($i+1 ) }}</div>
+                </th>
+                <td>
+                  <div class="final_response final_response_{{($i+1)}}">
+                    @if($question->response)
+                    {{$question->response}}
+                    @endif
+                  </div>
+                  <div class="img_c img_c_{{$i+1}} {{$m=0}}" style="width:150px;">
+                    @if($question->images)
+                      @foreach(array_reverse($question->images) as $img)
+                        <img id="" class="img_{{$i+1}} w-100 {{$m=1}} py-2" src="{{$img}}" style="max-width:150px" />
+                      @endforeach
+                    @endif
+                  </div>
+                  <div class="{{$i++}}"></div>
+                </td>
+              </tr >
+              @endforeach
+
+              @endif
+            </tbody>
+          </table>
+            </div>
+
+            @endforeach
+           
+        </div>
         
    
         

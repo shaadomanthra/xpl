@@ -964,6 +964,12 @@ $(document).ready(function(){
         $('.qid'+$qno).data('vq',1);
         console.log('vq-'+$('.qid'+$qno).data('vq'));
 
+        if(!$('.s'+$sno).hasClass('qblue-border'))
+        $('.s'+$sno).addClass('qblue-border');
+        if(!$('.s'+$sno).hasClass('active'))
+              $('.s'+$sno).removeClass('active');
+        $('.final_response_'+$sno).html('Video Response');
+
       } catch (e) {
         console.error('Exception while creating MediaRecorder:', e);
         errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(e)}`;
@@ -980,7 +986,7 @@ $(document).ready(function(){
 
     function stopRecording($final=null) {
       console.log('stop recording invoked');
-      //$sno = $('.clear-qno').data('sno');
+      $sno = $('.clear-qno').data('sno');
       $qno = $('.assessment').data('vques');
       $q=$qno;
       console.log($qno+" - qno stopvideo");
@@ -993,7 +999,7 @@ $(document).ready(function(){
             console.log('mediaRecorder found - trying to stop it');
             if(mediaRecorder.state!='inactive')
               mediaRecorder.stop();
-
+        
 
       mediaRecorder.onstop = (event) => {
         $('.recording').hide();
@@ -1214,6 +1220,12 @@ function audio_stop($sno){
       console.log("recorder stopped ");
       //$('.visualizer').hide();
       $('.recording_message').hide();
+
+       if(!$('.s'+$sno).hasClass('qblue-border'))
+        $('.s'+$sno).addClass('qblue-border');
+      if(!$('.s'+$sno).hasClass('active'))
+            $('.s'+$sno).removeClass('active');
+      $('.final_response_'+$sno).html('Audio Recorded');
  
 }
 
@@ -1276,6 +1288,7 @@ function visualize(stream) {
 
 
 }
+
 
    // audio end
 
@@ -1460,6 +1473,14 @@ function visualize(stream) {
         scroll($sno);
         if(parseInt($('.save_test').val()))
           saveTest($sno);
+        if($('audio').length){
+          $('audio').each(function (i,e) {
+            this.pause(); 
+          });
+        }else{
+          console.log('no audio');
+        }
+
     }
     function update_sno($sno){
 
@@ -1492,6 +1513,13 @@ function visualize(stream) {
       if($('.input_'+$sno).is(':checkbox')){
         var ans =[]
         $.each($(".input_"+$sno+":checked"), function(){
+          ans.push($(this).val());
+        });
+        resp.response = ans.join(",");
+      }
+      else if($('.input_'+$sno).is('select')){
+        var ans =[];
+        $.each($(".input_"+$sno+" option:selected"), function(){
           ans.push($(this).val());
         });
         resp.response = ans.join(",");

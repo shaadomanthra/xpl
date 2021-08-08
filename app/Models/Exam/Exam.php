@@ -675,6 +675,8 @@ $count =0;
           {
              $filename = $name_prefix.'audio_'.$t->question_id.'.wav';
             
+
+
             $url = Storage::disk('s3')->url($filename);
              $text = urlencode(strip_tags(trim(str_replace('Read aloud the below passage and record it, note that you can record only once.','',$questions[$t->question_id]->question))));
             // create curl resource
@@ -682,7 +684,13 @@ $count =0;
              //dd($curl);
              $exists = false;
              $output = json_decode($t->comment,true);
-             if(!isset($comment['fluency']))
+
+              if(!Storage::disk('s3')->exists($filename)){
+              
+              $output = "0";
+              }
+
+             if(!isset($output['fluency']) && $output!="0")
               $output = json_decode($this->curlPost($curl),true);
 
              
