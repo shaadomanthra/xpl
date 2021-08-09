@@ -254,7 +254,8 @@ pre, code {
           <div class="@if(request()->get('mode')==2) col-12 @else col-9 @endif">
 
                 <div class=" p-1 px-3 mr-2 rounded text-center bg-light border d-inline ">{{($k+1)}}</div>
-        <p class="d-inline {{ $question = $t->question}} mb-3">{!! $questions[$t->question_id]->question !!}</p>
+                  <div class="d-none {{ $question = $t->question}} "></div>
+        <p class="d-inline mb-3">{!! $questions[$t->question_id]->question !!}</p>
 
         @if($questions[$t->question_id]->type=='mcq')
         <div class="mt-3">
