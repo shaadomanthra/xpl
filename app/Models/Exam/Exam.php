@@ -153,6 +153,85 @@ class Exam extends Model
         
     }
 
+        public function removeDuplicatesStudent($student){
+        $exam = $this;
+        $sset = array_keys($exam->sections()->select('id')->get()->keyBy('id')->toArray());
+
+        $qset=[];
+
+        foreach($exam->sections as $s){
+          $qset1 = $exam->getQuestionsSection($s->id,$student->id);
+          
+          foreach($s->questions as $q)
+            array_push($qset,$q->id);
+        }
+        
+        $qcount = $exam->questionCount();
+        //$users = array_keys(Tests_Overall::select('user_id')->where('test_id',$exam->id)->get()->keyBy('user_id')->toArray());
+        
+        $to = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->get();
+        $t = Test::where('test_id',$exam->id)->where('user_id',$student->id)->get();
+        $ts = Tests_Section::where('test_id',$exam->id)->where('user_id',$student->id)->get();
+
+        //echo "users - ".count($users)."<br><br>";
+        $u=$student->id;
+        $count =0;
+        
+            $tests = $to->where('user_id',$u)->count();
+            if($tests!=1){
+              $items = $to->where('user_id',$u);
+              $dontDeleteThisRow = $items->first();
+
+              $ids =array_keys($to->where('user_id',$u)->where('id', '!=', $dontDeleteThisRow->id)->keyBy('id')->toArray());
+              Tests_Overall::whereIn('id',$ids)->delete();
+              
+            }
+            $count = $count + $tests;
+        //   echo $u.' - '.$tests."<bR>";
+        
+
+        // echo "total -".$count."<br><br>";
+
+
+        $count =0;
+       
+            $tests = $ts->where('user_id',$u)->count();
+            if($tests>count($sset)){
+              // Get the row you don't want to delete.
+              foreach($sset as $s){
+                  $dontDeleteThisRow = $ts->where('section_id', $s)->where('user_id',$u)->first();
+                  //dd($dontDeleteThisRow->id);
+                  
+                  $ids = Tests_Section::where('test_id',$exam->id)->where('user_id',$u)->where('section_id', $s)->where('id', '!=', $dontDeleteThisRow->id)->delete();
+                
+              }
+              
+
+            }
+             $count = $count + $tests;
+           // echo $u.' - '.$tests."<bR>";
+        
+        
+        $count =0;
+            $tests =$t->where('user_id',$u)->groupBy('question_id');
+            foreach($tests as $tx){
+              if(count($tx)>1){
+                $dontDeleteThisRow = $tx[1];//$t->where('question_id', $tx[1]->id)->where('user_id',$u)->first();
+
+                  echo $dontDeleteThisRow->id;
+                  $dontDeleteThisRow->delete();
+             
+                
+              }
+
+            }
+            
+            //$count = $count + $tests;
+          // echo $u.' - '.$tests."<bR>";
+        
+       
+    }
+
 
     public function removeDuplicates(){
         $exam = $this;

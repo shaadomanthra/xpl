@@ -1715,7 +1715,12 @@ class AssessmentController extends Controller
         }
 
 
-        
+        if($request->get('removeduplicates')){
+            
+            $url = str_replace("&removeduplicates=1","",url()->full())."&refresh=1";
+            $exam->removeDuplicatesStudent($student);
+            return redirect()->to($url);
+        }
 
         $jsonname = $slug.'_'.$user_id;
 
@@ -2179,6 +2184,12 @@ class AssessmentController extends Controller
             Cache::forget('attempt_'.$user_id.'_'.$test_id);
             Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
             Cache::forget('ranked_'.$user_id.'_'.$test_id);
+        }
+
+         if($request->get('removeduplicates')){
+
+            $exam->removeDuplicatesStudent($student);
+            return redirect()->back();
         }
 
         $jsonname = $slug.'_'.$user_id;
