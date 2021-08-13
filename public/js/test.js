@@ -1513,7 +1513,7 @@ $(document).ready(function(){
     }
 
 
-    function saveTest($sno=null,$live=null){
+    async function saveTest($sno=null,$live=null){
 
         if(!$('.ques_count').data('save'))
           return 1;
