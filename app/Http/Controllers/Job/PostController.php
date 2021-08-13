@@ -297,7 +297,7 @@ class PostController extends Controller
                 ob_end_clean(); // this
                 ob_start(); 
                 return Excel::download(new UsersExport, $name,\Maatwebsite\Excel\Excel::CSV);
-            }elseif($objs->total() <= 1000){
+            }elseif(count($objs) <= 1000){
                 request()->session()->put('users',$objs);
                 request()->session()->put('colleges',$colleges);
                 request()->session()->put('branches',$branches);
