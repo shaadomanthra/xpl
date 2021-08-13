@@ -1619,7 +1619,8 @@ $(document).ready(function(){
         var all_data = JSON.stringify(responses);
 
         if(!$live){
-            user_test_log(new Date().getTime() / 1000, 'Solving Question - Q'+$sno);
+            if($ques_count <120)
+              user_test_log(new Date().getTime() / 1000, 'Solving Question - Q'+$sno);
             aws_cache(all_data);
         }else{
 
