@@ -286,8 +286,8 @@ class PostController extends Controller
             $colleges = College::all()->keyBy('id');
             $branches = Branch::all()->keyBy('id');
             
-
-            request()->session()->put('users',$objs);
+            if(!request()->get('resume')){
+                request()->session()->put('users',$objs);
                 request()->session()->put('colleges',$colleges);
                 request()->session()->put('branches',$branches);
                 request()->session()->put('exam_data',$exam_data);
@@ -297,7 +297,37 @@ class PostController extends Controller
                 ob_end_clean(); // this
                 ob_start(); 
                 return Excel::download(new UsersExport, $name,\Maatwebsite\Excel\Excel::CSV);
-
+            }elseif($objs->total() <= 1000){
+                request()->session()->put('users',$objs);
+                request()->session()->put('colleges',$colleges);
+                request()->session()->put('branches',$branches);
+                request()->session()->put('exam_data',$exam_data);
+                request()->session()->put('exams',$exms);
+                request()->session()->put('data',$data);
+                $name = "Applicants_job_".$obj->slug.".csv";
+                ob_end_clean(); // this
+                ob_start(); 
+                return Excel::download(new UsersExport, $name,\Maatwebsite\Excel\Excel::CSV);
+            }else{
+                $limit = 500;
+                $offset = 0;
+                if($request->get('offset'))
+                    $offset = $request->get('offset');
+                 if($request->get('limit'))
+                    $limit = $request->get('limit');
+                $objs = $obj->users()->offset($offset)->limit($limit)->get();
+                request()->session()->put('users',$objs);
+                request()->session()->put('colleges',$colleges);
+                request()->session()->put('branches',$branches);
+                request()->session()->put('exam_data',$exam_data);
+                request()->session()->put('exams',$exms);
+                request()->session()->put('data',$data);
+                $name = "Applicants_job_".$obj->slug."_".$offset.".csv";
+                ob_end_clean(); // this
+                ob_start(); 
+                return Excel::download(new UsersExport, $name,\Maatwebsite\Excel\Excel::CSV);
+               
+            }
             // if($objs->total() <= 500){
                 
             // }else{
