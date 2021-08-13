@@ -2533,9 +2533,9 @@ $(function(){
 
 <script src="{{ asset('js/screenfull.min.js')}}"></script>
 @if(!$test_section)
-<script src="{{ asset('js/test.js')}}?new=16"></script>
+<script src="{{ asset('js/test.js')}}?new=111"></script>
 @else
-<script src="{{ asset('js/test_section.js')}}?new=16"></script>
+<script src="{{ asset('js/test_section.js')}}?new=116"></script>
 @endif
 <script type="text/javascript">
 $(function(){
