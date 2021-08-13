@@ -54,8 +54,8 @@
           </p>
         </div>
       </div>
-      @if( $_SERVER['HTTP_HOST'] != 'xplore.co.in')
-      @if(\auth::user()->role == 12 || \auth::user()->role == 13 || \auth::user()->isAdmin())
+      @if(sudbomain() != strtolower(env('APP_NAME')))
+      @if(\auth::user()->role == 13 || \auth::user()->isAdmin())
       <div class="col-12 col-md-2">
         <div class="row mt-4">
           <div class="col-12 ">

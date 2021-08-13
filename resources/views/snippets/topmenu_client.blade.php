@@ -45,7 +45,7 @@
         @endif
 
         @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
-         @if(\auth::user()->role == 12 || \auth::user()->isAdmin())
+         @if(\auth::user()->role == 13 || \auth::user()->isAdmin())
 
         
         <li class="mr-3"><a class="nav-link" href="{{ route('user.list') }}" aria-label="exams page"
