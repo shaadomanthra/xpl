@@ -2989,6 +2989,10 @@ class AssessmentController extends Controller
         $d =array();
         $typing_accuracy =  $typing_score =0;
         for($i=1;$i<=$qcount;$i++){
+
+            if(!isset($questions[$request->get($i.'_question_id')]))
+                return true;
+
             $type = $questions[$request->get($i.'_question_id')]->type;
             $item = array();
             if($request->exists($i.'_time')){
