@@ -194,7 +194,11 @@
             @if($b['completed']!=1)
             <p class="mb-0 mt-3">
               <span class="text-success float-right completed_msg"></span>
+              @if(isset($settings['chat']))
+              @if(strtolower($settings['chat'])=='yes')
               <span class="mr-4"><i class="fa fa-comment-alt text-success  cursor message_student message_{{$a}}" data-urlpost="{{$b['chat_post']}}" data-username="{{$a}}" data-name="{{$b['uname']}}"data-url="{{$b['chat']}}" data-proctor="{{\auth::user()->name}}"  data-p="1" data-lastchat=""></i> <span class="badge badge-warning p-1 text-white chat_count chat-count_{{$a}} d-none"></span></span>
+              @endif
+              @endif
              
               <i class="far fa-list-alt text-info mr-4 cursor user_log" data-url="{{$b['url']}}" data-selfie_url="{{$b['selfie_url']}}" data-idcard_url="{{$b['idcard_url']}}"></i> 
                 @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$b['username'].'_'.$exam->id.'_video_1000.webm'))
@@ -224,7 +228,8 @@
 
     </div>
     @if($b['completed']!=1)
- 
+    @if(isset($settings['chat']))
+    @if(strtolower($settings['chat'])=='yes')
     @if(isset($chats[$a]['last_user']))
     <div class="bg-light p-3"><b><span class="text-primary student_name_{{$a}}">{{ $chats[$a]['last_user'] }} </span></b>
    
@@ -235,6 +240,8 @@
         <span class="student_message student_message_{{$a}}">  </span> 
      
     </div>
+    @endif
+    @endif
     @endif
     @endif
   </div>

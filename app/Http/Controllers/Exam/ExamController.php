@@ -94,6 +94,11 @@ class ExamController extends Controller
         if($examtype){
              if(\auth::user()->isAdmin())
             $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
+            elseif(subdomain()==strtolower(env('APP_NAME'))){
+                if($user->role==10 || $user->role==11 || $user->role==12 || $user->role==13){
+                    $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->where('user_id',$user->id)->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
+                }
+            }
             elseif($user->role==10 || $user->role==11 || $user->role==12 || $user->role==13){
             $exams = $exam->where('name','LIKE',"%{$item}%")->where('examtype_id',$examtype->id)->where('client',subdomain())->orderBy('created_at','desc ')->withCount('users')->with('user')->paginate(config('global.no_of_records'));
             }
