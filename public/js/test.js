@@ -1386,6 +1386,15 @@ $(document).ready(function(){
 
     }
 
+    $ques_count = $('.ques_count').data('count');
+    if($ques_count>120){
+      $sno = $('.active').data('sno');
+        setInterval(function(){
+          saveTest($sno);
+        },60000);
+    }
+    
+
     function make_visible($sno){
       $('.active').removeClass('active');
         $('.s'+$sno).addClass('active');
@@ -1394,7 +1403,7 @@ $(document).ready(function(){
         update_sno($sno);
         scroll($sno);
         
-          if(parseInt($('.save_test').val())){
+          if(parseInt($('.save_test').val()) && $ques_count<120){
             setTimeout(function(){
             saveTest($sno);
              },1000);
@@ -1519,6 +1528,7 @@ $(document).ready(function(){
           return 1;
 
 
+
         if(!$sno)
           $sno = $('.active').data('sno');
 
@@ -1619,7 +1629,7 @@ $(document).ready(function(){
         var all_data = JSON.stringify(responses);
 
         if(!$live){
-            if($ques_count <120)
+            
               user_test_log(new Date().getTime() / 1000, 'Solving Question - Q'+$sno);
             aws_cache(all_data);
         }else{
