@@ -11,6 +11,7 @@ use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\ExamType;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Product\Test;
@@ -1193,6 +1194,13 @@ class UserController extends Controller
         $client_slug = \Auth::user()->client_slug;
         $client = Client::where('slug',$client_slug)->first();
 
+
+        if($request->get('info')){
+            $users = User::where('client_slug',$client_slug)->where('status','<>','2')->where('info',$request->get('info'))->get()->keyBy('id');
+        }else{
+            $users = User::where('client_slug',$client_slug)->where('status','<>','2')->get()->keyBy('id');
+        }
+
         $settings = json_decode($client->settings);
         $exam_slugs = [];
         if(isset($settings->exams))
@@ -1204,7 +1212,12 @@ class UserController extends Controller
                 $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
             }else
                 $exams = Exam::where('slug',$request->get('exam'))->get()->keyBy('id');
-        }else
+        }elseif($request->get('info')){
+            $examtype = Examtype::where('name',$request->get('info'))->first();
+            $exams = Exam::where('examtype_id',$examtype->id)->get()->keyBy('id');
+
+        }
+        else
          $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
 
         $exam_ids =[];
@@ -1221,11 +1234,7 @@ class UserController extends Controller
         }
 
 
-        if($request->get('info')){
-            $users = User::where('client_slug',$client_slug)->where('status','<>','2')->where('info',$request->get('info'))->get()->keyBy('id');
-        }else{
-            $users = User::where('client_slug',$client_slug)->where('status','<>','2')->get()->keyBy('id');
-        }
+        
         
         $allusers = User::where('client_slug',$client_slug)->where('status','<>','2')->get();
         $totalusers = $allusers->count();

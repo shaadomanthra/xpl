@@ -388,26 +388,26 @@
 
           <option value="0" @if(isset($exam)) @if($exam->upload_time==0) selected @endif @endif >None</option>
           <option value="600" @if(isset($exam)) @if($exam->upload_time==600) selected @endif @endif >Full Exam</option>
-          <option value="1" @if(isset($exam)) @if($exam->upload_time==1) selected @endif @endif >last 1 minute</option>
-          <option value="2" @if(isset($exam)) @if($exam->upload_time==2) selected @endif @endif >last 2 minutes</option>
-          <option value="3" @if(isset($exam)) @if($exam->upload_time==3) selected @endif @endif >last 3 minutes</option>
-          <option value="4" @if(isset($exam)) @if($exam->upload_time==4) selected @endif @endif >last 4 minutes</option>
-          <option value="5" @if(isset($exam)) @if($exam->upload_time==5) selected @endif @endif >last 5 minutes</option>
-          <option value="8" @if(isset($exam)) @if($exam->upload_time==8) selected @endif @endif >last 8 minutes</option>
-          <option value="10" @if(isset($exam)) @if($exam->upload_time==10) selected @endif @endif >last 10 minutes</option>
-          <option value="15" @if(isset($exam)) @if($exam->upload_time==15) selected @endif @endif >last 15 minutes</option>
-          <option value="20" @if(isset($exam)) @if($exam->upload_time==20) selected @endif @endif >last 20 minutes</option>
-          <option value="30" @if(isset($exam)) @if($exam->upload_time==30) selected @endif @endif >last 30 minutes</option>
-          <option value="45" @if(isset($exam)) @if($exam->upload_time==45) selected @endif @endif >last 45 minutes</option>
-          <option value="60" @if(isset($exam)) @if($exam->upload_time==60) selected @endif @endif >last 60 minutes</option>
-          <option value="75" @if(isset($exam)) @if($exam->upload_time==75) selected @endif @endif >last 75 minutes</option>
-          <option value="90" @if(isset($exam)) @if($exam->upload_time==90) selected @endif @endif >last 90 minutes</option>
-          <option value="120" @if(isset($exam)) @if($exam->upload_time==120) selected @endif @endif >last 120 minutes</option>
-          <option value="135" @if(isset($exam)) @if($exam->upload_time==135) selected @endif @endif >last 135 minutes</option>
-          <option value="150" @if(isset($exam)) @if($exam->upload_time==150) selected @endif @endif >last 150 minutes</option>
-          <option value="180" @if(isset($exam)) @if($exam->upload_time==180) selected @endif @endif >last 180 minutes</option>
-          <option value="210" @if(isset($exam)) @if($exam->upload_time==210) selected @endif @endif >last 210 minutes</option>
-          <option value="300" @if(isset($exam)) @if($exam->upload_time==300) selected @endif @endif >last 300 minutes</option>
+          <option value="1" @if(isset($exam)) @if($exam->upload_time==1) selected @endif @endif >after 1 minute</option>
+          <option value="2" @if(isset($exam)) @if($exam->upload_time==2) selected @endif @endif >after 2 minutes</option>
+          <option value="3" @if(isset($exam)) @if($exam->upload_time==3) selected @endif @endif >after 3 minutes</option>
+          <option value="4" @if(isset($exam)) @if($exam->upload_time==4) selected @endif @endif >after 4 minutes</option>
+          <option value="5" @if(isset($exam)) @if($exam->upload_time==5) selected @endif @endif >after 5 minutes</option>
+          <option value="8" @if(isset($exam)) @if($exam->upload_time==8) selected @endif @endif >after 8 minutes</option>
+          <option value="10" @if(isset($exam)) @if($exam->upload_time==10) selected @endif @endif >after 10 minutes</option>
+          <option value="15" @if(isset($exam)) @if($exam->upload_time==15) selected @endif @endif >after 15 minutes</option>
+          <option value="20" @if(isset($exam)) @if($exam->upload_time==20) selected @endif @endif >after 20 minutes</option>
+          <option value="30" @if(isset($exam)) @if($exam->upload_time==30) selected @endif @endif >after 30 minutes</option>
+          <option value="45" @if(isset($exam)) @if($exam->upload_time==45) selected @endif @endif >after 45 minutes</option>
+          <option value="60" @if(isset($exam)) @if($exam->upload_time==60) selected @endif @endif >after 60 minutes</option>
+          <option value="75" @if(isset($exam)) @if($exam->upload_time==75) selected @endif @endif >after 75 minutes</option>
+          <option value="90" @if(isset($exam)) @if($exam->upload_time==90) selected @endif @endif >after 90 minutes</option>
+          <option value="120" @if(isset($exam)) @if($exam->upload_time==120) selected @endif @endif >after 120 minutes</option>
+          <option value="135" @if(isset($exam)) @if($exam->upload_time==135) selected @endif @endif >after 135 minutes</option>
+          <option value="150" @if(isset($exam)) @if($exam->upload_time==150) selected @endif @endif >after 150 minutes</option>
+          <option value="180" @if(isset($exam)) @if($exam->upload_time==180) selected @endif @endif >after 180 minutes</option>
+          <option value="210" @if(isset($exam)) @if($exam->upload_time==210) selected @endif @endif >after 210 minutes</option>
+          <option value="300" @if(isset($exam)) @if($exam->upload_time==300) selected @endif @endif >after 300 minutes</option>
 
 
         </select>
@@ -456,7 +456,7 @@
           <small class='text-secondary'>If the exam has questions choice, you can enter the total marks </small>
           </div>
         </div>
-        <!--
+   
         <div class="col-12 col-md-3">
            <div class="form-group mt-3">
             <label for="formGroupExampleInput ">Re-attempt </label>
@@ -468,12 +468,47 @@
           <small class='text-secondary'>User can delete his response and retry the test </small>
           </div>
         </div>
-      -->
 
+        <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">Verified Email </label>
+            <select class="form-control" name="email_verified">
+              <option value="0" @if(isset($exam)) @if($exam->email_verified==0) selected @endif @endif >Not Required</option>
+              <option value="1" @if(isset($exam)) @if($exam->email_verified==1) selected @endif @endif >Compulsory</option>
+            </select>
+
+          </div>
+        </div>
+ 
+        <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">System Check </label>
+            <select class="form-control" name="system_check">
+              <option value="1" @if(isset($exam)) @if($exam->system_check==1) selected @endif selected @endif >Not Required</option>
+              <option value="0" @if(isset($exam)) @if($exam->system_check==0) selected @endif @endif >Required</option>
+            </select>
+
+          </div>
+        </div>
+
+        <div class="col-12 ">
+           <div class="form-group ">
+        <label for="formGroupExampleInput ">Form Fields</label>
+        <textarea class="form-control " name="form_fields"  rows="5">@if(isset($exam))@if(isset($exam->form_fields)){{$exam->form_fields}}
+            @endif 
+          @endif
+        </textarea>
+
+          <small class='text-secondary'>Used for data collection before attempting the test </small>
+      </div>
+
+        </div>
 
       </div>
     </div>
     </div>
+
+   
 
 
     <div class="form-group p-3 d-none">

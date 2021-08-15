@@ -5,7 +5,7 @@
 @include('flash::message')
 
 <div class="alert alert-info alert-important " role="alert">
- Kindly note that activation of account is compulsory to attempt the tests. In case of any issue kindly write to us at <span class="text-primary">info@xplore.co.in</span> 
+ Kindly note that activation of account is compulsory to attempt the tests. In case of any issue kindly write to us at <span class="text-primary">@if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif</span> 
 </div>
 
 <div class="row">
@@ -70,7 +70,7 @@
 				</div>
 
 				<div class="alert alert-warning alert-important mt-3" role="alert">
-  For international users, kindly send an email to <span class="text-success">info@xplore.co.in</span> to activate your account.
+  For international users, kindly send an email to <span class="text-success">@if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif</span> to activate your account.
 </div>
 				@endif
 			</div>		

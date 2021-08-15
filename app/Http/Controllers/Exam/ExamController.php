@@ -640,6 +640,10 @@ class ExamController extends Controller
             $settings['videosnaps'] = $request->get('videosnaps');
             $settings['totalmarks'] = $request->get('totalmarks');
             $settings['reattempt'] = $request->get('reattempt');
+            $settings['system_check'] = $request->get('system_check');
+            $settings['email_verified'] = $request->get('email_verified');
+            $settings['form_fields'] = $request->get('form_fields');
+
             
 
             $exam->settings = json_encode($settings);
@@ -1726,7 +1730,18 @@ class ExamController extends Controller
         $filename ="exports/Report_".$ename.".xlsx";
 
         $email_stack = array();
+        $data_ques =null;
         if(request()->get('export')){
+
+            if(isset($exam->settings->form_fields)){
+                if($exam->settings->form_fields){
+                    $extra = $exam->settings->form_fields;
+                    $data_ques = $exam->questions($extra);
+                   
+                }
+            }
+
+           
 
             if($code)
                 $result = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->orderby('score','desc')->get();
@@ -1754,6 +1769,7 @@ class ExamController extends Controller
             $branches = Branch::all()->keyBy('id');
             request()->session()->put('colleges',$colleges);
             request()->session()->put('branches',$branches);
+            request()->session()->put('data_ques',$data_ques);
 
             if(!Storage::disk('s3')->exists($filename))
                 Storage::disk('s3')->delete($filename);
@@ -2115,6 +2131,21 @@ class ExamController extends Controller
         else
             $exam->reattempt = null;
 
+        if(isset($settings['system_check']))
+            $exam->system_check = $settings['system_check'];
+        else
+            $exam->system_check = null;
+
+        if(isset($settings['email_verified']))
+            $exam->email_verified = $settings['email_verified'];
+        else
+            $exam->email_verified = null;
+
+        if(isset($settings['form_fields']))
+            $exam->form_fields = $settings['form_fields'];
+        else
+            $exam->form_fields = null;
+
         // if($exam->extra){
         //     $exam->viewers = json_decode($exam->extra,true)['viewers'];
         //     $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
@@ -2216,6 +2247,9 @@ class ExamController extends Controller
             $settings['videosnaps'] = $request->get('videosnaps');
             $settings['totalmarks'] = $request->get('totalmarks');
             $settings['reattempt'] = $request->get('reattempt');
+            $settings['system_check'] = $request->get('system_check');
+            $settings['email_verified'] = $request->get('email_verified');
+            $settings['form_fields'] = $request->get('form_fields');
 
 
 

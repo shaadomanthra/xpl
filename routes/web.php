@@ -679,9 +679,11 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('test/{test}/try','Exam\AssessmentController@try2')->middleware('auth')->name('assessment.try');
 	Route::get('test/{test}/view','Exam\AssessmentController@view')->middleware('auth')->name('assessment.view');
 	Route::get('test/{test}','Exam\AssessmentController@show')->name('assessment.show');
+	Route::post('test/{test}','Exam\AssessmentController@show')->name('assessment.show');
 	Route::get('test/{test}/details','Exam\AssessmentController@show')->name('assessment.details');
 	Route::get('test/{test}/access','Exam\AssessmentController@access')->name('assessment.access')->middleware('auth');
 	Route::get('test/{test}/instructions','Exam\AssessmentController@instructions')->middleware('auth')->name('assessment.instructions');
+	Route::post('test/{test}/instructions','Exam\AssessmentController@instructions')->middleware('auth')->name('assessment.instructions');
 
 	Route::get('test/{test}/{id}','Exam\AssessmentController@try')->name('assessment.try.id');
 	Route::get('test/{test}/{id}/save','Exam\AssessmentController@save')->name('assessment.save');

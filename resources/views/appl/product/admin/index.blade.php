@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Admin | Xplore')
-@section('description', 'Xplore Admin page data')
-@section('keywords', 'xplore, admin page')
+@section('title', 'Admin ')
+@section('description', 'Admin page data')
+@section('keywords', 'admin page')
 @section('content')
 
 

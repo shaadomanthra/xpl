@@ -295,7 +295,16 @@ $(document).ready(function(){
       }
 
 
-      system_check();
+       //system check constraints
+      var system_check_var = parseInt($('.assessment').data('system_check'));
+      console.log(system_check_var);
+      if(!system_check_var)
+        system_check();
+      else{
+        $('.testpage').show();
+        $('.fullscreen_container').hide();
+        $('#check').hide();
+      }
     // device details
      function system_check(){
 

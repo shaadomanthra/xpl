@@ -151,6 +151,56 @@ class Exam extends Model
         Cache::forever('tests_'.$exam->client,$exams);
 
         
+
+    }
+
+    public static function processForm($data){
+        $d = [];
+        $form = explode(',',$data);
+        foreach($form as $k=>$f){
+            $item = ["name"=>$f,"type"=>"input","values"=>""];
+            if(preg_match_all('/<<+(.*?)>>/', $f, $regs))
+            {
+                foreach ($regs[1] as $reg){
+                    $variable = trim($reg);
+                    $item['name'] = str_replace($regs[0], '', $f);
+
+
+                    if(is_numeric($variable)){
+                        $item['type'] = 'textarea';
+                        $item['values'] = $variable;
+
+                    }else if($variable=='file'){
+                        $item['type'] = 'file';
+                        $item['values'] = $variable;
+                    }else{
+                        $options = explode('/',$variable);
+                        $item['values'] = $options;
+                        $item['type'] = 'checkbox';
+                    }
+                    
+                }
+            }
+
+            if(preg_match_all('/{{+(.*?)}}/', $f, $regs))
+            {
+
+                foreach ($regs[1] as $reg){
+                    $variable = trim($reg);
+                    $item['name'] = str_replace($regs[0], '', $f);
+                    $options = explode('/',$variable);
+                    $item['values'] = $options;
+                    $item['type'] = 'radio';
+                    
+                }
+            }
+
+            if($item['name'])
+            $d[$k] = $item;
+
+        }
+
+        return $d;
     }
 
         public function removeDuplicatesStudent($student){
@@ -422,6 +472,28 @@ $count =0;
     // }
 
 
+     public function questions($data){
+        $d = [];
+        $form = explode(',',$data);
+        foreach($form as $k=>$f){
+            $item = ["name"=>$f,"type"=>"input","values"=>""];
+            if(preg_match_all('/<<+(.*?)>>/', $f, $regs))
+            {
+                $item['name'] = str_replace($regs[0], '', $f);   
+            }
+
+            if(preg_match_all('/{{+(.*?)}}/', $f, $regs))
+            {
+                $item['name'] = str_replace($regs[0], '', $f);
+            }
+
+            if($item['name'])
+                $d[$k] = $item['name'];
+
+        }
+
+        return $d;
+    }
 
     public function pool_qset($qset,$formula){
 

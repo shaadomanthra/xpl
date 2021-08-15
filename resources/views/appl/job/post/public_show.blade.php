@@ -233,7 +233,7 @@
             <div class="col-4">Document</div>
             <div class="col-8">
               @if(Storage::disk('s3')->exists('resume/resume_'.\auth::user()->username.'.pdf'))
-                <span class="badge badge-success">Uploaded</span>
+                <span class="badge badge-success">Uploaded</span> &nbsp; <a href="{{ route('resume.upload')}}">View/Update</a>
               @else
               <span class="badge badge-secondary">not uploaded</span>
               @endif

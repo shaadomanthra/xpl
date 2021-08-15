@@ -4,70 +4,54 @@
 @section('content')
 
 <div class="mb-md-5 mb-2 mt-3">
-
-
-		
-
 	<div class=" border p-3 bg-white rounded" style="min-height:300px;">
 		<div class="row">
 			<div class="col-12 col-md-2 mt-3 ml-3">
 
-
-	 @if(isset($exam->image))
-	      @if(Storage::disk('s3')->exists($exam->image))
-	      <picture>
-			  <img 
-      src="{{ Storage::disk('s3')->url($exam->image) }} " class="w-100 d-print-none" alt="{{  $exam->name }}" style='max-width:200px;'>
-			</picture>
-	      @endif
-	  @else
-	  <i class="fa fa-newspaper-o fa-5x p-3 d-none d-md-block" aria-hidden="true"></i>
-				<i class="fa fa-newspaper-o  fa-2x d-inline d-md-none" aria-hidden="true"></i>
-
-      @endif
-
-
 				
+
+			 @if(isset($exam->image))
+			      @if(Storage::disk('s3')->exists($exam->image))
+			      <picture>
+					  <img 
+		      src="{{ Storage::disk('s3')->url($exam->image) }} " class="w-100 d-print-none" alt="{{  $exam->name }}" style='max-width:200px;'>
+					</picture>
+			      @endif
+			  @else
+			  <i class="fa fa-newspaper-o fa-5x p-3 d-none d-md-block" aria-hidden="true"></i>
+						<i class="fa fa-newspaper-o  fa-2x d-inline d-md-none" aria-hidden="true"></i>
+		    @endif
 			</div>
 			<div class="col-12 col-md-8">
+				@include('flash::message')  
 				<h1 class="mt-3">
-					
-					{{ $exam->name }} @if($exam->status ==2)
-					<span class="badge badge-warning ">
-					<i class="fa fa-lock" aria-hidden="true"></i>  PRIVATE
-				</span>
+					{{ $exam->name }} 
+					@if($exam->status ==2)
+						<span class="badge badge-warning ">
+						<i class="fa fa-lock" aria-hidden="true"></i>  PRIVATE
+						</span>
 					@else
-					<span class="badge badge-warning ">
-					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> OPEN
-				</span>
-					@endif</h1>
+						<span class="badge badge-warning ">
+						<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> PUBLIC
+						</span>
+					@endif
+				</h1>
 
 				<p class="mb-3">
 				{!! $exam->description  !!}
 				</p>
 
-				@if(\auth::user())
-				@if(!\auth::user()->hometown)
-				@if(subdomain()=='exam' || subdomain()=='devshala')
-				<div class="bg-light border p-3 my-3 rounded">
-						<h3>My Details <span class="badge badge-success">Mandatory</span></h3>
-						<b class="text-primary">Your details are incomplete, kindly update your profile before attempting the test</b>
-						<a href="{{ route('profile.details')}}" class="btn btn-dark mt-3"> Update Profile  Now</a>
-				</div>
-				@endif
-				@endif
-				@endif
-
 				@include('appl.exam.assessment.blocks.camera')
+
 
 				@if($entry)
 				  @if(!$attempt)
 				  <div class=" mb-2" >
-                  <a href="{{route('assessment.instructions',$exam->slug)}}">
-					<button class="btn btn-lg btn-success accesscode_btn" > Attempt Test </button>
-					</a>
-				</div>
-                  @endif
+            <a href="{{route('assessment.instructions',$exam->slug)}}">
+								<button class="btn btn-lg btn-success accesscode_btn" > Attempt Test </button>
+						</a>
+					</div>
+          @endif
 				@else
 					@if($product)
 						@if($exam->status ==1)
@@ -81,19 +65,7 @@
 						<button class="btn btn-lg btn-success"> Buy Now </button>
 						</a>
 						@endif
-                  	@elseif($exam->slug == '34781')
-                  		@if(auth::user())
-                  			<div class=" mb-2" >
-		                    <a href="{{route('assessment.instructions',$exam->slug)}}">
-							<button class="btn btn-lg btn-success accesscode_btn" > Attempt Test </button>
-							</a> 
-							</div>
-							<!-- <div class="bg-light border rounded p-3">You are not authorised to attempt this test. Kindly apply for <a href="https://xplore.co.in/jobs/career-fair-2020">Virtual Career fair</a>  to take this test. </div> -->
-						@else
-							<div class="bg-light border rounded p-3">Kindly Login to attempt this test.<br>
-								<a href="{{ route('login')}}" class="btn btn-outline-primary">Login</a></div>
-						@endif
-					@elseif($exam->slug != '34781' && $exam->status==1) <!-- free Test -->
+					@elseif($exam->status==1) <!-- free Test -->
 					<div class=" mb-2" >
 					<a href="{{route('assessment.instructions',$exam->slug)}}">
 					<button class="btn btn-lg btn-success accesscode_btn" style="display: none"> Attempt Test </button>
@@ -101,24 +73,40 @@
 					</div>
 					@else
 
-					@if($product)
-					<a href="{{route('productpage',$product->slug)}}">
-						<button class="btn btn-lg btn-success"> Buy Now </button>
-					</a>
-					@else
-					
-					@endif
+						@if($product)
+						<a href="{{route('productpage',$product->slug)}}">
+							<button class="btn btn-lg btn-success"> Buy Now </button>
+						</a>
+						@else
+						
+						@endif
 
 					@endif
 
 				@endif
 
 
-				@if(subdomain()=='xplore' && auth::user())
-					@if(!auth::user()->branch_id)
+				@if(subdomain()==strtolower(env('APP_NAME')) && auth::user())
+					@if(!auth::user()->college_id)
 						@include('appl.exam.assessment.blocks.complete_profile')
+					@elseif($exam->settings->email_verified==1 && auth::user()->status!=0 && auth::user()->status!=1)
+							@include('appl.exam.assessment.blocks.verify_email')
+					@elseif(count($form_fields)  && !Storage::disk('s3')->exists('test_info/'.$exam->slug.'/'.auth::user()->username.'.json'))
+							@include('appl.exam.assessment.blocks.form_fields')
 					@else
 						@include('appl.exam.assessment.blocks.accesscode')
+					@endif
+				@elseif(isset($exam->settings->email_verified) && auth::user())
+					@if($exam->settings->email_verified==1 && (auth::user()->status==0 || auth::user()->status==1))
+							@include('appl.exam.assessment.blocks.accesscode')
+					@else
+							@include('appl.exam.assessment.blocks.verify_email')
+					@endif
+				@elseif(count($form_fields) && auth::user())
+					@if(count($form_fields)  && !Storage::disk('s3')->exists('test_info/'.$exam->slug.'/'.auth::user()->username.'.json'))
+							@include('appl.exam.assessment.blocks.form_fields')
+					@else
+							@include('appl.exam.assessment.blocks.accesscode')
 					@endif
 				@else
 					@include('appl.exam.assessment.blocks.accesscode')
@@ -126,9 +114,20 @@
 				
 
 				@if($attempt)
-				<a href="{{ route('assessment.analysis',$exam->slug) }}">
-                  <button class="btn btn-lg btn-success"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
-                  </a>
+				<div class="alert alert-warning alert-important" role="alert">
+			  	You have completed the test. To check the test report click on the analysis button.
+				</div>
+					<a href="{{ route('assessment.analysis',$exam->slug) }}">
+            <button class="btn btn-lg btn-success"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
+          </a>
+          @if(isset($exam->settings->reattempt))
+          	@if($exam->settings->reattempt==1)
+          		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal2">
+							  Retry the test
+							</button>
+          	@endif
+          @endif
+
 				@endif
 
 				@guest
@@ -218,6 +217,32 @@
         <button type="button" class="btn btn-primary">Register</button>
     	</a>
     	@endif
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" id="exampleModal2"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel3" aria-hidden="true">
+  <div class="modal-dialog ">
+
+    <div class="modal-content">
+     
+      <div class="modal-body">
+       This action will erase the last saved test response, and cannot be reversed. Kindly confirm your action.
+      </div>
+    
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
+       <form method="post" action="{{route('assessment.show',$exam->slug)}}">
+        <input type="hidden" name="retry" value="1">
+        <input type="hidden" name="test_id" value="{{$exam->id}}">
+        <input type="hidden" name="user_id" value="{{\auth::user()->id}}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+        <button type="submit" class="btn btn-danger">Erase my Responses</button>
+        </form>
+  
       </div>
     </div>
   </div>

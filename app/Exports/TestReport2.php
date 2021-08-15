@@ -23,6 +23,7 @@ class TestReport2 implements FromCollection
         $colleges = request()->session()->get('colleges');
         $branches= request()->session()->get('branches');
         $email_stack= request()->session()->get('email_stack');
+        $data_ques = request()->session()->get('data_ques');
 
     	foreach($result as $k=>$res){
 
@@ -124,8 +125,26 @@ class TestReport2 implements FromCollection
                 $result[$k]->personality = $res->user->personality;
                 $result[$k]->confidence= $res->user->confidence;
                 $result[$k]->dob= $res->user->dob;
+
+                
                  
             }
+
+            if($data_ques)
+                 foreach($data_ques as $m=>$ex){
+                    $ex = str_replace(" ","_",$ex);
+                    $ex = str_replace(".","_",$ex);
+                    $name = 'e_'.$m;
+                    $params = json_decode($res->params);
+                    if(isset($params->$ex)){
+                        $result[$k]->$name = $params->$ex;
+                    }
+                    else
+                    {
+                        $result[$k]->$name = '-';
+                    }
+
+                }
 
 
     		unset($result[$k]->id);
@@ -188,7 +207,16 @@ class TestReport2 implements FromCollection
         $ux->personality = 'Custom Field #4';
         $ux->confidence = 'Custom Field #5';
         $ux->dob = 'Custom Field #6';
+
+         
       }
+
+      if($data_ques)
+             foreach($data_ques as $m=>$ex){
+            $name = 'e_'.$m;
+            $ux->$name = $ex;
+
+            }
     	unset($ux->id);
     		unset($ux->user_id);
     		unset($ux->test_id);

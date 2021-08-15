@@ -46,6 +46,7 @@ $(document).ready(function(){
 
     if (screenfull.isEnabled) {
 
+
         screenfull.on('change', () => {
           var browser = $('.browser_details').html();
           var safari = browser.includes("Safari");
@@ -266,8 +267,16 @@ $(document).ready(function(){
           }
       }
 
+      //system check constraints
+      var system_check_var = parseInt($('.assessment').data('system_check'));
+      if(!system_check_var)
+        system_check();
+      else{
+        $('.testpage').show();
+        $('.fullscreen_container').hide();
+        $('#check').hide();
+      }
 
-      system_check();
     // device details
      function system_check(){
 
@@ -374,9 +383,6 @@ $(document).ready(function(){
       if($('.js_details').length){
           $('.js_details').html("enabled");
           $('.accesscode_btn_wrap').show();
-
-
-
       }
 
 
@@ -393,8 +399,6 @@ $(document).ready(function(){
 
          $('.cam_spinner').hide();
           },1000);
-
-
         });
 
         setTimeout(function(){

@@ -283,14 +283,7 @@ class AssessmentController extends Controller
         }
         $exam->time = $time;
 
-        if(!trim(strip_tags($exam->instructions)))
-        {
-            $url = route('assessment.try',$test);
-            if($r->get('code')){
-                $url=$url.'?code='.$r->get('code');
-            }
-            return redirect($url);
-        }
+        
 
         $code = $r->get('code');
         $user = \auth::user();
@@ -361,12 +354,76 @@ class AssessmentController extends Controller
                         return view('appl.exam.assessment.wrongcode')->with('code',$code);
                     }
             }else{
-               if($exam->code != $code)
+                if(isset($exam->settings->form_fields)){
+                    if(($exam->code != $code)){
+                        flash('Invalid Access code - <b>'.$code.'</b>')->error();
+                        return redirect()->back()->withInput();
+                    }
+                    
+                }
+               elseif($exam->code != $code)
                 return view('appl.exam.assessment.wrongcode')->with('code',$code);
             }
 
 
         }
+
+        $request = $r;
+        if(isset($exam->settings->form_fields)){
+            if($r->get('form_fields')){
+                foreach($request->all() as $k=>$v){
+                    if (strpos($k, 'questions_') !== false){
+                        //check for files and upload to aws
+                        if($request->hasFile($k)){
+                            $pieces = explode('questions_',$k);
+                            $file =  $request->all()[$k];
+                            //upload
+                            $file_data = $obj->uploadFile($file);
+                            //link the file url
+                            $json['questions'][$pieces[1]] = '<a href="'.$file_data[0].'">'.$file_data[1].'</a>';
+                        }else{
+                           $pieces = explode('questions_',$k);
+                            if(is_array($v)){
+                                $v = implode(',',$v);
+                            }
+                            $json['questions'][$pieces[1]] = $v;
+                        }
+                        
+                    }
+                    if (strpos($k, 'accesscode') !== false){
+                        $v = strtoupper($v);
+                        $json['accesscode'] = strtoupper($v);
+
+
+                        if($data->accesscodes)
+                        if(isset($data->accesscodes)){
+                            $acodes = explode(',',strtoupper($data->accesscodes));
+                            if(!in_array($v,$acodes)){
+                                flash('Accesscode not valid')->error();
+                                return redirect()->back();
+                            }   
+                                
+                        }
+
+                    }
+                }
+                // store the form fileds data in json, inorder to used in excel download
+                $json = json_encode($json['questions']);
+                $jsonfile = 'test_info/'.$exam->slug.'/'.$user->username.'.json';
+                Storage::disk('s3')->put($jsonfile, $json,'public');
+               
+            }
+        }
+
+        if(!trim(strip_tags($exam->instructions)))
+        {
+            $url = route('assessment.try',$test);
+            if($r->get('code')){
+                $url=$url.'?code='.$r->get('code');
+            }
+            return redirect($url);
+        }
+
         $username = \auth::user()->username;
         if($exam->camera){
             $folder = 'webcam/'.$exam->id.'/';
@@ -3474,10 +3531,27 @@ class AssessmentController extends Controller
         Tests_Section::insert($sec);
         Tests_Overall::insert($test_overall);
 
+
         if(!$request->get('admin')){
+            if(isset($exam->settings->form_fields)){
+                if($exam->settings->form_fields){
+                     $jsonfile = 'test_info/'.$exam->slug.'/'.$user->username.'.json';
+                     if(Storage::disk('s3')->exists($jsonfile)){
+                        $djson = Storage::disk('s3')->get($jsonfile);
+                        $test_oa2 = Tests_Overall::where('user_id', $user->id)
+                                        ->orderBy('id','desc')
+                                        ->first();
+                        $test_oa2->params = $djson;
+                        $test_oa2->save();
+
+                     }
+                }
+            }
+
             $test_oa = Tests_Overall::where('user_id', $user->id)
                     ->orderBy('id','desc')
-                    ->get();
+                    ->get();           
+
             if($audio){
                 //writing correction
                 writing::dispatch($user,$exam,'writing',null)->delay(now()->addMinutes(1));
@@ -5331,14 +5405,31 @@ class AssessmentController extends Controller
             //file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
         }
 
+        $user = \Auth::user();
+        if(request()->get('retry')){
+
+            if(isset($exam->settings->reattempt)){
+                if($exam->settings->reattempt==1){
+                    $this->delete($id,request());
+                }
+            }
+           
+        }
+
+        $form_fields = [];
+        if(isset($exam->settings->form_fields)){
+            $form_fields= Exam::processForm($exam->settings->form_fields);
+        }
 
 
         //precheck for auto activation
         $exam = $this->precheck_auto_activation($exam);
         //dd($exam);
+        if(!isset($exam->settings->email_verified))
+        $exam->settings->email_verified =0;
         $entry=null;
         $attempt = null;
-        $user = \Auth::user();
+        
         $products = $exam->product_ids;
         $product = null;
 
@@ -5384,7 +5475,6 @@ class AssessmentController extends Controller
 
 
 
-
         //dd($exam->product_ids);
 
 
@@ -5395,6 +5485,7 @@ class AssessmentController extends Controller
                     ->with('cameratest',$exam->camera)
                     ->with('product',$product)
                     ->with('responses',$responses)
+                    ->with('form_fields',$form_fields)
                     ->with('attempt',$attempt);
         else
             abort(404);
@@ -6387,6 +6478,12 @@ class AssessmentController extends Controller
 
             $jsonname = $slug.'_'.$user_id;
             $user = User::where('id',$user_id)->first();
+
+            $exam = Exam::where('id',$test_id)->first();
+            $jsonfile = 'test_info/'.$exam->slug.'/'.$user->username.'.json';
+            if(Storage::disk('s3')->exists($jsonfile)){
+                 Storage::disk('s3')->delete($jsonfile);
+            }
 
             if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json')){
                 $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
