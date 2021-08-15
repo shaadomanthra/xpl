@@ -11,7 +11,7 @@ use PacketPrep\Models\College\Branch;
 use PacketPrep\Models\Product\Client;
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Exam\Exam;
-use PacketPrep\Models\Exam\ExamType;
+use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Tests_Section;
 use PacketPrep\Models\Product\Test;
