@@ -58,6 +58,11 @@
   <button type="submit" class="btn btn-primary mb-2">Submit</button>
   <a href="{{route('performance')}}?export=1 @if(request()->get('info'))&info={{request()->get('info')}} @endif @if(request()->get('exam'))&exam={{request()->get('exam')}} @endif  @if(request()->get('status'))&status={{request()->get('status')}} @endif"  class="btn btn-success float-right mb-2 ml-4">Download</a>
 </form>
+
+<div class=" " ><hr><span class="badge badge-warning"> 
+            @if(request()->get('month')) {{request()->get('month')}} @elseif(request()->get('role')) {{request()->get('role')}} @elseif(request()->get('info')) {{request()->get('info')}} @else No Filter @endif</span>
+            
+          </div>
 </div>
 
  @include('flash::message')
@@ -76,23 +81,21 @@
     <div class="col-12 col-md-12">
    @if(count($exams)!=0)
         <div class="table-responsive">
-          <div class="bg-light p-3 border-top border-left border-right " >Filter : <span class="badge badge-warning"> 
-            @if(request()->get('month')) {{request()->get('month')}} @elseif(request()->get('role')) {{request()->get('role')}} @elseif(request()->get('info')) {{request()->get('info')}} @else All users @endif</span>
-            
-          </div>
+          
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
                 <th scope="col">#({{count($data)}})</th>
-                <th scope="col">Name </th>
-                <th scope="col" class="{{$i=1}}">Group</th>
+                <th scope="col" class="{{$i=1}}" style="width: 200px">Name </th>
+
+                  @if(!request()->get('status'))
+                <th scope="col" class="bg-light">CGPA (10)</th>
+                @endif
                 @foreach($exams as $e)
-                <th scope="col">{{$e->name}}({{$e->max}})<br><span class="badge badge-primary">{{$e->slug}}</span></th>
+                <th scope="col"><a href="{{ route('test.report',$e->slug)}}">{{$e->name}}</a><br><span class="badge badge-info">{{$e->slug}}</span></th>
                 @endforeach
 
-                @if(!request()->get('status'))
-                <th scope="col" class="">CGPA(10)</th>
-                @endif
+                
               </tr>
             </thead >
             <tbody>
@@ -106,19 +109,25 @@
                     {{ $u['user']->name }}
                   </a>
                    
-                 
+                 <span class="badge badge-light border border-dark"> {{$u['user']->info}}</span>
                   </td>
-                  <td>
-                   {{$u['user']->info}}
+                   @if(!request()->get('status'))
+                  <td class="bg-light">
+                   {{$data[$u['user']->id]['cgpa']}}
                   </td>
+                  @endif
                    @foreach($exams as $id=>$e)
                   <td>
                     @if(isset($data[$u['user']->id]['test'][$id]))
                        @if(!request()->get('status'))
-                          @if($data[$u['user']->id]['test'][$id]=="0")
-                            0
+                          @if($data[$u['user']->id]['status'][$id]==0)
+                            @if($data[$u['user']->id]['test'][$id]=="0")
+                              0
+                            @else
+                              <a href="{{ route('assessment.analysis',$e->slug)}}?student={{$u['user']->username}}"><h4>{{$data[$u['user']->id]['test'][$id]}}</h4></a>
+                            @endif
                           @else
-                            {{$data[$u['user']->id]['test'][$id]}}
+                           <i class="fa fa-question-circle-o text-secondary" aria-hidden="true"></i>
                           @endif
                         @else
                         <span class="badge badge-success">Attempted</span>
@@ -134,11 +143,7 @@
                   </td>
                   @endforeach
                   
-                   @if(!request()->get('status'))
-                  <td>
-                   {{$data[$u['user']->id]['cgpa']}}
-                  </td>
-                  @endif
+                  
                 </tr>
               
               @endforeach      

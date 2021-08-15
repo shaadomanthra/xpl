@@ -1213,7 +1213,8 @@ class UserController extends Controller
             }else
                 $exams = Exam::where('slug',$request->get('exam'))->get()->keyBy('id');
         }elseif($request->get('info')){
-            $examtype = Examtype::where('name',$request->get('info'))->first();
+            $examtype = Examtype::where('name',$request->get('info'))->where('client',subdomain())->first();
+        
             $exams = Exam::where('examtype_id',$examtype->id)->get()->keyBy('id');
 
         }
@@ -1261,10 +1262,12 @@ class UserController extends Controller
             $data[$id]['test'] = [];
             foreach($exams as $eid=>$e){
                 $data[$id]['test'][$eid] = null;
+                $data[$id]['status'][$eid] = null;
             }
             if(isset($tests_overall[$id]))
             foreach($tests_overall[$id] as $a=>$b){
                 $data[$id]['test'][$b->test_id] = $b->score;
+                $data[$id]['status'][$b->test_id] = $b->status;
                 $total +=$b->score;
                 $max += $b->max;
                 $count++;
@@ -1281,12 +1284,12 @@ class UserController extends Controller
             $data_unsorted[$id] = $cgpa;
             $data[$id]['count'] = $count;
         }
-
         
         arsort($data_unsorted);
         foreach($data_unsorted as $k=>$v){
             $data_sorted[$k]['user'] = $data[$k]['user'];
             $data_sorted[$k]['test'] = $data[$k]['test'];
+            $data_sorted[$k]['status'] = $data[$k]['status'];
             $data_sorted[$k]['cgpa'] = $data[$k]['cgpa'];
             $data_sorted[$k]['count'] = $data[$k]['count'];
         }
