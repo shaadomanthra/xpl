@@ -1215,7 +1215,10 @@ class UserController extends Controller
         }elseif($request->get('info')){
             $examtype = Examtype::where('name',$request->get('info'))->where('client',subdomain())->first();
         
-            $exams = Exam::where('examtype_id',$examtype->id)->get()->keyBy('id');
+            if($examtype)
+                $exams = Exam::where('examtype_id',$examtype->id)->get()->keyBy('id');
+            else
+                $exams = [];
 
         }
         else
