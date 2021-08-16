@@ -237,7 +237,9 @@
        <form method="post" action="{{route('assessment.show',$exam->slug)}}">
         <input type="hidden" name="retry" value="1">
         <input type="hidden" name="test_id" value="{{$exam->id}}">
+        	@if(\auth::user())
         <input type="hidden" name="user_id" value="{{\auth::user()->id}}">
+        	@endif
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <button type="submit" class="btn btn-danger">Erase my Responses</button>
