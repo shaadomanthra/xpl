@@ -96,7 +96,7 @@
 					@else
 						@include('appl.exam.assessment.blocks.accesscode')
 					@endif
-				@elseif(isset($exam->settings->email_verified) && auth::user())
+				@elseif($exam->settings->email_verified!=0 && auth::user())
 					@if($exam->settings->email_verified==1 && (auth::user()->status==0 || auth::user()->status==1))
 							@include('appl.exam.assessment.blocks.accesscode')
 					@else
