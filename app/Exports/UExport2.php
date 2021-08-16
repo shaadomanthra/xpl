@@ -26,7 +26,7 @@ class UExport2 implements FromCollection, WithHeadings
             'Phone',
             'Hometown/ District',
             'Current City/ Address',
-            'Fathers Phone',
+            'Gender / Fathers Phone ',
             'Date of Birth',
             'Custom Field 1',
             'Custom Field 2',
