@@ -1260,6 +1260,7 @@ class UserController extends Controller
             $cgpa=0;
             $data[$id]['user'] = $u;
             $data[$id]['test'] = [];
+            $data[$id]['status'] = [];
             foreach($exams as $eid=>$e){
                 $data[$id]['test'][$eid] = null;
                 $data[$id]['status'][$eid] = null;
