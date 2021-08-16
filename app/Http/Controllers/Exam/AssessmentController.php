@@ -5425,8 +5425,11 @@ class AssessmentController extends Controller
         //precheck for auto activation
         $exam = $this->precheck_auto_activation($exam);
         //dd($exam);
-        if(!isset($exam->settings->email_verified))
-        $exam->settings->email_verified =0;
+        if(!isset($exam->settings->email_verified)){
+            $s = new Exam();
+            $s->email_verified = 0;
+            $exam->settings =$s;
+        }
         $entry=null;
         $attempt = null;
         
