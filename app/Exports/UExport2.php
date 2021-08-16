@@ -19,6 +19,9 @@ class UExport2 implements FromCollection, WithHeadings
             'id',
             'Name',
             'Email',
+
+            'created',
+            'last_login',
             'Roll Number/Fathers Name',
             'Phone',
             'Hometown/ District',
@@ -30,7 +33,7 @@ class UExport2 implements FromCollection, WithHeadings
             'Custom Field 3',
             'Custom Field 4',
             'Custom Field 5',
-            'info',
+            'info'
         ];
     }
 
@@ -41,9 +44,7 @@ class UExport2 implements FromCollection, WithHeadings
     {
        $users = request()->session()->get('users');
         foreach($users as $k=>$u){
-                $id = $users[$k]->id;                
-                unset($users[$k]->created_at);
-                unset($users[$k]->updated_at);
+                $id = $users[$k]->id;             
                 unset($users[$k]->password);
                 unset($users[$k]->remember_token);
                 unset($users[$k]->username);
