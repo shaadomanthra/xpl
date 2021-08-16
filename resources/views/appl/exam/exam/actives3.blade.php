@@ -168,6 +168,7 @@
 
 @if($pg->total()!=0)
 @foreach($users as $a => $b)
+
 @if($b!=1)
 
 <div class="col-6 col-md-2 ">
@@ -462,6 +463,8 @@ div.chats {
         <div class="p-3 border float-right @if(!$exam->camera) d-none @endif">Lastest Capture<br>
         <img src="" class=" log_pic border" height="100px" style="display:none" /></div>
         <div class="">Name: <b><span class="log_name text-success"></span></b></div>
+        <div>Username: <b><span class="log_username text-muted"></span></b></div>
+        <div>Completed On: <b><span class="log_attempted text-muted"></span></b></div>
         <div>Roll Number: <b><span class="log_rollnumber text-primary"></span></b></div>
         <div>OS details: <b><span class="log_os text-muted"></span></b></div>
         <div>Browser details: <b><span class="log_browser text-muted"></span></b></div>

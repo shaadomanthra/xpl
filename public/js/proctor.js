@@ -12,8 +12,16 @@ $(function(){
 	    return datetext;
 	}
 
+    function toDate(secs) {
+        var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+        d.setUTCSeconds(secs);
+        var datestring = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +
+            d.getHours() + ":" + d.getMinutes();
+        return datestring;
+    }
+
 	$('.user_log').on('click',function(e){
-		console.log('log check');
+		//console.log('log check');
 		$url = $(this).data('url')+"?time="+$.now();
        
         if($(this).data('selfie_url'))
@@ -21,19 +29,21 @@ $(function(){
 
         $(this).data('idcard_url')
         $('.log_idcard_pic').attr('src',$(this).data('idcard_url'));
-		console.log($url);
+		
 		$.ajax({
                 type: "GET",
                 url: $url
             }).done(function (result) {
-            	//console.log(result);
             	var username = result.username;
+
             	var link = $('.link_snaps').data('url');
                 var link_upl = $('.dd_response_images').data('url');
-               // console.log(link_upl);
+              
                 $('.timeline').html('');
                 $('.log_name').html(result.uname);
                 $('.log_rollnumber').html(result.rollnumber);
+                $('.log_username').html(result.username);
+                $('.log_attempted').html(toDate(result.last_updated));
                 $('.log_os').html(result.os_details);
                 $('.log_browser').html(result.browser_details);
                 $('.log_ip').html(result.ip_details);

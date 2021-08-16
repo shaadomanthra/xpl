@@ -4401,7 +4401,12 @@ class AssessmentController extends Controller
             }
         }
 
+        $usx=[];
+        foreach($users as $a=>$b){
+            $usx[str_replace('.','_',$a)] = $b;
+        }
 
+       // dd($usx);
          if(count($users)==0 && $search){
                 return view('appl.exam.exam.nofile')
                     ->with('exam',$exam)
@@ -4411,7 +4416,7 @@ class AssessmentController extends Controller
         else if(request()->get('status')==1){
             return view('appl.exam.exam.status')
                     ->with('data',$data)
-                    ->with('users',$users)
+                    ->with('users',$usx)
                     ->with('pg',$pg)
                     ->with('exam',$exam)
                     ->with('userset',$userset)
@@ -4424,7 +4429,7 @@ class AssessmentController extends Controller
         else if(count($users))
             return view('appl.exam.exam.actives3')
                     ->with('data',$data)
-                    ->with('users',$users)
+                    ->with('users',$usx)
                     ->with('pg',$pg)
                     ->with('exam',$exam)
                     ->with('userset',$userset)

@@ -609,15 +609,23 @@ function image_refresh($i=null){
                  window_change = result.window_change;
                  last_photo = result.last_photo;
                  
-                 $username = result.username;
+                 $u3 = result.username;
+                 var $username = $u3.toString().split('.').join('_') ;
+
+                 console.log($username+' - '+$u3);
                  
                  $completed = $('.image_refresh_'+$username).data('completed');
                 
+                console.log('.uname_'+$username);
+                console.log($('.uname_'+$username).html());
                 var u1 = $('.uname_'+$username).html().split(' ').join('') ;
                 var u2 = (result.uname).split(' ').join('');
+
+               
                 
                 if($i){
                     $('.uname_'+$username).html(result.uname);
+                    console.log('.uname_'+$username);
                 }
                  
 
