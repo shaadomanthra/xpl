@@ -1251,13 +1251,13 @@ class AdminController extends Controller
             $user->colleges()->attach($college_id);
         }
 
-        $col = College::where('id',$college_id)->first();
-      
+       $col = College::where('id',$college_id)->first();
         $zone_id = null;
-        if($col->zones->first()){
+        if($col){
             $zone_id = $col->zones->first()->id;
         }
         
+
         if($zone_id){
             $user->zones()->detach();
             $user->zones()->attach($zone_id);
