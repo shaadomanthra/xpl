@@ -2,7 +2,7 @@
 @extends('layouts.app')
 @section('content')
 
-@section('title',  $product->name .' Product Page | Xplore')
+@section('title',  $product->name .' Product Page ')
 
 @section('description', 'The following page lists the product '.$product->name.', '.$product->description)
 
