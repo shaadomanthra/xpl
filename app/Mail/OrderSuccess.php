@@ -32,6 +32,6 @@ class OrderSuccess extends Mailable
      */
     public function build()
     {
-        return $this->subject('Xplore - '.$this->order->order_id.' - Transaction '.$this->order->payment_status)->markdown('mail.ordersuccess');
+        return $this->subject(env('APP_NAME').' - '.$this->order->order_id.' - Transaction '.$this->order->payment_status)->markdown('mail.ordersuccess');
     }
 }

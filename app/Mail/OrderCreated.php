@@ -32,6 +32,6 @@ class OrderCreated extends Mailable
      */
     public function build()
     {
-        return $this->subject('Xplore - '.$this->order->order_id.' - Order Placed')->markdown('mail.ordercreated');
+        return $this->subject(env('APP_NAME').' - '.$this->order->order_id.' - Order Placed')->markdown('mail.ordercreated');
     }
 }
