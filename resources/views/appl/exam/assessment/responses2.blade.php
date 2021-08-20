@@ -427,7 +427,7 @@ pre, code {
 
         @if($questions[$t->question_id]->type=='sq')
         @if($d=json_decode($t->comment))
-        @if($d)
+        @if(isset($d->Engagement))
         
         <div class="row" >
             <div class="col-6 col-md-3">
