@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
 
-@section('title', 'Products | Xplore')
+@section('title', 'Products ')
 
-@section('description', 'This page lists the products and services sold by packetprep')
+@section('description', '')
 
-@section('keywords', 'packetprep products')
+@section('keywords', 'products')
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb border">
