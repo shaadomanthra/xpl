@@ -427,6 +427,7 @@ pre, code {
 
         @if($questions[$t->question_id]->type=='sq')
         @if($d=json_decode($t->comment))
+        @if($d)
         
         <div class="row" >
             <div class="col-6 col-md-3">
@@ -454,7 +455,7 @@ pre, code {
               </div>
             </div>
         </div>
-
+        @endif
         @endif
         @endif
 
