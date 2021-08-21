@@ -349,8 +349,8 @@ function subdomain() {
             return 'rguktn';
     if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.in.net')
             return 'xplore';
-    if($_SERVER['HTTP_HOST'] == 'rgn.xplore.co.in')
-            return 'rguktnuzvid';
+    if($_SERVER['HTTP_HOST'] == 'devshala.gradable.test')
+            return 'exam';
     if($_SERVER['HTTP_HOST'] == 'rgrk.xplore.co.in')
             return 'rguktrkvalley';
     if($_SERVER['HTTP_HOST'] == 'demo.xp.test' )
