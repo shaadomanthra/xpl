@@ -48,8 +48,6 @@
       <a href="{{ route('password.change')}}" class="btn btn-primary">Change Password</a>
       @endif
     @endif
-      <a class="btn btn-info " href="{{ route('logout') }}" onclick="event.preventDefault();
-      document.getElementById('logout-form').submit();" role="button">Logout</a>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
       </form>

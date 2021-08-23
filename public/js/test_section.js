@@ -1541,8 +1541,16 @@ function visualize(stream) {
       }else if($('.input_'+$sno).is("textarea")){
         resp.response = $('.input_'+$sno).val();
       }
-      else
-        resp.response = $('.input_'+$sno).val();
+      else{
+        var ans =[]
+        $.each($(".input_"+$sno), function(){
+          console.log('many answers');
+          ans.push($(this).val());
+        });
+        console.log('aans joined');
+        resp.response = ans.join(",");
+        //resp.response = $('.input_'+$sno).val();
+      }
 
 
 

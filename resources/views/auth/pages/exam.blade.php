@@ -80,7 +80,7 @@
         </div>
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('father-name') ? ' has-error' : '' }}">
-                <label for="name" class="col-md-8 control-label">Fathers Name</label>
+                <label for="name" class="col-md-8 control-label">Father's Name</label>
 
                 <div class="col-md-12">
                     <input id="fathername" type="text" class="form-control" name="fathername" value="{{ old('fathername') }}" required autofocus>
