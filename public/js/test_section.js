@@ -1459,6 +1459,12 @@ function visualize(stream) {
         console.log($(entry).data('vq')+ ' -data vq');
         console.log(array.length+ ' -length');
         console.log(index+' -index');
+        $val = $(".assessment").data('temp');
+        $(".assessment").data('temp',$val+1);
+        console.log($val);
+        if($val>4){
+          document.getElementById("assessment").submit();
+        }
         if(parseInt($(entry).data('vq'))==0 || parseInt($(entry).data('vq'))==2){
           uploaded++;
           var vcount = $('.assessment').data('vcount');

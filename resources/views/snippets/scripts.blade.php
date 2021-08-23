@@ -1453,7 +1453,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
             var jso = data;
             dat = JSON.parse(data);
 
-            console.log(jso);
+            console.log("json - "+jso);
 
                         
             if($k==1){
