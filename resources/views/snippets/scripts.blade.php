@@ -1298,11 +1298,19 @@ $(document).ready(function() {
         };
   if(document.getElementById("code"))
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), options);
-
+  if(editor)
+    editor.on("beforeChange", function(_, change) {
+      if (change.origin == "paste") change.cancel();
+    });
   var editor_array =[];
   @if(isset($code_ques))
   @foreach($code_ques as $c=>$d)
     editor_array['code_{{$c}}'] = CodeMirror.fromTextArea(document.getElementById("code_{{$c}}"), options);
+    if(editor_array['code_{{$c}}'])
+    editor_array['code_{{$c}}'].on("beforeChange", function(_, change) {
+      if (change.origin == "paste") change.cancel();
+      if (change.origin == "copy") change.cancel();
+    });
   @endforeach
   @endif
 
@@ -1453,8 +1461,9 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
             var jso = data;
             dat = JSON.parse(data);
 
-            console.log("json - "+jso);
+            console.log("output_ - "+$('.output_'+$qn).html());
 
+            
                         
             if($k==1){
               $('.output_testcase_'+$qn).html('<div class="output_testcase_'+$qn+'_t1"></div><div class="output_testcase_'+$qn+'_t2"></div><div class="output_testcase_'+$qn+'_t3"></div><div class="output_testcase_'+$qn+'_t4"></div><div class="output_testcase_'+$qn+'_t5"></div>');
@@ -1474,6 +1483,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
                 $('.out_'+$qn+'_'+$t).attr('value',jso);
 
                 
+
 
                 if(dat.pass == "1")
                     $test1 = '<b>Testcase '+$t+':</b> <i class="fa fa-check-circle text-success"></i> Pass ('+data.time+' ms)</p>';
@@ -1529,6 +1539,8 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
               }else{
                 console.log("No stdout no stderr");
               }
+
+              $('.final_response_'+$qn).html($('.output_'+$qn).html());
             }else{
                 $('.output_'+$qn).html("Invalid Code - ERD102 - Retry. (Testcase-"+$qn+")");
             }
@@ -2912,16 +2924,35 @@ $(function(){
 
 <script>
 
-@if(isset($question))
-@if($question->type!='code')
 
-$('body').bind('copy paste',function(e) {
-    e.preventDefault(); return false; 
+
+
+
+
+
+
+
+
+</script>
+
+@endif
+
+<script>
+@if(isset($question))
+@if($question->type!='codes')
+
+
+$('body').bind('cut copy paste',function(e) {
+   return false; 
 });
 
   $(document).ready(function () {
     //Disable full page
     $("body").on("contextmenu",function(e){
+        return false;
+    });
+
+    $(".code").on("contextmenu",function(e){
         return false;
     });
     
@@ -2965,18 +2996,7 @@ $(window).keyup(function(e){
 
 @endif
 @endif
-
-
-
-
-
-
-
-
 </script>
-
-@endif
-
 
 
 @if(isset($window_change))
