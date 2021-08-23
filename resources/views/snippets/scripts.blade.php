@@ -1298,19 +1298,23 @@ $(document).ready(function() {
         };
   if(document.getElementById("code"))
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), options);
+  @if(!request()->get('default'))
   if(editor)
     editor.on("beforeChange", function(_, change) {
       if (change.origin == "paste") change.cancel();
     });
+  @endif
   var editor_array =[];
   @if(isset($code_ques))
   @foreach($code_ques as $c=>$d)
     editor_array['code_{{$c}}'] = CodeMirror.fromTextArea(document.getElementById("code_{{$c}}"), options);
+  @if(!request()->get('default'))
     if(editor_array['code_{{$c}}'])
     editor_array['code_{{$c}}'].on("beforeChange", function(_, change) {
       if (change.origin == "paste") change.cancel();
       if (change.origin == "copy") change.cancel();
     });
+  @endif
   @endforeach
   @endif
 
