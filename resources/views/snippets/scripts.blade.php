@@ -2940,11 +2940,10 @@ $(function(){
 <script>
 @if(isset($question))
 @if($question->type!='codes')
-
-
-$('body').bind('cut copy paste',function(e) {
-   return false; 
-});
+@if(!request()->get('default'))
+  $('body').bind('cut copy paste',function(e) {
+     return false; 
+  });
 
   $(document).ready(function () {
     //Disable full page
@@ -2961,6 +2960,7 @@ $('body').bind('cut copy paste',function(e) {
         return false;
     });
 });
+@endif
 
 function copyToClipboard() {
 
