@@ -456,9 +456,8 @@ class SectionController extends Controller
             flash('Invalid File!')->error();
             return redirect()->back()->withInput();
         }
+         // dd($data);
 
-        
-        
         foreach($data['sections'] as $key=>$value){
 
             $value['name'] = trim(strip_tags($value['name']));
@@ -521,12 +520,18 @@ class SectionController extends Controller
                     $q->mark = intval(trim(str_replace(" ","",strip_tags($qdata['mark'])),"\xA0\xC2"));
                    
                     $q->type = str_replace(' ','',strtolower($qdata['type']));
-                    if(isset($qdata['passage']))
-                    $passage = trim(str_replace(" ","",strip_tags($qdata['passage'])),"\xA0\xC2");
+                 
+                    if(isset($qdata['passage'])){
+                        $passage = trim(str_replace(" ","",strip_tags($qdata['passage'])),"\xA0\xC2");
+                    }
                     else
                         $passage='';
-                    if($passage!='')
-                    $q->passage = trim($qdata['passage']);
+                    if($passage!=''){
+                        $q->passage = trim(str_replace(" ","",strip_tags($qdata['passage'])),"\xA0\xC2");
+                    }else{
+                        $q->passage = $passage;
+                    }
+
                     $q->save();
 
                     //attach section

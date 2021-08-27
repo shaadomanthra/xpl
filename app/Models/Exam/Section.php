@@ -122,7 +122,7 @@ for ($i = 1; $i <= 8; $i++) {
            
            $c1 = strtoupper(str_replace(" ","",trim(strip_tags($rows->item(0)->getElementsByTagName('td')->item(0)->nodeValue))));
            $num = strtoupper(str_replace(" ","",trim(strip_tags($rows->item(0)->getElementsByTagName('td')->item(1)->nodeValue))));
-           
+            $question['a'] = $question['b'] = $question['c'] = $question['d'] = $question['e'] = $question['passage'] = $question['explanation'] = $question['topic'] = $question['answer'] = $question['leve']= null;         
             foreach ($rows as $row) {
                 $value = null;
                 /*** get each column by tag name ***/ 
@@ -131,15 +131,38 @@ for ($i = 1; $i <= 8; $i++) {
                 $key = strtolower(trim(strip_tags($cols->item(0)->nodeValue)));
                 $value = trim($cols->item(1)->nodeValue); 
 
+                if($key=='a' || $key=='b' || $key=='c' || $key=='d' || $key=='e' || $key=='question' || $key=='explanation'){
+                    
+                    $v= trim(str_replace(" ","",strip_tags($value)),"\xA0\xC2");
+                    
+                    $value  = static::DOMinnerHTML($cols->item(1));
+                    if($v){
+
+                        $value = str_replace('margin-top: 0;','',$value);
+                        $value = str_replace('margin-bottom: 0;','',$value);
+                        $value = str_replace("font-family: 'Arial';",'',$value);
+                        $value = str_replace("font-size: 12pt;",'',$value);
+                    }else{
+                        $value = $v;
+                    }
+                    
+                    //$value = preg_replace('#(<[a-z ]*)(style=("|\')(.*?)("|\'))([a-z ]*>)#', '\\1\\6', $value);
+                }
+
+                if($key=='passage'){
+                    $value = trim(str_replace(" ","",strip_tags($value)),"\xA0\xC2");
+                }
+                
+
                 
                 if($cols->item(1)->hasChildNodes()){
                     $images = $cols->item(1)->getElementsByTagName('img'); 
 
 
                     if($key=="a"){
-                       echo $key. ' - '.$value.'<br>';
-                    echo ($cols->item(1)->nodeValue);
-                    echo "<br><br>";  
+                       //echo $key. ' - '.$value.'<br>';
+                    //echo ($cols->item(1)->nodeValue);
+                    //echo "<br><br>";  
                     }
                     
 
@@ -171,15 +194,20 @@ for ($i = 1; $i <= 8; $i++) {
                 {
                     $section[$key] = $value;
                 }else if($c1=='QNO'){
+                   // echo $key.' -- '.$value." -- <br>";
                     $question[$key] = $value;
+
                 }
 
+                
                //  if($cols->item(1)->getElementsByTagName('img')){
                //     echo static::DOMinnerHTML($cols->item(1)); 
                //      echo "img here<br>";
                // }
 
             }
+
+
 
             if($c1=='SNO'){
                 $data['sections'][$num] = $section;
@@ -188,6 +216,7 @@ for ($i = 1; $i <= 8; $i++) {
                 $data['questions'][$num] = $question;
                 if(isset($data['sections'][$question['sno']])){
                     $data['sections'][$question['sno']]['qset'][$num] = $question;
+                    
                 }
                 //array_push($data['questions'],$question); 
             }
