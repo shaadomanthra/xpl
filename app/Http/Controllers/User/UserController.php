@@ -607,7 +607,10 @@ class UserController extends Controller
 
                     if(isset($data[$i]['products']))
                     if($data[$i]['products']){
+
+
                         $p = explode(',',$data[$i]['products']);
+
                         foreach($p as $pt){
                             if(isset($data[$i]['validity']))
                                 $validity = $data[$i]['validity'];
@@ -615,8 +618,12 @@ class UserController extends Controller
                                 $validity = 12;
                             $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($validity*31).' days'));
                             $product = Product::where('slug',$pt)->first();
-                            if(!$u->products->contains($product->id))
-                            $u->products()->attach($product->id,['validity'=>$validity,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+
+                            if(!$u->products->contains($product->id)){
+
+                              $u->products()->attach($product->id,['validity'=>$validity,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);  
+                            }
+                            
                         }
                     }
 

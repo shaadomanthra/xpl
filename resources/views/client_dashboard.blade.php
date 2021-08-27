@@ -233,6 +233,7 @@
 
 
 
+
  @if(count(auth::user()->myproducts())!=0)
   <div class="rounded table-responsive ">
             <table class="table table-bordered ">
@@ -257,7 +258,7 @@
                     @foreach($product->exams as $e)
                          <i class="fa fa-angle-right"></i> <a href="{{ route('assessment.details',$e->slug)}}">{{$e->name}}</a> 
                           @if($t=$mytests->where('test_id',$e->id)->first())
-                          <span class="badge badge-dark">{{$t->score}} / {{$t->max}}</span>
+                          
                           @endif <br>
                     @endforeach
                   </td>
