@@ -124,6 +124,7 @@ for ($i = 1; $i <= 8; $i++) {
            $num = strtoupper(str_replace(" ","",trim(strip_tags($rows->item(0)->getElementsByTagName('td')->item(1)->nodeValue))));
            
             foreach ($rows as $row) {
+                $value = null;
                 /*** get each column by tag name ***/ 
                 $cols = $row->getElementsByTagName('td'); 
 
