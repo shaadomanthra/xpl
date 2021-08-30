@@ -143,6 +143,13 @@ for ($i = 1; $i <= 8; $i++) {
                         $value = str_replace("font-family: 'Arial';",'',$value);
                         $value = str_replace("font-size: 12pt;",'',$value);
                         $value =str_replace("<p>&nbsp;</p>",'',$value);
+                        
+
+                        $value = htmlentities($value);
+                        $value =str_replace("&lt;p&gt;&nbsp;&lt;/p&gt;",'',$value);
+                        $value= rtrim(preg_replace("/<p[^>]*>(?:\s|&nbsp;)*<\/p>/", '', $value)); 
+                        $value = html_entity_decode($value);
+
                     }else{
                         $value = $v;
                     }
