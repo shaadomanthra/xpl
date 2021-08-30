@@ -142,6 +142,7 @@ for ($i = 1; $i <= 8; $i++) {
                         $value = str_replace('margin-bottom: 0;','',$value);
                         $value = str_replace("font-family: 'Arial';",'',$value);
                         $value = str_replace("font-size: 12pt;",'',$value);
+                        $value =str_replace("<p>&nbsp;</p>",'',$value);
                     }else{
                         $value = $v;
                     }
