@@ -332,6 +332,21 @@ class UserController extends Controller
         dd('done');
     }
 
+    $ct=0;
+    if(request()->get('sanitize')){
+        $usrs = User::where('client_slug',subdomain())->get();
+        foreach($usrs as $ud){
+            $ud->email = strtolower($ud->email);
+            $ud->username = str_replace('-','',$ud->username);
+            $ud->save();
+            echo $ud->id."<br>";
+            $ct++;
+        }
+        echo "total - ".$ct;
+        flash('Updated all users - '.$ct)->success();
+        dd();
+    }
+
     if(request()->get('export')){
 
         // $users = User::where('client_slug',subdomain())->get();
@@ -543,7 +558,7 @@ class UserController extends Controller
                 if(!$u){
                     $u = new User([
                    'name'     => $data[$i]['name'],
-                   'email'    => $data[$i]['email'], 
+                   'email'    => strtolower($data[$i]['email']), 
                    'username'    => $this->username($data[$i]['email']), 
                    'client_slug' =>$client_slug,
                    'phone'    => $data[$i]['phone'], 
@@ -675,7 +690,7 @@ class UserController extends Controller
         $username = $parts[0];
         $u = User::where('username',$username)->first();
         if($u){
-            $username = $username.'-'.rand(100,9999);
+            $username = $username.rand(100,9999);
         }
         return $username;
     }

@@ -120,7 +120,7 @@ class RegisterController extends Controller
         $u = User::where('username',$username)->first();
 
         if($u){
-            $username = $username.'-'.rand(10,100);
+            $username = $username.rand(10,100);
         }
 
         $password = $data['password'];
