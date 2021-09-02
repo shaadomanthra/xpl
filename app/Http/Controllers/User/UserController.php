@@ -338,6 +338,8 @@ class UserController extends Controller
         foreach($usrs as $ud){
             $ud->email = strtolower($ud->email);
             $ud->username = str_replace('-','',$ud->username);
+            $ud->username = str_replace('.','0',$ud->username);
+            $ud->username = str_replace('_','',$ud->username);
             $ud->save();
             echo $ud->id."<br>";
             $ct++;
