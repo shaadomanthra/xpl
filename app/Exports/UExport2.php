@@ -19,9 +19,9 @@ class UExport2 implements FromCollection, WithHeadings
             'id',
             'Name',
             'Email',
-
             'created',
             'last_login',
+            'Username',
             'Roll Number/Fathers Name',
             'Phone',
             'Hometown/ District',
@@ -47,7 +47,6 @@ class UExport2 implements FromCollection, WithHeadings
                 $id = $users[$k]->id;             
                 unset($users[$k]->password);
                 unset($users[$k]->remember_token);
-                unset($users[$k]->username);
                 unset($users[$k]->status);
                 unset($users[$k]->activation_token);
                 unset($users[$k]->role);
