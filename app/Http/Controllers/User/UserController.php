@@ -334,13 +334,15 @@ class UserController extends Controller
 
     $ct=0;
     if(request()->get('sanitize')){
-        $usrs = User::where('client_slug',subdomain())->get();
+        $usrs = User::where('client_slug',subdomain())->whereDate('created_at', '>', '2021-08-01')->get();
         foreach($usrs as $ud){
-            $ud->email = strtolower($ud->email);
-            $ud->username = str_replace('-','',$ud->username);
-            $ud->username = str_replace('.','0',$ud->username);
-            $ud->username = strtolower(str_replace('_','',$ud->username));
-            $ud->save();
+            if(request()->get('do')){
+                $ud->email = strtolower($ud->email);
+                $ud->username = str_replace('-','',$ud->username);
+                $ud->username = str_replace('.','0',$ud->username);
+                $ud->username = strtolower(str_replace('_','',$ud->username));
+                $ud->save();
+            }
             echo $ud->id."<br>";
             $ct++;
         }
