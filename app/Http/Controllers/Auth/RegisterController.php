@@ -126,7 +126,7 @@ class RegisterController extends Controller
         $password = $data['password'];
         $user = User::create([
             'name' => $data['name'],
-            'username' => $username,
+            'username' => strtolower($username),
             'phone' => $data['phone'],
             'email' => strtolower($data['email']),
             'client_slug' => $subdomain,

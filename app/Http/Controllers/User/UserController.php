@@ -339,7 +339,7 @@ class UserController extends Controller
             $ud->email = strtolower($ud->email);
             $ud->username = str_replace('-','',$ud->username);
             $ud->username = str_replace('.','0',$ud->username);
-            $ud->username = str_replace('_','',$ud->username);
+            $ud->username = strtolower(str_replace('_','',$ud->username));
             $ud->save();
             echo $ud->id."<br>";
             $ct++;
@@ -561,7 +561,7 @@ class UserController extends Controller
                     $u = new User([
                    'name'     => $data[$i]['name'],
                    'email'    => strtolower($data[$i]['email']), 
-                   'username'    => $this->username($data[$i]['email']), 
+                   'username'    => strtolower($this->username($data[$i]['email'])), 
                    'client_slug' =>$client_slug,
                    'phone'    => $data[$i]['phone'], 
                    'roll_number'    => trim(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data[$i]['roll_number'])), 
