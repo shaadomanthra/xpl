@@ -351,8 +351,10 @@ function subdomain() {
             return 'xplore';
     if($_SERVER['HTTP_HOST'] == 'devshala.gradable.test')
             return 'exam';
-    if($_SERVER['HTTP_HOST'] == 'rgrk.xplore.co.in')
-            return 'rguktrkvalley';
+    if($_SERVER['HTTP_HOST'] == 'rguktrkvalley.xplore.in.net')
+            return 'rguktsklm';
+    if($_SERVER['HTTP_HOST'] == 'rguknuzvid.xplore.in.net')
+            return 'rguktong';
     if($_SERVER['HTTP_HOST'] == 'demo.xp.test' )
             return 'fks';
 
