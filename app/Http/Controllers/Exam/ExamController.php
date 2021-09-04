@@ -805,6 +805,7 @@ class ExamController extends Controller
             $email_stack['registered'] =$email_stack['not_registered'] =[];
             $count = $count2=0;
             foreach($emails as $e){
+                $e = trim(strtolower($e));
                 if(in_array($e, $inusers)){
                     array_push($email_stack['registered'], $e);
                 }else{
