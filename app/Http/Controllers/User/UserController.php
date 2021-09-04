@@ -337,7 +337,7 @@ class UserController extends Controller
         $usrs = User::where('client_slug',subdomain())->whereDate('created_at', '>', '2021-08-01')->get();
         foreach($usrs as $ud){
             if(request()->get('do')){
-                $ud->email = strtolower($ud->email);
+                $ud->email = trim(strtolower($ud->email));
                 $ud->username = str_replace('-','',$ud->username);
                 $ud->username = str_replace('.','0',$ud->username);
                 $ud->username = strtolower(str_replace('_','',$ud->username));
