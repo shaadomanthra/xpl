@@ -174,6 +174,10 @@ class User extends Authenticatable
         $user = $this;
         $username = $this->username;
 
+        $d = \carbon\carbon::now()->format('d');
+        if($d==05){
+            Cache::forget('userimage_'.$username);
+        }
 
         if(request()->get('refresh')){
             Cache::forget('userimage_'.$username);
