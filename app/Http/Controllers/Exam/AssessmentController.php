@@ -648,7 +648,7 @@ class AssessmentController extends Controller
 
         if(!$request->get('admin'))
         if(trim(strip_tags($exam->emails))){
-            if(strpos(strtolower($exam->emails),strtolower($user->email))!==false)
+            if(strpos(trim(strtolower($exam->emails)),trim(strtolower($user->email)))!==false)
             {
 
             }else{
