@@ -1095,10 +1095,12 @@ class AssessmentController extends Controller
 
 
             if(\auth::user()->getImage()){
+            if($this->url_exists(\auth::user()->getImage())){
                 $base64_code = base64_encode(file_get_contents(\auth::user()->getImage()));
                 $base64_str = 'data:image/jpeg;base64,' . $base64_code;
                 $images['user'] = $base64_str;
 
+            }
             }
 
 
@@ -1250,6 +1252,11 @@ class AssessmentController extends Controller
                         ->with('cam360',$cam360)
                         ->with('section_questions',$section_questions);
     }
+
+    function url_exists($url) {
+        return curl_init($url) !== false;
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -5410,7 +5417,7 @@ class AssessmentController extends Controller
             //file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
         }
 
-      
+
         $user = \Auth::user();
         if(request()->get('retry')){
 
