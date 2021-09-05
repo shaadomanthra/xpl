@@ -1093,7 +1093,7 @@ class AssessmentController extends Controller
                 $images['logo'] = $base64_str;
             }
 
-
+            $images['user'] ='';
             if(\auth::user()->getImage()){
             if($this->url_exists(\auth::user()->getImage())){
                 $base64_code = base64_encode(file_get_contents(\auth::user()->getImage()));
@@ -1254,7 +1254,10 @@ class AssessmentController extends Controller
     }
 
     function url_exists($url) {
-        return curl_init($url) !== false;
+        $headers = @get_headers($url);
+        if(strpos($headers[0],'200')===false)
+            return false;
+        return true;
     }
 
 
