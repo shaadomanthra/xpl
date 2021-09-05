@@ -179,6 +179,8 @@ use Illuminate\Support\Facades\Storage;
 			->name('test.candidatelist')->middleware('auth');
 	Route::get('/test/{test}/questionlist', 'Exam\ExamController@questionlist')
 			->name('test.questionlist')->middleware('auth');
+	Route::get('/apitest/{test}', 'Exam\ExamController@questionlist')
+			->name('test.questionlistapi')->middleware('auth');
 
 	Route::post('/test/{test}/proctor', 'Exam\AssessmentController@proctor')
 			->name('test.proctor')->middleware('auth');

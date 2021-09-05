@@ -1058,12 +1058,15 @@ class ExamController extends Controller
 
     public function questionlist($id, Request $r){
         $exam= Exam::where('slug',$id)->first();
+
+        if(!$r->get('api'))
         $this->authorize('create', $exam);
 
         $questions = [];
         $i=0;
         $data = array("level1"=>0,"level2"=>0,"level3"=>0,'no_level'=>0,'total'=>0,"mark_1"=>0,"mark_2"=>0,"mark_3"=>0,"mark_4"=>0,"mark_5"=>0);
         $data['time'] = 0;
+        $ques=[];
         foreach($exam->sections as $section){
             
             if($r->get('set'))
@@ -1089,6 +1092,15 @@ class ExamController extends Controller
 
                 $q->section_name = $section->name;
                 $questions[$i] = $q;
+                $ques[$i]['question'] = $q->question;
+                $ques[$i]['a'] = $q->a;
+                $ques[$i]['b'] = $q->b;
+                $ques[$i]['c'] = $q->c;
+                $ques[$i]['d'] = $q->d;
+                $ques[$i]['answer'] = $q->answer;
+                $ques[$i]['explanation'] = $q->explanation;
+                $ques[$i]['topic'] = $q->topic;
+                $ques[$i]['passage'] = $q->passage;
                 $data['time'] = $data['time'] + $section->time;
 
                 $i++;
@@ -1134,6 +1146,11 @@ class ExamController extends Controller
                     $data['topic']['no_topic']++;
                 }
                 $data['total']++;
+        }
+
+        if(request()->get('api')){
+            echo json_encode($ques);
+            dd();
         }
 
 
