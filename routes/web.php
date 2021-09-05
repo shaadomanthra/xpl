@@ -180,7 +180,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('/test/{test}/questionlist', 'Exam\ExamController@questionlist')
 			->name('test.questionlist')->middleware('auth');
 	Route::get('/apitest/{test}', 'Exam\ExamController@questionlist')
-			->name('test.questionlistapi')->middleware('auth');
+			->name('test.questionlistapi');
 
 	Route::post('/test/{test}/proctor', 'Exam\AssessmentController@proctor')
 			->name('test.proctor')->middleware('auth');
