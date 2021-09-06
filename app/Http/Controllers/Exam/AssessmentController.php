@@ -4465,6 +4465,8 @@ class AssessmentController extends Controller
             return Exam::where('slug',$id)->first();
         });
 
+
+
         $search = trim($r->get('search'));
 
         $users = array();
@@ -4512,6 +4514,8 @@ class AssessmentController extends Controller
             if(request()->get('refresh')){
                 Cache::forget('candidates_'.$exam->slug.'_'.$user->username);
             }
+
+
             if(!$search)
                 $userset = Cache::remember('candidates_'.$exam->slug.'_'.$user->username,240, function() use($candidates) {
                     return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
@@ -4529,13 +4533,17 @@ class AssessmentController extends Controller
             foreach($userset as $a=> $b){
                 $name = $b->username.'_log.json';
                 $pg[$b->username] = 'testlog/'.$exam->id.'/log/'.$name;
+
             }
 
 
             $tests_overall = [];//Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$userset->pluck('user_id')->toArray())->with('user')->get();
             $completed_list = [];//$this->updateCompleted($pg,$tests_overall,$exam);
 
+
             $pg = $this->paginateAnswers($pg,count($pg));
+
+
 
             foreach($pg as $usc=>$f){
                 $p = explode('/',$f);
@@ -4543,6 +4551,8 @@ class AssessmentController extends Controller
 
                 $content = [];
                 //echo $f."<br>";
+                $time_start = microtime(true); 
+                
                 if(Storage::disk('s3')->exists($f)){
 
                     $content = json_decode(Storage::disk('s3')->get($f),true);
@@ -4553,7 +4563,9 @@ class AssessmentController extends Controller
 
                     $chaturl = 'testlog/'.$exam->id.'/chats/'.$usc.'.json';
 
+                    
                     if(Storage::disk('s3')->exists($chaturl)){
+                     
                         $chat_messages = json_decode(Storage::disk('s3')->get($chaturl),true);
                         $chats[$usc] = $chat_messages;
                         $end = end($chats[$usc]);
@@ -4562,6 +4574,7 @@ class AssessmentController extends Controller
                         $chats[$usc]['last_user'] = $end['name'];
 
                     }
+                    
 
                     $content['selfie_url'] ='';
                     $content['idcard_url'] ='';
@@ -4624,6 +4637,7 @@ class AssessmentController extends Controller
                     }else{
                         $content['last_photo'] = '';
                     }
+
                 }
 
                 if(isset($content['completed'])){
@@ -4650,9 +4664,16 @@ class AssessmentController extends Controller
                     if(isset($pc2[0]))
                         $users[$pc2[0]] = $content;
                 }
+
+                $time_end = microtime(true);
+                $execution_time = ($time_end - $time_start);
+
+                //execution time of the script
+               // echo '<b>Total Execution Time:</b> '.$execution_time.' Mins<br>';
                 //array_push($users, $content);
             }
 
+           // dd('done');
 
         }else{
 

@@ -31,7 +31,7 @@
             Dashboard
         </a></li>
 
-        @if($_SERVER['HTTP_HOST'] != 'rguktnuzvid.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'rguktrkvalley.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'demo.gradable.test')
+        @if($_SERVER['HTTP_HOST'] != 'rguktnuzvid.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'rguktrkvalley.xplore.co.in' && $_SERVER['HTTP_HOST'] != 'demo.gradable.test' && subdomain()!='rguktong' && subdomain()!='rguktsklm')
         <li class="mr-3">
             @if(\auth::user()->role == 12 || \auth::user()->role == 11  || \auth::user()->role == 10 || \auth::user()->role == 13 || \auth::user()->role == 14)
             <a class="nav-link" href="{{ url('exam') }}" aria-label="Tests"
