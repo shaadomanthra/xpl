@@ -259,7 +259,7 @@ class AssessmentController extends Controller
 
         $user = \auth::user();
 
-        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley')
+        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm')
         if($exam->client!=subdomain())
             abort('404','Test not found');
 
@@ -299,7 +299,7 @@ class AssessmentController extends Controller
                 }else
                     $products = null;
 
-            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley'){
+            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'){
                  $products = null;
             }else{
                 $client = Cache::get('client_'.subdomain());
@@ -512,6 +512,7 @@ class AssessmentController extends Controller
 
 
 
+
        $exam = Cache::get('test_'.$test);
        $data['branches'] = Cache::get('branches');
        $data['colleges'] = Cache::get('colleges');
@@ -540,7 +541,7 @@ class AssessmentController extends Controller
         if(!$exam)
             abort('404','Test not found');
 
-        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley')
+        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm')
         if($exam->client!=subdomain())
             abort('404','Test not found');
 
@@ -664,7 +665,7 @@ class AssessmentController extends Controller
                 }else
                     $products = null;
 
-            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley'){
+            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'){
                  $products = null;
             }else{
                 $client = Cache::get('client_'.subdomain());
@@ -749,7 +750,7 @@ class AssessmentController extends Controller
                     $ids = array_keys($responses->keyBy('question_id')->toArray());
                     $ids_ordered = implode(',', $ids);
                     
-                    if(subdomain()!='rguktnuzvid' && subdomain()!='rguktrkvalley' && subdomain()!='demo')
+                    if(subdomain()!='rguktnuzvid' && subdomain()!='rguktrkvalley' && subdomain()!='demo' && subdomain()!='rguktsklm' && subdomain()!='rguktong')
                     $qset = $section->questions()->whereIn('id', $ids)
                          ->orderByRaw("FIELD(id, $ids_ordered)")
                          ->get();
@@ -3528,59 +3529,70 @@ class AssessmentController extends Controller
 
         $test_overall_cache->cheat_detect = $test_overall['cheat_detect'];
 
-        if(!$request->get('admin')){
-            Cache::put('attempt_'.$user_id.'_'.$test_id,$test_overall_cache,240);
-            Cache::forget('attempts_'.$user_id);
-        }else{
-            Cache::forget('attempt_'.$user_id.'_'.$test_id);
-            Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
-        }
+        
 
 
-        Test::insert($data);
-        Tests_Section::insert($sec);
-        Tests_Overall::insert($test_overall);
+        try {
+            DB::connection()->getPdo();
 
-
-        if(!$request->get('admin')){
-            if(isset($exam->settings->form_fields)){
-                if($exam->settings->form_fields){
-                     $jsonfile = 'test_info/'.$exam->slug.'/'.$user->username.'.json';
-                     if(Storage::disk('s3')->exists($jsonfile)){
-                        $djson = Storage::disk('s3')->get($jsonfile);
-                        $test_oa2 = Tests_Overall::where('user_id', $user->id)
-                                        ->orderBy('id','desc')
-                                        ->first();
-                        $test_oa2->params = $djson;
-                        $test_oa2->save();
-
-                     }
-                }
+            if(!$request->get('admin')){
+                Cache::put('attempt_'.$user_id.'_'.$test_id,$test_overall_cache,240);
+                Cache::forget('attempts_'.$user_id);
+            }else{
+                Cache::forget('attempt_'.$user_id.'_'.$test_id);
+                Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
             }
+            Test::insert($data);
+            Tests_Section::insert($sec);
+            Tests_Overall::insert($test_overall);
 
-            $test_oa = Tests_Overall::where('user_id', $user->id)
-                    ->orderBy('id','desc')
-                    ->get();           
 
-            if($audio){
-                //writing correction
-                writing::dispatch($user,$exam,'writing',null)->delay(now()->addMinutes(1));
-                //speaking correction
-                foreach($exam->sections as $section){
-                    //$qset = $section->questions;
-                    $qset = $exam->getQuestionsSection($section->id,$user->id);
-                    foreach($qset as $q)
-                    {
-                        if($q->type=='aq')
-                          writing::dispatch($user,$exam,'audio',$q->id);
-                      
+            if(!$request->get('admin')){
+                if(isset($exam->settings->form_fields)){
+                    if($exam->settings->form_fields){
+                         $jsonfile = 'test_info/'.$exam->slug.'/'.$user->username.'.json';
+                         if(Storage::disk('s3')->exists($jsonfile)){
+                            $djson = Storage::disk('s3')->get($jsonfile);
+                            $test_oa2 = Tests_Overall::where('user_id', $user->id)
+                                            ->orderBy('id','desc')
+                                            ->first();
+                            $test_oa2->params = $djson;
+                            $test_oa2->save();
+
+                         }
                     }
                 }
+
+                $test_oa = Tests_Overall::where('user_id', $user->id)
+                        ->orderBy('id','desc')
+                        ->get();           
+                Cache::put('attempts_'.$user_id,$test_oa, 240);
+                if($audio){
+                    //writing correction
+                    writing::dispatch($user,$exam,'writing',null)->delay(now()->addMinutes(1));
+                    //speaking correction
+                    foreach($exam->sections as $section){
+                        //$qset = $section->questions;
+                        $qset = $exam->getQuestionsSection($section->id,$user->id);
+                        foreach($qset as $q)
+                        {
+                            if($q->type=='aq')
+                              writing::dispatch($user,$exam,'audio',$q->id);
+                          
+                        }
+                    }
+                }
+                
+            }else{
+                Cache::forget('attempts_'.$user_id);
             }
-            Cache::put('attempts_'.$user_id,$test_oa, 240);
-        }else{
-            Cache::forget('attempts_'.$user_id);
+
+        } catch (\Exception $e) {
+            //die("Could not connect to the database.  Please check your configuration. error:" . $e );
         }
+        
+
+
 
          if($request->get('api_submit'))
             return 1;
@@ -5480,7 +5492,7 @@ class AssessmentController extends Controller
         else
             $responses = null;
 
-        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley')
+        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client == 'rguktsklm' || $exam->client == 'rguktong')
         if($exam->client!=subdomain())
             abort('404','Test not found');
 
@@ -5930,9 +5942,6 @@ class AssessmentController extends Controller
         $content = null;
         if(Storage::disk('s3')->exists($filepath)){
             $content = json_decode(Storage::disk('s3')->get($filepath),true);
-
-            
-
         }
 
        
@@ -5970,6 +5979,30 @@ class AssessmentController extends Controller
         $sum = 0;
         $c=0; $i=0; $u=0;
 
+        if($exam->solutions==2){
+            $view = "analysis_private";
+             return view('appl.exam.assessment.'.$view)
+                        ->with('exam',$exam)
+                        ->with('data',$d)
+                        ->with('questions',$ques)
+                        ->with('sections',[])
+                        ->with('sectiondetails',$sectiondetails)
+                        ->with('details',$details)
+                        ->with('student',$student)
+                        ->with('user',$student)
+                        ->with('tests',[])
+                        ->with('typeslug',null)
+                        ->with('test_overall',0)
+                        ->with('review',true)
+                        ->with('mathjax',false)
+                         ->with('video',false)
+                         ->with('content',false)
+                        ->with('count',$count)
+                        ->with('images',$images)
+                        ->with('noback',1)
+                        ->with('chart',true);
+        }
+
         $tests = Cache::remember('resp_'.$user_id.'_'.$test_id,240,function() use ($exam,$student){
             return Test::where('test_id',$exam->id)
                         ->where('user_id',$student->id)->get();
@@ -5983,6 +6016,8 @@ class AssessmentController extends Controller
              Cache::forget('exam_type_'.$exam->slug);
 
         }
+
+        
 
         $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
