@@ -91,12 +91,14 @@
 
 		@elseif($details['evaluation'])
 
+		@if($test_overall)
 		@if($test_overall->comment)
 			<div class="card mb-3 p-3" style="background: #fff4ef;border: 2px solid #ffdecc;color: #ab836e;">
 		    <h3>Comments</h3>
 		    <p>{{$test_overall->comment}}</p>
 		  </div>  
 		  @endif
+		@endif
 
 		  
 
