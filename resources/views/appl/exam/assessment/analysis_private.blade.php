@@ -101,7 +101,7 @@
 		@endif
 
 		  
-
+		@if(isset($details['performance']))
 		<div class="row">
 			<div class="col-12 col-md-4 mb-3">
 				<div class="card p-3" style="background: #F9FCE5;border: 2px solid #D1D3C5;color: #9D9792;">
@@ -152,6 +152,8 @@
 			</div>
 		</div>
 
+		@endif
+
 		@if($exam->slug != 'proficiency-test')
 		@if($exam->solutions!=1)
 		<div class="card mb-3 "  style="background: #E6F5FF;border: 2px solid #B1D2E7;">
@@ -196,8 +198,9 @@
 		</div>
 		@endif
 
-
+		@if(isset($details['performance']))
 		@include('appl.exam.assessment.blocks.cheating')
+		@endif
 		
 		
 		@if(isset($details['c']))

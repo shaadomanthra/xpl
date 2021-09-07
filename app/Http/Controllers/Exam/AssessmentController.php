@@ -5979,7 +5979,7 @@ class AssessmentController extends Controller
         $sum = 0;
         $c=0; $i=0; $u=0;
 
-        if($exam->solutions==2){
+        if($exam->solutions==2 && !request()->get('student')){
             $view = "analysis_private";
              return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
