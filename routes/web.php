@@ -15,6 +15,7 @@ use PacketPrep\Http\Middleware\RequestFilter;
 use PacketPrep\Http\Middleware\Corporate;
 use PacketPrep\User;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Middleware\cors;
 
 
 
@@ -180,7 +181,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('/test/{test}/questionlist', 'Exam\ExamController@questionlist')
 			->name('test.questionlist')->middleware('auth');
 	Route::get('/apitest/{test}', 'Exam\ExamController@questionlist')
-			->name('test.questionlistapi');
+			->name('test.questionlistapi')->middleware('cors');
 
 	Route::post('/test/{test}/proctor', 'Exam\AssessmentController@proctor')
 			->name('test.proctor')->middleware('auth');
