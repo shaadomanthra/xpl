@@ -15,7 +15,7 @@ use PacketPrep\Http\Middleware\RequestFilter;
 use PacketPrep\Http\Middleware\Corporate;
 use PacketPrep\User;
 use Illuminate\Support\Facades\Storage;
-use PacketPrep\Http\Middleware\cors;
+
 
 
 
