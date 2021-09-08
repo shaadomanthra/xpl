@@ -4306,7 +4306,7 @@ class AssessmentController extends Controller
                             //dd($result);
                         }else if(!$flag && !Storage::disk('s3')->exists($url)){
                              $url = 'testlog/'.$exam->id.'/log/'.$c.'_log.json';
-                             Storage::disk('s3')->delete($url);
+                             //Storage::disk('s3')->delete($url);
                         }   
                         
                     }
