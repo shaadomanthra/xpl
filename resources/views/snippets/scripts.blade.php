@@ -3019,8 +3019,12 @@ $(window).keyup(function(e){
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" type="application/javascript"></script>
 @endif
 
-@if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com')
+@if($_SERVER['HTTP_HOST'] == 'learn.pp.test' || $_SERVER['HTTP_HOST'] == 'learn.packetprep.com')
+
+
+@elseif(strtoupper(env('APP_NAME')) == strtoupper('gradable'))
 @else
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43617911-9"></script>
 <script>

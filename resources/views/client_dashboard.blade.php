@@ -5,6 +5,7 @@
 @section('content')
 
 
+
 <div class="container mt-4">
 
 
@@ -21,7 +22,7 @@
       <div class="row mt-0 mt-mb-4">
         <div class="col-12 col-md-3">
 
-
+          
           <img class="img-thumbnail rounded-circle mb-3 d-none d-md-block" src="@if(\auth::user()->getImage()) {{ (\auth::user()->getImage())}}@else {{ Gravatar::src(\auth::user()->email, 150) }}@endif">
         </div>
         <div class="col-12 col-md-9">
