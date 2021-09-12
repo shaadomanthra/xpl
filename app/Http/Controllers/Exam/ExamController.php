@@ -1150,7 +1150,8 @@ class ExamController extends Controller
 
         if(request()->get('api')){
             echo json_encode($ques);
-            dd();
+            exit();
+            return 1;
         }
 
 
