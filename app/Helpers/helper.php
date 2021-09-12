@@ -347,7 +347,7 @@ function subdomain() {
             return 'gradable';
     if($_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' )
             return 'rguktn';
-    if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' || $_SERVER['HTTP_HOST'] == 'learn.pp.test' || $_SERVER['HTTP_HOST'] == 'learn.packetprep.com' )
+    if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' )
             return 'xplore';
     if($_SERVER['HTTP_HOST'] == 'devshala.gradable.test')
             return 'exam';

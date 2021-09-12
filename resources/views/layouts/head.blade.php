@@ -58,7 +58,7 @@
   @if(isset($highlight))
   <link href="{{ asset('css/styles2.css') }}?new=16" rel="stylesheet">
   @elseif(domain()=='pp' || domain()=='packetprep')
-  <link href="{{ asset('css/stylespp.css') }}?new=13" rel="stylesheet">
+  <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   @else
   <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   @endif
