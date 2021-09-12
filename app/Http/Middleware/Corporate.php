@@ -23,12 +23,9 @@ class Corporate
          }
            
 
-         if( subdomain()=='packetprep' && domain()=='xplore')
+        if( subdomain()=='packetprep' && domain()=='xplore')
             return redirect('https://learn.packetprep.com/',301);
 
-        if( subdomain()=='packetprep' ){
-            dd($_SERVER['HTTP_HOST']);
-        }
         if(subdomain()){
 
              
