@@ -19,7 +19,10 @@ class Corporate
     public function handle($request, Closure $next)
     {
         if( $_SERVER['HTTP_HOST'] == 'packetprep.xplore.co.in')
-                return redirect('https://learn.packetprep.com/',301);
+            return redirect('https://learn.packetprep.com/',301);
+
+         if( subdomain()=='packetprep' && domain()=='xplore')
+            return redirect('https://learn.packetprep.com/',301);
 
         if(subdomain()){
 
