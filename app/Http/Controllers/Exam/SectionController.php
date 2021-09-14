@@ -529,9 +529,9 @@ class SectionController extends Controller
 
 
                     if($passage!=''){
-                        $q->passage = trim(strip_tags($qdata['passage']),"\xA0\xC2");
+                        $q->passage = trim($qdata['passage'],"\xA0\xC2");
                     }else{
-                        $q->passage = trim(strip_tags($qdata['passage']),"\xA0\xC2");
+                        $q->passage =trim($qdata['passage'],"\xA0\xC2");
                     }
 
                     $q->save();

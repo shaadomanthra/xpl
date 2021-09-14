@@ -131,7 +131,7 @@ for ($i = 1; $i <= 8; $i++) {
                 $key = strtolower(trim(strip_tags($cols->item(0)->nodeValue)));
                 $value = trim($cols->item(1)->nodeValue); 
 
-                if($key=='a' || $key=='b' || $key=='c' || $key=='d' || $key=='e' || $key=='question' || $key=='explanation'){
+                if($key=='a' || $key=='b' || $key=='c' || $key=='d' || $key=='e' || $key=='question' || $key=='explanation' || $key=='passage'){
                     
                     $v= trim(str_replace(" ","",strip_tags($value)),"\xA0\xC2");
                     
@@ -157,9 +157,7 @@ for ($i = 1; $i <= 8; $i++) {
                     //$value = preg_replace('#(<[a-z ]*)(style=("|\')(.*?)("|\'))([a-z ]*>)#', '\\1\\6', $value);
                 }
 
-                if($key=='passage'){
-                    $value = trim(strip_tags($value),"\xA0\xC2");
-                }
+               
                 
 
                 
