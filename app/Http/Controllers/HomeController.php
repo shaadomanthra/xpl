@@ -136,7 +136,7 @@ class HomeController extends Controller
           return view('piofx.front')->with('welcome',1);
          elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
             return view('appl.pages.xp.index')->with('welcome3',1);
-        elseif($_SERVER['HTTP_HOST'] == 'learn.packetprep.com' || $_SERVER['HTTP_HOST'] == 'learn.pp.test')
+        elseif(subdomain()=='packetprep')
             return view('appl.pages.pp.index')->with('welcome3',1);
         elseif($_SERVER['HTTP_HOST'] == 'xplore.in.net'){
             echo "hello!";
