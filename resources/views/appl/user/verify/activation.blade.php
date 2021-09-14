@@ -19,7 +19,7 @@
 				@else
 				<h3  class="text-primary">Verify your email id</h3>
 				<p>We have sent you an activation email during registration, kindly click on the activation link to verify your email.</p>
-				<p>Sometimes email may land up in SPAM FOLDER. Kindly check spam folder before resending.</p>
+				<p>Sometimes email may land up in SPAM / Promotion FOLDER. Kindly check spam folder before resending.</p>
 				
 				<a href="{{ route('activation') }}?resend_email=1">
 					<button class="btn btn-warning">Resend activation email</button>
