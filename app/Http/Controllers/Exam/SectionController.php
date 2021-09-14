@@ -522,14 +522,16 @@ class SectionController extends Controller
                     $q->type = str_replace(' ','',strtolower($qdata['type']));
                  
                     if(isset($qdata['passage'])){
-                        $passage = trim(str_replace(" ","",strip_tags($qdata['passage'])),"\xA0\xC2");
+                        $passage = $qdata['passage'];
                     }
                     else
                         $passage='';
+
+
                     if($passage!=''){
-                        $q->passage = trim(str_replace(" ","",strip_tags($qdata['passage'])),"\xA0\xC2");
+                        $q->passage = trim(strip_tags($qdata['passage']),"\xA0\xC2");
                     }else{
-                        $q->passage = $passage;
+                        $q->passage = trim(strip_tags($qdata['passage']),"\xA0\xC2");
                     }
 
                     $q->save();

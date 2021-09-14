@@ -405,6 +405,8 @@ class ProductController extends Controller
 
       if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
         $view = 'xplore_dashboard';
+      else if($_SERVER['HTTP_HOST'] == 'learn.pp.test' || $_SERVER['HTTP_HOST'] == 'learn.packetprep.com')
+        $view = 'client_pp';
       else
         $view = 'client_dashboard';
         

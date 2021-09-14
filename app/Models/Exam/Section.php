@@ -158,7 +158,7 @@ for ($i = 1; $i <= 8; $i++) {
                 }
 
                 if($key=='passage'){
-                    $value = trim(str_replace(" ","",strip_tags($value)),"\xA0\xC2");
+                    $value = trim(strip_tags($value),"\xA0\xC2");
                 }
                 
 

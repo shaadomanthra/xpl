@@ -7,6 +7,12 @@
 
 
 <div class="container mt-4">
+<div class="rounded p-4 mb-4" style="background: #f7eaca; border:1px solid #e2ca8f;">
+ 
+  <h3 class="">Join Job Guaranteed Training with Pay After Placement <img src="https://i.imgur.com/2z3tA1h.gif" style="width: 35px"/> </h3>
+<p class="mb-3">Trained candidates of PacketPrep are placed in top companies like Deliotte, Capgemini, Cognizant, Tech Mahindra, ADP and more. Start your amazing journey with us! <a href="https://tech.packetprep.com/contact"><b>Apply Now</b> </a> or <i>call us at +91 90000 45750</i> </p>
+
+</div>
 
 
 @if(auth::user() && subdomain()=='packetprep')
@@ -22,10 +28,10 @@
 @endif
     @endif
 <div class="row">
-  <div class="col-12 ">
-<div class="p-0 mb-4" @if(env('APP_NAME')=='Gradable') style="border:1px solid #8ec5d4;box-shadow: 2px 2px 2px 1px #e2e6e7" @else style="border:1px solid #eee;box-shadow: 2px 2px 2px 1px #e7e7e7" @endif>
-  <div class="p-2 " @if(env('APP_NAME')=='Gradable')  style="background: #bee0e9;" @else style="background: #eee;"@endif> </div>
-<div class="  p-3 pt-5 " @if(env('APP_NAME')=='Gradable')  style="background: #d6eef3;" @else style="background: white;" @endif>
+  <div class="col-12 col-md-9 ">
+<div class="p-0 mb-4"  style="border:1px solid #8ec5d4;box-shadow: 2px 2px 2px 1px #e2e6e7"  >
+  <div class="p-2 "   style="background: #bee0e9;"> </div>
+<div class="  p-3 pt-5 "  style="background: #d6eef3;" >
 
 
 
@@ -83,12 +89,7 @@
 
     </div>
     
-    <div class="col-12 col-md-3  @if(env('APP_NAME')=='Gradable')  d-none @endif ">
-      <div class="float-right ">
-                <img src="{{ asset('/img/student_front.png')}}" class="w-100 p-3 pt-0"/>
-                
-      </div>
-    </div>
+    
   </div>
 </div>
 </div>
@@ -303,6 +304,23 @@
   
 
 
+  </div>
+
+  <div class="col-12 col-md-3">
+    <a href="https://tech.packetprep.com/contact"><img src="https://i.imgur.com/AFCPjbn.jpg" class="w-100 rounded" /></a>
+
+     <div class="bg-white  p-3 p-md-4 mb-md-4 mt-3" style="background-image:url(https://packetprep.com/img/corner-4.png);background-position: right;background-repeat: no-repeat; border-radius:8px;box-shadow: 2px 2px 2px 2px #eee;background-size: auto;">
+      <div class="heading mb-4">
+        <a href="https://www.youtube.com/packetprep">
+        <h3 class="jost  text-danger" > <i class="fa fa-youtube-play"></i> Youtube </h3></a>
+
+      </div>
+      <p>Subscribe to our <b> youtube channel</b> to access free learning content.</p>
+      <a href="https://www.youtube.com/packetprep">
+      <p class="mb-0 btn btn-danger"><b>Subscribe Now</b></p>
+    </a>
+
+    </div>
   </div>
 
   

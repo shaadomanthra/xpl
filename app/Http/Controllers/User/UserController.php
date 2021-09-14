@@ -819,10 +819,10 @@ class UserController extends Controller
                  return redirect()->back()->withInput();
         }
 
-        if($request->fathername==null){
-            flash('Fathers name cannot be empty')->error();
-                 return redirect()->back()->withInput();
-        }
+        // if($request->fathername==null){
+        //     flash('Fathers name cannot be empty')->error();
+        //          return redirect()->back()->withInput();
+        // }
 
         if($request->phone==null){
             flash('Phone number cannot be empty')->error();
@@ -867,8 +867,19 @@ class UserController extends Controller
             Cache::forever('uid_1',$usx);
         }
 
+        if(subdomain()=='packetprep')
+         $user = User::create([
+            'name' => $request->name,
+            'username' => strtolower($username),
+            'email' => strtolower($request->email),
+            'password' => bcrypt($request->password),
+            'activation_token' => str_random(20),
+            'client_slug' => $subdomain,
+            'user_id' =>$usx->id,
+            'status'=>5,
+        ]);
 
-
+        else
         $user = User::create([
             'name' => $request->name,
             'username' => strtolower($username),
