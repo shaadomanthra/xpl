@@ -40,6 +40,15 @@ class HomeController extends Controller
 
     }
 
+
+    public function contact(){
+
+        if(subdomain()=='xplore')
+        return view('appl.pages.xp.general.contact');
+        else
+            return redirect('/contactpage');
+    }
+
     public function phpword(){
 
       

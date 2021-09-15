@@ -341,7 +341,7 @@ use Illuminate\Support\Facades\Storage;
 
 	Route::get('/terms-corporate',function(){ return view('appl.product.pages.terms'); })->name('terms-corporate');
 
-	Route::get('/contact',function(){ return view('appl.pages.xp.general.contact'); })->name('contact');
+	Route::get('/contact','HomeController@contact')->name('contact');
 	Route::get('/contactpage',function(){ return view('appl.pages.contact'); })->name('contactpage');
 
 	Route::get('/downloads-corporate',function(){ return view('appl.product.pages.downloads'); })->name('downloads');
