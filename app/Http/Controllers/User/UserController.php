@@ -27,6 +27,8 @@ use PacketPrep\Exports\UExport2;
 use Maatwebsite\Excel\Facades\Excel;
 use PacketPrep\Models\College\Metric;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
+use PacketPrep\Mail\ActivateUser2;
 
 class UserController extends Controller
 {
@@ -912,6 +914,11 @@ class UserController extends Controller
             $user->tenth = $request->get('tenth');
             $user->twelveth = $request->get('twelveth');
             $user->bachelors = $request->get('bachelors');
+            $user->save();
+            Mail::to($user->email)->send(new ActivateUser2($user));
+
+            flash('Successfully created your account. Login with your email and password.')->success();
+            return redirect()->route('login');
         }
         
         $user->save();

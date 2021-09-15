@@ -60,7 +60,7 @@
 
              <dl class="row mb-0">
                 <dt class="col-sm-5"><i class='fa fa-address-book-o'></i> &nbsp; 
-                @if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+                @if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || subdomain()=='packetprep')
               Roll Number
                 @else
                 Fathers or Mothers Name / Roll number
@@ -100,15 +100,29 @@
 
              @if($user->current_city)
              <dl class="row mb-0">
-                <dt class="col-sm-5"><i class='fa fa-address-card-o'></i> &nbsp; Current City (or) Address</dt>
+                <dt class="col-sm-5"><i class='fa fa-address-card-o'></i> &nbsp; Current City  @if(subdomain()!='packetprep')(or) Address @endif</dt>
                 <dd class="col-sm-7">@if(strip_tags(trim($user->current_city))) {{$user->current_city}} @else - @endif</dd>
               </dl>
              @endif
 
              @if($user->hometown)
              <dl class="row mb-0">
-                <dt class="col-sm-5"><i class='fa fa-home'></i> &nbsp; Hometown (or) District</dt>
+                <dt class="col-sm-5"><i class='fa fa-home'></i> &nbsp; Hometown @if(subdomain()!='packetprep')(or) District @endif</dt>
                 <dd class="col-sm-7">{{$user->hometown}}</dd>
+              </dl>
+             @endif
+
+             @if($user->personality && subdomain()=='packetprep')
+             <dl class="row mb-0">
+                <dt class="col-sm-5"><i class='fa fa-globe'></i> &nbsp; State </dt>
+                <dd class="col-sm-7">{{$user->personality}}</dd>
+              </dl>
+             @endif
+
+             @if($user->info && subdomain()=='packetprep')
+             <dl class="row mb-0">
+                <dt class="col-sm-5"><i class='fa fa-th'></i> &nbsp; Batch </dt>
+                <dd class="col-sm-7">{{$user->info}}</dd>
               </dl>
              @endif
 
@@ -135,7 +149,7 @@
 
 @auth
 
-@if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
+@if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || subdomain()=='packetprep' )
       <div class="row mr-2 mb-4 ml-2">
         
     </div>
