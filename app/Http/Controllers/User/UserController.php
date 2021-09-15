@@ -903,6 +903,16 @@ class UserController extends Controller
         $user->fluency = $request->get('fluency');
         $user->language = $request->get('language');
         
+
+        if(subdomain()=='packetprep'){
+            $user->roll_number = $request->get('roll_number');
+            $user->college_id = $request->get('college_id');
+            $user->branch_id = $request->get('branch_id');
+            $user->year_of_passing = $request->get('yop');
+            $user->tenth = $request->get('tenth');
+            $user->twelveth = $request->get('twelveth');
+            $user->bachelors = $request->get('bachelors');
+        }
         
         $user->save();
         
