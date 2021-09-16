@@ -129,6 +129,8 @@ for ($i = 1; $i <= 8; $i++) {
                 $cols = $row->getElementsByTagName('td'); 
 
                 $key = strtolower(trim(strip_tags($cols->item(0)->nodeValue)));
+                if(!$cols->item(1))
+                    continue;
                 $value = trim($cols->item(1)->nodeValue); 
 
                 if($key=='a' || $key=='b' || $key=='c' || $key=='d' || $key=='e' || $key=='question' || $key=='explanation' || $key=='passage'){
