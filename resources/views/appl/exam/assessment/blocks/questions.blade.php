@@ -213,7 +213,7 @@
   @elseif($question->type=='mbdq')
   <div class="bg-light border p-3 rounded mt-3">
     <h5>Select the answers</h5>
-    @foreach(explode('/',$question->a) as $l=>$m)
+    @foreach(explode('/',trim(strip_tags($question->a))) as $l=>$m)
     <div class="row">
       <div class="col-3 col-md-2">({{($l+1)}})</div>
       <div class="col-9 col-md-10">
