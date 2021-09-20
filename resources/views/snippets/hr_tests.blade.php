@@ -33,11 +33,9 @@
 
                 @if(isset($e->pivot->role))
                   @if($e->pivot->role=='viewer')
-                    @if(subdomain()=='rguktnuzvid' || subdomain()=='rguktrkvalley')
+                   
                     <a href=" {{ route('test.actives3',$e->slug)}} " data-toggle="tooltip" title="View Test">
-                    @else
-                    <a href=" {{ route('test.active',$e->slug)}} " data-toggle="tooltip" title="View Test">
-                    @endif
+                  
                   @else
                   <a href=" {{ route('exam.show',$e->slug) }} " data-toggle="tooltip" title="View Test">
                   @endif

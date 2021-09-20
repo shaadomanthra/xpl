@@ -509,11 +509,7 @@ div.chats {
   </div>
 </div>
 
-<script>
-setTimeout(function(){
-   window.location.reload(1);
-}, 120000);
-  </script>
+
 
 @endsection
 
