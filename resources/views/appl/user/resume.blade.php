@@ -35,7 +35,7 @@
 </div>
 
 <script src="{{ asset('js/pdf.js')}}"></script>
-<script>PDFObject.embed("{{ Storage::disk('s3')->url('resume/resume_'.\auth::user()->username.'.pdf')}}", "#resume");</script>
+<script>PDFObject.embed("{{ Storage::disk('s3')->url('resume/resume_'.\auth::user()->username.'.pdf')}}?time={{microtime()}}", "#resume");</script>
 
 <style>
 .pdfobject-container { height: 30rem; border: 1px solid rgba(0,0,0,.2); }
