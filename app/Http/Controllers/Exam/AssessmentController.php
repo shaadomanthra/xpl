@@ -6158,6 +6158,8 @@ class AssessmentController extends Controller
         }
 
        
+        if($exam->solutions=='3')
+            $subjective = 1;
 
            //dd($sectiondetails);
         
