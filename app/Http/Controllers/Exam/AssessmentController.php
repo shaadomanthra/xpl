@@ -3218,6 +3218,7 @@ class AssessmentController extends Controller
                 $item['code'] = $request->get('dynamic_'.$i);
 
               
+
                 if(isset(json_decode($request->get('out_'.$i),true)['response_1']['error'])){
                    $item['comment'] = $request->get('out_'.$i);     
                 }else{
@@ -3243,12 +3244,27 @@ class AssessmentController extends Controller
                             }
                         }
 
+                        if (strpos($item['response'], '<TABLE') !== false) {
+                            for($m=1;$m<6;$m++){
+                                $mjson = json_decode($request->get('out_'.$i),true);
+
+                                if($mjson){
+                                    $mdata['response_'.$m] = $mjson['response']; 
+                                    $mdata['pass_'.$m] = $mjson['pass_'.$m]; 
+                                }else{
+                                    $mdata = null;
+                                }
+                            }
+                        }
+
                     }
                    
+
 
                     $item['comment'] = json_encode($mdata);
                 }
                 
+
                 
 
                 if(trim($item['code'])){
@@ -3298,6 +3314,7 @@ class AssessmentController extends Controller
                         }
                    }
                 }
+
                
 
                 

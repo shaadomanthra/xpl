@@ -200,6 +200,7 @@ th{ border:1px solid silver; }
      <option value="ruby" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='RUBY') selected @endif @endif >ruby</option>
      <option value="swift" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='SWIFT') selected @endif @endif >swift</option>
      <option value="bash" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='BASH') selected @endif @endif >bash</option>
+     <option value="sql" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='SQL') selected @endif @endif >SQL</option>
   </select>
   <p class="mt-4"><b>Note:</b><br> if -NA- is selected, user will have the choice to select his desired language to write the code. And if a specific language is selected, user has to program only in the specified language.</p>
       </div>

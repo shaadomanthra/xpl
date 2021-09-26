@@ -144,8 +144,8 @@ class QuestionController extends Controller
 
         $testcases =null;           
 
-        $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
-         $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b"];
+        $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
+         $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b","7"=>"b"];
 
          return view('appl.dataentry.question.createedit')
                     ->with('project',$this->project)
@@ -1217,7 +1217,7 @@ class QuestionController extends Controller
 
         $testcases = array("in_1"=>"","in_2"=>"","in_3"=>"","in_4"=>"","in_5"=>"","out_1"=>"","out_2"=>"","out_3"=>"","out_4"=>"","out_5"=>"");
 
-        $cds = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
+        $cds = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
         $codes = (object)[];
         if($question->d){
             if(strpos($question->d,'{') !== false){
@@ -1232,9 +1232,9 @@ class QuestionController extends Controller
                 }
             }
             if(!$codes)
-                $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
+                $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
         }else{
-            $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>""];
+            $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
         }
         
 
@@ -1260,7 +1260,7 @@ class QuestionController extends Controller
             }
         }
 
-        $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b"];
+        $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b","7"=>"b"];
         $question->tags = $question->tags->pluck('id')->toArray();         
 
         if($question)
@@ -1364,6 +1364,7 @@ class QuestionController extends Controller
             $ps['codefragment_4'] = $request->get('codefragment_4');
             $ps['codefragment_5'] = $request->get('codefragment_5');
             $ps['codefragment_6'] = $request->get('codefragment_6');
+            $ps['codefragment_7'] = $request->get('codefragment_7');
 
             $ps['output_1'] = $request->get('1');
             $ps['output_2'] = $request->get('2');
@@ -1371,6 +1372,7 @@ class QuestionController extends Controller
             $ps['output_4'] = $request->get('4');
             $ps['output_5'] = $request->get('5');
             $ps['output_6'] = $request->get('6');
+            $ps['output_7'] = $request->get('7');
 
             if(trim($request->get('preset_generic')))
                 $question->c = $request->get('preset_generic');

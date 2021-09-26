@@ -158,7 +158,11 @@
       <tr>
         <td>#1</td>
         <td>{{ json_decode($question->a)->in_1 }}</td>
+        @if($question->b=='sql')
+        <td>{!! json_decode($question->a)->out_1 !!}</td>
+        @else
         <td>{{ json_decode($question->a)->out_1 }}</td>
+        @endif
       </tr>
       @if(isset(json_decode($question->a)->in_2))
       <tr>
@@ -244,6 +248,7 @@
                     <li class="nav-item">
                       <a class="nav-link" id="python-tab" data-toggle="tab" href="#python" role="tab" aria-controls="python" aria-selected="false">Python</a>
                     </li>
+                    
                   </ul>
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="c" role="tabpanel" aria-labelledby="home-tab">
@@ -264,6 +269,7 @@
                        <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="python-tab">
                          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_python) !!}</code></pre>
                        </div>
+                      
                   </div>
               @endif
             @else
@@ -348,6 +354,9 @@
                     <li class="nav-item">
                       <a class="nav-link" id="cpython-tab" data-toggle="tab" href="#cpython" role="tab" aria-controls="cpython" aria-selected="false">Python</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="csql-tab" data-toggle="tab" href="#csql" role="tab" aria-controls="csql" aria-selected="false">SQL</a>
+                    </li>
                   </ul>
 
 <div class="tab-content" id="myTabContent">
@@ -378,6 +387,10 @@
         <div class="tab-pane fade" id="cpython" role="tabpanel" aria-labelledby="cpython-tab">
          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_6) !!}</code></pre>
           <div class="card"><div class="card-body">{!! htmlentities($codes->output_6) !!}</div></div>
+        </div>
+         <div class="tab-pane fade" id="csql" role="tabpanel" aria-labelledby="csql-tab">
+         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_7) !!}</code></pre>
+          <div class="card"><div class="card-body">{!! $codes->output_7 !!}</div></div>
         </div>
 </div>
 

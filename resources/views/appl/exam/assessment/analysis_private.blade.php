@@ -277,6 +277,7 @@
 	
 
 		@if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+		@if(isset($test_overall->cheat_detect))
 			<div class="card mt-3">
 				<div class="card-body">
 					<div class="row">
@@ -299,6 +300,7 @@
 					</div>
 				</div>
 			</div>
+		@endif
 		@endif
 
 	  @else

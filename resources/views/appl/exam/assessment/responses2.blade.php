@@ -505,6 +505,7 @@ pre, code {
         @endif
         @endif
 
+        @if($questions[$t->question_id]->b!='sql')
         @if($questions[$t->question_id]->type=='code')
        @if(isset(json_decode($t->comment,true)['pass_1']))
         <p class="mt-3"><b>Testcases:</b></p>
@@ -586,6 +587,7 @@ pre, code {
     </tbody>
   </table>
 
+        @endif
         @endif
         @endif
 

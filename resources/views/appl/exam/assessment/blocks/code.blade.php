@@ -38,15 +38,25 @@
   </select>
  <a href="#" class="ml-3 btn  btn-outline-primary btn-sm" data-toggle="modal" data-target="#io_code">I/O Instructions</a></div>
 
-<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}" data-dalang="{{$lang = 'preset_'.$question->b}}" rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}} @elseif(isset($question->d->$lang)){{$question->d->$lang}} @else //Note: The testcase inputs are taken from command line arguments
+<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}" data-dalang="{{$lang = 'preset_'.$question->b}}" rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}} @elseif(isset($question->d->$lang)){{$question->d->$lang}}@elseif($question->b=='sql') @else //Note: The testcase inputs are taken from command line arguments
 // click on the I/O instructions button to learn about the language specific input options
 // The output string has to exactly match with the execpted output @endif @endif</textarea>
 
-  @if($question->a)
-  <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-qslug="{{$question->slug}}" data-test="{{$exam->slug}}" data-testcase="1" data-qno="{{($i+1)}}" data-sno="{{($i+1)}}"  data-url="{{ route('runcode') }}" data-stop="{{ route('stopcode') }}" data-lang="@if($question->b=='c' || $question->b=='cpp')clang @else {{$question->b}}@endif" data-name="code_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-c="@if($question->b=='c') 1 @else 0 @endif" data-input="">Save & Compile </button>
-  <button type="button" class="btn btn-lg btn-warning btn-sm mt-4 runcode runcode_{{($i+1)}}" data-qslug="{{$question->slug}}" data-test="{{$exam->slug}}" data-testcase="3" data-qno="{{($i+1)}}"  data-sno="{{($i+1)}}"  data-url="{{ route('runcode') }}" data-stop="{{ route('stopcode') }}" data-lang="@if($question->b=='c' || $question->b=='cpp')clang @else {{$question->b}}@endif" data-name="code_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-c="@if($question->b=='c') 1 @else 0 @endif" data-input="">Submit Code</button>
-  <img class="loading loading_{{($i+1)}}" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
+  @if($question->b=='sql')
+    @if($question->a)
+    
+    <button type="button" class="btn btn-lg btn-warning btn-sm mt-4 runcode runcode_{{($i+1)}}" data-qslug="{{$question->slug}}" data-test="{{$exam->slug}}" data-testcase="3" data-qno="{{($i+1)}}"  data-sno="{{($i+1)}}"  data-url="https://sql.p24.in/" data-stop="{{ route('stopcode') }}" data-lang="@if($question->b=='c' || $question->b=='cpp')clang @else {{$question->b}}@endif" data-name="code_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-c="@if($question->b=='c') 1 @else 0 @endif" data-input="" data-output="{{json_decode($question->a,true)['out_1']}}">Submit Code</button>
+    <img class="loading loading_{{($i+1)}}" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
+    @endif
+  @else
+    @if($question->a)
+    <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-qslug="{{$question->slug}}" data-test="{{$exam->slug}}" data-testcase="1" data-qno="{{($i+1)}}" data-sno="{{($i+1)}}"  data-url="{{ route('runcode') }}" data-stop="{{ route('stopcode') }}" data-lang="@if($question->b=='c' || $question->b=='cpp')clang @else {{$question->b}}@endif" data-name="code_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-c="@if($question->b=='c') 1 @else 0 @endif" data-input="">Save & Compile </button>
+    <button type="button" class="btn btn-lg btn-warning btn-sm mt-4 runcode runcode_{{($i+1)}}" data-qslug="{{$question->slug}}" data-test="{{$exam->slug}}" data-testcase="3" data-qno="{{($i+1)}}"  data-sno="{{($i+1)}}"  data-url="{{ route('runcode') }}" data-stop="{{ route('stopcode') }}" data-lang="@if($question->b=='c' || $question->b=='cpp')clang @else {{$question->b}}@endif" data-name="code_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-c="@if($question->b=='c') 1 @else 0 @endif" data-input="">Submit Code</button>
+    <img class="loading loading_{{($i+1)}}" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
+    @endif
+
   @endif
+  
 
 @endif
 
@@ -69,7 +79,11 @@
   </div>
   <div class="col-12 col-md-6">
     <h5 class="mt-3">Expected Output (Testcase #1)</h5>
-<pre class=" rounded"><code class="rounded p-2 ex_output_{{($i+1)}} ">@if(isset($question->d->output)){{$question->d->output}} @else-@endif</code></pre>
+    @if($question->b=='sql')
+      <pre class=" rounded">@if(isset($question->d->output)){!!$question->d->output!!} @else-@endif</pre>
+    @else
+      <pre class=" rounded"><code class="rounded p-2 ex_output_{{($i+1)}} ">@if(isset($question->d->output)){{$question->d->output}} @else-@endif</code></pre>
+    @endif
     
   </div>
 </div>

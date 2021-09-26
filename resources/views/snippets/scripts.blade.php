@@ -1693,6 +1693,138 @@ function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
         });
             
 }
+
+function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$output){
+ $.ajax({
+          type : 'get',
+          url : $url+'?time='+ new Date().getTime(),
+          data:{'query':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug,'output':$output},
+          timeout: 120000, 
+          success:function(data){
+            $('.runcode_'+$qn).removeClass('disabled');
+            console.log($qn);
+            console.log(data);
+            var jso = data;
+            data = dat = JSON.parse(data);
+            //console.log(dat);
+            
+            //data = dat.response_1;
+            console.log(data.stderr);
+            if(data){
+              if(data.stderr!="0"){
+                console.log("At error place - " + $qn);
+                $('.output_'+$qn).html(data.stderr);
+                $('.output_testcase_'+$qn).html('');
+
+                $('.input_'+$qn).attr('value',data.stderr);
+                $('.out_'+$qn).attr('value',jso);
+
+                if(dat.pass_1 == "1")
+                    $test1 = '<h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test1 = '<p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                 if($testcase==3){
+                  if(!$('.s'+$qn).hasClass('qblue-border'))
+                    $('.s'+$qn).addClass('qblue-border');
+                  if(!$('.s'+$qn).hasClass('active'))
+                        $('.s'+$qn).removeClass('active');
+
+                  
+
+                  if(dat.pass_2 == "1")
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test2 = '<p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_3 == "1")
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test3 = '<p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_4 == "1")
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test4 = '<p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  if(dat.pass_5 == "1")
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+                  else
+                    $test5 = '<p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p>';
+
+                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
+                  $('.final_response_'+$qn).html(data.stdout);
+                }else{
+                   $('.output_testcase_'+$qn).html('<div class="output_testcase_'+$qn+'_t1"></div><div class="output_testcase_'+$qn+'_t2"></div><div class="output_testcase_'+$qn+'_t3"></div><div class="output_testcase_'+$qn+'_t4"></div><div class="output_testcase_'+$qn+'_t5"></div>');
+                }
+
+              }else if(data.stdout){
+                console.log("At output place");
+                $('.output_'+$qn).html("<div class='text-white'>"+data.stdout+"</div>");
+                $('.input_'+$qn).attr('value',data.stdout);
+                $('.out_'+$qn).attr('value',jso);
+
+                if(dat.pass_1 == "1")
+                    $test1 = '<div class="output_testcase_'+$qn+'_t1"><h4 class="mb-4 text-secondary">Code Validation:</h4><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
+                  else
+                    $test1 = '<div class="output_testcase_'+$qn+'_t1"><p class="mb-2"><b>Testcase 1:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
+
+                if($testcase==3){
+                  if(!$('.s'+$qn).hasClass('qblue-border'))
+                    $('.s'+$qn).addClass('qblue-border');
+                  if(!$('.s'+$qn).hasClass('active'))
+                        $('.s'+$qn).removeClass('active');
+
+                  
+
+                  if(dat.pass_2 == "1")
+                    $test2 = '<div class="output_testcase_'+$qn+'_t2"><p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
+                  else
+                    $test2 = '<div class="output_testcase_'+$qn+'_t2"><p class="mb-2"><b>Testcase 2:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
+
+                  if(dat.pass_3 == "1")
+                    $test3 = '<div class="output_testcase_'+$qn+'_t3"><p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
+                  else
+                    $test3 = '<div class="output_testcase_'+$qn+'_t3"><p class="mb-2"><b>Testcase 3:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
+                  if(dat.pass_4 == "1")
+                    $test4 = '<div class="output_testcase_'+$qn+'_t4"><p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
+                  else
+                    $test4 = '<div class="output_testcase_'+$qn+'_t4"><p class="mb-2"><b>Testcase 4:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
+
+                  if(dat.pass_5 == "1")
+                    $test5 = '<div class="output_testcase_'+$qn+'_t5"><p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
+                  else
+                    $test5 = '<div class="output_testcase_'+$qn+'_t5"><p class="mb-0"><b>Testcase 5:</b> <i class="fa fa-times-circle text-danger"></i> fail</p></div>';
+
+                  $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+$test2+$test3+$test4+$test5+'</div>');
+
+                  $('.final_response_'+$qn).html(data.stdout);
+                }else{
+                   $('.output_testcase_'+$qn).html('');
+                }
+                
+              }else{
+                console.log("No stdout no stderr");
+                $('.output_'+$qn).html("Invalid Code - ERO101 - Retry.");
+              }
+            }else{
+                $('.output_'+$qn).html("Invalid Code - ERD102 - Retry.");
+            }
+            $('.loading').hide();
+            $('.loading_'+$qn).hide();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+             $('.runcode_'+$qno).removeClass('disabled');
+              if(textStatus==="timeout") {  
+                $('.output_'+$qn).html("Invalid Code - ERT103 - Retry.");
+              } else {
+                $('.output_'+$qn).html("Invalid Code - ERX104 - Retry.");
+              }
+              $('.loading').hide();
+          }
+        });
+            
+}
  $('body').on('click','.runcode',function(){
       $qn = $qno = $(this).data('qno');
       $lang = $(this).data('lang');
@@ -1745,7 +1877,12 @@ function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
           }else{
             ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,1,1);
           }
-        }else{
+        }
+        else if($lang=='sql'){
+          $output = $(this).data('output');
+          ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$output);
+        }
+        else{
           ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn);
         }
         

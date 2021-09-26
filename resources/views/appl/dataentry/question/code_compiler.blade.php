@@ -18,6 +18,9 @@
                     <li class="nav-item">
                       <a class="nav-link" id="cpython-tab" data-toggle="tab" href="#cpython" role="tab" aria-controls="cpython" aria-selected="false">Python</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="csql-tab" data-toggle="tab" href="#csql" role="tab" aria-controls="csql" aria-selected="false">SQL</a>
+                    </li>
                   </ul>
 
 <div class="tab-content" id="myTabContent">
@@ -196,6 +199,36 @@
      <input class="form-control w-50 input_6" type="hidden"  name="6" data-sno="6" value="@if($codes->output_6){{$codes->output_6}}@endif" >
     <input class="form-control w-50 codefragment_6" type="hidden"  name="codefragment_6" data-sno="6" value="@if($codes->codefragment_6){{$codes->codefragment_6}} @endif" >
   </div>
+
+  <div class="tab-pane fade" id="csql" role="tabpanel" aria-labelledby="csql-tab">
+     <textarea id="code_7" class="form-control code code_6" name="dynamic_6"  rows="5">@if($codes->codefragment_7){{$codes->codefragment_7}} @endif </textarea>
+    <button type="button" class="btn btn-lg btn-warning btn-sm mt-4 runcode runcode_7" data-qslug="{{$question->slug}}" data-test="random" data-testcase="3" data-qno="7"  data-sno="7"  data-url="https://sql.p24.in/" data-stop="{{ route('stopcode') }}" data-lang="sql" data-name="code_7" data-namec="{{\auth::user()->username}}_random_7" data-c="0" data-input="" data-output="{{$testcases['out_1']}}">Submit Code</button>
+    <img class="loading loading_7" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <h5 class="mt-3">Code Output</h5>
+        <div class="">
+          <pre class="rounded"><code><div class="output_7 ">@if($codes->output_7){{$codes->output_7}}@else-@endif</div></code></pre>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <h5 class="mt-3">Expected Output</h5>
+        <div class=""><pre class="rounded"><code><div class=" ">@if(isset($testcases['out_1'])){!!$testcases['out_1']!!}@else-@endif</div></code></pre>
+        </div>
+      </div>
+    
+    </div>
+     <div class="output_testcase_7">
+       <div class="output_testcase_7_t1"></div>
+      <div class="output_testcase_7_t2"></div>
+      <div class="output_testcase_7_t3"></div>
+      <div class="output_testcase_7_t4"></div>
+      <div class="output_testcase_7_t5"></div>
+    </div>          
+     <input class="form-control w-50 input_7" type="hidden"  name="7" data-sno="7" value="@if($codes->output_7){{$codes->output_7}}@endif" >
+    <input class="form-control w-50 codefragment_7" type="hidden"  name="codefragment_7" data-sno="7" value="@if($codes->codefragment_7){{$codes->codefragment_7}} @endif" >
+  </div>
+
 </div>
 
 
