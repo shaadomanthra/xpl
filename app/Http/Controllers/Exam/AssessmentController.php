@@ -879,6 +879,7 @@ class AssessmentController extends Controller
 
 
 
+
                 $q->answer = $this->new_answer(strtoupper($q->answer),$q->dynamic);
                 //$q = $question->dynamic_variable_replacement($q->dynamic,$q);
                 $q = $this->option_swap2($q,$q->dynamic);
@@ -1975,7 +1976,12 @@ class AssessmentController extends Controller
 
             if(isset($ques[$t->question_id])){
                 $qd = $ques[$t->question_id];
-                $qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
+                 if($q->type=='mbfq' || $q->type=='mbdq'){
+                    $qd->answer = strtoupper($qd->answer);
+                }else{
+                   $qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
+                }
+                //$qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
                 $ques[$t->question_id] = $this->option_swap2($qd,$t->dynamic);
                 $tests[$key]->question = $ques[$t->question_id];
 
@@ -2428,7 +2434,11 @@ class AssessmentController extends Controller
 
             if(isset($ques[$t->question_id])){
                 $qd = $ques[$t->question_id];
-                $qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
+                 if($q->type=='mbfq' || $q->type=='mbdq'){
+                    $qd->answer = strtoupper($qd->answer);
+                }else{
+                   $qd->answer = $this->new_answer(strtoupper($qd->answer),$t->dynamic);
+                }
                 $ques[$t->question_id] = $this->option_swap2($qd,$t->dynamic);
                 $tests[$key]->question = $ques[$t->question_id];
 
@@ -3079,8 +3089,12 @@ class AssessmentController extends Controller
                     $item['response'] = strtoupper($request->get($i));
                 }
 
-
-                $item['answer'] = $this->new_answer(strtoupper($answers[$request->get($i.'_question_id')]),$request->get($i.'_dynamic'));
+                if($type=='mbfq' || $type=='mbdq'){
+                    $item['answer'] = strtoupper($answers[$request->get($i.'_question_id')]);
+                }else{
+                   $item['answer'] = $this->new_answer(strtoupper($answers[$request->get($i.'_question_id')]),$request->get($i.'_dynamic')); 
+                }
+                
                  $item['mark']=0;
 
                 if(strlen($item['answer'])==1){
@@ -3355,6 +3369,8 @@ class AssessmentController extends Controller
 
 
         }
+
+        // dd($data);
        
 
 

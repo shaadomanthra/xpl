@@ -1615,6 +1615,13 @@ class ExamController extends Controller
             return redirect()->back();
         }
 
+        if($r->get('reevaluation')){
+
+            $exam->reEvaluation();
+            flash('All reports evalauted')->success();
+            return redirect()->back();
+        }
+
         if($r->get('imagerollback')){
             $rep =  Tests_Overall::where('test_id',$exam->id)->with('user')->orderby('score','desc')->get();
             

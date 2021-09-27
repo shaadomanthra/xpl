@@ -1172,6 +1172,12 @@ $count =0;
                 $id = $q->id;
                 $e = $tests[$id];
 
+                if($q->type=='mbfq' || $q->type=='mbdq'){
+                    $q->answer = strtoupper($q->answer);
+                }else{
+                   $q->answer = $this->new_answer(strtoupper($q->answer),$e->dynamic);
+                }
+
                 if($section_marking){
                   $mark = $section->mark;
                   $neg = $section->negative;
@@ -1214,6 +1220,36 @@ $count =0;
                     }
 
                     $flag=1;
+                  }else if($q->type=='mbdq' || $q->type=='mbfq'){
+                    $partialmark = 0.2;
+
+                    $e->response = str_replace("<br>",",",$e->response);
+                    $ans = explode(',',$e->response);
+                    $actual_ans = explode(',',strip_tags($q->answer));
+                   
+                    //dd($actual_ans);
+                    $e->answer = $q->answer;
+                    if($q->mark)
+                        $partialmark = round($q->mark/count($actual_ans),2);
+                       
+                    $partial_awarded  = 0;
+                    
+                        foreach($ans as $g=>$an){
+                            if($an)
+                            if($an==$actual_ans[$g]){
+                                $partial_awarded = $partial_awarded  + $partialmark;
+                            }
+                        }
+
+                        $e->mark = $partial_awarded;
+
+                        if(!$partial_awarded)
+                            $e->accuracy =0;
+                        else
+                            $e->accuracy =1;
+                        $flag=1;
+
+                    
                   }
 
                   $stotal = $stotal + $e->mark;
@@ -1243,6 +1279,77 @@ $count =0;
         $toverall->save();
 
 
+    }
+
+    public function reEvaluation(){
+        $exam  = $this;
+        $toverall = Tests_Overall::where('test_id',$exam->id)->get();
+        foreach($toverall as $tx){
+            $user = $tx->user;
+            $this->reEvaluate($user);
+        }
+
+    }
+
+    public function new_answer($answer,$dynamic)
+    {
+
+        if(!$dynamic)
+            return $answer;
+
+
+
+        if(strpos($answer,',')!== false){
+            $ans =explode(',', $answer);
+            foreach($ans as $k=>$a){
+                $ans[$k]=$this->new_ans_str($a,$dynamic);
+            }
+            $new_ans = implode(',', $ans);
+        }else if(strlen($answer)==1){
+            $new_ans = $this->new_ans_str($answer,$dynamic);
+        }
+
+        if(!isset($new_ans))
+            return $answer;
+
+        return $new_ans;
+    }
+
+    public function new_ans_str($answer,$dynamic){
+        $new_ans = $answer;
+        if($answer == 'A'){
+            if($dynamic == 1) $new_ans = 'A';
+            if($dynamic == 2) $new_ans = 'D';
+            if($dynamic == 3) $new_ans = 'C';
+            if($dynamic == 4) $new_ans = 'B';
+        }
+
+        if($answer == 'B'){
+            if($dynamic == 1) $new_ans = 'B';
+            if($dynamic == 2) $new_ans = 'A';
+            if($dynamic == 3) $new_ans = 'D';
+            if($dynamic == 4) $new_ans = 'C';
+        }
+
+        if($answer == 'C'){
+            if($dynamic == 1) $new_ans = 'C';
+            if($dynamic == 2) $new_ans = 'B';
+            if($dynamic == 3) $new_ans = 'A';
+            if($dynamic == 4) $new_ans = 'D';
+        }
+
+        if($answer == 'D'){
+            if($dynamic == 1) $new_ans = 'D';
+            if($dynamic == 2) $new_ans = 'C';
+            if($dynamic == 3) $new_ans = 'B';
+            if($dynamic == 4) $new_ans = 'A';
+        }
+
+        if($answer == 'E'){
+            return $answer;
+        }
+
+        return $new_ans;
     }
 
     public function validateAnswer($key,$answer){
