@@ -388,10 +388,12 @@
          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_6) !!}</code></pre>
           <div class="card"><div class="card-body">{!! htmlentities($codes->output_6) !!}</div></div>
         </div>
+        @if(isset($codes->codefragment_7))
          <div class="tab-pane fade" id="csql" role="tabpanel" aria-labelledby="csql-tab">
          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_7) !!}</code></pre>
           <div class="card"><div class="card-body">{!! $codes->output_7 !!}</div></div>
         </div>
+        @endif
 </div>
 
 
