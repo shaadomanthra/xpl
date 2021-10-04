@@ -5475,6 +5475,11 @@ class AssessmentController extends Controller
         }else{
             $exam = Exam::where('slug',$id)->first();
 
+            if(is_numeric($id) && !$exam)
+            {
+                $exam = Exam::where('id',$id)->first();
+                return redirect()->route('assessment.show',$exam->slug);
+            }
             if(!$exam)
                 abort('403','Test not found');
             $exam->sections = $exam->sections;

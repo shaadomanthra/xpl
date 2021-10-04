@@ -175,6 +175,7 @@ class CourseController extends Controller
 
 
         
+        
 
         if(!$course)
             abort('404','Course Not Found');

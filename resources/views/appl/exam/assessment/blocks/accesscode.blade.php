@@ -48,4 +48,14 @@
 						</a>
 					@endif
 
+					@if($exam->status==1)
+						 @auth
+				       <a href="{{route('assessment.instructions',$exam->slug)}}">
+				       @else
+				       <a href="#" data-toggle="modal" data-target="#myModal2">
+				       @endauth
+						<button class="btn btn-lg btn-outline-primary accesscode_btn" > Try Now </button>
+						</a>
+					@endif
+
 				@endif
