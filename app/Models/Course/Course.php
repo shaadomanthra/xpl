@@ -59,6 +59,7 @@ class Course extends Model
         return $p;
     }
 
+
     public function updateCache($courses=null,$course=null){
         if($course){
             $course_data = $course->category_list($course->slug);

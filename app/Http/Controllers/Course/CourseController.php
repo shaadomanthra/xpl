@@ -197,10 +197,15 @@ class CourseController extends Controller
             
         }
 
+        //dd($course->exams);
+        
         foreach($course->exams as $e){
                 array_push($exam_ids, $e->id); 
         }
 
+        if($course->slug=='quantitative-aptitude')
+            $course->exams = null;
+        
         if(!isset($course->product))
         foreach($course->products as $product)
         {
