@@ -150,14 +150,9 @@ class CourseController extends Controller
         $filename = $id.'.json';
         $filepath = $this->cache_path.$filename;
 
-        $course = Cache::get('course_'.$id);
+         $course = Cache::get('course_'.$id);
 
-         if(request()->get('refresh'))
-            {
 
-                $course->updatecache(null,$course);
-                flash('Article Pages Cache Updated')->success();
-            }
 
         if(!$course){
             
@@ -170,6 +165,13 @@ class CourseController extends Controller
             $course->tests = $course_data['tests'];
 
         }
+
+        if(request()->get('refresh'))
+            {
+
+                $course->updatecache(null,$course);
+                flash('Article Pages Cache Updated')->success();
+            }
 
 
         
@@ -205,7 +207,7 @@ class CourseController extends Controller
 
         if($course->slug=='quantitative-aptitude')
             $course->exams = null;
-        
+
         if(!isset($course->product))
         foreach($course->products as $product)
         {

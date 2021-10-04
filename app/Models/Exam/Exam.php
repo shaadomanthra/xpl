@@ -558,9 +558,15 @@ $count =0;
 
     public function question_count()
     {
+        return null;
         $exam = $this;$count =0;
-        if(count($exam->sections)!=0){
-            foreach($exam->sections as $section){
+        $sections = Cache::get('sections_'.$exam->slug);
+        if(!$sections){
+            $sections = $exam->sections;
+            Cache::forever('sections_'.$exam->slug,$sections);
+        }
+        if(count($sections)!=0){
+            foreach($sections as $section){
                 $count = $count + count($section->questions);   
             }
             return $count;
@@ -749,6 +755,7 @@ $count =0;
     public function time()
     {
         $exam = $this;$count =0;
+        return null;
         if(count($exam->sections)!=0){
             foreach($exam->sections as $section){
                 $count = $count + $section->time;   
