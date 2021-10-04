@@ -145,7 +145,7 @@
       <th scope="col" style="width:50%">Question</th>
       <th scope="col">Response</th>
       @if(!$test_overall->status)
-      @if($exam->solutions !=3 && $exam->solutions !=4 )
+      @if($exam->solutions !=4 )
       <th scope="col">Score</th>
       @endif
       <th scope="col" style="width:15%">Feedback</th>
@@ -188,6 +188,7 @@
         @endif
         @if(trim($t->answer))
             <div class=""><hr>Answer: <b class="text-success">{!!$t->answer!!}</b></div>
+            <div class=""><hr>Mark: <b class="text-success">{!!$questions[$t->question_id]->mark!!}</b></div>
         @elseif(trim($questions[$t->question_id]->explanation))
             <div class=""><hr>Explanation: {!!$questions[$t->question_id]->explanation!!}</div>
         @else
@@ -239,7 +240,7 @@
      
       
       @if(!$test_overall->status)
-      @if($exam->solutions !=3 && $exam->solutions !=4 )
+      @if($exam->solutions !=4 )
       <td>
       	@if($t->mark)
       			{{$t->mark }}
