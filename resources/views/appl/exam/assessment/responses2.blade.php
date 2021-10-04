@@ -260,6 +260,12 @@ pre, code {
                   <div class="d-none {{ $question = $t->question}} "></div>
         <p class="d-inline mb-3">{!! $questions[$t->question_id]->question !!}</p>
 
+           @if($questions[$t->question_id]->type=='mbdq')
+        <div class="">
+          <h4>Answer:</h4>
+          <p>{!!$t->answer!!}</p>
+        </div>
+        @endif
         @if($questions[$t->question_id]->type=='mcq')
         <div class="mt-3">
           <div class="row">
@@ -358,6 +364,7 @@ pre, code {
           @endif
 
          
+
           </div>
 
         @else
@@ -375,9 +382,17 @@ pre, code {
               <i class="fa fa-times-circle text-danger"></i>
               @else
               <i class="fa fa-check-circle text-success"></i>
+
+              @if($questions[$t->question_id]->type=='mbdq')
+        <span class="text-success">Atleast once response is correct</span>
+        @endif
+
               @endif
             @else
             <i class="fa fa-check-circle text-success"></i>
+            @if($questions[$t->question_id]->type=='mbdq')
+        <span class="text-success">Atleast once response is correct</span>
+        @endif
             @endif
           @else
 
@@ -391,6 +406,7 @@ pre, code {
             @endif
           @endif
         @else
+
 
         @if($questions[$t->question_id]->type=='vq')
          @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$t->question_id.'.webm'))

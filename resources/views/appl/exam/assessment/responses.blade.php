@@ -214,6 +214,8 @@ pre, code {
            <div class="d-none {{ $question = $t->question}} "></div>
 				<p class="d-inline  mb-3">{!! $questions[$t->question_id]->question !!}</p>
 
+
+       
         @if($questions[$t->question_id]->type=='mcq')
         <div class="mt-3">
           <div class="row">

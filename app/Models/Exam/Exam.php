@@ -1143,6 +1143,7 @@ $count =0;
 
     public function reEvaluate($user){
         $exam  = $this;
+
         $user_id = $user->id;
         
         $settings = $exam->settings;
@@ -1158,6 +1159,7 @@ $count =0;
         $qcount =0;
         $ototal = 0;
         $otm=0;
+
         foreach($exam->sections as $section){
             //$qset = $section->questions;
             $qset = $exam->getQuestionsSection($section->id,$user->id);
@@ -1170,99 +1172,100 @@ $count =0;
             foreach($qset as $q){
                 $flag = 0; 
                 $id = $q->id;
-                $e = $tests[$id];
+                if(isset($tests[$id])){
+                    $e = $tests[$id];
 
-                if($q->type=='mbfq' || $q->type=='mbdq'){
-                    $q->answer = strtoupper($q->answer);
-                }else{
-                   $q->answer = $this->new_answer(strtoupper($q->answer),$e->dynamic);
-                }
-
-                if($section_marking){
-                  $mark = $section->mark;
-                  $neg = $section->negative;
-                  $stm = $stm + $mark;
-
-                  if($e->accuracy==1){
-                    if($e->mark!=$mark){
-                      $e->mark = $mark;
-                      $flag=1;
-                    }
-                    $stotal = $stotal + $e->mark;
-                  }else{
-                    if($e->response && $neg){
-                      $e->mark = 0 - $neg;
-                      $flag =1;
-                    }
-
-                    $stotal = $stotal + $e->mark;
-                  }
-
-                }else{
-                  $mark = $q->mark;
-                  $stm = $stm + $mark;
-                  // if($e->accuracy==1){
-                  //   if($e->mark!=$mark){
-                  //     $e->mark = $mark;
-                  //     $flag=1;
-                  //   }
-                  // }
-
-                  if($q->type=='mcq'){
-                    if($e->response==$q->answer){
-                      $e->answer = $q->answer;
-                      $e->mark = $mark;
-                      $e->accuracy =1;
+                    if($q->type=='mbfq' || $q->type=='mbdq'){
+                        $q->answer = strtoupper($q->answer);
                     }else{
-                      $e->answer = $q->answer;
-                      $e->mark = 0;
-                      $e->accuracy = 0;
+                       $q->answer = $this->new_answer(strtoupper($q->answer),$e->dynamic);
                     }
 
-                    $flag=1;
-                  }else if($q->type=='mbdq' || $q->type=='mbfq'){
-                    $partialmark = 0.2;
+                    if($section_marking){
+                      $mark = $section->mark;
+                      $neg = $section->negative;
+                      $stm = $stm + $mark;
 
-                    $e->response = str_replace("<br>",",",$e->response);
-                    $ans = explode(',',$e->response);
-                    $actual_ans = explode(',',strip_tags($q->answer));
-                   
-                    //dd($actual_ans);
-                    $e->answer = $q->answer;
-                    if($q->mark)
-                        $partialmark = round($q->mark/count($actual_ans),2);
-                       
-                    $partial_awarded  = 0;
-                    
-                        foreach($ans as $g=>$an){
-                            if($an)
-                            if($an==$actual_ans[$g]){
-                                $partial_awarded = $partial_awarded  + $partialmark;
-                            }
+                      if($e->accuracy==1){
+                        if($e->mark!=$mark){
+                          $e->mark = $mark;
+                          $flag=1;
+                        }
+                        $stotal = $stotal + $e->mark;
+                      }else{
+                        if($e->response && $neg){
+                          $e->mark = 0 - $neg;
+                          $flag =1;
                         }
 
-                        $e->mark = $partial_awarded;
+                        $stotal = $stotal + $e->mark;
+                      }
 
-                        if(!$partial_awarded)
-                            $e->accuracy =0;
-                        else
-                            $e->accuracy =1;
+                    }else{
+                      $mark = $q->mark;
+                      $stm = $stm + $mark;
+                      // if($e->accuracy==1){
+                      //   if($e->mark!=$mark){
+                      //     $e->mark = $mark;
+                      //     $flag=1;
+                      //   }
+                      // }
+
+                      if($q->type=='mcq'){
+                        if($e->response==$q->answer){
+                          $e->answer = $q->answer;
+                          $e->mark = $mark;
+                          $e->accuracy =1;
+                        }else{
+                          $e->answer = $q->answer;
+                          $e->mark = 0;
+                          $e->accuracy = 0;
+                        }
+
                         $flag=1;
+                      }else if($q->type=='mbdq' || $q->type=='mbfq'){
+                        $partialmark = 0.2;
+
+                        $e->response = str_replace("<br>",",",$e->response);
+                        $ans = explode(',',$e->response);
+                        $actual_ans = explode(',',strip_tags($q->answer));
+                       
+                        //dd($actual_ans);
+                        $e->answer = $q->answer;
+                        if($q->mark)
+                            $partialmark = round($q->mark/count($actual_ans),2);
+                           
+                        $partial_awarded  = 0;
+                        
+                            foreach($ans as $g=>$an){
+                                if($an)
+                                if($an==$actual_ans[$g]){
+                                    $partial_awarded = $partial_awarded  + $partialmark;
+                                }
+                            }
+
+                            $e->mark = $partial_awarded;
+
+                            if(!$partial_awarded)
+                                $e->accuracy =0;
+                            else
+                                $e->accuracy =1;
+                            $flag=1;
+
+                        
+                      }
+
+                      $stotal = $stotal + $e->mark;
+
+                    }
 
                     
-                  }
-
-                  $stotal = $stotal + $e->mark;
+                    if($flag){
+                      $e->save();
+                    }
 
                 }
-
                 
-
-
-
-                if($flag){
-                  $e->save();
-                }
             }
 
             $sitem->score = $stotal;
