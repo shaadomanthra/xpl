@@ -290,7 +290,7 @@ pre, code {
         </div>
         @endif
 
-         @if($questions[$t->question_id]->type=='mbdq' || $questions[$t->question_id]->type=='maq')
+         @if($questions[$t->question_id]->type=='mbdq' )
         <div class="">
           <h4>Answer:</h4>
           <p>{!!$t->answer!!}</p>
