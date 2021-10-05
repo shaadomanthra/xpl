@@ -5480,6 +5480,7 @@ class AssessmentController extends Controller
                 $exam = Exam::where('id',$id)->first();
                 return redirect()->route('assessment.show',$exam->slug);
             }
+            
             if(!$exam)
                 abort('403','Test not found');
             $exam->sections = $exam->sections;
