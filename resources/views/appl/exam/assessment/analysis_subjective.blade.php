@@ -187,7 +187,7 @@
         </div>
         @endif
         @if(trim($t->answer))
-            <div class=""><hr>Answer: <b class="text-success">{!!$t->answer!!}</b></div>
+           @if($question->type!='maq') <div class=""><hr>Answer: <b class="text-success">{!!$t->answer!!}</b></div> @endif
             <div class=""><hr>Mark: <b class="text-success">{!!$questions[$t->question_id]->mark!!}</b></div>
         @elseif(trim($questions[$t->question_id]->explanation))
             <div class=""><hr>Explanation: {!!$questions[$t->question_id]->explanation!!}</div>
