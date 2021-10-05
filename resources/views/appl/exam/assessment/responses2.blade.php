@@ -260,13 +260,8 @@ pre, code {
                   <div class="d-none {{ $question = $t->question}} "></div>
         <p class="d-inline mb-3">{!! $questions[$t->question_id]->question !!}</p>
 
-           @if($questions[$t->question_id]->type=='mbdq')
-        <div class="">
-          <h4>Answer:</h4>
-          <p>{!!$t->answer!!}</p>
-        </div>
-        @endif
-        @if($questions[$t->question_id]->type=='mcq')
+          
+        @if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq')
         <div class="mt-3">
           <div class="row">
             <div class="col-12 col-md-6">
@@ -294,6 +289,15 @@ pre, code {
           @endif
         </div>
         @endif
+
+         @if($questions[$t->question_id]->type=='mbdq' || $questions[$t->question_id]->type=='maq')
+        <div class="">
+          <h4>Answer:</h4>
+          <p>{!!$t->answer!!}</p>
+        </div>
+        @endif
+
+
         <hr>
 
 
