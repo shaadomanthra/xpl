@@ -453,11 +453,15 @@ $count =0;
        $i = $uid %10;
        $name = 'set_'.$this->slug.'_'.$i;
        $set = Cache::get($name);
+
        
        $sec = $this->sections->find($id);
        if($set){
           $qids = $set[$id];
-          return $sec->questions()->whereIn('question_id',$qids)->get();
+          $questions = Cache::remember('exam_ques_'.$i.'_'.$sec->id,240,function() use ($sec,$qids){
+            return $sec->questions()->whereIn('question_id',$qids)->get();
+          });
+          return $questions;
        }else{
         $questions = Cache::remember('exam_ques_'.$sec->id,240,function() use ($sec){
             return $sec->questions;
