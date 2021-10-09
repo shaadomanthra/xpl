@@ -1038,7 +1038,7 @@ class AdminController extends Controller
         }
 
         $user = User::where('username',$id)->first();
-        $user_details = $user->details;
+        $user_details = null;//$user->details;
         $colleges = College::orderBy('name','asc')->get();
         $metrics = Metric::all();
         $services = Service::all();
@@ -1089,20 +1089,20 @@ class AdminController extends Controller
         
         $user->save();
 
-        $user_details = User_Details::where('user_id',$user->id)->first();
-        if(!$user_details){
-            $user_details = new User_Details;
-        }
-        $user_details->user_id = $user->id;
-        $user_details->country = 'IN';
-        $user_details->city = 'HYD';
-        $user_details->phone = $request->get('phone');
-        $user_details->phone_2 = $request->get('phone_2');
-        $user_details->year_of_passing = $request->get('year_of_passing');
-        $user_details->roll_number = $request->get('roll_number');
+        // $user_details = User_Details::where('user_id',$user->id)->first();
+        // if(!$user_details){
+        //     $user_details = new User_Details;
+        // }
+        // $user_details->user_id = $user->id;
+        // $user_details->country = 'IN';
+        // $user_details->city = 'HYD';
+        // $user_details->phone = $request->get('phone');
+        // $user_details->phone_2 = $request->get('phone_2');
+        // $user_details->year_of_passing = $request->get('year_of_passing');
+        // $user_details->roll_number = $request->get('roll_number');
 
 
-        $user_details->save();
+        // $user_details->save();
 
 
         $college_id = $request->get('college_id');
