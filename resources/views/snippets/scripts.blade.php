@@ -3160,6 +3160,16 @@ $(window).keyup(function(e){
 
 
 @elseif(strtoupper(env('APP_NAME')) == strtoupper('gradable'))
+@elseif(subdomain() == 'rguktnz')
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M8YSFJHHXS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M8YSFJHHXS');
+</script>
 @else
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
