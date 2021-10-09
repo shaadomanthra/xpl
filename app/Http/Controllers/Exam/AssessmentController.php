@@ -259,7 +259,7 @@ class AssessmentController extends Controller
 
         $user = \auth::user();
 
-        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm')
+        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'|| $exam->client == 'rguktnz' || $exam->client == 'rguktrk' || $exam->client == 'rgukton' || $exam->client == 'rguktsk' )
         if($exam->client!=subdomain())
             abort('404','Test not found');
 
@@ -299,7 +299,7 @@ class AssessmentController extends Controller
                 }else
                     $products = null;
 
-            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'){
+            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'|| $exam->client == 'rguktnz' || $exam->client == 'rguktrk' || $exam->client == 'rgukton' || $exam->client == 'rguktsk' ){
                  $products = null;
             }else{
                 $client = Cache::get('client_'.subdomain());
@@ -541,7 +541,7 @@ class AssessmentController extends Controller
         if(!$exam)
             abort('404','Test not found');
 
-        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm')
+        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'|| $exam->client == 'rguktnz' || $exam->client == 'rguktrk' || $exam->client == 'rgukton' || $exam->client == 'rguktsk' )
         if($exam->client!=subdomain())
             abort('404','Test not found');
 
@@ -665,7 +665,7 @@ class AssessmentController extends Controller
                 }else
                     $products = null;
 
-            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'){
+            }elseif($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'|| $exam->client == 'rguktnz' || $exam->client == 'rguktrk' || $exam->client == 'rgukton' || $exam->client == 'rguktsk' ){
                  $products = null;
             }else{
                 $client = Cache::get('client_'.subdomain());
@@ -750,7 +750,7 @@ class AssessmentController extends Controller
                     $ids = array_keys($responses->keyBy('question_id')->toArray());
                     $ids_ordered = implode(',', $ids);
                     
-                    if(subdomain()!='rguktnuzvid' && subdomain()!='rguktrkvalley' && subdomain()!='demo' && subdomain()!='rguktsklm' && subdomain()!='rguktong')
+                    if(subdomain()!='rguktnuzvid' && subdomain()!='rguktrkvalley' && subdomain()!='demo' && subdomain()!='rguktsklm' && subdomain()!='rguktong' && subdomain()!='rguktrk' && subdomain()!='rgukton' && subdomain()!='rguktnz' && subdomain()!='rguktsk')
                     $qset = $section->questions()->whereIn('id', $ids)
                          ->orderByRaw("FIELD(id, $ids_ordered)")
                          ->get();
@@ -5531,7 +5531,7 @@ class AssessmentController extends Controller
         else
             $responses = null;
 
-        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client == 'rguktsklm' || $exam->client == 'rguktong')
+        if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'|| $exam->client == 'rguktnz' || $exam->client == 'rguktrk' || $exam->client == 'rgukton' || $exam->client == 'rguktsk' )
         if($exam->client!=subdomain())
             abort('404','Test not found');
 
