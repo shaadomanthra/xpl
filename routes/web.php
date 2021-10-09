@@ -388,6 +388,7 @@ use Illuminate\Support\Facades\Storage;
 
 	/* user verify routes */
 	Route::get('/activation', 'User\VerifyController@activation')->name('activation')->middleware('auth');
+	Route::get('/refresh', 'User\VerifyController@refresh')->name('refresh')->middleware('auth');
 	Route::post('/activation', 'User\VerifyController@activation')->name('activation');
 	Route::get('/activation/mail/{token}', 'User\VerifyController@email')->name('email.verify');
 

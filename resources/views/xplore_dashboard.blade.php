@@ -6,6 +6,7 @@
 
 
 <div class="container mt-4">
+  @include('flash::message')  
 @if(auth::user())
      @if($user->status!=0)
 <div class="rounded p-4 mb-4" style="background: #caf7dd; border:1px solid #39c072;">

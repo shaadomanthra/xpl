@@ -84,6 +84,18 @@ class VerifyController extends Controller
                 ->with('user',$user);
     }
 
+    public function refresh(Request $request)
+    {
+
+        $user = \auth::user();
+        $message = 'User data refreshed!';
+        flash($message)->warning();
+        Cache::forget('id-' . $user->id);
+        Cache::forget('user_'.$user->id);
+        return redirect()->route('dashboard')->with('message',$message);
+
+    }
+
 
     /**
      * Verify Email
