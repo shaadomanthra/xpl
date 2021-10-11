@@ -4043,6 +4043,7 @@ class AssessmentController extends Controller
         if(count($candidates)){
             if(request()->get('refresh')){
                 Cache::forget('candidates_'.$exam->slug.'_'.$user->username);
+                Cache::forget('candidates_ids_'.$exam->slug.'_'.$user->username);
             }
             if(!$search){
                 $userset = Cache::remember('candidates_'.$exam->slug.'_'.$user->username,240, function() use($candidates) {
@@ -4053,6 +4054,7 @@ class AssessmentController extends Controller
                     return User::whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('id');
                 });
 
+
             }else{
                 $userset = User::where('name','like','%'.$search.'%')->whereIn('email',$candidates)->where('client_slug',subdomain())->get()->keyBy('username');
                 if(!count($userset))
@@ -4061,6 +4063,7 @@ class AssessmentController extends Controller
                         ->with('active',1)
                         ->with('message',"No search results...");
                 $usersetids = User::whereIn('username',[$search])->where('client_slug',subdomain())->get()->keyBy('id');
+
             }
 
             foreach($userset as $u=>$usr){
@@ -4078,7 +4081,6 @@ class AssessmentController extends Controller
             $set = $userset->pluck('id')->toArray();
             $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$set)->get();
             foreach($tests_overall as $f=>$h){
-                if(isset($tests_overall[$f]) && isset($usersetids[$h->user_id]))
                 $tests_overall[$f]->user = $usersetids[$h->user_id];
             }
            
