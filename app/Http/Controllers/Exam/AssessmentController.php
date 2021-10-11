@@ -4078,6 +4078,7 @@ class AssessmentController extends Controller
             $set = $userset->pluck('id')->toArray();
             $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$set)->get();
             foreach($tests_overall as $f=>$h){
+                if(isset($tests_overall[$f]))
                 $tests_overall[$f]->user = $usersetids[$h->user_id];
             }
            
@@ -4395,7 +4396,7 @@ class AssessmentController extends Controller
             foreach($pg as $f){
                 $p = explode('/',$f);
                 $u = explode('.',$p[2]);
-               
+
 
                 $content = [];//json_decode(Storage::disk('s3')->get($f),true);
                 $content['url'] = Storage::disk('s3')->url($f);
