@@ -4078,7 +4078,7 @@ class AssessmentController extends Controller
             $set = $userset->pluck('id')->toArray();
             $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$set)->get();
             foreach($tests_overall as $f=>$h){
-                if(isset($tests_overall[$f]))
+                if(isset($tests_overall[$f]) && isset($usersetids[$h->user_id]))
                 $tests_overall[$f]->user = $usersetids[$h->user_id];
             }
            
