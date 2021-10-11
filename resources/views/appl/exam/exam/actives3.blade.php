@@ -68,7 +68,7 @@
          <form class="w-100" method="GET" action="{{ route('test.actives3',$exam->slug) }}">
            <div class="form-group mt-2">
             <div class="input-icon">
-             <input type="text" class="form-control" name="search" placeholder="Search by name..." value="@if(Request()->get('search')) {{Request()->get('search')}} @endif"/>
+             <input type="text" class="form-control" name="search" placeholder="Search by rollnumber..." value="@if(Request()->get('search')) {{Request()->get('search')}} @endif"/>
              <span><i class="flaticon2-search-1 icon-md"></i></span>
             </div>
            </div>
@@ -181,8 +181,8 @@
                  
                 <small><span class="badge badge-danger float-right window_change window_change_{{$a}}">{{$b['window_change']}}</span></small>
                
-                <div class="uname_{{$a}}">@if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif</div><br>
-                <small class="text-primary">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
+                <div class="uname_{{$a}}">@if(isset($b['uname'])){{substr($b['uname'],0,20)}} @elseif(isset($b['username'])) {{substr($b['username'],0,15)}} @endif</div>
+                <small class="text-primary rollnumber_{{$a}}">@if(isset($userset[$a])) {{$userset[$a]->roll_number}} @else @if(isset($b['rollnumber'])) {{$b['rollnumber']}} @endif @endif</small>
 
 
 

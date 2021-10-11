@@ -608,7 +608,8 @@ function image_refresh($i=null){
 
                  window_change = result.window_change;
                  last_photo = result.last_photo;
-                 
+                 roll_number = result.rollnumber;
+                
                  $u3 = result.username;
                  var $username = $u3.toString().split('.').join('_') ;
 
@@ -621,7 +622,8 @@ function image_refresh($i=null){
                 var u1 = $('.uname_'+$username).html().split(' ').join('') ;
                 var u2 = (result.uname).split(' ').join('');
 
-               
+                $('.rollnumber_'+$username).html(roll_number);
+                console.log(roll_number);
                 
                 if($i){
                     $('.uname_'+$username).html(result.uname);

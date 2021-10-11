@@ -3995,6 +3995,8 @@ class AssessmentController extends Controller
 
         $search = trim($r->get('search'));
 
+        
+
         $users = array();
         $userset = [];
 
@@ -4036,7 +4038,8 @@ class AssessmentController extends Controller
         $chats = [];
         $completed_list = [];
 
-        
+
+
         if(count($candidates)){
             if(request()->get('refresh')){
                 Cache::forget('candidates_'.$exam->slug.'_'.$user->username);
@@ -4237,11 +4240,42 @@ class AssessmentController extends Controller
 
 
             if($search){
-                $file = 'testlog/'.$exam->id.'/log/'.$search.'_log.json';
-                $files = [];
-                if(Storage::disk('s3')->exists($file))
-                    $files = [$file];
-                $pg = $this->paginateAnswers($files,$paginatecount );
+                 $userset = User::where('roll_number','like','%'.strtolower($search).'%')->where('client_slug',subdomain())->get()->keyBy('username');
+               
+                if(!count($userset))
+                     return view('appl.exam.exam.nofile')
+                        ->with('exam',$exam)
+                        ->with('active',1)
+                        ->with('message',"No search results...");
+                $usersetids = User::whereIn('username',[$search])->where('client_slug',subdomain())->get()->keyBy('id');
+
+                foreach($userset as $u=>$usr){
+                    $users[$u] = 1;
+                    $chats[$u] = 1;
+                }
+
+                //$usr = User::whereIn('email',$candidates)->orderBy('username','asc')->get();
+                foreach($userset as $a=> $b){
+                    $name = $b->username.'_log.json';
+                    $pg[$b->username] = 'testlog/'.$exam->id.'/log/'.$name;
+                }
+
+                $set = $userset->pluck('id')->toArray();
+                $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$set)->get();
+                foreach($tests_overall as $f=>$h){
+                    $tests_overall[$f]->user = $usersetids[$h->user_id];
+                }
+               
+
+                $completed_list = $this->updateCompleted($pg,$tests_overall,$exam,$usersetids);
+
+                $pg = $this->paginateAnswers($pg,count($pg));
+
+                // $file = 'testlog/'.$exam->id.'/log/'.$search.'_log.json';
+                // $files = [];
+                // if(Storage::disk('s3')->exists($file))
+                //     $files = [$file];
+                // $pg = $this->paginateAnswers($files,$paginatecount );
 
             }else{
 
@@ -4361,7 +4395,7 @@ class AssessmentController extends Controller
             foreach($pg as $f){
                 $p = explode('/',$f);
                 $u = explode('.',$p[2]);
-
+               
 
                 $content = [];//json_decode(Storage::disk('s3')->get($f),true);
                 $content['url'] = Storage::disk('s3')->url($f);
@@ -4389,7 +4423,6 @@ class AssessmentController extends Controller
                     $content['browser_details'] = null;
                     $content['js_details'] = null;
                     $content['ip_details'] = null;
-
 
 
                 if(isset($content['username'])){
@@ -4447,6 +4480,7 @@ class AssessmentController extends Controller
                 // }
 
                 if(!$content['completed']){
+                    if(isset($completed_list[$content['username']]))
                     if($completed_list[$content['username']]==1)
                         $content['completed'] = 1;
                 }
