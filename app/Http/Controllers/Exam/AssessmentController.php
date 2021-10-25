@@ -607,6 +607,7 @@ class AssessmentController extends Controller
         //dd($json);
 
         if($request->get('dump')){
+            echo "here";
             dd($json);
         }
 
@@ -831,9 +832,12 @@ class AssessmentController extends Controller
                     }else{
                         $keys = $responses->keyBy('question_id');
 
-                        if($request->get('dump'))
+
+                        if($request->get('dump2'))
                             dd($keys);
-                        if(is_array($keys[$q->id])){
+                        if(isset($keys[$q->id])){
+                            if(is_array($keys[$q->id])){
+
                             $q->dynamic = $keys[$q->id]['dynamic'];
                             //dd($keys[$q->id]['response']);
                             if(!isset($keys[$q->id]['response']))
@@ -859,6 +863,8 @@ class AssessmentController extends Controller
                             $time_used = $time_used + intval($q->time);
 
                         }
+                        }
+                        
 
                     }
                 }
@@ -3062,14 +3068,19 @@ class AssessmentController extends Controller
         }
 
 
+
         $date_time = new \DateTime();
         $data = array();
         $d =array();
         $typing_accuracy =  $typing_score =0;
         for($i=1;$i<=$qcount;$i++){
 
-            if(!isset($questions[$request->get($i.'_question_id')]))
-                return true;
+            if(!isset($questions[$request->get($i.'_question_id')])){
+
+                continue;
+            }
+
+            
 
             $type = $questions[$request->get($i.'_question_id')]->type;
             $item = array();
@@ -3279,7 +3290,7 @@ class AssessmentController extends Controller
                 }
                 
 
-                
+             
 
                 if(trim($item['code'])){
                     $testcases = json_decode($item['comment'],true);
@@ -3370,7 +3381,7 @@ class AssessmentController extends Controller
 
         }
 
-        // dd($data);
+       
        
 
 
@@ -3556,6 +3567,7 @@ class AssessmentController extends Controller
 
         }
 
+        //dd($data);
 
         if($test_overall['window_change']>3)
             $test_overall['cheat_detect'] = 1;
@@ -3568,6 +3580,8 @@ class AssessmentController extends Controller
         try {
             DB::connection()->getPdo();
 
+
+
             if(!$request->get('admin')){
                 Cache::put('attempt_'.$user_id.'_'.$test_id,$test_overall_cache,240);
                 Cache::forget('attempts_'.$user_id);
@@ -3575,7 +3589,10 @@ class AssessmentController extends Controller
                 Cache::forget('attempt_'.$user_id.'_'.$test_id);
                 Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
             }
+
+
             Test::insert($data);
+
             Tests_Section::insert($sec);
             Tests_Overall::insert($test_overall);
 
@@ -3620,8 +3637,10 @@ class AssessmentController extends Controller
                 Cache::forget('attempts_'.$user_id);
             }
 
+
+
         } catch (\Exception $e) {
-            //die("Could not connect to the database.  Please check your configuration. error:" . $e );
+            die("Could not connect to the database.  Please check your configuration. error:" . $e );
         }
         
 
@@ -4028,6 +4047,21 @@ class AssessmentController extends Controller
             $paginatecount = 18;
         }
 
+        $roll=null;
+        if($exam->emails){
+                $emails = implode(',',explode("\n", $exam->emails));
+                $emails =str_replace("\r", '', $emails);
+                $emails = array_unique(explode(',',$emails));
+                foreach($emails as $ek=>$ex){
+                    $ev = explode('@',$ex);
+                    if(isset($ev[1]))
+                    $roll[$ek] =$ev[0];
+                }
+        }
+       
+
+
+
         //dd($files);
         //dd($candidates);
 
@@ -4274,6 +4308,7 @@ class AssessmentController extends Controller
 
                 $pg = $this->paginateAnswers($pg,count($pg));
 
+
                 // $file = 'testlog/'.$exam->id.'/log/'.$search.'_log.json';
                 // $files = [];
                 // if(Storage::disk('s3')->exists($file))
@@ -4284,13 +4319,43 @@ class AssessmentController extends Controller
 
                 $files = Storage::disk('s3')->allFiles('testlog/'.$exam->id.'/log/');
 
-
+                
                 $tests_overall = Tests_Overall::where('test_id',$exam->id)->with('user')->get();
 
+                if($roll){
+                    foreach($files as $pv=>$pf){
+                        $df = str_replace('_log.json','',$pf);
+                        $dp = explode('/',$df);
+                        $ditem = $dp[3];
+                        if(!in_array($ditem,$roll)){
+                           // echo $ditem."<br>";
+                           unset($files[$pv]);
+                        }
+                     
+                            
+                    }
+                }
+
+                //dd($files);
+            
 
 
                 $completed_count  = count($tests_overall);
                 $sessions_count = count($files);
+
+
+
+                
+
+                $completed_list = $this->updateCompleted($files,$tests_overall,$exam);
+                $f2=[];
+
+                $completed_count =0;
+                foreach($completed_list as $cc){
+                    if($cc)
+                    $completed_count++;
+                }
+
 
                 if($sessions_count> $completed_count ){
                     $data['total'] = $sessions_count;
@@ -4302,8 +4367,6 @@ class AssessmentController extends Controller
                     $data['live'] = 0;
                 }
 
-                $completed_list = $this->updateCompleted($files,$tests_overall,$exam);
-                $f2=[];
                 
                 if(request()->get('completed')){
                     foreach($completed_list as $c=>$flag){
@@ -4336,9 +4399,10 @@ class AssessmentController extends Controller
                     $pg = $this->paginateAnswers($f2,$paginatecount );
                 }else if(request()->get('terminate_all')){
                     $data = null;
-
+                   
                     foreach($completed_list as $c=>$flag){
                         $url = 'testlog/'.$exam->id.'/'.$c.'.json';
+                        var_dump($url);
                         if(!$flag && Storage::disk('s3')->exists($url))
                         {
                             //submit the response
@@ -4380,9 +4444,9 @@ class AssessmentController extends Controller
                         }   
                         
                     }
-                    // print("All the responses submitted <br>");
-                    // dd();
-                    return redirect()->route('test.active',$exam->slug);
+                     print("<br><br>All the responses submitted <br>");
+                     //dd();
+                    return redirect()->route('test.actives3',$exam->slug);
 
                     $pg = $this->paginateAnswers($files,$paginatecount );
                 }
@@ -4394,6 +4458,7 @@ class AssessmentController extends Controller
 
             }
 
+           
 
             foreach($pg as $f){
                 $p = explode('/',$f);

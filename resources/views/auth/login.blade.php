@@ -7,6 +7,7 @@
 @include('flash::message')
     <p class="card-text">
 
+
         @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}

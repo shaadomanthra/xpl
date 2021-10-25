@@ -10,7 +10,7 @@
         </a>
         <!-- End Logo -->
         <div>
-          <a class="signup_btn ml-3 d-lg-none" href="contact">Request a Demo</a>
+          <a class="signup_btn ml-3 d-lg-none" href="login">Login</a>
 
           <!-- Responsive Toggle Button -->
           <button type="button" class="navbar-toggler btn btn-icon btn-ghost-dark" aria-label="Toggle navigation"
@@ -117,9 +117,7 @@
             <!-- End resources -->
 
             <!-- Contact -->
-            <li class="navbar-nav-item ml-lg-2">
-              <a href="login" class="nav-link">Login</a>
-            </li>
+           
             <li class="navbar-nav-item ml-lg-2">
               <a href="register" class="nav-link">Register</a>
             </li>
@@ -127,7 +125,7 @@
 
             <!-- Sign Up -->
             <li class="navbar-nav-item ml-lg-3 mt-3 mt-lg-0 d-none d-lg-block">
-              <a class="signup_btn" href="contact">Request a Demo</a>
+              <a class="signup_btn" href="login">Login</a>
             </li>
             <!-- End Sign Up -->
           </ul>

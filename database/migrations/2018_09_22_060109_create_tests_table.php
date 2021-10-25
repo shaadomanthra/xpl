@@ -18,7 +18,7 @@ class CreateTestsTable extends Migration
             $table->integer('question_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('test_id');
-            $table->string('response')->nullable();
+            $table->longText('response')->nullable();
             $table->string('answer');
             $table->integer('accuracy');
             $table->integer('time'); 

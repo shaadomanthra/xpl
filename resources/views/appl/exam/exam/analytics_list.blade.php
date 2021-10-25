@@ -59,12 +59,15 @@
                 @endif
                 </td>
                 @if(strtolower(str_replace(" ","",$exam->examtype->name))!='psychometrictest')
-               
+               @if(isset($sections[$users[$r['user_id']]->id]))
                 @foreach($sections[$users[$r['user_id']]->id] as $s)
                 <td>
                   {{ $s->score }} @if($sec->name=='typing')% @endif
                 </td>
                 @endforeach
+              @else
+              <td>-</td>
+              @endif
 
                 <td>
                   @if(!$r['status'])

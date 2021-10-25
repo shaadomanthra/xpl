@@ -342,8 +342,13 @@ $count =0;
             if($tests > count($qset)){
                 foreach($qset as $s){
                   $dontDeleteThisRow = $t->where('question_id', $s)->where('user_id',$u)->first();
-                  //echo $dontDeleteThisRow->id;
-                  Test::where('test_id',$exam->id)->where('question_id', $s)->where('user_id',$u)->where('id', '!=', $dontDeleteThisRow->id)->delete();
+                  try{
+                        if($dontDeleteThisRow)
+                        Test::where('test_id',$exam->id)->where('question_id', $s)->where('user_id',$u)->where('id', '!=', $dontDeleteThisRow->id)->delete();
+                  }catch(Exception $e) {
+                      echo 'Message: ' .$e->getMessage();
+                    }
+                  
                   //dd($ids);
                   //$ts::where('question_id', $s)->where('id', '!=', $dontDeleteThisRow->id)->delete();
 

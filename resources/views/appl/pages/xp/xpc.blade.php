@@ -10,9 +10,9 @@
             <div class="mb-5">
                 <!-- <span class="d-block small font-weight-bold text-cap mb-2">Who we are?</span> -->
                 <h1 class="display-4 mb-3">Xplore placement club</h1>
-                <p class="lead">Our team aims to deliver the most outstanding work in every pixel.</p>
+                <p class="lead">Join the club for exclusive placement drives, tech talks, premium learning content.</p>
             </div>
-            <a class="js-go-to position-static btn btn-primary btn-wide transition-3d-hover" href="contact"
+            <a class="js-go-to position-static btn btn-primary btn-wide transition-3d-hover" href="login"
                 data-hs-go-to-options='{
                 "targetSelector": "#caseStudies",
                 "offsetTop": 0,
@@ -99,12 +99,10 @@
             <h2 class="h1">One stop platform for preparation, exposure and placements.</h2>
             </div>
 
-            <p> Bring your ideas to life and share your vision with concrete elements. Make collaboration and communication easier with your team or your client.</p>
-
-            <p>Use our tools to explore your ideas and make your vision come true. Then share your work easily.</p>
+            <p> As an experienced staff recruitment company, we take care of all the placement needs of companies who can leverage our advanced smart platforms that make screening and hiring easier. We help you hire future-ready talent who meet your job requirements and also the ethos of your organization.</p><p> Whether niche positions or bulk hiring, we hunt the right talent for you in the shortest possible time.</p>
 
             <div class="mt-4">
-            <a class="btn btn-primary btn-wide transition-3d-hover" href="#">Start Now</a>
+            <a class="btn btn-primary btn-wide transition-3d-hover" href="/login">Start Now</a>
             </div>
         </div>
 

@@ -249,7 +249,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Simple</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Anyone can use the features easily without any prior training  </p>
                 </div>
             </div>
         </div>
@@ -261,7 +261,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Customizable</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">You can personalize the features to align with the requirements of your brand </p>
                 </div>
             </div>
         </div>
@@ -275,7 +275,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Secure</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">With our advanced security features, no fear of leakage of your personal data </p>
                 </div>
             </div>
         </div>
@@ -287,7 +287,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Scalable</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Has the flexibility to scale up and seamlessly adapt to an increase in load whenever you need </p>
                 </div>
             </div>
         </div>
@@ -298,7 +298,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Mobile ready</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Navigate, resize or scroll as you like as the platform adapts excellently for your small screen   </p>
                 </div>
             </div>
         </div>
@@ -310,7 +310,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Works in low bandwidth</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Runs optimally even when the internet connection is poor</p>
                 </div>
             </div>
         </div>
@@ -324,7 +324,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Power failure ready</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Continue using even during a power cut with our offline features </p>
                 </div>
             </div>
         </div>
@@ -336,7 +336,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Brand promotion</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Promote your brand using banners across different pages </p>
                 </div>
             </div>
         </div>
@@ -349,7 +349,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>White labelling</h4> 
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">The whole product under your brand name. </p>
                 </div>
             </div>
         </div>
@@ -361,7 +361,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Dedicated Support</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Count on our friendly customer service team to provide assistance any time you need</p>
                 </div>
             </div>
         </div>
@@ -383,7 +383,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>AI proctoring</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Securely manage and conduct tests with our amazing AI proctoring </p>
                 </div>
             </div>
         </div>
@@ -395,7 +395,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Human proctoring</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Online proctor invigilates the candidates in real-time to detect suspicious activities </p>
                 </div>
             </div>
         </div>
@@ -409,7 +409,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Window swap detection</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Bars the user from accessing other windows during the online exam </p>
                 </div>
             </div>
         </div>
@@ -421,7 +421,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Cut, copy, paste disabled</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Prevents cheating by not allowing candidates to cut, copy, or paste content to answer sheets</p>
                 </div>
             </div>
         </div>
@@ -432,7 +432,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Photo Id detection</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Verifies a candidate’s photo identity with previously shared registration details to prevent impersonation   </p>
                 </div>
             </div>
         </div>
@@ -444,7 +444,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>System check</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Complete system check happend before every exam</p>
                 </div>
             </div>
         </div>
@@ -458,7 +458,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Email based restriction</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Allows only emails from authorized domains or addresses </p>
                 </div>
             </div>
         </div>
@@ -470,7 +470,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Access code based restriction</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Allows only specified devices or users to access </p>
                 </div>
             </div>
         </div>
@@ -483,7 +483,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Auto termination contraint</h4> 
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">You can terminate the candidates exam based on predefined conditions</p>
                 </div>
             </div>
         </div>
@@ -495,7 +495,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Manual termination constraint</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Proctors can terminate students exam through live tracker </p>
                 </div>
             </div>
         </div>
@@ -506,7 +506,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Secure browser support</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Restricts candidates from opening any unauthorized website or accessing other blacklisted third-party applications </p>
                 </div>
             </div>
         </div>
@@ -518,7 +518,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Complete user logs</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Lets you check the activities of the users across their accounts </p>
                 </div>
             </div>
         </div>
@@ -531,7 +531,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Webcam captures</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Uses the webcam of the candidates to conduct invigilation and prevent cheating during tests</p>
                 </div>
             </div>
         </div>
@@ -543,7 +543,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Screen captures</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">The screen of the test takers are captured to monitor any suspicious activities </p>
                 </div>
             </div>
         </div>
@@ -554,7 +554,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Role band permisions</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Define roles and restrict the access to certain features </p>
                 </div>
             </div>
         </div>
@@ -566,7 +566,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Cloud backup</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Storage of all the user actions on the cloud server for review </p>
                 </div>
             </div>
         </div>
@@ -579,7 +579,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Chat with candidates</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Proctors can chat with candidates during the exam </p>
                 </div>
             </div>
         </div>
@@ -591,7 +591,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Broad cast messages</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Allows you to broadcast messages to all candidates during a live exam</p>
                 </div>
             </div>
         </div>
@@ -613,7 +613,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Question library</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Huge databank of question on aptitude and programming </p>
                 </div>
             </div>
         </div>
@@ -624,8 +624,8 @@
                 <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/faq.svg')}}" alt="SVG">
                 </figure>
                 <div class="media-body">
-                <h4>Numerous question paper</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <h4>Numerous question papers</h4>
+                <p class="text-body">Pick up preset question templates and use them on go</p>
                 </div>
             </div>
         </div>
@@ -639,7 +639,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Question/sectional marking</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">You have a choice to choose marking scheme question wise or section wise </p>
                 </div>
             </div>
         </div>
@@ -651,7 +651,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Question/option shuffling</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Allows you to randomize questions for test papers </p>
                 </div>
             </div>
         </div>
@@ -662,7 +662,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>On screen calculator</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">You can enable or disable on screen calculator for exam</p>
                 </div>
             </div>
         </div>
@@ -674,7 +674,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Code compiler</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Support 30 programming language tests </p>
                 </div>
             </div>
         </div>
@@ -688,7 +688,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Dynamic question</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">You can create sets for each question </p>
                 </div>
             </div>
         </div>
@@ -700,7 +700,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Dynamic set papers</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">You can create sets for each test paper </p>
                 </div>
             </div>
         </div>
@@ -712,8 +712,8 @@
                 <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/news-reporter.svg')}}" alt="SVG">
                 </figure>
                 <div class="media-body">
-                <h4>comprehensive student reports</h4> 
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <h4>Comprehensive student reports</h4> 
+                <p class="text-body">Lets you prepare detailed reports of the performance of candidates taking exams</p>
                 </div>
             </div>
         </div>
@@ -725,7 +725,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Question analysis</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Get detailed insigit on how student performed across various questions </p>
                 </div>
             </div>
         </div>
@@ -736,7 +736,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Excel download </h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Get the complete excel report in single click </p>
                 </div>
             </div>
         </div>
@@ -748,7 +748,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>User response sheet pdf</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">You can download complete answer script in PDF format </p>
                 </div>
             </div>
         </div>
@@ -761,7 +761,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Manual correction</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Allows you to manually correct the answers provided by candidates </p>
                 </div>
             </div>
         </div>
@@ -773,7 +773,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Auto enable\disable tests</h4>
-                <p class="text-body">Once your team signs up for a subscription plan. </p>
+                <p class="text-body">Schedule the tests to go live and close based on date </p>
                 </div>
             </div>
         </div>

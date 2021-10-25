@@ -249,7 +249,10 @@
         <!-- Icon Blocks Section -->
         <div class="bg-light">
         <div class="container space-2 ">
-            <h2 class="mb-8 text-center">Why Xplore ?</h2>
+            <h2 class="mb-2 text-center">Why Xplore ?</h2>
+            <div class="mx-auto mb-8"><p class=" text-center w-75 mx-auto">Do you want to find the right candidates for your organization in minutes?
+Then, Xplore’s job board, with its amazing features, is the platform you need.
+</p></div>
         <div class="row justify-content-lg-center pl-1 pl-md-0">
             <div class="col-md-6 mb-3 mb-md-7">
             <!-- Icon Blocks -->
@@ -259,7 +262,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Easy to use</h4>
-                <p>Trainers are well qualified with minimum 5 years experience.</p>
+                <p>The platform is aesthetically designed and is user friendly. It gives you an optimal viewing experience and facilitates easy reading and navigation. You can easily resize, scroll, and move across the screen whether you use a mobile or a laptop. </p>
                 </div>
             </div>
             <!-- End Icon Blocks -->
@@ -272,8 +275,8 @@
                 <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/computer-screen.svg')}}" alt="SVG">
                 </figure>
                 <div class="media-body">
-                <h4>Secure</h4>
-                <p>Extensively researched content has been designed to suit the needs of the market.</p>
+                <h4>Fully Secure</h4>
+                <p>We know that the personal data of candidates need the best protection possible. Our platform has advanced security features that make any kind of data leaks impossible.</p>
                 </div>
             </div>
             <!-- End Icon Blocks -->
@@ -288,8 +291,8 @@
                 <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/target.svg')}}" alt="SVG">
                 </figure>
                 <div class="media-body">
-                <h4>Validated Profiles</h4>
-                <p>Industry best training to fill gap in engineering students.</p>
+                <h4>Pre-screened Profiles</h4>
+                <p>We are aware of how your time is very valuable to you. By pre-screening every candidate, we make your hiring process easier, enabling you to save a lot of precious time and effort.</p>
                 </div>
             </div>
             <!-- End Icon Blocks -->
@@ -302,8 +305,8 @@
                 <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/network.svg')}}" alt="SVG">
                 </figure>
                 <div class="media-body">
-                <h4>Large Networks</h4>
-                <p>Extensively researched content has been designed to suit the needs of the market.</p>
+                <h4>Vast Networks</h4>
+                <p>Whatever data is posted on our platform has gone through extensive research to meet the needs of the market. Our vast network with all the top colleges in the country helps you find the best candidates for your organization.</p>
                 </div>
             </div>
             <!-- End Icon Blocks -->
@@ -319,7 +322,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Transperant Process</h4>
-                <p>Trainers are well qualified with minimum 5 years experience.</p>
+                <p>We assure you that the data you will find on our platform is 100% reliable and genuine. All information we receive is thoroughly validated before it is posted on the platform.</p>
                 </div>
             </div>
             <!-- End Icon Blocks -->
@@ -333,7 +336,7 @@
                 </figure>
                 <div class="media-body">
                 <h4>Dedicated Support</h4>
-                <p>Extensively researched content has been designed to suit the needs of the market.</p>
+                <p>Our friendly customer service team is always eager to provide all the help you need anytime. We will be most happy to resolve any issues you may encounter and make the screening and hiring process easy for you.</p>
                 </div>
             </div>
             <!-- End Icon Blocks -->
