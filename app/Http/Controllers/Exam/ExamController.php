@@ -1611,6 +1611,7 @@ class ExamController extends Controller
 
         if($r->get('removeduplicates')){
 
+            ini_set ( 'max_execution_time', 1200);
             $exam->removeDuplicates();
             return redirect()->back();
         }

@@ -292,16 +292,28 @@ class Exam extends Model
           foreach($s->questions as $q)
             array_push($qset,$q->id);
         }
-        $qcount = $exam->questionCount();
-        $users = array_keys(Tests_Overall::select('user_id')->where('test_id',$exam->id)->get()->keyBy('user_id')->toArray());
         
-        $to = Tests_Overall::where('test_id',$exam->id)->get();
-        $t = Test::where('test_id',$exam->id)->get();
-        $ts = Tests_Section::where('test_id',$exam->id)->get();
+        $qcount = $exam->questionCount();
+        if(request()->get('page')){
+
+            $users = array_keys(Tests_Overall::select('user_id')->where('test_id',$exam->id)->paginate(30)->keyBy('user_id')->toArray());
+            $to = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$users)->get();
+            $t = Test::where('test_id',$exam->id)->whereIn('user_id',$users)->get();
+            $ts = Tests_Section::where('test_id',$exam->id)->whereIn('user_id',$users)->get();
+
+        }else{
+            $users = array_keys(Tests_Overall::select('user_id')->where('test_id',$exam->id)->get()->keyBy('user_id')->toArray());
+             $to = Tests_Overall::where('test_id',$exam->id)->get();
+            $t = Test::where('test_id',$exam->id)->get();
+            $ts = Tests_Section::where('test_id',$exam->id)->get();
+        }
+        
+       
 
         //echo "users - ".count($users)."<br><br>";
         $count =0;
         foreach($users as $u){
+            
             $tests = $to->where('user_id',$u)->count();
             if($tests!=1){
               $items = $to->where('user_id',$u);
@@ -317,7 +329,7 @@ class Exam extends Model
 
         //echo "total -".$count."<br><br>";
 
-$count =0;
+        $count =0;
         foreach($users as $u){
             $tests = $ts->where('user_id',$u)->count();
             if($tests>count($sset)){
@@ -336,12 +348,16 @@ $count =0;
            // echo $u.' - '.$tests."<bR>";
         }
         
+
         $count =0;
         foreach($users as $u){
+           
             $tests =$t->where('user_id',$u)->count();
-            if($tests > count($qset)){
+            if($tests > count($qset) || $tests < count($qset) ){
+
                 foreach($qset as $s){
                   $dontDeleteThisRow = $t->where('question_id', $s)->where('user_id',$u)->first();
+
                   try{
                         if($dontDeleteThisRow)
                         Test::where('test_id',$exam->id)->where('question_id', $s)->where('user_id',$u)->where('id', '!=', $dontDeleteThisRow->id)->delete();
@@ -355,11 +371,11 @@ $count =0;
               }
             }
             $count = $count + $tests;
-           // echo $u.' - '.$tests."<bR>";
+            //echo $u.' - '.$tests."<bR>";
         }
         //echo "total -".$count."<br><br>";
         
-;    }
+    }
 
 
      public function getScore($id){

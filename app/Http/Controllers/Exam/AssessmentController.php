@@ -837,32 +837,31 @@ class AssessmentController extends Controller
                             dd($keys);
                         if(isset($keys[$q->id])){
                             if(is_array($keys[$q->id])){
+                                $q->dynamic = $keys[$q->id]['dynamic'];
+                                //dd($keys[$q->id]['response']);
+                                if(!isset($keys[$q->id]['response']))
+                                    $q->response = null;
+                                else
 
-                            $q->dynamic = $keys[$q->id]['dynamic'];
-                            //dd($keys[$q->id]['response']);
-                            if(!isset($keys[$q->id]['response']))
-                                $q->response = null;
-                            else
+                                $q->response = $keys[$q->id]['response'];
+                                $q->time = $keys[$q->id]['time'];
+                                if(isset($keys[$q->id]['code']))
+                                $q->code = $keys[$q->id]['code'];
 
-                            $q->response = $keys[$q->id]['response'];
-                            $q->time = $keys[$q->id]['time'];
-                            if(isset($keys[$q->id]['code']))
-                            $q->code = $keys[$q->id]['code'];
+                                $time_used = $time_used + intval($q->time);
+                            }else{
+                                $q->dynamic = $keys[$q->id]->dynamic;
+                                if(!isset($keys[$q->id]->response))
+                                    $q->response = null;
+                                else
+                                    $q->response = $keys[$q->id]->response;
+                                $q->time = $keys[$q->id]->time;
+                                if(isset($keys[$q->id]->code))
+                                $q->code = $keys[$q->id]->code;
 
-                            $time_used = $time_used + intval($q->time);
-                        }else{
-                            $q->dynamic = $keys[$q->id]->dynamic;
-                            if(!isset($keys[$q->id]->response))
-                                $q->response = null;
-                            else
-                                $q->response = $keys[$q->id]->response;
-                            $q->time = $keys[$q->id]->time;
-                            if(isset($keys[$q->id]->code))
-                            $q->code = $keys[$q->id]->code;
+                                $time_used = $time_used + intval($q->time);
 
-                            $time_used = $time_used + intval($q->time);
-
-                        }
+                            }
                         }
                         
 
