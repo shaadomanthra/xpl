@@ -353,7 +353,7 @@ class Exam extends Model
         foreach($users as $u){
            
             $tests =$t->where('user_id',$u)->count();
-            if($tests > count($qset) || $tests < count($qset) ){
+            if($tests > count($qset) || $tests>60 ){
 
                 foreach($qset as $s){
                   $dontDeleteThisRow = $t->where('question_id', $s)->where('user_id',$u)->first();
