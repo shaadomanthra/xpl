@@ -1589,6 +1589,37 @@ class ExamController extends Controller
         return $paginator;
     }
 
+    public function reportd($id,Request $r)
+    {
+        $exam = Cache::get('test_'.$id);
+
+        $qset=[];
+        foreach($exam->sections as $s){
+          foreach($s->questions as $q)
+            array_push($qset,$q->id);
+        }
+        $users = array_keys(Tests_Overall::select('user_id')->where('test_id',$exam->id)->get()->keyBy('user_id')->toArray());
+        $to = Tests_Overall::where('test_id',$exam->id)->get();
+        $t = Test::where('test_id',$exam->id)->get();
+        $ts = Tests_Section::where('test_id',$exam->id)->get();
+        $usx = User::whereIn('id',$users)->get();
+
+        echo 'Users - '.count($usx)."<br>";
+        $count = 0;
+        foreach($users as $u){
+           
+            $tests =$t->where('user_id',$u)->count();
+            if($tests > count($qset) || $tests>60 ){
+                foreach($qset as $s){
+                  //$ts::where('question_id', $s)->where('id', '!=', $dontDeleteThisRow->id)->delete();
+              }
+            }
+            $count = $count + $tests;
+            echo $tests." - <a href='".route('assessment.responses',$exam->slug)."?student=".$usx->find($u)->username."'>".$usx->find($u)->name."</a><br>";
+            //echo $u.' - '.$tests."<bR>";
+        }
+    }
+
     public function analytics($id,Request $r)
     {
 

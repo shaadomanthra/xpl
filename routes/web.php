@@ -166,6 +166,8 @@ use Illuminate\Support\Facades\Storage;
 			->name('test.pdfupload')->middleware('auth');
 	Route::get('/test/{test}/report', 'Exam\ExamController@analytics')
 			->name('test.report')->middleware('auth');
+	Route::get('/test/{test}/reportd', 'Exam\ExamController@reportd')
+			->name('test.reportd')->middleware('auth');
 	Route::get('/test/{test}/analytics3', 'Exam\ExamController@analytics3')
 			->name('test.analytics3')->middleware('auth');
 	Route::get('/test/{test}/analytics4', 'Exam\ExamController@analytics4')
