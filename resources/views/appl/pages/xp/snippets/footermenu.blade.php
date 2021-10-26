@@ -55,7 +55,7 @@
             <!-- Nav Link -->
             <ul class="nav nav-sm nav-x-0 nav-dark flex-column">
              
-              <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+              <li class="nav-item"><a class="nav-link" href="/aboutus">About Us</a></li>
               <li class="nav-item"><a class="nav-link" href="#">Team</a></li>
               <li class="nav-item"><a class="nav-link" href="#">News</a></li>
               <li class="nav-item"><a class="nav-link" href="#">Testimonials</a></li>

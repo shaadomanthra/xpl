@@ -169,7 +169,7 @@
                     <img class="img-fluid " src="{{ asset('assetsfront/xploreImages/regulation.svg')}}" alt="SVG">
                   </figure>
                   <h4>Define Rules</h4>
-                  <p>This is where we really begin to visualize your napkin sketches and make them into beautiful pixels.</p>
+                  <p>Create a preset rules to filter, shortlist and process candidates for furthur rounds.</p>
                 </div>
                 <!-- End Icon Blocks -->
               </div>
@@ -181,7 +181,7 @@
                     <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/clickstream.svg')}}" alt="SVG">
                   </figure>
                   <h4>Applicant Analytics</h4>
-                  <p>Now that we've aligned the details, it's time to get things mapped out and organized.</p>
+                  <p>Our insightful analytics about the applicants make hiring more efficient and less stressful for you.</p>
                 </div>
                 <!-- End Icon Blocks -->
               </div>
@@ -193,7 +193,7 @@
                     <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/profile.svg')}}" alt="SVG">
                   </figure>
                   <h4>Applicant Data</h4>
-                  <p>This is where we really begin to visualize your napkin sketches and make them into beautiful pixels.</p>
+                  <p>Remote screening and hiring become a breeze with the detailed data we provide on every applicant. </p>
                 </div>
                 <!-- End Icon Blocks -->
               </div>
@@ -205,7 +205,7 @@
                     <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/video-call.svg')}}" alt="SVG">
                   </figure>
                   <h4>Profile Video</h4>
-                  <p>Now that we've aligned the details, it's time to get things mapped out and organized.</p>
+                  <p>Viewing them, you can peek into the personality of your applicants and assess their confidence levels and communication skills.</p>
                 </div>
                 <!-- End Icon Blocks -->
               </div>
@@ -217,7 +217,7 @@
                     <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/smart.svg')}}" alt="SVG">
                   </figure>
                   <h4>Shortlisting tools</h4>
-                  <p>We strive to embrace and drive change in our industry which allows us to keep our clients relevant.</p>
+                  <p>With this tool, you can easily weed out the candidates from your list who do not fit in with your requirements.</p>
                 </div>
                 <!-- End Icon Blocks -->
               </div>
@@ -229,7 +229,7 @@
                     <img class="img-fluid" src="{{ asset('assetsfront/xploreImages/xls.svg')}}" alt="SVG">
                   </figure>
                   <h4>Excel Download</h4>
-                  <p>Staying focused allows us to turn every project we complete into something we love.</p>
+                  <p>Get all the important information about the candidates in excel with a single click.</p>
                 </div>
                 <!-- End Icon Blocks -->
               </div>
