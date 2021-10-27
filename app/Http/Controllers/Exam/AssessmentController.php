@@ -786,13 +786,13 @@ class AssessmentController extends Controller
 
                         if($request->get('dump'))
                             dd($keys);
+                        if(isset($keys[$q->id]))
                         if(is_array($keys[$q->id])){
                             $q->dynamic = $keys[$q->id]['dynamic'];
                             //dd($keys[$q->id]['response']);
                             if(!isset($keys[$q->id]['response']))
                                 $q->response = null;
                             else
-
                             $q->response = $keys[$q->id]['response'];
                             $q->time = $keys[$q->id]['time'];
                             if(isset($keys[$q->id]['code']))
