@@ -1426,7 +1426,7 @@ $(document).ready(function() {
       $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
       $c = ($(this).data('c'))?$(this).data('c'):null;
       $input = $(this).data('input');
-      $url= 'https://cmplr.in/run';
+      $url= 'https://stag.cmplr.in/run';
       $stop= $(this).data('stop');
       var editor_ = editor_array[$name];
 
@@ -1465,6 +1465,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
             console.log('qn'+$qn);
            
             var jso = data;
+            console.log('data-'+data);
             dat = JSON.parse(data);
 
             console.log("output_ - "+$('.output_'+$qn).html());
@@ -1870,7 +1871,7 @@ function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$o
           if($lang=='c' || $lang=='cpp')
             $lang ='clang';
           console.log('sent - '+$lang);
-          $url= 'https://cmplr.in/run';
+          $url= 'https://stag.cmplr.in/run';
           if($testcase==3){
 
             for(i=1;i<=5;i++){
