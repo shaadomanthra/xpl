@@ -353,8 +353,10 @@ function subdomain() {
             return 'packetprep';
     if($_SERVER['HTTP_HOST'] == 'devshala.gradable.test')
             return 'exam';
-    // if($_SERVER['HTTP_HOST'] == 'rguktrkvalley.xplore.in.net')
-    //         return 'rguktsklm';
+    if($_SERVER['HTTP_HOST'] == 'rgon.xplore.co.in')
+            return 'rgukton';
+    if($_SERVER['HTTP_HOST'] == 'rgsk.xplore.co.in')
+            return 'rguktsk';
     // if($_SERVER['HTTP_HOST'] == 'rguknuzvid.xplore.in.net')
     //         return 'rguktong';
     if($_SERVER['HTTP_HOST'] == 'demo.xp.test' )
