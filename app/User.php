@@ -570,7 +570,7 @@ class User extends Authenticatable
 
     public function send_sms($number,$code){
                 // Authorisation details.
-        $url = "https://2factor.in/API/V1/b2122bd6-9856-11ea-9fa5-0200cd936042/SMS/+91".$number."/".$code;
+        $url = "https://2factor.in/API/V1/95f80a8a-3945-11ec-a13b-0200cd936042/SMS/+91".$number."/".$code;
         $d = $this->curl_get_contents($url);
         
     }

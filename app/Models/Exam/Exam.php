@@ -479,12 +479,12 @@ class Exam extends Model
        $sec = $this->sections->find($id);
        if($set){
           $qids = $set[$id];
-          $questions = Cache::remember('exam_ques_'.$i.'_'.$sec->id,240,function() use ($sec,$qids){
+          $questions = Cache::remember('exam_ques_'.$i.'_'.$sec->id,360,function() use ($sec,$qids){
             return $sec->questions()->whereIn('question_id',$qids)->get();
           });
           return $questions;
        }else{
-        $questions = Cache::remember('exam_ques_'.$sec->id,240,function() use ($sec){
+        $questions = Cache::remember('exam_ques_'.$sec->id,360,function() use ($sec){
             return $sec->questions;
         });
           return $questions;
