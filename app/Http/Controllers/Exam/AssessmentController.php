@@ -526,6 +526,7 @@ class AssessmentController extends Controller
        $data['vcount'] = 0;
        $data['upload_urls'] = [];
        $cc = 0 ;
+       $json_b1=0;
 
 
 
@@ -537,6 +538,7 @@ class AssessmentController extends Controller
         }else{
             $exam = Exam::where('slug',$test)->first();
         }
+
 
         if(!$exam)
             abort('404','Test not found');
@@ -560,6 +562,7 @@ class AssessmentController extends Controller
                 $section_timer = true;
         
 
+        if(!request()->get('admin'))
         if($exam->active){
             if(!$responses)
                 return view('appl.exam.assessment.inactive')->with('exam',$exam);
@@ -570,6 +573,27 @@ class AssessmentController extends Controller
         if($request->get('student') && $request->get('admin')){
             $user = User::where('username',$request->get('student'))->first();
             $responses = Test::where('test_id',$exam->id)->where('user_id',$user->id)->get();
+
+            if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/'.$user->username.'.json')){
+                $json = json_decode(Storage::disk('s3')->get('testlog/'.$exam->id.'/'.$user->username.'.json'),true);
+
+                $responses = $json['responses'];
+
+                if(isset($json['qid'])){
+                    $data['qid'] = $json['qid'];
+                    $data['sno'] = $json['qno'];
+                }
+
+                if(isset($json['c']))
+                $cc = $json['c'];
+
+                if(is_array($responses))
+                {
+                    $responses = collect($responses);
+                }
+            }else{
+                    $responses = null;
+            }
 
         }else{
 
@@ -601,6 +625,9 @@ class AssessmentController extends Controller
                 $json_log = Storage::disk('s3')->get('testlog/'.$exam->id.'/log/'.$user->username.'_log.json');
             }
 
+            if(Storage::disk('s3')->exists('testlog/'.$exam->id.'/backup/'.$user->username.'_b1.json')){
+                $json_b1 = Storage::disk('s3')->get('testlog/'.$exam->id.'/backup/'.$user->username.'_b1.json');
+            }
 
         }
 
@@ -740,26 +767,43 @@ class AssessmentController extends Controller
         $section_questions = array();
         $imgs=[];
         foreach($exam->sections as $section){
-            $qset = $exam->getQuestionsSection($section->id,$user->id);//$section->questions;
+            if(!$responses){
+                $qset = $exam->getQuestionsSection($section->id,$user->id);//$section->questions;
+            }else{
+                $ids = array_keys($responses->keyBy('question_id')->toArray());
+                $ids_ordered = implode(',', $ids);
+                $qset = Cache::remember('ques_'.$section->id.'_'.$exam->id.'_'.$user->id,360,function() use($section,$ids, $ids_ordered){
+                    return $section->questions()->whereIn('id',$ids)->orderByRaw("FIELD(id, $ids_ordered)")
+                         ->get();
+                });
+            }
+
 
             //shuffle($qset);
             if($exam->shuffle){
                 if(!$responses){
                     $qset = $qset->shuffle();
+                    Cache::put('ques_'.$section->id.'_'.$exam->id.'_'.$user->id,$qset,360);
+
                 }else{
                     
                     $ids = array_keys($responses->keyBy('question_id')->toArray());
                     $ids_ordered = implode(',', $ids);
                     
                     if(subdomain()!='rguktnuzvid' && subdomain()!='rguktrkvalley' && subdomain()!='demo' && subdomain()!='rguktsklm' && subdomain()!='rguktong' && subdomain()!='rguktrk' && subdomain()!='rgukton' && subdomain()!='rguktnz' && subdomain()!='rguktsk')
+                    if(!$qset)
                     $qset = $section->questions()->whereIn('id', $ids)
                          ->orderByRaw("FIELD(id, $ids_ordered)")
                          ->get();
-                }
+
+
+                }   
+
             }
 
 
             $k=0;$g=0;
+
             foreach($qset as $e=>$q){
 
                 if($data['qid']){
@@ -942,6 +986,7 @@ class AssessmentController extends Controller
                 if($i==0){
                     $id = $q->id;
                 }
+
                 $questions[$i] = $q;
                 //dd($questions);
                 $ques[$i] = $ques;
@@ -994,7 +1039,11 @@ class AssessmentController extends Controller
                 
             }
 
+           
+
         }
+
+       
 
         $cam360=0;
         if(isset($exam->settings->camera360)){
@@ -1089,6 +1138,7 @@ class AssessmentController extends Controller
 
             $folder = 'testlog/'.$exam->id.'/';
             $name = $folder.\auth::user()->username.'.json';
+
             $name_log = $folder.'log/'.\auth::user()->username.'_log.json';
 
 
@@ -1136,8 +1186,10 @@ class AssessmentController extends Controller
             }
         }
 
+         $name_b1 = $folder.'backup/'.\auth::user()->username.'_b1.json';
          $settings = json_decode($exam->getOriginal('settings'),true);
          $url['testlog'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name]);
+         $url['testlog_b1'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_b1]);
          $url['testlog_log'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_log]);
          $approval_link_name = 'testlog/approvals/'.$exam->id.'/'.$user->username.'.json';
          $url['approval'] = Storage::disk('s3')->url($approval_link_name);
@@ -1179,6 +1231,12 @@ class AssessmentController extends Controller
          if(!Storage::disk('s3')->exists($name_log)){
             Storage::disk('s3')->put($name_log,$json_d,'public');
             $json_log = $json_d;
+         }
+
+         if(!$json_b1)
+         if(!Storage::disk('s3')->exists($name_b1)){
+            Storage::disk('s3')->put($name_b1,$json_d,'public');
+            $json_b1 = $json_d;
          }
 
 
@@ -1226,6 +1284,15 @@ class AssessmentController extends Controller
             $view = 'test';
 
 
+        if(request()->get('admin')){
+            $camera = $exam->camera = 0;
+            $window_change = $exam->window_swap = 0;
+            $settings['system_check'] = 1;
+            $settings['fullscreen'] =1;
+        }
+        else{
+            $camera = $exam->camera;
+        }
       
 
         return view('appl.exam.assessment.blocks.'.$view)
@@ -1242,10 +1309,11 @@ class AssessmentController extends Controller
                         ->with('urls2',$url2)
                         ->with('urls3',$url3)
                         ->with('json_log',$json_log)
+                        ->with('json_b1',$json_b1)
                         ->with('user',$user)
                         ->with('code_ques',$code_ques)
                         ->with('timer2',true)
-                        ->with('camera',$exam->camera)
+                        ->with('camera',$camera)
                         ->with('window_change',$window_change)
                         ->with('time',$time)
                         ->with('sections',$sections)
@@ -1864,6 +1932,7 @@ class AssessmentController extends Controller
         });
        
 
+
         
 
         $test_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
@@ -1893,6 +1962,7 @@ class AssessmentController extends Controller
         $secs = $tests_section->groupBy('section_id');
 
 
+       
 
         //dd($secs);
 
@@ -1909,7 +1979,9 @@ class AssessmentController extends Controller
 
             $secs[$section->id] = $section;
 
-            $qset = $exam->getQuestionsSection($section->id,$user->id);
+            $qset = $section->questions()->whereIn('id',$tests_keys->pluck('question_id')->toArray())->get();
+
+             //$exam->getQuestionsSection($section->id,$user->id);
             foreach($qset as $q){
 
                 if(isset($images)){
@@ -3043,11 +3115,26 @@ class AssessmentController extends Controller
         }
 
 
+        //qcount
         $qcount =0;
+        foreach($exam->sections as $section){
+            $qcount = $qcount + $section->questions()->count();
+        }
+        //get qset
+        $quesset=[];
+        for($i=1;$i<=$qcount;$i++){
+            array_push($quesset,$request->get($i.'_question_id')); 
+        }
+
+    
+
+        
         $audio=0;
         foreach($exam->sections as $section){
             //$qset = $section->questions;
-            $qset = $exam->getQuestionsSection($section->id,$user->id);
+            $qset = $section->questions()->whereIn('id',$quesset)->get();
+            //$qset = Question::whereIn('id',$quesset)->get();
+            //$qset = $exam->getQuestionsSection($section->id,$user->id);
 
             foreach( $qset as $q){
                 $questions[$q->id] = $q;
@@ -3066,6 +3153,8 @@ class AssessmentController extends Controller
             }
         }
 
+        
+
 
 
         $date_time = new \DateTime();
@@ -3075,7 +3164,6 @@ class AssessmentController extends Controller
         for($i=1;$i<=$qcount;$i++){
 
             if(!isset($questions[$request->get($i.'_question_id')])){
-
                 continue;
             }
 
@@ -3796,6 +3884,8 @@ class AssessmentController extends Controller
         });
 
         $username = $r->get('username');
+        if(!$username)
+            $username = $r->get('student');
         $type = $r->get('type');
         $folder = 'webcam/'.$exam->id.'/';
         $user = User::where('username',$username)->first();
@@ -3803,21 +3893,21 @@ class AssessmentController extends Controller
         $this->authorize('create', $exam);
 
         //log file
-        $name = $username.'_log.json';
-        $filepath = 'testlog/'.$exam->id.'/log/'.$name;
-
-
+        if($r->get('b1')){
+            $name = $username.'_b1.json';
+            $filepath = 'testlog/'.$exam->id.'/backup/'.$name;
+        }
+        else
+        {
+            $name = $username.'_log.json';
+            $filepath = 'testlog/'.$exam->id.'/log/'.$name;
+        }
 
         $content = null;
         if(Storage::disk('s3')->exists($filepath)){
             $content = json_decode(Storage::disk('s3')->get($filepath),true);
-
-            
-
         }
 
-        
-        //dd($content);
 
         if($content)
             return view('appl.exam.exam.logs')
@@ -6697,47 +6787,54 @@ class AssessmentController extends Controller
             $user = User::where('id',$user_id)->first();
 
             $exam = Exam::where('id',$test_id)->first();
-            $jsonfile = 'test_info/'.$exam->slug.'/'.$user->username.'.json';
-            if(Storage::disk('s3')->exists($jsonfile)){
-                 Storage::disk('s3')->delete($jsonfile);
-            }
 
-            if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json')){
-                $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
-
-                foreach($json as $q=>$ques){
-                        foreach($ques as $filename=>$img){
-                            echo $filename.'<br>';
-                            Storage::disk('s3')->delete('urq/'.$filename);
-                        }
+            if($request->get('full')){
+                $jsonfile = 'test_info/'.$exam->slug.'/'.$user->username.'.json';
+                if(Storage::disk('s3')->exists($jsonfile)){
+                     Storage::disk('s3')->delete($jsonfile);
                 }
-                Storage::disk('s3')->delete('urq/'.$jsonname.'.json');
+
+                if(Storage::disk('s3')->exists('urq/'.$jsonname.'.json')){
+                    $json = json_decode(Storage::disk('s3')->get('urq/'.$jsonname.'.json'),true);
+
+                    foreach($json as $q=>$ques){
+                            foreach($ques as $filename=>$img){
+                                echo $filename.'<br>';
+                                Storage::disk('s3')->delete('urq/'.$filename);
+                            }
+                    }
+                    Storage::disk('s3')->delete('urq/'.$jsonname.'.json');
+                }
+
+                if(Storage::disk('s3')->exists('testlog/'.$test_id.'/'.$user->username.'.json')){
+                    Storage::disk('s3')->delete('testlog/'.$test_id.'/'.$user->username.'.json');
+                }
+
+                 if(Storage::disk('s3')->exists('testlog/'.$test_id.'/log/'.$user->username.'_log.json')){
+                    Storage::disk('s3')->delete('testlog/'.$test_id.'/log/'.$user->username.'_log.json');
+                }
+
+                if(Storage::disk('s3')->exists('testlog/'.$test_id.'/backup/'.$user->username.'_b1.json')){
+                    Storage::disk('s3')->delete('testlog/'.$test_id.'/backup/'.$user->username.'_b1.json');
+                }
+
+                if(Storage::disk('s3')->exists('testlog/'.$test_id.'/chats/'.$user->username.'.json')){
+                    Storage::disk('s3')->delete('testlog/'.$test_id.'/chats/'.$user->username.'.json');
+                }
+
+                if(Storage::disk('s3')->exists('testlog/approvals/'.$test_id.'/'.$user->username.'.json')){
+                    Storage::disk('s3')->delete('testlog/approvals/'.$test_id.'/'.$user->username.'.json');
+                }
+
+
+                $name = 'testlog/pre-message/'.$test_id.'/'.$user->username.'.json';
+                if(Storage::disk('s3')->exists($name)){
+                    Storage::disk('s3')->delete($name);
+                }
+                flash('Test attempt delete')->success();
+            }else{
+                flash('Test attempte reactivated!')->success();
             }
-
-            if(Storage::disk('s3')->exists('testlog/'.$test_id.'/'.$user->username.'.json')){
-                Storage::disk('s3')->delete('testlog/'.$test_id.'/'.$user->username.'.json');
-            }
-
-             if(Storage::disk('s3')->exists('testlog/'.$test_id.'/log/'.$user->username.'_log.json')){
-                Storage::disk('s3')->delete('testlog/'.$test_id.'/log/'.$user->username.'_log.json');
-            }
-
-            if(Storage::disk('s3')->exists('testlog/'.$test_id.'/chats/'.$user->username.'.json')){
-                Storage::disk('s3')->delete('testlog/'.$test_id.'/chats/'.$user->username.'.json');
-            }
-
-            if(Storage::disk('s3')->exists('testlog/approvals/'.$test_id.'/'.$user->username.'.json')){
-                Storage::disk('s3')->delete('testlog/approvals/'.$test_id.'/'.$user->username.'.json');
-            }
-
-
-            $name = 'testlog/pre-message/'.$test_id.'/'.$user->username.'.json';
-            if(Storage::disk('s3')->exists($name)){
-                Storage::disk('s3')->delete($name);
-            }
-
-
-
 
             Cache::forget('attempt_'.$user_id.'_'.$test_id);
             Cache::forget('attempts_'.$user_id);
@@ -6745,7 +6842,7 @@ class AssessmentController extends Controller
             Test::where('test_id',$test_id)->where('user_id',$user_id)->delete();
             Tests_Section::where('test_id',$test_id)->where('user_id',$user_id)->delete();
             Tests_Overall::where('test_id',$test_id)->where('user_id',$user_id)->delete();
-            flash('Test attempt delete')->success();
+            
             if($request->get('url'))
                 return redirect($request->get('url'));
             else

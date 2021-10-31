@@ -187,6 +187,7 @@
   </div>
 </div>
 
+
 <div class="modal fade " id="user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -215,5 +216,50 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade " id="delete_resp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Delete Response</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="">
+          The following action will delete the candidate response completely. By this the student can re-attempt the test again from the beginning. Also note that this action will completely remove all the recorded responses from database and cache.
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger delete_resp_btn" data-id="" data-url="" 
+        data-curr_url="{{request()->url()}}" data-test="{{$exam->id }}" data-token="{{ csrf_token() }}">Confirm Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="reattempt_resp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Activate Re-Attempt</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="">
+          The following action will reopen the test for candidate to submit one more time within the left over time.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger reattempt_resp_btn" data-id="" data-url="" 
+        data-curr_url="{{request()->url()}}" data-test="{{$exam->id }}" data-token="{{ csrf_token() }}">Confirm </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 @endsection

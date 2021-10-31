@@ -196,9 +196,13 @@ $(document).ready(function(){
 
 
     /* user test log */
-     function user_test_log($time,$action=null){
-
-          var log = $('.url_testlog_log');
+     function user_test_log($time,$action=null,$mode=null){
+    
+          console.log('user test log - '+$mode);
+          if($mode)
+            var log = $('.url_testlog_b1');
+          else
+            var log = $('.url_testlog_log');
           $url = log.data('url');
 
           if(log.data('json')){
@@ -260,13 +264,14 @@ $(document).ready(function(){
                   url: $url
                 })
                 .done(function($url) {
-                        console.log('log updated');
+                    console.log('log updated');
                 });
             }
 
           }
       }
 
+      
       //system check constraints
       var system_check_var = parseInt($('.assessment').data('system_check'));
       if(!system_check_var)
@@ -1441,6 +1446,7 @@ $(document).ready(function(){
       if(!$('.s'+$sno).hasClass('active'))
             $('.s'+$sno).removeClass('active');
 
+      $flag = 1;
       // update answer
       var resp = {};
       if($('.input_'+$sno).is(':checkbox')){
@@ -1463,6 +1469,7 @@ $(document).ready(function(){
         console.log($(".input_"+$sno+"_"+$val+":checked").val());
         resp.response = $val;
       }else if($('.input_'+$sno).is("textarea")){
+        $flag=0;
         resp.response = $('.input_'+$sno).val();
       }
       else{
@@ -1477,6 +1484,20 @@ $(document).ready(function(){
       }
 
 
+      $qid = $('.s'+$sno).data('qno');
+      resp.test_id =  $('input[name=test_id]').val();
+      resp.user_id =  $('input[name=user_id]').val();
+      resp.section_id = $('input[name='+$sno+'_section_id]').val();
+      resp.time = $('input[name='+$sno+'_time]').val();
+      resp.dynamic = $('input[name='+$sno+'_dynamic]').val();
+
+      var strr = 'qno:'+ $sno+' question_id:'+$qid+' response:'+resp.response+' section_id:'+resp.section_id+' test_id:'+resp.test_id+' user_id:'+resp.user_id+' time:'+resp.time+' dynamic:'+resp.dynamic;
+      
+      if($flag){
+        console.log(strr);
+        user_test_log(new Date().getTime() / 1000, strr, 1);
+      }
+      
 
       $('.final_response_'+$sno).html(resp.response);
     }
@@ -1531,8 +1552,6 @@ $(document).ready(function(){
         if(!$('.ques_count').data('save'))
           return 1;
 
-
-
         if(!$sno)
           $sno = $('.active').data('sno');
 
@@ -1573,8 +1592,8 @@ $(document).ready(function(){
         responses.last_updated = seconds;
         responses.completed = 0;
 
+        var strr = '';
 
-        console.log('qno - '+$qno);
         var r = [];
         while (number <= $ques_count) {
           var resp = {};
@@ -1582,7 +1601,6 @@ $(document).ready(function(){
           resp.section_id = $('input[name='+$qno+'_section_id]').val();
           resp.time = $('input[name='+$qno+'_time]').val();
           resp.dynamic = $('input[name='+$qno+'_dynamic]').val();
-
 
           if($('.code_'+$sno).length){
             resp.code = $('.codefragment_'+$qno).val();
@@ -1616,25 +1634,23 @@ $(document).ready(function(){
               resp.response = ans.join(",");
           }
           else if($('.input_'+$qno).is(':radio')){
-                resp.response = $(".input_"+$qno+":checked").val();
+              resp.response = $(".input_"+$qno+":checked").val();
           }else if($('.input_'+$qno).is("textarea")){
-                resp.response = $('.input_'+$qno).val();
+              resp.response = $('.input_'+$qno).val();
           }
           else
               resp.response = $('.input_'+$qno).val();
-          //console.log('selected='+resp.response);
+          
           r.push(resp);
           number++;
           $qno++;
         }
         responses.responses = r;
 
-
         var all_data = JSON.stringify(responses);
 
         if(!$live){
-            
-              user_test_log(new Date().getTime() / 1000, 'Solving Question - Q'+$sno);
+            user_test_log(new Date().getTime() / 1000, 'Solving Question - Q'+$sno);
             aws_cache(all_data);
         }else{
 

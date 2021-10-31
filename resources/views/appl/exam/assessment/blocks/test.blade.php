@@ -553,6 +553,8 @@ div.chats {
     
     @if($k=='testlog_log')
     <div class="url_{{$k}} d-none " data-url="{{$url}}" data-json="@if($json_log){{$json_log}}@endif"></div>
+    @elseif($k=='testlog_b1')
+    <div class="url_{{$k}} d-none " data-url="{{$url}}" data-json="@if($json_b1){{$json_b1}}@endif"></div>
     @else
     <div class="url_{{$k}} d-none " data-url="{{$url}}" ></div>
 

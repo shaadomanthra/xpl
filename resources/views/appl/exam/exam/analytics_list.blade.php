@@ -99,12 +99,11 @@
                   @endcan
                   @endif
 
-                  @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="user_id" value="{{ $users[$r['user_id']]->id}}">
-                    <input type="hidden" name="test_id" value="{{ $exam->id }}">
-                    <button class="btn btn-link  p-0" type="submit"><i class='fa fa-trash'></i> delete</button>
-                  @endif
+                  <a href="#" class="delete_resp"  data-url="{{route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" data-id="{{$r['user_id']}}"><i class='fa fa-trash'></i> Delete Response</a>&nbsp;&nbsp;&nbsp;
+
+                  <a href="#" class="reattempt_resp"  data-url="{{route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" data-id="{{$r['user_id']}}"><i class='fa fa-retweet'></i> Re-activate</a>&nbsp;&nbsp;&nbsp;
+
+                  
                 </form>
 
                 </td>
@@ -122,3 +121,4 @@
 <nav aria-label="Page navigation  " class="card-nav @if($report->total() > 30)mt-3 @endif">
         {{$report->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}
       </nav>
+

@@ -379,6 +379,7 @@
         <div>IP Address: <b><span class="log_ip text-muted">{{$content['ip_details']}}</span></b></div>
         <div>Window Swaps: <b><span class="log_swaps text-danger">{{$content['window_change']}}</span></b></div>
         <div>Date: <b><span class="log_swaps text-primary">{{date("jS F, Y", $content['last_updated'])}}</span></b></div>
+        <div>Logs: <b><a href="{{ route('test.logs',$exam->slug)}}?student={{$content['username']}}">Basic</a> | <a href="{{ route('test.logs',$exam->slug)}}?student={{$content['username']}}&b1=1">Debug</a></b></div>
         <hr>
         
          @if(isset($content['activity']))

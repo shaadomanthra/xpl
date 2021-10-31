@@ -472,10 +472,11 @@ class Exam extends Model
     public function getQuestionsSection($id, $uid){
 
        $i = $uid %10;
+    
        $name = 'set_'.$this->slug.'_'.$i;
        $set = Cache::get($name);
 
-       
+       //dd($set);
        $sec = $this->sections->find($id);
        if($set){
           $qids = $set[$id];
