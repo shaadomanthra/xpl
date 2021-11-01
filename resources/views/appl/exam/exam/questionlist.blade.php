@@ -117,6 +117,8 @@
             </thead>
             <tbody>
               @foreach($data as $key=>$obj)  
+
+
               <tr>
                 <th scope="row">{{ ($key+1) }}</th>
                 <td>
@@ -126,6 +128,8 @@
                     </div>
                   @endif
                   <h5 >{!! $obj->question !!} </h5>
+
+                  @if($obj->type!='code')
                   <p>
                     @if($obj->a)
                     <div class="row no-gutters">
@@ -163,6 +167,79 @@
                     @endif
 
                   </p>
+                  @else
+
+
+                    @if($obj->a)
+                    <hr>
+                      <h4><i class="fa fa-angle-right"></i> Testcases</h4>
+                       @if(isset(json_decode($obj->a)->in_1))
+                          <table class="table table-bordered bg-light">
+                            <thead style="background: #eee">
+                              <tr>
+                                <th></th>
+                                <th>Input</th>
+                                <th>Output</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>#1</td>
+                                <td>{{ json_decode($obj->a)->in_1 }}</td>
+                                @if($obj->b=='sql')
+                                <td>{!! json_decode($obj->a)->out_1 !!}</td>
+                                @else
+                                <td>{{ json_decode($obj->a)->out_1 }}</td>
+                                @endif
+                              </tr>
+                              @if(isset(json_decode($obj->a)->in_2))
+                              <tr>
+                                <td>#2</td>
+                                <td>{{ json_decode($obj->a)->in_2 }}</td>
+                                <td>{{ json_decode($obj->a)->out_2 }}</td>
+                              </tr>
+                              @endif
+                              @if(isset(json_decode($obj->a)->in_3))
+                              <tr>
+                                <td>#3</td>
+                                <td>{{ json_decode($obj->a)->in_3 }}</td>
+                                <td>{{ json_decode($obj->a)->out_3}}</td>
+                              </tr>
+                              @endif
+                              @if(isset(json_decode($obj->a)->in_4))
+                               <tr>
+                                <td>#4</td>
+                                <td>{{ json_decode($obj->a)->in_4 }}</td>
+                                <td>{{ json_decode($obj->a)->out_4}}</td>
+                              </tr>
+                              @endif
+                              @if(isset(json_decode($obj->a)->in_5))
+                               <tr>
+                                <td>#5</td>
+                                <td>{{ json_decode($obj->a)->in_5 }}</td>
+                                <td>{{ json_decode($obj->a)->out_5}}</td>
+                              </tr>
+                              @endif
+                            </tbody>
+                          </table>
+                      @endif
+
+                      @if($obj->b)
+                      <h3>Language: <span class="badge badge-warning"> {{$obj->b}} </span></h3>
+                      @endif
+
+
+                       @if($obj->d && $obj->b && $obj->a)
+                      <h3>Preset Code: </h3>
+                         <pre class="p-3"><code class="text-light ">{!! htmlentities(json_decode($obj->d,true)['codefragment_1']) !!}</code></pre>
+                      @endif
+
+                    @endif
+
+
+                  @endif
+
+
                   @if($obj->answer)<span class="text-primary">Answer : <b>{{$obj->answer}}</b> </span>
                   @elseif($obj->answer==0)
                   <span class="text-primary">Answer : <b>{{$obj->answer}}</b> </span>
