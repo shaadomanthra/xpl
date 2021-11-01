@@ -316,7 +316,7 @@ class AdminController extends Controller
 
         $data['colleges']=College::all()->keyBy('id');
         $data['branches']=Branch::all()->keyBy('id');
-        
+ 
         $view = $search ? 'list': 'index';
 
         return view('appl.product.admin.user.'.$view)
