@@ -161,6 +161,7 @@ pre, code {
                   <div class="score_main" >
                     @if(!$test_overall->status)
                     <div class="display-3 text-primary">{{ $test_overall->score }} </div>
+                    
                     <div class=" mt-2">out of {{$test_overall->max}}</div>
                     @else
                     <div class="badge badge-primary under_review_main" >Under <br>Review</div>

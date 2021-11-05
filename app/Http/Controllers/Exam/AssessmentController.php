@@ -1811,6 +1811,7 @@ class AssessmentController extends Controller
 
         $exam = Cache::get('test_'.$slug);
 
+        
 
         if(!$pdf2)
         if(!\auth::user()->isAdmin()){
@@ -1832,6 +1833,9 @@ class AssessmentController extends Controller
                 $exam = Exam::where('slug',$slug)->first();
         }
 
+       
+
+
         $questions = array();
         $i=0;
 
@@ -1848,6 +1852,8 @@ class AssessmentController extends Controller
         $user_id = $student->id;
         $test_id = $exam->id;
         $user = $student;
+
+
 
         if($request->get('refresh')){
             Cache::forget('resp_'.$user_id.'_'.$test_id);
@@ -2261,6 +2267,8 @@ class AssessmentController extends Controller
              // 
            
         }else{
+
+
             return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
                         ->with('questions',$ques)
@@ -2291,6 +2299,7 @@ class AssessmentController extends Controller
 
 
         $exam = Cache::get('test_'.$slug);
+
 
 
         if(!$pdf2)

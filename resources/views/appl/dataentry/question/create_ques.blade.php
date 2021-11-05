@@ -35,7 +35,7 @@
         <a href="{{ route('question.create','default')}}?type=aq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Audio Question(AQ)</a>
         @if(\auth::user()->checkRole(['administrator']))
        <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Code Question (CQ)</a>
-        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 )
+        @elseif(\auth::user()->role==11 || \auth::user()->role ==12 || \auth::user()->role ==13)
        <a href="{{ route('question.create','default')}}?type=code&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Code Question (CQ)</a>
         @else
         @endif
