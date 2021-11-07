@@ -5,7 +5,7 @@
 
 <div class="testpage_wrap">
 <div class="p-2 p-md-3 testpage " style="display: none">
-<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif" data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif" data-upload_time="@if(isset($settings['upload_time'])) {{$settings['upload_time']}} @endif" data-camera360="@if(isset($cam360)) {{$cam360}} @endif" data-videosnaps="@if(isset($settings['videosnaps'])) {{$settings['videosnaps']}}@else 0 @endif" data-first="{{$data['first']}}" data-last="{{$data['last']}}" data-stopswap="{{$data['stopswap']}}" data-slast="{{$data['slast']}}" data-vques="0" data-system_check="@if(isset($settings['system_check'])) {{$settings['system_check']}}@else 1 @endif"
+<form method="post" class="assessment" id="assessment" data-window_swap="{{$exam->window_swap}}"  data-camera="{{$exam->camera}}" data-auto_terminate="{{$exam->auto_terminate}}" data-username="{{\auth::user()->username}}" data-uname="{{\auth::user()->name}}" data-rollnumber="{{\auth::user()->roll_number}}" data-exam_time="{{$time}}" data-start="@if(isset($settings['start_time'])) {{$settings['start_time']}} @endif" data-fullscreen="@if(isset($settings['fullscreen'])) {{$settings['fullscreen']}} @endif" data-upload_time="@if(isset($settings['upload_time'])) {{$settings['upload_time']}} @endif" data-camera360="@if(isset($cam360)) {{$cam360}} @endif" data-videosnaps="@if(isset($settings['videosnaps'])) {{$settings['videosnaps']}}@else 0 @endif" data-first="{{$data['first']}}" data-last="{{$data['last']}}" data-stopswap="{{$data['stopswap']}}" data-slast="{{$data['slast']}}" data-vques="0" data-system_check="@if(isset($settings['system_check'])) {{$settings['system_check']}}@else 1 @endif" data-face_detect="@if(isset($settings['videosnaps'])) @if($settings['videosnaps']==100) 1 @else 0 @endif @else 0 @endif"
 
 action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form-data">
   <style>
@@ -82,7 +82,11 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
 
 
 
+    @if(isset($exam->section_timer))
+    @if($exam->section_timer!='unlimted')
     <div class="mb-2 h5"> <i class="fa fa-clock-o"></i> <span class="text-bold " id="timer2"></span></div>
+    @endif
+    @endif
     <div class="text-warning mb-3">
       <div class="d-inline">
           <a href="#" class="text-light" data-toggle="modal" data-target="#instructions">
@@ -497,6 +501,8 @@ div.chats {
 
 
 
+@if(isset($exam->section_timer))
+    @if($exam->section_timer!='unlimted')
 <div class="modal fade" id="timer_alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -515,6 +521,8 @@ div.chats {
     </div>
   </div>
 </div>
+@endif
+@endif
 
 <div class="modal fade" id="camera_test" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -639,6 +647,9 @@ div.chats {
     <video id="gum_2002" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="gum_2003" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
     <video id="gum_2004" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    @for($hk=3000;$hk<3010;$hk++)
+    <video id="gum_{{$hk}}" playsinline autoplay muted style="width:200px;height:200px; border-radius:8px;display: none"></video>
+    @endfor
 </div>
 
 <div class="modal fade" id="no_connectivity" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">

@@ -277,6 +277,13 @@
             </div>
           </div>
 
+          <div class="row mb-2">
+            <div class="col-6"> <i class="fa fa-bars"></i>&nbsp;Exam id</div>
+            <div class="col-6">
+                <span class="">{{$exam->id}}</span>
+            </div>
+          </div>
+
 
 
 

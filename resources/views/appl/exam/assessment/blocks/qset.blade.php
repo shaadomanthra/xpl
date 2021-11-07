@@ -64,7 +64,12 @@ video ,#photo3{
 @endif
 @endif
 
-		<h4 class="timer_count" data-value="{{$time*60}}"><i class="fa fa-clock-o"></i> Timer &nbsp;&nbsp;
+		<h4 class="timer_count" data-value="{{$time*60}}">
+			@if(isset($exam->section_timer))
+			@if($exam->section_timer!='unlimted')
+				<i class="fa fa-clock-o"></i> Timer &nbsp;&nbsp;
+			@endif
+			@endif
 		@if(isset($exam->calculator))
 		@if($exam->calculator)
 		<span class="" style="cursor: pointer" data-toggle="modal" data-target="#calculator"><i class="fa fa-calculator" aria-hidden="true"></i> </span>
@@ -72,7 +77,11 @@ video ,#photo3{
 		@endif
 		</h4>
 
+		@if(isset($exam->section_timer))
+		@if($exam->section_timer!='unlimted')
 		<h1 class="text-bold mb-2" id="timer"></h1>
+		@endif
+		@endif
 		@if(!$camera)
 		<span class="text-warning "><i class="fa fa-dot-circle-o blink" aria-hidden="true"></i> Continuous monitoring is enabled</span>
 		@endif

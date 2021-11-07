@@ -85,6 +85,7 @@
 
 				@endif
 
+			@if($exam->status==2)
 
 				@if(subdomain()==strtolower(env('APP_NAME')) && auth::user())
 					@if(!auth::user()->college_id)
@@ -112,9 +113,10 @@
 					@include('appl.exam.assessment.blocks.accesscode')
 				@endif
 				
-
+			@endif
+				
 				@if($attempt)
-				<div class="alert alert-warning alert-important" role="alert">
+				<div class="alert alert-warning alert-important mt-3" role="alert">
 			  	You have completed the test. To check the test report click on the analysis button.
 				</div>
 					<a href="{{ route('assessment.analysis',$exam->slug) }}">

@@ -1047,7 +1047,7 @@ class AssessmentController extends Controller
 
         $cam360=0;
         if(isset($exam->settings->camera360)){
-            $folder = 'webcam/'.$exam->id.'/';
+            $folder = 'webcam/'.$exam->id.'/360v/'.\auth::user()->username.'/';
                     $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
             
             if($exam->settings->camera360){
@@ -1063,7 +1063,7 @@ class AssessmentController extends Controller
         }
 
         if(isset($exam->settings->videosnaps)){
-            $folder = 'webcam/'.$exam->id.'/';
+            $folder = 'webcam/'.$exam->id.'/snaps/'.\auth::user()->username.'/';
             $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
             
             if($exam->settings->videosnaps){
@@ -1071,6 +1071,15 @@ class AssessmentController extends Controller
                 $url3['video_2002'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_2002.webm']);
                 $url3['video_2003'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_2003.webm']);
                 $url3['video_2004'] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_2004.webm']);
+            }
+
+            $folder = 'webcam/'.$exam->id.'/video/'.\auth::user()->username.'/';
+            $name_prefix = $folder.\auth::user()->username.'_'.$exam->id.'_';
+            if($exam->settings->videosnaps==100){
+                for($i=0;$i<60;$i++){
+                    $num = 3000 + $i;
+                    $url3['video_'.$num] = \App::call('PacketPrep\Http\Controllers\AwsController@getAwsUrl',[$name_prefix.'video_'.$num.'.webm']);
+                }
             }
             
         }
@@ -6685,6 +6694,9 @@ class AssessmentController extends Controller
 
         if(request()->get('student'))
             $view = 'blocks.student';
+
+        if(request()->get('video'))
+            $view = 'blocks.video_proctoring';
 
 
         if(isset($exam->settings->totalmarks)){

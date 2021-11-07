@@ -813,7 +813,9 @@ $(document).ready(function(){
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display the result in the element with id="demo"
+            if(document.getElementById("timer"))
             document.getElementById("timer").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
+            if(document.getElementById("timer2"))
             document.getElementById("timer2").innerHTML =  hours + "h " + minutes + "m " + seconds + "s ";
 
 
@@ -828,7 +830,9 @@ $(document).ready(function(){
             // If the count down is finished, write some text
             if (distance < 0) {
               clearInterval(x);
+              if(document.getElementById("timer").length)
               document.getElementById("timer").innerHTML = "EXPIRED";
+              if(document.getElementById("timer2").length)
               document.getElementById("timer2").innerHTML = "EXPIRED";
               alert('The Test time has expired. ');
               document.getElementById("assessment").submit();
@@ -918,7 +922,7 @@ $(document).ready(function(){
     function stopRecording($qno) {
       console.log('stop recording invoked');
       //$sno = $('.clear-qno').data('sno');
-      $q=$qno;
+      $qn2=$qno;
       console.log($qno+" - qno stopvideo");
 
       if($('#gum_'+$qno).length){
@@ -940,6 +944,7 @@ $(document).ready(function(){
         const url = window.URL.createObjectURL(blob);
        // $qno = $('#curr-qno').data('qno');
         $url = $('.url_video_'+$qno).data('url');
+        
         if($url){
             $.ajax({
                     method: "PUT",
@@ -950,7 +955,7 @@ $(document).ready(function(){
             })
             .done(function($url) {
 
-                console.log('video uploaded - '+$q);
+                console.log('video uploaded - '+$qn2);
                 
                  
                 
@@ -990,6 +995,7 @@ $(document).ready(function(){
         setTimeout(function(){
           startRecording(qno);
         },5000);
+        
       }
       
     
@@ -1013,7 +1019,7 @@ $(document).ready(function(){
           echoCancellation: {exact: true}
         },
         video: {
-          width: 768, height: 432
+          width: 128, height: 72
         }
       };
       //console.log('Using media constraints:', constraints);
@@ -1063,12 +1069,10 @@ $(document).ready(function(){
    }
 
    if(parseInt($('.assessment').data('videosnaps')) && camera)
+   if(parseInt($('.assessment').data('videosnaps'))!=100)
    {
       $vcount= parseInt($('.assessment').data('videosnaps'));
       $times = [0,95,180,720,1020];
-
-        
-
          setTimeout(function(){
             a = 1;
             $id = parseInt("200"+a);
@@ -1121,8 +1125,170 @@ $(document).ready(function(){
             stopRecording($id);
           },($times[4]+21) * 1000);
 
+
       
    }
+
+    if(parseInt($('.assessment').data('videosnaps'))==100){
+        console.log('video proctoring enabled');
+        $tm=[0,60,120,180,240,540,840,1140,1440,1740,2040,2340,2640,2940];
+        
+        // one
+        $q=0;
+        setTimeout(function(){
+            $q=0;
+            $idx = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$idx);
+            startvideo($idx);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=0
+            $idy = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$idy);
+            stopRecording($idy);
+          }, ($tm[$q+1]) * 1000);
+
+        // two
+        $q=1;
+        setTimeout(function(){
+            $q=1;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$id);
+            startvideo($id);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=1;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$id);
+            stopRecording($id);
+          }, ($tm[$q+1]) * 1000);
+
+        // three
+        $q=2;
+        setTimeout(function(){
+            $q=2;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$id);
+            startvideo($id);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=2;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$id);
+            stopRecording($id);
+          }, ($tm[$q+1]) * 1000);
+
+        // four
+        $q=3;
+        setTimeout(function(){
+            $q=3;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$id);
+            startvideo($id);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=3;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$id);
+            stopRecording($id);
+          }, ($tm[$q+1]) * 1000);
+
+        // five
+        $q=4;
+        setTimeout(function(){
+            $q=4;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$id);
+            startvideo($id);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=4;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$id);
+            stopRecording($id);
+          }, ($tm[$q+1]) * 1000);
+
+        // six
+        $q=5;
+        setTimeout(function(){
+            $q=5;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$id);
+            startvideo($id);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=5;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$id);
+            stopRecording($id);
+          }, ($tm[$q+1]) * 1000);
+
+        // seven
+        $q=6;
+        setTimeout(function(){
+            $q=6;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$id);
+            startvideo($id);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=6;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$id);
+            stopRecording($id);
+          }, ($tm[$q+1]) * 1000);
+
+        // eight
+        $q=7;
+        setTimeout(function(){
+            $q=7;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$id);
+            startvideo($id);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=7;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$id);
+            stopRecording($id);
+          }, ($tm[$q+1]) * 1000);
+
+        // nine
+        $q=8;
+        setTimeout(function(){
+            $q=8;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$id);
+            startvideo($id);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=8;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$id);
+            stopRecording($id);
+          }, ($tm[$q+1]) * 1000);
+
+        // ten
+        $q=9;
+        setTimeout(function(){
+            $q=9;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - start - "+$id);
+            startvideo($id);
+          }, $tm[$q] * 1000);
+          setTimeout(function(){
+            $q=9;
+            $id = parseInt("300"+$q);
+            console.log("video proctoring - end - "+$id);
+            stopRecording($id);
+          }, ($tm[$q+1]) * 1000);
+
+
+        window.onbeforeunload = function() {
+          return "Data will be lost if you leave the page, are you sure?";
+        };
+
+      }
 
 
    //audio start

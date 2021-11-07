@@ -458,6 +458,140 @@
       </video>
         </div>
         @endif
+      </div>
+    </div>
+    @endif
+
+    @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2001.webm'))
+     <div class="pb-4">
+      <h3 class="mb-3"><i class="fa fa-angle-double-right"></i>  Video Snaps</h3>
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2001.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+        </div>
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2002.webm'))
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2002.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+        </div>
+        @endif
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2003.webm'))
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2003.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+        </div>
+        @endif
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2004.webm'))
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2004.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+        </div>
+        @endif
+      </div>
+    </div>
+    @endif
+
+
+     @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3001.webm'))
+     <div class="pb-4">
+      <h3 class="mb-3"><i class="fa fa-angle-double-right"></i>  Video Proctoring <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$student->username}}&video=1">view all</a></h3>
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3001.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+        
+      </video>
+      <p><i class="fa fa-angle-right"></i> First Minute </p>
+        </div>
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3002.webm'))
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3002.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+          <p><i class="fa fa-angle-right"></i>  Second Minute </p>
+        </div>
+        @endif
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3003.webm'))
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3003.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+
+        <p><i class="fa fa-angle-right"></i> Third Minute </p>
+        </div>
+        @endif
+        @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3004.webm'))
+        <div class="col-12 col-md-3">
+          <video id="my1" class="video-js" controls preload="auto" width="250" data-setup="{}">
+        <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3004.webm')}}" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+
+      </video>
+      <p><i class="fa fa-angle-right"></i> Fourth Minute </p>
+        </div>
+        @endif
+
+
         
       </div>
       
@@ -466,7 +600,9 @@
   
     @endif
 
-     @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_1000.webm'))
+   
+
+    @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_1000.webm'))
      <div class="pb-4">
       <h3 class="mb-3"><i class="fa fa-angle-double-right"></i> 360<sup>o</sup> Video Screening</h3>
         <video id="my-video" class="video-js" controls preload="auto" width="500" data-setup="{}">
@@ -480,7 +616,8 @@
         </p>
       </video>
     </div>
-        @endif
+    @endif
+
 
 
          @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
@@ -511,8 +648,10 @@
     @endif
     <br><br><br>
 
-
-        <script>
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+<script src="/js/video.min.js"></script>
+<script src="/js/videojs-playlist.min.js"></script>
+<script>
   if(typeof video !== 'undefined'){
       video.addEventListener('loadedmetadata', function() {
     if (video.buffered.length === 0) return;
@@ -522,9 +661,18 @@
   });
   }
 
+  function eclick(){
+    console.log('clicked');
+     var video = videojs("my5");
+  video.src("https://s3-xplore.s3.ap-south-1.amazonaws.com/webcam/2733/gajanavenirakesh123_2733_video_2002.webm");
+
+
+  }
+ 
+
 </script>
-<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
-<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+
+
   </div>
 </div>
 @endsection

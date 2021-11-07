@@ -48,9 +48,11 @@
 						</a>
 					@endif
 
-					@if($exam->status==1)
+					@if($exam->status==1 && !$entry)
 						 @auth
+						
 				       <a href="{{route('assessment.instructions',$exam->slug)}}">
+
 				       @else
 				       <a href="#" data-toggle="modal" data-target="#myModal2">
 				       @endauth

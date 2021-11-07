@@ -123,7 +123,7 @@ class Tests_Overall extends Model
       
         $data = $jsondata['image'];
         $data = base64_decode($data);
-        Storage::disk('s3')->put('webcam/'.$exam->id.'/'.$filename,$data,'public');
+        Storage::disk('s3')->put('webcam/'.$exam->id.'/processed/'.$filename,$data,'public');
         
         return 1;
     }

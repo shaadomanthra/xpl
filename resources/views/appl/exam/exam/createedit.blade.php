@@ -355,6 +355,7 @@
         <select class="form-control" name="section_timer">
           <option value="no" @if(isset($exam)) @if($exam->section_timer=="no") selected @endif @endif >No</option>
           <option value="yes" @if(isset($exam)) @if($exam->section_timer=="yes") selected @endif @endif >Yes</option>
+          <option value="unlimited" @if(isset($exam)) @if($exam->section_timer=="unlimited") selected @endif @endif >Unlimited</option>
         </select>
       </div>
         </div>
@@ -432,13 +433,15 @@
 
         <div class="col-12 col-md-3">
            <div class="form-group mt-3">
-            <label for="formGroupExampleInput ">Video Snaps </label>
+            <label for="formGroupExampleInput ">Video Proctoring </label>
             <select class="form-control" name="videosnaps">
               <option value="0" @if(isset($exam)) @if($exam->videosnaps==0) selected @endif @endif >None</option>
-              <option value="4" @if(isset($exam)) @if($exam->videosnaps==4) selected @endif @endif >Enable</option>
+              <option value="4" @if(isset($exam)) @if($exam->videosnaps==4) selected @endif @endif >4 snaps</option>
+
+              <option value="100" @if(isset($exam)) @if($exam->videosnaps==100) selected @endif @endif >Continuous</option>
             </select>
 
-          <small class='text-secondary'>4 videosnaps are recorded in the background at random intervals</small>
+          <small class='text-secondary'>videosnaps are recorded in the background at random intervals</small>
           </div>
         </div>
 

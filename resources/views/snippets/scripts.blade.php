@@ -3264,7 +3264,7 @@ $(window).keyup(function(e){
 <script>
 $(function(){
 
-  var width = 600;    // We will scale the photo width to this
+  var width = 128;    // We will scale the photo width to this
   var height = 0;     // This will be computed based on the input stream
 
   // |streaming| indicates whether or not we're currently streaming
@@ -3746,7 +3746,7 @@ $(function(){
            
           if($('.start_btn').hasClass('exam_started')){
             
-            if(parseInt($('.start_btn').data('face_detect')))
+            if(parseInt($('.assessment').data('face_detect')))
               $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
                 console.log('Face Detect:' + data);
               });
@@ -4047,7 +4047,7 @@ var width = 600;    // We will scale the photo width to this
       $counnt = 2;
       if($c % $counnt == 0){
          var url = $('#photo').data('hred');
-         if(parseInt($('.start_btn').data('face_detect')))
+         if(parseInt($('.assessment').data('face_detect')))
          $.post( url ,{'name': $name ,'username':$username,'count':$counnt,'key':$c,'test':$test,'_token':$token}, function( data ) {
               console.log('Face Detect:' + data);
         });

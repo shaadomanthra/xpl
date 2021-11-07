@@ -402,6 +402,7 @@ class HomeController extends Controller
           $name = $username.'_'.$test.'_'.$i;
           
           FaceDetect::dispatch($name)->delay(now()->addSeconds(1));
+          break;
         }
         
         return json_encode($name);
