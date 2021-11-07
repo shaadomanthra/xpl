@@ -321,7 +321,17 @@
        @if($count['webcam'])
     <div class="rounded   ">
 
-    <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Webcam Captures  <small><a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$user->username}}" class="">view all</a></small></h3>
+    <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> @if(!$images['webcam']) Webcam @else AI @endif Captures  
+
+      @if($images['webcam'])
+      <span class="float-right">Face Detect:  <span class="text-primary">{{$test_overall['face_detect']}}</span> &nbsp;&nbsp;&nbsp; Mobile Detect : <span class="text-primary">{{$test_overall['mobile_detect']}}</span></span>
+      @endif
+      @if(!$images['webcam'])
+      <small><a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$user->username}}" class="">view all</a></small>
+      @else 
+      <small><a href="{{ route('test.snaps',$exam->slug)}}?type=ai&username={{$user->username}}" class="">view all</a></small>
+      @endif
+      </h3>
     
           <div class="row mb-0 {{$m=0}}">
             @if(isset($images['webcam']))
@@ -342,6 +352,9 @@
             
            
           </div>
+
+
+
            <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Screen Captures <small><a href="{{ route('test.snaps',$exam->slug)}}?type=screens&username={{$user->username}}" class=""> view all</a> </small></h3>
           <div class="row mb-0 {{$m=0}}">
 
@@ -371,7 +384,7 @@
     <div class="col-12 col-md">
       <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Logs </h3>
       <div class="timeline timeline-5 mt-3 border rounded p-3">
-        <div style="max-height: 260px;overflow: auto;">
+        <div style="max-height: 340px;overflow: auto;">
             <div class="">Name: <b><span class="log_name text-success">{{$content['uname']}}</span></b></div>
         <div>Roll Number: <b><span class="log_rollnumber text-primary">{{$content['rollnumber']}}</span></b></div>
         <div>OS details: <b><span class="log_os text-muted">{{$content['os_details']}}</span></b></div>

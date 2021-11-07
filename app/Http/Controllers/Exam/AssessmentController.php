@@ -4002,9 +4002,15 @@ class AssessmentController extends Controller
 
         if($type=='snaps')
         $imagepath = 'webcam/'.$exam->id.'/'.$username.'_'.$exam->id.'_';
+        else if($type=='ai')
+        $imagepath = 'webcam/'.$exam->id.'/processed/'.$username.'/'.$username.'_'.$exam->id.'_';  
         else
         $imagepath = 'webcam/'.$exam->id.'/screens/'.$username.'_'.$exam->id.'_';
 
+        $pics = Storage::disk('s3')->allFiles('webcam/'.$exam->id.'/processed/'.$username.'/');
+     
+
+        if($type!='ai')
         if($content){
             for($i=0;$i<=$last_number;$i++){
                 if(strlen($i)==1)
@@ -6159,10 +6165,27 @@ class AssessmentController extends Controller
             $image_files['10'] = $folder.'screens/'.$three;
             
         }
-       
-       
+       $images['webcam']['ai'] = 0;
+       $ai1 = 'webcam/'.$exam->id.'/processed/'.$username.'/'.$username.'_'.$exam->id.'_001.jpg';
+       if(Storage::disk('s3')->exists($ai1)){
+             $image_files['1'] = $ai1;
+             $images['webcam']['ai'] = 1;
+       }
 
-       
+       $ai1 = 'webcam/'.$exam->id.'/processed/'.$username.'/'.$username.'_'.$exam->id.'_003.jpg';
+       if(Storage::disk('s3')->exists($ai1)){
+             $image_files['2'] = $ai1;
+       }
+
+       $ai1 = 'webcam/'.$exam->id.'/processed/'.$username.'/'.$username.'_'.$exam->id.'_005.jpg';
+       if(Storage::disk('s3')->exists($ai1)){
+             $image_files['3'] = $ai1;
+       }
+
+       $ai1 = 'webcam/'.$exam->id.'/processed/'.$username.'/'.$username.'_'.$exam->id.'_007.jpg';
+       if(Storage::disk('s3')->exists($ai1)){
+             $image_files['4'] = $ai1;
+       }
 
         
         foreach($image_files as $j=>$im){
