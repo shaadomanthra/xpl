@@ -1302,7 +1302,7 @@ class AssessmentController extends Controller
         else{
             $camera = $exam->camera;
         }
-      
+       
 
         return view('appl.exam.assessment.blocks.'.$view)
                         ->with('mathjax',true)

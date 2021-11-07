@@ -64,9 +64,11 @@ video ,#photo3{
 @endif
 @endif
 
+
 		<h4 class="timer_count" data-value="{{$time*60}}">
-			@if(isset($exam->section_timer))
-			@if($exam->section_timer!='unlimted')
+
+			@if(isset($settings['section_timer']))
+			@if($settings['section_timer']!='unlimted')
 				<i class="fa fa-clock-o"></i> Timer &nbsp;&nbsp;
 			@endif
 			@endif
@@ -77,8 +79,8 @@ video ,#photo3{
 		@endif
 		</h4>
 
-		@if(isset($exam->section_timer))
-		@if($exam->section_timer!='unlimted')
+		@if(isset($settings['section_timer']))
+		@if($settings['section_timer']!='unlimted')
 		<h1 class="text-bold mb-2" id="timer"></h1>
 		@endif
 		@endif
