@@ -49,6 +49,7 @@ class Tests_Overall extends Model
         $filename = $name.'.jpg';
         $image = Storage::disk('s3')->get('webcam/'.$exam->id.'/'.$filename);
 
+        //return Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$filename);
         $b64_image =base64_encode($image);
 
         // Get cURL resource
@@ -64,7 +65,7 @@ class Tests_Overall extends Model
 
         curl_setopt_array($curl, [
           CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => 'https://fd.p24.in/python',
+          CURLOPT_URL => 'https://api.p24.in/python',
           CURLOPT_POST => 1,
           CURLOPT_TIMEOUT => 30,
         ]);
@@ -122,6 +123,7 @@ class Tests_Overall extends Model
 
       
         $data = $jsondata['image'];
+
         $data = base64_decode($data);
         Storage::disk('s3')->put('webcam/'.$exam->id.'/processed/'.$filename,$data,'public');
         

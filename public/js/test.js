@@ -1284,9 +1284,7 @@ $(document).ready(function(){
           }, ($tm[$q+1]) * 1000);
 
 
-        window.onbeforeunload = function() {
-          return "Data will be lost if you leave the page, are you sure?";
-        };
+        
 
       }
 

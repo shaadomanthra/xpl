@@ -301,7 +301,7 @@ class HomeController extends Controller
 
      public function process_image(Request $request){
         
-        $name = 'krishnateja_815_020';
+        $name = 'krishnateja_2763_001';
          $p = explode('_', $name);
 
         $user = User::where('username',$p[0])->first();
@@ -309,9 +309,10 @@ class HomeController extends Controller
 
         //$t = Tests_Overall::where('user_id',$user->id)->where('test_id',$exam->id)->first();
 
+
         $filename = $name.'.jpg';
         $filename_2 = $name.'_n.jpg';
-        $image = Storage::disk('s3')->get('webcam/815/'.$filename);
+        $image = Storage::disk('s3')->get('webcam/2763/'.$filename);
 
         $b64_image =base64_encode($image);
 
@@ -346,7 +347,7 @@ class HomeController extends Controller
           curl_close($curl);
 
           $jsondata = json_decode($j,true);
-          dd($jsondata);
+        
         
         
         // $f_name = $p[2];
@@ -379,8 +380,8 @@ class HomeController extends Controller
         
         $data = base64_decode($data);
 
-
-        Storage::disk('s3')->put('webcam/815/'.$filename_2,$data,'public');
+        
+        Storage::disk('s3')->put('webcam/2763/check/'.$filename_2,$data,'public');
         
         return 1;
 
@@ -400,7 +401,7 @@ class HomeController extends Controller
           else if(strlen($i)==2)
             $i='0'.$i;
           $name = $username.'_'.$test.'_'.$i;
-          
+          //Tests_Overall::process_image($name);
           FaceDetect::dispatch($name)->delay(now()->addSeconds(1));
           break;
         }
