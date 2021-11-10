@@ -121,7 +121,10 @@ for ($i = 1; $i <= 8; $i++) {
            $rows = $table->getElementsByTagName('tr'); 
            
            $c1 = strtoupper(str_replace(" ","",trim(strip_tags($rows->item(0)->getElementsByTagName('td')->item(0)->nodeValue))));
+           if(!isset($rows->item(0)->getElementsByTagName('td')->item(1)->nodeValue))
+                continue;
            $num = strtoupper(str_replace(" ","",trim(strip_tags($rows->item(0)->getElementsByTagName('td')->item(1)->nodeValue))));
+
             $question['a'] = $question['b'] = $question['c'] = $question['d'] = $question['e'] = $question['passage'] = $question['explanation'] = $question['topic'] = $question['answer'] = $question['leve']= null;         
             foreach ($rows as $row) {
                 $value = null;
