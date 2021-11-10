@@ -156,7 +156,7 @@
 </div>
 
 <div class="d-block d-md-none mb-4">
-<a href="https://tech.packetprep.com/contact" target="_blank"><img src="{{ asset('img/packetprep.jpg')}}" class="w-100 rounded" style="box-shadow: 3px 3px 3px 3px #eee;"/></a>
+<a href="https://packetprep.com/apply?source=xplore&campaign=imagefeed" target="_blank"><img src="{{ asset('img/packetprep.jpg')}}" class="w-100 rounded" style="box-shadow: 3px 3px 3px 3px #eee;"/></a>
 </div>
 
 
@@ -273,7 +273,7 @@
 <div class="col-12 col-md-3">
   <a href="https://t.me/xplorejobs" target="_blank"><img src="{{ asset('img/graphics/telegram.jpg')}}" class="w-100 rounded mb-3" style="box-shadow: 3px 3px 3px 3px #eee;"/></a>
 
-    <a href="https://packetprep.com/apply?source=xplore&campaign=dashboard" target="_blank"><img src="{{ asset('img/packetprep.jpg')}}" class="w-100 rounded" style="box-shadow: 3px 3px 3px 3px #eee;"/></a>
+    <a href="https://packetprep.com/apply?source=xplore&campaign=imagefeed" target="_blank"><img src="{{ asset('img/packetprep.jpg')}}" class="w-100 rounded" style="box-shadow: 3px 3px 3px 3px #eee;"/></a>
 
 @if(auth::user()->profile_complete()!=100)
   <div class="bg-white  p-4 p-md-4 mb-md-4 mt-4" style="background-image:url({{asset('img/graphics/corner-4.png')}});background-position: right;background-repeat: no-repeat; border-radius:8px;box-shadow: 3px 3px 3px 3px #eee;background-size: auto;">
