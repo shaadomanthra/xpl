@@ -1302,7 +1302,7 @@ class AssessmentController extends Controller
         else{
             $camera = $exam->camera;
         }
-       
+
 
         return view('appl.exam.assessment.blocks.'.$view)
                         ->with('mathjax',true)
@@ -1905,6 +1905,7 @@ class AssessmentController extends Controller
 
         //reevaluate
         if(request()->get('reevaluate')){
+
             $exam->reEvaluate($student);
         }
 
@@ -2812,6 +2813,8 @@ class AssessmentController extends Controller
 
         if(request()->get('slug')){
 
+            $test_responses =  Test::where('test_id',$exam->id)
+                        ->where('user_id',$student->id)->get();
             $response->mark = request()->get('score');
             $response->comment = request()->get('comment');
             $response->status = 1;

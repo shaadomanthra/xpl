@@ -472,7 +472,7 @@ class Exam extends Model
     public function getQuestionsSection($id, $uid){
 
        $i = $uid %10;
-    
+
        $name = 'set_'.$this->slug.'_'.$i;
        $set = Cache::get($name);
 
@@ -1201,7 +1201,7 @@ class Exam extends Model
 
             $stotal = 0;
             $stm =0;
-
+            $m=1;
             foreach($qset as $q){
                 $flag = 0; 
                 $id = $q->id;
@@ -1236,6 +1236,7 @@ class Exam extends Model
 
                     }else{
                       $mark = $q->mark;
+
                       $stm = $stm + $mark;
                       // if($e->accuracy==1){
                       //   if($e->mark!=$mark){
@@ -1245,16 +1246,17 @@ class Exam extends Model
                       // }
 
                       if($q->type=='mcq'){
-                        if($e->response==$q->answer){
-                          $e->answer = $q->answer;
-                          $e->mark = $mark;
-                          $e->accuracy =1;
-                        }else{
-                          $e->answer = $q->answer;
-                          $e->mark = 0;
-                          $e->accuracy = 0;
-                        }
+                        // if($e->response==$q->answer){
+                        //   $e->answer = $q->answer;
+                        //   $e->mark = $mark;
+                        //   $e->accuracy =1;
+                        // }else{
+                        //   $e->answer = $q->answer;
+                        //   $e->mark = 0;
+                        //   $e->accuracy = 0;
+                        // }
 
+                        echo $m++.' - '.$e->mark."<br>";
                         $flag=1;
                       }else if($q->type=='mbdq' || $q->type=='mbfq'){
                         $partialmark = 0.2;
@@ -1300,6 +1302,7 @@ class Exam extends Model
                 }
                 
             }
+            dd($stotal);
 
             $sitem->score = $stotal;
             $sitem->max = $stm;
@@ -1410,13 +1413,15 @@ class Exam extends Model
       $mark = 0;
       $sattempted=0; $oattempted=0;
       $flag = true;
-      foreach($tests as $t){
-
-        if($t->accuracy && !$t->mark)
-          $t->mark = 1;
+      $tx=[];$i=1;
+      $tt=0;
+      foreach($tests as $md=>$t){
+       
+        // if($t->accuracy && !$t->mark)
+        //   $t->mark = 1;
         
         if($t->id==$entry->id)
-          $t->mark = $entry->mark;
+          $t->mark = $e->mark;
 
         if($t->section_id==$entry->section_id){
           $s['mark'] = $s['mark'] + floatval($t->mark);
@@ -1428,6 +1433,8 @@ class Exam extends Model
 
         if($t->status==2)
           $flag= false;
+       $tx[$i++]=$t->mark;
+        $tt = $tt+$t->mark;
 
       }
       $e_section->score = $s['mark'];
@@ -1458,7 +1465,7 @@ class Exam extends Model
 
 
       if(request()->get('ajax')){
-                echo json_encode($e_overall);
+            echo json_encode($e_overall);
             exit();
       }
 
