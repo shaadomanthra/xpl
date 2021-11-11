@@ -342,8 +342,10 @@ class AssessmentController extends Controller
             }
         }else{
             $code = strtoupper($code);
+
             $exam->code = strtoupper($exam->code);
             if (strpos($exam->code, ',') !== false) {
+                
                     $examcodes = explode(',',$exam->code);
                     $exists = false;
                     foreach($examcodes as $c){

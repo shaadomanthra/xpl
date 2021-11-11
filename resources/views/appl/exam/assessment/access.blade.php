@@ -7,6 +7,7 @@
 
 
 	<div class=" border p-3 bg-white rounded">
+		@include('flash::message')
 		<div class="row">
 			<div class="col-12 col-md-2">
 				@if(isset($exam->image))
@@ -41,8 +42,10 @@
 
 					<button class="btn btn-primary">Submit</button>
 				</form>
+
 			</div>
 			</div>
+			
 
 		</div>
 		

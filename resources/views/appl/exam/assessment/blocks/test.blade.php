@@ -83,7 +83,7 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
 
 
     @if(isset($settings['section_timer']))
-      @if($settings['section_timer']!='unlimted')
+      @if($settings['section_timer']!='unlimited')
     <div class="mb-2 h5"> <i class="fa fa-clock-o"></i> <span class="text-bold " id="timer2"></span></div>
     @endif
     @endif
@@ -501,8 +501,9 @@ div.chats {
 
 
 
+
 @if(isset($settings['section_timer']))
-      @if($settings['section_timer']!='unlimted')
+      @if($settings['section_timer']!='unlimited')
 <div class="modal fade" id="timer_alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
