@@ -57,8 +57,8 @@
              
               <li class="nav-item"><a class="nav-link" href="/aboutus">About Us</a></li>
               <li class="nav-item"><a class="nav-link" href="#">Team</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">News</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Testimonials</a></li>
+              <li class="nav-item"><a class="nav-link" href="news">News</a></li>
+              <li class="nav-item"><a class="nav-link" href="testimonials">Testimonials</a></li>
               <li class="nav-item"><a class="nav-link" href="contact">Contact Us</a></li>
             </ul>
             <!-- End Nav Link -->
@@ -87,7 +87,7 @@
             <ul class="nav nav-sm nav-x-0 nav-dark flex-column">
               <li class="nav-item"><a class="nav-link" href="#">Campus Recruitment Training</a></li>
               <li class="nav-item"><a class="nav-link" href="#">Company specific Training</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Corporate Training</a></li>
+              <li class="nav-item"><a class="nav-link" href="corporate-training">Corporate Training</a></li>
               <li class="nav-item"><a class="nav-link" href="#">Finishing School Program</a></li>
               <li class="nav-item"><a class="nav-link" href="#">Language Training</a></li>
             </ul>

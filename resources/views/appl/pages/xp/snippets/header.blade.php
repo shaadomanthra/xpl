@@ -3,7 +3,7 @@
 
 <head>
   <!-- Title -->
-  <title>Xplore</title>
+  <title>@yield('title','Xplore')</title>
   <!-------google font-------->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Quattrocento&display=swap" rel="stylesheet">

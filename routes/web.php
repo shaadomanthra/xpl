@@ -101,12 +101,20 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('/terms',function(){ return view('appl.pages.terms'); })->name('terms');
 	Route::get('/em',function(){ return view('appl.pages.eamcet'); })->name('eamcet');
 
+	//pages
 	Route::get('/premium','Product\ProductController@premium')->name('premium');
 	Route::get('/hire',function(){ return view('xp_welcome')->with('welcome',1); })->name('xp');
 	Route::get('/privacy',function(){ return view('appl.product.pages.privacy'); })->name('privacy');
 	Route::get('/refund',function(){ return view('appl.product.pages.refund'); })->name('refund');
 	Route::get('/disclaimer',function(){ return view('appl.product.pages.disclaimer'); })->name('disclaimer');
 	Route::get('/about',function(){ return view('appl.pages.about'); })->name('xp.about');
+
+	Route::get('/corporate-training',function(){ return view('appl.pages.xp.specific.corporate_training'); })->name('xp.ct');
+	Route::get('/aptitude-test',function(){ return view('appl.pages.xp.specific.aptitude_test'); })->name('xp.aptitude');
+	Route::get('/news',function(){ return view('appl.pages.xp.specific.news'); })->name('xp.news');
+	Route::get('/testimonials',function(){ return view('appl.pages.xp.specific.testimonials'); })->name('xp.testimonials');
+
+
 	Route::get('/aboutus',function(){ return view('appl.pages.xp.about'); })->name('about');
 	Route::get('/faq',function(){ return view('appl.product.pages.faq'); })->name('faq')->middleware('corporate');;
 	Route::get('/checkout','Product\OrderController@checkout')->name('checkout')->middleware('auth');

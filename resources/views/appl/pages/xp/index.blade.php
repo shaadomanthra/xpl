@@ -100,7 +100,7 @@
           <ul class="list-unstyled list-article">
             <li><a class="link-underline" href="hiring">Hiring Assessments</a></li>
             <li><a class="link-underline" href="jobboard">Job Board</a></li>
-            <li><a class="link-underline" href="#">Corporate Training</a></li>
+            <li><a class="link-underline" href="corporate-training">Corporate Training</a></li>
             
           </ul>
         </div>
