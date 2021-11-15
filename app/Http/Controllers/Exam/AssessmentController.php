@@ -4004,6 +4004,7 @@ class AssessmentController extends Controller
 
 
         $pics = [];$i=0;
+        $c = $content['c'];
 
         if($type=='snaps')
         $imagepath = 'webcam/'.$exam->id.'/'.$username.'_'.$exam->id.'_';
@@ -4014,10 +4015,11 @@ class AssessmentController extends Controller
 
         $pics = Storage::disk('s3')->allFiles($imagepath);
         
-       
 
         if($type!='ai')
         if($content){
+            if(!$last_number)
+                $last_number = $c;
             for($i=0;$i<=$last_number;$i++){
                 if(strlen($i)==1)
                     $nm ="00".$i;
@@ -4029,6 +4031,7 @@ class AssessmentController extends Controller
 
             }
 
+
             if($last_number==0){
 
                 if(!Storage::disk('s3')->exists($pics[$i-1]))
@@ -4039,8 +4042,9 @@ class AssessmentController extends Controller
             }
         }
 
-        rsort($pics);
 
+        rsort($pics);
+        
 
         $pg = $this->paginateAnswers($pics,18);
 
