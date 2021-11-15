@@ -1824,6 +1824,10 @@ class AssessmentController extends Controller
 
         $evaluators = $exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray();
         
+        if(\auth::user()->role < 12 && \auth::user()->role>3){
+            if($evaluators && !in_array(\auth::user()->id,$evaluators))
+                abort("403","unauthorized");
+        }
 
         if(!$pdf2)
         if(!\auth::user()->isAdmin()){
