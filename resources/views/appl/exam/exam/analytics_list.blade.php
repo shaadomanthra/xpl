@@ -96,12 +96,13 @@
                   @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
                   @can('update',$exam)
                   <a href="{{ route('assessment.try',$exam->slug)}}?student={{$users[$r['user_id']]->username}}&admin=1&code={{$r['code']}}" ><i class='fa fa-edit'></i> modify</a>&nbsp;&nbsp;&nbsp;
+                    <a href="#" class="delete_resp"  data-url="{{route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" data-id="{{$r['user_id']}}"><i class='fa fa-trash'></i> Delete Response</a>&nbsp;&nbsp;&nbsp;
+
+                  <a href="#" class="reattempt_resp"  data-url="{{route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" data-id="{{$r['user_id']}}"><i class='fa fa-retweet'></i> Re-activate</a>&nbsp;&nbsp;&nbsp;
                   @endcan
                   @endif
 
-                  <a href="#" class="delete_resp"  data-url="{{route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" data-id="{{$r['user_id']}}"><i class='fa fa-trash'></i> Delete Response</a>&nbsp;&nbsp;&nbsp;
-
-                  <a href="#" class="reattempt_resp"  data-url="{{route('assessment.delete',$exam->slug)}}?url={{ request()->url()}}" data-id="{{$r['user_id']}}"><i class='fa fa-retweet'></i> Re-activate</a>&nbsp;&nbsp;&nbsp;
+                  
 
                   
                 </form>

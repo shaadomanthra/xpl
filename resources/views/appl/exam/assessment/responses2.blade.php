@@ -161,7 +161,7 @@ pre, code {
                   <div class="score_main" >
                     @if(!$test_overall->status)
                     <div class="display-3 text-primary">{{ $test_overall->score }} </div>
-                    
+
                     <div class=" mt-2">out of {{$test_overall->max}}</div>
                     @else
                     <div class="badge badge-primary under_review_main" >Under <br>Review</div>
@@ -617,6 +617,8 @@ pre, code {
         @endif
 
           </div>
+    @if(in_array(Auth::user()->id,$evaluators) || Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
+           
           <div class=" @if(request()->get('mode')==2) col-12 @else col-3 @endif">
             <div class="item fixed sticky rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 mt-md-0 box_{{$t->question_id}}">
       <div class="card-body ">
@@ -676,6 +678,7 @@ pre, code {
       </div>
 
     </div>
+    @endif
 
    
           </div>

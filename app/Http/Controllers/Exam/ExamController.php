@@ -1631,6 +1631,8 @@ class ExamController extends Controller
          $exam= Exam::where('slug',$id)->first();
         $this->authorize('create', $exam);
 
+       
+        
         $code = $r->get('code');
         $item = $r->get('item');
         $data = $r->get('score');

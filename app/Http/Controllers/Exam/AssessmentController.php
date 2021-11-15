@@ -1822,6 +1822,7 @@ class AssessmentController extends Controller
 
         $exam = Cache::get('test_'.$slug);
 
+        $evaluators = $exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray();
         
 
         if(!$pdf2)
@@ -2283,6 +2284,7 @@ class AssessmentController extends Controller
 
             return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
+                        ->with('evaluators',$evaluators)
                         ->with('questions',$ques)
                         ->with('sections',$sections)
                         ->with('details',$details)
@@ -2311,6 +2313,7 @@ class AssessmentController extends Controller
 
 
         $exam = Cache::get('test_'.$slug);
+
 
 
 
