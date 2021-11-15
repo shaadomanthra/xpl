@@ -746,11 +746,27 @@ class ExamController extends Controller
             return Exam::where('slug',$id)->with('user')->with('sections')->withCount('users')->first();
         });
 
+
         $exam->precheck_auto_activation();
 
         if(!\auth::user()->checkRole(['administrator','hr-manager','tpo'])){
             return redirect()->route('assessment.show',$id);
         }
+
+        $evaluators = $exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray();
+        
+        if(!$evaluators)
+            $evaluators = [];
+
+        if(\auth::user()->role < 12 && \auth::user()->role>3){
+            if(!in_array(\auth::user()->id,$evaluators)){
+                echo in_array(\auth::user()->id,$evaluators);
+                abort("403","unauthorized");
+            }
+        }
+
+        
+
         $this->authorize('view', $exam);
 
         if(request()->get('refresh')){
@@ -1059,6 +1075,18 @@ class ExamController extends Controller
     public function questionlist($id, Request $r){
         $exam= Exam::where('slug',$id)->first();
 
+        $evaluators = $exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray();
+        
+        if(!$evaluators)
+            $evaluators = [];
+
+        if(\auth::user()->role < 12 && \auth::user()->role>3){
+            if(!in_array(\auth::user()->id,$evaluators)){
+                echo in_array(\auth::user()->id,$evaluators);
+                abort("403","unauthorized");
+            }
+        }
+        
         if(!$r->get('api'))
         $this->authorize('create', $exam);
 
@@ -1634,9 +1662,14 @@ class ExamController extends Controller
        
        $evaluators = $exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray();
         
+        if(!$evaluators)
+            $evaluators = [];
+
         if(\auth::user()->role < 12 && \auth::user()->role>3){
-            if($evaluators && !in_array(\auth::user()->id,$evaluators))
+            if(!in_array(\auth::user()->id,$evaluators)){
+                echo in_array(\auth::user()->id,$evaluators);
                 abort("403","unauthorized");
+            }
         }
         
         $code = $r->get('code');

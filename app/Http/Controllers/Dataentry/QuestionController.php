@@ -1068,7 +1068,17 @@ class QuestionController extends Controller
         $exam = Exam::where('slug',$exam_slug)->first();
         $exams =  Exam::orderBy('name','desc ')->get();
 
+        $evaluators = $exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray();
+        
+        if(!$evaluators)
+            $evaluators = [];
 
+        if(\auth::user()->role < 12 && \auth::user()->role>3){
+            if(!in_array(\auth::user()->id,$evaluators)){
+                echo in_array(\auth::user()->id,$evaluators);
+                abort("403","unauthorized");
+            }
+        }
 
         if($id == null)
         if(count($exam->sections)!=0)
