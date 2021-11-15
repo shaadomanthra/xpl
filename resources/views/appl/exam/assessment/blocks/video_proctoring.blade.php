@@ -20,35 +20,12 @@
 </div>
 </div>
 
-
-
-
-
-
-
-
-
 </div>
 
 <div class="" style="background: #fff;">
 <div class="container">
 
-   <div class="pt-5">
-        <h2 class="mb-4"><i class="fa fa-angle-double-right"></i> Cheating Status : 
-          @if($test_overall->cheat_detect==0)
-          <span class="text-success">Potentially No</span>
-          @elseif($test_overall->cheat_detect==1)
-          <span class="text-danger">Potentially YES</span>
-          @elseif($test_overall->cheat_detect==2)
-          <span class="text-info">Not Clear</span>
-
-          @endif
-
-        </h2>      
-  </div>
-
-
-    
+ 
 
      @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3001.webm'))
      <div class="pb-4">
@@ -57,11 +34,13 @@
         <div class="col-12">
           <div class="embed-responsive embed-responsive-16by9">
           <video id="my1" class="video-js embed-responsive-item "  controls preload="auto"  data-setup="{}">
-            <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_3001.webm')}}" type="video/webm" />
+           @if(in_array(request()->get('video'),[1,2,3,4]))
+            <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/video/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_300'.request()->get('video').'.webm')}}" type="video/webm" />
             <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a
               web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
             </p>
+            @endif
           </video>
         </div>
         </div>
@@ -82,6 +61,38 @@
           @else
           (next Five minutes)
           @endif
+
+        </span>
+        @endif
+      @endfor
+    @endif
+
+  
+    @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2001.webm'))
+
+     <div class="pb-4 mt-5">
+      <h3 class="mb-3"><i class="fa fa-angle-double-right"></i>  Video Proctoring - <span id="clipname">Clip {{request()->get('video')}}</span></h3>
+      <div class="row">
+        <div class="col-12">
+          <div class="embed-responsive embed-responsive-16by9">
+          <video id="my1" class="video-js embed-responsive-item "  controls preload="auto"  data-setup="{}">
+           @if(in_array(request()->get('video'),[1,2,3,4]))
+            <source src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_200'.request()->get('video').'.webm')}}" type="video/webm" />
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a
+              web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+            @endif
+          </video>
+        </div>
+        </div>
+      </div>
+    </div>
+
+      @for($h=2001;$h<2011;$h++)
+         @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_'.$h.'.webm'))
+        <span class="btn btn-outline-primary cursor " data-url="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/snaps/'.$student->username.'_'.$exam->id.'_video_'.$h.'.webm')}}" data-name="Clip {{($h-2000)}}" onclick="eclick(event)">Clip {{($h-2000)}} 
+         
 
         </span>
         @endif

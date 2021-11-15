@@ -323,10 +323,12 @@
 
     <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> @if(!$images['webcam']) Webcam @else AI @endif Captures  
 
+      @if($test_overall['face_detect'])
       @if($images['webcam'])
       <span class="float-right">Face Detect:  <span class="text-primary">{{$test_overall['face_detect']}}</span> &nbsp;&nbsp;&nbsp; Mobile Detect : <span class="text-primary">{{$test_overall['mobile_detect']}}</span></span>
       @endif
-      @if(!$images['webcam'])
+      @endif
+      @if(!$test_overall['face_detect'])
       <small><a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$user->username}}" class="">view all</a></small>
       @else 
       <small><a href="{{ route('test.snaps',$exam->slug)}}?type=ai&username={{$user->username}}" class="">view all</a></small>
@@ -490,6 +492,7 @@
           >
         </p>
       </video>
+      <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$student->username}}&video=1" class="mt-2"><i class="fa fa-angle-right"></i> video link</a>
         </div>
         @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2002.webm'))
         <div class="col-12 col-md-3">
@@ -503,6 +506,7 @@
           >
         </p>
       </video>
+      <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$student->username}}&video=2" class="mt-2"><i class="fa fa-angle-right"></i> video link</a>
         </div>
         @endif
         @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2003.webm'))
@@ -517,6 +521,7 @@
           >
         </p>
       </video>
+      <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$student->username}}&video=3" class="mt-2"><i class="fa fa-angle-right"></i> video link</a>
         </div>
         @endif
         @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/snaps/'.$student->username.'/'.$student->username.'_'.$exam->id.'_video_2004.webm'))
@@ -531,6 +536,7 @@
           >
         </p>
       </video>
+      <a href="{{ route('assessment.analysis',$exam->slug)}}?student={{$student->username}}&video=4" class="mt-2"><i class="fa fa-angle-right"></i> video link</a>
         </div>
         @endif
       </div>

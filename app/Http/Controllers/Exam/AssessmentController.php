@@ -345,7 +345,7 @@ class AssessmentController extends Controller
 
             $exam->code = strtoupper($exam->code);
             if (strpos($exam->code, ',') !== false) {
-                
+
                     $examcodes = explode(',',$exam->code);
                     $exists = false;
                     foreach($examcodes as $c){
@@ -4012,8 +4012,9 @@ class AssessmentController extends Controller
         else
         $imagepath = 'webcam/'.$exam->id.'/screens/'.$username.'_'.$exam->id.'_';
 
-        $pics = Storage::disk('s3')->allFiles('webcam/'.$exam->id.'/processed/'.$username.'/');
-     
+        $pics = Storage::disk('s3')->allFiles($imagepath);
+        
+       
 
         if($type!='ai')
         if($content){
@@ -4039,6 +4040,7 @@ class AssessmentController extends Controller
         }
 
         rsort($pics);
+
 
         $pg = $this->paginateAnswers($pics,18);
 
