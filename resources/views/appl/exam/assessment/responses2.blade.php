@@ -207,8 +207,8 @@ pre, code {
               <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1"  class="btn btn-outline-dark btn-sm mt-2 mt-md-0" >Refresh Cache</a>
 
               @if(\auth::user()->role==13 || \auth::user()->role==2)
-             <!-- <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1&reevaluate=1"  class="btn btn-outline-dark btn-sm mt-2" >Re-Evaluate</a> -->
-                <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&removeduplicates=1"  class="btn btn-outline-dark btn-sm mt-2" >Remove Duplicates</a>
+              <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1&reevaluate=1"  class="btn btn-outline-dark btn-sm mt-2" >Re-Evaluate</a> 
+              <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&removeduplicates=1"  class="btn btn-outline-dark btn-sm mt-2" >Remove Duplicates</a>
               @endif
               @if(request()->get('mode')!=2)
                 <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&mode=2"  class="btn btn-outline-dark btn-sm  mt-2 " >Mobile Mode</a>
