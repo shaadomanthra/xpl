@@ -1256,7 +1256,6 @@ class Exam extends Model
                         //   $e->accuracy = 0;
                         // }
 
-                        echo $m++.' - '.$e->mark."<br>";
                         $flag=1;
                       }else if($q->type=='mbdq' || $q->type=='mbfq'){
                         $partialmark = 0.2;
@@ -1302,7 +1301,6 @@ class Exam extends Model
                 }
                 
             }
-            dd($stotal);
 
             $sitem->score = $stotal;
             $sitem->max = $stm;
