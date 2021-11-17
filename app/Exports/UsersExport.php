@@ -85,6 +85,7 @@ class UsersExport implements FromCollection,ShouldAutoSize
                 $d = json_decode($users[$k]->pivot->data);
                 $ax="-";
                 if($d){
+                    if(isset($d->accesscode))
                     if($d->accesscode!='true')
                         $ax = $d->accesscode;
                        

@@ -2216,9 +2216,10 @@ class AssessmentController extends Controller
 
         if($request->get('pdf3')){
             
-        
+            
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
             $view = 'responses-pdf_backup';
+            //$view = 'responses-pdf';
             $data['tests'] = $tests;
             $data['student'] = $student;
             $data['exam'] = $exam;
@@ -2226,6 +2227,7 @@ class AssessmentController extends Controller
             $data['test_overall'] = $test_overall;
             $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
 
+            //dd($tests);
             //
             if($request->get('screen'))
              return view('appl.exam.assessment.'.$view)
@@ -2255,6 +2257,7 @@ class AssessmentController extends Controller
             $view = 'responses-pdf_backup';
 
             $data['tests'] = $tests;
+
             $data['student'] = $student;
             $data['exam'] = $exam;
             $data['test_overall'] = $test_overall;
@@ -2265,6 +2268,7 @@ class AssessmentController extends Controller
             $uuname = str_replace(' ', '-', $student->name);
             $name = $folder.$uuname.'_'.$student->roll_number.'.pdf';
             Storage::disk('s3')->put($name, $pdf->output(), 'public');
+
 
              return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
@@ -3091,7 +3095,9 @@ class AssessmentController extends Controller
         $code_ques_flag =0;
         $test = $slug;
         if($request->get('admin') || $request->get('api_submit')){
-            $user = User::where('id',$request->get('user_id'))->first();
+            $uid = intval($request->get('user_id'));
+            $user = User::where('id',$uid)->first();
+       
         }else{
             $user = \auth::user();
         }
@@ -3128,6 +3134,7 @@ class AssessmentController extends Controller
         }
         else
             $section_marking = 0;
+
 
         if(!$request->get('admin')){
 
@@ -3191,6 +3198,7 @@ class AssessmentController extends Controller
         $data = array();
         $d =array();
         $typing_accuracy =  $typing_score =0;
+
         for($i=1;$i<=$qcount;$i++){
 
             if(!isset($questions[$request->get($i.'_question_id')])){
@@ -3499,7 +3507,7 @@ class AssessmentController extends Controller
         }
 
        
-       
+      
 
 
         if(!$request->get('admin')){
@@ -3684,15 +3692,13 @@ class AssessmentController extends Controller
 
         }
 
-        //dd($data);
 
         if($test_overall['window_change']>3)
             $test_overall['cheat_detect'] = 1;
 
         $test_overall_cache->cheat_detect = $test_overall['cheat_detect'];
 
-        
-
+       
 
         try {
             DB::connection()->getPdo();
@@ -4568,7 +4574,7 @@ class AssessmentController extends Controller
                             //dd(request()->all());
 
                             $result = $this->submission($exam->slug,$r);
-                            //dd($result);
+                         
                         }else if(!$flag && !Storage::disk('s3')->exists($url)){
                              $url = 'testlog/'.$exam->id.'/log/'.$c.'_log.json';
                              //Storage::disk('s3')->delete($url);
