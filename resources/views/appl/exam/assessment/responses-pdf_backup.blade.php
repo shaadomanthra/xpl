@@ -163,25 +163,83 @@
         <!-- Define header and footer blocks before your content -->
         <!-- Wrap the content of your PDF inside a main tag -->
         <main class="bcontainer">
+
+            
           <div id="pdf" style="padding:20px ;">
+            <img src="https://xp.test/img/xplore.png" style="width:100px;border-radius: 10px;margin-bottom: 25px;"/>
           <div class=' ' style=" padding-bottom: 30px;  ">
-          <p class="heading_two mb-1 f30" ><h4> {{$student->name}}</h4>
+          <p class="heading_two mb-1 f30 "  ><h4> {{ ucfirst($exam->name) }} - Report</h4>
 
           </p>
-          @if($student->roll_number)<span class="badge badge-warning ">Roll Number : {{$student->roll_number}}</span> <br>@endif
-           @if($student->branch_id)@if(isset($student->branch->name))<span class="badge badge-danger ">Branch : {{$student->branch->name}}</span><br>@endif @endif
-      @if($student->college_id)@if(isset($student->college->name))<span class="badge badge-info">College : {{$student->college->name}}</span><br>@endif @endif
-      <p class="pt-3">Exam : <span class="text-primary">{{ ucfirst($exam->name) }}</span></p>
-      <p class="pt-3"><b>Score : @if(!$test_overall->status)
-      <span class="">{{ $test_overall->score }} </span>
-      @else
+
+            <img src="{{ $images['webcam'][1]}}" style="float: right;width:150px;border-radius: 10px;margin-top: 15px;"/>
+          <h4 style="color:#c44569;margin-bottom: 3px"> {{ ucfirst($student->name) }}</h4>
+            @if($student->college_id)@if(isset($student->college->name))<span class="badge badge-info"><b>College :</b> {{$student->college->name}}</span><br>@endif @endif
+           @if($student->branch_id)@if(isset($student->branch->name))<span class="badge badge-danger "><b>Branch : </b>{{$student->branch->name}}</span><br>@endif @endif
+
+          @if($student->roll_number)<span class="badge badge-warning "><b>Roll Number :</b> {{$student->roll_number}}</span> <br>@endif
+            <span><b>Year of passing :</b> <span class="text-primary">{{ $student->year_of_passing }}</span><br>
+     
+             @if($student->current_city)<span class="badge badge-warning "><b>Currenty City:</b> {{$student->current_city}}</span> <br>@endif
+               @if($student->hometown)<span class="badge badge-warning "><b>Hometown :</b> {{$student->hometown}}</span> <br>@endif
+
+        <br><br><br>
+
+      
+        <div class="brow">
+          <div class="bcol-25" style="width:30%;float: left;">
+            <div style="background: #b8e994;border-radius:5px;padding:15px;margin-right:20px;">
+              <div>Score</div>
+              @if(!$test_overall->status)
+              <h1>{{$test_overall->score}}</h1>
+              <div>out of {{$test_overall->max}}</div>
+                @else
       <span class="badge badge-primary under_review_main" >Under Review</span>
-      @endif</b></p>
+      @endif
+            </div>
+          </div>
+          <div class="bcol-25" style="width:30%;float: left;">
+            <div style="background: #82ccdd;border-radius:5px;padding:15px;margin-right:20px;">
+              <div>Percentage</div>
+              <h1>{{ round($test_overall->score/$test_overall->max*100,1) }}%</h1>
+              <div>out of 100</div>
+            </div>
+          </div>
+          <div class="bcol-25" style="width:30%;float: left;">
+            <div style="background: #f8c291;border-radius:5px;padding:15px;margin-right:20px;">
+              <div>Rank</div>
+              <h1>{{$rank['rank']}}</h1>
+              <div>out of {{$rank['participants']}}</div>
+            </div>
+          </div>
+         
         </div>
+        </div>
+        <br><br><br><br><br><br><br><Br><br><br><br><Br>
+        <table class="table ">
+          <tr><th>Board</th><th>Percentage/CGPA</th></tr>
+          <tr>
+            <td>Class 10</td>
+            <td>{{$student->tenth}}</td>
+          </tr>
+          <tr>
+            <td>Class 12</td>
+            <td>{{$student->twelveth}}</td>
+          </tr>
+          <tr>
+            <td>Graduation</td>
+            <td>{{$student->bachelors}}</td>
+          </tr>
+          <tr>
+            <td>Masters</td>
+            <td>{{$student->masters}}</td>
+          </tr>
+        </table>
+        <br><br><br><br><br><br><br>
            <div class="">
+            <h3> Responses</h3>
            @foreach($tests as $k=>$t)
           
-
            <table class="table ">
               <tbody>
                 <tr>
@@ -295,11 +353,43 @@
               </tbody>
             </table>
 
-      
+            @endforeach
 
+            <br><br>
+            <h3>Images</h3>
+            <br><br>
+              @foreach($images['webcam'] as $j=>$l)
+              <img src="{{ $l}}" style="margin-top: 5px"/>
+              @endforeach
+              <br>
+              <a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$student->username}}">>view all images</a>
+            <br><br>
+            <h3>Log</h3>
+            <br><br>
+            <div style="">
+        @if(isset($content['os_details']))
+        <div>OS details: <b><span class="log_os text-muted">{{$content['os_details']}}</span></b></div>
+         
+        <div>Browser details: <b><span class="log_browser text-muted">{{$content['browser_details']}}</span></b></div>
 
+        <div>IP Address: <b><span class="log_ip text-muted">{{$content['ip_details']}}</span></b></div>
 
-@endforeach
+        <div>Window Swaps: <b><span class="log_swaps text-danger">{{$content['window_change']}}</span></b></div>
+        <div>Date: <b><span class="log_swaps text-primary">{{date("jS F, Y", $content['last_updated'])}}</span></b></div>
+           @endif
+        <hr>
+        
+         @if(isset($content['activity']))
+         @foreach($content['activity'] as $a => $b)
+         <div class="row">
+            <div class="col-3">{{date(' h:i:s ', $a)}} -  {{$b}}</div>
+            
+          </div> 
+          @endforeach
+          @endif
+          
+          </div>
+  
 </div>
 
 

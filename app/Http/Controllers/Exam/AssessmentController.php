@@ -1819,17 +1819,19 @@ class AssessmentController extends Controller
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
 
-
+        
+            
         $exam = Cache::get('test_'.$slug);
 
         $evaluators = $exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray();
         
+        if(!$request->is('test/*/pdf'))
         if(\auth::user()->role < 12 && \auth::user()->role>3){
             if($evaluators && !in_array(\auth::user()->id,$evaluators))
                 abort("403","unauthorized");
         }
 
-        if(!$pdf2)
+        if(!$pdf2 && !$request->is('test/*/pdf'))
         if(!\auth::user()->isAdmin()){
             $ex = Exam::where('slug',$slug)->with('examtype')->first();
 
@@ -2214,7 +2216,7 @@ class AssessmentController extends Controller
         $mathjax = false;
         $view = 'responses2';
 
-        if($request->get('pdf3')){
+        if($request->get('pdf3') || $request->is('test/*/pdf')){
             
             
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
@@ -2225,19 +2227,93 @@ class AssessmentController extends Controller
             $data['exam'] = $exam;
             $data['questions'] = $ques;
             $data['test_overall'] = $test_overall;
+            $image_files = [];
+            $username = $student->username;
+            $folder = 'webcam/'.$exam->id.'/';
+            $one1 = $user->username.'_'.$exam->id.'_000.jpg';
+
+             //log file
+            $name = $student->username.'_log.json';
+            $filepath = 'testlog/'.$exam->id.'/log/'.$name;
+
+
+
+            $content = null;
+            if(Storage::disk('s3')->exists($filepath)){
+                $content = json_decode(Storage::disk('s3')->get($filepath),true);
+            }
+
+            if(Storage::disk('s3')->exists($folder.$one1)){
+                //  $selfie = $username.'_'.$exam->id.'_selfie.jpg';
+                // $image_files['selfie_url'] = $folder.$selfie;
+
+                // $idcard = $username.'_'.$exam->id.'_idcard.jpg';
+                // $image_files['idcard_url'] = $folder.$idcard;
+
+                // $one1 = $username.'_'.$exam->id.'_000.jpg';
+                // $image_files['0'] = $folder.$one1;
+
+                $one = $username.'_'.$exam->id.'_001.jpg';
+                $image_files['1'] = Storage::disk('s3')->url($folder.$one);
+                $two = $username.'_'.$exam->id.'_002.jpg';
+                $image_files['2'] = Storage::disk('s3')->url($folder.$two);
+                $three = $username.'_'.$exam->id.'_003.jpg';
+                $image_files['3'] = Storage::disk('s3')->url($folder.$three);
+                $three = $username.'_'.$exam->id.'_004.jpg';
+                $image_files['4'] = Storage::disk('s3')->url($folder.$three);
+                $three = $username.'_'.$exam->id.'_005.jpg';
+                $image_files['5'] = Storage::disk('s3')->url($folder.$three);
+                $three = $username.'_'.$exam->id.'_006.jpg';
+                $image_files['6'] = Storage::disk('s3')->url($folder.$three);
+
+                
+            }
+                       
+            foreach($image_files as $j=>$im){
+               if (strpos($im, 'screen') !== false) {
+                    $images['screens'][$j] =$im ;
+                }else if (strpos($im, 'idcard') !== false) {
+                    $images['idcard'][$j] =$im ;
+                }else if (strpos($im, 'selfie') !== false) {
+                    $images['selfie'][$j] =$im ;
+                }else if (strpos($im, 'json') !== false) {
+                    $images['json'][$j] =$im ;
+                }else{
+                    $images['webcam'][$j] =$im ;
+                }
+
+            }
+             $data['rank'] = Cache::remember('ranked_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
+                $all = Tests_Overall::where('test_id',$exam->id)->orderBy('score','desc')->get();
+                foreach($all as $k=>$a){
+                    if($a->user_id ==$student->id)
+                        $rank = $k+1;
+
+                }
+                $d['rank'] =$rank;
+                $d['participants'] = count($all);
+                return $d;
+            });
+            $data['images'] = $images;
+            $data['content'] = $content;
+
+            
             $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
 
             //dd($tests);
             //
             if($request->get('screen'))
-             return view('appl.exam.assessment.'.$view)
+                return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
                         ->with('questions',$ques)
                         ->with('sections',$sections)
                         ->with('details',$details)
                         ->with('student',$student)
+                        ->with('images',$images)
                         ->with('user',$student)
                         ->with('tests',$tests)
+                        ->with('content',$content)
+                        ->with('rank',$data['rank'])
                         ->with('test_overall',$tests_overall)
                         ->with('review',true)
                         ->with('mathjax',$mathjax)
@@ -2246,8 +2322,7 @@ class AssessmentController extends Controller
                         ->with('highlight',true)
                         ->with('chart',false);
             else{
-
-             return $pdf->download($student->name.'_'.$exam->name.'.pdf');
+                return $pdf->download($student->name.'_'.$exam->name.'.pdf');
             }
            
         }
@@ -2678,6 +2753,7 @@ class AssessmentController extends Controller
             
         
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+            ini_set('memory_limit', '-1');
             $view = 'responses-pdf_backup';
             $data['tests'] = $tests;
             $data['student'] = $student;
@@ -2705,6 +2781,7 @@ class AssessmentController extends Controller
             else{
 
              return $pdf->download($student->name.'_'.$exam->name.'.pdf');
+
             }
            
         }

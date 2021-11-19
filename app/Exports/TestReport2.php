@@ -146,6 +146,10 @@ class TestReport2 implements FromCollection
 
                 }
 
+            if(request()->get('all')){
+                $result[$k]->pdf= route('assessment.pdf',$exam->slug).'?student='.$res->user->username;
+
+            }
 
     		unset($result[$k]->id);
     		unset($result[$k]->user_id);
@@ -238,6 +242,10 @@ class TestReport2 implements FromCollection
 
     	$result->prepend($ux);
 
+        if(request()->get('all')){
+                $ux->pdf = 'PDF Report';
+
+            }
         if(count($email_stack['not_registered']))
         foreach($email_stack['not_registered'] as $e){
             $ux = new Tests_Overall();

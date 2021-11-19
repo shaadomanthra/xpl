@@ -683,6 +683,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
 
 	Route::get('test/{test}/responses','Exam\AssessmentController@responses2')->name('assessment.responses')->middleware('auth');
+	Route::get('test/{test}/pdf','Exam\AssessmentController@responses2')->name('assessment.pdf');
 	Route::get('test/{test}/response_images','Exam\AssessmentController@response_images')->name('assessment.response_images')->middleware('auth');
 	Route::get('test/{test}/responses2','Exam\AssessmentController@responses')->name('assessment.response2')->middleware('auth');
 
