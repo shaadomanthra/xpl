@@ -105,7 +105,7 @@ class UsersExport implements FromCollection,ShouldAutoSize
 
                 }
                 $users[$k]->access = $ax;
-                if(request()->get('resume')){
+                if(request()->get('resume') || request()->get('r')){
                     $users[$k]->resume = '-';
                     if(Storage::disk('s3')->exists('resume/resume_'.$username.'.pdf')){
                         $users[$k]->resume = Storage::disk('s3')->url('resume/resume_'.$username.'.pdf');
@@ -163,7 +163,7 @@ class UsersExport implements FromCollection,ShouldAutoSize
         }
 
         $ux->accesscode = "Access Code";
-         if(request()->get('resume')){
+         if(request()->get('resume') || request()->get('r')){
         $ux->resume = "Resume";
         }
         $ux->c11 = "UID";
