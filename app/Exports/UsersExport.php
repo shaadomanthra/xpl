@@ -105,12 +105,16 @@ class UsersExport implements FromCollection,ShouldAutoSize
 
                 }
                 $users[$k]->access = $ax;
-                if(request()->get('resume') || request()->get('r')){
+                if(request()->get('resume') ){
                     $users[$k]->resume = '-';
                     if(Storage::disk('s3')->exists('resume/resume_'.$username.'.pdf')){
                         $users[$k]->resume = Storage::disk('s3')->url('resume/resume_'.$username.'.pdf');
                     }
                 
+                }
+
+                if(request()->get('r')){
+                    $users[$k]->resume = Storage::disk('s3')->url('resume/resume_'.$username.'.pdf');
                 }
 
                 // if(request()->get('location')){
