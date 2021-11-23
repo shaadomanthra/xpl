@@ -2903,15 +2903,15 @@ class AssessmentController extends Controller
 
         if(request()->get('slug')){
 
-            $test_responses =  Test::where('test_id',$exam->id)
-                        ->where('user_id',$student->id)->get();
+            
             $response->mark = request()->get('score');
             $response->comment = request()->get('comment');
             $response->status = 1;
-
-
             $response->save();
 
+            $test_responses =  Test::where('test_id',$exam->id)
+                        ->where('user_id',$student->id)->get();
+                        
             $test_responses = $exam->updateScore($test_responses,$response);
 
 

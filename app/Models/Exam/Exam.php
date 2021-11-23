@@ -1431,7 +1431,7 @@ class Exam extends Model
 
         if($t->status==2)
           $flag= false;
-       $tx[$i++]=$t->mark;
+        $tx[$i++]=$t->mark;
         $tt = $tt+$t->mark;
 
       }

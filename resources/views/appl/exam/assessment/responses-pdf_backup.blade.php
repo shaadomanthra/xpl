@@ -172,7 +172,9 @@
 
           </p>
 
+          @if(isset($images['webcam']))
             <img src="{{ $images['webcam'][1]}}" style="float: right;width:150px;border-radius: 10px;margin-top: 15px;"/>
+          @endif
           <h4 style="color:#c44569;margin-bottom: 3px"> {{ ucfirst($student->name) }}</h4>
             @if($student->college_id)@if(isset($student->college->name))<span class="badge badge-info"><b>College :</b> {{$student->college->name}}</span><br>@endif @endif
            @if($student->branch_id)@if(isset($student->branch->name))<span class="badge badge-danger "><b>Branch : </b>{{$student->branch->name}}</span><br>@endif @endif
@@ -355,15 +357,18 @@
 
             @endforeach
 
+          @if(isset($images['webcam']))
             <br><br>
             <h3>Images</h3>
             <br><br>
+
               @foreach($images['webcam'] as $j=>$l)
               <img src="{{ $l}}" style="margin-top: 5px"/>
               @endforeach
               <br>
               <a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$student->username}}">>view all images</a>
             <br><br>
+            @endif
             <h3>Log</h3>
             <br><br>
             <div style="">
