@@ -284,11 +284,15 @@ class AdminController extends Controller
 
 
         $month = $request->get('month');
+        $role = $request->get('role');
         $recent = $request->get('recent');
 
         if($recent){
             $users = User::where('name','LIKE',"%{$item}%")
                                       ->orWhere('email', 'LIKE', "%{$item}%")->orWhere('phone', 'LIKE', "%{$item}%")->with('college')->orderBy('updated_at','desc')->paginate(30);
+        }
+        elseif($role){
+            $users = User::whereIn('role',[10,11,12,13])->where('client_slug','xplore')->with('college')->orderBy('id','desc')->paginate(30);
         }
         elseif($month=='thismonth')
             $users = User::whereMonth('created_at', Carbon::now()->month)->with('college')->orderBy('id','desc')->paginate(30);

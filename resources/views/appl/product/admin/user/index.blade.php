@@ -26,6 +26,9 @@
             <a href="{{route('upload.users')}}">
               <button type="button" class="btn btn-outline-primary my-2 my-sm-2 mr-sm-3">Upload Users</button>
             </a>
+            <a href="{{route('admin.user')}}?role=true">
+              <button type="button" class="btn btn-outline-dark my-2 my-sm-2 mr-sm-3">Admin Users</button>
+            </a>
 
             <a href="{{route('admin.user.create')}}">
               <button type="button" class="btn btn-outline-success my-2 my-sm-2 mr-sm-3">Add User</button>
