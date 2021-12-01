@@ -62,7 +62,7 @@ pre, code {
     <div class="row">
       <div class="col-12 ">
 
-      	    @if(auth::user()->checkRole(['hr-manager','admin']))
+@if(auth::user()->checkRole(['hr-manager','admin']))
 <nav class="mb-0" data-html2canvas-ignore="true">
   <ol class="breadcrumb p-0 pt-3" style="background: transparent;">
     <li class="breadcrumb-item"><a href="{{ url('/dashboard')}}">Home</a></li>
@@ -668,7 +668,6 @@ pre, code {
           @endif
           @endif
          @endif
-
          @endif
        @endif
      
@@ -678,10 +677,11 @@ pre, code {
       </div>
 
     </div>
-    @endif
+  
 
    
           </div>
+            @endif
         </div>
     
 			</div>

@@ -88,14 +88,28 @@ class PostController extends Controller
         $item = $request->item;
         $user = \auth::user();
         if($user){
-            $myjobs = $user->posts;
+            $myjobs = Cache::remember('myjobs_'.$user->id,240,function() use ($user){
+                   return  $user->posts;
+            });
+            
         }else{
             $myjobs = array();
         }
         
-        $objs = $obj->where('title','LIKE',"%{$item}%")
+        if($request->get('page')){
+            $objs = $obj->where('title','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
-                    ->paginate(config('global.no_of_records'));   
+                    ->paginate(config('global.no_of_records'));  
+        }else{
+            $objs = Cache::remember('posts_1',240,function() use ($obj,$item){
+                   return  $obj->where('title','LIKE',"%{$item}%")
+                    ->orderBy('created_at','desc ')
+                    ->paginate(config('global.no_of_records'));  
+            }); 
+        }
+        
+
+         
         $view = $search ? 'public_list': 'public_index';
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)

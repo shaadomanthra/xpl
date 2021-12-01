@@ -1823,6 +1823,11 @@ class AssessmentController extends Controller
             
         $exam = Cache::get('test_'.$slug);
 
+        if(!$exam){
+            $exam = Exam::where('slug',$slug)->first();
+
+        }
+
         $evaluators = $exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray();
         
         if(!$request->is('test/*/pdf'))
