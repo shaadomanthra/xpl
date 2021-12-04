@@ -22,6 +22,7 @@ class UExport2 implements FromCollection, WithHeadings
             'created',
             'last_login',
             'Username',
+            'Branch_id'
             'Roll Number/Fathers Name',
             'Phone',
             'Hometown/ District',
@@ -57,7 +58,6 @@ class UExport2 implements FromCollection, WithHeadings
                 unset($users[$k]->bachelors);
                 unset($users[$k]->masters);
                 unset($users[$k]->college_id);
-                unset($users[$k]->branch_id);
                 unset($users[$k]->user_id);
                 unset($users[$k]->aadhar);
               
