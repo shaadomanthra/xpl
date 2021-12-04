@@ -22,7 +22,7 @@ class UExport2 implements FromCollection, WithHeadings
             'created',
             'last_login',
             'Username',
-            'Branch_id'
+            'Branch_id',
             'Roll Number/Fathers Name',
             'Phone',
             'Hometown/ District',
