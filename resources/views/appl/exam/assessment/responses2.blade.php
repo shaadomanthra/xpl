@@ -378,7 +378,7 @@ pre, code {
 
         @if($questions[$t->question_id]->type!='vq' && $questions[$t->question_id]->type!='aq')
           @if(request()->get('htmlmode'))
-            {{ nl2br($t->response) }} 
+            <pre class="bg-white text-dark border border-white">{!! htmlentities($t->response) !!} </pre>
           @else
             @if(trim(strip_tags($t->response)))
             {!! nl2br($t->response) !!} 
