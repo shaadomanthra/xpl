@@ -215,6 +215,7 @@ pre, code {
               @else
                 <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}"  class="btn btn-outline-dark btn-sm  mt-2 mt-md-0" >Desktop Mode</a>
               @endif
+              <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&htmlmode=1"  class="btn btn-outline-dark btn-sm  mt-2 " >HTML Mode</a>
 
               @if(Storage::disk('s3')->exists('pdfuploads/'.$exam->slug.'/'.$exam->slug.'_'.$student->username.'.pdf'))
                <div class="mt-3">
@@ -376,11 +377,17 @@ pre, code {
         @else
 
         @if($questions[$t->question_id]->type!='vq' && $questions[$t->question_id]->type!='aq')
-          @if(trim(strip_tags($t->response)))
-          {!! nl2br($t->response) !!} 
+          @if(request()->get('htmlmode'))
+            {{ nl2br($t->response) }} 
           @else
-          -
+            @if(trim(strip_tags($t->response)))
+            {!! nl2br($t->response) !!} 
+            @else
+            -
+            @endif
+
           @endif
+          
           @if($t->accuracy)
             @if($questions[$t->question_id]->type=='mcq' || $questions[$t->question_id]->type=='maq' || $questions[$t->question_id]->type=='fillup')
 
