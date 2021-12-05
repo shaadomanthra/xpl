@@ -117,9 +117,9 @@
           </div>
 
           <ul class="list-unstyled list-article">
-            <li><a class="link-underline" href="#">Campus Recruitment Training</a></li>
-            <li><a class="link-underline" href="#">Company Specific Training</a></li>
-            <li><a class="link-underline" href="#">Proctored Online Examination</a></li>
+            <li><a class="link-underline" href="campus-recruitment-training">Campus Recruitment Training</a></li>
+            <li><a class="link-underline" href="company-specific-training">Company Specific Training</a></li>
+            <li><a class="link-underline" href="proctored-online-examinations">Proctored Online Examination</a></li>
             <li><a class="link-underline" href="xpc">Xplore Placement Club</a></li>
           </ul>
         </div>
@@ -136,7 +136,7 @@
 
           <ul class="list-unstyled list-article">
             <li><a class="link-underline" href="xpc">Xplore Placement Club</a></li>
-            <li><a class="link-underline" href="#">Finishing School Program</a></li>
+            <li><a class="link-underline" href="finishing-school-program">Finishing School Program</a></li>
           </ul>
         </div>
       </div>

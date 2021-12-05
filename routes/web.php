@@ -110,10 +110,14 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('/about',function(){ return view('appl.pages.about'); })->name('xp.about');
 
 	Route::get('/corporate-training',function(){ return view('appl.pages.xp.specific.corporate_training'); })->name('xp.ct');
+	Route::get('/campus-recruitment-training',function(){ return view('appl.pages.xp.specific.campus_recruitment_training'); })->name('xp.crt');
+	Route::get('/company-specific-training',function(){ return view('appl.pages.xp.specific.company_specific_training'); })->name('xp.cst');
+	Route::get('/finishing-school-program',function(){ return view('appl.pages.xp.specific.finishing_school_program'); })->name('xp.fsp');
+	Route::get('/proctored-online-examinations',function(){ return view('appl.pages.xp.specific.proctored-online-examinations'); })->name('xp.poe');
 	Route::get('/aptitude-test',function(){ return view('appl.pages.xp.specific.aptitude_test'); })->name('xp.aptitude');
 	Route::get('/news',function(){ return view('appl.pages.xp.specific.news'); })->name('xp.news');
 	Route::get('/testimonials',function(){ return view('appl.pages.xp.specific.testimonials'); })->name('xp.testimonials');
-
+	Route::get('/team',function(){ return view('appl.pages.xp.specific.team'); })->name('xp.team');
 
 	Route::get('/aboutus',function(){ return view('appl.pages.xp.about'); })->name('about');
 	Route::get('/faq',function(){ return view('appl.product.pages.faq'); })->name('faq')->middleware('corporate');;
@@ -393,7 +397,7 @@ use Illuminate\Support\Facades\Storage;
 
 	Route::get('/home', function () { return redirect('/'); })->name('home');
 	Route::get('/apply', function () { return view('welcome'); })->name('apply');
-	Route::get('team','User\TeamController@index')->name('team');
+	//Route::get('team','User\TeamController@index')->name('team');
 	Route::get('user/export','User\TeamController@export')->name('export')->middleware('auth');
 
 

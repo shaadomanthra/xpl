@@ -1,331 +1,186 @@
-@section('title', 'Aptitude Test | Xplore')
+@section('title', 'Aptitute Tests | Xplore')
 @include('appl.pages.xp.snippets.header')
 @include('appl.pages.xp.snippets.topmenu')
 
 
-<div class="bg-white">
-<main class="container space-top-3">
- <!-- Hero Section -->
-<div class="container space-2">
-  <div class="row justify-content-lg-between align-items-lg-center">
-    <div class="col-sm-10 col-lg-5 mb-7 mb-lg-0">
-      <img class="img-fluid" src="" alt="GRE Test | First Academy">
-    </div>
-
-    <div class="col-md-6">
-      <div class="mb-5">
-        <h1 class="display-4 mb-3">
-          Aptitude Test
-        </h1>
-        <p class="lead">Cognitive talents are brain-based capabilities that are required to complete every activity, from the simplest to the most difficult. Tests of cognitive capacity evaluate talents related to thinking (e.g., reasoning, perception, memory, verbal and mathematical ability, and problem-solving). In general, the results of cognitive ability tests are closely linked to work performance. </p>
-      </div>
-
-
-       <div class="d-sm-flex align-items-sm-center flex-sm-wrap">
-        <a class="btn btn-outline-dark transition-3d-hover m-1" href="#aptitude-tests">Aptitude Practice Tests</a>
-        <a class="btn btn-outline-dark transition-3d-hover m-1" href="#company-specific-tests">Company Specific Tests</a>
-        <a class="btn btn-outline-dark transition-3d-hover m-1" href="#technical-tests">Technical Practice Tests</a>
-    </div>
-  </div>
-</div>
-<!-- End Hero Section -->
-</main>
-</div>
-<div class="p-2 p-md-5 bg-light" style="">
-  <div id="aptitude-tests" class="container space-1">
-  <div class=" text-center mx-md-auto mb-5 mb-md-5">
-    <h2 >Free Aptitude Practice Tests</h2>
-    <span class="d-block small font-weight-bold text-cap mb-5">The best handpicked tests for practice</span>
-    <div class="row">
-      <div class="col-12 col-md-5">
-      <p class="text-md-left lead"><b >GET the most up-to-date APTITUDE Mock Tests for FREE</b></p>
-
-      <p  class="text-md-left lead" >We provide free mock placement practice tests in Quant, Logical Reasoning, and Verbal ability. A timer  is included in our simulated tests (similar model tests).As you progress through the test, you will learn exactly how much time you spend on each question and how you can improve your speed and manage time. </p>
-
-      </div>
-      <div class="col-12 col-md-7">
-       <a href="https://learn.packetprep.com/test/qa01" class="btn btn-outline-dark mt-3" > Quantitative Aptitude #QA01</a>
-      <a href="https://learn.packetprep.com/test/qa02" class="btn btn-outline-dark mt-3 ml-2" > Quantitative Aptitude #QA02</a>
-      <a href="https://learn.packetprep.com/test/va01" class="btn btn-outline-dark mt-3 ml-2" > Verbal Ability #VA01</a>
-      <a href="https://learn.packetprep.com/test/va02" class="btn btn-outline-dark mt-3 ml-2" > Verbal Ability #VA02</a>
-      <a href="https://learn.packetprep.com/test/lr01" class="btn btn-outline-dark mt-3 ml-2" > Logical Reasoning #LR01</a>
-      <a href="https://learn.packetprep.com/test/lr02" class="btn btn-outline-dark mt-3 ml-2" > Logical Reasoning #LR02</a>
-      <a href="https://learn.packetprep.com/test/pptr1" class="btn btn-outline-dark mt-3 ml-2" > Placement Practice Test #PPTR1</a>
-      <a href="https://learn.packetprep.com/test/pptr2" class="btn btn-outline-dark mt-3 ml-2" > Placement Practice Test #PPTR2</a>
-      </div>
-    </div>
-   
-  </div>
-  </div>
-</div>
-
-<div class="p-2 p-md-5 bg-white" style="">
-  <div id="company-specific-tests" class="container space-1">
-  <div class=" text-center mx-md-auto mb-5 mb-md-5">
-    <h2 >Free Company Specific Tests</h2>
-    <span class="d-block small font-weight-bold text-cap mb-5">The best handpicked tests for practice</span>
-
-    <div class="row">
-     
-      <div class="col-12 col-md-7">
-        <a href="https://learn.packetprep.com/test/accenture-free-mock" class="btn btn-outline-dark mt-3" > Accenture Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/mphasis-free-mock" class="btn btn-outline-dark mt-3 ml-2" > Mphasis Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/tcs-nqt-free-mock" class="btn btn-outline-dark mt-3 ml-2" > TCS NQT Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/capgemini-mock" class="btn btn-outline-dark mt-3 ml-2" > Capgemini Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/dxc-free-mock" class="btn btn-outline-dark mt-3 ml-2" >DXC Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/mindtree-mock" class="btn btn-outline-dark mt-3 ml-2" > Mindtree Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/deloitte-free-mock" class="btn btn-outline-dark mt-3 ml-2" > Deloitte Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/hcl-free-mock" class="btn btn-outline-dark mt-3 ml-2" > HCL Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/infosys-free-mock" class="btn btn-outline-dark mt-3 ml-2" > Infosys Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/wipro-free-mock-test" class="btn btn-outline-dark mt-3 ml-2" > Wipro Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/cognizant-free-test" class="btn btn-outline-dark mt-3 ml-2" > Cognizant Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/amcat-apt01" class="btn btn-outline-dark mt-3 ml-2" > Amcat Free Practice Test</a>
-        <a href="https://learn.packetprep.com/test/ibm-test" class="btn btn-outline-dark mt-3 ml-2" > IBM Free Mock Test</a>
-        <a href="https://learn.packetprep.com/test/cocubes-free-test" class="btn btn-outline-dark mt-3 ml-2" > Cocubes Free Practice Test</a>
-        <a href="https://learn.packetprep.com/test/tech-mahindra-test" class="btn btn-outline-dark mt-3 ml-2" > Tech Mahindra Test</a>
-      </div>
-
-       <div class="col-12 col-md-5">
-      <p class="text-md-left lead">
-        <p class="lead text-md-left"><b>GET MORE IN LESS</b></p>
-
-        <p class="lead text-md-left">Each of the free company-specific tests we provide cover
-        TCS, Wipro, Infosys, Accenture, Capgemini, Cognizant, and more 10+ companies to help you in 
-        <ul class="lead text-md-left">
-          <li>gaining a better understanding of the exam pattern,</li>
-          <li>evaluating your results in a short time,</li>
-          <li>preparing you for a real-time placement test</li>
-          <li>ensuring your selection in one of the organisations.</li>
-        </ul>
-        </p>
-      </p>
-      </div>
-    </div>
-    
-  </div>
-  </div>
-</div>
-
-<div class="p-2 p-md-5 bg-light" style="">
-  <div id="technical-tests" class="container space-1">
-  <div class=" text-center mx-md-auto mb-5 mb-md-5">
-    <h2 >Free Technical Practice Tests</h2>
-    <span class="d-block small font-weight-bold text-cap mb-5">The best handpicked tests for practice</span>
-    <div class="row">
-      <div class="col-12 col-md-5">
-      <p class="text-md-left lead"><b >SCORE HIGH IN TECHNICAL TEST </b></p>
-
-      <p  class="text-md-left lead" >Make good use of this opportunity by taking our free technical tests for Python, Java, data structures, and C programming. Regular practice here helps you get prepared for the upcoming placement season. </p>
-
-      </div>
-      <div class="col-12 col-md-7">
-        <a href="https://learn.packetprep.com/test/coding-free-test" class="btn btn-outline-dark mt-3" > Free Coding Test</a>
-        <a href="https://learn.packetprep.com/test/c-practice-test" class="btn btn-outline-dark mt-3 ml-2" > C Programming Free Practice Test</a>
-        <a href="https://learn.packetprep.com/test/python-free-test" class="btn btn-outline-dark mt-3 ml-2" > Python Free Test</a>
-        <a href="https://learn.packetprep.com/test/java-test" class="btn btn-outline-dark mt-3 ml-2" > Java Free Practice Test</a>
-        <a href="https://learn.packetprep.com/test/ds-practice-test" class="btn btn-outline-dark mt-3 ml-2" > Data Structures Free Practice Test</a>
-      </div>
-      </div>
-  </div>
-  </div>
-</div>
-
-
-<div class="p-2 p-md-5 bg-white" style="">
-  <!-- Features Section -->
- 
- <!-- Learn Section -->
-<div class="container space-1">
-  <!-- Title -->
-  <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
-    <h2 class="h1">Why PacketPrep?</h2>
-    <p>The best coaching institute in hyderabad offering job oriented fullstack java training with pay after placement</p>
-  </div>
-  <!-- End Title -->
-
-  <div class="w-lg-75 mx-md-auto">
-    <!-- Step -->
-    <ul class="step step-md step-centered">
-      <li class="step-item">
-        <div class="step-content-wrapper">
-          <span class="step-icon step-icon-sm step-icon-soft-primary step-icon-pseudo"></span>
-          <div class="step-content">
-            <h4>Exam Grade</h4>
-            <p>Develop skills that actually help in the test</p>
-          </div>
-        </div>
-      </li>
-
-      <li class="step-item">
-        <div class="step-content-wrapper">
-          <span class="step-icon step-icon-sm step-icon-soft-primary step-icon-pseudo"></span>
-          <div class="step-content">
-            <h4>Carefully Curated</h4>
-            <p>Designed and selected by the best from the best</p>
-          </div>
-        </div>
-      </li>
-
-      <li class="step-item">
-        <div class="step-content-wrapper">
-          <span class="step-icon step-icon-sm step-icon-soft-primary step-icon-pseudo"></span>
-          <div class="step-content">
-            <h4><span>360</span> Development</h4>
-            <p>Created to develop multi-point understanding</p>
-          </div>
-        </div>
-      </li>
-
-     
-    </ul>
-    <!-- End Step -->
-  </div>
-
-<!-- End Learn Section -->
-
-</div>
-<!-- End Features Section -->
-</div>
-
-<div class="bg-white">
-<!-- Testimonials Section -->
-<div class="rounded mx-3 mx-md-11 " style="background:#f9f9e7">
-  <div class="container space-1 space-md-2">
-    <div class="card bg-transparent shadow-none p-3">
-      <div class="row">
-        <div class="col-lg-3 d-none d-lg-block">
-              <img class="mt-4 float-right" src=""  style="border-radius: 50%;width:150px">
-
-             
-        </div>
-
-        <div class="col-lg-9">
-          <!-- Card Body -->
-          <div class="card-body h-100 rounded p-0 p-md-4">
-            <!-- SVG Quote -->
-            <figure class="mb-3 ">
-              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="36" height="36" viewBox="0 0 8 8">
-                <path fill="#377dff" d="M3,1.3C2,1.7,1.2,2.7,1.2,3.6c0,0.2,0,0.4,0.1,0.5c0.2-0.2,0.5-0.3,0.9-0.3c0.8,0,1.5,0.6,1.5,1.5c0,0.9-0.7,1.5-1.5,1.5
-                  C1.4,6.9,1,6.6,0.7,6.1C0.4,5.6,0.3,4.9,0.3,4.5c0-1.6,0.8-2.9,2.5-3.7L3,1.3z M7.1,1.3c-1,0.4-1.8,1.4-1.8,2.3
-                  c0,0.2,0,0.4,0.1,0.5c0.2-0.2,0.5-0.3,0.9-0.3c0.8,0,1.5,0.6,1.5,1.5c0,0.9-0.7,1.5-1.5,1.5c-0.7,0-1.1-0.3-1.4-0.8
-                  C4.4,5.6,4.4,4.9,4.4,4.5c0-1.6,0.8-2.9,2.5-3.7L7.1,1.3z"/>
-              </svg>
-            </figure>
-            <!-- End SVG Quote -->
-
-            <div class="row">
-              <div class="col-lg-8 mb-3 mb-lg-0">
-                <div class="pr-lg-5">
-                  <blockquote class="h3 font-weight-normal mb-4">It was a unique experience with lots of learning opportunities through course units,videos, links to various sources. This course is really good value for money and the best thing that has happened to me during the coronavirus lockdown. I wholeheartedly recommend this particular  Python with AI by PacketPrep, and I would like to thank my tutor Krishna Teja sir for all the support provided me during the teaching practices.Zoom - based course. So cannot really judge location and site. Overall, it's impressive how much hard work is also done on 'the other side' @Packetprep  and at the same time I had the feeling of being taken good care of.</blockquote>
-                  <div class="media">
-                    <div class="avatar avatar-xs avatar-circle d-lg-none mr-2">
-                      <img class="avatar-img" src="" alt="Image Description">
-                    </div>
-                    <div class="media-body">
-                      <span class="text-dark font-weight-bold"><a href="hhttps://goo.gl/maps/pwSoQWFVuVW8tfq8A">Afiyan Salma</a></span>
-                      <span class="font-size-1">— original google review</span>
-                    </div>
-                  </div>
+  <section class="pt-11 ">
+    <div class="container">
+        <h1 class="text-center pt-5">Cognitive Ability Tests for Different Skills and Abilities</h1>
+        <div class="pt-5">
+            <div class="card transition-3d-hover border-0 p-3" style="box-shadow: none;background: linear-gradient(45deg,#fff2e8, #f5f5f5);">
+                <div class="card-title text-dark">
+                  <h3>
+                    What are Cognitive Ability Tests?
+                  </h3>
                 </div>
-              </div>
-
-              <div class="col-lg-4 column-divider-lg text-center text-md-left">
-                <hr class="d-lg-none">
-
-                <div class="pl-lg-5">
-                  <span class="h1 text-primary">4,000+</span>
-                  <p class="font-size-2">Happy students</p>
-                  <p> Best rated java training center in Hyderabad</p>
-                </div>
-              </div>
+                <div class="card-text text-dark">
+                  <p>
+                    Cognin-based capabilities that are required to complete every activity, from the simplest to the most difficult. Tests of cognitive capacity evaluate talents related to thinking (e.g., reasoning, 
+                    perception, memory, verbal and mathematical ability, and problem-solving). In general, the results of cognitive ability tests are closely linked to work performance.
+                  </p>
+                 </div>
             </div>
-          </div>
-          <!-- End Card Body -->
+            <div class="card transition-3d-hover border-0 bg-soft-primary mt-5 p-3" style="box-shadow: none;background: linear-gradient(45deg,#fff2e8, #f5f5f5);">
+                <div class="card-title text-dark">
+                  <h3>
+                    What are these Cognitive Ability Tests used for?
+                  </h3>
+                </div>
+                <div class="card-text text-dark">
+                  <p>
+                    Organizations use cognitive assessment tests to measure applicants' capacity to learn fast, solve issues, 
+                    understand new concepts, and meet performance goals. Employee performance in knowledge-based and vocational positions across sectors relies heavily on cognitive assessment skills. Cognitive testing can predict applicant skills more precisely than face-to-face interviews. Test results can indicate how well a job candidate will perform in a new capacity and how effectively an employee will learn new skills through training programmes.
+                   </p> 
+                   <p>Xplore's cognitive ability tests are extensively used to assess students' and candidates' analytical, numerical, verbal, abstract thinking, quantitative, and spatial reasoning abilities in both the educational and employment sectors. The cognitive aptitude tests reveal a lot about a student's or candidate's capacity to adjust to new conditions, engage actively, and reach or surpass performance goals.</p>
+                </div>
+            
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
-<!-- End Testimonials Section -->
-
-<!-- Collapse Section -->
-<div class="container space-2">
-  <h2>FAQ</h2>
-
-  <!-- Basics Accordion -->
-  <div id="basicsAccordion">
-    <!-- Card -->
-    <div class="card shadow-none mb-3">
-      <div class="card-header card-collapse" id="basicsHeadingOne">
-        <a class="btn btn-link btn-block d-flex justify-content-between card-btn collapsed bg-white px-0" href="javascript:;" role="button" data-toggle="collapse" data-target="#basicsCollapseOne" aria-expanded="false" aria-controls="basicsCollapseOne">
-          What are the benefits of using Packet Prep for free practice tests?
-
-          <span class="card-btn-toggle">
-            <span class="card-btn-toggle-default">+</span>
-            <span class="card-btn-toggle-active">−</span>
-          </span>
-        </a>
-      </div>
-      <div id="basicsCollapseOne" class="collapse" aria-labelledby="basicsHeadingOne" data-parent="#basicsAccordion">
-        <div class="card-body px-0">
-          <p><b>OUR STUDENTS ARE ALREADY USING AND BENEFITTING from our services.</b></p>
-
-        <p>Our team of specialists design and customize free practise tests based on the questions from previous placement papers that cover all the sections of reasoning, quant, and verbal ability in order to help you achieve a high score in the actual examination
-        </p>
+  </section>
+    <!-- Objectives -->
+    <section class="pt-4">
+        <div class="container">
+            <h1 class="text-danger">Objectives of Cognitive Ability Tests</h1>
+            <p class="text-dark">Recruiters can use cognitive tests to determine a candidate's IQ and specific mental talents. Multiple-choice, multiple-answer, sentence completion, true-false, and short-answer questions are used in these tests. They are intended to assess an applicant's ability to apply mental processes to solve work-related challenges and learn new skills.</p>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card transition-3d-hover px-5 py-3 mb-4" style="color: #000;background: linear-gradient(45deg,#fff2e8, #f5f5f5); box-shadow: none;">
+                        <h3 class="text-dark">Attention to Detail</h3>
+                    <p>This is the measure of how a candidate processes new information. When it comes to completing jobs, attention to detail indicates a high level of precision and thoroughness. 
+                        Because these abilities are critical for long-term productivity and efficiency, many employers make them a condition for new hires.</p>
+                    <p>Strong attention to detail is a job ability that boosts efficiency and production while reducing errors.
+                    Detail-orientedness is necessary for providing high-quality work, which is why it is a highly sought-after talent among potential employees.</p>
+                    </div>
+                    
+                </div>
+                <div class="col-12">
+                    <div class="card transition-3d-hover px-5 py-3 mb-4" style="color: #000;background: linear-gradient(45deg,#fff2e8, #f5f5f5); ">
+                        <h3 class="text-dark">Problem-Solving</h3>
+                        <p>This shows if a candidate is able to use data to make the best judgments possible. People with problem-solving abilities may engage in the psychological process of recognizing, analyzing, and addressing difficulties they confront on a regular basis. The capacity to problem solve is at the heart of business growth because it teaches people how to use readily available resources to solve problems in a productive way that does not compromise a company's ethics</p>
+                        <p>Furthermore, they can achieve an amicable agreement by utilizing professional viewpoints and problem-solving abilities</p>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card transition-3d-hover px-5 py-3 mb-4" style="color: #000;background: linear-gradient(45deg,#fff2e8, #f5f5f5); ">
+                        <h3 class="text-dark">Critical Thinking</h3>
+                        <p>This measures how effectively a candidate can think critically and solve logical problems. Critical thinking is the capacity to objectively evaluate an idea, taking into account evidence and opposing viewpoints to arrive at a sound, logical conclusion.</p>
+                        <p>
+                        The ability of an applicant to think critically is beneficial to businesses. Critical thinking is a lifelong talent that can be used in a variety of situations, including interpersonal interactions, financial planning, personal goal-setting, and professional choices.
+                        </p>
+                        <p>Here are some of the benefits of critical thinking:</p>
+                        <ul>
+                            <li>Problem-solving with numerous options</li>
+                            <li>Good communication between teams and individual employees </li>
+                            <li>Developing fresh viewpoints on work conditions and difficulties</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card transition-3d-hover px-5 py-3 mb-4" style="color: #000;background: linear-gradient(45deg,#fff2e8, #f5f5f5); ">
+                        <h3 class="text-dark">Numerical Reasoning</h3>
+                        <p>This tests a candidate's ability to deal with and interpret numbers. The capacity to think numerically is one of the most fundamental skills, and it is present in children long before they are taught mathematics in school. Numerical reasoning exams, also known as data interpretation or numerical critical reasoning tests, require you to evaluate situations and develop conclusions based on your information.</p>
+                        <p>A numerical reasoning exam can assist in determining whether applicants possess the data analysis abilities necessary to be successful in an organization. A numerical reasoning exam assesses a candidate's ability to think critically, concentrate on a problem, make logical judgments, and execute excellent solutions.</p>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card transition-3d-hover px-5 py-3 mb-4" style="color: #000;background: linear-gradient(45deg,#fff2e8, #f5f5f5); ">
+                        <h3 class="text-dark">Reading Comprehension</h3>
+                        <p>Reading Comprehension is a test that determines how effectively a candidate comprehends the main points of a text. The capacity to correctly perceive and evaluate written material is demonstrated by reading comprehension abilities. Because reading comprehension is such a fundamental ability, it is applicable in any position where verbal information is exchanged on a regular basis. An employee's capacity to grasp what their coworkers, managers, or clients are attempting to convey is influenced by their reading comprehension. Reading comprehension abilities are indicative of an applicant's overall communication skills, attention to detail, critical thinking, and general aptitude, in addition to their ability to read and absorb the material.</p>
+                
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card transition-3d-hover px-5 py-3 mb-4" style="color: #000;background: linear-gradient(45deg,#fff2e8, #f5f5f5); ">
+                        <h3 class="text-dark">Spatial Reasoning</h3>
+                        <p>Spatial reasoning tests a candidate's ability to comprehend, recall, and reason about spatial connections between things or space. Spatial thinking is also strongly linked to cognitive aptitude, or general intelligence, which is one of the most reliable indicators of job performance. The capacity to see spatial patterns, make spatial judgements, and solve problems based on such representations is referred to as spatial aptitude. One of the reasons spatial ability is so helpful as a measure of cognitive capacity is that spatial exams don't often rely on prior schooling, culture, or language fluency, resulting in a more level playing field for evaluating aptitude in individuals.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!-- End Card -->
-
-    <!-- Card -->
-    <div class="card shadow-none mb-3">
-      <div class="card-header card-collapse" id="basicsHeadingTwo">
-        <a class="btn btn-link btn-block d-flex justify-content-between card-btn collapsed bg-white px-0" href="javascript:;" role="button" data-toggle="collapse" data-target="#basicsCollapseTwo" aria-expanded="false" aria-controls="basicsCollapseTwo">
-          Will these questions appear in the actual exams?
-
-          <span class="card-btn-toggle">
-            <span class="card-btn-toggle-default">+</span>
-            <span class="card-btn-toggle-active">−</span>
-          </span>
-        </a>
-      </div>
-      <div id="basicsCollapseTwo" class="collapse" aria-labelledby="basicsHeadingTwo" data-parent="#basicsAccordion">
-        <div class="card-body px-0">
-          <p><b>PLACEMENT PREP WITH PACKET PREP</b></p>
-          <p>Marjory of these type of questions are quite likely to appear on real placement tests. Use our services to make the most of your time, as we offer tried, tested and proven methods to help you succeed.</p>
+    </section>
+    <!-- Why C.A_TEST -->
+    <section class="">
+        <div class="container">
+            <h2 class="pb-2 text-danger">Why Should Companies Use Cognitive Ability Tests?</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card transition-3d-hover p-3 mb-3" style="box-shadow: none;background: linear-gradient(45deg,#fff2e8, #f5f5f5);">
+                        <div class="card-title text-dark">
+                            <h3>
+                                Assesses Applicants' Abilities
+                            </h3>
+                        </div>
+                        <div class="card-text text-dark">
+                            <p>
+                                These tests will inform the company about the applicants' skills and the amount of training they will need to provide their best results. During the post-placement training session, the company will know which areas to concentrate on and which to avoid.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card transition-3d-hover  p-3 mb-3" style="box-shadow: none;background: linear-gradient(45deg,#fff2e8, #f5f5f5);">
+                        <div class="card-title text-dark">
+                            <h3>
+                                Reliable
+                            </h3>
+                        </div>
+                        <div class="card-text text-dark">
+                            <p>
+                                Cognitive evaluations have the highest level of accuracy. A mixture of disciplines, such as aptitude, reasoning, logic, and numerical ability, will evaluate the applicants' mental flexibility in a small amount of time and is more efficient than individual subject exams.                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3 -->
+                <div class="col-12">
+                    <div class="card transition-3d-hover p-3 mb-3" style="box-shadow: none;background: linear-gradient(45deg,#fff2e8, #f5f5f5);">
+                        <div class="card-title text-dark">
+                            <h3>
+                                Predicting Job Performance
+                            </h3>
+                        </div>
+                        <div class="card-text text-dark">
+                            <p>
+                                One highly significant benefit of including a cognitive evaluation in the recruitment process is that these assessments can predict success. The cognitive abilities test is a good predictor of on-the-job performance. A cognitive assessment can provide insight into how successfully a new recruit can learn new skills, follow instructions, and communicate with others.                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 4 -->
+                <div class="col-12">
+                    <div class="card transition-3d-hover p-3 mb-3" style="box-shadow: none;background: linear-gradient(45deg,#fff2e8, #f5f5f5);">
+                        <div class="card-title text-dark">
+                            <h3>
+                                Simple to Use
+                            </h3>
+                        </div>
+                        <div class="card-text text-dark">
+                            <p>
+                                Many hiring methods are both costly and time-consuming to implement. A cognitive exam, on the other hand, is quite simple to incorporate into a hiring process. Companies need only to provide the shortlisted applicants with a link to complete the test online using an online platform. The data from these will be returned to companies for simple comparison.                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 5 -->
+                <div class="col-12">
+                    <div class="card transition-3d-hover p-3 mb-3 mb-lg-5" style="box-shadow: none;background: linear-gradient(45deg,#fff2e8, #f5f5f5);">
+                        <div class="card-title text-dark">
+                            <h3>
+                                Success
+                            </h3>
+                        </div>
+                        <div class="card-text text-dark">
+                            <p>
+                                The information a company gets about the applicants' cognitive abilities is highly useful. This helps hire not only for the talents a company requires today but also for those it will require in the future. It can set up the potential for future success by hiring individuals based on their abilities and their willingness to learn. Including a cognitive evaluation in the recruiting process can help a company achieve success.                             
+                            </p>
+                            <p>
+                                The cognitive ability exams offered by Xplore are an excellent tool for improving the quality of hire and the overall recruiting process. Customize and pick the proper sort of tests to recruit top performers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <!-- End Card -->
-
-    <!-- Card -->
-    <div class="card shadow-none mb-3">
-      <div class="card-header card-collapse" id="basicsHeadingThree">
-        <a class="btn btn-link btn-block d-flex justify-content-between card-btn collapsed bg-white px-0" href="javascript:;" role="button" data-toggle="collapse" data-target="#basicsCollapseThree" aria-expanded="false" aria-controls="basicsCollapseThree">
-         Do I need to pay to attempt these tests? 
-
-          <span class="card-btn-toggle">
-            <span class="card-btn-toggle-default">+</span>
-            <span class="card-btn-toggle-active">−</span>
-          </span>
-        </a>
-      </div>
-      <div id="basicsCollapseThree" class="collapse" aria-labelledby="basicsHeadingThree" data-parent="#basicsAccordion">
-        <div class="card-body px-0">
-          <p><b>WE ARE COMMITTED TO PROVIDING EXCEPTIONAL SERVICE</b></p>
-          <p>You do not need to pay to attempt these tests. This part is completely free and 100% reliable. Learn from Packet Prep and the team will be the most rewarding career move you will ever make. Stop by our website to learn more about us and our services.</p>
-        </div>
-      </div>
-    </div>
-    <!-- End Card -->
-
-  </div>
-  <!-- End Basics Accordion -->
-</div>
-</div>
-<!-- End Collapse Section -->
-
-         
+    </section>
+    <!-- Footer -->
 
 @include('appl.pages.xp.snippets.footermenu')
 @include('appl.pages.xp.snippets.footer')

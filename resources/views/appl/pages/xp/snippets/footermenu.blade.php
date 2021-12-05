@@ -56,7 +56,7 @@
             <ul class="nav nav-sm nav-x-0 nav-dark flex-column">
              
               <li class="nav-item"><a class="nav-link" href="/aboutus">About Us</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Team</a></li>
+              <li class="nav-item"><a class="nav-link" href="team">Team</a></li>
               <li class="nav-item"><a class="nav-link" href="news">News</a></li>
               <li class="nav-item"><a class="nav-link" href="testimonials">Testimonials</a></li>
               <li class="nav-item"><a class="nav-link" href="contact">Contact Us</a></li>
@@ -69,7 +69,7 @@
 
             <!-- Nav Link -->
             <ul class="nav nav-sm nav-x-0 nav-dark flex-column">
-              <li class="nav-item"><a class="nav-link" href="#">Aptitude Test</a></li>
+              <li class="nav-item"><a class="nav-link" href="aptitude-test">Aptitude Test</a></li>
               <li class="nav-item"><a class="nav-link" href="#">Technical Test</a></li>
               <li class="nav-item"><a class="nav-link" href="#">Coding Test</a></li>
               <li class="nav-item"><a class="nav-link" href="#">English proficiency Test</a></li>
@@ -85,11 +85,10 @@
             <h5 class="text-dark">Training</h5>
             <!-- Nav Link -->
             <ul class="nav nav-sm nav-x-0 nav-dark flex-column">
-              <li class="nav-item"><a class="nav-link" href="#">Campus Recruitment Training</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Company specific Training</a></li>
+              <li class="nav-item"><a class="nav-link" href="campus-recruitment-training">Campus Recruitment Training</a></li>
+              <li class="nav-item"><a class="nav-link" href="company-specific-training">Company specific Training</a></li>
               <li class="nav-item"><a class="nav-link" href="corporate-training">Corporate Training</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Finishing School Program</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Language Training</a></li>
+              <li class="nav-item"><a class="nav-link" href="finishing-school-program">Finishing School Program</a></li>
             </ul>
             <!-- End Nav Link -->
           </div>
@@ -99,7 +98,7 @@
             <ul class="nav nav-sm nav-x-0 nav-dark flex-column">
               <li class="nav-item"><a class="nav-link" href="hiring">Hiring Assessments</a></li>
               <li class="nav-item"><a class="nav-link" href="jobboard">Job Board</a></li>
-              <li class="nav-item"><a class="nav-link" href="#">Online Examination </a></li>
+              <li class="nav-item"><a class="nav-link" href="proctored-online-examinations">Online Examination </a></li>
               <li class="nav-item"><a class="nav-link" href="xpc">Xplore placement club</a></li>
               
             </ul>
