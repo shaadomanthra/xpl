@@ -12,15 +12,19 @@
   <div class="d-print-none">
   @include('appl.exam.assessment.blocks.breadcrumbs')
 </div>
+<div class="d-none d-print-inline">
+<h1 class="mb-3"><i class="fa fa-bars"></i> {{$exam->name}} - Report</h1>
+<hr>
+</div>
  <div class="row mb-4">
           @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_selfie.jpg'))
-          <div class="col-4 col-md-1 col-lg-2 d-print-none">
+          <div class="col-4 col-md-2  ">
             <img src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_selfie.jpg')}}" class="w-100 rounded " />
           </div>
           @endif
           <div class="col-12 col-md">
-            <h1 class="mb-0">{{$student->name}}</h1>
-              <p><i class="fa fa-bars"></i> {{$exam->name}}</p>
+            <h2 class="mb-2">{{$student->name}}</h2>
+              <p class="d-print-none"> <i class="fa fa-bars"></i> {{$exam->name}}</p>
             <div class="row mb-0">
               <div class="col-4"> Email:</div>
               <div class="col-8">{{$student->email}}</div>
@@ -94,10 +98,10 @@
 
 
           </div>
-          <div class="col-12 col-md-7 col-lg-6">
+          <div class="col-12 col-md-5 col-lg-6">
            
             <div class="row">
-              <div class="col-6 col-md-4 col-lg-4">
+              <div class="col-6 col-md-6 col-lg-4">
                 <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox " style='background: #f2faff;border:1px solid #c1e6f7;box-shadow:2px 2px 0px 0px #e9e9e9'>
                   <div class="h6">Score Secured</div>
                   <div class="score_main" >
@@ -110,7 +114,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6 col-md-4 col-lg-4">
+              <div class="col-6 col-md-6 col-lg-4">
                 <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox " style='background: #fffff2;border:1px solid #ebebb2;box-shadow:2px 2px 0px 0px #f3f3f3'>
                   <div class="h6">Percentage</div>
                   <div class="score_main" >
@@ -123,8 +127,8 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6 col-md-4 col-lg-4">
-                <div class=" p-3  mt-md-2 mt-lg-2 mb-3 mb-md-0 text-center cardbox " style='background: #fff4f4;border:1px solid#f7d8d8;box-shadow:2px 2px 0px 0px #efefef;'>
+              <div class="col-6 col-md-6 col-lg-4">
+                <div class=" p-3  mt-md-3 mt-lg-2 mb-3 mb-md-0 text-center cardbox " style='background: #fff4f4;border:1px solid#f7d8d8;box-shadow:2px 2px 0px 0px #efefef;'>
                   <div class="h6">Rank</div>
                   <div class="score_main" >
                     @if(!$test_overall->status)
