@@ -9,10 +9,12 @@
 .dblue2{ background: #f2fff9;border-bottom:2px solid #beedd6; }</style>
 <div class="dblue2">
 <div class="container py-4 ">
+  <div class="d-print-none">
   @include('appl.exam.assessment.blocks.breadcrumbs')
+</div>
  <div class="row mb-4">
           @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_selfie.jpg'))
-          <div class="col-4 col-md-2">
+          <div class="col-4 col-md-1 col-lg-2 d-print-none">
             <img src="{{Storage::disk('s3')->url('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_selfie.jpg')}}" class="w-100 rounded " />
           </div>
           @endif
@@ -69,6 +71,7 @@
             </div>
             @endif
 
+            <div class="d-print-none">
             <div class="row mb-0">
               <div class="col-4"> Cheating:</div>
               <div class="col-8"><b>
@@ -87,14 +90,14 @@
               <div class="col-4"> Answersheet:</div>
               <div class="col-8"><a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}">view responses</a></div>
             </div>
-       
+        </div>
 
 
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-7 col-lg-6">
            
             <div class="row">
-              <div class="col-6 col-md-6 col-lg-4">
+              <div class="col-6 col-md-4 col-lg-4">
                 <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox " style='background: #f2faff;border:1px solid #c1e6f7;box-shadow:2px 2px 0px 0px #e9e9e9'>
                   <div class="h6">Score Secured</div>
                   <div class="score_main" >
@@ -107,7 +110,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6 col-md-6 col-lg-4">
+              <div class="col-6 col-md-4 col-lg-4">
                 <div class=" p-3  mt-md-2 mb-3 mb-md-0 text-center cardbox " style='background: #fffff2;border:1px solid #ebebb2;box-shadow:2px 2px 0px 0px #f3f3f3'>
                   <div class="h6">Percentage</div>
                   <div class="score_main" >
@@ -120,8 +123,8 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6 col-md-6 col-lg-4">
-                <div class=" p-3  mt-md-3 mt-lg-2 mb-3 mb-md-0 text-center cardbox " style='background: #fff4f4;border:1px solid#f7d8d8;box-shadow:2px 2px 0px 0px #efefef;'>
+              <div class="col-6 col-md-4 col-lg-4">
+                <div class=" p-3  mt-md-2 mt-lg-2 mb-3 mb-md-0 text-center cardbox " style='background: #fff4f4;border:1px solid#f7d8d8;box-shadow:2px 2px 0px 0px #efefef;'>
                   <div class="h6">Rank</div>
                   <div class="score_main" >
                     @if(!$test_overall->status)
@@ -146,7 +149,7 @@
 
 <div class="bg-white container">
 <div class="row mt-4">
-  <div class="col-12 col-md-8">
+  <div class="col-12 col-md-12 col-lg-8">
     <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Test Details</h3>
   <div class="row mb-4">
     <div class="col-6 col-md-4 ">
@@ -209,7 +212,7 @@
 
   </div>
 
-  <div class="col-12 col-md-4">
+  <div class="col-12 col-md-4 d-print-none">
    
     <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Report</h3>
     <canvas id="myChart" width="295" height="270"></canvas>
@@ -220,7 +223,7 @@
 
   </div>
 
-  <div class="col-12 col-md-8">
+  <div class="col-12 col-md-12 col-lg-8">
      <h3 class="mb-4"><i class="fa fa-angle-double-right"></i> Academic Scores</h3>
   <div class="row mb-4">
     <div class="col-6 col-md-4 ">
@@ -260,7 +263,7 @@
 
 </div>
 
-<div class="col-12 col-md-4">
+<div class="col-12 col-md-4 d-print-none">
  @if(Storage::disk('s3')->exists('webcam/'.$exam->id.'/'.$student->username.'_'.$exam->id.'_video_'.$video.'.webm'))
      <div class="pb-4">
       <h3 class="mb-3"><i class="fa fa-angle-double-right"></i> Video Question</h3>
@@ -295,7 +298,7 @@
 
 </div>
 
-<div class="" style="background: #f9f9f1;">
+<div class="d-print-none" style="background: #f9f9f1;">
 <div class="container">
 
    <div class="pt-5">
@@ -645,7 +648,7 @@
 
 
          @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee']))
-      <div class="border rounded  mt-3">
+      <div class="border rounded  mt-3 d-print-none">
         <div class="p-4">
           <h5><i class="fa fa-th"></i> Admin Tools (visible for super amdin only)</h5>
           <hr>
