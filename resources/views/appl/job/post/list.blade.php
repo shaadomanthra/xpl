@@ -15,7 +15,11 @@
             <tbody>
               @foreach($objs as $key=>$obj)  
               <tr>
-                <th scope="row">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
+                <th scope="row">
+                  <a href=" {{ route($app->module.'.show',$obj->slug) }} ">
+                    {{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}
+                  </a>
+                </th>
                 <td>
                   <a href=" {{ route($app->module.'.show',$obj->slug) }} ">
                   {{ $obj->title }}
