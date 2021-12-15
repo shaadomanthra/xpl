@@ -1776,6 +1776,7 @@ $(document).ready(function(){
             resp.out_3 = $('.out_'+$qno+'_3').val();
             resp.out_4 = $('.out_'+$qno+'_4').val();
             resp.out_5 = $('.out_'+$qno+'_5').val();
+            console.log($qno+' - '+resp.out_5);
 
             if($('.preset_c_'+$qno).length){
               resp.preset_c = $('.preset_c_'+$qno).data('code');

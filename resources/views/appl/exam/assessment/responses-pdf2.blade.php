@@ -300,7 +300,7 @@
 
                 @endif
 
-                
+                @if($t->question->type!='code')
                 <tr>
                   <td scope="row" class="">User<br><small> Response</small></td>
                   <td>
@@ -347,6 +347,7 @@
                     @endif
                   </td>
                 </tr>
+                @endif
                  <tr>
                   <td scope="row" class="">Marks<br><small>Awarded</small></td>
                   <td>

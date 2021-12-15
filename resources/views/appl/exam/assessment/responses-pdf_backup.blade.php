@@ -293,16 +293,15 @@
                 @if($t->question->type=='code')
                 <tr>
                   <td scope="row" class="">User Code</td>
-                  <td><pre class="mb-3" style=""><code style="overflow-wrap: break-word;word-wrap: break-word">{!! htmlentities($t->code) !!}
+                  <td><pre class="mb-3" style=""><code style="overflow-wrap: break-word;word-wrap: break-word">{!! htmlentities($t->code)  !!}
                       </code>
                     </pre>
                   </td>
                 </tr>
                 
-
                 @endif
 
-                
+                @if($t->question->type!='code')
                 <tr>
                   <td scope="row" class="">User<br><small> Response</small></td>
                   <td>
@@ -330,7 +329,7 @@
                       @if($t->question->type=='mcq' || $t->question->type=='maq' || $t->question->type=='fillup')
 
                         @if($t->mark==0)
-                        <sapn class="fa fa-times-circle text-danger"> incorrect </span>
+                        <span class="fa fa-times-circle text-danger"> incorrect </span>
                         @else
                         <span class="fa fa-check-circle text-success"> correct</span>
                         @endif
@@ -349,6 +348,7 @@
                     @endif
                   </td>
                 </tr>
+                @endif
                  <tr>
                   <td scope="row" class="">Marks<br><small>Awarded</small></td>
                   <td>

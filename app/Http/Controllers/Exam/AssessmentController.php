@@ -2223,8 +2223,9 @@ class AssessmentController extends Controller
 
         if($request->get('pdf4') || $request->get('pdf3') || $request->is('test/*/pdf')){
             
-            
+               
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+           
 
             if($request->get('pdf4'))
                 $view = 'responses-pdf2';
@@ -2251,6 +2252,8 @@ class AssessmentController extends Controller
             if(Storage::disk('s3')->exists($filepath)){
                 $content = json_decode(Storage::disk('s3')->get($filepath),true);
             }
+
+
 
             if(Storage::disk('s3')->exists($folder.$one1)){
                 //  $selfie = $username.'_'.$exam->id.'_selfie.jpg';
@@ -2309,6 +2312,7 @@ class AssessmentController extends Controller
             
             $pdf = PDF::loadView('appl.exam.assessment.'.$view,$data);
 
+
             //dd($tests);
             //
             if($request->get('screen'))
@@ -2331,6 +2335,7 @@ class AssessmentController extends Controller
                         ->with('highlight',true)
                         ->with('chart',false);
             else{
+                //dd($data);
                 return $pdf->download($student->name.'_'.$exam->name.'.pdf');
             }
            
@@ -2760,7 +2765,7 @@ class AssessmentController extends Controller
 
         if($request->get('pdf3')){
             
-        
+            
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
             ini_set('memory_limit', '-1');
             $view = 'responses-pdf_backup';
@@ -3454,7 +3459,7 @@ class AssessmentController extends Controller
                 $item['code'] = $request->get('dynamic_'.$i);
 
               
-
+                $mdata = null;
                 if(isset(json_decode($request->get('out_'.$i),true)['response_1']['error'])){
                    $item['comment'] = $request->get('out_'.$i);     
                 }else{
@@ -3471,7 +3476,7 @@ class AssessmentController extends Controller
                     }else{
                         for($m=1;$m<6;$m++){
                             $mjson = json_decode($request->get('out_'.$i.'_'.$m),true);
-
+                      
                             if($mjson){
                                 $mdata['response_'.$m] = $mjson['response']; 
                                 $mdata['pass_'.$m] = $mjson['pass']; 
@@ -3592,7 +3597,6 @@ class AssessmentController extends Controller
 
         }
 
-       
       
 
 
