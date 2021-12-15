@@ -50,8 +50,9 @@
         <div>Browser details: <b><span class="log_browser text-muted">{{$content['browser_details']}}</span></b></div>
         <div>IP Address: <b><span class="log_ip text-muted">{{$content['ip_details']}}</span></b></div>
         <div>Window Swaps: <b><span class="log_swaps text-danger">{{$content['window_change']}}</span></b></div>
-        @endif
+
         <div>Date: <b><span class="log_swaps text-primary">{{date("jS F, Y", $content['last_updated'])}}</span></b></div>
+        @endif
         <hr>
       </div>
 @if($content)
