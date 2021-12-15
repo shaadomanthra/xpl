@@ -210,8 +210,10 @@
           <div class="bcol-25" style="width:30%;float: left;">
             <div style="background: #f8c291;border-radius:5px;padding:15px;margin-right:20px;">
               <div>Rank</div>
+              @if(isset($rank['rank']))
               <h1>{{$rank['rank']}}</h1>
               <div>out of {{$rank['participants']}}</div>
+              @endif
             </div>
           </div>
          
