@@ -213,6 +213,9 @@
               @if(isset($rank['rank']))
               <h1>{{$rank['rank']}}</h1>
               <div>out of {{$rank['participants']}}</div>
+              @else
+              <h1>-</h1>
+              <div>-</div>
               @endif
             </div>
           </div>
