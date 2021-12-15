@@ -172,9 +172,7 @@
 
           </p>
 
-          @if(isset($images['webcam']))
-            <img src="{{ $images['webcam'][1]}}" style="float: right;width:150px;border-radius: 10px;margin-top: 15px;"/>
-          @endif
+         
           <h4 style="color:#c44569;margin-bottom: 3px"> {{ ucfirst($student->name) }}</h4>
             @if($student->college_id)@if(isset($student->college->name))<span class="badge badge-info"><b>College :</b> {{$student->college->name}}</span><br>@endif @endif
            @if($student->branch_id)@if(isset($student->branch->name))<span class="badge badge-danger "><b>Branch : </b>{{$student->branch->name}}</span><br>@endif @endif
@@ -362,43 +360,8 @@
 
             @endforeach
 
-          @if(isset($images['webcam']))
-            <br><br>
-            <h3>Images</h3>
-            <br><br>
-
-              @foreach($images['webcam'] as $j=>$l)
-              <img src="{{ $l}}" style="margin-top: 5px"/>
-              @endforeach
-              <br>
-              <a href="{{ route('test.snaps',$exam->slug)}}?type=snaps&username={{$student->username}}">>view all images</a>
-            <br><br>
-            @endif
-            <h3>Log</h3>
-            <br><br>
-            <div style="">
-        @if(isset($content['os_details']))
-        <div>OS details: <b><span class="log_os text-muted">{{$content['os_details']}}</span></b></div>
-         
-        <div>Browser details: <b><span class="log_browser text-muted">{{$content['browser_details']}}</span></b></div>
-
-        <div>IP Address: <b><span class="log_ip text-muted">{{$content['ip_details']}}</span></b></div>
-
-        <div>Window Swaps: <b><span class="log_swaps text-danger">{{$content['window_change']}}</span></b></div>
-        <div>Date: <b><span class="log_swaps text-primary">{{date("jS F, Y", $content['last_updated'])}}</span></b></div>
-           @endif
-        <hr>
-        
-         @if(isset($content['activity']))
-         @foreach($content['activity'] as $a => $b)
-         <div class="row">
-            <div class="col-3">{{date(' h:i:s ', $a)}} -  {{$b}}</div>
-            
-          </div> 
-          @endforeach
-          @endif
-          
-          </div>
+      
+           
   
 </div>
 

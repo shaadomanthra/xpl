@@ -2221,10 +2221,14 @@ class AssessmentController extends Controller
         $mathjax = false;
         $view = 'responses2';
 
-        if($request->get('pdf3') || $request->is('test/*/pdf')){
+        if($request->get('pdf4') || $request->get('pdf3') || $request->is('test/*/pdf')){
             
             
             ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+
+            if($request->get('pdf4'))
+                $view = 'responses-pdf2';
+            else
             $view = 'responses-pdf_backup';
             //$view = 'responses-pdf';
             $data['tests'] = $tests;
