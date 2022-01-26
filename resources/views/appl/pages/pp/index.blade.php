@@ -36,7 +36,7 @@
 
 <div class="bg-soft-primary py-2">
   <div class="container">
-  <div class="w-lg-75 mx-lg-auto mt-5 mb-5 px-3"><div class="media d-block d-sm-flex pt-4"><figure class="w-100 max-w-15rem mr-4 mb-3 mb-sm-0"><img class="img-fluid" src="https://tech.packetprep.com/themes/front/svg/illustrations/growing-business.svg" ></figure><div class="media-body"><h4>Listen to our students who got placed</h4><p>Our focus is on quality, consistency and success. If your target is cracking a job then in you are in the right place <a class="font-weight-bold" href="https://packetprep.com/testimonials">See our testimonials <i class="fas fa-angle-right ml-1"></i></a></p></div></div></div>
+  <div class="w-lg-75 mx-lg-auto mt-5 mb-5 px-3"><div class="media d-block d-sm-flex pt-4"><figure class="w-100 max-w-15rem mr-4 mb-3 mb-sm-0"><img class="img-fluid" src="https://packetprep.com/themes/front/svg/illustrations/growing-business.svg" ></figure><div class="media-body"><h4>Listen to our students who got placed</h4><p>Our focus is on quality, consistency and success. If your target is cracking a job then in you are in the right place <a class="font-weight-bold" href="https://packetprep.com/testimonials">See our testimonials <i class="fas fa-angle-right ml-1"></i></a></p></div></div></div>
 
   </div>
 </div>
