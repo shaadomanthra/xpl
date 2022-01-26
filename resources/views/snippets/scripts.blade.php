@@ -1375,10 +1375,11 @@ $(document).ready(function() {
     });
   @endif
   var editor_array =[];
+ 
   @if(isset($code_ques))
   @foreach($code_ques as $c=>$d)
     editor_array['code_{{$c}}'] = CodeMirror.fromTextArea(document.getElementById("code_{{$c}}"), options);
-  @if(!request()->get('default'))
+  @if(!request()->get('default') && !isset($copy))
     if(editor_array['code_{{$c}}'])
     editor_array['code_{{$c}}'].on("beforeChange", function(_, change) {
       if (change.origin == "paste") change.cancel();
@@ -1387,6 +1388,7 @@ $(document).ready(function() {
   @endif
   @endforeach
   @endif
+
 
   // $('.runcode').on('click',function(){
   //     $qno = $(this).data('qno');
@@ -3152,8 +3154,9 @@ $(function(){
 <script>
 @if(isset($question))
 @if($question->type!='codes')
-@if(!request()->get('default'))
+@if(!request()->get('default') && !isset($copy))
   $('body').bind('cut copy paste',function(e) {
+     
      return false; 
   });
 

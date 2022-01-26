@@ -67,18 +67,19 @@
 
       
 
-      @if($exams)
       <div class="form-group">
-        <label for="formGroupExampleInput ">Exam</label>
-        <select class="form-control" name="exam_id">
-          <option value="">- None -</option>
-          @foreach($exams as $e)
-          <option value="{{$e->id}}"   @if($stub!='Create') @if($e->id==$category->exam_id) selected @endif @endif >{{ $e->name }}</option>
-          @endforeach
-        </select>
+        <label for="formGroupExampleInput ">Exam Slug</label>
+        <input type="text" class="form-control" name="exam_id" id="formGroupExampleInput" placeholder="Enter the Exam Slug" 
+            @if($stub=='Create')
+            value="{{ (old('exam_id')) ? old('exam_id') : '' }}"
+            @else
+            value = "{{ $category->exam_id }}"
+            @endif>
+   
+
+       
       </div>
 
-      @endif
 
       <div class="form-group">
         <label for="formGroupExampleInput ">Description</label>

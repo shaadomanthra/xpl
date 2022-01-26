@@ -9,6 +9,7 @@ use PacketPrep\Models\Dataentry\Category;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Tests_Overall;
 use Illuminate\Support\Facades\Cache;
 
 class Course extends Model
@@ -157,6 +158,8 @@ class Course extends Model
         $ap = Category::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
 
 
+      
+
         $categories_ =array();
         foreach($categories_list as $categ){
             $cat = $categ->id;
@@ -170,9 +173,11 @@ class Course extends Model
         }
 
 
-
+        
         $qset = DB::table('category_question')->whereIn('category_id', $ap)->select('category_id', DB::raw('count(*) as count'))->where('intest','!=',1)->groupBy('category_id')->get();
 
+
+       
 
         $count =0;
         foreach($qset as $q){
@@ -201,8 +206,11 @@ class Course extends Model
 
                           
         } 
+
+
         $data['nodes'] = $node;
         //$data['ques_count'] = $qcount;
+
 
         $examtype = Examtype::where('slug',$id)->first();
         if($examtype)
@@ -219,9 +227,20 @@ class Course extends Model
         }
 
         $tests =[];
+
+        if(!count($exams)){
+             $exams = Exam::whereIn('slug',$exam_ids)->get()->keyBy('slug'); 
+             $eids = $exams->pluck('id')->toArray();
+             $attempts = Tests_Overall::whereIn('test_id',$eids)->where('user_id',\auth::user()->id)->get()->keyBy('test_id');
+           
+        }
+
         foreach($exams as $m=>$e){
-            $exams[$m]->ques_count = $e->question_count();
-            $exams[$m]->time = $e->time();
+            $exams[$m]->ques_count = 0;//$e->question_count();
+            $exams[$m]->time = 0;//$e->time();
+            if(isset($attempts[$e->id]))
+            $exams[$m]->try =1;
+            else
             $exams[$m]->try =0;
             unset($exams[$m]->sections);
 
@@ -231,7 +250,7 @@ class Course extends Model
 
         }
 
-        
+
 
         $data['exams'] = $exams;
         $data['tests'] = $tests;

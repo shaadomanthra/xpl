@@ -126,9 +126,7 @@ th{ border:1px solid silver; }
         <a class="nav-link" id="tag-tab" data-toggle="tab" href="#tag" role="tab" aria-controls="tag" aria-selected="false">Tag</a>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="false">Details</a>
-      </li>
+     
       @endif
        
     </ul>
@@ -478,7 +476,8 @@ th{ border:1px solid silver; }
         </select>
 
       </div>
-<!--
+
+      @if(!request()->get('default'))
        <div class="form-group mt-3">
         <label for="formGroupExampleInput ">Include in Test</label>
         <select class="form-control" name="intest" >
@@ -486,7 +485,8 @@ th{ border:1px solid silver; }
           <option value="1" @if(isset($question)) @if($question->intest==1) selected @endif @endif >Yes</option>
         </select>
 
-      </div> -->
+      </div> 
+      @endif
 
         <div class="form-group mt-3">
         <label for="formGroupExampleInput ">Status</label>

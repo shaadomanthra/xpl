@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @if($category->pdf_link)
-@section('title', $category->name.' | Xplore')
+@section('title', $category->name.' ')
 @elseif($category->test_link)
-@section('title', 'Attempt '.$category->name.' | Xplore')
+@section('title', 'Attempt '.$category->name.' ')
 @else
-@section('title', $category->name.' | Xplore')
+@section('title', $category->name.' ')
 @endif
 
 @if($category->video_desc )
@@ -155,14 +155,22 @@
   <div class="row">
     <div class="col-12 col-md-2"><span class="d-none d-md-block"><i class="fa fa-external-link fa-5x"></i></span></div>
     <div class="col-12 col-md-10">
-      {!! $category->video_desc !!}<br>
+     
       @if(!$category->test_analysis)
+      @if(isset($category->exam->slug)))
       <a href="{{ route('assessment.instructions',$category->exam->slug)}}">
+      @else
+      <a href="{{ route('assessment.instructions',$category->exam_id)}}">
+      @endif
       <button class="btn btn-success mt-3 btn-lg">
       Take Test
       </button>
       @else
+      @if(isset($category->exam->slug)))
       <a href="{{ route('assessment.analysis',$category->exam->slug)}}">
+      @else
+      <a href="{{ route('assessment.analysis',$category->exam_id)}}">
+      @endif
       <button class="btn btn-primary mt-3 btn-lg">
       View Analysis
       </button>
@@ -254,10 +262,7 @@
 
 
 
-  <div class=" mt-3 border p-4 rounded mb-3">
-        @include('appl.pages.disqus')
-      </div>
-  </div>
+ 
 
   @else
   <div class="bg-white p-4 border ">

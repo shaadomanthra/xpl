@@ -154,6 +154,7 @@ class CourseController extends Controller
 
 
 
+
         if(!$course){
             
             $course = Course::where('slug',$id)->first();
@@ -166,16 +167,17 @@ class CourseController extends Controller
 
         }
 
+
         if(request()->get('refresh'))
             {
-
+                Cache::forget('course_'.$id);
                 $course->updatecache(null,$course);
                 flash('Article Pages Cache Updated')->success();
             }
 
 
         
-        
+        //dd($course->categories);
 
         if(!$course)
             abort('404','Course Not Found');
@@ -200,7 +202,7 @@ class CourseController extends Controller
             
         }
 
-        //dd($course->exams);
+        
         
         foreach($course->exams as $e){
                 array_push($exam_ids, $e->id); 
@@ -291,8 +293,8 @@ class CourseController extends Controller
         $course->keywords = $course->name;
         $course->description = strip_tags($course->description);
     
-        
-
+      
+      // dd($course->exams);
         if($course)
             return view('appl.course.course.show4')
                     ->with('course',$course)
@@ -549,8 +551,9 @@ class CourseController extends Controller
         
 
         if($category->exam_id){
-            $exam = Exam::where('id',$category->exam_id)->first();
+            $exam = Exam::where('slug',$category->exam_id)->first();
             
+
             if($category->video_link)
             $category->video_desc = $category->video_desc.'<br><hr><h3>'.$exam->name.'</h3>'.$exam->instructions;  
             else    
@@ -562,8 +565,6 @@ class CourseController extends Controller
                 $category->test_analysis = true;
             }
         }
-        
-        
 
 
             

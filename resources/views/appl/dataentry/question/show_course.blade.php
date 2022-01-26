@@ -97,6 +97,7 @@
         </div>
         </div>
 
+@if($question->type!='code')
         @if($question->a)
          <div class="row no-gutters">
         	<div class="col-3 col-md-2">
@@ -164,7 +165,10 @@
         	<div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
         </div>
         @endif
-         
+@else
+  @include('appl.dataentry.question.code_ques')
+@endif
+
         </div>
       </div>
 
@@ -213,6 +217,7 @@
       </div>
       @endif
 
+      @if($question->type!='code' )
       @if($question->explanation && $details['response'])
       <div class="card mb-3 mb-md-0">
       	<div class="card-body">
@@ -221,12 +226,15 @@
       	</div>
       </div>
       @endif
+      @else
 
-      @if( $details['response'])
-      <div class=" mt-3 border p-4 rounded mb-3">
-        @include('appl.pages.disqus')
-      </div>
+      @if($details['response'])
+      @include('appl.dataentry.question.code_sol')
       @endif
+
+      @endif
+
+      
 
     </div>
 

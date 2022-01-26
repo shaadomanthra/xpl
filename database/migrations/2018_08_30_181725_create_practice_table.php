@@ -17,7 +17,7 @@ class CreatePracticeTable extends Migration
             $table->increments('id');
             $table->integer('qid')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->string('response');
+            $table->longText('response');
             $table->string('answer');
             $table->integer('accuracy');
             $table->foreign('user_id')->references('id')->on('users');

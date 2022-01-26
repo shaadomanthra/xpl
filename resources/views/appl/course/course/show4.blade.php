@@ -113,6 +113,9 @@
 
 		<div class="row ml-0 mr-0  mb-0 mb-md-3 bg-white pt-4 rounded" >
 		<ul class="list2 list2-first {{$j=0}}" >
+
+			 
+
 		@foreach($nodes as $n)
 			<li class="item title-list" id="{{ $n->slug}}" > <h3><span class="bg-light p-1 pr-3 pl-3 border rounded">{{++$j}}</span> &nbsp;{{ $n->name }}</h3>
 			@if($n->video_desc)
@@ -123,9 +126,11 @@
 			@if(count($n->children))
 				<ul class="list2">
 					@foreach($n->children as $c)
-					@if($c->video_link || $c->pdf_link || $c->exam_id || $c->video_desc)
+
+					@if($c->video_link || $c->pdf_link  || $c->video_desc)
 						<li class="item {{ $cid = $c->id }}" id="{{ $c->slug }}"> 
 						@include('appl.course.course.blocks.video_link')
+
 
                      	@if($categories->$cid->total!=0)
                      		@include('appl.course.course.blocks.practice_link')
@@ -141,6 +146,17 @@
 
 						
                      	</li>
+                   @else
+                   <li class="item {{ $cid = $c->id }}" id="{{ $c->slug }}">	<i class="fa fa-bars"></i> {{$c->name}} 
+                   	@if($categories->$cid->total!=0)
+                     		@include('appl.course.course.blocks.practice_link')
+                     	@endif
+
+                     	@if($c->exam_id)
+                     		@include('appl.course.course.blocks.exam_link')
+                     	@endif
+                   </li>
+
                      @endif	
                      @endforeach
 				</ul>
@@ -172,7 +188,6 @@
 
                 @endif
                   <h1>{{ $exam->name }}</h1>
-                    {{ $exam->ques_count }} Questions | {{ $exam->time }} min<br>
 
                     <div class="pt-2">
                   @if(!isset($course->attempt[$exam->id]))

@@ -157,6 +157,7 @@ class QuestionController extends Controller
                     ->with('testcases',$testcases)
                     ->with('type',request()->get('type'))
                     ->with('code',true)
+                    ->with('copy',1)
                     ->with('code_ques',$code_ques)
                     ->with('editor',true)
                     ->with('stub','Create');
@@ -561,6 +562,78 @@ class QuestionController extends Controller
         $category = Category::where('slug',$category_slug)->first();
         $question = Question::where('id',$id)->first();
 
+        $request = request();
+        $i=1;
+        $item['response']='';
+        $item['code'] = request()->get('codefragment_1');
+        $item['accuracy'] = 0;
+
+        if(request()->get('delete')){
+            $practice = Practice::where('user_id',\auth::user()->id)->where('qid',$id)->first();
+            $practice->delete();
+            return redirect()->route('course.question',[$project_slug,$category_slug,$id]);
+        }
+        if(request()->get('codefragment_1')){
+
+                 $mdata = null;
+                if(isset(json_decode($request->get('out_'.$i),true)['response_1']['error'])){
+                    $item['testcases']  = $request->get('out_'.$i);     
+
+                }else{
+                    if(!$request->get('out_'.$i.'_2') && $request->get('out_'.$i.'_1'))
+                    {
+                        $mjson = json_decode($request->get('out_'.$i.'_1'),true);
+                      
+                        if($mjson){
+                            $mdata['response_1'] = $mjson['response']; 
+                            $mdata['pass_1'] = $mjson['pass']; 
+                        }else{
+                            $mdata = null;
+                        }
+
+                        if($mdata['pass_1']==1)
+                            $item['accuracy']=1;
+
+                    }else{
+                        $correct=0;
+                        for($m=1;$m<6;$m++){
+                            $mjson = json_decode($request->get('out_'.$i.'_'.$m),true);
+                           
+                            if($mjson){
+                                $mdata['response_'.$m] = $mjson['response']; 
+                                $mdata['pass_'.$m] = $mjson['pass']; 
+                                echo $mjson['pass']."<br>";
+                                if($mjson['pass']==1)
+                                    $correct++;
+                            }else{
+                                $mdata = null;
+                            }
+                        }
+                        if($correct==5)
+                            $item['accuracy'] =1;
+                       
+
+                        if (strpos($item['response'], '<TABLE') !== false) {
+                            for($m=1;$m<6;$m++){
+                                $mjson = json_decode($request->get('out_'.$i),true);
+
+                                if($mjson){
+                                    $mdata['response_'.$m] = $mjson['response']; 
+                                    $mdata['pass_'.$m] = $mjson['pass_'.$m]; 
+                                }else{
+                                    $mdata = null;
+                                }
+                            }
+                        }
+
+                    }
+                   
+
+
+                    $item['testcases'] = json_encode($mdata);
+                }
+        }
+
         if($question){
 
             $practice = Practice::where('user_id',\auth::user()->id)->where('qid',$id)->first();
@@ -569,14 +642,22 @@ class QuestionController extends Controller
                 $practice->qid = $id;
                 $practice->course_id = request()->get('course_id');
                 $practice->user_id = \auth::user()->id;
-                $practice->response = strtoupper(request()->get('response'));
-                $practice->answer = strtoupper($question->answer);
+                if(request()->get('codefragment_1')){
+                    $practice->response = json_encode($item);
+                    ($item['accuracy'])? $practice->accuracy  = 1:$practice->accuracy  = 0;
+                    $practice->answer = strtoupper($question->answer);
+                }else{
+                    $practice->response = strtoupper(request()->get('response'));
+                    ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
+                    $practice->answer = strtoupper($question->answer);
+                }
+                
                 $practice->category_id = $question->categories->last()->id;
 
                 $now =  microtime(true);
                 $start = session('start');
                 $practice->time = $now-$start;
-                ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
+                
                 $practice->save();
 
 
@@ -637,6 +718,7 @@ class QuestionController extends Controller
         
         $tests = ['test1','test2','test3','test4','test5'];
         $course = Course::where('slug',$project_slug)->first();
+
 
 
         $user = \Auth::user();
@@ -775,7 +857,77 @@ class QuestionController extends Controller
                 //dd($details);
                 session(['start' => microtime(true)]) ;
 
+                $exam = json_decode(json_encode(['name'=>'course',"slug"=>"practice"]));
                 
+                $code_ques =[];
+                $codes=[];
+                $highlight=0;
+                if($question->type=='code'){
+                    $code_ques =[1=>'1'];
+                    $highlight=1;
+                    $code =1;
+                    $question->d = json_decode($question->d);
+                    $testcases = json_decode($question->a,true);
+
+                    if(!$testcases)
+                        $testcases['out_1'] = '';
+                     if($question->d)
+                        $question->d->output = $testcases['out_1'];
+                    else
+                        $question->d = (object)['output'=>$testcases['out_1']];
+
+                    if($details['response']){
+                       
+                        $details['response']->response = json_decode($details['response']->response);
+                        $details['response']->response->testcases = json_decode($details['response']->response->testcases);
+                        //dd($details['response']->response->testcases->response_1->stderr);
+                    }
+
+
+                    if($question->b=='c')
+                    {
+                     $codes['codefragment'] = $question->d->codefragment_1;
+                     $codes['output'] = $question->d->output_1;
+                    }
+                    if($question->b=='cpp')
+                    {
+                     $codes['codefragment'] = $question->d->codefragment_2;
+                     $codes['output'] = $question->d->output_2;
+                    }
+                    if($question->b=='csharp')
+                    {
+                     $codes['codefragment'] = $question->d->codefragment_3;
+                     $codes['output'] = $question->d->output_3;
+                    }
+
+                    if($question->b=='java')
+                    {
+                     $codes['codefragment'] = $question->d->codefragment_4;
+                     $codes['output'] = $question->d->output_4;
+                    }
+                    if($question->b=='javascript')
+                    {
+                     $codes['codefragment'] = $question->d->codefragment_5;
+                     $codes['output'] = $question->d->output_5;
+                    }
+                    if($question->b=='python')
+                    {
+                     $codes['codefragment'] = $question->d->codefragment_6;
+                     $codes['output'] = $question->d->output_6;
+                    }
+                    if($question->b=='sql')
+                    {
+                     $codes['codefragment'] = $question->d->codefragment_7;
+                     $codes['output'] = $question->d->output_7;
+                    }
+
+                    if(!isset($codes['output'])){
+                        $codes['output'] = $testcases['out_1'];
+                    }
+
+                }
+                else
+                    $code=0;
                 return view('appl.dataentry.question.show_course')
                         ->with('project',$this->project)
                         ->with('mathjax',true)
@@ -783,6 +935,12 @@ class QuestionController extends Controller
                         ->with('tests',$tests)
                         ->with('passage',$passage)
                         ->with('details',$details)
+                        ->with('code_ques',$code_ques)
+                        ->with('code',$code)
+                        ->with('codes',$codes)
+                        ->with('highlight',$highlight)
+                        ->with('copy',1)
+                        ->with('exam',$exam)
                         ->with('category',$category)
                         ->with('questions',$questions);
             }else
@@ -1286,6 +1444,7 @@ class QuestionController extends Controller
                     ->with('testcases',$testcases)
                     ->with('type',$question->type)
                     ->with('code',true)
+                    ->with('copy',1)
                     ->with('code_ques',$code_ques)
                     ->with('editor',true)
                     ->with('stub','Update');

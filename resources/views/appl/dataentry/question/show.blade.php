@@ -192,44 +192,45 @@
             <div>{!! $question->c !!}</div>
            @elseif($question->type=='code')
 
+
               @if($codes)
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#c" role="tab" aria-controls="home" aria-selected="true">C</a>
+                      <a class="nav-link  @if($question->b=='c') active @endif" id="home-tab" data-toggle="tab" href="#c" role="tab" aria-controls="home" @if($question->b=='c') aria-selected="true" @else aria-selected="false" @endif>C</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#cpp" role="tab" aria-controls="profile" aria-selected="false">C++</a>
+                      <a class="nav-link @if($question->b=='cpp') active @endif" id="profile-tab" data-toggle="tab" href="#cpp" role="tab" aria-controls="profile" @if($question->b=='cpp') aria-selected="true" @else aria-selected="false" @endif>C++</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#csharp" role="tab" aria-controls="contact" aria-selected="false">C#</a>
+                      <a class="nav-link @if($question->b=='csharp') active @endif" id="contact-tab" data-toggle="tab" href="#csharp" role="tab" aria-controls="contact" @if($question->b=='csharp') aria-selected="true" @else aria-selected="false" @endif>C#</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link " id="java-tab" data-toggle="tab" href="#java" role="tab" aria-controls="java" aria-selected="false">Java</a>
+                      <a class="nav-link @if($question->b=='java') active @endif" id="java-tab" data-toggle="tab" href="#java" role="tab" aria-controls="java" @if($question->b=='java') aria-selected="true" @else aria-selected="false" @endif>Java</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="javascript-tab" data-toggle="tab" href="#javascript" role="tab" aria-controls="javascript" aria-selected="false">Javascript</a>
+                      <a class="nav-link @if($question->b=='javascript') active @endif" id="javascript-tab" data-toggle="tab" href="#javascript" role="tab" aria-controls="javascript" @if($question->b=='javascript') aria-selected="true" @else aria-selected="false" @endif>Javascript</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="python-tab" data-toggle="tab" href="#python" role="tab" aria-controls="python" aria-selected="false">Python</a>
+                      <a class="nav-link @if($question->b=='python') active @endif" id="python-tab" data-toggle="tab" href="#python" role="tab" aria-controls="python" @if($question->b=='python') aria-selected="true" @else aria-selected="false" @endif>Python</a>
                     </li>
                   </ul>
                   <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="c" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade  @if($question->b=='c') show active  @endif" id="c" role="tabpanel" aria-labelledby="home-tab">
                       <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_c) !!}</code></pre>
                     </div>
-                    <div class="tab-pane fade" id="cpp" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade @if($question->b=='cpp') show active  @endif" id="cpp" role="tabpanel" aria-labelledby="profile-tab">
                       <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_cpp) !!}</code></pre>
                     </div>
-                    <div class="tab-pane fade" id="csharp" role="tabpanel" aria-labelledby="contact-tab">
+                    <div class="tab-pane fade @if($question->b=='csharp') show active  @endif" id="csharp" role="tabpanel" aria-labelledby="contact-tab">
                       <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_csharp) !!}</code></pre>
                     </div>
-                     <div class="tab-pane fade" id="java" role="tabpanel" aria-labelledby="java-tab">
+                     <div class="tab-pane fade @if($question->b=='java') show active  @endif" id="java" role="tabpanel" aria-labelledby="java-tab">
                        <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_java) !!}</code></pre>
                      </div>
-                      <div class="tab-pane fade" id="javascript" role="tabpanel" aria-labelledby="javascript-tab">
+                      <div class="tab-pane fade @if($question->b=='javascript') show active  @endif" id="javascript" role="tabpanel" aria-labelledby="javascript-tab">
                         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_javascript) !!}</code></pre>
                       </div>
-                       <div class="tab-pane fade" id="python" role="tabpanel" aria-labelledby="python-tab">
+                       <div class="tab-pane fade @if($question->b=='python') show active  @endif" id="python" role="tabpanel" aria-labelledby="python-tab">
                          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_python) !!}</code></pre>
                        </div>
                   </div>
