@@ -833,6 +833,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('course/{course}/list','Course\CourseController@show4')->name('course.list');
 	//Route::resource('course/{course}/index','Course\IndexController');
 	Route::get('course/{course}/{category}/view','Course\CourseController@video')->name('course.category.video');
+	Route::get('course/{course}/analytics','Course\CourseController@analytics')->name('course.analytics');
 	Route::get('course/{project}/{category}/practice','Dataentry\QuestionController@categoryCourse')->name('course.question')->middleware('auth');
 	Route::get('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourse')->name('course.question')->middleware('auth');
 	Route::post('course/{project}/{category}/practice/{id}','Dataentry\QuestionController@categoryCourseSave')->name('course.question')->middleware('auth');

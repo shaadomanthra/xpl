@@ -16,6 +16,7 @@ use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Course\Practice;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use PacketPrep\User;
 
 use Illuminate\Support\Facades\DB;
 
@@ -83,6 +84,68 @@ class CourseController extends Controller
 
         return view('appl.course.course.'.$view)
         ->with('courses',$courses)->with('course',new Course());
+    }
+
+
+    public function analytics($id){
+        $course = Cache::get('course_'.$id);
+
+        if(!$course){
+            $course = Course::where('slug',$id)->first();
+            $course_data = $course->category_list($course->slug);
+            $course->categories = json_decode(json_encode($course_data['categories']));
+            $course->ques_count = $course_data['ques_count'];
+            $course->nodes = $course_data['nodes'];
+            $course->exams = $course_data['exams'];
+            $course->tests = $course_data['tests'];
+        }
+        $this->authorize('create', $course);
+
+        $topic = request()->get('topic');
+        $category = Category::where('slug',$topic)->first();
+
+        if(!request()->get('batch')){
+            $bno=0;
+             return view('appl.course.course.analytics')
+                ->with('stub','Create')
+                ->with('editor','true')
+                ->with('category',$category)
+                ->with('course',$course);
+        }else{
+            $bno = request()->get('batch');
+        }
+
+        if(request()->get('refresh'))
+        {
+            Cache::forget('users_'.$bno);
+        }
+
+
+        if($bno)
+        $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
+            return User::where('info',$bno)->get();
+        });
+
+
+
+        
+        $uids = $users->pluck('id')->toArray();
+
+        if($category)
+        $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('category_id',$category->id)->get()->groupBy('user_id');
+        else{
+            $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+        }
+
+        
+
+        return view('appl.course.course.analytics')
+                ->with('stub','Create')
+                ->with('editor','true')
+                ->with('users',$users)
+                ->with('practice',$practice)
+                ->with('category',$category)
+                ->with('course',$course);
     }
 
 

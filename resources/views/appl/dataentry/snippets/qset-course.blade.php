@@ -73,3 +73,9 @@
 		</div>
 	</div>
 </div>
+
+
+@if(\auth::user()->checkRole(['administrator','employee']))
+
+<a href="{{ route('course.analytics',$details['course']->slug)}}?topic={{$category->slug}}" class="btn btn-primary w-100"> Check Analytics</a>
+@endif
