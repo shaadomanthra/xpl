@@ -81,6 +81,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('/ocrupload','Exam\SectionController@ocrupload')->name('ocrupload');
 	Route::post('/ocrupload','Exam\SectionController@ocrupload')->name('ocrupload');
 	Route::get('/xpc',function(){ return view('appl.pages.xp.xpc'); })->name('xpc');
+	Route::get('/trialpdf',function(){ return view('appl.pages.pp.pdf'); })->name('ppdf');
 	Route::get('/jobboard',function(){ return view('appl.pages.xp.jobboard'); })->name('jobboard');
 	Route::get('/hiring',function(){ return view('appl.pages.xp.hiring'); })->name('hiring');
 	Route::get('/oet',function(){ return view('piofx.oet')->with('menudark',1); })->name('oet');

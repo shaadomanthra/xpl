@@ -14,9 +14,9 @@ th{ border:1px solid silver; }
       
       
       @if($stub=='Create')
-      <form method="post" action="{{route('question.store',$project->slug)}}" >
+      <form method="post" action="{{route('question.store',$project->slug)}}" enctype="multipart/form-data">
       @else
-      <form method="post" action="{{route('question.update',[$project->slug,$question->id])}}" >
+      <form method="post" action="{{route('question.update',[$project->slug,$question->id])}}" enctype="multipart/form-data" >
       @endif  
 
       <h1 class="bg-light p-3 mb-3 border rounded">
@@ -442,6 +442,7 @@ th{ border:1px solid silver; }
             <option value="csq" @if(isset($question)) @if($question->type=='csq') selected @endif @endif >Code Submission Question</option>
             <option value="urq" @if(isset($question)) @if($question->type=='urq') selected @endif @endif >Upload Response Question</option>
             <option value="typing" @if(isset($question)) @if($question->type=='typing') selected @endif @endif >Typing Question</option>
+            <option value="pdf" @if(isset($question)) @if($question->type=='pdf') selected @endif @endif >PDF Question</option>
             
           </select>
           @else
@@ -461,6 +462,8 @@ th{ border:1px solid silver; }
             <option value="csq" @if($type =='csq')  selected  @endif >Code Submission Question</option>
             <option value="urq" @if($type =='urq')  selected  @endif >Upload Response Question</option>
             <option value="typing" @if($type =='typing')  selected  @endif >Typing Question</option>
+
+            <option value="pdf" @if($type =='pdf')  selected  @endif >PDF Question</option>
           </select>
           @endif
             

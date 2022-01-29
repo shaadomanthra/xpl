@@ -643,6 +643,8 @@ class ExamController extends Controller
             $settings['system_check'] = $request->get('system_check');
             $settings['email_verified'] = $request->get('email_verified');
             $settings['form_fields'] = $request->get('form_fields');
+            $settings['tags'] = $request->get('tags');
+            $settings['pdf_paper'] = $request->get('pdf_paper');
 
             
 
@@ -2248,6 +2250,16 @@ class ExamController extends Controller
         else
             $exam->form_fields = null;
 
+        if(isset($settings['tags']))
+            $exam->tags = $settings['tags'];
+        else
+            $exam->tags = null;
+
+        if(isset($settings['pdf_paper']))
+            $exam->pdf_paper = $settings['pdf_paper'];
+        else
+            $exam->pdf_paper = null;
+
         // if($exam->extra){
         //     $exam->viewers = json_decode($exam->extra,true)['viewers'];
         //     $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
@@ -2352,6 +2364,8 @@ class ExamController extends Controller
             $settings['system_check'] = $request->get('system_check');
             $settings['email_verified'] = $request->get('email_verified');
             $settings['form_fields'] = $request->get('form_fields');
+            $settings['tags'] = $request->get('tags');
+            $settings['pdf_paper'] = $request->get('pdf_paper');
 
 
 

@@ -41,6 +41,7 @@
         @endif
 
         <a href="{{ route('question.create','default')}}?type=csq&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> Code Submission Question (CSQ)</a>
+        <a href="{{ route('question.create','default')}}?type=pdf&default=1&exam={{$exam->id}}&url={{url()->current()}}&section={{$sec->id}}" class="btn btn-outline-dark mb-2"> PDF Question (PDF)</a>
         <hr>
     @endforeach
       

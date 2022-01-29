@@ -3156,7 +3156,7 @@ $(function(){
 @if($question->type!='codes')
 @if(!request()->get('default') && !isset($copy))
   $('body').bind('cut copy paste',function(e) {
-     
+
      return false; 
   });
 
@@ -4315,3 +4315,5 @@ if($('.element').length)
 var typed = new Typed('.element', options);
 </script>
 @endif
+
+

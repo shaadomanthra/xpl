@@ -133,7 +133,7 @@ class QuestionController extends Controller
         $exams =  [];
 
         // Question Types
-        $allowed_types = ['mcq','naq','maq','eq','code','fillup','sq','urq','vq','csq','mbdq','mbfq'];
+        $allowed_types = ['mcq','naq','maq','eq','code','fillup','sq','urq','vq','csq','mbdq','mbfq','pdf'];
         if(in_array(request()->get('type'), $allowed_types)){
             $type = request()->get('type');
         }
@@ -243,6 +243,30 @@ class QuestionController extends Controller
                 $testcases['out_4'] = $request->get('out_4');
                 $testcases['out_5'] = $request->get('out_5');
                 $question->a = json_encode($testcases);
+
+            }
+
+            
+            if(isset($request->all()['pdf_file'])){
+
+                $file      = $request->all()['pdf_file'];
+                $username = \auth::user()->username;
+                if($file->getClientOriginalExtension()=='pdf')
+                {
+                    $filepath = '/pdf_ques/'.$question->slug.'.pdf';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
+
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                    
+                }else{
+                    flash('Only pdf format supported')->error();
+                    return redirect()->back();
+                }   
+
+                
 
             }
 
@@ -1556,6 +1580,29 @@ class QuestionController extends Controller
                 $question->dynamic_code_save();
             }
 
+
+            if(isset($request->all()['pdf_file'])){
+
+                $file      = $request->all()['pdf_file'];
+                $username = \auth::user()->username;
+                if($file->getClientOriginalExtension()=='pdf')
+                {
+                    $filepath = '/pdf_ques/'.$question->slug.'.pdf';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
+
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                    
+                }else{
+                    flash('Only pdf format supported')->error();
+                    return redirect()->back();
+                }   
+
+                
+
+            }
             
          
             if($request->get('type')=='code'){

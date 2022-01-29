@@ -1,4 +1,10 @@
 <div class="bg-light p-3 border">
+@if($type=='pdf')
+        <label for="formGroupExampleInput2">Question - Select the PDF File</label>
+            <input type="file" class="form-control" name="pdf_file" id="formGroupExampleInput" >
+            <input type="hidden" name="question" value="pdf question {{time()}}"/>
+@else
+
 <div class="nav  nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
   <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Question </a>
   <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Version 2</a>
@@ -55,4 +61,6 @@
       </div>
   </div>
 </div>
+
+@endif
 </div>
