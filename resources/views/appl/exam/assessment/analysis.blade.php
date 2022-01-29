@@ -29,6 +29,15 @@
 		<div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Report</b></div>
 		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
 		</p>
+
+		@if(isset($exam->settings->reattempt))
+          	@if($exam->settings->reattempt==1)
+          		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal2">
+							  Retry the test
+							</button>
+          	@endif
+          @endif
+          
 	</div>
 
 	
@@ -344,5 +353,31 @@
 </div>
 
 
+<div class="modal fade bd-example-modal-lg" id="exampleModal2"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel3" aria-hidden="true">
+  <div class="modal-dialog ">
+
+    <div class="modal-content">
+     
+      <div class="modal-body">
+       This action will erase the last saved test response, and cannot be reversed. Kindly confirm your action.
+      </div>
+    
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Close</button>
+       <form method="post" action="{{route('assessment.show',$exam->slug)}}">
+        <input type="hidden" name="retry" value="1">
+        <input type="hidden" name="test_id" value="{{$exam->id}}">
+        	@if(\auth::user())
+        <input type="hidden" name="user_id" value="{{\auth::user()->id}}">
+        	@endif
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+        <button type="submit" class="btn btn-danger">Erase my Responses</button>
+        </form>
+  
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection           
