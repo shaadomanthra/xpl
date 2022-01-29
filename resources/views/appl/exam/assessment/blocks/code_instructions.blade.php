@@ -98,8 +98,7 @@ class Hello {
   </div>
   <div class="tab-pane fade " id="java" role="tabpanel" aria-labelledby="java-tab">
     <p class="mt-3">The testcase input is passed as command line arguments. In Java, you can access the inputs using args. </p>
-    <div class="alert alert-important alert-danger">In java programming, the classname has to be named Main only.</div>
-    <pre><code>class Main {
+      <pre><code>class Main {
    public static void main(String args[]) {
       // first input in string format
       System.out.println(args[0]);
