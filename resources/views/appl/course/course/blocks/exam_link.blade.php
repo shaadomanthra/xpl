@@ -1,4 +1,5 @@
 <span class="{{ $eid = $c->exam_id }}"></span>
+@if(isset($exams[$c->exam_id]->try))
 @if($c->exam_id)
   @if(!$exams[$c->exam_id]->try)
         @auth
@@ -19,4 +20,6 @@
         </a>
   
   @endif
+@endif
+
 @endif
