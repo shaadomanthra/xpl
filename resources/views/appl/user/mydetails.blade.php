@@ -47,8 +47,8 @@
                 <label for="name" class="col-md-10 control-label">Info</label>
 
                 <div class="col-md-12">
-                    <input id="name" type="text" class="form-control" name="info" value="{{$user->info}}" disabled="">
-                        <input id="name" type="hidden" class="form-control" name="info" value="{{$user->info}}" disabled="">
+                    <input id="name" type="text" class="form-control" name="info" value="{{$user->info}}" >
+                        
                 </div>
             </div>
         </div>
