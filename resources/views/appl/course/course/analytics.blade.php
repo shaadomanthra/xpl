@@ -27,7 +27,7 @@
           @else
           <h4><i class="fa fa-angle-double-right"></i> All Topics</h4>
           @endif
-          <span class="badge badge-info">Practice Questions Status</span>
+
 
           @if(request()->get('batch'))
           @if(count($users))
@@ -46,9 +46,9 @@
                 <th scope="row">{{$i+1}}</th>
                 <td>{{$u->name}}</td>
                 <td>{{$u->info}}</td>
-                <td>{{count($practice[$u->id])}} / {{$course->ques_count}}
+                <td>{{count($practice[$u->id])}} / {{$total}}
                   <div class="progress" style="height:8px">
-                    <div class="progress-bar" role="progressbar" style="width: {{round(count($practice[$u->id])/$course->ques_count*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar" role="progressbar" style="width: {{round(count($practice[$u->id])/$total*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
                 </td>
               </tr>
@@ -64,9 +64,22 @@
           @else
           <form action="" >
             <div class="form-group mt-5">
-    <label for="exampleInputEmail1">Enter Details</label>
+    <label for="exampleInputEmail1">Practice Questions Data</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="batch" placeholder="Enter batch number">
     <input type="text" class="form-control my-3" id="exampleInputEmail1" aria-describedby="emailHelp" name="topic" placeholder="Enter topic slug (optional)" value="@if(request()->get('topic') ){{request()->get('topic') }} @endif">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+
+          </form>
+
+          <hr>
+
+          <form action="{{ url('/performance')}}" >
+            <div class="form-group mt-5">
+    <label for="exampleInputEmail1">Exam Data</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="info" placeholder="Enter batch number">
+    <input type="hidden" name="course" value="{{$course->slug}}" >
+    <input type="text" class="form-control my-3" id="exampleInputEmail1" aria-describedby="emailHelp" name="exam" placeholder="Enter exam slug (optional)" value="@if(request()->get('exam') ){{request()->get('exam') }} @endif">
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>
 

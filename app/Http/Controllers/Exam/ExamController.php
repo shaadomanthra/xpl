@@ -131,6 +131,9 @@ class ExamController extends Controller
         ->with('exams',$exams)->with('exam',$exam)->with('examtypes',$examtypes);
     }
 
+
+    
+
     /**
      * Show the form for creating a new resource.
      *

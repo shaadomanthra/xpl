@@ -1253,8 +1253,11 @@ class UserController extends Controller
             $users = User::where('client_slug',$client_slug)->where('status','<>','2')->where('info',$request->get('info'))->get()->keyBy('id');
         }else{
             $users = User::where('client_slug',$client_slug)->where('status','<>','2')->get()->keyBy('id');
+
+            abort(403,'batch info is mandatory');
         }
 
+        if(isset($client))
         $settings = json_decode($client->settings);
         $exam_slugs = [];
         if(isset($settings->exams))
@@ -1266,7 +1269,23 @@ class UserController extends Controller
                 $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
             }else
                 $exams = Exam::where('slug',$request->get('exam'))->get()->keyBy('id');
-        }elseif($request->get('info')){
+        }
+        else if($request->get('course')){
+            $id = $request->get('course');
+             $course = Cache::get('course_'.$id);
+
+            if(!$course){
+                $course = Course::where('slug',$id)->first();
+                $course_data = $course->category_list($course->slug);
+                $course->categories = json_decode(json_encode($course_data['categories']));
+                $course->ques_count = $course_data['ques_count'];
+                $course->nodes = $course_data['nodes'];
+                $course->exams = $course_data['exams'];
+                $course->tests = $course_data['tests'];
+            }
+            $exams = $course->exams->keyBy('id');
+        }
+        elseif($request->get('info')){
             $examtype = Examtype::where('name',$request->get('info'))->where('client',subdomain())->first();
         
             if($examtype)
@@ -1275,8 +1294,10 @@ class UserController extends Controller
                 $exams = [];
 
         }
+
         else
          $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
+
 
         $exam_ids =[];
         $user_ids = [];
@@ -1293,10 +1314,11 @@ class UserController extends Controller
 
 
         
+
         
-        $allusers = User::where('client_slug',$client_slug)->where('status','<>','2')->get();
-        $totalusers = $allusers->count();
-        $user_info = $allusers->groupBy('info');
+        //$allusers = User::where('client_slug',$client_slug)->where('status','<>','2')->get();
+        $totalusers = 0;//$allusers->count();
+        $user_info = 0;//$allusers->groupBy('info');
         
 
         foreach($users as $id=>$u){

@@ -31,7 +31,7 @@
 				<a href="{{ route('course.edit',$course->slug) }}">
 				<i class="fa fa-edit"></i>
 				</a>
-				<a href="{{ route('admin.analytics.course') }}?course={{$course->slug}}">
+				<a href="{{ route('course.analytics',$course->slug)}}">
 				<i class="fa fa-bar-chart"></i> 
 				</a>
 			@endcan
@@ -173,39 +173,58 @@
 
 			     
  <div class="row ">
+ 	<div class="col-12 "> 
+ 	<div class="card mb-0 pb-0">
     
-  @foreach($exams as $key=>$exam)  
-  @if($exam->status != 0)
-<div class="col-12 col-md-6 mb-4"> 
-  
-          <div class="bg-white border">
-            <div  style="background: #eee">&nbsp;</div>
-              <div class="card-body">
-              	@if($exam->status==1)
-                <span class="badge badge-warning">FREE</span>
-                @else
-                <span class="badge badge-primary">PREMIUM</span>
 
-                @endif
-                  <h1>{{ $exam->name }}</h1>
-
-                    <div class="pt-2">
-                  @if(!isset($course->attempt[$exam->id]))
+  <table class="table table-bordered mb-0 pb-0">
+  <thead>
+    <tr class="bg-light">
+      <th scope="col">#</th>
+      <th scope="col">Test Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody class="{{$j=1}}">
+  	@foreach($exams as $key=>$exam)  
+  	@if($exam->status != 0)
+    <tr>
+      <th scope="row">{{$j++}}</th>
+      <td>{{ $exam->name }}</td>
+      <td>@if($exam->status==1)
+          <span class="badge badge-warning">FREE</span>
+          @else
+          <span class="badge badge-primary">PREMIUM</span>
+          @endif
+       </td>
+      <td>@if(!isset($course->attempt[$exam->id]))
                   <a href="{{ route('assessment.show',$exam->slug) }}">
-                  <button class="btn btn-outline-primary btn-sm"> <i class="fa fa-paper-plane" ></i> Details</button>
+                  <button class="btn btn-success btn-sm"> <i class="fa fa-paper-plane" ></i> Try Test</button>
                   </a>
                   @else
                   <a href="{{ route('assessment.analysis',$exam->slug) }}">
                   <button class="btn btn-outline-secondary btn-sm"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
                   </a>
                   @endif
-                </div>
-              </div>
-          </div>
-    
-</div>
-  @endif
-    @endforeach  
+
+
+          @if(\auth::user())
+           @if(\auth::user()->checkRole(['administrator','employee']))
+						<a href="{{ route('course.analytics',$course->slug)}}?exam={{$exam->slug}}" class="btn btn-outline-primary btn-sm "> <i class="fa fas fa-bar-chart" ></i> All</a>
+						@endif
+					@endif
+      </td>
+
+    </tr>
+    @endif
+    @endforeach
+   
+  </tbody>
+</table>
+
+    </div> 
+  </div>
   </div>       
 
 		</div>

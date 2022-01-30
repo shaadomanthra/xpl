@@ -1522,13 +1522,25 @@ $(document).ready(function() {
 
     }); 
 
+   function getStringBetween(str, start, end) {
+    const result = str.match(new RegExp(start + "(.*)" + end));
+
+    return result[1];
+}
+
 function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,$k=0){
+   //coded = JSON.stringify(code).replace(/\n/g, '');
+ 
+  //var fname= getStringBetween(code,'class','{');
+
+
+  //console.log(fname);
 
   $.ajax({
           type : 'get',
           url : $url+'?time='+ new Date().getTime(),
           cache: false,
-          data:{'code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug},
+          data:{'code':code,'lang':$lang,'c':$c,'input':$input,'name':$namec,'testcase':$testcase,'test':$test,'qslug':$qslug,'coded':JSON.stringify(code)},
           timeout: 8000, 
           success:function(data){
             $('.runcode_'+$qn).removeClass('disabled');

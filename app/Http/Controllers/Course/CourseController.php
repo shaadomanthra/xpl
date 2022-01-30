@@ -101,7 +101,10 @@ class CourseController extends Controller
         }
         $this->authorize('create', $course);
 
+        
+
         $topic = request()->get('topic');
+        $total = $course->ques_count;
         $category = Category::where('slug',$topic)->first();
 
         if(!request()->get('batch')){
@@ -122,17 +125,18 @@ class CourseController extends Controller
 
 
         if($bno)
-        $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
-            return User::where('info',$bno)->get();
-        });
+            $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
+                return User::where('info',$bno)->get();
+            });
 
 
-
-        
         $uids = $users->pluck('id')->toArray();
 
-        if($category)
-        $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('category_id',$category->id)->get()->groupBy('user_id');
+        if($category){
+            $cid = $category->id;
+            $total = $course->categories->$cid->total;
+            $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('category_id',$category->id)->get()->groupBy('user_id');
+        }
         else{
             $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
         }
@@ -145,6 +149,7 @@ class CourseController extends Controller
                 ->with('users',$users)
                 ->with('practice',$practice)
                 ->with('category',$category)
+                ->with('total',$total)
                 ->with('course',$course);
     }
 

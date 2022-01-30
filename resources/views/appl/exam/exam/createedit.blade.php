@@ -494,37 +494,17 @@
           </div>
         </div>
 
-         <div class="col-12 col-md-3">
-           <div class="form-group mt-3">
-            <label for="formGroupExampleInput ">PDF Paper</label>
-             <select class="form-control" name="pdf_paper">
-              <option value="0" @if(isset($exam)) @if($exam->pdf_paper==0) selected @endif @endif >No</option>
-              <option value="1" @if(isset($exam)) @if($exam->pdf_paper==1) selected @endif @endif >Yes</option>
-            </select>
-
-
-          <small class='text-secondary'>Select yes if you want to display a PDF as question paper</small>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-3">
-           <div class="form-group mt-3">
-            <label for="formGroupExampleInput ">Tags (optional)</label>
-            <input type="text" class="form-control" name="tags" id="formGroupExampleInput" placeholder="" 
-            @if($stub=='Create')
-            value="{{ (old('tags')) ? old('tags') : '' }}"
-            @else
-            value = "{{ $exam->tags }}"
-            @endif
-          >
-
-          <small class='text-secondary'>Add tags seperated by commas to generate tag based report (Admin purpose)</small>
-          </div>
-        </div>
+         
 
         <div class="col-12 ">
            <div class="form-group ">
         <label for="formGroupExampleInput ">Form Fields</label>
+        <input type="hidden" class="form-control" name="tags" id="formGroupExampleInput" placeholder="" 
+            value=""
+          >
+          <input type="hidden" class="form-control" name="pdf_paper" id="formGroupExampleInput" placeholder="" 
+            value="0"
+          >
         <textarea class="form-control " name="form_fields"  rows="5">@if(isset($exam))@if(isset($exam->form_fields)){{$exam->form_fields}}
             @endif 
           @endif
