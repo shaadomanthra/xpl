@@ -154,6 +154,7 @@ class UserController extends Controller
         $user->confidence = $request->get('confidence');
         $user->fluency = $request->get('fluency');
         $user->language = $request->get('language');
+        $user->info = $request->get('info');
         $user->save();
         Cache::forget('id-' . $user->id);
         Cache::forget('user_'.$user->id);
@@ -1100,6 +1101,7 @@ class UserController extends Controller
         $user->year_of_passing = $request->year_of_passing;
         $user->aadhar = $request->aadhar;
         $user->client_slug = $request->client_slug;
+        $user->info = $request->get('info');
         
 
         $user->save();

@@ -115,14 +115,7 @@
          </div>
 
 
-         <div class="col-12 college_name" @if(!$user->info) style="display:none" @endif>
-            
-
-       <div class="form-group">
-        <label for="formGroupExampleInput ">College Name <i class="fa fa-check-circle info @if($user->info) text-success @else text-silver @endif"></i></label>
-        <input type="text" class="form-control info" name="info"  placeholder="Enter your college name" value="">
-      </div>
-         </div>
+         
 
         </div>
         <div class="row">
@@ -222,6 +215,20 @@
           </span>
           </div>
          </div>
+
+         @if(\auth::user()->checkRole(['administrator','employee']))
+         <div class="col-12 col-md-6">
+          <div class="form-group ">
+            <label for="formGroupExampleInput ">Batch Info</label><br>
+            <input type="text" class="form-control" name="info" id="formGroupExampleInput" value="{{ $user->info }}" >
+           
+          </div>
+         </div>
+         @else
+         <input type="hidden" class="form-control" name="info" id="formGroupExampleInput" value="{{ $user->info }}" >
+           
+
+        @endif
       </div>
     </div>
 
