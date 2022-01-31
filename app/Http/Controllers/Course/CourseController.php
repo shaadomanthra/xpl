@@ -622,11 +622,15 @@ class CourseController extends Controller
             $exam = Exam::where('slug',$category->exam_id)->first();
             
 
-            if($category->video_link)
-            $category->video_desc = $category->video_desc.'<br><hr><h3>'.$exam->name.'</h3>'.$exam->instructions;  
-            else    
+            if($category->video_link){
+            $category->video_desc = $category->video_desc.'<br>';
+                if(isset($exam->name))
+                 $category->video_desc = $category->video_desc.'<hr><h3>'.$exam->name.'</h3>'.$exam->instructions;  
+
+            }else    
             $category->video_desc = $exam->instructions;
 
+            if($exam)
             if(!$exam->attempted())
                 $category->test_analysis = false;
             else{
