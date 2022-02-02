@@ -201,6 +201,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('/apitest/{test}', 'Exam\ExamController@questionlist')
 			->name('test.questionlistapi')->middleware('cors');
 
+
 	Route::post('/test/{test}/proctor', 'Exam\AssessmentController@proctor')
 			->name('test.proctor')->middleware('auth');
 	Route::get('/test/{test}/active', 'Exam\AssessmentController@active')
@@ -522,7 +523,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('users/add','User\UserController@add')->name('user.add');
 	Route::get('users/{user}','User\UserController@view')->name('user.view');
 
-	Route::get('apiuser','User\UserController@apiuser')->name('user.apiuser');
+	Route::get('apiuser','User\UserController@apiuser')->name('user.apiuser')->middleware('cors');
 	Route::get('users/{user}/edit','User\UserController@edit')->name('user.edit');
 	Route::get('performance','User\UserController@performance')->name('performance');
 
