@@ -658,6 +658,8 @@ class QuestionController extends Controller
                 }
         }
 
+
+
         if($question){
 
             $practice = Practice::where('user_id',\auth::user()->id)->where('qid',$id)->first();
@@ -672,8 +674,9 @@ class QuestionController extends Controller
                     $practice->answer = strtoupper($question->answer);
                 }else{
                     $practice->response = strtoupper(request()->get('response'));
-                    ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
                     $practice->answer = strtoupper($question->answer);
+                    ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
+                    
                 }
                 
                 $practice->category_id = $question->categories->last()->id;
