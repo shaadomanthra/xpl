@@ -18,6 +18,11 @@ use PacketPrep\Models\Product\Test;
 use PacketPrep\Models\User\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use PacketPrep\Models\Job\Post;
+use PacketPrep\Models\Course\Course;
+use PacketPrep\Models\Dataentry\Project;
+use PacketPrep\Models\Dataentry\Tag;
+use PacketPrep\Models\Dataentry\Category;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
@@ -122,6 +127,9 @@ class UserController extends Controller
         $token = $request->get('token');
         $email = $request->get('email');
         $info = $request->get('info');
+        $job = $request->get('job');
+        $practice = $request->get('practice');
+        $assessment = $request->get('assessment');
         if($token=='ppofficerwx4356'){
             if($email){
                 $user = User::where('email',$email)->first();
@@ -140,6 +148,7 @@ class UserController extends Controller
 
             }elseif($info){
                  $users = User::where('info',$info)->get();
+                 $uids = $users->pluck('id')->toArray();
                  $usx=[];
                  foreach($users as $k=>$user){
                     unset($user->password);
@@ -151,13 +160,76 @@ class UserController extends Controller
                     $user->last_login = $user->updated_at;
                     unset($user->updated_at);
                     $usx[$k] = $user;
-                 }
-                 $users = json_encode($usx);
-                   header('Content-Type: application/json; charset=utf-8');
+                }
+
+                if($practice){
+                    $course = Cache::get('course_'.$practice);
+                    if(!$course){
+                        $course = Course::where('slug',$practice)->first();
+                        $course_data = $course->category_list($course->slug);
+                        $course->categories = json_decode(json_encode($course_data['categories']));
+                        $course->ques_count = $course_data['ques_count'];
+                        $course->nodes = $course_data['nodes'];
+                        $course->exams = $course_data['exams'];
+                        $course->tests = $course_data['tests'];
+                    }
+                    
+                    $prac = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+                    foreach($usx as $k=>$u){
+                        $usx[$k]->practice = $prac[$u->id]; 
+                    }
+
+                   
+
+                }else if($assessment){
+                    $exam = Cache::get('test_'.$assessment);
+                    if(!$exam){
+                        $exam = Exam::where('slug',$assessment)->first();
+                    }
+                    $tests_overall = Tests_Overall::where('test_id',$exam->id)->whereIn('user_id',$uids)->get()->groupBy('user_id');
+
+                    foreach($usx as $k=>$u){
+                        $usx[$k]->assessment = $tests_overall[$u->id]; 
+                    }
+
+                }
+
+                $users = json_encode($usx);
+                header('Content-Type: application/json; charset=utf-8');
+                echo ($users);
+                exit();
+
+            }elseif($job){
+
+                $post = Post::where('slug',$job)->first();
+                $users = $post->users;
+                $usx=[];
+                foreach($users as $k=>$user){
+                    unset($user->password);
+                    unset($user->language);
+                    unset($user->fluency);
+                    unset($user->confidence);
+                    unset($user->personality);
+                    unset($user->video);
+                    $user->last_login = $user->updated_at;
+                    unset($user->updated_at);
+                    $usx[$k] = $user;
+                    $user->applied_at = $user->pivot->created_at;
+                    $data = json_decode($user->pivot->data);
+
+                    $user->accesscode= $data->accesscode;
+                    $user->post = $post;
+                    
+                    unset($user->pivot);
+                    dd($user);
+                }
+                $users = json_encode($usx);
+                header('Content-Type: application/json; charset=utf-8');
                 echo ($users);
                 exit();
 
             }
+
 
         }else{
             abort('403','Unauthorized Access');
