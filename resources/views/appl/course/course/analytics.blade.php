@@ -46,10 +46,15 @@
                 <th scope="row">{{$i+1}}</th>
                 <td>{{$u->name}}</td>
                 <td>{{$u->info}}</td>
-                <td>{{count($practice[$u->id])}} / {{$total}}
+                <td>
+                  @if(isset($practice[$u->id]))
+                  @if($practice[$u->id])
+                  {{count($practice[$u->id])}} / {{$total}}
                   <div class="progress" style="height:8px">
                     <div class="progress-bar" role="progressbar" style="width: {{round(count($practice[$u->id])/$total*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
+                  @endif
+                  @endif
                 </td>
               </tr>
             @endforeach
