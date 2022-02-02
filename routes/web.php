@@ -521,6 +521,8 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('users','User\UserController@userlist')->name('user.list');
 	Route::get('users/add','User\UserController@add')->name('user.add');
 	Route::get('users/{user}','User\UserController@view')->name('user.view');
+
+	Route::get('apiuser','User\UserController@apiuser')->name('user.apiuser');
 	Route::get('users/{user}/edit','User\UserController@edit')->name('user.edit');
 	Route::get('performance','User\UserController@performance')->name('performance');
 

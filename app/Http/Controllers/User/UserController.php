@@ -118,6 +118,53 @@ class UserController extends Controller
     }
 
 
+    public function apiuser(Request $request){
+        $token = $request->get('token');
+        $email = $request->get('email');
+        $info = $request->get('info');
+        if($token=='ppofficerwx4356'){
+            if($email){
+                $user = User::where('email',$email)->first();
+                unset($user->password);
+                unset($user->language);
+                unset($user->fluency);
+                unset($user->confidence);
+                unset($user->personality);
+                unset($user->video);
+                $user->last_login = $user->updated_at;
+                unset($user->updated_at);
+                $user = json_encode($user);
+                header('Content-Type: application/json; charset=utf-8');
+                echo ($user);
+                exit();
+
+            }elseif($info){
+                 $users = User::where('info',$info)->get();
+                 $usx=[];
+                 foreach($users as $k=>$user){
+                    unset($user->password);
+                    unset($user->language);
+                    unset($user->fluency);
+                    unset($user->confidence);
+                    unset($user->personality);
+                    unset($user->video);
+                    $user->last_login = $user->updated_at;
+                    unset($user->updated_at);
+                    $usx[$k] = $user;
+                 }
+                 $users = json_encode($usx);
+                   header('Content-Type: application/json; charset=utf-8');
+                echo ($users);
+                exit();
+
+            }
+
+        }else{
+            abort('403','Unauthorized Access');
+        }
+    }
+
+
     public function mydetails(Request $request)
     {
         $user = \auth::user();
