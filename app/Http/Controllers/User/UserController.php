@@ -290,7 +290,7 @@ class UserController extends Controller
 
                 $usx['job'] = $post;
                 
-                $users = json_encode($usx);
+                $users = json_encode($usx,JSON_PRETTY_PRINT);
              
                 header('Content-Type: application/json; charset=utf-8');
                 echo ($users);
