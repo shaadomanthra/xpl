@@ -220,6 +220,9 @@ class UserController extends Controller
                         $user_data['total'] = 0;
                         $user_data['percentage'] = 0;
 
+                        foreach($course->categories  as $cm=>$cp){
+                            $user_data['total'] = $user_data['total'] + $cp->total;
+                        }
                         foreach($pset as $pid=>$p){
                             $topic = $categories->find($pid);
                             $cid = $topic->id;
@@ -229,8 +232,6 @@ class UserController extends Controller
                             $topics[$topic_name]['last_practiced_at'] = $p[0]->created_at;
                             $user_data['user_completed'] = $user_data['user_completed'] + $topics[$topic_name]['user_completed'];
                             $topics[$topic_name]['total'] = $course->categories->$cid->total;
-                            $user_data['total'] = $user_data['total'] + $topics[$topic_name]['total'];
-
                         }
 
                         if($user_data['total']!=0)
