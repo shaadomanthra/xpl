@@ -221,7 +221,7 @@ class UserController extends Controller
                     $user->post = $post;
                     
                     unset($user->pivot);
-                    dd($user);
+                   
                 }
                 $users = json_encode($usx);
                 header('Content-Type: application/json; charset=utf-8');
