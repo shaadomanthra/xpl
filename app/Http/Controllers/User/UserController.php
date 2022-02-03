@@ -130,6 +130,7 @@ class UserController extends Controller
         $job = $request->get('job');
         $practice = $request->get('practice');
         $assessment = $request->get('assessment');
+        $mode=$request->get('mode');
         if($token=='ppofficerwx4356'){
             if($email){
                 $user = User::where('email',$email)->first();
@@ -141,10 +142,33 @@ class UserController extends Controller
                 unset($user->video);
                 $user->last_login = $user->updated_at;
                 unset($user->updated_at);
-                $user = json_encode($user);
-                header('Content-Type: application/json; charset=utf-8');
-                echo ($user);
-                exit();
+
+                if(!$mode){
+                    $user = json_encode($user);
+                    header('Content-Type: application/json; charset=utf-8');
+                    echo ($user);
+                    exit();
+                }else{
+                    if($mode=='job'){
+                       
+                       // my jobs
+                        foreach($user->posts as $k=>$p){
+
+                                $posts[$k]['name'] = $p->title;
+                                $j = $user->posts->find($p->id);
+                                $posts[$k]['created_at'] = $j->created_at;
+                        }
+                        $user->myjobs = $posts;
+
+
+                    }
+                    unset($user->posts);
+                    $user = json_encode($user,JSON_PRETTY_PRINT);
+                    header('Content-Type: application/json; charset=utf-8');
+                    echo ($user);
+                    exit();
+                }
+               
 
             }elseif($info){
                  $users = User::where('info',$info)->get();
@@ -202,8 +226,13 @@ class UserController extends Controller
             }elseif($job){
 
                 $post = Post::where('slug',$job)->first();
+                if(!$post)
+                    $users =[];
+                else
                 $users = $post->users;
                 $usx=[];
+
+
                 foreach($users as $k=>$user){
                     unset($user->password);
                     unset($user->language);
@@ -213,17 +242,25 @@ class UserController extends Controller
                     unset($user->video);
                     $user->last_login = $user->updated_at;
                     unset($user->updated_at);
-                    $usx[$k] = $user;
+                    
                     $user->applied_at = $user->pivot->created_at;
                     $data = json_decode($user->pivot->data);
 
                     $user->accesscode= $data->accesscode;
-                    $user->post = $post;
-                    
+                    //$user->post = $post;
+                
                     unset($user->pivot);
+                    $usx[$k] = $user;
+
                    
                 }
+
+                unset($post->users);
+
+                $usx['job'] = $post;
+                
                 $users = json_encode($usx);
+             
                 header('Content-Type: application/json; charset=utf-8');
                 echo ($users);
                 exit();
