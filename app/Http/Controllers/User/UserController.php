@@ -153,13 +153,14 @@ class UserController extends Controller
                        // my jobs
                         foreach($user->posts as $k=>$p){
 
+                                $posts[$k]['id'] = $p->id;
                                 $posts[$k]['name'] = $p->title;
                                 $j = $user->posts->find($p->id);
                                 $posts[$k]['created_at'] = $j->created_at;
                         }
                         $user->myjobs = $posts;
                         $user->myjob_count = count($user->posts);
-                        
+
                     }
                     unset($user->posts);
                     $user = json_encode($user,JSON_PRETTY_PRINT);
