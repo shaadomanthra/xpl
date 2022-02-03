@@ -23,6 +23,7 @@ use PacketPrep\Models\Course\Course;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Dataentry\Tag;
 use PacketPrep\Models\Dataentry\Category;
+use PacketPrep\Models\Course\Practice;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
@@ -198,12 +199,38 @@ class UserController extends Controller
                         $course->tests = $course_data['tests'];
                     }
                     
-                    $prac = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
-                    foreach($usx as $k=>$u){
-                        $usx[$k]->practice = $prac[$u->id]; 
-                    }
+                    $prac = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->orderBy('created_at','desc')->get()->groupBy('user_id');
 
+                    $topics = [];
+                    $categories = Category::get();
+                    $user_data =[];
                    
+                    foreach($usx as $k=>$u){
+                        $pset = $prac[$u->id]->groupBy('category_id');
+                        $user_data['user_completed']=0;
+                        $user_data['total'] = 0;
+                        $user_data['percentage'] = 0;
+
+                        foreach($pset as $pid=>$p){
+                            $topic = $categories->find($pid);
+                            $usx[$k]->last_practiced_at = $p[0]->created_at;
+                            $topic_name = $topic->name;
+                            $topics[$topic_name]['user_completed'] = count($p); 
+                            $topics[$topic_name]['last_practiced_at'] = $p[0]->created_at;
+                            $user_data['user_completed'] = $user_data['user_completed'] + $topics[$topic_name]['user_completed'];
+                            $topics[$topic_name]['total'] = count($topic->questions);
+                            $user_data['total'] = $user_data['total'] + $topics[$topic_name]['total'];
+
+                        }
+
+                        $user_data['percentage'] = round($user_data['user_completed']/$user_data['total'] * 100,2);
+                        $usx[$k]->practice_track  = $topics;
+                        $usx[$k]->practice_percent  = $user_data;
+                        
+                      
+                    }
+                   
+
 
                 }else if($assessment){
                     $exam = Cache::get('test_'.$assessment);
