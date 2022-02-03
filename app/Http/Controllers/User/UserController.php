@@ -150,7 +150,6 @@ class UserController extends Controller
                     exit();
                 }else{
                     if($mode=='job'){
-                       
                        // my jobs
                         foreach($user->posts as $k=>$p){
 
@@ -159,8 +158,8 @@ class UserController extends Controller
                                 $posts[$k]['created_at'] = $j->created_at;
                         }
                         $user->myjobs = $posts;
-
-
+                        $user->myjob_count = count($user->posts);
+                        
                     }
                     unset($user->posts);
                     $user = json_encode($user,JSON_PRETTY_PRINT);
