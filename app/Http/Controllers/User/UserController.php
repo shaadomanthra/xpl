@@ -203,6 +203,8 @@ class UserController extends Controller
                         $course->exams = $course_data['exams'];
                         $course->tests = $course_data['tests'];
                     }
+
+                    
                     
                     $prac = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->orderBy('created_at','desc')->get()->groupBy('user_id');
 
@@ -220,12 +222,13 @@ class UserController extends Controller
 
                         foreach($pset as $pid=>$p){
                             $topic = $categories->find($pid);
+                            $cid = $topic->id;
                             $usx[$k]->last_practiced_at = $p[0]->created_at;
                             $topic_name = $topic->name;
                             $topics[$topic_name]['user_completed'] = count($p); 
                             $topics[$topic_name]['last_practiced_at'] = $p[0]->created_at;
                             $user_data['user_completed'] = $user_data['user_completed'] + $topics[$topic_name]['user_completed'];
-                            $topics[$topic_name]['total'] = count($topic->questions);
+                            $topics[$topic_name]['total'] = $course->categories->$cid->total;
                             $user_data['total'] = $user_data['total'] + $topics[$topic_name]['total'];
 
                         }
