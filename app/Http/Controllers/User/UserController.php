@@ -139,7 +139,7 @@ class UserController extends Controller
                 $user = User::where('email',$email)->first();
                 else if($user_id)
                 $user = User::where('id',$user_id)->first();
-            
+
                 unset($user->password);
                 unset($user->language);
                 unset($user->fluency);
@@ -212,7 +212,7 @@ class UserController extends Controller
                     $pset=[];
                    
                     foreach($usx as $k=>$u){
-                        if(isset($prac[$u->id]->groupBy('category_id')))
+                        if(isset($prac[$u->id]))
                         $pset = $prac[$u->id]->groupBy('category_id');
                         $user_data['user_completed']=0;
                         $user_data['total'] = 0;
