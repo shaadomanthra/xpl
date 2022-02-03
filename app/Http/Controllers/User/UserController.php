@@ -127,14 +127,19 @@ class UserController extends Controller
     public function apiuser(Request $request){
         $token = $request->get('token');
         $email = $request->get('email');
+        $user_id = $request->get('user_id');
         $info = $request->get('info');
         $job = $request->get('job');
         $practice = $request->get('practice');
         $assessment = $request->get('assessment');
         $mode=$request->get('mode');
         if($token=='ppofficerwx4356'){
-            if($email){
+            if($email || $user_id){
+                if($email)
                 $user = User::where('email',$email)->first();
+                else if($user_id)
+                $user = User::where('id',$user_id)->first();
+            
                 unset($user->password);
                 unset($user->language);
                 unset($user->fluency);
@@ -204,8 +209,10 @@ class UserController extends Controller
                     $topics = [];
                     $categories = Category::get();
                     $user_data =[];
+                    $pset=[];
                    
                     foreach($usx as $k=>$u){
+                        if(isset($prac[$u->id]->groupBy('category_id')))
                         $pset = $prac[$u->id]->groupBy('category_id');
                         $user_data['user_completed']=0;
                         $user_data['total'] = 0;
@@ -226,11 +233,7 @@ class UserController extends Controller
                         $user_data['percentage'] = round($user_data['user_completed']/$user_data['total'] * 100,2);
                         $usx[$k]->practice_track  = $topics;
                         $usx[$k]->practice_percent  = $user_data;
-                        
-                      
                     }
-                   
-
 
                 }else if($assessment){
                     $exam = Cache::get('test_'.$assessment);
