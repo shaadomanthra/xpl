@@ -5790,6 +5790,39 @@ class AssessmentController extends Controller
             }
     }
 
+
+    public function add_attempt($id){
+        $exam = Cache::get('test_'.$id);
+        if(!$exam){
+            $exam = Exam::where('slug',$id)->first();
+
+            if(is_numeric($id) && !$exam)
+            {
+                $exam = Exam::where('id',$id)->first();
+                return redirect()->route('assessment.show',$exam->slug);
+            }
+            
+            if(!$exam)
+                abort('403','Test not found');
+            $exam->sections = $exam->sections;
+            $exam->products = $exam->products;
+            $exam->product_ids = $exam->products->pluck('id')->toArray();
+            foreach($exam->sections as $m=>$section){
+                $exam->sections->questions = $section->questions;
+            }
+            Cache::forever('test_'.$id,$exam);
+
+
+        }
+        $code = explode(',',$exam->code);
+        if(is_array($code)){
+            $code = $code[0];
+        }
+        $this->authorize('update', $exam);
+      
+        return view('appl.exam.exam.add_attempt')->with('exam',$exam)->with('code',$code);
+    }
+
     public function show($id)
     {
         $filename = $id.'.json';

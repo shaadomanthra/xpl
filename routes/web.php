@@ -174,6 +174,9 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('/user_details_update', 'College\CampusController@user_details_update')
 			->name('user.details.update');
 
+	Route::get('/test/{test}/add_attempt', 'Exam\AssessmentController@add_attempt')
+	 ->name('test.attempt')->middleware('auth');
+
     Route::get('/test/{test}/analytics', 'College\CampusController@test_analytics')
 	 ->name('test.analytics')->middleware('auth');
 	Route::get('/exam/{test}/analytics', 'Exam\ExamController@test_analytics')

@@ -592,6 +592,30 @@ class QuestionController extends Controller
         $item['code'] = request()->get('codefragment_1');
         $item['accuracy'] = 0;
 
+
+        if(isset($request->all()['pdf_file'])){
+
+                $file      = $request->all()['pdf_file'];
+                $username = \auth::user()->username;
+                if($file->getClientOriginalExtension()=='pdf')
+                {
+                    $filepath = '/pdf_practice/'.$question->slug.'_'.$username.'.pdf';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
+
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                    
+                }else{
+                    flash('Only pdf format supported')->error();
+                    return redirect()->back();
+                }   
+
+                
+
+        }
+
         if(request()->get('delete')){
             $practice = Practice::where('user_id',\auth::user()->id)->where('qid',$id)->first();
             $practice->delete();
@@ -672,6 +696,11 @@ class QuestionController extends Controller
                     $practice->response = json_encode($item);
                     ($item['accuracy'])? $practice->accuracy  = 1:$practice->accuracy  = 0;
                     $practice->answer = strtoupper($question->answer);
+                }
+                else if($question->type=='eq'){
+                    $practice->response = strip_tags(request()->get('response'));
+                    $practice->answer='';
+                    $practice->accuracy=1;
                 }else{
                     $practice->response = strtoupper(request()->get('response'));
                     $practice->answer = strtoupper($question->answer);

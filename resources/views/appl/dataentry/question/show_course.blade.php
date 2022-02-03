@@ -43,7 +43,7 @@
 </div>
 @include('flash::message')
 
-<form method="post" action="{{route('course.question',[$project->slug,$category->slug,$question->id])}}" >
+<form method="post" action="{{route('course.question',[$project->slug,$category->slug,$question->id])}}" enctype="multipart/form-data" >
   <div class="row">
 
     <div class="col-md-9">
@@ -165,9 +165,53 @@
         	<div class="col-9 col-md-10"><div class="pt-1 e">{!! $question->e!!}</div></div>
         </div>
         @endif
+
+  @if($question->type =="eq")
+  <hr>
+    @if(!$details['response'])
+    <div class="mb-2">Enter your response below:</div>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" name="response"></textarea>
+    @else
+    <div class="mb-2"><b>Your Response:</b></div>
+    {!! nl2br($details['response']->response) !!}
+    @endif
+  @endif
+
+   @if($question->type == "updf")
+   <hr>
+    @if(!$details['response'])
+    <div class="mb-2">Upload your PDF:</div>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="pdf_file">
+    @else
+    <div class="mb-2"><b>Your Response:</b></div>
+     <style>
+      .pdfobject-container { height: 30rem; border: 1px solid rgba(0,0,0,.2); }
+      .toolbar {
+        display: none !important;
+      }
+      .end
+      {
+          display:none !important;    
+      }
+
+      .print
+      {
+          display:none !important;
+      }
+      </style>
+          <div class="pdfobject-container">
+      <div id="resume"></div>
+      </div>
+
+
+      <script src="{{ asset('js/pdf.js')}}"></script>
+      <script>PDFObject.embed("{{ Storage::disk('s3')->url('pdf_practice/'.$question->slug.'_'.\auth::user()->username.'.pdf')}}?time={{microtime()}}", "#resume");</script>
+    @endif
+  @endif
 @else
   @include('appl.dataentry.question.code_ques')
 @endif
+
 
         </div>
       </div>
