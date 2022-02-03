@@ -230,6 +230,7 @@ class UserController extends Controller
 
                         }
 
+                        if($user_data['total'])
                         $user_data['percentage'] = round($user_data['user_completed']/$user_data['total'] * 100,2);
                         $usx[$k]->practice_track  = $topics;
                         $usx[$k]->practice_percent  = $user_data;
