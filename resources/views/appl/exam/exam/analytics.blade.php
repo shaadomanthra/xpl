@@ -42,6 +42,7 @@
            @endif
 
            <a href="{{ route('test.report',$exam->slug)}}?removeduplicates=1&refresh=1 @if(request()->get('code'))&code={{request()->get('code')}}@endif" class="btn  btn-outline-secondary btn-sm "> Remove Duplicates</a>
+            <a href="{{ route('test.attempt',$exam->slug)}}" class="btn  btn-outline-secondary btn-sm "><i class="fa fa-plus-square"></i> Add Attempt</a>
 
           </p>
         </div>

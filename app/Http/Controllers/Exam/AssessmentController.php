@@ -6455,6 +6455,7 @@ class AssessmentController extends Controller
 
 
         if(!$tests_overall){
+            return redirect()->route('assessment.show',$slug);
             abort('403','Test not attempted');
         }
 
