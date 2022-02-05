@@ -16,15 +16,13 @@
 	</nav>
 </div>
           
-    <div class="row mt-md-3" >
+<div class="row mt-md-3" >
 	<div class="col-12 col-md-4 col-lg-4 mt-1">
 		<div class="border mb-3">
 		<h2 class="  p-4  mb-0" style="background: #eee;  border-bottom:1px solid #eee;height:120px;"> 
-			
 		      <div class="pt-4">{{ $course->name }}</div>
 		</h2>
 		<div class=" p-4 mb-3  bg-white " style="">
-
 			<div class=" mb-3" style="">
 			{!! $course->description !!}
 			@can('update',$course)
@@ -36,20 +34,35 @@
 				</a>
 			@endcan
 		</div>
-
 		@include('appl.course.course.blocks.access')
-			
 		</div>
 	</div>
+
+	@if(count($practice_set))
+	<div class="border mb-3">
+		<div class=" p-4 mb-3  bg-white " style="">
+			<div class=" mb-1" style="">
+			<h3><i class="fa fa-shield"></i> Leaderboard <span class="float-right"><i class="fa fa-bolt"></i> Streak</span></h3>
+			@if(!request()->get('batch'))
+			<h5 class="text-info">Batch : {{ strtoupper(\auth::user()->info) }}</h5>
+			@else
+			<h5 class="text-info">Batch : {{ strtoupper(request()->get('batch')) }}</h5>
+			@endif
+			<hr class="{{$j=1}}">
+			@foreach($practice_set as $uid=>$p)
+				<div @if($uid==\auth::user()->id) class="text-primary border p-2 rounded bg-light" @else class="  p-2 rounded" @endif> {{$j++}}. {{ $users->find($uid)->name }} <span class="float-right">{{ $p * 10 }}</span></div>
+			@endforeach
+		</div>
+		</div>
+	</div>
+	@endif
 
 	</div>		
 	
 
 	<div class="col-12 col-md-8 col-lg-8 mt-md-1">
-
 		@if(\auth::user())
 		@if($ques_count)
-
 		<div class="pl-3 mb-0 mb-md-3 mt-0 mt-md-0"> 
 			<div class="row">
 				

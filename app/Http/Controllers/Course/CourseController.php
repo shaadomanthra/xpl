@@ -101,8 +101,6 @@ class CourseController extends Controller
         }
         $this->authorize('create', $course);
 
-        
-
         $topic = request()->get('topic');
         $total = $course->ques_count;
         $category = Category::where('slug',$topic)->first();
@@ -129,9 +127,7 @@ class CourseController extends Controller
                 return User::where('info',$bno)->get();
             });
 
-
         $uids = $users->pluck('id')->toArray();
-
         if($category){
             $cid = $category->id;
             $total = $course->categories->$cid->total;
@@ -142,7 +138,6 @@ class CourseController extends Controller
         }
 
         
-
         return view('appl.course.course.analytics')
                 ->with('stub','Create')
                 ->with('editor','true')
@@ -270,8 +265,6 @@ class CourseController extends Controller
             
         }
 
-        
-        
         foreach($course->exams as $e){
                 array_push($exam_ids, $e->id); 
         }
@@ -345,7 +338,6 @@ class CourseController extends Controller
 
             $course->user = $dat; 
 
-
             //exams attempt
             $attempt = DB::table('tests_overall')
                     ->whereIn('test_id', $exam_ids)
@@ -357,12 +349,34 @@ class CourseController extends Controller
         }
 
         $course->entry = $entry;
-
         $course->keywords = $course->name;
         $course->description = strip_tags($course->description);
-    
-      
-      // dd($course->exams);
+
+        if(!request()->get('batch'))    
+            $bno = trim($user->info);
+        else
+            $bno = request()->get('batch');
+
+        $user_practice = [];
+        $users = [];
+
+        $practice_set=[];
+        if($bno){
+            $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
+                return User::where('info',$bno)->get();
+            });
+
+           
+            $uids = $users->pluck('id')->toArray();
+            $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+            foreach($user_practice as $uid=>$p){
+                $practice_set[$uid] = count($p); 
+            }
+            arsort($practice_set);
+
+        }
+        //dd($user_practice);
+        //dd($course->exams);
         if($course)
             return view('appl.course.course.show4')
                     ->with('course',$course)
@@ -371,7 +385,11 @@ class CourseController extends Controller
                     ->with('ques_count',$course->ques_count)
                     ->with('exams',$course->exams)
                     ->with('entry',$course->entry)
+                    ->with('user_practice',$user_practice)
+                    ->with('practice_set',$practice_set)
+                    ->with('users',$users)
                     ->with('nodes',$course->nodes);
+
         else
             abort(404);
     }
