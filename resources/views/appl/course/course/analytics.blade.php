@@ -44,8 +44,11 @@
             @foreach($users as $i=>$u)
               <tr>
                 <th scope="row">{{$i+1}}</th>
-                <td><a href="{{ route('course.question',[$course->slug,$category->slug,''])}}?student={{$u->username}}" class="d-print-none">{{$u->name}}</a>
-                  <span class="d-print-block d-none">{{$u->name}}</span>
+                <td>
+                  @if(isset($category->slug)) <a href="{{ route('course.question',[$course->slug,$category->slug,''])}}?student={{$u->username}}" class="d-print-none">{{$u->name}}</a><span class="d-print-block d-none">{{$u->name}}</span> @else
+                  <span class="d-block d-print-none">{{$u->name}}</span>
+                  @endif
+                  
                 </td>
                 <td>{{$u->info}}</td>
                 <td>
