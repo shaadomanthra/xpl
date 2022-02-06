@@ -44,9 +44,28 @@
 @include('flash::message')
 
 <form method="post" action="{{route('course.question',[$project->slug,$category->slug,$question->id])}}" enctype="multipart/form-data" >
+
+
   <div class="row">
 
     <div class="col-md-9">
+
+      @if(request()->get('student'))
+        <div class=" mb-3" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
+        <div class="p-3" >
+          <b class=""><i class="fa fa-user"></i> {{$user->name}}</b> 
+          @if(!$details['response'])
+              <span class="badge badge-warning">unattempted</span>
+          @else
+              <span class="badge badge-info">attempted</span>
+              <input type="hidden" name="delete" value="1">
+              <button type="submit" class="btn btn-lg btn-danger btn-sm float-md-right">
+          Delete Response
+      </button>
+          @endif
+        </div>
+      </div>
+      @endif
 
       @if($passage)
       <div class=" mb-3" style="background: #ddffef;border: 1px solid #caefdd;border-radius: 5px;">
@@ -58,6 +77,8 @@
         </div>
       </div>
       @endif
+
+
       <div class="card  mb-3">
         <div class="card-body ">
           
@@ -222,6 +243,7 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
     
     @if(!$details['response'])
+    @if(!request()->get('student'))
     <div class="card mb-3">
           <div class="card-body">
         <button type="submit" class="btn btn-lg btn-success ">
@@ -229,6 +251,7 @@
       </button>
     </div>
     </div>
+    @endif
     @endif
 
       @if($question->answer && $details['response'])

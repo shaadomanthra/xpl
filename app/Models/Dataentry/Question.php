@@ -70,7 +70,13 @@ class Question extends Model
     {
         if($id==null)
             $id = $this->id;
-        return DB::table('practices')->where('user_id', \auth::user()->id)->where('qid',$id)->first();
+
+        if(request()->get('student'))
+            $user = \Auth::user()->where('username',request()->get('student'))->first();
+        else
+        $user = \Auth::user();
+
+        return DB::table('practices')->where('user_id', $user->id)->where('qid',$id)->first();
     }
 
     public function color($response,$option){

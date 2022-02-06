@@ -591,6 +591,7 @@ class QuestionController extends Controller
         $item['response']='';
         $item['code'] = request()->get('codefragment_1');
         $item['accuracy'] = 0;
+        $username = \auth::user()->username;
 
 
         if(isset($request->all()['pdf_file'])){
@@ -617,6 +618,11 @@ class QuestionController extends Controller
         }
 
         if(request()->get('delete')){
+            $filepath = '/pdf_practice/'.$question->slug.'_'.$username.'.pdf';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
             $practice = Practice::where('user_id',\auth::user()->id)->where('qid',$id)->first();
             $practice->delete();
             return redirect()->route('course.question',[$project_slug,$category_slug,$id]);
@@ -777,6 +783,9 @@ class QuestionController extends Controller
 
 
 
+        if(request()->get('student'))
+            $user = \Auth::user()->where('username',request()->get('student'))->first();
+        else
         $user = \Auth::user();
         $entry=null;
         if($user){
@@ -935,7 +944,12 @@ class QuestionController extends Controller
                     if($details['response']){
                        
                         $details['response']->response = json_decode($details['response']->response);
+                        if(isset($details['response']->response->testcases))
                         $details['response']->response->testcases = json_decode($details['response']->response->testcases);
+                        else{
+                           // dd($details['response']->response);
+                           // $details['response']->response->testcases = null;//new Course();
+                        }
                         //dd($details['response']->response->testcases->response_1->stderr);
                     }
 
@@ -992,6 +1006,7 @@ class QuestionController extends Controller
                         ->with('passage',$passage)
                         ->with('details',$details)
                         ->with('code_ques',$code_ques)
+                        ->with('user',$user)
                         ->with('code',$code)
                         ->with('codes',$codes)
                         ->with('highlight',$highlight)

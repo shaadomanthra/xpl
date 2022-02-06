@@ -44,7 +44,9 @@
             @foreach($users as $i=>$u)
               <tr>
                 <th scope="row">{{$i+1}}</th>
-                <td>{{$u->name}}</td>
+                <td><a href="{{ route('course.question',[$course->slug,$category->slug,''])}}?student={{$u->username}}" class="d-print-none">{{$u->name}}</a>
+                  <span class="d-print-block d-none">{{$u->name}}</span>
+                </td>
                 <td>{{$u->info}}</td>
                 <td>
                   @if(isset($practice[$u->id]))

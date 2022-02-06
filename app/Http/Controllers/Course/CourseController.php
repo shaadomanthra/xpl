@@ -235,6 +235,7 @@ class CourseController extends Controller
             {
                 Cache::forget('course_'.$id);
                 $course->updatecache(null,$course);
+                session()->forget('bno');
                 flash('Article Pages Cache Updated')->success();
             }
 
@@ -352,10 +353,18 @@ class CourseController extends Controller
         $course->keywords = $course->name;
         $course->description = strip_tags($course->description);
 
-        if(!request()->get('batch'))    
+        $bno=null;
+
+        if(session()->get('bno'))
+            $bno = session()->get('bno');
+        else if(!request()->get('batch') && $user)    
             $bno = trim($user->info);
-        else
+        else{
             $bno = request()->get('batch');
+            session()->put('bno',$bno);
+        }
+
+
 
         $user_practice = [];
         $users = [];
@@ -366,15 +375,17 @@ class CourseController extends Controller
                 return User::where('info',$bno)->get();
             });
 
-           
             $uids = $users->pluck('id')->toArray();
             $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
             foreach($user_practice as $uid=>$p){
-                $practice_set[$uid] = count($p); 
+                $practice_set[$uid] = $p->sum('accuracy');
+
             }
             arsort($practice_set);
 
         }
+
+      
         //dd($user_practice);
         //dd($course->exams);
         if($course)
@@ -388,6 +399,7 @@ class CourseController extends Controller
                     ->with('user_practice',$user_practice)
                     ->with('practice_set',$practice_set)
                     ->with('users',$users)
+                    ->with('bno',$bno)
                     ->with('nodes',$course->nodes);
 
         else

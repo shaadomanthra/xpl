@@ -4,6 +4,8 @@
 @section('description', $course->description)
 @section('content')
 
+
+
 @include('flash::message')  
 <div class="d-none d-md-block">
 	<nav aria-label="breadcrumb ">
@@ -38,15 +40,33 @@
 		</div>
 	</div>
 
+	@if(\auth::user())
+ 		@if(\auth::user()->checkRole(['administrator','employee']))
+ 		 <form action="" class="card mb-3">
+         <div class="card-body form-group ">
+         	<h3>Admin tools</h3>
+         	<hr>
+			    <label for="exampleInputEmail1">Batch Number</label>
+			    <input type="text" class="form-control mb-3" id="exampleInputEmail1" aria-describedby="emailHelp" name="batch" placeholder="Enter batch number" value="{{ request()->get('batch') }}">
+			 
+			    <button type="submit" class="btn btn-primary">Submit</button>
+			    <a href="{{ route('course.show',$course->slug)}}?refresh=1" class="btn btn-outline-primary ml-2">Refresh Data</a>
+			  </div>
+
+     </form>
+    @endif
+  @endif
+
+
 	@if(count($practice_set))
 	<div class="border mb-3">
 		<div class=" p-4 mb-3  bg-white " style="">
 			<div class=" mb-1" style="">
 			<h3><i class="fa fa-shield"></i> Leaderboard <span class="float-right"><i class="fa fa-bolt"></i> Streak</span></h3>
 			@if(!request()->get('batch'))
-			<h5 class="text-info">Batch : {{ strtoupper(\auth::user()->info) }}</h5>
+			<h5 class="text-info">Batch : {{ strtoupper($bno)  }}</h5>
 			@else
-			<h5 class="text-info">Batch : {{ strtoupper(request()->get('batch')) }}</h5>
+			<h5 class="text-info">Batch : {{ strtoupper($bno)  }}</h5>
 			@endif
 			<hr class="{{$j=1}}">
 			@foreach($practice_set as $uid=>$p)
@@ -55,6 +75,25 @@
 		</div>
 		</div>
 	</div>
+	@else
+		@if(\auth::user())
+ 		@if(\auth::user()->checkRole(['administrator','employee']))
+ 		<div class="border mb-3">
+		<div class=" p-4 mb-3  bg-white " style="">
+			<div class=" mb-1" style="">
+			<h3><i class="fa fa-shield"></i> Leaderboard <span class="float-right"><i class="fa fa-bolt"></i> Streak</span></h3>
+			@if(!request()->get('batch'))
+			<h5 class="text-info">Batch : {{ strtoupper($bno) }}</h5>
+			@else
+			<h5 class="text-info">Batch : {{ strtoupper($bno) }}</h5>
+			@endif
+			<hr class="{{$j=1}}">
+			- No Data -
+		</div>
+		</div>
+	</div>
+ 		@endif
+ 		@endif
 	@endif
 
 	</div>		
@@ -68,7 +107,7 @@
 				
 				<div class="col-12 mb-3 mb-md-0 col-md-4"> 
 					<div class="mr-3">
-					<div class="row border  rounded p-2 pt-3 pb-3" style=";border:1px solid #8db8dc4d;">
+					<div class="row border  rounded p-2 pt-3 pb-3" style="background: white;border:1px solid white;">
 						<div class="col-4"><div class="mt-2"><i class="fa fa-font-awesome fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
 						<div class="col-8">
 						<div class="  " style="color: rgba(127, 166, 198, 0.93)">
@@ -82,7 +121,7 @@
 
 				<div class="col-12 mb-3 mb-md-0 col-md-4 "> 
 					<div class="mr-3 mr-md-2 ml-0 ml-md-1">
-					<div class="row  rounded p-2 pt-3 pb-3" style="border:1px solid #8db8dc4d;">
+					<div class="row  rounded p-2 pt-3 pb-3" style="background: white;border:1px solid #8db8dc4d;">
 						<div class="col-4"><div class="mt-2"><i class="fa fa-area-chart fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
 						<div class="col-8">
 						<div class="  " style="color: rgba(127, 166, 198, 0.93)">
@@ -100,7 +139,7 @@
 
 				<div class="col-12 mb-3 mb-md-0 col-md-4 "> 
 					<div class="mr-3 ml-0 ml-md-2">
-					<div class="row border  rounded p-2 pt-3 pb-3" style="border:1px solid #8db8dc4d;">
+					<div class="row border  rounded p-2 pt-3 pb-3" style="background: White;border:1px solid #8db8dc4d;">
 						<div class="col-4"><div class="mt-2"><i class="fa fa-clock-o fa-3x" style="color: rgba(127, 166, 198, 0.93)"></i></div></div>
 						<div class="col-8">
 						<div class="  " style="color: rgba(127, 166, 198, 0.93)">
@@ -181,7 +220,22 @@
 @if($exams) 
 @if(count($exams)!=0)
 		<div class=" ">
-			<h1 class="mb-4 mt-4 p-3 border rounded"> <i class="fa fas fa-gg"></i> Online Tests</h1>
+			<h1 class="mb-4 mt-4 p-3 border rounded"> <i class="fa fas fa-gg"></i> Online Tests
+
+				<span class="float-right">
+				  @if(\auth::user())
+           @if(\auth::user()->checkRole(['administrator','employee']))
+           	@if($bno)
+						<a href="{{ url('/performance') }}?course={{$course->slug}}&info={{$bno}}" class="btn btn-outline-primary btn-sm "> <i class="fa fas fa-bar-chart" ></i> All Tests</a>
+						@else
+						<a href="{{ url('/performance') }}?course={{$course->slug}}" class="btn btn-outline-primary btn-sm "> <i class="fa fas fa-bar-chart" ></i> All Tests</a>
+						@endif
+						@endif
+					@endif
+				</span>
+			</h1>
+
+
 
 
 			     
@@ -219,12 +273,16 @@
                   <a href="{{ route('assessment.analysis',$exam->slug) }}">
                   <button class="btn btn-outline-secondary btn-sm"> <i class="fa fas fa-bar-chart" ></i> Analysis</button>
                   </a>
-                  @endif
+          @endif
 
 
           @if(\auth::user())
            @if(\auth::user()->checkRole(['administrator','employee']))
-						<a href="{{ route('course.analytics',$course->slug)}}?exam={{$exam->slug}}" class="btn btn-outline-primary btn-sm "> <i class="fa fas fa-bar-chart" ></i> All</a>
+           	@if($bno)
+						<a href="{{ url('/performance') }}?exam={{$exam->slug}}&info={{$bno}}" class="btn btn-outline-primary btn-sm "> <i class="fa fas fa-bar-chart" ></i> All Users</a>
+						@else
+						<a href="{{ route('course.analytics',$course->slug)}}?exam={{$exam->slug}}" class="btn btn-outline-primary btn-sm "> <i class="fa fas fa-bar-chart" ></i> All Users</a>
+						@endif
 						@endif
 					@endif
       </td>

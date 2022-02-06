@@ -2,15 +2,18 @@
 @if($details['response'])
 
 <div class="">
-<h4>Your Code <span class="float-right">Time Spent: <span class="text-info">{{$details['response']->time}} sec</span> Execution Time: <span class="text-info">{{round($details['response']->response->testcases->response_1->time/1000,2)}} sec</span></span></h4>
+<h4>Your Code <span class="float-right">Time Spent: <span class="text-info">{{$details['response']->time}} sec</span> 
+  @if(isset($details['response']->response->testcases)) Execution Time: <span class="text-info">{{round($details['response']->response->testcases->response_1->time/1000,2)}} sec</span> @endif</span></h4>
 @if(isset($details['response']->response->code))
 <pre><code>
   {{$details['response']->response->code}}
 </code></pre>
 
 
-  <h5>Your Output @if($details['response']->response->accuracy) <span class="text-success"><i class="fa fa-check-circle"></i> correct</span> @else <span class="text-danger"><i class="fa fa-times-circle"></i> incorrect</span> @endif</h5><pre><code>@if($details['response']->response->testcases->response_1->stderr) {{$details['response']->response->testcases->response_1->stderr}}@elseif($details['response']->response->testcases->response_1->stdout){{$details['response']->response->testcases->response_1->stdout}}@endif
-</code></pre>
+  <h5>Your Output @if($details['response']->response->accuracy) <span class="text-success"><i class="fa fa-check-circle"></i> correct</span> @else <span class="text-danger"><i class="fa fa-times-circle"></i> incorrect</span> @endif</h5><pre>
+@if(isset($details['response']->response->testcases))
+    <code>@if($details['response']->response->testcases->response_1->stderr) {{$details['response']->response->testcases->response_1->stderr}}@elseif($details['response']->response->testcases->response_1->stdout){{$details['response']->response->testcases->response_1->stdout}}@endif
+</code>@endif</pre>
 
 
 <input type="hidden" name="delete" value="1">
