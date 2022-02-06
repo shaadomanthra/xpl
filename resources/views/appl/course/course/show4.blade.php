@@ -207,6 +207,10 @@
                      	@if($c->exam_id)
                      		@include('appl.course.course.blocks.exam_link')
                      	@endif
+
+                     	@if($categories->$cid->total!=0)
+                     		@include('appl.course.course.blocks.progress')
+                     	@endif
                    </li>
 
                      @endif	
