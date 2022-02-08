@@ -231,7 +231,10 @@ class Course extends Model
         if(!count($exams)){
              $exams = Exam::whereIn('slug',$exam_ids)->get()->keyBy('slug'); 
              $eids = $exams->pluck('id')->toArray();
+             if(\auth::user())
              $attempts = Tests_Overall::whereIn('test_id',$eids)->where('user_id',\auth::user()->id)->get()->keyBy('test_id');
+         else
+            $attempts = [];
            
         }
 
