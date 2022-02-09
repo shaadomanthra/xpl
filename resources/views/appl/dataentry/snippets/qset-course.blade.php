@@ -78,4 +78,17 @@
 @if(\auth::user()->checkRole(['administrator','employee']))
 
 <a href="{{ route('course.analytics',$details['course']->slug)}}?topic={{$category->slug}}" class="btn btn-primary w-100"> Check Analytics</a>
+
+<div class="card mt-4">
+	<div class="card-header">Batch <b>{{ strtoupper($bno) }}</b></div>
+<div class="card-body">
+
+@if(count($users))
+  @foreach($users as $u)
+		<a href="{{ route('course.question',[$project->slug,$category->slug,$q->id]) }}?student={{$u->username}}">{{$u->name}}</a> @if($u->practiced) <i class="fa fa-check-circle text-success"></i>  @else  <i class="fa fa-times-circle text-danger"></i>   @endif<br>
+	@endforeach
+@endif
+</div>
+</div>
+
 @endif

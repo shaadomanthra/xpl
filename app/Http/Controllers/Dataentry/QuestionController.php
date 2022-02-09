@@ -18,6 +18,7 @@ use PacketPrep\Models\Course\Practices_Course;
 use PacketPrep\Models\Course\Practices_Topic;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 use PDF;
 
 use DOMDocument;
@@ -819,6 +820,15 @@ class QuestionController extends Controller
         }
 
 
+        $bno=null;
+
+        $users = [];
+        if(session()->get('bno')){
+            $bno = session()->get('bno');
+             $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
+                return User::where('info',$bno)->get();
+            });
+        }
         
 
         
@@ -876,7 +886,15 @@ class QuestionController extends Controller
 
         if($id){
 
+            $pt = Practice::where('qid',$id)->whereIn('user_id',$users->pluck('id')->toArray())->get()->keyBy('user_id');
            
+            foreach($users as $ux=>$usx)
+            {
+                if(isset($pt[$usx->id]))
+                $users[$ux]->practiced = 1;
+                else
+                     $users[$ux]->practiced = 0;
+            }
             $question = Question::where('id',$id)->first();
             $question = $question->dynamic_variable_replacement();
 
@@ -998,6 +1016,8 @@ class QuestionController extends Controller
                 }
                 else
                     $code=0;
+
+           
                 return view('appl.dataentry.question.show_course')
                         ->with('project',$this->project)
                         ->with('mathjax',true)
@@ -1009,9 +1029,11 @@ class QuestionController extends Controller
                         ->with('user',$user)
                         ->with('code',$code)
                         ->with('codes',$codes)
+                        ->with('users',$users)
                         ->with('highlight',$highlight)
                         ->with('copy',1)
                         ->with('exam',$exam)
+                        ->with('bno',$bno)
                         ->with('category',$category)
                         ->with('questions',$questions);
             }else
