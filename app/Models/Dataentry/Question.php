@@ -9,6 +9,7 @@ use PacketPrep\Models\Dataentry\Tag;
 use PacketPrep\Models\Dataentry\Project;
 use PacketPrep\Models\Coures\Practice;
 use PacketPrep\Models\Exam\Section;
+use Illuminate\Support\Facades\Cache;
 
 class Question extends Model
 {
@@ -70,13 +71,26 @@ class Question extends Model
     {
         if($id==null)
             $id = $this->id;
-
-        if(request()->get('student'))
-            $user = \Auth::user()->where('username',request()->get('student'))->first();
+         $st = request()->get('student');
+        if(request()->get('refresh'))
+        {
+            Cache::forget('student_'.$st);
+        }
+       
+        if(request()->get('student')){
+            $user = Cache::remember('student_'.$st, 120, function() use ($st) { 
+                return \Auth::user()->where('username',$st)->first();
+            });
+        }
         else
-        $user = \Auth::user();
+            $user = \Auth::user();
 
-        return DB::table('practices')->where('user_id', $user->id)->where('qid',$id)->first();
+        $practices = Cache::remember('practices_'.$user->id, 120, function() use ($user) { 
+                return  DB::table('practices')->where('user_id', $user->id)->get();
+            });
+        
+
+        return $practices->where('qid',$id)->first();
     }
 
     public function color($response,$option){
