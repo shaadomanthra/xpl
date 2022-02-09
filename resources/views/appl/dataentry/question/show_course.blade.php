@@ -226,7 +226,7 @@
 
 
       <script src="{{ asset('js/pdf.js')}}"></script>
-      <script>PDFObject.embed("{{ Storage::disk('s3')->url('pdf_practice/'.$question->slug.'_'.\auth::user()->username.'.pdf')}}?time={{microtime()}}", "#resume");</script>
+      <script>PDFObject.embed("{{ Storage::disk('s3')->url('pdf_practice/'.$question->slug.'_'.$user->username.'.pdf')}}?time={{microtime()}}", "#resume");</script>
     @endif
   @endif
 @else

@@ -786,7 +786,7 @@ class QuestionController extends Controller
         if(request()->get('student'))
             $user = \Auth::user()->where('username',request()->get('student'))->first();
         else
-        $user = \Auth::user();
+            $user = \Auth::user();
         $entry=null;
         if($user){
                 $entry = DB::table('product_user')
