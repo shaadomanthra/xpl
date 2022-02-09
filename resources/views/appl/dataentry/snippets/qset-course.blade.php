@@ -85,7 +85,7 @@
 
 @if(count($users))
   @foreach($users as $u)
-		<a href="{{ route('course.question',[$project->slug,$category->slug,$q->id]) }}?student={{$u->username}}">{{$u->name}}</a> @if($u->practiced) <i class="fa fa-check-circle text-success"></i>  @else  <i class="fa fa-times-circle text-danger"></i>   @endif<br>
+		<a href="{{ route('course.question',[$project->slug,$category->slug,$question->id]) }}?student={{$u->username}}">{{$u->name}}</a> @if($u->practiced) <i class="fa fa-check-circle text-success"></i>  @else  <i class="fa fa-times-circle text-danger"></i>   @endif<br>
 	@endforeach
 @endif
 </div>
