@@ -85,6 +85,11 @@ class Question extends Model
         else
             $user = \Auth::user();
 
+        if(request()->get('refresh'))
+        {
+            Cache::forget('practices_'.$user->id);
+        }
+
         $practices = Cache::remember('practices_'.$user->id, 120, function() use ($user) { 
                 return  DB::table('practices')->where('user_id', $user->id)->get();
             });

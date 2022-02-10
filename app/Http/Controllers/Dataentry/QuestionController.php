@@ -587,6 +587,9 @@ class QuestionController extends Controller
         $category = Category::where('slug',$category_slug)->first();
         $question = Question::where('id',$id)->first();
 
+
+        
+       
         $request = request();
         $i=1;
         $item['response']='';
@@ -594,6 +597,8 @@ class QuestionController extends Controller
         $item['accuracy'] = 0;
         $username = \auth::user()->username;
 
+        Cache::forget('student_'.$username);
+         Cache::forget('practices_'.\auth::user()->id);
 
         if(isset($request->all()['pdf_file'])){
 
@@ -875,21 +880,19 @@ class QuestionController extends Controller
             }else{
                 $id=$category->questions()->wherePivot('intest','!=',1)->pluck('id')->toArray()[0];
 
-            }
-
-
-
-             
+            }    
         }
         
         
 
         if($id){
 
-            if($user->checkRole(['administrator']))
-            $pt = Practice::where('qid',$id)->whereIn('user_id',$users->pluck('id')->toArray())->get()->keyBy('user_id');
+
+            if(count($users))
+                $pt = Practice::where('qid',$id)->whereIn('user_id',$users->pluck('id')->toArray())->get()->keyBy('user_id');
             else
                 $pt=[];
+
             foreach($users as $ux=>$usx)
             {
                 if(isset($pt[$usx->id]))
@@ -1019,7 +1022,8 @@ class QuestionController extends Controller
                 else
                     $code=0;
 
-           
+               
+
                 return view('appl.dataentry.question.show_course')
                         ->with('project',$this->project)
                         ->with('mathjax',true)
