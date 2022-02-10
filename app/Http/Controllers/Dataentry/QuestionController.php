@@ -886,12 +886,14 @@ class QuestionController extends Controller
 
         if($id){
 
+            if($user->checkRole(['administrator']))
             $pt = Practice::where('qid',$id)->whereIn('user_id',$users->pluck('id')->toArray())->get()->keyBy('user_id');
-           
+            else
+                $pt=[];
             foreach($users as $ux=>$usx)
             {
                 if(isset($pt[$usx->id]))
-                $users[$ux]->practiced = 1;
+                    $users[$ux]->practiced = 1;
                 else
                      $users[$ux]->practiced = 0;
             }
