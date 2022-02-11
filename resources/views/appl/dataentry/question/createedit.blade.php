@@ -239,6 +239,10 @@ th{ border:1px solid silver; }
 <p class="mt-4"><b>Javascript</b></p>
 <textarea class="form-control " name="preset_javascript"  rows="5">@if($stub=='Create'){{ (old('preset_javascript')) ? old('preset_javascript') : '' }}@else{{ $codes->preset_javascript }}@endif</textarea>
           </div>
+          <div class="col-12 col-md-6">
+<p class="mt-4"><b>Constraints</b></p>
+<textarea class="form-control " name="constraints"  rows="5">@if($stub=='Create'){{ (old('constraints')) ? old('constraints') : '' }}@else{{ $codes->constraints }}@endif</textarea>
+          </div>
         </div>
 
       </div>

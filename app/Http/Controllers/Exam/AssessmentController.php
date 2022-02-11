@@ -976,6 +976,8 @@ class AssessmentController extends Controller
 
                             if(isset($keys[$q->id]['preset_python']))
                             $q->preset_python= $keys[$q->id]['preset_python']; 
+                            if(isset($keys[$q->id]['contraints']))
+                            $q->constraints= $keys[$q->id]['constraints'];  
                         }
                             //dd($q);
                             

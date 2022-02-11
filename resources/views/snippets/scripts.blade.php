@@ -1923,13 +1923,27 @@ function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$o
       $input = $(this).data('input');
       $url= $(this).data('url');
       $stop= $(this).data('stop');
+      $constraints= $(this).data('constraints');
 
+      
 
       var editor_ = editor_array[$name];
 
       var code = editor_.getValue();
       $('.code_'+$qno).val(code);
       $('.codefragment_'+$qno).val(code);
+
+      if($constraints){
+        for (var property in $constraints) {
+          var p = property.replace(/ /g, "").toLowerCase();
+          var c = code.replace(/ /g, "").toLowerCase();
+          if(!c.includes(p)){
+            alert($constraints[property]);
+            return;
+          }
+        }
+      }
+      
       if(!$('.s'+$qno).hasClass('qblue-border'))
       $('.s'+$qno).addClass('qblue-border');
       

@@ -24,7 +24,8 @@
 @endif
 </div>
 @else
-<span class="{{$i=0}}"></span>
+<span class="{{$i=0}} " ></span>
+
 @if(!$question->b)
 
 
@@ -49,7 +50,7 @@
 // The output string has to exactly match with the execpted output @endif @endif</textarea>
 
   @if($question->a)
-  <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-testcase="1" data-qslug="{{$question->slug}}" data-qno="{{($i+1)}}" data-url="{{ route('runcode') }}" data-lang="@if(isset($dlang)){{$dlang}}@else clang @endif" data-sno="{{($i+1)}}" data-name="code_{{($i+1)}}" data-test="{{$exam->slug}}" data-c="1">Compile & Run</button>
+  <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-testcase="1" data-qslug="{{$question->slug}}" data-qno="{{($i+1)}}" data-url="{{ route('runcode') }}" data-lang="@if(isset($dlang)){{$dlang}}@else clang @endif" data-sno="{{($i+1)}}" data-name="code_{{($i+1)}}" data-test="{{$exam->slug}}" data-c="1"  data-constraints="{{$codes['constraints']}}">Compile & Run</button>
  
   <img class="loading loading_{{($i+1)}}" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
   @endif
@@ -74,7 +75,7 @@
     @endif
   @else
     @if($question->a)
-    <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-qslug="{{$question->slug}}" data-test="{{$exam->slug}}" data-testcase="1" data-qno="{{($i+1)}}" data-sno="{{($i+1)}}"  data-url="{{ route('runcode') }}" data-stop="{{ route('stopcode') }}" data-lang="@if($question->b=='c' || $question->b=='cpp')clang @else {{$question->b}}@endif" data-name="code_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-c="@if($question->b=='c') 1 @else 0 @endif" data-input="">Compile & Run </button>
+    <button type="button" class="btn btn-lg btn-primary btn-sm mt-4 runcode runcode_{{($i+1)}}" data-qslug="{{$question->slug}}" data-test="{{$exam->slug}}" data-testcase="1" data-qno="{{($i+1)}}" data-sno="{{($i+1)}}"  data-url="{{ route('runcode') }}" data-stop="{{ route('stopcode') }}" data-lang="@if($question->b=='c' || $question->b=='cpp')clang @else {{$question->b}}@endif" data-name="code_{{($i+1)}}" data-namec="{{\auth::user()->username}}_{{$exam->slug}}_{{($i+1)}}" data-c="@if($question->b=='c') 1 @else 0 @endif" data-input="" data-constraints="{{$codes['constraints']}}">Compile & Run </button>
    
     <img class="loading loading_{{($i+1)}}" src="{{asset('img/loading.gif')}}" style="width:80px;padding-left:30px;"/>
     @endif

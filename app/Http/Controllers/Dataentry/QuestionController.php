@@ -145,7 +145,7 @@ class QuestionController extends Controller
 
         $testcases =null;           
 
-        $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
+        $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
          $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b","7"=>"b"];
 
          return view('appl.dataentry.question.createedit')
@@ -1017,13 +1017,15 @@ class QuestionController extends Controller
                     if(!isset($codes['output'])){
                         $codes['output'] = $testcases['out_1'];
                     }
+                     $codes['constraints']=null;
+                    if(isset($question->d->constraints))
+                        $codes['constraints'] = $question->d->constraints;
 
                 }
                 else
                     $code=0;
 
-               
-
+                
                 return view('appl.dataentry.question.show_course')
                         ->with('project',$this->project)
                         ->with('mathjax',true)
@@ -1484,7 +1486,7 @@ class QuestionController extends Controller
 
         $testcases = array("in_1"=>"","in_2"=>"","in_3"=>"","in_4"=>"","in_5"=>"","out_1"=>"","out_2"=>"","out_3"=>"","out_4"=>"","out_5"=>"");
 
-        $cds = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
+        $cds = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
         $codes = (object)[];
         if($question->d){
             if(strpos($question->d,'{') !== false){
@@ -1499,9 +1501,9 @@ class QuestionController extends Controller
                 }
             }
             if(!$codes)
-                $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
+                $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
         }else{
-            $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
+            $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
         }
         
 
@@ -1624,6 +1626,7 @@ class QuestionController extends Controller
             $ps['preset_java'] = $request->get('preset_java');
             $ps['preset_javascript'] = $request->get('preset_javascript');
             $ps['preset_python'] = $request->get('preset_python');
+            $ps['constraints'] = $request->get('constraints');
             
 
             $ps['codefragment_1'] = $request->get('codefragment_1');
