@@ -59,6 +59,7 @@
 
 
 	@if(count($practice_set))
+	@if(\auth::user())
 	<div class="border mb-3">
 		<div class=" p-4 mb-3  bg-white " style="">
 			<div class=" mb-1" style="">
@@ -75,6 +76,7 @@
 		</div>
 		</div>
 	</div>
+	@endif
 	@else
 		@if(\auth::user())
  		@if(\auth::user()->checkRole(['administrator','employee']))

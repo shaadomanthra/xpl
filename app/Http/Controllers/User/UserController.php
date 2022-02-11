@@ -123,6 +123,239 @@ class UserController extends Controller
        
     }
 
+    public  function agreement_list(Request $request){
+
+        $users = User::where('info',$info)->get();
+                 $uids = $users->pluck('id')->toArray();
+                 $usx=[];
+                 foreach($users as $k=>$user){
+                    unset($user->password);
+                    unset($user->language);
+                    unset($user->fluency);
+                    unset($user->confidence);
+                    unset($user->personality);
+                    unset($user->video);
+                    $user->last_login = $user->updated_at;
+                    unset($user->updated_at);
+                    $usx[$k] = $user;
+                }
+                
+        $username = $user->username;
+        $status = 0; 
+        $photo = 0;
+        $filepath = '/agreement/agreement_'.$username.'.pdf';
+        $agreement = Storage::disk('s3')->url($filepath);
+
+        $filepath = '/agreement/aadhar_student_'.$username.'.pdf';
+        $aadhar_student = Storage::disk('s3')->url($filepath);
+
+        $filepath = '/agreement/aadhar_parent_'.$username.'.pdf';
+        $aadhar_parent = Storage::disk('s3')->url($filepath);
+
+
+        $filepath = '/agreement/photo_'.$username.'.png';
+        $photo_png = Storage::disk('s3')->url($filepath);
+        $filepath = '/agreement/photo_'.$username.'.jpg';
+        $photo_jpg = Storage::disk('s3')->url($filepath);
+        $filepath = '/agreement/photo_'.$username.'.jpeg';
+        $photo_jpeg = Storage::disk('s3')->url($filepath);
+        if($photo_png)
+            $photo  = $photo_png;
+        else if($photo_jpg)
+            $photo = $photo_jpg;
+        else if($photo_jpeg)
+            $photo = $photo_jpeg;
+
+        if($photo && $agreement && $aadhar_parent && $aadhar_student){
+            $status = 1;
+            $token = $request->get('token');
+            if($token=='ppofficerwx4356'){
+                $data['agreement'] = $agreement;
+                $data['aadhar_student'] = $aadhar_student;
+                $data['aadhar_parent'] = $aadhar_parent;
+                $data['photo'] = $photo;
+                return $data;
+            }
+        }
+    }
+
+    public function agreement(Request $request){
+
+
+        if($request->get('username'))
+            $user = User::where('username',$request->get('username'))->first();
+        else
+            $user = \auth::user();
+        
+        $username = $user->username;
+        $status = 0; 
+        $photo = 0;
+        $filepath = '/agreement/agreement_'.$username.'.pdf';
+        $agreement = Storage::disk('s3')->url($filepath);
+
+        $filepath = '/agreement/aadhar_student_'.$username.'.pdf';
+        $aadhar_student = Storage::disk('s3')->url($filepath);
+
+        $filepath = '/agreement/aadhar_parent_'.$username.'.pdf';
+        $aadhar_parent = Storage::disk('s3')->url($filepath);
+
+
+        $filepath = '/agreement/photo_'.$username.'.png';
+        $photo_png = Storage::disk('s3')->url($filepath);
+        $filepath = '/agreement/photo_'.$username.'.jpg';
+        $photo_jpg = Storage::disk('s3')->url($filepath);
+        $filepath = '/agreement/photo_'.$username.'.jpeg';
+        $photo_jpeg = Storage::disk('s3')->url($filepath);
+        if($photo_png)
+            $photo  = $photo_png;
+        else if($photo_jpg)
+            $photo = $photo_jpg;
+        else if($photo_jpeg)
+            $photo = $photo_jpeg;
+
+        if($photo && $agreement && $aadhar_parent && $aadhar_student){
+            $status = 1;
+            $token = $request->get('token');
+            if($token=='ppofficerwx4356'){
+                $data['agreement'] = $agreement;
+                $data['aadhar_student'] = $aadhar_student;
+                $data['aadhar_parent'] = $aadhar_parent;
+                $data['photo'] = $photo;
+
+                $data = json_encode($data,JSON_PRETTY_PRINT);
+                header('Content-Type: application/json; charset=utf-8');
+                echo ($data);
+                exit();
+            }
+        }
+            
+        
+         /* If image is given upload and store path */
+         if(isset($request->all()['file_agreement'])){
+            $file      = $request->all()['file_agreement'];
+            
+            if($file->getClientOriginalExtension()=='pdf')
+            {
+                $filepath = '/agreement/agreement_'.$username.'.pdf';
+
+                if(Storage::disk('s3')->exists($filepath)){
+                    Storage::disk('s3')->delete($filepath);
+                }
+
+                Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                flash('Agreement PDF Successfully updated')->success();
+
+                return redirect()->route('profile.agreement');
+
+            }else{
+                flash('Only pdf format supported for Agreement')->error();
+                return redirect()->back();
+            }   
+        }
+
+             if(isset($request->all()['file_aadhar_student'])){
+
+                $file      = $request->all()['file_aadhar_student'];
+                $username = \auth::user()->username;
+                if($file->getClientOriginalExtension()=='pdf')
+                {
+                    $filepath = '/agreement/aadhar_student_'.$username.'.pdf';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
+                    
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                    flash('Student Aadhar PDF Successfully updated')->success();
+                    return redirect()->route('profile.agreement');
+                    
+                }else{
+                    flash('Only pdf format supported for Student Aadhar')->error();
+                    return redirect()->back();
+                }   
+
+                
+
+            }
+
+              if(isset($request->all()['file_aadhar_parent'])){
+
+                $file      = $request->all()['file_aadhar_parent'];
+                $username = \auth::user()->username;
+                if($file->getClientOriginalExtension()=='pdf')
+                {
+                    $filepath = '/agreement/aadhar_parent_'.$username.'.pdf';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
+                    
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                    flash('Parent Aadhar PDF Successfully updated')->success();
+                    return redirect()->route('profile.agreement');
+                    
+                }else{
+                    flash('Only pdf format supported for Parent Aadhar')->error();
+                    return redirect()->back();
+                }   
+
+                
+
+            }
+
+              if(isset($request->all()['file_photo'])){
+
+                $file      = $request->all()['file_photo'];
+                $username = \auth::user()->username;
+                if($file->getClientOriginalExtension()=='png')
+                {
+                    $filepath = '/agreement/photo_'.$username.'.png';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
+                    
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                    flash('Student Photo  Successfully updated')->success();
+                    return redirect()->route('profile.agreement');
+                    
+                }else if($file->getClientOriginalExtension()=='jpg')
+                {
+                    $filepath = '/agreement/photo_'.$username.'.jpg';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
+                    
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                    flash('Student Photo Successfully updated')->success();
+                    return redirect()->route('profile.agreement');
+                    
+                }else if($file->getClientOriginalExtension()=='jpeg')
+                {
+                    $filepath = '/agreement/photo_'.$username.'.jpeg';
+            
+                    if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+                    }
+                    
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                    flash('Student Photo Successfully updated')->success();
+                    return redirect()->route('profile.agreement');
+                    
+                }
+                else{
+                    flash('Only png & jpg format supported for Photo')->error();
+                    return redirect()->back();
+                }   
+
+            }
+
+
+        return view('appl.user.agreement')->with('user',$user)->with('status',$status);
+
+    }
+
 
     public function apiuser(Request $request){
         $token = $request->get('token');
