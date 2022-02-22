@@ -30,6 +30,6 @@ user-select: none;
 
 @endif
 
-@if(isset($codes['output']))
+@if(isset($codes['output']) && $question->b!='nolang')
 <div class="card mt-2"><div class="card-header">Expected Output</div><div class="card-body">{!! htmlentities($codes['output']) !!}</div></div>
 @endif

@@ -145,7 +145,7 @@ class QuestionController extends Controller
 
         $testcases =null;           
 
-        $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
+        $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","preset_nolang"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","codefragment_8"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>"","output_8"=>""];
          $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b","7"=>"b"];
 
          return view('appl.dataentry.question.createedit')
@@ -519,6 +519,7 @@ class QuestionController extends Controller
 
             $codes = json_decode($question->d);
 
+
             $passage = Passage::where('id',$question->passage_id)->first();
             $questions = Question::select('id','status')
                                 ->where('project_id',$this->project->id)
@@ -543,6 +544,8 @@ class QuestionController extends Controller
 
                 }
             } 
+
+
             return  view('appl.dataentry.question.show')
                     ->with('project',$this->project)
                     ->with('mathjax',true)
@@ -591,6 +594,8 @@ class QuestionController extends Controller
         
        
         $request = request();
+
+
         $i=1;
         $item['response']='';
         $item['code'] = request()->get('codefragment_1');
@@ -635,13 +640,22 @@ class QuestionController extends Controller
         }
         if(request()->get('codefragment_1')){
 
+
                  $mdata = null;
                 if(isset(json_decode($request->get('out_'.$i),true)['response_1']['error'])){
                     $item['testcases']  = $request->get('out_'.$i);     
 
                 }else{
-                    if(!$request->get('out_'.$i.'_2') && $request->get('out_'.$i.'_1'))
+                    if(!$request->get('out_'.$i.'_2') && !$request->get('out_'.$i.'_1'))
                     {
+
+                            $item['accuracy']=1;
+
+                        //dd($mdata);
+                    }
+                    elseif(!$request->get('out_'.$i.'_2') && $request->get('out_'.$i.'_1'))
+                    {
+
                         $mjson = json_decode($request->get('out_'.$i.'_1'),true);
                       
                         if($mjson){
@@ -655,6 +669,7 @@ class QuestionController extends Controller
                             $item['accuracy']=1;
 
                     }else{
+
                         $correct=0;
                         for($m=1;$m<6;$m++){
                             $mjson = json_decode($request->get('out_'.$i.'_'.$m),true);
@@ -695,7 +710,6 @@ class QuestionController extends Controller
         }
 
 
-
         if($question){
 
             $practice = Practice::where('user_id',\auth::user()->id)->where('qid',$id)->first();
@@ -705,6 +719,10 @@ class QuestionController extends Controller
                 $practice->course_id = request()->get('course_id');
                 $practice->user_id = \auth::user()->id;
                 if(request()->get('codefragment_1')){
+                    $practice->response = json_encode($item);
+                    ($item['accuracy'])? $practice->accuracy  = 1:$practice->accuracy  = 0;
+                    $practice->answer = strtoupper($question->answer);
+                }else if(request()->get('dynamic_1')){
                     $practice->response = json_encode($item);
                     ($item['accuracy'])? $practice->accuracy  = 1:$practice->accuracy  = 0;
                     $practice->answer = strtoupper($question->answer);
@@ -976,7 +994,6 @@ class QuestionController extends Controller
                         //dd($details['response']->response->testcases->response_1->stderr);
                     }
 
-
                     if($question->b=='c')
                     {
                      $codes['codefragment'] = $question->d->codefragment_1;
@@ -1002,6 +1019,11 @@ class QuestionController extends Controller
                     {
                      $codes['codefragment'] = $question->d->codefragment_5;
                      $codes['output'] = $question->d->output_5;
+                    }
+                    if($question->b=='nolang')
+                    {
+                     $codes['codefragment'] = $question->d->codefragment_8;
+                     $codes['output'] = $question->d->output_8;
                     }
                     if($question->b=='python')
                     {
@@ -1144,6 +1166,8 @@ class QuestionController extends Controller
                         $details['qno'] = $key + 1 ;
                     }
                 } 
+
+
 
                 return view('appl.dataentry.question.show')
                         ->with('project',$this->project)
@@ -1486,7 +1510,7 @@ class QuestionController extends Controller
 
         $testcases = array("in_1"=>"","in_2"=>"","in_3"=>"","in_4"=>"","in_5"=>"","out_1"=>"","out_2"=>"","out_3"=>"","out_4"=>"","out_5"=>"");
 
-        $cds = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
+        $cds = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","preset_nolang"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","codefragment_8"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>"","output_8"=>""];
         $codes = (object)[];
         if($question->d){
             if(strpos($question->d,'{') !== false){
@@ -1501,9 +1525,9 @@ class QuestionController extends Controller
                 }
             }
             if(!$codes)
-                $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
+                $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","preset_nolang"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","codefragment_8"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>"","output_8"=>""];
         }else{
-            $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>""];
+            $codes = (object)["preset_generic"=>"","preset_c"=>"","preset_cpp"=>"","preset_csharp"=>"","preset_java"=>"","preset_python"=>"","preset_javascript"=>"","preset_nolang"=>"","constraints"=>"","codefragment_1"=>"","codefragment_2"=>"","codefragment_3"=>"","codefragment_4"=>"","codefragment_5"=>"","codefragment_6"=>"","codefragment_7"=>"","codefragment_8"=>"","output_1"=>"","output_2"=>"","output_3"=>"","output_4"=>"","output_5"=>"","output_6"=>"","output_7"=>"","output_8"=>""];
         }
         
 
@@ -1529,8 +1553,10 @@ class QuestionController extends Controller
             }
         }
 
-        $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b","7"=>"b"];
+        $code_ques=["1"=>"a","2"=>"b","3"=>"b","4"=>"b","5"=>"b","6"=>"b","7"=>"b","8"=>"b"];
         $question->tags = $question->tags->pluck('id')->toArray();         
+
+     
 
         if($question)
             return view('appl.dataentry.question.createedit')
@@ -1626,6 +1652,7 @@ class QuestionController extends Controller
             $ps['preset_java'] = $request->get('preset_java');
             $ps['preset_javascript'] = $request->get('preset_javascript');
             $ps['preset_python'] = $request->get('preset_python');
+            $ps['preset_nolang'] = $request->get('preset_nolang');
             $ps['constraints'] = $request->get('constraints');
             
 
@@ -1636,6 +1663,8 @@ class QuestionController extends Controller
             $ps['codefragment_5'] = $request->get('codefragment_5');
             $ps['codefragment_6'] = $request->get('codefragment_6');
             $ps['codefragment_7'] = $request->get('codefragment_7');
+            $ps['codefragment_8'] = $request->get('codefragment_8');
+
 
             $ps['output_1'] = $request->get('1');
             $ps['output_2'] = $request->get('2');
@@ -1644,6 +1673,10 @@ class QuestionController extends Controller
             $ps['output_5'] = $request->get('5');
             $ps['output_6'] = $request->get('6');
             $ps['output_7'] = $request->get('7');
+            if($request->get('8'))
+            $ps['output_8'] = $request->get('8');
+            else
+            $ps['output_8'] = $request->get('codefragment_8');  
 
             if(trim($request->get('preset_generic')))
                 $question->c = $request->get('preset_generic');

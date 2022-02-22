@@ -295,7 +295,7 @@
       @endif
       @else
 
-      @if($details['response'])
+      @if($details['response'] )
       @include('appl.dataentry.question.code_sol')
       @endif
 

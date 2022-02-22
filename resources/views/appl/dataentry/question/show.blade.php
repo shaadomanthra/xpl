@@ -213,6 +213,9 @@
                     <li class="nav-item">
                       <a class="nav-link @if($question->b=='python') active @endif" id="python-tab" data-toggle="tab" href="#python" role="tab" aria-controls="python" @if($question->b=='python') aria-selected="true" @else aria-selected="false" @endif>Python</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link @if($question->b=='nolang') active @endif" id="cnolang-tab" data-toggle="tab" href="#cnolang" role="tab" aria-controls="cnolang" @if($question->b=='nolang') aria-selected="true" @else aria-selected="false" @endif>Nolang</a>
+                    </li>
                   </ul>
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade  @if($question->b=='c') show active  @endif" id="c" role="tabpanel" aria-labelledby="home-tab">
@@ -232,6 +235,9 @@
                       </div>
                        <div class="tab-pane fade @if($question->b=='python') show active  @endif" id="python" role="tabpanel" aria-labelledby="python-tab">
                          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_python) !!}</code></pre>
+                       </div>
+                       <div class="tab-pane fade @if($question->b=='nolang') show active  @endif" id="cnolang" role="tabpanel" aria-labelledby="cnolang-tab">
+                         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_nolang) !!}</code></pre>
                        </div>
                   </div>
               @endif
@@ -316,6 +322,9 @@
                     <li class="nav-item">
                       <a class="nav-link" id="cpython-tab" data-toggle="tab" href="#cpython" role="tab" aria-controls="cpython" aria-selected="false">Python</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="nolang-tab" data-toggle="tab" href="#nolang" role="tab" aria-controls="nolang" aria-selected="false">Nolang</a>
+                    </li>
                   </ul>
 
 <div class="tab-content" id="myTabContent">
@@ -346,6 +355,12 @@
         <div class="tab-pane fade" id="cpython" role="tabpanel" aria-labelledby="cpython-tab">
          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_6) !!}</code></pre>
           <div class="card"><div class="card-body">{!! htmlentities($codes->output_6) !!}</div></div>
+        </div>
+         <div class="tab-pane fade" id="nolang" role="tabpanel" aria-labelledby="nolang-tab">
+          @if(isset($codes->codefragment_8))
+         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_8) !!}</code></pre>
+          <div class="card"><div class="card-body">{!! htmlentities($codes->output_8) !!}</div></div>
+          @endif
         </div>
 </div>
 

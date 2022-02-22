@@ -199,6 +199,7 @@ th{ border:1px solid silver; }
      <option value="swift" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='SWIFT') selected @endif @endif >swift</option>
      <option value="bash" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='BASH') selected @endif @endif >bash</option>
      <option value="sql" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='SQL') selected @endif @endif >SQL</option>
+     <option value="nolang" @if(isset($question)) @if(strtoupper(strip_tags($question->b))=='NOLANG') selected @endif @endif >NoLang</option>
   </select>
   <p class="mt-4"><b>Note:</b><br> if -NA- is selected, user will have the choice to select his desired language to write the code. And if a specific language is selected, user has to program only in the specified language.</p>
       </div>
@@ -238,6 +239,10 @@ th{ border:1px solid silver; }
           <div class="col-12 col-md-6">
 <p class="mt-4"><b>Javascript</b></p>
 <textarea class="form-control " name="preset_javascript"  rows="5">@if($stub=='Create'){{ (old('preset_javascript')) ? old('preset_javascript') : '' }}@else{{ $codes->preset_javascript }}@endif</textarea>
+          </div>
+          <div class="col-12 col-md-6">
+<p class="mt-4"><b>Nolang</b></p>
+<textarea class="form-control " name="preset_nolang"  rows="5">@if($stub=='Create'){{ (old('preset_nolang')) ? old('preset_nolang') : '' }}@else{{ $codes->preset_nolang }}@endif</textarea>
           </div>
           <div class="col-12 col-md-6">
 <p class="mt-4"><b>Constraints</b></p>

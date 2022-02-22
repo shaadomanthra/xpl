@@ -1780,6 +1780,21 @@ function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
 }
 
 function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$output){
+
+  if($lang=='nolang'){
+    data = {'response':{'stderr':'','stdout':code,'time':'1'},'pass':1,'lang':'nolang'};
+    if(data.pass == 1){
+      $test1 = '<p class="mb-2"><b>Testcase :</b> <i class="fa fa-check-circle text-success"></i> pass</p>';
+    }
+    $('.output_testcase_'+$qn).html('<div class="p-3 rounded border">'+$test1+'</div>');
+    $('.final_response_'+$qn).html(data.stdout);
+    $('.output_'+$qn).html(code);
+    $('.input_'+$qn).attr('value',code);
+
+    $('.loading').hide();
+    $('.loading_'+$qn).hide();
+    return data;
+  }
  $.ajax({
           type : 'get',
           url : $url+'?time='+ new Date().getTime(),
@@ -1910,6 +1925,100 @@ function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$o
         });
             
 }
+
+ $('body').on('click','.runcode5',function(){
+      $qn = $qno = $(this).data('qno');
+      $lang = $(this).data('lang');
+      console.log($lang);
+      $name = $(this).data('name');
+      $test = $(this).data('test');
+      $qslug = $(this).data('qslug');
+      $testcase = parseInt($(this).data('testcase'));
+      $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
+      $c = ($(this).data('c'))?$(this).data('c'):null;
+      $input = $(this).data('input');
+      $url= $(this).data('url');
+      $stop= $(this).data('stop');
+      $constraints= $(this).data('constraints');
+
+      
+
+      var editor_ = editor_array[$name];
+
+      var code = editor_.getValue();
+      $('.code_'+$qno).val(code);
+      $('.codefragment_'+$qno).val(code);
+
+      if($constraints){
+        for (var property in $constraints) {
+          var p = property.replace(/ /g, "").replace(/(\r\n|\n|\r)/gm, "").toLowerCase();
+          var c = code.replace(/ /g, "").replace(/(\r\n|\n|\r)/gm, "").toLowerCase();
+          console.log(p);
+          console.log(c);
+          if(!c.includes(p)){
+            alert($constraints[property]);
+            return;
+          }else{
+             $test1 = '<div class="output_testcase_'+$qn+'_t1"><p class="mb-2"><b>Testcase :</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
+             $('.output_testcase_'+$qn).html('<div class="py-3">'+$test1+'</div>');
+
+            $('.final_response_'+$qn).html(c);
+          }
+        }
+      }
+
+      return;
+      
+      if(!$('.s'+$qno).hasClass('qblue-border'))
+      $('.s'+$qno).addClass('qblue-border');
+      
+      $('.loading_'+$qno).show();
+      // setTimeout(function(){
+      //   $.get($stop,{'name':$namec}, function(data, status){
+      //   console.log(data);
+      //   console.log('Code execution stopped');
+      //   });
+      // }, 5000);
+
+
+
+      if(!$('.runcode_'+$qno).hasClass('disabled')){
+        $(this).addClass('disabled');
+
+        $lang = $lang.trim();
+       console.log('sent - '+$lang);
+        if($lang=='c'|| $lang=='cpp'|| $lang=='clang' || $lang=='csharp' || $lang=='java' || $lang=='python' || $lang=='javascript')
+        {
+          if($lang=='c' || $lang=='cpp')
+            $lang ='clang';
+          console.log('sent - '+$lang);
+          $url= 'https://stag.cmplr.in/run';
+          if($testcase==3){
+
+            for(i=1;i<=5;i++){
+              ajaxrun($url,code,$lang,$c,$input,$namec,i,$test,$qslug,$qn,i,0);
+            }
+          }else{
+            ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,1,1);
+          }
+        }
+        else if($lang=='nolang'){
+          $output = $(this).data('output');
+          ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$output);
+        }
+        else if($lang=='sql'){
+          $output = $(this).data('output');
+          ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$output);
+        }
+        else{
+          ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn);
+        }
+        
+        
+      }
+
+    }); 
+
  $('body').on('click','.runcode',function(){
       $qn = $qno = $(this).data('qno');
       $lang = $(this).data('lang');
@@ -1935,8 +2044,10 @@ function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$o
 
       if($constraints){
         for (var property in $constraints) {
-          var p = property.replace(/ /g, "").toLowerCase();
-          var c = code.replace(/ /g, "").toLowerCase();
+          var p = property.replace(/ /g, "").replace(/(\r\n|\n|\r)/gm, "").toLowerCase();
+          var c = code.replace(/ /g, "").replace(/(\r\n|\n|\r)/gm, "").toLowerCase();
+          console.log(p);
+          console.log(c);
           if(!c.includes(p)){
             alert($constraints[property]);
             return;
@@ -1976,6 +2087,10 @@ function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$o
           }else{
             ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,1,1);
           }
+        }
+        else if($lang=='nolang'){
+          $output = $(this).data('output');
+          ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$output);
         }
         else if($lang=='sql'){
           $output = $(this).data('output');
