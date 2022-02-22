@@ -1958,14 +1958,16 @@ function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$o
           if(!c.includes(p)){
             alert($constraints[property]);
             return;
-          }else{
+          }
+        }
+      }
+
+
              $test1 = '<div class="output_testcase_'+$qn+'_t1"><p class="mb-2"><b>Testcase :</b> <i class="fa fa-check-circle text-success"></i> pass</p></div>';
              $('.output_testcase_'+$qn).html('<div class="py-3">'+$test1+'</div>');
 
             $('.final_response_'+$qn).html(c);
-          }
-        }
-      }
+ 
 
       return;
       
