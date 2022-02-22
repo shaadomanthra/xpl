@@ -81,6 +81,7 @@ class QuestionController extends Controller
                         ->paginate(500);
     }
         
+
         
 
         $view = $search ? 'list': 'index';
@@ -603,7 +604,7 @@ class QuestionController extends Controller
         $username = \auth::user()->username;
 
         Cache::forget('student_'.$username);
-         Cache::forget('practices_'.\auth::user()->id);
+        Cache::forget('practices_'.\auth::user()->id);
 
         if(isset($request->all()['pdf_file'])){
 
@@ -1087,6 +1088,7 @@ class QuestionController extends Controller
     public function category($project_slug,$category_slug,$id=null)
     {
         
+        
         $mode = \request()->session()->get('mode');
         $change = \request()->get('change');
 
@@ -1446,7 +1448,7 @@ class QuestionController extends Controller
                     }
                 } 
 
-                
+               
 
                 return view('appl.dataentry.question.show_exam')
                         ->with('mathjax',true)

@@ -237,7 +237,9 @@
                          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_python) !!}</code></pre>
                        </div>
                        <div class="tab-pane fade @if($question->b=='nolang') show active  @endif" id="cnolang" role="tabpanel" aria-labelledby="cnolang-tab">
+                        @if(isset($codes->preset_nolang))
                          <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->preset_nolang) !!}</code></pre>
+                         @endif
                        </div>
                   </div>
               @endif
