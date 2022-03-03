@@ -8,6 +8,7 @@
 <script src="../lib/codemirror.js"></script>
 <script src="../mode/xml/xml.js"></script>
 <script src="../addon/selection/active-line.js"></script>
+<script src="../addon/search/searchcursor.js"></script>
 <style type="text/css">
       .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
     </style>
@@ -32,13 +33,17 @@
      xmlns:georss="http://www.georss.org/georss"
      xmlns:twitter="http://api.twitter.com">
   <channel>
+    
+     #startdrivercode
     <title>Twitter / codemirror</title>
     <link>http://twitter.com/codemirror</link>
+     #enddrivercode
     <atom:link type="application/rss+xml"
                href="http://twitter.com/statuses/user_timeline/242283288.rss" rel="self"/>
     <description>Twitter updates from CodeMirror / codemirror.</description>
     <language>en-us</language>
     <ttl>40</ttl>
+
   <item>
     <title>codemirror: http://cloud-ide.com &#8212; they're springing up like mushrooms. This one
       uses CodeMirror as its editor.</title>
@@ -65,12 +70,46 @@
 </rss></textarea></form>
 
     <script>
+      // the line numbers to be "readonly"
+var readOnlyLines=[2,3,4];
 var nonEmpty = false;
 var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
   mode: "application/xml",
   styleActiveLine: true,
   lineNumbers: true,
   lineWrapping: true
+});
+
+function lockText(){
+
+    var cursorstart = editor.getSearchCursor("startdrivercode");
+    var cursorend = editor.getSearchCursor("enddrivercode");
+    fr=null;
+    to=null;
+    while (cursorstart.findNext()) {
+        fr = cursorstart.from();
+            
+    }
+    while (cursorend.findNext()) {
+        to = cursorend.from();
+           
+    }
+    var arr=[];
+    if(fr && to)
+    for(let j=fr.line;j<=to.line;j++){
+      arr.push(j);
+    }
+    return arr;
+
+}
+
+// listen for the beforeChange event, test the changed line number, and cancel
+editor.on('beforeChange',function(cm,change) {
+    readOnlyLines = lockText();
+    console.log(readOnlyLines);
+    if ( ~readOnlyLines.indexOf(change.from.line) ) {
+        change.cancel();
+    }
 });
 
 function toggleSelProp() {

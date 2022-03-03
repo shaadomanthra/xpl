@@ -1369,10 +1369,18 @@ $(document).ready(function() {
   if(document.getElementById("code"))
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), options);
   @if(!request()->get('default'))
-  if(editor)
-    editor.on("beforeChange", function(_, change) {
+    if(editor){
+      editor.on("beforeChange", function(cm, change) {
       if (change.origin == "paste") change.cancel();
-    });
+      readOnlyLines = lockText(cm);
+          console.log(readOnlyLines);
+          if ( ~readOnlyLines.indexOf(change.from.line) ) {
+              change.cancel();
+          }
+      });
+    
+    }
+      
   @endif
   var editor_array =[];
  
@@ -1380,14 +1388,43 @@ $(document).ready(function() {
   @foreach($code_ques as $c=>$d)
     editor_array['code_{{$c}}'] = CodeMirror.fromTextArea(document.getElementById("code_{{$c}}"), options);
   @if(!request()->get('default') && !isset($copy))
-    if(editor_array['code_{{$c}}'])
-    editor_array['code_{{$c}}'].on("beforeChange", function(_, change) {
-      if (change.origin == "paste") change.cancel();
-      if (change.origin == "copy") change.cancel();
-    });
+    if(editor_array['code_{{$c}}']){
+      editor_array['code_{{$c}}'].on("beforeChange", function(cm, change) {
+        if (change.origin == "paste") change.cancel();
+        if (change.origin == "copy") change.cancel();
+        readOnlyLines = lockText(cm);
+          console.log(readOnlyLines);
+          if ( ~readOnlyLines.indexOf(change.from.line) ) {
+              change.cancel();
+          }
+      });
+     
+
+    }
+    
   @endif
   @endforeach
   @endif
+
+
+function lockText(editor){
+    var cursorstart = editor.getSearchCursor("startdrivercode");
+    var cursorend = editor.getSearchCursor("enddrivercode");
+    fr=null;to=null;
+    while (cursorstart.findNext()) {
+        fr = cursorstart.from();     
+    }
+    while (cursorend.findNext()) {
+        to = cursorend.from();
+           
+    }
+    var arr=[];
+    if(fr && to)
+    for(let j=fr.line;j<=to.line;j++){
+      arr.push(j);
+    }
+    return arr;
+}
 
 
   // $('.runcode').on('click',function(){
@@ -1536,6 +1573,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
 
   //console.log(fname);
 
+
   $.ajax({
           type : 'get',
           url : $url+'?time='+ new Date().getTime(),
@@ -1626,6 +1664,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
                     $('.s'+$qn).removeClass('active');
 
               }else{
+                $('.output_'+$qn).html("-");
                 console.log("No stdout no stderr");
               }
 
@@ -1649,6 +1688,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
 }
 
 function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
+  console.log('here in ajaxrun2');
  $.ajax({
           type : 'get',
           url : $url+'?time='+ new Date().getTime(),
@@ -1758,7 +1798,7 @@ function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
                 
               }else{
                 console.log("No stdout no stderr");
-                $('.output_'+$qn).html("Invalid Code - ERO101 - Retry.");
+                $('.output_'+$qn).html("-");
               }
             }else{
                 $('.output_'+$qn).html("Invalid Code - ERD102 - Retry.");
@@ -1781,6 +1821,7 @@ function ajaxrun2($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn){
 
 function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$output){
 
+console.log('here in ajaxrun3');
   if($lang=='nolang'){
     data = {'response':{'stderr':'','stdout':code,'time':'1'},'pass':1,'lang':'nolang'};
     if(data.pass == 1){
@@ -1905,7 +1946,7 @@ function ajaxrun3($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$o
                 
               }else{
                 console.log("No stdout no stderr");
-                $('.output_'+$qn).html("Invalid Code - ERO101 - Retry.");
+                $('.output_'+$qn).html("-");
               }
             }else{
                 $('.output_'+$qn).html("Invalid Code - ERD102 - Retry.");

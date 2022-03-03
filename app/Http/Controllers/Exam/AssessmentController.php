@@ -3514,20 +3514,20 @@ class AssessmentController extends Controller
                     $testcases = json_decode($item['comment'],true);
 
                     
-                    $partialmark = 0.2;
+                    $partialmark = 0.25;
                     if($questions[$item['question_id']]->mark)
-                        $partialmark = round($questions[$item['question_id']]->mark/5,2);
+                        $partialmark = round($questions[$item['question_id']]->mark/4,2);
                     elseif($secs[$item['section_id']]->mark)
-                        $partialmark = round($secs[$item['section_id']]->mark/5,2);
+                        $partialmark = round($secs[$item['section_id']]->mark/4,2);
                    
                    $partial_awarded  = 0;
 
 
 
                    if(isset($testcases['pass_1'])){
-                       if($testcases['pass_1']=='1'){
-                            $partial_awarded = $partial_awarded +$partialmark;
-                       }
+                       // if($testcases['pass_1']=='1'){
+                       //      $partial_awarded = $partial_awarded +$partialmark;
+                       // }
 
                        if(isset($testcases['pass_2'])){
                             if($testcases['pass_2']=='1'){
@@ -3550,7 +3550,7 @@ class AssessmentController extends Controller
                        
                        $item['mark'] = $partial_awarded;
 
-                        if($testcases['pass_1']=='1'){
+                        if($testcases['pass_2']=='1'){
                             $item['accuracy'] =1;
                         }else{
                             $item['accuracy'] =0;
