@@ -37,7 +37,7 @@ class Project extends Model
 
         $count=0;
         foreach($projects as $project){
-            $count = $count + count($project->questions);
+            //$count = $count + $project->questions->count();
         }
         return $count;
     }

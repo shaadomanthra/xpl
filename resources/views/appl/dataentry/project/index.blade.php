@@ -10,7 +10,7 @@
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
         <nav class="navbar navbar-light bg-light justify-content-between border mb-3">
-          <a class="navbar-brand"><i class="fa fa-inbox"></i> Data Entry ({{$project->count}}) </a>
+          <a class="navbar-brand"><i class="fa fa-inbox"></i> Data Entry  </a>
 
           <form class="form-inline" method="GET" action="{{ route('dataentry.index') }}">
 
