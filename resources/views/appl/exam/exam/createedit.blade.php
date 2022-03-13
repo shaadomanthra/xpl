@@ -459,6 +459,21 @@
           <small class='text-secondary'>If the exam has questions choice, you can enter the total marks </small>
           </div>
         </div>
+
+         <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">Connected Slug (optional)</label>
+            <input type="text" class="form-control" name="testslug" id="formGroupExampleInput" placeholder="" 
+            @if($stub=='Create')
+            value="{{ (old('testslug')) ? old('testslug') : '' }}"
+            @else
+            value = "{{ $exam->testslug }}"
+            @endif
+          >
+
+          <small class='text-secondary'>API to connect to secondary test platform</small>
+          </div>
+        </div>
    
         <div class="col-12 col-md-3">
            <div class="form-group mt-3">

@@ -486,6 +486,13 @@ class AssessmentController extends Controller
             $url = null;
         }
 
+        $settings = json_decode($exam->getOriginal('settings'),true);
+        
+        $exam->testslug  = null;
+        if(isset($settings['testslug'])){
+            if($settings['testslug'])
+                $exam->testslug = $settings['testslug'];
+        }
 
 
 
@@ -1115,7 +1122,11 @@ class AssessmentController extends Controller
 
         // access code based timer
         $settings = json_decode($exam->getOriginal('settings'),true);
-
+        $exam->testslug  = null;
+        if(isset($settings->testslug)){
+            if($settings->testslug)
+                $exam->testslug = $settings->testslug;
+        }
 
         if(isset($settings['timer']))
         foreach($settings['timer'] as $cd=>$tm){
@@ -1123,6 +1134,7 @@ class AssessmentController extends Controller
                 $time = $tm;
             }
         }
+
 
 
         $url =$url2=  $images = null;
@@ -6212,6 +6224,7 @@ class AssessmentController extends Controller
     public function analysis2($slug,Request $request)
     {
 
+
         $filename = $slug.'.json';
         $filepath = $this->cache_path.$filename;
         $rank=0;
@@ -6411,6 +6424,7 @@ class AssessmentController extends Controller
         $sum = 0;
         $c=0; $i=0; $u=0;
 
+
         if($exam->solutions==2 && !request()->get('student')){
             $view = "analysis_private";
              return view('appl.exam.assessment.'.$view)
@@ -6455,8 +6469,9 @@ class AssessmentController extends Controller
             return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         });
 
+        
 
-        if(!$tests_overall){
+        if(!$tests_overall && !$request->get('reference')){
             return redirect()->route('assessment.show',$slug);
             abort('403','Test not attempted');
         }
@@ -6485,13 +6500,24 @@ class AssessmentController extends Controller
         }
        
       
+        $settings = json_decode($exam->getOriginal('settings'),true);
+        $testslug = null;
+            if(isset($settings['testslug']))
+            {
+                if($settings['testslug']){
 
+                    $testslug = $settings['testslug'];
+                }
+            }
 
         // api
         if(!count($tests)){
             if($request->get('reference')){
                 $id = explode('_',$request->get('reference'))[1];
-                $score = $exam->getScore($id);
+
+
+                $score = $exam->getScore($id,$testslug);
+
                 $tests = new Test();
                 $tests->question_id = 809;
                 $tests->test_id = $exam->id;
@@ -6526,7 +6552,6 @@ class AssessmentController extends Controller
                 Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
                 Cache::forget('attempt_'.$user_id.'_'.$test_id);
 
-                //dd();
 
                 return redirect()->to(request()->fullUrl());
 
@@ -6760,6 +6785,8 @@ class AssessmentController extends Controller
             }else{
                  $ques_keys[$t->question_id]['topic'] = null;
                  $ques_keys[$t->question_id]['section'] = null;
+                 if(isset($ques[$t->question_id]))
+
                  if(!$ques[$t->question_id])
                     if(isset($t->question))
                         $ques[$t->question_id] = $t->question;
@@ -6809,10 +6836,12 @@ class AssessmentController extends Controller
                 $u++;
                 $details['unattempted'] = $details['unattempted'] + 1;
                 $details['unattempted_time'] = $details['unattempted_time'] + $t->time;
+                if(isset($ques[$t->question_id]))
                 if($ques[$t->question_id]->type=='sq' || $ques[$t->question_id]->type=='urq' || $ques[$t->question_id]->type=='csq')
                         $details['marks'] = $details['marks'] + $t->mark;
             }
 
+            if(isset($secs[$t->section_id]))
             $details['total'] = $details['total'] + $secs[$t->section_id]->mark;
             //dd();
 
@@ -6994,6 +7023,18 @@ class AssessmentController extends Controller
 
             $exam = Exam::where('id',$test_id)->first();
 
+            $settings = json_decode($exam->getOriginal('settings'),true);
+
+            if(isset($settings['testslug']))
+            {
+                if($settings['testslug']){
+
+                    $exam->deleteScore($user_id,$settings['testslug']);
+                }
+            }
+
+            
+
             if($request->get('full')){
                 $jsonfile = 'test_info/'.$exam->slug.'/'.$user->username.'.json';
                 if(Storage::disk('s3')->exists($jsonfile)){
@@ -7041,6 +7082,8 @@ class AssessmentController extends Controller
             }else{
                 flash('Test attempte reactivated!')->success();
             }
+
+            
 
             Cache::forget('attempt_'.$user_id.'_'.$test_id);
             Cache::forget('attempts_'.$user_id);

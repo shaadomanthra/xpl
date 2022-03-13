@@ -378,27 +378,78 @@ class Exam extends Model
     }
 
 
-     public function getScore($id){
+     public function getScore($id,$slug){
         $curl = curl_init();
       // Set some options - we are passing in a useragent too here
 
       curl_setopt_array($curl, [
           CURLOPT_RETURNTRANSFER => 1,
-          CURLOPT_URL => env('API_URL').$this->slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&json=1',
+          CURLOPT_URL => env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&json=1',
       ]);
+      $url = env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&json=1';
+      //$d = file_get_contents($url);
+  
 
-    
-    
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
       //echo $data;
 
       // Send the request & save response to $resp
       $data = json_decode(curl_exec($curl));
+
+   
       
       // Close request to clear up some resources
       curl_close($curl);
+      if($data)
+        return $data->score;
+      else
+        return 0;
+    }
 
-      return $data->score;
+    public function deleteScore($id,$slug=null){
+        $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&deletescore=1',
+      ]);
+
+      
+      //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
+      //echo $data;
+
+      // Send the request & save response to $resp
+      $data = json_decode(curl_exec($curl));
+
+      // Close request to clear up some resources
+      curl_close($curl);
+     
+    }
+
+    public function getAnalysis($id,$slug=null){
+        $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&analysis=1',
+      ]);
+    
+      //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
+      //echo $data;
+
+      // Send the request & save response to $resp
+      $data = curl_exec($curl);
+
+
+      
+      // Close request to clear up some resources
+      curl_close($curl);
+      if($data)
+        return $data;
+      else
+        return null;
     }
 
     public function precheck_auto_activation(){

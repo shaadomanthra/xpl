@@ -174,7 +174,7 @@ input[type=checkbox]
 		<div class="ins_block ins_block_6" style="display:none">
 		<h3><i class="fa fa-bars  " aria-hidden="true"></i> {{ $exam->name }}  - Instructions</h3>
 		{!! $exam->instructions  !!}
-		
+
 		<hr>
 		<div class="form-check">
 			<h5 class="text-info">Kindly accept the terms to start the test</h5>
@@ -225,8 +225,8 @@ input[type=checkbox]
 
 		
 			@if(subdomain()=='xplore' || subdomain()=='gradable')
-				@if($exam->examtype->name=='api')
-				<a href="{{ env('API_URL').$exam->slug.'/try?id='.auth::user()->id.'&source='.env('APP_NAME').'&username='.auth::user()->username.'&private=1&uri='.route('assessment.analysis',$exam->slug) }}" class='btn btn-lg btn-primary mt-3 btn-accept d-none test_link'>
+				@if($exam->testslug)
+				<a href="{{ env('API_URL').$exam->testslug.'/try?id='.auth::user()->id.'&source='.env('APP_NAME').'&username='.auth::user()->username.'&private=1&uri='.route('assessment.analysis',$exam->slug) }}" class='btn btn-lg btn-primary mt-3 btn-accept d-none test_link'>
 				@else
 				<a href="{{route('assessment.try',$exam->slug)}}@if(request()->get('code'))?code={{ request()->get('code') }}@endif" class='btn btn-lg btn-primary mt-3 btn-accept d-none test_link'>
 				@endif
@@ -248,13 +248,16 @@ input[type=checkbox]
 		 </div>
 		&nbsp;&nbsp;&nbsp;&nbsp;<br>
 
+		
+
 		@if($exam->camera)
 		<a href="#" class="btn btn-lg btn-outline-secondary btn-ins-next mt-3 px-5" data-next="4"> Prev</a>
 		@endif
+		
 
 		@if(isset($exam->examtype))
-			@if($exam->examtype->name=='api')
-			<a href="{{ env('API_URL').$exam->slug.'/try?id='.auth::user()->id.'&source='.env('APP_NAME').'&username='.auth::user()->username.'&private=1&uri='.route('assessment.analysis',$exam->slug) }}" class='btn btn-lg btn-primary mt-3 btn-accept disabled'>
+			@if($exam->testslug)
+				<a href="{{ env('API_URL').$exam->testslug.'/try?id='.auth::user()->id.'&source='.env('APP_NAME').'&username='.auth::user()->username.'&private=1&uri='.route('assessment.analysis',$exam->slug) }}" class='btn btn-lg btn-primary mt-3 btn-accept disabled'>
 			@else
 			<a href="{{route('assessment.try',$exam->slug)}}@if(request()->get('code'))?code={{ request()->get('code') }}@endif" class='btn btn-lg btn-primary mt-3 btn-accept disabled'>
 			@endif
@@ -266,7 +269,7 @@ input[type=checkbox]
 	</div>
 
 	@endif
-		
+	
 	</div>
 	<p class="bg-light border rounded p-3" style="margin-top:-5px;">Incase of any query, write to us at <span class="text-info">@if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif</span> or call us at <span class="text-info">@if(env('CONTACT_PHONE')) {{env('CONTACT_PHONE')}} @else 9515125110 @endif</span></p>
 	</div>

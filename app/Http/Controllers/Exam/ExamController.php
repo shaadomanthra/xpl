@@ -647,6 +647,7 @@ class ExamController extends Controller
             $settings['email_verified'] = $request->get('email_verified');
             $settings['form_fields'] = $request->get('form_fields');
             $settings['tags'] = $request->get('tags');
+            $settings['testslug'] = $request->get('testslug');
             $settings['pdf_paper'] = $request->get('pdf_paper');
 
             
@@ -2258,6 +2259,11 @@ class ExamController extends Controller
         else
             $exam->tags = null;
 
+        if(isset($settings['testslug']))
+            $exam->testslug = $settings['testslug'];
+        else
+            $exam->testslug = null;
+
         if(isset($settings['pdf_paper']))
             $exam->pdf_paper = $settings['pdf_paper'];
         else
@@ -2368,6 +2374,7 @@ class ExamController extends Controller
             $settings['email_verified'] = $request->get('email_verified');
             $settings['form_fields'] = $request->get('form_fields');
             $settings['tags'] = $request->get('tags');
+            $settings['testslug'] = $request->get('testslug');
             $settings['pdf_paper'] = $request->get('pdf_paper');
 
 
