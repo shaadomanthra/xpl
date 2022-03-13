@@ -6425,7 +6425,7 @@ class AssessmentController extends Controller
         $c=0; $i=0; $u=0;
 
 
-        if($exam->solutions==2 && !request()->get('student')){
+        if($exam->solutions==2 && !request()->get('student') && !request()->get('reference')){
             $view = "analysis_private";
              return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
@@ -6518,7 +6518,7 @@ class AssessmentController extends Controller
 
 
                 $score = $exam->getScore($id,$testslug);
-                dd($score);
+            
                 $tests = new Test();
                 $tests->question_id = 809;
                 $tests->test_id = $exam->id;
