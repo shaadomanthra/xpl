@@ -6516,8 +6516,9 @@ class AssessmentController extends Controller
                 $id = explode('_',$request->get('reference'))[1];
 
 
-                $score = $exam->getScore($id,$testslug);
 
+                $score = $exam->getScore($id,$testslug);
+                dd($score);
                 $tests = new Test();
                 $tests->question_id = 809;
                 $tests->test_id = $exam->id;
