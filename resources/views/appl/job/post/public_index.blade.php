@@ -1,5 +1,5 @@
 @extends('layouts.nowrap-white')
-@section('title', 'Jobs - Xplore')
+@section('title', 'Jobs ')
 @section('content')
 
 @include('appl.exam.exam.xp_css')
@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-12 col-md-9 mb-5">
       <div class="bg-white p-4 p-md-5 mb-4" style="margin-top:-50px">
-        <h1>Xplore Jobs</h1>
+        <h1>Job Openings</h1>
       </div>
         <div  class="">
           @include('flash::message')
