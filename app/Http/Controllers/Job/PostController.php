@@ -84,11 +84,17 @@ class PostController extends Controller
     {
 
 
+
         $search = $request->search;
         $item = $request->item;
         $user = \auth::user();
+
+        if($request->get('refresh')){
+            Cache::forget('myjobs_'.subdomain().'_'.$user->id);
+            Cache::forget('posts_'.subdomain());
+        }
         if($user){
-            $myjobs = Cache::remember('myjobs_'.$user->id,240,function() use ($user){
+            $myjobs = Cache::remember('myjobs_'.subdomain().'_'.$user->id,240,function() use ($user){
                    return  $user->posts;
             });
             
@@ -101,7 +107,7 @@ class PostController extends Controller
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records'));  
         }else{
-            $objs = Cache::remember('posts_1',240,function() use ($obj,$item){
+            $objs = Cache::remember('posts_'.subdomain(),240,function() use ($obj,$item){
                    return  $obj->where('title','LIKE',"%{$item}%")
                     ->orderBy('created_at','desc ')
                     ->paginate(config('global.no_of_records'));  
