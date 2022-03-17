@@ -319,11 +319,11 @@ class CourseController extends Controller
             
             foreach($practice as $pr){
                 $prid = $pr->category_id;
-                if($pr->category_id)
-                if($pr->accuracy==1)
-                $course->categories->$prid->correct++; 
-                else
-                $course->categories->$prid->incorrect++;
+                if($pr->category_id && isset($course->categories->$prid))
+                    if($pr->accuracy==1)
+                    $course->categories->$prid->correct++; 
+                    else
+                    $course->categories->$prid->incorrect++;
             }
             
             /* correct percent */
