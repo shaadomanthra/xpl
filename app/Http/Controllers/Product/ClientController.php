@@ -13,6 +13,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use PacketPrep\Models\Exam\Examtype;
 
 
 class ClientController extends Controller
@@ -216,7 +217,7 @@ class ClientController extends Controller
                     'password' => bcrypt($password),
                     'activation_token' => $password,
                     'client_slug' =>$client->slug,
-                    'user_id' =>1,
+                    'user_id' =>2,
                     'role'=>13,
                     'status'=>1,
                 ]);
@@ -227,6 +228,12 @@ class ClientController extends Controller
 
                $client->user_id_owner = $user->id;
                $client->save();
+
+               $etype = new Examtype();
+               $etype->name = 'Internal Tests '.$client->slug;
+               $etype->slug = 'it_'.$client->slug;
+               $etype->client = $client->slug;
+               $etype->save();
             }
 
 
@@ -252,7 +259,7 @@ class ClientController extends Controller
                     'password' => bcrypt($password),
                     'activation_token' => $password,
                     'client_slug' =>$client->slug,
-                    'user_id' =>1,
+                    'user_id' =>2,
                     'status'=>1,
                 ]);
                 

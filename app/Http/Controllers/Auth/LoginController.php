@@ -183,7 +183,7 @@ class LoginController extends Controller
             return back()->with('warning', 'Your account is in frozen state. Kindly contact administrator for the access.');
         }
 
-        if($user->username == 'demo500'){
+        if($user->username == 'demo500' || $user->email=='demo500@gmail.com'){
            Test::where('user_id',$user->id)->delete();
            Tests_Section::where('user_id',$user->id)->delete();
            Tests_Overall::where('user_id',$user->id)->delete();

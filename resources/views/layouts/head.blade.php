@@ -59,6 +59,8 @@
   <link href="{{ asset('css/styles2.css') }}?new=16" rel="stylesheet">
   @elseif(domain()=='pp' || domain()=='packetprep')
   <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
+  @elseif(domain()=='gradable')
+  <link href="{{ asset('css/stylesgd.css') }}?new=13" rel="stylesheet">
   @else
   <link href="{{ asset('css/styles.css') }}?new=13" rel="stylesheet">
   @endif
