@@ -23,7 +23,7 @@
 	@if($exam->solutions!=0)
 	<div class="card "  style="background: #ffceb8;border: 2px solid #e0a889;color: #b55422;">
 		<div class="card-body">
-			Your have scored {{$score}} / {{$total}}
+			Your have scored {{$score}} @if($total) / {{$total}} @endif
 		</div>
 	</div>
 	@else

@@ -428,7 +428,7 @@ class Exam extends Model
       
       // Close request to clear up some resources
       curl_close($curl);
-      if($data)
+      if(isset($data->total))
         return $data->total;
       else
         return 0;
@@ -464,7 +464,7 @@ class Exam extends Model
           CURLOPT_URL => env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&analysis=1',
       ]);
     
-     
+
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
       //echo $data;
 
