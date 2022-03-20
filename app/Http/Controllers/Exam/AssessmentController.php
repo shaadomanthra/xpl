@@ -6899,7 +6899,7 @@ class AssessmentController extends Controller
         if($testslug){
              $score = $exam->getScore($idd,$testslug);
              $total = $exam->getTotal($idd,$testslug);
-             $analysis = $exam->getAnalysis($idd,$testslug);
+             $analysis = $exam->getAnalysisUrl($idd,$testslug);
 
         }
         $mathjax = false;
