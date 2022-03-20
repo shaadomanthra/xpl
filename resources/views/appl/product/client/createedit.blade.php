@@ -88,6 +88,50 @@
         </textarea>
       </div>
 
+      @if($stub=='Create')
+      <div class="bg-light border p-3 rounded my-3">
+        <h4>Admin User (Optional)</h4>
+        <hr>
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label for="formGroupExampleInput ">Name</label>
+              <input type="text" class="form-control" name="admin_name" id="formGroupExampleInput" placeholder="Enter Name" 
+                @if($stub=='Create')
+                value="{{ (old('admin_name')) ? old('admin_name') : '' }}"
+                @endif
+              >
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label for="formGroupExampleInput ">Email</label>
+              <input type="text" class="form-control" name="admin_email" id="formGroupExampleInput" placeholder="Enter email" 
+                @if($stub=='Create')
+                value="{{ (old('admin_email')) ? old('admin_email') : '' }}"
+                @endif
+              >
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label for="formGroupExampleInput ">Phone</label>
+              <input type="text" class="form-control" name="admin_phone" id="formGroupExampleInput" placeholder="Enter phone" 
+                @if($stub=='Create')
+                value="{{ (old('admin_phone')) ? old('admin_phone') : '' }}"
+                @endif
+              >
+            </div>
+          </div>
+        </div>
+        <hr>
+        <span class="badge badge-warning">Note</span> A demo user with email demo500@gmail and password demo500 is auto generated for the above client.
+      </div>
+
+      
+
+      @endif
+
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="form-group">

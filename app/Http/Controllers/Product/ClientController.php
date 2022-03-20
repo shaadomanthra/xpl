@@ -193,6 +193,71 @@ class ClientController extends Controller
                 
             } 
 
+            if($request->get('admin_name')){
+                $parts = explode("@", $request->admin_email);
+                $username = $parts[0];
+                $password = $request->admin_phone;
+
+                $user = User::where('username',$username)->first();
+
+                if($user){         
+                    while(1){
+                        $username = $username.str_random(5);
+                        $user = User::where('username',$username)->first();
+                        if(!$user)
+                            break;
+                    }
+                }
+                 $user = User::create([
+                    'name' => $request->admin_name,
+                    'username' => strtolower($username),
+                    'email' => strtolower($request->admin_email),
+                    'phone' =>$request->admin_phone,
+                    'password' => bcrypt($password),
+                    'activation_token' => $password,
+                    'client_slug' =>$client->slug,
+                    'user_id' =>1,
+                    'role'=>13,
+                    'status'=>1,
+                ]);
+                if(!$user->roles->contains(28))
+                        $user->roles()->attach(28);
+
+                $user->save();
+
+               $client->user_id_owner = $user->id;
+               $client->save();
+            }
+
+
+            if($request->get('admin_name')){
+                $username = 'demo500'.$client->slug;
+                $password = 'demo500*123';
+
+                $user2 = User::where('username',$username)->first();
+
+                if($user2){         
+                    while(1){
+                        $username = $username.str_random(5);
+                        $user2 = User::where('username',$username)->first();
+                        if(!$user2)
+                            break;
+                    }
+                }
+                 $user2 = User::create([
+                    'name' => 'Demo User',
+                    'username' => strtolower($username),
+                    'email' => strtolower('demo500@gmail.com'),
+                    'phone' =>'12345',
+                    'password' => bcrypt($password),
+                    'activation_token' => $password,
+                    'client_slug' =>$client->slug,
+                    'user_id' =>1,
+                    'status'=>1,
+                ]);
+                
+            }
+
 
             // $param = "?";
             // foreach($client->toArray() as $key=>$value){
