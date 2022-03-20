@@ -23,12 +23,14 @@
 	
 	<div class="card "  style="background: #ffceb8;border: 2px solid #e0a889;color: #b55422;">
 		<div class="card-body">
-			Your have scored {{$score}} @if($total) / {{$total}} @endif
-			@if($exam->solutions==0)
-			<a href="{{$analysis}}" class="h4 my-4">view answers <i class="fa fa-angle-right"></i></a>
-			@endif
+			Your have scored {{$score}} @if($total) / {{$total}} @endif <br>
+			
 		</div>
 	</div>
+
+	@if($exam->solutions==0)
+			<a href="{{$analysis}}" class="h5 my-4 btn btn-success">view answers <i class="fa fa-angle-right"></i></a>
+			@endif 
 
 
 	

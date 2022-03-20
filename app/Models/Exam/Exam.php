@@ -455,8 +455,8 @@ class Exam extends Model
      
     }
 
-    public function getAnalysisUrl($id,$slug=null){
-      return env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&analysis=1';
+    public function getAnalysisUrl($id,$slug=null,$tslug){
+      return env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&analysis=1&url='.env('APP_URL').'/test/'.$tslug.'/analysis';
     }
     public function getAnalysis($id,$slug=null){
         $curl = curl_init();
