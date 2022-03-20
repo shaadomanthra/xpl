@@ -20,11 +20,15 @@
 		</p>
 	</div>
 
+	@if($exam->solutions!=0)
 	<div class="card "  style="background: #ffceb8;border: 2px solid #e0a889;color: #b55422;">
 		<div class="card-body">
-			Your responses are recorded for internal evaluation.
+			Your have scored {{$score}} / {{$total}}
 		</div>
 	</div>
+	@else
+	{!! $analysis !!}
+	@endif
 
 	
 

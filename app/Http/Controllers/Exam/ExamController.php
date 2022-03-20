@@ -2068,12 +2068,24 @@ class ExamController extends Controller
         // ->with('sections',$sections)
         // ->with('exam',$exam)
         // ->with('users',$ux);
+
+         $settings = json_decode($exam->getOriginal('settings'),true);
+        $testslug = null;
+            if(isset($settings['testslug']))
+            {
+                if($settings['testslug']){
+
+                    $testslug = $settings['testslug'];
+                }
+            }
+
         if($exam)
             return view('appl.exam.exam.'.$view)
                     ->with('report',$result)
                     ->with('r',$res)
                     ->with('exam_sections',$exam_sections)
                     ->with('sections',$sections)
+                    ->with('testslug',$testslug)
                     ->with('exam',$exam)
                     ->with('users',$ux);
         else

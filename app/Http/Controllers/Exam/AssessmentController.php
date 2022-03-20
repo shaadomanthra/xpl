@@ -6423,6 +6423,7 @@ class AssessmentController extends Controller
           $sectiondetails = null;
         $sum = 0;
         $c=0; $i=0; $u=0;
+        $score =$total =0;
 
 
         if($exam->solutions==2 && !request()->get('student') && !request()->get('reference')){
@@ -6509,15 +6510,17 @@ class AssessmentController extends Controller
                     $testslug = $settings['testslug'];
                 }
             }
-
+//$score = $exam->getScore($id,$testslug);
         // api
+            $idd=$user->id;
         if(!count($tests)){
             if($request->get('reference')){
-                $id = explode('_',$request->get('reference'))[1];
+                $id =$idd= explode('_',$request->get('reference'))[1];
 
 
 
                 $score = $exam->getScore($id,$testslug);
+                $total = $exam->getTotal($id,$testslug);
             
                 $tests = new Test();
                 $tests->question_id = 809;
@@ -6538,7 +6541,7 @@ class AssessmentController extends Controller
                 $tests_section->section_id = $exam->sections[0]->id;
                 $tests_section->score = $score;
                 $tests_section->time = 1;
-                $tests_section->max = 100;
+                $tests_section->max = $total;
                 $tests_section->save();
 
                 $tests_overall = new Tests_Overall();
@@ -6546,7 +6549,7 @@ class AssessmentController extends Controller
                 $tests_overall->user_id = $student->id;
                 $tests_overall->score = $score;
                 $tests_overall->time = 1;
-                $tests_overall->max = 100;
+                $tests_overall->max = $total;
                 $tests_overall->save();
 
                 Cache::forget('resp_'.$user_id.'_'.$test_id);
@@ -6755,6 +6758,7 @@ class AssessmentController extends Controller
                         ->with('data',$d)
                         ->with('m',$mc)
                         ->with('c',$cc)
+                        ->with('testslug',$testslug)
                         ->with('typeslug',$typeslug)
                         ->with('student',$student)
                         ->with('chart',true);
@@ -6891,21 +6895,38 @@ class AssessmentController extends Controller
 
         if(!$topics)
         unset($details['c']);
-        //dd($details);
+        $analysis =null;
+        if($testslug){
+             $score = $exam->getScore($idd,$testslug);
+             $total = $exam->getTotal($idd,$testslug);
+             $analysis = $exam->getAnalysis($idd,$testslug);
 
-        //dd($sections);
+        }
         $mathjax = false;
         if($subjective){
             $mathjax = true;
             $view = "analysis_subjective";
         }
-        else if(request()->get('reference') ||  $typeslug=='api')
-            $view = 'analysis_api';
-        else if($exam->status==2)
-            $view = "analysis_private";
-
-        else
-            $view = "analysis";
+        else if($exam->solutions!=2){
+            if(request()->get('reference') || $testslug){
+                $view = 'analysis_api_public';
+            }
+            else
+                $view = "analysis";
+        }
+        else if($exam->status==2){
+            if(request()->get('reference') || $testslug)
+                $view = 'analysis_api';
+            else
+                $view = "analysis_private";
+        }
+        else{
+            if(request()->get('reference') || $testslug){
+                $view = 'analysis_api_public';
+            }
+            else
+                $view = "analysis";
+        }
 
         if(request()->get('student'))
             $view = 'blocks.student';
@@ -6932,12 +6953,16 @@ class AssessmentController extends Controller
                         ->with('user',$student)
                         ->with('tests',$tests)
                         ->with('typeslug',$typeslug)
+                        ->with('testslug',$testslug)
                         ->with('test_overall',$tests_overall)
                         ->with('review',true)
                         ->with('mathjax',$mathjax)
                          ->with('video',$video)
                          ->with('content',$content)
+                         ->with('analysis',$analysis)
                         ->with('count',$count)
+                        ->with('score',$score)
+                        ->with('total',$total)
                         ->with('images',$images)
                         ->with('noback',1)
                         ->with('chart',true);

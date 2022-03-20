@@ -388,7 +388,7 @@ class Exam extends Model
       ]);
       $url = env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&json=1';
       //$d = file_get_contents($url);
-  
+    
 
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
       //echo $data;
@@ -402,6 +402,34 @@ class Exam extends Model
       curl_close($curl);
       if($data)
         return $data->score;
+      else
+        return 0;
+    }
+
+        public function getTotal($id,$slug){
+        $curl = curl_init();
+      // Set some options - we are passing in a useragent too here
+
+      curl_setopt_array($curl, [
+          CURLOPT_RETURNTRANSFER => 1,
+          CURLOPT_URL => env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&json=1&total=1',
+      ]);
+      $url = env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&json=1';
+      //$d = file_get_contents($url);
+  
+
+      //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
+      //echo $data;
+
+      // Send the request & save response to $resp
+      $data = json_decode(curl_exec($curl));
+
+   
+      
+      // Close request to clear up some resources
+      curl_close($curl);
+      if($data)
+        return $data->total;
       else
         return 0;
     }
@@ -436,6 +464,7 @@ class Exam extends Model
           CURLOPT_URL => env('API_URL').$slug.'/analysis?id='.$id.'&source='.env('APP_NAME').'&analysis=1',
       ]);
     
+     
       //$data ='{"files": [{"name": "main.c", "content": '.$code.'}]}';
       //echo $data;
 
