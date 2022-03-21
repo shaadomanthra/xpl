@@ -3561,12 +3561,16 @@ class AssessmentController extends Controller
                        }
                        
                        $item['mark'] = $partial_awarded;
-
+                       if(isset($testcases['pass_2'])){
                         if($testcases['pass_2']=='1'){
                             $item['accuracy'] =1;
                         }else{
                             $item['accuracy'] =0;
                         }
+                       }else{
+                        $item['accuracy'] =0;
+                       }
+                        
                    }
                 }
 
