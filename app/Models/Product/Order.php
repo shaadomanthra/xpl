@@ -29,4 +29,10 @@ class Order extends Model
         return $this->belongsTo('PacketPrep\User');
     }
 
+    public function refreshCache($user){
+        Cache::forget('my_usertests_'.$user->id);
+        Cache::forget('mytests_'.$user->id);
+        Cache::forget('myproducts_'.$user->id);
+    }
+
 }

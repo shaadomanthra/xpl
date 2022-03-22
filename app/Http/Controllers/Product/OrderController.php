@@ -135,6 +135,7 @@ class OrderController extends Controller
         if ($response['status']=='Completed') {
           $order->payment_status = 'Successful';
           //Mail::to($user->email)->send(new OrderSuccess($user,$order));
+          $order->refreshCache(\auth::user());
         }
         
         return view('appl.product.pages.checkout_success')->with('order',$order);
@@ -323,7 +324,7 @@ class OrderController extends Controller
               $order->payment_status = 'Successful';
               //Mail::to($user->email)->send(new OrderSuccess($user,$order));
 
-
+              $order->refreshCache(\auth::user());
               $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($product->validity*31).' days'));
 
               $user->products()->attach($order->product_id,['validity'=>$product->validity,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
@@ -341,6 +342,7 @@ class OrderController extends Controller
         }
 
         //Mail::to($user->email)->send(new OrderCreated($user,$order));
+        $order->refreshCache(\auth::user());
         
     }
 
@@ -399,7 +401,7 @@ class OrderController extends Controller
         if ($_POST["STATUS"] == "TXN_SUCCESS") {
           $order->payment_status = 'Successful';
           //Mail::to($user->email)->send(new OrderSuccess($user,$order));
-        
+          $order->refreshCache(\auth::user());
         return view('appl.product.pages.checkout_success')->with('order',$order);
             
           
@@ -410,6 +412,7 @@ class OrderController extends Controller
         else {
           $order->payment_status = 'Failure';
           //Mail::to($user->email)->send(new OrderSuccess($user,$order));
+          $order->refreshCache(\auth::user());
           return view('appl.product.pages.checkout_txn_failure');
         }
 
