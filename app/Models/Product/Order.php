@@ -3,6 +3,7 @@
 namespace PacketPrep\Models\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Order extends Model
 {
