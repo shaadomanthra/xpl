@@ -134,7 +134,7 @@ class OrderController extends Controller
 
         if ($response['status']=='Completed') {
           $order->payment_status = 'Successful';
-          Mail::to($user->email)->send(new OrderSuccess($user,$order));
+          //Mail::to($user->email)->send(new OrderSuccess($user,$order));
         }
         
         return view('appl.product.pages.checkout_success')->with('order',$order);
@@ -321,7 +321,7 @@ class OrderController extends Controller
               $order->save();
               $order->coupon = $request->get('coupon');
               $order->payment_status = 'Successful';
-              Mail::to($user->email)->send(new OrderSuccess($user,$order));
+              //Mail::to($user->email)->send(new OrderSuccess($user,$order));
 
 
               $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($product->validity*31).' days'));
@@ -398,7 +398,7 @@ class OrderController extends Controller
 
         if ($_POST["STATUS"] == "TXN_SUCCESS") {
           $order->payment_status = 'Successful';
-          Mail::to($user->email)->send(new OrderSuccess($user,$order));
+          //Mail::to($user->email)->send(new OrderSuccess($user,$order));
         
         return view('appl.product.pages.checkout_success')->with('order',$order);
             
@@ -409,7 +409,7 @@ class OrderController extends Controller
         }
         else {
           $order->payment_status = 'Failure';
-          Mail::to($user->email)->send(new OrderSuccess($user,$order));
+          //Mail::to($user->email)->send(new OrderSuccess($user,$order));
           return view('appl.product.pages.checkout_txn_failure');
         }
 
