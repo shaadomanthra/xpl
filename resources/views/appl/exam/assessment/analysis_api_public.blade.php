@@ -27,15 +27,9 @@
 			
 		</div>
 	</div>
-
 	@elseif($exam->solutions==0)
-		<a href="{{$analysis}}" class="btn btn-primary my-3"> solutions link</a>
 			{!!$analysisdata!!}
 	@endif 
-
-
-	
-
 	</div>
 </div>
 
