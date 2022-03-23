@@ -16,11 +16,11 @@
 		<div class="p-3 border rounded bg-light mb-4">
 		<div class="  display-4  mb-3"><b>{{ ucfirst($exam->name) }} - Report</b></div>
 		<p>Name : <span class="text-primary">{{$student->name}}</span><br>
-			
+			<a href="{{ url('/dashboard')}}" class="btn btn-success mt-3">back to dashboard</a>
 		</p>
 	</div>
 
-	
+	@if($exam->solutions!=0)
 	<div class="card "  style="background: #ffceb8;border: 2px solid #e0a889;color: #b55422;">
 		<div class="card-body">
 			Your have scored {{$score}} @if($total) / {{$total}} @endif <br>
@@ -28,9 +28,10 @@
 		</div>
 	</div>
 
-	@if($exam->solutions==0)
-			<a href="{{$analysis}}" class="h5 my-4 btn btn-success">view answers <i class="fa fa-angle-right"></i></a>
-			@endif 
+	@elseif($exam->solutions==0)
+
+			{!!$analysisdata!!}
+	@endif 
 
 
 	

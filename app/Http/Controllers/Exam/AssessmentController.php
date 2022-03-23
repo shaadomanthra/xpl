@@ -6517,6 +6517,7 @@ class AssessmentController extends Controller
 //$score = $exam->getScore($id,$testslug);
         // api
             $idd=$user->id;
+
         if(!count($tests)){
             if($request->get('reference')){
                 $id =$idd= explode('_',$request->get('reference'))[1];
@@ -6526,6 +6527,7 @@ class AssessmentController extends Controller
                 $score = $exam->getScore($id,$testslug);
                 $total = $exam->getTotal($id,$testslug);
             
+
                 $tests = new Test();
                 $tests->question_id = 809;
                 $tests->test_id = $exam->id;
@@ -6567,6 +6569,24 @@ class AssessmentController extends Controller
             }else
                 abort('404','Test not attempted');
         }
+
+        if($request->get('reference')){
+            //dd($tests_section);
+           if($tests_section && !$tests_overall){
+                $tests_overall = new Tests_Overall();
+                $tests_overall->test_id = $exam->id;
+                $tests_overall->user_id = $student->id;
+                $tests_overall->score = $tests_section[0]['score'];
+                $tests_overall->time = 1;
+                $tests_overall->max =$tests_section[0]['max'];
+                $tests_overall->save();
+                Cache::forget('resp_'.$user_id.'_'.$test_id);
+                Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
+                Cache::forget('attempt_'.$user_id.'_'.$test_id);
+           }
+        }
+
+
         $subjective = false;
         $video=false;
         $sections = array();
@@ -6900,10 +6920,12 @@ class AssessmentController extends Controller
         if(!$topics)
         unset($details['c']);
         $analysis =null;
+        $analysisdata =null;
         if($testslug){
              $score = $exam->getScore($idd,$testslug);
              $total = $exam->getTotal($idd,$testslug);
              $analysis = $exam->getAnalysisUrl($idd,$testslug,$slug);
+             $analysisdata = $exam->getAnalysis($idd,$testslug,$slug);
 
         }
         $mathjax = false;
@@ -6964,6 +6986,7 @@ class AssessmentController extends Controller
                          ->with('video',$video)
                          ->with('content',$content)
                          ->with('analysis',$analysis)
+                         ->with('analysisdata',$analysisdata)
                         ->with('count',$count)
                         ->with('score',$score)
                         ->with('total',$total)
