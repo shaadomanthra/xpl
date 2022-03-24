@@ -76,16 +76,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-12 col-md-6 mb-3">
-		<div class="card mb-2">
-			<div class="card-body">
-				<img src="https://i.imgur.com/Closp7D.jpg" class="rounded float-left pr-4 pb-3" style="max-width: 150px"/>
-				<h2>Prachi Vaidya </h2>
-				<p class="lead text-secondary">Head - L & D</p>
-				<p>Prachi Vaidya, Head of L&D of Xplore, spent seven years with the Manipal Group, where she worked in many aspects of HR, including Business Partnering, Operations, Generalists, and Learning & Development. This and her experience abroad is the right person to be in charge of Learning and Development.</p>
-			</div>
-		</div>
-	</div>
+	
 </div>
 
 
