@@ -35,23 +35,63 @@
 
 <div class="container ">
 <div class='mt-4 mb-4'>
+  <div class="row">
+    <div class="col-12 col-md-6">
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
-      
-        <form action="{{ route('assessment.try',$exam->slug)}}" >
-          <div class="form-group">
-            <label for="exampleInputEmail1">Username</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="student" placeholder="Enter username">
-            <input type="hidden" name="admin" value="1">
-            <input type="hidden" name="code" value="{{$code}}">
-          </div>
-         
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+          <form action="{{ route('assessment.try',$exam->slug)}}" >
+            <div class="form-group">
+              <label for="exampleInputEmail1">Username</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="student" placeholder="Enter username">
+              <input type="hidden" name="admin" value="1">
+              <input type="hidden" name="code" value="{{$code}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
        </div>
      </div>
-</div>
+   </div>
+   <div class="col-12 col-md-6">
 
+    <div class="card mb-3 mb-md-0">
+      <div class="card-body mb-0">
+          <form action="{{ route('test.attempt',$exam->slug)}}" >
+            <div class="form-group">
+              <label for="exampleInputEmail1">Batch Number / Info</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="batch" placeholder="Enter batch number" value="{{ request()->get('batch')}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+       </div>
+     </div>
+
+   </div>
+    </div>
+  </div>
+
+  @if(count($users))
+  <div class="my-3">
+    <div class="card">
+      <div class="card-header">Batch Users : {{$bno}}</div>
+      <div class="card-body">
+        @foreach($users as $u)
+          <a href="{{ route('assessment.try',$exam->slug)}}?code={{$code}}&admin=1&student={{$u->username}}&responses=1" class="mb-4 h5">{{ $u->name }}</a> &nbsp; 
+          @if(isset($attempts[$u->id]))
+            <i class="fa fa-check-circle text-success"></i> <span class="text-success">completed</span>
+          @endif
+          <br>
+        @endforeach
+      </div>
+    </div>
+  </div>
+  @elseif(request()->get('batch'))
+  <div class="my-3">
+    <div class="card">
+      <div class="card-header">No Users found</div>
+      
+    </div>
+  </div>
+  @endif
 </div>
 
 </div>

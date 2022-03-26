@@ -216,6 +216,7 @@ pre, code {
                 <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}"  class="btn btn-outline-dark btn-sm  mt-2 mt-md-0" >Desktop Mode</a>
               @endif
               <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&htmlmode=1"  class="btn btn-outline-dark btn-sm  mt-2 " >HTML Mode</a>
+              <a href="{{ route('test.attempt',$exam->slug)}}"  class="btn btn-outline-dark btn-sm  mt-2 " >Add Attempt</a>
 
               @if(Storage::disk('s3')->exists('pdfuploads/'.$exam->slug.'/'.$exam->slug.'_'.$student->username.'.pdf'))
                <div class="mt-3">

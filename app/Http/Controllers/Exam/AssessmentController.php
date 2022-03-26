@@ -3884,8 +3884,18 @@ class AssessmentController extends Controller
 
         if(!$request->get('admin'))
             return redirect()->route('assessment.analysis',$slug);
-        else
-            return redirect()->route('test.report',$slug);
+        else{
+            $datt = $request->get('score');
+            $respo = $request->get('responses');
+            Cache::forget('exam_sections_'.$exam->id);
+            Cache::forget('tests_overall_'.$exam->id.'_'.$datt);
+            Cache::forget('sections_'.$exam->id.'_data');
+            Cache::forget('users_'.$exam->id.'_data');
+            if($respo){
+                return redirect()->route('assessment.responses',['test'=>$slug,"student"=>$user->username]);
+            }else
+            return redirect()->route('test.report',$slug)->with('refresh',1);
+        }
 
 
     }
@@ -5837,8 +5847,28 @@ class AssessmentController extends Controller
             $code = $code[0];
         }
         $this->authorize('update', $exam);
+
+        $bno=null;
+        if(session()->get('bno'))
+            $bno = session()->get('bno');
+
+    
+        if(request()->get('batch')){
+            $bno = request()->get('batch');
+            session()->put('bno',$bno);
+        }
+
+        $users =[];
+        if($bno){
+            $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
+                return User::where('info',$bno)->get();
+            });
+        }
+        
+        $attempts = Tests_Overall::where('test_id',$exam->id)->get()->keyBy('user_id');
+
       
-        return view('appl.exam.exam.add_attempt')->with('exam',$exam)->with('code',$code);
+        return view('appl.exam.exam.add_attempt')->with('exam',$exam)->with('code',$code)->with('users',$users)->with('bno',$bno)->with('attempts',$attempts);
     }
 
     public function show($id)

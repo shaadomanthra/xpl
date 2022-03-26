@@ -279,6 +279,12 @@ action="{{ route('assessment.submission',$exam->slug)}}" enctype="multipart/form
         <input type="hidden" name="admin" value="0">
         @endif
 
+        @if(request()->get('responses'))
+        <input type="hidden" name="responses" value="1">
+        @else
+        <input type="hidden" name="responses" value="0">
+        @endif
+
         <input type="hidden" name="test_id" value="{{ $exam->id }}">
         <input type="hidden" name="save" class="save_test" value="{{ $exam->save }}">
         <input type="hidden" name="code" value="{{ request()->get('code') }}">
