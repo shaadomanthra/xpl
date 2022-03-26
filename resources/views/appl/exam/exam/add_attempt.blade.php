@@ -75,7 +75,7 @@
       <div class="card-header">Batch Users : {{$bno}}</div>
       <div class="card-body">
         @foreach($users as $u)
-          <a href="{{ route('assessment.try',$exam->slug)}}?code={{$code}}&admin=1&student={{$u->username}}&responses=1" class="mb-4 h5">{{ $u->name }}</a> &nbsp; 
+          <a href="{{ route('assessment.try',$exam->slug)}}?code={{$code}}&admin=1&student={{$u->username}}&responses=1" class="mb-5 h5">{{ $u->name }}</a> &nbsp; 
           @if(isset($attempts[$u->id]))
             <i class="fa fa-check-circle text-success"></i> <span class="text-success">completed</span>
           @endif

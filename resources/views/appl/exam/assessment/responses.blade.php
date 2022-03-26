@@ -178,9 +178,11 @@ pre, code {
           </div>
              
               <button  class="btn btn-outline-dark btn-sm ml-2" data-toggle="modal" data-target="#exampleModal2" data-html2canvas-ignore="true">Add Comment</button>
-              <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1"  class="btn btn-outline-dark btn-sm " >Refresh Cache</a>
-            </div>
+              <a href="{{ route('assessment.responses',$exam->slug)}}?student={{$student->username}}&refresh=1"  class="btn btn-outline-dark btn-sm mt-2 mt-md-0" >Refresh Cache</a>
+               <a href="{{ route('test.attempt',$exam->slug)}}"  class="btn btn-outline-dark btn-sm  mt-2 mt-md-0" >Add Attempt</a>
             
+            </div>
+           
 
           </div>
 
@@ -477,8 +479,8 @@ pre, code {
 	</div>
 
 	<div class="col-12 col-md-2 col-lg-3 "  data-html2canvas-ignore="true">
-    <div class="mt-1 ml-2">
-		<div class="sticky rounded @if($t->status!=2)qgreen @else qyellow @endif mb-3 mt-3 mt-md-0 box_{{$t->question_id}}">
+    <div class="mt-md-1 ml-md-2">
+		<div class="sticky rounded @if($t->status!=2)qgreen @else qyellow @endif mb-5 mb-md-3 mt-1 mt-md-3 mt-md-0 box_{{$t->question_id}}">
 			<div class="card-body ">
 
 				<p>Status: @if($t->status==2)<span class="badge badge-warning review_{{$t->question_id}}">under review</span>
@@ -533,9 +535,12 @@ pre, code {
 @endforeach
 
 
-</div>
+<a href="{{ route('test.attempt',$exam->slug)}}"  class="btn btn-outline-dark   my-3 w-100 " >Add User Attempt</a>
 
 </div>
+</div>
+
+
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

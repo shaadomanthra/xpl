@@ -3892,7 +3892,7 @@ class AssessmentController extends Controller
             Cache::forget('sections_'.$exam->id.'_data');
             Cache::forget('users_'.$exam->id.'_data');
             if($respo){
-                return redirect()->route('assessment.responses',['test'=>$slug,"student"=>$user->username]);
+                return redirect()->route('assessment.responses2',['test'=>$slug,"student"=>$user->username]);
             }else
             return redirect()->route('test.report',$slug)->with('refresh',1);
         }
