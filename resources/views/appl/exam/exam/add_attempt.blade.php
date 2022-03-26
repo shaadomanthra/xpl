@@ -36,7 +36,7 @@
 <div class="container ">
 <div class='mt-4 mb-4'>
   <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-6 col-md-6">
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
           <form action="{{ route('assessment.try',$exam->slug)}}" >
@@ -51,13 +51,13 @@
        </div>
      </div>
    </div>
-   <div class="col-12 col-md-6">
+   <div class="col-6 col-md-6">
 
     <div class="card mb-3 mb-md-0">
       <div class="card-body mb-0">
           <form action="{{ route('test.attempt',$exam->slug)}}" >
             <div class="form-group">
-              <label for="exampleInputEmail1">Batch Number / Info</label>
+              <label for="exampleInputEmail1">Info</label>
               <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="batch" placeholder="Enter batch number" value="{{ request()->get('batch')}}">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
