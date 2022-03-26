@@ -1680,7 +1680,7 @@ class UserController extends Controller
         }else{
             $users = User::where('client_slug',$client_slug)->where('status','<>','2')->get()->keyBy('id');
 
-            abort(403,'batch info is mandatory');
+            //abort(403,'batch info is mandatory');
         }
 
         if(isset($client))
