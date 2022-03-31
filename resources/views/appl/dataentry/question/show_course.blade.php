@@ -198,6 +198,19 @@
     @endif
   @endif
 
+  @if($question->type == "zip")
+   <hr>
+    @if(!$details['response'])
+    <div class="mb-2">Upload your Zip/War File:</div>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="zip_file">
+    @else
+    <div class="mb-2"><b>Your Response:</b></div>
+     <hr>
+     <div>File uploaded</div>
+
+    @endif
+  @endif
+
    @if($question->type == "updf")
    <hr>
     @if(!$details['response'])

@@ -135,7 +135,7 @@ class QuestionController extends Controller
         $exams =  [];
 
         // Question Types
-        $allowed_types = ['mcq','naq','maq','eq','code','fillup','sq','urq','vq','csq','mbdq','mbfq','pdf'];
+        $allowed_types = ['mcq','naq','maq','eq','code','fillup','sq','urq','vq','csq','mbdq','mbfq','pdf','zip'];
         if(in_array(request()->get('type'), $allowed_types)){
             $type = request()->get('type');
         }
@@ -250,7 +250,6 @@ class QuestionController extends Controller
 
             
             if(isset($request->all()['pdf_file'])){
-
                 $file      = $request->all()['pdf_file'];
                 $username = \auth::user()->username;
                 if($file->getClientOriginalExtension()=='pdf')
@@ -267,12 +266,9 @@ class QuestionController extends Controller
                     flash('Only pdf format supported')->error();
                     return redirect()->back();
                 }   
-
-                
-
             }
 
-
+            
 
             if($request->dynamic){
                 $question->dynamic_code_save();
@@ -624,20 +620,47 @@ class QuestionController extends Controller
                     flash('Only pdf format supported')->error();
                     return redirect()->back();
                 }   
-
-                
-
         }
 
-        if(request()->get('delete')){
-            $filepath = '/pdf_practice/'.$question->slug.'_'.$username.'.pdf';
+        if(isset($request->all()['zip_file'])){
+
+                $file      = $request->all()['zip_file'];
+                $username = \auth::user()->username;
+                if($file->getClientOriginalExtension()=='zip' || $file->getClientOriginalExtension()=='war')
+                {
+                    $filepath = '/zip_practice/'.$question->slug.'_'.$username.'.'.$file->getClientOriginalExtension();
             
                     if(Storage::disk('s3')->exists($filepath)){
                         Storage::disk('s3')->delete($filepath);
                     }
+
+                    Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+                    
+                }else{
+                    flash('Only zip/war format supported')->error();
+                    return redirect()->back();
+                }   
+        }
+
+        if(request()->get('delete')){
+            $filepath = '/pdf_practice/'.$question->slug.'_'.$username.'.pdf';
+            if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+            }
+
+             $filepath = '/zip_practice/'.$question->slug.'_'.$username.'.zip';
+            if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+            }
+             $filepath = '/zip_practice/'.$question->slug.'_'.$username.'.war';
+            if(Storage::disk('s3')->exists($filepath)){
+                        Storage::disk('s3')->delete($filepath);
+            }
             $practice = Practice::where('user_id',\auth::user()->id)->where('qid',$id)->first();
             $practice->delete();
             return redirect()->route('course.question',[$project_slug,$category_slug,$id]);
+
+
         }
         if(request()->get('codefragment_1')){
 

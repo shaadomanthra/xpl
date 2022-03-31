@@ -851,8 +851,8 @@ use Illuminate\Support\Facades\Storage;
 
 	Route::get('/complete_profile', 'User\UserController@update_self')->name('profile.complete');
 
-	Route::get('/agreement', 'User\UserController@agreement')->name('profile.agreement');
-	Route::post('/agreement', 'User\UserController@agreement')->name('profile.agreement');
+	Route::get('/agreement', 'User\UserController@agreement')->name('profile.agreement')->middleware('auth');
+	Route::post('/agreement', 'User\UserController@agreement')->name('profile.agreement')->middleware('auth');
 	
 	//Route::resource('job','Recruit\JobController');
 	Route::resource('form','Recruit\FormController')->middleware('auth');

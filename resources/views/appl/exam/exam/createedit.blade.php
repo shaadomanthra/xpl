@@ -460,20 +460,7 @@
           </div>
         </div>
 
-         <div class="col-12 col-md-3">
-           <div class="form-group mt-3">
-            <label for="formGroupExampleInput ">Connected Slug (optional)</label>
-            <input type="text" class="form-control" name="testslug" id="formGroupExampleInput" placeholder="" 
-            @if($stub=='Create')
-            value="{{ (old('testslug')) ? old('testslug') : '' }}"
-            @else
-            value = "{{ $exam->testslug }}"
-            @endif
-          >
-
-          <small class='text-secondary'>API to connect to secondary test platform</small>
-          </div>
-        </div>
+      
    
         <div class="col-12 col-md-3">
            <div class="form-group mt-3">
@@ -506,6 +493,36 @@
               <option value="0" @if(isset($exam)) @if($exam->system_check==0) selected @endif @endif >Required</option>
             </select>
 
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">Connected Slug (optional)</label>
+            <input type="text" class="form-control" name="testslug" id="formGroupExampleInput" placeholder="" 
+            @if($stub=='Create')
+            value="{{ (old('testslug')) ? old('testslug') : '' }}"
+            @else
+            value = "{{ $exam->testslug }}"
+            @endif
+          >
+
+          <small class='text-secondary'>API to connect to secondary test platform</small>
+          </div>
+        </div>
+
+           <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">Forward Slug (optional)</label>
+            <input type="text" class="form-control" name="forwardslug" id="formGroupExampleInput" placeholder="" 
+            @if($stub=='Create')
+            value="{{ (old('forwardslug')) ? old('forwardslug') : '' }}"
+            @else
+            value = "{{ $exam->forwardslug }}"
+            @endif
+          >
+
+          <small class='text-secondary'>To move from one test to other automatically</small>
           </div>
         </div>
 

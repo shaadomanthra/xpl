@@ -648,6 +648,7 @@ class ExamController extends Controller
             $settings['form_fields'] = $request->get('form_fields');
             $settings['tags'] = $request->get('tags');
             $settings['testslug'] = $request->get('testslug');
+            $settings['forwardslug'] = $request->get('forwardslug');
             $settings['pdf_paper'] = $request->get('pdf_paper');
 
             
@@ -2069,13 +2070,21 @@ class ExamController extends Controller
         // ->with('exam',$exam)
         // ->with('users',$ux);
 
-         $settings = json_decode($exam->getOriginal('settings'),true);
-        $testslug = null;
+            $settings = json_decode($exam->getOriginal('settings'),true);
+            $testslug = null;
             if(isset($settings['testslug']))
             {
                 if($settings['testslug']){
 
                     $testslug = $settings['testslug'];
+                }
+            }
+            $forwardslug = null;
+            if(isset($settings['forwardslug']))
+            {
+                if($settings['forwardslug']){
+
+                    $forwardslug = $settings['forwardslug'];
                 }
             }
 
@@ -2086,6 +2095,7 @@ class ExamController extends Controller
                     ->with('exam_sections',$exam_sections)
                     ->with('sections',$sections)
                     ->with('testslug',$testslug)
+                    ->with('forwardslug',$forwardslug)
                     ->with('exam',$exam)
                     ->with('users',$ux);
         else
@@ -2276,6 +2286,11 @@ class ExamController extends Controller
         else
             $exam->testslug = null;
 
+        if(isset($settings['forwardslug']))
+            $exam->forwardslug = $settings['forwardslug'];
+        else
+            $exam->forwardslug = null;
+
         if(isset($settings['pdf_paper']))
             $exam->pdf_paper = $settings['pdf_paper'];
         else
@@ -2387,6 +2402,7 @@ class ExamController extends Controller
             $settings['form_fields'] = $request->get('form_fields');
             $settings['tags'] = $request->get('tags');
             $settings['testslug'] = $request->get('testslug');
+            $settings['forwardslug'] = $request->get('forwardslug');
             $settings['pdf_paper'] = $request->get('pdf_paper');
 
 

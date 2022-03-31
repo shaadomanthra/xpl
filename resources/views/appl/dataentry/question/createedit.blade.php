@@ -452,6 +452,7 @@ th{ border:1px solid silver; }
             <option value="urq" @if(isset($question)) @if($question->type=='urq') selected @endif @endif >Upload Response Question</option>
             <option value="typing" @if(isset($question)) @if($question->type=='typing') selected @endif @endif >Typing Question</option>
             <option value="pdf" @if(isset($question)) @if($question->type=='pdf') selected @endif @endif >Question PDF Question</option>
+            <option value="zip" @if(isset($question)) @if($question->type=='zip') selected @endif @endif >Zip Question</option>
             <option value="updf" @if(isset($question)) @if($question->type=='updf') selected @endif @endif >Upload PDF Question</option>
             
           </select>
@@ -474,6 +475,7 @@ th{ border:1px solid silver; }
             <option value="typing" @if($type =='typing')  selected  @endif >Typing Question</option>
 
             <option value="pdf" @if($type =='pdf')  selected  @endif >Question PDF Question</option>
+              <option value="zip" @if($type =='zip')  selected  @endif >Zip Question</option>
             <option value="updf" @if($type =='updf')  selected  @endif >Upload PDF Question</option>
           </select>
           @endif

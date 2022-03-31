@@ -522,6 +522,7 @@ class AssessmentController extends Controller
 
 
 
+
        $exam = Cache::get('test_'.$test);
        $data['branches'] = Cache::get('branches');
        $data['colleges'] = Cache::get('colleges');
@@ -563,6 +564,22 @@ class AssessmentController extends Controller
         else
             $responses = null;
 
+
+
+        $settings = json_decode($exam->getOriginal('settings'),true);
+        
+        $exam->testslug  = null;
+        if(isset($settings['testslug'])){
+            if($settings['testslug'])
+                $exam->testslug = $settings['testslug'];
+        }
+
+
+        if($exam->testslug){
+            $rurl = env('API_URL').$exam->testslug.'/try?id='.\auth::user()->id.'&source='.env('APP_NAME').'&username='.\auth::user()->username.'&private=1&uri='.route('assessment.analysis',$exam->slug);
+            return redirect()->to($rurl);
+
+        }
 
         $section_timer =  false;
 
@@ -3806,12 +3823,18 @@ class AssessmentController extends Controller
 
         $test_overall_cache->cheat_detect = $test_overall['cheat_detect'];
 
+        $settings = json_decode($exam->getOriginal('settings'),true);
+        $forwardslug = null;
+        if(isset($settings['forwardslug'])){
+            if($settings['forwardslug']){
+                $forwardslug = $settings['forwardslug'];
+            }
+        }
+
        
 
         try {
             DB::connection()->getPdo();
-
-
 
             if(!$request->get('admin')){
                 Cache::put('attempt_'.$user_id.'_'.$test_id,$test_overall_cache,240);
@@ -3821,9 +3844,7 @@ class AssessmentController extends Controller
                 Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
             }
 
-
             Test::insert($data);
-
             Tests_Section::insert($sec);
             Tests_Overall::insert($test_overall);
 
@@ -3874,7 +3895,11 @@ class AssessmentController extends Controller
             die("Could not connect to the database.  Please check your configuration. error:" . $e );
         }
         
+        
 
+        if($forwardslug){
+            return redirect()->route('assessment.try',['test'=>$forwardslug,"student"=>$user->username]);
+        }
 
 
          if($request->get('api_submit'))
@@ -6544,6 +6569,13 @@ class AssessmentController extends Controller
                     $testslug = $settings['testslug'];
                 }
             }
+
+        $forwardslug = null;
+        if(isset($settings['forwardslug'])){
+            if($settings['forwardslug']){
+                $forwardslug = $settings['forwardslug'];
+            }
+        }
 //$score = $exam->getScore($id,$testslug);
         // api
             $idd=$user->id;
@@ -6592,6 +6624,9 @@ class AssessmentController extends Controller
                 Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
                 Cache::forget('attempt_'.$user_id.'_'.$test_id);
 
+                if($forwardslug){
+                    return redirect()->route('assessment.try',['test'=>$forwardslug,"student"=>$user->username]);
+                }
 
                 return redirect()->to(request()->fullUrl());
 
@@ -6614,6 +6649,7 @@ class AssessmentController extends Controller
                 Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
                 Cache::forget('attempt_'.$user_id.'_'.$test_id);
            }
+           
         }
 
 
