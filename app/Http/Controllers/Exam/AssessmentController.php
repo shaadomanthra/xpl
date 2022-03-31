@@ -3898,7 +3898,7 @@ class AssessmentController extends Controller
         
 
         if($forwardslug){
-            return redirect()->route('assessment.try',['test'=>$forwardslug,"student"=>$user->username]);
+            return redirect()->route('assessment.instructions',['test'=>$forwardslug,"student"=>$user->username]);
         }
 
 
@@ -6625,7 +6625,7 @@ class AssessmentController extends Controller
                 Cache::forget('attempt_'.$user_id.'_'.$test_id);
 
                 if($forwardslug){
-                    return redirect()->route('assessment.try',['test'=>$forwardslug,"student"=>$user->username]);
+                    return redirect()->route('assessment.instructions',['test'=>$forwardslug,"student"=>$user->username]);
                 }
 
                 return redirect()->to(request()->fullUrl());
