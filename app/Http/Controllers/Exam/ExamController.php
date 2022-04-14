@@ -1999,7 +1999,15 @@ class ExamController extends Controller
                     } 
                 }
 
+                request()->session()->put('versant',0);
+                if($exam->total==80){
+                    if($exam->examtype->name ="communication"){
+                        request()->session()->put('versant',1);
+                    }
+                    
+                }
                 request()->session()->put('exam',$exam);
+
                 request()->session()->put('result',$result);
                 request()->session()->put('sections',$sections);
                 request()->session()->put('exam_sections',$exam_sections);

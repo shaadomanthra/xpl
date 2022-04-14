@@ -24,6 +24,7 @@ class TestReport2 implements FromCollection
         $branches= request()->session()->get('branches');
         $email_stack= request()->session()->get('email_stack');
         $data_ques = request()->session()->get('data_ques');
+        $versant = request()->session()->get('versant');
 
     	foreach($result as $k=>$res){
 
@@ -153,6 +154,28 @@ class TestReport2 implements FromCollection
 
             }
 
+            if($versant){
+                if($result[$k]->Score<=25){
+                    $result[$k]->grade = "A0";
+                }else if($result[$k]->Score>25 && $result[$k]->Score<=35){
+                    $result[$k]->grade = "A1";
+                }
+                else if($result[$k]->Score>35 && $result[$k]->Score<=46){
+                    $result[$k]->grade = "A2";
+                }
+                else if($result[$k]->Score>46 && $result[$k]->Score<=57){
+                    $result[$k]->grade = "B1";
+                }
+                else if($result[$k]->Score>57 && $result[$k]->Score<=68){
+                    $result[$k]->grade = "B2";
+                }
+                else if($result[$k]->Score>68 && $result[$k]->Score<=78){
+                    $result[$k]->grade = "C1";
+                }else{
+                    $result[$k]->grade = "C2";
+                }
+               
+            }
     		unset($result[$k]->id);
     		unset($result[$k]->user_id);
     		unset($result[$k]->test_id);
@@ -248,6 +271,12 @@ class TestReport2 implements FromCollection
             
                 $ux->pdf2 = 'Web Report';
                 $ux->pdf = 'PDF Report';
+
+        }
+
+        if($versant){
+            
+                $ux->grade = 'Grade';
 
         }
         if(count($email_stack['not_registered']))
