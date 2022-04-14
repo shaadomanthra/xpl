@@ -2000,7 +2000,7 @@ class ExamController extends Controller
                 }
 
                 request()->session()->put('versant',0);
-                if($exam->total==80){
+                if(isset($exam->examtype->name )){
                     if($exam->examtype->name ="communication"){
                         request()->session()->put('versant',1);
                     }
