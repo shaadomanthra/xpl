@@ -999,6 +999,23 @@ class AdminController extends Controller
         return view('appl.product.admin.user.show')->with('user',$user);
     }
 
+    public function searchuser(Request $request)
+    {
+        if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))
+        {
+             abort(403,'Unauthorised Access');   
+        }
+        $user = null;
+        $email = $request->get('email');
+        if($email){
+            $user = User::where('email',$email)->first();
+
+        }
+       
+
+        return view('appl.product.admin.user.usersearch')->with('user',$user);
+    }
+
     public function listuser(Request $request)
     {
         if(!\auth::user()->checkRole(['administrator','investor','patron','promoter','employee','client-owner','client-manager','manager']))

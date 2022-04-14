@@ -203,7 +203,8 @@ class SectionController extends Controller
 
     
     public function ocrupload(Request $request){
-         $exam = Exam::where('slug','29199')->first();
+         $exam = Exam::where('slug','98250')->first();
+
          $url = "https://i.imgur.com/QLsbILi.jpg";
 
         
@@ -223,6 +224,16 @@ class SectionController extends Controller
         $url = Storage::disk('s3')->url($path);
       
         $data = $this->processocr($url);
+
+        foreach($data as $dd){
+            $tx = $dd['text'];
+            $tx = $tx .'  --- '.implode(',',$dd['boundingBox']);
+            echo $tx."<br>";
+        }
+        $jdata = json_encode($data,JSON_PRETTY_PRINT);
+
+        dd($jdata);
+        dd('');
          $result = $this->extractData($exam,$data);
        
         }

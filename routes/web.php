@@ -293,6 +293,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::post('admin/image','Product\AdminController@imageupload')->name('admin.image')->middleware('auth');
 	Route::get('admin/user','Product\AdminController@user')->name('admin.user')->middleware('auth');
 	Route::get('admin/user/list','Product\AdminController@listuser')->name('admin.listuser')->middleware('auth');
+	Route::get('admin/user/search','Product\AdminController@searchuser')->name('admin.searchuser')->middleware('auth');
 
 	Route::post('admin/upload_users','User\UserController@upload_users')->name('upload.user')->middleware('auth');
 	Route::get('admin/upload_users','User\UserController@upload_users')->name('upload.users')->middleware('auth');
