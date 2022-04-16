@@ -1087,6 +1087,7 @@ class ExamController extends Controller
         if(!$evaluators)
             $evaluators = [];
 
+        if(!$r->get('api'))
         if(\auth::user()->role < 12 && \auth::user()->role>3){
             if(!in_array(\auth::user()->id,$evaluators)){
                 echo in_array(\auth::user()->id,$evaluators);
