@@ -189,6 +189,7 @@ class User extends Authenticatable
         $user = User::where('email',$email)->where('client_slug',subdomain())->first();
         $parts = explode("@", $email);
         $username = $parts[0];
+        $request = request();
 
         $u = User::where('username',$username)->first();
 
