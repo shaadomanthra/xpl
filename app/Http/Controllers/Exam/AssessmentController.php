@@ -6310,7 +6310,7 @@ class AssessmentController extends Controller
         
 
         if($hcode && $email){
-            $student = Cache::remember('usr_api_'.$username, 240, function() use ($email){
+            $student = Cache::remember('usr_apid_'.$username, 240, function() use ($email){
                 return User::where('email',$email)->first();
             });
              
@@ -6324,7 +6324,7 @@ class AssessmentController extends Controller
                 }else{
                     echo json_encode($data);
                     exit();
-                    
+
                 }
             }
         }
