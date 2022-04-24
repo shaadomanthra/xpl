@@ -6324,6 +6324,7 @@ class AssessmentController extends Controller
                 }else{
                     echo json_encode($data);
                     exit();
+                    
                 }
             }
         }
