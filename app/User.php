@@ -215,7 +215,7 @@ class User extends Authenticatable
                 'password' => bcrypt($phone),
                 'activation_token' => str_random(20),
                 'client_slug' => subdomain(),
-                'user_id' =>'1',
+                'user_id' =>'2',
                 'status'=>1,
             ]);
 
