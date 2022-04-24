@@ -697,6 +697,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::post('savetest/{test}','Exam\AssessmentController@savetest')->name('assessment.savetest');
 	//Route::get('uploadimage/{test}','Exam\AssessmentController@upload_image')->name('assessment.uploadget');
 	Route::get('test/{test}/analysis','Exam\AssessmentController@analysis2')->name('assessment.analysis')->middleware('auth');
+	Route::get('test/{test}/analysis_api','Exam\AssessmentController@analysis3')->name('assessment.analysis3');
 	Route::get('test/{test}/solutions','Exam\AssessmentController@solutions')->name('assessment.solutions')->middleware('auth');
 
 	Route::get('test/{test}/responses','Exam\AssessmentController@responses2')->name('assessment.responses')->middleware('auth');

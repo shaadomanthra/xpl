@@ -6293,6 +6293,78 @@ class AssessmentController extends Controller
 
     }
 
+    public function analysis3($slug,Request $request)
+    {
+        $name = $request->get('name');
+        $email = $request->get('email');
+        $phone = $request->get('phone');
+        $hcode = $request->get('hashcode');
+        
+        $exam = Cache::get('test_'.$slug);
+        if(!$exam){
+            $exam = Exam::where('slug',$slug)->first();
+        }
+
+        $parts = explode("@", $email);
+        $username = $parts[0];
+        
+
+        if($hcode && $email){
+            $student = Cache::remember('usr_api_'.$username, 240, function() use ($email){
+                return User::where('email',$email)->first();
+            });
+             
+             // create user if it doesnot exist
+             $user = $student;
+            if(!$user){
+                $data = User::directregister($name,$email,$phone,$hcode);
+
+                if($data['error']!=1){
+                    $student = User::where('email',$request->get('email'))->first();
+                }else{
+                    echo json_encode($data);
+                    exit();
+                }
+            }
+        }
+        else
+        {
+            $data['error'] = 1;
+            $data['message'] = 'Hashcode not provided';
+            header('Content-Type: application/json');
+            echo  json_encode($data,JSON_PRETTY_PRINT);
+            exit();
+        }
+
+        $user_id = $student->id;
+        $test_id = $exam->id;
+
+        $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
+            return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
+        });
+
+        $data['attempt'] = $tests_overall;
+        $data['exam'] = $exam;
+
+        if($hcode!='piofxapp734')
+        {
+             $data['error'] = 1;
+            $data['message'] = 'Invalid hashcode used';
+             header('Content-Type: application/json');
+            echo  json_encode($data,JSON_PRETTY_PRINT);
+
+        }
+        else if($tests_overall){
+            header('Content-Type: application/json');
+            echo  json_encode($data,JSON_PRETTY_PRINT);
+        }
+        else
+            echo 0;
+        exit();
+
+
+    }
+
     public function analysis2($slug,Request $request)
     {
 
@@ -6343,6 +6415,9 @@ class AssessmentController extends Controller
 
         if($request->get('student'))
             $student = User::where('username',$request->get('student'))->first();
+        else if($request->get('hashcode') && $request->get('email')){
+             $student = User::where('email',$request->get('email'))->first();
+        }
         else
             $student = \auth::user();
 
@@ -6543,6 +6618,10 @@ class AssessmentController extends Controller
         });
 
         
+        if($request->get('hashcode') && $request->get('email')){
+            echo json_encode($tests_overall);
+            exit();
+        }
 
         if(!$tests_overall && !$request->get('reference') && !$request->session()->get('rd')){
             return redirect()->route('assessment.show',$slug);
