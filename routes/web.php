@@ -560,6 +560,9 @@ use Illuminate\Support\Facades\Storage;
 	Route::post('register/client','User\UserController@saveregister')->name('register.client');
 	Route::post('register/sendotp','User\UserController@sendOTP')->name('register.sendotp');
 
+	Route::get('api/register','User\UserController@apiregister')->name('api.register');
+	Route::get('api/login','User\UserController@apilogin')->name('api.login');
+
 	Route::get('/companies', 'Content\ArticleController@companies')->name('companies');
 	
 	Route::get('/j/listing', 'Content\ArticleController@public')->name('article.listing')->middleware('auth');

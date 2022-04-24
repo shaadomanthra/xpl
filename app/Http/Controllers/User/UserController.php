@@ -1224,6 +1224,74 @@ class UserController extends Controller
       return $data;
     }
 
+
+
+    public function apiregister(Request $request)
+    {
+
+        $phone = $request->phone;
+        $email = $request->email;
+        $name = $request->name;
+        $hcode = $request->hashcode;
+        $user = User::where('email',$email)->where('client_slug',subdomain())->first();
+        $parts = explode("@", $request->email);
+        $username = $parts[0];
+
+        $u = User::where('username',$username)->first();
+
+        if($u){
+            $username = $username.'_'.rand(10,100);
+        }
+
+        if($hcode!='piofxapp734'){
+            $data['error'] = 1;
+            $data['message'] = 'Invalid hashcode used';
+        }
+        
+        else if($user){
+            $data['error'] = 2;
+            $data['message'] = 'User with email ('.$email.') already exists';
+            
+        }else if(!$email || !$phone || !$name){
+            $data['error'] = 1;
+            $data['message'] = 'Email or phone or name not given';
+        }else{
+            $user = User::create([
+                'name' => $name,
+                'username' => strtolower($username),
+                'email' => strtolower($request->email),
+                'password' => bcrypt($phone),
+                'activation_token' => str_random(20),
+                'client_slug' => subdomain(),
+                'user_id' =>'1',
+                'status'=>1,
+            ]);
+
+            $user->phone = $request->get('phone');
+            $user->roll_number = $request->get('fathername');
+            $user->hometown = $request->get('hometown');
+            $user->current_city = $request->get('current_city');
+            $user->dob = $request->get('dob');
+            $user->gender = $request->get('gender');
+            $user->video = $request->get('video');
+            $user->personality = $request->get('personality');
+            $user->confidence = $request->get('confidence');
+            $user->fluency = $request->get('fluency');
+            $user->language = $request->get('language');
+
+            $user->save();
+
+            $data['error'] = 0;
+            $data['message'] = 'User with email ('.$email.') is created';
+        }
+
+
+        echo json_encode($data);
+        exit();
+        
+
+    }
+
     public function saveregister(Request $request)
     {
         $code = intval(request()->session()->get('code'));

@@ -5927,6 +5927,19 @@ class AssessmentController extends Controller
             //file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
         }
 
+        if(request()->get('hashcode')){
+            $name = request()->get('name');
+            $email = request()->get('email');
+            $hcode = request()->get('hashcode');
+            $phone = request()->get('phone');
+
+            User::directLogin($name,$email,$phone,$hcode);
+
+            $rd = request()->get('redirect');
+            request()->session()->put('rd',$rd);
+
+
+        }
 
         $user = \Auth::user();
         if(request()->get('retry')){
@@ -6485,7 +6498,7 @@ class AssessmentController extends Controller
         $score =$total =0;
 
 
-        if($exam->solutions==2 && !request()->get('student') && !request()->get('reference')){
+        if($exam->solutions==2 && !request()->get('student') && !request()->get('reference') && !$request->session()->get('rd')){
             $view = "analysis_private";
              return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
@@ -6531,7 +6544,7 @@ class AssessmentController extends Controller
 
         
 
-        if(!$tests_overall && !$request->get('reference')){
+        if(!$tests_overall && !$request->get('reference') && !$request->session()->get('rd')){
             return redirect()->route('assessment.show',$slug);
             abort('403','Test not attempted');
         }
@@ -6650,6 +6663,10 @@ class AssessmentController extends Controller
                 Cache::forget('attempt_'.$user_id.'_'.$test_id);
            }
            
+        }
+
+        if($request->session()->get('rd')){
+            return redirect()->to($request->session()->get('rd'));
         }
 
 

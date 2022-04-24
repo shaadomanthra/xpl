@@ -166,6 +166,81 @@ class User extends Authenticatable
         
     }
 
+     public static function directlogin($name,$email,$phone,$hcode)
+    {
+        $user = User::where('email',$email)->where('client_slug',subdomain())->first();
+        if(!$user){
+            $data = User::directregister($name,$email,$phone,$hcode);
+
+            if($data['error']!=1){
+                \Auth::loginUsingId($data['uid']);
+            }else{
+                echo json_encode($data);
+                exit();
+            }
+        }else{
+            \Auth::loginUsingId($user->id);
+        }
+    }
+
+    public static function directregister($name,$email,$phone,$hcode)
+    {
+
+        $user = User::where('email',$email)->where('client_slug',subdomain())->first();
+        $parts = explode("@", $email);
+        $username = $parts[0];
+
+        $u = User::where('username',$username)->first();
+
+        if($u){
+            $username = $username.'_'.rand(10,100);
+        }
+
+        if($hcode!='piofxapp734'){
+            $data['error'] = 1;
+            $data['message'] = 'Invalid hashcode used';
+        } else if(!$email || !$phone || !$name){
+            $data['error'] = 1;
+            $data['message'] = 'Email or phone or name not given';
+        }
+        else if($user){
+            $data['error'] = 1;
+            $data['message'] = 'User with email ('.$email.') already exists';
+            
+        }else{
+            $user = User::create([
+                'name' => $name,
+                'username' => strtolower($username),
+                'email' => strtolower($email),
+                'password' => bcrypt($phone),
+                'activation_token' => str_random(20),
+                'client_slug' => subdomain(),
+                'user_id' =>'1',
+                'status'=>1,
+            ]);
+
+            $user->phone = $phone;
+            $user->roll_number = $request->get('fathername');
+            $user->hometown = $request->get('hometown');
+            $user->current_city = $request->get('current_city');
+            $user->dob = $request->get('dob');
+            $user->gender = $request->get('gender');
+            $user->video = $request->get('video');
+            $user->personality = $request->get('personality');
+            $user->confidence = $request->get('confidence');
+            $user->fluency = $request->get('fluency');
+            $user->language = $request->get('language');
+
+            $user->save();
+
+            $data['error'] = 0;
+            $data['message'] = 'User with email ('.$email.') is created';
+            $data['uid'] = $user->id;
+        }
+
+        return $data;
+    }
+
     public function getImage($signature=null){
 
         if($signature)

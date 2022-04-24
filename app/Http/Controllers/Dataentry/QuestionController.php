@@ -635,6 +635,9 @@ class QuestionController extends Controller
                     }
 
                     Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
+
+                    Question::uploadWar($question);
+
                     
                 }else{
                     flash('Only zip/war format supported')->error();
