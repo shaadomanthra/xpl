@@ -42,7 +42,11 @@
     <div class="alert alert-important alert-warning">
       <p>Hi, {{\auth::user()->name}}!</p>
       <p><b> Note:</b> You are required to start the test within the above mentioned test window. </p>
-      <a href="{{ url('/logout') }}"><button class="btn btn-success">Logout</button></a>
+      <a class="btn border border-success text-success " href="{{ route('logout') }}" onclick="event.preventDefault();
+      document.getElementById('logout-form').submit();" role="button">Logout</a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+      </form>
     </div>
       
     @endif
