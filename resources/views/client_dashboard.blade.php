@@ -112,7 +112,7 @@
 @endif
 @endif
 
-
+@if(subdomain()!='xplore')
 @if(count(\auth::user()->newtests())!=0)
   <div class="row ">
               
@@ -189,7 +189,7 @@
 
 
 @endif
-
+@endif
 
 @if(count(\auth::user()->tests())!=0)
   <div class="rounded table-responsive ">
