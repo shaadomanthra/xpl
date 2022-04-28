@@ -39,14 +39,19 @@
       <a href="{{ url('/register') }}"><button class="btn btn-primary">Register</button></a>
     </div>
     @else
+    <div class="alert alert-important alert-warning">
+      <p>Hi, {{\auth::user()->name}}!</p>
       <p><b> Note:</b> You are required to start the test within the above mentioned test window. </p>
+      <a href="{{ url('/logout') }}"><button class="btn btn-success">Logout</button></a>
+    </div>
+      
     @endif
   
     @endif
     <p>  For queries, kindly write to us at <span class="text-primary"><span class="text-info">@if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif</span> </p>
     <p>
     </p>
-    <a href="{{ url('/') }}"><button class="btn btn-success">Home</button></a>
+    <a href="{{ url('/') }}">Home page</a>
   </div>
 
 
