@@ -29,7 +29,19 @@
     @else
     <h3 class="display-5 mb-1"> <div class=""> This test link  will be activated on <span class="text-danger">{{\carbon\carbon::parse($exam->auto_activation)->toDayDateTimeString()}}</span></div></h3>
     <p>and will be deactivated by <span class="text-info">{{\carbon\carbon::parse($exam->auto_deactivation)->toDayDateTimeString()}}</span></p>
-    <p><b> Note:</b> You are required to start the test within the above mentioned test window. </p>
+    {{
+          request()->session()->put('redirect.url',url()->current())
+      }}
+    @if(!\auth::user())
+    <div class="alert alert-important alert-warning">
+      <p>You are not logged in. Use the below links to login or register.</p>
+      <a href="{{ url('/login') }}"><button class="btn btn-success">Login</button></a>
+      <a href="{{ url('/register') }}"><button class="btn btn-primary">Register</button></a>
+    </div>
+    @else
+      <p><b> Note:</b> You are required to start the test within the above mentioned test window. </p>
+    @endif
+  
     @endif
     <p>  For queries, kindly write to us at <span class="text-primary"><span class="text-info">@if(env('CONTACT_MAIL')) {{env('CONTACT_MAIL')}} @else krishnatejags@gmail.com @endif</span> </p>
     <p>
