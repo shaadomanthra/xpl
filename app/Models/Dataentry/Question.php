@@ -69,72 +69,23 @@ class Question extends Model
     }
 
 
-    public static function uploadWar($question){
-        $file      = request()->all()['zip_file'];
-        $username = \auth::user()->username;
-        $fname = $question->slug.'_'.$username.'.'.$file->getClientOriginalExtension();
-        
-        $filepath = 'zip_practice/'.$fname;
-
-        Storage::disk('local')->put($filepath, file_get_contents($file),'public');
-        $file_name_with_full_path = Storage::disk('local')->path($filepath);
-        $target_url = 'http://64.227.185.90:8080/projects/uploadFile';
-        $ip = "64.227.185.90:8080";
-
-        // if (function_exists('curl_file_create')) { // php 5.5+
-        //   $cFile = curl_file_create($file_name_with_full_path,mime_content_type($file_name_with_full_path), $fname);
-        // } else { // 
-        //   $cFile = '@' . realpath($file_name_with_full_path);
-        // }
-        // $post = array('file_contents'=> $cFile);
-      
-        // $ch = curl_init();
-        // curl_setopt( $ch, CURLOPT_HTTPHEADER, array("REMOTE_ADDR: $ip", "HTTP_X_FORWARDED_FOR: $ip"));
-        // curl_setopt($ch, CURLOPT_URL,$target_url);
-        // curl_setopt($ch, CURLOPT_POST,1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-        // $result=curl_exec ($ch);
-        // curl_close ($ch);
-        //The URL that accepts the file upload.
-        
-
+    public static function uploadWar($fname){
+   
+        //$fname = $question->slug.'_'.$username.'.'.$file->getClientOriginalExtension();
     
-
-
-
+        $path = 'https://project.packetprep.in/projects/uploadFile/'.$fname;
+        $dpath = 'https://project.packetprep.in/projects/delete/'.$fname;
+        
         //Initiate cURL
         $ch = curl_init();
 
         //Set the URL
-        curl_setopt($ch, CURLOPT_URL, $target_url);
+        curl_setopt($ch, CURLOPT_URL, $path);
 
-        //Set the HTTP request to POST
-        curl_setopt($ch, CURLOPT_POST, true);
 
         //Tell cURL to return the output as a string.
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        //If the function curl_file_create exists
-        if(function_exists('curl_file_create')){
-            //Use the recommended way, creating a CURLFile object.
-            $filePath = curl_file_create($file_name_with_full_path);
-        } else{
-            //Otherwise, do it the old way.
-            //Get the canonicalized pathname of our file and prepend
-            //the @ character.
-            $filePath = '@' . realpath($file_name_with_full_path);
-            //Turn off SAFE UPLOAD so that it accepts files
-            //starting with an @
-            curl_setopt($ch, CURLOPT_SAFE_UPLOAD, false);
-        }
-
-        //Setup our POST fields
-        $postFields = array(
-            $fname=> $file_name_with_full_path,
-            'blahblah' => 'Another POST FIELD'
-        );
-
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
 
         //Execute the request
         $result = curl_exec($ch);
@@ -146,9 +97,7 @@ class Question extends Model
         }
 
         //Print out the response from the page
-       
-
-        dd($result);
+        return $result;
                
     }
 

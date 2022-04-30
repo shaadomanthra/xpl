@@ -74,12 +74,18 @@ th{ border:1px solid silver; }
       <li class="nav-item">
         <a class="nav-link" id="e-tab" data-toggle="tab" href="#e" role="tab" aria-controls="e" aria-selected="false">E</a>
       </li>
+
+      
+     
+      @endif
+
+      @if($type=='mcq' || $type=='maq' || $type=='mbdq' || $type =='zip')
       <li class="nav-item">
         <a class="nav-link" id="answer-tab" data-toggle="tab" href="#answer" role="tab" aria-controls="answer" aria-selected="false">Ans</a>
       </li>
-     
       @endif
-      @if($type=='code')
+
+      @if($type=='code' )
       <li class="nav-item">
         <a class="nav-link" id="a-tab" data-toggle="tab" href="#a" role="tab" aria-controls="a" aria-selected="false">Testcases</a>
       </li>
@@ -317,10 +323,12 @@ th{ border:1px solid silver; }
       </div>
       </div>
       @endif
+
+      @if($type=='mcq' || $type=='maq' || $type=='mbdq' || $type =='zip')
       <div class="tab-pane fade" id="answer" role="tabpanel" aria-labelledby="answer-tab">
          @include('appl.dataentry.snippets.answer')
-       
       </div>
+      @endif
       <div class="tab-pane fade" id="explanation" role="tabpanel" aria-labelledby="explanation-tab">
        <div class="form-group mt-3">
         @if($type!='code')

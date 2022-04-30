@@ -206,7 +206,25 @@
     @else
     <div class="mb-2"><b>Your Response:</b></div>
      <hr>
-     <div>File uploaded</div>
+     <div>Profile File uploaded - {{$question->slug}}_{{\auth::user()->username}} <i class="fa fa-check-circle text-success"></i></div>
+     <a href="https://project.packetprep.in/{{$question->slug}}_{{\auth::user()->username}}/" class="btn btn-success my-3">Project Link</a>
+     <input type="hidden" name="delete" value="1">
+     <input type="hidden" name="warproject" value="1">
+     <button type="submit" class="btn  btn-danger ">
+          Delete Project
+      </button>
+
+     <div class="row">
+        <div class="col-12 col-md-6">
+          <h4>Your Project Tracker:</h4>
+          <pre><code>{{ json_encode(json_decode($details['response']->response),JSON_PRETTY_PRINT)}}</code></pre>
+        </div>
+        <div class="col-12 col-md-6">
+          <h4>Expected Tracker:</h4>
+          <pre><code>{{ json_encode(json_decode($question->answer),JSON_PRETTY_PRINT)}}</code></pre>
+        </div>
+     </div>
+
 
     @endif
   @endif
@@ -267,7 +285,7 @@
     @endif
     @endif
 
-      @if($question->answer && $details['response'])
+      @if($question->answer && $details['response'] && $question->type != "zip")
       <div class="card bg-light mb-3 ">
       	<div class="card-body">
           <div class="row">

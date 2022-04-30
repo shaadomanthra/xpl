@@ -8,6 +8,7 @@ use PacketPrep\Jobs\SendEmail;
 use PacketPrep\Jobs\FaceDetect;
 use PacketPrep\Mail\EmailForQueuing;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\College\College;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\User;
@@ -132,7 +133,17 @@ class HomeController extends Controller
 
     {
         $this->middleware('auth');
-        return view('home');
+        $users = User::where('year_of_passing',2022)->get()->groupBy('college_id');
+        $college = College::get();
+        $data =[];
+        foreach($college as $k=>$c){
+            if(isset($users[$c->id]))
+            $c->count = count($users[$c->id]);
+            else
+                $c->count =0;
+            $data[$k] = $c;
+        }
+        return view('home')->with('college',$data)->with('users',$users);
     }
 
 

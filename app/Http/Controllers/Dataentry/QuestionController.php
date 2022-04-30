@@ -587,11 +587,9 @@ class QuestionController extends Controller
         $category = Category::where('slug',$category_slug)->first();
         $question = Question::where('id',$id)->first();
 
-
         
-       
-        $request = request();
 
+        $request = request();
 
         $i=1;
         $item['response']='';
@@ -629,6 +627,7 @@ class QuestionController extends Controller
                 if($file->getClientOriginalExtension()=='zip' || $file->getClientOriginalExtension()=='war')
                 {
                     $filepath = '/zip_practice/'.$question->slug.'_'.$username.'.'.$file->getClientOriginalExtension();
+                    $fname = $question->slug.'_'.$username.'.'.$file->getClientOriginalExtension();
             
                     if(Storage::disk('s3')->exists($filepath)){
                         Storage::disk('s3')->delete($filepath);
@@ -636,7 +635,8 @@ class QuestionController extends Controller
 
                     Storage::disk('s3')->put($filepath, file_get_contents($file),'public');
 
-                    Question::uploadWar($question);
+                    $data = Question::uploadWar($fname);
+                    request()->merge(['response'=> $data]);
 
                     
                 }else{
@@ -730,8 +730,6 @@ class QuestionController extends Controller
 
                     }
                    
-
-
                     $item['testcases'] = json_encode($mdata);
                 }
         }
@@ -762,7 +760,6 @@ class QuestionController extends Controller
                     $practice->response = strtoupper(request()->get('response'));
                     $practice->answer = strtoupper($question->answer);
                     ($practice->answer == $practice->response)? $practice->accuracy  = 1:$practice->accuracy  = 0;
-                    
                 }
                 
                 $practice->category_id = $question->categories->last()->id;

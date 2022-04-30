@@ -39,7 +39,7 @@
                     @elseif($obj->status==2)
                 <span class="badge badge-warning">Unlisted</span>
               @else
-                <span class="badge badge-info">Priavte</span>
+                <span class="badge badge-info">Private</span>
                   @endif
                 </td>
                 <td>{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</td>

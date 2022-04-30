@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::group(['middleware' => [RequestFilter::class,Corporate::class,nocache::class]], function () {
 	
 	Route::get('/', 'HomeController@root')->name('root');
+	Route::get('/trail', 'HomeController@index')->name('trail');
 	Route::post('/', 'Product\OrderController@callback');
 	Route::get('/instamojo', 'Product\OrderController@instamojo')->middleware('auth');
 	Route::get('/order_payment', 'Product\OrderController@instamojo_return');
