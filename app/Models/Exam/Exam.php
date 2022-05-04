@@ -701,11 +701,11 @@ class Exam extends Model
         else{
           
           if($month=='thismonth')
-            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', Carbon::now()->month)->count();
+            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', Carbon::now()->month)->whereYear('created_at', '=', Carbon::now()->year)->count();
           elseif($month=='lastmonth')
-            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->count();
+            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->whereYear('created_at', '=', Carbon::now()->year)->count();
           elseif($month=='lastbeforemonth')
-            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', '=', Carbon::now()->subMonth(2)->month)->count();
+            return Tests_Overall::where('test_id',$this->id)->whereMonth('created_at', '=', Carbon::now()->subMonth(2)->month)->whereYear('created_at', '=', Carbon::now()->year)->count();
           else
             return Tests_Overall::where('test_id',$this->id)->count();
         }

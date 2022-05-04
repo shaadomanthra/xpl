@@ -134,16 +134,25 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
         $users = User::where('year_of_passing',2022)->get()->groupBy('college_id');
-        $college = College::get();
+
+        if(request()->get('location'))
+            $college = College::where('location',request()->get('location'))->get();
+        else
+            $college = College::get();
+
         $data =[];
+        $counter =0;
         foreach($college as $k=>$c){
             if(isset($users[$c->id]))
             $c->count = count($users[$c->id]);
             else
                 $c->count =0;
             $data[$k] = $c;
+            $counter = $counter +$c->count;
         }
-        return view('home')->with('college',$data)->with('users',$users);
+       
+
+        return view('home')->with('college',$data)->with('users',$users)->with('counter',$counter);
     }
 
 
