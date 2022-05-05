@@ -1852,11 +1852,16 @@ class ExamController extends Controller
             }
 
            
+            $offset = request()->get('offset');
+            $limit = request()->get('limit');
 
             if($code)
                 $result = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->orderby('score','desc')->get();
+            else if($offset && $limit)
+                $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->with('user')->limit($limit)->offset($offset)->get();
             else
                 $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->with('user')->get();
+
 
             if(request()->get('rollnumber')){
                 foreach($result as $g => $f){
