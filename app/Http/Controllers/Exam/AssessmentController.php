@@ -6310,8 +6310,8 @@ class AssessmentController extends Controller
         
 
         if($hcode && $email){
-            $student = Cache::remember('usr_apid_'.$username, 240, function() use ($email){
-                return User::where('email',$email)->first();
+            $student = Cache::remember('usr_apid_'.$email, 240, function() use ($email){
+                return User::where('email',$email)->where('client_slug',subdomain())->first();
             });
              
              // create user if it doesnot exist
@@ -6320,7 +6320,7 @@ class AssessmentController extends Controller
                 $data = User::directregister($name,$email,$phone,$hcode);
 
                 if($data['error']!=1){
-                    $student = User::where('email',$request->get('email'))->first();
+                    $student = User::where('email',$request->get('email'))->where('client_slug',subdomain())->first();
                 }else{
                     echo json_encode($data);
                     exit();

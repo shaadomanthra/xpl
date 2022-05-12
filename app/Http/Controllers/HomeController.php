@@ -150,6 +150,7 @@ class HomeController extends Controller
             $data[$k] = $c;
             $counter = $counter +$c->count;
         }
+
        
 
         return view('home')->with('college',$data)->with('users',$users)->with('counter',$counter);
