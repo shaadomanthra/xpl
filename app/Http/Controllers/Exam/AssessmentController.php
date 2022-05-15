@@ -6738,12 +6738,13 @@ class AssessmentController extends Controller
                 $tests_overall = new Tests_Overall();
                 $tests_overall->test_id = $exam->id;
                 $tests_overall->user_id = $student->id;
+                dd($tests_section);
                 if(isset($tests_section[0]['score']))
                     $tests_overall->score = $tests_section[0]['score'];
                 else
                     $tests_overall->score = 0;
                 $tests_overall->time = 1;
-                $tests_overall->max =$tests_section[0]['max'];
+                $tests_overall->max = $tests_section[0]['max'];
                 $tests_overall->save();
                 Cache::forget('resp_'.$user_id.'_'.$test_id);
                 Cache::forget('attempt_section_'.$user_id.'_'.$test_id);
