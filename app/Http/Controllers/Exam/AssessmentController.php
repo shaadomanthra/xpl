@@ -6348,6 +6348,36 @@ class AssessmentController extends Controller
              $tests_overall  = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
         }
 
+        // L1
+        $s1 = json_decode($exam->settings);
+        // check for forward slug
+        if(isset($s1->forwardslug)){
+            $e1 = Exam::where('slug',$s1->forwardslug)->first();
+            $a1 = Tests_Overall::where('test_id',$e1->id)->where('user_id',$student->id)->first();
+            $data['attempt_2'] = $a1;
+            $data['exam_2'] = $e1;
+
+            $s2 = json_decode($e1->settings);
+            //L2 - check for forward slug
+            if(isset($s2->forwardslug)){
+                $e2 = Exam::where('slug',$s2->forwardslug)->first();
+                $a2 = Tests_Overall::where('test_id',$e2->id)->where('user_id',$student->id)->first();
+                $data['attempt_3'] = $a2;
+                $data['exam_3'] = $e2;
+
+                $s3 = json_decode($e2->settings);
+                 //L3 - check for forward slug
+                if(isset($s3->forwardslug)){
+                    $e3 = Exam::where('slug',$s3->forwardslug)->first();
+                    $a3 = Tests_Overall::where('test_id',$e3->id)->where('user_id',$student->id)->first();
+                    $data['attempt_4'] = $a3;
+                    $data['exam_4'] = $e3;
+                }
+            }
+            
+
+        }
+
         $data['attempt'] = $tests_overall;
         $data['exam'] = $exam;
 
@@ -6577,8 +6607,30 @@ class AssessmentController extends Controller
         $c=0; $i=0; $u=0;
         $score =$total =0;
 
+        $settings = json_decode($exam->getOriginal('settings'),true);
+        $testslug = null;
+            if(isset($settings['testslug']))
+            {
+                if($settings['testslug']){
+
+                    $testslug = $settings['testslug'];
+                }
+            }
+
+        $forwardslug = null;
+        if(isset($settings['forwardslug'])){
+            if($settings['forwardslug']){
+                $forwardslug = $settings['forwardslug'];
+            }
+        }
+
+        $fsg = $forwardslug;
 
         if($exam->solutions==2 && !request()->get('student') && !request()->get('reference') && !$request->session()->get('rd')){
+
+            if($fsg)
+                return redirect()->route('assessment.try',$fsg);
+
             $view = "analysis_private";
              return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
@@ -6657,22 +6709,9 @@ class AssessmentController extends Controller
         }
        
       
-        $settings = json_decode($exam->getOriginal('settings'),true);
-        $testslug = null;
-            if(isset($settings['testslug']))
-            {
-                if($settings['testslug']){
+        
 
-                    $testslug = $settings['testslug'];
-                }
-            }
-
-        $forwardslug = null;
-        if(isset($settings['forwardslug'])){
-            if($settings['forwardslug']){
-                $forwardslug = $settings['forwardslug'];
-            }
-        }
+        
 //$score = $exam->getScore($id,$testslug);
         // api
             $idd=$user->id;
@@ -6738,7 +6777,7 @@ class AssessmentController extends Controller
                 $tests_overall = new Tests_Overall();
                 $tests_overall->test_id = $exam->id;
                 $tests_overall->user_id = $student->id;
-                dd($tests_section);
+
                 if(isset($tests_section[0]['score']))
                     $tests_overall->score = $tests_section[0]['score'];
                 else
@@ -6754,7 +6793,10 @@ class AssessmentController extends Controller
         }
 
         if($request->session()->get('rd')){
+            if(!$fsg)
             return redirect()->to($request->session()->get('rd'));
+            else
+            return redirect()->route('assessment.try',$fsg);
         }
 
 
@@ -6942,7 +6984,8 @@ class AssessmentController extends Controller
             }
 
 
-
+            if($fsg)
+                return redirect()->route('assessment.try',$fsg);
             
 
             return view('appl.exam.assessment.analysis')
@@ -7137,7 +7180,10 @@ class AssessmentController extends Controller
             $tests_overall->max = $exam->settings->totalmarks;
         }
 
-        //dd($sectiondetails);
+
+        
+        if($fsg)
+                return redirect()->route('assessment.try',$fsg);
 
         return view('appl.exam.assessment.'.$view)
                         ->with('exam',$exam)
