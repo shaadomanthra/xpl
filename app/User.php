@@ -217,7 +217,7 @@ class User extends Authenticatable
                 'activation_token' => str_random(20),
                 'client_slug' => subdomain(),
                 'user_id' =>'2',
-                'status'=>1,
+                'status'=>1
             ]);
 
             $user->phone = $phone;

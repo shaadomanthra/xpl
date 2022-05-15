@@ -6349,7 +6349,7 @@ class AssessmentController extends Controller
         }
 
         // L1
-        $s1 = json_decode($exam->settings);
+        $s1 = $exam->settings;
         // check for forward slug
         if(isset($s1->forwardslug)){
             $e1 = Exam::where('slug',$s1->forwardslug)->first();
@@ -6357,7 +6357,7 @@ class AssessmentController extends Controller
             $data['attempt_2'] = $a1;
             $data['exam_2'] = $e1;
 
-            $s2 = json_decode($e1->settings);
+            $s2 = $e1->settings;
             //L2 - check for forward slug
             if(isset($s2->forwardslug)){
                 $e2 = Exam::where('slug',$s2->forwardslug)->first();
@@ -6365,7 +6365,7 @@ class AssessmentController extends Controller
                 $data['attempt_3'] = $a2;
                 $data['exam_3'] = $e2;
 
-                $s3 = json_decode($e2->settings);
+                $s3 = $e2->settings;
                  //L3 - check for forward slug
                 if(isset($s3->forwardslug)){
                     $e3 = Exam::where('slug',$s3->forwardslug)->first();
