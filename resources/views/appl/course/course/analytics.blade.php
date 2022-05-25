@@ -43,16 +43,16 @@
             <tbody>
             @foreach($users as $i=>$u)
               <tr>
-                <th scope="row">{{$i+1}}</th>
-                <td>
+                <th scope="row" class="p-1">{{$i+1}}</th>
+                <td class="p-1">
                   @if(isset($category->slug)) <a href="{{ route('course.question',[$course->slug,$category->slug,''])}}?student={{$u->username}}" class="d-print-none">{{$u->name}}</a> @else
                   <span class="d-block d-print-none">{{$u->name}}</span>
                   @endif
                   <span class="d-print-block d-none">{{$u->name}}</span>
                   
                 </td>
-                <td>{{$u->info}}</td>
-                <td>
+                <td class="p-1">{{$u->info}}</td>
+                <td class="p-1">
                   @if(isset($practice[$u->id]))
                   @if($practice[$u->id])
                   {{count($practice[$u->id])}} / {{$total}}
