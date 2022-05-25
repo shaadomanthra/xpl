@@ -116,10 +116,10 @@ function initials($str) {
                   <a href="{{ route('test.report',$e->slug)}}">{{$e->name}}</a>
                   @else
                   <a href="{{ route('test.report',$e->slug)}}" class="d-print-none d-block">{{initials($e->name)}}</a>
-                  <span class="d-print-block d-none">{{initials($e->name)}}</span>
+                  <span class="d-print-inline d-none">{{initials($e->name)}}</span>
                   @endif
 
-                  <br><span class="badge badge-info d-print-none d-block">{{$e->slug}}</span></th>
+                  <span class="badge badge-info d-print-none d-inline">{{$e->slug}}</span></th>
                 @endforeach
 
                 
@@ -132,13 +132,13 @@ function initials($str) {
                  <tr>
                   <th scope="row">{{ $i++ }}</th>
                   <td class="p-1">
-                    <a href="{{ route('profile','@'.$u['user']->username)}}" class="d-print-none d-block">
+                    <a href="{{ route('profile','@'.$u['user']->username)}}" class="d-print-none d-inline">
                     {{ $u['user']->name }}
                   </a>
 
                   <span class="d-none d-print-inline"> {{ $u['user']->name }}</span>
                    
-                 <span class="badge badge-light border border-dark d-print-none d-block"> {{$u['user']->info}}</span>
+                 <span class="badge badge-light border border-dark d-print-none d-inline"> {{$u['user']->info}}</span>
                   </td>
                    @if(!request()->get('status'))
                   <td class="bg-light p-1" >
