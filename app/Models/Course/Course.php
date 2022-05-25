@@ -158,7 +158,7 @@ class Course extends Model
         $ap = Category::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
 
 
-      
+       
 
         $categories_ =array();
         foreach($categories_list as $categ){
@@ -196,12 +196,22 @@ class Course extends Model
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
             foreach($node as $k=>$n){
                 $node[$k]['children'] = Category::defaultOrder()->descendantsOf($n->id)->toTree();
-                $qcount = $qcount + count($n->questions);
+
+                
+                $qc=0;
+                foreach($n->questions as $q){
+                    if(!$q->intest)
+                        $qc++;
+                }
+                    $qcount = $qcount + $qc;
+                    
                 foreach($node[$k]['children'] as $m => $c){
                     $node[$k]['children'][$m]->try = 1;
                     
                 }
+                //dd($qc);
             }
+
 
 
                           
@@ -209,7 +219,7 @@ class Course extends Model
 
 
         $data['nodes'] = $node;
-        //$data['ques_count'] = $qcount;
+        $data['ques_count'] = $qcount;
 
 
         $examtype = Examtype::where('slug',$id)->first();
@@ -252,6 +262,7 @@ class Course extends Model
             $tests[$e->id] = $e->slug;
 
         }
+
 
 
 
