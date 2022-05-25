@@ -130,7 +130,7 @@ function initials($str) {
 
                  <tr>
                   <th scope="row">{{ $i++ }}</th>
-                  <td>
+                  <td class="p-1">
                     <a href="{{ route('profile','@'.$u['user']->username)}}">
                     {{ $u['user']->name }}
                   </a>
@@ -138,19 +138,20 @@ function initials($str) {
                  <span class="badge badge-light border border-dark"> {{$u['user']->info}}</span>
                   </td>
                    @if(!request()->get('status'))
-                  <td class="bg-light">
+                  <td class="bg-light p-1" >
                    {{$data[$u['user']->id]['cgpa']}}
                   </td>
                   @endif
                    @foreach($exams as $id=>$e)
-                  <td>
+                  <td class="p-1">
                     @if(isset($data[$u['user']->id]['test'][$id]))
                        @if(!request()->get('status'))
                           @if($data[$u['user']->id]['status'][$id]==0)
                             @if($data[$u['user']->id]['test'][$id]=="0")
                               0
                             @else
-                              <a href="{{ route('assessment.analysis',$e->slug)}}?student={{$u['user']->username}}"><h4>{{$data[$u['user']->id]['test'][$id]}}</h4></a>
+                              <a href="{{ route('assessment.analysis',$e->slug)}}?student={{$u['user']->username}}" class="d-print-none d-block"><h4>{{$data[$u['user']->id]['test'][$id]}}</h4></a>
+                              <h4 class="d-print-block d-none">{{$data[$u['user']->id]['test'][$id]}}</h4>
                             @endif
                           @else
                            <i class="fa fa-question-circle-o text-secondary" aria-hidden="true"></i>
