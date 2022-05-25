@@ -11,13 +11,19 @@
 
 @php
 function initials($str) {
-    $ret = '';
-    foreach (explode(' ', $str) as $word){
-      if(isset($word[0]))
-      $ret .= strtoupper($word[0]);
-    
-    }
-    return $ret;
+   $acronym='';
+        $word='';
+        $words = preg_split("/(\s|\-|\.)/", $str);
+
+        foreach($words as $w) {
+            if(substr($w,0,1)!='#')
+            $acronym .= substr($w,0,1);
+            else
+            $acronym .= $w;
+        }
+        $word = $word . $acronym ;
+        return $word;
+
         
 }
 @endphp
