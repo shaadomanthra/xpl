@@ -187,7 +187,7 @@ class Course extends Model
         
        
 
-        $data['ques_count'] = $count;
+        //$data['ques_count'] = 0;
         
         $data['categories'] = $categories_;
 
@@ -203,7 +203,7 @@ class Course extends Model
                     if(!$q->intest)
                         $qc++;
                 }
-                    $qcount = $qcount + $qc;
+                $qcount = $qcount + $qc;
                     
                 foreach($node[$k]['children'] as $m => $c){
                     $node[$k]['children'][$m]->try = 1;

@@ -215,7 +215,7 @@ class CourseController extends Controller
         $filename = $id.'.json';
         $filepath = $this->cache_path.$filename;
 
-         $course = Cache::get('course_'.$id);
+        $course = Cache::get('course_'.$id);
 
 
 
