@@ -36,9 +36,11 @@
 
 			@if(\auth::user())
 			@if(\auth::user()->isSiteAdmin()))
+			<div class="my-3">
 			<a href="{{ route('course.analytics',$course->slug)}}">
-				<i class="fa fa-bar-chart"></i> 
+				<i class="fa fa-bar-chart"></i> Analytics
 				</a>
+			</div>
 			@endif
 			@endif
 		</div>
@@ -85,7 +87,7 @@
 	@endif
 	@else
 		@if(\auth::user())
- 		@if(\auth::user()->checkRole(['administrator','employee']))
+ 		@if(\auth::user()->isSiteAdmin())
  		<div class="border mb-3">
 		<div class=" p-4 mb-3  bg-white " style="">
 			<div class=" mb-1" style="">
@@ -236,7 +238,7 @@
 
 				<span class="float-right">
 				  @if(\auth::user())
-           @if(\auth::user()->checkRole(['administrator','employee']))
+           @if(\auth::user()->isSiteAdmin())
            	@if($bno)
 						<a href="{{ url('/performance') }}?course={{$course->slug}}&info={{$bno}}" class="btn btn-outline-primary btn-sm "> <i class="fa fas fa-bar-chart" ></i> All Tests</a>
 						@else
