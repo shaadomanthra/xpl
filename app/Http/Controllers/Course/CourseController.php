@@ -374,7 +374,7 @@ class CourseController extends Controller
         $practice_set=[];
         if($bno){
             $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
-                return User::where('info',$bno)->get();
+                return User::where('info',$bno)->where('client_slug',subdomain())->get();
             });
 
             $uids = $users->pluck('id')->toArray();
