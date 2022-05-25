@@ -27,7 +27,7 @@ function initials($str) {
         
 }
 @endphp
-<div class='pb-1 dblue' >
+<div class='pb-1 dblue d-print-none' >
   <div class='container'>
      <nav class="mb-0">
         
@@ -48,12 +48,13 @@ function initials($str) {
     </div>
   </div>
 </div>
-<div class='p-1  ddblue' >
+<div class='p-1  ddblue d-print-none' >
 </div>
 
+<div class="d-print-inline h3 mt-3">Assessments - Performance @if(request()->get('info')) - {{ request()->get('info')}} @endif</div>
 
-<div class=" mt-4 mb-4">
-  <div class="bg-light p-4 rounded border mb-3">
+<div class=" mt-4 mb-4 ">
+  <div class="bg-light p-4 rounded border mb-3 d-print-none">
   <h4>Filters</h4>
   <form class="form-inline" action="{{route('performance')}}" method="get">
   <label class="sr-only" for="inlineFormInputName2">Exams</label>
@@ -130,7 +131,7 @@ function initials($str) {
 
 
                  <tr>
-                  <th scope="row">{{ $i++ }}</th>
+                  <td scope="row" class="p-1">{{ $i++ }}</td>
                   <td class="p-1">
                     <a href="{{ route('profile','@'.$u['user']->username)}}" class="d-print-none d-inline">
                     {{ $u['user']->name }}
