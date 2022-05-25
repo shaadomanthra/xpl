@@ -9,6 +9,18 @@
 @include('appl.exam.exam.xp_css')
 
 
+@php
+function initials($str) {
+    $ret = '';
+    foreach (explode(' ', $str) as $word){
+      if(isset($word[0]))
+      $ret .= strtoupper($word[0]);
+    
+    }
+    return $ret;
+        
+}
+@endphp
 <div class='pb-1 dblue' >
   <div class='container'>
      <nav class="mb-0">
@@ -34,7 +46,7 @@
 </div>
 
 
-<div class="container mt-4 mb-4">
+<div class=" mt-4 mb-4">
   <div class="bg-light p-4 rounded border mb-3">
   <h4>Filters</h4>
   <form class="form-inline" action="{{route('performance')}}" method="get">
@@ -77,6 +89,7 @@
  </div>
  @endif
 
+
   <div class="row">
     <div class="col-12 col-md-12">
    @if(count($exams)!=0)
@@ -92,7 +105,7 @@
                 <th scope="col" class="bg-light">CGPA (10)</th>
                 @endif
                 @foreach($exams as $e)
-                <th scope="col"><a href="{{ route('test.report',$e->slug)}}">{{$e->name}}</a><br><span class="badge badge-info">{{$e->slug}}</span></th>
+                <th scope="col"><a href="{{ route('test.report',$e->slug)}}">{{initials($e->name)}}</a><br><span class="badge badge-info">{{$e->slug}}</span></th>
                 @endforeach
 
                 
