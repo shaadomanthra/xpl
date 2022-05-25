@@ -49,7 +49,7 @@
 	</div>
 
 	@if(\auth::user())
- 		@if(\auth::user()->checkRole(['administrator','employee']))
+ 		@if(\auth::user()->isSiteAdmin())
  		 <form action="" class="card mb-3">
          <div class="card-body form-group ">
          	<h3>Admin tools</h3>
