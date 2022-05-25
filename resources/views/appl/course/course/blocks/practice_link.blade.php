@@ -7,7 +7,7 @@
 </a>
 
 @if(\auth::user())
-   @if(\auth::user()->checkRole(['administrator','employee']))
+   @if(\auth::user()->isSiteAdmin() )
        @if($bno)
 			<a href="{{ route('course.analytics',$course->slug)}}?topic={{$c->slug}}&batch={{$bno}}" class="mx-2"> <i class="fa fas fa-bar-chart" ></i> All</a>
 		@else

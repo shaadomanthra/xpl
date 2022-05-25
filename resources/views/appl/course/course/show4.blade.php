@@ -31,10 +31,16 @@
 				<a href="{{ route('course.edit',$course->slug) }}">
 				<i class="fa fa-edit"></i>
 				</a>
-				<a href="{{ route('course.analytics',$course->slug)}}">
+				
+			@endcan
+
+			@if(\auth::user())
+			@if(\auth::user()->isSiteAdmin()))
+			<a href="{{ route('course.analytics',$course->slug)}}">
 				<i class="fa fa-bar-chart"></i> 
 				</a>
-			@endcan
+			@endif
+			@endif
 		</div>
 		@include('appl.course.course.blocks.access')
 		</div>

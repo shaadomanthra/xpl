@@ -644,6 +644,17 @@ class User extends Authenticatable
         return false;
     }
 
+    public function isSiteAdmin(){
+        if(\Auth::user())
+            {
+                if(\Auth::user()->role == 2 || \Auth::user()->role == 11 || \Auth::user()->role == 12 ||\Auth::user()->role == 13)
+                    return true;
+                else
+                    return false;
+            }
+        return false;
+    }
+
     public function send_sms($number,$code){
                 // Authorisation details.
         $url = "https://2factor.in/API/V1/95f80a8a-3945-11ec-a13b-0200cd936042/SMS/+91".$number."/".$code;

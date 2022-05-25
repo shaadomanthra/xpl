@@ -99,8 +99,10 @@ class CourseController extends Controller
             $course->exams = $course_data['exams'];
             $course->tests = $course_data['tests'];
         }
-        $this->authorize('create', $course);
-
+        if(!\auth::user())
+            abort('403','Unauthorized');
+        if(!\auth::user()->isSiteAdmin())
+            abort('403','Unauthorized');
         $topic = request()->get('topic');
         $total = $course->ques_count;
         $category = Category::where('slug',$topic)->first();
