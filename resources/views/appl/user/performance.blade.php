@@ -51,9 +51,10 @@ function initials($str) {
 <div class='p-1  ddblue d-print-none' >
 </div>
 
-<div class="d-print-inline h3 mt-3">Assessments - Performance @if(request()->get('info')) - {{ request()->get('info')}} @endif</div>
 
-<div class=" mt-4 mb-4 ">
+
+<div class=" mt-4 mb-4 px-3">
+  <div class="d-print-inline h3 mt-3">Assessments - Performance @if(request()->get('info')) - {{ request()->get('info')}} @endif</div>
   <div class="bg-light p-4 rounded border mb-3 d-print-none">
   <h4>Filters</h4>
   <form class="form-inline" action="{{route('performance')}}" method="get">
