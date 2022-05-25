@@ -105,7 +105,14 @@ function initials($str) {
                 <th scope="col" class="bg-light">CGPA (10)</th>
                 @endif
                 @foreach($exams as $e)
-                <th scope="col"><a href="{{ route('test.report',$e->slug)}}">{{initials($e->name)}}</a><br><span class="badge badge-info">{{$e->slug}}</span></th>
+                <th scope="col">
+                  @if(request()->get('all'))
+                  <a href="{{ route('test.report',$e->slug)}}">{{$e->name}}</a>
+                  @else
+                  <a href="{{ route('test.report',$e->slug)}}">{{initials($e->name)}}</a>
+                  @endif
+
+                  <br><span class="badge badge-info">{{$e->slug}}</span></th>
                 @endforeach
 
                 
