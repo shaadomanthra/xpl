@@ -47,9 +47,11 @@
                 <td class="p-1">
                   @if(isset($category->slug)) <a href="{{ route('course.question',[$course->slug,$category->slug,''])}}?student={{$u->username}}" class="d-print-none">{{$u->name}}</a> @else
                   <a href="{{ route('profile','@'.$u->username) }}" class="d-print-none">{{$u->name}}</a> 
+
                   <span class="d-print-block d-none">{{$u->name}}</span>
+                  <span class=""> - {{$u->roll_number}}</span>
                   @endif
-                  
+
                   
                 </td>
                 <td class="p-1">{{$u->info}}</td>
