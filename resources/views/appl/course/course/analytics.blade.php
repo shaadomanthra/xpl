@@ -36,6 +36,7 @@
               <tr class="bg-light">
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
+                <th scope="col">Roll Number</th>
                 <th scope="col">Batch</th>
                 <th scope="col">Completion</th>
               </tr>
@@ -49,11 +50,12 @@
                   <a href="{{ route('profile','@'.$u->username) }}" class="d-print-none">{{$u->name}}</a> 
 
                   <span class="d-print-block d-none">{{$u->name}}</span>
-                  <span class=""> - {{$u->roll_number}}</span>
+                
                   @endif
 
                   
                 </td>
+                <td class="p-1">  <span class="">  {{$u->roll_number}}</span></td>
                 <td class="p-1">{{$u->info}}</td>
                 <td class="p-1">
                   @if(isset($practice[$u->id]))
