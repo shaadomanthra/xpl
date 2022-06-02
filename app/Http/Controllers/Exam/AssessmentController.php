@@ -5927,6 +5927,7 @@ class AssessmentController extends Controller
             //file_put_contents($filepath, json_encode($exam,JSON_PRETTY_PRINT));
         }
 
+        $rd=0;
         if(request()->get('hashcode')){
             $name = request()->get('name');
             $email = request()->get('email');
@@ -6013,6 +6014,8 @@ class AssessmentController extends Controller
         }
 
 
+        if($entry && $rd)
+            return redirect()->route('assessment.analysis',$exam->slug);
 
         //dd($exam->product_ids);
 
