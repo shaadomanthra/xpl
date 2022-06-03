@@ -103,6 +103,7 @@ class CourseController extends Controller
             abort('403','Unauthorized');
         if(!\auth::user()->isSiteAdmin())
             abort('403','Unauthorized');
+
         $topic = request()->get('topic');
         $total = $course->ques_count;
         $category = Category::where('slug',$topic)->first();
@@ -120,12 +121,12 @@ class CourseController extends Controller
 
         if(request()->get('refresh'))
         {
-            Cache::forget('users_'.$bno);
+            Cache::forget('users_'.subdomain().'_'.$bno);
         }
 
 
         if($bno)
-            $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
+            $users = Cache::remember('users_'.subdomain().'_'.$bno, 120, function() use ($bno) { 
                 return User::where('info',$bno)->where('client_slug',subdomain())->get();
             });
 
