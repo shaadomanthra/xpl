@@ -324,7 +324,7 @@ th{ border:1px solid silver; }
       </div>
       @endif
 
-      @if($type=='mcq' || $type=='maq' || $type=='mbdq' || $type =='zip' || || $type =='fillup' || $type=='mbfq')
+      @if($type=='mcq' || $type=='maq' || $type=='mbdq' || $type =='zip' || $type =='fillup' || $type=='mbfq')
       <div class="tab-pane fade" id="answer" role="tabpanel" aria-labelledby="answer-tab">
          @include('appl.dataentry.snippets.answer')
       </div>
