@@ -12,7 +12,7 @@
             @elseif($f['type']=='textarea')
             <div class="js-form-message form-group mb-4">
               <label for="emailAddressExample2" class="input-label">{{$f['name']}}</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" name="questions_{{ str_replace(' ','_',$f['name'])}}" rows="{{$f['values']}}"></textarea>
+              <textarea class="form-control" id="exampleFormControlTextarea1" name="questions_{{ str_replace(' ','_',$f['name'])}}" rows="{{$f['values']}}" required></textarea>
             </div>
             @elseif($f['type']=='radio')
             <div class="js-form-message form-group mb-4">

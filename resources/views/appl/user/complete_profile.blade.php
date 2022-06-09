@@ -179,7 +179,7 @@
         <div class="col-12 col-md-6">
           <div class="form-group ">
             <label for="formGroupExampleInput ">Class 10th Percentage <i class="fa fa-check-circle tenth @if($user->tenth) text-success @else text-silver @endif"></i></label><br>
-            <input type="number" minlength="1" class="form-control" name="tenth" id="formGroupExampleInput" value="{{ $user->tenth }}" min="30" max="100">
+            <input type="number" minlength="1" class="form-control" name="tenth" id="formGroupExampleInput" value="{{ $user->tenth }}" min="30" max="100" required>
             <span class="cp-help-block text-danger help_tenth" style="display:none">
             Error Message
           </span>
@@ -188,7 +188,7 @@
          <div class="col-12 col-md-6">
           <div class="form-group ">
             <label for="formGroupExampleInput ">Class 12th Percentage  <i class="fa fa-check-circle twelveth @if($user->twelveth) text-success @else text-silver @endif"></i></label><br>
-            <input type="number" minlength="1" class="form-control" name="twelveth" id="formGroupExampleInput" value="{{ $user->twelveth }}" min="30" max="100">
+            <input type="number" minlength="1" class="form-control" name="twelveth" id="formGroupExampleInput" value="{{ $user->twelveth }}" min="30" max="100" required>
             <span class="cp-help-block text-danger help_twelveth" style="display: none">
             Error Message
           </span>
@@ -200,7 +200,7 @@
         <div class="col-12 col-md-6">
             <div class="form-group ">
             <label for="formGroupExampleInput ">BTech/Degree Percentage  <i class="fa fa-check-circle bachelors @if($user->bachelors) text-success @else text-silver @endif"></i></label><br>
-            <input type="number" minlength="1" class="form-control" name="graduation" id="formGroupExampleInput" value="{{ $user->bachelors }}" min="30" max="100">
+            <input type="number" minlength="1" class="form-control" name="graduation" id="formGroupExampleInput" value="{{ $user->bachelors }}" min="30" max="100" required>
             <span class="cp-help-block text-danger help_graduation" style="display: none">
             Error Message
           </span>

@@ -171,13 +171,13 @@
         <div class="col-12 col-md-6">
           <div class="form-group ">
             <label for="formGroupExampleInput ">Class 10th Percentage/CGPA</label><br>
-            <input type="text" minlength="1" class="form-control" name="tenth" id="formGroupExampleInput" value="{{ $user->tenth }}">
+            <input type="text" minlength="1" class="form-control" name="tenth" id="formGroupExampleInput" value="{{ $user->tenth }}" required>
           </div>
         </div>
          <div class="col-12 col-md-6">
           <div class="form-group ">
             <label for="formGroupExampleInput ">Class 12th Percentage/CGPA</label><br>
-            <input type="text" minlength="1" class="form-control" name="twelveth" id="formGroupExampleInput" value="{{ $user->twelveth }}">
+            <input type="text" minlength="1" class="form-control" name="twelveth" id="formGroupExampleInput" value="{{ $user->twelveth }}" required>
           </div>
          </div>
       </div>
@@ -186,7 +186,7 @@
         <div class="col-12 col-md-6">
             <div class="form-group ">
             <label for="formGroupExampleInput ">BTech Percentage/CGPA</label><br>
-            <input type="text" minlength="1" class="form-control" name="graduation" id="formGroupExampleInput" value="{{ $user->bachelors }}">
+            <input type="text" minlength="1" class="form-control" name="graduation" id="formGroupExampleInput" value="{{ $user->bachelors }}" required>
           </div>
         </div>
          <div class="col-12 col-md-6">
