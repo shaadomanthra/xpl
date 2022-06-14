@@ -246,7 +246,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">District</label>
                 <div class="col-md-12">
@@ -289,7 +289,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">Address (Eg: H.No, Street/colony, City/Village/Town, Pin)
 </label>
