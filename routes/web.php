@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 
+
 	Route::get('/dashboard','Product\ProductController@welcome')->name('dashboard')->middleware('auth');
 
 	Route::get('/participants','Product\ProductController@participants')->name('participants')->middleware('auth');
@@ -501,6 +502,10 @@ use Illuminate\Support\Facades\Storage;
 
 	Route::get('/eamcet', function(){
 		return Redirect::to('https://vaagdevi.xplore.co.in/register', 301); 
+	});
+
+	Route::get('/smec', function(){
+		return Redirect::to('https://smechyd.xplore.co.in/productpage/stmartins-sctest', 301); 
 	});
 
 	Route::get('/test/052740', function(){
