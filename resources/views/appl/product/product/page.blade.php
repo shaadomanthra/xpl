@@ -72,7 +72,7 @@
           <hr>
 
           @endif
-          <div class="row mb-2">
+          <div class="row mb-2 d-none">
             <div class="col-md-4">
               @if(count($product->exams)==0 && count($product->courses)==0 )
               Training
@@ -106,7 +106,7 @@
                 @if($product->price==0)
                 Access Now
                 @else
-                Buy Now
+                Pay Now
                 @endif
                 </button>
               </a>
@@ -130,7 +130,7 @@
                 @if($product->price==0)
                 Access Now
                 @else
-                Buy Now
+                Pay Now
                 @endif
                 </button>
               </a>
