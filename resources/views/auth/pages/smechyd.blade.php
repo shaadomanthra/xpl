@@ -198,7 +198,7 @@
 
         <div class="col-12 col-md-4">
            <div class="form-group{{ $errors->has('fluency') ? ' has-error' : '' }}">
-                <label for="phone" class="col-md-8 control-label">Course or Branch Preference
+                <label for="phone" class="col-md-8 control-label">Name the Engineering course you are interested
 </label>
                 <div class="col-md-12">
                     <select name="fluency" class="form-control">

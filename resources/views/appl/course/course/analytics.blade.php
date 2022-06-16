@@ -58,12 +58,14 @@
                 <td class="p-1">  <span class="">  {{$u->roll_number}}</span></td>
                 <td class="p-1">{{$u->info}}</td>
                 <td class="p-1">
+                  @if($total)
                   @if(isset($practice[$u->id]))
                   @if($practice[$u->id])
                   {{count($practice[$u->id])}} / {{$total}}
                   <div class="progress" style="height:8px">
                     <div class="progress-bar" role="progressbar" style="width: {{round(count($practice[$u->id])/$total*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                   </div>
+                  @endif
                   @endif
                   @endif
                 </td>
