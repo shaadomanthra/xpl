@@ -197,20 +197,26 @@
         </div>
 
         <div class="col-12 col-md-4">
-             <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-        <label for="email" class="col-md-12 control-label">Student Phone Number </label>
-
-        <div class="col-md-12">
-            <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
-            <input id="otp" type="hidden" class="form-control" name="otp" value="{{$code}}" >
-
-            @if ($errors->has('phone'))
-            <span class="help-block">
-                <strong>{{ $errors->first('phone') }}</strong>
-            </span>
-            @endif
-        </div>
-    </div>
+           <div class="form-group{{ $errors->has('fluency') ? ' has-error' : '' }}">
+                <label for="phone" class="col-md-8 control-label">Course or Branch Preference
+</label>
+                <div class="col-md-12">
+                    <select name="fluency" class="form-control">
+                        <option value="CSE">Computer Science Engineering (CSE)</option>
+                        <option value="AI-DS">Artificial Intelligence & Data Science (AI & DS)</option>
+                        <option value="AI-ML">Artificial Intelligence & Machine Learning (AI & ML)</option>
+                        <option value="CSG">Computer Science & Design (CDS)</option>
+                        <option value="IT">Information Technology</option>
+                        <option value="ECE">Electronics and Communication Engineering</option>
+                        <option value="EEE">Electrical and Electronics Engineering</option>
+                        <option value="ME">Mechanical Engineering</option>
+                        <option value="CIVIL">Civil Engineering</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+   
+                    
+                </div>
+            </div>
 
         </div>
 
