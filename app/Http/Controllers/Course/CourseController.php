@@ -104,6 +104,8 @@ class CourseController extends Controller
         if(!\auth::user()->isSiteAdmin())
             abort('403','Unauthorized');
 
+        if(request()->get('course'))
+        dd($course);
         $topic = request()->get('topic');
         $total = $course->ques_count;
         $category = Category::where('slug',$topic)->first();
