@@ -565,6 +565,31 @@ class ProductController extends Controller
 
     }
 
+    public function transactions($id)
+    {
+        $product= Product::where('slug',$id)->first();
+        $orderids = $product->orders->pluck('id')->toArray();
+        
+        $orders = Order::whereIn('id',$orderids)->orderBy('id','desc')->paginate(20);
+
+        $status=array("incomplete"=>0,"complete"=>0,"total"=>0);
+        foreach($product->orders as $o){
+          if($o->status==0 || $o->status==2)
+            $status['incomplete']++;
+          else if($o->status==1)
+            $status['complete']++;
+          $status['total']++;
+        }
+
+
+        return view('appl.product.product.transactions')
+                    ->with('product',$product)
+                    ->with('orders',$orders)
+                    ->with('status',$status);
+
+
+    }
+
     public function page($id)
     {
         $product= Product::where('slug',$id)->first();

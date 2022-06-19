@@ -31,6 +31,10 @@ class Product extends Model
         return $this->belongsToMany('PacketPrep\Models\Course\Course');
     }
 
+    public function orders(){
+        return $this->hasMany('PacketPrep\Models\Product\Order');
+    }
+
      public function service()
     {
         return $this->hasOne('PacketPrep\Models\College\Service');

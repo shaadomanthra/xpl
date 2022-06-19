@@ -529,6 +529,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('productpage','Product\ProductController@products')->name('products');
 	Route::get('stats','Product\ProductController@statistics')->name('statistics');
 	Route::get('productpage/{product}','Product\ProductController@page')->name('productpage');
+	Route::get('productpage/{product}/transactions','Product\ProductController@transactions')->name('product.transactions');
 	Route::get('users','User\UserController@userlist')->name('user.list');
 	Route::get('users/add','User\UserController@add')->name('user.add');
 	Route::get('users/{user}','User\UserController@view')->name('user.view');
