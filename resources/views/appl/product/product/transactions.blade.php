@@ -58,7 +58,7 @@
                 <th scope="col">User</th>
                 <th scope="col">Product</th>
                 <th scope="col">Status</th>
-                <th scope="col">Created at</th>
+                <th scope="col">Created</th>
               </tr>
             </thead>
             <tbody>
@@ -66,11 +66,13 @@
               <tr>
                 <th scope="row">{{ $orders->currentpage() ? ($orders->currentpage()-1) * $orders->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
-                  <a href=" {{ route('order.transaction',$order->order_id) }} ">
                   {{ $order->order_id }}
-                  </a> @if($order->coupon) <br>coupon - {{ $order->coupon }} @endif
+                 
                 </td>
-                 <td>{{ (isset($order->user->name))?$order->user->name:'-' }}</td>
+                 <td>
+                  @if(isset($order->user->name))
+                    {{$order->user->name}} <br> {{$order->user->phone}} <br> {{$order->user->email}}
+                  @endif</td>
                 <td>{{ (isset($order->product->name))?$order->product->name:'-' }}</td>
                 <td>
                   @if($order->status==0)
