@@ -73,7 +73,7 @@
                   @if(isset($order->user->name))
                     {{$order->user->name}} <br> {{$order->user->phone}} <br> {{$order->user->email}}
                   @endif</td>
-                <td>{{ (isset($order->product->name))?$order->product->name:'-' }}</td>
+                <td>{{ $product->name }}</td>
                 <td>
                   @if($order->status==0)
                     <span class="badge badge-warning">Pending</span>

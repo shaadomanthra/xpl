@@ -575,10 +575,10 @@ class ProductController extends Controller
         if(!$user->isSiteAdmin())
           abort(403,'Not athorized to view this page!');
 
-        $product= Product::where('slug',$id)->first();
+        $product= Product::where('slug',$id)->with('orders')->first();
         $orderids = $product->orders->pluck('id')->toArray();
         
-        $orders = Order::whereIn('id',$orderids)->orderBy('id','desc')->paginate(20);
+        $orders = Order::whereIn('id',$orderids)->orderBy('id','desc')->with('user')->paginate(20);
 
         $status=array("incomplete"=>0,"complete"=>0,"total"=>0);
         foreach($product->orders as $o){
