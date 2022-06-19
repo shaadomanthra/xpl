@@ -572,7 +572,7 @@ class ProductController extends Controller
         if(!$user)
           abort(403,'Login to view th page!');
 
-        if(!$user->checkRole(['admin','hr-manager']))
+        if(!$user->checkRole(['admin','hr-manager','hrmanager','administrator','employee']))
           abort(403,'Not athorized to view this page!');
 
         $product= Product::where('slug',$id)->first();
