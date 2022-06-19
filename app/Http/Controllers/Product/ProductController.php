@@ -567,6 +567,14 @@ class ProductController extends Controller
 
     public function transactions($id)
     {
+        $user = \auth::user();
+
+        if(!$user)
+          abort(403,'Login to view th page!');
+
+        if(!$user->checkRole(['admin','hr-manager']))
+          abort(403,'Not athorized to view this page!');
+
         $product= Product::where('slug',$id)->first();
         $orderids = $product->orders->pluck('id')->toArray();
         
