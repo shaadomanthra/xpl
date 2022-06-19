@@ -578,6 +578,8 @@ class ProductController extends Controller
         $product= Product::where('slug',$id)->with('orders')->first();
         $orderids = $product->orders->pluck('id')->toArray();
         
+        if(request()->get('role'))
+          dd($user->role);
         $orders = Order::whereIn('id',$orderids)->orderBy('id','desc')->with('user')->paginate(20);
 
         $status=array("incomplete"=>0,"complete"=>0,"total"=>0);
