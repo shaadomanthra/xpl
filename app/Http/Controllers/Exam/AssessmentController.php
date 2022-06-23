@@ -6356,32 +6356,32 @@ class AssessmentController extends Controller
         // L1
         $s1 = $exam->settings;
         // check for forward slug
-        if(isset($s1->forwardslug)){
-            $e1 = Exam::where('slug',$s1->forwardslug)->first();
-            $a1 = Tests_Overall::where('test_id',$e1->id)->where('user_id',$student->id)->first();
-            $data['attempt_2'] = $a1;
-            $data['exam_2'] = $e1;
+        // if(isset($s1->forwardslug)){
+        //     $e1 = Exam::where('slug',$s1->forwardslug)->first();
+        //     $a1 = Tests_Overall::where('test_id',$e1->id)->where('user_id',$student->id)->first();
+        //     $data['attempt_2'] = $a1;
+        //     $data['exam_2'] = $e1;
 
-            $s2 = $e1->settings;
-            //L2 - check for forward slug
-            if(isset($s2->forwardslug)){
-                $e2 = Exam::where('slug',$s2->forwardslug)->first();
-                $a2 = Tests_Overall::where('test_id',$e2->id)->where('user_id',$student->id)->first();
-                $data['attempt_3'] = $a2;
-                $data['exam_3'] = $e2;
+        //     $s2 = $e1->settings;
+        //     //L2 - check for forward slug
+        //     if(isset($s2->forwardslug)){
+        //         $e2 = Exam::where('slug',$s2->forwardslug)->first();
+        //         $a2 = Tests_Overall::where('test_id',$e2->id)->where('user_id',$student->id)->first();
+        //         $data['attempt_3'] = $a2;
+        //         $data['exam_3'] = $e2;
 
-                $s3 = $e2->settings;
-                 //L3 - check for forward slug
-                if(isset($s3->forwardslug)){
-                    $e3 = Exam::where('slug',$s3->forwardslug)->first();
-                    $a3 = Tests_Overall::where('test_id',$e3->id)->where('user_id',$student->id)->first();
-                    $data['attempt_4'] = $a3;
-                    $data['exam_4'] = $e3;
-                }
-            }
+        //         $s3 = $e2->settings;
+        //          //L3 - check for forward slug
+        //         if(isset($s3->forwardslug)){
+        //             $e3 = Exam::where('slug',$s3->forwardslug)->first();
+        //             $a3 = Tests_Overall::where('test_id',$e3->id)->where('user_id',$student->id)->first();
+        //             $data['attempt_4'] = $a3;
+        //             $data['exam_4'] = $e3;
+        //         }
+        //     }
             
 
-        }
+        // }
 
         $data['attempt'] = $tests_overall;
         $data['exam'] = $exam;
