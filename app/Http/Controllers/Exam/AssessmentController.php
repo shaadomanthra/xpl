@@ -6343,13 +6343,15 @@ class AssessmentController extends Controller
         $user_id = $student->id;
         $test_id = $exam->id;
 
-        $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
-            return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
-        });
+        // $tests_overall = Cache::remember('attempt_'.$user_id.'_'.$test_id, 60, function() use ($exam,$student){
+        //     return Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
+        // });
 
-        if(!$tests_overall){
-             $tests_overall  = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
-        }
+        $tests_overall = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
+
+        // if(!$tests_overall){
+        //      $tests_overall  = Tests_Overall::where('test_id',$exam->id)->where('user_id',$student->id)->first();
+        // }
 
         // L1
         $s1 = $exam->settings;
