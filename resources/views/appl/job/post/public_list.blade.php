@@ -13,7 +13,7 @@
               @elseif(Storage::disk('s3')->exists('post/job_'.$obj->slug.'.png'))
                <img class="mr-3 w-100" src="{{ Storage::disk('s3')->url('post/job_'.$obj->slug.'.png') }}" alt="{{$obj->title}}">
               @else
-              <img class="mr-3" src="{{ asset('img/job.jpg') }}" alt="{{$obj->title}}">
+              <img class="mr-3" src="https://i.imgur.com/LFQMZfb.png" alt="{{$obj->title}}">
               @endif
             </div>
   <div class="media-body">
