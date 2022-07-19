@@ -311,7 +311,7 @@
         <td>#1</td>
         <td>@if($details['coder']['pass_1']) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger"></i> Fail @endif</td>
         <td>{{ json_decode($question->a)->out_1 }}</td>
-        <td>@if($details['coder']['response_1']['error']) {{ $details['coder']['response_1']['stderr']}} @else
+        <td>@if($details['coder']['response_1']['stderr']) {{ $details['coder']['response_1']['stderr']}} @else
           {!! nl2br($details['coder']['response_1']['stdout']) !!}
         @endif</td>
         <td>{{ $details['coder']['response_1']['time']}}</td>
@@ -324,7 +324,7 @@
         <td class="i {{ $out ='out_'.$j}} a_{{json_decode($question->a)->$out}}">#{{$j}}</td>
         <td>@if($details['coder']['pass_'.$j]) <i class="fa fa-check-circle text-success"></i> success @else <i class="fa fa-times-circle text-danger "></i> Fail @endif</td>
         <td>@if(trim(json_decode($question->a)->$out)) {{ json_decode($question->a)->$out }} @else  {{ json_decode($question->a)->out_1 }}@endif</td>
-        <td>@if($details['coder']['response_'.$j]['error']) {{ $details['coder']['response_'.$j]['stderr']}} @else
+        <td>@if($details['coder']['response_'.$j]['stderr']) {{ $details['coder']['response_'.$j]['stderr']}} @else
           {!! nl2br($details['coder']['response_'.$j]['stdout']) !!}
         @endif</td>
         <td>{{ $details['coder']['response_'.$j]['time']}}</td>
@@ -443,6 +443,87 @@
 
       @endif
 
+     
+
+
+      <div class="card mb-3 mb-md-0">
+        <div class="card-body">
+          <h3 class="mb-3">Code Solution</h3>
+           @if($codes)
+               
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="chome-tab" data-toggle="tab" href="#cc" role="tab" aria-controls="chome" aria-selected="true">C</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="cprofile-tab" data-toggle="tab" href="#ccpp" role="tab" aria-controls="cprofile" aria-selected="false">C++</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="ccontact-tab" data-toggle="tab" href="#ccsharp" role="tab" aria-controls="ccontact" aria-selected="false">C#</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " id="cjava-tab" data-toggle="tab" href="#cjava" role="tab" aria-controls="cjava" aria-selected="false">Java</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="cjavascript-tab" data-toggle="tab" href="#cjavascript" role="tab" aria-controls="cjavascript" aria-selected="false">Javascript</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="cpython-tab" data-toggle="tab" href="#cpython" role="tab" aria-controls="cpython" aria-selected="false">Python</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="nolang-tab" data-toggle="tab" href="#nolang" role="tab" aria-controls="nolang" aria-selected="false">Nolang</a>
+                    </li>
+                  </ul>
+
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="cc" role="tabpanel" aria-labelledby="chome-tab">
+
+     <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_1) !!}</code></pre>
+      <div class="card"><div class="card-body"><h5 class="text-secondary">Output</h5><hr>{!! htmlentities($codes->output_1) !!}</div></div>
+
+  </div>
+  <div class="tab-pane fade" id="ccpp" role="tabpanel" aria-labelledby="cprofile-tab">
+
+     <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_2) !!}</code></pre>
+      <div class="card"><div class="card-body">{!! htmlentities($codes->output_2) !!}</div></div>
+
+  </div>
+    <div class="tab-pane fade" id="ccsharp" role="tabpanel" aria-labelledby="ccontact-tab">
+       <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_3) !!}</code></pre>
+        <div class="card"><div class="card-body">{!! htmlentities($codes->output_3) !!}</div></div>
+      </div>
+      <div class="tab-pane fade" id="cjava" role="tabpanel" aria-labelledby="cjava-tab">
+        <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_4) !!}</code></pre>
+          <div class="card"><div class="card-body">{!! htmlentities($codes->output_4) !!}</div></div>
+       </div>
+       <div class="tab-pane fade" id="cjavascript" role="tabpanel" aria-labelledby="cjavascript-tab">
+         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_5) !!}</code></pre>
+          <div class="card"><div class="card-body">{!! htmlentities($codes->output_5) !!}</div></div>
+        </div>
+        <div class="tab-pane fade" id="cpython" role="tabpanel" aria-labelledby="cpython-tab">
+         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_6) !!}</code></pre>
+          <div class="card"><div class="card-body">{!! htmlentities($codes->output_6) !!}</div></div>
+        </div>
+         <div class="tab-pane fade" id="nolang" role="tabpanel" aria-labelledby="nolang-tab">
+          @if(isset($codes->codefragment_8))
+         <pre class="p-3"><code class="text-light ">{!! htmlentities($codes->codefragment_8) !!}</code></pre>
+          <div class="card"><div class="card-body">{!! htmlentities($codes->output_8) !!}</div></div>
+          @endif
+        </div>
+</div>
+
+
+
+  
+
+
+
+                  
+              @else
+              <div class="solution">@if($question->explanation) {!! $question->explanation !!} @else - @endif</div>
+            @endif
+        </div>
+      </div>
      
 
       @if($question->explanation )

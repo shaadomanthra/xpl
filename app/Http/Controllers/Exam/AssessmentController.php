@@ -3060,12 +3060,16 @@ class AssessmentController extends Controller
 
                 $details['coder'] = json_decode($details['comment'],true);
                
+                $codes = json_decode($question['d']);
+              
+
 
                 return view('appl.exam.assessment.'.$view)
                         ->with('mathjax',true)
                         ->with('question',$question)
                         ->with('passage',$passage)
                         ->with('details',$details)
+                        ->with('codes',$codes)
                         ->with('exam',$exam)
                         ->with('student',$student)
                         ->with('images',$images)
