@@ -1670,7 +1670,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
 
               $('.final_response_'+$qn).html($('.output_'+$qn).html());
             }else{
-                $('.output_'+$qn).html("Invalid Code - ERD102 - Retry. (Testcase-"+$qn+")");
+                $('.output_'+$qn).html("Invalid Code. Retry.");
             }
             $('.loading').hide();
             $('.loading_'+$qn).hide();
@@ -1680,7 +1680,7 @@ function ajaxrun($url,code,$lang,$c,$input,$namec,$testcase,$test,$qslug,$qn,$t,
               if(textStatus==="timeout") {  
                 $('.output_'+$qn).html("Timeout - Code execution timelimit crossed. Retry.");
               } else {
-                $('.output_'+$qn).html("Invalid Code - ERX104 - Retry. (Testcase-"+$qn+")");
+                $('.output_'+$qn).html("Invalid Code. Retry.");
               }
               $('.loading').hide();
           }
