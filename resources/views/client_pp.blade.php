@@ -7,12 +7,7 @@
 
 
 <div class="container mt-4">
-<div class="rounded p-4 mb-4" style="background: #f7eaca; border:1px solid #e2ca8f;">
- 
-  <h3 class="">Join Job Guaranteed Training with Pay After Placement <img src="https://i.imgur.com/2z3tA1h.gif" style="width: 35px"/> </h3>
-<p class="mb-3">Trained candidates of PacketPrep are placed in top companies like Deliotte, Capgemini, Cognizant, Tech Mahindra, ADP and more. Start your amazing journey with us! <a href="https://tech.packetprep.com/contact"><b>Apply Now</b> </a> or <i>call us at +91 90000 45750</i> </p>
 
-</div>
 
 
 @if(auth::user() && subdomain()=='packetprep')
@@ -307,6 +302,14 @@
   </div>
 
   <div class="col-12 col-md-3">
+
+    <div class="rounded p-4 mb-4" style="background: #f7eaca; border:1px solid #e2ca8f;">
+ 
+  <h3 class="">Java Fullstack Course<img src="https://i.imgur.com/2z3tA1h.gif" style="width: 35px"/> </h3>
+<p class="mb-3">Carefully curated practice questions from java. <a href="https://learn.packetprep.com/course/java-programming"><b>View Course</b> </a>  </p>
+
+</div>
+
     <a href="https://tech.packetprep.com/contact"><img src="https://i.imgur.com/AFCPjbn.jpg" class="mt-3 mt-md-0 w-100 rounded" /></a>
 
      <div class="bg-white  p-3 p-md-4 mb-3 mb-md-4 mt-3" style="background-image:url(https://packetprep.com/img/corner-4.png);background-position: right;background-repeat: no-repeat; border-radius:8px;box-shadow: 2px 2px 2px 2px #eee;background-size: auto;">
