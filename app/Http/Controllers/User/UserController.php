@@ -1736,7 +1736,7 @@ class UserController extends Controller
         if(!\auth::user())
         abort('403','Unauthorized Access');
 
-        if(!\auth::user()->checkRole(['hr-manager','administrator']))
+        if(!\auth::user()->isSiteAdmin() )
         abort('403','Unauthorized Access');
 
         $client_slug = \Auth::user()->client_slug;

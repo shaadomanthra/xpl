@@ -291,7 +291,7 @@
 
 
           @if(\auth::user())
-           @if(\auth::user()->checkRole(['administrator','employee']))
+           @if(\auth::user()->isSiteAdmin() )
            	@if($bno)
 						<a href="{{ url('/performance') }}?exam={{$exam->slug}}&info={{$bno}}" class="btn btn-outline-primary btn-sm "> <i class="fa fas fa-bar-chart" ></i> All Users</a>
 						@else
