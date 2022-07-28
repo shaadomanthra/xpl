@@ -44,15 +44,13 @@
 
           <h2>Hi, {{  \auth::user()->name}}</h2>
 
-          <a href="https://learn.packetprep.com/user/mydetails" class="btn btn-primary my-3"> edit profile</a>
+          <a href="https://learn.packetprep.com/user/mydetails" class="btn btn-success my-3"> edit profile</a>
       <p> 
-        @if(auth::user()->roll_number)
-        <span class="badge badge-warning">{{auth::user()->roll_number}}</span><br>
-        @endif
+        
         @if(auth::user()->branch_id)
           @if(isset($data['branches'][auth::user()->branch_id])) <span class="badge badge-primary"> {{ $data['branches'][auth::user()->branch_id]->name}}</span>@else Welcome aboard @endif
         @else
-          @if(auth::user()->info) <span class="badge badge-primary">Class {{auth::user()->info}}</span>@else Welcome aboard @endif
+          @if(auth::user()->info) <span class="badge badge-primary">Batch - {{auth::user()->info}}</span>@else Welcome aboard @endif
         @endif
       </p>
       

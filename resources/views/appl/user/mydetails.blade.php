@@ -66,7 +66,7 @@
                 <label for="name" class="col-md-8 control-label">Roll Number</label>
 
                 <div class="col-md-12">
-                    <input id="fathername" type="text" class="form-control" name="roll_number" value="{{$user->roll_number}}" required>
+                    <input id="fathername" type="text" class="form-control" name="roll_number" value="{{$user->roll_number}}" >
                 </div>
             </div>
 
