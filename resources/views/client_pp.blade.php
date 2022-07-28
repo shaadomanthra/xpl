@@ -43,6 +43,8 @@
         <div class="col-12 col-md-9">
 
           <h2>Hi, {{  \auth::user()->name}}</h2>
+
+          <a href="https://learn.packetprep.com/user/mydetails" class="btn btn-primary my-3"> edit profile</a>
       <p> 
         @if(auth::user()->roll_number)
         <span class="badge badge-warning">{{auth::user()->roll_number}}</span><br>

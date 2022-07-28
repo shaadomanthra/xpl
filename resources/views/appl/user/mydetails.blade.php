@@ -44,7 +44,7 @@
         </div>
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                <label for="name" class="col-md-10 control-label">Info</label>
+                <label for="name" class="col-md-10 control-label">Batch Number</label>
 
                 <div class="col-md-12">
                     <input id="name" type="text" class="form-control" name="info" value="{{$user->info}}" >
