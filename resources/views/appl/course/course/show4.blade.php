@@ -35,7 +35,7 @@
 			@endcan
 
 			@if(\auth::user())
-			@if(\auth::user()->isSiteAdmin()))
+			@if(\auth::user()->isSiteAdmin())
 			<div class="my-3">
 			<a href="{{ route('course.analytics',$course->slug)}}">
 				<i class="fa fa-bar-chart"></i> Analytics
