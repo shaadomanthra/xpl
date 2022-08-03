@@ -62,7 +62,7 @@
 			     
 			     @if(request()->get('batch'))
 			     <hr>
-			     Student Count: {{count($users)}}<br>
+			     Student Count: <a href="{{ route('user.list') }}?info={{request()->get('batch')}}">{{count($users)}}</a><br>
 			     Total Solved Questions : {{($pavg*count($users))}}<br>
 			  <span clas="text-primary">Avg Practice Ques : <b>{{$pavg}}</b></span><br>
 			  @endif
