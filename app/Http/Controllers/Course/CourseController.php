@@ -376,6 +376,7 @@ class CourseController extends Controller
 
         $practice_set=[];
         $pavg = 0;
+        $wpavg =0;
         if($bno){
             $total = 0;
             $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
@@ -389,11 +390,18 @@ class CourseController extends Controller
                 $total = $total + $p->sum('accuracy');
             }
 
-            arsort($practice_set);
-
+             arsort($practice_set);
             $pavg = $total / count($users);
 
+            $date = \Carbon\Carbon::today()->subDays(7);
 
+            $user_practice2 = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$date)->get()->groupBy('user_id');
+
+            $total2 =0;
+            foreach($user_practice2 as $uid=>$p){
+                $total2 = $total2 + $p->sum('accuracy');
+            }
+            $wpavg = $total2 / count($users);
 
         }
 
@@ -413,6 +421,7 @@ class CourseController extends Controller
                     ->with('users',$users)
                     ->with('bno',$bno)
                     ->with('pavg',$pavg)
+                    ->with('wpavg',$wpavg)
                     ->with('nodes',$course->nodes);
 
         else

@@ -64,7 +64,10 @@
 			     <hr>
 			     Student Count: <a href="{{ route('user.list') }}?info={{request()->get('batch')}}">{{count($users)}}</a><br>
 			     Total Solved Questions : {{($pavg*count($users))}}<br>
-			  <span clas="text-primary">Avg Practice Ques : <b>{{round($pavg,2)}}</b></span><br>
+			  
+			  Total Avg Practice Ques : <b>{{round($pavg,2)}}</b><br>
+			  <span class="text-info">Last 7 days Solved Questions : <b>{{($wpavg*count($users))}}</b></span><br>
+			  <span class="text-info">Last 7 days Avg Practice Ques : <b>{{round($wpavg,2)}}</b></span><br>
 			  @endif
 			  </div>
 
