@@ -59,9 +59,12 @@
 			 		 <input type="hidden" class="form-control mb-3" name="refresh"  value="{{ request()->get('refresh') }}">
 			    <button type="submit" class="btn btn-primary">Submit</button>
 			    <a href="{{ route('course.show',$course->slug)}}?refresh=1" class="btn btn-outline-primary ml-2">Refresh Data</a>
-			     <hr>
+			     
 			     @if(request()->get('batch'))
-			  Avg Practice Ques ({{request()->get('batch')}}) : <b>{{$pavg}}</b>
+			     <hr>
+			     Student Count: {{count($users)}}<br>
+			     Total Solved Questions : {{($pavg*count($users))}}<br>
+			  <span clas="text-primary">Avg Practice Ques : <b>{{$pavg}}</b></span><br>
 			  @endif
 			  </div>
 
