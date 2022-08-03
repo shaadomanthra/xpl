@@ -375,7 +375,9 @@ class CourseController extends Controller
         $users = [];
 
         $practice_set=[];
+        $pavg = 0;
         if($bno){
+            $total = 0;
             $users = Cache::remember('users_'.$bno, 120, function() use ($bno) { 
                 return User::where('info',$bno)->where('client_slug',subdomain())->get();
             });
@@ -384,9 +386,14 @@ class CourseController extends Controller
             $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
             foreach($user_practice as $uid=>$p){
                 $practice_set[$uid] = $p->sum('accuracy');
-
+                $total = $total + $p->sum('accuracy');
             }
+
             arsort($practice_set);
+
+            $pavg = $total / count($users);
+
+
 
         }
 
@@ -405,6 +412,7 @@ class CourseController extends Controller
                     ->with('practice_set',$practice_set)
                     ->with('users',$users)
                     ->with('bno',$bno)
+                    ->with('pavg',$pavg)
                     ->with('nodes',$course->nodes);
 
         else
