@@ -383,6 +383,11 @@ class CourseController extends Controller
                 return User::where('info',$bno)->where('client_slug',subdomain())->get();
             });
 
+            if(!count($users ))
+                $countuser = 1;
+            else
+                $countuser = count($users);
+
             $uids = $users->pluck('id')->toArray();
             $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
             foreach($user_practice as $uid=>$p){
@@ -391,7 +396,7 @@ class CourseController extends Controller
             }
 
              arsort($practice_set);
-            $pavg = $total / count($users);
+            $pavg = $total / $countuser;
 
             $date = \Carbon\Carbon::today()->subDays(7);
 
@@ -401,7 +406,7 @@ class CourseController extends Controller
             foreach($user_practice2 as $uid=>$p){
                 $total2 = $total2 + $p->sum('accuracy');
             }
-            $wpavg = $total2 / count($users);
+            $wpavg = $total2 / $countuser;
 
         }
 
