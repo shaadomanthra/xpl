@@ -2132,7 +2132,9 @@ class AssessmentController extends Controller
                     $review = true;
             }else{
 
+                if(isset($ques[$t->question_id]->mark)))
                 $cx = $cx+intval($ques[$t->question_id]->mark);
+                
                 
             }
             //$ques = Question::where('id',$q->id)->first();
