@@ -56,16 +56,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-12 col-md-6 mb-3">
-		<div class="card mb-2">
-			<div class="card-body">
-				<img src="https://i.imgur.com/vpXbcco.jpg" class="rounded float-left pr-4 pb-3" style="max-width: 150px"/>
-				<h2>Preethi Bhatia </h2>
-				<p class="lead text-secondary">Head - Partnership and Client Engagement/Relationship</p>
-				<p>With over 18 years of experience in Sales and Marketing, Business Development, Operations, and L&D, Preethi Bhatia, Head of Partnership and client engagement, led the team to revenue generation, new business growth, and expansion.</p>
-			</div>
-		</div>
-	</div>
+
 	<div class="col-12 col-md-6 mb-3">
 		<div class="card mb-2">
 			<div class="card-body">
