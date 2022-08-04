@@ -135,7 +135,10 @@ class CourseController extends Controller
         $uids = $users->pluck('id')->toArray();
         if($category){
             $cid = $category->id;
+            if(isset($course->categories->$cid))
             $total = $course->categories->$cid->total;
+            else
+                $total =0;
             $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('category_id',$category->id)->get()->groupBy('user_id');
         }
         else{
