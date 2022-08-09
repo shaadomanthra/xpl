@@ -31,11 +31,11 @@
     
         <div class="col-12 col-md-4">
             <div class="card w-100">
-              <div class="card-header"><h3>{{$bno['batch']}}</h3></div>
+              <div class="card-header"><h3>{{$bno['batch']}} ({{count($bno['users'])}})</h3></div>
               <div class="card-body">
                 @if(isset($bno['practice_set']))
                 @foreach($bno['practice_set'] as $a=>$b)
-                    {{$bno['users'][$a]->name}} - {{$b}}
+                    <div class="">{{$bno['users'][$a]->name}} <span class="float-right">{{$b}}</span></div>
                 @endforeach
                 @endif
               </div>
