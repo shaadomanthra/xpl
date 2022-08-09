@@ -159,6 +159,8 @@ class CourseController extends Controller
             }
         }        
 
+        $d['p_date'] = $date;
+        $d['date'] = \Carbon\Carbon::today();
         $d['btotal']=0;
         $d['bavg']=0;
         $d['btotal_name'] ='';
@@ -166,11 +168,11 @@ class CourseController extends Controller
         foreach($data as $bno){
             if($bno['wpavg']>$d['bavg']){
                 $d['bavg'] = $bno['wpavg'];
-                $d['bavg_name'] = $bno;
+                $d['bavg_name'] = $bno['batch'];
             }
             if($bno['total2']>$d['btotal']){
                 $d['btotal'] = $bno['total2'];
-                $d['btotal_name'] = $bno;
+                $d['btotal_name'] = $bno['batch'];
             }
 
         }

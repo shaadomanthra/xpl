@@ -22,12 +22,13 @@
   <div class="bg-white border p-3">
       <a href="{{ url()->previous() }}" class="float-right"><button class="btn btn-success">Back</button></a>
     <h1 class="display-4 mb-1"> <div class="">Batch Analysis </div></h1>
+     <small class="text-info">{{$d['p_date']->format('d M Y')}} to {{$d['date']->format('d M Y')}}</small>
     <hr>
-    @if($d['btotal_name'])
+  
     Best Performer (Weekly Total Ques) - <b>{{$d['btotal_name']}}({{$d['btotal']}}) </b><br>
     Best Performer (Weekly Avg Ques) - <b>{{$d['bavg_name']}}({{$d['bavg']}}) </b>
 
-    @endif
+
   
   </div>
 </div>
