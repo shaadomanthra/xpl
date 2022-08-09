@@ -4,7 +4,7 @@
 @section('content')
 
 
-
+<div class="p-3">
 @if(!request()->get('batches'))
 <div class="bg-white ">
   <div class="bg-white border p-3">
@@ -60,4 +60,5 @@
   </div>
   
 @endif
+</div>
 @endsection           
