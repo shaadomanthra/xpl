@@ -86,6 +86,84 @@ class CourseController extends Controller
         ->with('courses',$courses)->with('course',new Course());
     }
 
+    public function batches($id){
+        $course = Cache::get('course_'.$id);
+
+        if(!$course){
+            $course = Course::where('slug',$id)->first();
+            $course_data = $course->category_list($course->slug);
+            $course->categories = json_decode(json_encode($course_data['categories']));
+            $course->ques_count = $course_data['ques_count'];
+            $course->nodes = $course_data['nodes'];
+            $course->exams = $course_data['exams'];
+            $course->tests = $course_data['tests'];
+        }
+         if(!\auth::user())
+            abort('403','Unauthorized');
+        if(!\auth::user()->isSiteAdmin())
+            abort('403','Unauthorized');
+
+        $batch=request()->get('batches');
+        $batches = [];
+        if(request()->get('batches')){
+            $batches = explode(',',request()->get('batches'));
+        }
+        
+
+
+
+        $data = [];
+       
+        $avg = [];
+        foreach($batches as $bno){
+            $user_practice = [];
+        $users = [];
+        $practice_set=[];
+            if($bno){
+                $total = 0;
+                $users = User::where('info',$bno)->where('client_slug',subdomain())->get()->keyBy('id');
+
+                $data[$bno]['users'] = $users;
+                if(!count($users ))
+                    $countuser = 1;
+                else
+                    $countuser = count($users);
+
+                $uids = $users->pluck('id')->toArray();
+                $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+                foreach($user_practice as $uid=>$p){
+                    $practice_set[$uid] = $p->sum('accuracy');
+                    $total = $total + $p->sum('accuracy');
+                }
+
+
+                $data[$bno]['batch'] = $bno;
+                $data[$bno]['practice_set'] = $practice_set; 
+
+                 arsort($practice_set);
+                $pavg = $total / $countuser;
+
+                $date = \Carbon\Carbon::today()->subDays(7);
+
+                $user_practice2 = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$date)->get()->groupBy('user_id');
+
+                $total2 =0;
+                foreach($user_practice2 as $uid=>$p){
+                    $total2 = $total2 + $p->sum('accuracy');
+                }
+                $wpavg = $total2 / $countuser;
+
+                $data[$bno]['pavg'] = $pavg;
+                $data[$bno]['wpavg'] = $wpavg;
+
+            }
+        }        
+
+          return view('appl.course.course.batches')
+                ->with('data',$data)
+                ->with('course',$course);
+
+    }
 
     public function analytics($id){
         $course = Cache::get('course_'.$id);

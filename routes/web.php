@@ -852,6 +852,7 @@ use Illuminate\Support\Facades\Storage;
 
 	Route::resource('course','Course\CourseController');
 	Route::get('course/{course}/list','Course\CourseController@show4')->name('course.list');
+	Route::get('course/{course}/batches','Course\CourseController@batches')->name('course.batches');
 	//Route::resource('course/{course}/index','Course\IndexController');
 	Route::get('course/{course}/{category}/view','Course\CourseController@video')->name('course.category.video');
 	Route::get('course/{course}/analytics','Course\CourseController@analytics')->name('course.analytics');
