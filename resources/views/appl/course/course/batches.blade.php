@@ -22,6 +22,7 @@
   <div class="bg-white border p-3">
       <a href="{{ url()->previous() }}" class="float-right"><button class="btn btn-success">Back</button></a>
     <h1 class="display-4 mb-1"> <div class="">Practice Questions Analysis </div></h1>
+    <h4>{{$course->name}}</h4>
      <small class="text-info">{{$d['p_date']->format('d M Y')}} to {{$d['date']->format('d M Y')}}</small>
     <hr>
   
