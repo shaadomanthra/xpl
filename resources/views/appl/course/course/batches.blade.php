@@ -21,12 +21,44 @@
 <div class="bg-white mb-3">
   <div class="bg-white border p-3">
       <a href="{{ url()->previous() }}" class="float-right"><button class="btn btn-success">Back</button></a>
-    <h1 class="display-4 mb-1"> <div class="">Batch Analysis </div></h1>
+    <h1 class="display-4 mb-1"> <div class="">Practice Questions Analysis </div></h1>
      <small class="text-info">{{$d['p_date']->format('d M Y')}} to {{$d['date']->format('d M Y')}}</small>
     <hr>
   
-    Best Performer (Weekly Total Ques) - <b>{{$d['btotal_name']}}({{$d['btotal']}}) </b><br>
+    Best Performer (Weekly Total Ques) - <b>{{$d['btotal_name']}}({{$d['btotal']}}) </b>
+     @if (strpos(strtoupper($d['btotal_name']), 'H') !== false)
+                  <span class="text-primary">Hyderabad</span>
+                @endif
+
+                @if (strpos(strtoupper($d['btotal_name']), 'V') !== false)
+                  <span class="text-primary">Vijayawada</span>
+                @endif
+
+                @if (strpos(strtoupper($d['btotal_name']), 'Z') !== false)
+                  <span class="text-primary">Visakhapatnam</span>
+                @endif
+
+                @if (strpos(strtoupper($d['btotal_name']), 'T') !== false)
+                  <span class="text-primary">Tirupati</span>
+                @endif
+    <br>
     Best Performer (Weekly Avg Ques) - <b>{{$d['bavg_name']}}({{$d['bavg']}}) </b>
+
+     @if (strpos(strtoupper($d['bavg_name']), 'H') !== false)
+                  <span class="text-primary">Hyderabad</span>
+                @endif
+
+                @if (strpos(strtoupper($d['bavg_name']), 'V') !== false)
+                  <span class="text-primary">Vijayawada</span>
+                @endif
+
+                @if (strpos(strtoupper($d['bavg_name']), 'Z') !== false)
+                  <span class="text-primary">Visakhapatnam</span>
+                @endif
+
+                @if (strpos(strtoupper($d['bavg_name']), 'T') !== false)
+                  <span class="text-primary">Tirupati</span>
+                @endif
 
 
   
@@ -55,6 +87,7 @@
                 @endif
               </div>
               <div class="card-body">
+                <div><b>Name</b> <span class="float-right">Questions Solved</span></div>
                 @if(isset($bno['practice_set']))
                 @foreach($bno['practice_set'] as $a=>$b)
                     <div class="">{{$bno['users'][$a]->name}} <span class="float-right">{{$b}}</span></div>
