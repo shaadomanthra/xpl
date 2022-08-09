@@ -22,14 +22,19 @@
   <div class="bg-white border p-3">
       <a href="{{ url()->previous() }}" class="float-right"><button class="btn btn-success">Back</button></a>
     <h1 class="display-4 mb-1"> <div class="">Batch Analysis </div></h1>
-   
+    <hr>
+    @if($d['btotal_name'])
+    Best Performer (Weekly Total Ques) - <b>{{$d['btotal_name']}}({{$d['btotal']}}) </b><br>
+    Best Performer (Weekly Avg Ques) - <b>{{$d['bavg_name']}}({{$d['bavg']}}) </b>
+
+    @endif
   
   </div>
 </div>
   <div class="row">
   @foreach($data as $bno)
     
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-4 mb-3">
             <div class="card w-100">
               <div class="card-header"><h3>{{strtoupper($bno['batch'])}} [{{count($bno['users'])}}]</h3></div>
               <div class="card-body">
@@ -52,5 +57,6 @@
     
   @endforeach
   </div>
+  
 @endif
 @endsection           

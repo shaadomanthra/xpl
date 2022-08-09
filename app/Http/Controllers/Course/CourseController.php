@@ -121,7 +121,7 @@ class CourseController extends Controller
         $practice_set=[];
             if($bno){
                 $total = 0;
-                $users = User::where('info',$bno)->where('client_slug',subdomain())->get()->keyBy('id');
+                $users = User::where('info',$bno)->where('client_slug',subdomain())->where('role',1)->get()->keyBy('id');
 
                 $data[$bno]['users'] = $users;
                 if(!count($users ))
@@ -152,15 +152,32 @@ class CourseController extends Controller
                     $total2 = $total2 + $p->sum('accuracy');
                 }
                 $wpavg = $total2 / $countuser;
-
+                $data[$bno]['total2'] = $total2;
                 $data[$bno]['pavg'] = $pavg;
                 $data[$bno]['wpavg'] = $wpavg;
 
             }
         }        
 
+        $d['btotal']=0;
+        $d['bavg']=0;
+        $d['btotal_name'] ='';
+        $d['bavg_name'] = '';
+        foreach($data as $bno){
+            if($bno['wpavg']>$d['bavg']){
+                $d['bavg'] = $bno['wpavg'];
+                $d['bavg_name'] = $bno;
+            }
+            if($bno['total2']>$d['btotal']){
+                $d['btotal'] = $bno['total2'];
+                $d['btotal_name'] = $bno;
+            }
+
+        }
+
           return view('appl.course.course.batches')
                 ->with('data',$data)
+                ->with('d',$d)
                 ->with('course',$course);
 
     }
