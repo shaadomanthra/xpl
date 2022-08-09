@@ -31,7 +31,7 @@
     
         <div class="col-12 col-md-4">
             <div class="card w-100">
-              <div class="card-header"><h3>{{$bno['batch']}} ({{count($bno['users'])}})</h3></div>
+              <div class="card-header"><h3>{{strtoupper($bno['batch'])}} [{{count($bno['users'])}}]</h3></div>
               <div class="card-body">
                 @if(isset($bno['practice_set']))
                 @foreach($bno['practice_set'] as $a=>$b)
