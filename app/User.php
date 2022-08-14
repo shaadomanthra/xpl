@@ -457,6 +457,7 @@ class User extends Authenticatable
 
         $tests_section = Tests_Section::where('user_id',$user->id)->get();
         $sections = Section::whereIn('id',$tests_section->pluck('section_id')->toArray())->get()->keyBy('id');
+        
 
         $tests_section = $tests_section->groupBy('test_id');
        
@@ -470,8 +471,14 @@ class User extends Authenticatable
             $str ='';
             foreach($tests_section[$t->id] as $m=>$n){
                
-                if(isset($sections[$n->section_id]))
-                $str =$str.$sections[$n->section_id]->name.' - '.$n->score.'<br>';
+                if(isset($sections[$n->section_id])){
+                    $total =0;
+                    foreach($sections[$n->section_id]->questions as $q){
+                        $total = $total + $q->mark;
+                    }
+                    $str =$str.$sections[$n->section_id]->name.' - '.$n->score.'/'.$total.'<br>';
+                }
+                
             }
             $tests[$k]->details = $str;
         }
