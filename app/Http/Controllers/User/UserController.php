@@ -1883,7 +1883,10 @@ class UserController extends Controller
             $data_sorted[$k]['test'] = $data[$k]['test'];
             $data_sorted[$k]['status'] = $data[$k]['status'];
             $data_sorted[$k]['cgpa'] = $data[$k]['cgpa'];
+            if(isset($data[$k]['section']))
             $data_sorted[$k]['section'] = $data[$k]['section'];
+            else
+                $data_sorted[$k]['section'] = [];
             $data_sorted[$k]['count'] = $data[$k]['count'];
         }
 
