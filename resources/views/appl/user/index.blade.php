@@ -139,7 +139,7 @@
               <a href="{{route('profile.edit','@'.$user->username)}}?complete_profile=1" class="btn btn-success mt-3 mb-4 d-print-none"><i class="fa fa-edit"></i> Edit</a>
               @endcan
               @can('manage',$user)
-              <a href="{{route('profile.manage','@'.$user->username)}}" class="btn btn-primary mt-3 mb-4 d-print-none"><i class="fa fa-gear"></i> Manage</a>
+              <a href="{{route('profile.manage','@'.$user->username)}}" class="btn btn-primary mt-3 mb-4 d-print-none "><i class="fa fa-gear"></i> Manage</a>
               @endcan
 
             </div>
@@ -235,8 +235,8 @@
 @endauth
  
  @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
-    
-      <div class="card bg-white d-print-none">
+      <div class="px-3">
+      <div class="card bg-white d-print-none ">
         <div class="card-body">
           <h3>Admin Tools</h3>
           <button class="btn btn-outline-dark" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Reset password to 12345</button>
@@ -245,13 +245,14 @@
           <button class="btn btn-outline-danger" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal4">Delete Account</button>
         </div>
       </div>
+    </div>
 
     @endif
 
  @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
 
  @if(count($user->tests())!=0)
-  <div class="rounded table-responsive mt-4">
+  <div class="rounded table-responsive mt-4 px-3">
             <table class="table table-bordered {{$i=0}}">
               <thead>
                 <tr>
