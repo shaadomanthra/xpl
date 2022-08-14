@@ -28,7 +28,31 @@
           <h4><i class="fa fa-angle-double-right"></i> All Topics</h4>
           @endif
 
+          <hr>
 
+           <h3>Batch Completion</h3>
+     <div class="table-responsive mb-3">
+          <table class="table table-bordered mb-0 bg-light">
+            <thead>
+              <tr>
+                <th scope="col">Batch</th>
+                <th scope="col">Students</th>
+                <th scope="col">Avg Completion</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($batches as $g=>$h)
+              <tr>
+                <td>{{$h['name']}}</td>
+                <td>{{$h['count']}}</td>
+                <td>{{$h['avg']}}</td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+      </div>
+
+      <h3>Student Completion</h3>
           @if(request()->get('batch'))
           @if(count($users))
           <table class="table table-bordered mt-3">
@@ -56,7 +80,7 @@
                   
                 </td>
                 <td class="p-1">  <span class="">  {{$u->roll_number}}</span></td>
-                <td class="p-1">{{$u->info}}</td>
+                <td class="p-1">{{strtoupper($u->info)}}</td>
                 <td class="p-1">
                   @if($total)
                   @if(isset($practice[$u->id]))

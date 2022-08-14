@@ -111,7 +111,7 @@ class CourseController extends Controller
         
 
 
-
+        $date = \Carbon\Carbon::today()->subDays(7);
         $data = [];
        
         $avg = [];
@@ -143,7 +143,7 @@ class CourseController extends Controller
                  arsort($practice_set);
                 $pavg = $total / $countuser;
 
-                $date = \Carbon\Carbon::today()->subDays(7);
+                
 
                 $user_practice2 = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$date)->get()->groupBy('user_id');
 
@@ -206,7 +206,7 @@ class CourseController extends Controller
         $topic = request()->get('topic');
         $total = $course->ques_count;
         $category = Category::where('slug',$topic)->first();
-
+        $batches =[];
         if(!request()->get('batch')){
             $bno=0;
              return view('appl.course.course.analytics')
@@ -215,7 +215,13 @@ class CourseController extends Controller
                 ->with('category',$category)
                 ->with('course',$course);
         }else{
-            $bno = request()->get('batch');
+            $bno = str_replace(',','_',request()->get('batch'));
+             if(strpos(request()->get('batch'),',')!==false){
+                $batches = explode(',',request()->get('batch'));
+            }
+                
+
+            
         }
 
         if(request()->get('refresh'))
@@ -229,6 +235,10 @@ class CourseController extends Controller
                 return User::where('info',$bno)->where('client_slug',subdomain())->get();
             });
 
+        if(count($batches)){
+            $users = User::whereIn('info',$batches)->where('client_slug',subdomain())->get();
+        }
+            
         $uids = $users->pluck('id')->toArray();
         if($category){
             $cid = $category->id;
@@ -242,6 +252,27 @@ class CourseController extends Controller
             $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
         }
 
+        $batches = [];
+        foreach($users as $id=>$u){
+            $batches[strtoupper($u->info)]['name'] = strtoupper($u->info);
+             $batches[strtoupper($u->info)]['avg'] = 0;
+            if(isset($batches[strtoupper($u->info)]['total']))
+            {
+                if(isset($practice[$u->id]))
+                $batches[strtoupper($u->info)]['total'] = $batches[strtoupper($u->info)]['total'] +count($practice[$u->id]);
+                $batches[strtoupper($u->info)]['count']++;
+            }else{
+                $batches[strtoupper($u->info)]['total']  = 0;
+                $batches[strtoupper($u->info)]['count'] = 1;
+                if(isset($practice[$u->id]))
+                $batches[strtoupper($u->info)]['total'] = count($practice[$u->id]);
+            }
+        }
+
+        foreach($batches as $h=>$j){
+            $batches[$h]['avg'] = round($batches[$h]['total']/$batches[$h]['count'],2);
+        }
+      
         
         return view('appl.course.course.analytics')
                 ->with('stub','Create')
@@ -250,6 +281,7 @@ class CourseController extends Controller
                 ->with('practice',$practice)
                 ->with('category',$category)
                 ->with('total',$total)
+                ->with('batches',$batches)
                 ->with('course',$course);
     }
 
