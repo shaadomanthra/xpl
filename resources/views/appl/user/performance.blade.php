@@ -115,8 +115,8 @@ function initials($str) {
                   @if(request()->get('all'))
                   <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}">{{$e->name}}</a>
                   @else
-                  <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}" class="d-print-none d-block">{{initials($e->name)}} ({{$scores['scores']['exam']}})</a>
-                  <span class="d-print-inline d-none">{{initials($e->name)}}</span>
+                  <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}" class="d-print-none d-block">{{initials($e->name)}} - Total({{$scores['scores']['exam']}})</a>
+                  <span class="d-print-inline d-none">Total({{$scores['scores']['exam']}})</span>
                   @endif
 
                   <span class="badge badge-info d-print-none d-inline">{{$e->slug}}</span></th>
