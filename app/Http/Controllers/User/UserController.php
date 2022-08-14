@@ -1744,7 +1744,11 @@ class UserController extends Controller
 
 
         if($request->get('info')){
-            $users = User::where('client_slug',$client_slug)->where('status','<>','2')->where('info',$request->get('info'))->get()->keyBy('id');
+            if(strpos($request->get('info'),',')!==false){
+                $info_batches = explode(',',$request->get('info'));
+                $users = User::where('client_slug',$client_slug)->where('status','<>','2')->whereIn('info',$info_batches)->get()->keyBy('id');
+            }else   
+                $users = User::where('client_slug',$client_slug)->where('status','<>','2')->where('info',$request->get('info'))->get()->keyBy('id');
         }else{
             $users = User::where('client_slug',$client_slug)->where('status','<>','2')->get()->keyBy('id');
 

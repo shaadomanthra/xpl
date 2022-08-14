@@ -104,6 +104,9 @@ function initials($str) {
                 <th scope="col">#({{count($data)}})</th>
                 <th scope="col" class="{{$i=1}}" style="width: 200px">Name </th>
 
+                @if(request()->get('exam')&& request()->get('status')!='on')
+                  <th scope="col" >Batch</th>
+                @endif
                   @if(!request()->get('status'))
                 <th scope="col" class="bg-light">CGPA (10)</th>
                 @endif
@@ -139,8 +142,15 @@ function initials($str) {
 
                   <span class="d-none d-print-inline"> {{ $u['user']->name }}</span>
                    
+                   @if(!request()->get('exam'))
                  <span class="badge badge-light border border-dark d-print-none d-inline"> {{$u['user']->info}}</span>
+                  @endif
                   </td>
+
+                  @if(request()->get('exam')&& request()->get('status')!='on')
+                  <td  >{{$u['user']->info}}</th>
+                  @endif
+
                    @if(!request()->get('status'))
                   <td class="bg-light p-1" >
                    {{$data[$u['user']->id]['cgpa']}}
