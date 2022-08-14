@@ -27,7 +27,7 @@ function initials($str) {
         
 }
 @endphp
-<div class='pb-1 dblue d-print-none' >
+<div class=' pb-1 dblue d-print-none' >
   <div class='container'>
      <nav class="mb-0">
         
@@ -40,11 +40,6 @@ function initials($str) {
           </ol>
 
         </nav>
-
-      
-
-        
-    
     </div>
   </div>
 </div>
@@ -53,7 +48,7 @@ function initials($str) {
 
 
 
-<div class=" mt-4 mb-4 px-3">
+<div class="pl-5 mt-4 mb-4 px-3">
   <div class="d-print-inline h3 mt-3">Assessments - Performance @if(request()->get('info')) - {{ request()->get('info')}} @endif</div>
   <div class="bg-light p-4 rounded border mb-3 d-print-none">
   <h4>Filters</h4>
@@ -92,7 +87,7 @@ function initials($str) {
     @foreach($exams as $e)
                 
                 <h1 class="mt-0 mb-0">{{$e->name}}</h1>
-                  <a href="">{{route('assessment.show',$e->slug)}}</a>
+                  <a href="" class="d-inline d-print-none">{{route('assessment.show',$e->slug)}}</a>
                 @endforeach
  </div>
  @endif
@@ -115,29 +110,29 @@ function initials($str) {
                 @foreach($exams as $e)
                 <th scope="col">
                   @if(request()->get('all'))
-                  <a href="{{ route('test.report',$e->slug)}}">{{$e->name}}</a>
+                  <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}">{{$e->name}}</a>
                   @else
-                  <a href="{{ route('test.report',$e->slug)}}" class="d-print-none d-block">{{initials($e->name)}}</a>
+                  <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}" class="d-print-none d-block">{{initials($e->name)}}</a>
                   <span class="d-print-inline d-none">{{initials($e->name)}}</span>
                   @endif
 
                   <span class="badge badge-info d-print-none d-inline">{{$e->slug}}</span></th>
                 @endforeach
 
-                @if(request()->get('exam'))
+                @if(request()->get('exam')&& request()->get('status')!='on')
                   @foreach($exams->first()->sections as $a=>$b)
                     <th scope="col">{{$b->name}}</th>
                   @endforeach
                 @endif
               </tr>
             </thead >
-            <tbody>
+            <tbody class="text-center">
               @foreach($data as $key=>$u) 
 
 
                  <tr>
-                  <td scope="row" class="p-1">{{ $i++ }}</td>
-                  <td class="p-1">
+                  <td scope="row" class="p-1 text-center">{{ $i++ }}</td>
+                  <td class="p-1 text-left">
                     <a href="{{ route('profile','@'.$u['user']->username)}}" class="d-print-none d-inline">
                     {{ $u['user']->name }}
                   </a>
@@ -177,13 +172,15 @@ function initials($str) {
 
                     @endif
                   </td>
-                  @if(request()->get('exam'))
+                  @if(request()->get('exam') && request()->get('status')!='on')
                     @if(count($data[$u['user']->id]['section'][$e->id]))
                     @foreach($data[$u['user']->id]['section'][$e->id] as $a=>$b)
                     <td class="p-1">{{$b}}</td>
                     @endforeach
                     @else
-                    <td class="p-1">-</td>
+                       @foreach($exams->first()->sections as $a=>$b)
+                        <td class="p-1">-</td>
+                      @endforeach
                     @endif
                   @endif
                   @endforeach

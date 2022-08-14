@@ -1825,11 +1825,11 @@ class UserController extends Controller
         $sections = null;
         $tests_sections = null;
         if($request->get('exam')){
-            $tests_sections = Tests_Section::whereIn('test_id',$exams)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
+            $tests_sections = Tests_Section::whereIn('test_id',$exam_ids)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
             $sections = $exams->first()->sections;
         }
 
-        
+
         $data = [];
 
         $data_sorted = [];
@@ -1861,9 +1861,11 @@ class UserController extends Controller
             }
 
             if(isset($tests_sections[$id])){
+
                  foreach($tests_sections[$id] as $a=>$b){
                     $data[$id]['section'][$b->test_id][$b->id] = $b->score;
                 }
+
             }
 
 
@@ -1885,7 +1887,6 @@ class UserController extends Controller
             $data_sorted[$k]['count'] = $data[$k]['count'];
         }
 
-        
 
         if(request('export')){
             if (ob_get_level()) ob_end_clean();
