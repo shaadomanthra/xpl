@@ -93,6 +93,29 @@ function initials($str) {
  @endif
 
 
+   <h3>Batch Perfomance</h3>
+     <div class="table-responsive mb-3">
+          <table class="table table-bordered mb-0 bg-light">
+            <thead>
+              <tr>
+                <th scope="col">Batch</th>
+                <th scope="col">Student</th>
+                <th scope="col">Avg CGPA</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($batches as $g=>$h)
+              <tr>
+                <td>{{$h['name']}}</td>
+                <td>{{$h['count']}}</td>
+                <td>{{$h['avg']}}</td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+      </div>
+
+    <h3>Student Perfomance</h3>
   <div class="row">
     <div class="col-12 col-md-12">
    @if(count($exams)!=0)

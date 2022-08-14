@@ -1851,6 +1851,7 @@ class UserController extends Controller
         //one exam requested
         $sections = null;
         $tests_sections = null;
+        $batches=[];
       
         if($request->get('exam')){
             $tests_sections = Tests_Section::whereIn('test_id',$exam_ids)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
@@ -1896,9 +1897,26 @@ class UserController extends Controller
             $cgpa = round($total/$max*10,2);
         
             $data[$id]['cgpa'] = $cgpa;
+            if(isset($batches[strtoupper($u->info)])){
+                $batches[strtoupper($u->info)]['total'] = $batches[strtoupper($u->info)]['total'] + $cgpa;
+                $batches[strtoupper($u->info)]['count']++;
+            }
+            else{
+                $batches[strtoupper($u->info)]['total'] = 0;
+                $batches[strtoupper($u->info)]['avg'] = 0;
+                $batches[strtoupper($u->info)]['count'] = 0;
+                $batches[strtoupper($u->info)]['name'] = strtoupper($u->info);
+            }
             $data_unsorted[$id] = $cgpa;
             $data[$id]['count'] = $count;
+
         }
+
+        foreach($batches as $h=>$k){
+            if($batches[$h]['count'])
+            $batches[$h]['avg'] =  round($batches[$h]['total'] /  $batches[$h]['count'],2);
+        }
+       
         
         arsort($data_unsorted);
         foreach($data_unsorted as $k=>$v){
@@ -1919,7 +1937,7 @@ class UserController extends Controller
             if (ob_get_level()) ob_end_clean();
             return  Tests_overall::export($data_sorted,$exams);
         }else{
-            return view('appl.user.performance')->with('data',$data_sorted)->with('exams',$exams)->with('user_info',$user_info)->with('totalusers',$totalusers)->with('scores',$scores);
+            return view('appl.user.performance')->with('data',$data_sorted)->with('exams',$exams)->with('user_info',$user_info)->with('totalusers',$totalusers)->with('scores',$scores)->with('batches',$batches);
         } 
     }
 
