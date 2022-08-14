@@ -104,9 +104,8 @@ function initials($str) {
                 <th scope="col">#({{count($data)}})</th>
                 <th scope="col" class="{{$i=1}}" style="width: 200px">Name </th>
 
-                @if(request()->get('exam')&& request()->get('status')!='on')
                   <th scope="col" >Batch</th>
-                @endif
+                
                   @if(!request()->get('status'))
                 <th scope="col" class="bg-light">CGPA (10)</th>
                 @endif
@@ -116,7 +115,12 @@ function initials($str) {
                   <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}">{{$e->name}}</a>
                   @else
                   <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}" class="d-print-none d-block">{{initials($e->name)}} - Total({{$scores[$e->id]['exam']}})</a>
-                  <span class="d-print-inline d-none">Total({{$scores[$e->id]['exam']}})</span>
+                  @if(!request()->get('exam'))
+                    <span class="d-print-inline d-none">{{initials($e->name)}} ({{$scores[$e->id]['exam']}})</span>
+                    @else
+                    <span class="d-print-inline d-none">Total({{$scores[$e->id]['exam']}})</span>
+                  @endif
+                  
                   @endif
 
                   <span class="badge badge-info d-print-none d-inline">{{$e->slug}}</span></th>
@@ -142,14 +146,11 @@ function initials($str) {
 
                   <span class="d-none d-print-inline"> {{ $u['user']->name }}</span>
                    
-                   @if(!request()->get('exam'))
-                 <span class="badge badge-light border border-dark d-print-none d-inline"> {{$u['user']->info}}</span>
-                  @endif
+                   
                   </td>
 
-                  @if(request()->get('exam')&& request()->get('status')!='on')
                   <td  >{{$u['user']->info}}</th>
-                  @endif
+             
 
                    @if(!request()->get('status'))
                   <td class="bg-light p-1" >
