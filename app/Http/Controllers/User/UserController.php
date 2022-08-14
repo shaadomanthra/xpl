@@ -1807,6 +1807,7 @@ class UserController extends Controller
         }
 
 
+
         
 
         
@@ -1820,11 +1821,19 @@ class UserController extends Controller
         }
         $tests_overall = Tests_Overall::whereIn('test_id',$exam_ids)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
 
+         //one exam requested
+        $sections = null;
+        $tests_sections = null;
+        if($request->get('exam')){
+            $tests_sections = Tests_Section::whereIn('test_id',$exams)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
+            $sections = $exams->first()->sections;
+        }
+
+        
         $data = [];
 
         $data_sorted = [];
         $data_unsorted=[];
-
 
         foreach($users as $id=>$u){
             $count =0;
@@ -1837,19 +1846,26 @@ class UserController extends Controller
             foreach($exams as $eid=>$e){
                 $data[$id]['test'][$eid] = null;
                 $data[$id]['status'][$eid] = null;
+                 $data[$id]['section'][$eid]  = [];
             }
             if(isset($tests_overall[$id]))
             foreach($tests_overall[$id] as $a=>$b){
                 $data[$id]['test'][$b->test_id] = $b->score;
                 $data[$id]['status'][$b->test_id] = $b->status;
+               
                 $total +=$b->score;
                 $max += $b->max;
                 $count++;
                 if($b->max)
                 $exams[$b->test_id]->max = $b->max;
-
-             
             }
+
+            if(isset($tests_sections[$id])){
+                 foreach($tests_sections[$id] as $a=>$b){
+                    $data[$id]['section'][$b->test_id][$b->id] = $b->score;
+                }
+            }
+
 
             if($count)
             $cgpa = round($total/$max*10,2);
@@ -1865,20 +1881,18 @@ class UserController extends Controller
             $data_sorted[$k]['test'] = $data[$k]['test'];
             $data_sorted[$k]['status'] = $data[$k]['status'];
             $data_sorted[$k]['cgpa'] = $data[$k]['cgpa'];
+            $data_sorted[$k]['section'] = $data[$k]['section'];
             $data_sorted[$k]['count'] = $data[$k]['count'];
         }
 
         
+
         if(request('export')){
             if (ob_get_level()) ob_end_clean();
             return  Tests_overall::export($data_sorted,$exams);
-            
-            
         }else{
             return view('appl.user.performance')->with('data',$data_sorted)->with('exams',$exams)->with('user_info',$user_info)->with('totalusers',$totalusers);
         } 
-         
-
     }
 
     /**

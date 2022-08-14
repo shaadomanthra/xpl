@@ -124,7 +124,11 @@ function initials($str) {
                   <span class="badge badge-info d-print-none d-inline">{{$e->slug}}</span></th>
                 @endforeach
 
-                
+                @if(request()->get('exam'))
+                  @foreach($exams->first()->sections as $a=>$b)
+                    <th scope="col">{{$b->name}}</th>
+                  @endforeach
+                @endif
               </tr>
             </thead >
             <tbody>
@@ -173,7 +177,17 @@ function initials($str) {
 
                     @endif
                   </td>
+                  @if(request()->get('exam'))
+                    @if(count($data[$u['user']->id]['section'][$e->id]))
+                    @foreach($data[$u['user']->id]['section'][$e->id] as $a=>$b)
+                    <td class="p-1">{{$b}}</td>
+                    @endforeach
+                    @else
+                    <td class="p-1">-</td>
+                    @endif
+                  @endif
                   @endforeach
+                  
                   
                   
                 </tr>
