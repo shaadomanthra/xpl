@@ -1799,8 +1799,9 @@ class UserController extends Controller
          $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
 
 
-        $add=0;
+        
             foreach($exams as $e){
+                $add=0;
                foreach($e->sections as $a=>$b){
                     $total = 0;
                     foreach($b->questions as $m=>$n){
