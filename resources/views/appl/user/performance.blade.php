@@ -56,7 +56,7 @@ function initials($str) {
   <label class="sr-only" for="inlineFormInputName2">Exams</label>
 
   <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" name="exam" placeholder="Enter exam slugs " value="{{request()->get('exam')}}">
-  
+  <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" name="course" placeholder="Enter course " value="{{request()->get('course')}}">
 
   <label class="sr-only" for="inlineFormInputGroupUsername2">Group</label>
   <div class="input-group mb-2 mr-sm-2">
