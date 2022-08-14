@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Section;
+use PacketPrep\Models\Course\Practice;
 use PacketPrep\Models\Exam\Tests_Section;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
@@ -164,9 +165,38 @@ class User extends Authenticatable
         $products = Cache::remember('myproducts_'.$user->id, 240, function() use ($user) {
           return $user->products()->with('courses')->with('exams')->get();
         });
+        
+     
         return $products;
         
     }
+
+     public function mycourses(){
+        $user = $this;
+        if(request()->get('refresh'))
+            Cache::forget('myproducts_'.$user->id);
+        $products = Cache::remember('myproducts_'.$user->id, 240, function() use ($user) {
+          return $user->products()->with('courses')->with('exams')->get();
+        });
+        $practice = Practice::where('user_id',$user->id)->get()->groupBy('course_id');
+        foreach($products as $a=>$b){
+            foreach($b->courses as $d=>$e){
+                $courses[$e->id] = Cache::get('course_'.$e->slug);
+            }
+        }
+
+        foreach($courses as $a=>$b){
+            if(isset($practice[$a]))
+                $courses[$a]->practice = count($practice[$a]);
+            else
+                $courses[$a]->practice = 0;
+        }
+     
+        return $courses;
+        
+    }
+
+   
 
      public static function directlogin($name,$email,$phone,$hcode)
     {
@@ -457,7 +487,7 @@ class User extends Authenticatable
 
         $tests_section = Tests_Section::where('user_id',$user->id)->get();
         $sections = Section::whereIn('id',$tests_section->pluck('section_id')->toArray())->get()->keyBy('id');
-        
+
 
         $tests_section = $tests_section->groupBy('test_id');
        

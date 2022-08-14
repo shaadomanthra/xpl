@@ -302,6 +302,31 @@
             </div>
   
         @endif
+
+
+        @if(count($user->mycourses())!=0)
+         <div class="rounded table-responsive mt-4 px-3">
+            <table class="table table-bordered {{$i=0}}">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Course</th>
+                  <th scope="col">Practice</th>
+                </tr>
+              </thead>
+              <tbody class="{{$k=1}}">
+                @foreach($user->mycourses() as $a=>$c)
+                  <tr>
+                    <td>{{($k++)}}</td>
+                    <td>{{$c->name}}</td>
+                    <td>{{$c->practice}} / {{$c->ques_count}} </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+
+        @endif
         @endif
       
             </div>
