@@ -319,7 +319,13 @@
                   <tr>
                     <td>{{($k++)}}</td>
                     <td>{{$c->name}}</td>
-                    <td>{{$c->practice}} / {{$c->ques_count}} </td>
+                    <td>{{$c->practice}} / {{$c->ques_count}} <br>
+                      @if($c->ques_count)
+                      <div class="progress" style="height:8px">
+                    <div class="progress-bar" role="progressbar" style="width: {{round($c->practice/$c->ques_count*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  @endif
+                    </td>
                 </tr>
                 @endforeach
               </tbody>
