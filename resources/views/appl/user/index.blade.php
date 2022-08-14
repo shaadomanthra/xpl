@@ -136,10 +136,10 @@
              @endif
              
              @can('update',$user)
-              <a href="{{route('profile.edit','@'.$user->username)}}?complete_profile=1" class="btn btn-success mt-3 mb-4"><i class="fa fa-edit"></i> Edit</a>
+              <a href="{{route('profile.edit','@'.$user->username)}}?complete_profile=1" class="btn btn-success mt-3 mb-4 d-print-none"><i class="fa fa-edit"></i> Edit</a>
               @endcan
               @can('manage',$user)
-              <a href="{{route('profile.manage','@'.$user->username)}}" class="btn btn-primary mt-3 mb-4"><i class="fa fa-gear"></i> Manage</a>
+              <a href="{{route('profile.manage','@'.$user->username)}}" class="btn btn-primary mt-3 mb-4 d-print-none"><i class="fa fa-gear"></i> Manage</a>
               @endcan
 
             </div>
@@ -236,7 +236,7 @@
  
  @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
     
-      <div class="card bg-white ">
+      <div class="card bg-white d-print-none">
         <div class="card-body">
           <h3>Admin Tools</h3>
           <button class="btn btn-outline-dark" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Reset password to 12345</button>
