@@ -317,17 +317,29 @@
               </thead>
               <tbody class="{{$k=1}}">
                 @foreach($user->mycourses() as $a=>$c)
+                @if($c)
                   <tr>
                     <td>{{($k++)}}</td>
                     <td>{{$c->name}}</td>
-                    <td>{{$c->practice}} / {{$c->ques_count}} <br>
+                    <td>
+                      @if($c->practice || $c->ques_count)
+                        {{$c->practice}} / {{$c->ques_count}} <br>
+                      @else
+                      -
+                      @endif
+
                       @if($c->ques_count)
                       <div class="progress" style="height:8px">
                         <div class="progress-bar" role="progressbar" style="width: {{round($c->practice/$c->ques_count*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       @endif
                     </td>
-                    <td>{{$c->attempt_count}} / {{$c->exam_count}} <br>
+                    <td>
+                      @if($c->attempt_count || $c->exam_count)
+                      {{$c->attempt_count}} / {{$c->exam_count}} <br>
+                      @else
+                      -
+                      @endif
                       @if($c->exam_count)
                       <div class="progress" style="height:8px">
                         <div class="progress-bar" role="progressbar" style="width: {{round($c->attempt_count/$c->exam_count*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
@@ -335,6 +347,7 @@
                       @endif
                     </td>
                 </tr>
+                @endif
                 @endforeach
               </tbody>
             </table>

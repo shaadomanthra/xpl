@@ -181,24 +181,34 @@ class User extends Authenticatable
         });
         $practice = Practice::where('user_id',$user->id)->get()->groupBy('course_id');
         $tests_overall =Tests_Overall::where('user_id',$user->id)->get();
+        $courses=[];
         foreach($products as $a=>$b){
             foreach($b->courses as $d=>$e){
                 $courses[$e->id] = Cache::get('course_'.$e->slug);
-                $exams = $courses[$e->id]->exams; 
-                $exam_ids = $tests_overall->where('test_id',$exams->pluck('id')->toArray()); 
-                $courses[$e->id]->exam_count = count($exams);
-                $courses[$e->id]->attempt_count = count($exam_ids);
+                if(isset($courses[$e->id]->exams)){
+                   $exams = $courses[$e->id]->exams; 
+                    $exam_ids = $tests_overall->whereIn('test_id',$exams->pluck('id')->toArray()); 
+                   
+                    $courses[$e->id]->exam_count = count($exams);
+                    $courses[$e->id]->attempt_count = count($exam_ids); 
+                }
+                
             }
         }
 
 
 
         foreach($courses as $a=>$b){
-            if(isset($practice[$a]))
+            if(isset($practice[$a])){
+                if(isset($courses[$a]))
                 $courses[$a]->practice = count($practice[$a]);
-            else
+            }
+            else{
+                if(isset($courses[$a]))
                 $courses[$a]->practice = 0;
+            }
         }
+
      
         return $courses;
         
@@ -445,6 +455,7 @@ class User extends Authenticatable
 
     public function tests($all=null){
         
+         
         $user = $this;
         if(request()->get('refresh')){
             Cache::forget('attempts_'.$user->id);
