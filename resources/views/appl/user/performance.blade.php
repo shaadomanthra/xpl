@@ -112,7 +112,7 @@ function initials($str) {
                   @if(request()->get('all'))
                   <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}">{{$e->name}}</a>
                   @else
-                  <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}" class="d-print-none d-block">{{initials($e->name)}}</a>
+                  <a href="{{route('performance')}}?exam={{$e->slug}}&info={{request()->get('info')}}" class="d-print-none d-block">{{initials($e->name)}} ({{$scores['scores']['exam']}})</a>
                   <span class="d-print-inline d-none">{{initials($e->name)}}</span>
                   @endif
 
@@ -121,7 +121,7 @@ function initials($str) {
 
                 @if(request()->get('exam')&& request()->get('status')!='on')
                   @foreach($exams->first()->sections as $a=>$b)
-                    <th scope="col">{{$b->name}}</th>
+                    <th scope="col">{{$b->name}} ({{$scores['scores']['section'][$b->id]}})</th>
                   @endforeach
                 @endif
               </tr>

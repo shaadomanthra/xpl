@@ -1807,7 +1807,6 @@ class UserController extends Controller
         }
 
 
-
         
 
         
@@ -1821,19 +1820,38 @@ class UserController extends Controller
         }
         $tests_overall = Tests_Overall::whereIn('test_id',$exam_ids)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
 
-         //one exam requested
-        $sections = null;
-        $tests_sections = null;
-        if($request->get('exam')){
-            $tests_sections = Tests_Section::whereIn('test_id',$exam_ids)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
-            $sections = $exams->first()->sections;
-        }
+
 
 
         $data = [];
 
         $data_sorted = [];
         $data_unsorted=[];
+
+
+        //one exam requested
+        $sections = null;
+        $tests_sections = null;
+        $scores = [];
+        if($request->get('exam')){
+            $tests_sections = Tests_Section::whereIn('test_id',$exam_ids)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
+            
+            $add=0;
+            foreach($exams as $e){
+               foreach($e->sections as $a=>$b){
+                    $total = 0;
+                    foreach($b->questions as $m=>$n){
+                        $total = $total + $n->mark;
+                    }
+                    
+
+                    $scores['scores']['section'][$b->id] = $total;
+                    $add = $add+ $total;
+               }
+
+               $scores['scores']['exam'] = $add;
+            }
+        }
 
         foreach($users as $id=>$u){
             $count =0;
@@ -1890,12 +1908,13 @@ class UserController extends Controller
             $data_sorted[$k]['count'] = $data[$k]['count'];
         }
 
+      
 
         if(request('export')){
             if (ob_get_level()) ob_end_clean();
             return  Tests_overall::export($data_sorted,$exams);
         }else{
-            return view('appl.user.performance')->with('data',$data_sorted)->with('exams',$exams)->with('user_info',$user_info)->with('totalusers',$totalusers);
+            return view('appl.user.performance')->with('data',$data_sorted)->with('exams',$exams)->with('user_info',$user_info)->with('totalusers',$totalusers)->with('scores',$scores);
         } 
     }
 
