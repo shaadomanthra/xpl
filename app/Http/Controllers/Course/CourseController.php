@@ -201,6 +201,7 @@ class CourseController extends Controller
         if(!\auth::user()->isSiteAdmin())
             abort('403','Unauthorized');
 
+        $batches = [];
         if(request()->get('course'))
         dd($course);
         $topic = request()->get('topic');
@@ -252,7 +253,6 @@ class CourseController extends Controller
             $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
         }
 
-        $batches = [];
         foreach($users as $id=>$u){
             $batches[strtoupper($u->info)]['name'] = strtoupper($u->info);
              $batches[strtoupper($u->info)]['avg'] = 0;
@@ -273,6 +273,7 @@ class CourseController extends Controller
             $batches[$h]['avg'] = round($batches[$h]['total']/$batches[$h]['count'],2);
         }
       
+
         
         return view('appl.course.course.analytics')
                 ->with('stub','Create')

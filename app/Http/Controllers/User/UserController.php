@@ -1870,18 +1870,25 @@ class UserController extends Controller
             foreach($exams as $eid=>$e){
                 $data[$id]['test'][$eid] = null;
                 $data[$id]['status'][$eid] = null;
-                 $data[$id]['section'][$eid]  = [];
+                $data[$id]['section'][$eid]  = [];
             }
             if(isset($tests_overall[$id]))
             foreach($tests_overall[$id] as $a=>$b){
                 $data[$id]['test'][$b->test_id] = $b->score;
                 $data[$id]['status'][$b->test_id] = $b->status;
-               
+                
                 $total +=$b->score;
                 $max += $b->max;
                 $count++;
                 if($b->max)
                 $exams[$b->test_id]->max = $b->max;
+
+                if(isset($batches[strtoupper($u->info)]['attempt']))
+                {
+                    $batches[strtoupper($u->info)]['attempt']++;
+                }else{
+                    $batches[strtoupper($u->info)]['attempt']=1;
+                }
             }
 
             if(isset($tests_sections[$id])){
@@ -1913,8 +1920,11 @@ class UserController extends Controller
         }
 
         foreach($batches as $h=>$k){
-            if($batches[$h]['count'])
-            $batches[$h]['avg'] =  round($batches[$h]['total'] /  $batches[$h]['count'],2);
+            if($batches[$h]['count']){
+               $batches[$h]['avg'] =  round($batches[$h]['total'] /  $batches[$h]['count'],2);
+               $batches[$h]['attempt_avg'] =  round($batches[$h]['attempt'] /  $batches[$h]['count'],2);
+            }
+            
         }
        
         
@@ -1931,7 +1941,7 @@ class UserController extends Controller
             $data_sorted[$k]['count'] = $data[$k]['count'];
         }
 
-        
+       
 
         if(request('export')){
             if (ob_get_level()) ob_end_clean();

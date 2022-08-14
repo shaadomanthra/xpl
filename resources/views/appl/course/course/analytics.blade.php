@@ -30,6 +30,7 @@
 
           <hr>
 
+          @if(isset($batches))
            <h3>Batch Completion</h3>
      <div class="table-responsive mb-3">
           <table class="table table-bordered mb-0 bg-light">
@@ -51,10 +52,12 @@
             </tbody>
           </table>
       </div>
+      @endif
 
-      <h3>Student Completion</h3>
+      
           @if(request()->get('batch'))
           @if(count($users))
+          <h3>Student Completion</h3>
           <table class="table table-bordered mt-3">
             <thead>
               <tr class="bg-light">

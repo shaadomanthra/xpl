@@ -100,6 +100,7 @@ function initials($str) {
               <tr>
                 <th scope="col">Batch</th>
                 <th scope="col">Student</th>
+                <th scope="col">Avg Attempts</th>
                 <th scope="col">Avg CGPA</th>
               </tr>
             </thead>
@@ -108,6 +109,7 @@ function initials($str) {
               <tr>
                 <td>{{$h['name']}}</td>
                 <td>{{$h['count']}}</td>
+                <td>{{$h['attempt_avg']}}</td>
                 <td>{{$h['avg']}}</td>
               </tr>
               @endforeach
