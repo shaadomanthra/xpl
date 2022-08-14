@@ -312,6 +312,7 @@
                   <th scope="col">#</th>
                   <th scope="col">Course</th>
                   <th scope="col">Practice</th>
+                  <th scope="col">Tests</th>
                 </tr>
               </thead>
               <tbody class="{{$k=1}}">
@@ -322,9 +323,16 @@
                     <td>{{$c->practice}} / {{$c->ques_count}} <br>
                       @if($c->ques_count)
                       <div class="progress" style="height:8px">
-                    <div class="progress-bar" role="progressbar" style="width: {{round($c->practice/$c->ques_count*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  @endif
+                        <div class="progress-bar" role="progressbar" style="width: {{round($c->practice/$c->ques_count*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      @endif
+                    </td>
+                    <td>{{$c->attempt_count}} / {{$c->exam_count}} <br>
+                      @if($c->exam_count)
+                      <div class="progress" style="height:8px">
+                        <div class="progress-bar" role="progressbar" style="width: {{round($c->attempt_count/$c->exam_count*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                      @endif
                     </td>
                 </tr>
                 @endforeach

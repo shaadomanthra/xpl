@@ -16,6 +16,7 @@ use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Course\Practice;
 use PacketPrep\Models\Exam\Tests_Section;
+use PacketPrep\Models\Exam\Tests_Overall;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 
@@ -179,11 +180,18 @@ class User extends Authenticatable
           return $user->products()->with('courses')->with('exams')->get();
         });
         $practice = Practice::where('user_id',$user->id)->get()->groupBy('course_id');
+        $tests_overall =Tests_Overall::where('user_id',$user->id)->get();
         foreach($products as $a=>$b){
             foreach($b->courses as $d=>$e){
                 $courses[$e->id] = Cache::get('course_'.$e->slug);
+                $exams = $courses[$e->id]->exams; 
+                $exam_ids = $tests_overall->where('test_id',$exams->pluck('id')->toArray()); 
+                $courses[$e->id]->exam_count = count($exams);
+                $courses[$e->id]->attempt_count = count($exam_ids);
             }
         }
+
+
 
         foreach($courses as $a=>$b){
             if(isset($practice[$a]))
