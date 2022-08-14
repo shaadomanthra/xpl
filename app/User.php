@@ -13,6 +13,8 @@ use PacketPrep\Notifications\MailResetPasswordToken;
 use Illuminate\Support\Facades\DB;
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Section;
+use PacketPrep\Models\Exam\Tests_Section;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 
@@ -453,11 +455,25 @@ class User extends Authenticatable
             $tests = [];
         }
 
+        $tests_section = Tests_Section::where('user_id',$user->id)->get();
+        $sections = Section::whereIn('id',$tests_section->pluck('section_id')->toArray())->get()->keyBy('id');
+
+        $tests_section = $tests_section->groupBy('test_id');
+       
         foreach($tests as $k=>$t){
+
             $tests[$k]->attempt_at = $test_idgroup[$t->id][0]->created_at;
             $tests[$k]->score = $test_idgroup[$t->id][0]->score;
             $tests[$k]->max = $test_idgroup[$t->id][0]->max;
             $tests[$k]->attempt_status = $test_idgroup[$t->id][0]->status;
+            
+            $str ='';
+            foreach($tests_section[$t->id] as $m=>$n){
+               
+                if(isset($sections[$n->section_id]))
+                $str =$str.$sections[$n->section_id]->name.' - '.$n->score.'<br>';
+            }
+            $tests[$k]->details = $str;
         }
 
         return $tests;

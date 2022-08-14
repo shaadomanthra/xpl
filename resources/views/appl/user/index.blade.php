@@ -258,12 +258,14 @@
                   <th scope="col">#</th>
                   <th scope="col">Tests</th>
                   <th scope="col">Score</th>
+                  <th scope="col">Details</th>
                   <th scope="col">Attempted</th>
                   <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($user->tests() as $k=>$test)
+
                  <tr>
                   <th scope="row">{{ $i=$i+1}}</th>
                   <td>
@@ -280,6 +282,9 @@
                      -
                     @endif
                   </td>
+                   <td>
+                      {!!$test->details !!}
+                   </td>
                   <td>{{date('d M Y', strtotime($test->attempt_at))}}</td>
                   <td> 
                       @if(!$test->attempt_status)
