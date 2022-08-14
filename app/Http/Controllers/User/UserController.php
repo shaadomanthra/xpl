@@ -1904,7 +1904,7 @@ class UserController extends Controller
             $cgpa = round($total/$max*10,2);
         
             $data[$id]['cgpa'] = $cgpa;
-            if(isset($batches[strtoupper($u->info)])){
+            if(isset($batches[strtoupper($u->info)]['total'])){
                 $batches[strtoupper($u->info)]['total'] = $batches[strtoupper($u->info)]['total'] + $cgpa;
                 $batches[strtoupper($u->info)]['count']++;
             }
