@@ -1902,9 +1902,9 @@ class UserController extends Controller
                 $batches[strtoupper($u->info)]['count']++;
             }
             else{
-                $batches[strtoupper($u->info)]['total'] = 0;
+                $batches[strtoupper($u->info)]['total'] = $cgpa;
                 $batches[strtoupper($u->info)]['avg'] = 0;
-                $batches[strtoupper($u->info)]['count'] = 0;
+                $batches[strtoupper($u->info)]['count'] = 1;
                 $batches[strtoupper($u->info)]['name'] = strtoupper($u->info);
             }
             $data_unsorted[$id] = $cgpa;
