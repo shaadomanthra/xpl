@@ -1922,7 +1922,8 @@ class UserController extends Controller
         foreach($batches as $h=>$k){
             if($batches[$h]['count']){
                $batches[$h]['avg'] =  round($batches[$h]['total'] /  $batches[$h]['count'],2);
-               $batches[$h]['attempt_avg'] =  round($batches[$h]['attempt'] /  $batches[$h]['count'],2);
+               $batches[$h]['attempt_avg'] =  round($batches[$h]['attempt'] /  $batches[$h]['count'] / count($exams),2)*100;
+               $batches[$h]['exam_count'] = count($exams);
             }
             
         }
