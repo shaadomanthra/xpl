@@ -1760,13 +1760,15 @@ class UserController extends Controller
         $exam_slugs = [];
         if(isset($settings->exams))
         $exam_slugs = explode(',',$settings->exams);
-
+        $scores = [];
         if($request->get('exam')){
             if(strpos($request->get('exam'),',')!==false){
                 $exam_slugs = explode(',',$request->get('exam'));
                 $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
             }else
                 $exams = Exam::where('slug',$request->get('exam'))->get()->keyBy('id');
+
+            
         }
         else if($request->get('course')){
             $id = $request->get('course');
@@ -1797,6 +1799,19 @@ class UserController extends Controller
          $exams = Exam::whereIn('slug',$exam_slugs)->get()->keyBy('id');
 
 
+        $add=0;
+            foreach($exams as $e){
+               foreach($e->sections as $a=>$b){
+                    $total = 0;
+                    foreach($b->questions as $m=>$n){
+                        $total = $total + $n->mark;
+                    }
+                    $scores[$e->id]['section'][$b->id] = $total;
+                    $add = $add+ $total;
+               }
+               $scores[$e->id]['exam'] = $add;
+            }
+
         $exam_ids =[];
         $user_ids = [];
         foreach($exams as $id=>$e){
@@ -1812,7 +1827,6 @@ class UserController extends Controller
 
 
         
-
         
         //$allusers = User::where('client_slug',$client_slug)->where('status','<>','2')->get();
         $totalusers = 0;//$allusers->count();
@@ -1836,25 +1850,11 @@ class UserController extends Controller
         //one exam requested
         $sections = null;
         $tests_sections = null;
-        $scores = [];
+      
         if($request->get('exam')){
             $tests_sections = Tests_Section::whereIn('test_id',$exam_ids)->whereIn('user_id',$user_ids)->get()->groupBy('user_id');
             
-            $add=0;
-            foreach($exams as $e){
-               foreach($e->sections as $a=>$b){
-                    $total = 0;
-                    foreach($b->questions as $m=>$n){
-                        $total = $total + $n->mark;
-                    }
-                    
-
-                    $scores['scores']['section'][$b->id] = $total;
-                    $add = $add+ $total;
-               }
-
-               $scores['scores']['exam'] = $add;
-            }
+            
         }
 
         foreach($users as $id=>$u){
@@ -1912,7 +1912,7 @@ class UserController extends Controller
             $data_sorted[$k]['count'] = $data[$k]['count'];
         }
 
-      
+        
 
         if(request('export')){
             if (ob_get_level()) ob_end_clean();
