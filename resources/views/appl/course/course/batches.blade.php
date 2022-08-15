@@ -68,7 +68,7 @@
   <div class="row">
   @foreach($data as $bno)
     
-        <div class="col-12 col-md-4 mb-3">
+        <div class="col-12 col-md-6 mb-3">
             <div class="card w-100">
               <div class="card-header"><h3>{{strtoupper($bno['batch'])}} [{{count($bno['users'])}}]</h3>
                 @if (strpos(strtoupper($bno['batch']), 'H') !== false)
@@ -88,12 +88,44 @@
                 @endif
               </div>
               <div class="card-body">
-                <div><b>Name</b> <span class="float-right">Questions Solved</span></div>
+                
+                <div class="row">
+                
+                    <div class="col-6">
+                      Name
+                    </div>
+                    <div class="col-2">
+                      Ques Count
+                    </div>
+                    <div class="col-2">
+                      Attempt Count
+                    </div>
+                     <div class="col-2">
+                      Avg Cgpa
+                    </div>
+                </div>
                 @if(isset($bno['practice_set']))
                 @foreach($bno['practice_set'] as $a=>$b)
-                    <div class="">{{$bno['users'][$a]->name}} <span class="float-right">{{$b}}</span></div>
+                <div class="row">
+                    <div class=""> <span class="float-right"></span></div>
+                    <div class="col-6">
+                      {{$bno['users'][$a]->name}}
+                    </div>
+                    <div class="col-2">
+                      {{$b}} / {{$course->ques_count}}
+                    </div>
+                    <div class="col-2">
+                      {{count($bno['tests_overall'][$a])}} / {{count($course->exams)}}
+                    </div>
+                    <div class="col-2">
+                      {{count($bno['tests_overall'][$a])}} /
+                    </div>
+                </div>
                 @endforeach
                 @endif
+                    
+                
+               
               </div>
               <div class="card-footer">
                  Student Count: {{count($bno['users'])}}<br>

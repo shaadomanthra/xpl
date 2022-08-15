@@ -12,6 +12,7 @@ use PacketPrep\Models\Dataentry\Question;
 use PacketPrep\Models\Product\Product;
 use PacketPrep\Models\Product\Order;
 use PacketPrep\Models\Exam\Exam;
+use PacketPrep\Models\Exam\Tests_Overall;
 use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Course\Practice;
 use Illuminate\Support\Facades\Storage;
@@ -109,16 +110,15 @@ class CourseController extends Controller
             $batches = explode(',',request()->get('batches'));
         }
         
-
-
         $date = \Carbon\Carbon::today()->subDays(7);
         $data = [];
        
         $avg = [];
         foreach($batches as $bno){
             $user_practice = [];
-        $users = [];
-        $practice_set=[];
+            $users = [];
+            $practice_set=[];
+
             if($bno){
                 $total = 0;
                 $users = User::where('info',$bno)->where('client_slug',subdomain())->where('role',1)->get()->keyBy('id');
@@ -131,6 +131,7 @@ class CourseController extends Controller
 
                 $uids = $users->pluck('id')->toArray();
                 $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+
                 foreach($user_practice as $uid=>$p){
                     $practice_set[$uid] = $p->sum('accuracy');
                     $total = $total + $p->sum('accuracy');
@@ -155,6 +156,11 @@ class CourseController extends Controller
                 $data[$bno]['total2'] = $total2;
                 $data[$bno]['pavg'] = $pavg;
                 $data[$bno]['wpavg'] = $wpavg;
+
+
+                $tests_overall = Tests_Overall::whereIn('user_id',$uids)->get()->groupBy('user_id');
+                $data[$bno]['tests_overall'] = $tests_overall;
+                
 
             }
         }        
