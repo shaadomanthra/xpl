@@ -21,7 +21,7 @@
 <div class="bg-white mb-3">
   <div class="bg-white border p-3">
       <a href="{{ url()->previous() }}" class="float-right"><button class="btn btn-success">Back</button></a>
-    <h1 class="display-4 mb-1"> <div class="">Practice Questions Analysis </div></h1>
+    <h1 class="display-4 mb-1"> <div class="">Batch Analysis </div></h1>
     <h4>{{$course->name}}</h4>
      <small class="text-info">{{$d['p_date']->format('d M Y')}} to {{$d['date']->format('d M Y')}}</small>
     <hr>
@@ -101,7 +101,7 @@
                       Tests Attempted
                     </div>
                      <div class="col-2">
-                      Avg Cgpa
+                      Avg CGPA
                     </div>
                 </div>
                 @if(isset($bno['practice_set']))
@@ -113,20 +113,30 @@
                     </div>
                     <div class="col-2">
                       {{$b}} / {{$course->ques_count}}
+                      <div class="progress" style="height:8px">
+                        <div class="progress-bar" role="progressbar" style="width: {{round($b/$course->ques_count*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
                     </div>
                     <div class="col-2">
                       @if(isset($bno['tests_overall'][$a]))
                         {{count($bno['tests_overall'][$a])}}
+                        <div class="progress" style="height:8px">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{round($bno['tests_overall'][$a]/count($course->exams)*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
                       @else
-                      0
-                      @endif / {{count($course->exams)}}
+                      0 / {{count($course->exams)}}
+                      @endif 
+
                     </div>
                     <div class="col-2">
                       @if(isset($bno['tests_overall'][$a]))
-                        {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)}}
+                        {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)}} / 10
+                        <div class="progress" style="height:8px">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{round(round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max')/10,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
                       @else
-                      0
-                      @endif / 10
+                      0 / 10
+                      @endif 
                     </div>
                 </div>
                 @endforeach
