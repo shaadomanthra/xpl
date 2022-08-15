@@ -91,8 +91,11 @@
                 <b>
                 <div class="row">
                 
-                    <div class="col-6">
+                    <div class="col-4">
                       Name
+                    </div>
+                    <div class="col-2">
+                      Details
                     </div>
                     <div class="col-2">
                       Ques Solved
@@ -109,8 +112,11 @@
                 @foreach($bno['practice_set'] as $a=>$b)
                 <div class="row">
                     <div class=""> <span class="float-right"></span></div>
-                    <div class="col-6">
+                    <div class="col-4">
                       <a href="{{ route('profile','@'.$bno['users'][$a]->username) }}" class="d-print-none">{{$bno['users'][$a]->name}}</a>
+                    </div>
+                    <div class="col-2">
+                      {{$branches[$bno['users'][$a]->branch_id]->name }} | $bno['users'][$a]->year_of_passing
                     </div>
                     <div class="col-2">
                       {{$b}} / {{$course->ques_count}}

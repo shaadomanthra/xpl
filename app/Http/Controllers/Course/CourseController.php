@@ -161,7 +161,7 @@ class CourseController extends Controller
                 $tests_overall = Tests_Overall::whereIn('user_id',$uids)->get()->groupBy('user_id');
                 $data[$bno]['tests_overall'] = $tests_overall;
                 $total =0;
-                
+
 
             }
         }        
@@ -184,9 +184,14 @@ class CourseController extends Controller
 
         }
 
+        $branches = Cache::remember('branches',240,function(){
+                    return Branch::all()->keyBy('id');
+                });
+
           return view('appl.course.course.batches')
                 ->with('data',$data)
                 ->with('d',$d)
+                ->with('branches',$branches)
                 ->with('course',$course);
 
     }
