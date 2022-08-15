@@ -117,7 +117,7 @@
                     </div>
                     <div class="col-2">
                       @if($bno['users'][$a]->branch_id){{$branches[$bno['users'][$a]->branch_id]->name }} | @endif
-                       $bno['users'][$a]->year_of_passing
+                       {{$bno['users'][$a]->year_of_passing}}
                     </div>
                     <div class="col-2">
                       {{$b}} / {{$course->ques_count}}
