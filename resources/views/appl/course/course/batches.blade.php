@@ -115,10 +115,12 @@
                       {{$b}} / {{$course->ques_count}}
                     </div>
                     <div class="col-2">
-                      {{count($bno['tests_overall'][$a])}} / {{count($course->exams)}}
+                      @if(isset($bno['tests_overall'][$a]))
+                        {{count($bno['tests_overall'][$a])}}
+                      @endif / {{count($course->exams)}}
                     </div>
                     <div class="col-2">
-                      {{count($bno['tests_overall'][$a])}} /
+                    -
                     </div>
                 </div>
                 @endforeach
