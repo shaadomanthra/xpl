@@ -70,7 +70,7 @@
 			  <span class="text-info">Last 7 days Avg Practice Ques : <b>{{round($wpavg,2)}}</b></span><br>
 			  @endif
 			  <hr>
-			  <a href="{{ route('course.batches',{{$course->slug}}) }}" >View Batch Analytics</a>
+			  <a href="{{ route('course.batches',$course->slug) }}" ><i class="fa fa-bar-chart"></i> View Batch Analytics</a>
 			  </div>
 
 
