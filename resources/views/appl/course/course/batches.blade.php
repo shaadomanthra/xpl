@@ -115,6 +115,19 @@
                     <div class=""> <span class="float-right"></span></div>
                     <div class="col-3">
                       <a href="{{ route('profile','@'.$bno['users'][$a]->username) }}" class="">{{$bno['users'][$a]->name}}</a>
+
+                      @if(isset($bno['tests_overall'][$a]))
+                      @if(round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)>6)
+                      <i class="fa fa-star text-warning"></i>
+                      <i class="fa fa-star text-warning"></i>
+                      <i class="fa fa-star text-warning"></i>
+                      @elseif(round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)>5)
+                      <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>
+                      @elseif(round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)>4)
+                      <i class="fa fa-star text-warning"></i>
+                      @endif
+                      @endif
+
                     </div>
                     <div class="col-3">
                       @if($bno['users'][$a]->branch_id){{$branches[$bno['users'][$a]->branch_id]->name }} | @endif
