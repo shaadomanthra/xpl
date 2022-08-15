@@ -125,7 +125,7 @@
                       @elseif(round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)>5)
                       <i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>
                       @elseif(round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)>4)
-                      <i class="fa fa-star text-info"></i>
+                      <i class="fa fa-star-half-o text-warning"></i>
                       @endif
                       @endif
 
