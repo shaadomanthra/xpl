@@ -121,7 +121,7 @@
                       @if(isset($bno['tests_overall'][$a]))
                         {{count($bno['tests_overall'][$a])}}
                         <div class="progress" style="height:8px">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: {{round($bno['tests_overall'][$a]/count($course->exams)*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{round( count($bno['tests_overall'][$a])/count($course->exams)*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       @else
                       0 / {{count($course->exams)}}
