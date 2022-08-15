@@ -88,7 +88,7 @@
                 @endif
               </div>
               <div class="card-body">
-                
+                <b>
                 <div class="row">
                 
                     <div class="col-6">
@@ -104,6 +104,7 @@
                       Avg CGPA
                     </div>
                 </div>
+              </b>
                 @if(isset($bno['practice_set']))
                 @foreach($bno['practice_set'] as $a=>$b)
                 <div class="row">
@@ -121,7 +122,7 @@
                       @if(isset($bno['tests_overall'][$a]))
                         {{count($bno['tests_overall'][$a])}}
                         <div class="progress" style="height:8px">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: {{round( count($bno['tests_overall'][$a])/count($course->exams)*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-info" role="progressbar" style="width: {{round( count($bno['tests_overall'][$a])/count($course->exams)*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       @else
                       0 / {{count($course->exams)}}
@@ -132,7 +133,7 @@
                       @if(isset($bno['tests_overall'][$a]))
                         {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)}} / 10
                         <div class="progress" style="height:8px">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max')*10,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max')*10,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       @else
                       0 / 10
