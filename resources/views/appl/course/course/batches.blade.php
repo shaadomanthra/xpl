@@ -91,10 +91,10 @@
                 <b>
                 <div class="row">
                 
-                    <div class="col-4">
+                    <div class="col-3">
                       Name
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                       Details
                     </div>
                     <div class="col-2">
@@ -112,10 +112,10 @@
                 @foreach($bno['practice_set'] as $a=>$b)
                 <div class="row">
                     <div class=""> <span class="float-right"></span></div>
-                    <div class="col-4">
+                    <div class="col-3">
                       <a href="{{ route('profile','@'.$bno['users'][$a]->username) }}" class="">{{$bno['users'][$a]->name}}</a>
                     </div>
-                    <div class="col-2">
+                    <div class="col-3">
                       @if($bno['users'][$a]->branch_id){{$branches[$bno['users'][$a]->branch_id]->name }} | @endif
                        {{$bno['users'][$a]->year_of_passing}}<br>
                        [10th - {{$bno['users'][$a]->tenth}}%, 12th - {{$bno['users'][$a]->twelveth}}%, Btech - {{$bno['users'][$a]->bachelors}}%]
