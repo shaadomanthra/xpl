@@ -132,7 +132,7 @@
                       @if(isset($bno['tests_overall'][$a]))
                         {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)}} / 10
                         <div class="progress" style="height:8px">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: {{round(round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max')/10,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max')*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       @else
                       0 / 10
