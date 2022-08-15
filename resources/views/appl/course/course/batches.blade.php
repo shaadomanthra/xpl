@@ -110,7 +110,7 @@
                 <div class="row">
                     <div class=""> <span class="float-right"></span></div>
                     <div class="col-6">
-                      {{$bno['users'][$a]->name}}
+                      <a href="{{ route('profile','@'.$bno['users'][$a]->username) }}" class="d-print-none">{{{$bno['users'][$a]->name}}</a>
                     </div>
                     <div class="col-2">
                       {{$b}} / {{$course->ques_count}}
