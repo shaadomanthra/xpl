@@ -20,7 +20,7 @@
 @else
 <div class="bg-white mb-3">
   <div class="bg-white border p-3">
-      <a href="{{ url()->previous() }}" class="float-right"><button class="btn btn-success">Back</button></a>
+      <a href="{{ route('course.batches') }}" class="float-right"><button class="btn btn-success">Back</button></a>
     <h1 class="display-4 mb-1"> <div class="">Batch Analysis </div></h1>
     <h4>{{$course->name}}</h4>
      <small class="text-info">{{$d['p_date']->format('d M Y')}} to {{$d['date']->format('d M Y')}}</small>
