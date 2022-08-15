@@ -117,7 +117,7 @@
                     </div>
                     <div class="col-3">
                       @if($bno['users'][$a]->branch_id){{$branches[$bno['users'][$a]->branch_id]->name }} | @endif
-                       {{$bno['users'][$a]->year_of_passing}}
+                       <span class="text-info">{{$bno['users'][$a]->year_of_passing}}</span>
                        [{{$bno['users'][$a]->tenth}}%,  {{$bno['users'][$a]->twelveth}}%, {{$bno['users'][$a]->bachelors}}%]
                     </div>
                     <div class="col-2">
