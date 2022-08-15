@@ -68,7 +68,7 @@
   <div class="row">
   @foreach($data as $bno)
     
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12  mb-3">
             <div class="card w-100">
               <div class="card-header"><h3>{{strtoupper($bno['batch'])}} [{{count($bno['users'])}}]</h3>
                 @if (strpos(strtoupper($bno['batch']), 'H') !== false)
@@ -132,7 +132,7 @@
                       @if(isset($bno['tests_overall'][$a]))
                         {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)}} / 10
                         <div class="progress" style="height:8px">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max')*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max')*10,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       @else
                       0 / 10
