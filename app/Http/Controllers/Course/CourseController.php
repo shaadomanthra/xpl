@@ -160,6 +160,7 @@ class CourseController extends Controller
 
                 $tests_overall = Tests_Overall::whereIn('user_id',$uids)->get()->groupBy('user_id');
                 $data[$bno]['tests_overall'] = $tests_overall;
+                $total =0;
                 
 
             }

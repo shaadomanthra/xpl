@@ -95,10 +95,10 @@
                       Name
                     </div>
                     <div class="col-2">
-                      Ques Count
+                      Ques Solved
                     </div>
                     <div class="col-2">
-                      Attempt Count
+                      Tests Attempted
                     </div>
                      <div class="col-2">
                       Avg Cgpa
@@ -117,10 +117,16 @@
                     <div class="col-2">
                       @if(isset($bno['tests_overall'][$a]))
                         {{count($bno['tests_overall'][$a])}}
+                      @else
+                      0
                       @endif / {{count($course->exams)}}
                     </div>
                     <div class="col-2">
-                    -
+                      @if(isset($bno['tests_overall'][$a]))
+                        {{$bno['tests_overall'][$a]->avg('score')}}
+                      @else
+                      0
+                      @endif / 10
                     </div>
                 </div>
                 @endforeach
