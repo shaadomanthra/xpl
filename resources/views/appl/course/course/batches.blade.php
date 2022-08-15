@@ -123,7 +123,7 @@
                     </div>
                     <div class="col-2">
                       @if(isset($bno['tests_overall'][$a]))
-                        {{$bno['tests_overall'][$a]->avg('score')}}
+                        {{round($bno['tests_overall'][$a]->avg('score')*10/$bno['tests_overall'][$a]->avg('max'),2)}}
                       @else
                       0
                       @endif / 10
