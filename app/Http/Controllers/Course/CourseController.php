@@ -17,6 +17,8 @@ use PacketPrep\Models\Exam\Examtype;
 use PacketPrep\Models\Course\Practice;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use PacketPrep\Models\College\College;
+use PacketPrep\Models\College\Branch;
 use PacketPrep\User;
 
 use Illuminate\Support\Facades\DB;
