@@ -117,8 +117,8 @@
                     </div>
                     <div class="col-3">
                       @if($bno['users'][$a]->branch_id){{$branches[$bno['users'][$a]->branch_id]->name }} | @endif
-                       {{$bno['users'][$a]->year_of_passing}}<br>
-                       [10th - {{$bno['users'][$a]->tenth}}%, 12th - {{$bno['users'][$a]->twelveth}}%, Btech - {{$bno['users'][$a]->bachelors}}%]
+                       {{$bno['users'][$a]->year_of_passing}}
+                       [{{$bno['users'][$a]->tenth}}%,  {{$bno['users'][$a]->twelveth}}%, {{$bno['users'][$a]->bachelors}}%]
                     </div>
                     <div class="col-2">
                       {{$b}} / {{$course->ques_count}}
@@ -128,7 +128,7 @@
                     </div>
                     <div class="col-2">
                       @if(isset($bno['tests_overall'][$a]))
-                        {{count($bno['tests_overall'][$a])}}
+                        {{count($bno['tests_overall'][$a])}} / {{count($course->exams)}}
                         <div class="progress" style="height:8px">
                         <div class="progress-bar bg-info" role="progressbar" style="width: {{round( count($bno['tests_overall'][$a])/count($course->exams)*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
