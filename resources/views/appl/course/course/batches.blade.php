@@ -113,11 +113,12 @@
                 <div class="row">
                     <div class=""> <span class="float-right"></span></div>
                     <div class="col-4">
-                      <a href="{{ route('profile','@'.$bno['users'][$a]->username) }}" class="d-print-none">{{$bno['users'][$a]->name}}</a>
+                      <a href="{{ route('profile','@'.$bno['users'][$a]->username) }}" class="">{{$bno['users'][$a]->name}}</a>
                     </div>
                     <div class="col-2">
                       @if($bno['users'][$a]->branch_id){{$branches[$bno['users'][$a]->branch_id]->name }} | @endif
                        {{$bno['users'][$a]->year_of_passing}}
+                       [10th - {{$bno['users'][$a]->tenth}}, 12th - {{$bno['users'][$a]->twelveth}}, Btech - {{$bno['users'][$a]->bachelors}}]
                     </div>
                     <div class="col-2">
                       {{$b}} / {{$course->ques_count}}
