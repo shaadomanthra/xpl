@@ -116,7 +116,8 @@
                       <a href="{{ route('profile','@'.$bno['users'][$a]->username) }}" class="d-print-none">{{$bno['users'][$a]->name}}</a>
                     </div>
                     <div class="col-2">
-                      {{$branches[$bno['users'][$a]->branch_id]->name }} | $bno['users'][$a]->year_of_passing
+                      @if(isset($bno['users'][$a]->branch_id){{$branches[$bno['users'][$a]->branch_id]->name }} | @endif
+                       $bno['users'][$a]->year_of_passing
                     </div>
                     <div class="col-2">
                       {{$b}} / {{$course->ques_count}}
