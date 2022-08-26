@@ -166,7 +166,7 @@
                         <div class="progress-bar bg-info" role="progressbar" style="width: {{round( count($bno['tests_overall'][$a])/count($course->exams)*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                       @else
-                      0 / {{count($course->exams)}}
+                      0 @if(!$start)/ {{count($course->exams)}} @endif
                       @endif 
 
                     </div>
