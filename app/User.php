@@ -394,13 +394,15 @@ class User extends Authenticatable
         if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com' )
             $tests = DB::table('exams')->where('slug','psychometric-test')->orWhere('emails','LIKE',"%{$email}%")
                 ->get();
-        else if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')
+        else if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in'){
             $tests = Cache::remember('mytests_'.$this->id, 240, function() use ($email) {
                 $tests = DB::table('exams')->where('emails','LIKE',"%{$email}%")->get();
                 if($tests)
                     return $tests;
                 return 0;
             });
+       
+        }
         else
         {
             $user = $this;
@@ -413,7 +415,8 @@ class User extends Authenticatable
             });
 
         }
-  
+        
+
         /*
         if(!subdomain())
             $tests = DB::table('exams')->where('slug','psychometric-test')->orWhere('emails','LIKE',"%{$email}%")
@@ -471,6 +474,7 @@ class User extends Authenticatable
                 ->get()->keyBy('test_id');
         });
 
+        
 
         if($all)
             return $attempts;
@@ -480,6 +484,8 @@ class User extends Authenticatable
         //         ->orderBy('id','desc')
         //         ->get();;
         // });
+
+
 
         if($attempts->count()){
 
@@ -531,6 +537,8 @@ class User extends Authenticatable
             }
             $tests[$k]->details = $str;
         }
+
+      
 
         return $tests;
     }

@@ -112,6 +112,8 @@
 </div>
 </div>
 
+
+
 @if(isset(request()->session()->get('client')->slug))
 @if(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_banner.png'))
               <img src="{{ Storage::disk('s3')->url('companies/'.request()->session()->get('client')->slug.'_banner.png')}}" class=" w-100 mb-3" />
@@ -136,136 +138,26 @@
 
 @endif
 
-<div class="rounded p-4 mb-4 d-none d-md-block" style="background: #dfecff; border:1px solid #98c3ff;">
+<div class="rounded p-4 mb-4 " style="background: #dfecff; border:1px solid #98c3ff;">
   
-  <h1>Worried about cracking a job?</h1>
-<p>Enroll for Fullstack Java Developer program conducted by our partner company 'PacketPrep' </p>
- <ul>
-  <li>Attend company drives from day One of training</li>
-  <li> 120 hours of classroom training on Java and softskills</li>
-<li>Extensively researched Study material</li>
-<li>Access to company specific online mock tests</li>
-<li>You could choose to pay training fee after getting a job or opt for scholarship with pre-payment</li>
+  <h1>View my tests & products</h1>
 
-</ul>
 
-<a href="https://packetprep.com/apply?utm_source=xplore&utm_medium=referral&utm_term=textfeed">
-<button class="btn btn-primary  mt-md-2">Apply Now</button>
+<a href="{{ route('dashboard')}}?mytests=1">
+<button class="btn btn-primary  mt-md-2">View Now</button>
 </a>
 
 </div>
 
-<div class="d-block d-md-none mb-4">
-<a href="https://packetprep.com/apply?utm_source=xplore&utm_medium=referral&utm_term=imagefeed" target="_blank"><img src="{{ asset('img/pp3.png')}}" class="w-100 rounded" style="box-shadow: 3px 3px 3px 3px #eee;"/></a>
-</div>
 
 
 
-@if(count(\auth::user()->tests())!=0)
-  <div class="rounded table-responsive ">
-            <table class="table table-bordered ">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">My Tests</th>
-                  <th scope="col">Score</th>
-                  <th scope="col">Attempted</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach(\auth::user()->tests() as $k=>$test)
-                 <tr>
-                  <th scope="row">{{ $k+1}}</th>
-                  <td>
-                    <a href="{{ route('assessment.analysis',$test->slug) }}">{{$test->name}}</a>
-                  </td>
 
-                  <td>
 
-                    @if(!$test->attempt_status)
-                      @if($test->solutions==2 || $test->solutions==4 )
-                      <span class="badge badge-secondary">private</span>
-                      @elseif($test->slug!='psychometric-test')
-                      {{$test->score}} / {{$test->max}}
-                      @else
-                      -
-                      @endif
-                    @else
-                     -
-                    @endif
-                  </td>
-                  <td>{{date('d M Y', strtotime($test->attempt_at))}}</td>
-                  <td> 
-                      @if(!$test->attempt_status)
-                      <span class="badge badge-success">Completed</span>
-                      @else
-                      <span class="badge badge-warning">Under Review</span>
-                      @endif
-                    
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-            </div>
+
+
+
   
-        @endif
-
-
-
-
-  @if(count(auth::user()->myproducts())!=0)
-  <div class="rounded table-responsive ">
-            <table class="table table-bordered ">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Products</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Valid till</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach(auth::user()->myproducts() as $k=>$product)
-                 <tr>
-                  <th scope="row">{{ $k+1}}</th>
-                  <td>
-                    <a href="{{ route('productpage',$product->slug) }}">{{$product->name}}</a><br>
-                    @foreach($product->courses as $c)
-                         - <a href="{{ route('course.show',$c->slug)}}">{{$c->name}}</a> <span class="badge badge-primary">course</span><br>
-                    @endforeach
-                    @foreach($product->exams as $e)
-                         - <a href="{{ route('assessment.details',$e->slug)}}">{{$e->name}}</a> <span class="badge badge-secondary">Test</span><br>
-                    @endforeach
-                  </td>
-                  <td>
-                    @if($product->price==0)
-                      <span class="badge badge-warning">Free</span>
-                      @else
-                      <span class="badge badge-info">Premium</span>
-                      @endif
-                  </td>
-                  <td>{{date('d M Y', strtotime($product->pivot->valid_till))}}</td>
-                  <td> 
-                    @if(strtotime($product->pivot->valid_till) > strtotime(date('Y-m-d')))
-                      @if($product->pivot->status==1)
-                      <span class="badge badge-success">Active</span>
-                      @else
-                      <span class="badge badge-secondary">Disabled</span>
-                      @endif
-                    @else
-                        <span class="badge badge-danger">Expired</span>
-                    @endif
-                  </td>
-                </tr>
-                @endforeach
-              </tbody>
-            </table>
-            </div>
-
-        @endif
 
 
   </div>
@@ -289,6 +181,7 @@
     
 </div>
 @endif
+
 
 @if(!auth::user()->video)
   <div class="bg-white  p-4 p-md-4 mb-md-4 mt-4" style="background-image:url({{asset('img/graphics/corner-3.png')}});background-position: right;background-repeat: no-repeat; border-radius:8px;box-shadow: 3px 3px 3px 3px #eee;background-size: auto;">

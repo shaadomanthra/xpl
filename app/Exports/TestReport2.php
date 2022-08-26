@@ -46,8 +46,6 @@ class TestReport2 implements FromCollection
                     else
                         $result[$k]->college  = '-'; 
                 }
-                
-
 
                 if($res->user->branch_id){
                     if(isset($branches[$res->user->branch_id]))

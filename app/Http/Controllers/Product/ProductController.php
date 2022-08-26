@@ -409,8 +409,12 @@ class ProductController extends Controller
         $view = 'client_pp';
       else
         $view = 'client_dashboard';
+
+      if(request()->get('mytests'))
+      $view='xplore_dashboard2';
         
       return view($view)->with('user',$user)->with('data',$data)->with('mytests',$mytests);
+
 
     }
 
