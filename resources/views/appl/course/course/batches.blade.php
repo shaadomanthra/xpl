@@ -197,7 +197,7 @@
         <span class="text-info">Last 7 days Solved Questions : <b>{{($bno['wpavg']*count($bno['users']))}}</b></span><br>
         <span class="text-info">Last 7 days Avg Practice Ques : <b>{{round($bno['wpavg'],2)}}</b></span><br>
               @else
-              Total Avg Practice Ques : <b>{{round($bno['pavg']*count($bno['users']),2)}}</b><br>
+              Total questions solved : <b>{{round($bno['pavg']*count($bno['users']),2)}}</b><br>
                 Avg questions solved : {{round($bno['pavg'],2)}}<br>
 
                 Tests Attempted : <b>{{$bno['total_tests']}}</b><br>
