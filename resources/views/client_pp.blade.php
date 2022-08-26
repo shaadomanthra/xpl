@@ -44,7 +44,8 @@
 
           <h2>Hi, {{  \auth::user()->name}}</h2>
 
-          <a href="https://learn.packetprep.com/user/mydetails" class="btn btn-success my-3"> edit profile</a>
+          <a href="https://learn.packetprep.com/user/mydetails" class="btn btn-success my-3"> edit batch details</a>
+           <a href="https://learn.packetprep.com/profile" class="btn btn-primary my-3"> update profile</a>
       <p> 
         
         @if(auth::user()->branch_id)
