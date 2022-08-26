@@ -12,6 +12,20 @@
       <h1 class="display-4 mb-3"> <div class="">Enter the Batches </div></h1>
       <form>
         <input type="text" class="form-control w-100 mb-3" name="batches" value="{{ request()->get('batches')}}">
+        <hr>
+        <h4>Optional fields</h4>
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <input id="datetimepicker" type="text" class="form-control mb-3" name="start" placeholder="choose start date">
+          </div>
+          <div class="col-12 col-md-6">
+               <input id="datetimepicker2" type="text" class="form-control mb-3" name="end" placeholder="choose end date">
+          </div>
+        </div>
+        
+     
+
+
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>

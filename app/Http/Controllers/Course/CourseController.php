@@ -112,6 +112,12 @@ class CourseController extends Controller
             $batches = explode(',',request()->get('batches'));
         }
         
+        $start = $end = null;
+
+        $start = request()->get('start');
+        $end = request()->get('end');
+
+
         $date = \Carbon\Carbon::today()->subDays(7);
         $data = [];
        
@@ -132,7 +138,11 @@ class CourseController extends Controller
                     $countuser = count($users);
 
                 $uids = $users->pluck('id')->toArray();
-                $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+
+                if($start)
+                    $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$start)->where('created_at','<=',$end)->get()->groupBy('user_id');
+                else
+                    $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
 
                 foreach($user_practice as $uid=>$p){
                     $practice_set[$uid] = $p->sum('accuracy');
@@ -147,7 +157,6 @@ class CourseController extends Controller
                 $pavg = $total / $countuser;
 
                 
-
                 $user_practice2 = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$date)->get()->groupBy('user_id');
 
                 $total2 =0;
@@ -159,8 +168,11 @@ class CourseController extends Controller
                 $data[$bno]['pavg'] = $pavg;
                 $data[$bno]['wpavg'] = $wpavg;
 
-
-                $tests_overall = Tests_Overall::whereIn('user_id',$uids)->get()->groupBy('user_id');
+                if($start)
+                $tests_overall = Tests_Overall::whereIn('user_id',$uids)->where('created_at','>=',$start)->where('created_at','<=',$end)->get()->groupBy('user_id');
+                else
+                   $tests_overall = Tests_Overall::whereIn('user_id',$uids)->get()->groupBy('user_id');
+                 
                 $data[$bno]['tests_overall'] = $tests_overall;
                 $total =0;
 
@@ -193,6 +205,7 @@ class CourseController extends Controller
           return view('appl.course.course.batches')
                 ->with('data',$data)
                 ->with('d',$d)
+                ->with('jqueryui',true)
                 ->with('branches',$branches)
                 ->with('course',$course);
 
