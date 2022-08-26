@@ -199,12 +199,12 @@ class CourseController extends Controller
         $d['bavg_name'] = '';
         foreach($data as $bno){
             if($bno['wpavg']>$d['bavg']){
-                $d['bavg'] = $bno['wpavg'];
-                $d['bavg_name'] = $bno['batch'];
+                $d['bavg'] = round($bno['wpavg'],2);
+                $d['bavg_name'] = strtoupper($bno['batch']);
             }
             if($bno['total2']>$d['btotal']){
                 $d['btotal'] = $bno['total2'];
-                $d['btotal_name'] = $bno['batch'];
+                $d['btotal_name'] = strtoupper($bno['batch']);
             }
 
         }
