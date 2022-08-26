@@ -127,6 +127,7 @@ class CourseController extends Controller
             $users = [];
             $practice_set=[];
 
+
             if($bno){
                 $total = 0;
                 $users = User::where('info',$bno)->where('client_slug',subdomain())->where('role',1)->get()->keyBy('id');
@@ -140,15 +141,19 @@ class CourseController extends Controller
                 $uids = $users->pluck('id')->toArray();
 
                 if($start)
-                    $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$start)->where('created_at','<=',$end)->get()->groupBy('user_id');
+                $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$start)->where('created_at','<=',$end)->get()->groupBy('user_id');
                 else
-                    $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+                $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
 
                 foreach($user_practice as $uid=>$p){
                     $practice_set[$uid] = $p->sum('accuracy');
                     $total = $total + $p->sum('accuracy');
                 }
 
+                foreach($users as $u){
+                    if(!isset($practice_set[$u->id]))
+                        $practice_set[$u->id] = 0;
+                }
 
                 $data[$bno]['batch'] = $bno;
                 $data[$bno]['practice_set'] = $practice_set; 
@@ -156,7 +161,9 @@ class CourseController extends Controller
                  arsort($practice_set);
                 $pavg = $total / $countuser;
 
-                
+                if($start)
+                $user_practice2 = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$start)->where('created_at','<=',$end)->get()->groupBy('user_id');
+                else
                 $user_practice2 = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$date)->get()->groupBy('user_id');
 
                 $total2 =0;
@@ -175,10 +182,14 @@ class CourseController extends Controller
                  
                 $data[$bno]['tests_overall'] = $tests_overall;
                 $total =0;
-
-
+                $data[$bno]['total_tests'] = Tests_Overall::whereIn('user_id',$uids)->count();
+                $data[$bno]['tcgpa'] = round(Tests_Overall::whereIn('user_id',$uids)->avg('score')*10 / Tests_Overall::whereIn('user_id',$uids)->avg('max'),2);
             }
+
+
         }        
+
+       
 
         $d['p_date'] = $date;
         $d['date'] = \Carbon\Carbon::today();
@@ -205,6 +216,8 @@ class CourseController extends Controller
           return view('appl.course.course.batches')
                 ->with('data',$data)
                 ->with('d',$d)
+                ->with('start',$start)
+                ->with('end',$end)
                 ->with('jqueryui',true)
                 ->with('branches',$branches)
                 ->with('course',$course);

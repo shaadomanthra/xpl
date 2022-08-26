@@ -38,7 +38,11 @@
       <a href="{{ route('course.batches',$course->slug) }}" class="float-right"><button class="btn btn-success">Reset Filter</button></a>
     <h1 class="display-4 mb-1"> <div class="">Batch Analysis </div></h1>
     <h4>{{$course->name}}</h4>
-     <small class="text-info">{{$d['p_date']->format('d M Y')}} to {{$d['date']->format('d M Y')}}</small>
+    @if($start)
+     <small class="text-info">{{\carbon\carbon::parse($start)->format('d M Y')}} to {{\carbon\carbon::parse($end)->format('d M Y')}}</small>
+    @else
+    <small class="text-info">{{$d['p_date']->format('d M Y')}} to {{$d['date']->format('d M Y')}}</small>
+    @endif
     <hr>
   
     Best Performer (Weekly Total Ques) - <b>{{$d['btotal_name']}}({{$d['btotal']}}) </b>
@@ -150,14 +154,14 @@
                        [{{$bno['users'][$a]->tenth}}%,  {{$bno['users'][$a]->twelveth}}%, {{$bno['users'][$a]->bachelors}}%]
                     </div>
                     <div class="col-2">
-                      {{$b}} / {{$course->ques_count}}
+                      {{$b}}  @if(!$start)/ {{$course->ques_count}} @endif
                       <div class="progress" style="height:8px">
                         <div class="progress-bar" role="progressbar" style="width: {{round($b/$course->ques_count*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                     </div>
                     <div class="col-2">
                       @if(isset($bno['tests_overall'][$a]))
-                        {{count($bno['tests_overall'][$a])}} / {{count($course->exams)}}
+                        {{count($bno['tests_overall'][$a])}} @if(!$start) / {{count($course->exams)}} @endif
                         <div class="progress" style="height:8px">
                         <div class="progress-bar bg-info" role="progressbar" style="width: {{round( count($bno['tests_overall'][$a])/count($course->exams)*100,2)}}%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
@@ -184,12 +188,20 @@
                
               </div>
               <div class="card-footer">
-                 Student Count: {{count($bno['users'])}}<br>
-           Total Solved Questions : {{($bno['pavg']*count($bno['users']))}}<br>
+                Student Count: {{count($bno['users'])}}<br>
+                @if(!$start)
+                 
+           
         
         Total Avg Practice Ques : <b>{{round($bno['pavg'],2)}}</b><br>
         <span class="text-info">Last 7 days Solved Questions : <b>{{($bno['wpavg']*count($bno['users']))}}</b></span><br>
         <span class="text-info">Last 7 days Avg Practice Ques : <b>{{round($bno['wpavg'],2)}}</b></span><br>
+              @else
+                Avg questions solved : {{round($bno['pavg'],2)}}<br>
+                Tests Attempted : <b>{{$bno['total_tests']}}</b><br>
+                Avg CGPA: <b>{{$bno['tcgpa']}}</b><br>
+
+              @endif
               </div>
             </div>
         </div>
