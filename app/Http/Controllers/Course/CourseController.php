@@ -184,8 +184,8 @@ class CourseController extends Controller
                  
                 $data[$bno]['tests_overall'] = $tests_overall;
                 $total =0;
-                $data[$bno]['total_tests'] = Tests_Overall::whereIn('user_id',$uids)->where('created_at','>=',$start)->where('created_at','<=',$end)->count();
-                $data[$bno]['tcgpa'] = round(Tests_Overall::whereIn('user_id',$uids)->where('created_at','>=',$start)->where('created_at','<=',$end)->avg('score')*10 / Tests_Overall::whereIn('user_id',$uids)->avg('max'),2);
+                $data[$bno]['total_tests'] = Tests_Overall::whereIn('user_id',$uids)->where('created_at','>=',$start)->where('created_at','<=',$end)->whereIn('test_id',array_keys($course->tests))->where('test_id','!=',2623)->count();
+                $data[$bno]['tcgpa'] = round(Tests_Overall::whereIn('user_id',$uids)->where('created_at','>=',$start)->whereIn('test_id',array_keys($course->tests))->where('test_id','!=',2623)->where('created_at','<=',$end)->avg('score')*10 / Tests_Overall::whereIn('user_id',$uids)->avg('max'),2);
             }
 
 
