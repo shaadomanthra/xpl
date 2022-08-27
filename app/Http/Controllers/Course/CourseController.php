@@ -101,6 +101,8 @@ class CourseController extends Controller
             $course->exams = $course_data['exams'];
             $course->tests = $course_data['tests'];
         }
+
+
          if(!\auth::user())
             abort('403','Unauthorized');
         if(!\auth::user()->isSiteAdmin())
@@ -176,9 +178,9 @@ class CourseController extends Controller
                 $data[$bno]['wpavg'] = $wpavg;
 
                 if($start)
-                $tests_overall = Tests_Overall::whereIn('user_id',$uids)->where('created_at','>=',$start)->where('created_at','<=',$end)->get()->groupBy('user_id');
+                $tests_overall = Tests_Overall::whereIn('user_id',$uids)->where('created_at','>=',$start)->whereIn('test_id',array_keys($course->tests))->where('created_at','<=',$end)->get()->groupBy('user_id');
                 else
-                   $tests_overall = Tests_Overall::whereIn('user_id',$uids)->get()->groupBy('user_id');
+                   $tests_overall = Tests_Overall::whereIn('user_id',$uids)->whereIn('test_id',array_keys($course->tests))->get()->groupBy('user_id');
                  
                 $data[$bno]['tests_overall'] = $tests_overall;
                 $total =0;
