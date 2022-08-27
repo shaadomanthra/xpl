@@ -178,9 +178,9 @@ class CourseController extends Controller
                 $data[$bno]['wpavg'] = $wpavg;
 
                 if($start)
-                $tests_overall = Tests_Overall::whereIn('user_id',$uids)->where('created_at','>=',$start)->whereIn('test_id',array_keys($course->tests))->where('created_at','<=',$end)->get()->groupBy('user_id');
+                $tests_overall = Tests_Overall::whereIn('user_id',$uids)->where('created_at','>=',$start)->whereIn('test_id',array_keys($course->tests))->where('created_at','<=',$end)->where('test_id','!=',2623)->get()->groupBy('user_id');
                 else
-                   $tests_overall = Tests_Overall::whereIn('user_id',$uids)->whereIn('test_id',array_keys($course->tests))->get()->groupBy('user_id');
+                   $tests_overall = Tests_Overall::whereIn('user_id',$uids)->whereIn('test_id',array_keys($course->tests))->where('test_id','!=',2623)->get()->groupBy('user_id');
                  
                 $data[$bno]['tests_overall'] = $tests_overall;
                 $total =0;
