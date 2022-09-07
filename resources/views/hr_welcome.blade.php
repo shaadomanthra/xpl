@@ -131,7 +131,7 @@
 </div>
 
 <div class="container mt-4">
-  @if(subdomain() == 'learn' )
+  @if(subdomain() == 'learn'  || $_SERVER['HTTP_HOST'] == 'learn.packetprep.com' )
    <div class="rounded p-4 mb-4" style="background: #f7eaca; border:1px solid #e2ca8f;">
  
   <h3 class="">Java Fullstack Course<img src="https://i.imgur.com/2z3tA1h.gif" style="width: 35px"/> </h3>
