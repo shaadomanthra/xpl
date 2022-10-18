@@ -311,6 +311,13 @@
 
 </div>
 
+<div class="rounded p-4 mb-4" style="background: #f7dcca; border:1px solid #e7c5af;">
+ 
+  <h3 class="">Aptitude & Reasoning Material</h3>
+<p class="mb-3">A complete package of video lessons, practice questions and tests from aptitude, reasoning and programing <br><a href="https://learn.packetprep.com/productpage/grandmaster" class="btn btn-primary mt-3 mb-0"><b>View Product</b> </a>  </p>
+
+</div>
+
     <a href="https://tech.packetprep.com/contact"><img src="https://i.imgur.com/AFCPjbn.jpg" class="mt-3 mt-md-0 w-100 rounded" /></a>
 
      <div class="bg-white  p-3 p-md-4 mb-3 mb-md-4 mt-3" style="background-image:url(https://packetprep.com/img/corner-4.png);background-position: right;background-repeat: no-repeat; border-radius:8px;box-shadow: 2px 2px 2px 2px #eee;background-size: auto;">

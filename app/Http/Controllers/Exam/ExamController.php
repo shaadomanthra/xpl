@@ -1995,14 +1995,20 @@ class ExamController extends Controller
 
                 foreach($exam_sections as $k=>$s){
                     $qset = $exam->getQuestionsSection($s->id,$usr->id);
-                    if($exam->settings->section_marking=='no'){
-                        foreach($qset as $q)
-                            $exam_sections[$k]->total = $exam_sections[$k]->total + intval($q->mark);
-                        $exam->total = $exam->total + $exam_sections[$k]->total;
+                    if(isset($exam->settings->section_marking)){
+                       if($exam->settings->section_marking=='no'){
+                            foreach($qset as $q)
+                                $exam_sections[$k]->total = $exam_sections[$k]->total + intval($q->mark);
+                            $exam->total = $exam->total + $exam_sections[$k]->total;
+                        }else{
+                            $exam_sections[$k]->total = count($s->questions) * $s->mark;
+                            $exam->total = $exam->total + $exam_sections[$k]->total;
+                        }  
                     }else{
                         $exam_sections[$k]->total = count($s->questions) * $s->mark;
                         $exam->total = $exam->total + $exam_sections[$k]->total;
-                    } 
+                    }
+                    
                 }
 
                 request()->session()->put('versant',0);
