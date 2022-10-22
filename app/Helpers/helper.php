@@ -360,7 +360,7 @@ function subdomain() {
     // if($_SERVER['HTTP_HOST'] == 'rguknuzvid.xplore.in.net')
     //         return 'rguktong';
     if($_SERVER['HTTP_HOST'] == 'demo.xp.test' )
-            return 'fks';
+            return 'bits';
 
     $parsed = parse_url($url);
     $exploded = explode('.', $parsed["host"]);
@@ -393,6 +393,7 @@ function domain() {
         $exploded = explode('.', $parsed["host"]);
         $domain = $exploded[0];
      }
+
 
     if($domain == 'piofx' || $domain == 'p24' || $domain == 'onlinelibrary' )
             $domain  = 'piofx';

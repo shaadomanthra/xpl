@@ -148,8 +148,8 @@ class CourseController extends Controller
                 $user_practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
 
                 foreach($user_practice as $uid=>$p){
-                    $practice_set[$uid] = $p->sum('accuracy');
-                    $total = $total + $p->sum('accuracy');
+                    $practice_set[$uid] = count($p);
+                    $total = $total + count($p);
                 }
 
                 foreach($users as $u){
@@ -170,7 +170,7 @@ class CourseController extends Controller
 
                 $total2 =0;
                 foreach($user_practice2 as $uid=>$p){
-                    $total2 = $total2 + $p->sum('accuracy');
+                    $total2 = $total2 + count($p);
                 }
                 $wpavg = $total2 / $countuser;
                 $data[$bno]['total2'] = $total2;
@@ -251,6 +251,11 @@ class CourseController extends Controller
         if(request()->get('course'))
         dd($course);
         $topic = request()->get('topic');
+
+     
+        if($topic=="")
+            $topic=null;
+       
         $total = $course->ques_count;
         $category = Category::where('slug',$topic)->first();
         $batches =[];
