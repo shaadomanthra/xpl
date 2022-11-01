@@ -56,8 +56,6 @@
       </p>
       
 
-      <p class="lead">Develop a passion for learning. If you do, you will never cease to grow - 
-            Anthony J Dangelo</p>
 
 
    
@@ -89,6 +87,12 @@
   </div>
 </div>
 </div>
+
+<div class=" rounded p-3 my-4" style="border:1px solid red; background: pink;">
+  <h3> Get <span class="badge badge-light">FREE</span> material worth Rs.7000  <img src="https://i.imgur.com/2z3tA1h.gif" style="width: 35px"/> </h3>
+  <p> Refer 3 friends and get access to 300+ video lessons on aptitude, reasoning, and programming.</p>
+  <a href="/sreferral" class="btn btn-danger"> Referral Program</a>
+  </div>
 
 @if(isset(request()->session()->get('client')->slug))
 @if(Storage::disk('s3')->exists('companies/'.request()->session()->get('client')->slug.'_banner.png'))
@@ -306,7 +310,7 @@
 
     <div class="rounded p-4 mb-4" style="background: #f7eaca; border:1px solid #e2ca8f;">
  
-  <h3 class="">Java Fullstack Course<img src="https://i.imgur.com/2z3tA1h.gif" style="width: 35px"/> </h3>
+  <h3 class="">Java Fullstack Course</h3>
 <p class="mb-3">Carefully curated practice questions from java. <br><a href="https://learn.packetprep.com/course/java-programming" class="btn btn-warning mt-3 mb-0"><b>View Course</b> </a>  </p>
 
 </div>

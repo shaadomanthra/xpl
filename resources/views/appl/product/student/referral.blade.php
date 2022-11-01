@@ -21,12 +21,13 @@
 			</h1>
       <p>Help us reach more people ! </p>
       <p>Refer 3 students and get 12 month pro access to 'GRAND MASTER PACKAGE'. It includes 300+ video lectures, 10000+ practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability, programming concepts, coding and interview skills.</p>
+      <p>Use the below link or message to share it in whatsapp, facebook, instagram and all social media channels to get your first 3 referrals.</p>
       <div class="mt-4 p-4 border rounded mb-4">
         <h2> Referral Link</h2>
         @guest
         Login to get the referral link
         @else
-        <a href="{{ route('student.'.$type.'register') }}?code={{$user->username}}">{{ route('student.'.$type.'register') }}?code={{$user->username}}</a>
+        <a href="{{ route('student.eregister') }}?code={{$user->username}}">{{ route('student.eregister') }}?code={{$user->username}}</a>
         @endguest
       </div>
 
@@ -37,11 +38,11 @@
       @else
       <div class="mt-4 p-4 border rounded mb-4">
         <h2> Message to share on whatsup/facebook</h2>
-        <p> Hi Guys, <br><br>A great opportunity!<br><br>PacketPrep - an ed-tech company specialized in training students to crack recruitment exams of MNCs like TCS, Infosys, Wipro, Capgemini, Delloite and many more.</p>
-        <p> Their premium service includes 300+ video lectures, 10000 practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability, programming concepts, coding and interview skills.</p>
+        <p> Hi Guys, <br><br>A great opportunity!<br><br>PacketPrep - Job Training & Placement company, a premium institute offering 100% placement driven training in Java & Software Testing. They have released a Free learning material worth Rs. 7000 to benefit students.</p>
+        <p> This material includes 300+ video lectures, 10000 practice questions and numerous online assessments on various topics of quantitative aptitude, logical reasoning, mental ability, programming concepts, coding and interview skills.</p>
        
-        <p>Use the following registration link to get access to Rs.7000 worth of material for FREE.
-         <br><a href="{{ route('student.'.$type.'register') }}?code={{$user->username}}">{{ route('student.'.$type.'register') }}?code={{$user->username}}</a></p>
+        <p>Use the following registration link to get access to material for FREE.
+         <br><a href="{{ route('student.eregister') }}?code={{$user->username}}">{{ route('student.eregister') }}?code={{$user->username}}</a></p>
         <p> regards, <br>
           {{\auth::user()->name}}
         </p>

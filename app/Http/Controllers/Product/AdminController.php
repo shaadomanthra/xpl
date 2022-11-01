@@ -404,7 +404,7 @@ class AdminController extends Controller
         $services = Service::all();
         $branches = Branch::all();
 
-         if(!$request->code)
+        if(!$request->code)
             abort('403','Activation code Required');
         else
             $user = User::where('username',$request->code)->first();

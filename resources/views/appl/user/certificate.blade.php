@@ -11,7 +11,7 @@
 				<div class="display-4">This is to certify that </div><br>
 				<div class="display-2 "><i>{{ $user->name }} </i></div><br>
 				<div class="display-4 mb-2">has been associated with PACKETPREP as BRAND PROMOTER</div>
-				<div class="display-4 mb-3">and referred {{count($user->referrals)}} students in  {{ date('Y',strtotime($user->created_at))}}</div>
+				<div class="display-4 mb-3">and referred {{count($user->referrals)}} students in  {{ date('Y')}}</div>
 
 			</div>
 

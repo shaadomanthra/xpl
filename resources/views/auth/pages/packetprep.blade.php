@@ -281,6 +281,18 @@
 
 
     </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12 col-md-offset-4">
+    <div class="form-group">
+            <label for="dob" class=" control-label">Referral Code (Optional)</label>
+
+                <div class="">
+                    <input id="rcode" type="text" class="form-control" name="rcode" value="{{ request()->get('code') }}" >
+                </div>
+            </div>
+        </div>
+    </div>
     
    
 

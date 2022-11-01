@@ -1361,6 +1361,13 @@ class UserController extends Controller
             $usx = User::where('email','packetcode@gmail.com')->first();
             Cache::forever('uid_1',$usx);
         }
+        $udx = null;
+        if(request()->get('rcode'))
+        {
+            $udx = User::where('username',request()->get('rcode'))->first();
+            if($udx)
+                $usx = $udx;
+        }
 
         if(subdomain()=='packetprep')
          $user = User::create([
@@ -1409,6 +1416,32 @@ class UserController extends Controller
             $user->bachelors = $request->get('bachelors');
             $user->save();
             Mail::to($user->email)->send(new ActivateUser2($user));
+
+            $code = request()->get('rcode');
+            if($code=='packetprep'){
+                //pro access
+                    $pid = 10;
+                    $month = 12;
+
+                    $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
+                    if(!$user->products->contains($pid)){
+                        $product = Product::where('id',$pid)->first();
+                        if($product->status!=0)
+                            $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                    }
+            }
+            if($udx){
+                //pro access
+                    $pid = 31;
+                    $month = 12;
+
+                    $valid_till = date('Y-m-d H:i:s', strtotime(date("Y-m-d H:i:s") .' + '.($month*31).' days'));
+                    if(!$user->products->contains($pid)){
+                        $product = Product::where('id',$pid)->first();
+                        if($product->status!=0)
+                            $user->products()->attach($pid,['validity'=>$month,'created_at'=>date("Y-m-d H:i:s"),'valid_till'=>$valid_till,'status'=>1]);
+                    }
+                }
 
             flash('Successfully created your account. Login with your email and password.')->success();
             return redirect()->route('login');

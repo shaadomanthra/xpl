@@ -15,7 +15,7 @@
  
         <div class="bg-white  border mb-3 p-3">
           <div class="navbar-brand"><i class="fa fa-user"></i> My Referrals - @if(!request()->get('othercollege')) All Colleges @else Other Colleges @endif - {{ $username }} </div>
-          <p>Referral URL : <a href="{{ route('student.'.$type.'register') }}?code={{$username}}">{{ route('student.'.$type.'register') }}?code={{$username}}</a></p>
+          <p>Referral URL : <a href="{{ route('student.eregister') }}?code={{$username}}">{{ route('student.eregister') }}?code={{$username}}</a></p>
 
           
         </div>
