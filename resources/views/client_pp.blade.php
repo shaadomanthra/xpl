@@ -322,7 +322,7 @@
 
 </div>
 
-    <a href="https://tech.packetprep.com/contact"><img src="https://i.imgur.com/AFCPjbn.jpg" class="mt-3 mt-md-0 w-100 rounded" /></a>
+    <a href="https://packetprep.com/contact?utm_source=packetprep_learn&utm_medium=website"><img src="/img/pp2.png" class="mt-3 mt-md-0 w-100 rounded" /></a>
 
      <div class="bg-white  p-3 p-md-4 mb-3 mb-md-4 mt-3" style="background-image:url(https://packetprep.com/img/corner-4.png);background-position: right;background-repeat: no-repeat; border-radius:8px;box-shadow: 2px 2px 2px 2px #eee;background-size: auto;">
       <div class="heading mb-4">

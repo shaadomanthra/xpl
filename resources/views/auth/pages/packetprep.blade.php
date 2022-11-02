@@ -25,6 +25,12 @@
 
     {{ csrf_field() }}
 
+    @if(request()->get('code')=='packetprep')
+    <div class="alert alert-warning alert-important py-4">
+        Fill the below form to regsiter and activate your <b>15 company specific mock tests</b> worth Rs.2000 for <span class="badge badge-warning">FREE</span> 👇
+    </div>
+    @endif
+
     <div class="alert alert-primary alert-important py-4">
     <p class="px-3">Verification of phone number is mandatory. Kindly enter the correct 10 digit phone number to complete the registration.</p>
     <div class="row">
@@ -282,7 +288,7 @@
 
     </div>
 
-    <div class="row mt-4">
+    <div class="row mt-4 mx-1">
         <div class="col-md-12 col-md-offset-4">
     <div class="form-group">
             <label for="dob" class=" control-label">Referral Code (Optional)</label>
