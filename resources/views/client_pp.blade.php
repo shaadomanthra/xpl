@@ -311,14 +311,14 @@
     <div class="rounded p-4 mb-4" style="background: #f7eaca; border:1px solid #e2ca8f;">
  
   <h3 class="">Java Fullstack Course</h3>
-<p class="mb-3">Carefully curated practice questions from java. <br><a href="https://learn.packetprep.com/course/java-programming" class="btn btn-warning mt-3 mb-0"><b>View Course</b> </a>  </p>
+<p class="mb-1"> <a href="https://learn.packetprep.com/course/java-programming" class="btn btn-warning mt-3 mb-0"><b>View Course</b> </a>  </p>
 
 </div>
 
 <div class="rounded p-4 mb-4" style="background: #f7dcca; border:1px solid #e7c5af;">
  
   <h3 class="">Aptitude & Reasoning Material</h3>
-<p class="mb-3">A complete package of video lessons, practice questions and tests from aptitude, reasoning and programing <br><a href="https://learn.packetprep.com/productpage/grandmaster" class="btn btn-primary mt-3 mb-0"><b>View Product</b> </a>  </p>
+<p class="mb-1"><a href="https://learn.packetprep.com/productpage/grandmaster" class="btn btn-primary mt-3 mb-0"><b>View Product</b> </a>  </p>
 
 </div>
 
