@@ -288,12 +288,11 @@ class AssessmentController extends Controller
         $code = $r->get('code');
         $user = \auth::user();
 
-
         if(isset($exam->product_ids))
         $products = $exam->product_ids;
         else{
             //dd(count($exam->products));
-            if(subdomain()==strtolower(env('APP_NAME'))){
+            if(subdomain()==strtolower(env('APP_NAME')) || subdomain()=='packetprep'){
                 if(count($exam->products)){
                  $products = $exam->products->pluck('id')->toArray();
                 }else

@@ -42,8 +42,8 @@
 </div>
 <div class="bg-dark py-2">
   <div class="container py-3 text-light">
-  <div class="text-center d-md-inline">&copy; PacketPrep | The Best preparation platform for campus placements</div>
-  <span class="mt-3 mt-md-0 text-center d-block d-md-inline float-md-right">+91 90000 45750</span>
+  <div class="text-center d-md-inline">&copy; PacketPrep | The Best institute for Java Training with 100% placement</div>
+  <span class="mt-3 mt-md-0 text-center d-block d-md-inline float-md-right">Hyderabad | Vijayawada | Visakhapatnam | Tirupati</span>
   </div>
 </div>
 

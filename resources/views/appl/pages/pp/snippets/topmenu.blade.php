@@ -1,16 +1,16 @@
 <!-- ========== HEADER ========== -->
-  <header id="header" class="header nav-shadow  position-fixed" style="background: #216ba7;">
+  <header id="header" class="header nav-shadow  position-fixed" style="background: #125c9f;">
 
     <div id="logoAndNav" class="container">
       <!-- Nav -->
       <nav class="js-mega-menu navbar navbar-expand-lg d-flex justify-content-between">
         <!-- Logo -->
         <a href="/" aria-label="Front">
-          <img src="{{ asset('/img/packetprep-logo-small.png')}}" width="70" alt="Logo">
+          <img src="{{ asset('/img/file_pp_logo_dark.png')}}" width="290" alt="Logo">
         </a>
         <!-- End Logo -->
         <div>
-          <a class="signup_btn ml-3 d-lg-none" href="https://tech.packetprep.com/contact">Job Training</a>
+          <a class="signup_btn ml-3 d-lg-none" href="https://packetprep.com/contact">Job Training</a>
 
           <!-- Responsive Toggle Button -->
           <button type="button" class="navbar-toggler btn btn-icon btn-ghost-light" aria-label="Toggle navigation"
