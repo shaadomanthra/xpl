@@ -134,7 +134,7 @@ class HomeController extends Controller
 
     {
         $this->middleware('auth');
-        $users = User::where('year_of_passing',2022)->get()->groupBy('college_id');
+        $users = User::where('year_of_passing',2023)->get()->groupBy('college_id');
 
         if(request()->get('location'))
             $college = College::where('location',request()->get('location'))->get();
