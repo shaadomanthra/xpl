@@ -212,6 +212,22 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                <label for="phone" class="col-md-8 control-label">Fathers Name</label>
+                <div class="col-md-12">
+                   <input id="password-confirm" type="text" class="form-control" name="fluency" required>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
+                <label for="phone" class="col-md-8 control-label">Fathers Phone Number</label>
+                <div class="col-md-12">
+                   <input id="password-confirm" type="text" class="form-control" name="language" required>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                 <label for="phone" class="col-md-8 control-label">State</label>
                 <div class="col-md-12">
                    <select name="personality" class="form-control">

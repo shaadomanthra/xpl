@@ -4,9 +4,11 @@
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{$objs->total()}})</th>
+                <th scope="col">#</th>
                 <th scope="col">Name </th>
-                <th scope="col">Students </th>
+                <th scope="col">Code </th>
+                <th scope="col">Location</th>
+                <th scope="col">Zone </th>
                 <th scope="col">Created at</th>
               </tr>
             </thead>
@@ -19,8 +21,14 @@
                   {{ $obj->name }}
                   </a>
                 </td>
+                <td>
+                  {{ $obj->college_code}}
+                </td>
+                <td>
+                  {{ $obj->location}}
+                </td>
                  <td>
-                  {{ $obj->users_count}}
+                  {{ $obj->college_website}}
                 </td>
                 
                 <td>{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</td>

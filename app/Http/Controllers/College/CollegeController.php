@@ -34,15 +34,25 @@ class CollegeController extends Controller
         $search = $request->search;
         $item = $request->item;
         
-     
-        $objs = $obj->where('name','LIKE',"%{$item}%")->withCount('users')->orderBy('users_count', 'desc')->paginate(config('global.no_of_records')); 
+        $objs = $obj->where('name','LIKE',"%{$item}%")->paginate(200); 
         Cache::forever('colleges',$obj->all()->keyBy('id'));
 
-
+        if($request->get('zone'))
+            $colleges = $obj->where('college_website',$request->get('zone'))->get();
+        else
+            $colleges = $obj->all();
+        
+        $carray = $colleges->pluck('id')->toArray();
+        $data['engineering'] = $colleges->where('type','btech')->count();
+        $data['degree'] = $colleges->where('type','degree')->count();
+        $data['users'] = User::select('college_id')->whereIn('college_id',$carray)->where('year_of_passing',2023)->count();
+        $zones = Obj::select('college_website')->distinct()->get();    
         $view = $search ? 'list': 'index';
 
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('objs',$objs)
+                ->with('data',$data)
+                ->with('zones',$zones)
                 ->with('obj',$obj)
                 ->with('app',$this);
     }
@@ -168,10 +178,14 @@ class CollegeController extends Controller
     {
         $obj = Obj::where('id',$id)->first();
 
+        $users = $obj->users->groupBy('year_of_passing');
+        unset($users[""]);
+
         //dd($obj->users);
         $this->authorize('view', $obj);
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
+                    ->with('users',$users)
                     ->with('obj',$obj)->with('app',$this);
         else
             abort(404);
@@ -295,11 +309,19 @@ class CollegeController extends Controller
     public function userlist($id)
     {
         $obj = Obj::where('id',$id)->first();
-
+        $branches = Branch::all()->keyBy('id');
+        if(request()->get('yop')){
+            $users = User::where('college_id',$obj->id)
+                        ->where('year_of_passing',request()->get('yop'))
+                        ->get();
+        }else
+            $users = $obj->users;
         
         $this->authorize('view', $obj);
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.userlist')
+                    ->with('college',$obj)->with('branches',$branches)
+                    ->with('users',$users)
                     ->with('obj',$obj)->with('app',$this);
         else
             abort(404);

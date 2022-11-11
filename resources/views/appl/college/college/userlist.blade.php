@@ -1,11 +1,12 @@
 @extends('layouts.plain')
+@section('title', $college->name.' Student List | PacketPrep')
 @section('content')
 
 
 
 @include('flash::message')
 
-  <div class="row">
+  <div class="row p-4">
 
     <div class="col-md-12">
       
@@ -13,35 +14,40 @@
      
       <div class="card mb-4">
         
-
-      @if(count($obj->users)!=0)
+        <h3 class="px-3 pt-3">{{$college->name}}</h3>
+        <h5 class="px-3 pb-3">{{$college->code}} | {{$college->location}} | {{$college->college_website}}</h5>
+    
+      @if(count($users)!=0)
         <div class="table-responsive">
           <table class="table table-bordered mb-0">
             <thead>
               <tr>
-                <th scope="col">#({{count($obj->users)}})</th>
+                <th scope="col">#({{count($users)}})</th>
                 <th scope="col">Name </th>
                 <th scope="col">Branch</th>
-                <th scope="col">Service</th>
+                <th scope="col">YOP</th>
                 <th scope="col">Phone</th>
-                <th scope="col">Signature</th>
-              </tr>
+                <th>Status</th>
+              </tr> 
             </thead>
             <tbody>
-              @foreach($obj->users as $key=>$obj)  
+              @foreach($users as $key=>$obj)  
               <tr>
-                <th scope="row">{{ $key+1}}</th>
-                <td>
+                <th scope="row"  style="padding:1px;margin:0px;text-align:center">{{ $key+1}}</th>
+                <td  style="padding:1px;margin:0px">
                   {{ $obj->name }}
                  
                 </td>
-                
-                <td>{{ ($obj->branches->first())?$obj->branches->first()->name :''}}</td>
-                <td>{{ ($obj->services->first())?$obj->services->first()->name :''}}</td>
-                <td>
-                  {{($obj->details->first())?$obj->details->phone :''}}
+                <td  style="padding:1px;margin:0px;text-align:center">
+                  @if(isset($branches[($obj->branch_id)]))
+                  {{ $branches[($obj->branch_id)]->name}}
+                  @endif
                 </td>
-                <td></td>
+                <td  style="padding:1px;margin:0px;text-align:center">{{ $obj->year_of_passing}}</td>
+                <td  style="padding:1px;margin:0px;text-align:center">
+                  {{$obj->phone}}
+                </td>
+                <td style="padding:1px;margin:0px"></td>
               </tr>
               @endforeach      
             </tbody>
@@ -56,6 +62,8 @@
 
 
       </div>
+
+      <a href="{{ route('college.show',$college->id)}}" class="my-3 ml-4"><i class="fa fa-angle-left"></i> back</a>
 
     </div>
 

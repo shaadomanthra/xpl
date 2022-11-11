@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', $obj->name.'  College')
 @section('content')
 
 <nav aria-label="breadcrumb">
@@ -19,37 +20,51 @@
           <p class="h2 mb-3"><i class="fa fa-th "></i> {{ $obj->name }} 
 
 
-          </p>
+          
           @can('update',$obj)
           
-            <span class="btn-group " role="group" aria-label="Basic example">
+            <span class="btn-group float-md-right" role="group" aria-label="Basic example">
               <a href="{{ route($app->module.'.edit',$obj->id) }}" class="btn btn-outline-secondary" data-tooltip="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
               <a href="#" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" data-tooltip="tooltip" data-placement="top" title="Delete" ><i class="fa fa-trash"></i></a>
-              <a href="{{ route('college.view',$obj->id) }}" class="btn btn-outline-secondary"  ><i class="fa fa-bars"></i> College</a>
               <a href="{{ route($app->module.'.userlist',$obj->id) }}" class="btn btn-outline-secondary"  ><i class="fa fa-bars"></i> User List</a>
-              <a href="{{ route('campus.admin') }}?college={{$obj->id}}" class="btn btn-outline-secondary"  ><i class="fa fa-bar-chart"></i> Analytics</a>
             </span>
             @endcan
+            </p>
         </div>
       </div>
 
      
       <div class="card mb-4">
         <div class="card-body">
-          @foreach($obj->getAttributes() as $key=>$item)
-          @if($item && $key!='created_at' && $key!= 'updated_at')
+         
           <div class="row mb-2">
-            <div class="col-12 col-md-2">{{ strtoupper($key) }}</div>
-            <div class="col-12 col-md-10">{{ $item }}</div>
+            <div class="col-12 col-md-2">Location</div>
+            <div class="col-12 col-md-10">{{$obj->location}}</div>
           </div>
-          @endif
-          @endforeach
 
+           <div class="row mb-2">
+            <div class="col-12 col-md-2">Zone</div>
+            <div class="col-12 col-md-10">{{$obj->college_website}}</div>
+          </div> 
+           <div class="row mb-2">
+            <div class="col-12 col-md-2">College Code</div>
+            <div class="col-12 col-md-10">{{$obj->college_code}}</div>
+          </div> 
+           <div class="row mb-2">
+            <div class="col-12 col-md-2">Type</div>
+            <div class="col-12 col-md-10">{{$obj->type}}</div>
+          </div> 
+           <div class="row mb-2">
+            <div class="col-12 col-md-2">User Count</div>
+            <div class="col-12 col-md-10">{{$obj->users->count()}}</div>
+          </div> 
 
+          @if($obj->zones->first())
           <div class="row mb-2">
             <div class="col-12 col-md-2">Zone</div>
             <div class="col-12 col-md-10"> {{ $obj->zones->first()->name }}</div>
           </div> 
+          @endif
 
           <div class="row mb-2">
             <div class="col-12 col-md-2">Branches</div>
@@ -60,19 +75,24 @@
             </div>
           </div> 
 
-          <div class="row mb-2">
-            <div class="col-12 col-md-2">Courses</div>
-            <div class="col-12 col-md-10"> 
-              <ol>
-              @foreach($obj->courses as $course)
-                <li>{{ $course->name }} </li>
-              @endforeach
-            </ol>
-            </div>
-          </div> 
+          
 
 
         </div>
+      </div>
+
+
+      <div class="row">
+        @foreach($users as $y=>$u)
+        <div class="col-2">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h3>{{$y}}</h3>
+              <a href="{{ route('college.userlist',$obj->id)}}?yop={{$y}}"><div class="display-3">{{count($u)}}</div></a>
+            </div>
+          </div>
+        </div>
+        @endforeach
       </div>
 
     </div>
