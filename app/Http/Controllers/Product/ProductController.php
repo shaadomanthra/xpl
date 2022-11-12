@@ -199,6 +199,7 @@ class ProductController extends Controller
       $data['branches'] = Cache::get('branches');
       $data['colleges'] = Cache::get('colleges');
 
+
       
 
       $username = $user->username;
@@ -206,7 +207,7 @@ class ProductController extends Controller
       $users = [];
 
      
-      if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role!=13){
+      if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role!=13 && subdomain()!='packetprep'){
 
           $search = $request->search;
           $page = $request->get('page');
@@ -288,7 +289,7 @@ class ProductController extends Controller
               ->with('exam',$exam)
               ->with('e',$e)
               ->with('exams',$exams);
-      }else if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role==13){
+      }else if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role==13 && subdomain()!='packetprep'){
 
           $search = $request->search;
           $page = $request->get('page');
@@ -353,7 +354,7 @@ class ProductController extends Controller
 
       }
 
-      if($user->checkRole(['tpo']) && !$user->isAdmin()){
+      if($user->checkRole(['tpo']) && !$user->isAdmin() && subdomain()!='packetprep'){
 
           $search = $request->search;
           $item = $request->item;
