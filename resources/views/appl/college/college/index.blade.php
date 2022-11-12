@@ -90,7 +90,7 @@
   </a>
   @foreach($zones as $zone)
   @if($zone->college_website)
-  <a href="{{ route('college.index')}}?zone={{$zone->college_website}}" class="list-group-item list-group-item-action @if(request()->get('zone')==$zone->college_website)active @endif">{{ucfirst($zone->college_website)}}</a>
+  <a href="{{ route('college.index')}}?zone={{$zone->college_website}}" class="list-group-item list-group-item-action @if(request()->get('zone')==$zone->college_website)active @endif">{{ucfirst($zone->college_website)}}({{count($colleges_zone[$zone->college_website])}})</a>
   @endif
   @endforeach
 </div>

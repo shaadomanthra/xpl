@@ -35,12 +35,14 @@ class CollegeController extends Controller
         $item = $request->item;
         
         $student_count = array();
-        Cache::forever('colleges',$obj->all()->keyBy('id'));
+        $all_colleges = $obj->all();
+        $colleges_zone = $all_colleges->groupBy('college_website');
+        Cache::forever('colleges',$all_colleges->keyBy('id'));
+        Cache::forever('colleges_zone',$all_colleges->groupBy('college_website'));
 
         if($request->get('zone')){
             $colleges = $obj->where('college_website',$request->get('zone'))->get();
             $objs = $obj->where('name','LIKE',"%{$item}%")->where('college_website',$request->get('zone'))->paginate(200); 
-            
         }
         else{
             $colleges = $obj->all();
@@ -58,6 +60,7 @@ class CollegeController extends Controller
                 ->with('objs',$objs)
                 ->with('data',$data)
                 ->with('zones',$zones)
+                ->with('colleges_zone',$colleges_zone)
                 ->with('obj',$obj)
                 ->with('app',$this);
     }
