@@ -12,7 +12,7 @@
 
 @if(auth::user() && subdomain()=='packetprep')
      @if($user->status!=0)
-<div class="rounded p-4 mb-4" style="background: #caf7dd; border:1px solid #39c072;">
+<div class="rounded p-3 mb-3" style="background: #caf7dd; border:1px solid #39c072;">
   <a href="{{ route('activation')}}">
 <button class="btn btn-success float-right mt-md-2">Validate Now</button>
 </a>
@@ -24,9 +24,9 @@
     @endif
 <div class="row">
   <div class="col-12 col-md-9 ">
-<div class="p-0 mb-4"  style="border:1px solid #8ec5d4;box-shadow: 2px 2px 2px 1px #e2e6e7"  >
+<div class="p-0 mb-3"  style="border:1px solid #8ec5d4;box-shadow: 2px 2px 2px 1px #e2e6e7"  >
   <div class="p-2 "   style="background: #bee0e9;"> </div>
-<div class="  p-3 pt-5 "  style="background: #d6eef3;" >
+<div class="  p-3  pt-4"  style="background: #d6eef3;" >
 
 
 
@@ -34,7 +34,7 @@
   <div class="row ">
     <div class="col-md-9 ">
       @if(auth::user())
-      <div class="row mt-0 mt-mb-4">
+      <div class="row mt-0 mt-mb-3">
         <div class="col-12 col-md-3">
 
           
@@ -51,32 +51,19 @@
         @if(auth::user()->branch_id)
           @if(isset($data['branches'][auth::user()->branch_id])) <span class="badge badge-primary"> {{ $data['branches'][auth::user()->branch_id]->name}}</span>@else Welcome aboard @endif
         @else
-          @if(auth::user()->info) <span class="badge badge-primary">Batch - {{auth::user()->info}}</span>@else Welcome aboard @endif
+          @if(auth::user()->info) <span class="badge badge-primary">Batch - {{auth::user()->info}}</span>@else Welcome aboard!@endif
         @endif
       </p>
       
-
-
-
-   
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
       </form>
-
-            <br><br>
-
-        
-            
 
         </div>
 
 
       </div>
 
-
-            
-             
-      
       @else
 
       @endif
@@ -88,7 +75,7 @@
 </div>
 </div>
 
-<div class=" rounded p-3 my-4" style="border:1px solid red; background: pink;">
+<div class=" rounded p-3 my-3" style="border:1px solid red; background: pink;">
   <h3> Get <span class="badge badge-light">FREE</span> material worth Rs.7000  <img src="https://i.imgur.com/2z3tA1h.gif" style="width: 35px"/> </h3>
   <p> Refer 3 friends and get access to 300+ video lessons on aptitude, reasoning, and programming.</p>
   <a href="/sreferral" class="btn btn-danger"> Referral Program</a>
@@ -308,21 +295,21 @@
 
   <div class="col-12 col-md-3">
 
-    <div class="rounded p-4 mb-4" style="background: #f7eaca; border:1px solid #e2ca8f;">
+    <div class="rounded p-3 mb-2" style="background: #f7eaca; border:1px solid #e2ca8f;">
  
   <h3 class="">Java Fullstack Course</h3>
 <p class="mb-1"> <a href="https://learn.packetprep.com/course/java-programming" class="btn btn-warning mt-3 mb-0"><b>View Course</b> </a>  </p>
 
 </div>
 
-<div class="rounded p-4 mb-4" style="background: #f7dcca; border:1px solid #e7c5af;">
+<div class="rounded p-3 mb-2" style="background: #f7dcca; border:1px solid #e7c5af;">
  
   <h3 class="">Aptitude & Reasoning Material</h3>
-<p class="mb-1"><a href="https://learn.packetprep.com/productpage/grandmaster" class="btn btn-primary mt-3 mb-0"><b>View Product</b> </a>  </p>
+<p class="mb-1"><a href="https://learn.packetprep.com/productpage/grandmaster" class="btn btn-primary mt-2 mb-0"><b>View Product</b> </a>  </p>
 
 </div>
 
-    <a href="https://packetprep.com/contact?utm_source=packetprep_learn&utm_medium=website"><img src="/img/pp2.png" class="mt-3 mt-md-0 w-100 rounded" /></a>
+    <a href="https://packetprep.com/contact?utm_source=packetprep_learn&utm_medium=website"><img src="/img/pp2.png" class="mt-2 mt-md-0 w-100 rounded" /></a>
 
      <div class="bg-white  p-3 p-md-4 mb-3 mb-md-4 mt-3" style="background-image:url(https://packetprep.com/img/corner-4.png);background-position: right;background-repeat: no-repeat; border-radius:8px;box-shadow: 2px 2px 2px 2px #eee;background-size: auto;">
       <div class="heading mb-4">
