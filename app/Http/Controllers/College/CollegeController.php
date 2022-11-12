@@ -43,10 +43,12 @@ class CollegeController extends Controller
         if($request->get('zone')){
             $colleges = $obj->where('college_website',$request->get('zone'))->get();
             $objs = $obj->where('name','LIKE',"%{$item}%")->where('college_website',$request->get('zone'))->paginate(200); 
+            $lusers= User::select('college_id')->whereIn('college_id',$objs->pluck('id')->toArray())->where('year_of_passing',2023)->get()->groupby('college_id');
         }
         else{
             $colleges = $obj->all();
             $objs = $obj->where('name','LIKE',"%{$item}%")->paginate(200); 
+            $lusers= User::select('college_id')->whereIn('college_id',$objs->pluck('id')->toArray())->where('year_of_passing',2023)->get()->groupby('college_id');
         }
 
         $carray = $colleges->pluck('id')->toArray();
@@ -56,10 +58,12 @@ class CollegeController extends Controller
         $zones = Obj::select('college_website')->distinct()->get();    
         $view = $search ? 'list': 'index';
 
+
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('objs',$objs)
                 ->with('data',$data)
                 ->with('zones',$zones)
+                ->with('lusers',$lusers)
                 ->with('colleges_zone',$colleges_zone)
                 ->with('obj',$obj)
                 ->with('app',$this);

@@ -6,7 +6,7 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name </th>
-                <th scope="col">Code </th>
+                <th scope="col">Students</th>
                 <th scope="col">Location</th>
                 <th scope="col">Zone </th>
                 <th scope="col">Created at</th>
@@ -22,7 +22,11 @@
                   </a>
                 </td>
                 <td>
-                  {{ $obj->college_code}}
+                  @if(isset($lusers[$obj->id]))
+                  {{ count($lusers[$obj->id])}}
+                  @else
+                  0
+                  @endif
                 </td>
                 <td>
                   {{ $obj->location}}
