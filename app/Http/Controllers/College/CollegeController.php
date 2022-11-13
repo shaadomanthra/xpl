@@ -394,8 +394,9 @@ class CollegeController extends Controller
             $users = User::where('college_id',$obj->id)
                         ->where('year_of_passing',request()->get('yop'))
                         ->get();
-        }else
-            $users = $obj->users;
+        }else{
+            $users = User::where('college_id',$obj->id)->get();
+        }
         
         $this->authorize('view', $obj);
         if($obj)
