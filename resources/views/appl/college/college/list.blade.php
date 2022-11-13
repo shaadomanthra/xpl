@@ -14,7 +14,7 @@
             </thead>
             <tbody>
               @foreach($objs as $key=>$obj)  
-              <tr>
+              <tr class="" @if($obj->type=='degree') style="background: #ffe7e7e8;"  @elseif($obj->type=='btech') style="background: #f8ffe7e8;" @endif>
                 <th scope="row">{{ $objs->currentpage() ? ($objs->currentpage()-1) * $objs->perpage() + ( $key + 1) : $key+1 }}</th>
                 <td>
                   <a href=" {{ route($app->module.'.show',$obj->id) }} ">

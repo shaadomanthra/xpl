@@ -89,9 +89,7 @@
                   checked
                   @endif
               @else
-                  @if(in_array($branch->id, [9,10,11,12,13,14,15]))
-                  checked
-                  @endif 
+                 
               @endif
             > {{ $branch->name }} &nbsp;&nbsp;
         @endforeach

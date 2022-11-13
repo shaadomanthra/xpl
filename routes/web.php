@@ -642,16 +642,20 @@ use Illuminate\Support\Facades\Storage;
 
 	Route::get('college/top30','College\CollegeController@top30')->middleware('auth')->name('college.top30');
 
+	Route::get('college/upload','College\CollegeController@uploadColleges')->middleware('auth')->name('college.upload');
+	Route::post('college/upload','College\CollegeController@uploadColleges')->middleware('auth')->name('college.upload');
 	Route::resource('zone','College\ZoneController')->middleware('auth');
 	Route::resource('branch','College\BranchController')->middleware('auth');
 	Route::resource('college','College\CollegeController')->middleware('auth');
 	Route::resource('metric','College\MetricController')->middleware('auth');
 	Route::resource('service','College\ServiceController')->middleware('auth');
 
+
 	Route::get('college/{college}/view','College\CollegeController@show2')->middleware('auth')->name('college.view');
 
 	Route::get('college/{college}/students','College\CollegeController@students')->middleware('auth')->name('college.students');
 	Route::get('college/{college}/userlist','College\CollegeController@userlist')->middleware('auth')->name('college.userlist');
+
 	
 	Route::post('productactivate','Product\ProductController@activate')->middleware('auth')->name('product.activate');
 

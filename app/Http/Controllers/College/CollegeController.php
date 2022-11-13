@@ -12,6 +12,7 @@ use PacketPrep\Models\Course\Course;
 use PacketPrep\User;
 use PacketPrep\Models\User\User_Details;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 
 class CollegeController extends Controller
@@ -94,6 +95,66 @@ class CollegeController extends Controller
                 ->with('app',$this);
     }
     
+
+    public function uploadColleges(Obj $obj,Request $request)
+    {
+        if(isset($request->all()['file'])){
+                
+                $file      = $request->all()['file'];
+                $fname = str_replace(' ','_',strtolower($file->getClientOriginalName()));
+                $extension = strtolower($file->getClientOriginalExtension());
+
+                if(!in_array($extension, ['csv'])){
+                    $alert = 'Only CSV files are allowed';
+                    return redirect()->route($this->module.'.upload')->with('alert',$alert);
+                }
+
+                 $file_path = Storage::disk('public')->putFileAs('excels', $request->file('file'),$fname,'public');
+                 $fpath = Storage::disk('public')->path($file_path);
+
+                 $row = 1;
+                 
+                if (($handle = fopen($fpath, "r")) !== FALSE) {
+                  while (($data = fgetcsv($handle, 9000, ",")) !== FALSE) {
+               
+                    $num = count($data);
+                    $row++;
+                    $cname = $data[0];
+                    $col = Obj::where('name',$cname)->first();
+
+                    if(!$col){
+                        $col = new Obj();
+                        $col->name = ucwords(strtolower($cname));
+                        $col->type = $data[1];
+                        $col->location = $data[2];
+                        $col->college_website = $data[3];
+                        $col->save();
+                    }else{
+                        $col->name = ucwords(strtolower($cname));
+                        $col->type = $data[1];
+                        $col->location = ucfirst($data[2]);
+                        $col->college_website = ucfirst($data[3]);
+                        $col->save();
+                    }
+                    
+                  }
+                  fclose($handle);
+                }
+
+
+                $alert = 'Data Records Added!';
+                return redirect()->route($this->module.'.upload')->with('alert',$alert);
+            }
+            else{
+                return view('appl.'.$this->app.'.'.$this->module.'.upload')
+                    ->with('stub','Create')
+                    ->with('obj',$obj)
+                    ->with('editor',true)
+                    ->with('app',$this);
+
+            }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
