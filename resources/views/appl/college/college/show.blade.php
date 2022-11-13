@@ -56,7 +56,7 @@
           </div> 
            <div class="row mb-2">
             <div class="col-12 col-md-2">User Count</div>
-            <div class="col-12 col-md-10">{{$obj->users->count()}}</div>
+            <div class="col-12 col-md-10">{{$user_count}}</div>
           </div> 
 
           @if($obj->zones->first())

@@ -44,7 +44,10 @@ class CollegeController extends Controller
         if($request->get('zone')){
             $colleges = $obj->where('college_website',$request->get('zone'))->get();
             $objs = $obj->where('name','LIKE',"%{$item}%")->where('college_website',$request->get('zone'))->paginate(200); 
+
             $lusers= User::select('college_id')->whereIn('college_id',$objs->pluck('id')->toArray())->where('year_of_passing',2023)->get()->groupby('college_id');
+
+
         }
         else{
             $colleges = $obj->all();
@@ -251,14 +254,18 @@ class CollegeController extends Controller
     {
         $obj = Obj::where('id',$id)->first();
 
-        $users = $obj->users->groupBy('year_of_passing');
+
+        $u = User::where('college_id',$obj->id)->get();
+        $users = $u->groupBy('year_of_passing');
         unset($users[""]);
 
+        $user_count =count($u);
         //dd($obj->users);
         $this->authorize('view', $obj);
         if($obj)
             return view('appl.'.$this->app.'.'.$this->module.'.show')
                     ->with('users',$users)
+                    ->with('user_count',$user_count)
                     ->with('obj',$obj)->with('app',$this);
         else
             abort(404);
