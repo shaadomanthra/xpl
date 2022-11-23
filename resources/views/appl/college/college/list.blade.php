@@ -9,7 +9,7 @@
                 <th scope="col">Students</th>
                 <th scope="col">Location</th>
                 <th scope="col">Zone </th>
-                <th scope="col">Created at</th>
+                <th scope="col">Type</th>
               </tr>
             </thead>
             <tbody>
@@ -35,7 +35,7 @@
                   {{ $obj->college_website}}
                 </td>
                 
-                <td>{{ ($obj->created_at) ? $obj->created_at->diffForHumans() : '' }}</td>
+                <td>{{ ($obj->type)}}</td>
               </tr>
               @endforeach      
             </tbody>
