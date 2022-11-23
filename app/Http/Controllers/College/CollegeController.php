@@ -42,8 +42,9 @@ class CollegeController extends Controller
         Cache::forever('colleges_zone',$all_colleges->groupBy('college_website'));
 
         if($request->get('zone')){
-            $colleges = $obj->where('college_website',$request->get('zone'))->get();
-            $objs = $obj->where('name','LIKE',"%{$item}%")->where('college_website',$request->get('zone'))->paginate(200); 
+            $colleges = $obj->where('college_website',$request->get('zone'))->orderBy('location')->get();
+            $objs = $obj->where('name','LIKE',"%{$item}%")->where('college_website',$request->get('zone'))->orderBy('location')->paginate(200); 
+
 
             $lusers= User::select('college_id')->whereIn('college_id',$objs->pluck('id')->toArray())->where('year_of_passing',2023)->get()->groupby('college_id');
 
