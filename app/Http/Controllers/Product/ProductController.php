@@ -402,6 +402,13 @@ class ProductController extends Controller
       }
 
       $mytests = \auth::user()->tests(1);
+      if($user->role==12 && subdomain()=='packetprep')
+      {
+        $view = 'admin_pp';
+        return view($view)->with('user',$user)->with('data',$data)->with('mytests',$mytests);
+      }
+
+      
 
 
       if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in')

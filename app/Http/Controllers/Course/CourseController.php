@@ -55,11 +55,20 @@ class CourseController extends Controller
                 if($obj->status){
                     $obj->products = $obj->products;
                     $course_data = $obj->category_list($obj->slug);
-                    $obj->categories = $course_data['categories'];
-                    $obj->ques_count = $course_data['ques_count'];
-                    $obj->nodes = $course_data['nodes'];
-                    $obj->exams = $course_data['exams'];
-                    $obj->tests = $course_data['tests'];
+                    if(isset($course_data['categories'])){
+                        $obj->categories = $course_data['categories'];
+                        $obj->ques_count = $course_data['ques_count'];
+                        $obj->nodes = $course_data['nodes'];
+                        $obj->exams = $course_data['exams'];
+                        $obj->tests = $course_data['tests'];
+                    }else{
+                        $obj->categories = null;
+                        $obj->ques_count = null;
+                        $obj->nodes = null;
+                        $obj->exams = null;
+                        $obj->tests = null;
+                    }
+                    
                     $filename = $obj->slug.'.json';
                     $filepath = $this->cache_path.$filename;
                     //file_put_contents($filepath, json_encode($obj,JSON_PRETTY_PRINT));
@@ -71,6 +80,8 @@ class CourseController extends Controller
 
             flash('Article Pages Cache Updated')->success();
         }
+
+
 
         if($item)
             $courses = $course->where('name','LIKE',"%{$item}%")->orderBy('created_at','asc')->paginate(config('global.no_of_records'));
@@ -406,6 +417,7 @@ class CourseController extends Controller
 
 
 
+        //dd($course);
 
         if(!$course){
             
@@ -416,8 +428,10 @@ class CourseController extends Controller
             $course->nodes = $course_data['nodes'];
             $course->exams = $course_data['exams'];
             $course->tests = $course_data['tests'];
+            
 
         }
+
 
 
         if(request()->get('refresh'))
@@ -506,6 +520,7 @@ class CourseController extends Controller
               $data['time']=0;
             }
             
+            //dd($course);
             foreach($practice as $pr){
                 $prid = $pr->category_id;
                 if($pr->category_id && isset($course->categories->$prid))
@@ -513,8 +528,10 @@ class CourseController extends Controller
                     $course->categories->$prid->correct++; 
                     else
                     $course->categories->$prid->incorrect++;
+               
             }
-            
+          
+
             /* correct percent */
             foreach($course->categories as $c=>$cat){
             if(isset($cat->total))

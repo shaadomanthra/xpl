@@ -207,32 +207,42 @@
 						@include('appl.course.course.blocks.video_link')
 
 
+									@if(isset($categories->$cid->total))
                      	@if($categories->$cid->total!=0)
                      		@include('appl.course.course.blocks.practice_link')
                      	@endif
+                   @elseif(isset($categories[$cid]['total']))
+                   			@include('appl.course.course.blocks.practice_link')
+                   @endif
                      	
                      	@if($c->exam_id)
                      		@include('appl.course.course.blocks.exam_link')
                      	@endif
-                     	
+
+                     	@if(isset($categories->$cid->total))
                      	@if($categories->$cid->total!=0)
                      		@include('appl.course.course.blocks.progress')
+                     	@endif
                      	@endif
 
 						
                      	</li>
                    @else
                    <li class="item {{ $cid = $c->id }}" id="{{ $c->slug }}">	<i class="fa fa-bars"></i> {{$c->name}} 
+                   	@if(isset($categories->$cid->total))
                    	@if($categories->$cid->total!=0)
                      		@include('appl.course.course.blocks.practice_link')
                      	@endif
+                    @endif
 
                      	@if($c->exam_id)
                      		@include('appl.course.course.blocks.exam_link')
                      	@endif
 
+                     	@if(isset($categories->$cid->total))
                      	@if($categories->$cid->total!=0)
                      		@include('appl.course.course.blocks.progress')
+                     	@endif
                      	@endif
                    </li>
 

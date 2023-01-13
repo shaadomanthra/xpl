@@ -11,6 +11,10 @@ use PacketPrep\Models\Exam\Exam;
 use PacketPrep\Models\College\College;
 use PacketPrep\Models\Exam\Section;
 use PacketPrep\Models\Exam\Tests_Overall;
+
+use PacketPrep\Exports\UExport2;
+
+use Maatwebsite\Excel\Facades\Excel;
 use PacketPrep\User;
 use Google\Cloud\Core\ServiceBuilder;  
 
@@ -542,6 +546,50 @@ class HomeController extends Controller
         
         }
         exit();
+    }
+
+
+    public function getUsers(){
+
+         if(1){
+                
+                
+                 $fpath = 'vm.csv';
+
+                 $row = 1;
+                 $uemails = array();
+                 
+                if (($handle = fopen($fpath, "r")) !== FALSE) {
+                  while (($data = fgetcsv($handle, 9000, ",")) !== FALSE) {
+               
+                    if($row==1){
+                        $row++;
+                        continue;
+                    }
+                    $row++;
+                    array_push($uemails,$data[0]);
+                    
+                    
+                   
+                    
+                  }
+                  fclose($handle);
+                }
+               
+                $users = User::whereIn('email',$uemails)->get();
+
+                    if(count($users)>0){
+                        request()->session()->put('users',$users);
+
+                        ob_end_clean(); // this
+                        ob_start(); 
+                        $filename ="Userlist_".subdomain().".xlsx";
+                        return Excel::download(new UExport2, $filename);
+
+                    }
+
+
+            }
     }
 
      public function iupload(Request $request){

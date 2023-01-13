@@ -193,6 +193,19 @@
 
 
      <div class="col-12 col-md-2">
+      <div class="mb-3">
+        <form class="w-100" method="GET" action="{{ route('user.list') }}">
+            
+            <div class="input-group ">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-search"></i></div>
+              </div>
+              <input class="form-control " id="search" name="item" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
+              value="{{Request::get('item')?Request::get('item'):'' }}">
+            </div>
+            
+          </form>
+      </div>
           <div class="list-group">
             <a href="#" class="list-group-item list-group-item-action bg-light disabled">
               Groups
@@ -210,19 +223,7 @@
             @endforeach
           </div>
 
-           <div class="my-3">
-        <form class="w-100" method="GET" action="{{ route('user.list') }}">
-            
-            <div class="input-group ">
-              <div class="input-group-prepend">
-                <div class="input-group-text"><i class="fa fa-search"></i></div>
-              </div>
-              <input class="form-control " id="search" name="item" autocomplete="off" type="search" placeholder="Search" aria-label="Search" 
-              value="{{Request::get('item')?Request::get('item'):'' }}">
-            </div>
-            
-          </form>
-      </div>
+           
       </div>
 
 

@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Storage;
 	
 	Route::get('/', 'HomeController@root')->name('root');
 	Route::get('/trail', 'HomeController@index')->name('trail');
+	Route::get('/gu', 'HomeController@getUsers')->name('gu');
 	Route::post('/', 'Product\OrderController@callback');
 	Route::get('/instamojo', 'Product\OrderController@instamojo')->middleware('auth');
 	Route::get('/order_payment', 'Product\OrderController@instamojo_return');

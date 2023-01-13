@@ -1360,11 +1360,12 @@ $(document).ready(function() {
           mode: "text/x-c++src",
           theme: "monokai",
     lineWrapping: true,
-    extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); },"Alt-F": "findPersistent"},
+    extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); },"Alt-F": "findPersistent","Enter":function(cm){ console.log('This is called... sometimes');cm.replaceSelection("\n"); }},
     foldGutter: true,
     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
     autoCloseBrackets: true,
-          indentUnit: 4
+          indentUnit: 0,
+           smartIndent: false, tabSize: 2 
         };
   if(document.getElementById("code"))
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), options);
@@ -1373,6 +1374,7 @@ $(document).ready(function() {
       editor.on("beforeChange", function(cm, change) {
       if (change.origin == "paste") change.cancel();
       readOnlyLines = lockText(cm);
+
           console.log(readOnlyLines);
           if ( ~readOnlyLines.indexOf(change.from.line) ) {
               change.cancel();

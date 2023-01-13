@@ -846,32 +846,33 @@ class UserController extends Controller
     $item = $r->get('item');
     if(is_numeric($item)){
         $users = $users->where('phone','LIKE',"%$item%");
+    }elseif (strpos($r->get('item'), '@') !== false) {
+        $users = $users->where('email','LIKE',"%$item%");
     }
     elseif($r->get('item')){
-        $users = $users->where('name','LIKE',"%$item%")->orWhere('email',"%$item%");
+        $users = $users->where('name','LIKE',"%$item%");
     }
 
     $uids = null;
-    //  if($r->get('role')){
-    //     $rol = $r->get('role');
-    //     $role = Role::where('slug',$rol)->first();
-    //     if($rol=='student' || !$rol)
-    //         $uids = User::pluck('id')->toArray();  
-    //     elseif($role)
-    //         $uids = $role->users->pluck('id')->toArray();
-    //     else
-    //         $uids = null;  
-        
-    // }else{
-    //     $uids = null;
-    // }
-
     
-    // if($uids){
-    //     $users = $users->whereIn('id',$uids);
-    // }
 
-    $users = $users->orderBy('id','desc')->with('roles')->paginate(30);
+    if($r->get('info'))
+    $users = Cache::remember('users_paginate_'.subdomain().'_'.$r->get('info'),240,function()use ($users){
+        return $users->orderBy('id','desc')->with('roles')->paginate(30);
+    });
+    elseif(is_numeric($item)){
+        $users = $users->orderBy('id','desc')->with('roles')->paginate(30);
+    }
+    elseif($r->get('item')){
+       $users = $users->orderBy('id','desc')->with('roles')->paginate(30);
+    }elseif (strpos($r->get('item'), '@') !== false) {
+        $users = $users->orderBy('id','desc')->with('roles')->paginate(30);
+    }
+    else
+        $users = Cache::remember('users_paginate_'.subdomain(),240,function()use ($users){
+        return $users->orderBy('id','desc')->with('roles')->paginate(30);
+    });
+
 
 
     if($uids){
@@ -881,10 +882,14 @@ class UserController extends Controller
     $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereIn('id',$uids)->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
 
     }else{
-        $data['users_all'] =  User::where('client_slug',subdomain())->where('status','<>','2')->count();
-    $data['users_lastmonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
-    $data['users_thismonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereMonth('created_at', Carbon::now()->month)->count();
-    $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
+        $data = Cache::remember('data_users_'.subdomain(),240, function(){
+            $data['users_all'] =  User::where('client_slug',subdomain())->where('status','<>','2')->count();
+        $data['users_lastmonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereMonth('created_at', Carbon::now()->subMonth()->month)->count();
+        $data['users_thismonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereMonth('created_at', Carbon::now()->month)->count();
+        $data['users_lastbeforemonth'] = User::where('client_slug',subdomain())->where('status','<>','2')->whereMonth('created_at', Carbon::now()->subMonth(2)->month)->count();
+        return $data;
+        });
+        
 
     }
     
@@ -900,7 +905,10 @@ class UserController extends Controller
     else    
         $user = \auth::user();
 
-    $user_info = User::where('client_slug',subdomain())->get()->groupBy('info');
+    $user_info = Cache::remember('user_info_'.subdomain(),240,function(){
+        return User::where('client_slug',subdomain())->get()->groupBy('info');
+    });
+
 
     
       return view('appl.user.userlist')

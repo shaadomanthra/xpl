@@ -64,11 +64,22 @@ class Course extends Model
     public function updateCache($courses=null,$course=null){
         if($course){
             $course_data = $course->category_list($course->slug);
-            $course->categories = json_decode(json_encode($course_data['categories']));
-            $course->ques_count = $course_data['ques_count'];
-            $course->nodes = $course_data['nodes'];
-            $course->exams = $course_data['exams'];
-            $course->tests = $course_data['tests'];
+            if(isset($course_data['categories'])){
+                        $course->categories = json_decode(json_encode($course_data['categories']));
+                        $course->ques_count = $course_data['ques_count'];
+                        $course->nodes = $course_data['nodes'];
+                        $course->exams = $course_data['exams'];
+                        $course->tests = $course_data['tests'];
+                    }else{
+
+                        $course->categories = null;
+                        $course->ques_count = null;
+                        $course->nodes = null;
+                        $course->exams = null;
+                        $course->tests = null;
+                    }
+
+
 
             Cache::forget('course_'.$course->slug);
             Cache::forever('course_'.$course->slug,$course);
