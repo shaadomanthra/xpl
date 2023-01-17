@@ -4,9 +4,9 @@
 <div class="mt-5">
 
 	<div class="text-center">
-		<h1 style="font-size:40px">Under Quick Maintenance</h1>
+		<h1 style="font-size:40px">Site is Down</h1>
 		
-		<p>The wesbite will be active in 5 mins. Kindly check after few minutes.</p>
+		<p>Website Services Suspended.</p>
 		
 	</div>
 </div>
