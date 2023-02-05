@@ -363,6 +363,7 @@ function subdomain() {
     //         return 'rguktong';
     if($_SERVER['HTTP_HOST'] == 'demo.xp.test' )
             return 'bits';
+        
 
     $parsed = parse_url($url);
     $exploded = explode('.', $parsed["host"]);
