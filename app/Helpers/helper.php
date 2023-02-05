@@ -346,7 +346,7 @@ function subdomain() {
     if($_SERVER['HTTP_HOST'] == 'gradable.test' || $_SERVER['HTTP_HOST'] == 'gradable.in' )
             return 'gradable';
     if($_SERVER['HTTP_HOST'] == 'myparakh.test' || $_SERVER['HTTP_HOST'] == 'myparakh.com' )
-            return 'packetprep';
+            return 'gradable';
     if($_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' )
             return 'rguktn';
     if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' || $_SERVER['HTTP_HOST'] == 'app1.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'app2.xplore.co.in' )
