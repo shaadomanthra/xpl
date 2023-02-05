@@ -1832,12 +1832,14 @@ class ExamController extends Controller
         }
 
 
+
         $view = $search ? 'analytics_list': 'analytics';
 
         $ename = str_replace('/', '-', $exam->name);
         $ename = str_replace(' ', '_', $ename);
         $ename = str_replace('\\', '-', $ename);
         $filename ="exports/Report_".$ename.".xlsx";
+
 
         $email_stack = array();
         $data_ques =null;
@@ -1968,7 +1970,7 @@ class ExamController extends Controller
             }
 
 
-
+            
 
             // foreach($notattempted as $k=>$u){
             //     if(!in_array($u, $attemptedby)){
@@ -1986,7 +1988,9 @@ class ExamController extends Controller
             //     if()
             // }
 
+
             $usr = \auth::user();
+
             if(count($users)>0){
                 $exam->total = 0;
                 foreach($exam_sections as $k=>$s){
@@ -2027,6 +2031,8 @@ class ExamController extends Controller
 
                 ob_end_clean(); // this
                 ob_start();
+
+
                 $filename ="Report_".$ename.".xlsx";
                 return Excel::download(new TestReport2, $filename);
             }else{

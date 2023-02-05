@@ -1,3 +1,4 @@
+@if($report->total())
 @if($report->total()!=0)
         <div class="table-responsive">
           @if($exam->slug!='psychometric-test')
@@ -124,6 +125,7 @@
         <div class="card card-body bg-light">
           No Reports listed
         </div>
+        @endif
         @endif
 <nav aria-label="Page navigation  " class="card-nav @if($report->total() > 30)mt-3 @endif">
         {{$report->appends(request()->except(['page','search']))->links('vendor.pagination.bootstrap-4') }}

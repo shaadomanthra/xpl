@@ -89,12 +89,14 @@
 
 </head>
 <body >
-    <div id="app" >
+    <div id="app" style=" min-height: 90vh;
+    display: flex;
+    flex-direction: column;">
 
         @yield('content-main')
     </div>
-    <div class="bg-dark d-print-none">
-        <footer class="text-light footer">
+    <div class="bg-dark d-print-none" style=" margin: auto 0;">
+        <footer class="text-light footer" style="">
             <div class="container py-3">
              
 

@@ -18,6 +18,7 @@ class Corporate
      */
     public function handle($request, Closure $next)
     {
+
         if( $_SERVER['HTTP_HOST'] == 'packetprep.xplore.co.in'){
              return redirect('https://learn.packetprep.com/',301);
          }
@@ -52,6 +53,13 @@ class Corporate
                 $client = json_decode(file_get_contents($filename));
                 $client->name = 'Gradable';
                 $client->logo = url('/').'/img/gradable.png';
+                $request->session()->put('client',$client);
+            }
+             elseif($_SERVER['HTTP_HOST'] == 'myparakh.test' || $_SERVER['HTTP_HOST'] == 'myparakh.com'){
+                $filename = 'corporate.json';
+                $client = json_decode(file_get_contents($filename));
+                $client->name = 'Parakh';
+                $client->logo = url('/').'/img/myparakh.png';
                 $request->session()->put('client',$client);
             }
             elseif( subdomain()!='xplore' && subdomain()!='bfs'){
