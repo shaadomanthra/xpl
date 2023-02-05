@@ -511,15 +511,7 @@
           <div class="card"><div class="card-body">{!! htmlentities($codes->output_8) !!}</div></div>
           @endif
         </div>
-</div>
-
-
-
-  
-
-
-
-                  
+        </div>                  
               @else
               <div class="solution">@if($question->explanation) {!! $question->explanation !!} @else - @endif</div>
             @endif

@@ -184,6 +184,8 @@ class LoginController extends Controller
         }
 
         if($user->username == 'demo500' || $user->email=='demo500@gmail.com'){
+
+
            Test::where('user_id',$user->id)->delete();
            Tests_Section::where('user_id',$user->id)->delete();
            Tests_Overall::where('user_id',$user->id)->delete();
@@ -194,7 +196,7 @@ class LoginController extends Controller
            foreach($tests as $test){
                 Cache::forget('attempt_'.$user->id.'_'.$test->id);
            }
-           
+           dd($tests);
         
         }
         
