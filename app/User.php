@@ -527,6 +527,7 @@ class User extends Authenticatable
             $tests[$k]->attempt_status = $test_idgroup[$t->id][0]->status;
             
             $str ='';
+            if(isset($tests_section[$t->id]))
             foreach($tests_section[$t->id] as $m=>$n){
                
                 if(isset($sections[$n->section_id])){
