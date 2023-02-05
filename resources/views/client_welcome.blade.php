@@ -65,6 +65,8 @@
 
             @if(domain()=='piofx')
             <img src="{{ asset('img/bg_login_piofx.jpg') }}?time={{ microtime()}}" alt="login image" class="login-img">
+            @elseif(domain()=='myparakh')
+            <img src="{{ asset('img/bg_login_piofx.jpg') }}?time={{ microtime()}}" alt="login image" class="login-img">
             @elseif(domain()=='gradable')
             <img src="{{ asset('img/bg_login_gradable.jpg') }}?time={{ microtime()}}" alt="login image" class="login-img">
             @else
