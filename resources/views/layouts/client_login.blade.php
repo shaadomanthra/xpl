@@ -19,6 +19,8 @@
     <link rel="shortcut icon" href="{{asset('/favicon_piofx.ico')}}" />
   @elseif($_SERVER['HTTP_HOST'] == 'gradable.test' || env('APP_NAME') =='Gradable')
       <link rel="shortcut icon" href="{{asset('/favicon_gradable.ico')}}" />
+  @elseif($_SERVER['HTTP_HOST'] == 'myparakh.test' || $_SERVER['HTTP_HOST'] == 'myparakh.com' || env('APP_NAME') =='Gradable')
+      <link rel="shortcut icon" href="{{asset('/favicon-parakh.png')}}" />
   @else
       <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
   @endif
