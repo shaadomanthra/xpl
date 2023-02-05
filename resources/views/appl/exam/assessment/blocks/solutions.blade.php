@@ -446,6 +446,7 @@
      
 
 
+      @if($question->type=='code')
       <div class="card mb-3 mb-md-0">
         <div class="card-body">
           <h3 class="mb-3">Code Solution</h3>
@@ -524,6 +525,7 @@
             @endif
         </div>
       </div>
+      @endif
      
 
       @if($question->type!='code')
