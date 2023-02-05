@@ -17,6 +17,8 @@
       <link rel="shortcut icon" href="{{asset('/favicon_hs.ico')}}" />
   @elseif($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' )
     <link rel="shortcut icon" href="{{asset('/favicon.ico')}}" />
+    @elseif($_SERVER['HTTP_HOST'] == 'myparakh.test' || $_SERVER['HTTP_HOST'] == 'myparakh.com' || env('APP_NAME') =='Gradable')
+      <link rel="shortcut icon" href="{{asset('/favicon-parakh.png')}}" />
   @else
      <link rel="shortcut icon" href="{{asset('/favicon_client.ico')}}" />
   @endif
