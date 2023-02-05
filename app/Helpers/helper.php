@@ -345,7 +345,9 @@ function subdomain() {
             return 'piofx';
     if($_SERVER['HTTP_HOST'] == 'gradable.test' || $_SERVER['HTTP_HOST'] == 'gradable.in' )
             return 'gradable';
-    if($_SERVER['HTTP_HOST'] == 'myparakh.test' || $_SERVER['HTTP_HOST'] == 'myparakh.com' )
+    if($_SERVER['HTTP_HOST'] == 'myparakh.test' )
+            return 'gradable';
+     if($_SERVER['HTTP_HOST'] == 'myparakh.test' || $_SERVER['HTTP_HOST'] == 'myparakh.com' )
             return 'myparakh';
     if($_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' )
             return 'rguktn';

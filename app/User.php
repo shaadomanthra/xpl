@@ -346,7 +346,6 @@ class User extends Authenticatable
 
         
 
-
         $test = Cache::remember('attempt_'.$user->id.'_'.$id, 240, function() use ($user,$id) {
                 $test = DB::table('tests_overall')
                     ->where('user_id', $user->id)
@@ -510,8 +509,12 @@ class User extends Authenticatable
             $tests = [];
         }
 
-        $tests_section = Tests_Section::where('user_id',$user->id)->get();
-        $sections = Section::whereIn('id',$tests_section->pluck('section_id')->toArray())->get()->keyBy('id');
+        $tests_section = Cache::remember('section_attempt_'.$user->id,60, function() use ($user){
+            return Tests_Section::where('user_id',$user->id)->get();
+        });
+        $sections = Cache::remember('sections_'.$user->id,60, function() use ($user,$tests_section){
+            return Section::whereIn('id',$tests_section->pluck('section_id')->toArray())->get()->keyBy('id');
+        });
 
 
         $tests_section = $tests_section->groupBy('test_id');

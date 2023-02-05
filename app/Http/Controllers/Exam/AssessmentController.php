@@ -5907,6 +5907,7 @@ class AssessmentController extends Controller
         $filepath = $this->cache_path.$filename;
 
         $exam = Cache::get('test_'.$id);
+
         if(!$exam)
         if(file_exists($filepath))
         {
@@ -5985,6 +5986,8 @@ class AssessmentController extends Controller
         else
             $responses = null;
 
+
+
         if($exam->client == 'rguktnuzvid' || $exam->client == 'rguktrkvalley' || $exam->client ='rguktong' || $exam->client=='rguktsklm'|| $exam->client == 'rguktnz' || $exam->client == 'rguktrk' || $exam->client == 'rgukton' || $exam->client == 'rguktsk' )
         if($exam->client!=subdomain())
             abort('404','Test not found');
@@ -6018,6 +6021,7 @@ class AssessmentController extends Controller
             $entry = 1;
         }
 
+       
 
         if($entry && $rd)
             return redirect()->route('assessment.analysis',$exam->slug);

@@ -187,9 +187,9 @@ class LoginController extends Controller
 
            $tests = Tests_Overall::where('user_id',$user->id)->get();
            foreach($tests as $test){
-                Cache::forget('attempt_'.$user->id.'_'.$test->id);
-                Cache::forget('attempt_section_'.$user->id.'_'.$test->id);
-                Cache::forget('resp_'.$user->id.'_'.$test->id);
+                Cache::forget('attempt_'.$user->id.'_'.$test->test_id);
+                Cache::forget('attempt_section_'.$user->id.'_'.$test->test_id);
+                Cache::forget('resp_'.$user->id.'_'.$test->test_id);
            }
            Test::where('user_id',$user->id)->delete();
            Tests_Section::where('user_id',$user->id)->delete();
