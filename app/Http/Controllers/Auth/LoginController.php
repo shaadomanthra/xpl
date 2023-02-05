@@ -190,6 +190,12 @@ class LoginController extends Controller
            Cache::forget('attempts_'.$user->id);
            Cache::forget('mytests_'.$user->id);
            Cache::forget('myproducts_'.$user->id);
+           $tests = Test::where('user_id',$user->id)->get();
+           foreach($tests as $test){
+                Cache::forget('attempt_'.$user->id.'_'.$test->id);
+           }
+           
+        
         }
         
         
