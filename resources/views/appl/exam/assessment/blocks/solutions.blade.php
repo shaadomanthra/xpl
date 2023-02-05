@@ -526,6 +526,7 @@
       </div>
      
 
+      @if($question->type!='code')
       @if($question->explanation )
       <div class="card mb-3 mb-md-0">
         <div class="card-body">
@@ -533,6 +534,7 @@
           <div class="explanation">{!! $question->explanation !!}</div>
         </div>
       </div>
+      @endif
       @endif
 
      </div>
