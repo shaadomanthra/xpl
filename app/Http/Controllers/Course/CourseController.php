@@ -495,10 +495,12 @@ class CourseController extends Controller
                     ->orderBy('valid_till','desc')
                     ->first();
             
-            $practice = DB::table('practices')
+            $practice = Cache::remember('my_practice'.$user->id,60,function()use($course){
+                return DB::table('practices')
                     ->where('course_id', $course->id)
                     ->where('user_id',\auth()->user()->id)
                     ->get();
+                });
             $sum =0;$time = 0;
             $count = count($practice);
             foreach($practice as $p){
@@ -546,10 +548,12 @@ class CourseController extends Controller
             $course->user = $dat; 
 
             //exams attempt
-            $attempt = DB::table('tests_overall')
+            $attempt = Cache::remember('my_attempt_'.$user->id,60,function() use($exam_ids) {
+                return DB::table('tests_overall')
                     ->whereIn('test_id', $exam_ids)
                     ->where('user_id',\auth()->user()->id)
                     ->get()->groupBy('test_id');
+                });
 
             $course->attempt = $attempt;
 
