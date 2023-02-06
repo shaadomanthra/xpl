@@ -468,8 +468,9 @@ class CourseController extends Controller
             }
             
         }
-
+        if($course->slug!='quantitative-aptitude')
         foreach($course->exams as $e){
+            
                 array_push($exam_ids, $e->id); 
         }
 
