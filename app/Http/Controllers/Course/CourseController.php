@@ -414,11 +414,8 @@ class CourseController extends Controller
         $filepath = $this->cache_path.$filename;
 
         $course = Cache::get('course_'.$id);
-
-
-
+        //$course =null;
         //dd($course);
-
         if(!$course){
             
             $course = Course::where('slug',$id)->first();
@@ -432,7 +429,7 @@ class CourseController extends Controller
 
         }
 
-
+        
 
         if(request()->get('refresh'))
             {
@@ -486,6 +483,7 @@ class CourseController extends Controller
 
         if(!isset($course->product))
             $course->product = null;
+
 
         $user = \Auth::user();
         $entry=null;
@@ -595,9 +593,10 @@ class CourseController extends Controller
                 $countuser = count($users);
 
             $uids = $users->pluck('id')->toArray();
-            $user_practice = Cache::remember('user_practice_'.$user->id, 60, function() use($uids, $course){
-                return Practice::select('id','user_id','accuracy')->whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
-            });
+            $user_practice = [];
+            // Cache::remember('user_practice_'.$user->id, 60, function() use($uids, $course){
+            //     return Practice::select('id','user_id','accuracy','course_id')->whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+            // });
             foreach($user_practice as $uid=>$p){
                 $practice_set[$uid] = $p->sum('accuracy');
                 $total = $total + $p->sum('accuracy');
@@ -608,11 +607,11 @@ class CourseController extends Controller
 
             $date = \Carbon\Carbon::today()->subDays(7);
 
-            $user_practice2 = Cache::remember('user_practice2_'.$user->id, 60, function() use($uids, $course){
+            $user_practice2 = [];
+            //Cache::remember('user_practice2_'.$user->id, 60, function() use($uids, $course){
+        //         return Practice::select('id','user_id','accuracy','course_id','created_at')->whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$date)->get()->groupBy('user_id');
 
-                return Practice::select('id','user_id','accuracy')->whereIn('user_id',$uids)->where('course_id',$course->id)->where('created_at','>=',$date)->get()->groupBy('user_id');
-
-        });
+        // });
 
             $total2 =0;
             foreach($user_practice2 as $uid=>$p){

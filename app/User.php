@@ -461,6 +461,8 @@ class User extends Authenticatable
         $user = $this;
         if(request()->get('refresh')){
             Cache::forget('attempts_'.$user->id);
+             Cache::forget('section_attempt_'.$user->id);
+             Cache::forget('sections_'.$user->id);
         }
 
 
@@ -513,7 +515,9 @@ class User extends Authenticatable
             return Tests_Section::where('user_id',$user->id)->get();
         });
         $sections = Cache::remember('sections_'.$user->id,60, function() use ($user,$tests_section){
-            return Section::whereIn('id',$tests_section->pluck('section_id')->toArray())->get()->keyBy('id');
+           $sections = Section::whereIn('id',$tests_section->pluck('section_id')->toArray())->with('questions')->get()->keyBy('id');
+
+            return $sections;
         });
 
 

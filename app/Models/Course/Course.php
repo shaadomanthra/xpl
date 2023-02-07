@@ -185,7 +185,7 @@ class Course extends Model
 
 
         
-        $qset = DB::table('category_question')->whereIn('category_id', $ap)->select('category_id', DB::raw('count(*) as count'))->where('intest','!=',1)->groupBy('category_id')->get();
+        $qset = DB::table('category_question')->select('category_id','intest')->whereIn('category_id', $ap)->select('category_id', DB::raw('count(*) as count'))->where('intest','!=',1)->groupBy('category_id')->get();
 
 
        
@@ -222,12 +222,9 @@ class Course extends Model
                 }
                 //dd($qc);
             }
-
-
-
                           
         } 
-
+        
 
         $data['nodes'] = $node;
         $data['ques_count'] = $qcount;
@@ -236,6 +233,8 @@ class Course extends Model
             $data['ques_count']  = $count;
 
         $examtype = Examtype::where('slug',$id)->first();
+        $exams = [];
+        if($id!='quantitative-aptitude')
         if($examtype)
             $exams = Exam::where('examtype_id',$examtype->id)->get();
         else{
@@ -275,8 +274,6 @@ class Course extends Model
             $tests[$e->id] = $e->slug;
 
         }
-
-
 
 
         $data['exams'] = $exams;
