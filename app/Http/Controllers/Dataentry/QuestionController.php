@@ -1071,7 +1071,7 @@ class QuestionController extends Controller
                 else
                     $code=0;
 
-                
+                   
                 return view('appl.dataentry.question.show_course')
                         ->with('project',$this->project)
                         ->with('mathjax',true)
@@ -1085,7 +1085,7 @@ class QuestionController extends Controller
                         ->with('codes',$codes)
                         ->with('users',$users)
                         ->with('highlight',$highlight)
-                        ->with('copy',1)
+                        ->with('copy',null)
                         ->with('exam',$exam)
                         ->with('bno',$bno)
                         ->with('category',$category)

@@ -3340,7 +3340,10 @@ $(function(){
 <script>
 @if(isset($question))
 @if($question->type!='codes')
-@if(!request()->get('default') && !isset($copy))
+
+@if(request()->get('default')!=null && isset($copy))
+
+
   $('body').bind('cut copy paste',function(e) {
 
      return false; 
@@ -3381,18 +3384,7 @@ $(window).keyup(function(e){
   }
 });
 
-// var btn = document.getElementById('submit_button'),
-//     clicked = false;
 
-// btn.addEventListener('click', function () {
-//   clicked = true;
-// });
-
-// window.onbeforeunload = function () {
-//   if(!clicked) {
-//     return 'If you resubmit this page, progress will be lost.';
-//   }
-// };
 
 
 @endif
