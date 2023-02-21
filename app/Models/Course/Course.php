@@ -67,7 +67,7 @@ class Course extends Model
             if(isset($course_data['categories'])){
                         $course->categories = json_decode(json_encode($course_data['categories']));
                         $course->ques_count = $course_data['ques_count'];
-                        $course->nodes = $course_data['nodes'];
+                        $course->nodes = [];//$course_data['nodes'];
                         $course->exams = $course_data['exams'];
                         $course->tests = $course_data['tests'];
                     }else{
@@ -79,10 +79,22 @@ class Course extends Model
                         $course->tests = null;
                     }
 
+            
+            $nodes = array();
+            foreach($course_data['nodes'] as $node){
+                $nodes[$node->name] = array();
+                foreach($node->children as $n){
+                    $item = ["id"=>$n->id,"name"=>$n->name,"slug"=>$n->slug];
+                    array_push($nodes[$node->name] ,$item);
+                }
+              
+            }
+            $course->new_nodes = $nodes;
 
-
-            Cache::forget('course_'.$course->slug);
+            //Cache::forget('course_'.$course->slug);
             Cache::forever('course_'.$course->slug,$course);
+
+             
         }
 
         if($courses){
@@ -169,7 +181,7 @@ class Course extends Model
         $ap = Category::defaultOrder()->descendantsOf($parent->id)->pluck('id')->toArray();
 
 
-       
+      
 
         $categories_ =array();
         foreach($categories_list as $categ){
@@ -274,7 +286,6 @@ class Course extends Model
             $tests[$e->id] = $e->slug;
 
         }
-
 
         $data['exams'] = $exams;
         $data['tests'] = $tests;

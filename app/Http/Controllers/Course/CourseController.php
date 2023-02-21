@@ -413,33 +413,35 @@ class CourseController extends Controller
         $filename = $id.'.json';
         $filepath = $this->cache_path.$filename;
 
+        if(request()->get('refresh'))
+        {
+            Cache::forget('course_'.$id);
+            session()->forget('bno');
+        }
+
         $course = Cache::get('course_'.$id);
-        //$course =null;
-        //dd($course);
-        if(!$course){
+       
+         if(!$course){
             
             $course = Course::where('slug',$id)->first();
-            $course_data = $course->category_list($course->slug);
-            $course->categories = json_decode(json_encode($course_data['categories']));
-            $course->ques_count = $course_data['ques_count'];
-            $course->nodes = $course_data['nodes'];
-            $course->exams = $course_data['exams'];
-            $course->tests = $course_data['tests'];
-            
+            // $course_data = $course->category_list($course->slug);
+
+            // $course->categories = json_decode(json_encode($course_data['categories']));
+            // $course->ques_count = $course_data['ques_count'];
+            // $course->nodes = $course_data['nodes'];
+            // $course->exams = $course_data['exams'];
+            // $course->tests = $course_data['tests'];
 
         }
 
-        
-
         if(request()->get('refresh'))
-            {
-                Cache::forget('course_'.$id);
+        {
+                
                 $course->updatecache(null,$course);
-                session()->forget('bno');
                 flash('Article Pages Cache Updated')->success();
-            }
+         }
 
-
+         
         
         //dd($course->categories);
 
@@ -494,12 +496,10 @@ class CourseController extends Controller
                     ->orderBy('valid_till','desc')
                     ->first();
             
-            $practice = Cache::remember('my_practice'.$user->id,60,function()use($course){
-                return DB::table('practices')
+            $practice = DB::table('practices')
                     ->where('course_id', $course->id)
                     ->where('user_id',\auth()->user()->id)
                     ->get();
-                });
             $sum =0;$time = 0;
             $count = count($practice);
             foreach($practice as $p){
@@ -621,11 +621,12 @@ class CourseController extends Controller
 
         }
 
-      
+        $course->categories = json_decode(json_encode($course->categories),true);
+       
         //dd($user_practice);
         //dd($course->exams);
         if($course)
-            return view('appl.course.course.show4')
+            return view('appl.course.course.show3')
                     ->with('course',$course)
                     ->with('categories',$course->categories)
                     ->with('product',$course->product)
@@ -638,7 +639,8 @@ class CourseController extends Controller
                     ->with('bno',$bno)
                     ->with('pavg',$pavg)
                     ->with('wpavg',$wpavg)
-                    ->with('nodes',$course->nodes);
+                    ->with('nodes',$course->nodes)
+                    ->with('new_nodes',$course->new_nodes);
 
         else
             abort(404);
