@@ -312,7 +312,8 @@ class CourseController extends Controller
             $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('category_id',$category->id)->get()->groupBy('user_id');
         }
         else{
-            $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+           
+            $practice = Practice::select('course_id','id','user_id')->whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
         }
 
         foreach($users as $id=>$u){
