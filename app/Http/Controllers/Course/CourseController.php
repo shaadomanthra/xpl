@@ -310,27 +310,52 @@ class CourseController extends Controller
             else
                 $total =0;
             $practice = Practice::whereIn('user_id',$uids)->where('course_id',$course->id)->where('category_id',$category->id)->get()->groupBy('user_id');
-        }
-        else{
-           
-            $practice = Practice::select('course_id','id','user_id')->whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
-        }
 
-        foreach($users as $id=>$u){
-            $batches[strtoupper($u->info)]['name'] = strtoupper($u->info);
-             $batches[strtoupper($u->info)]['avg'] = 0;
-            if(isset($batches[strtoupper($u->info)]['total']))
-            {
-                if(isset($practice[$u->id]))
-                $batches[strtoupper($u->info)]['total'] = $batches[strtoupper($u->info)]['total'] +count($practice[$u->id]);
-                $batches[strtoupper($u->info)]['count']++;
-            }else{
-                $batches[strtoupper($u->info)]['total']  = 0;
-                $batches[strtoupper($u->info)]['count'] = 1;
-                if(isset($practice[$u->id]))
-                $batches[strtoupper($u->info)]['total'] = count($practice[$u->id]);
+            foreach($users as $id=>$u){
+                $batches[strtoupper($u->info)]['name'] = strtoupper($u->info);
+                 $batches[strtoupper($u->info)]['avg'] = 0;
+                if(isset($batches[strtoupper($u->info)]['total']))
+                {
+                    if(isset($practice[$u->id]))
+                    $batches[strtoupper($u->info)]['total'] = $batches[strtoupper($u->info)]['total'] +count($practice[$u->id]);
+                    $batches[strtoupper($u->info)]['count']++;
+                }else{
+                    $batches[strtoupper($u->info)]['total']  = 0;
+                    $batches[strtoupper($u->info)]['count'] = 1;
+                    if(isset($practice[$u->id]))
+                    $batches[strtoupper($u->info)]['total'] = count($practice[$u->id]);
+                }
             }
         }
+        else{
+
+            //$practice = Practice::select('course_id','id','user_id')->whereIn('user_id',$uids)->where('course_id',$course->id)->get()->groupBy('user_id');
+            $practice = array();
+
+            foreach($users as $id=>$u){
+
+                $practice[$u->id] = Practice::where('user_id',$u->id)->where('course_id',$course->id)->count();
+            }
+
+            foreach($users as $id=>$u){
+                 
+                $batches[strtoupper($u->info)]['name'] = strtoupper($u->info);
+                 $batches[strtoupper($u->info)]['avg'] = 0;
+                if(isset($batches[strtoupper($u->info)]['total']))
+                {
+                    if(isset($practice[$u->id]))
+                    $batches[strtoupper($u->info)]['total'] = $batches[strtoupper($u->info)]['total'] +$practice[$u->id];
+                    $batches[strtoupper($u->info)]['count']++;
+                }else{
+                    $batches[strtoupper($u->info)]['total']  = 0;
+                    $batches[strtoupper($u->info)]['count'] = 1;
+                    if(isset($practice[$u->id]))
+                    $batches[strtoupper($u->info)]['total'] = $practice[$u->id];
+                }
+            }
+        }
+
+        
 
         foreach($batches as $h=>$j){
             $batches[$h]['avg'] = round($batches[$h]['total']/$batches[$h]['count'],2);
