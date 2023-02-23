@@ -1582,7 +1582,6 @@ class QuestionController extends Controller
         $question->tags = $question->tags->pluck('id')->toArray();         
 
      
-     
 
         if($question)
             return view('appl.dataentry.question.createedit')
