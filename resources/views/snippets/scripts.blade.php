@@ -3344,26 +3344,26 @@ $(function(){
 @if(request()->get('default')!=null && isset($copy) && !isset($disable))
 
  
-  // $('body').bind('cut copy paste',function(e) {
+  $('body').bind('cut copy paste',function(e) {
 
-  //    return false; 
-  // });
+     return false; 
+  });
 
-  // $(document).ready(function () {
-  //   //Disable full page
-  //   $("body").on("contextmenu",function(e){
-  //       return false;
-  //   });
+  $(document).ready(function () {
+    //Disable full page
+    $("body").on("contextmenu",function(e){
+        return false;
+    });
 
-  //   $(".code").on("contextmenu",function(e){
-  //       return false;
-  //   });
+    $(".code").on("contextmenu",function(e){
+        return false;
+    });
     
-  //   //Disable part of page
-  //   $("#id").on("contextmenu",function(e){
-  //       return false;
-  //   });
-  //});
+    //Disable part of page
+    $("#id").on("contextmenu",function(e){
+        return false;
+    });
+  });
 @endif
 
 function copyToClipboard() {
