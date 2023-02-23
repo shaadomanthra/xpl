@@ -1597,6 +1597,7 @@ class QuestionController extends Controller
                     ->with('type',$question->type)
                     ->with('code',true)
                     ->with('copy',1)
+                    ->with('disable',1)
                     ->with('code_ques',$code_ques)
                     ->with('editor',true)
                     ->with('stub','Update');

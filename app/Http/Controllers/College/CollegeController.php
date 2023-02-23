@@ -64,6 +64,7 @@ class CollegeController extends Controller
         $view = $search ? 'list': 'index';
 
 
+
         return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
                 ->with('objs',$objs)
                 ->with('data',$data)
@@ -121,23 +122,28 @@ class CollegeController extends Controller
                 if (($handle = fopen($fpath, "r")) !== FALSE) {
                   while (($data = fgetcsv($handle, 9000, ",")) !== FALSE) {
                
+
                     $num = count($data);
                     $row++;
-                    $cname = $data[0];
+                    $cname = $data[1];
                     $col = Obj::where('name',$cname)->first();
+
+                    if($row==2)
+                        continue;
+
 
                     if(!$col){
                         $col = new Obj();
                         $col->name = ucwords(strtolower($cname));
-                        $col->type = $data[1];
-                        $col->location = $data[2];
-                        $col->college_website = $data[3];
+                        $col->type = $data[2];
+                        $col->location = $data[3];
+                        $col->college_website = $data[4];
                         $col->save();
                     }else{
                         $col->name = ucwords(strtolower($cname));
-                        $col->type = $data[1];
-                        $col->location = ucfirst($data[2]);
-                        $col->college_website = ucfirst($data[3]);
+                        $col->type = $data[2];
+                        $col->location = ucfirst($data[3]);
+                        $col->college_website = ucfirst($data[4]);
                         $col->save();
                     }
                     
@@ -272,6 +278,38 @@ class CollegeController extends Controller
             abort(404);
     }
 
+     /**
+     * Download the csv file
+     *
+     * @return \Illuminate\Http\Response
+     */
+     public function download(Obj $obj)
+    {
+
+        // Retrieve all the records
+        $objs = $obj->get();
+        $fileName = "colleges_".strtotime("now").'.csv';
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+       
+        $callback = function() use($objs) {
+            $file = fopen('php://output', 'w');
+            $columns = ['sno','name','type','location','zone'];
+            fputcsv($file, $columns);
+                foreach($objs as $obj){
+                    $row = [$obj->id,$obj->name,$obj->type,$obj->location,$obj->college_website];
+                    fputcsv($file, $row);
+                }
+            fclose($file);
+        };
+        return response()->stream($callback, 200, $headers);
+      
+    }
 
     public function analysis(Request $request)
     {

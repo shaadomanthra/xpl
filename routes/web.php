@@ -644,6 +644,7 @@ use Illuminate\Support\Facades\Storage;
 	Route::get('college/top30','College\CollegeController@top30')->middleware('auth')->name('college.top30');
 
 	Route::get('college/upload','College\CollegeController@uploadColleges')->middleware('auth')->name('college.upload');
+	Route::get('college/download','College\CollegeController@download')->middleware('auth')->name('college.download');
 	Route::post('college/upload','College\CollegeController@uploadColleges')->middleware('auth')->name('college.upload');
 	Route::resource('zone','College\ZoneController')->middleware('auth');
 	Route::resource('branch','College\BranchController')->middleware('auth');

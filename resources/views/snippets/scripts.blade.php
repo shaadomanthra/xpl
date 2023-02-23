@@ -3341,7 +3341,7 @@ $(function(){
 @if(isset($question))
 @if($question->type!='codes')
 
-@if(request()->get('default')!=null && isset($copy))
+@if(request()->get('default')!=null && isset($copy) && !isset($disable))
 
 
   $('body').bind('cut copy paste',function(e) {
