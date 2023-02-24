@@ -38,7 +38,7 @@
   </select>
  <a href="#" class="ml-3 btn  btn-outline-primary btn-sm" data-toggle="modal" data-target="#io_code">I/O Instructions</a></div>
 
-<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}" data-dalang="{{$lang = 'preset_'.$question->b}}" rows="5">@if($question->code){{$question->code}} @else @if($question->c){{$question->c}} @elseif(isset($question->d->$lang)){{$question->d->$lang}}@elseif($question->b=='sql') @else //Note: The testcase inputs are taken from command line arguments
+<textarea id="code_{{($i+1)}}" class="form-control code code_{{($i+1)}}" name="dynamic_{{($i+1)}}" data-dalang="{{$lang = 'preset_'.$question->b}}" rows="5">@if(isset($question->d->$lang)){{$question->d->$lang}} @elseif($question->code){{trim($question->code)}} @else @if($question->c){{$question->c}} @elseif($question->b=='sql') @else //Note: The testcase inputs are taken from command line arguments
 // click on the I/O instructions button to learn about the language specific input options
 // The output string has to exactly match with the execpted output @endif @endif</textarea>
 
