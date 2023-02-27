@@ -10,7 +10,7 @@
         <div class="col-12 col-lg-7 pt-5 pt-md-0 order-last d-flex align-items-center">
           <div class="content">
             <h1 class="pb-2">What is Finishing School?</h1>
-            <p class="mb-0" style="line-height: 35px;">Talent Sprint's three-month Engineering Finishing School is
+            <p class="mb-0" style="line-height: 35px;">Xplore's three-month Engineering Finishing School is
               designed to impart technological training, improve critical thinking, and refine English communication
               along with interview preparation skills for recently graduated students and students who have 60%
               aggregate in 10th,12th and graduation. All of this is complemented by regular tests and feedback to help
@@ -271,12 +271,12 @@
           <div class="why_fs card p-5 bg-dark text-light font-weight-lighter">
             <p>What do students get out of finishing school?</p>
             <ul class="pl-4">
-              <li>With TalentSprint Certification, students gain a strong foothold in the tech business.</li>
+              <li>With Xplore Certification, students gain a strong foothold in the tech business.</li>
               <li>They get to work on intriguing use-cases and projects while being coached by renowned instructors.
               </li>
-              <li>Students can take advantage of TalentSprint's Placement Support to get a head start on their careers.
+              <li>Students can take advantage of Xplore's Placement Support to get a head start on their careers.
               </li>
-              <li>TalentSprint Recruitment Partner Network will provide students with unwavering assistance until they
+              <li>Xplore Recruitment Partner Network will provide students with unwavering assistance until they
                 receive their first job offer.</li>
             </ul>
           </div>

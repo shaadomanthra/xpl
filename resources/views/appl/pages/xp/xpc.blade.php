@@ -12,14 +12,8 @@
                 <h1 class="display-4 mb-3">Xplore placement club</h1>
                 <p class="lead">Join the club for exclusive placement drives, tech talks, premium learning content.</p>
             </div>
-            <a class="js-go-to position-static btn btn-primary btn-wide transition-3d-hover" href="login"
-                data-hs-go-to-options='{
-                "targetSelector": "#caseStudies",
-                "offsetTop": 0,
-                "position": null,
-                "animationIn": false,
-                "animationOut": false
-                }'>
+            <a class=" btn btn-primary btn-wide transition-3d-hover" href="/productpage/xpc"
+                >
                 Join Now
                 
             </a>
