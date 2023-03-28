@@ -146,7 +146,7 @@
 
          <div class="col-12 col-md-4">
             <div class="form-group{{ $errors->has('confidence') ? ' has-error' : '' }}">
-                <label for="confidence" class="col-md-8 control-label">Total Inter marks/GPA</label>
+                <label for="confidence" class="col-md-8 control-label">1st year Inter marks</label>
 
                 <div class="col-md-12">
                     <input id="confidence" type="text" class="form-control" name="confidence" value="{{ old('confidence') }}" required autofocus>
