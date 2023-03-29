@@ -6,7 +6,7 @@
 	<div class="text-center">
 		<h1 style="font-size:40px">Site is Down</h1>
 		
-		<p>Website Services Suspended.</p>
+		<p>Website under maintenance. Kindly check back after few minutes.</p>
 		
 	</div>
 </div>
