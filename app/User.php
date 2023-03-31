@@ -118,7 +118,7 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->belongsToMany('PacketPrep\Models\Job\Post');
+        return $this->belongsToMany('PacketPrep\Models\Job\Post')->withPivot(['created_at','score','shortlisted','data']);
     }
 
     

@@ -513,6 +513,8 @@ use Illuminate\Support\Facades\Storage;
 		return Redirect::to('https://iidt.xplore.co.in/test/067855', 301); 
 	});
 
+	Route::get('post/candidate','Job\PostController@candidate')->name('job.candidate');
+	
 	Route::get('post/{slug}/analytics','Job\PostController@analytics')->name('job.analytics');
 	Route::get('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');
 	Route::post('post/{slug}/applicants','Job\PostController@applicant_index')->name('job.applicants');

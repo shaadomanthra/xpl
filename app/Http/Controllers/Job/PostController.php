@@ -80,6 +80,41 @@ class PostController extends Controller
                 ->with('app',$this);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function candidate(Obj $obj,Request $request)
+    {
+
+        $this->authorize('view', $obj);
+
+        $search = $request->search;
+        $item = $request->item;
+        $user =\auth::user();
+        $applications = null;
+        $candidate=null;
+        if($item){
+            $candidate = $user->where('phone','LIKE',"%{$item}%")->where('client_slug',subdomain())->first();
+            if($candidate){
+                $applications = $candidate->posts;
+            }else{
+               
+            }
+        }
+
+        
+
+        $view = 'candidate';
+
+        return view('appl.'.$this->app.'.'.$this->module.'.'.$view)
+                ->with('applications',$applications)
+                ->with('candidate',$candidate)
+                ->with('obj',$obj)
+                ->with('app',$this);
+    }
+
     public function public_index(Obj $obj,Request $request)
     {
 
