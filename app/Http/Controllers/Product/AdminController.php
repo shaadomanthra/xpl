@@ -65,7 +65,7 @@ class AdminController extends Controller
        
 
         
-        
+      
 
         if(!$request->get('refresh')){
             $data =   json_decode(Storage::disk('s3')->get('analytics_'.subdomain().'.co.in.json'),true);
