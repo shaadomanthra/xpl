@@ -366,104 +366,111 @@ class QuestionController extends Controller
 
     public function copy($id,Request $r){
 
-        $section_id = $r->session()->get('session_section_id');
-        $section_name = $r->session()->get('session_section_name');
-        $question = Question::where('id',$id)->first();
-        if(!$question->sections->contains($section_id))
-            $question->sections()->attach($section_id);
+        $mode = $r->get('mode');
 
-        flash('Question (<b>'.$question->slug.'</b>) Successfully Copied to '.$section_name.'!')->success();
-        return redirect()->back();
-        // $topic_id = $r->session()->get('topic_id');
+        if($mode!='project'){
+            $section_id = $r->session()->get('session_section_id');
+            $section_name = $r->session()->get('session_section_name');
+            $question = Question::where('id',$id)->first();
+            if(!$question->sections->contains($section_id))
+                $question->sections()->attach($section_id);
 
-        // if(!$topic_id){
-        //     abort('403','Topic Not Defined');
-        // }
+            flash('Question (<b>'.$question->slug.'</b>) Successfully Copied to '.$section_name.'!')->success();
+            return redirect()->back();
+        }else{
+            $topic_id = $r->session()->get('topic_id');
 
-        // $category = Category::where('id',$topic_id)->first();
+            if(!$topic_id){
+                abort('403','Topic Not Defined');
+            }
 
-        // $project = Project::where('slug',$r->session()->get('course_slug'))->first();
+            $category = Category::where('id',$topic_id)->first();
 
-        // $q = Question::where('id',$id)->first();
-        // $old_project = Project::where('id',$q->project_id)->first();
+            $project = Project::where('slug',$r->session()->get('module_slug'))->first();
 
-        // $passage = Passage::where('id',$q->passage_id)->first();
+            $q = Question::where('id',$id)->first();
+            $old_project = Project::where('id',$q->project_id)->first();
+
+            $passage = Passage::where('id',$q->passage_id)->first();
         
-        // if($passage){
-        //      $p = Passage::where('passage',$passage->passage)
-        //             ->where('project_id',$project->id)
-        //             ->first();
-        //      if(!$p){
-        //          $p = new Passage();
-        //          $p->name = $passage->name;
-        //          $p->passage = $passage->passage;
-        //          $p->user_id = \auth::user()->id;
-        //          $p->project_id = $project->id;
-        //          $p->stage = $passage->stage;
-        //          $p->status = $passage->status;
-        //          $p->save();
-        //      }
-        //      $q->passage_id = $p->id;    
-        // }
+            if($passage){
+                 $p = Passage::where('passage',$passage->passage)
+                        ->where('project_id',$project->id)
+                        ->first();
+                 if(!$p){
+                     $p = new Passage();
+                     $p->name = $passage->name;
+                     $p->passage = $passage->passage;
+                     $p->user_id = \auth::user()->id;
+                     $p->project_id = $project->id;
+                     $p->stage = $passage->stage;
+                     $p->status = $passage->status;
+                     $p->save();
+                 }
+                 $q->passage_id = $p->id;    
+            }
 
-        // try{
-        //     $question = new Question();
-        //     $question->reference = strtoupper($q->reference);
-        //     $question->question = $q->question;
-        //     $question->type = $q->type;
-        //     $question->a = $q->a;
-        //     $question->b = $q->b;
-        //     $question->c = $q->c;
-        //     $question->d = $q->d;
-        //     $question->e = $q->e;
-        //     $question->answer = $q->answer;
-        //     $question->explanation = $q->explanation;
-        //     $question->dynamic = $q->dynamic;
-        //     $question->passage_id= $q->passage_id;
-        //     $question->project_id= $project->id;
-        //     $question->stage = 0;
-        //     $question->slug = str_random(10);
-        //     $question->user_id = \auth::user()->id;
-        //     $question->status = $q->status;
-        //     $question->level = $q->level;
-        //     if($q->topic){
-        //        $question->topic = $q->topic; 
-        //    }else{
-        //     if(count($q->categories)!=0){
-        //        foreach($q->categories as $m=>$cat)
-        //         {
-        //             if($m==0)
-        //             $c = $cat->name;
-        //             else
-        //                 $c = $c.', '.$cat->name;
-        //         } 
-        //     } 
-        //     $question->topic = $c;
-        //    }
+            try{
+                $question = new Question();
+                $question->reference = strtoupper($q->reference);
+                $question->question = $q->question;
+                $question->type = $q->type;
+                $question->a = $q->a;
+                $question->b = $q->b;
+                $question->c = $q->c;
+                $question->d = $q->d;
+                $question->e = $q->e;
+                $question->answer = $q->answer;
+                $question->explanation = $q->explanation;
+                $question->dynamic = $q->dynamic;
+                $question->passage_id= $q->passage_id;
+                $question->project_id= $project->id;
+                $question->stage = 0;
+                $question->slug = str_random(10);
+                $question->user_id = \auth::user()->id;
+                $question->status = $q->status;
+                $question->level = $q->level;
+                if($q->topic){
+                   $question->topic = $q->topic; 
+               }else{
+                if(count($q->categories)!=0){
+                   foreach($q->categories as $m=>$cat)
+                    {
+                        if($m==0)
+                        $c = $cat->name;
+                        else
+                            $c = $c.', '.$cat->name;
+                    } 
+                } 
+                $question->topic = $c;
+               }
 
 
-            
-        //     $question->intest = $q->intest;
-            
-        //     $question->save(); 
+                
+                $question->intest = $q->intest;
+                
+                $question->save(); 
 
-        //     if(!$q->intest)
-        //         $intest = 0;
-        //     else
-        //         $intest = $q->intest;
+                if(!$q->intest)
+                    $intest = 0;
+                else
+                    $intest = $q->intest;
 
-        //     if(!$question->categories->contains($category->id))
-        //         $question->categories()->attach($category->id,array('intest' => $intest)); 
+                if(!$question->categories->contains($category->id))
+                    $question->categories()->attach($category->id,array('intest' => $intest)); 
 
-        //     flash('Question (<b>'.$q->slug.'</b>) Successfully Copied to '.$category->name.'!')->success();
-            
-        //     return redirect()->back();
-  
-        // }
-        // catch (QueryException $e){
-        //     flash('There is some error in storing the data...kindly retry.')->error();
-        //     return redirect()->back()->withInput();
-        // }
+                flash('Question (<b>'.$q->slug.'</b>) Successfully Copied to '.$category->name.'!')->success();
+                
+                return redirect()->back();
+      
+            }
+            catch (QueryException $e){
+                flash('There is some error in storing the data...kindly retry.')->error();
+                return redirect()->back()->withInput();
+            }
+        }
+        
+        
 
     }
 

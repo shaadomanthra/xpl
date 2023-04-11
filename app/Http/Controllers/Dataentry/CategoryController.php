@@ -142,12 +142,13 @@ class CategoryController extends Controller
             if($parent->getParent($parent)){
                 $request->session()->put('course_id', $parent->getParent($parent)->id); 
                 $request->session()->put('course_name', $parent->getParent($parent)->name); 
-            $request->session()->put('course_slug', $parent->getParent($parent)->slug);
+                $request->session()->put('course_slug', $parent->getParent($parent)->slug);
             }
             
 
             $request->session()->put('topic_name', $category->name);
             $request->session()->put('module_name', $parent->name); 
+            $request->session()->put('module_slug', $parent->slug); 
             
               
         }

@@ -12,6 +12,9 @@
 			<a href="#"  data-toggle="modal" data-target="#exampleModal3">
 				<i class="fa fa-retweet" data-tooltip="tooltip" data-placement="top" title="Copy"></i>
 			</a>&nbsp;
+			<a href="#"  data-toggle="modal" data-target="#exampleModal4">
+				<i class="fa fa-th" data-tooltip="tooltip" data-placement="top" title="Copy Project"></i>
+			</a>&nbsp;
 			<a href="{{ route('question.edit',['project'=>$project->slug,'question'=>$question->id,'url'=> url()->current()]) }}">
 			<i class="fa fa-pencil-square" data-tooltip="tooltip" data-placement="top" title="Edit"></i> 
 			</a>&nbsp;
