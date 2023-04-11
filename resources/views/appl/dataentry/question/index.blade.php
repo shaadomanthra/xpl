@@ -24,7 +24,7 @@
             </button>
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="{{ route('question.create',['project_id'=>$project->slug])}}">Multiple Choice Question</a>
+                <a class="dropdown-item" href="{{ route('question.create',['project_id'=>$project->slug,'type'=>'mcq'])}}">Multiple Choice Question</a>
                 <a class="dropdown-item" href="{{ route('question.create',['project_id'=>$project->slug,'type'=>'naq'])}}">Numerical Answer Question</a>
                 <a class="dropdown-item" href="{{ route('question.create',['project_id'=>$project->slug,'type'=>'maq'])}}">Multi Answer Question</a>
                 <a class="dropdown-item" href="{{ route('question.create',['project_id'=>$project->slug,'type'=>'eq'])}}">Explanation Question</a>
