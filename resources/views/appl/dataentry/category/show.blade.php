@@ -35,7 +35,7 @@
           <div class="mb-3">
             <h3>Topic Name : {{ request()->session()->get('topic_name') }}</h3><br>
             Module Name : {{ request()->session()->get('module_name') }}<br>
-            Course Name : {{ request()->session()->get('course_name') }}<br>
+            Module Slug : {{ request()->session()->get('module_slug') }}<br>
           </div>
           <p class="bg-light mb-3 p-2 border"> We save to session in order to copy questions from one project to other</p>
           <a class="btn btn-outline-primary" href="{{ route('category.show',[$project->slug,$category->slug])}}?store_session=true">Save to Session
