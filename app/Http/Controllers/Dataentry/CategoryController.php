@@ -148,7 +148,7 @@ class CategoryController extends Controller
 
             $request->session()->put('topic_name', $category->name);
             $request->session()->put('module_name', $parent->name); 
-            $request->session()->put('module_slug', $parent->slug); 
+            $request->session()->put('module_slug', $project_slug); 
             
               
         }
