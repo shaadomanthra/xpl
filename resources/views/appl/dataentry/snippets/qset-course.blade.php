@@ -77,6 +77,9 @@
 
 @if(\auth::user()->checkRole(['administrator','employee']))
 
+<a href="#"  data-toggle="modal" data-target="#exampleModal4" class="btn btn-success w-100 mb-2">
+				<i class="fa fa-th" data-tooltip="tooltip" data-placement="top" title="Copy Project"></i> Add to Project
+			</a>
 <a href="{{ route('course.analytics',$details['course']->slug)}}?topic={{$category->slug}}" class="btn btn-primary w-100"> Check Analytics</a>
 
 <div class="card mt-4">
