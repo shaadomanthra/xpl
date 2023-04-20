@@ -87,19 +87,20 @@
 
 			@if($exam->status==2)
 
+				
 				@if(subdomain()==strtolower(env('APP_NAME')) && auth::user())
-
+				
 					@if(!auth::user()->college_id)
 						@include('appl.exam.assessment.blocks.complete_profile')
 					@elseif($exam->settings->email_verified==1 && auth::user()->status!=0 && auth::user()->status!=1)
 							@include('appl.exam.assessment.blocks.verify_email')
 					@elseif($exam->settings->resume==1 && !Storage::disk('s3')->exists('resume/resume_'.\auth::user()->username.'.pdf'))
 							@include('appl.exam.assessment.blocks.resume')
-
+							
 					@elseif(count($form_fields)  && !Storage::disk('s3')->exists('test_info/'.$exam->slug.'/'.auth::user()->username.'.json'))
 							@include('appl.exam.assessment.blocks.form_fields')
 					@else
-
+					
 						@include('appl.exam.assessment.blocks.accesscode')
 
 					@endif

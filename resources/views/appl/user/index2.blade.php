@@ -1,3 +1,4 @@
+
 @extends('layouts.nowrap-white')
 @section('title', $user->name.' ')
 @section('content')
@@ -6,6 +7,7 @@
   <div class="col">
     @include('flash::message')  
 
+    
     <div class=" mb-3">
       <div style="height:150px;background: linear-gradient(70deg,#F44336, #3f51b5);"></div>
       <div class=" " style="margin-top: -90px;">

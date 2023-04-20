@@ -151,7 +151,24 @@
 
 @if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in' || subdomain()=='packetprep' )
       <div class="row mr-2 mb-4 ml-2">
-        
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              @if(!Storage::disk('s3')->exists('resume/resume_'.\auth::user()->username.'.pdf') )
+              <a href="{{ route('resume.upload')}}" class="btn btn-sm btn-secondary float-right"> 
+                Upload your resume
+              </a>
+              @else
+              <a href="{{ route('resume.upload')}}" class="btn btn-sm btn-secondary float-right"> 
+                View your resume
+              </a>
+              @endif
+              <h3>My Resume </h3>
+              
+
+            </div>
+          </div>
+        </div>
     </div>
 
       <div class="row mr-2 ml-2">
