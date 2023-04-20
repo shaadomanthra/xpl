@@ -6,6 +6,8 @@ use PacketPrep\Models\Exam\Tests_Overall;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Storage;
+
 class TestReport2 implements FromCollection
 {
 
@@ -155,6 +157,8 @@ class TestReport2 implements FromCollection
 
                 $result[$k]->pdf2= route('assessment.pdf',$exam->slug).'?student='.$res->user->username.'&screen=1';
                 $result[$k]->pdf= route('assessment.pdf',$exam->slug).'?student='.$res->user->username;
+                if($exam->settings->resume==1)
+                    $result[$k]->resume= Storage::disk('s3')->url('resume/resume_'.$res->user->username.'.pdf');
 
             }
 
@@ -275,6 +279,8 @@ class TestReport2 implements FromCollection
             
                 $ux->pdf2 = 'Web Report';
                 $ux->pdf = 'PDF Report';
+                if($exam->settings->resume==1)
+                    $ux->resume= 'Resume';
 
         }
 

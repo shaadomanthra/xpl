@@ -71,10 +71,9 @@ class UsersExport implements FromCollection,ShouldAutoSize
                         $users[$k]->$name = $exam_data[$ex->id][$id]['score'];
                     }
                     else
-                       {
+                    {
                         $users[$k]->$name = '-';
-                       }
-
+                    }
                 }
 
                 
