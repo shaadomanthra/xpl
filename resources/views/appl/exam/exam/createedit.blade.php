@@ -511,7 +511,7 @@
           </div>
         </div>
 
-           <div class="col-12 col-md-3">
+        <div class="col-12 col-md-3">
            <div class="form-group mt-3">
             <label for="formGroupExampleInput ">Forward Slug (optional)</label>
             <input type="text" class="form-control" name="forwardslug" id="formGroupExampleInput" placeholder="" 
@@ -523,6 +523,17 @@
           >
 
           <small class='text-secondary'>To move from one test to other automatically</small>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+           <div class="form-group mt-3">
+            <label for="formGroupExampleInput ">Resume </label>
+            <select class="form-control" name="resume">
+              <option value="0" @if(isset($exam)) @if($exam->resume==0) selected @endif selected @endif >Not Required</option>
+              <option value="1" @if(isset($exam)) @if($exam->resume==1) selected @endif @endif >Required</option>
+            </select>
+
           </div>
         </div>
 

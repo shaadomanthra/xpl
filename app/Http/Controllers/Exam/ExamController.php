@@ -650,6 +650,7 @@ class ExamController extends Controller
             $settings['testslug'] = $request->get('testslug');
             $settings['forwardslug'] = $request->get('forwardslug');
             $settings['pdf_paper'] = $request->get('pdf_paper');
+            $settings['resume'] = $request->get('resume');
 
             
 
@@ -2322,6 +2323,10 @@ class ExamController extends Controller
         else
             $exam->pdf_paper = null;
 
+        if(isset($settings['resume']))
+            $exam->resume = $settings['resume'];
+        else
+            $exam->resume = null;
         // if($exam->extra){
         //     $exam->viewers = json_decode($exam->extra,true)['viewers'];
         //     $exam->evaluators = json_decode($exam->extra,true)['evaluators'];
@@ -2430,6 +2435,7 @@ class ExamController extends Controller
             $settings['testslug'] = $request->get('testslug');
             $settings['forwardslug'] = $request->get('forwardslug');
             $settings['pdf_paper'] = $request->get('pdf_paper');
+            $settings['resume'] = $request->get('resume');
 
 
 

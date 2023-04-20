@@ -44,7 +44,13 @@
   <a href="{{ route('resume.upload')}}?edit=1" class="btn btn-primary mt-3">edit</a>
     <a href="{{ route('resume.upload')}}?delete=1" class="btn btn-danger mt-3">delete</a>
 
+
 @endif
+@endif
+@if(request()->get('redirect'))
+<div class="mt-4">
+<a href="{{ request()->get('redirect')}}" class="mt-3">return to the test page</a>
+</div>
 @endif
 </div>
 @endsection
