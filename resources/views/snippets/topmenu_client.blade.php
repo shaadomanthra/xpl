@@ -47,6 +47,12 @@
             
         @endif
 
+        @if($_SERVER['HTTP_HOST'] == 'learn.packetprep.com')
+        <a class="nav-link" href="{{ url('course') }}" aria-label="Courses"
+            ><i class="fa fa-th"></i> Courses
+        </a></li>
+        @endif
+
         @if(\Auth::user()->checkRole(['administrator','manager','investor','patron','promoter','employee','client-manager','tpo','hr-manager']))
          @if(\auth::user()->role == 13 || \auth::user()->isAdmin())
 
