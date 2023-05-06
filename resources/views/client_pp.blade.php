@@ -304,8 +304,8 @@
 
 <div class="rounded p-3 mb-2" style="background: #f7dcca; border:1px solid #e7c5af;">
  
-  <h3 class="">Aptitude & Reasoning Material</h3>
-<p class="mb-1"><a href="https://learn.packetprep.com/productpage/grandmaster" class="btn btn-primary mt-2 mb-0"><b>View Product</b> </a>  </p>
+  <h3 class="">Aptitude Material</h3>
+<p class="mb-1"><a href="https://learn.packetprep.com/productpage/aptitude" class="btn btn-primary mt-2 mb-0"><b>View Product</b> </a>  </p>
 
 </div>
 
