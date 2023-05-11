@@ -1170,8 +1170,8 @@ class UserController extends Controller
             dd(College::get());
         }
 
-        if(request()->get('dump4')){
-            dd(College::all());
+        if(!count($colleges)){
+            $colleges = College::all();
         }
 
         $branches = Branch::all();
