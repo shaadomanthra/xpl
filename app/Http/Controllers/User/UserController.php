@@ -1157,9 +1157,23 @@ class UserController extends Controller
         // $user_details->countries = $user_details->getCountry();
 
         $colleges = College::orderby('name','asc')->get();
+
         if(request()->get('dump')){
             dd($colleges);
         }
+
+        if(request()->get('dump2')){
+            dd(College::orderby('name','asc')->get());
+        }
+
+        if(request()->get('dump3')){
+            dd(College::get());
+        }
+
+        if(request()->get('dump4')){
+            dd(College::all());
+        }
+
         $branches = Branch::all();
 
             
