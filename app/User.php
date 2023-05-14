@@ -614,7 +614,13 @@ class User extends Authenticatable
         }
         if(subdomain()=='xplore' || subdomain()=='piofx' || subdomain() =='gradable' ){
             $users = Role::where('slug',$role)->first()->users()->orderBy('name');
+
+            if(request()->get('dump2'))
+                dd($users);
+
             $d = $users->whereIn('role',[2,12,13])->where('status','<>',2)->get();
+            if(request()->get('dump3'))
+                dd($d);
             return $d;
         }
         else{
