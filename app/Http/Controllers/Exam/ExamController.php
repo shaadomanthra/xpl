@@ -861,10 +861,11 @@ class ExamController extends Controller
         else
             $data['users'] = 0;
 
+
         $data['hr-managers'] = Cache::remember('hr_managers_'.$id, 60, function()  {
             $husers = \auth::user()->getRole('hr-manager');
                 if(request()->get('dump')){
-                    dd($husers)
+                    dd($husers);
                 }
                 return $husers;
             });
