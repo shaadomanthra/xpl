@@ -12,7 +12,7 @@ class TrustProxies extends Middleware
      *
      * @var array
      */
-    protected $proxies =['10.139.0.2','159.65.232.195','10.139.0.10','10.139.0.13','10.139.0.12','10.139.0.14','10.122.0.2'];
+    protected $proxies =['10.139.0.2','159.65.232.195','10.139.0.10','10.139.0.13','10.139.0.12','10.139.0.14','142.93.210.150'];
 
     /**
      * The current proxy header mappings.
