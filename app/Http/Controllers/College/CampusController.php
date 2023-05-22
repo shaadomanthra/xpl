@@ -736,6 +736,7 @@ class CampusController extends Controller
 
             $details['item_name'] = 'Branch';
         }
+
         
         $branches = array(1=>"BCOM",2=>"",3=>"",4=>"",5=>"",6=>"",7=>"",8=>"",9=>"CSE",10=>"IT",11=>"ECE",12=>"EEE",13=>"MECH",14=>"CIVIL",15=>"OTHER",30=>"AERO",31=>"BE-AGRICULTURE",32=>"BIOMEDICAL",33=>"BT",60=>"CSW",61=>"CSO",69=>"CSM",47=>"CSIT");
         if(!$college)

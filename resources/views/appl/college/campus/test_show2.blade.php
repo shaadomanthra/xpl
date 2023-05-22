@@ -144,7 +144,7 @@
 
 		@if(isset($details['items']) && !request()->get('none'))
 		 <div class="rounded table-responsive">
-		 @if(count($details['items']))
+		 @if(count($details['items'])>-1)
 		 <table class="table mt-4  table-bordered bg-white" >
 		  <thead>
 		    <tr>
@@ -159,7 +159,7 @@
 		  <tbody>
 
 		    @foreach($details['items'] as $k=>$batch)
-		    @if($batch['participants']!=0)
+		    @if($batch['participants']>-1)
 		    <tr>
 		      <th scope="row">{{++$m}}</th>
 		      <td><a href="{{ $batch['url']}}@if(request()->get('all')) &all=1&code={{request()->get('code')}}&college_id={{request()->get('college_id')}} @endif ">{{$batch['name']}}  </a></td>
