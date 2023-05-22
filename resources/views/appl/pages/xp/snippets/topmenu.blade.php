@@ -134,7 +134,7 @@
       </nav>
       <!-- End Nav -->
     </div>
-    <div class=" p-2" style="background: #eecf3e;color:black;"> 
+    <div class="d-none p-2" style="background: #eecf3e;color:black;"> 
       <div class="container">
         Register for FREE MOCK EAMCET TEST now <a href="https://tseamcet.xplore.co.in"><span class="badge badge-primary">Click Here</span></a>
       </div>
