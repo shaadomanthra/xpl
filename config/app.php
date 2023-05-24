@@ -216,7 +216,7 @@ return [
         //Anand\LaravelPaytmWallet\PaytmWalletServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         //Dawson\Youtube\YoutubeServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        //Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -272,7 +272,7 @@ return [
         //'PaytmWallet' => Anand\LaravelPaytmWallet\Facades\PaytmWallet::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         //'Youtube' => Dawson\Youtube\Facades\Youtube::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        //'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
