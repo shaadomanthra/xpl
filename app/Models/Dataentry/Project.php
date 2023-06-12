@@ -3,6 +3,7 @@
 namespace PacketPrep\Models\Dataentry;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Project extends Model
 {
@@ -48,7 +49,10 @@ class Project extends Model
     }
 
     public static function get($slug){
-        return (new Project)->where('slug',$slug)->first();
+        $project = Cache::remember('prj_'.$slug,60, function() use($slug){
+            return (new Project)->where('slug',$slug)->first();
+        });
+        return $project;
     }
 
     public static function getID($slug){

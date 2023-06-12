@@ -582,16 +582,26 @@ class User extends Authenticatable
     }
 
     public function productvalidity($slug){
-        $course = Course::where('slug',$slug)->first();
+        $course = Cache::remember('course_product'.$slug, 360, function() use($slug) {
+            return Course::where('slug',$slug)->first();
+        });
         //dd($course->products->first());
         $user_id = \auth::user()->id;
         $entry = null;
-        if($course->products->first())
-        $entry = DB::table('product_user')
+        $products = Cache::get('cp_'.$slug);
+        if(!$products)
+            $products = $course->products;
+        if($products->first()){
+             $entry = Cache::get('ps_'.$slug.'_'.\auth()->user()->id);
+             if(!$entry){
+                $entry = DB::table('product_user')
                 ->where('product_id', $course->products->first()->id)
                 ->where('user_id', $user_id)
                 ->orderBy('id','desc')
                 ->first();
+             }
+        }
+        
         if($entry)
         return $entry->valid_till;
         else

@@ -834,7 +834,10 @@ class QuestionController extends Controller
     {
         
         $tests = ['test1','test2','test3','test4','test5'];
-        $course = Course::where('slug',$project_slug)->first();
+        $course = Cache::get('course_'.$project_slug);
+        $slug = $project_slug;
+        if(!$course)
+            $course = Course::where('slug',$project_slug)->first();
 
 
 
@@ -844,7 +847,10 @@ class QuestionController extends Controller
             $user = \Auth::user();
         $entry=null;
         if($user){
-                $entry = DB::table('product_user')
+                $entry = Cache::get('ps_'.$slug.'_'.\auth()->user()->id);
+
+                if(!$entry)
+                    $entry = DB::table('product_user')
                     ->whereIn('product_id', $course->products()->pluck('id')->toArray())
                     ->where('user_id', $user->id)
                     ->orderBy('valid_till','desc')
@@ -895,18 +901,25 @@ class QuestionController extends Controller
             $category->questions = Category::getUncategorizedQuestions($this->project);
 
         }else
-            $category = Category::where('slug',$category_slug)->first();
+            $category = Cache::remember('category_'.$category_slug, 60, function() use($category_slug) {
+                return Category::where('slug',$category_slug)->first();
+            });
 
 
        
+       $questions = Cache::remember('questions_'.$category_slug, 60, function() use($category) {
+            return $category->questions;
+       });
 
+       if(!$questions)
+        $questions = $category->questions;
 
         if($id==null){
             if($category_slug=='uncategorized')
                 $id = $category->questions->first()->id;
-            elseif($category->questions){
-                if(isset($category->questions[0]))
-                $id = $category->questions[0]->id;
+            elseif($questions){
+                if(isset($questions[0]))
+                $id = $questions[0]->id;
                 else
                 $id = null ;
 
@@ -927,7 +940,9 @@ class QuestionController extends Controller
             $list = array_intersect($ques_tag, $ques_category);
             $id = reset($list);
             }else{
-                $id=$category->questions()->wherePivot('intest','!=',1)->pluck('id')->toArray()[0];
+                $id= Cache::remember('category_intest_'.$category_slug, 60, function() use($category){
+                    return $category->questions()->wherePivot('intest','!=',1)->pluck('id')->toArray()[0];
+                });
 
             }    
         }
@@ -949,7 +964,9 @@ class QuestionController extends Controller
                 else
                      $users[$ux]->practiced = 0;
             }
-            $question = Question::where('id',$id)->first();
+            $question = Cache::remember('question_'.$id, 60, function() use($id){
+                return Question::where('id',$id)->first();
+            });
             $question = $question->dynamic_variable_replacement();
 
            // $this->authorize('view', $question);
@@ -962,8 +979,13 @@ class QuestionController extends Controller
                     $question->save();
                 }
 
-                $passage = Passage::where('id',$question->passage_id)->first();
-                $questions = $category->questions()->wherePivot('intest','!=',1)->get();
+                $passage = Cache::remember('passage_'.$question->id, 60, function() use($question) {
+                    return Passage::where('id',$question->passage_id)->first();
+                });
+
+                $questions = Cache::remember('category_tin_'.$category_slug, 60, function() use($category){
+                    return $category->questions()->wherePivot('intest','!=',1)->get();
+                });
 
                 //if(request()->get('debug'))
                 //dd($questions);
@@ -988,7 +1010,8 @@ class QuestionController extends Controller
                 } 
 
                 $details['display_type'] = 'Topic';
-                $details['course'] = Course::where('slug',$project_slug)->first();
+                $details['course'] = Cache::get('course_'.$slug);
+                //Course::where('slug',$project_slug)->first();
                 $details['response'] = $question->practice($question->id);
 
                 //dd($details);

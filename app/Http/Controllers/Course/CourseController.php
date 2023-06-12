@@ -475,8 +475,11 @@ class CourseController extends Controller
             abort('404','Course Not Found');
         
         $product_ids = [];
-        if(isset($course->products))
-        foreach($course->products as $product)
+        $products = Cache::remember('cp_'.$course->slug,360, function() use ($course){
+            return $course->products;
+        });
+        if(isset($products))
+        foreach($products as $product)
         {
             if($product->slug == $id)
                 $course->product = $product;
@@ -516,16 +519,20 @@ class CourseController extends Controller
         $user = \Auth::user();
         $entry=null;
         if($user){
-            $entry = DB::table('product_user')
+            $entry = Cache::remember('ps_'.$course->slug.'_'.\auth()->user()->id, 60, function() use($product_ids,$user) {
+                return DB::table('product_user')
                     ->whereIn('product_id', $product_ids)
                     ->where('user_id', $user->id)
                     ->orderBy('valid_till','desc')
                     ->first();
+                });
             
-            $practice = DB::table('practices')
+            $practice = Cache::remember('practice_'.$course->slug.'_'.\auth()->user()->id, 60, function() use($course) {
+                return DB::table('practices')
                     ->where('course_id', $course->id)
                     ->where('user_id',\auth()->user()->id)
                     ->get();
+                });
             $sum =0;$time = 0;
             $count = count($practice);
             foreach($practice as $p){
