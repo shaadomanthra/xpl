@@ -606,6 +606,9 @@ class QuestionController extends Controller
 
         Cache::forget('student_'.$username);
         Cache::forget('practices_'.\auth::user()->id);
+        Cache::forget('practice_'.$project_slug.'_'.\auth()->user()->id);
+
+        
 
         if(isset($request->all()['pdf_file'])){
 
