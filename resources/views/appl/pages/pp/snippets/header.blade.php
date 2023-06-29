@@ -3,7 +3,7 @@
 
 <head>
   <!-- Title -->
-  <title>PacketPrep | The best study material for job prep</title>
+  <title>PacketPrep Job Training & Placement | Java Fullstack | Software Testing</title>
   <!-------google font-------->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Quattrocento&display=swap" rel="stylesheet">
