@@ -11,8 +11,8 @@
       <div class="col-md-6 col-lg-5 mb-7 mb-md-0">
         <div class="mb-5">
           <span class="d-block small font-weight-bold text-cap mb-2">The Best </span>
-          <h1 class="display-4 mb-3">Study Material for Job Prep</h1>
-          <p class="lead">TCS NQT, Wipro NTH, InfyTQ, Capgemini, Cognizant, Accenture, Tech Mahindra, Deloitte, HCL and more</p>
+          <h1 class="display-4 mb-3">Join PacketPrep to crack Interviews</h1>
+          <p class="lead">The Largest training and placement company in telugu states with 8 branches. We teach Java fullstack / Software Testing  with assured placement opportunities. Enroll now to land your dream job as developer/tester.</p>
         </div>
          <a class="position-static btn btn-primary " href="/login"
            >
