@@ -49,11 +49,7 @@
             </li>
             <!-- End Contact -->
 
-            <!-- Sign Up -->
-            <li class="navbar-nav-item ml-lg-3 mt-3 mt-lg-0 d-none d-lg-block">
-              <a class="signup_btn" href="https://tech.packetprep.com/contact">Job Training</a>
-            </li>
-            <!-- End Sign Up -->
+            
           </ul>
         </div>
         <!-- End Navigation -->
