@@ -27,6 +27,7 @@ class Corporate
         if( subdomain()=='packetprep' && domain()=='xplore')
             return redirect('https://learn.packetprep.com/',301);
 
+
         if(subdomain()){
 
              

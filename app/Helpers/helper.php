@@ -355,6 +355,8 @@ function subdomain() {
             return 'xplore';
     if($_SERVER['HTTP_HOST'] == 'learn.pp.test' || $_SERVER['HTTP_HOST'] == 'learn.packetprep.com'  )
             return 'packetprep';
+    if($_SERVER['HTTP_HOST'] == 'learn.pp.test' || $_SERVER['HTTP_HOST'] == 'campus.packetprep.com'  )
+            return 'campus';
     if($_SERVER['HTTP_HOST'] == 'devshala.gradable.test')
             return 'exam';
     if($_SERVER['HTTP_HOST'] == 'rgon.xplore.co.in')
