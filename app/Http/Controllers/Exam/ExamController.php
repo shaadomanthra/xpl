@@ -1668,10 +1668,202 @@ class ExamController extends Controller
     public function analytics($id,Request $r)
     {
 
+
+
         $exam = Cache::get('test_'.$id);
         if(!$exam)
          $exam= Exam::where('slug',$id)->first();
         $this->authorize('create', $exam);
+
+        $code = $r->get('code');
+        $item = $r->get('item');
+        $data = $r->get('score');
+
+        $ename = str_replace('/', '-', $exam->name);
+        $ename = str_replace(' ', '_', $ename);
+        $ename = str_replace('\\', '-', $ename);
+        $filename ="exports/Report_".$ename.".xlsx";
+
+        $email_stack = array();
+        $data_ques =null;
+        if(request()->get('export')){
+
+            if(isset($exam->settings->form_fields)){
+                if($exam->settings->form_fields){
+                    $extra = $exam->settings->form_fields;
+                    $data_ques = $exam->questions($extra);
+                   
+                }
+            }
+
+           
+            $offset = request()->get('offset');
+            $limit = request()->get('limit');
+
+         
+
+            if($code)
+                $result = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->orderby('score','desc')->get();
+            else if($offset>-1 && $limit){
+
+                $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->with('user')->limit($limit)->offset($offset)->get();
+            }
+            else
+                $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->with('user')->get();
+
+            
+            if(request()->get('rollnumber')){
+                foreach($result as $g => $f){
+                    if($result[$g]->user->roll_number)
+                    $result[$g]['rollnumber'] = $result[$g]->user->roll_number;
+                    else
+                    $result[$g]['rollnumber'] = 0; 
+                }
+                $result = $result->sortBy(function($it)
+                        {
+                          return $it->rollnumber;
+                        });
+            }
+            
+           
+            $usrs = $result->pluck('user_id');
+            $exam_sections = Section::where('exam_id',$exam->id)->get();
+            $sections = Tests_Section::whereIn('user_id',$usrs)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
+            $colleges = College::all()->keyBy('id');
+            $branches = Branch::all()->keyBy('id');
+            request()->session()->put('colleges',$colleges);
+            request()->session()->put('branches',$branches);
+            request()->session()->put('data_ques',$data_ques);
+
+            if(!Storage::disk('s3')->exists($filename))
+                Storage::disk('s3')->delete($filename);
+
+           // dd($sections);
+
+            if($exam->emails){
+                $emails = implode(',',explode("\n", $exam->emails));
+                $emails =str_replace("\r", '', $emails);
+                $emails = array_unique(explode(',',$emails));
+               
+
+                $users_result = User::whereIn('id',$usrs->toArray())->get()->keyBy('id');
+                $result_users = $users_result->pluck('email')->toArray();
+                $result_users_ids = $users_result->pluck('id')->toArray();
+
+                $subdomain = $exam->client;
+
+                $users = User::where('client_slug',$subdomain)->whereIn('email',$emails)->get()->keyBy('id');
+
+                $inusers = array_unique($users->pluck('email')->toArray());
+                // $email_stack['registered'] = array_unique($users->pluck('email')->toArray());
+
+                $email_stack['total'] = [];
+                $email_stack['registered'] =$email_stack['not_registered'] =[];
+                $count = $count2=0;
+                foreach($emails as $e){
+
+                    if(in_array($e ,$inusers)){
+                        array_push($email_stack['registered'], $e);
+                    }else{
+                        array_push($email_stack['not_registered'], $e);
+                    }
+                    array_push($email_stack['total'], $e);
+
+                }
+
+
+                $attemptedby = User::whereIn('email',$email_stack['registered'])->get()->pluck('id')->toArray();
+
+
+                $res = $result->whereIn('user_id',$attemptedby);
+
+
+                //dd($count);
+                foreach($attemptedby as $k=>$u){
+                    if(!in_array($u, $result_users_ids)){
+                        $rs = new Tests_Overall();
+                        $rs->created_at = now();
+                        $rs->user_id = $u;
+                        $rs->test_id = $exam->id;
+                        $rs->window_change = '-';
+                        $rs->cheat_detect = 3;
+                        $rs->score = 'ABSENT';
+                        $result->push($rs);
+                    }
+
+                }
+
+
+
+            }else{
+                $email_stack['registered'] = [];
+                $email_stack['not_registered'] =  [];
+            }
+
+
+
+
+            $usr = \auth::user();
+        
+      
+            if(1){
+                $exam->total = 0;
+                foreach($exam_sections as $k=>$s){
+                    $exam_sections[$k]->total = 0;
+                }
+
+                foreach($exam_sections as $k=>$s){
+                    $qset = $exam->getQuestionsSection($s->id,$usr->id);
+                    if(isset($exam->settings->section_marking)){
+                       if($exam->settings->section_marking=='no'){
+                            foreach($qset as $q)
+                                $exam_sections[$k]->total = $exam_sections[$k]->total + intval($q->mark);
+                            $exam->total = $exam->total + $exam_sections[$k]->total;
+                        }else{
+                            $exam_sections[$k]->total = count($s->questions) * $s->mark;
+                            $exam->total = $exam->total + $exam_sections[$k]->total;
+                        }  
+                    }else{
+                        $exam_sections[$k]->total = count($s->questions) * $s->mark;
+                        $exam->total = $exam->total + $exam_sections[$k]->total;
+                    }
+                    
+                }
+
+                request()->session()->put('versant',0);
+                if(isset($exam->examtype->name )){
+                    if($exam->examtype->name ="communication"){
+                        request()->session()->put('versant',1);
+                    }
+                    
+                }
+                request()->session()->put('exam',$exam);
+
+                request()->session()->put('result',$result);
+                request()->session()->put('sections',$sections);
+                request()->session()->put('exam_sections',$exam_sections);
+                request()->session()->put('email_stack',$email_stack);
+
+                ob_end_clean(); // this
+                ob_start();
+
+
+                $filename ="Report_".$ename.".xlsx";
+                return Excel::download(new TestReport2, $filename);
+            }else{
+
+                // request()->session()->put('result',$result);
+                // request()->session()->put('sections',$sections);
+                // request()->session()->put('exam_sections',$exam_sections);
+                // request()->session()->put('users',$usrs);
+                // //ini_set('memory_limit', '1024M');
+                // Excel::store(new TestReport, $filename,'s3');
+                // flash('Export is queued, it will be ready for download in 5min.')->success();
+                // dd('Export is queued, it will be ready for download in 5min.');
+            }
+
+        }
+
 
        
        $evaluators = $exam->evaluators()->wherePivot('role','evaluator')->pluck('id')->toArray();
@@ -1686,9 +1878,7 @@ class ExamController extends Controller
             }
         }
         
-        $code = $r->get('code');
-        $item = $r->get('item');
-        $data = $r->get('score');
+        
 
         if($r->get('refresh')){
             Cache::forget('exam_sections_'.$exam->id);
@@ -1820,6 +2010,7 @@ class ExamController extends Controller
         }
 
 
+        
         $search = $r->search;
         if($item){
             $users = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")->orWhere('roll_number','LIKE',"%{$item}%")
@@ -1841,219 +2032,10 @@ class ExamController extends Controller
 
         $view = $search ? 'analytics_list': 'analytics';
 
-        $ename = str_replace('/', '-', $exam->name);
-        $ename = str_replace(' ', '_', $ename);
-        $ename = str_replace('\\', '-', $ename);
-        $filename ="exports/Report_".$ename.".xlsx";
-
-
-        $email_stack = array();
-        $data_ques =null;
-        if(request()->get('export')){
-
-            if(isset($exam->settings->form_fields)){
-                if($exam->settings->form_fields){
-                    $extra = $exam->settings->form_fields;
-                    $data_ques = $exam->questions($extra);
-                   
-                }
-            }
-
-           
-            $offset = request()->get('offset');
-            $limit = request()->get('limit');
-
-            if($code)
-                $result = Tests_Overall::where('test_id',$exam->id)->where('code',$code)->orderby('score','desc')->get();
-            else if($offset && $limit)
-                $result = Tests_Overall::where('test_id',$exam->id)->orderby('id','desc')->with('user')->limit($limit)->offset($offset)->get();
-            else
-                $result = Tests_Overall::where('test_id',$exam->id)->orderby('score','desc')->with('user')->get();
-
-
-            if(request()->get('rollnumber')){
-                foreach($result as $g => $f){
-                    if($result[$g]->user->roll_number)
-                    $result[$g]['rollnumber'] = $result[$g]->user->roll_number;
-                    else
-                    $result[$g]['rollnumber'] = 0; 
-                }
-                $result = $result->sortBy(function($it)
-                        {
-                          return $it->rollnumber;
-                        });
-            }
-            
-           
-            $usrs = $result->pluck('user_id');
-            $exam_sections = Section::where('exam_id',$exam->id)->get();
-            $sections = Tests_Section::whereIn('user_id',$usrs)->where('test_id',$exam->id)->orderBy('section_id')->get()->groupBy('user_id');
-            $colleges = College::all()->keyBy('id');
-            $branches = Branch::all()->keyBy('id');
-            request()->session()->put('colleges',$colleges);
-            request()->session()->put('branches',$branches);
-            request()->session()->put('data_ques',$data_ques);
-
-            if(!Storage::disk('s3')->exists($filename))
-                Storage::disk('s3')->delete($filename);
-
-           // dd($sections);
-
-            if($exam->emails){
-                $emails = implode(',',explode("\n", $exam->emails));
-                $emails =str_replace("\r", '', $emails);
-                $emails = array_unique(explode(',',$emails));
-               
-
-                $users_result = User::whereIn('id',$usrs->toArray())->get()->keyBy('id');
-                $result_users = $users_result->pluck('email')->toArray();
-                $result_users_ids = $users_result->pluck('id')->toArray();
-
-                $subdomain = $exam->client;
-
-                $users = User::where('client_slug',$subdomain)->whereIn('email',$emails)->get()->keyBy('id');
-
-                $inusers = array_unique($users->pluck('email')->toArray());
-                // $email_stack['registered'] = array_unique($users->pluck('email')->toArray());
-
-                $email_stack['total'] = [];
-                $email_stack['registered'] =$email_stack['not_registered'] =[];
-                $count = $count2=0;
-                foreach($emails as $e){
-
-                    if(in_array($e ,$inusers)){
-                        array_push($email_stack['registered'], $e);
-                    }else{
-                        array_push($email_stack['not_registered'], $e);
-                    }
-                    array_push($email_stack['total'], $e);
-
-                }
+        
 
 
 
-                // $uids = array_unique($users->pluck('id')->toArray());
-                // $attempted = [];//array_unique($result->pluck('user_id')->toArray());
-
-                // $notattempted =  [];//array_diff($email_stack['registered'],$result_users);
-                // $nonusers = array_diff($emails,$email_stack['registered']);
-
-                // foreach($email_stack['registered'] as $em){
-                //     if(!in_array($em, $result_users)){
-                //         array_push($notattempted,$em);
-                //     }else{
-                //         array_push($attempted,$em);
-
-                //     }
-                // }
-
-                $attemptedby = User::whereIn('email',$email_stack['registered'])->get()->pluck('id')->toArray();
-
-
-                $res = $result->whereIn('user_id',$attemptedby);
-
-
-                //dd($count);
-                foreach($attemptedby as $k=>$u){
-                    if(!in_array($u, $result_users_ids)){
-                        $rs = new Tests_Overall();
-                        $rs->created_at = now();
-                        $rs->user_id = $u;
-                        $rs->test_id = $exam->id;
-                        $rs->window_change = '-';
-                        $rs->cheat_detect = 3;
-                        $rs->score = 'ABSENT';
-                        $result->push($rs);
-                    }
-
-                }
-
-
-
-            }else{
-                $email_stack['registered'] = [];
-                $email_stack['not_registered'] =  [];
-            }
-
-
-            
-
-            // foreach($notattempted as $k=>$u){
-            //     if(!in_array($u, $attemptedby)){
-            //         $rs = new Tests_Section();
-            //         $rs->user_id = $u;
-            //         $rs->test_id = $exam->id;
-            //         $rs->score = '';
-            //         $sections->push($rs);
-            //     }
-            // }
-
-
-            // foreach($users as $u){
-
-            //     if()
-            // }
-
-
-            $usr = \auth::user();
-
-            if(count($users)>0){
-                $exam->total = 0;
-                foreach($exam_sections as $k=>$s){
-                    $exam_sections[$k]->total = 0;
-                }
-
-                foreach($exam_sections as $k=>$s){
-                    $qset = $exam->getQuestionsSection($s->id,$usr->id);
-                    if(isset($exam->settings->section_marking)){
-                       if($exam->settings->section_marking=='no'){
-                            foreach($qset as $q)
-                                $exam_sections[$k]->total = $exam_sections[$k]->total + intval($q->mark);
-                            $exam->total = $exam->total + $exam_sections[$k]->total;
-                        }else{
-                            $exam_sections[$k]->total = count($s->questions) * $s->mark;
-                            $exam->total = $exam->total + $exam_sections[$k]->total;
-                        }  
-                    }else{
-                        $exam_sections[$k]->total = count($s->questions) * $s->mark;
-                        $exam->total = $exam->total + $exam_sections[$k]->total;
-                    }
-                    
-                }
-
-                request()->session()->put('versant',0);
-                if(isset($exam->examtype->name )){
-                    if($exam->examtype->name ="communication"){
-                        request()->session()->put('versant',1);
-                    }
-                    
-                }
-                request()->session()->put('exam',$exam);
-
-                request()->session()->put('result',$result);
-                request()->session()->put('sections',$sections);
-                request()->session()->put('exam_sections',$exam_sections);
-                request()->session()->put('email_stack',$email_stack);
-
-                ob_end_clean(); // this
-                ob_start();
-
-
-                $filename ="Report_".$ename.".xlsx";
-                return Excel::download(new TestReport2, $filename);
-            }else{
-
-                // request()->session()->put('result',$result);
-                // request()->session()->put('sections',$sections);
-                // request()->session()->put('exam_sections',$exam_sections);
-                // request()->session()->put('users',$usrs);
-                // //ini_set('memory_limit', '1024M');
-                // Excel::store(new TestReport, $filename,'s3');
-                // flash('Export is queued, it will be ready for download in 5min.')->success();
-                // dd('Export is queued, it will be ready for download in 5min.');
-            }
-
-        }
 
 
         if(request()->get('downloadsection')){
