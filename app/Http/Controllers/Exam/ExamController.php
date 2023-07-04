@@ -1847,7 +1847,7 @@ class ExamController extends Controller
                 ob_end_clean(); // this
                 ob_start();
 
-                if($limit && $offset){
+                if($limit>-1 && $offset){
                     $filename ="Report_".$ename."from[".$offset."]_to[".($offset+$limit)."]".".xlsx";
                 }else
 
