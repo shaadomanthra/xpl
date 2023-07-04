@@ -1847,6 +1847,9 @@ class ExamController extends Controller
                 ob_end_clean(); // this
                 ob_start();
 
+                if($limit && $offset){
+                    $filename ="Report_".$ename."from[".$offset."]_to[".($offset+$limit)."]".".xlsx";
+                }else
 
                 $filename ="Report_".$ename.".xlsx";
                 return Excel::download(new TestReport2, $filename);
@@ -2010,7 +2013,7 @@ class ExamController extends Controller
         }
 
 
-        
+
         $search = $r->search;
         if($item){
             $users = User::whereIn('id',$users)->where('name','LIKE',"%{$item}%")->orWhere('roll_number','LIKE',"%{$item}%")
@@ -2023,7 +2026,8 @@ class ExamController extends Controller
         }
 
         $ux =  Cache::get('users_'.$exam->id.'_data');
-        if(!isset($ux[0])){
+ 
+        if(!$ux){
           $ux = User::whereIn('id',$users)->get()->keyBy('id');
           Cache::put('users_'.$exam->id.'_data',$ux,120);
         }
@@ -2033,10 +2037,6 @@ class ExamController extends Controller
         $view = $search ? 'analytics_list': 'analytics';
 
         
-
-
-
-
 
         if(request()->get('downloadsection')){
             if($code)
