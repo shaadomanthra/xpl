@@ -724,7 +724,7 @@ class CampusController extends Controller
             if($college)
                 $branches = $college->branches()->orderBy('id')->get();
             else
-                $branches = Branch::whereIn('name',['CSE','ECE','EEE','IT','CIVIL','MECH','AERO','BE-AGRICULTURE','BIOMEDICAL','BT','CSW','CSO','CSM','CSIT','AI','OTHER'])->get();
+                $branches = Branch::whereIn('name',['CSE','ECE','EEE','IT','CIVIL','MECH','AERO','BE-AGRICULTURE','BIOMEDICAL','BT','CSW','CSO','CSM','CSIT','AI','Data_Science','OTHER'])->get();
 
             foreach($branches as $branch){
             $details['items'][$branch->id] = $campus->analytics_test($college,$branch,null,$r,null,null,$exam->id);
@@ -738,7 +738,7 @@ class CampusController extends Controller
         }
 
         
-        $branches = array(1=>"BCOM",2=>"",3=>"",4=>"",5=>"",6=>"",7=>"",8=>"",9=>"CSE",10=>"IT",11=>"ECE",12=>"EEE",13=>"MECH",14=>"CIVIL",15=>"OTHER",30=>"AERO",31=>"BE-AGRICULTURE",32=>"BIOMEDICAL",33=>"BT",60=>"CSW",61=>"CSO",69=>"CSM",47=>"CSIT",41=>"AI");
+        $branches = array(1=>"BCOM",2=>"",3=>"",4=>"",5=>"",6=>"",7=>"",8=>"",9=>"CSE",10=>"IT",11=>"ECE",12=>"EEE",13=>"MECH",14=>"CIVIL",15=>"OTHER",30=>"AERO",31=>"BE-AGRICULTURE",32=>"BIOMEDICAL",33=>"BT",60=>"CSW",61=>"CSO",69=>"CSM",47=>"CSIT",41=>"AI",74=>"Data_Science");
         if(!$college)
         $colleges = College::all()->groupBy('id');
         else
