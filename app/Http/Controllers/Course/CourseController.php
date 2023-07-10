@@ -884,22 +884,46 @@ class CourseController extends Controller
     public function video($course,$category)
     {
         
-
-        $course = Course::where('slug',$course)->first();
+        $id = $course;
+        $course = $course = Cache::get('course_'.$course);
+        if(!$course)
+            $course = Course::where('slug',$course)->first();
 
         $user = \Auth::user();
+
+        $product_ids = [];
+        $products = Cache::remember('cp_'.$course->slug,360, function() use ($course){
+            return $course->products;
+        });
+        if(isset($products))
+        foreach($products as $product)
+        {
+            if($product->slug == $id)
+                $course->product = $product;
+            array_push($product_ids, $product->id);
+        }
+
         $entry=null;
         if($user){
-                $entry = DB::table('product_user')
-                    ->whereIn('product_id', $course->products()->pluck('id')->toArray())
+                $entry = Cache::remember('ps_'.$course->slug.'_'.\auth()->user()->id, 60, function() use($product_ids,$user) {
+                return DB::table('product_user')
+                    ->whereIn('product_id', $product_ids)
                     ->where('user_id', $user->id)
                     ->orderBy('valid_till','desc')
                     ->first();
+                });
+                // DB::table('product_user')
+                //     ->whereIn('product_id', $course->products()->pluck('id')->toArray())
+                //     ->where('user_id', $user->id)
+                //     ->orderBy('valid_till','desc')
+                //     ->first();
         }
 
 
 
-        $category = Category::where('slug',$category)->first();
+        $category = Cache::remember('course_'.$course->slug.'_'.$category, 120, function() use($category){
+            return Category::where('slug',$category)->first();
+        });
         //dd($category);
 
         $videos = explode(',', $category->video_link);

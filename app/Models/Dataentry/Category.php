@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 use PacketPrep\Models\Dataentry\Question;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -48,8 +49,13 @@ class Category extends Model
 
         $list = array_intersect($ques_tag, $ques_category);
             return $list;
-        }else
-            return $category->questions()->wherePivot('intest','!=',1)->pluck('id')->toArray();
+        }else{
+            $ques = Cache::remember('category_ques_'.$category->slug,60,function() use($category){
+                return $category->questions()->wherePivot('intest','!=',1)->pluck('id')->toArray();
+            });
+
+            return $ques;
+        }
         
     }
 
