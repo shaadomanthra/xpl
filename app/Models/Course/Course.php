@@ -221,17 +221,19 @@ class Course extends Model
                 $node[$k]['children'] = Category::defaultOrder()->descendantsOf($n->id)->toTree();
 
                 foreach($node[$k]['children'] as $c){
+
                     $qc=0;
                     foreach($c->questions as $q){
                         if(!$q->intest)
                             $qc++;
                     }
+
+                    $data['categories'][$c->id]['total']  = $qc;
                     //echo $c['name']."-".$qc."<br>";
                     $qcount = $qcount + $qc;
                 }
+               // dd($n);
 
-              
-                
                 // $qc=0;
                 // foreach($n->questions as $q){
                 //     if(!$q->intest)

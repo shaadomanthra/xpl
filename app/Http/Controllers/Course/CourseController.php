@@ -449,7 +449,10 @@ class CourseController extends Controller
        
          if(!$course){
             
+
             $course = Course::where('slug',$id)->first();
+
+
             // $course_data = $course->category_list($course->slug);
 
             // $course->categories = json_decode(json_encode($course_data['categories']));
@@ -553,6 +556,8 @@ class CourseController extends Controller
               $dat['accuracy'] = 0; 
               $data['time']=0;
             }
+
+
             
             //dd($course);
             foreach($practice as $pr){
@@ -656,6 +661,7 @@ class CourseController extends Controller
 
         $course->categories = json_decode(json_encode($course->categories),true);
        
+
         //dd($user_practice);
         //dd($course->exams);
         if($course)
