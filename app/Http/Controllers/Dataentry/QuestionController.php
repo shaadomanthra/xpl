@@ -842,6 +842,13 @@ class QuestionController extends Controller
         if(!$course)
             $course = Course::where('slug',$project_slug)->first();
 
+        if(request()->get('refresh')){
+            Cache::forget('questions_'.$category_slug);
+            Cache::forget('ps_'.$slug.'_'.\auth()->user()->id);
+            Cache::forget('category_'.$category_slug);
+            Cache::forget('category_intest_'.$category_slug);
+            Cache::forget('question_'.$id);
+        }
 
 
         if(request()->get('student'))
@@ -862,8 +869,6 @@ class QuestionController extends Controller
 
                 if($entry){
                     if(strtotime($entry->valid_till) < strtotime(date('Y-m-d'))){
-
-                        
                         return view('appl.course.course.access');
                     }else if($entry->status===0)
                         return view('appl.course.course.access');
