@@ -214,19 +214,32 @@ class Course extends Model
         
         $data['categories'] = $categories_;
 
-        $qcount = 0;
+        $qcount = 0;$i=0;
         if($parent){
             $node = Category::defaultOrder()->descendantsOf($parent->id)->toTree();
             foreach($node as $k=>$n){
                 $node[$k]['children'] = Category::defaultOrder()->descendantsOf($n->id)->toTree();
 
-                
-                $qc=0;
-                foreach($n->questions as $q){
-                    if(!$q->intest)
-                        $qc++;
+                foreach($node[$k]['children'] as $c){
+                    $qc=0;
+                    foreach($c->questions as $q){
+                        if(!$q->intest)
+                            $qc++;
+                    }
+                    //echo $c['name']."-".$qc."<br>";
+                    $qcount = $qcount + $qc;
                 }
-                $qcount = $qcount + $qc;
+
+              
+                
+                // $qc=0;
+                // foreach($n->questions as $q){
+                //     if(!$q->intest)
+                //         $qc++;
+                // }
+
+                // //echo $i++."-".$node[$k]['children']['name']."-".$qc."<br>";
+                // $qcount = $qcount + $qc;
                     
                 foreach($node[$k]['children'] as $m => $c){
                     $node[$k]['children'][$m]->try = 1;
@@ -240,6 +253,19 @@ class Course extends Model
 
         $data['nodes'] = $node;
         $data['ques_count'] = $qcount;
+
+        //dd($data['ques_count']);
+
+        // $i=0;
+        // foreach($data['nodes'] as $a=>$b){
+         
+        //     foreach($b->children as $c){
+                
+        //         echo $i++."-".$c['name']."<br>";
+        //     }
+        // }
+
+        // dd('here');
 
         if($qcount==0)
             $data['ques_count']  = $count;
