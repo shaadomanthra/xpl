@@ -291,6 +291,7 @@ class ProductController extends Controller
               ->with('exams',$exams);
       }else if($user->checkRole(['hr-manager']) && !$user->isAdmin() && $user->role==13 && subdomain()!='packetprep'){
 
+
           $search = $request->search;
           $page = $request->get('page');
           $item = $request->item;
@@ -299,16 +300,15 @@ class ProductController extends Controller
 
           
           
-          $usertests = Exam::where('client',subdomain())->orderBy('id','desc')->withCount('users');
-
-
-          
+          $usertests = Exam::where('client',subdomain())->orderBy('id','desc');
 
           //dd($user->clientexams->pluck('id'));
           //$user->exams()->withCount('users')->orderBy('id','desc');
 
 
-          $count = Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->count();
+          $count = Cache::remember('tests_count_'.subdomain(),60, function() use($usertests){
+            return Tests_Overall::whereIn('test_id',$usertests->pluck('id')->toArray())->count();
+          });
           //$count = count($alltests);
 
          
@@ -321,7 +321,9 @@ class ProductController extends Controller
             $exams = Exam::where('client',subdomain())->where('name','LIKE',"%{$item}%")->orderBy('id','desc')->withCount('users')
                     ->paginate(8);
           else
-            $exams = $usertests->paginate(8);
+            $exams = Cache::remember('exams__'.subdomain(),60, function() use($usertests){
+              return $usertests->paginate(8);
+            });
 
 
 
