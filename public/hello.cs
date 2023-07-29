@@ -1,18 +1,12 @@
+// Hello World! program
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSharpTutorials
+ 
+namespace HelloWorld
 {
-    class Program
-    {
+    class Hello {         
         static void Main(string[] args)
         {
-            string message = "Hello World from MONO CS";
-
-            Console.WriteLine(message);
+            Console.WriteLine("Hello World!");
         }
     }
 }
