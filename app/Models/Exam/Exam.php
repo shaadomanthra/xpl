@@ -203,8 +203,9 @@ class Exam extends Model
         return $d;
     }
 
-        public function removeDuplicatesStudent($student){
-        $exam = $this;
+        public static function removeDuplicatesStudent($student,$exam=null){
+          if(!$exam)
+          $exam = $this;
         $sset = array_keys($exam->sections()->select('id')->get()->keyBy('id')->toArray());
 
         $qset=[];
@@ -268,7 +269,6 @@ class Exam extends Model
               if(count($tx)>1){
                 $dontDeleteThisRow = $tx[1];//$t->where('question_id', $tx[1]->id)->where('user_id',$u)->first();
 
-                  echo $dontDeleteThisRow->id;
                   $dontDeleteThisRow->delete();
              
                 

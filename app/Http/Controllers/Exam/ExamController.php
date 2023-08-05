@@ -1633,18 +1633,27 @@ class ExamController extends Controller
 
     public function reportd($id,Request $r)
     {
+
         $exam = Cache::get('test_'.$id);
+        if(request()->get('rduplicates') && request()->get('user_id')){
+            
+            $student= User::where('id',$r->get('user_id'))->first();
+            flash('Successfully removed one iteration of duplicates of '.$student->name)->success();
+            Exam::removeDuplicatesStudent($student,$exam);
+        }
 
         $qset=[];
         foreach($exam->sections as $s){
           foreach($s->questions as $q)
             array_push($qset,$q->id);
         }
+
+        $qcount = count($qset);
         $us = Tests_Overall::select('user_id')->where('test_id',$exam->id)->paginate(50);
         $total = Tests_Overall::select('user_id')->where('test_id',$exam->id)->count();
         $users = array_keys($us->keyBy('user_id')->toArray());
         //$to = Tests_Overall::where('test_id',$exam->id)->paginate(50);
-        $t = Test::where('test_id',$exam->id)->whereIn('user_id',$users)->get();
+        $t = Test::select('test_id','user_id')->where('test_id',$exam->id)->whereIn('user_id',$users)->get();
         // $ts = Tests_Section::where('test_id',$exam->id)->whereIn('user_id',$users)->paginate(50);
         $usx = User::whereIn('id',$users)->get();
 
@@ -1660,6 +1669,7 @@ class ExamController extends Controller
                     ->with('us',$us)
                     ->with('total',$total)
                     ->with('users',$usx)
+                    ->with('qcount',$qcount)
                     ->with('exam',$exam);
         else
             abort(404);
