@@ -1084,6 +1084,9 @@ class UserController extends Controller
                     if($data[$i]['college_id'])
                     $u->college_id = $data[$i]['college_id'];
 
+                    if($data[$i]['branch_id'])
+                    $u->branch_id = $data[$i]['branch_id'];
+
                     if($data[$i]['year_of_passing'])
                     $u->year_of_passing = $data[$i]['year_of_passing'];
 
