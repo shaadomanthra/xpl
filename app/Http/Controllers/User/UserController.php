@@ -983,6 +983,7 @@ class UserController extends Controller
             {
                 $client_slug = $data[$i]['client_slug'];
                 $u = User::where('email',$data[$i]['email'])->where('client_slug',$client_slug)->first();
+
                 $br =["CSE"=>"9","IT"=>10,"ECE"=>11,"EEE"=>12,"MECH"=>13,"CIVIL"=>14,"OTHER"=>15];
 
                 if(!is_numeric($data[$i]['branch_id'])){
@@ -1039,7 +1040,7 @@ class UserController extends Controller
                     if($data[$i]['roll_number'])
                     $u->roll_number = trim(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $data[$i]['roll_number']));
 
-                  
+                    
                     if($bid)
                     $u->branch_id = $bid;
 
@@ -1084,8 +1085,8 @@ class UserController extends Controller
                     if($data[$i]['college_id'])
                     $u->college_id = $data[$i]['college_id'];
 
-                    if($data[$i]['branch_id'])
-                    $u->branch_id = $data[$i]['branch_id'];
+                    // if($data[$i]['branch_id'])
+                    // $u->branch_id = $data[$i]['branch_id'];
 
                     if($data[$i]['year_of_passing'])
                     $u->year_of_passing = $data[$i]['year_of_passing'];
