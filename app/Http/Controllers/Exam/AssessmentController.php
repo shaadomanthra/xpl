@@ -1919,7 +1919,8 @@ class AssessmentController extends Controller
         if($request->get('removeduplicates')){
             
             $url = str_replace("&removeduplicates=1","",url()->full())."&refresh=1";
-            $exam->removeDuplicatesStudent($student);
+            //dd($exam);
+            $exam->removeDuplicatesStudent($student,$exam);
             return redirect()->to($url);
         }
 

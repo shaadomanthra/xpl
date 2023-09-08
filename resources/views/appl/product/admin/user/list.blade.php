@@ -32,10 +32,12 @@
                 </td>
                  <td>
                   {{ $user->email }}<br>
+                  @if(isset($data['colleges'][$user->college_id]))
                   @if($user->college_id)
                     {{ $data['colleges'][$user->college_id]->name }} 
                    
                   @endif 
+                  @endif
                   
                 </td>
                 
