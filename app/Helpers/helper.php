@@ -351,7 +351,7 @@ function subdomain() {
             return 'myparakh';
     if($_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test' )
             return 'rguktn';
-    if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' || $_SERVER['HTTP_HOST'] == 'app1.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'app2.xplore.co.in' )
+    if($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.in.net' || $_SERVER['HTTP_HOST'] == 'app1.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'v2.xplore.co.in' )
             return 'xplore';
     if($_SERVER['HTTP_HOST'] == 'learn.pp.test' || $_SERVER['HTTP_HOST'] == 'learn.packetprep.com'  )
             return 'packetprep';
