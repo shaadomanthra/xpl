@@ -6,6 +6,8 @@
 		    <tr>
 		      <th scope="col">#</th>
 		      <th scope="col">Name</th>
+		       <th scope="col" style="width:10%"  >Score</th>
+		      <th scope="col" class=" {{$m=0}} " style="width:20%" >Performance</th>
 		      @if(!request()->get('none'))
 		      <th scope="col" >Branch</th>
 		      @if($colleges)
@@ -17,8 +19,7 @@
 		      <th scope="col" >{{$s->name }}</th> 
 		      @endforeach
 		      @endif
-		      <th scope="col" style="width:10%"  >Score</th>
-		      <th scope="col" class=" {{$m=0}} " style="width:20%" >Performance</th>
+		     
 		     
 		    </tr>
 		  </thead>
@@ -41,6 +42,19 @@
 		      	@endif
 		      	
 		      </td>
+		      <td>{{$user['score']}} / {{$user['max']}}  </td>
+		      
+		      <td>
+
+		      	@if($user['performance']=='need_to_improve')
+		      	<img src="{{ asset('/img/medals/needtoimprove.png')}}" style="width:20px;"  />&nbsp;
+		      		Need to Improve
+		      	@else
+		      	<img src="{{ asset('/img/medals/'.$user['performance'].'.png')}}" style="width:20px;"  />&nbsp;
+		      	{{ ucfirst($user['performance'])}}
+		      	@endif
+		      	
+		      </td>
 		      @if(!request()->get('none'))
 		      <td>@if(isset($branches[$user['branch']])){{  $branches[$user['branch']] }}@endif</td>
 
@@ -56,19 +70,7 @@
 		      	@endforeach
 		      @endif
 		      
-		      <td>{{$user['score']}} / {{$user['max']}}  </td>
 		      
-		      <td>
-
-		      	@if($user['performance']=='need_to_improve')
-		      	<img src="{{ asset('/img/medals/needtoimprove.png')}}" style="width:20px;"  />&nbsp;
-		      		Need to Improve
-		      	@else
-		      	<img src="{{ asset('/img/medals/'.$user['performance'].'.png')}}" style="width:20px;"  />&nbsp;
-		      	{{ ucfirst($user['performance'])}}
-		      	@endif
-		      	
-		      </td>
 		      
 		      </tr>
 		     @endforeach
