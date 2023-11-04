@@ -282,6 +282,41 @@ class Exam extends Model
        
     }
 
+    public function removeDuplicates2(){
+      $exam = $this;
+      //remove from overall
+      $reports = Tests_Overall::where('test_id',$exam->id)->get()->groupBy('user_id');
+      foreach($reports as $a=>$b){
+        if(count($b)>1){
+          foreach($b as $m=>$n){
+            if($m!=0){
+              $n->delete();
+            }
+          }
+        }
+      }
+      $sset = array_keys($exam->sections()->select('id')->get()->keyBy('id')->toArray());
+
+      //remove duplicates from sections
+      $reports = Tests_Section::where('test_id',$exam->id)->get()->groupBy('user_id');
+      foreach($reports as $u=>$i){
+        $st=$i->groupBy('section_id');
+        foreach($st as $a=>$b){
+          if(count($b)>1){
+            foreach($b as $m=>$n){
+              if($m!=0){
+                $n->delete();
+              }
+            }
+          }
+        }
+      }
+      //remove duplicates tests records
+      // $reports = Test::where('test_id',$exam->id)->get()->groupBy('user_id');
+      // dd($reports);
+      
+    }
+
 
     public function removeDuplicates(){
         $exam = $this;

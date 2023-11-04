@@ -32,6 +32,7 @@
             </thead>
             <tbody>
               @foreach($report as $key=>$r)
+              @if(isset($users[$r['user_id']]))
               <tr @if($r['cheat_detect']==1)
                   style='background: #fff3f3'
                 @elseif($r['cheat_detect']==2)
@@ -41,8 +42,11 @@
                 @endif >
                 <th scope="row">{{$key+1 }}</th>
                 <td>
+                  
+
                   <a href="#" class="showuser"  data-url="{{route('profile','@'.$users[$r['user_id']]->username)}}" >
                   {{ $users[$r['user_id']]->name }}</a>
+                
 
                   @if(isset($users[$r['user_id']]->phone))
                     <div>{{$users[$r['user_id']]->email}}<br>{{$users[$r['user_id']]->phone}}</div>
@@ -117,6 +121,7 @@
                 </td>
 
               </tr>
+              @endif
               @endforeach
             </tbody>
           </table>

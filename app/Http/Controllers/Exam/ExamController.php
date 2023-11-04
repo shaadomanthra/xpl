@@ -1764,6 +1764,7 @@ class ExamController extends Controller
 
                 $users = User::where('client_slug',$subdomain)->whereIn('email',$emails)->get()->keyBy('id');
 
+
                 $inusers = array_unique($users->pluck('email')->toArray());
                 // $email_stack['registered'] = array_unique($users->pluck('email')->toArray());
 
@@ -1904,7 +1905,8 @@ class ExamController extends Controller
         if($r->get('removeduplicates')){
 
             ini_set ( 'max_execution_time', 1200);
-            $exam->removeDuplicates();
+            $exam->removeDuplicates2();
+            //$exam->removeDuplicates();
             return redirect()->back();
         }
 
@@ -1990,6 +1992,7 @@ class ExamController extends Controller
 
             $res =$result;
             $users = $result->pluck('user_id');
+
             $result = $this->paginateAnswers($result->toArray(),30);
             $exam_sections = Cache::remember('exam_sections_'.$exam->id,240,function() use($exam){
                 return Section::where('exam_id',$exam->id)->get();
@@ -2037,6 +2040,7 @@ class ExamController extends Controller
 
         $ux =  Cache::get('users_'.$exam->id.'_data');
  
+
         if(!$ux){
           $ux = User::whereIn('id',$users)->get()->keyBy('id');
           Cache::put('users_'.$exam->id.'_data',$ux,120);
