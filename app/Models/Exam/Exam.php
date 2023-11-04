@@ -312,8 +312,20 @@ class Exam extends Model
         }
       }
       //remove duplicates tests records
-      // $reports = Test::where('test_id',$exam->id)->get()->groupBy('user_id');
-      // dd($reports);
+      $reports = Test::where('test_id',$exam->id)->get()->groupBy('user_id');
+       foreach($reports as $u=>$i){
+        $st=$i->groupBy('question_id');
+        foreach($st as $a=>$b){
+          if(count($b)>1){
+            foreach($b as $m=>$n){
+              if($m!=0){
+                $n->delete();
+              }
+            }
+          }
+        }
+      }
+      
       
     }
 
