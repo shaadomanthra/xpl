@@ -422,7 +422,10 @@ class Campus extends Model
             $data['users'][$k]['score']=$t->sum('score');
             $data['users'][$k]['max']=$t->sum('max');
 
+            if($data['users'][$k]['max'])
             $data['users'][$k]['pace']=$t->sum('time')/$data['users'][$k]['max'];
+            else
+               $data['users'][$k]['pace'] = 0; 
             $data['users'][$k]['correct']=$t->sum('correct');
 
             if($data['users'][$k]['score'])
