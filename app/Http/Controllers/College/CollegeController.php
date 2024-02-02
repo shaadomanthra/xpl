@@ -46,20 +46,20 @@ class CollegeController extends Controller
             $objs = $obj->where('name','LIKE',"%{$item}%")->where('college_website',$request->get('zone'))->orderBy('location')->paginate(200); 
 
 
-            $lusers= User::select('college_id')->whereIn('college_id',$objs->pluck('id')->toArray())->where('year_of_passing',2023)->get()->groupby('college_id');
+            $lusers= User::select('college_id')->whereIn('college_id',$objs->pluck('id')->toArray())->where('year_of_passing',2024)->get()->groupby('college_id');
 
 
         }
         else{
             $colleges = $obj->all();
             $objs = $obj->where('name','LIKE',"%{$item}%")->paginate(200); 
-            $lusers= User::select('college_id')->whereIn('college_id',$objs->pluck('id')->toArray())->where('year_of_passing',2023)->get()->groupby('college_id');
+            $lusers= User::select('college_id')->whereIn('college_id',$objs->pluck('id')->toArray())->where('year_of_passing',2024)->get()->groupby('college_id');
         }
 
         $carray = $colleges->pluck('id')->toArray();
         $data['engineering'] = $colleges->where('type','btech')->count();
         $data['degree'] = $colleges->where('type','degree')->count();
-        $data['users'] = User::select('college_id')->whereIn('college_id',$carray)->where('year_of_passing',2023)->count();
+        $data['users'] = User::select('college_id')->whereIn('college_id',$carray)->where('year_of_passing',2024)->count();
         $zones = Obj::select('college_website')->distinct()->get();    
         $view = $search ? 'list': 'index';
 
