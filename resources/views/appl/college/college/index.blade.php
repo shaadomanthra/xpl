@@ -67,7 +67,7 @@
           <div class="col-6 col-md-3">
             <div class="card">
                 <div class="card-body">
-                  <h4>Users (2023)</h4>
+                  <h4>Users (2024)</h4>
                   <div class="display-3">{{$data['users']}}</div>
                 </div>
             </div>
