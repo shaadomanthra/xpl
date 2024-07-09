@@ -742,6 +742,10 @@ class ProductController extends Controller
             array_push($found, $email);
             if (!$u->products->contains($product->id))
               $u->products()->attach($product->id, ['validity' => $validity, 'created_at' => date("Y-m-d H:i:s"), 'valid_till' => $valid_till, 'status' => 1]);
+            else {
+              $u->products()->detach($product->id);
+              $u->products()->attach($product->id, ['validity' => $validity, 'created_at' => date("Y-m-d H:i:s"), 'valid_till' => $valid_till, 'status' => 1]);
+            }
           } else {
             array_push($not_found, $email);
           }
