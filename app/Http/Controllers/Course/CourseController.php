@@ -493,8 +493,8 @@ class CourseController extends Controller
         if ($course->slug == 'quantitative-aptitude')
             $course->exams = null;
 
-        dd($course->product);
-        if ($course->product)
+
+        if (!isset($course->product))
             foreach ($course->products as $product) {
                 if ($product->slug != 'premium-access')
                     $course->product = $product;
