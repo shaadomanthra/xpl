@@ -5915,6 +5915,7 @@ class AssessmentController extends Controller
             $exam = json_decode(file_get_contents($filepath));
 
         }else{
+            
             $exam = Exam::where('slug',$id)->first();
 
             if(is_numeric($id) && !$exam)

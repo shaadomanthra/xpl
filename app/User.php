@@ -30,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','username','activation_token','status','client_slug','user_id','phone','year_of_passing','branch_id','role'
+        'name', 'email', 'password', 'username', 'activation_token', 'status', 'client_slug', 'user_id', 'phone', 'year_of_passing', 'branch_id', 'role'
     ];
 
     /**
@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
 
-        /**
+    /**
      * Send a password reset email to the user
      */
     public function sendPasswordResetNotification($token)
@@ -66,7 +66,7 @@ class User extends Authenticatable
         return $this->hasMany('PacketPrep\User');
     }
 
-    
+
     public function details()
     {
         return $this->hasOne('PacketPrep\Models\User\User_Details');
@@ -98,45 +98,45 @@ class User extends Authenticatable
         return $this->hasMany('PacketPrep\Models\Exam\Exam');
     }
 
-    
-     public function batches()
+
+    public function batches()
     {
         return $this->belongsToMany('PacketPrep\Models\College\Batch');
     }
 
     public function colleges()
     {
-        
+
         return $this->belongsToMany('PacketPrep\Models\College\College');
     }
 
     public function college()
     {
-        
+
         return $this->belongsTo('PacketPrep\Models\College\College');
     }
 
     public function posts()
     {
-        return $this->belongsToMany('PacketPrep\Models\Job\Post')->withPivot(['created_at','score','shortlisted','data']);
+        return $this->belongsToMany('PacketPrep\Models\Job\Post')->withPivot(['created_at', 'score', 'shortlisted', 'data']);
     }
 
-    
+
     public function clientexams()
     {
-        
-        
+
+
         return $this->belongsToMany('PacketPrep\Models\Exam\Exam')->withPivot('role');
     }
 
     public function services()
     {
-        return $this->belongsToMany('PacketPrep\Models\College\Service')->withPivot(['code','status']);
+        return $this->belongsToMany('PacketPrep\Models\College\Service')->withPivot(['code', 'status']);
     }
 
     public function myservice()
     {
-        return $this->belongsToMany('PacketPrep\Models\College\Service')->withPivot(['code','status']);
+        return $this->belongsToMany('PacketPrep\Models\College\Service')->withPivot(['code', 'status']);
     }
 
     public function metrics()
@@ -144,121 +144,122 @@ class User extends Authenticatable
         return $this->belongsToMany('PacketPrep\Models\College\Metric');
     }
 
-    public function courses(){
-        return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('credits','validity','created_at','valid_till');
+    public function courses()
+    {
+        return $this->belongsToMany('PacketPrep\Models\Course\Course')->withPivot('credits', 'validity', 'created_at', 'valid_till');
     }
 
-    public function schedules(){
+    public function schedules()
+    {
         return $this->belongsToMany('PacketPrep\Models\Training\Schedule');
     }
-     public function trainings(){
+    public function trainings()
+    {
         return $this->belongsToMany('PacketPrep\Models\Training\Training');
     }
 
-    public function products(){
-        return $this->belongsToMany('PacketPrep\Models\Product\Product')->withPivot('status','validity','created_at','valid_till');
-    }
-
-    public function myproducts(){
-        $user = $this;
-        if(request()->get('refresh'))
-            Cache::forget('myproducts_'.$user->id);
-        $products = Cache::remember('myproducts_'.$user->id, 240, function() use ($user) {
-          return $user->products()->with('courses')->with('exams')->get();
-        });
-        
-     
-        return $products;
-        
-    }
-
-     public function mycourses(){
-        $user = $this;
-        if(request()->get('refresh'))
-            Cache::forget('myproducts_'.$user->id);
-        $products = Cache::remember('myproducts_'.$user->id, 240, function() use ($user) {
-          return $user->products()->with('courses')->with('exams')->get();
-        });
-        $practice = Practice::where('user_id',$user->id)->get()->groupBy('course_id');
-        $tests_overall =Tests_Overall::where('user_id',$user->id)->get();
-        $courses=[];
-        foreach($products as $a=>$b){
-            foreach($b->courses as $d=>$e){
-                $courses[$e->id] = Cache::get('course_'.$e->slug);
-                if(isset($courses[$e->id]->exams)){
-                   $exams = $courses[$e->id]->exams; 
-                    $exam_ids = $tests_overall->whereIn('test_id',$exams->pluck('id')->toArray()); 
-                   
-                    $courses[$e->id]->exam_count = count($exams);
-                    $courses[$e->id]->attempt_count = count($exam_ids); 
-                }
-                
-            }
-        }
-
-
-
-        foreach($courses as $a=>$b){
-            if(isset($practice[$a])){
-                if(isset($courses[$a]))
-                $courses[$a]->practice = count($practice[$a]);
-            }
-            else{
-                if(isset($courses[$a]))
-                $courses[$a]->practice = 0;
-            }
-        }
-
-     
-        return $courses;
-        
-    }
-
-   
-
-     public static function directlogin($name,$email,$phone,$hcode)
+    public function products()
     {
-        $user = User::where('email',$email)->where('client_slug',subdomain())->first();
-        if(!$user){
-            $data = User::directregister($name,$email,$phone,$hcode);
+        return $this->belongsToMany('PacketPrep\Models\Product\Product')->withPivot('status', 'validity', 'created_at', 'valid_till');
+    }
 
-            if($data['error']!=1){
+    public function myproducts()
+    {
+        $user = $this;
+        if (request()->get('refresh'))
+            Cache::forget('myproducts_' . $user->id);
+        //$products = [];
+        $products = Cache::remember('myproducts_' . $user->id, 240, function () use ($user) {
+            return $user->products()->with('courses')->with('exams')->get();
+        });
+
+
+        return $products;
+    }
+
+    public function mycourses()
+    {
+        $user = $this;
+        if (request()->get('refresh'))
+            Cache::forget('myproducts_' . $user->id);
+        $products = Cache::remember('myproducts_' . $user->id, 240, function () use ($user) {
+            return $user->products()->with('courses')->with('exams')->get();
+        });
+        $practice = Practice::where('user_id', $user->id)->get()->groupBy('course_id');
+        $tests_overall = Tests_Overall::where('user_id', $user->id)->get();
+        $courses = [];
+        foreach ($products as $a => $b) {
+            foreach ($b->courses as $d => $e) {
+                $courses[$e->id] = Cache::get('course_' . $e->slug);
+                if (isset($courses[$e->id]->exams)) {
+                    $exams = $courses[$e->id]->exams;
+                    $exam_ids = $tests_overall->whereIn('test_id', $exams->pluck('id')->toArray());
+
+                    $courses[$e->id]->exam_count = count($exams);
+                    $courses[$e->id]->attempt_count = count($exam_ids);
+                }
+            }
+        }
+
+
+
+        foreach ($courses as $a => $b) {
+            if (isset($practice[$a])) {
+                if (isset($courses[$a]))
+                    $courses[$a]->practice = count($practice[$a]);
+            } else {
+                if (isset($courses[$a]))
+                    $courses[$a]->practice = 0;
+            }
+        }
+
+
+        return $courses;
+    }
+
+
+
+    public static function directlogin($name, $email, $phone, $hcode)
+    {
+        $user = User::where('email', $email)->where('client_slug', subdomain())->first();
+        if (!$user) {
+            $data = User::directregister($name, $email, $phone, $hcode);
+
+            if ($data['error'] != 1) {
                 \Auth::loginUsingId($data['uid']);
-            }else{
+            } else {
                 echo json_encode($data);
                 exit();
             }
-        }else{
+        } else {
             \Auth::loginUsingId($user->id);
         }
     }
 
-    public static function directregister($name,$email,$phone,$hcode)
+    public static function directregister($name, $email, $phone, $hcode)
     {
 
-        $user = User::where('email',$email)->where('client_slug',subdomain())->first();
+        $user = User::where('email', $email)->where('client_slug', subdomain())->first();
         $parts = explode("@", $email);
         $username = $parts[0];
         $request = request();
 
-        $u = User::where('username',$username)->first();
+        $u = User::where('username', $username)->first();
 
-        if($u){
-            $username = $username.'_'.rand(10,100);
+        if ($u) {
+            $username = $username . '_' . rand(10, 100);
         }
 
-        if($hcode!='piofxapp734'){
+        if ($hcode != 'piofxapp734') {
             $data['error'] = 1;
             $data['message'] = 'Invalid hashcode used';
-        } else if(!$email || !$phone || !$name){
+        } else if (!$email || !$phone || !$name) {
             $data['error'] = 1;
             $data['message'] = 'Email or phone or name not given';
-        }
-        else if($user){
+        } else if ($user) {
             $data['error'] = 1;
-            $data['message'] = 'User with email ('.$email.') already exists';
-            
-        }else{
+            $data['message'] = 'User with email (' . $email . ') already exists';
+        } else {
             $user = User::create([
                 'name' => $name,
                 'username' => strtolower($username),
@@ -266,8 +267,8 @@ class User extends Authenticatable
                 'password' => bcrypt($phone),
                 'activation_token' => str_random(20),
                 'client_slug' => subdomain(),
-                'user_id' =>'2',
-                'status'=>1
+                'user_id' => '2',
+                'status' => 1
             ]);
 
             $user->phone = $phone;
@@ -285,92 +286,89 @@ class User extends Authenticatable
             $user->save();
 
             $data['error'] = 0;
-            $data['message'] = 'User with email ('.$email.') is created';
+            $data['message'] = 'User with email (' . $email . ') is created';
             $data['uid'] = $user->id;
         }
 
         return $data;
     }
 
-    public function getImage($signature=null){
+    public function getImage($signature = null)
+    {
 
-        if($signature)
+        if ($signature)
             return Storage::disk('s3')->url('articles/signature.jpg');
 
         $user = $this;
         $username = $this->username;
 
         $d = \carbon\carbon::now()->format('d');
-        if($d==05){
-            Cache::forget('userimage_'.$username);
+        if ($d == 05) {
+            Cache::forget('userimage_' . $username);
         }
 
-        if(request()->get('refresh')){
-            Cache::forget('userimage_'.$username);
+        if (request()->get('refresh')) {
+            Cache::forget('userimage_' . $username);
         }
-        $user->image = Cache::get('userimage_'.$username);
+        $user->image = Cache::get('userimage_' . $username);
 
-        if($user->image)
+        if ($user->image)
             return $user->image;
-        if(Storage::disk('s3')->exists('articles/'.strtolower($user->roll_number).'.jpg'))
-                {
-                    $user->image = Storage::disk('s3')->url('articles/'.strtolower($user->roll_number).'.jpg');
-                }
+        if (Storage::disk('s3')->exists('articles/' . strtolower($user->roll_number) . '.jpg')) {
+            $user->image = Storage::disk('s3')->url('articles/' . strtolower($user->roll_number) . '.jpg');
+        }
 
-        if(Storage::disk('s3')->exists('articles/'.$user->username.'.jpg'))
-                {
-                    $user->image = Storage::disk('s3')->url('articles/'.$user->username.'.jpg');
-                }
-        if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpg'))
-                {
-                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpg');
-                }
-                if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.png'))
-                {
-                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.png');
-                }
+        if (Storage::disk('s3')->exists('articles/' . $user->username . '.jpg')) {
+            $user->image = Storage::disk('s3')->url('articles/' . $user->username . '.jpg');
+        }
+        if (Storage::disk('s3')->exists('articles/profile_' . $user->username . '.jpg')) {
+            $user->image = Storage::disk('s3')->url('articles/profile_' . $user->username . '.jpg');
+        }
+        if (Storage::disk('s3')->exists('articles/profile_' . $user->username . '.png')) {
+            $user->image = Storage::disk('s3')->url('articles/profile_' . $user->username . '.png');
+        }
 
-                if(Storage::disk('s3')->exists('articles/profile_'.$user->username.'.jpeg'))
-                {
-                    $user->image = Storage::disk('s3')->url('articles/profile_'.$user->username.'.jpeg');
-                }
-                
-        Cache::forever('userimage_'.$username,$user->image);
-                
+        if (Storage::disk('s3')->exists('articles/profile_' . $user->username . '.jpeg')) {
+            $user->image = Storage::disk('s3')->url('articles/profile_' . $user->username . '.jpeg');
+        }
+
+        Cache::forever('userimage_' . $username, $user->image);
+
 
         return $user->image;
     }
 
-    public function attempted_test($id){
+    public function attempted_test($id)
+    {
         $user = \auth::user();
 
-        
 
-        $test = Cache::remember('attempt_'.$user->id.'_'.$id, 240, function() use ($user,$id) {
-                $test = DB::table('tests_overall')
-                    ->where('user_id', $user->id)
-                    ->where('test_id', $id)
-                    ->first();
-                if($test)
-                    return $test;
-                return 0;
+
+        $test = Cache::remember('attempt_' . $user->id . '_' . $id, 240, function () use ($user, $id) {
+            $test = DB::table('tests_overall')
+                ->where('user_id', $user->id)
+                ->where('test_id', $id)
+                ->first();
+            if ($test)
+                return $test;
+            return 0;
         });
 
         return $test;
-
     }
 
-    public function attempted($id){
+    public function attempted($id)
+    {
         $user = \auth::user();
         //Cache::forget('attempt_'.$user->id.'_'.$id);
-        $attempts = Cache::get('attempts_'.$user->id);
+        $attempts = Cache::get('attempts_' . $user->id);
         //dd($attempts->where('test_id',$id)->count());
-        if(!$attempts)
+        if (!$attempts)
             return 0;
 
-        if($attempts->where('test_id',$id)->count()){
-            return $attempts->where('test_id',$id);
-        }else{
+        if ($attempts->where('test_id', $id)->count()) {
+            return $attempts->where('test_id', $id);
+        } else {
             return 0;
         }
 
@@ -387,34 +385,32 @@ class User extends Authenticatable
         // return $test;
     }
 
-    public function newtests(){
+    public function newtests()
+    {
         $email = $this->email;
 
-        if($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com' )
-            $tests = DB::table('exams')->where('slug','psychometric-test')->orWhere('emails','LIKE',"%{$email}%")
+        if ($_SERVER['HTTP_HOST'] == 'pcode.test' || $_SERVER['HTTP_HOST'] == 'hire.packetprep.com' || $_SERVER['HTTP_HOST'] == 'hiresyntax.com')
+            $tests = DB::table('exams')->where('slug', 'psychometric-test')->orWhere('emails', 'LIKE', "%{$email}%")
                 ->get();
-        else if($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in'){
-            $tests = Cache::remember('mytests_'.$this->id, 240, function() use ($email) {
-                $tests = DB::table('exams')->where('emails','LIKE',"%{$email}%")->get();
-                if($tests)
+        else if ($_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xplore.co.in') {
+            $tests = Cache::remember('mytests_' . $this->id, 240, function () use ($email) {
+                $tests = DB::table('exams')->where('emails', 'LIKE', "%{$email}%")->get();
+                if ($tests)
                     return $tests;
                 return 0;
             });
-       
-        }
-        else
-        {
+        } else {
             $user = $this;
-            
+
             $client = subdomain();
             //$tests = Cache::get('tests_'.subdomain());
-            
-            $tests = Cache::remember('tests_'.subdomain(), 240, function() use ($client) {
-                return Exam::where('client',$client)->with('examtype')->orderBy('id','desc')->get();
-            });
 
+
+            $tests = Cache::remember('tests_' . subdomain(), 240, function () use ($client) {
+                return Exam::where('client', $client)->with('examtype')->orderBy('id', 'desc')->get();
+            });
         }
-        
+
 
         /*
         if(!subdomain())
@@ -437,47 +433,49 @@ class User extends Authenticatable
     }
 
 
-    public function authorizedEmail($e){
+    public function authorizedEmail($e)
+    {
         $user = $this;
 
         $emails = $e->emails;
-        $emails = implode(',',explode("\n", $e->emails));
-        $emails =str_replace("\r", '', $emails);
-        $emails = array_unique(explode(',',$emails));
+        $emails = implode(',', explode("\n", $e->emails));
+        $emails = str_replace("\r", '', $emails);
+        $emails = array_unique(explode(',', $emails));
 
         $flag = 0;
-        foreach($emails as $em){
-            if(strtoupper($user->email) == strtoupper(trim($em))){
-                $flag = 1;break;
+        foreach ($emails as $em) {
+            if (strtoupper($user->email) == strtoupper(trim($em))) {
+                $flag = 1;
+                break;
             }
         }
         return $flag;
-
     }
 
-    public function tests($all=null){
-        
-         
+    public function tests($all = null)
+    {
+
+
         $user = $this;
-        if(request()->get('refresh')){
-            Cache::forget('attempts_'.$user->id);
-             Cache::forget('section_attempt_'.$user->id);
-             Cache::forget('sections_'.$user->id);
+        if (request()->get('refresh')) {
+            Cache::forget('attempts_' . $user->id);
+            Cache::forget('section_attempt_' . $user->id);
+            Cache::forget('sections_' . $user->id);
         }
 
 
-        
+
         //Cache::forget('attempts_'.$user->id);
-        $attempts = Cache::remember('attempts_'.$user->id, 240, function() use ($user) {
-          return DB::table('tests_overall')
+        $attempts = Cache::remember('attempts_' . $user->id, 240, function () use ($user) {
+            return DB::table('tests_overall')
                 ->where('user_id', $user->id)
-                ->orderBy('id','desc')
+                ->orderBy('id', 'desc')
                 ->get()->keyBy('test_id');
         });
 
-        
 
-        if($all)
+
+        if ($all)
             return $attempts;
         // Cache::remember('attempts_'.$this->id, 40, function() use ($this) {
         //   return DB::table('tests_overall')
@@ -488,342 +486,347 @@ class User extends Authenticatable
 
 
 
-        if($attempts->count()){
+        if ($attempts->count()) {
 
-            if(!isset($attempts['test_id'])){
+            if (!isset($attempts['test_id'])) {
                 $test_idgroup = $attempts->groupby('test_id');
                 $test_ids = $attempts->pluck('test_id')->toArray();
-            }else{
+            } else {
                 $test_idgroup[$attempts['test_id']][0] = json_decode(json_encode($attempts));
                 $test_ids = [$attempts['test_id']];
             }
-            
+
 
             //Cache::forget('tests_'.$user->id);
-            $alltests = Cache::get('tests_'.subdomain());
+            $alltests = Cache::get('tests_' . subdomain());
 
-            if($alltests)
-                $tests = $alltests->whereIn('id',$test_ids);
+            if ($alltests)
+                $tests = $alltests->whereIn('id', $test_ids);
             else
                 $tests = [];
-        
-        }else{
+        } else {
             $tests = [];
         }
+        $tests_section  = [];
+        // $tests_section = Cache::remember('section_attempt_' . $user->id, 60, function () use ($user) {
+        //     return Tests_Section::where('user_id', $user->id)->get();
+        // });
+        $sections = [];
+        // $sections = Cache::remember('sections_'.$user->id,60, function() use ($user,$tests_section){
+        //    $sections = Section::whereIn('id',$tests_section->pluck('section_id')->toArray())->with('questions')->get()->keyBy('id');
 
-        $tests_section = Cache::remember('section_attempt_'.$user->id,60, function() use ($user){
-            return Tests_Section::where('user_id',$user->id)->get();
-        });
-        $sections = Cache::remember('sections_'.$user->id,60, function() use ($user,$tests_section){
-           $sections = Section::whereIn('id',$tests_section->pluck('section_id')->toArray())->with('questions')->get()->keyBy('id');
-
-            return $sections;
-        });
+        //     return $sections;
+        // });
 
 
-        $tests_section = $tests_section->groupBy('test_id');
-       
-        foreach($tests as $k=>$t){
+        // $tests_section = $tests_section->groupBy('test_id');
+
+        foreach ($tests as $k => $t) {
 
             $tests[$k]->attempt_at = $test_idgroup[$t->id][0]->created_at;
             $tests[$k]->score = $test_idgroup[$t->id][0]->score;
             $tests[$k]->max = $test_idgroup[$t->id][0]->max;
             $tests[$k]->attempt_status = $test_idgroup[$t->id][0]->status;
-            
-            $str ='';
-            if(isset($tests_section[$t->id]))
-            foreach($tests_section[$t->id] as $m=>$n){
-               
-                if(isset($sections[$n->section_id])){
-                    $total =0;
-                    foreach($sections[$n->section_id]->questions as $q){
-                        $total = $total + $q->mark;
+
+            $str = '';
+            if (isset($tests_section[$t->id]))
+                foreach ($tests_section[$t->id] as $m => $n) {
+
+                    if (isset($sections[$n->section_id])) {
+                        $total = 0;
+                        foreach ($sections[$n->section_id]->questions as $q) {
+                            $total = $total + $q->mark;
+                        }
+                        $str = $str . $sections[$n->section_id]->name . ' - ' . $n->score . '/' . $total . '<br>';
                     }
-                    $str =$str.$sections[$n->section_id]->name.' - '.$n->score.'/'.$total.'<br>';
                 }
-                
-            }
             $tests[$k]->details = $str;
         }
 
-      
+
 
         return $tests;
     }
 
-    public function getPsy(){
-        $e = Exam::where('slug','psychometric-test')->first();
+    public function getPsy()
+    {
+        $e = Exam::where('slug', 'psychometric-test')->first();
 
-        if(!$e)
+        if (!$e)
             return null;
 
         return $e->psychometric_test($this);
     }
 
-    public function productvalid($slug){
-        $product_id = Product::where('slug',$slug)->first()->id;
+    public function productvalid($slug)
+    {
+        $product_id = Product::where('slug', $slug)->first()->id;
         $user_id = \auth::user()->id;
 
         $entry = DB::table('product_user')
-                ->where('product_id', $product_id)
-                ->where('user_id', $user_id)
-                ->orderBy('id','desc')
-                ->first();
-        if(!$entry)       
+            ->where('product_id', $product_id)
+            ->where('user_id', $user_id)
+            ->orderBy('id', 'desc')
+            ->first();
+        if (!$entry)
             return 2;
 
 
-        if(strtotime($entry->valid_till) > strtotime(date('Y-m-d')))
+        if (strtotime($entry->valid_till) > strtotime(date('Y-m-d')))
             return 0;
-        elseif($entry->status==0)
+        elseif ($entry->status == 0)
             return -1;
         else
             return 1;
     }
 
-    public function productvalidity($slug){
-        $course = Cache::remember('course_product'.$slug, 360, function() use($slug) {
-            return Course::where('slug',$slug)->first();
+    public function productvalidity($slug)
+    {
+        $course = Cache::remember('course_product' . $slug, 360, function () use ($slug) {
+            return Course::where('slug', $slug)->first();
         });
         //dd($course->products->first());
         $user_id = \auth::user()->id;
         $entry = null;
-        $products = Cache::get('cp_'.$slug);
-        if(!$products)
+        $products = Cache::get('cp_' . $slug);
+        if (!$products)
             $products = $course->products;
-        if($products->first()){
-             $entry = Cache::get('ps_'.$slug.'_'.\auth()->user()->id);
-             if(!$entry){
+        if ($products->first()) {
+            $entry = Cache::get('ps_' . $slug . '_' . \auth()->user()->id);
+            if (!$entry) {
                 $entry = DB::table('product_user')
-                ->where('product_id', $course->products->first()->id)
-                ->where('user_id', $user_id)
-                ->orderBy('id','desc')
-                ->first();
-             }
+                    ->where('product_id', $course->products->first()->id)
+                    ->where('user_id', $user_id)
+                    ->orderBy('id', 'desc')
+                    ->first();
+            }
         }
-        
-        if($entry)
-        return $entry->valid_till;
+
+        if ($entry)
+            return $entry->valid_till;
         else
-        return null;
+            return null;
     }
-    
+
 
     public function repositories()
     {
         return $this->belongsToMany('PacketPrep\Models\Library\Respository');
     }
-    
 
-    public function getRole($role){
 
-        if(request()->get('order')){
+    public function getRole($role)
+    {
+
+        if (request()->get('order')) {
             $order = request()->get('order');
-        }else{
+        } else {
             $order = 'name';
         }
-        if(subdomain()=='xplore' || subdomain()=='piofx' || subdomain() =='gradable' ){
-            $users = Role::where('slug',$role)->first()->users()->orderBy('name');
+        if (subdomain() == 'xplore' || subdomain() == 'piofx' || subdomain() == 'gradable') {
+            $users = Role::where('slug', $role)->first()->users()->orderBy('name');
 
-            if(request()->get('dump2'))
+            if (request()->get('dump2'))
                 dd($users);
 
-            $d = $users->whereIn('role',[2,12,13])->where('status','<>',2)->get();
-            if(request()->get('dump3'))
+            $d = $users->whereIn('role', [2, 12, 13])->where('status', '<>', 2)->get();
+            if (request()->get('dump3'))
                 dd($d);
             return $d;
-        }
-        else{
-            $r =Role::where('slug',$role)->first();
-            $users = $r->users()->orderBy($order)->where('client_slug',subdomain())->where('status','<>',2)->get()->keyBy('id');
-            if(!$users)
-                return $r->users()->orderBy($order)->where('status','<>',2)->get()->keyBy('id');
+        } else {
+            $r = Role::where('slug', $role)->first();
+            $users = $r->users()->orderBy($order)->where('client_slug', subdomain())->where('status', '<>', 2)->get()->keyBy('id');
+            if (!$users)
+                return $r->users()->orderBy($order)->where('status', '<>', 2)->get()->keyBy('id');
             else
-            return  $users;
+                return  $users;
         }
-
     }
-    
 
-    public function checkRole($roles){
+
+    public function checkRole($roles)
+    {
         $user = $this;
-        if($user->isAdmin())
+        if ($user->isAdmin())
             return true;
 
-        if($user->role==1)
+        if ($user->role == 1)
             return false;
 
-        $userroles = Cache::remember('userroles_'.$user->id, 240, function() use ($user) {
-           return $user->roles->pluck('slug')->toArray();
+        $userroles = Cache::remember('userroles_' . $user->id, 240, function () use ($user) {
+            return $user->roles->pluck('slug')->toArray();
         });
 
-        
-        foreach($roles as $r){
-            if(in_array($r, $userroles)){
+
+        foreach ($roles as $r) {
+            if (in_array($r, $userroles)) {
                 return true;
             }
         }
         return false;
     }
 
-    public function checkExamRole($exam,$roles){
+    public function checkExamRole($exam, $roles)
+    {
         $user = $this;
-        if($user->isAdmin())
+        if ($user->isAdmin())
             return true;
 
-        if($user->role==1)
+        if ($user->role == 1)
             return false;
-        
-        $exams = Cache::remember('userexamroles_'.$user->id, 60, function() use ($user) {
-           return $user->clientexams;
+
+        $exams = Cache::remember('userexamroles_' . $user->id, 60, function () use ($user) {
+            return $user->clientexams;
         });
         $ex = $exams->find($exam->id);
-        foreach($roles as $r){
+        foreach ($roles as $r) {
 
-            if($ex->pivot->role == $r){
+            if ($ex->pivot->role == $r) {
                 return true;
             }
         }
         return false;
     }
 
-    public function checkUserRole($roles){
+    public function checkUserRole($roles)
+    {
         $user = $this;
         $userroles = array();
-        foreach($user->roles as $role)
+        foreach ($user->roles as $role)
             array_push($userroles, $role->slug);
-        
-        foreach($roles as $r){
-            if(in_array($r, $userroles)){
+
+        foreach ($roles as $r) {
+            if (in_array($r, $userroles)) {
                 return true;
             }
         }
         return false;
     }
 
-    public function getCollege($id){
-        if($id)
-            return  User::where('id',$id)->first()->colleges()->first()->name;
+    public function getCollege($id)
+    {
+        if ($id)
+            return  User::where('id', $id)->first()->colleges()->first()->name;
         else
             return null;
     }
-    public function getName($id){
-        if($id)
-            return  User::where('id',$id)->get()->first()->name;
+    public function getName($id)
+    {
+        if ($id)
+            return  User::where('id', $id)->get()->first()->name;
         else
             return null;
-
     }
 
-    public function client_id(){
+    public function client_id()
+    {
         $slug = $this->client_slug;
-        if(!$slug)
+        if (!$slug)
             $slug = 'demo';
-        return Client::where('slug',$slug)->first()->id;
+        return Client::where('slug', $slug)->first()->id;
     }
-    public function getClient(){
+    public function getClient()
+    {
         $slug = $this->client_slug;
-        if(!$slug)
+        if (!$slug)
             $slug = 'demo';
-        return Client::where('slug',$slug)->first();
+        return Client::where('slug', $slug)->first();
     }
 
-    public function getUserName($id){
-        return  User::where('id',$id)->get()->first()->username;
-
+    public function getUserName($id)
+    {
+        return  User::where('id', $id)->get()->first()->username;
     }
 
-    public function getDesignation($id){
-        return User_Details::where('user_id',$id)->get()->first()->designation;
+    public function getDesignation($id)
+    {
+        return User_Details::where('user_id', $id)->get()->first()->designation;
     }
 
-    public function isAdmin(){
-        if(\Auth::user())
-            {
-                if(\Auth::user()->role == 2 )
-                    return true;
-                else
-                    return false;
-            }
+    public function isAdmin()
+    {
+        if (\Auth::user()) {
+            if (\Auth::user()->role == 2)
+                return true;
+            else
+                return false;
+        }
         return false;
     }
 
-    public function isSiteAdmin(){
-        if(\Auth::user())
-            {
-                if(\Auth::user()->role == 2 || \Auth::user()->role == 11 || \Auth::user()->role == 12 ||\Auth::user()->role == 13)
-                    return true;
-                else
-                    return false;
-            }
+    public function isSiteAdmin()
+    {
+        if (\Auth::user()) {
+            if (\Auth::user()->role == 2 || \Auth::user()->role == 11 || \Auth::user()->role == 12 || \Auth::user()->role == 13)
+                return true;
+            else
+                return false;
+        }
         return false;
     }
 
-    public function send_sms($number,$code){
-                // Authorisation details.
-        $url = "https://2factor.in/API/V1/95f80a8a-3945-11ec-a13b-0200cd936042/SMS/+91".$number."/".$code;
+    public function send_sms($number, $code)
+    {
+        // Authorisation details.
+        $url = "https://2factor.in/API/V1/95f80a8a-3945-11ec-a13b-0200cd936042/SMS/+91" . $number . "/" . $code;
         $d = $this->curl_get_contents($url);
-        
     }
 
     function curl_get_contents($url)
     {
-      $ch = curl_init($url);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-      $data = curl_exec($ch);
-      curl_close($ch);
-      return $data;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
     }
 
-     public function profile_complete_step(){
-        $fields = ["name",'email','phone','username','current_city','hometown','college_id','branch_id','year_of_passing','roll_number','gender','dob','tenth','twelveth','bachelors','pic','aadhar'];
-        return round(100/count($fields),2);
-     }
-    public function profile_complete($username=null,$user=null){
+    public function profile_complete_step()
+    {
+        $fields = ["name", 'email', 'phone', 'username', 'current_city', 'hometown', 'college_id', 'branch_id', 'year_of_passing', 'roll_number', 'gender', 'dob', 'tenth', 'twelveth', 'bachelors', 'pic', 'aadhar'];
+        return round(100 / count($fields), 2);
+    }
+    public function profile_complete($username = null, $user = null)
+    {
 
-        if($this->username == $username)
+        if ($this->username == $username)
             $u = $this;
-        elseif($username)
-            $u = $this->where('username',$username)->first();
+        elseif ($username)
+            $u = $this->where('username', $username)->first();
         else
-            $u =$this;
+            $u = $this;
 
-        if($user)
+        if ($user)
             $u = $user;
 
-        $fields = ["name",'email','phone','username','current_city','hometown','college_id','branch_id','year_of_passing','roll_number','gender','dob','tenth','twelveth','bachelors','pic','aadhar'];
+        $fields = ["name", 'email', 'phone', 'username', 'current_city', 'hometown', 'college_id', 'branch_id', 'year_of_passing', 'roll_number', 'gender', 'dob', 'tenth', 'twelveth', 'bachelors', 'pic', 'aadhar'];
 
-        $count =0;
-        foreach($fields as $f){
-            if(isset($u->$f)){
-                if(!$u->$f){
+        $count = 0;
+        foreach ($fields as $f) {
+            if (isset($u->$f)) {
+                if (!$u->$f) {
                     $count++;
-                }else{
+                } else {
                 }
-            }else{
-                if(isset($u[$f]))
-                if(!$u[$f]){
-                    $count++;
-                }else{
-                }
+            } else {
+                if (isset($u[$f]))
+                    if (!$u[$f]) {
+                        $count++;
+                    } else {
+                    }
             }
-            
         }
 
-        if(!is_array($u))
-        if($u->getImage()){
-            $count--;
-        }
+        if (!is_array($u))
+            if ($u->getImage()) {
+                $count--;
+            }
 
-        $percent = round((1-($count/count($fields)))*100,2);
+        $percent = round((1 - ($count / count($fields))) * 100, 2);
 
         return $percent;
-
     }
-
-    
-
 }
