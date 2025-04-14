@@ -1535,7 +1535,7 @@ function lockText(editor){
       $namec = $(this).data('namec')+Math.random().toString(36).substring(3);
       $c = ($(this).data('c'))?$(this).data('c'):null;
       $input = $(this).data('input');
-      $url= 'https://stag.cmplr.in/run';
+      $url= 'https://code.p24.in/run';
       $stop= $(this).data('stop');
       var editor_ = editor_array[$name];
 
@@ -2037,7 +2037,7 @@ console.log('here in ajaxrun3');
           if($lang=='c' || $lang=='cpp')
             $lang ='clang';
           console.log('sent - '+$lang);
-          $url= 'https://stag.cmplr.in/run';
+          $url= 'https://code.p24.in/run';
           if($testcase==3){
 
             for(i=1;i<=5;i++){
@@ -2123,7 +2123,7 @@ console.log('here in ajaxrun3');
           if($lang=='c' || $lang=='cpp')
             $lang ='clang';
           console.log('sent - '+$lang);
-          $url= 'https://stag.cmplr.in/run';
+          $url= 'https://code.p24.in/run';
           if($testcase==3){
 
             for(i=1;i<=5;i++){
