@@ -354,7 +354,7 @@ if (!function_exists('subdomain')) {
         if ($_SERVER['HTTP_HOST'] == 'corporate.onlinelibrary.test')
             return 'rguktn';
         if ($_SERVER['HTTP_HOST'] == 'xplore.co.in' || $_SERVER['HTTP_HOST'] == 'xp.test' || $_SERVER['HTTP_HOST'] == 'xpl.test' || $_SERVER['HTTP_HOST'] == 'app1.xplore.co.in' || $_SERVER['HTTP_HOST'] == 'v2.xplore.co.in')
-            return 'dhaanish';
+            return 'xplore';
         if ($_SERVER['HTTP_HOST'] == 'learn.pp.test' || $_SERVER['HTTP_HOST'] == 'learn.packetprep.com')
             return 'packetprep';
         if ($_SERVER['HTTP_HOST'] == 'learn.pp.test' || $_SERVER['HTTP_HOST'] == 'campus.packetprep.com')
